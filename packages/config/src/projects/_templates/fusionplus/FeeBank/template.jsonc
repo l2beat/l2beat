@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "FeeBank",
+  "description": "Custody contract for resolver fee-token deposits. Depositing increases the resolver's credit in the associated charger contract, while withdrawing reduces credit and returns only the still-available amount. The owner can collect credit already consumed as protocol fees and can rescue arbitrary assets held by the contract.",
+  "category": "core",
+  "ignoreRelatives": ["constructorArgs", "feeToken"],
+  "fields": {
+    "constructorArgs": {
+      "description": "Deployment configuration: credit charger, fee token and initial owner.",
+      "handler": { "type": "constructorArgs", "nameArgs": true }
+    },
+    "charger": {
+      "description": "Contract that accounts for available resolver credit and is called on every deposit and withdrawal.",
+      "copy": "constructorArgs",
+      "edit": ["get", "charger"]
+    },
+    "feeToken": {
+      "description": "Token held as resolver credit and paid out on withdrawals or fee collection.",
+      "copy": "constructorArgs",
+      "edit": ["get", "feeToken"]
+    },
+    "owner": {
+      "description": "Owner allowed to collect consumed fees and rescue assets from the FeeBank.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "collect fee-token credit consumed from resolver accounts, rescue arbitrary ERC20 or native-token balances (including funds backing unused resolver credit), and transfer ownership."
+        }
+      ]
+    }
+  }
+}

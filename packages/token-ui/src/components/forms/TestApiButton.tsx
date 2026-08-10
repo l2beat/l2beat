@@ -1,7 +1,8 @@
+import { useMutation } from '@tanstack/react-query'
 import { CheckIcon, PlayIcon, XIcon } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
 import { Spinner } from '../core/Spinner'
 
@@ -18,9 +19,10 @@ export function TestApiButton({
   chainId: number | undefined
   className?: string
 }) {
+  const trpc = useTRPC()
   const [result, setResult] = useState<boolean | undefined>()
-  const { mutate: testApi, isPending: isTesting } =
-    api.chains.testApi.useMutation({
+  const { mutate: testApi, isPending: isTesting } = useMutation(
+    trpc.chains.testApi.mutationOptions({
       onSuccess: (response) => {
         setResult(response.success)
         if (response.error) {
@@ -31,7 +33,8 @@ export function TestApiButton({
         setResult(false)
         toast.error('Failed to test API')
       },
-    })
+    }),
+  )
 
   const testFn =
     type === 'etherscan' && chainId !== undefined

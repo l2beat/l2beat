@@ -24,6 +24,7 @@ const genesisTimestamp = UnixTime(
 
 export const syndicate: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1773273600), // 2026-03-12T00:00:00Z
+  archivedAt: UnixTime(1782813784), // Tue, 30 Jun 2026 10:03:04 GMT
   discovery,
   additionalBadges: [BADGES.RaaS.Alchemy],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
@@ -95,6 +96,7 @@ export const syndicate: ScalingProject = orbitStackL2({
         callsPerMinute: 300,
       },
     ],
+    untilTimestamp: UnixTime(1782813784), // Tue, 30 Jun 2026 10:03:04 GMT
     multicallContracts: [
       {
         sinceBlock: 1,

@@ -3,7 +3,10 @@
   "name": "hyperliquid",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": [
-    "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7"
+    "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+    "hyperevm:0x6B9E773128f453f5c2C60935Ee2DE2CBc5390A24",
+    "hyperevm:0xc20699185c15D0a2fD65779BB5d69f5b0B113c00", // Coinbase USDC treasury 1 (AQAv2)
+    "hyperevm:0x4E5319dEb1072B01439EE674db5C321d11fd96F8" // Coinbase USDC treasury 2 (AQAv2, announced, unused so far)
     // "arb1:0xef2364db5db6f5539aa0bc111771a94ee47637fc", // hot validator 1
     // "arb1:0xda6816df552c3f9e0fb64979fb357800d690d79b", // hot validator 2
     // "arb1:0x58e1b0e63c905d5982324fcd9108582623b8132e", // hot validator 3
@@ -14,9 +17,17 @@
     // "arb1:0x5a92b4a6a525445c9b4fff61c0db71dcfe305ede" // cold validator 4
   ],
   "names": {
-    "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7": "HyperliquidBridge"
+    "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7": "HyperliquidBridge",
+    "hyperevm:0xc20699185c15D0a2fD65779BB5d69f5b0B113c00": "USDCTreasury1",
+    "hyperevm:0x4E5319dEb1072B01439EE674db5C321d11fd96F8": "USDCTreasury2"
   },
   "overrides": {
+    "hyperevm:0xc20699185c15D0a2fD65779BB5d69f5b0B113c00": {
+      "description": "Coinbase-operated EOA ('USDC treasury wallet', AQAv2) holding the bulk of the native USDC reserves that back USDC on HyperCore. It is continuously rebalanced with the CoreDepositWallet at a 9:1 ratio (this wallet holds 90% of the HyperEVM-side reserves, the CoreDepositWallet keeps 10% as a hot buffer)."
+    },
+    "hyperevm:0x4E5319dEb1072B01439EE674db5C321d11fd96F8": {
+      "description": "Second Coinbase-operated EOA announced for AQAv2 USDC treasury operations, unused so far."
+    },
     "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7": {
       "fields": {
         // hot and cold validators can only be fetched from calldata
@@ -35,7 +46,8 @@
           "description": "The hot valis can also change the cold valis by adding a finalizer they control and then proposing, finalizing a validator set update.",
           "permissions": [
             {
-              "type": "hotValidatorHyperliquid"
+              "type": "interact",
+              "description": "Can request withdrawals, start a validator set change, add lockers and finalizers (Can also change cold validators by adding a finalizer and proposing/finalizing a new validator set)."
             }
           ]
         },
@@ -51,7 +63,8 @@
           },
           "permissions": [
             {
-              "type": "coldValidatorHyperliquid"
+              "type": "interact",
+              "description": "Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause and change the validator set), remove lockers and finalizers."
             }
           ]
         }

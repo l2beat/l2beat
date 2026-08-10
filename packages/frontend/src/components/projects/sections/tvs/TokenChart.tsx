@@ -1,4 +1,5 @@
 import type { Milestone } from '@l2beat/config'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
@@ -8,7 +9,7 @@ import { TokenSummaryBox } from '~/components/chart/tvs/token/TokenSummaryBox'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 
 export function TokenChart({
   project,
@@ -48,14 +49,17 @@ function TokenChartControls({
   projectId: string
   className?: string
 }) {
+  const trpc = useTRPC()
   const { range, setRange } = useTvsChartControlsContext()
-  const { data } = api.tvs.tokenChart.useQuery({
-    token: {
-      tokenId: token.id,
-      projectId,
-    },
-    range,
-  })
+  const { data } = useQuery(
+    trpc.tvs.tokenChart.queryOptions({
+      token: {
+        tokenId: token.id,
+        projectId,
+      },
+      range,
+    }),
+  )
 
   const timeRange = useMemo(
     () =>

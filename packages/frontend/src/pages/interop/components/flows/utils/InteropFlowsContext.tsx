@@ -24,6 +24,7 @@ interface InteropFlowsContextType {
   toggleProtocolSelection: (protocolId: string) => void
   selectAllProtocols: () => void
   deselectAllProtocols: () => void
+  setSelectedProtocols: (protocolIds: string[]) => void
   highlightedChains: string[]
   toggleHighlightedChain: (chainId: string) => void
   setHighlightedChainPair: (chainIdA: string, chainIdB: string) => void
@@ -33,12 +34,14 @@ export const InteropFlowsContext = createContext<
   InteropFlowsContextType | undefined
 >(undefined)
 
+export type InteropFlowsProtocol = ProtocolDisplayable & {
+  id: string
+}
+
 interface InteropFlowsProviderProps {
   children: ReactNode
   chains: InteropChainWithIcon[]
-  protocols: (ProtocolDisplayable & {
-    id: string
-  })[]
+  protocols: InteropFlowsProtocol[]
   defaultSelectedChains: string[]
   pinnedChainId?: string
 }
@@ -47,7 +50,7 @@ export function InteropFlowsProvider({
   children,
   chains,
   protocols,
-  defaultSelectedChains,
+  defaultSelectedChains = [],
   pinnedChainId: providedPinnedChainId,
 }: InteropFlowsProviderProps) {
   const allChainIds = useMemo(() => chains.map((c) => c.id), [chains])
@@ -229,6 +232,7 @@ export function InteropFlowsProvider({
         toggleProtocolSelection,
         selectAllProtocols,
         deselectAllProtocols,
+        setSelectedProtocols,
         highlightedChains,
         toggleHighlightedChain,
         setHighlightedChainPair,

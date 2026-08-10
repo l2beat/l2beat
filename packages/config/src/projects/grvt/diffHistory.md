@@ -1,3 +1,305 @@
+Generated with discovered.json: 0xacb6852061d92f6b80e4b97b2a0192aefa4855fa
+
+# Diff at Wed, 05 Aug 2026 10:28:03 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@352ff1eba99519e3c6090fccec5796e0475edcfa block: 1783332198
+- current timestamp: 1785925620
+
+## Description
+
+Executed 2 gov proposal with several upgrade transactions going to L2: https://tools.l2beat.com/decoder-new/?hash=0x12872dd4becaa4cfd45173bad5b49b2d7d005450ce47e57d05e6346ca4039227&data=AwA and https://tools.l2beat.com/decoder-new/?hash=0xc479b923d2614903ef0405eff70a31859ff0b516993d8d7872e93c4d2c14d2ee&data=AwA.
+
+Also updated permissions and ownership of various contracts:
+- Expanded admin ms with 4 addresses 2/3 -> 4/7.
+- Created another ms with the same members as the admin for bridge-related contracts.
+- Governance, bridge and trx filterer ownership changed from EOA to 4/7 ms.
+
+## Watched changes
+
+```diff
+    contract GrvtChainAdminMultisig (eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x293d3512083507664Ee5EDe44c0477f600e3A3BE"
+      values.$members.1:
++        "eth:0xe224125147fB0a3d0e1eC30Ed1573ed0632727CC"
+      values.$members.2:
++        "eth:0x79BfE9868a2613F3327FB2B9e3a39959165118F4"
+      values.$members.3:
++        "eth:0xC8552d52A6a8e92Ea37f3a305dE5e8dDbeB6e490"
+      values.$threshold:
+-        2
++        4
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "4 of 7 (57%)"
+    }
+```
+
+```diff
+    contract GRVTTransactionFilterer (eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a) [N/A] {
+    +++ description: None
+      values.acAdmin.0:
+-        "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
++        "eth:0x5CC33778d3aFa0979e6C59efEE27b73496c1B65c"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
++        "eth:0x5CC33778d3aFa0979e6C59efEE27b73496c1B65c"
+    }
+```
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        48
++        50
++++ severity: HIGH
+      values.owner:
+-        "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
++        "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        48
++        50
+    }
+```
+
+```diff
+    contract GRVTBridgeProxy (eth:0xE17aeD2fC55f4A876315376ffA49FE6358113a65) [N/A] {
+    +++ description: Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.
+      values.owner:
+-        "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
++        "eth:0x5CC33778d3aFa0979e6C59efEE27b73496c1B65c"
+    }
+```
+
+```diff
+    contract Governance (eth:0xe81d64195072e4d09639b31Abb257d0096FEa9d1) [N/A] {
+    +++ description: None
+      values.owner:
+-        "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
++        "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
+    }
+```
+
+```diff
+    EOA  (eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a","description":"manage the whitelist of addresses.","role":".acAdmin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GrvtBridgeAdminMultisig (eth:0x5CC33778d3aFa0979e6C59efEE27b73496c1B65c) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../grvt/.flat/GrvtBridgeAdminMultisig/Safe.sol    | 1216 ++++++++++++++++++++
+ .../.flat/GrvtBridgeAdminMultisig/SafeProxy.p.sol  |   42 +
+ 2 files changed, 1258 insertions(+)
+```
+
+Generated with discovered.json: 0x5301558b47db00477f90ee54305bbe4cc68a6c1e
+
+# Diff at Mon, 06 Jul 2026 10:04:22 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@1fd9d39064602bc28714717ec6eae23c740b472b block: 1782901251
+- current timestamp: 1783332198
+
+## Description
+
+Governance transaction from L1 -> L2: https://tools.l2beat.com/decoder-new/?hash=0xaca859883993dac67cc7049946aca729dd4287c2eefdc0fc2b465fdc1c2f6906&data=AwA.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        47
++        48
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        47
++        48
+    }
+```
+
+Generated with discovered.json: 0xfa7d111f26d9ab30fdc1aa34b9de7349b5c192c3
+
+# Diff at Wed, 01 Jul 2026 10:21:54 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ddc641881a6870ab0c9e9ee1c517ed9eb73306bc block: 1781777978
+- current timestamp: 1782901251
+
+## Description
+
+Governance transaction from L1 -> L2: https://tools.l2beat.com/decoder-new/?hash=0x188d7e979cc425fe64a3917bccf81bfc9601ecddc73be546a8d78410e3168846&data=AwA.
+
+## Watched changes
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        46
++        47
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        46
++        47
+    }
+```
+
+Generated with discovered.json: 0xe4925b02df11bcc589b8765cf4060e9a8b60a606
+
+# Diff at Thu, 18 Jun 2026 10:20:44 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ece0bb89d93f4462f45501d91379f3ba4bc05b8a block: 1781602758
+- current timestamp: 1781777978
+
+## Description
+
+Upgraded boojum verifier to the latest version (same as zksync era). Also rotated admin ms member.
+
+## Watched changes
+
+```diff
+    contract GrvtChainAdminMultisig (eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x29496817aB0820A5aDa4d5C656Ea8DF79Ba05F3A"
++        "eth:0xE1Fd2981A9FbAAfBB73Cf253234516ECcaf4AFcE"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c or eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7 depending on the supplied proof type.
+```
+
+```diff
+    contract GrvtZkEvmAdmin (eth:0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5 act through it.
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.6:
++        {"_protocolVersion":124554051588,"_upgradeTimestamp":1781759700}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (eth:0xD324a7c8556A059371B207fB96FD77bE24E2042c) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (eth:0xe201837d151E5aC33Af3305f287Ad6F6a7Dfccd7) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+    contract Diamond (eth:0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.7:
++        ["2026-06-16T11:46:11.000Z","0xedafd71bf96d2993dff23fca5d6d2e1ace52468cc10eed9e68cf260529156b7b",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
+      values.$pastUpgrades.8:
++        ["2026-06-18T10:13:35.000Z","0xa5133fa49c851e0a36f14a62515213fb1268e877a6ba35f0978f8c4e369074e9",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
+      values.$upgradeCount:
+-        7
++        9
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        124554051586
++        124554051588
+      values.getSemverProtocolVersion.2:
+-        2
++        4
+      values.getVerifier:
+-        "eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3"
++        "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (eth:0x7f33D100f482093182111d69a4a457289e99f4ec) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.
+```
+
+## Source code changes
+
+```diff
+.../grvt/{.flat@1781602758 => .flat}/L1VerifierFflonk.sol      |  6 +++---
+ .../grvt/{.flat@1781602758 => .flat}/L1VerifierPlonk.sol       | 10 +++++-----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+```
+
+Generated with discovered.json: 0xcfca47b22b3ae111dd72a1d4b6664357e76e7d05
+
+# Diff at Tue, 16 Jun 2026 09:40:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e3be4116cfc279e5c4415ba34f338c2f1d453616 block: 1779278156
+- current timestamp: 1781602758
+
+## Description
+
+New scheduled tx targeting GBT (gas token) and contracts on L2: https://tools.l2beat.com/decoder-new/?hash=0xac73fadffe5aa2eb9b6d9b0ff4d9f1a4fa07eb147c3553d9e70718968bdb0139&data=AwA .
+
+## Watched changes
+
+```diff
+    contract GrvtZkEvmAdmin (eth:0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5 act through it.
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.5:
++        {"_protocolVersion":124554051587,"_upgradeTimestamp":1781074800}
+    }
+```
+
+```diff
+    contract Governance (eth:0xbdC07D62fA117B195E579c2e299f037b158E7335) [adi/Governance] {
+    +++ description: Allows scheduling transparent and shadow proposals, 'securityCouncil' role can execute without delay.
++++ description: Number of executed proposals
+      values.executedCount:
+-        45
++        46
++++ description: Number of scheduled transparent proposals
+      values.scheduledTransparentCount:
+-        45
++        46
+    }
+```
+
 Generated with discovered.json: 0xfaa7f54d444bc1f412d30add572e0f27a60d33b4
 
 # Diff at Wed, 20 May 2026 11:56:59 GMT:

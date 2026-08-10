@@ -5,6 +5,7 @@ interface MarkdownProps {
   children: string
   inline?: boolean
   className?: string
+  allowHtml?: boolean
 }
 
 function highlightDiff(str: string, escapeHtml: (s: string) => string): string {
@@ -28,45 +29,62 @@ function highlightDiff(str: string, escapeHtml: (s: string) => string): string {
   return `<pre class="mdc-diff"><code>${lines.join('\n')}</code></pre>`
 }
 
-const markdown: MarkdownIt = MarkdownIt({
-  html: true,
-  linkify: true,
-  typographer: true,
-  highlight: (str, lang) =>
-    lang === 'diff' ? highlightDiff(str, markdown.utils.escapeHtml) : '',
-})
+function createMarkdown(options: { allowHtml: boolean }): MarkdownIt {
+  const markdown: MarkdownIt = MarkdownIt({
+    html: options.allowHtml,
+    linkify: true,
+    typographer: true,
+    highlight: (str, lang) =>
+      lang === 'diff' ? highlightDiff(str, markdown.utils.escapeHtml) : '',
+  })
 
-// Render every markdown anchor as a safe external link (new tab, no referrer).
-const defaultLinkOpen =
-  markdown.renderer.rules.link_open ??
-  ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options))
+  // Render every markdown anchor as a safe external link (new tab, no referrer).
+  const defaultLinkOpen =
+    markdown.renderer.rules.link_open ??
+    ((tokens, idx, options, _env, self) =>
+      self.renderToken(tokens, idx, options))
 
-markdown.renderer.rules.link_open = (tokens, idx, options, env, self) => {
-  const token = tokens[idx]
-  if (token) {
-    const setAttr = (name: string, value: string) => {
-      const i = token.attrIndex(name)
-      if (i < 0) {
-        token.attrPush([name, value])
-      } else {
-        const attr = token.attrs?.[i]
-        if (attr) {
-          attr[1] = value
+  markdown.renderer.rules.link_open = (tokens, idx, options, env, self) => {
+    const token = tokens[idx]
+    if (token) {
+      const setAttr = (name: string, value: string) => {
+        const i = token.attrIndex(name)
+        if (i < 0) {
+          token.attrPush([name, value])
+        } else {
+          const attr = token.attrs?.[i]
+          if (attr) {
+            attr[1] = value
+          }
         }
       }
+      setAttr('target', '_blank')
+      setAttr('rel', 'noopener noreferrer')
     }
-    setAttr('target', '_blank')
-    setAttr('rel', 'noopener noreferrer')
+    return defaultLinkOpen(tokens, idx, options, env, self)
   }
-  return defaultLinkOpen(tokens, idx, options, env, self)
+
+  return markdown
+}
+
+const markdownWithHtml = createMarkdown({ allowHtml: true })
+const markdownWithoutHtml = createMarkdown({ allowHtml: false })
+
+export function renderMarkdown(
+  text: string,
+  options?: { inline?: boolean; allowHtml?: boolean },
+) {
+  const markdown =
+    options?.allowHtml === false ? markdownWithoutHtml : markdownWithHtml
+  return options?.inline ? markdown.renderInline(text) : markdown.render(text)
 }
 
 export function Markdown(props: MarkdownProps) {
   const Comp = props.inline ? 'span' : 'div'
-  const render = (text: string) =>
-    props.inline ? markdown.renderInline(text) : markdown.render(text)
-
-  const rendered = render(props.children)
+  const rendered = renderMarkdown(props.children, {
+    inline: props.inline,
+    allowHtml: props.allowHtml,
+  })
 
   return (
     <Comp

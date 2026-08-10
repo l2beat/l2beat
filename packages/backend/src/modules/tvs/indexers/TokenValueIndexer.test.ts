@@ -151,7 +151,7 @@ describe(TokenValueIndexer.name, () => {
     })
   })
 
-  describe(TokenValueIndexer.prototype.removeData.name, () => {
+  describe(TokenValueIndexer.prototype.trimData.name, () => {
     it('deletes records for configuration in time range', async () => {
       const tvsTokenValueRepository = mockObject<Database['tvsTokenValue']>({
         deleteByConfigInTimeRange: mockFn().returns(1),
@@ -179,26 +179,26 @@ describe(TokenValueIndexer.name, () => {
 
       const removalConfigs = [
         {
+          type: 'trim' as const,
           id: 'config-1',
-          from: 100,
-          to: 200,
+          range: [100, 200] as [number, number],
         },
         {
+          type: 'trim' as const,
           id: 'config-2',
-          from: 300,
-          to: 400,
+          range: [300, 400] as [number, number],
         },
       ]
 
-      await indexer.removeData(removalConfigs)
+      await indexer.trimData(removalConfigs)
 
       expect(
         tvsTokenValueRepository.deleteByConfigInTimeRange,
       ).toHaveBeenNthCalledWith(
         1,
         removalConfigs[0].id,
-        UnixTime(removalConfigs[0].from),
-        UnixTime(removalConfigs[0].to),
+        UnixTime(removalConfigs[0].range[0]),
+        UnixTime(removalConfigs[0].range[1]),
       )
 
       expect(
@@ -206,8 +206,8 @@ describe(TokenValueIndexer.name, () => {
       ).toHaveBeenNthCalledWith(
         2,
         removalConfigs[1].id,
-        UnixTime(removalConfigs[1].from),
-        UnixTime(removalConfigs[1].to),
+        UnixTime(removalConfigs[1].range[0]),
+        UnixTime(removalConfigs[1].range[1]),
       )
     })
   })

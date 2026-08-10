@@ -9,7 +9,10 @@ import type {
 } from '../types'
 
 export function getAverageDuration(
-  data: CommonInteropData,
+  data: Pick<
+    CommonInteropData,
+    'totalDurationSum' | 'transfersWithDurationCount' | 'transferTypeStats'
+  >,
   durationSplit: InteropDurationSplit | undefined,
 ): Exclude<AverageDuration, UnknownAverageDuration> | null {
   if (data.transfersWithDurationCount <= 0) return null
@@ -33,6 +36,17 @@ export function getAverageDuration(
       data.totalDurationSum / data.transfersWithDurationCount,
     ),
   }
+}
+export function getAverageDurationSeconds(
+  data: Pick<
+    CommonInteropData,
+    'totalDurationSum' | 'transfersWithDurationCount'
+  >,
+  project: Project<'interopConfig'> | undefined,
+): number | null {
+  if (project?.interopConfig.transfersTimeMode === 'unknown') return null
+  if (data.transfersWithDurationCount <= 0) return null
+  return Math.floor(data.totalDurationSum / data.transfersWithDurationCount)
 }
 
 export function getDurationSplit(

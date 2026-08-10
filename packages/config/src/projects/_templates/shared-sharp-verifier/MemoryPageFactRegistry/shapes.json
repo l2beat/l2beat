@@ -1,4 +1,9 @@
 {
+  "MemoryPageFactRegistry_2023_9": {
+    "hash": "0x99f66b72ee95ffcb106a1527cd855448c5a9ff57ea36a0dcd5fef4b4f140c11f",
+    "address": "eth:0x40864568f679c10aC9e72211500096a5130770fA",
+    "blockNumber": 19079931
+  },
   "MemoryPageFactRegistry": {
     "hash": "0xb39531f2d5802255bd28ef9c4a41c69deeaaacbb0107d4d1a09e89dc64ca2903",
     "address": "eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",

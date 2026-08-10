@@ -1,13 +1,15 @@
+import type { ActivityTotals } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { ChartRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
-import type { ActivityChartStats } from './getActivityChart'
+import {
+  type ActivityProjectChartStats,
+  buildActivityProjectChartStats,
+} from './buildActivityProjectChartStats'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
-import { countPerSecond } from './utils/countPerSecond'
 import { getActivitySyncInfo } from './utils/getActivitySyncInfo'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
 
@@ -28,28 +30,28 @@ export type EthereumActivityChartData = {
   data: EthereumActivityChartDataPoint[]
   syncWarning: string | undefined
   syncedUntil: UnixTime
-  stats: ActivityChartStats | undefined
+  stats: ActivityProjectChartStats | undefined
 }
 /**
  * A function that computes values for chart data of the activity over time.
  * @returns [timestamp, ethereumTxCount, ethereumUopsCount][] - all numbers
  */
-export async function getEthereumActivityChart({
-  range,
-}: EthereumActivityChartParams): Promise<EthereumActivityChartData> {
+export async function getEthereumActivityChart(
+  params: EthereumActivityChartParams,
+): Promise<EthereumActivityChartData> {
   if (env.MOCK) {
-    return getMockEthereumActivityChart({ range })
+    return getMockEthereumActivityChart(params)
   }
 
   const db = getDb()
 
-  const adjustedRange = await getFullySyncedActivityRange(range)
+  const adjustedRange = await getFullySyncedActivityRange(params.range)
 
-  const [entries, maxCounts, syncInfo, totalCounts] = await Promise.all([
+  const [entries, maxCounts, syncInfo, activityTotals] = await Promise.all([
     db.activity.getByProjectsAndTimeRange([ProjectId.ETHEREUM], adjustedRange),
-    db.activity.getMaxCountsForProjects(),
+    db.activity.getMaxCountsForProject(ProjectId.ETHEREUM),
     getActivitySyncInfo(ProjectId.ETHEREUM, adjustedRange[1]),
-    db.activity.getTpsTotalsForProjects([ProjectId.ETHEREUM]),
+    db.activity.getActivityTotalsForProjects([ProjectId.ETHEREUM]),
   ])
 
   if (!syncInfo.hasSyncData) {
@@ -75,7 +77,7 @@ export async function getEthereumActivityChart({
 
   const timestamps = generateTimestamps(
     [startTimestamp, adjustedRange[1]],
-    'daily',
+    'day',
   )
 
   const data: EthereumActivityChartDataPoint[] = timestamps.map((timestamp) => {
@@ -98,7 +100,7 @@ export async function getEthereumActivityChart({
     data,
     syncedUntil,
     maxCounts,
-    totalCounts[ProjectId.ETHEREUM],
+    activityTotals[ProjectId.ETHEREUM],
   )
 
   return {
@@ -112,22 +114,18 @@ export async function getEthereumActivityChart({
 function getEthereumActivityChartStats(
   data: EthereumActivityChartDataPoint[],
   syncedUntil: UnixTime,
-  maxCounts: Record<
-    ProjectId,
-    {
-      uopsCount: number
-      uopsTimestamp: number
-      count: number
-      countTimestamp: number
-    }
-  >,
-  totalCount:
+  maxCounts:
     | {
+        uopsCount: number
+        uopsTimestamp: number
         count: number
-        sinceTimestamp: number
+        countTimestamp: number
       }
     | undefined,
-): ActivityChartStats | undefined {
+  totals: ActivityTotals | undefined,
+): ActivityProjectChartStats | undefined {
+  if (!maxCounts) return undefined
+
   const currentData = data.find(([timestamp]) => timestamp === syncedUntil)
   const sevenDaysAgoData = data.find(
     ([timestamp]) => timestamp === syncedUntil - 7 * UnixTime.DAY,
@@ -138,51 +136,21 @@ function getEthereumActivityChartStats(
   const sevenDaysAgoTps = sevenDaysAgoData?.[1] ?? 0
   const sevenDaysAgoUops = sevenDaysAgoData?.[2] ?? sevenDaysAgoTps
 
-  const maxCount = maxCounts[ProjectId.ETHEREUM]
-
-  if (!maxCount) return undefined
-
-  return {
-    uops: {
-      pastDaySum: pastDaySumUops,
-      pastDayCount:
-        pastDaySumUops !== null ? countPerSecond(pastDaySumUops) : null,
-      pastDayChange:
-        pastDaySumUops !== null
-          ? calculatePercentageChange(pastDaySumUops, sevenDaysAgoUops)
-          : 0,
-      maxCount: {
-        value: countPerSecond(maxCount.uopsCount),
-        timestamp: maxCount.uopsTimestamp,
-      },
-    },
-    tps: {
-      pastDaySum: pastDaySumTps,
-      pastDayCount:
-        pastDaySumTps !== null ? countPerSecond(pastDaySumTps) : null,
-      pastDayChange:
-        pastDaySumTps !== null
-          ? calculatePercentageChange(pastDaySumTps, sevenDaysAgoTps)
-          : 0,
-      maxCount: {
-        value: countPerSecond(maxCount.count),
-        timestamp: maxCount.countTimestamp,
-      },
-      totalCount: totalCount
-        ? {
-            value: totalCount.count,
-            sinceTimestamp: totalCount.sinceTimestamp,
-          }
-        : undefined,
-    },
-  }
+  return buildActivityProjectChartStats({
+    pastDayCount: pastDaySumTps,
+    pastDayUopsCount: pastDaySumUops,
+    sevenDaysAgoCount: sevenDaysAgoTps,
+    sevenDaysAgoUopsCount: sevenDaysAgoUops,
+    maxCounts,
+    totals,
+  })
 }
 
 function getMockEthereumActivityChart({
   range,
 }: EthereumActivityChartParams): EthereumActivityChartData {
   const adjustedRange: [UnixTime, UnixTime] = [range[0] ?? 1590883200, range[1]]
-  const timestamps = generateTimestamps(adjustedRange, 'daily')
+  const timestamps = generateTimestamps(adjustedRange, 'day')
 
   return {
     data: timestamps.map((timestamp) => [+timestamp, 15, 11]),

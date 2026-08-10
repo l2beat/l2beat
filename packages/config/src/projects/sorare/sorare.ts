@@ -28,7 +28,10 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
-import { getSHARPBootloaderHashes } from '../starknet/starknet'
+import {
+  getAcceptedSHARPVerifierChain,
+  getSHARPBootloaderHashes,
+} from '../starknet/starknet'
 
 const discovery = new ProjectDiscovery('sorare')
 const freezeGracePeriod = discovery.getContractValue<number>(
@@ -58,6 +61,7 @@ export const sorare: ScalingProject = {
   id: ProjectId('sorare'),
   capability: 'appchain',
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  archivedAt: UnixTime(1780916919),
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
@@ -65,11 +69,9 @@ export const sorare: ScalingProject = {
     BADGES.Infra.SHARP,
   ],
   display: {
-    redWarning: {
-      text: 'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
-      detailAnchor: 'permissions',
-    },
     architectureImage: 'starkex',
+    headerWarning:
+      'Sorare froze its StarkEx rollup on June 1st, 2026. The core rollup contract is currently frozen.',
     name: 'Sorare',
     slug: 'sorare',
     description:
@@ -90,7 +92,7 @@ export const sorare: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogIds: [ProjectId('stone')],
   },
   stage: getAltDaStage(
     {
@@ -195,7 +197,7 @@ export const sorare: ScalingProject = {
     ],
     programHashes: sorareProgramHashes.map((el) => PROGRAM_HASHES(el)),
     // stone verifier address, could be deduced from analyzing trx traces
-    zkVerifiers: [discovery.getContract('SHARPVerifier_2024_10').address],
+    zkVerifiers: getAcceptedSHARPVerifierChain().factRegistries,
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
@@ -205,6 +207,14 @@ export const sorare: ScalingProject = {
       url: 'https://medium.com/sorare/were-live-on-our-scaling-solution-starkware-62438abee9a8',
       description:
         'Layer 2 scaling solution powered by Starkware, is live on Ethereum.',
+      type: 'general',
+    },
+    {
+      title: 'Sorare StarkEx deprecation',
+      date: '2026-06-01T00:00:00Z',
+      url: 'https://etherscan.io/tx/0xe289078d3ad6f8f306b2b2938036bb7de8829ba4e897ebcf69af3004240d9d63',
+      description:
+        'Sorare finalizes its migration to Solana by sunsetting its StarkEx L2 contract.',
       type: 'general',
     },
   ],

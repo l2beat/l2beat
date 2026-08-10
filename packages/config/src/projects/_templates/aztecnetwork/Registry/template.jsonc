@@ -2,5 +2,31 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Central directory that tracks the current 'canonical' (active) Rollup contract address and key system contracts like the Reward Distributor.",
   "category": "gov",
-  "ignoreMethods": ["getRollup"]
+  "ignoreMethods": ["getRollup"],
+  "fields": {
+    "owner": {
+      "description": "Owner of the Registry.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register a new canonical rollup version, update the Registry-selected reward distributor pointer, and transfer or renounce Registry ownership. Updating the pointer does not change a distributor fixed in an already deployed Rollup."
+        }
+      ]
+    },
+    "getCanonicalRollup": {
+      "description": "The latest registered rollup instance, treated as canonical by the Aztec contracts."
+    },
+    "getGovernance": {
+      "description": "The current Registry owner, which controls registration and the Registry-selected reward distributor."
+    },
+    "getRewardDistributor": {
+      "description": "The Registry-selected reward distributor. An existing Rollup keeps the distributor fixed at its deployment and is not retargeted when this pointer changes."
+    },
+    "numberOfVersions": {
+      "description": "Number of rollup versions registered in the registry."
+    },
+    "getVersion": {
+      "description": "Registered rollup version identifiers in insertion order."
+    }
+  }
 }

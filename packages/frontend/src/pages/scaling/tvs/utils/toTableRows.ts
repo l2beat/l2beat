@@ -27,6 +27,7 @@ export function toTableRows({
       warnings,
       breakdown,
       change,
+      changePeriod,
       additionalTrustAssumptionsPercentage,
       syncState,
     } = projectData
@@ -47,6 +48,7 @@ export function toTableRows({
         data: {
           breakdown,
           change,
+          changePeriod,
           additionalTrustAssumptionsPercentage,
         },
         warnings: [...entry.tvs.warnings, ...warnings],

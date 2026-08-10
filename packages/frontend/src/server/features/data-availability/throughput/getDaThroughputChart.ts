@@ -16,6 +16,7 @@ import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
+import { isInEigendaLayerDataGap } from './utils/eigendaDataGap'
 import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
 
 type DaThroughputChart = {
@@ -126,13 +127,15 @@ export async function getDaThroughputChart({
     }
 
     const fallbackValue = isSynced ? 0 : null
+    const isEigendaGap =
+      !includeScalingOnly && isInEigendaLayerDataGap(timestamp, resolution)
 
     return [
       timestamp,
       layerValues.ethereum ?? fallbackValue,
       layerValues.celestia ?? fallbackValue,
       layerValues.avail ?? fallbackValue,
-      layerValues.eigenda ?? fallbackValue,
+      isEigendaGap ? null : (layerValues.eigenda ?? fallbackValue),
     ]
   })
   return {
@@ -154,26 +157,12 @@ export function groupByTimestampAndDaLayerId(
   let maxTimestamp = Number.NEGATIVE_INFINITY
   const result: Record<number, Record<string, number>> = {}
 
-  const offset = UnixTime.toStartOf(
-    UnixTime.now(),
-    resolution === 'daily'
-      ? 'day'
-      : resolution === 'sixHourly'
-        ? 'six hours'
-        : 'hour',
-  )
+  const offset = UnixTime.toStartOf(UnixTime.now(), resolution)
 
   const fullySyncedRecords = records.filter((r) => r.timestamp < offset)
 
   for (const record of fullySyncedRecords) {
-    const timestamp = UnixTime.toStartOf(
-      record.timestamp,
-      resolution === 'daily'
-        ? 'day'
-        : resolution === 'sixHourly'
-          ? 'six hours'
-          : 'hour',
-    )
+    const timestamp = UnixTime.toStartOf(record.timestamp, resolution)
     const daLayerId = record.daLayer
     const value = record.totalSize
     if (!result[timestamp]) {
@@ -195,6 +184,16 @@ export function groupByTimestampAndDaLayerId(
   }
 }
 
+export function sumGroupedDataPosted(
+  grouped: Record<number, Record<string, number>>,
+) {
+  return Object.values(grouped).reduce(
+    (total, byDaLayer) =>
+      total + Object.values(byDaLayer).reduce((sum, value) => sum + value, 0),
+    0,
+  )
+}
+
 function getMockDaThroughputChartData({
   range,
 }: DaThroughputChartParams): DaThroughputDataPoint[] {
@@ -203,7 +202,7 @@ function getMockDaThroughputChartData({
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = range[0] ?? to - actualDays * UnixTime.DAY
 
-  const timestamps = generateTimestamps([from, to], 'daily')
+  const timestamps = generateTimestamps([from, to], 'day')
   return timestamps.map((timestamp) => {
     // Generate random but somewhat realistic values
     const ethereum = Math.random() * 900_000_000 + 90_000_000

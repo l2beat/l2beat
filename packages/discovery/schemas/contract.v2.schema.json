@@ -11,6 +11,7 @@
         "call implementation proxy",
         "zkSync Lite proxy",
         "zkLighter proxy",
+        "ZkLink proxy",
         "zkSpace proxy",
         "Eternal Storage proxy",
         "Polygon Extension proxy",
@@ -19,6 +20,7 @@
         "LightLink proxy",
         "Everclear proxy",
         "TaikoFork proxy",
+        "NXV proxy",
         "immutable"
       ]
     },
@@ -41,38 +43,7 @@
             "items": {
               "type": "object",
               "properties": {
-                "type": {
-                  "enum": [
-                    "challenge",
-                    "guard",
-                    "propose",
-                    "sequence",
-                    "validate",
-                    "disperse",
-                    "relayDA",
-                    "operateLinea",
-                    "fastconfirm",
-                    "validateZkStack",
-                    "validateBridge",
-                    "validateBridge2",
-                    "validateBridge3",
-                    "relay",
-                    "aggregatePolygon",
-                    "operateStarknet",
-                    "operateStarkEx",
-                    "governStarknet",
-                    "metisGameCreator",
-                    "stateDeleterMetis",
-                    "hotValidatorHyperliquid",
-                    "coldValidatorHyperliquid",
-                    "acrossPropose",
-                    "validateLighter",
-                    "member",
-                    "act",
-                    "interact",
-                    "upgrade"
-                  ]
-                },
+                "type": { "enum": ["member", "act", "interact", "upgrade"] },
                 "delay": {
                   "anyOf": [{ "type": "number" }, { "type": "string" }]
                 },
@@ -387,6 +358,22 @@
                 "type": "object",
                 "properties": {
                   "type": { "const": "accessControl" },
+                  "roleNames": {
+                    "type": "object",
+                    "propertyNames": { "type": "string" },
+                    "additionalProperties": { "type": "string" }
+                  },
+                  "includeEmptyRoles": { "type": "boolean" },
+                  "pickRoleMembers": { "type": "string" },
+                  "ignoreRelative": { "type": "boolean" }
+                },
+                "additionalProperties": false,
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "aragonPermissions" },
                   "roleNames": {
                     "type": "object",
                     "propertyNames": { "type": "string" },

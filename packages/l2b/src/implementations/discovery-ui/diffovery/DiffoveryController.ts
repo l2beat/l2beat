@@ -5,6 +5,7 @@ import {
   partition,
 } from '@l2beat/shared-pure'
 import { type ASTNode, parse } from '@mradomski/fast-solidity-parser'
+import { getASTTopLevelChildName } from '../solidityDeclarations'
 import type { FlatSourceClient } from './FlatSourceClient'
 
 type DiffoveryResult = {
@@ -72,42 +73,4 @@ function getNodeContent(flat: string, node: ASTNode): string {
 
   const left = findLeadingCommentStart(flat, node.range[0])
   return flat.substring(left, node.range[1] + 1)
-}
-
-// NOTE(radomski): This function needs to handle all nodes listed in
-// https://docs.soliditylang.org/en/latest/grammar.html#a4.SolidityParser
-function getASTTopLevelChildName(child: ASTNode): string | undefined {
-  switch (child.type) {
-    case 'UsingForDeclaration':
-      assert(child.libraryName !== null)
-      return child.libraryName
-    case 'ContractDefinition':
-      return child.name
-    case 'FunctionDefinition':
-      assert(child.name !== null)
-      return child.name
-    case 'VariableDeclaration':
-      assert(child.name !== null)
-      return child.name
-    case 'StructDefinition':
-      return child.name
-    case 'EnumDefinition':
-      return child.name
-    case 'UserDefinedTypeName':
-      return child.namePath
-    case 'CustomErrorDefinition':
-      return child.name
-    case 'EventDefinition':
-      return child.name
-    case 'PragmaDirective':
-    case 'ImportDirective':
-      return undefined
-    case 'TypeDefinition':
-      return child.name
-    case 'FileLevelConstant':
-      return child.name
-    default: {
-      assert(false, `Unhandled child type: ${child.type}`)
-    }
-  }
 }

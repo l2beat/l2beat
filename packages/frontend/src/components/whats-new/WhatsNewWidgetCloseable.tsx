@@ -23,6 +23,7 @@ export function WhatsNewWidgetCloseable({
 
   if (
     isClosed ||
+    pathname === '/' ||
     whatsNew.disabledOnMatches?.some((match) => pathname.startsWith(match))
   )
     return null

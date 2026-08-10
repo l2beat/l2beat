@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -6,7 +11,11 @@ import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zeronetwork')
 const v26UpgradeTS = UnixTime(1742860739)
+const v29UpgradeTS = UnixTime(1783512011)
 const chainId = 543210
+const diamondAddress = ChainSpecificAddress.address(
+  discovery.getContract('Diamond').address,
+)
 
 const bridge = discovery.getContract('L1NativeTokenVault')
 
@@ -18,6 +27,8 @@ export const zeronetwork: ScalingProject = zkStackL2({
   display: {
     name: 'ZERO Network',
     slug: 'zeronetwork',
+    headerWarning:
+      'ZERO Network is sunsetting. See the [announcement](https://x.com/zerodotnetwork/status/2057529610628128917) and make sure to bridge off your funds until July 31, 2026. Deposits are disabled.',
     description:
       'ZERO Network is an L2 by the Zerion wallet team, utilizing the ZK stack and native account abstraction, allowing Zerion wallet users gasless and prioritized transactions.',
     links: {
@@ -57,6 +68,31 @@ export const zeronetwork: ScalingProject = zkStackL2({
     ],
   },
   usesEthereumBlobs: true,
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 21809364,
+      untilBlock: 25482106, // last batch before the v29 upgrade
+      inbox: EthereumAddress('0x8c0Bfc04AdA21fd496c55B8C50331f904306F564'),
+      sequencers: [
+        EthereumAddress('0x479B7c95b9509E1A834C994fc94e3581aA8A73B9'),
+        EthereumAddress('0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F'),
+        EthereumAddress('0xef854E09fa6e281268e1051D4d5465d8c92862ee'),
+        EthereumAddress('0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0'),
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 25482106, // v29 upgrade
+      inbox: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+      sequencers: [
+        EthereumAddress('0xef854E09fa6e281268e1051D4d5465d8c92862ee'),
+        EthereumAddress('0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0'),
+      ],
+    },
+  ],
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
@@ -113,6 +149,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
         functionSignature:
           'function commitBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: v26UpgradeTS,
+        untilTimestamp: v29UpgradeTS,
       },
     },
     {
@@ -128,6 +165,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
         functionSignature:
           'function proveBatchesSharedBridge(uint256 _chainId, uint256, uint256, bytes)',
         sinceTimestamp: v26UpgradeTS,
+        untilTimestamp: v29UpgradeTS,
       },
     },
     {
@@ -143,6 +181,49 @@ export const zeronetwork: ScalingProject = zkStackL2({
         functionSignature:
           'function executeBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: v26UpgradeTS,
+        untilTimestamp: v29UpgradeTS,
+      },
+    },
+    {
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: diamondAddress,
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0x0db9eb87',
+        functionSignature:
+          'function commitBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: v29UpgradeTS,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: diamondAddress,
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0x9271e450',
+        functionSignature:
+          'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
+        sinceTimestamp: v29UpgradeTS,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: diamondAddress,
+        address: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+        selector: '0xa085344d',
+        functionSignature:
+          'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: v29UpgradeTS,
       },
     },
   ],

@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import partition from 'lodash/partition'
 import { Skeleton } from '~/components/core/Skeleton'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
@@ -18,7 +19,7 @@ import {
   useInteropFlows,
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
 import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
@@ -48,16 +49,19 @@ export function InteropVolumeSection({
 }
 
 function Content({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
+  const trpc = useTRPC()
   const { selectedChains, selectedProtocols, highlightedChains } =
     useInteropFlows()
   const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
   const hasEnoughProtocols = selectedProtocols.length >= MIN_SELECTED_PROTOCOLS
-  const { data, isLoading } = api.interop.flows.useQuery(
-    {
-      chains: selectedChains,
-      protocolIds: selectedProtocols,
-    },
-    { enabled: hasEnoughChains && hasEnoughProtocols },
+  const { data, isLoading } = useQuery(
+    trpc.interop.flows.queryOptions(
+      {
+        chains: selectedChains,
+        protocolIds: selectedProtocols,
+      },
+      { enabled: hasEnoughChains && hasEnoughProtocols },
+    ),
   )
 
   const activeIds = new Set<string>(

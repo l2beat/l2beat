@@ -26,6 +26,7 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('morph')
 
@@ -64,8 +65,8 @@ export const morph: ScalingProject = {
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
   proofSystem: {
     type: 'Optimistic',
-    name: 'SP1',
-    zkCatalogId: ProjectId('sp1turbo'),
+    name: 'SP1 Hypercube',
+    zkCatalogIds: [ProjectId('sp1hypercube')],
     challengeProtocol: 'Single-step',
   },
   display: {
@@ -163,7 +164,23 @@ export const morph: ScalingProject = {
       {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
-        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        sinceBlock: 21013218, // first batch
+        untilBlock: 22744283, // last batch of the original staker set, before it shrank
+        inbox: EthereumAddress('0x759894Ced0e6af42c26668076Ffa84d02E3CeF60'),
+        sequencers: [
+          EthereumAddress('0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796'),
+          EthereumAddress('0x61F2945d4bc9E40B66a6376d1094a50438f613e2'),
+          EthereumAddress('0x6aB0E960911b50f6d14f249782ac12EC3E7584A0'),
+          EthereumAddress('0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65'),
+          EthereumAddress('0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7'),
+          EthereumAddress('0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80'),
+          EthereumAddress('0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23'),
+        ],
+      },
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 22744284, // first block after the original staker set shrank
         inbox: EthereumAddress('0x759894Ced0e6af42c26668076Ffa84d02E3CeF60'),
         sequencers: sequencers.map((s) => ChainSpecificAddress.address(s)),
       },
@@ -232,10 +249,16 @@ export const morph: ScalingProject = {
     categories: [
       {
         title: 'Fraud proofs',
-        description: `Morph uses a one round fault proof system where whitelisted Challengers, if they find a faulty state root within the ${formatSeconds(challengeWindow)} challenge window, \
-          can post a ${challengeBond} WEI bond and request a ZK proof of the state transition. At least 5 Challengers are operated by entities external to the team. After the challenge, during a ${formatSeconds(proofWindow)} proving window, a ZK proof must be \
-          delivered, otherwise the state root is considered invalid and the root proposer bond, which is currently set to ${stakingValue} ETH, is slashed. The zkVM used is SP1 by Succinct.\
-          If a valid proof is delivered, the Challenger loses the challenge bond. The Morph Multisig can revert unfinalized batches.`,
+        description: readProjectMarkdown(
+          'morph',
+          'stateValidationFraudProofs',
+          {
+            challengeWindow: formatSeconds(challengeWindow),
+            challengeBond,
+            proofWindow: formatSeconds(proofWindow),
+            stakingValue,
+          },
+        ),
         references: [
           {
             title: 'Whitelisted Challengers - Morph Docs',
@@ -244,7 +267,7 @@ export const morph: ScalingProject = {
           {
             title:
               'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
-            url: 'https://etherscan.io/address/0x9e2Fb684935a32CEd121972f23BD0e4634377cA2',
+            url: 'https://etherscan.io/address/0xaC3C379D772f3520B34690d32BA14510ab36C3fB',
           },
         ],
         risks: [

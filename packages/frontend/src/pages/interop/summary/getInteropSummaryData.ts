@@ -1,5 +1,4 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
-import { ProjectId } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
@@ -10,8 +9,11 @@ import { getSsrHelpers } from '~/trpc/server'
 import { type Manifest, manifest } from '~/utils/Manifest'
 import { MAX_SELECTED_CHAINS } from '../components/flows/consts'
 import type { InteropQuery } from '../InteropRouter'
+import { getFlowChainOrderByVolume } from '../utils/getFlowChainOrderByVolume'
 import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
+import { getInteropChainHref } from '../utils/getInteropChainHref'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
+import { selectDefaultFlowChains } from '../utils/selectDefaultFlowChains'
 import type { InteropSelection } from '../utils/types'
 
 export async function getInteropSummaryData(
@@ -66,15 +68,13 @@ export async function getInteropSummaryData(
       ),
   )
 
-  const activeInteropChainsById = new Map(
-    activeInteropChains.map((chain) => [chain.id, chain]),
+  const {
+    sortedChains: activeInteropChainsSortedByVolume,
+    defaultSelectedFlowChains,
+  } = selectDefaultFlowChains(
+    activeInteropChains,
+    queryState.defaultFlowChainOrder,
   )
-  const activeInteropChainsSortedByVolume = queryState.defaultFlowChainOrder
-    .map((chainId) => activeInteropChainsById.get(chainId))
-    .filter((chain) => chain !== undefined)
-  const defaultSelectedFlowChains = activeInteropChainsSortedByVolume
-    .slice(0, MAX_SELECTED_CHAINS)
-    .map((chain) => chain.id)
 
   return {
     head: {
@@ -102,17 +102,6 @@ export async function getInteropSummaryData(
   }
 }
 
-function getInteropChainHref(
-  chainId: string,
-  scalingProjectSlugById: Map<ProjectId, string>,
-): string | undefined {
-  if (chainId === ProjectId.ETHEREUM) {
-    return '/data-availability/projects/ethereum/ethereum'
-  }
-  const slug = scalingProjectSlugById.get(ProjectId(chainId))
-  return slug ? `/scaling/projects/${slug}` : undefined
-}
-
 async function getCachedData(
   initialSelection: InteropSelection,
   initialFlowsChains: string[],
@@ -123,7 +112,9 @@ async function getCachedData(
       select: ['interopConfig'],
     }),
     initialSelection.from.length > 0 && initialSelection.to.length > 0
-      ? helpers.interop.dashboard.prefetch({ ...initialSelection })
+      ? helpers.queryClient.prefetchQuery(
+          helpers.trpc.interop.dashboard.queryOptions({ ...initialSelection }),
+        )
       : undefined,
   ])
 
@@ -133,17 +124,20 @@ async function getCachedData(
   let defaultFlowChainOrder = initialFlowsChains
 
   if (shouldPrefetchFlows) {
-    const flowsData = await helpers.interop.flows.fetch({
-      chains: initialFlowsChains,
-      protocolIds: protocols.map((protocol) => protocol.id),
-    })
-    const chainsByVolume = flowsData.chainData
-      .toSorted((a, b) => b.totalVolume - a.totalVolume)
-      .map((chain) => chain.chainId)
+    const protocolIds = protocols.map((protocol) => protocol.id)
+    defaultFlowChainOrder = await getFlowChainOrderByVolume(
+      initialFlowsChains,
+      protocolIds,
+    )
 
-    if (chainsByVolume.length > 0) {
-      defaultFlowChainOrder = chainsByVolume
-    }
+    // The client's flows chart defaults to the top chains by volume, so
+    // prefetch that exact query to hydrate it from cache.
+    await helpers.queryClient.prefetchQuery(
+      helpers.trpc.interop.flows.queryOptions({
+        chains: defaultFlowChainOrder.slice(0, MAX_SELECTED_CHAINS),
+        protocolIds,
+      }),
+    )
   }
 
   return {

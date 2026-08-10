@@ -8,12 +8,12 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "pause and unpause the rollup system."
+          "description": "pause and unpause the rollup system, activate the inbox, and execute the one-time state recovery path."
         }
       ]
     }
   },
   "ignoreInWatchMode": ["getForcedInclusionState", "getCoreState"],
   "category": "core",
-  "description": "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. It manages bonds, validates batch parameters, and acts as the state machine for the L2."
+  "description": "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. Users can enqueue forced inclusions by publishing an L1 blob. Once an inclusion is due, subsequent proposals must process it, but proposing remains restricted by the configured proposer checker. If the configured prover whitelist is non-empty, proofs from non-whitelisted provers revert."
 }

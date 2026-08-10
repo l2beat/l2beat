@@ -1,3 +1,78 @@
+Generated with discovered.json: 0xb13bf125f7a4213f770167629db08e428b58f501
+
+# Diff at Tue, 09 Jun 2026 12:43:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1762880606
+- current timestamp: 1762880606
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762880606 (main branch discovery), not current.
+
+```diff
+    contract Blessnet Multisig 2 (arb1:0x089E12e795b3292BcC16f29817bE124C720615b0) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      receivedPermissions.1.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x27752e6B947e777E894c1b7E574Ca7593d6F2C49) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x3D5cFeB6C99343793a8E112dF7D6c331F48e22De) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    contract Blessnet Multisig 1 (arb1:0x571D6CA61B979A967E055696c822CF8C928d3556) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x82Bc29d2a230d99261CFF7Dab9dAB27649784Fd9) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xa0899d20D9665EB0FfE311A395FCd481bF38A5Ff) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x4359ed2c62c16a2c742b018239327d3c127e3e40
 
 # Diff at Mon, 05 Jan 2026 17:44:06 GMT:

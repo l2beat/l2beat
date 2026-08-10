@@ -1,3 +1,4 @@
+import { formatCurrency, formatNumberWithCommas } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { useSelectedTokenContext } from '~/components/chart/tvs/token/SelectedTokenContext'
 import {
@@ -5,18 +6,19 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { PercentChange } from '~/components/PercentChange'
+import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
+import { EM_DASH } from '~/consts/characters'
 import { ChevronIcon } from '~/icons/Chevron'
 import { LineChartIcon } from '~/icons/LineChart'
 import { sourceToLabel } from '~/server/features/scaling/tvs/utils/sourceToLabel'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { categoryToLabel } from './categoryToLabel'
 import { BridgedUsingCell } from './cells/BridgedUsingCell'
 import { TokenAddressCell } from './cells/TokenAddressCell'
 import { TokenNameCell } from './cells/TokenNameCell'
-import { TokenValueCell } from './cells/TokenValueCell'
 import type { TokenRow } from './ProjectTvsBreakdownTokenTable'
 
 const columnHelper = createColumnHelper<TokenRow>()
@@ -94,30 +96,41 @@ export const columns = [
       return <TokenAddressCell {...address} />
     },
   }),
-  columnHelper.accessor('priceUsd', {
+  columnHelper.accessor((row) => row.priceUsd.value, {
     id: 'priceUsd',
     header: 'Price',
     meta: {
       align: 'right',
     },
     cell: (ctx) => {
+      const { priceUsd } = ctx.row.original
       return (
-        <div className="font-medium text-xs">
-          {formatCurrency(ctx.row.original.priceUsd, 'usd')}
+        <div className="flex items-center justify-end gap-1">
+          <div className="font-medium text-xs">
+            {formatCurrency(priceUsd.value, 'usd')}
+          </div>
+          {priceUsd.change !== undefined ? (
+            <PercentChange
+              value={priceUsd.change}
+              period={priceUsd.changePeriod}
+            />
+          ) : (
+            <PercentChangeNotAvailable />
+          )}
         </div>
       )
     },
   }),
-  columnHelper.accessor('valueForProject', {
+  columnHelper.accessor((row) => row.valueForProject.value, {
     id: 'value',
     header: 'TVS-Adjusted Value',
     meta: {
       align: 'right',
       tooltip:
-        'The value is calculated by multiplying the amount by the token price for most tokens. For some tokens, we use custom calculations to avoid double counting. Expand the section to learn more.',
+        'The value is calculated by multiplying the amount by the token price for most tokens. For some tokens, we use custom calculations to avoid double counting. Percentage change compared to 7 days ago. Expand the section to learn more.',
     },
     cell: (ctx) => {
-      return <TokenValueCell {...ctx.row.original} />
+      return <ProjectTokenValueCell row={ctx.row.original} />
     },
   }),
   columnHelper.display({
@@ -160,3 +173,31 @@ export const columns = [
     },
   }),
 ]
+
+function PercentChangeNotAvailable() {
+  return (
+    <span className="inline-block w-[52px] text-right text-secondary text-xs">
+      {EM_DASH}
+    </span>
+  )
+}
+
+function ProjectTokenValueCell({ row }: { row: TokenRow }) {
+  return (
+    <SyncStatusWrapper isSynced={row.syncStatus === undefined}>
+      <div className="flex items-center justify-end gap-1">
+        <div className="font-bold text-xs">
+          ${formatNumberWithCommas(+row.valueForProject.value)}
+        </div>
+        {row.valueForProject.change !== undefined ? (
+          <PercentChange
+            value={row.valueForProject.change}
+            period={row.valueForProject.changePeriod}
+          />
+        ) : (
+          <PercentChangeNotAvailable />
+        )}
+      </div>
+    </SyncStatusWrapper>
+  )
+}

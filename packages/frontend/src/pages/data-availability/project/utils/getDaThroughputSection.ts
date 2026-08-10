@@ -19,11 +19,13 @@ export async function getDaThroughputSection(
     return undefined
 
   const [charts, projectsWithColors] = await Promise.all([
-    helpers.da.projectCharts.fetch({
-      range: optionToRange('1y'),
-      projectId: project.id,
-      includeScalingOnly: true,
-    }),
+    helpers.queryClient.fetchQuery(
+      helpers.trpc.da.projectCharts.queryOptions({
+        range: optionToRange('1y'),
+        projectId: project.id,
+        includeScalingOnly: true,
+      }),
+    ),
     ps.getProjects({ select: ['colors'] }),
   ])
 

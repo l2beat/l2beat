@@ -14,6 +14,7 @@ import {
   Result,
 } from '../types'
 import { LayerZeroV2Config } from './layerzero.config'
+import { classifyLayerZeroApp } from './layerzero-app-classifiers'
 
 export const parsePacketSent = createEventParser(
   'event PacketSent(bytes encodedPayload, bytes options, address sendLibrary)',
@@ -26,6 +27,7 @@ export const parsePacketDelivered = createEventParser(
 export const PacketSent = createInteropEventType<{
   $dstChain: string
   guid: string
+  app?: string
 }>('layerzero-v2.PacketSent')
 
 export const PacketDelivered = createInteropEventType<{
@@ -58,7 +60,9 @@ export class LayerZeroV2Plugin implements InteropPlugin {
         packet.header.receiver,
       )
       const $dstChain = findChain(networks, (x) => x.eid, packet.header.dstEid)
-      return [PacketSent.create(input, { $dstChain, guid })]
+      const app = classifyLayerZeroApp({ capture: input, guid, packet })
+      const args = app ? { $dstChain, guid, app } : { $dstChain, guid }
+      return [PacketSent.create(input, args)]
     }
 
     const packetDelivered = parsePacketDelivered(input.log, [
@@ -91,7 +95,7 @@ export class LayerZeroV2Plugin implements InteropPlugin {
     if (!packetSent) return
     return [
       Result.Message('layerzero-v2.Message', {
-        app: 'unknown',
+        app: packetSent.args.app ?? 'unknown',
         srcEvent: packetSent,
         dstEvent: packetDelivered,
       }),

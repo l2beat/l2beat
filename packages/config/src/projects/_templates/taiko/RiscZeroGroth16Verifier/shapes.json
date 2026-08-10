@@ -33,5 +33,11 @@
     "hash": "0x20f30107695bee36a63acac61a5ba93d47cbb8ad79df70f6dd9b16d15db66ad3",
     "address": "eth:0x411e56a890c5fe0712f6F345977815Ba8E7785C3",
     "blockNumber": 24067663
+  },
+  "RiscZeroGroth16Verifier.sol": {
+    "hash": "0x81aaa989dd0b4061656a407b0facd27e1d2a5355486422e37dc62d5e1b077032",
+    "address": "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF",
+    "chain": "ethereum",
+    "blockNumber": 25430675
   }
 }

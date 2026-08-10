@@ -11,11 +11,15 @@ import { zkStackL2 } from '../../templates/zkStack'
 const genesisTimestamp = UnixTime(1729881083)
 const v26UpgradeTS = UnixTime(1742940287)
 const v29UpgradeTS = UnixTime(1761601727)
+const eraMultisigValidatorTs = UnixTime(1782741239)
 const chainId = 2741
 const discovery = new ProjectDiscovery('abstract')
 
 const bridge = discovery.getContract('L1NativeTokenVault')
 const diamond = discovery.getContract('Diamond')
+const eraValidatorMsAddress = ChainSpecificAddress.address(
+  discovery.getContract('EraMultisigValidator').address,
+)
 
 export const abstract: ScalingProject = zkStackL2({
   addedAt: UnixTime(1737936000), // 2025-01-27T00:00:00Z
@@ -95,6 +99,44 @@ export const abstract: ScalingProject = zkStackL2({
     }),
   ],
   usesEthereumBlobs: true,
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 21809364,
+      untilBlock: 23671537, // last batch before the v29 upgrade
+      inbox: EthereumAddress('0x8c0Bfc04AdA21fd496c55B8C50331f904306F564'),
+      sequencers: [
+        EthereumAddress('0x11805594be0229EF08429D775AF0c55f7c4535dE'),
+        EthereumAddress('0x54aB716D465be3D5EEca64E63ac0048D7a81659a'),
+        EthereumAddress('0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807'),
+        EthereumAddress('0x4b2d036D2c27192549ad5A2F2D9875E1843833De'),
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 23671537, // v29 upgrade
+      untilBlock: 25424362, // last direct batch before the EraMultisigValidator took over
+      inbox: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
+      sequencers: [
+        EthereumAddress('0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807'),
+        EthereumAddress('0x4b2d036D2c27192549ad5A2F2D9875E1843833De'),
+        EthereumAddress('0x6be789605b13Edb78749824633b9933D44B582ba'),
+        EthereumAddress('0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8'),
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 25424362, // EraMultisigValidator takes over as validator
+      inbox: EthereumAddress('0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83'),
+      sequencers: [
+        EthereumAddress('0x6be789605b13Edb78749824633b9933D44B582ba'),
+        EthereumAddress('0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8'),
+      ],
+    },
+  ],
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
@@ -207,6 +249,22 @@ export const abstract: ScalingProject = zkStackL2({
         functionSignature:
           'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
         sinceTimestamp: v29UpgradeTS,
+        untilTimestamp: eraMultisigValidatorTs,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: ChainSpecificAddress.address(diamond.address),
+        address: eraValidatorMsAddress,
+        selector: '0x9271e450',
+        functionSignature:
+          'function proveBatchesSharedBridge(address _chainAddress, uint256, uint256, bytes)',
+        sinceTimestamp: eraMultisigValidatorTs,
       },
     },
     {
@@ -238,6 +296,22 @@ export const abstract: ScalingProject = zkStackL2({
         functionSignature:
           'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: v29UpgradeTS,
+        untilTimestamp: eraMultisigValidatorTs,
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        firstParameter: ChainSpecificAddress.address(diamond.address),
+        address: eraValidatorMsAddress,
+        selector: '0xa085344d',
+        functionSignature:
+          'function executeBatchesSharedBridge(address _chainAddress, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: eraMultisigValidatorTs,
       },
     },
   ],

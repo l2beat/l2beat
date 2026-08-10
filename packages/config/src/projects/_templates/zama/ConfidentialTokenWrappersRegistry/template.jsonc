@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreRelatives": ["getTokenConfidentialTokenPairs"],
+  "ignoreMethods": ["proxiableUUID", "getTokenConfidentialTokenPair"],
+  "category": "core",
+  "description": "Registry for Zama confidential token wrappers.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage addresses in the registry"
+        }
+      ]
+    }
+  }
+}

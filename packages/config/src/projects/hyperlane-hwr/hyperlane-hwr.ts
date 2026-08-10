@@ -19,6 +19,10 @@ export const hyperlaneHwr: BaseProject = {
         plugin: 'hyperlane-hwr',
         bridgeType: 'lockAndMint',
       },
+      {
+        plugin: 'hyperlane-hwr',
+        bridgeType: 'nonMinting',
+      },
     ],
     type: 'multichain',
   },

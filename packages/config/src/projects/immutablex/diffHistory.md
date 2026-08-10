@@ -1,8 +1,117 @@
+Generated with discovered.json: 0x7de1fe1fe2682d187746f10e7837876a0415106a
+
+# Diff at Mon, 22 Jun 2026 08:58:45 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@18532eacfff59dfa2ff9ea37d128b65c569fef40 block: 1781778427
+- current timestamp: 1782118661
+
+## Description
+
+Disabled withdrawal queue of 1 day for all withdrawals from the Immutable X bridge to Ethereum (it was enabled very recently).
+
+## Watched changes
+
+```diff
+    contract RootERC20BridgeFlowRate (eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) [N/A] {
+    +++ description: None
+      values.withdrawalQueueActivated:
+-        true
++        false
+    }
+```
+
+Generated with discovered.json: 0xc4786b8ca9a4c28a8cd537bde5c49aeabeb44d93
+
+# Diff at Thu, 18 Jun 2026 10:28:10 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ece0bb89d93f4462f45501d91379f3ba4bc05b8a block: 1780913745
+- current timestamp: 1781778427
+
+## Description
+
+Enabled withdrawal queue of 1 day for all withdrawals from the Immutable X bridge to Ethereum, probably as a security measure. Note that the chain is archived and TVS is very low already.
+
+## Watched changes
+
+```diff
+    contract RootERC20BridgeFlowRate (eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) [N/A] {
+    +++ description: None
+      values.withdrawalQueueActivated:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0x2da45483ac18283c7ad4b39cbd76c1ee3c0f069d
+
+# Diff at Fri, 12 Jun 2026 10:25:51 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1780913745
+- current timestamp: 1780913745
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780913745 (main branch discovery), not current.
+
+```diff
+    contract AxelarGasService (eth:0x2d5d7d31F671F86C782533cc367F14109a082712) [N/A] {
+    +++ description: None
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+Generated with discovered.json: 0x899ddb0b40a8152bc7dd8c93491b82ed1dee98c3
+
+# Diff at Mon, 08 Jun 2026 10:16:49 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@986b95b3ae833105f37e6f39ab1fd37448dc183a block: 1779377712
+- current timestamp: 1780913745
+
+## Description
+
+Axelar gas service owner changed (the owner address of this contract is the microservice that pays for gas for cross-chain communication on Axelar).
+
+Also rotated owner of the operators contract of Axelar gas service.
+
+## Watched changes
+
+```diff
+    contract AxelarGasService (eth:0x2d5d7d31F671F86C782533cc367F14109a082712) [N/A] {
+    +++ description: None
+      values.$admin:
+-        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
++        "eth:0x72164D4448fe6cfA472946feDC71e83b4628B1aF"
+      values.owner:
+-        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
++        "eth:0x72164D4448fe6cfA472946feDC71e83b4628B1aF"
+    }
+```
+
+```diff
+    contract Operators (eth:0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC) [N/A] {
+    +++ description: None
+      values.owner:
+-        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
++        "eth:0x2053E8e8c7456DE57141D1357579520dEaa8Bf9C"
+    }
+```
+
 Generated with discovered.json: 0xde7424726ad1e3b357045db2de1bda6d9708fe8a
 
 # Diff at Thu, 21 May 2026 16:02:29 GMT:
 
-- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@b3061d13527867199a7f8470f738f778234b8a4e block: 1772785651
 - current timestamp: 1779377712
 

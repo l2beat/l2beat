@@ -1,4 +1,5 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { functionalUpdate, getCoreRowModel } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
@@ -7,8 +8,8 @@ import type {
   InteropTopItemsSort,
   InteropTopItemsSorting,
 } from '~/server/features/scaling/interop/types'
-import { api } from '~/trpc/React'
-import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
+import { useTRPC } from '~/trpc/React'
+import type { InteropSelection } from '../../utils/types'
 import { getTopTokensPairsColumns, type TokensPairRow } from './columns'
 import {
   InfiniteScrollTrigger,
@@ -42,7 +43,11 @@ export function TokensPairsTable({
   showTopProtocolColumn?: boolean
   showFlowsColumn?: boolean
 }) {
-  const { selectedChains } = useInteropSelectedChains()
+  const trpc = useTRPC()
+  const selectedChains = useMemo<InteropSelection>(
+    () => ({ from: queryInput.from, to: queryInput.to }),
+    [queryInput],
+  )
   const [sorting, setSorting] =
     useState<InteropTopItemsSorting>(DEFAULT_SORTING)
   const queryInputWithSort = useMemo(
@@ -53,9 +58,11 @@ export function TokensPairsTable({
     [queryInput, sorting],
   )
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    api.interop.tokensPairs.useInfiniteQuery(queryInputWithSort, {
-      getNextPageParam: (lastPage) => lastPage.nextCursor,
-    })
+    useInfiniteQuery(
+      trpc.interop.tokensPairs.infiniteQueryOptions(queryInputWithSort, {
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+      }),
+    )
 
   const filteredData = useMemo(() => {
     const rows = data?.pages.flatMap((page) => page.items) ?? []

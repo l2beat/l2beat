@@ -72,8 +72,12 @@ const TableRow = ({
 }: React.HTMLAttributes<HTMLTableRowElement> & {
   highlightId: string | undefined
 }) => {
-  const { highlightedId } = useHighlightedTableRowContext()
-  const isSelected = highlightedId && highlightedId === highlightId
+  const { highlightedIds } = useHighlightedTableRowContext()
+  const isSelected =
+    highlightId !== undefined && highlightedIds.includes(highlightId)
+  // With multiple highlighted rows, scroll only to the first one so the
+  // rows don't fight over the viewport.
+  const isScrollTarget = isSelected && highlightId === highlightedIds[0]
   return (
     <tr
       className={cn(
@@ -82,7 +86,7 @@ const TableRow = ({
         className,
       )}
       ref={(node) => {
-        if (node && isSelected) {
+        if (node && isScrollTarget) {
           node.scrollIntoView({ block: 'center' })
         }
       }}

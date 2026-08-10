@@ -26,6 +26,7 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
   private models: Record<string, editor.IDiffEditorModel | null> = {}
   private viewStates: Record<string, editor.IDiffEditorViewState | null> = {}
   private currentCodeHash = ''
+  private disposed = false
   private originalAlignmentZoneIds = new Set<string>()
   private modifiedAlignmentZoneIds = new Set<string>()
 
@@ -68,6 +69,11 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
   }
 
   setDiff(codeLeft: string, codeRight: string) {
+    // See Editor.setFile: a remount can drive the previous, already-disposed
+    // editor instance, which throws "InstantiationService has been disposed".
+    if (this.disposed) {
+      return
+    }
     const currentModel = this.editor.getModel()
 
     if (currentModel) {
@@ -204,6 +210,10 @@ export class DiffEditor extends EditorPluginStore<'diff'> {
   }
 
   dispose() {
+    if (this.disposed) {
+      return
+    }
+    this.disposed = true
     Object.values(this.models).forEach((model) => {
       if (model) {
         model.original.dispose()

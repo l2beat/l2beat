@@ -1,17 +1,17 @@
 import type { PrivacyAttribute } from '../types'
 
 export const PRIVACY_ATTRIBUTES = {
-  upgradeable: {
-    id: 'upgradeable',
-    label: 'Upgradeable',
+  fhe: {
+    id: 'fhe',
+    label: 'FHE',
     description:
-      'DAO can vote on upgrades that are executable with a 7d delay.',
+      'Uses fully homomorphic encryption for private computation over encrypted values.',
   },
-  optCompliance: {
-    id: 'optCompliance',
-    label: 'Opt compliance',
+  zk: {
+    id: 'zk',
+    label: 'ZK',
     description:
-      "Optional 'proofs of innocence' (POIs), can disassociate the deposit from a list of flagged addresses.",
+      'Uses zero-knowledge proofs to prove private actions without revealing private data.',
   },
   transfers: {
     id: 'transfers',
@@ -35,26 +35,16 @@ export const PRIVACY_ATTRIBUTES = {
     description:
       'Pre-defined transfer amounts use distinct buckets (anonymity sets).',
   },
-  sourceAvailable: {
-    id: 'sourceAvailable',
-    label: 'Source available',
+  privateAmounts: {
+    id: 'privateAmounts',
+    label: 'Private amounts',
     description:
-      'There is at least one practical way to use exclusively auditable, source-available software to interact with this protocol.',
+      'Transfer amounts are private, while sender and recipient addresses remain public.',
   },
-  immutable: {
-    id: 'immutable',
-    label: 'Immutable',
-    description: 'Core smart contract code cannot be changed.',
-  },
-  uncensorable: {
-    id: 'uncensorable',
-    label: 'Uncensorable',
-    description: 'Deposits and withdrawals cannot be censored.',
-  },
-  enforcedCompliance: {
-    id: 'enforcedCompliance',
-    label: 'Enforced compliance',
+  stealthAddresses: {
+    id: 'stealthAddresses',
+    label: 'Stealth addresses',
     description:
-      'ASPs (association set providers) can censor any deposits, excluding them from the anonymity set.',
+      'Uses fresh, one-time recipient addresses to obscure who controls the receiving address.',
   },
 } as const satisfies Record<string, PrivacyAttribute>

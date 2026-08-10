@@ -5,11 +5,13 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist *.tsbuildinfo",
     "build": "tsc -p tsconfig.build.json",
     "db:generate-types": "prisma generate",
     "db:create-migration": "prisma migrate dev --create-only --name",
     "db:migrate": "prisma migrate deploy",
+    "db:restore": "tsx scripts/db-restore/db-restore.ts",
+    "db:restore-table": "tsx scripts/db-restore/table-restore.ts",
     "format": "prisma format && biome format .",
     "format:fix": "prisma format && biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
@@ -22,6 +24,7 @@
     "@l2beat/discovery": "workspace:*",
     "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
+    "@l2beat/validate": "workspace:*",
     "kysely": "^0.27.3",
     "lodash": "^4.17.21",
     "pg": "^8.8.0"
@@ -30,8 +33,10 @@
     "@l2beat/typescript-config": "workspace:*",
     "@types/lodash": "^4.17.13",
     "@types/pg": "8.6.5",
+    "dotenv": "^16.3.1",
     "prisma": "^5.15.0",
     "prisma-kysely": "^1.8.0",
+    "tsx": "^4.9.3",
     "type-fest": "^4.20.0"
   }
 }

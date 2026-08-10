@@ -2,14 +2,42 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "aztecnetwork",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": [
-    "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
-    "eth:0x8c189ead28D5987A48e522162f9225124D50AD1B",
-    "eth:0xa4a38fD0108C00983E75616b638Ff3321FD26958"
-  ],
+  "initialAddresses": ["eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298"],
   "overrides": {
+    "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2": {
+      "fields": {
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "mint AZTEC only through the CoinIssuer's capped issuance function. The CoinIssuer exposes no path to transfer or renounce ownership of the AZTEC token."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80": {
+      "displayName": "AztecTokenPositionRegistry_ProtocolTreasury",
+      "description": "AZTEC token-position Registry referenced by the ProtocolTreasury for its activation cutoff and by other ecosystem vesting contracts."
+    },
+    "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34": {
+      "fields": {
+        "linkedLibraries": {
+          "description": "Runtime libraries immutably linked into this Rollup deployment.",
+          "handler": {
+            "type": "hardcoded",
+            "value": [
+              "eth:0x516f010C9AB452d70E0c6f78b9E698249a66d2AC",
+              "eth:0xD6E890c615d6f99681a00771C20ed04516288898",
+              "eth:0xe4F0b9769Ca04a6E3d93b5BA732b5aD80797D411"
+            ]
+          }
+        }
+      }
+    },
     "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480": {
-      "displayName": "SlashVeto Council"
+      "displayName": "SlashVeto Council",
+      "category": "gov"
     }
   }
 }

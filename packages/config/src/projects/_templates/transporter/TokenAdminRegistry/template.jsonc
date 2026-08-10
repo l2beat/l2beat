@@ -48,5 +48,6 @@
     }
   },
   "ignoreRelatives": ["administrators", "poolsMap"],
+  "ignoreInWatchMode": ["administrators", "poolsMap"],
   "description": "Central token registry that defines token pools and administrative rights to change such token pools. Tokens can either be centrally administered by Chainlink, or by the actual token admin / issuer."
 }

@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Verifier contract for SGX proven blocks.",
+  "description": "Verifier contract for SGX proven blocks. Registered SGX instances can sign accepted proofs until their instance expiry.",
   "ignoreInWatchMode": ["nextInstanceId"],
   "ignoreMethods": ["getPastTotalSupply", "instances", "proxiableUUID"],
   "fields": {
@@ -8,9 +8,20 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "can add new instances without a DCAP attestation"
+          "description": "add SGX instances without DCAP attestation and delete registered instances."
         }
       ]
+    },
+    "registrar": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register SGX instances after DCAP attestation verification."
+        }
+      ]
+    },
+    "automataDcapAttestation": {
+      "description": "Attestation contract used to verify DCAP quotes before registrar-submitted SGX instances are accepted."
     }
   }
 }

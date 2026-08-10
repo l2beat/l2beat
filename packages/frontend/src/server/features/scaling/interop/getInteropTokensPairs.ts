@@ -1,6 +1,7 @@
-import { assert, InMemoryCache, unique } from '@l2beat/shared-pure'
+import { assert, unique } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { INTEROP_PAIR_SEPARATOR } from './consts'
@@ -26,6 +27,7 @@ import { getInteropChains } from './utils/getInteropChains'
 import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
 import { getTopProtocolDisplay } from './utils/getTopProtocolDisplay'
 import { sortInteropTopItems } from './utils/sortInteropTopItems'
+import { transferTouchesChain } from './utils/transferTouchesChain'
 
 type TokensPairInteropData = CommonInteropData & {
   flows: Map<string, TokenFlowData>
@@ -33,7 +35,9 @@ type TokensPairInteropData = CommonInteropData & {
 }
 
 const PAGE_SIZE = 100
-const interopTokensPairsCache = new InMemoryCache({})
+const interopTokensPairsCache = new FrontendInMemoryCache(
+  'getInteropTokensPairsInfinite',
+)
 
 export async function getInteropTokensPairsInfinite({
   cursor,
@@ -63,6 +67,7 @@ async function getCachedInteropTokensPairs(params: InteropTopItemsParams) {
         [...params.from].sort().join(','),
         [...params.to].sort().join(','),
         [...(params.protocolIds ?? [])].sort().join(','),
+        params.anchorChain ?? 'all',
       ],
       ttl: 60 * 10,
       staleWhileRevalidate: 60 * 15,
@@ -77,6 +82,7 @@ async function getInteropTokensPairsData({
   to,
   type,
   protocolIds,
+  anchorChain,
 }: InteropTopItemsParams): Promise<TokensPairData[]> {
   const db = getDb()
 
@@ -104,7 +110,11 @@ async function getInteropTokensPairsData({
       id,
       type,
     )
-  ).filter((pair) => !protocolIds || protocolIds.includes(pair.id))
+  ).filter(
+    (pair) =>
+      (!protocolIds || protocolIds.includes(pair.id)) &&
+      transferTouchesChain(pair, anchorChain),
+  )
 
   const abstractTokenIds = unique(
     pairs

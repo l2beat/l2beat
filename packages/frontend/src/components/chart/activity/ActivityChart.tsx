@@ -2,6 +2,8 @@ import type { Milestone } from '@l2beat/config'
 import {
   assert,
   assertUnreachable,
+  formatActivityCount,
+  formatInteger,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -42,8 +44,6 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import { formatRange } from '~/utils/dates'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { ChartStrokeOverFillAreaComponents } from '../../core/chart/utils/getStrokeOverFillAreaComponents'
 import type { ChartScale } from '../types'
 

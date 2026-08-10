@@ -226,14 +226,14 @@ export function BasicTableRow<T extends BasicTableRow>({
   className,
   ...props
 }: BasicTableProps<T> & { row: Row<T>; className?: string }) {
-  const { highlightedId } = useHighlightedTableRowContext()
+  const { highlightedIds } = useHighlightedTableRowContext()
   const { cells, denominator } = prepareBasicTableVisibleCells(row)
 
   const cellDataMap = new Map<number, BasicTableCellData>()
 
   const highlightId = props.getHighlightId?.(row.original) ?? row.original.slug
   const isHighlighted =
-    highlightId !== undefined && highlightedId === highlightId
+    highlightId !== undefined && highlightedIds.includes(highlightId)
 
   const shouldRenderSubComponentRow =
     row.getIsExpanded() && !!props.renderSubComponent

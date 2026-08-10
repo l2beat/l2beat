@@ -8,5 +8,11 @@
     "hash": "0x184ad3273d7e257c9f1b138ecff33286528599eae858abc182fdc3068060af90",
     "address": "ink:0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020",
     "blockNumber": 10183769
+  },
+  "SchemaRegistry_v1_3_1_beta2": {
+    "hash": "0xe2a60db541c987ffa9a6ed73b9100c7f62f2574966a20c903a73a8f730c7dfcc",
+    "address": "ink:0x70DE55BC0bfBC52C5D0CCA1DA5816c2428886A34",
+    "chain": "ink",
+    "blockNumber": 50094988
   }
 }

@@ -39,7 +39,6 @@ export { hashJsonStable } from './discovery/config/hashJsonStable'
 export {
   BasePermissionEntries,
   Permission,
-  RolePermissionEntries,
 } from './discovery/config/PermissionConfig'
 export {
   makeEntryStructureConfig,
@@ -62,7 +61,6 @@ export { KnowledgeBase } from './discovery/modelling/KnowledgeBase'
 export { ModelIdRegistry } from './discovery/modelling/ModelIdRegistry'
 export {
   DiscoveryRegistry,
-  type DiscoveryTimestamps as DiscoveryBlockNumbers,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
   getDependenciesToDiscoverForProject,

@@ -3,5 +3,10 @@
     "hash": "0x2d3743808043a53dd1ba2ed90d831a27cf0086c271251cf36846a6584bf91257",
     "address": "eth:0x8Dbf0b6ed495baAb6062f5D5365aF3C1B2ed4578",
     "blockNumber": 24590324
+  },
+  "Inbox_v5.sol": {
+    "hash": "0x5d6007913833accd5df70ab805f311a9155df0e3976a83b5ffd5f5a9d026c19b",
+    "address": "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA",
+    "blockNumber": 25428902
   }
 }

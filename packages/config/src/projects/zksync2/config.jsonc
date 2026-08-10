@@ -9,8 +9,6 @@
     // "gateway:0xCE7CBd23193d029410b40e0fD8a79a5121f9250C", // zksync diamond
     // "gateway:0x0000000000000000000000000000000000010002" // bridgehub
   ],
-  // "sharedModules": ["shared-zk-stack", "gateway"],
-  "sharedModules": ["shared-zk-stack"],
   "names": {
     "eth:0x32400084C286CF3E17e7B677ea9583e60a000324": "Diamond",
     "eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063": "L1ERC20Bridge",
@@ -37,7 +35,12 @@
             "type": "crossChainAccessControl",
             "pickChainAddress": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324"
           },
-          "permissions": [{ "type": "validateZkStack" }]
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+            }
+          ]
         }
       }
     },

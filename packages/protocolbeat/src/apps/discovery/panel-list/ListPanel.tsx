@@ -15,6 +15,7 @@ import { IconUnlinked } from '../../../icons/IconUnliked'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { useStore as useNodesStore } from '../panel-nodes/store/store'
+import { getGraphProjection } from '../panel-nodes/store/utils/graphProjection'
 import { useGlobalSettingsStore } from '../store/global-settings-store'
 import { usePanelStore } from '../store/panel-store'
 
@@ -160,13 +161,15 @@ function ListItemContracts(props: {
 }
 
 function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
-  const isSelected = usePanelStore((state) => state.selected === entry.address)
+  const isSelected = usePanelStore((state) =>
+    state.selected.includes(entry.address),
+  )
   const select = usePanelStore((state) => state.select)
   const markUnreachableEntries = useGlobalSettingsStore(
     (s) => s.markUnreachableEntries,
   )
   const isHidden = useNodesStore((state) =>
-    state.hidden.includes(entry.address),
+    getGraphProjection(state.nodes).hiddenNodeIds.has(entry.address),
   )
   const isGrayedOut = isHidden || (markUnreachableEntries && !entry.isReachable)
 
@@ -177,7 +180,7 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
         isSelected && 'bg-autumn-300 text-black',
         !isSelected && 'bg-coffee-800 hover:bg-aux-brown',
       )}
-      onClick={() => select(entry.address)}
+      onClick={() => select([entry.address])}
       style={{
         opacity: isGrayedOut ? 0.2 : 1,
         filter: isGrayedOut ? 'grayscale(100%)' : 'none',

@@ -33,16 +33,22 @@ conflicts and errors surface to humans.
 ## Overview
 
 A background loop in the token-backend service ticks every minute. Each tick
-does two things in order:
+does three things in order:
 
-1. **Pre-step.** Scan the interop transfer table for transfers inserted
+1. **Token relation ingestion.** Materialize `TokenRelation` rows from
+   interop transfers inserted since the previous tick. This is a separate
+   subsystem that deliberately does not use the queue below — see
+   [Token relations](./token_relations.md) for how it works and, more
+   importantly, why it is not part of this queue.
+2. **Pre-step.** Scan the interop transfer table for transfers inserted
    since the previous tick and enqueue both token addresses from each
    transfer.
-2. **Drain.** Repeatedly take the next pending queue entry and process it
+3. **Drain.** Repeatedly take the next pending queue entry and process it
    until the queue is empty or the per-run safety cap is reached.
 
-That's the entire shape. Everything else is a detail of how a single entry
-gets processed.
+The steps run sequentially (never in parallel) so that logs stay separated
+and a failure is attributable to a single step. That's the entire shape.
+Everything else is a detail of how a single entry gets processed.
 
 ## Drain guard and monitoring
 
@@ -114,7 +120,12 @@ The processor splits each tick into three phases:
    coin map. **No external calls**: no RPC, no explorer, and no per-coin
    CoinGecko endpoints (`getCoinDataById` / `getCoinMarketChartRange`).
    Produces an **`IngestionTrace`**: an ordered list of decision `steps`
-   plus a single `outcome`. When the outcome can't be made terminal
+   plus a single `outcome`. The trace also carries
+   `existingDeployedToken` — the result of the TokenDB lookup `plan`
+   performs for every entry — as a structured field, so consumers (such
+   as the queue page's already-in-TokenDB indicator) read it directly
+   instead of scanning the human-readable `steps`. When the outcome
+   can't be made terminal
    without an external call — either we'd insert a new token (needs RPC
    facts) or we'd materialize a new abstract from a CoinGecko coin we
    haven't seen before (needs CoinGecko per-coin endpoints) — the
@@ -222,9 +233,10 @@ update, possibly with a newly built CoinGecko abstract), `conflict`
 
 ## Shared write boundary
 
-Both this pipeline and the user-driven `intent → plan → execute` pipeline
-ultimately write to the same two TokenDB tables (`AbstractToken` and
-`DeployedToken`). To make sure both paths produce the same writes — and so
+This pipeline, the user-driven `intent → plan → execute` pipeline, and
+[token relation ingestion](./token_relations.md) ultimately write to the
+same TokenDB core tables (`AbstractToken`, `DeployedToken`, and
+`TokenRelation`). To make sure all paths produce the same writes — and so
 that future cross-cutting concerns like a persistent history table land
 in exactly one place — they share a single primitive,
 [`commitTokenChanges`](../../../../../packages/token-backend/src/commitTokenChanges.ts),
@@ -263,7 +275,7 @@ alone. Setting `abstractTokenId` to `null` clears the proof.
 - `{ kind: 'non-swapping-transfer'; transfer }` — ingestion resolved
   from non-swapping transfer evidence. The proof carries the *full*
   transfer row, not just an id, because the interop transfer table is a
-  sliding 24h window — by the time someone reviews the assignment, the
+  sliding 7-day window — by the time someone reviews the assignment, the
   row may already be gone. Because the proof is stored as JSON, BigInt
   raw amounts in that transfer are persisted as decimal strings.
 
@@ -321,11 +333,22 @@ ping-pong cycles between two stable tokens.
 
 ## Reading the interop transfer table
 
-For each tick, the drain loads the full interop transfer table once and
-builds an in-memory index keyed by normalized `(chain, address)`. Each
-processed entry looks up its own transfers from this index — no per-entry
-DB queries for transfers. This is cheap because the interop table only
-retains the last ~24 hours.
+For each tick, the drain builds an in-memory index keyed by normalized
+`(chain, address)` from a SQL aggregation over the interop transfer table:
+one row per unique group of `(src token, dst token, bridge-type evidence)`,
+carrying the group's transfer count and a sample transfer id. Each
+processed entry looks up its own routes from this index — no per-entry DB
+queries for transfer evidence. Aggregating in SQL keeps the index size
+proportional to the number of distinct bridged token pairs, not to
+transfer volume — the table retains ~7 days of transfers, and loading full
+rows for all of them (as an earlier version of this index did) caused
+out-of-memory crashes when retention grew from one day to seven.
+
+The one consumer that needs a full transfer row — the
+`non-swapping-transfer` assignment proof — fetches the group's sample
+transfer by primary key, and only for outcomes that persist the proof
+(`write` and `pending`). Plans that end in `noop` or `conflict` — the
+common steady-state outcomes — never pay the lookup.
 
 The drain refresh happens immediately after the pre-step and immediately
 before processing the queue. Do not replace it with a stale cached read:
@@ -423,7 +446,9 @@ EVM addresses. Normalization:
   caches one on demand if no drain has warmed it yet.
 - Queue page predicted outcomes: `plan` only, called once per row from
   inside the `tokenIngestionQueue.getPage` tRPC route. Uses the same cached
-  transfer index/fallback path as preview.
+  transfer index/fallback path as preview. The same per-row `plan` call
+  also powers the row's already-in-TokenDB indicator via the trace's
+  `existingDeployedToken`.
 
 ## What this replaces
 
@@ -440,5 +465,5 @@ changed and *who* changed it. The next step, if needed, is persisting the
 full `IngestionTrace` next to write events so the *reasoning* (every
 decision step) is queryable too — useful when a researcher wants to
 understand why a particular abstract was chosen long after the interop
-transfer that justified it has rolled out of the 24h window. The trace
+transfer that justified it has rolled out of the 7-day window. The trace
 already exists at `apply` time, so this is a low-cost follow-up.

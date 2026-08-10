@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { TanStackTable } from '~/components/table/TanStackTable'
 import { useTanStackTable } from '~/components/table/useTanStackTable'
+import type { InteropTransferDataRange } from '../../transferDataRange'
 import type { TransferPairRow } from '../types'
 import { buildTransferDetailsPath } from '../utils'
 import { createTransferPairsColumns } from './pairs-columns'
@@ -9,6 +10,7 @@ interface TransferPairsTableProps {
   data: TransferPairRow[]
   plugin: string
   type: string
+  range: InteropTransferDataRange
   enableCsvExport?: boolean
 }
 
@@ -16,6 +18,7 @@ export function TransferPairsTable({
   data,
   plugin,
   type,
+  range,
   enableCsvExport = false,
 }: TransferPairsTableProps) {
   const getDetailsPath = useMemo(
@@ -25,8 +28,9 @@ export function TransferPairsTable({
         plugin,
         srcChain: pair.srcChain,
         dstChain: pair.dstChain,
+        range,
       }),
-    [plugin, type],
+    [plugin, range, type],
   )
   const columns = useMemo(
     () =>

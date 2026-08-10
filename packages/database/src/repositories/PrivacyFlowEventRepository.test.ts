@@ -71,7 +71,7 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
         const result = await repository.getDailyByProjectIds(
           ['proj-a'],
           START,
-          START,
+          START + UnixTime.DAY,
         )
 
         expect(result).toEqualUnsorted([
@@ -256,6 +256,53 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
 
       it('returns undefined when projectIds is empty', async () => {
         const result = await repository.getLatestTimestampByProjectIds([])
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
+  describe(
+    PrivacyFlowEventRepository.prototype.getFirstTimestampByProjectIds.name,
+    () => {
+      it('returns the earliest timestamp for the project', async () => {
+        await repository.upsertMany([
+          flowEvent('proj-a', UnixTime(START + 1), 101, 'deposit', 1, 100n),
+          flowEvent('proj-a', START, 100, 'deposit', 1, 100n),
+        ])
+
+        const result = await repository.getFirstTimestampByProjectIds([
+          'proj-a',
+        ])
+
+        expect(result).toEqual(START)
+      })
+
+      it('considers all given projects', async () => {
+        await repository.upsertMany([
+          flowEvent('proj-a', START, 100, 'deposit', 1, 100n),
+          flowEvent('proj-b', UnixTime(START - 5), 99, 'deposit', 1, 100n),
+        ])
+
+        const result = await repository.getFirstTimestampByProjectIds([
+          'proj-a',
+          'proj-b',
+        ])
+
+        expect(result).toEqual(UnixTime(START - 5))
+      })
+
+      it('returns undefined when no data', async () => {
+        const result = await repository.getFirstTimestampByProjectIds([
+          'proj-a',
+        ])
+        expect(result).toEqual(undefined)
+      })
+
+      it('returns undefined when projectIds is empty', async () => {
+        await repository.upsertMany([
+          flowEvent('proj-a', START, 100, 'deposit', 1, 100n),
+        ])
+        const result = await repository.getFirstTimestampByProjectIds([])
         expect(result).toEqual(undefined)
       })
     },

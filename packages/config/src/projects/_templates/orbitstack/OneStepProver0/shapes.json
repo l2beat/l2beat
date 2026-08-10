@@ -13,5 +13,11 @@
     "hash": "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407",
     "address": "eth:0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5",
     "blockNumber": 22188285
+  },
+  "OneStepProver0_robinhood": {
+    "hash": "0xf6e6f414e3ab8410da9205ca8f22944139717fb7044cb18aad83ef1106c1afc2",
+    "address": "eth:0x6fE84aC811EBEcd888Eca93757fEa378Bb03b00c",
+    "chain": "ethereum",
+    "blockNumber": 25443718
   }
 }

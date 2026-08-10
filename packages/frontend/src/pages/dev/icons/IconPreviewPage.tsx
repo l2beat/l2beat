@@ -13,7 +13,7 @@ export function IconPreviewPage(props: AppLayoutProps) {
 
   return (
     <AppLayout {...props}>
-      <SideNavLayout maxWidth="wide">
+      <SideNavLayout variant="wide">
         <MainPageHeader>Icon Preview</MainPageHeader>
         {entries.length === 0 ? (
           <PrimaryCard className="mt-6">

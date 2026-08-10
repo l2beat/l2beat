@@ -4,6 +4,8 @@ const PROMISE_TIMEOUT = 30
 
 type Logger = {
   info: (...args: unknown[]) => void
+  warn: (...args: unknown[]) => void
+  debug: (...args: unknown[]) => void
   for: (object: object) => Logger
 }
 
@@ -48,18 +50,18 @@ export class InMemoryCache {
       return fallback()
     }
 
-    this.logger?.info('Getting cache key', { key: options.key })
+    this.logger?.debug('Getting cache key', { key: options.key })
     const key = this.getKey(options.key.filter(Boolean) as string[])
     const now = UnixTime.now()
     const maxLifetime = options.ttl + (options.staleWhileRevalidate ?? 0)
 
-    this.sweep(now)
-
     const result = this.cache.get(key)
+
+    this.sweep(now)
 
     // If we have a result and it's not expired, return it immediately
     if (result && result.timestamp + options.ttl > now) {
-      this.logger?.info('Cache hit', { key, result })
+      this.logger?.info('Cache hit', { key })
       return result.result as T
     }
 
@@ -130,8 +132,12 @@ export class InMemoryCache {
         timestamp: UnixTime.now(),
         maxLifetime,
       })
-    } catch {
+    } catch (error) {
       // If revalidation fails, we keep the stale data
+      this.logger?.warn('Cache revalidation failed', {
+        key,
+        error,
+      })
     }
   }
 

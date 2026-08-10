@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import {
   Bar,
   BarChart,
@@ -27,14 +27,14 @@ import { EM_DASH } from '~/consts/characters'
 import { useIsClient } from '~/hooks/useIsClient'
 import type { TransferSizeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { transferSizeBuckets } from '../../../utils/transferSizeBuckets'
 
 interface Props {
   data: TransferSizeDataPoint[]
   isLoading: boolean
   horizontal?: boolean
+  /** Label gutter of the horizontal variant; widen it for long protocol names. */
+  categoryAxisWidth?: number
 }
 
 const chartMeta = {
@@ -69,6 +69,7 @@ export function TransferSizeChart({
   data,
   isLoading,
   horizontal = false,
+  categoryAxisWidth = 70,
 }: Props) {
   const isClient = useIsClient()
 
@@ -150,8 +151,14 @@ export function TransferSizeChart({
               axisLine={false}
               tickLine={false}
               interval={0}
-              width={70}
-              tick={(props) => <CategoryYAxisTick {...props} data={data} />}
+              width={categoryAxisWidth}
+              tick={(props) => (
+                <CategoryYAxisTick
+                  {...props}
+                  data={data}
+                  axisWidth={categoryAxisWidth}
+                />
+              )}
             />
           ) : (
             <YAxis
@@ -209,18 +216,26 @@ function CategoryYAxisTick({
   y,
   payload,
   data,
+  axisWidth,
 }: YAxisTickContentProps & {
   data: TransferSizeDataPoint[]
+  axisWidth: number
 }) {
   const item = data.find((item) => item.name === payload.value)
   assert(item, 'Item not found')
   return (
     <g transform={`translate(${x ?? 0},${y ?? 0})`}>
-      <image x={-66} y={-7} width={14} height={14} href={item.iconUrl}>
+      <image
+        x={4 - axisWidth}
+        y={-7}
+        width={14}
+        height={14}
+        href={item.iconUrl}
+      >
         <title>{item.name}</title>
       </image>
       <text
-        x={-48}
+        x={22 - axisWidth}
         dy="0.32em"
         className="fill-primary font-bold text-subtitle-14"
       >

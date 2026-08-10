@@ -1,3 +1,204 @@
+Generated with discovered.json: 0xde471847ba5617227c432c687847e031ebf01e81
+
+# Diff at Tue, 07 Jul 2026 12:22:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1fd9d39064602bc28714717ec6eae23c740b472b block: 1781510846
+- current timestamp: 1783426843
+
+## Description
+
+ExchangeGateway upgraded; source unchanged. PerpEngine redeployed and rewired via the ExchangeGateway `PERP_ENGINE` registry. New PerpEngine adds a Liquidator role that can settle funding and PnL without a matching account, and lets `update()` change a perp product's `pythFeedId`. [PerpEngine diff](https://disco.l2beat.com/diff/ethereal:0xCc0385301a10191b7ac633A64742a34F2e4cFB37/ethereal:0x5e26faca3898F6fF88A6ae0Be08a290Ad9f3C3c8).
+
+## Watched changes
+
+```diff
+    contract ExchangeGateway (ethereal:0xB3cDC82035C495c484C9fF11eD5f3Ff6d342e3cc) [ethereal/ExchangeGateway] {
+    +++ description: Main contract of the Ethereal DEX. Entrypoint for users to deposit and withdraw funds and for operators submit user actions.
+      values.$implementation:
+-        "ethereal:0x6F4888af4c37D9Da8545b4766646e2891e47b1db"
++        "ethereal:0xd03959377f5DF4CB08A6bB1aec93ddE2141fC3A0"
+      values.$pastUpgrades.2:
++        ["2026-06-19T01:34:15.000Z","0x7e8bc19dd02c63ae22cba5f88603c784cbcd2bd6230e11491b2b80d601ee4967",["ethereal:0xd03959377f5DF4CB08A6bB1aec93ddE2141fC3A0"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.registry.0x504552505f454e47494e45000000000000000000000000000000000000000000:
+-        "ethereal:0xCc0385301a10191b7ac633A64742a34F2e4cFB37"
++        "ethereal:0x5e26faca3898F6fF88A6ae0Be08a290Ad9f3C3c8"
+      implementationNames.ethereal:0x6F4888af4c37D9Da8545b4766646e2891e47b1db:
+-        "ExchangeGateway"
+      implementationNames.ethereal:0xd03959377f5DF4CB08A6bB1aec93ddE2141fC3A0:
++        "ExchangeGateway"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PerpEngine (ethereal:0xCc0385301a10191b7ac633A64742a34F2e4cFB37) [ethereal/ExchangeGatewayRegistryContracts]
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+```diff
++   Status: CREATED
+    contract PerpEngine (ethereal:0x5e26faca3898F6fF88A6ae0Be08a290Ad9f3C3c8) [ethereal/ExchangeGatewayRegistryContracts]
+    +++ description: Auxiliary contract of the ExchangeGateway.
+```
+
+## Source code changes
+
+```diff
+.../ExchangeGateway/ExchangeGateway.sol            |  1 +
+ .../{.flat@1781510846 => .flat}/PerpEngine.sol     | 79 +++++++++++++++++-----
+ 2 files changed, 63 insertions(+), 17 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781510846 (main branch discovery), not current.
+
+```diff
+    EOA  (ethereal:0x9D4F46b2595F596fC826Db2e5A6c32bCfE8BdDA5) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "take over liquidated accounts."
++        "take over liquidated accounts, then settle funding and PnL on the resulting positions via the PerpEngine."
+    }
+```
+
+Generated with discovered.json: 0x6b1193cd40192d42f0c8c272ed83b221486f2213
+
+# Diff at Mon, 15 Jun 2026 08:08:46 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@91b2eba1ff9c1c8341d0eaf6594dac4179405ef6 block: 1780925503
+- current timestamp: 1781510846
+
+## Description
+
+Conduit Multisig 2 dropped one signer.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "arb1:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.multisigThreshold:
+-        "4 of 11 (36%)"
++        "4 of 10 (40%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780925503 (main branch discovery), not current.
+
+```diff
+    EOA  (ethereal:0x98046Bd286715D3B0BC227Dd7a956b83D8978603) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract PythLazer (ethereal:0xACeA761c27A909d4D3895128EBe6370FDE2dF481) [ethereal/PythLazer] {
+    +++ description: Used to verify offchain signed oracle data.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+Generated with discovered.json: 0xc7d4dd2e6c54d4e47f1c28e742912f58b7752db9
+
+# Diff at Tue, 09 Jun 2026 12:43:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780925503
+- current timestamp: 1780925503
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780925503 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0x12473dC3cBefb64337B6c7A772F25f4d2d9b45c3) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x80e046764185e776100A4f59079C2B00327f279A) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x7cccd5be719e64dbcaeacfb376df705ef75c7d5a
+
+# Diff at Mon, 08 Jun 2026 13:33:31 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@7b249a098f7367cb0ead3d881bbc57b408521134 block: 1780398295
+- current timestamp: 1780925503
+
+## Description
+
+Ethereal SafeL2 (on ethereal chain) rotated one signer.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (ethereal:0x3F93bCc6201558aE2d7528a85575cF07679Bb50e) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "ethereal:0x66096e581863EC2682e4E317Da41B80510a274F6"
+      values.$members.1:
+-        "ethereal:0xFBE49A82CB2BFF6Fa4C2B1F0d165A5E1175Aac83"
+    }
+```
+
+Generated with discovered.json: 0xcb6d73c472180733e09d5b894f0c1b793852608b
+
+# Diff at Tue, 02 Jun 2026 11:08:46 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1778232940
+- current timestamp: 1780398295
+
+## Description
+
+Conduit Multisig 2 rotated one signer (operator key `0x3840…fd5f` → `0xcdC9…4853`); same rotation propagated across Conduit Multisigs 1/2/3 on eth/arb1/base.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "arb1:0xcdC931935768c0562AfE989A366a3Dc4d52F4853"
+      values.$members.8:
+-        "arb1:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    }
+```
+
 Generated with discovered.json: 0x6517da95ca07737119b50ca2e3f673556c11bd78
 
 # Diff at Fri, 22 May 2026 15:43:25 GMT:

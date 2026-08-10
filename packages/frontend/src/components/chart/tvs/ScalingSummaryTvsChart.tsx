@@ -1,4 +1,5 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { formatCurrency, UnixTime } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import compact from 'lodash/compact'
 import { useMemo } from 'react'
 import { AreaChart } from 'recharts'
@@ -34,9 +35,8 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
 import { PercentChange } from '~/components/PercentChange'
 import { ChevronIcon } from '~/icons/Chevron'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartRange } from '~/utils/range/range'
 import type { ChartUnit } from '../types'
 import { tvsRangeToReadable } from './tvsRangeToReadable'
@@ -72,13 +72,16 @@ export function ScalingSummaryTvsChart({
   unit: ChartUnit
   range: ChartRange
 }) {
+  const trpc = useTRPC()
   const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
-  const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
-    range,
-    excludeAssociatedTokens: false,
-    excludeRwaRestrictedTokens: true,
-    filter: { type: 'layer2' },
-  })
+  const { data, isLoading } = useQuery(
+    trpc.tvs.recategorisedChart.queryOptions({
+      range,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
+      filter: { type: 'layer2' },
+    }),
+  )
 
   const chartData = useMemo(() => {
     return data?.chart.map(

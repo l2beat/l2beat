@@ -5,6 +5,7 @@ import { IconContractUnverified } from '../icons/IconContractUnverified'
 import { IconDiamond } from '../icons/IconDiamond'
 import { IconEoa } from '../icons/IconEoa'
 import { IconEoaPermissioned } from '../icons/IconEoaPermissioned'
+import { IconGroup } from '../icons/IconGroup'
 import { IconMultisig } from '../icons/IconMultisig'
 import { IconTimelock } from '../icons/IconTimelock'
 import { IconToken } from '../icons/IconToken'
@@ -20,6 +21,7 @@ export const ADDRESS_ICON_COMPONENTS = {
   Diamond: IconDiamond,
   Untemplatized: IconUntemplatized,
   Contract: IconContract,
+  Group: IconGroup,
   Unknown: IconContractUnverified,
 }
 

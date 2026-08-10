@@ -13,5 +13,11 @@
     "hash": "0x404b422e4f3c5aebc79f8e98018dba99a74160264438944292fdeee40a4e68f1",
     "address": "eth:0x3d745b8815F9be5BF053858165f8aB1F58c77932",
     "blockNumber": 23436372
+  },
+  "UpgradeExecutor_l2": {
+    "hash": "0x4f3e8e6c5b1c8bb195977df29816a2b30d65f6017df81bd01ba9934736baf1c8",
+    "address": "robinhood:0x3c3E52bC8C181D06A76e2518bBc655C5BB3Ce7Cd",
+    "chain": "robinhood",
+    "blockNumber": 3091263
   }
 }

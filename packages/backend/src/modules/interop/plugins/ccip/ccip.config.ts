@@ -42,6 +42,7 @@ const CHAINLINK_TO_L2BEAT: Record<string, string> = {
   // Ethereum
   mainnet: 'ethereum',
   // L2s on Ethereum
+  'abstract-mainnet': 'abstract',
   'ethereum-mainnet-arbitrum-1': 'arbitrum',
   'ethereum-mainnet-base-1': 'base',
   'ethereum-mainnet-optimism-1': 'optimism',
@@ -57,23 +58,31 @@ const CHAINLINK_TO_L2BEAT: Record<string, string> = {
   'ethereum-mainnet-unichain-1': 'unichain',
   'ethereum-mainnet-polygon-zkevm-1': 'polygonzkevm',
   'ethereum-mainnet-taiko-1': 'taiko',
+  'ethereum-mainnet-xlayer-1': 'xlayer',
+  'polygon-mainnet-katana': 'katana',
+  'robinhood-mainnet': 'robinhood',
   // Other L1s
   'avalanche-mainnet': 'avalanche',
   'bsc-mainnet': 'bsc',
   'matic-mainnet': 'polygonpos',
   'celo-mainnet': 'celo',
+  // Chainlink still uses Gnosis Chain's former xDai name in its CCIP config.
+  'xdai-mainnet': 'gnosis',
+  // Keep the current name as an alias in case the upstream config migrates.
   'gnosis-mainnet': 'gnosis',
   'metis-mainnet': 'metis',
   'soneium-mainnet': 'soneium',
   'hyperliquid-mainnet': 'hyperevm',
   'monad-mainnet': 'monad',
   'megaeth-mainnet': 'megaeth',
+  'plasma-mainnet': 'plasma',
+  'tempo-mainnet': 'tempo',
 }
 
 // Maps a Chainlink chain name to an L2Beat chain name, or derives a readable
 // "Unknown_<name>" fallback from the Chainlink naming convention.
 // e.g. "ethereum-mainnet-base-1" → "base", "solana-mainnet" → "Unknown_solana"
-function toChainName(chainlinkName: string): string {
+export function toChainName(chainlinkName: string): string {
   const l2beat = CHAINLINK_TO_L2BEAT[chainlinkName]
   if (l2beat) return l2beat
 

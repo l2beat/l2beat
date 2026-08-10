@@ -1,3 +1,88 @@
+Generated with discovered.json: 0x57d1909b8e793f1bf65896ea0a9832c6775d0bd4
+
+# Diff at Tue, 09 Jun 2026 12:43:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1722265907
+- current timestamp: 1722265907
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1722265907 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0x1c22740A0B4511E11D76434A424487862b593901","role":".challenger"}
+      receivedPermissions.1:
+-        {"permission":"challenge","from":"eth:0x1c22740A0B4511E11D76434A424487862b593901","role":".CHALLENGER"}
+      receivedPermissions.2:
+-        {"permission":"guard","from":"eth:0xadE916De67511E5C24af4174Be67143d0dA94959","role":".guardian"}
+      receivedPermissions.3.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.3.role:
+-        ".guardian"
++        ".challenger"
+      receivedPermissions.3.from:
+-        "eth:0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15"
++        "eth:0x1c22740A0B4511E11D76434A424487862b593901"
+      receivedPermissions.3.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.4.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.4.role:
+-        ".GUARDIAN"
++        ".CHALLENGER"
+      receivedPermissions.4.from:
+-        "eth:0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15"
++        "eth:0x1c22740A0B4511E11D76434A424487862b593901"
+      receivedPermissions.4.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xadE916De67511E5C24af4174Be67143d0dA94959","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".GUARDIAN"}
+    }
+```
+
+```diff
+    EOA  (eth:0xb2a5571C23d13Ce16EF3e993FbE8d225D3f67366) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xde794bEc196832474f2F218135bFd0f7cA7fb038) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x9994362e7c6dc4993c51f6cd3739f07976d799b0
 
 # Diff at Fri, 08 May 2026 07:52:26 GMT:

@@ -15,6 +15,7 @@ import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { buildInteropUrl } from './buildInteropUrl'
 import { getValidInteropSelection } from './getValidInteropSelection'
 import { parseInteropSelectionFromSearchParams } from './parseInteropSelectionFromSearchParams'
+import { toggleSelection } from './toggleSelection'
 import type { InteropSelection } from './types'
 
 interface InteropSelectedChainsContextType {
@@ -202,21 +203,6 @@ export function InteropSelectedChainsProvider({
       {children}
     </InteropSelectedChainsContext.Provider>
   )
-}
-
-function toggleSelection(
-  selection: string[],
-  chainId: string,
-  allChainIds: string[],
-): string[] {
-  const nextSet = new Set(selection)
-  if (nextSet.has(chainId)) {
-    nextSet.delete(chainId)
-  } else {
-    nextSet.add(chainId)
-  }
-
-  return allChainIds.filter((id) => nextSet.has(id))
 }
 
 function isSameSelection(left: InteropSelection, right: InteropSelection) {

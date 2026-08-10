@@ -1,4 +1,5 @@
 import { v } from '@l2beat/validate'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { optionToRange } from '~/utils/range/range'
 import { getRecategorisedTvsChart } from './getRecategorisedTvsChartData'
@@ -22,13 +23,14 @@ export type TvsChartStats = {
 type TvsStat = {
   value: number
   change: number | undefined
+  changePeriod: PercentageChangePeriod
 }
 
 export async function getTvsChartStats({
   filter,
   excludeAssociatedTokens,
   excludeRwaRestrictedTokens,
-}: TvsChartStatsParams): Promise<TvsChartStats | undefined> {
+}: TvsChartStatsParams): Promise<TvsChartStats | null> {
   const { chart } = await getRecategorisedTvsChart({
     range: optionToRange('7d'),
     excludeAssociatedTokens,
@@ -38,7 +40,7 @@ export async function getTvsChartStats({
 
   const oldest = chart.at(0)
   const newest = chart.at(-1)
-  if (!oldest || !newest) return undefined
+  if (!oldest || !newest) return null
 
   const oldestRollups = oldest[1] ?? 0
   const oldestValidiumsAndOptimiums = oldest[2] ?? 0
@@ -51,6 +53,7 @@ export async function getTvsChartStats({
   const stat = (now: number, then: number): TvsStat => ({
     value: now,
     change: calculatePercentageChange(now, then),
+    changePeriod: '7D',
   })
 
   return {

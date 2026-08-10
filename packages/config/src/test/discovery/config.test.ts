@@ -35,7 +35,7 @@ export const onChainProjects: string[] = [
   'vector',
   'espresso',
   'dydx',
-  'tokens',
+  'lido',
   'gateway',
   'opcm16',
   'debridge',
@@ -45,6 +45,7 @@ export const onChainProjects: string[] = [
   'privacy-pools',
   'railgun',
   'tornado-cash',
+  'butternetwork',
 ]
 
 describe('discovery config.jsonc', () => {
@@ -131,7 +132,7 @@ describe('discovery config.jsonc', () => {
         `${c.name} project is outdated: ${reasons.map((r) => templateService.formatReason(r)).join('\n')}.\n Run "l2b refresh-discovery"`,
       )
     }
-  })
+  }).timeout(10_000)
 
   describe('shape addresses are unique', () => {
     const shapes = templateService.listAllTemplates()
@@ -317,19 +318,6 @@ describe('discovery config.jsonc', () => {
       }
     })
 
-    describe('all shared modules exist', () => {
-      for (const c of configs ?? []) {
-        it(c.name, () => {
-          for (const sharedModule of c.structure.sharedModules) {
-            assert(
-              configs?.flat()?.some((x) => x.name === sharedModule),
-              `Shared module ${sharedModule} does not exist (${c.name})`,
-            )
-          }
-        })
-      }
-    })
-
     // inversion logic depends on this
     describe('all accessControl fields keys are accessControl', () => {
       for (const c of configs ?? []) {
@@ -385,7 +373,7 @@ describe('discovery config.jsonc', () => {
         } of your local discovered.json (${currentHash.toString()}) does not match the hash stored in the diffHistory.md (${savedHash.toString()}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
       )
     }
-  })
+  }).timeout(10_000)
 
   it('is colorized correctly', () => {
     for (const c of configs ?? []) {

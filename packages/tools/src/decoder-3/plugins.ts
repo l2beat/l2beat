@@ -1,7 +1,9 @@
 import { getCreate2Address, toFunctionSelector } from 'viem'
 import { type DecodedValue, decodeType } from './decode'
+import { decodePacked, type PackedSchema } from './packed'
+import { OP_PERMISSIONED_GAME_ARGS_SCHEMA } from './packedSchemas'
 
-const plugins = [multiSendPlugin, create2FactoryPlugin]
+const plugins = [packedArgumentPlugin, multiSendPlugin, create2FactoryPlugin]
 
 export function decode(
   data: `0x${string}`,
@@ -29,6 +31,63 @@ export function decode(
 }
 
 const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
+
+interface PackedArgumentCodec {
+  functionAbi: string
+  selector: `0x${string}`
+  parameter: string
+  matches: Readonly<Record<string, string>>
+  schema: PackedSchema
+}
+
+const SET_IMPLEMENTATION_ABI =
+  'function setImplementation(uint32 _gameType, address _impl, bytes _args)'
+const OP_PERMISSIONED_DISPUTE_GAME_V2_4_0 =
+  '0xe1dffcbe4e22b813f26d2106d943c102e7cab87e'
+
+const packedArgumentCodecs: PackedArgumentCodec[] = [
+  {
+    functionAbi: SET_IMPLEMENTATION_ABI,
+    selector: toFunctionSelector(SET_IMPLEMENTATION_ABI),
+    parameter: 'args',
+    matches: {
+      gameType: '1',
+      impl: OP_PERMISSIONED_DISPUTE_GAME_V2_4_0,
+    },
+    schema: OP_PERMISSIONED_GAME_ARGS_SCHEMA,
+  },
+]
+
+function packedArgumentPlugin(
+  data: `0x${string}`,
+  chainId: number,
+  address?: `0x${string}`,
+): DecodedValue | undefined {
+  for (const codec of packedArgumentCodecs) {
+    if (data.slice(0, 10).toLowerCase() !== codec.selector) continue
+
+    const decoded = decodeType(codec.functionAbi, data, chainId, address)
+    const members = decoded.members ?? []
+    const matches = Object.entries(codec.matches).every(([name, value]) =>
+      members.some(
+        (member) =>
+          member.name === name &&
+          member.value.toLowerCase() === value.toLowerCase(),
+      ),
+    )
+    if (!matches) continue
+
+    const parameter = members.find((member) => member.name === codec.parameter)
+    if (!parameter || parameter.type !== 'bytes') continue
+
+    const packed = decodePacked(codec.schema, parameter.bytes, chainId)
+    packed.name = parameter.name
+    decoded.members = members.map((member) =>
+      member === parameter ? packed : member,
+    )
+    return decoded
+  }
+}
 
 function applyCallTargetHeuristic(value: DecodedValue) {
   if (!value.members) return

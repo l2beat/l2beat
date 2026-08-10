@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useEffect, useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
@@ -7,7 +8,7 @@ import { useTable } from '~/hooks/useTable'
 import type { CostsTableData } from '~/server/features/scaling/costs/getCostsTableData'
 import type { ScalingCostsEntry } from '~/server/features/scaling/costs/getScalingCostsEntries'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import type { CostsMetric } from '../CostsMetricContext'
 import { useCostsMetricContext } from '../CostsMetricContext'
 import { useCostsTimeRangeContext } from '../CostsTimeRangeContext'
@@ -20,12 +21,13 @@ interface Props {
 }
 
 export function ScalingCostsTable({ entries }: Props) {
+  const trpc = useTRPC()
   const { range } = useCostsTimeRangeContext()
   const { unit } = useCostsUnitContext()
   const { metric } = useCostsMetricContext()
   const { sorting, setSorting } = useTableSorting()
 
-  const { data } = api.costs.table.useQuery({ range })
+  const { data } = useQuery(trpc.costs.table.queryOptions({ range }))
 
   const tableEntries = useMemo(() => {
     const tableEntries = entries.map((e) => mapToTableEntry(e, data, unit))

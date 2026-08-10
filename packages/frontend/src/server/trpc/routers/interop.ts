@@ -1,5 +1,8 @@
+import { getIntentBridgesData } from '~/server/features/scaling/interop/getIntentBridgesData'
+import { getInteropBridgeSelectionData } from '~/server/features/scaling/interop/getInteropBridgeSelectionData'
 import { getInteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { getInteropFlows } from '~/server/features/scaling/interop/getInteropFlows'
+import { getInteropProtocolsByVolume } from '~/server/features/scaling/interop/getInteropProtocolsByVolume'
 import { getInteropProtocolTransfers } from '~/server/features/scaling/interop/getInteropProtocolTransfers'
 import { getInteropTokenData } from '~/server/features/scaling/interop/getInteropTokenData'
 import { getInteropTokensInfinite } from '~/server/features/scaling/interop/getInteropTokens'
@@ -7,8 +10,10 @@ import { getInteropTokensPairsInfinite } from '~/server/features/scaling/interop
 import { getInteropTokenTransfers } from '~/server/features/scaling/interop/getInteropTokenTransfers'
 import { getTokenFrameworksData } from '~/server/features/scaling/interop/getTokenFrameworksData'
 import {
+  InteropBridgeSelectionParams,
   InteropDashboardParams,
   InteropFlowsParams,
+  InteropProtocolsByVolumeParams,
   InteropProtocolTransfersParams,
   InteropSelectionInput,
   InteropTokenParams,
@@ -21,6 +26,9 @@ export const interopRouter = router({
   dashboard: procedure
     .input(InteropDashboardParams)
     .query(({ input }) => getInteropDashboardData(input)),
+  bridgeSelection: procedure
+    .input(InteropBridgeSelectionParams)
+    .query(({ input }) => getInteropBridgeSelectionData(input)),
   tokenDashboard: procedure
     .input(InteropTokenParams)
     .query(({ input }) => getInteropTokenData(input)),
@@ -30,6 +38,9 @@ export const interopRouter = router({
   tokenFrameworks: procedure
     .input(InteropSelectionInput)
     .query(({ input }) => getTokenFrameworksData(input)),
+  intentBridges: procedure
+    .input(InteropSelectionInput)
+    .query(({ input }) => getIntentBridgesData(input)),
   tokens: procedure
     .input(InteropTopItemsInfiniteParams)
     .query(({ input }) => getInteropTokensInfinite(input)),
@@ -42,4 +53,7 @@ export const interopRouter = router({
   flows: procedure
     .input(InteropFlowsParams)
     .query(({ input }) => getInteropFlows(input)),
+  protocolsByVolume: procedure
+    .input(InteropProtocolsByVolumeParams)
+    .query(({ input }) => getInteropProtocolsByVolume(input)),
 })

@@ -5,6 +5,7 @@ import { useConfigModels } from '../hooks/useConfigModels'
 import { FieldTag } from './FieldTag'
 import { FieldValueDisplay } from './FieldValueDisplay'
 import { FieldConfigDialog } from './field-config-dialog/FieldConfigDialog'
+import { PastUpgradesDisplay } from './PastUpgradesDisplay'
 
 export interface FieldDisplayProps {
   field: Field
@@ -174,7 +175,11 @@ export function FieldDisplay({ field }: FieldDisplayProps) {
         </div>
       )}
       <div className="overflow-x-auto bg-coffee-900 px-10 py-0.5">
-        <FieldValueDisplay topLevel value={field.value} />
+        {field.name === '$pastUpgrades' ? (
+          <PastUpgradesDisplay value={field.value} />
+        ) : (
+          <FieldValueDisplay topLevel value={field.value} />
+        )}
       </div>
     </li>
   )

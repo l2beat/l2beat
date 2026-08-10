@@ -1,0 +1,137 @@
+{
+  "PedersenHashPointsYColumn_05c19e64": {
+    "hash": "0x05c19e648542d62b4ddf24a4fa4c15a3a6e25cd850736e41c5544eb570a9f2a2",
+    "address": "eth:0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed",
+    "blockNumber": 20376781
+  },
+  "PoseidonPoseidonFullRoundKey1Column_0b378742": {
+    "hash": "0x0b3787429d9d8281d861b3ec991d3042eed31b610240e2a0310d8f59ef194622",
+    "address": "eth:0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc",
+    "blockNumber": 20376818
+  },
+  "EcdsaPointsYColumn_16786b57": {
+    "hash": "0x16786b57094cb8c3157552703287a310748c4453d743f9f2fa22adc7a6bf991c",
+    "address": "eth:0xCaea5002758D5B977680Fe65164B7fE6a062C771",
+    "blockNumber": 23531471
+  },
+  "CpuConstraintPoly_23119114": {
+    "hash": "0x23119114187536afb19dd113fa8b7a5e59da2d76ff5ad78bde5efe9dabe09c67",
+    "address": "eth:0x05C98569CA566a2035b87dE7d1b623C950798035",
+    "blockNumber": 20377720
+  },
+  "PoseidonPoseidonPartialRoundKey0Column_25dd1929": {
+    "hash": "0x25dd1929fec2a9443c338244c4662b650c29efb6cf29691e799b2046bb1e138b",
+    "address": "eth:0x5318edCfEcAF84EB5A3A4D364C2dCFF06083953E",
+    "blockNumber": 23531474
+  },
+  "EcdsaPointsXColumn_412fb414": {
+    "hash": "0x412fb414e7fea74325d60a077f704a49cf6d23a7a1d43c9fd09be7e9a4e5e76f",
+    "address": "eth:0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1",
+    "blockNumber": 20376781
+  },
+  "CpuConstraintPoly_5014b4dd": {
+    "hash": "0x5014b4dd4ac75d575b7511cda643b511a4f57eaffccb5aad8fe12fd2a412be65",
+    "address": "eth:0x547eeCf2aeE8f3859732BCFFC70dE24C75CE0717",
+    "blockNumber": 20376784
+  },
+  "CpuConstraintPoly_5595d485": {
+    "hash": "0x5595d4856475241caf1eea25b1f3921875fcd4f8f0481ef29d2cae21d74394fb",
+    "address": "eth:0x2c9726B081305F314A74D570F0FED8dd9fab01A1",
+    "blockNumber": 23531474
+  },
+  "PoseidonPoseidonFullRoundKey2Column_57c50a0d": {
+    "hash": "0x57c50a0d1562f3139dbb628a80e20f0d13db2a8eec9672350c40e474bed459f6",
+    "address": "eth:0x4576bA889ddCb27738c4D3b8dF2FF2616650BA0b",
+    "blockNumber": 23531474
+  },
+  "PoseidonPoseidonPartialRoundKey1Column_5e84fb9b": {
+    "hash": "0x5e84fb9b706cdc8accbf714b0921245dc0fa26f9b14bbeb97b3d347abd832b5d",
+    "address": "eth:0x032e5cDb729Ce94638ACA9e82A22688109B43046",
+    "blockNumber": 20376819
+  },
+  "PedersenHashPointsXColumn_6eb94f42": {
+    "hash": "0x6eb94f42b6ee59326d27f5ec055a5872adf1df7825af5df411459832c72ba175",
+    "address": "eth:0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1",
+    "blockNumber": 20376781
+  },
+  "CpuConstraintPoly_7022113b": {
+    "hash": "0x7022113b2e37d8a13b820de3fc4a30b173169193b244b19c704a5d9411e37ad0",
+    "address": "eth:0x4feFa770f154624067cF9d8Ff4B925a21E33Abe5",
+    "blockNumber": 20376781
+  },
+  "CpuOods_75b9c03f": {
+    "hash": "0x75b9c03f92fe5939c6afa765489c0bbe8d66237fabc1dfa3a14fc0f109bc4f38",
+    "address": "eth:0x0aCC3292202b05175F86C7Bf4bd6011eB79eC5cb",
+    "blockNumber": 20376784
+  },
+  "CpuConstraintPoly_7deae45f": {
+    "hash": "0x7deae45fbdef9d73c9faefb89a11904e2f2bd48e4cb9365f1ba55739857cbc62",
+    "address": "eth:0xC3938063598A23B9f3c71cA8AFa3A22fdB287f7B",
+    "blockNumber": 20376782
+  },
+  "CpuOods_8c46f2cb": {
+    "hash": "0x8c46f2cb0ccf501034b8dbe976044b44d42b9596de9c9b876cc111ba6d2bea7d",
+    "address": "eth:0xa4D0Bb20c708262155378C9D14A5A6A863E15Dd4",
+    "blockNumber": 23531471
+  },
+  "CpuConstraintPoly_8caeb68c": {
+    "hash": "0x8caeb68cf2d1508fc57800f8ff78ad1b3c9ad8d0f1f6e30998fd012c9b6182ba",
+    "address": "eth:0x3E727f44Fd2c92bd960AAb86DaAcD1A831B16eba",
+    "blockNumber": 23531473
+  },
+  "PoseidonPoseidonFullRoundKey0Column_a1aa27ff": {
+    "hash": "0xa1aa27ff7953106ca4dfbaa9583880e2df0d01bf601c63858504ed7fefc2261c",
+    "address": "eth:0x21578B24F86AdF6f59C406f641F693745C31Ea8F",
+    "blockNumber": 23531474
+  },
+  "CpuConstraintPoly_a863111e": {
+    "hash": "0xa863111e2d969c242b95e592a09048d8ae0e7c2b8c4e5d237f420f2ae9d6b6b0",
+    "address": "eth:0x86ABf7A15Ea9Ff955C0E6e168DA4cd009a8CdA46",
+    "blockNumber": 20376784
+  },
+  "MerkleStatementContract_aca82336": {
+    "hash": "0xaca823368006ed788b5c39c8a5441f4078675429b11a0255fa3c4739da757787",
+    "address": "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
+    "blockNumber": 20376781
+  },
+  "CpuOods_c2263421": {
+    "hash": "0xc2263421f1724484975ff224cd66eeaf740b4c5fd0635b8e9c19c073f4ce1831",
+    "address": "eth:0x6454b594e2C968ab4BdA63139B0df83A4EfD4A6e",
+    "blockNumber": 20376782
+  },
+  "CpuOods_c4d2148d": {
+    "hash": "0xc4d2148d6cd791873abac02aba0f89a5c902b9b810c5bb301604470ce047c01d",
+    "address": "eth:0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17",
+    "blockNumber": 20377720
+  },
+  "CpuConstraintPoly_c6b85b79": {
+    "hash": "0xc6b85b7926407ac9352754cb496033d4bf5689bc99395d4b8b15d2d79b245209",
+    "address": "eth:0x1BdE14B50e7dAeD71eE14F7e8defaa3d8A7D4420",
+    "blockNumber": 23531473
+  },
+  "CpuOods_d446fcab": {
+    "hash": "0xd446fcab8f5c29a3cb78d30509ab38f9829fd14d35464cfe3d4049d5c82aa13b",
+    "address": "eth:0x35e9F63Efc97E008f3f9097eA3293b540483e7Cb",
+    "blockNumber": 23531473
+  },
+  "CpuOods_e02da9f9": {
+    "hash": "0xe02da9f94c167d2e7810a91f52b8d6ece9428c858d2cb050de600148b6776251",
+    "address": "eth:0x4742f8723CAE9C17Cb1D54708898904fB43621c9",
+    "blockNumber": 20376820
+  },
+  "CpuOods_e3889a0e": {
+    "hash": "0xe3889a0e87718f39844e3ed41e417ae36561dccf53941c5a69bc8300b6934f79",
+    "address": "eth:0xaE325CE505AA13EDC30d48187B05c24A3BaC2707",
+    "blockNumber": 23531472
+  },
+  "CpuOods_e390f739": {
+    "hash": "0xe390f7396234c6cc841aa421a1d1ccb8872ccf3a354a248e45f65729dae6c087",
+    "address": "eth:0xa40115c39Dc257E5aAE39e2F311AF6a0247bb766",
+    "blockNumber": 23531474
+  },
+  "FriStatementContract_f71797d4": {
+    "hash": "0xf71797d479a665686e6fcccb6c80b49e5dfb373f38bb8363729d7eacede46b91",
+    "address": "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
+    "blockNumber": 20376781
+  }
+}

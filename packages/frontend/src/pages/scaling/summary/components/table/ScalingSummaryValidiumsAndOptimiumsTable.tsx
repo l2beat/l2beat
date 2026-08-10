@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
@@ -6,7 +7,7 @@ import { useTvsDisplayControlsContext } from '~/components/table/display/context
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { toTableRows } from '../../utils/toTableRows'
 import { getScalingSummaryValidiumAndOptimiumsColumns } from './columns'
 
@@ -15,14 +16,17 @@ interface Props {
 }
 
 export function ScalingSummaryValidiumsAndOptimiumsTable({ entries }: Props) {
+  const trpc = useTRPC()
   const { display } = useTvsDisplayControlsContext()
   const { sorting, setSorting } = useTableSorting()
 
-  const { data, isLoading } = api.tvs.table.useQuery({
-    type: 'validiumsAndOptimiums',
-    excludeAssociatedTokens: display.excludeAssociatedTokens,
-    excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.tvs.table.queryOptions({
+      type: 'validiumsAndOptimiums',
+      excludeAssociatedTokens: display.excludeAssociatedTokens,
+      excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
+    }),
+  )
 
   const tableEntries = useMemo(
     () =>

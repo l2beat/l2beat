@@ -20,7 +20,7 @@ export interface ScalingBadgeDialogData {
 
 export async function getScalingBadgeDialogData(input: {
   badgeId: string
-}): Promise<ScalingBadgeDialogData | undefined> {
+}): Promise<ScalingBadgeDialogData | null> {
   const projects = await ps.getProjects({
     select: ['display', 'scalingInfo'],
     where: ['scalingInfo'],
@@ -58,7 +58,7 @@ export async function getScalingBadgeDialogData(input: {
   }
 
   const selectedBadge = badgesById.get(input.badgeId)
-  if (!selectedBadge) return undefined
+  if (!selectedBadge) return null
 
   const projectsWithBadge = (projectsByBadge.get(input.badgeId) ?? []).sort(
     (a, b) => a.name.localeCompare(b.name),

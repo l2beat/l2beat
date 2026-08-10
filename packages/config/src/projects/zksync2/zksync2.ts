@@ -18,7 +18,8 @@ const chainId = 324
 const l1migrationTs = UnixTime(1769897051) // 2023-11-03T00:32:11Z
 
 // timestamp of the first executeBatchesSharedBridge trx on 0xdC26B08F0335b68721F64001C38b05D0BC9B539d
-const eraMultisigValidatorTs = UnixTime(1777393175)
+const eraMultisigValidatorTs = UnixTime(1777393451)
+const eraMultisigValidatorBlock = 24979735 // block with timestamp eraMultisigValidatorTs
 
 export const zksync2: ScalingProject = zkStackL2({
   chainId,
@@ -104,7 +105,7 @@ export const zksync2: ScalingProject = zkStackL2({
       daLayer: ProjectId('ethereum'),
       sinceBlock: 21809364,
       untilBlock: 23016895, // migration to Gateway
-      inbox: 'eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
+      inbox: '0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
       sequencers: [
         '0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2',
         '0x30066439887C0a509Cb38E45c9262E6924a29BbD',
@@ -118,7 +119,7 @@ export const zksync2: ScalingProject = zkStackL2({
       daLayer: ProjectId('ethereum'),
       sinceBlock: 23016895, // migration to Gateway
       untilBlock: 23633924, // v29 upgrade
-      inbox: 'eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
+      inbox: '0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
       sequencers: [
         '0x14F19299476664665eDa17DBb7dA7e62E3253aa8',
         '0x7d95f0B9D3383D58E39a75a67760aA2153D355A2',
@@ -128,10 +129,26 @@ export const zksync2: ScalingProject = zkStackL2({
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: 23633924,
-      inbox: 'eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776',
+      untilBlock: eraMultisigValidatorBlock,
+      inbox: '0x2e5110cF18678Ec99818bFAa849B8C881744b776',
       sequencers: [
         '0x14F19299476664665eDa17DBb7dA7e62E3253aa8',
         '0x7d95f0B9D3383D58E39a75a67760aA2153D355A2',
+        '0xc75cDcBEef3aE3365ABF0217815748586F9047F1',
+        '0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7',
+        '0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd',
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: eraMultisigValidatorBlock,
+      inbox: '0xdC26B08F0335b68721F64001C38b05D0BC9B539d',
+      sequencers: [
+        '0xa90c7CDB553332948E2943431436117eCFb1e781',
+        '0x28942E6870612893B96F77De0F485fcE3497AAA8',
+        '0xc75cDcBEef3aE3365ABF0217815748586F9047F1',
+        '0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd',
       ],
     },
   ],

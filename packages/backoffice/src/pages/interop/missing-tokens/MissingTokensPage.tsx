@@ -1,3 +1,4 @@
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import { Badge } from '~/components/core/Badge'
@@ -5,14 +6,17 @@ import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
-import { useBackendApi } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
+import { TransferDataRangeSelect } from '../TransferDataRangeSelect'
+import { useTransferDataRange } from '../transferDataRange'
 import { MissingTokenStatusBadge } from './MissingTokenStatusBadge'
 import { MissingTokenStatusGuide } from './MissingTokenStatusGuide'
 import { MissingTokensTable } from './table/MissingTokensTable'
 import type { ChainMetadata, MissingTokenRow } from './types'
 
 export function MissingTokensPage() {
-  const api = useBackendApi()
+  const trpc = useBackendTrpc()
+  const [range, setRange] = useTransferDataRange()
   const {
     data: missingTokensData,
     error: missingTokensError,
@@ -20,7 +24,7 @@ export function MissingTokensPage() {
     isLoading: isMissingTokensLoading,
     isFetching: isMissingTokensFetching,
     refetch: refetchMissingTokens,
-  } = api.interop.missingTokens.list.useQuery()
+  } = useQuery(trpc.interop.missingTokens.list.queryOptions({ range }))
 
   const {
     data: chainsData,
@@ -28,7 +32,7 @@ export function MissingTokensPage() {
     isError: isChainsError,
     isFetching: isChainsFetching,
     refetch: refetchChains,
-  } = api.interop.chains.metadata.useQuery()
+  } = useQuery(trpc.interop.chains.metadata.queryOptions())
 
   const rows: MissingTokenRow[] = missingTokensData ?? []
   const chains: ChainMetadata[] = chainsData ?? []
@@ -52,7 +56,9 @@ export function MissingTokensPage() {
     },
   )
 
-  const requeueMissingTokens = api.interop.missingTokens.requeue.useMutation()
+  const requeueMissingTokens = useMutation(
+    trpc.interop.missingTokens.requeue.mutationOptions(),
+  )
 
   const refetchAll = async () => {
     await Promise.all([refetchMissingTokens(), refetchChains()])
@@ -83,19 +89,28 @@ export function MissingTokensPage() {
       title="Missing tokens"
       description="Transfers missing financial attribution, grouped by chain and address and cross-checked against TokenDB."
       actions={
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => void refetchAll()}
-          disabled={isMissingTokensFetching || isChainsFetching}
-        >
-          <RefreshCwIcon
-            className={
-              isMissingTokensFetching || isChainsFetching ? 'animate-spin' : ''
-            }
+        <>
+          <TransferDataRangeSelect
+            value={range}
+            onValueChange={setRange}
+            disabled={isMissingTokensFetching}
           />
-          Refresh
-        </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => void refetchAll()}
+            disabled={isMissingTokensFetching || isChainsFetching}
+          >
+            <RefreshCwIcon
+              className={
+                isMissingTokensFetching || isChainsFetching
+                  ? 'animate-spin'
+                  : ''
+              }
+            />
+            Refresh
+          </Button>
+        </>
       }
       summary={
         <>

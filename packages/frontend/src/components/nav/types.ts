@@ -4,7 +4,6 @@ export type NavGroup =
       title: string
       match: string
       icon: React.ReactNode
-      preventTitleNavigation?: boolean
       disableMobileTabs?: boolean
       links: NavLink[]
       secondaryLinks?: NavLink[]
@@ -21,4 +20,6 @@ export interface NavLink {
   href: string
   disabled?: boolean
   accessory?: React.ReactNode
+  subLinks?: NavLink[]
+  exactMatch?: boolean
 }

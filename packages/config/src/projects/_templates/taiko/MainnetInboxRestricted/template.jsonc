@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["getProposalHash", "proxiableUUID"],
+  "fields": {
+    "noForce": {
+      "handler": { "type": "hardcoded", "value": [true] },
+      "description": "Forced inclusions are disabled in this implementation: saveForcedInclusion() always reverts and propose() only accepts zero forced inclusions.",
+      "severity": "HIGH"
+    },
+    "paused": { "severity": "HIGH" },
+    "getCurrentForcedInclusionFee": { "severity": "HIGH" },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause the rollup system, activate the inbox, and execute the one-time state recovery path."
+        }
+      ]
+    }
+  },
+  "ignoreInWatchMode": ["getForcedInclusionState", "getCoreState"],
+  "category": "core",
+  "description": "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. Forced inclusion submission and processing are disabled in this implementation. Proposals must come from the configured proposer checker, and if the configured prover whitelist is non-empty, proofs from non-whitelisted provers revert; the configured permissionless proving delay is not used to open proving."
+}

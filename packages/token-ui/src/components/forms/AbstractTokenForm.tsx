@@ -1,6 +1,13 @@
+import { TOKEN_CATEGORIES } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { ArrowRightIcon, RefreshCwIcon } from 'lucide-react'
+import {
+  ArrowRightIcon,
+  PlusIcon,
+  RefreshCwIcon,
+  TrashIcon,
+} from 'lucide-react'
 import type { SubmitHandler, UseFormReturn } from 'react-hook-form'
+import { useFieldArray } from 'react-hook-form'
 import { toast } from 'sonner'
 import { Button, buttonVariants } from '~/components/core/Button'
 import {
@@ -27,7 +34,6 @@ import { parseDatePaste } from '~/utils/parseDate'
 import { Checkbox } from '../core/Checkbox'
 import { ExternalLink } from '../ExternalLink'
 
-const categoryValues = ['btc', 'ether', 'stablecoin', 'other'] as const
 const EMPTY_CATEGORY_VALUE = '__none__'
 
 export type AbstractTokenSchema = v.infer<typeof AbstractTokenSchema>
@@ -35,9 +41,26 @@ export const AbstractTokenSchema = v.object({
   id: v.string(),
   issuer: v.string().optional(),
   symbol: v.string().check(minLengthCheck(1)),
-  category: v.union([v.enum(categoryValues), v.null()]),
+  category: v.union([v.enum(TOKEN_CATEGORIES), v.null()]),
   coingeckoId: v.string().optional(),
   coingeckoListingTimestamp: v.string().optional(),
+  additionalCoingeckoEntries: v
+    .array(
+      v.object({
+        coingeckoId: v.string().check(minLengthCheck(1)),
+        coingeckoListingTimestamp: v.string().optional(),
+        iconUrl: v
+          .string()
+          .check((value) => {
+            if (value) {
+              return urlCheck(value)
+            }
+            return true
+          })
+          .optional(),
+      }),
+    )
+    .optional(),
   iconUrl: v
     .string()
     .check((value) => {
@@ -70,6 +93,15 @@ export function AbstractTokenForm({
   }
   children: React.ReactNode
 }) {
+  const {
+    fields: additionalCoingeckoEntryFields,
+    append: appendAdditionalCoingeckoEntry,
+    remove: removeAdditionalCoingeckoEntry,
+  } = useFieldArray({
+    control: form.control,
+    name: 'additionalCoingeckoEntries',
+  })
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit((values) => onSubmit(values))}>
@@ -218,6 +250,82 @@ export function AbstractTokenForm({
             )}
           />
 
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <FormLabel>Additional Coingecko entries</FormLabel>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() =>
+                  appendAdditionalCoingeckoEntry({
+                    coingeckoId: '',
+                    coingeckoListingTimestamp: '',
+                    iconUrl: '',
+                  })
+                }
+              >
+                <PlusIcon className="size-4" />
+              </Button>
+            </div>
+
+            {additionalCoingeckoEntryFields.map((entry, index) => (
+              <div
+                key={entry.id}
+                className="grid grid-cols-1 items-start gap-2 md:grid-cols-[1fr_1fr_1fr_auto]"
+              >
+                <FormField
+                  control={form.control}
+                  name={`additionalCoingeckoEntries.${index}.coingeckoId`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Coingecko ID</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`additionalCoingeckoEntries.${index}.coingeckoListingTimestamp`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Listing Timestamp</FormLabel>
+                      <FormControl>
+                        <Input type="date" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`additionalCoingeckoEntries.${index}.iconUrl`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Icon URL</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="icon"
+                  className="mt-7 shrink-0 text-white"
+                  onClick={() => removeAdditionalCoingeckoEntry(index)}
+                >
+                  <TrashIcon className="size-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+
           <FormField
             control={form.control}
             name="category"
@@ -241,7 +349,7 @@ export function AbstractTokenForm({
                     <SelectItem value={EMPTY_CATEGORY_VALUE}>
                       No category
                     </SelectItem>
-                    {categoryValues.map((category) => (
+                    {TOKEN_CATEGORIES.map((category) => (
                       <SelectItem key={category} value={category}>
                         {category}
                       </SelectItem>

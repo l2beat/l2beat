@@ -5,6 +5,15 @@
   "category": "gov",
   "ignoreMethods": ["getActions", "proposals", "proposalsLength"],
   "fields": {
+    "proposalCount": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0xe56c149b9a4f632c327b2bc8b691ebfd0d76354ca7b678faea1effbd9d9f223d"
+        ]
+      }
+    },
     "DELEGATOR_CONTRACT": {
       "description": "Delegator contract that executes successful proposal actions.",
       "severity": "HIGH"

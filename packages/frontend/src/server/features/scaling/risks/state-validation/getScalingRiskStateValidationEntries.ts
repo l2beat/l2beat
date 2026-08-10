@@ -26,6 +26,9 @@ import {
   type ContractUtils,
   getContractUtils,
 } from '~/utils/project/contracts-and-permissions/getContractUtils'
+import type { ProjectWithPageMetadata } from '~/utils/project/getProjectUrl'
+import { getProofSystemWithName } from '~/utils/project/getProofSystemWithName'
+import { getUsedZkCatalogProjects } from '~/utils/project/getUsedZkCatalogProjects'
 import {
   type CommonScalingEntry,
   getCommonScalingEntry,
@@ -51,7 +54,13 @@ export async function getScalingRiskStateValidationEntries() {
       select: ['zkCatalogInfo'],
     }),
     ps.getProjects({
-      optional: ['display', 'daBridge', 'scalingInfo', 'daLayer'],
+      optional: [
+        'display',
+        'daBridge',
+        'scalingInfo',
+        'daLayer',
+        'privacyInfo',
+      ],
     }),
     getContractUtils(),
     get7dTvsBreakdown({ type: 'all' }),
@@ -115,7 +124,7 @@ export interface ScalingRiskStateValidationValidityEntry
   tvsOrder: number
   proofSystem: ProjectScalingProofSystem
   isa: string | undefined
-  trustedSetupsByProofSystem: TrustedSetupsByProofSystem
+  trustedSetups: TrustedSetupsByProofSystem[string][]
   executionDelay: number | undefined
   executionDelayMode: 'always' | 'if-challenged' | undefined
   permissioned: boolean | undefined
@@ -131,41 +140,44 @@ function getScalingRiskStateValidationValidityEntry(
   zkCatalogProjects: Project<'zkCatalogInfo'>[],
   contractUtils: ContractUtils,
   tvs: SevenDayTvsBreakdown,
-  allProjects: Project<
-    never,
-    'display' | 'daBridge' | 'scalingInfo' | 'daLayer'
-  >[],
+  allProjects: ProjectWithPageMetadata[],
 ): ScalingRiskStateValidationValidityEntry {
   const proofSystem = project.scalingInfo?.proofSystem
   assert(proofSystem, 'Proof system is required')
 
-  const zkCatalogProject = zkCatalogProjects.find(
-    (p) => p.id === proofSystem.zkCatalogId,
-  )
-  assert(zkCatalogProject, `zkCatalogProject not found: ${project.id}`)
-
-  const isa = zkCatalogProject.zkCatalogInfo.techStack.zkVM?.find(
-    (tag) => tag.type === 'ISA',
+  const usedZkCatalogProjects = getUsedZkCatalogProjects(
+    proofSystem,
+    zkCatalogProjects,
   )
 
-  const trustedSetupsByProofSystem = getTrustedSetupsWithVerifiersAndAttesters(
-    zkCatalogProject,
-    contractUtils,
-    tvs,
-    allProjects,
-    { id: project.id, contracts: project.contracts },
+  const isas = uniq(
+    usedZkCatalogProjects.flatMap(
+      (zkCatalogProject) =>
+        zkCatalogProject.zkCatalogInfo.techStack.zkVM
+          ?.filter((tag) => tag.type === 'ISA')
+          .map((tag) => tag.name) ?? [],
+    ),
+  )
+
+  const trustedSetups = usedZkCatalogProjects.flatMap((zkCatalogProject) =>
+    Object.values(
+      getTrustedSetupsWithVerifiersAndAttesters(
+        zkCatalogProject,
+        contractUtils,
+        tvs,
+        allProjects,
+        { id: project.id, contracts: project.contracts },
+      ),
+    ),
   )
 
   const projectTvs = tvs.projects[project.id.toString()]
   return {
     ...getCommonScalingEntry({ project, changes }),
     tvsOrder: projectTvs?.breakdown?.total ?? -1,
-    proofSystem: {
-      ...proofSystem,
-      name: proofSystem.name ?? zkCatalogProject?.name,
-    },
-    isa: isa?.name,
-    trustedSetupsByProofSystem,
+    proofSystem: getProofSystemWithName(proofSystem, zkCatalogProjects),
+    isa: isas.length > 0 ? isas.join(' / ') : undefined,
+    trustedSetups,
     executionDelay: project.scalingRisks.self.stateValidation?.executionDelay,
     executionDelayMode:
       project.scalingRisks.self.stateValidation?.executionDelayMode,
@@ -193,7 +205,7 @@ export interface ScalingRiskStateValidationOptimisticEntry
   zkCatalog:
     | {
         name: string
-        id: string
+        ids: string[]
         successful: { count: number; attesters: string[] }
         unsuccessful: { count: number; attesters: string[] }
         notVerified: { count: number; attesters: string[] }
@@ -214,23 +226,27 @@ function getScalingRiskStateValidationOptimisticEntry(
   const proofSystem = project.scalingInfo?.proofSystem
   assert(proofSystem, 'Proof system is required')
 
-  const zkCatalogProject = zkCatalogProjects.find(
-    (p) => p.id === proofSystem.zkCatalogId,
+  const usedZkCatalogProjects = getUsedZkCatalogProjects(
+    proofSystem,
+    zkCatalogProjects,
   )
 
   const { stateValidation } =
     project.scalingRisks.stacked ?? project.scalingRisks.self
 
   let zkCatalog: ScalingRiskStateValidationOptimisticEntry['zkCatalog']
-  if (zkCatalogProject && proofSystem.zkCatalogId) {
-    const trustedSetups = getTrustedSetupsWithVerifiersAndAttesters(
-      zkCatalogProject,
-      contractUtils,
-      tvs,
-      [],
-      { id: project.id, contracts: project.contracts },
+  if (usedZkCatalogProjects.length > 0) {
+    const allVerifiers = usedZkCatalogProjects.flatMap((zkCatalogProject) =>
+      Object.values(
+        getTrustedSetupsWithVerifiersAndAttesters(
+          zkCatalogProject,
+          contractUtils,
+          tvs,
+          [],
+          { id: project.id, contracts: project.contracts },
+        ),
+      ).map((ts) => ts.verifiers),
     )
-    const allVerifiers = Object.values(trustedSetups).map((ts) => ts.verifiers)
 
     const aggregateStatus = (
       key: 'successful' | 'unsuccessful' | 'notVerified',
@@ -244,8 +260,8 @@ function getScalingRiskStateValidationOptimisticEntry(
     }
 
     zkCatalog = {
-      name: zkCatalogProject.name,
-      id: proofSystem.zkCatalogId,
+      name: usedZkCatalogProjects.map((p) => p.name).join(' / '),
+      ids: usedZkCatalogProjects.map((p) => p.id),
       successful: aggregateStatus('successful'),
       unsuccessful: aggregateStatus('unsuccessful'),
       notVerified: aggregateStatus('notVerified'),
@@ -256,10 +272,7 @@ function getScalingRiskStateValidationOptimisticEntry(
   return {
     ...getCommonScalingEntry({ project, changes }),
     tvsOrder: projectTvs?.breakdown?.total ?? -1,
-    proofSystem: {
-      ...proofSystem,
-      name: proofSystem.name ?? zkCatalogProject?.name,
-    },
+    proofSystem: getProofSystemWithName(proofSystem, zkCatalogProjects),
     executionDelay: stateValidation?.executionDelay,
     executionDelayMode: stateValidation?.executionDelayMode,
     challengePeriod: stateValidation?.challengeDelay,

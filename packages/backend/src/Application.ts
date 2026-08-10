@@ -4,6 +4,7 @@ import { ApiServer } from './api/ApiServer'
 import type { Config } from './config'
 import { initActivityModule } from './modules/activity/ActivityModule'
 import { createAnomaliesModule } from './modules/anomalies/AnomaliesModule'
+import { createAppStateModule } from './modules/app-state/AppStateModule'
 import { createBackofficeModule } from './modules/backoffice/BackofficeModule'
 import { createBlockSyncModule } from './modules/block-sync/BlockSyncModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
@@ -53,8 +54,10 @@ export class Application {
     const interopModule = createInteropModule(deps)
     const trackedTxsModule = createTrackedTxsModule(deps)
     const dataAvailabilityModule = initDataAvailabilityModule(deps)
+    const appStateModule = createAppStateModule()
 
     const modulesWithTrpc = [
+      appStateModule,
       interopModule,
       trackedTxsModule,
       dataAvailabilityModule,
@@ -84,6 +87,7 @@ export class Application {
       createDailyChecksModule(deps),
 
       interopModule,
+      appStateModule,
       backofficeModule,
     ]
 

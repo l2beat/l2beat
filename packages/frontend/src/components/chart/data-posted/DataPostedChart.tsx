@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, formatBytes, UnixTime } from '@l2beat/shared-pure'
 import pick from 'lodash/pick'
 import { useMemo } from 'react'
 import { AreaChart } from 'recharts'
@@ -25,7 +25,6 @@ import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { formatRange } from '~/utils/dates'
-import { formatBytes } from '~/utils/number-format/formatBytes'
 import type { ChartResolution } from '~/utils/range/range'
 
 const chartMeta = {
@@ -153,12 +152,7 @@ function DataPostedCustomTooltip({
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatRange(
             timestamp,
-            timestamp +
-              (resolution === 'daily'
-                ? UnixTime.DAY
-                : resolution === 'sixHourly'
-                  ? UnixTime.HOUR * 6
-                  : UnixTime.HOUR),
+            timestamp + UnixTime.periodToSeconds(resolution),
           )}
         </div>
         <div className="flex flex-col gap-2">

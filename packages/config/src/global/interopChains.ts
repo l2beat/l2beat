@@ -34,6 +34,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     explorerUrl: 'https://basescan.org',
   },
   {
+    id: 'robinhood',
+    name: 'Robinhood Chain',
+    type: 'evm',
+    display: 'RH',
+    color: '#00C805',
+    explorerUrl: 'https://robinhoodchain.blockscout.com',
+  },
+  {
     id: 'optimism',
     name: 'OP Mainnet',
     iconSlug: 'op-mainnet',
@@ -41,14 +49,6 @@ export const INTEROP_CHAINS: InteropChain[] = [
     display: 'OP',
     color: '#FF0420',
     explorerUrl: 'https://optimistic.etherscan.io',
-  },
-  {
-    id: 'apechain',
-    name: 'ApeChain',
-    type: 'evm',
-    display: 'APE',
-    color: '#0054FA',
-    explorerUrl: 'https://apescan.io',
   },
   {
     id: 'polygonpos',
@@ -94,6 +94,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     explorerUrl: 'https://bscscan.com',
   },
   {
+    id: 'gnosis',
+    name: 'Gnosis Chain',
+    type: 'evm',
+    display: 'GNO',
+    color: '#04795B',
+    explorerUrl: 'https://gnosis.blockscout.com',
+  },
+  {
     id: 'solana',
     name: 'Solana',
     type: 'evm',
@@ -135,6 +143,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     explorerUrl: 'https://worldscan.org',
   },
   {
+    id: 'rise',
+    name: 'RISE',
+    type: 'evm',
+    display: 'RISE',
+    color: '#04DF83',
+    explorerUrl: 'https://explorer.risechain.com',
+  },
+  {
     id: 'celo',
     name: 'Celo',
     type: 'evm',
@@ -151,21 +167,28 @@ export const INTEROP_CHAINS: InteropChain[] = [
     explorerUrl: 'https://uniscan.xyz',
   },
   {
-    id: 'forknet',
-    iconSlug: 'forknet',
-    name: 'Forknet',
-    type: 'evm',
-    display: 'FORK',
-    color: '#8B5CF6',
-    explorerUrl: 'https://forkscan.org',
-  },
-  {
     id: 'linea',
     name: 'Linea',
     type: 'evm',
     display: 'LINEA',
     color: '#61DFFF',
     explorerUrl: 'https://lineascan.build',
+  },
+  {
+    id: 'xlayer',
+    name: 'X Layer',
+    type: 'evm',
+    display: 'XLAYER',
+    color: '#000000',
+    explorerUrl: 'https://web3.okx.com/explorer/x-layer/evm',
+  },
+  {
+    id: 'adi',
+    name: 'ADI Chain',
+    type: 'evm',
+    display: 'ADI',
+    color: '#FD7108',
+    explorerUrl: 'https://explorer-bls.adifoundation.ai',
   },
   {
     id: 'avalanche',
@@ -200,6 +223,22 @@ export const INTEROP_CHAINS: InteropChain[] = [
     explorerUrl: 'https://monadscan.com',
   },
   {
+    id: 'plasma',
+    name: 'Plasma',
+    type: 'evm',
+    display: 'XPL',
+    color: '#162F29',
+    explorerUrl: 'https://plasmascan.to',
+  },
+  {
+    id: 'tron',
+    name: 'Tron',
+    type: 'evm',
+    display: 'TRX',
+    color: '#FF060A',
+    explorerUrl: 'https://tronscan.org',
+  },
+  {
     id: 'hyperliquid',
     name: 'Hyperliquid',
     type: 'evm',
@@ -219,6 +258,10 @@ export const INTEROP_CHAINS: InteropChain[] = [
 
 export const INTEROP_ONE_SIDED_CHAINS = [
   'solana',
+  'xlayer',
+  'adi',
+  'plasma',
+  'tron',
   'hyperliquid',
   'lighter',
 ] as const

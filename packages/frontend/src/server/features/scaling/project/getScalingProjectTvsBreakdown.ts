@@ -55,7 +55,8 @@ export async function getScalingProjectTvsBreakdown(
     project: withProjectIcon(project),
     dataTimestamp: getTvsTargetTimestamp(),
     entries: entries.filter(
-      (entry) => entry.valueForProject >= MIN_VALUE_FOR_PROJECT_TVS_BREAKDOWN,
+      (entry) =>
+        entry.valueForProject.value >= MIN_VALUE_FOR_PROJECT_TVS_BREAKDOWN,
     ),
     project7dData,
     milestones: project.milestones ?? [],

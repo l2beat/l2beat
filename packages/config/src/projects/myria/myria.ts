@@ -27,7 +27,10 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
-import { getSHARPBootloaderHashes } from '../starknet/starknet'
+import {
+  getAcceptedSHARPVerifierChain,
+  getSHARPBootloaderHashes,
+} from '../starknet/starknet'
 
 const discovery = new ProjectDiscovery('myria')
 
@@ -58,6 +61,7 @@ export const myria: ScalingProject = {
   id: ProjectId('myria'),
   capability: 'appchain',
   addedAt: UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  archivedAt: UnixTime(1780272000), // 2026-06-01T00:00:00Z
   badges: [
     BADGES.VM.AppChain,
     BADGES.DA.DAC,
@@ -65,10 +69,6 @@ export const myria: ScalingProject = {
     BADGES.Infra.SHARP,
   ],
   display: {
-    redWarning: {
-      text: 'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
-      detailAnchor: 'permissions',
-    },
     architectureImage: 'starkex',
     name: 'Myria',
     slug: 'myria',
@@ -92,7 +92,7 @@ export const myria: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogIds: [ProjectId('stone')],
   },
   stage: getAltDaStage(
     {
@@ -198,7 +198,7 @@ export const myria: ScalingProject = {
     ],
     programHashes: myriaProgramHashes.map((el) => PROGRAM_HASHES(el)),
     // stone verifier address, could be deduced from analyzing trx traces
-    zkVerifiers: [discovery.getContract('SHARPVerifier_2024_10').address],
+    zkVerifiers: getAcceptedSHARPVerifierChain().factRegistries,
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [

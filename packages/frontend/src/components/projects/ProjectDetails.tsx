@@ -14,6 +14,7 @@ import { InteropTokenTransfersSection } from './sections/interop/InteropTokenTra
 import { InteropTokenVolumeSection } from './sections/interop/InteropTokenVolumeSection'
 import { InteropTransfersSection } from './sections/interop/InteropTransfersSection'
 import { InteropVolumeSection } from './sections/interop/InteropVolumeSection'
+import { InteropTokenOnchainDeploymentsSection } from './sections/interop/onchain-deployments/InteropTokenOnchainDeploymentsSection'
 import { L3RiskAnalysisSection } from './sections/L3RiskAnalysisSection'
 import { LivenessSection } from './sections/liveness/LivenessSection'
 import { MarkdownSection } from './sections/MarkdownSection'
@@ -43,6 +44,7 @@ interface ProjectDetailsProps {
   nested?: boolean
   parentSection?: string
   items: ProjectDetailsSection[]
+  selectedUpdateId?: string
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
@@ -239,6 +241,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 {...item.props}
               />
             )
+          case 'InteropTokenOnchainDeploymentsSection':
+            return (
+              <InteropTokenOnchainDeploymentsSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
           case 'InteropTokenTransfersSection':
             return (
               <InteropTokenTransfersSection
@@ -333,6 +343,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
+                selectedUpdateId={props.selectedUpdateId}
               />
             )
           case 'PrivacyTvlSection':

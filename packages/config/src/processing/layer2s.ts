@@ -6,7 +6,7 @@ import { aevo } from '../projects/aevo/aevo'
 import { alephzero } from '../projects/alephzero/alephzero'
 import { alienx } from '../projects/alienx/alienx'
 import { ancient } from '../projects/ancient/ancient'
-import { apex } from '../projects/apex/apex'
+import { apexPro } from '../projects/apex-pro/apex-pro'
 import { appchain } from '../projects/appchain/appchain'
 import { arbitrum } from '../projects/arbitrum/arbitrum'
 import { arenaz } from '../projects/arenaz/arenaz'
@@ -118,7 +118,9 @@ import { real } from '../projects/real/real'
 import { reddioex } from '../projects/reddioex/reddioex'
 import { redstone } from '../projects/redstone/redstone'
 import { reya } from '../projects/reya/reya'
+import { rise } from '../projects/rise/rise'
 import { river } from '../projects/river/river'
+import { robinhood } from '../projects/robinhood/robinhood'
 import { roninNetwork } from '../projects/roninnetwork/roninnetwork'
 import { rss3 } from '../projects/rss3/rss3'
 import { scroll } from '../projects/scroll/scroll'
@@ -138,7 +140,6 @@ import { superseed } from '../projects/superseed/superseed'
 import { swan } from '../projects/swan/swan'
 import { swell } from '../projects/swell/swell'
 import { sxnetwork } from '../projects/sxnetwork/sxnetwork'
-import { sxt } from '../projects/sxt/sxt'
 import { syndicate } from '../projects/syndicate/syndicate'
 import { taiko } from '../projects/taiko/taiko'
 import { termstructure } from '../projects/termstructure/termstructure'
@@ -171,7 +172,7 @@ export const layer2s: ScalingProject[] = [
   alienx,
   adi,
   ancient,
-  apex,
+  apexPro,
   appchain,
   arbitrum,
   arenaz,
@@ -283,7 +284,9 @@ export const layer2s: ScalingProject[] = [
   redstone,
   reya,
   deversifi,
+  rise,
   river,
+  robinhood,
   rss3,
   scroll,
   settlus,
@@ -303,7 +306,6 @@ export const layer2s: ScalingProject[] = [
   swell,
   syndicate,
   sxnetwork,
-  sxt,
   taiko,
   brine,
   termstructure,

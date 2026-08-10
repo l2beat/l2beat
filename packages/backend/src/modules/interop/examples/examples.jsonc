@@ -1,50 +1,4 @@
 {
-  "allbridge": {
-    "tags": ["allbridge"],
-    "txs": [
-      {
-        "chain": "arbitrum",
-        "tx": "0xf47433544bf5505d8c615d5184c1dae7e3a4bd26221af4146a721b794aff007d"
-      },
-      {
-        "chain": "base",
-        "tx": "0x68cde6faf73ff83be2267a8f136b2f79820e62ae59976bac5e3b9252cb8ff057"
-      },
-      {
-        "chain": "base",
-        "tx": "0x158ead7fb516fb23fd2da016d4e704c9623af497b6a8303d68388020f07ef3bd"
-      }
-    ],
-    "expects": {
-      "events": [
-        {
-          "type": "allbridge.MessageSent"
-        },
-        {
-          "type": "allbridge.TokensSent"
-        },
-        {
-          "type": "allbridge.MessageReceived"
-        },
-        {
-          "type": "allbridge.TokensReceived"
-        }
-      ],
-      "messages": [{ "type": "allbridge.Message", "app": "allbridge" }],
-      "transfers": [
-        {
-          "type": "allbridge.Transfer",
-          "events": [
-            { "type": "allbridge.TokensSent", "args": { "amount": "39870" } },
-            {
-              "type": "allbridge.TokensReceived",
-              "args": { "amount": "39898063" }
-            }
-          ]
-        }
-      ]
-    }
-  },
   "lighter-bridge": {
     "description": "Ethereum <> Lighter perp DEX bridge (one-sided)",
     "txs": [
@@ -295,7 +249,8 @@
     }
   },
   "hyperliquid-bridge": {
-    "description": "Arbitrum <> Hyperliquid USDC bridge (one-sided)",
+    "description": "Arbitrum/HyperEVM <> Hyperliquid USDC bridge (one-sided)",
+    "loadConfigs": ["cctp-v2"],
     "txs": [
       {
         "chain": "arbitrum",
@@ -308,12 +263,28 @@
       {
         "chain": "arbitrum",
         "tx": "0x0fa1d62afe91f99fa5292db2afd0988e5a9fcc5346ae44296814722e5011ef49"
+      },
+      {
+        "chain": "hyperevm",
+        "tx": "0x083b623f4e3ac3330a29aad9daa89a404eb2170c006ddaf51f3957a157f3416d"
+      },
+      {
+        "chain": "hyperevm",
+        "tx": "0xb85911ae9ba0fab229480f800eaf8b46d928f49bb539ad6fc151ea7fa8682a52"
       }
     ],
     "expects": {
       "events": [
         { "type": "hyperliquid-bridge.Deposit" },
-        { "type": "hyperliquid-bridge.FinalizedWithdrawal" }
+        { "type": "hyperliquid-bridge.FinalizedWithdrawal" },
+        {
+          "type": "hyperliquid-bridge.CoreDeposit",
+          "args": { "srcAmount": "43884677" }
+        },
+        {
+          "type": "hyperliquid-bridge.CoreWithdrawal",
+          "args": { "dstAmount": "3904958097" }
+        }
       ],
       "messages": [],
       "transfers": [
@@ -328,6 +299,26 @@
           "bridgeType": "lockAndMint",
           "src": { "chain": "hyperliquid" },
           "dst": { "event": { "ctx": { "chain": "arbitrum" } } }
+        },
+        {
+          "type": "hyperliquid-bridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "event": { "ctx": { "chain": "hyperevm" } },
+            "tokenAmount": "43884677",
+            "wasBurned": false
+          },
+          "dst": { "chain": "hyperliquid" }
+        },
+        {
+          "type": "hyperliquid-bridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "chain": "hyperliquid" },
+          "dst": {
+            "event": { "ctx": { "chain": "hyperevm" } },
+            "tokenAmount": "3904958097",
+            "wasMinted": false
+          }
         }
       ]
     }
@@ -1037,6 +1028,49 @@
       ]
     }
   },
+  "ccip-partial-adi": {
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // Ethereum → ADI Chain (v1.6 send to one-sided chain)
+      {
+        "chain": "ethereum",
+        "tx": "0xcf66ff94bcb9045154e27ddbcfb59559a14439e3b8dbad9ce94a724e89b5abaf"
+      },
+      // ADI Chain → Ethereum (v1.6 receive from one-sided chain)
+      {
+        "chain": "ethereum",
+        "tx": "0x251a702e539a5f3dd07f042de0a7a023d92c54bb7201e8dcb0eb3ed0fe9eb2ce"
+      }
+    ],
+    "expects": {
+      "events": ["ccip.CCIPSendRequested", "ccip.ExecutionStateChanged"],
+      "messages": [],
+      "transfers": [
+        {
+          "type": "ccip.Transfer",
+          "plugin": "ccip",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "tokenAddress": "0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "wasBurned": false,
+            "financials": { "symbol": "USDC" }
+          },
+          "dst": { "chain": "adi" }
+        },
+        {
+          "type": "ccip.Transfer",
+          "plugin": "ccip",
+          "bridgeType": "lockAndMint",
+          "src": { "chain": "adi" },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "wasMinted": false,
+            "financials": { "symbol": "USDC" }
+          }
+        }
+      ]
+    }
+  },
   "celer": {
     "txs": [
       // message only, wrapping cctp
@@ -1082,6 +1116,66 @@
         { "type": "celer.Message", "app": "cBridge" }
       ],
       "transfers": ["celer.Transfer"]
+    }
+  },
+  "butternetwork": {
+    "description": "Butter V3 token bridge, including native input and Base to Polygon PoS",
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x8dfc50a50a573514d0fc1d8f3c008b2b074972fdc812bb35aaac3377144f633d"
+      },
+      {
+        "chain": "polygonpos",
+        "tx": "0x622bc3a75845f7fed4b5507b74555d08cfb1873a87d9baa3fa1ffef24ccf7a13"
+      },
+      // Native ETH input, swapped to USDT on BSC.
+      {
+        "chain": "base",
+        "tx": "0x54c5a20ef0a5c1c559d0c21136a79e31b8d2011acb420aef140660c4a8ce7bde"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0xc816c7391f696bbb6549df5b33cf239d1d65f5016664006bdb1dcb2228d19a1a"
+      }
+    ],
+    "expects": {
+      "events": [
+        "butternetwork.MessageOut",
+        "butternetwork.MessageIn",
+        "butternetwork.MessageOut",
+        "butternetwork.MessageIn"
+      ],
+      "messages": [
+        { "type": "butternetwork.Message", "app": "butternetwork" },
+        { "type": "butternetwork.Message", "app": "butternetwork" }
+      ],
+      "transfers": [
+        {
+          "type": "butternetwork.Transfer",
+          "src": {
+            "event": { "ctx": { "chain": "base" } },
+            "wasBurned": false
+          },
+          "dst": {
+            "event": { "ctx": { "chain": "polygonpos" } },
+            "wasMinted": false
+          }
+        },
+        {
+          "type": "butternetwork.Transfer",
+          "src": {
+            "event": { "ctx": { "chain": "base" } },
+            "tokenAddress": "native",
+            "wasBurned": false
+          },
+          "dst": {
+            "event": { "ctx": { "chain": "bsc" } },
+            "tokenAddress": "0x00000000000000000000000055d398326f99059ff775485246999027b3197955",
+            "wasMinted": false
+          }
+        }
+      ]
     }
   },
   "mayan-forwarder": {
@@ -1183,6 +1277,40 @@
       }
     ]
   },
+  "cctpv2-usyc": {
+    "description": "USYC bridged via CCTP v2 (USDC is swapped to USYC by Circle's CrossChainTeller at the source before the burn)",
+    "loadConfigs": ["cctp-v2"],
+    "txs": [
+      // Ethereum -> BSC: CrossChainTeller takes USDC, mints USYC via the USYC
+      // Teller, then burns USYC via CCTP v2. The bridged token is USYC on both
+      // sides, not USDC (the USDC->USYC swap happens before depositForBurn).
+      {
+        "chain": "ethereum",
+        "tx": "0x447e7b59367544e16b2e45514b8d0056d6d447ff154c70903668aa92557bb5da"
+      },
+      {
+        "chain": "bsc",
+        "tx": "0x2ffaad21f883b573b5b76471d6e3c29ceab6a4cdbe4f12673f3aa5c6daca65ad"
+      }
+    ],
+    "expects": {
+      "events": ["cctp-v2.MessageSent", "cctp-v2.MessageReceived"],
+      "messages": [{ "type": "cctp-v2.SlowMessage", "app": "cctp-v2" }],
+      "transfers": [
+        {
+          "type": "cctp-v2.Transfer",
+          "src": {
+            "tokenAddress": "0x000000000000000000000000136471a34f6ef19fe571effc1ca711fdb8e49f2b",
+            "financials": { "symbol": "USYC", "amount": 39752925.879469 }
+          },
+          "dst": {
+            "tokenAddress": "0x0000000000000000000000008d0fa28f221eb5735bc71d3a0da67ee5bc821311",
+            "financials": { "symbol": "USYC", "amount": 39752925.879469 }
+          }
+        }
+      ]
+    }
+  },
   "cctponesided": {
     "loadConfigs": ["cctp-v1", "cctp-v2"],
     "txs": [
@@ -1205,6 +1333,21 @@
       {
         "chain": "ethereum",
         "tx": "0x6cd6000cb5a329372ac7ce3e56f3de6bbd25fd2b52d84e2732faf7f361f47e37"
+      },
+      // Source tx for the CCTP withdrawal below. The relevant HyperEVM logs
+      // are present in receipts but missing from eth_getLogs, so this tx mainly
+      // makes the example load the HyperEVM CCTP domain config.
+      {
+        "chain": "hyperevm",
+        "tx": "0x033404436a2a559ae86401438213056f4b810fe848d5376f455db4441b492c6b"
+      },
+      // HyperCore -> HyperEVM -> Arbitrum withdrawal. The HyperEVM source
+      // MessageSent/DepositForBurn/CrossChainWithdraw logs are present in
+      // receipts but missing from eth_getLogs, so the Arbitrum CCTP receive is
+      // counted as a one-sided hyperliquid -> arbitrum transfer.
+      {
+        "chain": "arbitrum",
+        "tx": "0x309869eb0dcc36fe0962c396aea336a599bbb898f77e506fe6bd2256072acdfe"
       }
     ],
     "expects": {
@@ -1212,7 +1355,15 @@
         "cctp-v1.MessageSent",
         "cctp-v1.MessageReceived",
         "cctp-v2.MessageSent",
-        "cctp-v2.MessageReceived"
+        "cctp-v2.MessageReceived",
+        {
+          "type": "cctp-v2.MessageReceived",
+          "plugin": "cctp-v2",
+          "args": {
+            "$srcChain": "hyperliquid",
+            "dstAmount": "99999800000"
+          }
+        }
       ],
       "messages": [],
       "transfers": [
@@ -1239,6 +1390,17 @@
           "plugin": "cctp-v2",
           "src": { "chain": "solana" },
           "dst": { "event": { "ctx": { "chain": "ethereum" } } }
+        },
+        {
+          "type": "cctp-v2.Transfer",
+          "plugin": "cctp-v2",
+          "bridgeType": "burnAndMint",
+          "src": { "chain": "hyperliquid" },
+          "dst": {
+            "event": { "ctx": { "chain": "arbitrum" } },
+            "tokenAmount": "99999800000",
+            "wasMinted": true
+          }
         }
       ]
     }
@@ -1938,7 +2100,7 @@
   "axelar": {
     "loadConfigs": ["layerzero-v2"],
     "txs": [
-      // contractcallwithtoken + express fill via squid
+      // contractcallwithtoken
       {
         "chain": "base",
         "tx": "0x90c74bb1bf1a3257ba4713e1562535babd77d3d7ec6a9608125a9b289ec9ffb4"
@@ -2002,12 +2164,6 @@
     ],
     "expects": {
       "transfers": [
-        {
-          "type": "axelar-squid.Transfer",
-          "bridgeType": "nonMinting",
-          "src": { "financials": { "symbol": "axlUSDC" } },
-          "dst": { "financials": { "symbol": "USDC" } }
-        },
         {
           "type": "axelar.Transfer",
           "bridgeType": "lockAndMint",
@@ -2092,33 +2248,59 @@
     }
   },
   "centrifuge": {
+    "description": "Centrifuge cross-chain share transfer (Ethereum -> Base)",
     "txs": [
       {
         "chain": "ethereum",
-        "tx": "0x0f064d7f4691ce67c55b57de1ec573166790e27cff94cb888344cca8bd21beb9"
+        "tx": "0xf65ca822bb5f691d64ee6d43006352de611cbe27436ec9e2a709176929ef253f"
       },
       {
         "chain": "base",
-        "tx": "0x51c5d58ae6ac7d5a94c190b862672596b7eac59d3ccaaab065001c20b86be0d8"
+        "tx": "0xa8fff7f6601c77121a145704ac305cf15480143a6ca3612b33eb132ccf04b564"
       },
       {
         "chain": "base",
-        "tx": "0xbae8a4bcaa22c803252e0b9230a8fe0a0bf84dee1878ead73eaf24fc2a07e1f5" // handlePayload
-      },
-      {
-        "chain": "base",
-        "tx": "0xbac552a3a71e83ddd594cb27d3b7a99a1959522c7b94f9b23c93d147539b2c20" // handleProof
+        "tx": "0x431af4700ea9793854de93454f75f24a95b46d48e26be13600322766ee0c2c52"
       }
     ],
-    "events": [
-      "axelar-its.InterchainTransfer",
-      "axelar-its.InterchainTransferReceived",
-      "axelar.ContractCallExecuted",
-      "axelar.ContractCall",
-      "axelar.ContractCallApproved"
-    ],
-    "messages": ["axelar.ContractCallMessage"],
-    "transfers": ["axelar-its.Transfer"]
+    "expects": {
+      "events": [
+        "centrifuge.InitiateTransferShares",
+        "centrifuge.ForwardTransferShares",
+        "axelar.ContractCall",
+        "axelar.ContractCallApproved",
+        "axelar.ContractCallExecuted",
+        "centrifuge.ExecuteTransferShares"
+      ],
+      "messages": [
+        {
+          // centrifuge fans each message out via multiple AMB adapters
+          // (MultiAdapter with threshold voting), so AMB plugins label
+          // centrifuge traffic by adapter address instead of the centrifuge
+          // plugin claiming a single AMB message
+          "type": "axelar.Message",
+          "app": "centrifuge",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "base" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "centrifuge.Transfer",
+          "bridgeType": "burnAndMint",
+          "src": {
+            "event": { "ctx": { "chain": "ethereum" } },
+            "tokenAmount": "100000000000000000000",
+            "wasBurned": true
+          },
+          "dst": {
+            "event": { "ctx": { "chain": "base" } },
+            "tokenAmount": "100000000000000000000",
+            "wasMinted": true
+          }
+        }
+      ]
+    }
   },
   "squid-coral": {
     "txs": [
@@ -2807,6 +2989,86 @@
       }
     ]
   },
+  "stargatev2bus-gnosis": {
+    "description": "Stargate bus maps Gnosis WETH to native ETH on Base",
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "gnosis",
+        "tx": "0xf72cf180885f3807d1104c2ec710cab1fd01c702b0722c1e6d9986e16b93c7b5"
+      },
+      {
+        "chain": "gnosis",
+        "tx": "0x6191fb41ce33580616bb9cf2d94e1996d32d5bcb49cc5f708e498ce0c424fcfa"
+      },
+      {
+        "chain": "base",
+        "tx": "0x2c0f5bd84720034214710b0054808b7752bc97493663dd33298b3df749a1824a"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "stargate-v2.OFTSentBus",
+          "ctx": { "chain": "gnosis" },
+          "args": {
+            "token": "ETH",
+            "ticketId": 6252,
+            "$dstChain": "base"
+          }
+        },
+        {
+          "type": "stargate-v2.BusDriven",
+          "ctx": { "chain": "gnosis" },
+          "args": {
+            "startTicketId": 6252,
+            "numPassengers": 1,
+            "$dstChain": "base"
+          }
+        },
+        {
+          "type": "stargate-v2.OFTReceived",
+          "ctx": { "chain": "base" },
+          "args": {
+            "token": "ETH",
+            "$srcChain": "gnosis"
+          }
+        }
+      ],
+      "messages": [
+        {
+          "type": "layerzero-v2.Message",
+          "app": "stargate-v2-bus",
+          "src": { "ctx": { "chain": "gnosis" } },
+          "dst": { "ctx": { "chain": "base" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "stargate-v2-bus.Transfer",
+          "bridgeType": "nonMinting",
+          "src": {
+            "tokenAddress": "0x0000000000000000000000006a023ccd1ff6f2045c3309768ead9e68f978f6e1",
+            "tokenAmount": "2964000000000000",
+            "wasBurned": false,
+            "event": {
+              "type": "stargate-v2.OFTSentBus",
+              "ctx": { "chain": "gnosis" }
+            }
+          },
+          "dst": {
+            "tokenAddress": "native",
+            "tokenAmount": "2962000000000000",
+            "wasMinted": false,
+            "event": {
+              "type": "stargate-v2.OFTReceived",
+              "ctx": { "chain": "base" }
+            }
+          }
+        }
+      ]
+    }
+  },
   "layerzeromix": {
     "loadConfigs": ["layerzero-v2"],
     // Messages:
@@ -2877,6 +3139,75 @@
         "tx": "0xda926e7dd4b35380b6c6ef3c90f207aa7766cbdb3efdb9d33a008be1d5eb62af"
       }
     ]
+  },
+  "layerzero-aori": {
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x4eb187cc72aac9f22d2e144bd595d12e7d8739c9ac250908e103407f4240f26d"
+      },
+      {
+        "chain": "base",
+        "tx": "0xf720749312a7e4522642a7b1a147fd32323d87294258e91b44de2331a55be52d"
+      }
+    ],
+    "expects": {
+      "messages": [
+        {
+          "type": "layerzero-v2.Message",
+          "app": "aori-settlement",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "base" } }
+        }
+      ]
+    }
+  },
+  "layerzero-superform": {
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "polygonpos",
+        "tx": "0xbc896ba73005cf577a6188285990b6f9d4b7fdad5ff2c907a89d131d58c812f7"
+      },
+      {
+        "chain": "base",
+        "tx": "0x456eff39ca3cffcf230ac98a349d6b85c27ff275f60d947d314b1f821012d49c"
+      }
+    ],
+    "expects": {
+      "messages": [
+        {
+          "type": "layerzero-v2.Message",
+          "app": "superform",
+          "src": { "ctx": { "chain": "polygonpos" } },
+          "dst": { "ctx": { "chain": "base" } }
+        }
+      ]
+    }
+  },
+  "layerzero-centrifuge": {
+    "loadConfigs": ["layerzero-v2"],
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0x7d18630bbefb8bb9f742c6e861f540dbab537490704f2ecacc6bca0b365492b1"
+      },
+      {
+        "chain": "base",
+        "tx": "0x4c9b98c5e3109cab8592f8012bb960ae7c8759a07ba35c70c6301616db73020a"
+      }
+    ],
+    "expects": {
+      "messages": [
+        {
+          "type": "layerzero-v2.Message",
+          "app": "centrifuge",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "base" } }
+        }
+      ]
+    }
   },
   "usdt0": {
     "loadConfigs": ["layerzero-v2"],
@@ -4728,6 +5059,43 @@
       ]
     }
   },
+  "hwr-xerc20-lockbox": {
+    // oUSDT Base → Ethereum: the Ethereum warp route (HypXERC20Lockbox) mints
+    // oUSDT to itself and immediately unwraps it via the xERC20 lockbox, so the
+    // recipient receives USDT released from escrow (not a minted token). The
+    // intermediate oUSDT mint+burn pair is cancelled out by findBestTransferLog,
+    // making this a lockAndMint transfer with the locked side on Ethereum.
+    "loadConfigs": ["hyperlane"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x2112e87f49039b6908dbe4e2fb28516150ef2bf6f11e2243a0259d0d79f32a21"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0xbd870a6a42b05dba90f84d34e747b428ed84ee5fe1114e19b57fe3c78a6ebc74"
+      }
+    ],
+    "expects": {
+      "messages": [{ "type": "hyperlane.Message", "app": "hwr" }],
+      "transfers": [
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "tokenAddress": "0x0000000000000000000000001217bfe6c773eec6cc4a38b5dc45b92292b6e189",
+            "wasBurned": true,
+            "financials": { "symbol": "oUSDT", "amount": 1000 }
+          },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7",
+            "wasMinted": false,
+            "financials": { "symbol": "USDT", "amount": 1000 }
+          }
+        }
+      ]
+    }
+  },
   "hwr-onesided": {
     "loadConfigs": ["hyperlane"],
     "txs": [
@@ -4900,8 +5268,10 @@
           "dst": { "financials": { "symbol": "USDT" } }
         },
         {
+          // on-chain the CHECK OFT escrows on both sides: user → adapter on
+          // abstract, adapter → user on base (no burn/mint transfers)
           "type": "oftv2.Transfer",
-          "bridgeType": "burnAndMint",
+          "bridgeType": "nonMinting",
           "src": { "financials": { "symbol": "CHECK" } },
           "dst": { "financials": { "symbol": "CHECK" } }
         },
@@ -4918,8 +5288,10 @@
           "dst": { "financials": { "symbol": "OL" } }
         },
         {
+          // USDT0 arb → celo: USDT locked in the arbitrum adapter, USDT
+          // released from the celo adapter's escrow (no burn/mint transfers)
           "type": "oftv2.Transfer",
-          "bridgeType": "lockAndMint",
+          "bridgeType": "nonMinting",
           "src": { "financials": { "symbol": "USD₮0" } },
           "dst": { "financials": { "symbol": "USD₮" } }
         }
@@ -5087,6 +5459,82 @@
       }
     ]
   },
+  "lifi-intents": {
+    "description": "LI.FI Intents Base to Arbitrum fill with Polymer proof",
+    "tags": ["lifi-intents"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0x20fd4b5fd7d21793dc7a430064dfeeb067d98cc3b596d4c29c4f11d8a4afe56d"
+      },
+      {
+        "chain": "arbitrum",
+        "tx": "0x5d40798b06c40f271710d49f943203c8875b2346beedc91241bc1e0b765601c8"
+      },
+      {
+        "chain": "base",
+        "tx": "0xe10cdbb89d37a5c9cae6a0611ef303428869183c2ff4c53de7c211cf7c1231e6"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "lifi-intents.OutputRequested",
+          "ctx": { "chain": "base" },
+          "args": {
+            "orderId": "0x1c673ea05b48d983961d3e60ba97ff1f198511fea8e697cc65aacbde3d1f6b5b",
+            "destinationChainId": 42161
+          }
+        },
+        {
+          "type": "lifi-intents.OutputFilled",
+          "ctx": { "chain": "arbitrum" },
+          "args": {
+            "orderId": "0x1c673ea05b48d983961d3e60ba97ff1f198511fea8e697cc65aacbde3d1f6b5b",
+            "payloadHash": "0xab1c1d41c71b63db377d0f30b074fcc1f111b1e45e627fa37670340be55b7b11"
+          }
+        },
+        {
+          "type": "lifi-intents.OutputPayload",
+          "ctx": { "chain": "arbitrum" },
+          "args": {
+            "payloadHash": "0xab1c1d41c71b63db377d0f30b074fcc1f111b1e45e627fa37670340be55b7b11"
+          }
+        },
+        {
+          "type": "lifi-intents.OutputProven",
+          "ctx": { "chain": "base" },
+          "args": {
+            "payloadHash": "0xab1c1d41c71b63db377d0f30b074fcc1f111b1e45e627fa37670340be55b7b11"
+          }
+        }
+      ],
+      "messages": [
+        {
+          "type": "lifi-intents.Message",
+          "app": "lifi-intents",
+          "src": { "ctx": { "chain": "base" } },
+          "dst": { "ctx": { "chain": "arbitrum" } }
+        },
+        {
+          "type": "lifi-intents.SettlementMessage",
+          "app": "lifi-intents",
+          "src": { "ctx": { "chain": "arbitrum" } },
+          "dst": { "ctx": { "chain": "base" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "lifi-intents.Transfer",
+          "src": { "event": { "ctx": { "chain": "base" } } },
+          "dst": {
+            "event": { "ctx": { "chain": "arbitrum" } },
+            "tokenAmount": "254989545"
+          }
+        }
+      ]
+    }
+  },
   "gasziponesided": {
     "loadConfigs": ["gaszip"],
     "txs": [
@@ -5104,6 +5552,69 @@
           "plugin": "gaszip",
           "src": { "event": { "ctx": { "chain": "ethereum" } } },
           "dst": { "chain": "solana" }
+        }
+      ]
+    }
+  },
+  "gaszip-gnosis": {
+    "description": "Gas.zip native transfer from Base to Gnosis",
+    "loadConfigs": ["gaszip"],
+    "txs": [
+      {
+        "chain": "base",
+        "tx": "0xda244e1831e6bbb7488110f9d78ee61f6786f4fcaf957a4773b8c9963dddf371"
+      },
+      {
+        "chain": "gnosis",
+        "tx": "0x4054200528ba6f3f37639ee1799984703880f6156a4224792671e97d7076b98c"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "gaszip.Deposit",
+          "ctx": { "chain": "base" },
+          "args": {
+            "$dstChain": "gnosis",
+            "depositor": "0x000000000000000000000000568e7100ffe233e9407f38e055b644adece378b7",
+            "amount": "16944210094908512",
+            "tokenAddress": "native",
+            "destinationAddress": "0x000000000000000000000000479a93170b595572ae9b6cea47a191c2bdea5646"
+          }
+        },
+        {
+          "type": "gaszip.Fill",
+          "ctx": { "chain": "gnosis" },
+          "args": {
+            "receiver": "0x000000000000000000000000479a93170b595572ae9b6cea47a191c2bdea5646",
+            "amount": "32059445221933136640",
+            "tokenAddress": "native"
+          }
+        }
+      ],
+      "messages": [
+        {
+          "type": "gaszip.Message",
+          "app": "gaszip",
+          "src": { "ctx": { "chain": "base" } },
+          "dst": { "ctx": { "chain": "gnosis" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "gaszip.Transfer",
+          "src": {
+            "tokenAddress": "native",
+            "tokenAmount": "16944210094908512",
+            "wasBurned": false,
+            "event": { "ctx": { "chain": "base" } }
+          },
+          "dst": {
+            "tokenAddress": "native",
+            "tokenAmount": "32059445221933136640",
+            "wasMinted": false,
+            "event": { "ctx": { "chain": "gnosis" } }
+          }
         }
       ]
     }
@@ -5615,6 +6126,241 @@
             "event": {
               "type": "linea.BridgingFinalizedV2",
               "ctx": { "chain": "linea" }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "gnosisbridge": {
+    "description": "Ethereum <> Gnosis canonical AMB, Omnibridge, and native xDAI bridge",
+    "txs": [
+      // Omnibridge: Ethereum -> Gnosis (GNO)
+      {
+        "chain": "ethereum",
+        "tx": "0x198a84aea5ea049b2905006b337c85ac8b8b940ee7ae17522e6514490fe7ca79"
+      },
+      {
+        "chain": "gnosis",
+        "tx": "0xbe3401ce217725dec0037e3ad32b226bf55c18c3c5a77e7a7af7c670cdc9e1cf"
+      },
+      // Omnibridge: Gnosis -> Ethereum (USDT)
+      {
+        "chain": "gnosis",
+        "tx": "0x946d5a926b4e6c55b51eae53b6fea118d7d4fd5ebfa44d6256ef4ce7b4d927be"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x7bac646761744ab63fd918c222108762ef3793dac252b9b71c1a82a16d6105b9"
+      },
+      // Native xDAI bridge: Ethereum -> Gnosis
+      {
+        "chain": "ethereum",
+        "tx": "0xc8b02fb55feb8d223f36b3aedb573854057ada763ef51988b2ee56adf88a8519"
+      },
+      {
+        "chain": "gnosis",
+        "tx": "0xf6f6f166413c343059c4068d1cf45d4b722dac89c2aeeea4412c08a6a3ceceed"
+      },
+      // Native xDAI bridge: Gnosis -> Ethereum (USDS)
+      {
+        "chain": "gnosis",
+        "tx": "0x6e68581085547e30e9878244971c295879666f48d7362b8b7a170be2ea0722a9"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x1943e4e8268e9cbed3e228cd686f4118f847b46141b8cfe24b3ba79216ad3004"
+      },
+      // Native xDAI bridge: Gnosis -> Ethereum (DAI conversion)
+      {
+        "chain": "gnosis",
+        "tx": "0x2431cf3a34c3b39663397809fe5a14849d9c21fb794fb428cb93851fa8c1d5b4"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x25579f0d7d173f12cae8889d495286f855e314fa8c645d1f06079309e19b50e0"
+      }
+    ],
+    "expects": {
+      "events": [
+        "gnosisbridge.AmbMessageRequested",
+        "gnosisbridge.OmnibridgeTransferInitiated",
+        "gnosisbridge.OmnibridgeTransferFinalized",
+        "gnosisbridge.AmbMessageRelayed",
+        "gnosisbridge.AmbMessageRequested",
+        "gnosisbridge.OmnibridgeTransferInitiated",
+        "gnosisbridge.OmnibridgeTransferFinalized",
+        "gnosisbridge.AmbMessageRelayed",
+        "gnosisbridge.XdaiTransferInitiated",
+        "gnosisbridge.XdaiTransferFinalized",
+        "gnosisbridge.XdaiWithdrawalInitiated",
+        "gnosisbridge.XdaiWithdrawalFinalized",
+        "gnosisbridge.XdaiWithdrawalInitiated",
+        "gnosisbridge.XdaiWithdrawalFinalized"
+      ],
+      "messages": [
+        {
+          "type": "gnosisbridge.Message",
+          "app": "omnibridge",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "gnosis" } }
+        },
+        {
+          "type": "gnosisbridge.Message",
+          "app": "omnibridge",
+          "src": { "ctx": { "chain": "gnosis" } },
+          "dst": { "ctx": { "chain": "ethereum" } }
+        },
+        {
+          "type": "gnosisbridge.Message",
+          "app": "xdai-bridge",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "gnosis" } }
+        },
+        {
+          "type": "gnosisbridge.Message",
+          "app": "xdai-bridge",
+          "src": { "ctx": { "chain": "gnosis" } },
+          "dst": { "ctx": { "chain": "ethereum" } }
+        },
+        {
+          "type": "gnosisbridge.Message",
+          "app": "xdai-bridge",
+          "src": { "ctx": { "chain": "gnosis" } },
+          "dst": { "ctx": { "chain": "ethereum" } }
+        }
+      ],
+      "transfers": [
+        // Bridge types are inferred centrally from wasBurned/wasMinted.
+        {
+          "type": "gnosisbridge.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "33400121260000000000",
+            "wasBurned": false,
+            "event": {
+              "type": "gnosisbridge.OmnibridgeTransferInitiated"
+            }
+          },
+          "dst": {
+            "tokenAmount": "33400121260000000000",
+            "wasMinted": true,
+            "event": {
+              "type": "gnosisbridge.OmnibridgeTransferFinalized"
+            }
+          }
+        },
+        {
+          "type": "gnosisbridge.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "389189000000",
+            "wasBurned": true,
+            "event": {
+              "type": "gnosisbridge.OmnibridgeTransferInitiated"
+            }
+          },
+          "dst": {
+            "tokenAmount": "389189000000",
+            "wasMinted": false,
+            "event": {
+              "type": "gnosisbridge.OmnibridgeTransferFinalized"
+            }
+          }
+        },
+        {
+          "type": "gnosisbridge.L1ToL2Transfer",
+          "src": {
+            "tokenAmount": "40000000000000000000000",
+            "wasBurned": false,
+            "event": { "type": "gnosisbridge.XdaiTransferInitiated" }
+          },
+          "dst": {
+            "tokenAmount": "40000000000000000000000",
+            "wasMinted": true,
+            "event": { "type": "gnosisbridge.XdaiTransferFinalized" }
+          }
+        },
+        {
+          "type": "gnosisbridge.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "2418625240434307784481",
+            "wasBurned": true,
+            "event": { "type": "gnosisbridge.XdaiWithdrawalInitiated" }
+          },
+          "dst": {
+            "tokenAmount": "2418625240434307784481",
+            "wasMinted": false,
+            "event": { "type": "gnosisbridge.XdaiWithdrawalFinalized" }
+          }
+        },
+        {
+          "type": "gnosisbridge.L2ToL1Transfer",
+          "src": {
+            "tokenAmount": "120000000000000000000",
+            "wasBurned": true,
+            "event": { "type": "gnosisbridge.XdaiWithdrawalInitiated" }
+          },
+          "dst": {
+            "tokenAmount": "120000000000000000000",
+            "wasMinted": true,
+            "event": { "type": "gnosisbridge.XdaiWithdrawalFinalized" }
+          }
+        }
+      ]
+    }
+  },
+  "gnosisbridge-paid-interest": {
+    "description": "xDAI bridge payInterest() uses PaidInterest to identify the source token",
+    "txs": [
+      {
+        "chain": "ethereum",
+        "tx": "0xccc6ceb72ca864017fc1523860f5e418011fbab5073730ef2445b81bcffc389c"
+      },
+      {
+        "chain": "gnosis",
+        "tx": "0xd66f4cb6039e221a263878d58f5cccafc623216c4cfd0513b0090c7a991dc91e"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "gnosisbridge.XdaiTransferInitiated",
+          "ctx": { "chain": "ethereum" },
+          "args": {
+            "token": "0x000000000000000000000000dc035d45d973e3ec169d2276ddab16f1e407384f",
+            "amount": "18899257185396495213246"
+          }
+        },
+        {
+          "type": "gnosisbridge.XdaiTransferFinalized",
+          "ctx": { "chain": "gnosis" },
+          "args": { "amount": "18899257185396495213246" }
+        }
+      ],
+      "messages": [
+        {
+          "type": "gnosisbridge.Message",
+          "app": "xdai-bridge",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "gnosis" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "gnosisbridge.L1ToL2Transfer",
+          "src": {
+            "tokenAddress": "0x000000000000000000000000dc035d45d973e3ec169d2276ddab16f1e407384f",
+            "tokenAmount": "18899257185396495213246",
+            "event": {
+              "type": "gnosisbridge.XdaiTransferInitiated",
+              "ctx": { "chain": "ethereum" }
+            }
+          },
+          "dst": {
+            "tokenAddress": "native",
+            "tokenAmount": "18899257185396495213246",
+            "event": {
+              "type": "gnosisbridge.XdaiTransferFinalized",
+              "ctx": { "chain": "gnosis" }
             }
           }
         }

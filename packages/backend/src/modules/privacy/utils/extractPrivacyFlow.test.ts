@@ -14,12 +14,25 @@ const railgunInterface = new utils.Interface([
   'event Unshield(address to, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint256 amount, uint256 fee)',
 ])
 
+const umbraInterface = new utils.Interface([
+  'event Announcement(address indexed receiver, uint256 amount, address indexed token, bytes32 pkx, bytes32 ciphertext)',
+  'event TokenWithdrawal(address indexed receiver, address indexed acceptor, uint256 amount, address indexed token)',
+])
+
+const zamaInterface = new utils.Interface([
+  'event Wrap(address indexed to, uint256 roundedAmount, bytes32 encryptedWrappedAmount)',
+  'event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)',
+])
+
 const ADDRESS = EthereumAddress.random()
 const TOKEN_ADDRESS = EthereumAddress(
   '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
 )
 const OTHER_TOKEN_ADDRESS = EthereumAddress(
   '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+)
+const ETH_TOKEN_PLACEHOLDER = EthereumAddress(
+  '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
 )
 
 const baseFlowConfig = {
@@ -274,6 +287,133 @@ describe(extractPrivacyFlow.name, () => {
       const result = extractPrivacyFlow(config, log)
 
       expect(result).toEqual(undefined)
+    })
+  })
+
+  describe('umbraAmount', () => {
+    const config: PrivacyFlowIndexerConfig = {
+      ...baseFlowConfig,
+      event: 'Announcement',
+      extractor: 'umbraAmount',
+      params: { tokenAddress: TOKEN_ADDRESS },
+    }
+
+    function announcement(tokenAddress: EthereumAddress, amount: bigint) {
+      return encodeLog(umbraInterface, 'Announcement', [
+        EthereumAddress.random().toString(),
+        amount,
+        tokenAddress.toString(),
+        '0x' + '11'.repeat(32),
+        '0x' + '22'.repeat(32),
+      ])
+    }
+
+    it('extracts amount from matching Announcement event', () => {
+      const result = extractPrivacyFlow(
+        config,
+        announcement(TOKEN_ADDRESS, 42n),
+      )
+
+      expect(result).toEqual({ count: 1, amount: 42n })
+    })
+
+    it('returns undefined when the announced token does not match', () => {
+      const result = extractPrivacyFlow(
+        config,
+        announcement(OTHER_TOKEN_ADDRESS, 42n),
+      )
+
+      expect(result).toEqual(undefined)
+    })
+
+    it('extracts amount from matching TokenWithdrawal event', () => {
+      const log = encodeLog(umbraInterface, 'TokenWithdrawal', [
+        EthereumAddress.random().toString(),
+        EthereumAddress.random().toString(),
+        555n,
+        TOKEN_ADDRESS.toString(),
+      ])
+
+      const result = extractPrivacyFlow(
+        { ...config, direction: 'withdrawal', event: 'TokenWithdrawal' },
+        log,
+      )
+
+      expect(result).toEqual({ count: 1, amount: 555n })
+    })
+
+    it('returns undefined when the withdrawn token does not match', () => {
+      const log = encodeLog(umbraInterface, 'TokenWithdrawal', [
+        EthereumAddress.random().toString(),
+        EthereumAddress.random().toString(),
+        555n,
+        OTHER_TOKEN_ADDRESS.toString(),
+      ])
+
+      const result = extractPrivacyFlow(
+        { ...config, direction: 'withdrawal', event: 'TokenWithdrawal' },
+        log,
+      )
+
+      expect(result).toEqual(undefined)
+    })
+
+    it('counts an ETH Announcement as both a deposit and a withdrawal', () => {
+      const ethConfig: PrivacyFlowIndexerConfig = {
+        ...config,
+        params: { tokenAddress: ETH_TOKEN_PLACEHOLDER },
+      }
+      const log = announcement(ETH_TOKEN_PLACEHOLDER, 7n)
+
+      expect(extractPrivacyFlow(ethConfig, log)).toEqual({
+        count: 1,
+        amount: 7n,
+      })
+      expect(
+        extractPrivacyFlow({ ...ethConfig, direction: 'withdrawal' }, log),
+      ).toEqual({ count: 1, amount: 7n })
+    })
+  })
+
+  describe('zamaWrap', () => {
+    it('extracts roundedAmount from Wrap event', () => {
+      const config: PrivacyFlowIndexerConfig = {
+        ...baseFlowConfig,
+        event: 'Wrap',
+        extractor: 'zamaWrap',
+        params: {},
+      }
+      const log = encodeLog(zamaInterface, 'Wrap', [
+        EthereumAddress.random().toString(),
+        123_456n,
+        '0x' + '11'.repeat(32),
+      ])
+
+      const result = extractPrivacyFlow(config, log)
+
+      expect(result).toEqual({ count: 1, amount: 123_456n })
+    })
+  })
+
+  describe('zamaUnwrap', () => {
+    it('extracts cleartextAmount multiplied by wrapper rate', () => {
+      const config: PrivacyFlowIndexerConfig = {
+        ...baseFlowConfig,
+        direction: 'withdrawal',
+        event: 'UnwrapFinalized',
+        extractor: 'zamaUnwrap',
+        params: { rate: '10' },
+      }
+      const log = encodeLog(zamaInterface, 'UnwrapFinalized', [
+        EthereumAddress.random().toString(),
+        '0x' + '22'.repeat(32),
+        '0x' + '33'.repeat(32),
+        987n,
+      ])
+
+      const result = extractPrivacyFlow(config, log)
+
+      expect(result).toEqual({ count: 1, amount: 9_870n })
     })
   })
 })

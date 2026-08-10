@@ -137,8 +137,8 @@ export const Inspect = command({
       }
     }
 
-    if (entry.controlsMajorityOfUpgradePermissions) {
-      console.log('\ncontrolsMajorityOfUpgradePermissions: true')
+    if (entry.eoaWithUpgradePermissions) {
+      console.log('\neoaWithUpgradePermissions: true')
     }
   },
 })

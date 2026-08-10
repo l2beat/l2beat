@@ -136,6 +136,15 @@ export class PrivacyPriceRepository extends BaseRepository {
     return deleted
   }
 
+  async deleteByConfigIds(ids: string[]): Promise<number> {
+    if (ids.length === 0) return 0
+    const result = await this.db
+      .deleteFrom('PrivacyPrice')
+      .where('configurationId', 'in', ids)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
   async getAll(): Promise<PrivacyPriceRecord[]> {
     const rows = await this.db.selectFrom('PrivacyPrice').selectAll().execute()
     return rows.map(toRecord)

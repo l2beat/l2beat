@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Verifies attestations of an AWS Nitro TEE. \nNote: currently only Succinct proofs are used.",
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers."
+        },
+        {
+          "type": "interact",
+          "description": "set the nitro enclave verifier that checks the TEE attestations."
+        }
+      ]
+    },
+    "registeredSigners": {
+      "handler": {
+        "type": "event",
+        "select": "signer",
+        "add": { "event": "AWSSignerRegistered" },
+        "remove": { "event": "DeletedAWSRegisteredSigner" }
+      }
+    },
+    "validEnclaveHashes": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "enclaveHash",
+        "add": { "event": "AWSEnclaveHashSet", "where": ["=", "#valid", true] },
+        "remove": {
+          "event": "AWSEnclaveHashSet",
+          "where": ["=", "#valid", false]
+        }
+      }
+    }
+  }
+}

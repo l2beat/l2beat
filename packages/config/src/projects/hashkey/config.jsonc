@@ -9,8 +9,22 @@
     },
     "eth:0x78075eA46A562c3201E61664645c0f0537a8DDd5": {
       "fields": {
-        "proposer": { "permissions": [{ "type": "propose" }] },
-        "challenger": { "permissions": [{ "type": "challenge" }] }
+        "proposer": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to post new state roots of the current layer to the host chain."
+            }
+          ]
+        },
+        "challenger": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+            }
+          ]
+        }
       }
     },
     "eth:0xb321dEC8b39b54a740bbD0fbbD14D48fa9CC8f65": {
@@ -18,6 +32,15 @@
     },
     "eth:0x6319563FD2B6aC5DbD5c946E74f9DaD60d028F22": {
       "proxyType": "immutable"
+    },
+    "eth:0x6F2b20996ADAf3ae64Da901A67f659C2c48f66C9": {
+      "proxyType": "NXV proxy"
+    },
+    "eth:0x3228F00FbFD0e1F4c282601c489664B10932C40f": {
+      "proxyType": "NXV proxy"
+    },
+    "eth:0x391832Fb1884E6772Dbd9f24cE2db35E9B20B696": {
+      "proxyType": "NXV proxy"
     }
   }
 }

@@ -1,11 +1,19 @@
+import type { InteropTransferTypeStatsMap } from '@l2beat/database'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { INTEROP_PAIR_SEPARATOR } from '../consts'
 import type { InteropTransferWithTokens } from '../types'
 import { getInteropTransferRecordValue } from './getInteropTransferRecordValue'
+import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 
 export interface TopEntry {
   id: string
   volume: number
+}
+
+export interface DurationData {
+  totalDurationSum: number
+  transfersWithDurationCount: number
+  transferTypeStats: InteropTransferTypeStatsMap | undefined
 }
 
 export interface InteropFlowAggregate {
@@ -21,6 +29,8 @@ export interface InteropFlowAggregates {
   chainPairTopTokens: Map<string, TopEntry[]>
   chainTopProtocols: Map<string, TopEntry[]>
   chainPairTopProtocols: Map<string, TopEntry[]>
+  chainDurations: Map<string, DurationData>
+  chainPairDurations: Map<string, DurationData>
   chainTokenCounts: Map<string, number>
   chainProtocolCounts: Map<string, number>
   topToken: TopEntry | undefined
@@ -39,6 +49,8 @@ export function getInteropFlowAggregates(
   const chainProtocols = new GroupedVolumes()
   const pairProtocols = new GroupedVolumes()
   const globalProtocols = new Map<string, number>()
+  const chainDurations = new Map<string, DurationData>()
+  const pairDurations = new Map<string, DurationData>()
 
   for (const record of records) {
     if (subgroupProjects.has(record.id as ProjectId)) continue
@@ -52,6 +64,11 @@ export function getInteropFlowAggregates(
     flow.volume += volume
     flow.transferCount += record.transferCount
     flowMap.set(flowKey, flow)
+
+    // Durations by chain and pair
+    addDuration(chainDurations, record.srcChain, record)
+    addDuration(chainDurations, record.dstChain, record)
+    addDuration(pairDurations, pairKey, record)
 
     // Token volumes: by chain, by pair, and global
     for (const token of record.tokens) {
@@ -85,6 +102,8 @@ export function getInteropFlowAggregates(
     chainPairTopTokens,
     chainTopProtocols: chainProtocols.topByGroup(3),
     chainPairTopProtocols: pairProtocols.topByGroup(3),
+    chainDurations,
+    chainPairDurations: pairDurations,
     chainTokenCounts: chainTokens.countByGroup(),
     chainProtocolCounts: chainProtocols.countByGroup(),
     topToken,
@@ -121,6 +140,25 @@ class GroupedVolumes {
     }
     return result
   }
+}
+
+function addDuration(
+  map: Map<string, DurationData>,
+  key: string,
+  record: InteropTransferWithTokens,
+) {
+  const duration = map.get(key) ?? {
+    totalDurationSum: 0,
+    transfersWithDurationCount: 0,
+    transferTypeStats: undefined,
+  }
+  duration.totalDurationSum += record.totalDurationSum
+  duration.transfersWithDurationCount += record.transfersWithDurationCount
+  duration.transferTypeStats = mergeTransferTypeStats(
+    duration.transferTypeStats,
+    record.transferTypeStats,
+  )
+  map.set(key, duration)
 }
 
 function topEntries(volumeMap: Map<string, number>, n: number): TopEntry[] {

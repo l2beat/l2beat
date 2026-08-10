@@ -23,5 +23,11 @@
     "hash": "0x16701fcaa0e04e5481701a81736e7c8ee2c8aa32da272bf74e0589e6a90c3615",
     "address": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
     "blockNumber": 22188285
+  },
+  "PreimageOracle_v1_1_5": {
+    "hash": "0xda05a58c400dcb5cf23c2575a7383b759a845956f2673724f2879e8ede57efe6",
+    "address": "eth:0x1E1d73536A081Ef2F355d29794547a9770Aeb1E0",
+    "chain": "ethereum",
+    "blockNumber": 25432649
   }
 }

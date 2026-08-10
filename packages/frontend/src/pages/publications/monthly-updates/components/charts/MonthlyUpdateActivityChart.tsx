@@ -1,4 +1,11 @@
-import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  formatActivityCount,
+  formatInteger,
+  type ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import compact from 'lodash/compact'
 import { useId, useMemo } from 'react'
 import { AreaChart } from 'recharts'
@@ -22,10 +29,8 @@ import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateActivityChart({
@@ -39,14 +44,17 @@ export function MonthlyUpdateActivityChart({
   from: UnixTime
   to: UnixTime
 }) {
+  const trpc = useTRPC()
   const id = useId()
-  const { data, isLoading } = api.activity.chart.useQuery({
-    range: [from, to],
-    filter: {
-      type: 'projects',
-      projectIds: entries,
-    },
-  })
+  const { data, isLoading } = useQuery(
+    trpc.activity.chart.queryOptions({
+      range: [from, to],
+      filter: {
+        type: 'projects',
+        projectIds: entries,
+      },
+    }),
+  )
 
   const chartMeta = useMemo(() => {
     return {
@@ -72,7 +80,7 @@ export function MonthlyUpdateActivityChart({
   )
 
   const stats = getStats(chartData, allScalingProjectsUops)
-  const timeRange = getChartTimeRangeFromData(chartData)
+  const timeRange = getChartTimeRangeFromData(chartData, { bucket: 'day' })
 
   return (
     <PrimaryCard className="rounded-lg! border border-divider">

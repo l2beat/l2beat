@@ -1,0 +1,274 @@
+{
+  "entrypoints": {
+    "eth:0x0D4e5723daAD06510CFd6864b8eB8a08CF0c4a34": {
+      "name": "AllocationManagerView",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9": {
+      "name": "StrategiesBeacon",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9": {
+      "name": "UpgradeableBeacon",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6": {
+      "name": "swETH-Strategy",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x132b466d9d5723531F68797519DfED701aC2C749": {
+      "name": "TaskMailbox",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF": {
+      "name": "AVSDirectory",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff": {
+      "name": "ankrETH-Strategy",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2": {
+      "name": "rETH-Strategy",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x218B5eC7482e072F6D47feb0463B3297eFb4bA56": {
+      "name": "Safe",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5": {
+      "name": "PermissionController",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129": {
+      "name": "ProtocolRegistry",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2": {
+      "name": "METH-Strategy",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111": {
+      "name": "EigenLayerOwningMultisig",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A": {
+      "name": "DelegationManager",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A": {
+      "name": "BN254CertificateVerifier",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9": {
+      "name": "ProxyAdmin",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": {
+      "name": "EigenLayerOperationsMultisig2",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x5050389572f2d220ad927CcbeA0D406831012390": {
+      "name": "EigenLayerPauserMultisig",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x53cC2D82E08370Fe1e44a96f69CEc7d5b54ae868": {
+      "name": "EigenPod",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc": {
+      "name": "cbETH-Strategy",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4": {
+      "name": "KeyRegistrar",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5": {
+      "name": "OperatorTableUpdater",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02": {
+      "name": "osETH-Strategy",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073": {
+      "name": "UpgradeableBeacon",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647": {
+      "name": "StrategyFactory",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84": {
+      "name": "EmissionsController",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53": {
+      "name": "TimelockControllerBeigen",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda": {
+      "name": "RewardsCoordinator",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184": {
+      "name": "wBETH-Strategy",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1": {
+      "name": "Safe",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75": {
+      "name": "bEIGEN token",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A": {
+      "name": "StrategyManager",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444": {
+      "name": "EigenLayerProxyAdmin",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6": {
+      "name": "sfrxETH-Strategy",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x8F6be4A906376bB4481E78cBF6FC783Cc0f8D1Ce": {
+      "name": "StrategyBase",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": {
+      "name": "EigenPodManager",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b": {
+      "name": "CrossChainRegistry",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D": {
+      "name": "stETH-Strategy",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d": {
+      "name": "EigenLayerBeigenOwningMultisig",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39": {
+      "name": "AllocationManager",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d": {
+      "name": "ETHx-Strategy",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059": {
+      "name": "OETH-Strategy",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7": {
+      "name": "bEIGEN-Strategy",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0xAe60d8180437b5C34bB956822ac2710972584473": {
+      "name": "RiverV1-Strategy",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806": {
+      "name": "PauserRegistry",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90": {
+      "name": "EigenLayerOperationsMultisig",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d": {
+      "name": "TimelockControllerOwning",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0xc946787cFd6c155886C673BF9815C841c1718903": {
+      "name": "DurationVaultStrategy",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25": {
+      "name": "ECDSACertificateVerifier",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0xE15AFE000789160BE164D2FBA66EaDd6c6B81e7B": {
+      "name": "GnosisSafe",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": {
+      "name": "EIGEN token",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F": {
+      "name": "ReleaseManager",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0xfD636E8EB3839cE82A58936b795043Da7DB0c734": {
+      "name": "Safe",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    },
+    "eth:0xFEA47018D632A77bA579846c840d5706705Dc598": {
+      "name": "EigenLayerCommunityMultisig",
+      "type": "Contract",
+      "project": "shared-eigenlayer"
+    }
+  }
+}

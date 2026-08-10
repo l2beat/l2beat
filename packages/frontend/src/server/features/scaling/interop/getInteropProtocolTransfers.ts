@@ -1,5 +1,6 @@
 import type { InteropTransferRecord } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
+import { ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
@@ -7,11 +8,13 @@ import type {
   InteropProtocolTransferDetailsItem,
   InteropProtocolTransfersParams,
   InteropProtocolTransfersResponse,
+  InteropTransferBridge,
 } from './types'
 import {
   buildTokensDetailsMap,
   type TokensDetailsMap,
 } from './utils/buildTokensDetailsMap'
+import { createTransferBridgeResolver } from './utils/createTransferBridgeResolver'
 import { getAbstractTokenIds } from './utils/getAbstractTokenIds'
 import { getFilteredInteropTransfersPage } from './utils/getFilteredInteropTransfersPage'
 import { getMockInteropTransfers } from './utils/getMockInteropTransfers'
@@ -23,7 +26,7 @@ import {
 const UNKNOWN_TOKEN_SYMBOL = 'Unknown'
 
 export async function getInteropProtocolTransfers({
-  id,
+  scope,
   from,
   to,
   type,
@@ -32,39 +35,32 @@ export async function getInteropProtocolTransfers({
   limit,
   cursor,
 }: InteropProtocolTransfersParams): Promise<InteropProtocolTransfersResponse> {
-  if (from.length === 0 || to.length === 0) {
-    return {
-      items: [],
-      nextCursor: undefined,
-    }
+  const empty: InteropProtocolTransfersResponse = {
+    items: [],
+    nextCursor: undefined,
   }
+
+  if (from.length === 0 || to.length === 0) return empty
 
   if (env.MOCK) {
     return getMockInteropTransfers({ from, to })
   }
 
-  const interopProject = await ps.getProject({
-    id,
+  const ids =
+    scope.type === 'project'
+      ? [scope.projectId]
+      : scope.protocolIds.map((value) => ProjectId(value))
+  if (ids.length === 0) return empty
+  const anchorChain = scope.type === 'selection' ? scope.anchorChain : undefined
+
+  const interopProjects = await ps.getProjects({
+    ids,
     select: ['interopConfig'],
   })
-  if (!interopProject?.interopConfig) {
-    return {
-      items: [],
-      nextCursor: undefined,
-    }
-  }
-
-  const plugins = type
-    ? interopProject.interopConfig.plugins.filter(
-        (plugin) => plugin.bridgeType === type,
-      )
-    : interopProject.interopConfig.plugins
-  if (plugins.length === 0) {
-    return {
-      items: [],
-      nextCursor: undefined,
-    }
-  }
+  const plugins = interopProjects
+    .flatMap((project) => project.interopConfig.plugins)
+    .filter((plugin) => !type || plugin.bridgeType === type)
+  if (plugins.length === 0) return empty
 
   const classifier = new InteropTransferClassifier()
   const matcher = classifier.createMatcher<InteropTransferRecord>(plugins)
@@ -74,6 +70,7 @@ export async function getInteropProtocolTransfers({
     snapshotTimestamp,
     sourceChains: from,
     destinationChains: to,
+    anchorChain,
     pluginIds,
     matcher,
     limit,
@@ -82,12 +79,14 @@ export async function getInteropProtocolTransfers({
   const tokensDetailsMap = await buildTokensDetailsMap(
     getAbstractTokenIds(result.items),
   )
+  const resolveTransferBridge = createTransferBridgeResolver(interopProjects)
   return {
     items: result.items.map((transfer) =>
       toInteropProtocolTransferDetailsItem(
         transfer,
         INTEROP_CHAIN_DETAILS,
         tokensDetailsMap,
+        resolveTransferBridge(transfer),
       ),
     ),
     nextCursor: result.nextCursor,
@@ -98,6 +97,7 @@ export function toInteropProtocolTransferDetailsItem(
   transfer: InteropTransferRecord,
   chainDetailsById: Map<string, InteropChainDetails>,
   tokensDetailsMap: TokensDetailsMap,
+  bridge: InteropTransferBridge,
 ): InteropProtocolTransferDetailsItem {
   const srcDetails = chainDetailsById.get(transfer.srcChain)
   const dstDetails = chainDetailsById.get(transfer.dstChain)
@@ -136,6 +136,7 @@ export function toInteropProtocolTransferDetailsItem(
       tokensDetailsMap,
     ),
     valueUsd: transfer.srcValueUsd ?? transfer.dstValueUsd,
+    bridge,
     duration: transfer.duration,
     srcChain: srcDetails?.name ?? transfer.srcChain,
     srcChainIconUrl: srcDetails?.iconUrl,

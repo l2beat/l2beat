@@ -29,17 +29,17 @@ jobs:
       should_deploy: ${{ steps.check.outputs.should_deploy }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 2
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
           run_install: false
 
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: 'pnpm'

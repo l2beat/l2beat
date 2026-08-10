@@ -1,5 +1,8 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
+import {
+  ProjectNameCell,
+  ProjectNameInfoTooltip,
+} from '~/components/table/cells/ProjectNameCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getDaCommonProjectColumns } from '~/components/table/common-project-columns/DaCommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
@@ -16,9 +19,11 @@ export const [indexColumn, logoColumn] = getDaCommonProjectColumns(
 const daLayerColumn = columnHelper.accessor('name', {
   header: 'DA Layer',
   cell: (ctx) => (
-    <TableLink href={`${ctx.row.original.href}#da-layer`}>
-      <ProjectNameCell project={ctx.row.original} />
-    </TableLink>
+    <ProjectNameInfoTooltip project={ctx.row.original}>
+      <TableLink href={`${ctx.row.original.href}#da-layer`}>
+        <ProjectNameCell project={ctx.row.original} withInfoTooltip />
+      </TableLink>
+    </ProjectNameInfoTooltip>
   ),
   meta: {
     tooltip:

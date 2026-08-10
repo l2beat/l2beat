@@ -1,14 +1,7 @@
+import type { TokenCategory } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { TokenMetadata } from '../kysely/generated/types'
-
-export type TokenCategory =
-  | 'ether'
-  | 'stablecoin'
-  | 'btc'
-  | 'rwaRestricted'
-  | 'rwaPublic'
-  | 'other'
 
 export type TokenSource =
   | 'canonical'

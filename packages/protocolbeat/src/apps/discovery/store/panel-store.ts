@@ -2,17 +2,17 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 interface State {
-  readonly selected: string | undefined
+  readonly selected: string[]
   readonly highlighted: readonly string[]
 }
 
 interface Actions {
-  select: (selected: string | undefined) => void
+  select: (selected: string[]) => void
   highlight: (highlighted: readonly string[]) => void
 }
 
 const INITIAL_STATE: State = {
-  selected: undefined,
+  selected: [],
   highlighted: [],
 }
 

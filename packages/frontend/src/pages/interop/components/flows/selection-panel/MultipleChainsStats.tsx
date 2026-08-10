@@ -1,12 +1,14 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import { api } from '~/trpc/React'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
+import type { AverageDuration } from '~/server/features/scaling/interop/types'
+import { useTRPC } from '~/trpc/React'
 import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
+import { getPairFlowStats } from '../utils/flowStats'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
+import { AvgDurationStatValue } from './AvgDurationStatValue'
 import { TopItemsList } from './TopItemsList'
 
 export function MultipleChainsStats({
@@ -24,12 +26,15 @@ export function MultipleChainsStats({
   linkTopProtocols?: boolean
   hideTopProtocols?: boolean
 }) {
+  const trpc = useTRPC()
   const { selectedProtocols } = useInteropFlows()
-  const { data, isLoading } = api.interop.flows.useQuery({
-    chains: selectedChains,
-    protocolIds: selectedProtocols,
-    tokenId,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.interop.flows.queryOptions({
+      chains: selectedChains,
+      protocolIds: selectedProtocols,
+      tokenId,
+    }),
+  )
 
   if (!data || isLoading) {
     return null
@@ -48,6 +53,7 @@ export function MultipleChainsStats({
         isLoading={isLoading}
         chainIdA={chainIdA}
         chainIdB={chainIdB}
+        avgDuration={pairData?.avgDuration ?? null}
       />
       <Routes
         data={data}
@@ -61,10 +67,7 @@ export function MultipleChainsStats({
           items={pairData.topTokens.map((t) => ({
             ...t,
             title: t.symbol,
-            href: getInteropTokenUrl(t, {
-              from: selectedChains,
-              to: selectedChains,
-            }),
+            href: getInteropTokenUrl(t),
           }))}
         />
       )}
@@ -87,6 +90,7 @@ function Stats({
   isLoading,
   chainIdA,
   chainIdB,
+  avgDuration,
 }: {
   data: {
     flows: {
@@ -99,26 +103,19 @@ function Stats({
   isLoading: boolean
   chainIdA: string
   chainIdB: string
+  avgDuration: AverageDuration | null
 }) {
   const { allChains } = useInteropFlows()
 
-  const flowAtoB = data.flows.find(
-    (f) => f.srcChain === chainIdA && f.dstChain === chainIdB,
-  )
-  const flowBtoA = data.flows.find(
-    (f) => f.srcChain === chainIdB && f.dstChain === chainIdA,
-  )
-
-  const totalVolume = (flowAtoB?.volume ?? 0) + (flowBtoA?.volume ?? 0)
-  const totalTransfers =
-    (flowAtoB?.transferCount ?? 0) + (flowBtoA?.transferCount ?? 0)
-  const avgTransferValue = totalTransfers > 0 ? totalVolume / totalTransfers : 0
-
-  const netFlowValue = (flowAtoB?.volume ?? 0) - (flowBtoA?.volume ?? 0)
-  const netFlowChainId = netFlowValue > 0 ? chainIdB : chainIdA
+  const {
+    totalVolume,
+    totalTransfers,
+    avgTransferValue,
+    netFlowValue,
+    netFlowChainId,
+    volumePerSecond,
+  } = getPairFlowStats(data.flows, chainIdA, chainIdB)
   const netFlowChain = allChains.find((c) => c.id === netFlowChainId)
-
-  const volumePerSecond = totalVolume / UnixTime.DAY
 
   return (
     <div className="rounded-lg border border-divider bg-surface-primary px-4 py-3">
@@ -139,6 +136,13 @@ function Stats({
           value={formatCurrency(avgTransferValue, 'usd')}
           isLoading={isLoading}
         />
+        {avgDuration && (
+          <StatRow
+            label="Avg. transfer time"
+            value={<AvgDurationStatValue avgDuration={avgDuration} />}
+            isLoading={isLoading}
+          />
+        )}
         <StatRow
           label="Net flow"
           value={`${formatCurrency(Math.abs(netFlowValue), 'usd')} to ${netFlowChain?.name}`}
@@ -239,16 +243,18 @@ function StatRow({
   isLoading,
 }: {
   label: ReactNode
-  value: string
+  value: ReactNode
   isLoading: boolean
 }) {
   return (
-    <div className="flex items-center justify-between gap-2 text-[13px]">
-      <span className="font-medium text-secondary leading-none">{label}</span>
+    <div className="flex items-start justify-between gap-2 text-[13px]">
+      <span className="whitespace-nowrap font-medium text-secondary leading-none">
+        {label}
+      </span>
       {isLoading ? (
         <Skeleton className="h-4 w-16" />
       ) : (
-        <span className="font-semibold leading-[1.15]">{value}</span>
+        <div className="text-right font-semibold leading-[1.15]">{value}</div>
       )}
     </div>
   )

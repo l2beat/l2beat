@@ -16,7 +16,7 @@ import { usePanelStore } from '../store/panel-store'
 
 export function PreviewPanel() {
   const { project } = useParams()
-  const selectedAddress = usePanelStore((state) => state.selected)
+  const selectedAddress = usePanelStore((state) => state.selected[0])
   const [showOnlySelected, setShowOnlySelected] = useState(false)
 
   if (!project) {

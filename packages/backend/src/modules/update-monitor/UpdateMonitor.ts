@@ -87,13 +87,16 @@ export class UpdateMonitor {
         id: project,
         name: `Update project ${project}`,
       },
-      job: async () => {
-        await this.updateProject(this.runner, project, timestamp)
-        await this.updateDiffer?.runForProject(project, timestamp)
-      },
+      job: () => this.updateProject(this.runner, project, timestamp),
     }))
 
     const results = await this.workerPool.runInPool(tasks)
+    const failedProjects = results.errors.map((error) => error.identity.id)
+
+    await this.updateDiffer?.run(
+      enabledProjects.filter((project) => !failedProjects.includes(project)),
+      timestamp,
+    )
 
     const updateEnd = UnixTime.now()
     const updateDuration = updateEnd - updateStart
@@ -109,7 +112,6 @@ export class UpdateMonitor {
       failedCount: results.errors.length,
       totalCount: tasks.length,
     })
-    const failedProjects = results.errors.map((error) => error.identity.id)
 
     const reminders = this.generateDailyReminder()
     await this.updateNotifier.sendDailyReminder(
@@ -188,9 +190,8 @@ export class UpdateMonitor {
 
       const runResult = await runner.run(
         projectConfig,
-        timestamp,
+        UnixTime.now(),
         this.logger,
-        'useCurrentTimestamp', // for dependent discoveries
       )
 
       // read previous state (committed vs DB) and prime flat sources if needed
@@ -313,7 +314,6 @@ export class UpdateMonitor {
       projectConfig,
       previousDiscovery.timestamp,
       this.logger,
-      previousDiscovery.dependentDiscoveries,
     )
     const { discovery, flatSources } = runResult
 

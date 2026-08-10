@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "shared",
   "description": "UMA protocol contract responsible for calculating and collecting regular and final fees for using the DVM.",
   "ignoreMethods": ["getCurrentTime"],
   "fields": {

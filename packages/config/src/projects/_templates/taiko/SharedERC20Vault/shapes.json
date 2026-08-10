@@ -3,5 +3,11 @@
     "hash": "0x4e0dd5fa918b3b1229feb85baaac3bf6d7fffd21febcdeb7a4f3bf62e22c9031",
     "address": "eth:0xb20C8Ffc2dD49596508d262b6E8B6817e9790E63",
     "blockNumber": 22297586
+  },
+  "MainnetERC20Vault.sol": {
+    "hash": "0x9b624be34d3f91047fd5ee6a056fd5d81ed43c3ba757e53661aeb4e4dabfe4aa",
+    "address": "eth:0x024253C6FDC27d3161aFd43fb0241411A28dDc3c",
+    "chain": "ethereum",
+    "blockNumber": 25430675
   }
 }

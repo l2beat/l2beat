@@ -1,3 +1,4 @@
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { getCoreRowModel, getPaginationRowModel } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'
 import {
@@ -16,7 +17,7 @@ import {
   type TransferRow,
 } from '~/pages/interop/components/table/transfer-count-cell/columns'
 import { useInteropTokenDashboard } from '~/pages/interop/token/InteropTokenDashboardContext'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -34,9 +35,14 @@ export function InteropTokenTransfersSection({
   interopChains,
   ...sectionProps
 }: InteropTokenTransfersSectionProps) {
-  const { data, apiSelection } = useInteropTokenDashboard()
-  const [selectedFrom, setSelectedFrom] = useState<string[]>(apiSelection.from)
-  const [selectedTo, setSelectedTo] = useState<string[]>(apiSelection.to)
+  const trpc = useTRPC()
+  const { data } = useInteropTokenDashboard()
+  const allInteropChainIds = useMemo(
+    () => interopChains.map((c) => c.id),
+    [interopChains],
+  )
+  const [selectedFrom, setSelectedFrom] = useState<string[]>(allInteropChainIds)
+  const [selectedTo, setSelectedTo] = useState<string[]>(allInteropChainIds)
 
   const {
     data: transfersData,
@@ -44,21 +50,23 @@ export function InteropTokenTransfersSection({
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = api.interop.tokenTransfers.useInfiniteQuery(
-    {
-      from: selectedFrom,
-      to: selectedTo,
-      tokenId,
-      snapshotTimestamp: data?.snapshotTimestamp ?? 0,
-      limit: TRANSFERS_PER_PAGE,
-    },
-    {
-      enabled:
-        data?.snapshotTimestamp !== undefined &&
-        selectedFrom.length > 0 &&
-        selectedTo.length > 0,
-      getNextPageParam: (lastPage) => lastPage.nextCursor,
-    },
+  } = useInfiniteQuery(
+    trpc.interop.tokenTransfers.infiniteQueryOptions(
+      {
+        from: selectedFrom,
+        to: selectedTo,
+        tokenId,
+        snapshotTimestamp: data?.snapshotTimestamp ?? 0,
+        limit: TRANSFERS_PER_PAGE,
+      },
+      {
+        enabled:
+          data?.snapshotTimestamp !== undefined &&
+          selectedFrom.length > 0 &&
+          selectedTo.length > 0,
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+      },
+    ),
   )
 
   const fetchedItems = useMemo(

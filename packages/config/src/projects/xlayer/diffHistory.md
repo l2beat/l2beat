@@ -1,3 +1,364 @@
+Generated with discovered.json: 0xfd12a9dfa4800f26565a667e831f8ce158e917dd
+
+# Diff at Thu, 30 Jul 2026 11:25:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@582e1a34fd1cba95db9957343b373cd84374dd99 block: 1782911432
+- current timestamp: 1782911432
+
+## Description
+
+Make shared-sp1 use entrypoints and rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782911432 (main branch discovery), not current.
+
+```diff
+    reference SP1VerifierGatewayOlder (eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B) {
+    +++ description: None
+      name:
+-        "SP1VerifierGateway"
++        "SP1VerifierGatewayOlder"
+      type:
+-        "Contract"
++        "Reference"
+      template:
+-        "succinct/SP1VerifierGateway"
+      sourceHashes:
+-        ["0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"]
+      proxyType:
+-        "immutable"
+      description:
+-        "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract."
+      deployerAddress:
+-        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+      sinceTimestamp:
+-        1730486951
+      sinceBlock:
+-        21094694
+      values:
+-        {"$immutable":true,"activeVerifiers":[{"selector":"0xa4594c59","verifier":"eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"},{"selector":"0x0e78f4db","verifier":"eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508"},{"selector":"0x4388a21c","verifier":"eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2"}],"allVerifiers":[{"selector":"0x09069090","verifier":"eth:0xE780809121774D06aD9B0EEeC620fF4B3913Ced1"},{"selector":"0x11b6a09d","verifier":"eth:0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D"},{"selector":"0xa4594c59","verifier":"eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"},{"selector":"0x0e78f4db","verifier":"eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508"},{"selector":"0x4388a21c","verifier":"eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2"}],"owner":"eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"}
+      fieldMeta:
+-        {"activeVerifiers":{"description":"Verifiers that are routed to by their selector and not frozen."},"allVerifiers":{"description":"All verifiers that were ever routed to by this gateway."}}
+      targetType:
++        "Contract"
+      targetProject:
++        "shared-sp1"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) [GnosisSafe]
+    +++ description: None
+```
+
+Generated with discovered.json: 0x5c55a5dccc132dd80bb8b8559b402964dbed9192
+
+# Diff at Wed, 01 Jul 2026 13:11:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@87787fbfe5dbbfa8f87f19557e7045da182d3d21 block: 1775561621
+- current timestamp: 1782911432
+
+## Description
+
+X Layer switched the respected OP Stack dispute game from the PermissionedDisputeGame to OP Succinct Lite (game type 42). The new setup uses an OPSuccinctFaultDisputeGame deployed on 2026-06-30, an AccessManager for proposer/challenger allowlists, and SP1 verifier gateways for zk proof verification during challenged games.
+
+## Watched changes
+
+```diff
+    contract AnchorStateRegistry (eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      description:
+-        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game)."
++        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the OPSuccinctFaultDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game)."
+      values.RespectedGameString:
+-        "PermissionedDisputeGame"
++        "OPSuccinctFaultDisputeGame"
++++ severity: HIGH
+      values.respectedGameType:
+-        1
++        42
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993) [opstack/OptimismPortal2] {
+    +++ description: Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It finalizes withdrawals against the currently respected OP Succinct Lite dispute game and allows forced transactions.
+      values.RespectedGameString:
+-        "PermissionedDisputeGame"
++        "OPSuccinctFaultDisputeGame"
++++ severity: HIGH
+      values.respectedGameType:
+-        1
++        42
+    }
+```
+
+```diff
+    EOA  (eth:0x6eE7BDa7AF04F61ccf93aB4b8DB2289aBe76C6aA) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B","description":"Allowed to add or remove proposers and challengers, and transfer ownership of the AccessManager.","role":".owner"}
+    }
+```
+
+```diff
+    EOA  (eth:0x736E68Af2CbF2aB0E46E4310fE5Ae568b3642FF6) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challengers"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game42:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x8841FA06099FEdfE7DB6962926C6A281e9E1e607"
+      values.initBondGame42:
+-        0
++        10000000000
+    }
+```
+
+```diff
+    EOA  (eth:0xE43944421681170648E10007f73816e04F74394F) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B","description":"Allowed to post new state roots of the current layer to the host chain.","role":".proposers"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B) [succinct/SP1VerifierGateway]
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract OPSuccinctFaultDisputeGame (eth:0x8841FA06099FEdfE7DB6962926C6A281e9E1e607) [succinct/OPSuccinct/OPSuccinctFaultDisputeGame]
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
++   Status: CREATED
+    contract AccessManager (eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B) [succinct/OPSuccinct/AccessManager]
+    +++ description: Contract managing access control for proposers and challengers in OPSuccinct.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (eth:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../src/projects/xlayer/.flat/AccessManager.sol    |  768 +++++
+ .../xlayer/.flat/OPSuccinctFaultDisputeGame.sol    | 3128 ++++++++++++++++++++
+ ...:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5.sol |  614 ++++
+ ...:0x99A74A05a0FaBEB217C1A329b0dac59a1FA52508.sol |  661 +++++
+ ...:0xb69f2584CBcFf99a58C4e7002E8b89Af54a6f4e2.sol |  664 +++++
+ .../projects/xlayer/.flat/SP1VerifierGateway.sol   |  271 ++
+ .../SP1VerifierGatewayMultisig/GnosisSafe.sol      | 1026 +++++++
+ .../GnosisSafeProxy.p.sol                          |   38 +
+ 8 files changed, 7170 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775561621 (main branch discovery), not current.
+
+```diff
+    contract AnchorStateRegistry (eth:0x000590BB65ab1864a7AD46d6B957cC9a4F2C149d) [opstack/AnchorStateRegistry_post13_opsuccinct] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game).
+      template:
+-        "opstack/AnchorStateRegistry_post13"
++        "opstack/AnchorStateRegistry_post13_opsuccinct"
+      description:
+-        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
++        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. Variant for chains using OPSuccinct (SP1) games instead of Cannon, which omits Cannon-specific cross-contract fields (vm, oracle, weth, challengePeriod, absolutePrestate from game)."
+      values.absolutePrestateFromGame:
+-        "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c"
+      values.challengePeriodFromOracle:
+-        86400
+      values.oracleFromVm:
+-        "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3"
+      values.vmFromGame:
+-        "eth:0x305D1C0EED9a0291686f3BfDf1F5E54aaeeF80e4"
+      values.wethFromGame:
+-        "eth:0x1B8A252A71bC8997d3871aF420895B5845212fC6"
++++ description: Formatted delay after which an unchallenged resolved dispute game can be used for withdrawals.
+      values.disputeGameFinalityDelaySeconds_fmt:
++        "3d 12h"
+      fieldMeta.disputeGameFinalityDelaySeconds_fmt:
++        {"description":"Formatted delay after which an unchallenged resolved dispute game can be used for withdrawals."}
+      usedTypes.0.arg.42:
++        "OPSuccinctFaultDisputeGame"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993) [opstack/OptimismPortal2] {
+    +++ description: Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It finalizes withdrawals against the currently respected OP Succinct Lite dispute game and allows forced transactions.
+      description:
+-        "Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It allows for permissioned state proposals without public challenges, and forced transactions."
++        "Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It finalizes withdrawals against the currently respected OP Succinct Lite dispute game and allows forced transactions."
+      usedTypes.0.arg.42:
++        "OPSuccinctFaultDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0x48826798d8592f61e062efc7270a5ebb430c4bf2
+
+# Diff at Tue, 30 Jun 2026 20:24:49 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1775561621
+- current timestamp: 1775561621
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775561621 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993) [opstack/OptimismPortal2] {
+    +++ description: Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It allows for permissioned state proposals without public challenges, and forced transactions.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0xec232a029b8ff8e33b7df3434c3bafd32286919d
+
+# Diff at Tue, 09 Jun 2026 12:43:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1775561621
+- current timestamp: 1775561621
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775561621 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x736E68Af2CbF2aB0E46E4310fE5Ae568b3642FF6) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x98245d0ADF4595C66F0a9Db8E13c44CBFF6be459) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xE43944421681170648E10007f73816e04F74394F) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xaeef6d08340285e861db71f749e50cdf65171897
+
+# Diff at Thu, 04 Jun 2026 17:46:41 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1775561621
+- current timestamp: 1775561621
+
+## Description
+
+New game name (aggregateVerifier) added to portal.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775561621 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993) [opstack/OptimismPortal2] {
+    +++ description: Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It allows for permissioned state proposals without public challenges, and forced transactions.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
 Generated with discovered.json: 0x3eafee4c44346d75b0304268b715f7a22e7daeed
 
 # Diff at Fri, 08 May 2026 07:52:42 GMT:

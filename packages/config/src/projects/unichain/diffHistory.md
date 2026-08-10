@@ -1,3 +1,260 @@
+Generated with discovered.json: 0xd182ed1615abd7f7f2c01a16ec649d0a0a56b1e5
+
+# Diff at Mon, 06 Jul 2026 07:57:11 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4572e5b954c85d78517dc66fc4a82b8ddc679e2a block: 1780397664
+- current timestamp: 1783324564
+
+## Description
+
+Shared SuperchainConfig upgraded 2.4.0 → 2.4.2 ([diff](https://disco.l2beat.com/diff/eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957/eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550)). No behavioral change — `ProxyAdminOwnedBase` import moved, misleading pause-state warning removed, and 5 new unused constants added to the shared `Constants` library (forward-plumbing for OPCM tooling).
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) [opstack/SuperchainConfig_expiry] {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      sourceHashes.1:
+-        "0x5fb525d1572fb90d060d122143b915059cbff39e0298b345857fd4267d7f6b28"
++        "0x2cd597b7305a446a1df355e6909cbd75fe38aa045faf4876a8e5496eebc1734f"
+      values.$implementation:
+-        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"
++        "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"
+      values.$pastUpgrades.6:
++        ["2026-06-25T23:05:47.000Z","0xbfdac60c9687a2e469159bf2458e73de2915a0a5eb53c4991a7ecde2b1fb3f15",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.7:
++        ["2026-06-25T23:05:47.000Z","0xbfdac60c9687a2e469159bf2458e73de2915a0a5eb53c4991a7ecde2b1fb3f15",["eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"]]
+      values.$upgradeCount:
+-        6
++        8
+      values.version:
+-        "2.4.0"
++        "2.4.2"
+      implementationNames.eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957:
+-        "SuperchainConfig"
+      implementationNames.eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550:
++        "SuperchainConfig"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol          | 34 ++++++++++++++++++----
+ 1 file changed, 28 insertions(+), 6 deletions(-)
+```
+
+Generated with discovered.json: 0x5a0345bad1379d9efe3a23c87d43b79493074251
+
+# Diff at Tue, 30 Jun 2026 20:24:48 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1780397664
+- current timestamp: 1780397664
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780397664 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0x46b07a5c044973c6bea0f528c707150a2b070c67
+
+# Diff at Fri, 12 Jun 2026 10:19:07 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1780397664
+- current timestamp: 1780397664
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780397664 (main branch discovery), not current.
+
+```diff
+    contract SequencerFeeVault (unichain:0x4200000000000000000000000000000000000011) [opstack/Layer2/SequencerFeeVault] {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract BaseFeeVault (unichain:0x4200000000000000000000000000000000000019) [opstack/Layer2/BaseFeeVault] {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    contract L1FeeVault (unichain:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault] {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      category:
++        {"name":"Non-Critical","priority":0}
+    }
+```
+
+```diff
+    EOA UnichainProxyAdminOwner_L2Alias (unichain:0x7E6c183F538abb8572F5cd17109C617b994d6944) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+Generated with discovered.json: 0x3d1f95f78f3266398fbb1c6c9de6965f751d7190
+
+# Diff at Tue, 09 Jun 2026 12:43:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780397664
+- current timestamp: 1780397664
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780397664 (main branch discovery), not current.
+
+```diff
+    contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      directlyReceivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA Optimism EOA 1 (eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) [gnosisSafeModules/SaferSafes] {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xb04564930081defce840a7f0044f6f25a2479255
+
+# Diff at Thu, 04 Jun 2026 17:46:04 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1778850530
+- current timestamp: 1780397664
+
+## Description
+
+Unichain Multisig 1 and Multisig 2 each rotated one signer.
+
+New game name (aggregateVerifier) added to portal.
+
+## Watched changes
+
+```diff
+    contract Unichain Multisig 2 (eth:0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x5b5B0669De777AF0Eb7A73eD46AaEe9711ab01E4"
+      values.$members.2:
+-        "eth:0xFA361ece9724d75B7EdF08B9A238706EAe270d3f"
+    }
+```
+
+```diff
+    contract Unichain Multisig 1 (eth:0xb0c4C487C5cf6d67807Bc2008c66fa7e2cE744EC) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xc8C31213545f32230E0327Db76df5538c2836081"
+      values.$members.2:
+-        "eth:0xf89C1b6e5D65e97c69fbc792f1BcdcB56DcCde91"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778850530 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
 Generated with discovered.json: 0x24a469ac6bdd08a236ef4233c5651f9fff0391d7
 
 # Diff at Fri, 15 May 2026 13:11:11 GMT:

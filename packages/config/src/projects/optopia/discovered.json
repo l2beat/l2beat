@@ -289,13 +289,15 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".proposer"
         },
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
           "role": ".PROPOSER"
         }
       ]
@@ -374,8 +376,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "eth:0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
           "role": ".batcherHash"
         }
       ]
@@ -556,18 +559,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "challenge",
-          "from": "eth:0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5",
-          "role": ".challenger"
-        },
-        {
-          "permission": "challenge",
-          "from": "eth:0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5",
-          "role": ".CHALLENGER"
-        },
-        {
-          "permission": "guard",
+          "permission": "interact",
           "from": "eth:0x5e8d351FD046Aa0b3DDA24096751996C0c397C61",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
           "role": ".guardian"
         },
         {
@@ -575,6 +569,18 @@
           "from": "eth:0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challenger"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".CHALLENGER"
         }
       ]
     },
@@ -1018,5 +1024,5 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 24247575 },
-  "permissionsConfigHash": "0x5efad161254aa07d0b7792d1fa865315df99323aea6e75af329be5e12d121eba"
+  "permissionsConfigHash": "0xc5a60bd508893e1d3877722f9e05e3cdcc541d73ed1159eeb4c4de9f6e5c91dc"
 }

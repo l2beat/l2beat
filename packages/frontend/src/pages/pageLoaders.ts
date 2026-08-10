@@ -1,6 +1,7 @@
 export const pageLoaders = {
   IconPreviewPage: async () =>
     (await import('./dev/icons/IconPreviewPage')).IconPreviewPage,
+  HomePage: async () => (await import('./home/HomePage')).HomePage,
   ScalingSummaryPage: async () =>
     (await import('./scaling/summary/ScalingSummaryPage')).ScalingSummaryPage,
   ScalingRiskPage: async () =>
@@ -13,9 +14,15 @@ export const pageLoaders = {
   ScalingActivityPage: async () =>
     (await import('./scaling/activity/ScalingActivityPage'))
       .ScalingActivityPage,
-  ScalingDataAvailabilityPage: async () =>
-    (await import('./scaling/data-availability/ScalingDataAvailabilityPage'))
-      .ScalingDataAvailabilityPage,
+  ScalingRiskDataAvailabilityPage: async () =>
+    (
+      await import(
+        './scaling/risk/data-availability/ScalingRiskDataAvailabilityPage'
+      )
+    ).ScalingRiskDataAvailabilityPage,
+  ScalingRiskSequencingPage: async () =>
+    (await import('./scaling/risk/sequencing/ScalingRiskSequencingPage'))
+      .ScalingRiskSequencingPage,
   ScalingLivenessPage: async () =>
     (await import('./scaling/liveness/ScalingLivenessPage'))
       .ScalingLivenessPage,
@@ -57,6 +64,9 @@ export const pageLoaders = {
   InteropTokenFrameworksPage: async () =>
     (await import('./interop/token-frameworks/InteropTokenFrameworksPage'))
       .InteropTokenFrameworksPage,
+  InteropIntentBridgesPage: async () =>
+    (await import('./interop/intent-bridges/InteropIntentBridgesPage'))
+      .InteropIntentBridgesPage,
   DataAvailabilitySummaryPage: async () =>
     (await import('./data-availability/summary/DataAvailabilitySummaryPage'))
       .DataAvailabilitySummaryPage,
@@ -92,6 +102,8 @@ export const pageLoaders = {
       .EcosystemProjectPage,
   GovernancePage: async () =>
     (await import('./governance/GovernancePage')).GovernancePage,
+  NativeRollupsPage: async () =>
+    (await import('./native-rollups/NativeRollupsPage')).NativeRollupsPage,
   EthereumConnectPage: async () =>
     (await import('./governance/ethereum-connect/EthereumConnectPage'))
       .EthereumConnectPage,

@@ -24,6 +24,7 @@ import {
   getTransferSizeChartData,
   type TransferSizeDataPoint,
 } from './utils/getTransferSizeChartData'
+import { pickTopProtocolEntries } from './utils/pickTopProtocolEntries'
 
 export type InteropDashboardFlowChain = {
   id: string
@@ -61,10 +62,10 @@ export async function getInteropDashboardData(
   })
 
   const { records, snapshotTimestamp } =
-    await getLatestAggregatedInteropTransferWithTokens(
-      params,
-      params.type ? [params.type] : undefined,
-    )
+    await getLatestAggregatedInteropTransferWithTokens({
+      selection: params,
+      types: params.type ? [params.type] : undefined,
+    })
 
   if (records.length === 0) {
     return null
@@ -102,7 +103,7 @@ export async function getInteropDashboardData(
     transferCount: flow.transferCount,
   }))
 
-  return {
+  const data: InteropDashboardData = {
     flows,
     topProtocols: getTopProtocols(records, interopProjects, subgroupProjects),
     topToken: getTopToken({
@@ -123,6 +124,12 @@ export async function getInteropDashboardData(
       params,
     ),
   }
+
+  if (params.limit !== undefined) {
+    data.entries = pickTopProtocolEntries(data, params.limit)
+  }
+
+  return data
 }
 
 async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
@@ -230,6 +237,7 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     name: project.interopConfig.name ?? project.name,
     shortName: project.interopConfig.shortName,
     description: project.interopConfig.description,
+    type: project.interopConfig.type,
     isAggregate: project.interopConfig.isAggregate,
     subgroup: undefined,
     iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
@@ -245,7 +253,9 @@ async function getMockInteropDashboardData(): Promise<InteropDashboardData> {
     byBridgeType: undefined,
     averageValueInFlight: undefined,
     netMintedValue: undefined,
+    topRoute: undefined,
     snapshotTimestamp: undefined,
+    filterable: [],
   }))
 
   const firstMockToken = mockTokens[0]

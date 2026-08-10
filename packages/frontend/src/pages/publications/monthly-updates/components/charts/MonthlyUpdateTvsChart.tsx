@@ -1,4 +1,6 @@
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { formatCurrency } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { useId, useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type { TvsChartDataPoint } from '~/components/chart/tvs/TvsChart'
@@ -16,8 +18,7 @@ import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChar
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
-import { api } from '~/trpc/React'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { useTRPC } from '~/trpc/React'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateTvsChart({
@@ -33,16 +34,19 @@ export function MonthlyUpdateTvsChart({
   from: UnixTime
   to: UnixTime
 }) {
+  const trpc = useTRPC()
   const id = useId()
-  const { data, isLoading } = api.tvs.chart.useQuery({
-    range: [from, to],
-    excludeAssociatedTokens: false,
-    excludeRwaRestrictedTokens: true,
-    filter: {
-      type: 'projects',
-      projectIds: entries,
-    },
-  })
+  const { data, isLoading } = useQuery(
+    trpc.tvs.chart.queryOptions({
+      range: [from, to],
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
+      filter: {
+        type: 'projects',
+        projectIds: entries,
+      },
+    }),
+  )
 
   const chartData: TvsChartDataPoint[] | undefined = data?.chart.map(
     ([timestamp, native, canonical, external]) => {

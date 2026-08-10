@@ -1,4 +1,8 @@
-import { formatSeconds } from '@l2beat/shared-pure'
+import {
+  formatCurrency,
+  formatNumberWithCommas,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import {
   Tooltip,
@@ -15,8 +19,6 @@ import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { InteropProtocolTransferDetailsItem } from '~/server/features/scaling/interop/types'
 import { formatTimestamp } from '~/utils/dates'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatNumberWithCommas } from '~/utils/number-format/formatNumber'
 
 export type TransferRow = InteropProtocolTransferDetailsItem & BasicTableRow
 
@@ -99,6 +101,25 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
         headClassName: 'text-2xs',
         align: 'right',
         tooltip: 'The USD value of the transfer.',
+      },
+    }),
+    columnHelper.accessor('bridge', {
+      header: 'Bridge',
+      enableSorting: false,
+      cell: (ctx) => {
+        const { bridge } = ctx.row.original
+        return (
+          <a
+            href={bridge.href}
+            className="font-medium text-label-value-14 text-link hover:underline"
+          >
+            {bridge.name}
+          </a>
+        )
+      },
+      meta: {
+        headClassName: 'text-2xs',
+        tooltip: 'The interoperability protocol used for the transfer.',
       },
     }),
     columnHelper.accessor('duration', {
@@ -209,10 +230,7 @@ function TokenAmount({
 
   const tokenUrl =
     abstractTokenId && selectedChains
-      ? getInteropTokenUrl(
-          { id: abstractTokenId, symbol, issuer },
-          selectedChains,
-        )
+      ? getInteropTokenUrl({ id: abstractTokenId, symbol, issuer })
       : undefined
 
   if (!tokenUrl) {

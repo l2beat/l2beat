@@ -1,7 +1,10 @@
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { lazy, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { SidebarProvider } from './components/core/Sidebar'
 import { Toaster } from './components/core/Sonner'
+import { LoadingState } from './components/LoadingState'
+import { AppLayout } from './layouts/AppLayout'
 import { AddChain } from './pages/chains/AddChain'
 import { ChainPage } from './pages/chains/ChainPage'
 import { ChainsSummaryPage } from './pages/chains/ChainsSummaryPage'
@@ -15,6 +18,12 @@ import { TokenIngestionQueuePage } from './pages/tokens/TokenIngestionQueuePage'
 import { TokenSuggestionsPage } from './pages/tokens/TokenSuggestionsPage'
 import { TokensSummaryPage } from './pages/tokens/TokensSummaryPage'
 import { TRPCReactProvider } from './react-query/trpc'
+
+const TokenRelationsGraphPage = lazy(() =>
+  import('./pages/tokens/TokenRelationsGraphPage').then((module) => ({
+    default: module.TokenRelationsGraphPage,
+  })),
+)
 
 export function App() {
   return (
@@ -36,6 +45,20 @@ export function App() {
               element={<TokenIngestionQueuePage />}
             />
             <Route path="/tokens/history" element={<TokenHistoryPage />} />
+            <Route
+              path="/tokens/relations-graph"
+              element={
+                <Suspense
+                  fallback={
+                    <AppLayout>
+                      <LoadingState className="h-full" />
+                    </AppLayout>
+                  }
+                >
+                  <TokenRelationsGraphPage />
+                </Suspense>
+              }
+            />
             <Route path="/search/:search" element={<SearchPage />} />
             <Route path="/tokens/new" element={<AddTokensPage />} />
             <Route path="/tokens/:id" element={<AbstractTokenPage />} />

@@ -1,5 +1,25 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Enforces the Taiko Multiprover policy and routes to the downstream router contracts.",
-  "category": "core"
+  "description": "Immutable verifier policy contract for Taiko mainnet. Each accepted proof must contain exactly two ordered sub-proofs: either SGX-GETH plus SGX-RETH/RISC0-RETH/SP1-RETH, or SGX-RETH plus SGX-GETH/RISC0-RETH/SP1-RETH. It routes each sub-proof to the corresponding downstream verifier.",
+  "category": "core",
+  "fields": {
+    "sgxGethVerifier": {
+      "description": "SGX verifier for Geth-based proofs. Each accepted proof must include either this verifier or the SGX-RETH verifier."
+    },
+    "sgxRethVerifier": {
+      "description": "SGX verifier for Reth-based proofs. Each accepted proof must include either this verifier or the SGX-GETH verifier."
+    },
+    "risc0RethVerifier": {
+      "description": "RISC Zero verifier for Reth-based proofs that can serve as the second required verifier."
+    },
+    "sp1RethVerifier": {
+      "description": "SP1 verifier for Reth-based proofs that can serve as the second required verifier."
+    },
+    "opVerifier": {
+      "description": "Optional optimistic verifier slot. It is zero in the mainnet verifier constructor and cannot satisfy the policy."
+    },
+    "tdxGethVerifier": {
+      "description": "Optional TDX verifier slot. It is zero in the mainnet verifier constructor and cannot satisfy the policy."
+    }
+  }
 }

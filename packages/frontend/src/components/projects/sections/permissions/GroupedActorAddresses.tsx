@@ -25,12 +25,13 @@ export function GroupedActorAddresses({
       {addresses.map((entry) => (
         <HighlightableLink
           key={entry.address}
+          id={entry.anchorId}
           variant={
             entry.verificationStatus === 'unverified' ? 'danger' : undefined
           }
           href={entry.href}
           address={entry.address}
-          className="inline-flex items-center gap-0.5"
+          className="inline-flex scroll-mt-14 items-center gap-0.5 md:scroll-mt-10"
         >
           {entry.verificationStatus === 'unverified' && (
             <Tooltip>

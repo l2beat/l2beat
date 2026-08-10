@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import { ChevronLeftIcon, RefreshCwIcon } from 'lucide-react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { Badge } from '~/components/core/Badge'
@@ -5,7 +6,9 @@ import { Button } from '~/components/core/Button'
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
-import { useBackendApi } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
+import { TransferDataRangeSelect } from '../TransferDataRangeSelect'
+import { useTransferDataRange } from '../transferDataRange'
 import { TransferDetailsTable } from './table/details/TransferDetailsTable'
 import type {
   ChainMetadata,
@@ -15,13 +18,14 @@ import type {
 import { decodeRouteParam, parseOptionalSearchParam } from './utils'
 
 export function TransferDetailsPage() {
-  const api = useBackendApi()
+  const trpc = useBackendTrpc()
   const params = useParams<{ type: string }>()
   const [searchParams] = useSearchParams()
   const type = decodeRouteParam(params.type)
   const plugin = parseOptionalSearchParam(searchParams.get('plugin'))
   const srcChain = parseOptionalSearchParam(searchParams.get('srcChain'))
   const dstChain = parseOptionalSearchParam(searchParams.get('dstChain'))
+  const [range, setRange] = useTransferDataRange()
   const hasValidParams = type !== undefined
 
   const detailsInput: TransferDetailsInput = hasValidParams
@@ -30,8 +34,9 @@ export function TransferDetailsPage() {
         plugin,
         srcChain,
         dstChain,
+        range,
       }
-    : { type: '' }
+    : { type: '', range }
 
   const {
     data: transfersData,
@@ -40,9 +45,11 @@ export function TransferDetailsPage() {
     isLoading: isTransfersLoading,
     isFetching: isTransfersFetching,
     refetch: refetchTransfers,
-  } = api.interop.transfers.details.useQuery(detailsInput, {
-    enabled: hasValidParams,
-  })
+  } = useQuery(
+    trpc.interop.transfers.details.queryOptions(detailsInput, {
+      enabled: hasValidParams,
+    }),
+  )
 
   const {
     data: chainsData,
@@ -50,7 +57,7 @@ export function TransferDetailsPage() {
     isError: isChainsError,
     isFetching: isChainsFetching,
     refetch: refetchChains,
-  } = api.interop.chains.metadata.useQuery()
+  } = useQuery(trpc.interop.chains.metadata.queryOptions())
 
   const rows: TransferDetailsRow[] = transfersData ?? []
   const chains: ChainMetadata[] = chainsData ?? []
@@ -71,11 +78,16 @@ export function TransferDetailsPage() {
       actions={
         <>
           <Button asChild variant="outline" size="sm">
-            <Link to="/interop/transfers">
+            <Link to={`/interop/transfers?range=${range}`}>
               <ChevronLeftIcon />
               Back to transfers
             </Link>
           </Button>
+          <TransferDataRangeSelect
+            value={range}
+            onValueChange={setRange}
+            disabled={!hasValidParams || isTransfersFetching}
+          />
           <Button
             variant="outline"
             size="sm"
@@ -99,6 +111,7 @@ export function TransferDetailsPage() {
             Type: {type ?? 'invalid route'}
           </Badge>
           <Badge variant="secondary">Plugin: {plugin ?? 'all'}</Badge>
+          <Badge variant="secondary">Range: {range}</Badge>
           <Badge variant="secondary">Source chain: {srcChain ?? 'all'}</Badge>
           <Badge variant="secondary">
             Destination chain: {dstChain ?? 'all'}

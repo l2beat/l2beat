@@ -46,7 +46,7 @@ export abstract class TimeLoop {
     try {
       await this.run()
     } catch (e) {
-      this.logger.error(e)
+      this.logger.error('Run failed', e)
     }
     const durationMs = Date.now() - runStartTime
     this.logger.debug('Run ended', { durationMs })

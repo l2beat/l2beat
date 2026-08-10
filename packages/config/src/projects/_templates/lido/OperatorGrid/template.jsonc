@@ -1,0 +1,38 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Registry of stVault node-operator groups and risk tiers. It defines per-tier share limits, reserve ratios, forced-rebalance thresholds and fees, coordinates two-party tier changes, and can jail vaults.",
+  "category": "core",
+  "ignoreMethods": ["nodeOperatorAddress", "tier"],
+  "ignoreInWatchMode": ["nodeOperatorCount", "tiersCount"],
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "includeEmptyRoles": true,
+        "roleNames": {
+          "0xa495a3428837724c7f7648cda02eb83c9c4c778c8688d6f254c7f3f80c154d55": "REGISTRY_ROLE"
+        }
+      }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke OperatorGrid roles."
+        }
+      ]
+    },
+    "registryManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "REGISTRY_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register node-operator groups, set their aggregate share limits, create or alter vault risk and fee tiers, change confirmation timing, and jail or unjail vaults."
+        }
+      ]
+    }
+  }
+}

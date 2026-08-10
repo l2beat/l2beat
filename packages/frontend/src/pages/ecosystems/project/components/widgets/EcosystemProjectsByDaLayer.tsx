@@ -1,9 +1,9 @@
+import { formatBytes } from '@l2beat/shared-pure'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ProgressBar } from '~/components/ProgressBar'
 import type { BlobsData } from '~/server/features/ecosystems/getBlobsData'
 import type { ProjectsByDaLayer } from '~/server/features/ecosystems/getProjectsByDaLayer'
 import { formatPercent } from '~/utils/calculatePercentageChange'
-import { formatBytes } from '~/utils/number-format/formatBytes'
 import { EcosystemWidget, EcosystemWidgetTitle } from './EcosystemWidget'
 
 export function EcosystemProjectsByDaLayer({

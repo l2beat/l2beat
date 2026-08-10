@@ -1,0 +1,46 @@
+{
+  "stakeToken": "AZTEC",
+  "totalStake": 610642000,
+  "entities": [
+    {
+      "name": "Nethermind",
+      "stake": 113600000
+    },
+    {
+      "name": "Nansen | Stake to Stack Points",
+      "stake": 75800000
+    },
+    {
+      "name": "Sigma Prime",
+      "stake": 66800000
+    },
+    {
+      "name": "P2P.org",
+      "stake": 41600000
+    },
+    {
+      "name": "snoopfear|PON",
+      "stake": 37200000
+    },
+    {
+      "name": "ZKV",
+      "stake": 30816000
+    },
+    {
+      "name": "GabbexNodes",
+      "stake": 27400000
+    },
+    {
+      "name": "Wonderland",
+      "stake": 26600000
+    },
+    {
+      "name": "Nightwolf Labs",
+      "stake": 22800000
+    },
+    {
+      "name": "01node",
+      "stake": 21600000
+    }
+  ]
+}

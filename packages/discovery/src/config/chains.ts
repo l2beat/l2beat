@@ -57,6 +57,19 @@ export const chains: ChainConfig[] = [
     coingeckoPlatform: 'arbitrum-nova',
   },
   {
+    name: 'robinhood',
+    chainId: 4663,
+    shortName: 'robinhood',
+    multicall: getMulticall3Config(406),
+    explorer: [
+      {
+        type: 'blockscout',
+        url: 'https://robinhoodchain.blockscout.com/api',
+      },
+      { type: 'sourcify' },
+    ],
+  },
+  {
     name: 'optimism',
     chainId: 10,
     shortName: 'oeth',
@@ -248,6 +261,13 @@ export const chains: ChainConfig[] = [
     coingeckoPlatform: 'unichain',
   },
   {
+    name: 'hyperevm',
+    chainId: 999,
+    shortName: 'hyperevm',
+    multicall: getMulticall3Config(13051),
+    explorer: { type: 'etherscan' },
+  },
+  {
     name: 'ink',
     chainId: 57073,
     shortName: 'ink',
@@ -313,6 +333,16 @@ export const chains: ChainConfig[] = [
     shortName: 'taiko',
     multicall: undefined,
     explorer: { type: 'etherscan' },
+  },
+  {
+    name: 'zama',
+    chainId: 261131,
+    shortName: 'zama',
+    multicall: undefined,
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.mainnet.zama.org/api',
+    },
   },
   {
     name: 'ethereal',

@@ -61,7 +61,7 @@
       "address": "eth:0x1eB7d5898A9b3dCB8145e37B564ef00bC4cB794D",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -77,7 +77,7 @@
       "address": "eth:0x2EAB2633c6180Ec592fB7A22EDAF323ccA51F85A",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -169,13 +169,14 @@
       "implementationNames": {
         "eth:0x4c614C7BB9420caA1F19cB2C58B00864f2125Ce2": "ERC1967Proxy",
         "eth:0x09665baEFbfaAE3E9b3AC854717C2ab5534d2D25": "Contribution"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0x5C044174cC9bcA35b933a2B5107b494BAFf34Bb6",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -315,7 +316,7 @@
       "address": "eth:0xB89001Ef513E10482B2667a0fC70F06cfF3a7418",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -791,7 +792,8 @@
       "implementationNames": {
         "scr:0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af": "ERC1967Proxy",
         "scr:0x8305Ca6756b0edb49ed9503C1Cf39Cb64a00b955": "Contribution"
-      }
+      },
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "scr:0x5C044174cC9bcA35b933a2B5107b494BAFf34Bb6",

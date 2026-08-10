@@ -22,6 +22,11 @@ export const axelar: BaseProject = {
         transferType: 'axelar.Transfer',
         bridgeType: 'burnAndMint',
       },
+      {
+        plugin: 'axelar',
+        transferType: 'axelar.Transfer',
+        bridgeType: 'nonMinting',
+      },
     ],
     type: 'multichain', // technically its a token bridge, but >90% used for axlUSDC, which is a multichain token
   },

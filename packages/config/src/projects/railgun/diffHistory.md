@@ -1,3 +1,186 @@
+Generated with discovered.json: 0xdc5ee3658590f256c693fe0f1a3df0ef79d5592f
+
+# Diff at Thu, 30 Jul 2026 15:18:34 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@66fa629d20cb3eebcd8a566401e5b4f335fafdf2 block: 1785404669
+- current timestamp: 1785404669
+
+## Description
+
+Added RAIL balances to gov staking and the treasury.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785404669 (main branch discovery), not current.
+
+```diff
+    contract Treasury (eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40) [railgun/Treasury] {
+    +++ description: Collects Railgun fees. Managed through access control roles.
+      fieldMeta.RAILBalance:
++        {"description":"RAIL held by the treasury, movable by holders of TRANSFER_ROLE."}
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
+```diff
+    contract Staking (eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20) [railgun/Staking] {
+    +++ description: RAIL staking contract that tracks delegated voting power, enforces a 1mo unstake delay, and snapshots staking balances for governance every 1d. Its parameters define the governance voting system.
+      fieldMeta.RAILStaked:
++        {"description":"Total RAIL locked in this contract by governance participants for voting power."}
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
+Generated with discovered.json: 0x2460028db8f0cf211ea30dd957fd769161b141b2
+
+# Diff at Thu, 30 Jul 2026 10:47:38 GMT:
+
+- author: Sergey Shemyakov (<serge.shemyakov@l2beat.com>)
+- comparing to: main@4e9103e71c52f25da344c761254bcc489fdd6f5a block: 1784543269
+- current timestamp: 1785404669
+
+## Description
+
+New railgun proposal created. It is evaluated as not malicious. The trx: https://tools.l2beat.com/decoder-new/?hash=0x818c219e6081d0b650f6be93fb19e1829c154c299f2dae0c7e2f6a6dcd3f2a71&data=AwA.
+Proposed upgrade of the main Railgun contract: https://disco.l2beat.com/diff/eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b/eth:0xd662c4b1f22aceb0beacdf3a493de6f478686a0c.
+
+Changes:
+- Added Action event that has overview of trxs in the action. This event is now emitted in transact()
+- verify() and validateTransaction() now also return hashBoundParams to be included in the new event
+- minor refactoring.
+
+Proposal also executes task 6 on Arbitrum Executor, which is this one: https://tools.l2beat.com/decoder-new/?hash=0xa2403ae37d69e9b92b5934bfb13779176d8484402b211ed8f55cd3d415ef0d66&data=AwA. It makes the same railgun contract upgrade on Arbitrum.
+
+The newly deployed railgun contracts have poseidon hash libraries not verified, it is confirmed that the EVM byte code of these libraries is equivalent to the previous deployment (no vulnerabilities introduced) on Ethereum and Arbitrum.
+
+## Watched changes
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ severity: HIGH
+      values.proposalCount:
+-        25
++        26
+    }
+```
+
+Generated with discovered.json: 0xfe1fbfd0e53c5757dbaa3477468a5f1704eb7f16
+
+# Diff at Mon, 20 Jul 2026 10:53:56 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@7377ac7e3e345e802eb1ede5f0ed37baf517c024 block: 1779461009
+- current timestamp: 1784543269
+
+## Description
+
+Executed a railgun proposal. It:
+
+- Upgraded Governor rewards (https://disco.l2beat.com/diff/eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b/eth:0xaC76eB94703b16e704f76ECFFDADF36b6A53ECDB). Diff mostly a solidity & lib version upgrades + minimal refactoring around changing interval BP parameter.
+- Minted 2.5M RAIL (currently ~$4M) for Treasury (staker rewards).
+- Increased staker rewards from 200 bp of treasury per 2 weeks to 420 bp of treasury (4.2%).
+
+## Watched changes
+
+```diff
+    contract GovernorRewards (eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f) [railgun/GovernorRewards] {
+    +++ description: Reward distributor that pulls assets from the Railgun treasury and allocates them to stakers via token voting.
+      sourceHashes.1:
+-        "0x9bf4e7d842e397338e0191cf08fc9478cf3988db823baa64976da77c103fab0d"
++        "0xfe182358adbab091fd4af273d3cd98fe8b507eeb8a230e1b538a26a612d68ee9"
++++ description: Current GovernorRewards implementation.
++++ severity: HIGH
+      values.$implementation:
+-        "eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b"
++        "eth:0xaC76eB94703b16e704f76ECFFDADF36b6A53ECDB"
++++ description: Basis points of treasury balance earmarked for rewards on each distribution interval.
++++ severity: HIGH
+      values.intervalBP:
+-        200
++        420
+      implementationNames.eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b:
+-        "GovernorRewards"
+      implementationNames.eth:0xaC76eB94703b16e704f76ECFFDADF36b6A53ECDB:
++        "GovernorRewards"
+    }
+```
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ severity: HIGH
+      values.proposalCount:
+-        23
++        25
+    }
+```
+
+```diff
+    contract Rail Token (eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D) [railgun/RailToken] {
+    +++ description: RAIL governance token contract with a capped (100,000,000 RAIL total supply) mint schedule and an early anti-bot transfer override.
++++ description: Current minted RAIL supply.
+      values.totalSupply:
+-        "57500000000000000000000000"
++        "60000000000000000000000000"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GovernorRewards/GovernorRewards.sol            | 409 +++++++++++++++------
+ 1 file changed, 300 insertions(+), 109 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779461009 (main branch discovery), not current.
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ severity: HIGH
+      values.proposalCount:
++        23
+      fieldMeta.proposalCount:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xbb96a58a3d0b2d62bd32d028f307ee079b77c450
+
+# Diff at Fri, 12 Jun 2026 10:19:00 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1779461009
+- current timestamp: 1779461009
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779461009 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624) {
+    +++ description: None
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
 Generated with discovered.json: 0x9a62af265633fda4fca4560ad7cdfb7fb5a9f3e4
 
 # Diff at Mon, 25 May 2026 09:49:42 GMT:

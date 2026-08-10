@@ -1,3 +1,4 @@
+import type { InteropType } from '@l2beat/config'
 import type {
   AggregatedInteropTokenRecord,
   AggregatedInteropTransferRecord,
@@ -5,6 +6,7 @@ import type {
 } from '@l2beat/database'
 import { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import type { InteropFlowData } from './utils/getFlows'
 import type { TopItems } from './utils/getTopItems'
 
@@ -15,6 +17,7 @@ export type ProtocolEntry = {
   name: string
   shortName: string | undefined
   description: string | undefined
+  type: InteropType
   bridgeTypes: KnownInteropBridgeType[]
   isAggregate: boolean | undefined
   subgroup:
@@ -34,8 +37,15 @@ export type ProtocolEntry = {
   byBridgeType: ByBridgeTypeData | undefined
   averageValueInFlight: number | undefined
   netMintedValue: number | undefined
+  topRoute:
+    | {
+        srcChain: { id: string; name: string; iconUrl: string }
+        dstChain: { id: string; name: string; iconUrl: string }
+        volume: number
+      }
+    | undefined
   snapshotTimestamp: number | undefined
-}
+} & FilterableEntry
 
 export type ProtocolDisplayable = {
   name: string
@@ -79,12 +89,37 @@ export type InteropDashboardParams = v.infer<typeof InteropDashboardParams>
 export const InteropDashboardParams = v.object({
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
+  limit: v.number().optional(),
 })
 
 export type InteropProtocolParams = v.infer<typeof InteropProtocolParams>
 export const InteropProtocolParams = v.object({
   id: v.string().transform((value) => ProjectId(value)),
   ...InteropSelectionInputShape,
+})
+
+const InteropProjectScope = v.object({
+  type: v.literal('project'),
+  projectId: v.string().transform((value) => ProjectId(value)),
+})
+const InteropSelectionScope = v.object({
+  type: v.literal('selection'),
+  protocolIds: v.array(v.string()),
+  anchorChain: v.string().optional(),
+})
+export type InteropScope = v.infer<typeof InteropScope>
+export const InteropScope = v.union([
+  InteropProjectScope,
+  InteropSelectionScope,
+])
+
+export type InteropBridgeSelectionParams = v.infer<
+  typeof InteropBridgeSelectionParams
+>
+export const InteropBridgeSelectionParams = v.object({
+  ...InteropSelectionInputShape,
+  protocolIds: v.array(v.string()),
+  anchorChain: v.string().optional(),
 })
 
 export type InteropTokenParams = v.infer<typeof InteropTokenParams>
@@ -120,6 +155,7 @@ const InteropTopItemsParamsShape = {
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
   protocolIds: v.array(v.string()).optional(),
+  anchorChain: v.string().optional(),
 }
 export const InteropTopItemsParams = v.object(InteropTopItemsParamsShape)
 
@@ -144,7 +180,7 @@ export const InteropProtocolTransfersCursor = v.object({
   transferId: v.string(),
 })
 export const InteropProtocolTransfersParams = v.object({
-  id: v.string().transform((value) => ProjectId(value)),
+  scope: InteropScope,
   ...InteropSelectionInputShape,
   type: KnownInteropBridgeType.optional(),
   tokenId: v.string().optional(),
@@ -171,6 +207,19 @@ export const InteropFlowsParams = v.object({
   tokenId: v.string().optional(),
 })
 
+export type InteropProtocolsByVolumeParams = v.infer<
+  typeof InteropProtocolsByVolumeParams
+>
+export const InteropProtocolsByVolumeParams = v.object({
+  chains: v.array(v.string()),
+  protocolIds: v.array(v.string()),
+})
+
+export type InteropTransferBridge = {
+  name: string
+  href: string
+}
+
 export type InteropProtocolTransferDetailsItem = {
   transferId: string
   timestamp: number
@@ -185,6 +234,7 @@ export type InteropProtocolTransferDetailsItem = {
   dstTokenIssuer: string | null
   dstTokenIconUrl: string
   valueUsd: number | undefined
+  bridge: InteropTransferBridge
   duration: number | undefined
   srcChain: string
   srcChainIconUrl: string | undefined

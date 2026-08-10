@@ -1,0 +1,94 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Manages node-operator bonds for a permissionless staking module. It accepts ETH, stETH and wstETH bonds, applies bond curves, locks or penalizes bond, and lets eligible node-operator addresses claim rewards after the module's fee distribution.",
+  "category": "core",
+  "ignoreMethods": [
+    "getActualLockedBond",
+    "getBond",
+    "getBondCurve",
+    "getBondCurveId",
+    "getBondDebt",
+    "getBondLockNonce",
+    "getBondShares",
+    "getBondSummary",
+    "getBondSummaryShares",
+    "getCustomRewardsClaimer",
+    "getCurveInfo",
+    "getFeeSplits",
+    "getLockedBond",
+    "getLockedBondInfo",
+    "getNodeOperatorBondInfo",
+    "getPendingSharesToSplit",
+    "getUnbondedKeysCount",
+    "getUnbondedKeysCountToEject",
+    "getClaimableBondShares",
+    "hasSplits",
+    "isLockExpired"
+  ],
+  "ignoreInWatchMode": ["getBondLockRetentionPeriod", "totalBondShares"],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke Accounting roles, change the bond lock period and penalty recipient, and configure fee splits and custom rewards claimers."
+        }
+      ]
+    },
+    "bondCurveManagers": {
+      "copy": "accessControl",
+      "edit": ["get", "MANAGE_BOND_CURVES_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add new bond curves and change existing bond requirements."
+        }
+      ]
+    },
+    "bondCurveSetters": {
+      "copy": "accessControl",
+      "edit": ["get", "SET_BOND_CURVE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "assign a bond curve to an individual node operator."
+        }
+      ]
+    },
+    "pausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause bond deposits and reward claims for a chosen duration."
+        }
+      ]
+    },
+    "resumers": {
+      "copy": "accessControl",
+      "edit": ["get", "RESUME_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "resume bond deposits and reward claims."
+        }
+      ]
+    },
+    "assetRecoverers": {
+      "copy": "accessControl",
+      "edit": ["get", "RECOVERER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "recover ETH, ERC-20, ERC-721 and ERC-1155 assets accidentally held by Accounting, subject to the protected-token restrictions."
+        }
+      ]
+    }
+  }
+}

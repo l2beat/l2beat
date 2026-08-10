@@ -28,5 +28,11 @@
     "hash": "0x30d86d66b2eba9a29c67fd3a446f636d4d7835b6d679dab61a2cfc6e10b97b23",
     "address": "eth:0x0d079b22B0B4083b9b0bDc62Bf1a4EAF4a95bDEe",
     "blockNumber": 24398013
+  },
+  "RollupEventInbox_robinhood": {
+    "hash": "0xd41755b4f84ce3bcb5d2176b040f92cc92a44cd8ef5f35a92509670c761dcc9c",
+    "address": "eth:0x796FeE4adceD1cb47a3e3d1B6925472F8fC8f1f9",
+    "chain": "ethereum",
+    "blockNumber": 25443718
   }
 }

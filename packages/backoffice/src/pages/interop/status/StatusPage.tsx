@@ -1,3 +1,4 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { RefreshCwIcon, RotateCcwIcon, Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
@@ -31,7 +32,7 @@ import {
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { useBackendApi } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 import { PluginStatusesTable } from './table/PluginStatusesTable'
 
 const RESYNC_OPTIONS: ReadonlyArray<{
@@ -69,8 +70,8 @@ function buildResyncPayload(
 }
 
 export function StatusPage() {
-  const api = useBackendApi()
-  const utils = api.useUtils()
+  const trpc = useBackendTrpc()
+  const queryClient = useQueryClient()
   const [autoRefresh, setAutoRefresh] = useState(true)
   const [restartDialogPlugin, setRestartDialogPlugin] = useState<string | null>(
     null,
@@ -81,10 +82,11 @@ export function StatusPage() {
     string | null
   >(null)
 
-  const { data, error, isError, isLoading, isFetching, refetch } =
-    api.interop.status.pluginSyncStatuses.useQuery(undefined, {
+  const { data, error, isError, isLoading, isFetching, refetch } = useQuery(
+    trpc.interop.status.pluginSyncStatuses.queryOptions(undefined, {
       refetchInterval: autoRefresh ? 5_000 : false,
-    })
+    }),
+  )
 
   const rows = data ?? []
   const pluginNames = Array.from(
@@ -95,37 +97,45 @@ export function StatusPage() {
     (row) => row.resyncRequestedFrom !== undefined,
   ).length
 
-  const resync = api.interop.status.resync.useMutation({
-    onSuccess: (result, input) => {
-      toast.success(
-        `${input.pluginName}: resync requested for ${result.updatedChains.length} chains`,
-      )
-      void utils.interop.status.pluginSyncStatuses.invalidate()
-    },
-    onError: (mutationError) => {
-      toast.error(mutationError.message)
-    },
-    onSettled: () => {
-      setPendingResyncKey(null)
-    },
-  })
+  const resync = useMutation(
+    trpc.interop.status.resync.mutationOptions({
+      onSuccess: (result, input) => {
+        toast.success(
+          `${input.pluginName}: resync requested for ${result.updatedChains.length} chains`,
+        )
+        void queryClient.invalidateQueries(
+          trpc.interop.status.pluginSyncStatuses.queryFilter(),
+        )
+      },
+      onError: (mutationError) => {
+        toast.error(mutationError.message)
+      },
+      onSettled: () => {
+        setPendingResyncKey(null)
+      },
+    }),
+  )
 
-  const restartFromNow = api.interop.status.restartFromNow.useMutation({
-    onSuccess: (result, input) => {
-      toast.success(
-        `${input.pluginName}: restart requested for ${result.updatedChains.length} chains`,
-      )
-      setRestartDialogPlugin(null)
-      setRestartConfirmation('')
-      void utils.interop.status.pluginSyncStatuses.invalidate()
-    },
-    onError: (mutationError) => {
-      toast.error(mutationError.message)
-    },
-    onSettled: () => {
-      setPendingRestartPlugin(null)
-    },
-  })
+  const restartFromNow = useMutation(
+    trpc.interop.status.restartFromNow.mutationOptions({
+      onSuccess: (result, input) => {
+        toast.success(
+          `${input.pluginName}: restart requested for ${result.updatedChains.length} chains`,
+        )
+        setRestartDialogPlugin(null)
+        setRestartConfirmation('')
+        void queryClient.invalidateQueries(
+          trpc.interop.status.pluginSyncStatuses.queryFilter(),
+        )
+      },
+      onError: (mutationError) => {
+        toast.error(mutationError.message)
+      },
+      onSettled: () => {
+        setPendingRestartPlugin(null)
+      },
+    }),
+  )
 
   function handleResync(
     pluginName: string,

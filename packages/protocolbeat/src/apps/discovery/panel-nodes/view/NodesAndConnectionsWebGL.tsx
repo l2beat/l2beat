@@ -11,6 +11,12 @@ import {
   HEADER_HEIGHT,
   HIDDEN_FIELDS_FOOTER_HEIGHT,
 } from '../store/utils/constants'
+import {
+  buildRenderGraph,
+  type GroupContainer,
+  isFieldConnectionLive,
+} from '../store/utils/renderGraph'
+import { topLevelByDescendant } from '../store/utils/subnodes'
 import { getColor } from './colors/colors'
 
 // ============================================================================
@@ -19,6 +25,7 @@ import { getColor } from './colors/colors'
 
 type RGBA = [number, number, number, number]
 
+const COFFEE_600: RGBA = [0x59 / 255, 0x4c / 255, 0x43 / 255, 1]
 const COFFEE_400: RGBA = [0xa9 / 255, 0x87 / 255, 0x63 / 255, 1]
 const COFFEE_200: RGBA = [0xf0 / 255, 0xd8 / 255, 0xbd / 255, 1]
 const AUTUMN_300: RGBA = [0xba / 255, 0xd8 / 255, 0x0a / 255, 1]
@@ -33,10 +40,16 @@ const HEADER_PADDING = 8
 const HEADER_ITEM_GAP = 4
 const NODE_CORNER_RADIUS = 4
 const FULL_HEIGHT_CORNER_RADIUS = 16
+const GROUP_CORNER_RADIUS = 12
 const DOT_RADIUS = 5
 const FIELD_DOT_CELL = DOT_RADIUS * 2 * 2 // see comment in emitNodeDots
 const SELECTION_OUTLINE_INSET = 2
 const SELECTION_OUTLINE_WIDTH = 4
+const GROUP_OUTLINE_INSET = 1
+const GROUP_OUTLINE_WIDTH = 2
+const CONTAINER_CORNER_RADIUS = 12
+const CONTAINER_OUTLINE_WIDTH = 2
+const CONTAINER_Z = 1
 const OVERLAP_BORDER_WIDTH = 2
 
 const HEADER_FONT: FontSpec = {
@@ -89,9 +102,12 @@ interface DrawData {
   visible: Node[]
   visibleById: Map<string, Node>
   flags: Map<string, NodeFlags>
+  containers: GroupContainer[]
+  selectedContainers: Set<string>
   enableDimming: boolean
   markUnreachableEntries: boolean
   anyNodeSelected: boolean
+  liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>
 }
 
 interface VisibleField {
@@ -109,6 +125,7 @@ interface RenderNode {
   fullHeight: boolean
   corner: number
   headerH: number
+  isGroup: boolean
 }
 
 type IconAtlasId = ApiAddressType | 'InitialCircle'
@@ -495,6 +512,7 @@ const ICON_LIST = [
       'Diamond',
       'Untemplatized',
       'Contract',
+      'Group',
       'Unknown',
     ] as const
   ).map((id) => ({
@@ -900,24 +918,77 @@ class WebGLRenderer {
 
   private rebuildAll(data: DrawData) {
     const renderNodes = buildRenderNodes(data)
-    this.counts.round = this.buildRound(renderNodes)
-    this.counts.icon = this.buildIcons(renderNodes)
-    this.counts.headerText = this.buildHeaderText(renderNodes)
+    this.counts.round = this.buildRound(
+      renderNodes,
+      data.containers,
+      data.selectedContainers,
+    )
+    this.counts.icon = this.buildIcons(
+      renderNodes,
+      data.containers,
+      data.selectedContainers,
+    )
+    this.counts.headerText = this.buildHeaderText(
+      renderNodes,
+      data.containers,
+      data.selectedContainers,
+    )
     this.counts.fieldText = this.buildFieldText(renderNodes)
     this.counts.footerText = this.buildFooterText(renderNodes)
     this.counts.connections = this.buildConnections(renderNodes, data)
     this.counts.overlap = this.buildOverlap(renderNodes)
   }
 
-  private buildRound(renderNodes: readonly RenderNode[]): number {
-    // Upper bound: 3 quads (body, header, selection) per node, plus one pill
-    // per visible field for selected/highlighted rows.
-    let maxInstances = renderNodes.length * 3
+  private buildRound(
+    renderNodes: readonly RenderNode[],
+    containers: readonly GroupContainer[],
+    selectedContainers: ReadonlySet<string>,
+  ): number {
+    // Upper bound: 4 quads (body, header, selection, group outline) per node,
+    // plus one pill per visible field, plus two quads (outline, header bar)
+    // per open-group container.
+    let maxInstances = renderNodes.length * 4 + containers.length * 2
     for (const rn of renderNodes) maxInstances += rn.visibleFields.length
     if (maxInstances === 0) return 0
     const buf = this.ensureRound(maxInstances)
 
+    const r = CONTAINER_CORNER_RADIUS
+    const w = CONTAINER_OUTLINE_WIDTH
     let n = 0
+    for (const { box: b, headerBox: h, id } of containers) {
+      const line = selectedContainers.has(id) ? AUTUMN_300 : COFFEE_200
+      const bar = selectedContainers.has(id) ? AUTUMN_300 : COFFEE_600
+      writeRound(
+        buf,
+        n++,
+        b.x,
+        b.y,
+        b.width,
+        b.height,
+        line,
+        r,
+        r,
+        r,
+        r,
+        w,
+        CONTAINER_Z,
+      )
+      writeRound(
+        buf,
+        n++,
+        h.x,
+        h.y,
+        h.width,
+        h.height,
+        bar,
+        r,
+        r,
+        0,
+        0,
+        0,
+        CONTAINER_Z,
+      )
+    }
     for (const rn of renderNodes) {
       const { node, flags, z, alpha, corner, headerH } = rn
       const { x, y, width, height } = node.box
@@ -979,6 +1050,25 @@ class WebGLRenderer {
         z,
       )
 
+      if (rn.isGroup) {
+        const inset = GROUP_OUTLINE_INSET
+        writeRound(
+          buf,
+          n++,
+          x - inset,
+          y - inset,
+          width + inset * 2,
+          height + inset * 2,
+          withAlpha(COFFEE_200, alpha),
+          corner + inset,
+          corner + inset,
+          corner + inset,
+          corner + inset,
+          GROUP_OUTLINE_WIDTH,
+          z,
+        )
+      }
+
       for (const { index, visibleRow } of rn.visibleFields) {
         if (flags.fieldHighlighted[index]) {
           const rowY = y + HEADER_HEIGHT + visibleRow * FIELD_HEIGHT
@@ -1005,13 +1095,31 @@ class WebGLRenderer {
     return this.upload(this.buffers.round.data, buf, n, QUAD_STRIDE_F)
   }
 
-  private buildIcons(renderNodes: readonly RenderNode[]): number {
-    let max = renderNodes.length * 3
+  private buildIcons(
+    renderNodes: readonly RenderNode[],
+    containers: readonly GroupContainer[],
+    selectedContainers: ReadonlySet<string>,
+  ): number {
+    let max = renderNodes.length * 3 + containers.length
     for (const rn of renderNodes) max += rn.visibleFields.length
     if (max === 0) return 0
     const buf = this.ensureText(max)
 
     let n = 0
+    for (const { headerBox: h, id } of containers) {
+      const iconY = h.y + (h.height - HEADER_ICON_SIZE) / 2
+      const color = selectedContainers.has(id) ? BLACK : COFFEE_200
+      n += this.emitIcon(
+        buf,
+        n,
+        'Group',
+        h.x + HEADER_PADDING,
+        iconY,
+        HEADER_ICON_SIZE,
+        color,
+        CONTAINER_Z,
+      )
+    }
     for (const rn of renderNodes) {
       const { node, flags, z, alpha, headerH } = rn
       const { x, y, width } = node.box
@@ -1123,13 +1231,32 @@ class WebGLRenderer {
     return 1
   }
 
-  private buildHeaderText(renderNodes: readonly RenderNode[]): number {
+  private buildHeaderText(
+    renderNodes: readonly RenderNode[],
+    containers: readonly GroupContainer[],
+    selectedContainers: ReadonlySet<string>,
+  ): number {
     let maxChars = 0
     for (const { node } of renderNodes) maxChars += node.name.length
+    for (const group of containers) maxChars += group.name.length
     if (maxChars === 0) return 0
     const buf = this.ensureText(maxChars)
     const atlas = this.headerAtlas
     let n = 0
+    for (const { name, headerBox: h, id } of containers) {
+      const baselineY = h.y + h.height / 2 + atlas.refSize / 2 - 2
+      n += writeStringInstances(
+        buf,
+        n,
+        name,
+        h.x + HEADER_PADDING + HEADER_ICON_SIZE + HEADER_ITEM_GAP,
+        baselineY,
+        atlas,
+        selectedContainers.has(id) ? BLACK : COFFEE_200,
+        h.x + h.width - HEADER_PADDING,
+        CONTAINER_Z,
+      )
+    }
     for (const { node, flags, z, alpha, headerH } of renderNodes) {
       const { isDark } = getColor(node)
       const baseColor = isDark ? COFFEE_200 : BLACK
@@ -1161,7 +1288,9 @@ class WebGLRenderer {
   private buildFieldText(renderNodes: readonly RenderNode[]): number {
     let maxChars = 0
     for (const rn of renderNodes) {
-      for (const { field } of rn.visibleFields) maxChars += field.name.length
+      for (const { field } of rn.visibleFields) {
+        maxChars += (field.label ?? field.name).length
+      }
     }
     if (maxChars === 0) return 0
     const buf = this.ensureText(maxChars)
@@ -1178,7 +1307,7 @@ class WebGLRenderer {
         n += writeStringInstances(
           buf,
           n,
-          field.name,
+          field.label ?? field.name,
           node.box.x + HEADER_PADDING,
           baselineY,
           atlas,
@@ -1248,8 +1377,9 @@ class WebGLRenderer {
     data: DrawData,
   ): number {
     let maxVertices = 0
-    for (const { flags, visibleFields } of renderNodes) {
+    for (const { node, flags, visibleFields } of renderNodes) {
       for (const { field, index } of visibleFields) {
+        if (!isFieldConnectionLive(node, field, data.liveGroupTargets)) continue
         if (flags.fieldTargetHidden[index]) continue
         const target = data.visibleById.get(field.target)
         if (!target) continue
@@ -1276,6 +1406,7 @@ class WebGLRenderer {
     let v = 0
     for (const { node, flags, visibleFields } of renderNodes) {
       for (const { field, index } of visibleFields) {
+        if (!isFieldConnectionLive(node, field, data.liveGroupTargets)) continue
         if (flags.fieldTargetHidden[index]) continue
         const target = data.visibleById.get(field.target)
         if (!target) continue
@@ -1501,6 +1632,7 @@ function buildRenderNodes(data: DrawData): RenderNode[] {
     const flags = data.flags.get(node.id)
     if (!flags) continue
     const fullHeight = node.addressType === 'EOA' && node.fields.length === 0
+    const isGroup = node.subnodes.length > 0
     const renderNode: RenderNode = {
       node,
       flags,
@@ -1508,8 +1640,13 @@ function buildRenderNodes(data: DrawData): RenderNode[] {
       alpha: nodeAlpha(flags),
       visibleFields: getVisibleFields(node),
       fullHeight,
-      corner: fullHeight ? FULL_HEIGHT_CORNER_RADIUS : NODE_CORNER_RADIUS,
+      corner: fullHeight
+        ? FULL_HEIGHT_CORNER_RADIUS
+        : isGroup
+          ? GROUP_CORNER_RADIUS
+          : NODE_CORNER_RADIUS,
       headerH: fullHeight ? HEADER_HEIGHT : HEADER_HEIGHT - 4,
+      isGroup,
     }
 
     if (flags.isSelected) selected.push(renderNode)
@@ -2092,22 +2229,22 @@ function getVisibleFields(node: Node): VisibleField[] {
 
 function buildDrawData(
   nodes: readonly Node[],
-  hidden: readonly string[],
+  containers: GroupContainer[],
+  hidden: ReadonlySet<string>,
+  liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>,
   selected: readonly string[],
   enableDimming: boolean,
   highlightOverlapping: boolean,
   markUnreachableEntries: boolean,
 ): DrawData {
-  const hiddenSet = new Set(hidden)
   const selectedSet = new Set(selected)
   const visible: Node[] = []
-  const visibleById = new Map<string, Node>()
   for (const node of nodes) {
-    if (!hiddenSet.has(node.id)) {
+    if (!hidden.has(node.id)) {
       visible.push(node)
-      visibleById.set(node.id, node)
     }
   }
+  const visibleById = topLevelByDescendant(visible)
 
   const overlappingIds = highlightOverlapping
     ? computeOverlappingIds(visible)
@@ -2119,12 +2256,16 @@ function buildDrawData(
     for (const node of visible) {
       if (!selectedSet.has(node.id)) continue
       for (const { field } of getVisibleFields(node)) {
+        if (!isFieldConnectionLive(node, field, liveGroupTargets)) continue
+        if (hidden.has(field.target)) continue
         highlightedSet.add(field.target)
       }
     }
     for (const node of visible) {
       if (highlightedSet.has(node.id)) continue
       for (const { field } of getVisibleFields(node)) {
+        if (!isFieldConnectionLive(node, field, liveGroupTargets)) continue
+        if (hidden.has(field.target)) continue
         if (selectedSet.has(field.target)) {
           highlightedSet.add(node.id)
         }
@@ -2143,7 +2284,7 @@ function buildDrawData(
       if (selectedSet.has(field.target)) {
         fieldHighlighted[i] = 1
       }
-      if (hiddenSet.has(field.target)) fieldTargetHidden[i] = 1
+      if (hidden.has(field.target)) fieldTargetHidden[i] = 1
     }
     flags.set(node.id, {
       isSelected: selectedSet.has(node.id),
@@ -2160,9 +2301,16 @@ function buildDrawData(
     visible,
     visibleById,
     flags,
+    containers,
+    selectedContainers: new Set(
+      containers
+        .filter((group) => selectedSet.has(group.id))
+        .map((group) => group.id),
+    ),
     enableDimming,
     markUnreachableEntries,
     anyNodeSelected,
+    liveGroupTargets,
   }
 }
 
@@ -2207,7 +2355,6 @@ export function NodesAndConnectionsWebGL() {
   const dataRef = useRef<DrawData | null>(null)
 
   const nodes = useStore((s) => s.nodes)
-  const hidden = useStore((s) => s.hidden)
   const selected = useStore((s) => s.selected)
   const enableDimming = useStore(
     ({ userPreferences }) => userPreferences.enableDimming,
@@ -2219,19 +2366,22 @@ export function NodesAndConnectionsWebGL() {
     (s) => s.markUnreachableEntries,
   )
 
+  const graph = useMemo(() => buildRenderGraph(nodes), [nodes])
+
   const data = useMemo(
     () =>
       buildDrawData(
-        nodes,
-        hidden,
+        graph.nodes,
+        graph.containers,
+        graph.hidden,
+        graph.liveGroupTargets,
         selected,
         enableDimming,
         highlightOverlapping,
         markUnreachableEntries,
       ),
     [
-      nodes,
-      hidden,
+      graph,
       selected,
       enableDimming,
       highlightOverlapping,

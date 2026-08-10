@@ -17,6 +17,9 @@ export function buildTransferDetailsPath(filters: TransferDetailsInput) {
   if (filters.dstChain) {
     params.set('dstChain', filters.dstChain)
   }
+  if (filters.range) {
+    params.set('range', filters.range)
+  }
 
   const query = params.toString()
   const encodedType = encodeURIComponent(filters.type)

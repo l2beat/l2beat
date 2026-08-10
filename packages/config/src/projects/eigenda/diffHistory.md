@@ -1,3 +1,92 @@
+Generated with discovered.json: 0x9b89bb89ed8753fd23fe8b3b2a65289f4bb8eaea
+
+# Diff at Thu, 23 Jul 2026 12:58:55 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1775212321
+- current timestamp: 1784811471
+
+## Description
+
+EigenDAOperationsMultisig: new signer added; threshold 3/4 → 3/5. New EigenDACertVerifier deployed and registered on the CertVerifierRouter with activation block 25,575,801 (2026-07-21). Rewrote the security-parameters check to be division-free with explicit underflow/threshold-ordering guards; preserves the intended security threshold ([diff](https://disco.l2beat.com/diff/eth:0x46766C6426eF4D3092f73F72660A8b7B510E6846/eth:0xD2e690d08Db56Fb648B1340457281EDE7b6F53FE)).
+
+## Watched changes
+
+```diff
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xB646A0871af2b2c6e115b24D7E36d406780b6ca8"
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract EigenDACertVerifierRouter (eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12) [eigenda/EigenDACertVerifierRouter] {
+    +++ description: A router contract for DA Certificate verifiers. Verifier routing depends on the certificate reference block number.
+      values.certVerifierABNs.2:
++        25575801
++++ description: The DA verifier contracts indexed by activation block number.
+      values.DAVerifiers.2:
++        {"activationBlockNumber":25575801,"certVerifier":"eth:0xD2e690d08Db56Fb648B1340457281EDE7b6F53FE"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EigenDACertVerifier (eth:0xD2e690d08Db56Fb648B1340457281EDE7b6F53FE) [N/A]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...:0xD2e690d08Db56Fb648B1340457281EDE7b6F53FE.sol | 2750 ++++++++++++++++++++
+ 1 file changed, 2750 insertions(+)
+```
+
+Generated with discovered.json: 0x31a0eae7cb0e697cc6a8dec5f51a5631f90c329a
+
+# Diff at Tue, 09 Jun 2026 12:43:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1775212321
+- current timestamp: 1775212321
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775212321 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can store and serve both unencoded blobs as well as encoded chunks."
+      receivedPermissions.0.permission:
+-        "relayDA"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Can disperse EigenDA blobs to the EigenDA node operators."
+      receivedPermissions.0.permission:
+-        "disperse"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x9ee182dedce979ec23c57de88a1158fdbdf98722
 
 # Diff at Fri, 08 May 2026 07:51:17 GMT:

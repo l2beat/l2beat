@@ -1,4 +1,4 @@
-import { pluralize } from '@l2beat/shared-pure'
+import { formatCurrency, pluralize } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import {
   ProjectNameCell,
@@ -8,7 +8,6 @@ import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
 import { FilledArrowIcon } from '~/icons/FilledArrow'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
 import { ProjectsUsedInByStatus } from '../components/ProjectsUsedInByStatus'
 import { TechStackCell } from '../components/TechStackCell'
@@ -25,6 +24,9 @@ export const zkCatalogColumns = [
       const project = {
         ...ctx.row.original,
         nameSecondLine: ctx.row.original.creator,
+        quantumResistance: ctx.row.original.quantumResistant
+          ? ('prover' as const)
+          : undefined,
       }
       return (
         <div className="flex h-full items-center">
@@ -178,6 +180,7 @@ export const zkCatalogColumns = [
         <TechStackCell
           tags={ctx.row.original.techStack.finalWrap ?? []}
           className="md:min-w-[180px]"
+          emptyText="No final wrap"
         />
       )
     },

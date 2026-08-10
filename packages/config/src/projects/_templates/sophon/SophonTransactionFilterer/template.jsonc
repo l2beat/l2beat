@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A contract implementing the ITransactionFilterer interface, allows only trxs from whitelisted superusers. The whitelist is defined in AccessControl roles.",
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the whitelist."
+        }
+      ]
+    },
+    "superuserAC": {
+      "description": "Addresses with this role are on the whitelist as senders for requestL2Transaction() calls.",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "SUPERUSER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "call requestL2Transaction() with any target/calldata (whitelisted superuser sender)."
+        }
+      ]
+    }
+  }
+}

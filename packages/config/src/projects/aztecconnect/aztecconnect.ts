@@ -250,6 +250,14 @@ export const aztecconnect: ScalingProject = {
   },
   milestones: [
     {
+      title: 'Immutable smart contract exploit',
+      date: '2026-06-15T00:00:00Z',
+      url: 'https://www.aztec-labs.com/blog/aztec-connect-incident.html',
+      description:
+        '$~2.3M of assets are drained by exploiting a bug in a smart contract.',
+      type: 'incident',
+    },
+    {
       title: 'Aztec operator sunset',
       date: '2024-04-30T00:00:00Z',
       url: 'https://medium.com/aztec-protocol/sunsetting-aztec-connect-a786edce5cae',

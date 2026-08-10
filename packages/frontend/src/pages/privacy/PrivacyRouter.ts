@@ -1,7 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import express from 'express'
-import { env } from '~/env'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -13,10 +12,6 @@ export function createPrivacyRouter(
   render: RenderFunction,
   cache: InMemoryCache,
 ) {
-  if (!env.CLIENT_SIDE_PRIVACY_ENABLED) {
-    return null
-  }
-
   const router = express.Router()
 
   router.get('/privacy', (_req, res) => {
@@ -48,13 +43,7 @@ export function createPrivacyRouter(
           ttl: 5 * 60,
           staleWhileRevalidate: 25 * 60,
         },
-        () =>
-          getPrivacyProjectData(
-            manifest,
-            req.params.slug,
-            req.originalUrl,
-            cache,
-          ),
+        () => getPrivacyProjectData(manifest, req.params.slug, req.originalUrl),
       )
 
       if (!data) {

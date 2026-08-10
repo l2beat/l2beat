@@ -1,4 +1,5 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { Command as CommandPrimitive } from 'cmdk'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
@@ -17,7 +18,7 @@ import { useOnClickOutside } from '~/hooks/useOnClickOutside'
 import { useRouter } from '~/hooks/useRouter'
 import { useTracking } from '~/hooks/useTracking'
 import type { SearchBarProject } from '~/server/features/projects/search-bar/types'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { Skeleton } from '../core/Skeleton'
 import { useSearchBarContext } from './SearchBarContext'
 import type { SearchBarCategory } from './searchBarCategories'
@@ -31,6 +32,7 @@ interface Props {
 }
 
 export function SearchBarDialog({ recentlyAdded }: Props) {
+  const trpc = useTRPC()
   const inputRef = useRef<HTMLInputElement>(null)
   const { track } = useTracking()
   const [value, setValue] = useState('')
@@ -40,11 +42,10 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
 
   useGlobalShortcut('/', () => setOpen((open) => !open))
 
-  const { data: allProjects, isFetching } = api.projects.searchBar.useQuery(
-    debouncedValue,
-    {
+  const { data: allProjects, isFetching } = useQuery(
+    trpc.projects.searchBar.queryOptions(debouncedValue, {
       enabled: debouncedValue !== '',
-    },
+    }),
   )
 
   useEffect(() => {

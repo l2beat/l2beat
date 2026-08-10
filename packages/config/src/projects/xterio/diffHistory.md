@@ -1,3 +1,85 @@
+Generated with discovered.json: 0xd487cc68b9e04c4f22380e3d44098f967060ebf2
+
+# Diff at Tue, 09 Jun 2026 12:43:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1745000255
+- current timestamp: 1745000255
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1745000255 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x39857a92E26648438d9c7dDDa1Ee3e481dea54B3) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x8b3B4F6C348f6baC39190B89c801E61E41F05b88) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.1.permission:
+-        "challenge"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xdF3700a9Cf9c7506Ca3B41E6ba991476677A8787) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.2.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.2.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xE4Cb2fd9E409ABE977EC946D54b59034C39AB07D) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x13d385dbe9f474cecef66bc97b59febd75160461
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

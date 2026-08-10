@@ -8,6 +8,7 @@ describe(formatIngestionTrace.name, () => {
     const trace: IngestionTrace = {
       id: 'ing_test',
       address: { chain: 'ethereum', address: '0xaaa' },
+      existingDeployedToken: undefined,
       steps: [
         { kind: 'no-existing-token' },
         {
@@ -59,6 +60,7 @@ describe(formatIngestionTrace.name, () => {
     const trace: IngestionTrace = {
       id: 'ing_test',
       address: { chain: 'ethereum', address: '0xbbb' },
+      existingDeployedToken: undefined,
       steps: [{ kind: 'no-existing-token' }],
       outcome: { kind: 'conflict', message: 'multiple abstracts' },
     }

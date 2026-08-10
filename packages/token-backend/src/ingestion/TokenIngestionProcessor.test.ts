@@ -1,5 +1,6 @@
 import type {
   Database,
+  InteropTokenRouteRecord,
   InteropTransferRecord,
   TokenDatabase,
   TokenIngestionQueueRecord,
@@ -37,7 +38,7 @@ describe(TokenIngestionProcessor.name, () => {
       const trace = await processor.plan(
         queueEntry(address),
         buildInteropTransferIndex([
-          transfer({
+          route({
             srcChain: address.chain,
             srcTokenAddress: `0x${address.address.slice(2).padStart(64, '0')}`,
             dstChain: 'base',
@@ -48,6 +49,7 @@ describe(TokenIngestionProcessor.name, () => {
       )
 
       expect(trace.id).toMatchRegex(/^ing_[0-9a-f-]{36}$/)
+      expect(trace.existingDeployedToken).toEqual(undefined)
       expect(
         trace.steps.find((step) => step.kind === 'transfer-evidence'),
       ).toEqual({
@@ -57,6 +59,44 @@ describe(TokenIngestionProcessor.name, () => {
         abstractTokens: [],
       })
       expect(getByPrimaryKeys).toHaveBeenCalledWith([])
+    })
+
+    it('records the existing deployed token on the trace', async () => {
+      const address = token('ethereum', '0xaaa')
+      const existing = {
+        ...address,
+        abstractTokenId: 'USDC01',
+        symbol: 'USDC',
+        comment: null,
+        decimals: 6,
+        deploymentTimestamp: UnixTime(1),
+        metadata: null,
+      }
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+            findByChainAndAddress: mockFn().resolvesTo(existing),
+            getByPrimaryKeys: mockFn().resolvesTo([]),
+          }),
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+            getByIds: mockFn().resolvesTo([
+              abstractTokenRecord('USDC01', 'USDC'),
+            ]),
+            findById: mockFn().resolvesTo(
+              abstractTokenRecord('USDC01', 'USDC'),
+            ),
+          }),
+        }),
+      })
+
+      const trace = await processor.plan(
+        queueEntry(address),
+        buildInteropTransferIndex([]),
+      )
+
+      expect(trace.existingDeployedToken).toEqual(existing)
+      expect(trace.outcome).toEqual({ kind: 'noop', deployedToken: existing })
     })
 
     it('returns pending-insert without fetching deployed-token facts for a new address', async () => {
@@ -73,6 +113,21 @@ describe(TokenIngestionProcessor.name, () => {
       const findByName = mockFn().resolvesTo(undefined)
 
       const processor = createProcessor({
+        db: mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            findByTransferId: mockFn().resolvesTo(
+              transfer({
+                srcChain: address.chain,
+                srcTokenAddress: address.address,
+                srcRawAmount: 0n,
+                dstChain: otherAddress.chain,
+                dstTokenAddress: otherAddress.address,
+                dstRawAmount: 123n,
+                bridgeType: 'lockAndMint',
+              }),
+            ),
+          }),
+        }),
         tokenDb: mockObject<TokenDatabase>({
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),
@@ -101,13 +156,11 @@ describe(TokenIngestionProcessor.name, () => {
       const trace = await processor.plan(
         queueEntry(address),
         buildInteropTransferIndex([
-          transfer({
+          route({
             srcChain: address.chain,
             srcTokenAddress: address.address,
-            srcRawAmount: 0n,
             dstChain: otherAddress.chain,
             dstTokenAddress: otherAddress.address,
-            dstRawAmount: 123n,
             bridgeType: 'lockAndMint',
           }),
         ]),
@@ -134,12 +187,20 @@ describe(TokenIngestionProcessor.name, () => {
       expect(findByName).toHaveBeenCalledTimes(0)
     })
 
-    it('records the first supporting transfer as proof and ignores transfers whose other side has no abstract', async () => {
+    it('records a sample transfer of the first supporting route as proof and ignores routes whose other side has no abstract', async () => {
       const address = token('ethereum', '0xaaa')
       const knownOther = token('base', '0xbbb')
       const unknownOther = token('arbitrum', '0xccc')
+      const findByTransferId = mockFn().executes(async (id: string) =>
+        transfer({ transferId: id }),
+      )
 
       const processor = createProcessor({
+        db: mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            findByTransferId,
+          }),
+        }),
         tokenDb: mockObject<TokenDatabase>({
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),
@@ -169,24 +230,24 @@ describe(TokenIngestionProcessor.name, () => {
       const trace = await processor.plan(
         queueEntry(address),
         buildInteropTransferIndex([
-          transfer({
-            transferId: 'transfer-known-1',
+          route({
+            sampleTransferId: 'transfer-known-1',
             srcChain: address.chain,
             srcTokenAddress: address.address,
             dstChain: knownOther.chain,
             dstTokenAddress: knownOther.address,
             bridgeType: 'lockAndMint',
           }),
-          transfer({
-            transferId: 'transfer-known-2',
+          route({
+            sampleTransferId: 'transfer-known-2',
             srcChain: address.chain,
             srcTokenAddress: address.address,
             dstChain: knownOther.chain,
             dstTokenAddress: knownOther.address,
             bridgeType: 'burnAndMint',
           }),
-          transfer({
-            transferId: 'transfer-unknown',
+          route({
+            sampleTransferId: 'transfer-unknown',
             srcChain: address.chain,
             srcTokenAddress: address.address,
             dstChain: unknownOther.chain,
@@ -202,6 +263,199 @@ describe(TokenIngestionProcessor.name, () => {
       if (trace.outcome.proof.kind !== 'non-swapping-transfer') return
       expect(trace.outcome.proof.transfer.transferId).toEqual(
         'transfer-known-1',
+      )
+      expect(findByTransferId).toHaveBeenOnlyCalledWith('transfer-known-1')
+    })
+
+    it('downgrades a transfer-driven update of an existing token to conflict when symbols differ', async () => {
+      const address = token('ethereum', '0xaaa')
+      const otherAddress = token('base', '0xbbb')
+      const findByTransferId = mockFn().resolvesTo(
+        transfer({ bridgeType: 'lockAndMint' }),
+      )
+
+      const processor = createProcessor({
+        db: mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            findByTransferId,
+          }),
+        }),
+        tokenDb: mockObject<TokenDatabase>({
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+            findByChainAndAddress: mockFn().resolvesTo({
+              ...address,
+              abstractTokenId: null,
+              symbol: 'WETH',
+              comment: null,
+              decimals: 18,
+              deploymentTimestamp: UnixTime(1),
+              metadata: null,
+            }),
+            getByPrimaryKeys: mockFn().resolvesTo([
+              {
+                ...otherAddress,
+                abstractTokenId: 'USDC01',
+                symbol: 'USDC',
+                comment: null,
+                decimals: 6,
+                deploymentTimestamp: UnixTime(1),
+                metadata: null,
+              },
+            ]),
+          }),
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+            getByIds: mockFn().resolvesTo([
+              abstractTokenRecord('USDC01', 'USDC'),
+            ]),
+          }),
+        }),
+      })
+
+      const trace = await processor.plan(
+        queueEntry(address),
+        buildInteropTransferIndex([
+          route({
+            srcChain: address.chain,
+            srcTokenAddress: address.address,
+            dstChain: otherAddress.chain,
+            dstTokenAddress: otherAddress.address,
+            bridgeType: 'lockAndMint',
+          }),
+        ]),
+      )
+
+      expect(trace.outcome).toEqual({
+        kind: 'conflict',
+        message:
+          'Non-swapping transfers point to abstract token USDC01:USDC, but the deployed token symbol is WETH.',
+      })
+      expect(findByTransferId).toHaveBeenCalledTimes(0)
+    })
+
+    it('does not fetch the proof transfer when transfers agree with the existing assignment', async () => {
+      const address = token('ethereum', '0xaaa')
+      const otherAddress = token('base', '0xbbb')
+      const existing = {
+        ...address,
+        abstractTokenId: 'USDC01',
+        symbol: 'USDC',
+        comment: null,
+        decimals: 6,
+        deploymentTimestamp: UnixTime(1),
+        metadata: null,
+      }
+      const findByTransferId = mockFn().resolvesTo(
+        transfer({ bridgeType: 'lockAndMint' }),
+      )
+
+      const processor = createProcessor({
+        db: mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            findByTransferId,
+          }),
+        }),
+        tokenDb: mockObject<TokenDatabase>({
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+            findByChainAndAddress: mockFn().resolvesTo(existing),
+            getByPrimaryKeys: mockFn().resolvesTo([
+              {
+                ...otherAddress,
+                abstractTokenId: 'USDC01',
+                symbol: 'USDC',
+                comment: null,
+                decimals: 6,
+                deploymentTimestamp: UnixTime(1),
+                metadata: null,
+              },
+            ]),
+          }),
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+            getByIds: mockFn().resolvesTo([
+              abstractTokenRecord('USDC01', 'USDC'),
+            ]),
+          }),
+        }),
+      })
+
+      const trace = await processor.plan(
+        queueEntry(address),
+        buildInteropTransferIndex([
+          route({
+            srcChain: address.chain,
+            srcTokenAddress: address.address,
+            dstChain: otherAddress.chain,
+            dstTokenAddress: otherAddress.address,
+            bridgeType: 'lockAndMint',
+          }),
+        ]),
+      )
+
+      expect(trace.outcome).toEqual({ kind: 'noop', deployedToken: existing })
+      expect(findByTransferId).toHaveBeenCalledTimes(0)
+    })
+
+    it('updates an existing token from a transfer when symbols match case-insensitively', async () => {
+      const address = token('ethereum', '0xaaa')
+      const otherAddress = token('base', '0xbbb')
+
+      const processor = createProcessor({
+        db: mockObject<Database>({
+          interopTransfer: mockObject<Database['interopTransfer']>({
+            findByTransferId: mockFn().resolvesTo(
+              transfer({ bridgeType: 'lockAndMint' }),
+            ),
+          }),
+        }),
+        tokenDb: mockObject<TokenDatabase>({
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+            findByChainAndAddress: mockFn().resolvesTo({
+              ...address,
+              abstractTokenId: null,
+              symbol: 'usdc',
+              comment: null,
+              decimals: 6,
+              deploymentTimestamp: UnixTime(1),
+              metadata: null,
+            }),
+            getByPrimaryKeys: mockFn().resolvesTo([
+              {
+                ...otherAddress,
+                abstractTokenId: 'USDC01',
+                symbol: 'USDC',
+                comment: null,
+                decimals: 6,
+                deploymentTimestamp: UnixTime(1),
+                metadata: null,
+              },
+            ]),
+          }),
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+            getByIds: mockFn().resolvesTo([
+              abstractTokenRecord('USDC01', 'USDC'),
+            ]),
+          }),
+        }),
+      })
+
+      const trace = await processor.plan(
+        queueEntry(address),
+        buildInteropTransferIndex([
+          route({
+            srcChain: address.chain,
+            srcTokenAddress: address.address,
+            dstChain: otherAddress.chain,
+            dstTokenAddress: otherAddress.address,
+            bridgeType: 'lockAndMint',
+          }),
+        ]),
+      )
+
+      expect(trace.outcome.kind).toEqual('write')
+      if (trace.outcome.kind !== 'write') return
+      expect(trace.outcome.deployedToken.type).toEqual('update')
+      if (trace.outcome.deployedToken.type !== 'update') return
+      expect(trace.outcome.deployedToken.update.abstractTokenId).toEqual(
+        'USDC01',
       )
     })
 
@@ -274,6 +528,7 @@ describe(TokenIngestionProcessor.name, () => {
       const trace = {
         id: 'ing_test',
         address: token('ethereum', '0xaaa'),
+        existingDeployedToken: undefined,
         steps: [],
         outcome: { kind: 'skip', reason: 'whatever' } as const,
       }
@@ -310,6 +565,7 @@ describe(TokenIngestionProcessor.name, () => {
       const result = await processor.fetch({
         id: 'ing_test',
         address,
+        existingDeployedToken: undefined,
         steps: [],
         outcome: {
           kind: 'pending',
@@ -390,6 +646,7 @@ describe(TokenIngestionProcessor.name, () => {
       const result = await processor.fetch({
         id: 'ing_test',
         address,
+        existingDeployedToken: undefined,
         steps: [],
         outcome: {
           kind: 'pending',
@@ -457,6 +714,7 @@ describe(TokenIngestionProcessor.name, () => {
       const result = await processor.fetch({
         id: 'ing_test',
         address,
+        existingDeployedToken: undefined,
         steps: [],
         outcome: {
           kind: 'pending',
@@ -534,6 +792,7 @@ describe(TokenIngestionProcessor.name, () => {
       const result = await processor.fetch({
         id: 'ing_test',
         address,
+        existingDeployedToken: undefined,
         steps: [],
         outcome: {
           kind: 'pending',
@@ -561,6 +820,118 @@ describe(TokenIngestionProcessor.name, () => {
       expect(
         result.steps.some((step) => step.kind === 'fetched-facts'),
       ).toEqual(true)
+    })
+
+    it('downgrades pending insert with a transfer-resolved abstract to conflict when symbols differ', async () => {
+      const address = token('ethereum', '0xaaa')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<TokenDatabase['chain']>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: 'WETH',
+          symbolSource: 'rpc' as const,
+          decimals: 18,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        }),
+      })
+
+      const result = await processor.fetch({
+        id: 'ing_test',
+        address,
+        steps: [],
+        existingDeployedToken: undefined,
+        outcome: {
+          kind: 'pending',
+          operation: 'insert',
+          existing: undefined,
+          abstract: {
+            kind: 'existing',
+            token: { id: 'USDC01', symbol: 'USDC' },
+          },
+          symbolFallback: undefined,
+          neighborsToEnqueue: [],
+          proof: nonSwappingProof(),
+        },
+      })
+
+      expect(result.outcome).toEqual({
+        kind: 'conflict',
+        message:
+          'Non-swapping transfers point to abstract token USDC01:USDC, but the deployed token symbol is WETH.',
+      })
+      expect(
+        result.steps.some((step) => step.kind === 'fetched-facts'),
+      ).toEqual(true)
+    })
+
+    it('keeps a transfer-resolved insert on write when symbols match case-insensitively', async () => {
+      const address = token('ethereum', '0xaaa')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<TokenDatabase['chain']>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: 'SUSDE',
+          symbolSource: 'rpc' as const,
+          decimals: 18,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        }),
+      })
+
+      const result = await processor.fetch({
+        id: 'ing_test',
+        address,
+        steps: [],
+        existingDeployedToken: undefined,
+        outcome: {
+          kind: 'pending',
+          operation: 'insert',
+          existing: undefined,
+          abstract: {
+            kind: 'existing',
+            token: { id: 'SUSDE1', symbol: 'sUSDe' },
+          },
+          symbolFallback: undefined,
+          neighborsToEnqueue: [],
+          proof: nonSwappingProof(),
+        },
+      })
+
+      expect(result.outcome.kind).toEqual('write')
+      if (result.outcome.kind !== 'write') return
+      expect(result.outcome.newAbstractToken).toEqual(undefined)
+      expect(
+        result.outcome.deployedToken.type === 'insert' &&
+          result.outcome.deployedToken.record.symbol,
+      ).toEqual('SUSDE')
+      expect(
+        result.steps.some(
+          (step) => step.kind === 'corrected-coingecko-symbol-casing',
+        ),
+      ).toEqual(false)
     })
 
     it('does not use the new CoinGecko abstract symbol as deployed-token fallback', async () => {
@@ -607,6 +978,7 @@ describe(TokenIngestionProcessor.name, () => {
       const result = await processor.fetch({
         id: 'ing_test',
         address,
+        existingDeployedToken: undefined,
         steps: [],
         outcome: {
           kind: 'pending',
@@ -666,6 +1038,7 @@ describe(TokenIngestionProcessor.name, () => {
       const result = await processor.fetch({
         id: 'ing_test',
         address,
+        existingDeployedToken: existing,
         steps: [],
         outcome: {
           kind: 'pending',
@@ -716,6 +1089,7 @@ describe(TokenIngestionProcessor.name, () => {
       const result = await processor.fetch({
         id: 'ing_test',
         address,
+        existingDeployedToken: undefined,
         steps: [],
         outcome: {
           kind: 'pending',
@@ -764,6 +1138,7 @@ describe(TokenIngestionProcessor.name, () => {
       const trace: IngestionTrace = {
         id: 'ing_test',
         address,
+        existingDeployedToken: undefined,
         steps: [],
         outcome: {
           kind: 'write',
@@ -797,6 +1172,7 @@ describe(TokenIngestionProcessor.name, () => {
       const trace: IngestionTrace = {
         id: 'ing_test',
         address: token('ethereum', '0xaaa'),
+        existingDeployedToken: undefined,
         steps: [],
         outcome: {
           kind: 'pending',
@@ -822,8 +1198,8 @@ describe(TokenIngestionProcessor.name, () => {
     () => {
       it('builds the interop transfer index on first use and reuses it', async () => {
         const address = token('ethereum', '0xaaa')
-        const getAll = mockFn().resolvesTo([
-          transfer({
+        const getTokenRoutes = mockFn().resolvesTo([
+          route({
             srcChain: address.chain,
             srcTokenAddress: address.address,
           }),
@@ -831,7 +1207,7 @@ describe(TokenIngestionProcessor.name, () => {
         const processor = createProcessor({
           db: mockObject<Database>({
             interopTransfer: mockObject<Database['interopTransfer']>({
-              getAll,
+              getTokenRoutes,
             }),
           }),
         })
@@ -841,21 +1217,21 @@ describe(TokenIngestionProcessor.name, () => {
 
         expect(first.findInvolving(address).length).toEqual(1)
         expect(second.findInvolving(address).length).toEqual(1)
-        expect(getAll).toHaveBeenCalledTimes(1)
+        expect(getTokenRoutes).toHaveBeenCalledTimes(1)
       })
 
       it('refreshes the cached interop transfer index from the database', async () => {
         const firstAddress = token('ethereum', '0xaaa')
         const secondAddress = token('base', '0xbbb')
-        const getAll = mockFn()
+        const getTokenRoutes = mockFn()
           .resolvesToOnce([
-            transfer({
+            route({
               srcChain: firstAddress.chain,
               srcTokenAddress: firstAddress.address,
             }),
           ])
           .resolvesToOnce([
-            transfer({
+            route({
               srcChain: secondAddress.chain,
               srcTokenAddress: secondAddress.address,
             }),
@@ -863,7 +1239,7 @@ describe(TokenIngestionProcessor.name, () => {
         const processor = createProcessor({
           db: mockObject<Database>({
             interopTransfer: mockObject<Database['interopTransfer']>({
-              getAll,
+              getTokenRoutes,
             }),
           }),
         })
@@ -873,7 +1249,7 @@ describe(TokenIngestionProcessor.name, () => {
 
         expect(refreshed.findInvolving(firstAddress).length).toEqual(0)
         expect(refreshed.findInvolving(secondAddress).length).toEqual(1)
-        expect(getAll).toHaveBeenCalledTimes(2)
+        expect(getTokenRoutes).toHaveBeenCalledTimes(2)
       })
     },
   )
@@ -908,6 +1284,7 @@ function abstractTokenRecord(id: string, symbol: string) {
     iconUrl: null,
     coingeckoId: null,
     coingeckoListingTimestamp: null,
+    additionalCoingeckoEntries: null,
     comment: null,
     reviewed: false,
   }
@@ -929,6 +1306,34 @@ function queueEntry(
     message: null,
     createdAt: UnixTime(1),
     updatedAt: UnixTime(1),
+  }
+}
+
+function nonSwappingProof() {
+  return {
+    kind: 'non-swapping-transfer' as const,
+    transfer: {
+      ...transfer({ bridgeType: 'lockAndMint' }),
+      srcRawAmount: '1',
+      dstRawAmount: '1',
+    },
+  }
+}
+
+function route(
+  overrides: Partial<InteropTokenRouteRecord>,
+): InteropTokenRouteRecord {
+  return {
+    srcChain: 'ethereum',
+    srcTokenAddress: undefined,
+    dstChain: 'base',
+    dstTokenAddress: undefined,
+    bridgeType: undefined,
+    srcWasBurned: false,
+    dstWasMinted: true,
+    transferCount: 1,
+    sampleTransferId: 'transfer-id',
+    ...overrides,
   }
 }
 

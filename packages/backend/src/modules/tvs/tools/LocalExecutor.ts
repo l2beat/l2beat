@@ -1,5 +1,6 @@
 import { type Env, type Logger, RateLimiter } from '@l2beat/backend-tools'
 import type { ChainBasicApi, ChainConfig, ProjectService } from '@l2beat/config'
+import { chainToProjectId } from '@l2beat/config/build/global/chainMap'
 import { createDatabase } from '@l2beat/database'
 import {
   BalanceProvider,
@@ -19,7 +20,6 @@ import {
   TotalSupplyProvider,
 } from '@l2beat/shared'
 import type { UnixTime } from '@l2beat/shared-pure'
-import { chainToProjectId } from '../../../config/chainMap'
 import { ValueService } from '../services/ValueService'
 import {
   type AmountConfig,

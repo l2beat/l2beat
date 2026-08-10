@@ -1,3 +1,89 @@
+Generated with discovered.json: 0x8eaa3511d62772e3b1301505fa96c5caa4b467e1
+
+# Diff at Thu, 09 Jul 2026 10:01:03 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@41e54e24b48ee5dc5e63086324d02428320c1565 block: 1779719769
+- current timestamp: 1783591155
+
+## Description
+
+XaiFundsReiceiverMultisig (receives ETH from Sentry Node License mints) added a new 1-of-3 `SafeL2` (`0x1946…2705`) as a member. Top-Safe per-member share drops: 3/6 (50%) → 3/7 (43%).
+
+## Watched changes
+
+```diff
+    contract XaiFundsReiceiverMultisig (arb1:0xFCF7248C495d6fd3641eE43F861c48Ebe402c878) [GnosisSafe] {
+    +++ description: The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints.
+      values.$members.0:
++        "arb1:0x194654c631686077d3C34a0e7c1856E4BE2E2705"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 7 (43%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (arb1:0x194654c631686077d3C34a0e7c1856E4BE2E2705) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../SafeL2.sol                                     |    0
+ .../SafeProxy.p.sol                                |    0
+ .../SafeL2.sol                                     | 1286 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   42 +
+ 4 files changed, 1328 insertions(+)
+```
+
+Generated with discovered.json: 0xe2a1aade8d72d818562cc69a7cc5e8f41c2a4e98
+
+# Diff at Tue, 09 Jun 2026 12:43:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1779719769
+- current timestamp: 1779719769
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1779719769 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0x0C2EbD821c68EC405Fb425596486F5b0f6dFff53) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x7F68dba68E72a250004812fe04F1123Fca89aBa9) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xffae1148823a49b23b24f2b40d8ac6d3ac84c77a
 
 # Diff at Mon, 25 May 2026 14:37:31 GMT:

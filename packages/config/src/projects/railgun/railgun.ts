@@ -7,6 +7,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
+import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -16,6 +18,7 @@ import {
   getTokenBySymbol,
 } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('railgun')
 
@@ -83,6 +86,21 @@ const executionEndOffset = discovery.getContractValue<number>(
   'EXECUTION_END_OFFSET',
 )
 const quorum = discovery.getContractValueBigInt('Voting', 'QUORUM')
+const railTotalSupply = discovery.getContractValueBigInt(
+  'Rail Token',
+  'totalSupply',
+)
+const railTreasuryBalance = Number(
+  discovery
+    .getContractValue<string>('Treasury', 'RAILBalance')
+    .replaceAll(',', ''),
+)
+const railStaked = Number(
+  discovery
+    .getContractValue<string>('Staking', 'RAILStaked')
+    .replaceAll(',', ''),
+)
+const RAILGUN_SINCE_TIMESTAMP = UnixTime(railgunCore.sinceTimestamp ?? 0)
 
 function formatBasisPoints(value: number): string {
   return `${Number((value / 100).toFixed(4))}%`
@@ -146,34 +164,11 @@ export const railgun: BaseProject = {
   display: {
     description:
       'An onchain privacy system for Ethereum based on encrypted UTXO-style private balances and zk-proven DeFi interactions.',
-    detailedDescription: `Railgun is a non-custodial privacy protocol on Ethereum built around encrypted UTXO-style private balances rather than fixed-denomination pools. This design enables in-protocol transfers of shielded tokens and interactions with DeFi smart contracts on L1.
-
-A shield transaction moves assets from a public address on Ethereum into the Railgun contract and creates encrypted commitments in a Merkle-tree state. Later private transfers or unshields use zk-SNARK proofs to spend those commitments without revealing the sender, recipient, token type, or amount. Notes created by deposits and private transactions represents ownership of tokens in Railgun, users must keep them secret and make sure the notes are not lost.
-
-Railgun supports private transfers and cross-contract interactions without fragmenting liquidity across denominations. DeFi calls can be executed through the RelayAdapt contract, which temporarily unshields tokens to Ethereum L1, performs a sequence of contract calls, and shields the resulting assets back into Railgun in a single transaction (facilitated by a relayer).
-
-Railgun has a DAO governed by holders of the RAIL token. The DAO has the authority to arbitrarily change the logic of the protocol and its shielded tokens.
-
-### Privacy considerations
-
-Railgun protocol supports [relayed withdrawals](https://docs.railgun.org/developer-guide/wallet/transactions/unshielding), in which a relayer processes withdrawals on the user's behalf for a fee, which enables sending funds to fresh addresses. Transactions from private addresses can be sent through relayers over the [Waku network](https://blog.waku.org/2024-04-26-railgun-case-study/), which increases network-level privacy. Railgun allows interactions between shielded tokens and DeFi, which allows depositing and withdrawing different tokens.
-
-Practical privacy also depends on the timing and amounts of deposits and withdrawals, as well as RPC providers used to send transactions and query the public blockchain state. Syncing a railgun wallet requires a user to make heavy rpc queries because they need to scan all deposits to the protocol to track their own balance. Running a full node or trusted rpc is recommended. Users are advised to research the best OPSEC practices. Users are advised to research [OPSEC best practice](/publications/privacy-best-practices).
-
-### Fees
-
-There are mandatory onchain protocol fees of ${formatBasisPoints(shieldFee)} for shields and ${formatBasisPoints(unshieldFee)} for unshields. The NFT fee field is currently set to ${nftFee}. Shield and unshield fees are sent to the Railgun Treasury.
-
-Relayers can charge additional offchain fees for submitting transactions on a user's behalf. These relayer fees are not set by the core protocol contracts.
-
-### Compliance
-
-Railgun protocol does not enforce any compliance measures. However it allows using [Private Proof of Innocence](https://docs.railgun.org/wiki/assurance/private-proofs-of-innocence)(PPoI), which can attest to the origin and history of shielded tokens. Relayers and some wallets require a valid PPoI for their services, but they are not generally enforced.
-
-Additionally, Railgun users can share a read-only viewing key to expose all sent and received private transactions, if required by a regulator or enforcer. 
-### Anonymity set
-
-Because Railgun allows private transfers, optional PPoIs that can be enforced by relayers, and interactions with DeFi, its anonymity set depends on many details. A withdrawal from Railgun could be connected with a deposit of another token, or could not correspond to any deposit if a user received a private transfer from another user. The anonymity set, in the best case, corresponds to the set of all Railgun users.`,
+    detailedDescription: readProjectMarkdown('railgun', 'detailedDescription', {
+      shieldFee: formatBasisPoints(shieldFee),
+      unshieldFee: formatBasisPoints(unshieldFee),
+      nftFee,
+    }),
     links: {
       websites: ['https://railgun.org'],
     },
@@ -189,35 +184,94 @@ Because Railgun allows private transfers, optional PPoIs that can be enforced by
     associatedTokens: [{ symbol: RAIL_TOKEN.symbol, icon: RAIL_TOKEN.iconUrl }],
     warnings: [],
   },
+  zkCatalogInfo: {
+    creator: 'Railgun',
+    techStack: {
+      zkVM: [ZK_CATALOG_TAGS.curve.BN254, ZK_CATALOG_TAGS.Groth16.Snarkjs],
+    },
+    proofSystemInfo: '',
+    trustedSetups: [
+      {
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        ...TRUSTED_SETUPS.Railgun,
+      },
+    ],
+    projectsForTvs: [
+      {
+        projectId: ProjectId('railgun'),
+        sinceTimestamp: RAILGUN_SINCE_TIMESTAMP,
+      },
+    ],
+    verifierHashes: [
+      {
+        hash: 'Railgun 91 circuit verifier 03.07.2026',
+        name: 'Railgun verifier',
+        sourceLink:
+          'https://github.com/Railgun-Privacy/circuits-v2/tree/0aa2d13763a9fcfbb7b7ea9c02e004e71f1394bb/src/library',
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
+        knownDeployments: [
+          {
+            address: ChainSpecificAddress.fromLong(
+              'ethereum',
+              '0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9',
+            ),
+          },
+        ],
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'railgun',
+          'verificationSteps-03.07.2026',
+        ),
+      },
+    ],
+  },
   privacyInfo: {
-    trustedSetup: TRUSTED_SETUPS.Railgun,
     tokens: privacyTokens,
+    exitWindow: {
+      value: formatSeconds(executionStartOffset),
+      sentiment: 'warning',
+      orderHint: executionStartOffset,
+      description: `DAO-approved upgrades wait ${formatSeconds(executionStartOffset)} before they can execute, giving users time to unshield funds if they do not approve the change.`,
+      walkawayTest: { passed: true },
+    },
+    reproducibility: {
+      value: 'Reproducible',
+      sentiment: 'good',
+      description:
+        'The contracts, circuits, and supporting software needed to participate in the protocol are publicly available and can be run locally.',
+    },
+    privacy: {
+      value: 'Optional compliance',
+      sentiment: 'good',
+      description:
+        'Compliance is optional at the core protocol level: users can create proofs of innocence to disassociate deposits from flagged addresses, and relayers can choose to require them.',
+    },
     attributes: [
-      PRIVACY_ATTRIBUTES.upgradeable,
-      PRIVACY_ATTRIBUTES.optCompliance,
+      PRIVACY_ATTRIBUTES.zk,
       PRIVACY_ATTRIBUTES.transfers,
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
-      PRIVACY_ATTRIBUTES.sourceAvailable,
     ],
-    riskSummary: `## Funds can be stolen if
-1. the zk proof system is broken, allowing invalid spends or withdrawals.
-2. the [trusted setup](#trusted-setups) is compromised or all ceremony participants collude, allowing invalid spends or withdrawals.
-3. the DAO passes a malicious [upgrade](#upgrades-and-governance) and users do not react before the 7-day execution delay expires.
-<br>
-## Funds can be lost if
-1. a user loses the private keys required to control their private balance.
-<br>
-## Privacy can be lost if
-1. no broadcaster is available and transactions must be sent from a public address that can be linked to the user.`,
-    upgradesAndGovernance: `Railgun features an omnipotent DAO governed by the stakers of the RAIL token. The DAO has the authority to change ZK circuit logic on the core Railgun contract, which can arbitrarily change the rules for shielded tokens; as well as manage blacklisted tokens, mint RAIL tokens and manage governance rewards. See docs here: <https://docs.railgun.org/wiki/rail-token/protocol-governance>
-
-## Governance flow
-
-1. Users stake RAIL token in the Staking contract ([0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20](https://etherscan.io/address/0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20)). Voting power is proportional to the staked amount and can be delegated to another address. Unstaking has ${formatSeconds(stakeLocktime)} delay.
-2. Anyone can create a new proposal with an IPFS link and onchain calldata on the Voting contract ([0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC)). It enters a Sponsorship stage of ${formatSeconds(sponsorWindow)}, where it has to be supported by ${formatLargeNumber(Number(proposalSponsorThreshold / 10n ** 18n))} RAIL stake.
-3. After a ${formatSeconds(votingStartOffset)} delay, the actual voting starts. "Yay" votes need to be cast within ${formatSeconds(votingYayEndOffset)}, "Nay" have ${formatSeconds(votingNayEndOffset)}. Proposal needs to reach the quorum of ${formatLargeNumber(Number(quorum / 10n ** 18n))} RAIL.
-4. A passed proposal (simple majority) waits for ${formatSeconds(executionStartOffset)} before execution and then must be executed within ${formatSeconds(executionEndOffset)} by anyone. Execution goes via the Delegator smart contract ([0xB6d513f6222Ee92Fff975E901bd792E2513fB53B](https://etherscan.io/address/0xB6d513f6222Ee92Fff975E901bd792E2513fB53B)), which actually has permissions to modify the Railgun protocol values.`,
+    riskSummary: readProjectMarkdown('railgun', 'riskSummary'),
+    upgradesAndGovernance: {
+      content: readProjectMarkdown('railgun', 'upgradesAndGovernance'),
+      governanceInfo: {
+        upgrades: {
+          'Normal upgrade path': `Create a proposal with an IPFS link and onchain calldata in the [Voting contract](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) → collect **${formatLargeNumber(Number(proposalSponsorThreshold / 10n ** 18n))} RAIL** sponsorship within ${formatSeconds(sponsorWindow)} → wait ${formatSeconds(votingStartOffset)} → cast Yay votes within ${formatSeconds(votingYayEndOffset)} and Nay votes within ${formatSeconds(votingNayEndOffset)} → pass with a simple majority and **${formatLargeNumber(Number(quorum / 10n ** 18n))} RAIL** quorum → wait ${formatSeconds(executionStartOffset)} → permissionless execution through the Delegator within ${formatSeconds(executionEndOffset)}.`,
+          'Exit window': `**${formatSeconds(executionStartOffset)}** — a passed proposal must wait this long before it can be executed, giving users time to unshield funds.`,
+        },
+        tokenGovernance: {
+          'Governance token': `\`RAIL\` 1 token = 1 vote, delegated. Total supply: **${formatLargeNumber(Number(railTotalSupply / 10n ** 18n))} RAIL**, DAO-owned treasury (unavailable for voting): **${formatLargeNumber(railTreasuryBalance)} RAIL**, staked for voting: **${formatLargeNumber(railStaked)} RAIL**, the rest is circulating supply.`,
+          'Stake lock': `Unstaking has **${formatSeconds(stakeLocktime)}** delay.`,
+          'Voting venue':
+            '[Voting contract](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) on Ethereum. Proposal text is distributed over IPFS, its CID is available as a parameter of \`createPropsal()\` call on the voting contract.',
+          'Proposal threshold': `**No threshold to create a proposal.** A proposal must receive sponsorship from **${formatLargeNumber(Number(proposalSponsorThreshold / 10n ** 18n))} RAIL** stake within ${formatSeconds(sponsorWindow)}.`,
+          Quorum: `**${formatLargeNumber(Number(quorum / 10n ** 18n))} RAIL**, with a simple majority required for acceptance.`,
+          'Execution model': `**Onchain calldata · Permissionless execution through the Delegator.** A passed proposal waits ${formatSeconds(executionStartOffset)}, after which anyone can execute it through the [Delegator contract](https://etherscan.io/address/0xB6d513f6222Ee92Fff975E901bd792E2513fB53B) within ${formatSeconds(executionEndOffset)}.`,
+        },
+      },
+    },
   },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {

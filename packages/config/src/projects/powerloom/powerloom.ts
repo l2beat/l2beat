@@ -16,6 +16,7 @@ export const powerloom: ScalingProject = orbitStackL2({
   discovery,
   capability: 'universal',
   addedAt: UnixTime(1741768931),
+  archivedAt: UnixTime(1783607668), // Thu, 09 Jul 2026 14:34:28 GMT — Powerloom wind-down announced (https://blog.powerloom.io/wind-down/)
   display: {
     name: 'Powerloom',
     slug: 'powerloom',
@@ -54,6 +55,7 @@ export const powerloom: ScalingProject = orbitStackL2({
         callsPerMinute: 300,
       },
     ],
+    untilTimestamp: UnixTime(1783607668), // Thu, 09 Jul 2026 14:34:28 GMT
   },
   activityConfig: {
     type: 'block',
@@ -69,5 +71,14 @@ export const powerloom: ScalingProject = orbitStackL2({
       sinceTimestamp: UnixTime(1741768931),
       tokens: ['USDC'],
     }),
+  ],
+  milestones: [
+    {
+      title: 'Powerloom announces wind-down',
+      url: 'https://blog.powerloom.io/wind-down/',
+      date: '2026-07-09T00:00:00Z',
+      description: 'Powerloom announces protocol wind down.',
+      type: 'general',
+    },
   ],
 })

@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x6053196bf951750589c17934d2f210508a075061
+
+# Diff at Tue, 09 Jun 2026 12:43:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1773160438
+- current timestamp: 1773160438
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1773160438 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x58480e2A163BA83282A11231134263bc1D7a79e9) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xB4cD58Be1C64AA42deA0C58f7482462EE250b88F) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x86242553c97095a1e3684394186f9098885d41c6
 
 # Diff at Fri, 22 May 2026 15:38:10 GMT:

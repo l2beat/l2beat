@@ -13,6 +13,7 @@
     "isBatchPreconfirmed",
     "proxiableUUID"
   ],
+  "ignoreInWatchMode": ["lastFinalizedBatchIndex", "nextBatchIndex"],
   "fields": {
     "nitroVerifiers": {
       "description": "Set of AWS Nitro Enclave verifier contracts allowed to preconfirm batches. Tracked via NitroVerifierEnabled / NitroVerifierDisabled events on the Rollup.",
@@ -55,7 +56,7 @@
       },
       "permissions": [
         {
-          "type": "sequence",
+          "type": "interact",
           "description": "commit batches and submit EIP-4844 blob hashes to the Rollup."
         }
       ]
@@ -67,7 +68,7 @@
       },
       "permissions": [
         {
-          "type": "validate",
+          "type": "interact",
           "description": "submit SP1 ZK proofs that resolve challenged batches and accelerate finalization via finalizeWithProofs."
         }
       ]
@@ -79,7 +80,7 @@
       },
       "permissions": [
         {
-          "type": "challenge",
+          "type": "interact",
           "description": "dispute preconfirmed batches via challengeBatchRoot or challengeBlock during the challenge window."
         }
       ]
@@ -91,7 +92,7 @@
       },
       "permissions": [
         {
-          "type": "fastconfirm",
+          "type": "interact",
           "description": "AWS Nitro Enclave attestation key admitted to preconfirm batches; binds the optimistic fast-withdrawal path."
         }
       ]

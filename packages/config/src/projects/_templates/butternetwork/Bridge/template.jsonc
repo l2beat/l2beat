@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Butter Bridge",
+  "category": "bridge-external",
+  "description": "Butter's omnichain bridge. On the destination chain it verifies a receipt proof against a MAP relay-chain header and then releases or mints assets, or executes a message receiver callback. The security of this bridge therefore depends on the MAP relay chain's header validator set and on the correctness of the configured relay contract.",
+  "ignoreMethods": ["getServiceContract", "proxiableUUID"],
+  "fields": {
+    "$implementation": {
+      "description": "Current implementation of the upgradeable Butter Bridge proxy.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "authority": {
+      "description": "Authority contract consulted by all Bridge management functions marked restricted. Its role members can pause the bridge, change supported tokens and service contracts, change the relay, configure trust-list entries, and upgrade the Bridge implementation.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [{ "type": "act" }]
+    },
+    "getRelay": {
+      "description": "MAP relay contract whose MessageRelay events are accepted by this Bridge. A malicious or incorrectly configured relay address could make otherwise valid proofs execute the wrong messages.",
+      "severity": "HIGH"
+    },
+    "lightNode": {
+      "description": "LightNode used to validate MAP relay-chain headers and receipt proofs before Bridge messages are executed.",
+      "severity": "HIGH",
+      "handler": { "type": "call", "method": "getServiceContract", "args": [1] }
+    },
+    "feeService": {
+      "description": "FeeService used to calculate and route message fees. Its authority can change gas prices, base gas values, token decimals, and the fee receiver.",
+      "severity": "HIGH",
+      "handler": { "type": "call", "method": "getServiceContract", "args": [2] }
+    },
+    "paused": {
+      "description": "Whether bridge transfers and message execution are paused. The authority can toggle this circuit breaker.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getTransferOutFailedReceiver": {
+      "description": "Fallback recipient for assets when a destination-side receiver or swap callback fails. The configured authority can change where such recovered assets are sent.",
+      "severity": "HIGH"
+    }
+  }
+}

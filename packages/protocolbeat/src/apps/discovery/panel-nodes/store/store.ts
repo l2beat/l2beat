@@ -1,9 +1,12 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { Actions } from './actions/Actions'
+import { alignSelected, distributeSelected } from './actions/align'
 import { applyStoredLayout } from './actions/applyStoredLayout'
+import { groupSelected, renameGroup, ungroupSelected } from './actions/group'
 import { redo, undo } from './actions/history'
 import { loadNodes } from './actions/loadNodes'
+import { onDoubleClick } from './actions/onDoubleClick'
 import { onKeyDown } from './actions/onKeyDown'
 import { onKeyUp } from './actions/onKeyUp'
 import { onMouseDown } from './actions/onMouseDown'
@@ -18,7 +21,6 @@ import {
   layout,
   setPreferences,
   showHidden,
-  showUnreachable,
 } from './actions/other'
 import { registerViewportContainer } from './actions/registerViewportContainer'
 import { selectAndFocus } from './actions/selectAndFocus'
@@ -37,7 +39,6 @@ type StoreSetter = (cb: (state: StoreState) => Partial<State>) => void
 
 const INITIAL_STATE: State = {
   selected: [],
-  hidden: [],
   nodes: [],
   history: emptyHistoryState(),
   transform: { offsetX: 0, offsetY: 0, scale: 1 },
@@ -74,11 +75,15 @@ export const useStore = create<StoreState>()(
       loadNodes: wrapHistoryResetAction(set, loadNodes),
       setNodes: wrapUndoableAction(set, setNodes),
       colorSelected: wrapUndoableAction(set, colorSelected),
+      alignSelected: wrapUndoableAction(set, alignSelected),
+      distributeSelected: wrapUndoableAction(set, distributeSelected),
+      groupSelected: wrapUndoableAction(set, groupSelected),
+      ungroupSelected: wrapUndoableAction(set, ungroupSelected),
+      renameGroup: wrapUndoableAction(set, renameGroup),
       undo: wrapAction(set, undo),
       redo: wrapAction(set, redo),
       hideSelected: wrapUndoableAction(set, hideSelected),
       hideUnreachable: wrapUndoableAction(set, hideUnreachable),
-      showUnreachable: wrapUndoableAction(set, showUnreachable),
       showHidden: wrapUndoableAction(set, showHidden),
       clear: wrapHistoryResetAction(set, clear),
       layout: wrapUndoableAction(set, layout),
@@ -92,16 +97,16 @@ export const useStore = create<StoreState>()(
       onMouseDown: wrapHistoryStartAction(set, onMouseDown),
       onMouseUp: wrapHistoryEndAction(set, onMouseUp),
       onMouseMove: wrapAction(set, onMouseMove),
+      onDoubleClick: wrapAction(set, onDoubleClick),
       onWheel: wrapAction(set, onWheel),
     }),
     {
       // You can update the key if changes are backwards incompatible
-      name: 'store-v4',
+      name: 'store-v5',
       partialize: (state) => {
         return {
           projectId: state.projectId,
           nodes: state.nodes,
-          hidden: state.hidden,
           userPreferences: state.userPreferences,
         }
       },

@@ -1,3 +1,544 @@
+Generated with discovered.json: 0xbe38b82c665e0bf37a28a173cb7eea157d45b343
+
+# Diff at Wed, 29 Jul 2026 11:32:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@7ee6102e023331dc2bb11a8e7d9b8b29863dccce block: 1768984927
+- current timestamp: 1768984927
+
+## Description
+
+Make blobstream use entrypoints and rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768984927 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    reference ArbitrumBlobstream (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xebee50215050c031a02122a50c3e2d166f48a818
+
+# Diff at Wed, 29 Jul 2026 11:21:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@38464c82f16364547cbef5e8196f1d7bc295fe3f block: 1768984927
+- current timestamp: 1768984927
+
+## Description
+
+Make blobstream use entrypoints and rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768984927 (main branch discovery), not current.
+
+```diff
+    contract OneStepProverMemory (arb1:0x07d24d32D8F522793faEEebA16BbB97441664374) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
++        "0x9e22e05e7953684e6f00507684bb902908d6d4383b2e82ecdce789027bebc33a"
+      deployerAddress:
++        "arb1:0xD8D975E4a53730306bE46c8901D0507bDADFe398"
+    }
+```
+
+```diff
+    contract ChallengeManager (arb1:0x0E40E41E6095A4f0607144a52d31C2F11a3FF1a1) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
++        "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54"
+      deployerAddress:
++        "arb1:0xD23d1DAF772BDc525842Ebf2B379A305d89DC914"
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x2633ea91d15BeE85105C9b27E068f406F2F36a4a) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.0:
+-        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
++        "0xb739f8156f36efd1dca81c7048413241da1e5bf4a5f98001523a474136b8defd"
+      sourceHashes.1:
+-        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
++        "0x6639f412df425cd0592b0ca4cf5e4ad9d39436f0e7255e83726bb7ac6a9e37b4"
+      usedTypes.0.arg.0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c:
++        "ArbOS v51.1 wasmModuleRoot"
+      deployerAddress:
++        "arb1:0xD23d1DAF772BDc525842Ebf2B379A305d89DC914"
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0x3524251c60e04889bB578fE6B2e2Ad86C6Fc48ad) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
++        "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407"
+      deployerAddress:
++        "arb1:0xD8D975E4a53730306bE46c8901D0507bDADFe398"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
++        "0xb33f29d585cf178f81b64440ee9a3c598cd398ad18d2b3c6dc6c711eaf63d5e4"
+      deployerAddress:
++        "arb1:0xD23d1DAF772BDc525842Ebf2B379A305d89DC914"
+    }
+```
+
+```diff
+    contract ValidatorUtils (arb1:0x6c21303F5986180B1394d2C89f3e883890E2867b) [orbitstack/ValidatorUtils] {
+    +++ description: This contract implements view only utilities for validators.
+      sourceHashes.0:
+-        "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
++        "0xebcd95194086ae9c3b9095578172a3192d9d209e5b159956f1d266910d248334"
+      deployerAddress:
++        "arb1:0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0x74D50DbaCfef02d3dAC141b0bC40195886d7ECF7) [orbitstack/OneStepProverHostIo_Celestia] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.
+      sourceHashes.0:
+-        "0xd8aa733150471ae7c5f80c9da64d49d363b060d6a993934483a9c749033b3678"
++        "0x75ce118e7fcc2ffbfdf5d8f1e027174a2e1dffbed589ff660d8ad7d7b12ac8b5"
+      deployerAddress:
++        "arb1:0xD8D975E4a53730306bE46c8901D0507bDADFe398"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0x759dbcB5E12E6bA091919c94BAa70A4797fd3D0d) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
++        "0x294155e99018f1d390be420f29ef940f9843f3ce54ed4e515d998653e2ce4293"
+      deployerAddress:
++        "arb1:0xD8D975E4a53730306bE46c8901D0507bDADFe398"
+    }
+```
+
+```diff
+    contract Conduit Multisig 2 (arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      deployerAddress:
++        "arb1:0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0x802c7B6585d20cb69524EF23fCbF919F671F808a) [global/ProxyAdmin] {
+    +++ description: None
+      deployerAddress:
++        "arb1:0xD23d1DAF772BDc525842Ebf2B379A305d89DC914"
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.1:
+-        "0x4030f12794a5a07697b98400d423a426b39fd6f2320b39ee377d700d4fafdc58"
++        "0x1ed1bb3154175c71650f620172dd3dd64a9276347fb9a67db89f90d25e8b22c2"
+      deployerAddress:
++        "arb1:0xD23d1DAF772BDc525842Ebf2B379A305d89DC914"
+    }
+```
+
+```diff
+    contract WinrFastconfirmerMultisig (arb1:0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      deployerAddress:
++        "arb1:0x417B4Adc279743FC49F047C323FC668db9E600D8"
+    }
+```
+
+```diff
+    contract Outbox (arb1:0xBA99217992620b76aae0D574c70bD313B30D3D1d) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "arb1:0xD23d1DAF772BDc525842Ebf2B379A305d89DC914"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      sourceHashes.1:
+-        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
++        "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
+      deployerAddress:
++        "arb1:0xD23d1DAF772BDc525842Ebf2B379A305d89DC914"
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0xe966442c0E8F28C48eF4F02BfF7a29876Dcd30CC) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
++        "arb1:0xD23d1DAF772BDc525842Ebf2B379A305d89DC914"
+    }
+```
+
+```diff
+    contract Bridge (arb1:0xF3f01622Ac969156760c32190995F9dC5b3eb7FA) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sourceHashes.1:
+-        "0x32c73666d391a33c17183e4ab20bcb0f2b925d8a99da436d2ff99c13f403e289"
++        "0x44eab8a1244ce0ae33674b88b4211d02a3f4d060cf9a7791854f3263c039813a"
+      deployerAddress:
++        "arb1:0xD23d1DAF772BDc525842Ebf2B379A305d89DC914"
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb1:0xf951C50162Ce1aEC93464aCFe90F755EC9878b5f) [orbitstack/OneStepProverMath] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
++        "0xd38b92884347e76d4ce463bc343cbf508eefb150146ed51cb80c2aee8c565122"
+      deployerAddress:
++        "arb1:0xD8D975E4a53730306bE46c8901D0507bDADFe398"
+    }
+```
+
+Generated with discovered.json: 0xdb00423ee2a448a200e6695b86001caf5c2142ad
+
+# Diff at Fri, 12 Jun 2026 10:19:07 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1768984927
+- current timestamp: 1768984927
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768984927 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0x487fb70F28cEb4f320f2D72ed859cEEdC1B8C648) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x3a23897d22061318203b2af7395acb9bdfb4bd25
+
+# Diff at Tue, 09 Jun 2026 12:43:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1768984927
+- current timestamp: 1768984927
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768984927 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0x026919DbCFab70a2A45775088C933331A7B25Ac6) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x053970A9AA9638F54370764E6E9c7B2f5854Ef21) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x0C79a90C94E1C1091D7D3a188730105be00798f9) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      receivedPermissions.1.permission:
+-        "validate"
++        "interact"
+      receivedPermissions.2.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x1B15bb40898Ca818E28C0448Ebac4165d5Dd0b5E) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x336dD5a1aB948058E4c699fD7732c2AA78C10d90) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x4e597125DB0aDC355F084d09B945DBfc6B8e9BE5) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x50A4EB12BFbf3B83FFb5c2a6378e35Cd83e6d885) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x50E91cb65a605E1b8B73be1fD558Fe40aBE59A31) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x54A51C10a3EF82Cb6B0fB6B1418882472e56Ff1a) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x6963d94D76D5315158B47DE0B0Ce1fd6E0F61bcB) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x79F4b4f9103298460486EC644499Df9985E34170) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x7Be767aFca580360eBD3dAD924B4D688daBCdaD7) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x7CD925c107dE5C06C100F2084bFA0422F21140f0) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x83433d51B327392aA694455231D2db092eE2A5Db) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    contract WinrFastconfirmerMultisig (arb1:0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      directlyReceivedPermissions.1.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x936cCC684c091b20806fA3C6668F7F1fD2B3C772) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xa65100caA20c06Bd278D83C60475ec4F69b23dc1) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xB180d28c01D3248C3fa88d67154a5070e5039135) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xbE119cCc44373B15517e921e9a7D54362250662D) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xC929c820dC03C2a22e44F440721Af3c835e071fc) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xCe957F6aFadFFA08dAa90cE5b47208C02a9b9B4F) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xD327b75C2CA829835b2B5EA9535827e9a06a480B) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xD47FB043557CB2289B31d813dd4BC1223C91f872) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xD6433a681832BD2020fc6d984Efb5f57fe9ac155) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xd76a3aCEd4115B017301C54C211EC36aA5E37e05) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xE31C47980a005B6E6d6c93212388ff7e9721D2Fc) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xe7685c09633B47Fe123ff47ebeA903C3763924a2) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xEBe1766201dd69A09a2953B08081829E90f4a8d3) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0xf8b74E847cCa2EfF5E939B9B948Bf889F3DC0822) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xfd9818cc3e94c3e677db5401b91255dc9bc3d5e1
 
 # Diff at Wed, 21 Jan 2026 08:43:26 GMT:

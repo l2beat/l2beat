@@ -11,7 +11,18 @@
     "totalStaked",
     "totalVotingPower"
   ],
+  "ignoreInWatchMode": ["RAILStaked"],
   "fields": {
+    "RAILStaked": {
+      "description": "Total RAIL locked in this contract by governance participants for voting power.",
+      "handler": {
+        "type": "call",
+        "method": "function balanceOf(address account) view returns (uint256)",
+        "args": ["0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20"],
+        "address": "{{ stakingToken }}"
+      },
+      "edit": ["format", "Undecimal18"]
+    },
     "stakingToken": {
       "description": "RAIL token contract that users lock here to obtain voting power.",
       "severity": "HIGH"

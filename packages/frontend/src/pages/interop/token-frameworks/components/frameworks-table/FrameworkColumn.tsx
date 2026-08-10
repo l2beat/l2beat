@@ -1,6 +1,8 @@
+import { formatInteger } from '@l2beat/shared-pure'
 import type { FrameworkTableEntry } from '~/server/features/scaling/interop/getTokenFrameworksData'
 import { cn } from '~/utils/cn'
-import { formatInteger } from '~/utils/number-format/formatInteger'
+import type { InteropTransferDefaults } from '../../../components/InteropTransferTrigger'
+import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
 import { BridgingTypeBreakdown } from './BridgingTypeBreakdown'
 import { ChainPathRow, TokenRow } from './Rows'
@@ -12,11 +14,13 @@ export function FrameworkColumn({
   entry,
   isFirst,
   isLoading,
+  transfer,
 }: {
   framework: InteropTokenFramework
   entry: FrameworkTableEntry | undefined
   isFirst: boolean
   isLoading: boolean
+  transfer: InteropTransferDefaults
 }) {
   return (
     <div
@@ -53,7 +57,13 @@ export function FrameworkColumn({
               <EmptyState />
             ) : (
               entry.tokens.map((token) => (
-                <TokenRow key={token.id} token={token} framework={framework} />
+                <TokenRow
+                  key={token.id}
+                  token={token}
+                  framework={framework}
+                  href={getInteropTokenUrl(token)}
+                  transfer={transfer}
+                />
               ))
             )}
           </ScrollList>
@@ -71,6 +81,7 @@ export function FrameworkColumn({
                   key={`${path.src.id}-${path.dst.id}-${i}`}
                   path={path}
                   framework={framework}
+                  transfer={transfer}
                 />
               ))
             )}

@@ -1,3 +1,158 @@
+Generated with discovered.json: 0x78b2e5208fb09a6516fce0a135c644868c442bf7
+
+# Diff at Mon, 27 Jul 2026 11:01:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@887150af6d3edad6e5fde92995bb5ecc5e48cfde block: 1753944481
+- current timestamp: 1753944481
+
+## Description
+
+shared-zk-stack now uses entrypoints rediscovery
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753944481 (main branch discovery), not current.
+
+```diff
+    contract Wonder Multisig (eth:0x4665ad531c35b02dE090E21FC57B69946434bf2b) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
++        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      deployerAddress:
++        "eth:0xee55ffc2a43d0641fD46EbB4a610E072Bf9d4FBf"
+    }
+```
+
+```diff
+    contract DualVerifier (eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579) [shared-zk-stack/DualVerifier] {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract L1VerifierPlonk (eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1) [shared-zk-stack/L1VerifierPlonk] {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) [shared-zk-stack/ValidatorTimelock] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      sourceHashes.0:
+-        "0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"
++        "0x76c03bdcd4b9f00719cb172815067482f6e639d9e37d46cd597995d931dc26a0"
+      deployerAddress:
++        "eth:0x71d84c3404a6ae258E6471d4934B96a2033F9438"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) [shared-zk-stack/ValidatorTimelock] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      sourceHashes.0:
+-        "0x2221508945ceea880f5d52488af1a7466fcdfadeaf3644dc5e3b82671b7947a3"
++        "0x6308b2ae7a44c1255f5ad431f8b3d2d7da55efd35a771e2a31c87ce6b814e358"
+      deployerAddress:
++        "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16"
+    }
+```
+
+```diff
+    contract ValidiumL1DAValidator (eth:0x907b30407249949521Bf0c89A43558dae200146A) [shared-zk-stack/ValidiumL1DAValidator] {
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+      deployerAddress:
++        "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16"
+    }
+```
+
+```diff
+    contract ChainAdmin (eth:0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x4665ad531c35b02dE090E21FC57B69946434bf2b act through it.
+      sourceHashes.0:
+-        "0xefb240f5e06f5ffb38c7e98e9738ecf10381c49716281a3da9d5a1d17438eb4c"
++        "0x5a6156ab737196ad26f28ac0f8be667f64154ce292ba41d4b7bc0c693ff19dea"
+      deployerAddress:
++        "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc"
+    }
+```
+
+```diff
+    contract Diamond (eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      sourceHashes.1:
+-        "0xbc2380479529743c27e6ab96cdf08210319fadcbca0856cf50c6b1b54bf8437f"
++        "0xfe92fc5881d0e7d5cabb9edf0344e4bf0f6bf6de5a51f9ce5b9a03d32c1338bc"
+      deployerAddress:
++        "eth:0x44Adb668e99103a310Fc2fE639AB8BDc09f2Bad1"
+    }
+```
+
+```diff
+    contract L1VerifierFflonk (eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b) [shared-zk-stack/L1VerifierFflonk] {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      deployerAddress:
++        "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c"
+    }
+```
+
+Generated with discovered.json: 0xd507fe15f15a0307fc4d53f6f1d95102d5111b3a
+
+# Diff at Tue, 09 Jun 2026 12:43:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1753944481
+- current timestamp: 1753944481
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753944481 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xAd0a80a085095ECa46De3053C345516f1c722D2a) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+      receivedPermissions.0.permission:
+-        "validateZkStack"
++        "interact"
+      receivedPermissions.1.description:
++        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+      receivedPermissions.1.permission:
+-        "validateZkStack"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xB76e732643A4956a71Ac1BB0E507126651a2FC66) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+      receivedPermissions.0.permission:
+-        "validateZkStack"
++        "interact"
+      receivedPermissions.1.description:
++        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+      receivedPermissions.1.permission:
+-        "validateZkStack"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xec5ab75dea50d1cf81436cd0d7400475f1e9ad64
 
 # Diff at Wed, 17 Dec 2025 14:34:42 GMT:

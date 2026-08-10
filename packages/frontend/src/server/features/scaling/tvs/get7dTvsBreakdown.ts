@@ -6,7 +6,10 @@ import groupBy from 'lodash/groupBy'
 import partition from 'lodash/partition'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
+import {
+  calculatePercentageChange,
+  type PercentageChangePeriod,
+} from '~/utils/calculatePercentageChange'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { getSyncState, type SyncState } from '../../utils/syncState'
 import { getAdditionalTrustAssumptionsPercentage } from './utils/getAdditionalTrustAssumptionsPercentage'
@@ -21,6 +24,7 @@ export interface ProjectSevenDayTvsBreakdown {
   breakdown: BreakdownSplit
   breakdown7d: BreakdownSplit
   change: BreakdownSplit
+  changePeriod: PercentageChangePeriod
   additionalTrustAssumptionsPercentage: number
   syncState: SyncState
 }
@@ -192,6 +196,7 @@ export async function get7dTvsBreakdown(
           rwaPublic: 0,
           associated: 0,
         },
+        changePeriod: '7D',
         additionalTrustAssumptionsPercentage,
         syncState,
       }
@@ -263,6 +268,7 @@ export async function get7dTvsBreakdown(
           oldestAssociated,
         ),
       },
+      changePeriod: '7D',
       additionalTrustAssumptionsPercentage,
       syncState,
     }
@@ -388,6 +394,7 @@ async function getMockTvsBreakdownData(
             rwaPublic: 0.25,
             associated: 0.25,
           },
+          changePeriod: '7D',
           additionalTrustAssumptionsPercentage:
             project.projectId === 'base' ? 0.8 : 0,
           syncState: {

@@ -11,6 +11,7 @@ export interface ChangelogEntry {
   whatsNew:
     | {
         image: string
+        verticalImage?: string
         alt: string
         href?: string
         disabledOnMatches?: string[]
@@ -31,10 +32,10 @@ export function sortChangelogEntries(
   )
 }
 
-export function selectActiveChangelogWhatsNewWidget(
+export function selectActiveWhatsNewEntry(
   entries: ChangelogEntry[],
   now: Date,
-): WhatsNewWidget | undefined {
+): ChangelogEntry | undefined {
   for (const entry of sortChangelogEntries(entries)) {
     if (!entry.whatsNew) continue
 
@@ -43,17 +44,29 @@ export function selectActiveChangelogWhatsNewWidget(
     const expiresAt = entry.whatsNew.expiresAt.getTime()
 
     if (publishedAt <= nowTimestamp && nowTimestamp < expiresAt) {
-      return {
-        id: `changelog-${entry.id}`,
-        href: entry.whatsNew.href ?? `/changelog#${entry.id}`,
-        image: entry.whatsNew.image,
-        disabledOnMatches: entry.whatsNew.disabledOnMatches,
-        alt: entry.whatsNew.alt,
-      }
+      return entry
     }
   }
 
   return undefined
+}
+
+export function selectActiveChangelogWhatsNewWidget(
+  entries: ChangelogEntry[],
+  now: Date,
+): WhatsNewWidget | undefined {
+  const entry = selectActiveWhatsNewEntry(entries, now)
+  if (!entry?.whatsNew) {
+    return undefined
+  }
+
+  return {
+    id: `changelog-${entry.id}`,
+    href: entry.whatsNew.href ?? `/changelog#${entry.id}`,
+    image: entry.whatsNew.image,
+    disabledOnMatches: entry.whatsNew.disabledOnMatches,
+    alt: entry.whatsNew.alt,
+  }
 }
 
 export function getActiveChangelogWhatsNewWidget(

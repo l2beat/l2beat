@@ -305,7 +305,7 @@ describe(OnchainAmountIndexer.name, () => {
     })
   })
 
-  describe(OnchainAmountIndexer.prototype.removeData.name, () => {
+  describe(OnchainAmountIndexer.prototype.trimData.name, () => {
     it('deletes records for configurations in time range', async () => {
       const tvsAmountRepository = mockObject<Database['tvsAmount']>({
         deleteByConfigs: mockFn().returns(5),
@@ -340,11 +340,19 @@ describe(OnchainAmountIndexer.name, () => {
       )
 
       const removalConfigs = [
-        { id: 'escrow-config-1', from: 100, to: 200 },
-        { id: 'supply-config-1', from: 300, to: 400 },
+        {
+          type: 'trim' as const,
+          id: 'escrow-config-1',
+          range: [100, 200] as [number, number],
+        },
+        {
+          type: 'trim' as const,
+          id: 'supply-config-1',
+          range: [300, 400] as [number, number],
+        },
       ]
 
-      await indexer.removeData(removalConfigs)
+      await indexer.trimData(removalConfigs)
 
       expect(tvsAmountRepository.deleteByConfigs).toHaveBeenOnlyCalledWith([
         {

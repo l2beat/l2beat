@@ -10,11 +10,3 @@ export type AbstractTokenWithDeployedTokens = AbstractToken & {
 }
 
 export type DeployedToken = DeployedTokenRecord
-
-export type TokenConnection = {
-  tokenFromId: string
-  tokenToId: string
-  type: string
-  params?: Record<string, unknown>
-  comment?: string
-}

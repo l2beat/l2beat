@@ -93,5 +93,11 @@
     "hash": "0x1f65fda230b6d0df44e466b06418b2e12a401ef82c07521ad18d2f4ae6c70fb2",
     "address": "eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9",
     "blockNumber": 23881654
+  },
+  "L1ERC721Bridge_v2_9_1": {
+    "hash": "0xc5ed62b03fb7c1340609ace7ebb0c5bf8d43b1814b1ab4f10863bfa21d13b90b",
+    "address": "eth:0x9F164f1d02A81e06D639E55F65a87f0070E3Cb2e",
+    "chain": "ethereum",
+    "blockNumber": 25424438
   }
 }

@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { TanStackTable } from '~/components/table/TanStackTable'
 import { useTanStackTable } from '~/components/table/useTanStackTable'
 import { cn } from '~/utils/cn'
+import type { InteropTransferDataRange } from '../../transferDataRange'
 import type { TransferStatsRow } from '../types'
 import { transferStatsColumns } from './columns'
 import { TransferPairsTable } from './TransferPairsTable'
@@ -12,16 +13,19 @@ function getTransferRowId(row: TransferStatsRow) {
 
 interface TransfersTableProps {
   data: TransferStatsRow[]
+  range: InteropTransferDataRange
   enableCsvExport?: boolean
   enablePairsCsvExport?: boolean
 }
 
 export function TransfersTable({
   data,
+  range,
   enableCsvExport = false,
   enablePairsCsvExport = false,
 }: TransfersTableProps) {
   const [selectedRowId, setSelectedRowId] = useState<string>()
+  const columns = useMemo(() => transferStatsColumns(range), [range])
 
   const {
     filteredRowsCount,
@@ -36,7 +40,7 @@ export function TransfersTable({
     totalRowsCount,
   } = useTanStackTable({
     data,
-    columns: transferStatsColumns,
+    columns,
     initialSorting: [{ id: 'count', desc: true }],
     getRowId: getTransferRowId,
     searchPlaceholder: 'Search transfer plugins and types',
@@ -115,6 +119,7 @@ export function TransfersTable({
             data={selectedRow.chains}
             plugin={selectedRow.plugin}
             type={selectedRow.type}
+            range={range}
             enableCsvExport={enablePairsCsvExport}
           />
         </div>

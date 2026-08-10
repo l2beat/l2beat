@@ -1,0 +1,83 @@
+import type { IntentBridgesData } from '~/server/features/scaling/interop/getIntentBridgesData'
+import type { TokenData } from '~/server/features/scaling/interop/types'
+import type { InteropTokenRowData } from '../../../components/InteropTokenRow'
+import {
+  InteropTopTokensWidget,
+  type TopTokensTab,
+} from '../../../components/InteropTopTokensWidget'
+import type { InteropTransferDefaults } from '../../../components/InteropTransferTrigger'
+import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'
+import type { InteropIntentBridge } from '../../getInteropIntentBridgesData'
+
+export function IntentTopTokensWidget({
+  intentBridges,
+  data: intentData,
+  isLoading,
+  transfer,
+}: {
+  intentBridges: InteropIntentBridge[]
+  data: IntentBridgesData | undefined
+  isLoading: boolean
+  transfer: InteropTransferDefaults
+}) {
+  const tabs: TopTokensTab[] = intentBridges.map((bridge) => ({
+    id: bridge.id,
+    iconUrl: bridge.iconUrl,
+    label: bridge.name,
+  }))
+
+  const toRow = (
+    token: TokenData,
+    bridge: InteropIntentBridge | undefined,
+  ): InteropTokenRowData => {
+    const flow = token.flows[0]
+    return {
+      tokenId: token.id,
+      iconUrl: token.iconUrl,
+      symbol: token.symbol,
+      href: getInteropTokenUrl(token),
+      volume: token.volume,
+      transferCount: token.transferCount,
+      topRoute: flow ? { src: flow.srcChain, dst: flow.dstChain } : undefined,
+      protocol: bridge
+        ? {
+            id: bridge.id,
+            name: bridge.name,
+            slug: bridge.slug,
+            iconUrl: bridge.iconUrl,
+          }
+        : undefined,
+      transferScope: bridge
+        ? undefined
+        : {
+            type: 'selection',
+            protocolIds: intentBridges.map((bridge) => bridge.id),
+          },
+    }
+  }
+
+  return (
+    <InteropTopTokensWidget
+      tabsName="topTokensIntentBridge"
+      tabs={tabs}
+      isLoading={isLoading}
+      transfer={transfer}
+      tabsListClassName="h-auto w-full flex-wrap justify-start"
+      tabLabelClassName="@max-[420px]:hidden"
+      getTabData={(activeTab) => {
+        const activeBridge = intentBridges.find((b) => b.id === activeTab)
+        const tokens =
+          activeTab === 'all'
+            ? intentData?.topTokens
+            : intentData?.table.entries.find((e) => e.id === activeTab)?.tokens
+        const value = activeBridge
+          ? (tokens?.items.length ?? 0) + (tokens?.remainingCount ?? 0)
+          : undefined
+        const rows = (tokens?.items ?? []).map((token) =>
+          toRow(token, activeBridge),
+        )
+        return { activeCount: { value, label: 'active tokens' }, rows }
+      }}
+    />
+  )
+}

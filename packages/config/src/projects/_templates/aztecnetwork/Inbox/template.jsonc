@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Facilitates canonical L1 to L2 communication. It accepts messages (including fee asset deposits) from L1, accumulates them in an append-only frontier tree per checkpoint, and forces the Sequencers and the Rollup contract to sequentially consume the roots of these message trees, ensuring message inclusion.",
   "ignoreMethods": ["getRoot", "trees"],
+  "ignoreRelatives": ["getFeeAssetPortal"],
   "ignoreInWatchMode": [
     "getInProgress",
     "getState",
@@ -9,13 +10,23 @@
   ],
   "fields": {
     "FEE_ASSET_PORTAL": {
-      "description": "The address of the FeeJuicePortal contract used for bridging fee assets to the L2."
+      "description": "The FeeJuicePortal contract used for bridging fee assets to the L2. Messages from this portal are inserted with the canonical fee-asset L2 sender.",
+      "template": "aztecnetwork/FeeJuicePortal"
     },
     "LAG": {
       "description": "The delay (in checkpoints) before L1 to L2 messages can be consumed by the sequencer."
     },
     "ROLLUP": {
-      "description": "The address of the core Rollup contract that possesses the permission to consume the message trees."
+      "description": "The address of the core Rollup contract that possesses the permission to consume the message trees.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "consume L1 to L2 message tree roots for checkpoint processing."
+        }
+      ]
+    },
+    "VERSION": {
+      "description": "The identifier of the Aztec instance/version to prevent cross-instance message replay."
     }
   },
   "category": "bridge-canonical"

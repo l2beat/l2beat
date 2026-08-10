@@ -1,39 +1,58 @@
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type {
   FrameworkChainPathItem,
   TopTokenItem,
 } from '~/server/features/scaling/interop/getTokenFrameworksData'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
+import { ChainIcon } from '../../../components/ChainIcon'
+import {
+  type InteropTransferDefaults,
+  InteropTransferTrigger,
+} from '../../../components/InteropTransferTrigger'
 import type { InteropTokenFramework } from '../../getInteropTokenFrameworksData'
-import { TokenFrameworksTransferTrigger } from '../TokenFrameworksTransferTrigger'
 
 export function TokenRow({
   token,
   framework,
+  href,
+  transfer,
 }: {
   token: TopTokenItem
   framework: InteropTokenFramework
+  href: string | undefined
+  transfer: InteropTransferDefaults
 }) {
+  const identity = (
+    <>
+      <img
+        src={token.iconUrl}
+        alt={token.symbol}
+        className="size-4 shrink-0 rounded-sm"
+      />
+      <span className="truncate font-medium text-label-value-13">
+        {token.symbol}
+      </span>
+    </>
+  )
   return (
     <div className="flex h-7 shrink-0 items-center justify-between gap-2">
-      <div className="flex min-w-0 items-center gap-1.5">
-        <img
-          src={token.iconUrl}
-          alt={token.symbol}
-          className="size-4 shrink-0 rounded-sm"
-        />
-        <span className="truncate font-medium text-label-value-13">
-          {token.symbol}
-        </span>
-      </div>
+      {href ? (
+        <a
+          href={href}
+          className="flex min-w-0 items-center gap-1.5 hover:underline"
+        >
+          {identity}
+        </a>
+      ) : (
+        <div className="flex min-w-0 items-center gap-1.5">{identity}</div>
+      )}
       <RowStats
         volume={token.volume}
         transferCount={token.transferCount}
         txsTrigger={
           token.isUnknown ? undefined : (
-            <TokenFrameworksTransferTrigger
+            <InteropTransferTrigger
               protocol={{
                 id: framework.projectId,
                 name: framework.name,
@@ -41,10 +60,12 @@ export function TokenRow({
                 iconUrl: framework.iconUrl,
               }}
               tokenId={token.id}
+              selection={transfer.selection}
+              snapshotTimestamp={transfer.snapshotTimestamp}
               className="cursor-pointer font-medium text-secondary hover:underline"
             >
               {formatInteger(token.transferCount)} txs
-            </TokenFrameworksTransferTrigger>
+            </InteropTransferTrigger>
           )
         }
       />
@@ -55,9 +76,11 @@ export function TokenRow({
 export function ChainPathRow({
   path,
   framework,
+  transfer,
 }: {
   path: FrameworkChainPathItem
   framework: InteropTokenFramework
+  transfer: InteropTransferDefaults
 }) {
   return (
     <div className="flex h-7 shrink-0 items-center justify-between gap-2">
@@ -70,36 +93,22 @@ export function ChainPathRow({
         volume={path.volume}
         transferCount={path.transferCount}
         txsTrigger={
-          <TokenFrameworksTransferTrigger
+          <InteropTransferTrigger
             protocol={{
               id: framework.projectId,
               name: framework.name,
               slug: framework.slug,
               iconUrl: framework.iconUrl,
             }}
-            selectionForApi={{ from: [path.src.id], to: [path.dst.id] }}
+            selection={{ from: [path.src.id], to: [path.dst.id] }}
+            snapshotTimestamp={transfer.snapshotTimestamp}
             className="cursor-pointer font-medium text-secondary hover:underline"
           >
             {formatInteger(path.transferCount)} txs
-          </TokenFrameworksTransferTrigger>
+          </InteropTransferTrigger>
         }
       />
     </div>
-  )
-}
-
-function ChainIcon({
-  iconUrl,
-  alt,
-}: {
-  iconUrl: string | undefined
-  alt: string
-}) {
-  if (!iconUrl) {
-    return <span className="size-4 rounded-sm bg-surface-secondary" />
-  }
-  return (
-    <img src={iconUrl} alt={alt} className="size-4 rounded-sm object-contain" />
   )
 }
 

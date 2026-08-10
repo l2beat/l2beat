@@ -23,10 +23,12 @@ import { getEverclearProxy } from './manual/EverclearProxy'
 import { getImmutableProxy } from './manual/immutableProxy'
 import { getLightLinkProxy } from './manual/LightLinkProxy'
 import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
+import { getNxvProxy } from './manual/NxvProxy'
 import { getOpticsBeaconProxy } from './manual/OpticsBeaconProxy'
 import { getPolygonExtensionProxy } from './manual/PolygonExtensionProxy'
 import { gatTaikoForkProxy } from './manual/TaikoForkProxy'
 import { getZkLighterProxy } from './manual/ZkLighterProxy'
+import { getZkLinkProxy } from './manual/ZkLinkProxy'
 import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
 import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
 import type { ProxyDetails, ProxyResult } from './types'
@@ -79,7 +81,9 @@ export const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
   'LightLink proxy': getLightLinkProxy,
   'Everclear proxy': getEverclearProxy,
   'TaikoFork proxy': gatTaikoForkProxy,
+  'ZkLink proxy': getZkLinkProxy,
   'zkLighter proxy': getZkLighterProxy,
+  'NXV proxy': getNxvProxy,
   immutable: getImmutableProxy,
 }
 

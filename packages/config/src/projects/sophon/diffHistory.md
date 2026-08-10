@@ -1,3 +1,375 @@
+Generated with discovered.json: 0x0710a5c22548e35bbb70e92bd24dcaafa8219ef0
+
+# Diff at Wed, 05 Aug 2026 10:30:10 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@352ff1eba99519e3c6090fccec5796e0475edcfa block: 1782815274
+- current timestamp: 1785925747
+
+## Description
+
+Upgraded boojum verifiers to the latest version (the same as zksync Era, not yet reproduced).
+
+Also rotated two ms members.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.10:
++        ["2026-08-04T14:53:47.000Z","0x6c47ec4cd22ac63a14d8e2e8f6f931af61e7b734b54153e63cd7970b2c598d4e",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
+      values.$upgradeCount:
+-        10
++        11
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        124554051588
++        124554051589
+      values.getSemverProtocolVersion.2:
+-        4
++        5
+      values.getVerifier:
+-        "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45"
++        "eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (eth:0x7f33D100f482093182111d69a4a457289e99f4ec) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.
+```
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xF6877208302D9715A576D4Bff96f6576B5A1dFbA"
++        "eth:0x891F19CdefBce82e2F39f34C2322526c01E7A845"
+      values.$members.5:
+-        "eth:0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69"
++        "eth:0xbe6D418089AaFeD4f95e516F21b2F56027a2E263"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x9f5C39a2790f38542065E7854b90407371923375 or eth:0xd22cA89e8991FCE568456914c616d303e3142395 depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    EOA  (eth:0x891F19CdefBce82e2F39f34C2322526c01E7A845)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (eth:0x9f5C39a2790f38542065E7854b90407371923375) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (eth:0xd22cA89e8991FCE568456914c616d303e3142395) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+## Source code changes
+
+```diff
+.../sophon/{.flat@1782815274 => .flat}/L1VerifierFflonk.sol    |  6 +++---
+ .../sophon/{.flat@1782815274 => .flat}/L1VerifierPlonk.sol     | 10 +++++-----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+```
+
+Generated with discovered.json: 0xf0575f5257b02eb8bd894208f54f9fa938d88c4e
+
+# Diff at Wed, 29 Jul 2026 12:10:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@aa8a66c60dd068866cc6883eb64714f2f3e69afa block: 1782815274
+- current timestamp: 1782815274
+
+## Description
+
+Make vector use entrypoints and rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782815274 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    reference Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference AvailBridgeV1 (eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x166a1616a512b39c181ae8c4f36e86a0afa98c15
+
+# Diff at Tue, 30 Jun 2026 10:28:58 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ddc641881a6870ab0c9e9ee1c517ed9eb73306bc block: 1782464947
+- current timestamp: 1782815274
+
+## Description
+
+Rotated two validators.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTL.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTLFullAC.PRECOMMITTER_ROLE.members.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTLFullAC.COMMITTER_ROLE.members.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTLFullAC.REVERTER_ROLE.members.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTLFullAC.PROVER_ROLE.members.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.0:
+-        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B"
+      values.validatorsVTLFullAC.EXECUTOR_ROLE.members.1:
+-        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
+    }
+```
+
+```diff
+    contract SophonZkEvmAdmin (eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1 act through it.
+      values.tokenMultiplierSetter:
+-        "eth:0xe14828E4405239dD331F194F1B7883eeD73bCBF3"
++        "eth:0xB1e2974E81922c1d5923dB4580292fB9954E9E05"
+    }
+```
+
+Generated with discovered.json: 0x23bfe8ee0208749fd2ecb77ad43a0cb78f83a56c
+
+# Diff at Fri, 26 Jun 2026 09:48:20 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@cf24a6eb45e0c4c6be4d66ee4e477ba0cce45b01 block: 1781602990
+- current timestamp: 1782464947
+
+## Description
+
+User deposits into sophon are paused: only authorized superuser can pass transaction filterer now: https://disco.l2beat.com/diff/eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063/eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41.
+
+Sophon chain is being sunset: https://x.com/sophon/status/2070192257295335800.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
++++ description: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.
++++ severity: HIGH
+      values.getTransactionFilterer:
+-        "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063"
++        "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41"
+    }
+```
+
+```diff
+    EOA  (eth:0x50B238788747B26c408681283D148659F9da7Cf9) {
+    +++ description: None
+      receivedPermissions.0.role:
+-        ".whitelistedSendersAC"
++        ".superuserAC"
+      receivedPermissions.0.from:
+-        "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063"
++        "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41"
+      receivedPermissions.1.from:
+-        "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063"
++        "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SophonTransactionFilterer (eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063) [shared-zk-stack/TransactionFilterer]
+    +++ description: A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender- OR contractL2 (target) addresses. The whitelist is defined in AccessControl roles.
+```
+
+```diff
+    contract SophonZkEvmAdmin (eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1 act through it.
+      directlyReceivedPermissions.0:
++        {"permission":"interact","from":"eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41","description":"call requestL2Transaction() with any target/calldata (whitelisted superuser sender).","role":".superuserAC"}
+    }
+```
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41","description":"call requestL2Transaction() with any target/calldata (whitelisted superuser sender).","role":".superuserAC","via":[{"address":"eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"}]}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063","description":"manage the whitelist.","role":".defaultAdminAC"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SophonTransactionFilterer (eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41) [sophon/SophonTransactionFilterer]
+    +++ description: A contract implementing the ITransactionFilterer interface, allows only trxs from whitelisted superusers. The whitelist is defined in AccessControl roles.
+```
+
+## Source code changes
+
+```diff
+.../SophonTransactionFilterer.sol                  | 22 +++++++---------------
+ 1 file changed, 7 insertions(+), 15 deletions(-)
+```
+
+Generated with discovered.json: 0xd5e37c0efad10bfe6bd88e6a27435d0438ef007c
+
+# Diff at Tue, 16 Jun 2026 09:44:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b8fe7ad12211d67626f7d23839b5be1f7ba15bb5 block: 1780913579
+- current timestamp: 1781602990
+
+## Description
+
+Multisig member switched.
+
+## Watched changes
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xF6877208302D9715A576D4Bff96f6576B5A1dFbA"
+      values.$members.3:
+-        "eth:0x20719Abd2E63518e68D30a295388cAd6B542dCEf"
+    }
+```
+
+Generated with discovered.json: 0x92f48e1fe0afd597461d13cee378686da2fda143
+
+# Diff at Tue, 09 Jun 2026 12:43:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780913579
+- current timestamp: 1780913579
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780913579 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x78325837C780788Ce6afF7883FdF68890010Fe30) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+      receivedPermissions.0.permission:
+-        "validateZkStack"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+      receivedPermissions.0.permission:
+-        "validateZkStack"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x00925a2490206c99543ca96595654da6017969c9
+
+# Diff at Mon, 08 Jun 2026 10:14:06 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@986b95b3ae833105f37e6f39ab1fd37448dc183a block: 1771251793
+- current timestamp: 1780913579
+
+## Description
+
+Removed one ms member for admin ms, rotated two more and decreased the threshold.
+
+## Watched changes
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x11BB5F79750de2Cc71e80cB2C59cF0a60EFFa95d"
++        "eth:0x4BBBaCCbA75dbb482619722FFE68bBddC9CCc336"
+      values.$members.1:
+-        "eth:0x0BA5557075B4E30bA409B01797c9c78b3Ce192bF"
++        "eth:0x2Ea9CcB15Ceb6c228786a3d4837B0bA3e9736D97"
+      values.$members.5:
+-        "eth:0x7f413262Cb811B034d077d9184b5Efda6943f2c3"
+      values.$threshold:
+-        4
++        3
+      values.multisigThreshold:
+-        "4 of 7 (57%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xb7b08c11a40d12d27cd32316755c68d3f7eab55d
 
 # Diff at Fri, 08 May 2026 07:52:24 GMT:

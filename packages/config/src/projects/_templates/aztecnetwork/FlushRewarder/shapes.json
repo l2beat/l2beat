@@ -8,5 +8,10 @@
     "hash": "0xac8071ca5e2e51dc06d7ee993e3b8cfea59cf94a743abf0a4c768a640262db63",
     "address": "eth:0x7C9a7130379F1B5dd6e7A53AF84fC0fE32267B65",
     "blockNumber": 24590324
+  },
+  "FlushRewarder_v5.sol": {
+    "hash": "0xd6322e4ccde3fb8a453a00b64881b8ffbb23a6fac4a1e8032ef41f12781b9908",
+    "address": "eth:0x5B98cA4dcE7b59CCf241D12f81d3d2eCF14e410e",
+    "blockNumber": 25428902
   }
 }

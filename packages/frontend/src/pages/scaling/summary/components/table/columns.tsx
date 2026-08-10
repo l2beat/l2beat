@@ -1,3 +1,4 @@
+import { formatActivityCount } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { Badge } from '~/components/badge/Badge'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
@@ -20,7 +21,6 @@ import {
   WALK_AWAY_NOT_PASSED_PROJECTS,
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import type { ScalingSummaryTableRow } from '../../utils/toTableRows'
 import { TotalCellWithTvsBreakdown } from './TotalCellWithTvsBreakdown'
 
@@ -115,6 +115,7 @@ export function getScalingSummaryColumns(opts?: ScalingSummaryColumnsOpts) {
                 value.additionalTrustAssumptionsPercentage
               }
               change={value.change?.total}
+              changePeriod={value.changePeriod}
               syncWarning={value.syncWarning}
             />
           )
@@ -140,7 +141,11 @@ export function getScalingSummaryColumns(opts?: ScalingSummaryColumnsOpts) {
             href={`/scaling/activity?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
           >
             <SyncStatusWrapper isSynced={data.isSynced}>
-              <ValueWithPercentageChange change={data?.change}>
+              <ValueWithPercentageChange
+                change={data?.change}
+                changePeriod={data.changePeriod}
+                disabledOnMobile
+              >
                 {formatActivityCount(ctx.getValue())}
               </ValueWithPercentageChange>
             </SyncStatusWrapper>
@@ -178,7 +183,7 @@ export function getScalingSummaryValidiumAndOptimiumsColumns(
                   ? 'No bridge'
                   : latestValue.bridge.value,
             }}
-            href={`/scaling/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+            href={`/scaling/risk/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
           />
         )
       },
@@ -193,7 +198,7 @@ export function getScalingSummaryValidiumAndOptimiumsColumns(
                   secondLine:
                     da.bridge.value === 'None' ? 'No bridge' : da.bridge.value,
                 }}
-                href={`/scaling/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+                href={`/scaling/risk/data-availability?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
               />
             )) ?? []
           )

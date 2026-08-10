@@ -1,3 +1,4 @@
+import { trpcTransformer } from '@l2beat/shared-pure'
 import { initTRPC } from '@trpc/server'
 export const createTRPCContext = (opts: { headers: Headers }) => {
   return {
@@ -6,10 +7,7 @@ export const createTRPCContext = (opts: { headers: Headers }) => {
 }
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
-  transformer: {
-    serialize: JSON.stringify,
-    deserialize: JSON.parse,
-  },
+  transformer: trpcTransformer,
   errorFormatter({ shape, error }) {
     return {
       ...shape,

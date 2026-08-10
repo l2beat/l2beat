@@ -66,7 +66,7 @@ function main() {
     security: [{ apiKeyAuth: [] }],
   })
   const cache = new InMemoryCache({
-    logger,
+    logger: logger.for('Cache'),
     enabled: config.cacheEnabled,
   })
 
@@ -116,7 +116,7 @@ function main() {
   )
 
   if (config.auth) {
-    app.use(authMiddleware(config.auth))
+    app.use(authMiddleware(config.auth, logger))
   }
   app.use(loggerMiddleware(logger))
 
@@ -128,7 +128,7 @@ function main() {
   app.use(errorHandler(logger))
 
   app.listen(config.api.port, () => {
-    console.log(`Example app listening on port ${config.api.port}`)
+    logger.info('Started', { port: config.api.port })
   })
 }
 

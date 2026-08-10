@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "GatewayPauserSet",
+  "description": "Maintains the set of accounts allowed to pause gateway contracts. The set is managed by the GatewayConfig owner.",
+  "category": "gov",
+  "fields": {
+    "gatewayConfig": {
+      "description": "GatewayConfig contract whose owner is allowed to manage the gateway pauser set.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab"
+      }
+    },
+    "gatewayOwner": {
+      "description": "Owner of GatewayConfig. This account can add, remove, or swap accounts that can pause gateway contracts.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add, remove, or swap gateway pausers."
+        }
+      ]
+    },
+    "pausers": {
+      "description": "Accounts that can pause the gateway workflow contracts, reconstructed from AddPauser and RemovePauser events.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "account",
+        "ignoreRelative": true,
+        "add": { "event": "AddPauser" },
+        "remove": { "event": "RemovePauser" }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause GatewayConfig and pausable gateway workflow contracts."
+        }
+      ]
+    }
+  }
+}

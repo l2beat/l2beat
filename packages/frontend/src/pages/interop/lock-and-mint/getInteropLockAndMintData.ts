@@ -82,10 +82,12 @@ async function getCachedData(initialSelection: InteropSelection) {
       select: ['interopConfig'],
     }),
     initialSelection.from.length > 0 && initialSelection.to.length > 0
-      ? helpers.interop.dashboard.prefetch({
-          ...initialSelection,
-          type: 'lockAndMint',
-        })
+      ? helpers.queryClient.prefetchQuery(
+          helpers.trpc.interop.dashboard.queryOptions({
+            ...initialSelection,
+            type: 'lockAndMint',
+          }),
+        )
       : undefined,
   ])
 

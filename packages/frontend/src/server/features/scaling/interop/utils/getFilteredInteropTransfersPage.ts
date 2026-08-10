@@ -2,6 +2,7 @@ import type { InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import type { InteropProtocolTransfersCursor } from '../types'
+import { transferTouchesChain } from './transferTouchesChain'
 
 interface TransfersPage {
   items: InteropTransferRecord[]
@@ -17,6 +18,7 @@ export async function getFilteredInteropTransfersPage({
   snapshotTimestamp,
   sourceChains,
   destinationChains,
+  anchorChain,
   pluginIds,
   matcher,
   limit,
@@ -26,6 +28,7 @@ export async function getFilteredInteropTransfersPage({
   snapshotTimestamp: number
   sourceChains: string[]
   destinationChains: string[]
+  anchorChain?: string
   pluginIds: string[]
   matcher: (transfer: InteropTransferRecord) => boolean
   limit: number | undefined
@@ -42,6 +45,7 @@ export async function getFilteredInteropTransfersPage({
       snapshotTimestamp: UnixTime(snapshotTimestamp),
       sourceChains,
       destinationChains,
+      abstractTokenId: tokenId,
       cursor: dbCursor
         ? {
             timestamp: UnixTime(dbCursor.timestamp),
@@ -58,7 +62,7 @@ export async function getFilteredInteropTransfersPage({
     for (const [i, transfer] of transfers.entries()) {
       dbCursor = toTransferCursor(transfer)
 
-      if (!matcher(transfer) || !matchesTokenId(transfer, tokenId)) {
+      if (!matcher(transfer) || !transferTouchesChain(transfer, anchorChain)) {
         continue
       }
 
@@ -102,15 +106,4 @@ function toTransferCursor(
     timestamp: transfer.timestamp,
     transferId: transfer.transferId,
   }
-}
-
-function matchesTokenId(
-  transfer: InteropTransferRecord,
-  tokenId: string | undefined,
-): boolean {
-  return (
-    tokenId === undefined ||
-    transfer.srcAbstractTokenId === tokenId ||
-    transfer.dstAbstractTokenId === tokenId
-  )
 }

@@ -61,6 +61,12 @@ const MERKLY_TOKENBRIDGE_NETWORKS = defineNetworks(
       address: EthereumAddress('0x0cb0354E9C51960a7875724343dfC37B93d32609'),
       token: EthereumAddress('0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619'),
     },
+    {
+      chain: 'gnosis',
+      chainId: 100,
+      address: EthereumAddress('0x98Ee7E8f0A0D18F393805cf99A56ce6B33ea1B21'),
+      token: EthereumAddress('0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1'),
+    },
     // no zksync2
     {
       chain: 'abstract',
@@ -79,6 +85,11 @@ const MERKLY_TOKENBRIDGE_NETWORKS = defineNetworks(
       chain: 'ink',
       chainId: 57073,
       address: EthereumAddress('0x25730BDE542aDBEf1FD978526Bf20c04b5251530'),
+    },
+    {
+      chain: 'xlayer',
+      chainId: 196,
+      address: EthereumAddress('0x444791b5cA0E0BdC2De93467f430fbe925b35487'),
     },
     // monad, tempo unsupported
     {

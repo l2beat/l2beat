@@ -1,5 +1,17 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TornadoVault",
-  "description": "Vault that escrows locked TORN of governance participants who wish to receive voting rights."
+  "description": "Vault that escrows locked TORN of governance participants who wish to receive voting rights.",
+  "ignoreInWatchMode": ["TORNStaked"],
+  "fields": {
+    "TORNStaked": {
+      "description": "TORN locked by governance participants for voting power, escrowed in this vault.",
+      "handler": {
+        "type": "call",
+        "method": "function balanceOf(address account) view returns (uint256)",
+        "args": ["0x2F50508a8a3D323B91336FA3eA6ae50E55f32185"],
+        "address": "0x77777FeDdddFfC19Ff86DB637967013e6C6A116C"
+      }
+    }
+  }
 }

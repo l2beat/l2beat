@@ -1,15 +1,12 @@
+import { formatCurrency } from '@l2beat/shared-pure'
+import { useQuery } from '@tanstack/react-query'
 import { StatCard } from '~/components/chart/stats/StatCard'
 import { StatsGrid } from '~/components/chart/stats/StatsGrid'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
 import { PercentChange } from '~/components/PercentChange'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
-import { api } from '~/trpc/React'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { useTRPC } from '~/trpc/React'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 
 type StatType = 'total' | 'rollups' | 'validiumsAndOptimiums' | 'others'
 const statsMeta: Record<StatType, { label: string; color: string }> = {
@@ -40,19 +37,22 @@ export function ScalingTvsStats({
     others: ScalingTvsEntry[]
   }
 }) {
+  const trpc = useTRPC()
   const { display } = useTvsDisplayControlsContext()
-  const { data, isLoading } = api.tvs.chartStats.useQuery({
-    filter: {
-      type: 'projects',
-      projectIds: [
-        ...entries.rollups,
-        ...entries.validiumsAndOptimiums,
-        ...entries.others,
-      ].map((entry) => entry.id),
-    },
-    excludeAssociatedTokens: display.excludeAssociatedTokens,
-    excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
-  })
+  const { data, isLoading } = useQuery(
+    trpc.tvs.chartStats.queryOptions({
+      filter: {
+        type: 'projects',
+        projectIds: [
+          ...entries.rollups,
+          ...entries.validiumsAndOptimiums,
+          ...entries.others,
+        ].map((entry) => entry.id),
+      },
+      excludeAssociatedTokens: display.excludeAssociatedTokens,
+      excludeRwaRestrictedTokens: display.excludeRwaRestrictedTokens,
+    }),
+  )
   const stats = data
 
   return (
@@ -61,24 +61,28 @@ export function ScalingTvsStats({
         type="rollups"
         value={stats?.rollups.value}
         change={stats?.rollups.change}
+        changePeriod={stats?.rollups.changePeriod}
         isLoading={isLoading}
       />
       <Stat
         type="validiumsAndOptimiums"
         value={stats?.validiumsAndOptimiums.value}
         change={stats?.validiumsAndOptimiums.change}
+        changePeriod={stats?.validiumsAndOptimiums.changePeriod}
         isLoading={isLoading}
       />
       <Stat
         type="others"
         value={stats?.others.value}
         change={stats?.others.change}
+        changePeriod={stats?.others.changePeriod}
         isLoading={isLoading}
       />
       <Stat
         type="total"
         value={stats?.total.value}
         change={stats?.total.change}
+        changePeriod={stats?.total.changePeriod}
         isLoading={isLoading}
       />
     </StatsGrid>
@@ -89,11 +93,13 @@ function Stat({
   type,
   value,
   change,
+  changePeriod,
   isLoading,
 }: {
   type: StatType
   value: number | undefined
   change: number | undefined
+  changePeriod: PercentageChangePeriod | undefined
   isLoading: boolean
 }) {
   const meta = statsMeta[type]
@@ -104,18 +110,12 @@ function Stat({
         <div className="whitespace-nowrap font-bold text-heading-18 md:text-heading-24">
           {value !== undefined ? formatCurrency(value, 'usd') : 'No data'}
         </div>
-        {change !== undefined ? (
-          <Tooltip>
-            <TooltipTrigger>
-              <PercentChange
-                textClassName="cursor-default md:text-heading-20 w-full text-heading-16"
-                value={change}
-              />
-            </TooltipTrigger>
-            <TooltipContent>
-              Percentage change compared to 7D ago.
-            </TooltipContent>
-          </Tooltip>
+        {change !== undefined && changePeriod !== undefined ? (
+          <PercentChange
+            textClassName="cursor-default md:text-heading-20 w-full text-heading-16"
+            value={change}
+            period={changePeriod}
+          />
         ) : null}
       </div>
     </StatCard>

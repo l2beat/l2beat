@@ -1,6 +1,8 @@
 import type { Node, State } from '../State'
 import type { NodeLocations, StoredNodeLayout } from '../utils/storage'
+import type { AlignDirection, DistributeAxis } from './align'
 import type { ApplyLayoutMode } from './applyStoredLayout'
+import type { AutoGroup } from './loadNodes'
 
 export interface Actions {
   /**
@@ -16,18 +18,23 @@ export interface Actions {
     opts?: { disableSelection?: boolean },
   ) => void
   onMouseUp: (event: MouseEvent) => void
+  onDoubleClick: (event: MouseEvent, container: HTMLElement) => void
   onWheel: (event: WheelEvent, view: HTMLElement) => void
 
-  loadNodes: (projectId: string, nodes: Node[]) => void
+  loadNodes: (projectId: string, nodes: Node[], autoGroups: AutoGroup[]) => void
   setNodes: (nodes: Node[]) => void
   colorSelected: (color: number) => void
+  alignSelected: (direction: AlignDirection) => void
+  distributeSelected: (axis: DistributeAxis) => void
+  groupSelected: () => void
+  ungroupSelected: () => void
+  renameGroup: (id: string, name: string) => void
   layout: (locations: NodeLocations) => void
   undo: () => void
   redo: () => void
   applyStoredLayout: (saved: StoredNodeLayout, mode: ApplyLayoutMode) => void
   hideSelected: () => void
   hideUnreachable: () => void
-  showUnreachable: () => void
   showHidden: () => void
   clear: () => void
   selectAndFocus: (selected: string) => void

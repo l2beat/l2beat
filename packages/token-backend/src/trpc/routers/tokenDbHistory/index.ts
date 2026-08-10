@@ -5,6 +5,7 @@ import { router } from '../../trpc'
 const HistoryPageInput = v.object({
   page: v.number(),
   pageSize: v.number(),
+  search: v.string().optional(),
 })
 
 export const tokenDbHistoryRouter = router({
@@ -15,6 +16,7 @@ export const tokenDbHistoryRouter = router({
     return ctx.tokenDb.tokenDbHistory.getPage({
       offset: (page - 1) * pageSize,
       limit: pageSize,
+      search: input.search,
     })
   }),
 })

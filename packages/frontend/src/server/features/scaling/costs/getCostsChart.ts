@@ -9,6 +9,7 @@ import {
   rangeToResolution,
 } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import { getChartStartTimestamp } from '../../utils/getChartStartTimestamp'
 import { addIfDefined } from './utils/addIfDefined'
 import { getCostsExpectedTimestamp } from './utils/getCostsExpectedTimestamp'
 import { CostsProjectsFilter, getCostsProjects } from './utils/getCostsProjects'
@@ -64,10 +65,11 @@ export async function getCostsChart({
   }
   const resolution = rangeToResolution(range)
 
-  const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
-    projects.map((p) => p.id),
-    range,
-  )
+  const projectIds = projects.map((p) => p.id)
+  const [data, firstTimestamp] = await Promise.all([
+    db.aggregatedL2Cost.getByProjectsAndTimeRange(projectIds, range),
+    db.aggregatedL2Cost.getFirstTimestampByProjects(projectIds),
+  ])
 
   if (data.length === 0) {
     return { chart: [], hasBlobs: false, syncedUntil: Number.POSITIVE_INFINITY }
@@ -77,7 +79,7 @@ export async function getCostsChart({
   assert(syncedUntil, 'syncedUntil is undefined')
 
   const summedByTimestamp = sumByTimestamp(data, resolution)
-  const minTimestamp = UnixTime(Math.min(...summedByTimestamp.keys()))
+  const dataStart = UnixTime(Math.min(...summedByTimestamp.keys()))
   const maxTimestamp = UnixTime(Math.max(...summedByTimestamp.keys()))
   const blobsTimestamp = Array.from(summedByTimestamp.entries()).find(
     ([_, value]) => value.blobsGas !== null,
@@ -88,7 +90,17 @@ export async function getCostsChart({
     ? maxTimestamp
     : expectedTo
 
-  const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
+  const startTimestamp = getChartStartTimestamp({
+    rangeStart: range[0],
+    firstProjectTimestamp: firstTimestamp,
+    dataStart,
+    resolution,
+  })
+
+  const timestamps = generateTimestamps(
+    [startTimestamp, adjustedTo],
+    resolution,
+  )
 
   const chart: CostsChartDataPoint[] = timestamps.map((timestamp) => {
     const entry = summedByTimestamp.get(timestamp)
@@ -189,27 +201,13 @@ function sumByTimestamp(
     }
   >()
 
-  const offset = UnixTime.toStartOf(
-    UnixTime.now(),
-    resolution === 'daily'
-      ? 'day'
-      : resolution === 'sixHourly'
-        ? 'six hours'
-        : 'hour',
-  )
+  const offset = UnixTime.toStartOf(UnixTime.now(), resolution)
 
   // Dismiss ranges that are not full
   const fullySyncedRecords = records.filter((r) => r.timestamp < offset)
 
   for (const record of fullySyncedRecords) {
-    const timestamp = UnixTime.toStartOf(
-      record.timestamp,
-      resolution === 'daily'
-        ? 'day'
-        : resolution === 'sixHourly'
-          ? 'six hours'
-          : 'hour',
-    )
+    const timestamp = UnixTime.toStartOf(record.timestamp, resolution)
 
     const existing = result.get(timestamp)
     if (existing) {

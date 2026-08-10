@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xce9cb951ee30bddcadee56470df819815f81997b
+
+# Diff at Thu, 30 Jul 2026 11:25:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@582e1a34fd1cba95db9957343b373cd84374dd99 block: 1763483689
+- current timestamp: 1763483689
+
+## Description
+
+Make shared-sp1 use entrypoints and rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763483689 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54) {
+    +++ description: None
+      type:
+-        "Reference"
++        "EOA"
+      targetType:
+-        "EOA"
+      targetProject:
+-        "shared-sp1"
+      proxyType:
++        "EOA"
+    }
+```
+
 Generated with discovered.json: 0xb7d5857a065bf7465870328fb4b25ea05cd76991
 
 # Diff at Fri, 08 May 2026 07:52:39 GMT:

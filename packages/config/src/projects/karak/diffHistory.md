@@ -1,3 +1,130 @@
+Generated with discovered.json: 0x5f65af672308fa3c0d0c63c0a3681e7d40ab7857
+
+# Diff at Thu, 09 Jul 2026 09:58:51 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@41e54e24b48ee5dc5e63086324d02428320c1565 block: 1782923571
+- current timestamp: 1783591047
+
+## Description
+
+SystemConfig `opStackDA.isUsingCelestia: false → true`. K2 is posting to Celestia again after the brief switch to Ethereum calldata on 2026-07-01; that switch was transient and has been removed from the config.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x622333688CC1878C7ff4205c89bDe051798788A7) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingCelestia:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0x073dad3bf7f35e0bdf71a576509dbc8f208b7db3
+
+# Diff at Wed, 01 Jul 2026 16:34:19 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@cfafbf3de953d9f519656c89c622fe51a04d547a block: 1772526845
+- current timestamp: 1782923571
+
+## Description
+
+SystemConfig `opStackDA.isUsingCelestia`: `true` → `false`. Karak no longer uses Celestia DA.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x622333688CC1878C7ff4205c89bDe051798788A7) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingCelestia:
+-        true
++        false
+    }
+```
+
+Generated with discovered.json: 0x35431eee855a014b8d5772b53ce55772db25ee07
+
+# Diff at Tue, 09 Jun 2026 12:43:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1772526845
+- current timestamp: 1772526845
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772526845 (main branch discovery), not current.
+
+```diff
+    contract KarakMultisig (eth:0x28A227d4faF0f4f75897438E24C43EF1CDABb920) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637","role":".challenger"}
+      receivedPermissions.1:
+-        {"permission":"challenge","from":"eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637","role":".CHALLENGER"}
+      receivedPermissions.2.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.2.role:
+-        ".guardian"
++        ".challenger"
+      receivedPermissions.2.from:
+-        "eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
++        "eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637"
+      receivedPermissions.2.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.3.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.3.role:
+-        ".GUARDIAN"
++        ".CHALLENGER"
+      receivedPermissions.3.from:
+-        "eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
++        "eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637"
+      receivedPermissions.3.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".GUARDIAN"}
+    }
+```
+
+```diff
+    EOA  (eth:0x4179f43f3b994e97090557363b09F403138a729e) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x84BdFb21ed7C8B332a42bFD595744a84F3101e4E) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x239c3f0bdca0b2c39ace3e1478f7f3509694d8ac
 
 # Diff at Fri, 08 May 2026 07:51:29 GMT:

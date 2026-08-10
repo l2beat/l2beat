@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x2c136f37eae6f634dd3159e69887cc3a8235eb2d
+
+# Diff at Tue, 09 Jun 2026 12:43:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1768984413
+- current timestamp: 1768984413
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768984413 (main branch discovery), not current.
+
+```diff
+    contract HyprMultisig (eth:0x28fB4D0e436874F4107948E358df3C242De06788) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x994c288de8418c8D3c5a4D21A69f35bF9641781C) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xeF2169180a2eda91B695eA5e5C4f4547C013840c) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x05db4c2dc65e309133d8e619e043357ed5b031e6
 
 # Diff at Wed, 21 Jan 2026 08:34:36 GMT:

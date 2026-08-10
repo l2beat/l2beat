@@ -1,0 +1,8 @@
+{
+  "DefaultPool": {
+    "hash": "0xa65617ba575ecd14fe2ae717c82c2feff2da018b2a42498f1d1323a0829e9d87",
+    "address": "eth:0x5cc5ceFD034Fdc4728D487a72Ca58A410CDdCD6b",
+    "chain": "ethereum",
+    "blockNumber": 25358256
+  }
+}

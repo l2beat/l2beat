@@ -1,4 +1,5 @@
 import type { ProjectId } from '@l2beat/shared-pure'
+import { formatActivityCount } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
@@ -15,7 +16,6 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { TotalCellWithTvsBreakdown } from '~/pages/scaling/summary/components/table/TotalCellWithTvsBreakdown'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import type { EcosystemProjectsTableRow } from '../utils/toTableRows'
 
 const columnHelper = createColumnHelper<EcosystemProjectsTableRow>()
@@ -110,6 +110,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
               tvsWarnings={value.warnings}
               breakdown={tvsData?.breakdown}
               change={tvsData?.change.total}
+              changePeriod={tvsData?.changePeriod}
               syncWarning={ctx.row.original.tvsSyncWarning}
             />
           )
@@ -134,7 +135,11 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
             href={`/scaling/activity?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
           >
             <SyncStatusWrapper isSynced={data.isSynced}>
-              <ValueWithPercentageChange change={data?.change}>
+              <ValueWithPercentageChange
+                change={data?.change}
+                changePeriod={data.changePeriod}
+                disabledOnMobile
+              >
                 {formatActivityCount(ctx.getValue())}
               </ValueWithPercentageChange>
             </SyncStatusWrapper>

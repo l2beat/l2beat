@@ -1,6 +1,17 @@
+import { env } from '~/env'
 import type { SearchBarEntry } from './types'
 
 export const searchBarPages = withIndex([
+  ...(env.CLIENT_SIDE_HOME_PAGE
+    ? [
+        {
+          category: 'other' as const,
+          name: 'Home',
+          href: '/',
+          tags: ['pages'],
+        },
+      ]
+    : []),
   {
     category: 'scaling',
     name: 'Summary',
@@ -29,7 +40,19 @@ export const searchBarPages = withIndex([
     category: 'scaling',
     name: 'Data Availability',
     tags: ['pages', 'scaling'],
-    href: '/scaling/data-availability',
+    href: '/scaling/risk/data-availability',
+  },
+  {
+    category: 'scaling',
+    name: 'State Validation',
+    tags: ['pages', 'scaling', 'risks'],
+    href: '/scaling/risk/state-validation',
+  },
+  {
+    category: 'scaling',
+    name: 'Sequencing',
+    tags: ['pages', 'scaling'],
+    href: '/scaling/risk/sequencing',
   },
   {
     category: 'scaling',
@@ -104,6 +127,12 @@ export const searchBarPages = withIndex([
     href: '/interop/burn-and-mint',
   },
   {
+    category: 'interop',
+    name: 'Intent bridges',
+    tags: ['pages', 'interop', 'interoperability', 'intent-bridges'],
+    href: '/interop/intent-bridges',
+  },
+  {
     category: 'zkCatalog',
     name: 'ZK Catalog',
     href: '/zk-catalog',
@@ -119,6 +148,12 @@ export const searchBarPages = withIndex([
     category: 'other',
     name: 'Governance',
     href: '/governance',
+    tags: ['pages'],
+  },
+  {
+    category: 'other',
+    name: 'Native Rollups',
+    href: '/native-rollups',
     tags: ['pages'],
   },
   {

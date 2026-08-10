@@ -1,3 +1,4 @@
+import { dehydrate } from '@tanstack/react-query'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -14,10 +15,12 @@ export async function getDataAvailabilityThroughputData(
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps(),
     getDaThroughputEntries(),
-    helpers.da.chart.prefetch({
-      range: optionToRange('1y'),
-      includeScalingOnly: true,
-    }),
+    helpers.queryClient.prefetchQuery(
+      helpers.trpc.da.chart.queryOptions({
+        range: optionToRange('1y'),
+        includeScalingOnly: true,
+      }),
+    ),
   ])
 
   return {
@@ -39,7 +42,7 @@ export async function getDataAvailabilityThroughputData(
       props: {
         ...appLayoutProps,
         entries,
-        queryState: helpers.dehydrate(),
+        queryState: dehydrate(helpers.queryClient),
       },
     },
   }

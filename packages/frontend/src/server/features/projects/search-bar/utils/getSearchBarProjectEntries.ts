@@ -4,7 +4,6 @@ import type {
   ProjectPermissions,
 } from '@l2beat/config'
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
-import { env } from '~/env'
 import { manifest } from '~/utils/Manifest'
 import type { SearchBarProjectEntry } from '../types'
 
@@ -83,6 +82,13 @@ export function getSearchBarProjectEntries<
       category: 'scaling',
       kind: project.scalingInfo?.layer ?? 'layer2',
       scalingCategory: project.scalingInfo?.type,
+      tags: project.interopConfig
+        ? dedupeTags([
+            ...commonTags,
+            project.interopConfig.name,
+            project.interopConfig.shortName,
+          ])
+        : commonTags,
     })
   }
 
@@ -124,7 +130,7 @@ export function getSearchBarProjectEntries<
     })
   }
 
-  if (project.interopConfig) {
+  if (project.interopConfig && !project.scalingInfo) {
     results.push({
       ...common,
       name: project.interopConfig.name ?? project.name,
@@ -149,7 +155,7 @@ export function getSearchBarProjectEntries<
     })
   }
 
-  if (project.privacyInfo && env.CLIENT_SIDE_PRIVACY_ENABLED) {
+  if (project.privacyInfo) {
     results.push({
       ...common,
       href: `/privacy/projects/${project.slug}`,

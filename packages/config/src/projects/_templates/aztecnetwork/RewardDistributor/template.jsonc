@@ -1,4 +1,43 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Holds tokens allocated for protocol rewards. The canonical Rollup contract (as defined by the Registry) calls this to distribute payments to sequencers and provers."
+  "description": "Holds tokens allocated for protocol rewards. The canonical Rollup contract, as defined by the Registry, can draw from the implicit reward pool while any address can claim only funds explicitly earmarked to it.",
+  "category": "core",
+  "ignoreInWatchMode": ["totalEarmarkedBalance"],
+  "fields": {
+    "ASSET": {
+      "description": "ERC20 token distributed as protocol rewards.",
+      "template": "aztecnetwork/Aztec"
+    },
+    "REGISTRY": {
+      "description": "Registry used to resolve the canonical rollup and governance owner.",
+      "template": "aztecnetwork/Registry"
+    },
+    "canonicalRollup": {
+      "description": "Current canonical rollup, which can claim from both the implicit reward pool and funds earmarked to it.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "claim protocol reward funds and direct them to sequencers and provers."
+        }
+      ]
+    },
+    "registryOwner": {
+      "description": "Current owner of the linked Registry, resolved by the RewardDistributor at call time.",
+      "handler": {
+        "type": "call",
+        "address": "{{ REGISTRY }}",
+        "method": "function owner() view returns (address)",
+        "args": []
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "recover AZTEC from any implicit or earmarked accounting bucket and recover any non-AZTEC token held by the distributor."
+        }
+      ]
+    },
+    "totalEarmarkedBalance": {
+      "description": "Total reward balance reserved for specific recipients rather than the canonical rollup's implicit pool."
+    }
+  }
 }

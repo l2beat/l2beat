@@ -42,7 +42,7 @@ const getDaThroughputSummaryData = async (
 
   const { grouped, minTimestamp } = groupByTimestampAndDaLayerId(
     scalingOnlyRecords,
-    'daily',
+    'day',
   )
 
   const lastDataForLayers: Record<
@@ -82,6 +82,7 @@ const getDaThroughputSummaryData = async (
     estimatedLayers: Object.entries(lastDataForLayers)
       .filter(([_, { timestamp }]) => timestamp < maxTimestamp)
       .map(([layer]) => layer),
+    changePeriod: '7D' as const,
   }
 }
 
@@ -100,5 +101,6 @@ function getMockDaThroughputSummaryData(): ThroughputSummaryData {
       eigenda: 100000,
     },
     estimatedLayers: ['eigenda'],
+    changePeriod: '7D',
   }
 }

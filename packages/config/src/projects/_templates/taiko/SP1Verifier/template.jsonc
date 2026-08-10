@@ -6,11 +6,14 @@
   "fields": {
     "owner": {
       "permissions": [
-        { "type": "interact", "description": "manage trusted program hashes." }
+        {
+          "type": "interact",
+          "description": "manage trusted SP1 program verification keys."
+        }
       ]
     },
     "trustedPrograms": {
-      "description": "Taiko specific Image IDs (i.e. program digest) of SP1 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.",
+      "description": "Taiko-specific SP1 program verification keys trusted by this verifier gateway. Only proofs for these programs can be successfully verified.",
       "severity": "HIGH",
       "handler": {
         "type": "event",

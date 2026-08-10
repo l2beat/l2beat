@@ -34,6 +34,7 @@ export const worldchain = opStackL2({
       explorers: [
         'https://worldscan.org',
         'https://worldchain-mainnet.explorer.alchemy.com/',
+        'https://worldplorer.com/',
       ],
       repositories: ['https://github.com/worldcoin'],
       socialMedia: [

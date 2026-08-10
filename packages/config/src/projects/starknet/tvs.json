@@ -373,6 +373,31 @@
     },
     {
       "mode": "custom",
+      "id": "starknet-strkBTC",
+      "priceId": "strkbtc",
+      "symbol": "strkBTC",
+      "name": "strkBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/102173511/large/strkBTC_Logo.png?1779888214",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x0787150e306e6EaE6E3f79dEA881770E8bbFF2c1b8EB490F969669EE945b3135",
+        "chain": "starknet",
+        "decimals": 8,
+        "sinceTimestamp": 1777893725
+      },
+      "category": "btc",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "strkBTC bridge"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "custom",
       "id": "starknet-sUSN",
       "priceId": "staked-usn",
       "symbol": "sUSN",

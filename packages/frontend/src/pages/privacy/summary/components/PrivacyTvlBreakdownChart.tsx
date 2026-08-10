@@ -1,3 +1,4 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type {
@@ -17,7 +18,6 @@ import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 export interface PrivacyTvlBreakdownProject {
   id: string
@@ -78,7 +78,8 @@ export function PrivacyTvlBreakdownChart({
         onItemClick: toggleDataKey,
       }}
     >
-      <AreaChart responsive data={chartData} margin={{ top: 20 }}>
+      {/* Without right:1 the chart last point is not hoverable for some reason */}
+      <AreaChart responsive data={chartData} margin={{ top: 20, right: 1 }}>
         <ChartLegendToggleAll
           showAllSelected={showAllSelected}
           onToggleAll={toggleAllDataKeys}

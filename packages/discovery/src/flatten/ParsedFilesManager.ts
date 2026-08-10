@@ -324,6 +324,13 @@ export class ParsedFilesManager {
       const [typeName, ...rest] = getASTIdentifiers(c.typeName)
       if (typeName !== undefined && rest.length === 0) {
         backwardLinks = [typeName]
+      } else {
+        // The target is a built-in type, so no declaration exists to link back
+        // to. The directive still applies to the whole source unit, so link it
+        // to every declaration in the file instead.
+        backwardLinks = file.topLevelDeclarations
+          .filter((declaration) => declaration.type !== 'using')
+          .map((declaration) => declaration.name)
       }
     } else {
       throw new Error('Invalid node type')

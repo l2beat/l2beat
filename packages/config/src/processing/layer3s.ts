@@ -1,5 +1,6 @@
 import type { ScalingProject } from '../internalTypes'
 import { apechain } from '../projects/apechain/apechain'
+import { apexOmni } from '../projects/apex-omni/apex-omni'
 import { b3 } from '../projects/b3/b3'
 import { blessnet } from '../projects/blessnet/blessnet'
 import { bugbuster } from '../projects/bugbuster/bugbuster'
@@ -17,6 +18,7 @@ import { hyperliquid } from '../projects/hyperliquid/hyperliquid'
 import { inevm } from '../projects/inevm/inevm'
 import { intmax } from '../projects/intmax/intmax'
 import { l3x } from '../projects/l3x/l3x'
+import { lighterRobinhood } from '../projects/lighter-robinhood/lighter-robinhood'
 import { molten } from '../projects/molten/molten'
 import { muster } from '../projects/muster/muster'
 import { onyx } from '../projects/onyx/onyx'
@@ -48,6 +50,7 @@ export const layer3s: ScalingProject[] = [
   geist,
   inevm,
   intmax,
+  lighterRobinhood,
   ham,
   hyperliquid,
   rari,
@@ -65,4 +68,5 @@ export const layer3s: ScalingProject[] = [
   playblock,
   superposition,
   winr,
+  apexOmni,
 ]

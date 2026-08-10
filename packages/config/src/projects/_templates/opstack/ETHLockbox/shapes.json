@@ -3,5 +3,11 @@
     "hash": "0x330c0ee4ca969ca3a1deda35d8ce83d1861361088ef0b4b8efe0ec23b4f24c19",
     "address": "eth:0x784d2F03593A42A6E4676A012762F18775ecbBe6",
     "blockNumber": 22995199
+  },
+  "ETHLockbox_v1_3_1": {
+    "hash": "0x99fabdfb3d8ef02962877763f6f3c7ec26d39e15e700fa854a040321a79f61ec",
+    "address": "eth:0xb3A24DB07038b51962026329B62E7a965d56A6ad",
+    "chain": "ethereum",
+    "blockNumber": 25424438
   }
 }

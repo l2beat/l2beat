@@ -1,14 +1,17 @@
+import { formatBpsToMbps, formatBytes } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { Badge } from '~/components/badge/Badge'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
-import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
+import {
+  ProjectNameCell,
+  ProjectNameInfoTooltip,
+} from '~/components/table/cells/ProjectNameCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { getDaCommonProjectColumns } from '~/components/table/common-project-columns/DaCommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
 import { formatTimestamp } from '~/utils/dates'
-import { formatBpsToMbps, formatBytes } from '~/utils/number-format/formatBytes'
 
 export type DaThroughputTableData = Omit<DaThroughputEntry, 'scalingOnlyData'>
 
@@ -25,9 +28,11 @@ export const publicSystemsColumns = [
   columnHelper.accessor('name', {
     header: 'DA Layer',
     cell: (ctx) => (
-      <TableLink href={`${ctx.row.original.href}#throughput`}>
-        <ProjectNameCell project={ctx.row.original} />
-      </TableLink>
+      <ProjectNameInfoTooltip project={ctx.row.original}>
+        <TableLink href={`${ctx.row.original.href}#throughput`}>
+          <ProjectNameCell project={ctx.row.original} withInfoTooltip />
+        </TableLink>
+      </ProjectNameInfoTooltip>
     ),
     meta: {
       tooltip:
@@ -206,6 +211,7 @@ export const publicSystemsColumns = [
         <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
           <ValueWithPercentageChange
             change={data.change}
+            changePeriod={data.changePeriod}
             className="font-medium text-xs md:text-sm"
           >
             {formatBytes(data.totalPosted)}

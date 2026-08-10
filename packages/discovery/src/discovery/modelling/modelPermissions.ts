@@ -18,14 +18,10 @@ import {
 import { KnowledgeBase } from './KnowledgeBase'
 import { ModelIdRegistry } from './ModelIdRegistry'
 import {
-  parseEoaWithMajorityUpgradePermissionsFacts,
+  parseEoaWithUpgradePermissionsFacts,
   parseUltimatePermissionFact,
 } from './parseUltimatePermissionFact'
 import { runClingo } from './runClingo'
-
-export type DiscoveryTimestamps = {
-  [project: string]: { timestamp: number }
-}
 
 export class DiscoveryRegistry {
   discoveries: {
@@ -56,22 +52,6 @@ export class DiscoveryRegistry {
     }
     return result
   }
-
-  getTimestamps(options: { skip?: { project: string } } = {}) {
-    const result: DiscoveryTimestamps = {}
-    const skip = options.skip
-
-    for (const [project, discovery] of Object.entries(this.discoveries)) {
-      if (skip && skip.project === project) {
-        continue
-      }
-      result[project] = {
-        timestamp: discovery.discoveryOutput.timestamp,
-      }
-    }
-
-    return result
-  }
 }
 
 export async function modelPermissions(
@@ -93,17 +73,12 @@ export async function modelPermissions(
       paths,
       options,
     )
-  return buildPermissionsOutput(
-    permissionFacts,
-    permissionsConfigHash,
-    discoveries,
-  )
+  return buildPermissionsOutput(permissionFacts, permissionsConfigHash)
 }
 
 export function buildPermissionsOutput(
   permissionFacts: ClingoFact[],
   permissionsConfigHash: Hash256,
-  discoveries: DiscoveryRegistry,
 ): PermissionsOutput {
   const kb = new KnowledgeBase(permissionFacts)
   const modelIdRegistry = new ModelIdRegistry(kb)
@@ -111,16 +86,14 @@ export function buildPermissionsOutput(
   const ultimatePermissions = ultimatePermissionFacts.map((fact) =>
     parseUltimatePermissionFact(fact, modelIdRegistry),
   )
-  const eoaWithMajorityUpgradePermissions =
-    parseEoaWithMajorityUpgradePermissionsFacts(
-      kb.getFacts('eoaWithMajorityUpgradePermissions'),
-      modelIdRegistry,
-    )
+  const eoasWithUpgradePermissions = parseEoaWithUpgradePermissionsFacts(
+    kb.getFacts('eoaWithUpgradePermissions'),
+    modelIdRegistry,
+  )
   return {
     permissionsConfigHash,
     permissions: ultimatePermissions,
-    eoasWithMajorityUpgradePermissions: eoaWithMajorityUpgradePermissions,
-    dependentTimestamps: discoveries.getTimestamps(),
+    eoasWithUpgradePermissions,
   }
 }
 

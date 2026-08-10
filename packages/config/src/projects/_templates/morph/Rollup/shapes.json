@@ -8,5 +8,11 @@
     "hash": "0x744e3febdbddacbc25d9934fa259bfb08b24e38cb1325cdce9e9740b9b6f192b",
     "address": "eth:0x9e2Fb684935a32CEd121972f23BD0e4634377cA2",
     "blockNumber": 24785167
+  },
+  "Rollup_batchData_v2": {
+    "hash": "0x9505004977004cf77ebe02c63bae0f3420673028462e69fe68350d91356eb33b",
+    "address": "eth:0xaC3C379D772f3520B34690d32BA14510ab36C3fB",
+    "chain": "ethereum",
+    "blockNumber": 25272095
   }
 }

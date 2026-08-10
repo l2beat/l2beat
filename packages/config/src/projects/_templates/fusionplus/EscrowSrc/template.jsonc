@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EscrowSrc",
+  "description": "Implementation for deterministic source-chain escrow clones. Each clone holds the maker's source token amount plus a resolver-funded native-token safety deposit. During the private withdrawal window only the swap's taker can reveal the secret and withdraw the tokens (optionally to another address); during the public window an access-token holder can do so only to the taker. After cancellation starts, the taker—or later an access-token holder—can return the tokens to the maker. The caller executing a withdrawal or cancellation receives the safety deposit. After {{rescueDelayFmt}}, the taker can rescue any remaining token or native balance from the clone.",
+  "category": "core",
+  "fields": {
+    "FACTORY": {
+      "description": "Factory that deployed this implementation. Clone calls validate all supplied swap parameters by recomputing the deterministic clone address against this factory."
+    },
+    "RESCUE_DELAY": {
+      "description": "Delay after clone deployment before the swap's taker can rescue arbitrary remaining balances.",
+      "type": "RISK_PARAMETER"
+    },
+    "rescueDelayFmt": {
+      "copy": "RESCUE_DELAY",
+      "edit": ["format", "FormatSeconds"]
+    },
+    "PROXY_BYTECODE_HASH": {
+      "description": "Hash of the minimal-proxy creation code used with the swap parameters to validate a clone's deterministic address."
+    }
+  }
+}

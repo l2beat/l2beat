@@ -5,17 +5,24 @@ import type {
   InteropSelectionInput,
 } from '../types'
 import { getAggregatedInteropSnapshotTimestamp } from './getAggregatedInteropTimestamp'
+import { transferTouchesChain } from './transferTouchesChain'
 
 interface AggregatedInteropTransferWithTokensResult {
   records: AggregatedInteropTransferWithTokens[]
   snapshotTimestamp: UnixTime | undefined
 }
 
-export async function getLatestAggregatedInteropTransferWithTokens(
-  selection: InteropSelectionInput,
-  types?: InteropBridgeType[],
-  protocolIds?: string[],
-): Promise<AggregatedInteropTransferWithTokensResult> {
+export async function getLatestAggregatedInteropTransferWithTokens({
+  selection,
+  types,
+  protocolIds,
+  anchorChain,
+}: {
+  selection: InteropSelectionInput
+  types?: InteropBridgeType[]
+  protocolIds?: string[]
+  anchorChain?: string
+}): Promise<AggregatedInteropTransferWithTokensResult> {
   const db = getDb()
 
   const { from, to } = selection
@@ -50,7 +57,11 @@ export async function getLatestAggregatedInteropTransferWithTokens(
     ),
   ])
 
-  const records = transfers.map((transfer) => ({
+  const anchoredTransfers = transfers.filter((transfer) =>
+    transferTouchesChain(transfer, anchorChain),
+  )
+
+  const records = anchoredTransfers.map((transfer) => ({
     ...transfer,
     tokens: tokens
       .filter(

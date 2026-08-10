@@ -1,3 +1,78 @@
+Generated with discovered.json: 0x8e3f2cf1f087bd5e4daa5e363bace23fde18aac2
+
+# Diff at Tue, 09 Jun 2026 12:43:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1758875696
+- current timestamp: 1758875696
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1758875696 (main branch discovery), not current.
+
+```diff
+    EOA  (base:0x0458F33fEE56BE44f3e8482eE3009aAB27a19022) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.1.permission:
+-        "challenge"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (base:0x0A6F4A53a014774da6698Ed6C90b8c7a4f934eDC) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (base:0x78c6285Cc98Ec52De9Cf2E40b763D509489C47fB) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    contract Caldera Multisig 2 (base:0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"guard","from":"base:0xdD83c537B35d98776913D7ab60EBaA5c28F9dD01","role":".guardian"}
+      receivedPermissions.1:
+-        {"permission":"guard","from":"base:0xFC57b0947C079073A1C5Fe61887Eb3495972EE72","role":".guardian"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"base:0xdD83c537B35d98776913D7ab60EBaA5c28F9dD01","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"base:0xFC57b0947C079073A1C5Fe61887Eb3495972EE72","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+    }
+```
+
 Generated with discovered.json: 0xb908bcff783069e233158c83da7f8d68de24efed
 
 # Diff at Fri, 26 Sep 2025 08:36:04 GMT:

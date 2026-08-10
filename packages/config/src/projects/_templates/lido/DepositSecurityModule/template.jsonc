@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Guardian-based circuit breaker for legacy staking-module deposits. Guardians can collectively pause deposits if a malicious or stale deposit is observed, while the owner configures guardians and resumes deposits.",
+  "category": "core",
+  "ignoreMethods": [
+    "canDeposit",
+    "getLastDepositBlock",
+    "isMinDepositDistancePassed"
+  ],
+  "fields": {
+    "getOwner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "transfer ownership, configure guardians, quorum and pause parameters, and unpause staking-module deposits."
+        }
+      ]
+    },
+    "getGuardians": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign deposit-pause intents which can pause staking-module deposits once the configured quorum is met."
+        }
+      ]
+    }
+  }
+}

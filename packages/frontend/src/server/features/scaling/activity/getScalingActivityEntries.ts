@@ -6,6 +6,7 @@ import type {
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { manifest } from '~/utils/Manifest'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
@@ -68,10 +69,12 @@ interface ActivityData {
   pastDayCount: {
     value: number
     change: number
+    changePeriod: PercentageChangePeriod
   }
   summedCount: {
     value: number
     change: number
+    changePeriod: PercentageChangePeriod
   }
   maxCount: {
     value: number

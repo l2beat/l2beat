@@ -1,3 +1,124 @@
+Generated with discovered.json: 0x8951eb0dcfe3eca009472c48878f7ba41f5a1cf5
+
+# Diff at Fri, 12 Jun 2026 10:18:59 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1765550969
+- current timestamp: 1765550969
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765550969 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xdaf66a37Fddc1095Aa916C6fF9347958DCa35395) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0xfde38380b900268faf18ee756be2f3cc57033f36
+
+# Diff at Tue, 09 Jun 2026 12:43:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1765550969
+- current timestamp: 1765550969
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765550969 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x0F7A7ca8f7673D9D219766a962856371e1Ed27FF) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x79DdF0745D14783cDC2a05624c585Ddce07F4A02) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.1.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.2.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.2.permission:
+-        "challenge"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x87aab081Ac9F8ce80fb048f23280DF019036BA1d) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x8B72aB0D35F87e0f56D9805031D7CDfA13D1C71F) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xF263a0AA8aFEaA7d516B596d49d7BA6C0FeB102c) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x6ccd4ab8086c5b68a06a67ae12106827cb6b0668
 
 # Diff at Fri, 08 May 2026 07:51:49 GMT:

@@ -1,4 +1,5 @@
 import type { ProjectZkCatalogInfo } from '@l2beat/config'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
@@ -16,7 +17,7 @@ import { FilledArrowIcon } from '~/icons/FilledArrow'
 import { InfoIcon } from '~/icons/Info'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { TechStackCell } from '../../../components/TechStackCell'
 import { TrustedSetupCell } from '../../../components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '../../../components/VerifiedCountWithDetails'
@@ -394,6 +395,7 @@ function TechStackSection({
     <div className="mt-3 flex flex-col gap-2">
       <h2 className="font-semibold text-subtitle-12 uppercase">Tech Stack</h2>
       <div className="flex gap-2 rounded-sm border-divider max-md:flex-col md:items-end md:border md:p-4">
+        {leftSideEmpty && rightSideEmpty && <NoDataBadge />}
         {!leftSideEmpty && (
           <div className="flex flex-col">
             <span className="font-medium text-label-value-12 text-secondary">
@@ -416,6 +418,7 @@ function TechStackSection({
             <TechStackCell
               tags={techStack.finalWrap ?? []}
               className="flex-wrap"
+              emptyText="No final wrap"
             />
           </div>
         )}
@@ -424,9 +427,18 @@ function TechStackSection({
   )
 }
 
-function TvsStat({ value, change }: { value: number; change: number }) {
+function TvsStat({
+  value,
+  change,
+  changePeriod,
+}: {
+  value: number
+  change: number
+  changePeriod: PercentageChangePeriod
+}) {
   return (
     <ProjectSummaryStat
+      titleAsChild
       title={
         <div className="font-semibold text-subtitle-12">
           <span className="md:hidden">Total Value Secured</span>
@@ -441,6 +453,7 @@ function TvsStat({ value, change }: { value: number; change: number }) {
               className="!text-base !font-medium !leading-[100%] text-nowrap"
               changeClassName="text-label-value-14 font-bold"
               change={change}
+              changePeriod={changePeriod}
             >
               {formatCurrency(value, 'usd')}
             </ValueWithPercentageChange>

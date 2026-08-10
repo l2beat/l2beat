@@ -4,7 +4,6 @@
   "archived": true,
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"],
-  "sharedModules": ["shared-zk-stack"],
   "names": {
     "eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92": "Diamond",
     "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"
@@ -25,7 +24,12 @@
               "where": ["=", "#chainId", 9637]
             }
           },
-          "permissions": [{ "type": "validateZkStack" }]
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+            }
+          ]
         }
       }
     },
@@ -44,7 +48,12 @@
               "where": ["=", "#chainId", 9637]
             }
           },
-          "permissions": [{ "type": "validateZkStack" }]
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract."
+            }
+          ]
         }
       }
     }

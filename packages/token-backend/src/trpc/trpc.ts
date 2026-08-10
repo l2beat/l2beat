@@ -1,4 +1,5 @@
 import type { Database, TokenDatabase } from '@l2beat/database'
+import { trpcTransformer } from '@l2beat/shared-pure'
 import { initTRPC } from '@trpc/server'
 import type { jwtVerify } from 'jose'
 import type { Config } from '../config/Config'
@@ -29,10 +30,7 @@ export const createTRPCContext = async (opts: {
 type Context = Awaited<ReturnType<typeof createTRPCContext>>
 
 export const trcpRoot = initTRPC.context<Context>().create({
-  transformer: {
-    serialize: JSON.stringify,
-    deserialize: JSON.parse,
-  },
+  transformer: trpcTransformer,
   errorFormatter({ shape, error }) {
     return {
       ...shape,

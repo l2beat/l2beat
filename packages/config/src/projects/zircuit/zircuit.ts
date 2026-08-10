@@ -35,6 +35,7 @@ import {
   safeGetImplementation,
 } from '../../templates/utils'
 import type { ProjectScalingStateValidationCategory } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('zircuit')
 
@@ -198,7 +199,7 @@ export const zircuit: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('sp1turbo'),
+    zkCatalogIds: [ProjectId('sp1turbo')],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
@@ -348,18 +349,8 @@ export const zircuit: ScalingProject = {
     apis: [
       {
         type: 'rpc',
-        url: 'https://zircuit1-mainnet.p2pify.com/',
-        callsPerMinute: 300,
-      },
-      {
-        type: 'rpc',
-        url: 'https://zircuit1-mainnet.liquify.com/',
-        callsPerMinute: 300,
-      },
-      {
-        type: 'rpc',
-        url: 'https://zircuit-mainnet.drpc.org/',
-        callsPerMinute: 300,
+        url: 'https://zircuit.rpc.sentio.xyz',
+        callsPerMinute: 3000,
       },
       {
         type: 'sourcify',
@@ -465,7 +456,15 @@ export const zircuit: ScalingProject = {
       },
       {
         name: 'Escape mechanism',
-        description: `Zircuit employs a custom escape mechanism that can help users exit the system in certain situations. If the operator disappears or is down for more than ${formatSeconds(timeLimitOutputRootSubmissionSeconds)}, users can submit a merkle proof to the L1 contracts to withdraw any ETH or ERC-20 balance they have on L2. L2 DeFi contracts and their deployers can manually distribute their pooled L2 balance using 'Resolver' contracts on L1 in case of an escape. In contrast to individual account escapes, the redistribution of these contract balances to users is permissioned.`,
+        description: readProjectMarkdown(
+          'zircuit',
+          'technologyExitMechanisms3',
+          {
+            timeLimitOutputRootSubmissionSeconds: formatSeconds(
+              timeLimitOutputRootSubmissionSeconds,
+            ),
+          },
+        ),
         references: [
           {
             title: 'Etherscan - OptimismPortal - escapeEth() function',

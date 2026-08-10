@@ -47,9 +47,11 @@ type GasZipCandidate = {
   amountDelta?: bigint
 }
 
-const GASZIP_AMOUNT_TOLERANCE_UP = 0.1 // see examples, 5% was too low
+const GASZIP_STRICT_AMOUNT_TOLERANCE_UP = 0.1 // see examples, 5% was too low
+const GASZIP_LOOSE_AMOUNT_TOLERANCE_UP = 0.2
 const GASZIP_AMOUNT_TOLERANCE_DOWN = 0.03 // for some reason some fills are more
 const TOLERANCE_PRECISION = 10_000n
+const GASZIP_FALLBACK_MAX_TIME_DELTA = 30 * 60
 
 export const GasZipDeposit = createInteropEventType<GasZipDepositArgs>(
   'gaszip.Deposit',
@@ -222,8 +224,8 @@ function findMatchingDeposit(
   const destination = getGasZipNetwork(fill.ctx.chain)
   if (!destination) return
 
-  const comparableCandidates: GasZipCandidate[] = []
-  const fallbackCandidates: GasZipCandidate[] = []
+  const preferredCandidates: GasZipCandidate[] = []
+  const looseCandidates: GasZipCandidate[] = []
 
   for (const deposit of db.findAll(GasZipDeposit, {
     $dstChain: fill.ctx.chain,
@@ -232,65 +234,91 @@ function findMatchingDeposit(
     const candidate = createCandidate(deposit, fill, destination)
     if (!candidate) continue
 
-    if (candidate.amountDelta !== undefined) {
-      comparableCandidates.push(candidate)
+    if (candidate.isLooseFallback) {
+      looseCandidates.push(candidate)
     } else {
-      fallbackCandidates.push(candidate)
+      preferredCandidates.push(candidate)
     }
   }
 
-  if (comparableCandidates.length > 0) {
-    comparableCandidates.sort(compareComparableCandidates)
-    return comparableCandidates[0]?.deposit
+  if (preferredCandidates.length > 0) {
+    preferredCandidates.sort(compareCandidates)
+    return preferredCandidates[0]?.deposit
   }
 
-  fallbackCandidates.sort(compareFallbackCandidates)
-  return fallbackCandidates[0]?.deposit
+  looseCandidates.sort(compareCandidates)
+  return looseCandidates[0]?.deposit
 }
 
-// Reject impossible source events and compute the ranking fields used by the
-// matcher. Custom-gas routes skip amount comparison entirely.
+// Reject impossible source events and assign a candidate tier.
+// Strict amount matches are preferred. Custom-gas routes cannot compare raw
+// native amounts reliably, so they use a bounded time-only match. Normal routes
+// get a bounded loose amount fallback to account for solver gas costs.
 function createCandidate(
   deposit: GasZipDepositEvent,
   fill: GasZipFillEvent,
   destination: (typeof GASZIP_NETWORKS)[number],
-): GasZipCandidate | undefined {
+): (GasZipCandidate & { isLooseFallback?: true }) | undefined {
   if (deposit.ctx.timestamp > fill.ctx.timestamp) return
 
   const timeDelta = fill.ctx.timestamp - deposit.ctx.timestamp
   const source = getGasZipNetwork(deposit.ctx.chain)
+  const isCustomGasRoute = !source || destination.customGas || source.customGas
 
-  if (!source || destination.customGas || source.customGas) {
+  if (isCustomGasRoute) {
+    if (timeDelta > GASZIP_FALLBACK_MAX_TIME_DELTA) return
     return { deposit, timeDelta }
   }
 
-  if (!matchesApproximateAmount(deposit.args.amount, fill.args.amount)) {
-    return
+  const amountDelta = absBigInt(deposit.args.amount - fill.args.amount)
+  if (
+    matchesApproximateAmount(
+      deposit.args.amount,
+      fill.args.amount,
+      GASZIP_STRICT_AMOUNT_TOLERANCE_UP,
+    )
+  ) {
+    return { deposit, timeDelta, amountDelta }
   }
 
+  if (timeDelta > GASZIP_FALLBACK_MAX_TIME_DELTA) return
+  if (
+    !matchesApproximateAmount(
+      deposit.args.amount,
+      fill.args.amount,
+      GASZIP_LOOSE_AMOUNT_TOLERANCE_UP,
+    )
+  ) {
+    return
+  }
   return {
     deposit,
     timeDelta,
-    amountDelta: absBigInt(deposit.args.amount - fill.args.amount),
+    amountDelta,
+    isLooseFallback: true,
   }
 }
 
-function matchesApproximateAmount(depositAmount: bigint, fillAmount: bigint) {
+function matchesApproximateAmount(
+  depositAmount: bigint,
+  fillAmount: bigint,
+  toleranceUp: number,
+) {
   const minValue =
     fillAmount -
     (fillAmount * BigInt(Math.floor(GASZIP_AMOUNT_TOLERANCE_DOWN * 10_000))) /
       TOLERANCE_PRECISION
   const maxValue =
     fillAmount +
-    (fillAmount * BigInt(Math.floor(GASZIP_AMOUNT_TOLERANCE_UP * 10_000))) /
+    (fillAmount * BigInt(Math.floor(toleranceUp * 10_000))) /
       TOLERANCE_PRECISION
 
   return depositAmount >= minValue && depositAmount <= maxValue
 }
 
-// For normal gas routes, prefer the closest earlier source event and only use
-// amount proximity as a tie-breaker.
-function compareComparableCandidates(a: GasZipCandidate, b: GasZipCandidate) {
+// Prefer the closest earlier source event and only use amount proximity as a
+// tie-breaker when amounts are comparable.
+function compareCandidates(a: GasZipCandidate, b: GasZipCandidate) {
   if (a.timeDelta !== b.timeDelta) {
     return a.timeDelta - b.timeDelta
   }
@@ -302,11 +330,6 @@ function compareComparableCandidates(a: GasZipCandidate, b: GasZipCandidate) {
   if (a.amountDelta === undefined) return 1
   if (b.amountDelta === undefined) return -1
   return a.amountDelta < b.amountDelta ? -1 : 1
-}
-
-// For custom-gas routes, timing is the only reliable ranking signal.
-function compareFallbackCandidates(a: GasZipCandidate, b: GasZipCandidate) {
-  return a.timeDelta - b.timeDelta
 }
 
 function absBigInt(value: bigint) {

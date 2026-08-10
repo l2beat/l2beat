@@ -44,6 +44,7 @@ export const ManualProxyType = v.enum([
   'call implementation proxy',
   'zkSync Lite proxy',
   'zkLighter proxy',
+  'ZkLink proxy',
   'zkSpace proxy',
   'Eternal Storage proxy',
   'Polygon Extension proxy',
@@ -52,6 +53,7 @@ export const ManualProxyType = v.enum([
   'LightLink proxy',
   'Everclear proxy',
   'TaikoFork proxy',
+  'NXV proxy',
   'immutable',
 ])
 
@@ -110,7 +112,6 @@ export const _StructureConfig = {
       StructureContract,
     )
     .optional(),
-  sharedModules: v.array(v.string()).default([]),
   types: v.record(v.string(), DiscoveryCustomType).optional(),
   ..._EntrypointsFile,
 }

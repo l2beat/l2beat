@@ -58,5 +58,11 @@
     "hash": "0x0aa60010b4e757abc3d2a8c5092ae466f97d6297d82a54e7911c8a1ace4be76a",
     "address": "eth:0x72D205182538207478dA7baFf0181884993D279A",
     "blockNumber": 23431685
+  },
+  "OptimismMintableERC20Factory_v1_11_0": {
+    "hash": "0x11b0ed6f15cabf613492a8d54c55304a17cf60f4fd94a655d7e720d4556906d0",
+    "address": "eth:0xaAbEA75Da509fA518Fd8a91Eae4BE5813B829b12",
+    "chain": "ethereum",
+    "blockNumber": 25424438
   }
 }

@@ -1,3 +1,234 @@
+Generated with discovered.json: 0x749d6d1aa45d1abdb5156389a47e90a60dc572b6
+
+# Diff at Mon, 10 Aug 2026 08:38:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@be83079eed365197a392b6bfd65fa6506007093c block: 1784563592
+- current timestamp: 1786351029
+
+## Description
+
+SuperchainConfig downgrade to a known and feature-identical version.
+
+https://disco.l2beat.com/diff/eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550/eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: Since this contract is deployed in the context of a neutered op stack system, the guardian role has no significance.
+      sourceHashes.1:
+-        "0x2cd597b7305a446a1df355e6909cbd75fe38aa045faf4876a8e5496eebc1734f"
++        "0x5fb525d1572fb90d060d122143b915059cbff39e0298b345857fd4267d7f6b28"
+      values.$implementation:
+-        "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"
++        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"
+      values.$pastUpgrades.5:
++        ["2026-08-04T13:59:35.000Z","0xfb6124f237aaaccedd1f8d1298ae5f3b19871f7af18bd4c791a818487cc199de",["eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]]
+      values.$pastUpgrades.6:
++        ["2026-08-04T14:11:35.000Z","0xf7dd2207111f0f269b7cdfa8a7fa703b664585513bc113e0d2c8bc7ce9eb355f",["eth:0xCe28685EB204186b557133766eCA00334EB441E4"]]
+      values.$pastUpgrades.7:
++        ["2026-08-04T14:16:11.000Z","0xeb6b35d861c5b232c47bc0e604f0834975876f80181776e46cb486f7a398cf03",["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]]
+      values.$upgradeCount:
+-        5
++        8
+      values.version:
+-        "2.4.2"
++        "2.4.0"
+      implementationNames.eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550:
+-        "SuperchainConfig"
+      implementationNames.eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957:
++        "SuperchainConfig"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol          | 34 ++++------------------
+ 1 file changed, 6 insertions(+), 28 deletions(-)
+```
+
+Generated with discovered.json: 0x5c85e517a540d2a9e7eda7031441d80195eab90b
+
+# Diff at Mon, 20 Jul 2026 16:07:54 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@ab4290b6bc5b6a34b8b091245cd07a7a94441102 block: 1781097139
+- current timestamp: 1784563592
+
+## Description
+
+Shared Conduit SuperchainConfig upgraded 2.4.0 → 2.4.2 ([diff](https://disco.l2beat.com/diff/eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957/eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550)). No behavioral change — just an import-path move, a stale pause-state warning removed, and the version tick, as with the main-Superchain upgrade on 2026-06-25.
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: Since this contract is deployed in the context of a neutered op stack system, the guardian role has no significance.
+      sourceHashes.1:
+-        "0x5fb525d1572fb90d060d122143b915059cbff39e0298b345857fd4267d7f6b28"
++        "0x2cd597b7305a446a1df355e6909cbd75fe38aa045faf4876a8e5496eebc1734f"
+      values.$implementation:
+-        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"
++        "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"
+      values.$pastUpgrades.3:
++        ["2026-07-17T11:30:11.000Z","0x1f1d4768cc0d3f218a3f5aea7b6ceed0ae663498958e8194f208e88522c6404b",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.4:
++        ["2026-07-17T11:30:11.000Z","0x1f1d4768cc0d3f218a3f5aea7b6ceed0ae663498958e8194f208e88522c6404b",["eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"]]
+      values.$upgradeCount:
+-        3
++        5
+      values.version:
+-        "2.4.0"
++        "2.4.2"
+      implementationNames.eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957:
+-        "SuperchainConfig"
+      implementationNames.eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550:
++        "SuperchainConfig"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol          | 34 ++++++++++++++++++----
+ 1 file changed, 28 insertions(+), 6 deletions(-)
+```
+
+Generated with discovered.json: 0x22e67b931a29d84ae95e2f936e117c9c07216869
+
+# Diff at Tue, 30 Jun 2026 20:24:39 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1781097139
+- current timestamp: 1781097139
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781097139 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0xD7cF5ce4688663e057E99D9f880599Ce88757695) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific contract is deployed in the agglayer system context which **disables the depositTransaction() function**, preventing users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0x2169365b77c71707d6a27b6252a5f362ff11caf8
+
+# Diff at Wed, 10 Jun 2026 13:13:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9b1a27959a14343aae7c71ebbc397f62f0aab99c block: 1780405336
+- current timestamp: 1781097139
+
+## Description
+
+Two conduit ms members removed.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0x65D1d44B8B2fE15d45A03708E0835C7E98a56007"
+      values.$members.8:
+-        "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.multisigThreshold:
+-        "4 of 12 (33%)"
++        "4 of 10 (40%)"
+    }
+```
+
+Generated with discovered.json: 0xcb5cb4a5a2335f055f1528f786172647ec52bf67
+
+# Diff at Tue, 09 Jun 2026 12:43:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780405336
+- current timestamp: 1780405336
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780405336 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x8839E742fd56ebC0d31d11DD5A2cA25aA61c54DA) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x6a58592b0cae775bd8ce918dcab8a93c13d01384
+
+# Diff at Thu, 04 Jun 2026 17:39:47 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1777451710
+- current timestamp: 1780405336
+
+## Description
+
+Conduit ms changes.
+
+New game name (aggregateVerifier) added to portal.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853"
+      values.$members.8:
+-        "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777451710 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0xD7cF5ce4688663e057E99D9f880599Ce88757695) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific contract is deployed in the agglayer system context which **disables the depositTransaction() function**, preventing users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
 Generated with discovered.json: 0xb8fd7c296f689407dc873a8f885933b56ba1f447
 
 # Diff at Fri, 08 May 2026 07:51:20 GMT:

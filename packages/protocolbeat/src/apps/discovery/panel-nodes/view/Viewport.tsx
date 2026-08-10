@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { useEffect, useRef } from 'react'
-import { useMultiViewStore } from '../../multi-view/store'
+import { useDockingStore } from '../../multi-view/store'
 import { useSearchStore } from '../../search/store'
 import { useStore } from '../store/store'
 import { useDesktopControls } from './hooks/useDesktopControls'
@@ -42,7 +42,7 @@ export function Viewport({ renderer: rendererOverride }: ViewportProps = {}) {
     desktopControls,
   })
 
-  const currentPanel = useMultiViewStore((state) => state.active)
+  const currentPanel = useDockingStore((state) => state.activeLeaf)
   const searchOpened = useSearchStore((state) => state.opened)
   // Always capture if we're not in panel mode, or if we're in nodes panel
   const shouldCapture =
@@ -61,6 +61,7 @@ export function Viewport({ renderer: rendererOverride }: ViewportProps = {}) {
       passive: false,
     })
     target?.addEventListener('mousedown', desktopControls.onMouseDown)
+    target?.addEventListener('dblclick', desktopControls.onDoubleClick)
     target?.addEventListener('touchstart', touchControls.onTouchStart, {
       passive: false,
     })
@@ -85,6 +86,7 @@ export function Viewport({ renderer: rendererOverride }: ViewportProps = {}) {
     return () => {
       target?.removeEventListener('wheel', desktopControls.onWheel)
       target?.removeEventListener('mousedown', desktopControls.onMouseDown)
+      target?.removeEventListener('dblclick', desktopControls.onDoubleClick)
       target?.removeEventListener('touchstart', touchControls.onTouchStart)
       target?.removeEventListener('touchmove', touchControls.onTouchMove)
       target?.removeEventListener('touchend', touchControls.onTouchEnd)

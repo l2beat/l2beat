@@ -154,20 +154,6 @@
     "txFilterer": "No"
   },
   {
-    "chainAddress": "0x410D7e4Ea1093A532eF9A7a2D5df84084B05ec24",
-    "chainID": "1217",
-    "name": "SxT",
-    "chainAdmin": "0x86F4487949Ac2fb0d5735870f1731e879e1d9680",
-    "baseToken": "0x0000000000000000000000000000000000000001",
-    "baseTokenName": "ETH",
-    "pubdataPricingMode": 1,
-    "pubdataModeName": "validium",
-    "daValidatorType": "Unknown",
-    "protocolVersion": "0.28.1",
-    "totalBlocksExecuted": "610",
-    "txFilterer": "No"
-  },
-  {
     "chainAddress": "0x742A28e22277945BBAAa34810393bf6e8512576C",
     "chainID": "2904",
     "name": "LaChain",

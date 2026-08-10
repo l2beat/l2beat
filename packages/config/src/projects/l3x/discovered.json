@@ -347,7 +347,7 @@
       "address": "arb1:0x5e31608B400F45846043E93747D72A1a02c5a2f5",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -861,7 +861,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -891,7 +891,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "arb1:0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -1540,5 +1540,5 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "arbitrum": 287771364 },
-  "permissionsConfigHash": "0x4b6b37ccf85f6eadfa178e3b561418a824a164a12f5762c0d4043037ac76fbf6"
+  "permissionsConfigHash": "0x8f6ed931f08013613e7a11ba22bf7e180044c3faf26cc8236959197677d1be46"
 }

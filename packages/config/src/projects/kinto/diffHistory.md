@@ -1,3 +1,156 @@
+Generated with discovered.json: 0x551340194c5623381a95183198dfd87da771f041
+
+# Diff at Tue, 09 Jun 2026 12:43:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1756898514
+- current timestamp: 1756898514
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756898514 (main branch discovery), not current.
+
+```diff
+    EOA KintoFoundation (eth:0x08E674c4538caE03B6c05405881dDCd95DcaF5a8) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA Ankr (eth:0x2bfDA59220413DEd39dD0E443620b5277EcE6348) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x4a3BB34aDE10127752015A6aF6136da15fde636A) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA Hypernative2 (eth:0x58028fFbc25aE2e12b96276bDB125955F41D41f3) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA Certora 1 (eth:0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA Caldera2 (eth:0x64Cf65036a76E3827e448cadbc53D31EefDCE04a) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x8A577165f8ef813296043d5f75fF2F2F2349afFd) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA MamoriLabs3 (eth:0x944eB0a2829A859959586b10D54229278534a696) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA KintsugiFoundation (eth:0x94561e98DD5E55271f91A103e4979aa6C493745E) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xad40f1440544475f4B70573a106F41dF1860598b) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xCb5BCC84741b379BFa0968b841C5de1fC9240CBd) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    contract Turnkey Multisig (eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xDcbb957bF991A0b252Fd996946Ea27E51ECabA69) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xe27f3f6db6824def1738b2aACe2672aC59046a39) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA Venn2 (eth:0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xa70b95e618228ba6e5734f13ee9a31b4bd13a6e9
 
 # Diff at Fri, 26 Sep 2025 12:48:15 GMT:

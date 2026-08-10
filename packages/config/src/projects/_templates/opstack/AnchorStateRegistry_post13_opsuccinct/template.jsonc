@@ -26,6 +26,15 @@
         "args": []
       },
       "edit": ["format", "DisputeGameMap"]
+    },
+    "disputeGameFinalityDelaySeconds_fmt": {
+      "handler": {
+        "type": "call",
+        "method": "disputeGameFinalityDelaySeconds",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"],
+      "description": "Formatted delay after which an unchallenged resolved dispute game can be used for withdrawals."
     }
   }
 }

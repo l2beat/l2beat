@@ -58,7 +58,8 @@
       },
       "permissions": [
         {
-          "type": "aggregatePolygon"
+          "type": "interact",
+          "description": "Permissioned to post new state roots and global exit roots accompanied by ZK proofs."
         }
       ]
     },

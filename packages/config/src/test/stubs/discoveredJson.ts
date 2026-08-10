@@ -13,10 +13,12 @@ export const contractStub: EntryParameters = {
   proxyType: 'StarkWare diamond',
   receivedPermissions: [
     {
-      permission: 'sequence',
+      permission: 'interact',
       from: ChainSpecificAddress(
         'eth:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
       ),
+      description:
+        'Allowed to commit transactions from the current layer to the host chain.',
     },
   ],
   values: {
@@ -84,10 +86,12 @@ export const discoveredJsonStub: DiscoveryOutput = {
       address: ChainSpecificAddress.from('eth', EthereumAddress.from('0xaa11')),
       receivedPermissions: [
         {
-          permission: 'validate',
+          permission: 'interact',
           from: ChainSpecificAddress(
             'eth:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
           ),
+          description:
+            'Orbit stack specific Proposer and Challenger role. Can propose new state roots (called nodes) and challenge state roots on the host chain.',
         },
       ],
     },
@@ -96,10 +100,12 @@ export const discoveredJsonStub: DiscoveryOutput = {
       address: ChainSpecificAddress.from('eth', EthereumAddress.from('0xbb22')),
       receivedPermissions: [
         {
-          permission: 'sequence',
+          permission: 'interact',
           from: ChainSpecificAddress(
             'eth:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
           ),
+          description:
+            'Allowed to commit transactions from the current layer to the host chain.',
         },
       ],
     },

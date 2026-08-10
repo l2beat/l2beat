@@ -1,10 +1,14 @@
-import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query'
+import {
+  type DehydratedState,
+  HydrationBoundary,
+  useQuery,
+} from '@tanstack/react-query'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
-import { api } from '~/trpc/React'
+import { useTRPC } from '~/trpc/React'
 import { AllProtocolsCard } from '../components/AllProtocolsCard'
 import { MultiChainSelector } from '../components/chain-selector/MultiChainSelector'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
@@ -54,7 +58,7 @@ export function InteropSummaryPage({
           interopChains={interopChains}
           initialSelection={initialSelection}
         >
-          <SideNavLayout maxWidth="wide">
+          <SideNavLayout variant="wide">
             <MainPageHeader>Interoperability</MainPageHeader>
             <Content
               interopChains={interopChains}
@@ -100,8 +104,11 @@ function Content({
 }
 
 function Widgets({ interopChains }: { interopChains: InteropChainWithIcon[] }) {
+  const trpc = useTRPC()
   const { selectedChains } = useInteropSelectedChains()
-  const { data, isLoading } = api.interop.dashboard.useQuery(selectedChains)
+  const { data, isLoading } = useQuery(
+    trpc.interop.dashboard.queryOptions(selectedChains),
+  )
 
   if (data === null) {
     return <InteropEmptyState />

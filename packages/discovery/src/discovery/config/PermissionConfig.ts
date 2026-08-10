@@ -13,38 +13,8 @@ export const BasePermissionEntries = [
   'upgrade',
 ] as const
 
-export const RolePermissionEntries = [
-  'challenge',
-  'guard',
-  'propose',
-  'sequence',
-  'validate',
-  'disperse',
-  'relayDA',
-  'operateLinea',
-  'fastconfirm',
-  'validateZkStack',
-  'validateBridge',
-  'validateBridge2',
-  'validateBridge3',
-  'relay',
-  'aggregatePolygon',
-  'operateStarknet',
-  'operateStarkEx',
-  'governStarknet',
-  'metisGameCreator',
-  'stateDeleterMetis',
-  'hotValidatorHyperliquid',
-  'coldValidatorHyperliquid',
-  'acrossPropose',
-  'validateLighter',
-] as const
-
 export type Permission = v.infer<typeof Permission>
-export const Permission = v.enum([
-  ...RolePermissionEntries,
-  ...BasePermissionEntries,
-])
+export const Permission = v.enum(BasePermissionEntries)
 
 export type RawPermissionConfiguration = v.infer<
   typeof RawPermissionConfiguration

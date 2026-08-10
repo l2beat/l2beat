@@ -50,6 +50,23 @@ const STORAGE_KEY = 'backoffice-environment'
 
 const environmentSchema = v.enum(['local', 'staging', 'production'])
 
+function readEnvironmentFromUrl(): Environment | undefined {
+  const value = new URLSearchParams(window.location.search).get('env')
+  const result = environmentSchema.safeParse(value)
+  return result.success ? result.data : undefined
+}
+
+function stripEnvironmentParamFromUrl(): void {
+  const params = new URLSearchParams(window.location.search)
+  if (!params.has('env')) {
+    return
+  }
+  params.delete('env')
+  const search = params.toString()
+  const url = `${window.location.pathname}${search ? `?${search}` : ''}${window.location.hash}`
+  window.history.replaceState(window.history.state, '', url)
+}
+
 interface EnvironmentContextValue {
   environment: Environment
   setEnvironment: (environment: Environment) => void
@@ -74,6 +91,18 @@ export function EnvironmentProvider({ children }: { children: ReactNode }) {
       setEnvironment('production')
     }
   }, [environment, setEnvironment])
+
+  // Deep-links from alerts carry the environment in `?env=`. Apply it once on
+  // load (it wins over the stored value) and then consume the param so later
+  // manual switches via the banner are not overridden on the next reload.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: run once on mount
+  useEffect(() => {
+    const urlEnvironment = readEnvironmentFromUrl()
+    if (urlEnvironment && urlEnvironment !== environment) {
+      setEnvironment(urlEnvironment)
+    }
+    stripEnvironmentParamFromUrl()
+  }, [])
 
   const value = useMemo<EnvironmentContextValue>(() => {
     const config = ENVIRONMENTS[environment] ?? ENVIRONMENTS.production

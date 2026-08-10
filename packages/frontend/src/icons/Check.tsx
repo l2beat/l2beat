@@ -12,7 +12,7 @@ export function CheckIcon(props: SvgIconProps) {
       stroke="currentColor"
       {...props}
     >
-      <path d="M3.3 8.63L6.23 11.53L12.7 5.07" />
+      <path d="m3.3 8.63 2.93 2.9 6.47-6.46" />
     </SvgIcon>
   )
 }

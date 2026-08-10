@@ -16,12 +16,14 @@ export interface SavedConfiguration<T> extends Configuration<T> {
   currentHeight: number | null
 }
 
-export interface RemovalConfiguration {
+export type TrimRemovalConfiguration = {
   id: string
-  /** Inclusive */
-  from: number
-  /** Inclusive */
-  to: number
+  /** Inclusive range */
+  range: [number, number]
+}
+
+export type WipeRemovalConfiguration = {
+  id: string
 }
 
 export interface ConfigurationRange<T> {
@@ -42,15 +44,4 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   // Optionals
   tags?: IndexerTags
   updateRetryStrategy?: RetryStrategy
-  /** Some indexers calculate aggregated sums
-      which make configurations trimming non-trivial
-      and would require re-fetching the data.
-      In this case we just wipe all the data that we have
-      and move the configuration state to minHeight
-  */
-  configurationsTrimmingDisabled?: boolean
-  /** Some indexers do not include configurationId in the data table
-      which makes it impossible to remove data of removed configuration
-  */
-  dataWipingAfterDeleteDisabled?: boolean
 }

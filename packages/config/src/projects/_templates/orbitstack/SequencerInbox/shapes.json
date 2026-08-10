@@ -33,5 +33,11 @@
     "hash": "0xd9d7945b3c909d8777cc1798e1b56051640a57595cc65064235a913104f4e9e9",
     "address": "arb1:0xfEB2537afD8519d16d0CcEa741A70f97f3D4288B",
     "blockNumber": 360996679
+  },
+  "SequencerInbox_robinhood": {
+    "hash": "0xaf8ab838329e6a166e4bc4bdde5fe20e747c37aa49458be9eb81c62fdbd17c21",
+    "address": "eth:0xb015D78fb9B890e96FD3E23819b2C8D9fffA3cC5",
+    "chain": "ethereum",
+    "blockNumber": 25443718
   }
 }

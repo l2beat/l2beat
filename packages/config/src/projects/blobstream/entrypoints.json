@@ -1,0 +1,34 @@
+{
+  "entrypoints": {
+    "arb1:0x738a9b55304f9fcF776B3BA285e50c0f9eF77997": {
+      "name": "BlobstreamMultisig",
+      "type": "Contract",
+      "project": "blobstream"
+    },
+    "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": {
+      "name": "ArbitrumBlobstream",
+      "type": "Contract",
+      "project": "blobstream"
+    },
+    "base:0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6": {
+      "name": "BlobstreamMultisig",
+      "type": "Contract",
+      "project": "blobstream"
+    },
+    "base:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": {
+      "name": "BaseBlobstream",
+      "type": "Contract",
+      "project": "blobstream"
+    },
+    "eth:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe": {
+      "name": "EthereumBlobstream",
+      "type": "Contract",
+      "project": "blobstream"
+    },
+    "eth:0x8bF34D8df1eF0A8A7f27fC587202848E528018E6": {
+      "name": "BlobstreamMultisig",
+      "type": "Contract",
+      "project": "blobstream"
+    }
+  }
+}

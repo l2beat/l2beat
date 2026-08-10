@@ -3,6 +3,7 @@
 **Table of Contents**
 
 - [TokenDB](#tokendb)
+  - [Two "planning" subsystems — what they share, what they don't](#two-planning-subsystems--what-they-share-what-they-dont)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -11,7 +12,7 @@
 TokenDB is the system that holds L2BEAT's canonical token catalogue —
 **Abstract Tokens** (the asset, e.g. "USDC") and **Deployed Tokens**
 (individual `(chain, address)` instances of an asset), plus the
-connections between them. It is served by the `token-backend` package and
+relations between deployed tokens. It is served by the `token-backend` package and
 edited through the `token-ui` package.
 
 The docs in this folder describe how TokenDB is kept correct:
@@ -20,10 +21,18 @@ The docs in this folder describe how TokenDB is kept correct:
   background loop that discovers new deployed tokens from interop
   transfers, links them to abstract tokens (via transfer evidence and
   CoinGecko), and surfaces conflicts/errors to humans.
+- [Token relations](./token_relations.md) — how relations between
+  deployed tokens are observed from non-swapping interop transfers, why
+  their ingestion is deliberately separate from the token ingestion
+  queue, and why the table has no foreign keys to `DeployedToken`.
 - [Intent / Plan / Execute](./intent_plan_execute.md) — the
   intent → plan → commands pipeline behind every human-driven write
   from token-UI, and why it exists (visible blast radius + concurrency
   safety).
+- [Abstract token merging](./abstract_token_merging.md) — why duplicate
+  abstract tokens arise (CoinGecko splits, ingestion fallback), why an
+  abstract token keeps multiple CoinGecko entries, and how merging
+  resolves relation conflicts.
 
 ## Two "planning" subsystems — what they share, what they don't
 
@@ -56,12 +65,14 @@ What the two pipelines *do* share — and what should remain shared — is
 the **write boundary** below them: the `Command` primitives and a single
 `commitTokenChanges` helper in
 [`packages/token-backend/src/commitTokenChanges.ts`](../../../../../packages/token-backend/src/commitTokenChanges.ts).
-Both pipelines translate their work into `Command[]` and funnel it
+Both pipelines — and [token relation ingestion](./token_relations.md) as
+a third writer — translate their work into `Command[]` and funnel it
 through this helper. That means:
 
-- There is exactly one place that writes to TokenDB's two tables.
+- There is exactly one place that writes to TokenDB's three core tables
+  (`AbstractToken`, `DeployedToken`, `TokenRelation`).
 - Future cross-cutting concerns (history, audit log, write proofs) plug
-  in here once and cover both pipelines automatically.
+  in here once and cover every writer automatically.
 - Each pipeline still owns its own concurrency story (the intent
   pipeline re-plans inside the SERIALIZABLE transaction; ingestion just
   wraps the writes in SERIALIZABLE), because they have different
@@ -76,6 +87,6 @@ plans, and `{ kind: 'coingecko' }` or
 proof lands on the `DeployedToken.abstractTokenAssignmentProof` JSON
 column; `commitTokenChanges` does not modify commands, it just routes
 them. The non-swapping-transfer proof carries the *full* transfer
-because the interop transfer table is a sliding 24h window; BigInt raw
+because the interop transfer table is a sliding 7-day window; BigInt raw
 amounts are stored in JSON as decimal strings. A persistent history
 table will land in a follow-up change.

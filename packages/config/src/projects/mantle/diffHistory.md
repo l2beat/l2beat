@@ -1,3 +1,153 @@
+Generated with discovered.json: 0x7948c2ae9c92c187701f38b9d510f76663233d93
+
+# Diff at Thu, 30 Jul 2026 11:25:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@582e1a34fd1cba95db9957343b373cd84374dd99 block: 1782298886
+- current timestamp: 1782298886
+
+## Description
+
+Make shared-sp1 use entrypoints and rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782298886 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+    reference SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: None
+      type:
+-        "Contract"
++        "Reference"
+      template:
+-        "succinct/SP1VerifierGateway"
+      sourceHashes:
+-        ["0xf67f0dc1760fe9589909a16bfef47f76d6dfa71427e034d759a3d8da88a42645"]
+      proxyType:
+-        "immutable"
+      description:
+-        "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract."
+      deployerAddress:
+-        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+      sinceTimestamp:
+-        1720099223
+      sinceBlock:
+-        20233410
+      values:
+-        {"$immutable":true,"activeVerifiers":[{"selector":"0xd4e8ecd2","verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"},{"selector":"0xbb1a6f29","verifier":"eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"},{"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}],"allVerifiers":[{"selector":"0x801c66ac","verifier":"eth:0xfE2bb0Ad7F2c44Bd1289234Af08aD6FDEC0d54a2"},{"selector":"0x8c5bc5e4","verifier":"eth:0x331b350dDA287d0A65ce43103984CD44cb4Da9f0"},{"selector":"0xfedc1fcc","verifier":"eth:0x36B353776AF6EF3A2bD707049e783F52c4209017"},{"selector":"0xc430ff7f","verifier":"eth:0xc350F063C13a3Ca21331610fe159E697a5c9c2FB"},{"selector":"0xc865c1b6","verifier":"eth:0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc"},{"selector":"0x4aca240a","verifier":"eth:0x1764C29FBd94865198588f10FC75D4f6636d158d"},{"selector":"0x09069090","verifier":"eth:0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3"},{"selector":"0x54bdcae3","verifier":"eth:0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16"},{"selector":"0x1b34fe11","verifier":"eth:0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"},{"selector":"0xd4e8ecd2","verifier":"eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"},{"selector":"0xbb1a6f29","verifier":"eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C"},{"selector":"0x5a093a2f","verifier":"eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A"}],"owner":"eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"}
+      fieldMeta:
+-        {"activeVerifiers":{"description":"Verifiers that are routed to by their selector and not frozen."},"allVerifiers":{"description":"All verifiers that were ever routed to by this gateway."}}
+      targetType:
++        "Contract"
+      targetProject:
++        "shared-sp1"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [shared-sp1/SP1Verifier]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGatewayMultisig (eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) [GnosisSafe]
+    +++ description: None
+```
+
+Generated with discovered.json: 0x0a2cd37661894243afdb6d79238f57e3a0775ccb
+
+# Diff at Wed, 24 Jun 2026 11:02:47 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@de5d8a0f706ed1564e5583609b20d2bf29d3dfd5 block: 1778830889
+- current timestamp: 1782298886
+
+## Description
+
+Upgraded op-succinct programs to v2.2.4-mainnet.4. Hashes reproduced.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) [succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x0006e0a9f37edc912bb269856518599d61689c78300c23615b2f90868d0181cf"
++        "0x001db6dc655ffc97e6ec7a2b5c9b1ddf42c2235faa007d8a96d659c68b7c432a"
+      values.rangeVkeyCommitment:
+-        "0x1d1e0ac74bb66ded0388062e779adae47925fd572a49a3424e2684f83d776004"
++        "0x6f0230de6e9b59592b3127f55829c9a766d397903df5c57d557c91634a30b32b"
+    }
+```
+
+Generated with discovered.json: 0x5a9bf86f2822071d1e97f9133b137c9ade472276
+
+# Diff at Tue, 09 Jun 2026 12:43:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1778830889
+- current timestamp: 1778830889
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778830889 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    contract MantleEngineeringMultisig (eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x6667961f5e9C98A76a48767522150889703Ed77D) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xdb6c0f3a93d4252e1c77dda9eeb9062db0aae162
 
 # Diff at Fri, 15 May 2026 07:43:09 GMT:

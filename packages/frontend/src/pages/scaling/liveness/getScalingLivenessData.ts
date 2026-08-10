@@ -9,6 +9,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { manifest } from '~/utils/Manifest'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import type { TabbedScalingEntries } from '../utils/groupByScalingTabs'
 
 export async function getScalingLivenessData(
@@ -61,8 +62,8 @@ function getProjectsWithAnomalies(
       const recentAnomalies = entry.anomalies.filter(
         (anomaly) =>
           anomaly.isApproved &&
-          (anomaly.end === undefined ||
-            anomaly.end >
+          (isAnomalyOngoing(anomaly) ||
+            (anomaly.end ?? anomaly.start) >
               UnixTime.toStartOf(UnixTime.now(), 'day') - 2 * UnixTime.DAY),
       )
 
@@ -78,11 +79,11 @@ function getProjectsWithAnomalies(
       }
     })
     .sort((a, b) => {
-      const aOngoing = a?.recentAnomalies.some(
-        (anomaly) => anomaly.end === undefined,
+      const aOngoing = a?.recentAnomalies.some((anomaly) =>
+        isAnomalyOngoing(anomaly),
       )
-      const bOngoing = b?.recentAnomalies.some(
-        (anomaly) => anomaly.end === undefined,
+      const bOngoing = b?.recentAnomalies.some((anomaly) =>
+        isAnomalyOngoing(anomaly),
       )
 
       if (aOngoing && !bOngoing) {

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x045bc9061fd361e62d55f71feadb2071e5d9b214
+
+# Diff at Tue, 04 Aug 2026 13:19:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@36c0588f2e6fd433fcb60f558353b75cea40247d block: 1711616603
+- current timestamp: 1785844290
+
+## Description
+
+Hop governance executed the ‘Increase quorum to block spam’ proposal, raising the voting quorum from 3M HOP (0.3%) to 60M HOP (6%).
+
+## Watched changes
+
+```diff
+    contract Hop Governor (eth:0xed8Bdb5895B8B7f9Fdb3C087628FD8410E853D48) [N/A] {
+    +++ description: None
+      values.quorumNumerator:
+-        30
++        600
+    }
+```
+
 Generated with discovered.json: 0x218238d97e593e987d1ea73baf61f88437388110
 
 # Diff at Fri, 08 May 2026 07:51:24 GMT:

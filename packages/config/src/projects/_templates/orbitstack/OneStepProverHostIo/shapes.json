@@ -18,5 +18,11 @@
     "hash": "0x081875b93df655e91ec23245390ad21db0990c12125dad497f1cbf118501ccc2",
     "address": "eth:0x0003A96B27ce73505b43ea1b71a5aB06bec568C4",
     "blockNumber": 22188285
+  },
+  "OneStepProverHostIo_robinhood": {
+    "hash": "0xbde4db29bf8a1c7fac14558998244ccc57b16c867919067c68f8fb7667c82296",
+    "address": "eth:0xe1aAfAfBde42f043495B39d1a15a58E91c894Fbf",
+    "chain": "ethereum",
+    "blockNumber": 25443718
   }
 }

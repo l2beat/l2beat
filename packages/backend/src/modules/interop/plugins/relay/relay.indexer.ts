@@ -7,8 +7,11 @@ import { ManagedChildIndexer } from '../../../../tools/uif/ManagedChildIndexer'
 import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { createInteropEventType, findChain, type InteropEvent } from '../types'
-import type { RelayApiClient } from './RelayApiClient'
+import type { GetRequestsResponse, RelayApiClient } from './RelayApiClient'
 import { buildRelayBootstrapChainNamesById, RelayConfig } from './relay.config'
+
+type RelayMetadata = GetRequestsResponse['requests'][number]['data']['metadata']
+type RelayCurrency = NonNullable<RelayMetadata>['currencyIn']
 
 export class RelayRootIndexer extends RootIndexer {
   override initialize() {
@@ -166,7 +169,7 @@ export class RelayIndexer extends ManagedChildIndexer {
         }
       }
       if (srcTx && srcTx.hash && srcTx.hash.length === 66) {
-        const srcToken = item.data.metadata?.currencyIn
+        const srcToken = getRelaySourceCurrency(item.data.metadata)
         let address = Address32.fromOrUndefined(srcToken?.currency?.address)
         if (address === Address32.ZERO) {
           address = Address32.NATIVE
@@ -183,7 +186,7 @@ export class RelayIndexer extends ManagedChildIndexer {
         events.push({ ...event, plugin: 'relay' })
       }
       if (dstTx && dstTx.hash && dstTx.hash.length === 66) {
-        const dstToken = item.data.metadata?.currencyOut
+        const dstToken = getRelayDestinationCurrency(item.data.metadata)
         let address = Address32.fromOrUndefined(dstToken?.currency?.address)
         if (address === Address32.ZERO) {
           address = Address32.NATIVE
@@ -234,4 +237,18 @@ export class RelayIndexer extends ManagedChildIndexer {
   override async invalidate(targetHeight: number): Promise<number> {
     return await Promise.resolve(targetHeight)
   }
+}
+
+export function getRelaySourceCurrency(
+  metadata: RelayMetadata,
+): RelayCurrency | undefined {
+  const routeInput = metadata?.route?.origin?.inputCurrency
+  return routeInput?.amount !== undefined ? routeInput : metadata?.currencyIn
+}
+
+export function getRelayDestinationCurrency(
+  metadata: RelayMetadata,
+): RelayCurrency | undefined {
+  const routeOutput = metadata?.route?.destination?.outputCurrency
+  return routeOutput?.amount !== undefined ? routeOutput : metadata?.currencyOut
 }

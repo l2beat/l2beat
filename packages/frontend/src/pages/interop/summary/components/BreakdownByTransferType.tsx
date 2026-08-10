@@ -1,10 +1,10 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { Breakdown } from '~/components/breakdown/Breakdown'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EmptyStateIcon } from '~/icons/EmptyState'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { BetweenChainsInfo } from '../../components/BetweenChainsInfo'
 import {
   INTEROP_TYPE_TO_BG_COLOR,

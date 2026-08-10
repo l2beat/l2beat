@@ -13,5 +13,11 @@
     "hash": "0xfa22fdbd3110142a813b224a89d371bb62a79a6907e822265020c1c69a8c546d",
     "address": "metis-andromeda:0x4200000000000000000000000000000000000007",
     "blockNumber": 21197158
+  },
+  "L2CrossDomainMessenger_v2_2_1": {
+    "hash": "0x9e9ae8aec73e808e50f80bced53c3a020588eed516b310a10397596869dcd3b1",
+    "address": "ink:0x250AF3f400cf8Aac8D410c90f1ba3968dD87DF96",
+    "chain": "ink",
+    "blockNumber": 50178011
   }
 }

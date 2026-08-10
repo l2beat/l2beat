@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Escrows stETH shares requested for cover or non-cover burning and burns them during an oracle report. Excess stETH can be recovered into the Lido protocol during migration.",
+  "category": "core",
+  "ignoreInWatchMode": [
+    "getCoverSharesBurnt",
+    "getExcessStETH",
+    "getNonCoverSharesBurnt",
+    "getSharesRequestedToBurn"
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant or revoke Burner roles and enable migration of excess stETH."
+        }
+      ]
+    },
+    "selfBurnRequesters": {
+      "copy": "accessControl",
+      "edit": ["get", "REQUEST_BURN_MY_STETH_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "transfer their own stETH to Burner and queue its shares for cover or non-cover burning."
+        }
+      ]
+    },
+    "shareBurnRequesters": {
+      "copy": "accessControl",
+      "edit": ["get", "REQUEST_BURN_SHARES_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "queue stETH shares already held by Burner for cover or non-cover burning."
+        }
+      ]
+    }
+  }
+}

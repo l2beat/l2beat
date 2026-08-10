@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x0096f460c40d7a13e66c998d532712d3fec1474a
+
+# Diff at Fri, 12 Jun 2026 10:18:53 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1728316727
+- current timestamp: 1728316727
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1728316727 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0xa8fda88cd22ff7eb009d04a4bdae5d35bc4f94ed
+
+# Diff at Tue, 09 Jun 2026 12:43:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1728316727
+- current timestamp: 1728316727
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1728316727 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x864A02Ca4a40616f8995709D1B26CDe588709043) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.1.permission:
+-        "challenge"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xC16EAEDaB78E033B555c9eF3C326c07B49F21907) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.1.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"guard","from":"eth:0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c","role":".guardian"}
+      receivedPermissions.1:
+-        {"permission":"guard","from":"eth:0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054","role":".guardian"}
+      receivedPermissions.2.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.2.role:
+-        ".GUARDIAN"
++        ".guardian"
+      receivedPermissions.2.from:
+-        "eth:0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054"
++        "eth:0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c"
+      receivedPermissions.2.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".GUARDIAN"}
+    }
+```
+
+```diff
+    EOA  (eth:0xDeC273BF31AD79ad00D619c52662f724176A12Fb) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x7e4c1528937260b42e5c821590e093a6ad57d1a8
 
 # Diff at Mon, 01 Sep 2025 10:01:10 GMT:

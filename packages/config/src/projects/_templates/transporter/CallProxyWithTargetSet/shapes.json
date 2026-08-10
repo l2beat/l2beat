@@ -3,5 +3,11 @@
     "hash": "0x8167542a48273d3ad36291b1445d3c0d62682a63ff6a5ea38974c19147782c9a",
     "address": "eth:0x49edf594E698F406A15afEf44CE7a0Fd8d998610",
     "blockNumber": 23978035
+  },
+  "ARMProxyOwnerExecutorV2": {
+    "hash": "0x0fce9e2f61da00588761ff8bbfbd4f481b2e61cd0950745e8b841bf06e465e31",
+    "address": "eth:0xF3E54a1FDA3d4351C8BD5065678c0F5DDD0D7BCB",
+    "chain": "ethereum",
+    "blockNumber": 25488897
   }
 }

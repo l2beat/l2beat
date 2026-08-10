@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "EasyTrack adapter for stVault administration. The EVMScriptExecutor may change vault fees and jail status, liability targets, socialize bad debt, and force validator exits; a separate trusted caller controls the maximum exit fee and ETH recovery.",
+  "category": "gov",
+  "ignoreRelatives": ["WITHDRAWAL_REQUEST_PREDEPLOY_ADDRESS"],
+  "fields": {
+    "evmScriptExecutor": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change stVault fees and jail status, set liability targets, socialize bad debt, and force validator exits through this adapter."
+        }
+      ]
+    },
+    "trustedCaller": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the validator-exit fee limit and withdraw ETH held by this adapter."
+        }
+      ]
+    }
+  }
+}

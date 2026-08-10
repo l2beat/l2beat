@@ -8,5 +8,10 @@
     "hash": "0x51de74b0f3bb93a136ac42d9ce84ea1064de040df73d36111378ddc0c1fb9508",
     "address": "eth:0x70aEDda427f26480D240bc0f4308ceDec8d31348",
     "blockNumber": 24590324
+  },
+  "HonkVerifier_v5.sol": {
+    "hash": "0x571cb1ad009254f2861d4e9f714fd96b9650ac98914a54037baa51a782d166b3",
+    "address": "eth:0x098f47c00F4df22a8030746Eb11378236C24b4bC",
+    "blockNumber": 25428902
   }
 }

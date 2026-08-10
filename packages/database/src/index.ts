@@ -9,7 +9,14 @@ export type {
   AbstractTokenRecord,
   AbstractTokenUpdateable,
 } from './repositories/AbstractTokenRepository'
-export type { ActivityRecord } from './repositories/ActivityRepository'
+export type {
+  ActivityRecord,
+  ActivityTotals,
+} from './repositories/ActivityRepository'
+export type {
+  AggregatedInteropDeployedTokenRecord,
+  AggregatedInteropDeployedTokenStats,
+} from './repositories/AggregatedInteropDeployedTokenRepository'
 export type { AggregatedInteropTokenRecord } from './repositories/AggregatedInteropTokenRepository'
 export type { AggregatedInteropTokensPairRecord } from './repositories/AggregatedInteropTokensPairRepository'
 export type {
@@ -20,6 +27,11 @@ export type { AggregatedL2CostRecord } from './repositories/AggregatedL2CostRepo
 export type { AggregatedLivenessRecord } from './repositories/AggregatedLivenessRepository'
 export type { AnomalyRecord } from './repositories/AnomaliesRepository'
 export type { AnomalyStatsRecord } from './repositories/AnomalyStatsRepository'
+export {
+  AppStateKey,
+  AppStatePair,
+  type AppStateRecord,
+} from './repositories/AppStateRepository'
 export type { BlobPairCount, BlobRecord } from './repositories/BlobsRepository'
 export type {
   ChainApi,
@@ -40,6 +52,10 @@ export type { DiscoveryCacheRecord } from './repositories/DiscoveryCacheReposito
 export type { FlatSourcesRecord } from './repositories/FlatSourcesRepository'
 export type { IndexerConfigurationRecord } from './repositories/IndexerConfigurationRepository'
 export type { IndexerStateRecord } from './repositories/IndexerStateRepository'
+export type {
+  InteropAggregateStatusRecord,
+  InteropAggregateStatusValue,
+} from './repositories/InteropAggregateStatusRepository'
 export type { InteropConfigRecord } from './repositories/InteropConfigRepository'
 export type {
   InteropEventContext,
@@ -58,14 +74,20 @@ export type {
   InteropPluginSyncedRangeRecord,
 } from './repositories/InteropPluginSyncedRangeRepository'
 export type { InteropPluginSyncStateRecord } from './repositories/InteropPluginSyncStateRepository'
-export type {
-  InteropMissingTokenInfo,
-  InteropSuspiciousTransferRecord,
-  InteropTransferRecord,
-  InteropTransfersDetailedStatsRecord,
-  InteropTransfersStatsRecord,
-  InteropTransferTokenInfo,
-  InteropTransferUpdate,
+export type { InteropRecentPriceRequest } from './repositories/InteropRecentPricesRepository'
+export {
+  hasAnyInteropTransferFinancialsFilter,
+  type InteropMissingTokenInfo,
+  type InteropSuspiciousTransferRecord,
+  type InteropTokenRouteRecord,
+  type InteropTransferFinancialsFilter,
+  type InteropTransferFinancialsStats,
+  type InteropTransferRecord,
+  type InteropTransfersDetailedStatsRecord,
+  type InteropTransfersStatsRecord,
+  type InteropTransferTimeRange,
+  type InteropTransferTokenInfo,
+  type InteropTransferUpdate,
 } from './repositories/InteropTransferRepository'
 export type {
   InteropTransferTypeStats,
@@ -92,11 +114,6 @@ export type {
   SyncMetadataRecord,
 } from './repositories/SyncMetadataRepository'
 export type {
-  TokenConnectionPrimaryKey,
-  TokenConnectionRecord,
-  TokenConnectionUpdateable,
-} from './repositories/TokenConnectionRepository'
-export type {
   TokenDbHistoryEntryInsert,
   TokenDbHistoryEntryRecord,
   TokenDbHistoryPage,
@@ -110,6 +127,15 @@ export type {
   TokenIngestionQueueState,
 } from './repositories/TokenIngestionQueueRepository'
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
+export type {
+  JsonValue,
+  TokenRelationLockedToken,
+  TokenRelationPrimaryKey,
+  TokenRelationRecord,
+  TokenRelationRoute,
+  TokenRelationUpdateable,
+} from './repositories/TokenRelationRepository'
+export { normalizeTokenRelation } from './repositories/TokenRelationRepository'
 export type {
   SummedByTimestampTokenValuePerProjectRecord,
   SummedByTimestampTokenValueRecord,

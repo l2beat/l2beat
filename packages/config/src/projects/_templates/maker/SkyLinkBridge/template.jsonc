@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SkyLinkBridge",
+  "description": "Custom Sky governance bridge for USDS and sUSDS using the canonical OP Stack L1CrossDomainMessenger. Token balances are held in a separate L1Escrow controlled by Sky governance.",
+  "fields": {
+    "escrow": {
+      "severity": "HIGH"
+    },
+    "messenger": {
+      "severity": "HIGH"
+    },
+    "otherBridge": {
+      "severity": "HIGH"
+    }
+  }
+}

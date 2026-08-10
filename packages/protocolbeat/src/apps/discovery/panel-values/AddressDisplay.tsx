@@ -62,7 +62,7 @@ export function AddressDisplay({ value, simplified }: AddressDisplayProps) {
       <p className="inline-flex w-min items-baseline gap-1 whitespace-nowrap text-left font-mono text-xs">
         <button
           className="inline-flex items-baseline gap-1 text-aux-blue"
-          onClick={() => select(value.address)}
+          onClick={() => select([value.address])}
         >
           <AddressIcon
             className="relative top-[3px] block"

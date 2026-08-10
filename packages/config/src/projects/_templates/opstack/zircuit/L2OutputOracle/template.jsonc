@@ -26,10 +26,23 @@
       },
       "edit": ["format", "FormatSeconds"]
     },
-    "proposer": { "severity": "HIGH", "permissions": [{ "type": "propose" }] },
+    "proposer": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to post new state roots of the current layer to the host chain."
+        }
+      ]
+    },
     "challenger": {
       "severity": "HIGH",
-      "permissions": [{ "type": "challenge" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+        }
+      ]
     },
     "deletedOutputs": {
       "severity": "HIGH",

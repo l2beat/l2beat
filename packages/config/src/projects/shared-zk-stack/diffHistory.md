@@ -1,3 +1,385 @@
+Generated with discovered.json: 0x1a3e6a1fcefdf5c52851f44f3c54655fda0fb979
+
+# Diff at Thu, 30 Jul 2026 13:10:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@66fa629d20cb3eebcd8a566401e5b4f335fafdf2 block: 1785168665
+- current timestamp: 1785168665
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785168665 (main branch discovery), not current.
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      values.L2_PROTOCOL_GOVERNOR:
+-        "eth:0x085b8B6407f150D62adB1EF926F7f304600ec714"
++        "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"zksync"}}]
+    }
+```
+
+```diff
+    contract ProtocolTimelockController (zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714) [shared-zk-stack/TimelockController] {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
+      directlyReceivedPermissions.0:
++        {"permission":"interact","from":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3","description":"start (queue) upgrades.","role":".L2_PROTOCOL_GOVERNOR"}
+    }
+```
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) [shared-zk-stack/ZkGovernor] {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3","description":"start (queue) upgrades.","role":".L2_PROTOCOL_GOVERNOR","via":[{"address":"zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"}]}
+    }
+```
+
+Generated with discovered.json: 0xf6fd62754e3cd5076871339df05d10ba4cf78af0
+
+# Diff at Mon, 27 Jul 2026 16:12:23 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e4bae6c708e972febd09837213f50ce9cdf09201 block: 1784804016
+- current timestamp: 1785168665
+
+## Description
+
+Preparation for v31 upgrade:
+
+- Updated chain creation params and chain type manager version via this emergency proposal: https://tools.l2beat.com/decoder-new/?hash=0x0e355ed305d463ae288194d2a5a00c16ea7e10fafbdc2e5b080ee4bbe17aa1bf&data=AwA.
+- Scheduled and executed an upgrade proposal on L2: https://tools.l2beat.com/decoder-new/?hash=0x2c0b7d455d57dbb0e1835ac1ff3ad484205c4e33b2c3025373811fb1ac16425d&data=AwA. For some reason it is not yet live on L1.
+- Removed one member of Chainlight ms.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x0F3F84b0aaaA6f577468F6708e7A5E09e59dbfA1"
+      values.multisigThreshold:
+-        "2 of 6 (33%)"
++        "2 of 5 (40%)"
+    }
+```
+
+```diff
+    contract ChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) [shared-zk-stack/ChainTypeManager] {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,5.
+      description:
+-        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,4."
++        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,5."
+      values.getSemverProtocolVersion.2:
+-        4
++        5
+      values.initialCutHash:
+-        "0x78e697c25f48b4e555813b0fb1baefebb707af0750f634a6d5f5354978765079"
++        "0x08ed3641fe05a42d8eeef971ecfc8bbcce46b97373ed02cd4cb9eb994e4d487a"
+      values.protocolVersion:
+-        124554051588
++        124554051589
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.11:
++        "0x03264a5977425fc58cac85729ef3eb6b3c60a6916f1e54ba2cd74b76fb6ba31f"
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.12:
++        "0x5925465d7a8bc46307b7867fcda93e445af7e6479370d34be058639453b4651a"
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.13:
++        "0x42432d865969ab601b7f4016895e1426f224bc02a1250008742443ac89511e8d"
+    }
+```
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) [shared-zk-stack/ZkGovernor] {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        15
++        16
+    }
+```
+
+Generated with discovered.json: 0x9b1fee98ff85e09ec8f5ed8060fb551d64882121
+
+# Diff at Fri, 24 Jul 2026 07:51:22 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@efe9fb65fe13447fa2102797e0c08f3569e5b554 block: 1784193326
+- current timestamp: 1784804016
+
+## Description
+
+Upgraded ServerNotifier contract that informs offchain node operators about onchain updates without any onchain significance (https://disco.l2beat.com/diff/eth:0x555D040F4A089D1dF14B372a87C5aF8FA37BDB7A/eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A). The new version corresponds to v30: https://github.com/matter-labs/era-contracts/blob/zkos-v0.30.2/l1-contracts/contracts/governance/ServerNotifier.sol.
+
+- Added `setUpgradeTimestamp` function to signal an upcoming upgrade
+- Added checks on announcing upgrades
+
+Also, rotated MS member.
+
+## Watched changes
+
+```diff
+    contract Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x5C7E59Dba6557C7dAB3B69ccd3E309d1965Cf1B1"
++        "eth:0xC9A814A4dFE108A4d2b0C01abb4c196Ed7FB3D83"
+    }
+```
+
+```diff
+    contract ServerNotifier (eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31) [shared-zk-stack/ServerNotifier] {
+    +++ description: A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations.
+      sourceHashes.1:
+-        "0x1e4d0bfb62cb7162bc9ad0aa55a8bf3d7e735f46b0e32e9886ac236f84f9d28e"
++        "0x3c0e5bd80bc25d2e6f4be57d2f37d84edafd89559cf83a704ad8545a8d5a05c8"
+      values.$implementation:
+-        "eth:0x555D040F4A089D1dF14B372a87C5aF8FA37BDB7A"
++        "eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A"
+      values.$pastUpgrades.1:
++        ["2026-07-22T10:09:59.000Z","0xdbd5285f559e4ae32457b8425f67e1dfe76575c40999499e0b55d5cf985b85d8",["eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A"]]
+      values.$upgradeCount:
+-        1
++        2
+      implementationNames.eth:0x555D040F4A089D1dF14B372a87C5aF8FA37BDB7A:
+-        "ServerNotifier"
+      implementationNames.eth:0x260813B0DAf35dda95c41F39c6Cc3F24dc87028A:
++        "ServerNotifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ServerNotifier/ServerNotifier.sol              | 714 ++++++++++++++++++++-
+ 1 file changed, 693 insertions(+), 21 deletions(-)
+```
+
+Generated with discovered.json: 0x84104a4ca3534bd1cf08716c959c78d936191899
+
+# Diff at Thu, 16 Jul 2026 09:16:34 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@e710b6c5d3cdbeb52887729e85025b32d82b88cf block: 1782901273
+- current timestamp: 1784193326
+
+## Description
+
+A proposal to upgrade zksync era to v31 is created: https://www.tally.xyz/gov/zksync/proposal/8054264069412312387384959632741848913824409307726784174607045091780823317020?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f.
+
+## Watched changes
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) [shared-zk-stack/ZkGovernor] {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        16
++        17
+    }
+```
+
+Generated with discovered.json: 0x87ce9c1aa1fbd06398e6e14b8f6ecdae0bc8a6a8
+
+# Diff at Wed, 01 Jul 2026 10:22:19 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2bbeat.com>)
+- comparing to: main@ddc641881a6870ab0c9e9ee1c517ed9eb73306bc block: 1782118472
+- current timestamp: 1782901273
+
+## Description
+
+Removed one member of Matter Labs ms, decreased the threshold by one.
+
+## Watched changes
+
+```diff
+    contract Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x4A333c167Ce76C46149c6B0197977ae02aaeC929"
++        "eth:0xEE7d66B84175cc423900595d1807A0371D66dE46"
+      values.$members.4:
+-        "eth:0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
+      values.$threshold:
+-        5
++        4
+      values.multisigThreshold:
+-        "5 of 8 (63%)"
++        "4 of 7 (57%)"
+    }
+```
+
+Generated with discovered.json: 0x1269e2ea41e76e44fc2bbf4e32d995374482f607
+
+# Diff at Mon, 22 Jun 2026 08:55:38 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@18532eacfff59dfa2ff9ea37d128b65c569fef40 block: 1781778259
+- current timestamp: 1782118472
+
+## Description
+
+Added capped minters as per this funding proposal: https://www.tally.xyz/gov/zksync/proposal/2943455218873421873697799536418607104467185343933430719456358615505163695727?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746.
+
+## Watched changes
+
+```diff
+    contract ZkToken (zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) [shared-zk-stack/ZkToken] {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      values.accessControl.MINTER_ROLE.members.22:
++        "zksync:0x872e575cc36d9CF26e7d2F1015D14df908427d03"
+      values.accessControl.MINTER_ROLE.members.23:
++        "zksync:0xA6ec9C7fbFbfdC3c1BfFd9305b66107A0Ac4c099"
+      values.accessControl.MINTER_ROLE.members.24:
++        "zksync:0xc412b13672765504d52fd69B0fEeacB7dc0BDE5C"
+      values.accessControl.MINTER_ROLE.members.25:
++        "zksync:0x92f92B86Ddb239b722651D98e2eb462febA3C8E5"
+      values.accessControl.MINTER_ROLE.members.26:
++        "zksync:0xd532D48feb00EC3323F49cfe63f0fA0cAaf04482"
+      values.accessControl.MINTER_ROLE.members.27:
++        "zksync:0xA424433Dd7f75D3cf394680ABca8F5C28B909F27"
+      values.accessControl.MINTER_ROLE.members.28:
++        "zksync:0x930c62584485F0dc47BFfaf8837b9F2AC217aBC2"
+      values.accessControl.MINTER_ROLE.members.29:
++        "zksync:0xD6291af385B72E547C1D7aD86e0B6852d18C48B1"
+      values.accessControl.MINTER_ROLE.members.30:
++        "zksync:0xcb75781c6cbb3a4A14E4269B67EF719C856F5002"
+      values.accessControl.MINTER_ROLE.members.31:
++        "zksync:0xaa2C61fA1ADDAEFC8d29CDe9448d0cF7899804f6"
+      values.accessControl.MINTER_ROLE.members.32:
++        "zksync:0x0b7d5e484B97d7D6f6981163de46474cD5CFe20F"
+      values.accessControl.MINTER_ROLE.members.33:
++        "zksync:0xCC13dBF9a748e7bf64304a58A7D529F2d0CB40Be"
+    }
+```
+
+Generated with discovered.json: 0x9c5b910f6a6ce39797a4591c666123623c515846
+
+# Diff at Thu, 18 Jun 2026 10:25:29 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@ece0bb89d93f4462f45501d91379f3ba4bc05b8a block: 1781602379
+- current timestamp: 1781778259
+
+## Description
+
+Removed one member from Matterlabs ms.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac"
+      values.multisigThreshold:
+-        "1 of 3 (33%)"
++        "1 of 2 (50%)"
+    }
+```
+
+Generated with discovered.json: 0x01b818a19fbcbebc6195e094bad6846650ba2df7
+
+# Diff at Tue, 16 Jun 2026 09:35:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e3be4116cfc279e5c4415ba34f338c2f1d453616 block: 1780913202
+- current timestamp: 1781602379
+
+## Description
+
+[TPP-18](https://www.tally.xyz/gov/zksync/proposal/2943455218873421873697799536418607104467185343933430719456358615505163695727?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746) queued: Mint USD 1M in ZK per month for development.
+
+## Watched changes
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        15
++        16
+    }
+```
+
+Generated with discovered.json: 0x5ef179ed57ac54472a3dfa8d83e45b5d09968bf5
+
+# Diff at Fri, 12 Jun 2026 10:19:03 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1780913202
+- current timestamp: 1780913202
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780913202 (main branch discovery), not current.
+
+```diff
+    EOA ProtocolUpgradeHandler_l2Alias (zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+Generated with discovered.json: 0xa2129158580720086e26319fcee41e0c9bc130e4
+
+# Diff at Mon, 08 Jun 2026 10:07:57 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@986b95b3ae833105f37e6f39ab1fd37448dc183a block: 1779962479
+- current timestamp: 1780913202
+
+## Description
+
+Published this funding proposal onchain: https://www.tally.xyz/gov/zksync/proposal/2943455218873421873697799536418607104467185343933430719456358615505163695727?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746.
+
+It "allocates 12 capped minters of 67M ZK each, distributed monthly to Matter Labs over 12 months (~$1M USD per month at the $0.015/ZK reference price), to execute the 2026 Prividium roadmap".
+
+Also removed one member of MatterLabs ms.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x41814626a9256173B6E6441d8133F9286F02AA16"
+      values.multisigThreshold:
+-        "1 of 4 (25%)"
++        "1 of 3 (33%)"
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        17
++        18
+    }
+```
+
 Generated with discovered.json: 0x42fea8d8f032cb283545fe5a5f8cf192cde315c2
 
 # Diff at Thu, 28 May 2026 10:02:56 GMT:

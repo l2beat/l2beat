@@ -7,11 +7,12 @@ import { validateRoute } from '~/utils/validateRoute'
 import { getScalingActivityData } from './activity/getScalingActivityData'
 import { getScalingArchivedData } from './archived/getScalingArchivedData'
 import { getScalingCostsData } from './costs/getScalingCostsData'
-import { getScalingDataAvailabilityData } from './data-availability/getScalingDataAvailabilityData'
 import { getScalingLivenessData } from './liveness/getScalingLivenessData'
 import { getScalingProjectData } from './project/getScalingProjectData'
 import { getScalingProjectTvsBreakdownData } from './project/tvs-breakdown/getScalingProjectTvsBreakdownData'
+import { getScalingRiskDataAvailabilityData } from './risk/data-availability/getScalingRiskDataAvailabilityData'
 import { getScalingRiskData } from './risk/getScalingRiskData'
+import { getScalingRiskSequencingData } from './risk/sequencing/getScalingRiskSequencingData'
 import { getScalingRiskStateValidationData } from './risk/state-validation/getScalingRiskStateValidationData'
 import { getScalingSummaryData } from './summary/getScalingSummaryData'
 import { getScalingTvsBreakdownData } from './tvs/breakdown/getScalingTvsBreakdownData'
@@ -51,6 +52,18 @@ export function createScalingRouter(
     res.status(200).send(html)
   })
 
+  router.get('/scaling/risk/data-availability', async (req, res) => {
+    const data = await getScalingRiskDataAvailabilityData(req, manifest, cache)
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
+
+  router.get('/scaling/risk/sequencing', async (req, res) => {
+    const data = await getScalingRiskSequencingData(req, manifest, cache)
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
+
   router.get(
     '/scaling/tvs',
     validateRoute({
@@ -69,12 +82,6 @@ export function createScalingRouter(
 
   router.get('/scaling/tvs/breakdown', async (req, res) => {
     const data = await getScalingTvsBreakdownData(req, manifest, cache)
-    const html = await render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
-
-  router.get('/scaling/data-availability', async (req, res) => {
-    const data = await getScalingDataAvailabilityData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })
@@ -109,16 +116,10 @@ export function createScalingRouter(
     '/scaling/projects/:slug',
     validateRoute({
       params: v.object({ slug: v.string() }),
+      query: v.object({ update: v.string().optional() }),
     }),
     async (req, res) => {
-      const data = await cache.get(
-        {
-          key: ['scaling', 'projects', req.params.slug],
-          ttl: 5 * 60,
-          staleWhileRevalidate: 25 * 60,
-        },
-        () => getScalingProjectData(manifest, req.params.slug, req.originalUrl),
-      )
+      const data = await getScalingProjectData(req, manifest, cache)
       if (!data) {
         res.status(404).send('Not found')
         return

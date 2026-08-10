@@ -34,5 +34,9 @@ export function createMigratedProjectsRouter() {
   router.get('/data-availability/projects/espressoDA/espressoDA', (_, res) => {
     res.redirect(301, '/data-availability/projects/espresso-da/espresso-da')
   })
+
+  router.get('/data-availability/projects/eigenda/eigenda-v2', (_, res) => {
+    res.redirect(301, '/data-availability/projects/eigenda/eigenda')
+  })
   return router
 }

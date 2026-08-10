@@ -22,12 +22,12 @@ export function createBackofficeModule<
   db,
   trpcContributions,
 }: BackofficeModuleDependencies<T>): ApplicationModule | undefined {
-  if (trpcContributions.length === 0) {
+  const backofficeConfig = config.backoffice
+  if (trpcContributions.length === 0 || backofficeConfig === false) {
     return
   }
 
   const appRouter = createBackendAppRouter(trpcContributions)
-  const auth = config.backoffice ? config.backoffice.auth : false
   const enabled = new Set(trpcContributions.map((c) => c.namespace))
 
   const trpc = createKoaMiddleware({
@@ -38,7 +38,7 @@ export function createBackofficeModule<
       createTRPCContext({
         headers: new Headers(req.headers as Record<string, string>),
         db,
-        auth,
+        auth: backofficeConfig.auth,
       }),
   })
 

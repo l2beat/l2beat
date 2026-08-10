@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "owner": {
+      "description": "Can manage controllers",
+      "permissions": [{ "type": "act" }]
+    },
+    "controllers": {
+      "description": "Can manage minters in USDC contracts refering to this contract as masterMinter",
+      "handler": {
+        "type": "event",
+        "select": "_controller",
+        "add": { "event": "ControllerConfigured" },
+        "remove": { "event": "ControllerRemoved" }
+      },
+      "permissions": [{ "type": "act" }]
+    }
+  }
+}

@@ -1,3 +1,355 @@
+Generated with discovered.json: 0xeb7d061f91808bc22a2d5a56f0b8b332ab7dcc71
+
+# Diff at Thu, 30 Jul 2026 22:24:05 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5f4f144c2fac250fa93419ac64df30086f06d90f block: 1784044779
+- current timestamp: 1785450156
+
+## Description
+
+State validation reverted from the Kailua ZK fault proof system to the permissioned L2OutputOracle: the OptimismPortal implementation was replaced and now reads state roots from the L2OutputOracle instead of the DisputeGameFactory. Only the permissioned proposer can submit state roots and rotate its own address. The SoonMultisig (challenger) can delete proposed outputs, change the 3-day finalization period and the submission interval, and rotate the challenger address. DisputeGameFactory, KailuaGame, KailuaTreasury, FaultDisputeGame, PermissionedDisputeGame and RiscZeroVerifier are no longer referenced.
+
+- OptimismPortal 3.11.0-beta.2 -> 2.8.1-beta.1 (SOON fork): https://disco.l2beat.com/diff/eth:0xcd87F6B5B03A73733ab5A9cbB56951600f3330A6/eth:0x24331B68bea70c2b086BC883EEEA551BAF80C2BA
+
+Batcher rotated. The last batch was posted to the batch inbox on 2026-07-11 and the new batcher has not posted since.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.batcherHash:
+-        "eth:0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6"
++        "eth:0x267576444F8504B23B98F2b3C0e31bB32eB6Eb7a"
+      values.sequencerInbox:
+-        "eth:0xfF000000000000000000000000000000000000FF"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.sequencerPubkeyInfos.1:
++        [6544083,"0xa8caa55df61160c0561d0e762b4d460df8c9e44578963e04741132e6a9044f10"]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroVerifier (eth:0x455218fa82e96A6adCcf182EE8A90A93BE7a6Bc6) [N/A]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (eth:0x57d53F9715A0A8bEBDFf74b72eCE85950CcfD087) [N/A]
+    +++ description: None
+```
+
+```diff
+    contract OptimismPortal (eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07) [opstack/OptimismPortal_soon] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
+      name:
+-        "OptimismPortal2"
++        "OptimismPortal"
+      template:
+-        "opstack/OptimismPortal2_soon"
++        "opstack/OptimismPortal_soon"
+      sourceHashes.1:
+-        "0x020cd1f3781cbab14e8093d3fa6bc9d2b4079839f36be9eb7adaf2a099f4f41e"
++        "0xd8927de1b0bb795177ecf745c74d3cdfcb0990dbaafe9c16803b5fddac9de99d"
+      values.$implementation:
+-        "eth:0xcd87F6B5B03A73733ab5A9cbB56951600f3330A6"
++        "eth:0x24331B68bea70c2b086BC883EEEA551BAF80C2BA"
+      values.$pastUpgrades.4:
++        ["2026-07-29T02:34:11.000Z","0xe885648ef6a4a0df9bb07233d1cd890015d0c00cdd713e388eadd58fd149803c",["eth:0x24331B68bea70c2b086BC883EEEA551BAF80C2BA"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.disputeGameFactory:
+-        "eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2"
+      values.disputeGameFinalityDelaySeconds:
+-        864000
+      values.paused:
+-        true
++        false
+      values.proofMaturityDelaySeconds:
+-        864000
+      values.RespectedGameString:
+-        "KailuaGame"
+      values.respectedGameType:
+-        2000
+      values.respectedGameTypeUpdatedAt:
+-        1765180799
+      values.version:
+-        "3.11.0-beta.2"
++        "2.8.1-beta.1"
+      values.l2Oracle:
++        "eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
+      fieldMeta.respectedGameType:
+-        {"severity":"HIGH"}
+      fieldMeta.paused:
+-        {"severity":"HIGH","description":"Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."}
+      implementationNames.eth:0xcd87F6B5B03A73733ab5A9cbB56951600f3330A6:
+-        "OptimismPortal2"
+      implementationNames.eth:0x24331B68bea70c2b086BC883EEEA551BAF80C2BA:
++        "OptimismPortal"
+      usedTypes.1:
+-        {"typeCaster":"Mapping","arg":{"0":"FaultDisputeGame","1":"PermissionedDisputeGame","2000":"KailuaGame"}}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaGame (eth:0x62CFb085Ce639a7C3896E51548378cFE5829Bd32) [risc0/KailuaGame]
+    +++ description: Implementation of the KailuaGame with type 2000. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.paused:
+-        true
++        false
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448","role":"admin"}
+      directlyReceivedPermissions.5:
+-        {"permission":"upgrade","from":"eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (eth:0xAa17a7021054a984199a5bC40538f3DD6d04d36e) [N/A]
+    +++ description: None
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.paused:
+-        true
++        false
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DisputeGameFactory (eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2) [opstack/DisputeGameFactory]
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+```
+
+```diff
+    contract SuperchainConfig (eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4) [opstack/SuperchainConfigFake] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.paused:
+-        true
++        false
+    }
+```
+
+```diff
+    contract SoonMultisig (eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challenger"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".CHALLENGER"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448","description":"change the finalization period (challenge period).","role":".challenger"}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448","role":"admin","via":[{"address":"eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}
+      receivedPermissions.6:
+-        {"permission":"upgrade","from":"eth:0xcf0f094b6765eD31038003831F7f75bD07Bd49c2","role":"admin","via":[{"address":"eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaTreasury (eth:0xd6E6c8bd7A86C2ba6e846D8ae2f9cC013c533beb) [risc0/KailuaTreasury_soon]
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.01 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.
+```
+
+```diff
+    contract L1StandardBridge (eth:0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9) [opstack/L1StandardBridge_soon] {
+    +++ description: The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.
+      values.paused:
+-        true
++        false
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448) [opstack/L2OutputOracle_soon]
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+## Source code changes
+
+```diff
+.../DisputeGameFactory.sol => /dev/null            | 2058 ------
+ .../.flat@1784044779/KailuaGame.sol => /dev/null   | 7546 --------------------
+ .../KailuaTreasury.sol => /dev/null                | 7308 -------------------
+ .../soon/.flat/L2OutputOracle/L2OutputOracle.sol   |  807 +++
+ .../L2OutputOracle}/Proxy.p.sol                    |    0
+ .../OptimismPortal/OptimismPortal.sol}             | 2805 ++------
+ .../OptimismPortal}/Proxy.p.sol                    |    0
+ 7 files changed, 1477 insertions(+), 19047 deletions(-)
+```
+
+Generated with discovered.json: 0xf708d7a955a91db408820da9f51428f0a5642419
+
+# Diff at Tue, 14 Jul 2026 16:01:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@40c68fc8d6e39f5b4f69bb2e62b69938a949b435 block: 1769535666
+- current timestamp: 1784044779
+
+## Description
+
+SOON paused on 2026-07-12; reason unknown. Guardian EOA rotated (`0x7fFB…1593` → `0xcb17…B911`), the new guardian was also added to SoonMultisig (member[3]), then it called `pause` on the `SuperchainConfigFake` — OptimismPortal2, L1CrossDomainMessenger, L1StandardBridge, L1ERC721Bridge all read `paused: true` through it. OptimismPortal2 impl upgraded ([tx](https://etherscan.io/tx/0xa4ccaddf2ef0b79355fce160a4241d1b637cb32d6a1b6b7c12eea57f32577f0c)); `disputeGameFinalityDelaySeconds` and `proofMaturityDelaySeconds` extended 8h → 10d. SystemConfig `opStackDA.isUsingEigenDA` set to `false` (was `"v3"`) — EigenDA disabled.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
+-        "v3"
++        false
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07) [opstack/OptimismPortal2_soon] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
+      values.$implementation:
+-        "eth:0x29174FC953F163452093aFa9eE3904168C74b2E7"
++        "eth:0xcd87F6B5B03A73733ab5A9cbB56951600f3330A6"
+      values.$pastUpgrades.3:
++        ["2026-07-12T16:28:23.000Z","0xa4ccaddf2ef0b79355fce160a4241d1b637cb32d6a1b6b7c12eea57f32577f0c",["eth:0xcd87F6B5B03A73733ab5A9cbB56951600f3330A6"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.disputeGameFinalityDelaySeconds:
+-        28800
++        864000
+      values.guardian:
+-        "eth:0x7fFB604c57FAFbAeaE6587DF035a0DB032301593"
++        "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911"
++++ description: Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused.
++++ severity: HIGH
+      values.paused:
+-        false
++        true
+      values.proofMaturityDelaySeconds:
+-        28800
++        864000
+      implementationNames.eth:0x29174FC953F163452093aFa9eE3904168C74b2E7:
+-        "OptimismPortal2"
+      implementationNames.eth:0xcd87F6B5B03A73733ab5A9cbB56951600f3330A6:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4) [opstack/SuperchainConfigFake] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.guardian:
+-        "eth:0x7fFB604c57FAFbAeaE6587DF035a0DB032301593"
++        "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911"
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract SoonMultisig (eth:0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
++        "eth:0xcb17B5F3Cf75eb40F0Addf97B0D457922f10B911"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9) [opstack/L1StandardBridge_soon] {
+    +++ description: The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.
+      values.paused:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0x0604a0b6a01d2d94faca77d685154a7e935ccbc1
+
+# Diff at Tue, 09 Jun 2026 12:43:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1769535666
+- current timestamp: 1769535666
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769535666 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x7fFB604c57FAFbAeaE6587DF035a0DB032301593) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"guard","from":"eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07","role":".guardian"}
+      receivedPermissions.1.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.1.from:
+-        "eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4"
++        "eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07"
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+    }
+```
+
+```diff
+    EOA  (eth:0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xf06a0ab8d66e1bc56f045ca88bb9deb7ff93253f
 
 # Diff at Fri, 08 May 2026 07:52:23 GMT:

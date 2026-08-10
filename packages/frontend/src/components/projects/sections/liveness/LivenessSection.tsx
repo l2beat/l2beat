@@ -12,6 +12,7 @@ import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { AnomalyText } from '~/pages/scaling/liveness/components/AnomalyText'
 import { NoAnomaliesState } from '~/pages/scaling/liveness/components/NoRecentAnomaliesState'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/getTrackedTransactions'
 import type { ChartRange } from '~/utils/range/range'
 import { TrackedTransactions } from '../costs/TrackedTransactions'
@@ -25,6 +26,10 @@ export interface LivenessSectionProps extends ProjectSectionProps {
   anomalies: LivenessAnomaly[]
   hasTrackedContractsChanged: boolean
   trackedTransactions: TrackedTransactionsByType
+  duplicateData?: {
+    from: TrackedTxsConfigSubtype
+    to: TrackedTxsConfigSubtype
+  }
   milestones: Milestone[]
   defaultRange: ChartRange
   isArchived: boolean
@@ -38,6 +43,7 @@ export function LivenessSection({
   anomalies,
   hasTrackedContractsChanged,
   trackedTransactions,
+  duplicateData,
   milestones,
   defaultRange,
   isArchived,
@@ -45,7 +51,7 @@ export function LivenessSection({
   isForDaBridge,
   ...sectionProps
 }: LivenessSectionProps) {
-  const ongoingAnomalies = anomalies.filter((a) => a.end === undefined)
+  const ongoingAnomalies = anomalies.filter(isAnomalyOngoing)
   return (
     <ProjectSection {...sectionProps}>
       <p className="mb-4 text-paragraph-15 md:text-paragraph-16">
@@ -74,7 +80,10 @@ export function LivenessSection({
         hideSubtypeSwitch={hideSubtypeSwitch}
       />
       <div className="mt-4">
-        <TrackedTransactions {...trackedTransactions} />
+        <TrackedTransactions
+          {...trackedTransactions}
+          duplicateData={duplicateData}
+        />
       </div>
       {!isArchived && (
         <>
@@ -100,21 +109,47 @@ function OngoingAnomalies({
     return <NoAnomaliesState className="rounded-lg!" type="ongoing" />
   }
 
+  const approvedAnomalies = anomalies.filter((anomaly) => anomaly.isApproved)
+  const unapprovedAnomalies = anomalies.filter((anomaly) => !anomaly.isApproved)
+
   return (
-    <div className="rounded-lg bg-surface-secondary px-5 py-4">
-      <div className="mb-3 flex items-center gap-2">
-        <LiveIndicator size="md" />
-        <h3 className="font-medium text-base text-negative uppercase">
-          Ongoing {pluralize(anomalies.length, 'anomaly', 'anomalies')}
-        </h3>
-      </div>
-      {hasTrackedContractsChanged && <ImplementationChangeCallout />}
-      {anomalies.map((anomaly) => (
-        <React.Fragment key={`${anomaly.start}-${anomaly.subtype}`}>
-          <AnomalyText anomaly={anomaly} />
-          <HorizontalSeparator className="my-2 last:hidden" />
-        </React.Fragment>
-      ))}
+    <div className="flex flex-col gap-4">
+      {approvedAnomalies.length > 0 && (
+        <div className="rounded-lg bg-surface-secondary px-5 py-4">
+          <div className="mb-3 flex items-center gap-2">
+            <LiveIndicator size="md" />
+            <h3 className="font-medium text-base text-negative uppercase">
+              Ongoing{' '}
+              {pluralize(approvedAnomalies.length, 'anomaly', 'anomalies')}
+            </h3>
+          </div>
+          {hasTrackedContractsChanged && <ImplementationChangeCallout />}
+          {approvedAnomalies.map((anomaly) => (
+            <React.Fragment key={`${anomaly.start}-${anomaly.subtype}`}>
+              <AnomalyText anomaly={anomaly} />
+              <HorizontalSeparator className="my-2 last:hidden" />
+            </React.Fragment>
+          ))}
+        </div>
+      )}
+      {unapprovedAnomalies.length > 0 && (
+        <div className="rounded-lg bg-surface-secondary px-5 py-4">
+          <div className="mb-3 flex items-center gap-2">
+            <RoundedWarningIcon className="size-4" sentiment="warning" />
+            <h3 className="font-medium text-base text-warning uppercase">
+              Potential ongoing{' '}
+              {pluralize(unapprovedAnomalies.length, 'anomaly', 'anomalies')}
+            </h3>
+          </div>
+          {hasTrackedContractsChanged && <ImplementationChangeCallout />}
+          {unapprovedAnomalies.map((anomaly) => (
+            <React.Fragment key={`${anomaly.start}-${anomaly.subtype}`}>
+              <AnomalyText anomaly={anomaly} />
+              <HorizontalSeparator className="my-2 last:hidden" />
+            </React.Fragment>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

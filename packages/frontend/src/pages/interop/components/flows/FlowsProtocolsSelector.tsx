@@ -25,10 +25,12 @@ import { useInteropFlows } from './utils/InteropFlowsContext'
 
 export function FlowsProtocolsSelector({
   allProtocols,
+  canonicalProtocolId,
 }: {
   allProtocols: (ProtocolDisplayable & {
     id: string
   })[]
+  canonicalProtocolId?: string
 }) {
   const {
     selectedProtocols,
@@ -37,15 +39,19 @@ export function FlowsProtocolsSelector({
     deselectAllProtocols,
   } = useInteropFlows()
 
-  const protocolsWithDetails = allProtocols.map(
-    ({ id, name, iconUrl, slug }) => ({
+  const protocolsWithDetails = allProtocols
+    .map(({ id, name, iconUrl, slug }) => ({
       id,
       name,
       iconUrl,
       slug,
       isSelected: selectedProtocols.includes(id),
-    }),
-  )
+    }))
+    .sort(
+      (a, b) =>
+        Number(b.id === canonicalProtocolId) -
+        Number(a.id === canonicalProtocolId),
+    )
 
   const selectedProtocolsWithDetails = protocolsWithDetails.filter(
     (protocol) => protocol.isSelected,
@@ -66,7 +72,7 @@ export function FlowsProtocolsSelector({
   ) : null
 
   const trigger = (
-    <div className="flex h-9.5 items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-primary! p-2">
+    <div className="flex h-9.5 shrink-0 items-center justify-center gap-1.5 rounded-lg border border-divider bg-surface-primary! p-2">
       <span className="rounded-full bg-pink-900 px-2 py-[3px] font-semibold text-white text-xs leading-none">{`${selectedProtocols.length}/${allProtocols.length}`}</span>
       <span className="font-bold text-lg leading-none">Protocols</span>
       <div className="flex items-center gap-1 max-md:hidden lg:max-xl:hidden">
@@ -112,8 +118,7 @@ export function FlowsProtocolsSelector({
   )
 
   return (
-    <div className="flex items-start gap-1 max-md:w-full max-md:flex-col md:items-center md:gap-3">
-      {/* Mobile */}
+    <div className="max-md:w-full">
       <Drawer>
         <DrawerTrigger className="w-full md:hidden">{trigger}</DrawerTrigger>
         <DrawerContent
@@ -135,6 +140,7 @@ export function FlowsProtocolsSelector({
                 key={protocol.id}
                 protocol={protocol}
                 onToggle={toggleProtocolSelection}
+                isCanonical={protocol.id === canonicalProtocolId}
                 nameClassName="font-semibold text-xs leading-none"
                 rowClassName="px-4"
               />
@@ -143,7 +149,6 @@ export function FlowsProtocolsSelector({
           <div className="mt-4 px-4">{footer}</div>
         </DrawerContent>
       </Drawer>
-      {/* Desktop */}
       <Dialog>
         <DialogTrigger className="cursor-pointer max-md:hidden" asChild>
           {trigger}
@@ -162,6 +167,7 @@ export function FlowsProtocolsSelector({
                 key={protocol.id}
                 protocol={protocol}
                 onToggle={toggleProtocolSelection}
+                isCanonical={protocol.id === canonicalProtocolId}
                 nameClassName="font-bold text-label-value-16"
                 rowClassName="px-3"
               />
@@ -177,6 +183,7 @@ export function FlowsProtocolsSelector({
 function ProtocolRow({
   protocol,
   onToggle,
+  isCanonical,
   nameClassName,
   rowClassName,
 }: {
@@ -188,6 +195,7 @@ function ProtocolRow({
     isSelected: boolean
   }
   onToggle: (id: string) => void
+  isCanonical?: boolean
   nameClassName: string
   rowClassName?: string
 }) {
@@ -196,6 +204,7 @@ function ProtocolRow({
       name={protocol.name}
       className={cn(
         'flex h-10 w-full flex-row-reverse items-center justify-between py-2.5 hover:bg-surface-secondary',
+        isCanonical && 'rounded-md bg-surface-secondary',
         rowClassName,
       )}
       checked={protocol.isSelected}
@@ -203,13 +212,22 @@ function ProtocolRow({
     >
       <div className="flex items-center gap-2">
         <img src={protocol.iconUrl} alt={protocol.name} className="size-4" />
-        <a
-          href={`/interop/protocols/${protocol.slug}`}
-          className="group inline-flex items-center gap-1"
-        >
+        {isCanonical ? (
           <span className={nameClassName}>{protocol.name}</span>
-          <ArrowRightIcon className="size-3 shrink-0 fill-brand opacity-0 transition-opacity group-hover:opacity-100" />
-        </a>
+        ) : (
+          <a
+            href={`/interop/protocols/${protocol.slug}`}
+            className="group inline-flex items-center gap-1"
+          >
+            <span className={nameClassName}>{protocol.name}</span>
+            <ArrowRightIcon className="size-3 shrink-0 fill-brand opacity-0 transition-opacity group-hover:opacity-100" />
+          </a>
+        )}
+        {isCanonical && (
+          <span className="rounded bg-surface-secondary px-1.5 py-0.5 font-medium text-2xs text-secondary uppercase leading-none">
+            Canonical
+          </span>
+        )}
       </div>
     </Checkbox>
   )

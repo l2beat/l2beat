@@ -1,0 +1,80 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "HCULimit",
+  "description": "Tracks and enforces per-transaction and per-block homomorphic computation unit limits for FHEVM operation requests.",
+  "category": "core",
+  "ignoreMethods": ["proxiableUUID"],
+  "ignoreInWatchMode": ["getBlockMeter"],
+  "fields": {
+    "aclOwner": {
+      "description": "Owner of the Zama ACL contract. This account is authorized by onlyACLOwner for HCULimit administration.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "{{ aclAddress }}"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the HCULimit implementation."
+        },
+        {
+          "type": "interact",
+          "description": "change the per-block and per-transaction HCU limits and manage callers that bypass the per-block limit."
+        }
+      ]
+    },
+    "getFHEVMExecutorAddress": {
+      "description": "FHEVMExecutor contract allowed to report operation HCU usage to this contract.",
+      "type": "EXTERNAL"
+    },
+    "aclAddress": {
+      "description": "ACL contract resolved through FHEVMExecutor and used by onlyACLOwner checks.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "call",
+        "method": "function getACLAddress() view returns (address)",
+        "args": [],
+        "address": "{{ getFHEVMExecutorAddress }}"
+      }
+    },
+    "getGlobalHCUCapPerBlock": {
+      "description": "Maximum HCU consumed by non-whitelisted callers in one block.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getMaxHCUDepthPerTx": {
+      "description": "Maximum sequential HCU depth allowed in one transaction.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getMaxHCUPerTx": {
+      "description": "Maximum total HCU allowed in one transaction.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "blockHCUWhitelist": {
+      "description": "Callers that bypass the global per-block HCU cap, reconstructed from whitelist events.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "account",
+        "add": { "event": "BlockHCUWhitelistAdded" },
+        "remove": { "event": "BlockHCUWhitelistRemoved" }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit FHE operations without being subject to the global per-block HCU cap."
+        }
+      ]
+    },
+    "getBlockMeter": {
+      "description": "HCU consumed by non-whitelisted callers in the current block."
+    }
+  }
+}

@@ -5,6 +5,7 @@
     "target": "esnext",
     "allowJs": true,
     "resolveJsonModule": true,
+    "types": ["node", "mocha"],
     "moduleDetection": "force",
     "isolatedModules": true,
 
@@ -14,14 +15,13 @@
 
     "lib": ["dom", "dom.iterable", "esnext"],
     "noEmit": false,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "jsx": "react-jsx",
     "incremental": true,
     "outDir": "dist",
 
     /* Path aliases */
-    "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
       "react": ["./node_modules/@types/react"]

@@ -11,7 +11,7 @@
       },
       "permissions": [
         {
-          "type": "propose",
+          "type": "interact",
           "description": "schedule operations on the timelock; the configured min-delay must elapse before they can be executed."
         }
       ]

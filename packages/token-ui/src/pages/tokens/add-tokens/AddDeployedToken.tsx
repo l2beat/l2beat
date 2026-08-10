@@ -1,5 +1,6 @@
 import { formatAddress, UnixTime } from '@l2beat/shared-pure'
 import type { Plan } from '@l2beat/token-backend'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import {
   CheckIcon,
   ListIcon,
@@ -53,7 +54,7 @@ import {
 } from '~/components/forms/DeployedTokenForm'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useQueryState } from '~/hooks/useQueryState'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 import { buildUrlWithParams } from '~/utils/buildUrlWithParams'
 import { cn } from '~/utils/cn'
 import { dateTimeInputToUnixTimestamp } from '~/utils/dateTimeInputToUnixTimestamp'
@@ -62,6 +63,7 @@ import { validateResolver } from '~/utils/validateResolver'
 type QueueItem = { chain: string; address: string; abstractTokenId?: string }
 
 export function AddDeployedToken() {
+  const trpc = useTRPC()
   const location = useLocation()
   const navigateQueue = location.state?.queue as QueueItem[] | undefined
   const [, setSearchParams] = useSearchParams()
@@ -86,24 +88,27 @@ export function AddDeployedToken() {
   const [isQueueSheetOpen, setIsQueueSheetOpen] = useState(false)
 
   const { data: abstractTokens, isLoading: areAbstractTokensLoading } =
-    api.abstractTokens.getAll.useQuery()
-  const { mutate: planMutate, isPending } = api.plan.generate.useMutation({
-    onSuccess: (data) => {
-      if (data.outcome === 'success') {
-        setPlan(data.plan)
-      } else {
-        toast.error(data.error)
-      }
-    },
-  })
+    useQuery(trpc.abstractTokens.getAll.queryOptions())
+  const { mutate: planMutate, isPending } = useMutation(
+    trpc.plan.generate.mutationOptions({
+      onSuccess: (data) => {
+        if (data.outcome === 'success') {
+          setPlan(data.plan)
+        } else {
+          toast.error(data.error)
+        }
+      },
+    }),
+  )
 
-  const { data: chains, isLoading: isLoadingChains } =
-    api.chains.getAll.useQuery()
+  const { data: chains, isLoading: isLoadingChains } = useQuery(
+    trpc.chains.getAll.queryOptions(),
+  )
 
   const chain = form.watch('chain')
   const address = form.watch('address')
-  const { data: checks, isLoading: checksLoading } =
-    api.deployedTokens.checks.useQuery(
+  const { data: checks, isLoading: checksLoading } = useQuery(
+    trpc.deployedTokens.checks.queryOptions(
       {
         chain,
         address,
@@ -111,7 +116,8 @@ export function AddDeployedToken() {
       {
         enabled: !!chain && !!address,
       },
-    )
+    ),
+  )
 
   useEffect(() => {
     if (!checks || checksLoading) return

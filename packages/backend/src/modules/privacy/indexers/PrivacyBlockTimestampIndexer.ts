@@ -1,17 +1,17 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { BlockTimestampProvider } from '@l2beat/shared'
-import {
-  assert,
-  type Configuration,
-  type RemovalConfiguration,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { createPrivacyConfigurationId } from '../../../config/features/privacy'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
-import type { ManagedMultiIndexerOptions } from '../../../tools/uif/multi/types'
+import type {
+  Configuration,
+  ManagedMultiIndexerOptions,
+  TrimRemovalConfiguration,
+  WipeRemovalConfiguration,
+} from '../../../tools/uif/multi/types'
 import type { PrivacyBlockTimestampConfig } from '../types'
 
 interface PrivacyBlockTimestampIndexerDeps
@@ -103,20 +103,35 @@ export class PrivacyBlockTimestampIndexer extends ManagedMultiIndexer<PrivacyBlo
     }
   }
 
-  override async removeData(configurations: RemovalConfiguration[]) {
+  override async wipeData(configurations: WipeRemovalConfiguration[]) {
+    const deletedRecords =
+      await this.$.db.privacyBlockTimestamp.deleteByConfigIds(
+        configurations.map((c) => c.id),
+      )
+
+    if (deletedRecords > 0) {
+      this.logger.info('Wiped block timestamp records for configurations', {
+        configurations: configurations.length,
+        deletedRecords,
+      })
+    }
+  }
+
+  override async trimData(configurations: TrimRemovalConfiguration[]) {
     for (const configuration of configurations) {
+      const [from, to] = configuration.range
       const deletedRecords =
         await this.$.db.privacyBlockTimestamp.deleteByConfigInTimeRange(
           configuration.id,
-          UnixTime(configuration.from),
-          UnixTime(configuration.to),
+          from,
+          to,
         )
 
       if (deletedRecords > 0) {
-        this.logger.info('Deleted block timestamp records', {
+        this.logger.info('Trimmed block timestamp records', {
           id: configuration.id,
-          from: configuration.from,
-          to: configuration.to,
+          from,
+          to,
           deletedRecords,
         })
       }

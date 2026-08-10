@@ -1,4 +1,8 @@
-/// <reference types="vite/types/importMeta.d.ts" />
+/// <reference types="vite/client" />
+
+interface ImportMetaEnv {
+  readonly VITE_KIBANA_URL?: string
+}
 
 // https://lucide.dev/guide/advanced/aliased-names
 declare module 'lucide-react' {

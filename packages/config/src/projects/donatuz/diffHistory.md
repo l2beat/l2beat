@@ -1,3 +1,92 @@
+Generated with discovered.json: 0x3bddf4b166e90ca935b0cb5649ef135820405ded
+
+# Diff at Fri, 12 Jun 2026 10:18:45 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1765381169
+- current timestamp: 1765381169
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765381169 (main branch discovery), not current.
+
+```diff
+    EOA  (base:0xb02b6c8e9970D7Fd54a000a95AC4fBAA3bb11288) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x0cfa939fe8b3c0e2161956bdae6d23ba37f8b9e6
+
+# Diff at Tue, 09 Jun 2026 12:43:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1765381169
+- current timestamp: 1765381169
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1765381169 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 3 (base:0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"base:0x88dBaaeCDa265241a1BABe4A0ce69ad4957da8a2","role":".CHALLENGER"}
+      receivedPermissions.1.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.1.role:
+-        ".GUARDIAN"
++        ".CHALLENGER"
+      receivedPermissions.1.from:
+-        "base:0xb765Df9d2925a82678F4B7bc60eF5294c1604514"
++        "base:0x88dBaaeCDa265241a1BABe4A0ce69ad4957da8a2"
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.2:
++        {"permission":"interact","from":"base:0xb765Df9d2925a82678F4B7bc60eF5294c1604514","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".GUARDIAN"}
+    }
+```
+
+```diff
+    EOA  (base:0x9C5657Fd52b200b3fE7652ADF20659ec071DD8b0) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (base:0xfB04981fa938f03b82B4Ca8F5B1FAAA1A547306B) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x1bf0e468ee41e26ad3f19381b18bf503920f0427
 
 # Diff at Wed, 10 Dec 2025 15:40:46 GMT:

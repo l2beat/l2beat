@@ -1,4 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import type { ChartRange } from '~/utils/range/range'
 
@@ -20,7 +19,6 @@ export function ActivityChartRangeControls({ range, setRange }: Props) {
         { value: '1y', label: '1Y' },
         { value: 'max', label: 'MAX' },
       ]}
-      offset={-UnixTime.DAY}
     />
   )
 }

@@ -53,6 +53,8 @@ const schema = {
 
   interopConfig: 'TEXT',
   privacyInfo: 'TEXT',
+  defiInfo: 'TEXT',
+  externalDependencies: 'TEXT',
 
   tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',
@@ -93,6 +95,18 @@ export class ProjectDatabase {
         id TEXT PRIMARY KEY,
         data TEXT NOT NULL
       )`)
+  }
+
+  async transaction<T>(callback: () => Promise<T>): Promise<T> {
+    await this.query('BEGIN TRANSACTION')
+    try {
+      const result = await callback()
+      await this.query('COMMIT')
+      return result
+    } catch (error) {
+      await this.query('ROLLBACK')
+      throw error
+    }
   }
 
   async saveProject(project: BaseProject) {

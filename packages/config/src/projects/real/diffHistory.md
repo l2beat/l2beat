@@ -1,3 +1,155 @@
+Generated with discovered.json: 0x97698b2c448a11e320d8b52ebc37eede5b53b665
+
+# Diff at Fri, 12 Jun 2026 10:19:00 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1754054742
+- current timestamp: 1754054742
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754054742 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3) {
+    +++ description: None
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x4fa0216d5ef8ff8348a795f8d48e9c80ff580bb3
+
+# Diff at Tue, 09 Jun 2026 12:43:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1754054742
+- current timestamp: 1754054742
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754054742 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    contract RealFastConfirmerMultisig (eth:0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      directlyReceivedPermissions.1.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x262711cA4DA6409Da795D8af9E18DDaF47397f80) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x3648e2c562F00DeEA11B0b335Cf55C5EB2Df3A5F) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "interact"
+      receivedPermissions.1.permission:
+-        "validate"
++        "interact"
+      receivedPermissions.2.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x75feC8Bb2d99076D776A5D46D1E3d42686520eF1) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x7D9A25f61865D5A211a8be80a4Ef6bd201112717) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xC410B8657FBB2CdbF0c5c5d5128576974467ba5e) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xCD795E6003Da105f4a1E11F73fb64b58B5C0f325) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xD19ee3f6Bf22A3A23eCd25B5ED0C655a2a56F65E) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xe778F5Bf5dDB8614a1ab6321Cc557EDbC90e615f) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xf244224843657bb59A6456754992Ea973655D918) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x178c5a54b9d91676d3231ce77cb7cf747870a5a1
 
 # Diff at Fri, 26 Sep 2025 13:12:16 GMT:

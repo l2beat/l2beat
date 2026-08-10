@@ -29,7 +29,12 @@
           "where": ["!=", "#status", true]
         }
       },
-      "permissions": [{ "type": "challenge" }]
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer."
+        }
+      ]
     },
     "owner": {
       "permissions": [

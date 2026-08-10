@@ -127,7 +127,7 @@ function getPublicDaSection(
                   `/icons/${daSolutions[index].layerSlug}.png`,
                 ),
               },
-              href: `/data-availability/projects/${daSolutions[index].layerSlug}/${daSolutions[index].bridgeSlug}`,
+              href: daSolutions[index].layerHref,
             }
           : undefined,
       }),

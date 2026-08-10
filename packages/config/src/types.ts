@@ -1,4 +1,7 @@
-import type { RetryHandlerVariant, TrackedTxConfigEntry } from '@l2beat/shared'
+import type {
+  RetryHandlerVariant,
+  TrackedTxConfigEntryWithoutId,
+} from '@l2beat/shared'
 import {
   type ChainSpecificAddress,
   type CoingeckoId,
@@ -41,8 +44,13 @@ export interface TableReadyValue<T extends string = string> {
   orderHint?: number
 }
 
+export interface RegularExitWindowRisk
+  extends Pick<TableReadyValue, 'value' | 'sentiment'> {
+  description: string
+}
+
 export interface ExitWindowRisk extends TableReadyValue {
-  regular?: Pick<TableReadyValue, 'value' | 'sentiment'>
+  regular?: RegularExitWindowRisk
 }
 
 export interface ProjectTechnologyChoice {
@@ -50,8 +58,71 @@ export interface ProjectTechnologyChoice {
   description: string
   references: ReferenceLink[]
   risks: ProjectRisk[]
+  sequencerSetSpec?: ProjectSequencerSetSpec
+  inclusionDelayChart?: ProjectInclusionDelayChart
+  inclusionDelayChartDescription?: string
+  censorshipResistance?: string
   isIncomplete?: boolean
   isUnderReview?: boolean
+}
+
+export interface ProjectSequencerSetSpec {
+  blockTime?: TableReadyValue
+  proposerRotationTime?: TableReadyValue
+  committeeRotationTime?: TableReadyValue
+  sequencerCount?: TableReadyValue
+  blockProductionAccess?: TableReadyValue
+  stakePerValidator?: TableReadyValue
+  rateLimit?: TableReadyValue
+  deterministicCrGadget?: TableReadyValue
+  additionalCrGadgets?: TableReadyValue
+}
+
+export type ProjectInclusionDelayChart =
+  | ProjectEthereumLikeInclusionDelayChart
+  | ProjectCommitteeLikeInclusionDelayChart
+  | ProjectSpanLikeInclusionDelayChart
+
+interface ProjectInclusionDelayChartBase {
+  target: number
+  maxCensorFraction: number
+  stakeDistribution?: ProjectInclusionDelayChartStakeDistribution
+}
+
+export interface ProjectInclusionDelayChartStakeDistribution {
+  stakeToken: string
+  totalStake: number
+  entities: ProjectInclusionDelayChartEntityStake[]
+}
+
+export interface ProjectInclusionDelayChartEntityStake {
+  name: string
+  stake: number
+}
+
+export interface ProjectEthereumLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'ethereumlike'
+  validatorCount: number
+  slotSeconds: number
+}
+
+export interface ProjectCommitteeLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'committeelike'
+  validatorCount: number
+  committeeSize: number
+  epochSlots: number
+  slotSeconds: number
+  blockingThreshold: number
+}
+
+export interface ProjectSpanLikeInclusionDelayChart
+  extends ProjectInclusionDelayChartBase {
+  type: 'spanlike'
+  validatorCount: number
+  spanBlocks: number
+  blockSeconds: number
 }
 
 export interface ReferenceLink {
@@ -120,6 +191,12 @@ export interface BaseProject {
   // privacy data
   privacyInfo?: ProjectPrivacyInfo
 
+  // defi data
+  defiInfo?: ProjectDefiInfo
+
+  // external dependency data
+  externalDependencies?: ProjectExternalDependency[]
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -127,7 +204,7 @@ export interface BaseProject {
   livenessInfo?: ProjectLivenessInfo
   livenessConfig?: ProjectLivenessConfig
   costsInfo?: ProjectCostsInfo
-  trackedTxsConfig?: Omit<TrackedTxConfigEntry, 'id'>[]
+  trackedTxsConfig?: TrackedTxConfigEntryWithoutId[]
   daTrackingConfig?: ProjectDaTrackingConfig[]
   ecosystemInfo?: ProjectEcosystemInfo
   ecosystemConfig?: ProjectEcosystemConfig
@@ -166,6 +243,7 @@ export interface ProjectStatuses {
 export interface ProjectDisplay {
   description: string
   detailedDescription?: string
+  references?: ReferenceLink[]
   links: ProjectLinks
   badges: Badge[]
   redWarning?: ProjectRedWarning
@@ -295,6 +373,7 @@ export type ChainApiConfig =
   | ChainBasicApi<'degate3'>
   | ChainBasicApi<'fuel'>
   | ChainBasicApi<'svm-rpc'>
+  | ChainBasicApi<'aztec-rpc'>
   | ChainExplorerApi<'blockscout'>
   | ChainExplorerApi<'blockscoutV2'>
   | ChainExplorerApi<'routescan'>
@@ -404,10 +483,10 @@ export type ProjectScalingCategory =
 export interface ProjectScalingProofSystem {
   /** Type of proof system */
   type: 'Optimistic' | 'Validity'
-  /** Name of the proof system. Only one of name or zkCatalogId should be provided. */
+  /** Custom display name of the proof system. Derived from the ZK Catalog projects' names when not set. */
   name?: string
-  /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
-  zkCatalogId?: string
+  /** Ids of the ZK Catalog projects describing the proof system. */
+  zkCatalogIds?: ProjectId[]
   /** Challenge protocol of the proof system. Configured only for optimistic proof systems. */
   challengeProtocol?: 'Interactive' | 'Single-step'
 }
@@ -880,14 +959,64 @@ export interface TrustedSetup {
 
 // #endregion
 
+// #region defi data
+
+export type ProjectDefiCategory = 'DEX' | 'Oracle' | 'Stablecoin'
+
+export interface ProjectDefiInfo {
+  /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
+  category: ProjectDefiCategory
+}
+
+export type ProjectExternalDependency =
+  | {
+      type: 'tracked'
+      /** An L2BEAT project this project depends on. */
+      projectId: ProjectId
+      /** How this project depends on the referenced project. */
+      description: string
+    }
+  | {
+      type: 'not-tracked'
+      /** An external dependency that is not represented by an L2BEAT project. */
+      name: string
+      /** Icon slug under /icons, e.g. "reth" for /icons/reth.png. */
+      icon: string
+      /** How this project depends on the external dependency. */
+      description: string
+    }
+
+// #endregion
+
 // #region privacy data
 
 export interface ProjectPrivacyInfo {
-  trustedSetup: TrustedSetup
   tokens: ProjectPrivacyToken[]
+  summaryTrackedItemName?: string
+  exitWindow: PrivacyExitWindow
+  reproducibility: PrivacySummaryValue
+  privacy: PrivacySummaryValue
   attributes?: PrivacyAttribute[]
+  /**
+   * Privacy-specific quantum-resistance flag. Distinct in meaning from
+   * ProjectZkCatalogInfo.quantumResistant
+   */
+  quantumResistant?: true
   riskSummary?: string
-  upgradesAndGovernance?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
+}
+
+export interface PrivacyExitWindow extends ExitWindowRisk {
+  description: string
+  walkawayTest: PrivacyWalkawayTest
+}
+
+export type PrivacyWalkawayTest =
+  | { passed: true }
+  | { passed: false; reason: string }
+
+export interface PrivacySummaryValue extends TableReadyValue {
+  description: string
 }
 
 export interface PrivacyAttribute {
@@ -944,6 +1073,22 @@ export type PrivacyFlowExtractorConfig =
       extractor: 'railgunUnshield'
       params: {
         tokenAddress: EthereumAddress
+      }
+    }
+  | {
+      extractor: 'umbraAmount'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+  | {
+      extractor: 'zamaWrap'
+      params: Record<string, never>
+    }
+  | {
+      extractor: 'zamaUnwrap'
+      params: {
+        rate: string
       }
     }
 
@@ -1298,8 +1443,6 @@ export type InteropPluginName =
   | 'across-settlement-op'
   | 'across-settlement-orbit'
   | 'agglayer'
-  | 'allbridge'
-  | 'aori'
   | 'avalanche'
   | 'axelar'
   | 'axelar-its'
@@ -1308,11 +1451,13 @@ export type InteropPluginName =
   | 'cctp-v1'
   | 'cctp-v2'
   | 'celer'
+  | 'butternetwork'
   | 'centrifuge'
   | 'circle-gateway'
   | 'debridge'
   | 'debridge-dln'
   | 'gaszip'
+  | 'gnosisbridge'
   | 'hyperlane'
   | 'hyperlane-eco'
   | 'hyperlane-hwr'
@@ -1323,6 +1468,7 @@ export type InteropPluginName =
   | 'lighter-bridge'
   | 'layerzero-v2-ofts'
   | 'lido-wsteth'
+  | 'lifi-intents'
   | 'maker-bridge'
   | 'mayan-forwarder'
   | 'mayan-mctp'
@@ -1343,7 +1489,6 @@ export type InteropPluginName =
   | 'sorare-base'
   | 'squid-coral'
   | 'stargate'
-  | 'superform'
   | 'synthetix-bridge'
   | 'world-id'
   | 'wormhole'
@@ -1356,13 +1501,20 @@ export type InteropPluginName =
 
 export type InteropType = 'multichain' | 'intent' | 'canonical' | 'other'
 
-export interface InteropConfig {
+export interface InteropIntentConfig {
+  color: string
+  intentModel: TableReadyValue
+  userRecovery: TableReadyValue
+  solverAccess: TableReadyValue
+  settlement: TableReadyValue
+}
+
+interface InteropConfigBase {
   name?: string
   shortName?: string
   description?: string
   /** Longer markdown description visible on interop detailed pages. */
   detailedDescription?: string
-  type: InteropType
   /** If set to `unknown` we show `Unknown` for transfers time. */
   transfersTimeMode?: 'unknown'
   /** If true we show `Aggregated` as second line in table under project name. Should be configured
@@ -1385,6 +1537,17 @@ export interface InteropConfig {
    * this is intentionally a different (narrower) set than the chain page. */
   permissions?: Record<string, ProjectPermissions>
 }
+
+export type InteropConfig =
+  | (InteropConfigBase & {
+      type: 'intent'
+      /** Intent-specific properties displayed on intent bridge pages. */
+      intent: InteropIntentConfig
+    })
+  | (InteropConfigBase & {
+      type: Exclude<InteropType, 'intent'>
+      intent?: never
+    })
 
 export type InteropPlugin = {
   plugin: InteropPluginName

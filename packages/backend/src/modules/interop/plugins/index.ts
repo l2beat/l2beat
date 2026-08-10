@@ -14,11 +14,11 @@ import { AcrossPlugin } from './across/across.plugin'
 import { AcrossSettlementOpPlugin } from './across-settlement-op'
 import { AcrossSettlementOrbitPlugin } from './across-settlement-orbit'
 import { AgglayerPlugin } from './agglayer'
-import { AllbridgePlugIn } from './allbridge'
 import { AvalanchePlugin } from './avalanche'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
 import { BeefyBridgePlugin } from './beefy-bridge'
+import { ButterNetworkPlugin } from './butternetwork'
 import { CCIPConfigPlugin } from './ccip/ccip.config'
 import { CCIPPlugin } from './ccip/ccip.plugin'
 import { CCTPConfigPlugin } from './cctp/cctp.config'
@@ -31,6 +31,7 @@ import { DeBridgePlugin } from './debridge'
 import { DeBridgeDlnPlugin } from './debridge-dln'
 import { GasZipConfigPlugin } from './gaszip/gaszip.config'
 import { GasZipPlugin } from './gaszip/gaszip.plugin'
+import { GnosisBridgePlugin } from './gnosisbridge'
 import { HyperlanePlugIn } from './hyperlane'
 import { HyperlaneConfigPlugin } from './hyperlane.config'
 import { HyperlaneEcoPlugin } from './hyperlane-eco'
@@ -42,6 +43,7 @@ import { LayerZeroConfigPlugin } from './layerzero/layerzero.config'
 import { LayerZeroV2Plugin } from './layerzero/layerzero-v2.plugin'
 import { LayerZeroV2OFTsPlugin } from './layerzero/layerzero-v2-ofts.plugin'
 import { LidoWstethPlugin } from './lido-wsteth'
+import { LifiIntentsPlugin } from './lifi-intents'
 import { LighterBridgePlugin } from './lighter-bridge'
 import { LineaPlugin } from './linea'
 import { MakerBridgePlugin } from './maker-bridge'
@@ -62,7 +64,6 @@ import { RelayConfigPlugin } from './relay/relay.config'
 import { RelayPlugin } from './relay/relay.plugin'
 import { SkyBridgePlugin } from './sky-bridge'
 import { SorareBasePlugin } from './sorare-base'
-import { SquidCoralPlugin } from './squid-coral'
 import { StargatePlugin } from './stargate'
 import { SynthetixBridgePlugin } from './synthetix-bridge'
 import type { InteropPlugin } from './types'
@@ -179,15 +180,15 @@ export function createInteropPlugins(
       ),
     ],
     eventPlugins: [
-      new SquidCoralPlugin(),
       new DeBridgePlugin(deps.oneSidedChains),
       new DeBridgeDlnPlugin(deps.oneSidedChains),
       new AgglayerPlugin(),
       new CircleGatewayPlugIn(deps.configs),
       new CelerPlugIn(),
+      new ButterNetworkPlugin(),
       new MesonPlugin(),
       new CCIPPlugin(deps.configs, deps.oneSidedChains),
-      new CentriFugePlugin(),
+      new CentriFugePlugin(deps.oneSidedChains),
       {
         name: 'layerzero',
         plugins: [
@@ -215,8 +216,8 @@ export function createInteropPlugins(
           new WormholePlugin(deps.configs),
         ],
       },
-      new AllbridgePlugIn(),
       new AvalanchePlugin(),
+      new GnosisBridgePlugin(),
       new LineaPlugin(),
       {
         name: 'axelar',
@@ -266,6 +267,7 @@ export function createInteropPlugins(
         ],
       },
       new OneinchFusionPlusPlugin(),
+      new LifiIntentsPlugin(),
       new HyperliquidBridgePlugin(deps.oneSidedChains),
       new LighterBridgePlugin(deps.oneSidedChains),
       new RelayPlugin(deps.oneSidedChains),

@@ -599,61 +599,18 @@
       }
     },
     {
-      "mode": "custom",
-      "id": "unichain-sUSDS",
+      "mode": "auto",
+      "id": "unichain-sUSDS-1",
       "priceId": "susds",
       "symbol": "sUSDS",
       "name": "Savings USDS",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-        "chain": "ethereum",
-        "escrowAddress": "0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A",
+        "type": "totalSupply",
+        "address": "0xA06b10Db9F390990364A3984C04FaDf1c13691b5",
+        "chain": "unichain",
         "decimals": 18,
-        "sinceTimestamp": 1745940647
-      },
-      "valueForProject": {
-        "type": "calculation",
-        "operator": "diff",
-        "arguments": [
-          {
-            "type": "value",
-            "priceId": "susds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-              "chain": "ethereum",
-              "escrowAddress": "0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A",
-              "decimals": 18,
-              "sinceTimestamp": 1745940647
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "susds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xA06b10Db9F390990364A3984C04FaDf1c13691b5",
-              "chain": "unichain",
-              "escrowAddress": "0x7b42ed932f26509465f7ce3faf76ffce1275312f",
-              "decimals": 18,
-              "sinceTimestamp": 1747159670
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "susds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xA06b10Db9F390990364A3984C04FaDf1c13691b5",
-              "chain": "unichain",
-              "escrowAddress": "0x345E368fcCd62266B3f5F37C9a131FD1c39f5869",
-              "decimals": 18,
-              "sinceTimestamp": 1747159670
-            }
-          }
-        ]
+        "sinceTimestamp": 1746046906
       },
       "category": "stablecoin",
       "source": "canonical",
@@ -810,61 +767,18 @@
       }
     },
     {
-      "mode": "custom",
-      "id": "unichain-USDS",
+      "mode": "auto",
+      "id": "unichain-USDS-1",
       "priceId": "usds",
       "symbol": "USDS",
       "name": "USDS Stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-        "chain": "ethereum",
-        "escrowAddress": "0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A",
+        "type": "totalSupply",
+        "address": "0x7E10036Acc4B56d4dFCa3b77810356CE52313F9C",
+        "chain": "unichain",
         "decimals": 18,
-        "sinceTimestamp": 1745940647
-      },
-      "valueForProject": {
-        "type": "calculation",
-        "operator": "diff",
-        "arguments": [
-          {
-            "type": "value",
-            "priceId": "usds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-              "chain": "ethereum",
-              "escrowAddress": "0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A",
-              "decimals": 18,
-              "sinceTimestamp": 1745940647
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "usds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xA06b10Db9F390990364A3984C04FaDf1c13691b5",
-              "chain": "unichain",
-              "escrowAddress": "0x7b42Ed932f26509465F7cE3FAF76FfCe1275312f",
-              "decimals": 18,
-              "sinceTimestamp": 1747159670
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "usds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xA06b10Db9F390990364A3984C04FaDf1c13691b5",
-              "chain": "unichain",
-              "escrowAddress": "0x345E368fcCd62266B3f5F37C9a131FD1c39f5869",
-              "decimals": 18,
-              "sinceTimestamp": 1747159670
-            }
-          }
-        ]
+        "sinceTimestamp": 1745994447
       },
       "category": "stablecoin",
       "source": "canonical",

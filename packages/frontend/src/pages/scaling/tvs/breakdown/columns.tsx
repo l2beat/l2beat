@@ -1,10 +1,10 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { ChevronIcon } from '~/icons/Chevron'
 import { sourceToLabel } from '~/server/features/scaling/tvs/utils/sourceToLabel'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { categoryToLabel } from '../../project/tvs-breakdown/components/tables/categoryToLabel'
 import { BridgedUsingCell } from '../../project/tvs-breakdown/components/tables/cells/BridgedUsingCell'
 import { TokenAddressCell } from '../../project/tvs-breakdown/components/tables/cells/TokenAddressCell'
@@ -85,7 +85,7 @@ export const columns = [
       </div>
     ),
   }),
-  columnHelper.accessor('priceUsd', {
+  columnHelper.accessor((row) => row.priceUsd.value, {
     id: 'priceUsd',
     header: 'Price',
     meta: {
@@ -94,12 +94,12 @@ export const columns = [
     cell: (ctx) => {
       return (
         <div className="font-medium text-xs">
-          {formatCurrency(ctx.row.original.priceUsd, 'usd')}
+          {formatCurrency(ctx.row.original.priceUsd.value, 'usd')}
         </div>
       )
     },
   }),
-  columnHelper.accessor('valueForProject', {
+  columnHelper.accessor((row) => row.valueForProject.value, {
     id: 'value',
     header: 'TVS-Adjusted Value',
     meta: {

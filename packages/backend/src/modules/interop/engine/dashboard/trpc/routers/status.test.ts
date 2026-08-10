@@ -10,11 +10,13 @@ describe(createStatusRouter.name, () => {
         {
           pluginName: 'plugin',
           chain: 'ethereum',
+          chainStatus: 'active' as const,
           syncMode: 'following-idle',
           toBlock: 123n,
           toTimestamp: 456,
           lastError: 'boom',
           resyncRequestedFrom: 111,
+          blocksAggregation: true,
         },
       ],
     })
@@ -25,11 +27,13 @@ describe(createStatusRouter.name, () => {
       {
         pluginName: 'plugin',
         chain: 'ethereum',
+        chainStatus: 'active',
         syncMode: 'following-idle',
         toBlock: '123',
         toTimestamp: 456,
         lastError: 'boom',
         resyncRequestedFrom: 111,
+        blocksAggregation: true,
       },
     ])
   })

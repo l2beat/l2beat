@@ -199,7 +199,7 @@ describe(PrivacyPriceIndexer.name, () => {
     })
   })
 
-  describe(PrivacyPriceIndexer.prototype.removeData.name, () => {
+  describe(PrivacyPriceIndexer.prototype.trimData.name, () => {
     it('deletes records for configurations in time range', async () => {
       const privacyPriceRepository = mockObject<Database['privacyPrice']>({
         deleteByConfigs: mockFn().returns(5),
@@ -217,11 +217,11 @@ describe(PrivacyPriceIndexer.name, () => {
       )
 
       const removalConfigs = [
-        { id: 'config-1', from: 100, to: 200 },
-        { id: 'config-2', from: 300, to: 400 },
+        { id: 'config-1', range: [100, 200] as [number, number] },
+        { id: 'config-2', range: [300, 400] as [number, number] },
       ]
 
-      await indexer.removeData(removalConfigs)
+      await indexer.trimData(removalConfigs)
 
       expect(privacyPriceRepository.deleteByConfigs).toHaveBeenOnlyCalledWith([
         {
@@ -253,9 +253,33 @@ describe(PrivacyPriceIndexer.name, () => {
         Logger.SILENT,
       )
 
-      await indexer.removeData([])
+      await indexer.trimData([])
 
       expect(privacyPriceRepository.deleteByConfigs).not.toHaveBeenCalled()
+    })
+  })
+
+  describe(PrivacyPriceIndexer.prototype.wipeData.name, () => {
+    it('deletes all records for the given configurations', async () => {
+      const privacyPriceRepository = mockObject<Database['privacyPrice']>({
+        deleteByConfigIds: mockFn().returns(5),
+      })
+      const indexer = new PrivacyPriceIndexer(
+        {
+          configurations: [config('config-1', 'ethereum')],
+          priceProvider: mockObject<PriceProvider>({}),
+          db: mockDatabase({ privacyPrice: privacyPriceRepository }),
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
+
+      await indexer.wipeData([{ id: 'config-1' }, { id: 'config-2' }])
+
+      expect(privacyPriceRepository.deleteByConfigIds).toHaveBeenOnlyCalledWith(
+        ['config-1', 'config-2'],
+      )
     })
   })
 

@@ -11,6 +11,7 @@ const discovery = new ProjectDiscovery('rari')
 
 export const rari: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1706285474), // 2024-01-26T16:11:14Z
+  archivedAt: UnixTime(1782813784), // Tue, 30 Jun 2026 10:03:04 GMT
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   additionalPurposes: ['NFT'],
   hostChain: 'arbitrum',
@@ -78,6 +79,7 @@ export const rari: ScalingProject = orbitStackL3({
       { type: 'blockscout', url: 'https://rari.calderaexplorer.xyz/api' },
       { type: 'blockscoutV2', url: 'https://rari.calderaexplorer.xyz/api/v2' },
     ],
+    untilTimestamp: UnixTime(1782813784), // Tue, 30 Jun 2026 10:03:04 GMT
   },
   nonTemplateTechnology: {
     sequencing: ESPRESSO,

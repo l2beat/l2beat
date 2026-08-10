@@ -55,6 +55,7 @@ interface TanStackTableProps<TData extends RowData> {
   searchPlaceholder?: string
   isSearchPending?: boolean
   fillHeight?: boolean
+  scrollToRowId?: string
 }
 
 export function TanStackTable<TData extends RowData>({
@@ -77,6 +78,7 @@ export function TanStackTable<TData extends RowData>({
   searchPlaceholder = 'Search',
   isSearchPending = false,
   fillHeight = false,
+  scrollToRowId,
 }: TanStackTableProps<TData>) {
   const pageCount = Math.max(table.getPageCount(), 1)
   const pageIndex = table.getState().pagination.pageIndex
@@ -145,6 +147,31 @@ export function TanStackTable<TData extends RowData>({
       resizeObserver.disconnect()
     }
   }, [syncScrollState])
+
+  // Scroll to a deep-linked row once it exists in the model. Navigates to the
+  // row's page first if pagination hides it, then re-runs (via `rows`) to scroll.
+  const autoScrolledRowIdRef = useRef<string | undefined>(undefined)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `rows` re-triggers this effect after data loads or the page changes
+  useEffect(() => {
+    if (!scrollToRowId || autoScrolledRowIdRef.current === scrollToRowId) {
+      return
+    }
+    const allRows = table.getPrePaginationRowModel().rows
+    const targetIndex = allRows.findIndex((row) => row.id === scrollToRowId)
+    if (targetIndex === -1) {
+      return
+    }
+    const pageSize = table.getState().pagination.pageSize
+    const targetPage = Math.floor(targetIndex / pageSize)
+    if (table.getState().pagination.pageIndex !== targetPage) {
+      table.setPageIndex(targetPage)
+      return
+    }
+    autoScrolledRowIdRef.current = scrollToRowId
+    rowVirtualizer.scrollToIndex(targetIndex - targetPage * pageSize, {
+      align: 'center',
+    })
+  }, [scrollToRowId, rows, table, rowVirtualizer])
 
   return (
     <div

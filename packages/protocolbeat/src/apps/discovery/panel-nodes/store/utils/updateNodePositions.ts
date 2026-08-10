@@ -33,19 +33,9 @@ export function updateNodePositions(
   for (const node of nextState.nodes) {
     const previousNode = previousNodes.get(node.id)
     const start = nextState.positionsBeforeMove[node.id]
-    const hiddenFieldsHeight =
-      node.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
-    const visibleFieldsCount = Math.max(
-      0,
-      node.fields.length - node.hiddenFields.length,
-    )
     const nextBox: Box = {
       width: node.box.width,
-      height:
-        HEADER_HEIGHT +
-        visibleFieldsCount * FIELD_HEIGHT +
-        BOTTOM_PADDING +
-        hiddenFieldsHeight,
+      height: getNodeHeight(node),
       x: start ? start.x + dx : node.box.x,
       y: start ? start.y + dy : node.box.y,
     }
@@ -55,6 +45,7 @@ export function updateNodePositions(
     if (boxMoved) {
       movedIds.add(node.id)
     }
+    indexSubnodes(node, nextBox, boxMoved, nextBoxes, movedIds)
   }
 
   // Pass 2: rebuild nodes lazily. Reuse refs whenever the data is
@@ -144,13 +135,97 @@ export function updateNodePositions(
     }
   }
 
-  if (!anyNodeChanged) {
+  // Members of opened groups live nested inside their group. Top-level boxes
+  // are handled above; here we drag the nested ones whose ids are being moved.
+  // Their display geometry is recomputed by the render graph.
+  let nestedMoved = false
+  const positions = nextState.positionsBeforeMove
+  for (let n = 0; n < nextNodes.length; n++) {
+    const node = nextNodes[n] as Node
+    if (node.subnodes.length === 0) {
+      continue
+    }
+    const subnodes = shiftSubnodes(node.subnodes, positions, dx, dy)
+    if (subnodes !== node.subnodes) {
+      nextNodes[n] = { ...node, subnodes }
+      nestedMoved = true
+    }
+  }
+
+  if (!anyNodeChanged && !nestedMoved) {
     return nextState
   }
 
   return {
     ...nextState,
     nodes: nextNodes,
+  }
+}
+
+function shiftSubnodes(
+  subnodes: readonly Node[],
+  positions: State['positionsBeforeMove'],
+  dx: number,
+  dy: number,
+): readonly Node[] {
+  let changed = false
+  const next = subnodes.map((node) => {
+    const start = positions[node.id]
+    const movedSubnodes =
+      node.subnodes.length > 0
+        ? shiftSubnodes(node.subnodes, positions, dx, dy)
+        : node.subnodes
+    const height = getNodeHeight(node)
+    const resized = height !== node.box.height
+    if (start !== undefined) {
+      changed = true
+      return {
+        ...node,
+        box: { ...node.box, x: start.x + dx, y: start.y + dy, height },
+        subnodes: movedSubnodes,
+      }
+    }
+    if (movedSubnodes !== node.subnodes || resized) {
+      changed = true
+      return {
+        ...node,
+        box: resized ? { ...node.box, height } : node.box,
+        subnodes: movedSubnodes,
+      }
+    }
+    return node
+  })
+  return changed ? next : subnodes
+}
+
+function getNodeHeight(node: Node): number {
+  const hiddenFieldsHeight =
+    node.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
+  const visibleFieldsCount = Math.max(
+    0,
+    node.fields.length - node.hiddenFields.length,
+  )
+  return (
+    HEADER_HEIGHT +
+    visibleFieldsCount * FIELD_HEIGHT +
+    BOTTOM_PADDING +
+    hiddenFieldsHeight
+  )
+}
+
+function indexSubnodes(
+  node: Node,
+  box: Box,
+  moved: boolean,
+  boxes: Map<string, Box>,
+  movedIds: Set<string>,
+): void {
+  for (const subnode of node.subnodes) {
+    boxes.set(subnode.id, box)
+    if (moved) {
+      movedIds.add(subnode.id)
+    }
+    indexSubnodes(subnode, box, moved, boxes, movedIds)
   }
 }
 
@@ -178,7 +253,7 @@ function connectionsEqual(a: Connection, b: Connection): boolean {
   )
 }
 
-function processConnection(
+export function processConnection(
   index: number,
   from: { x: number; y: number; width: number },
   to: { x: number; y: number; width: number },

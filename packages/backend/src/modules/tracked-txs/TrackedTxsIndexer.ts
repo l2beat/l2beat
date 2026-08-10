@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import { clampRangeToDay, UnixTime } from '@l2beat/shared-pure'
+import { clampRangeToDay } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import uniq from 'lodash/uniq'
 import type { TrackedTxProject } from '../../config/Config'
@@ -9,7 +9,8 @@ import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
-  RemovalConfiguration,
+  TrimRemovalConfiguration,
+  WipeRemovalConfiguration,
 } from '../../tools/uif/multi/types'
 import type { TrackedTxsClient } from './TrackedTxsClient'
 import type { TxUpdaterInterface } from './types/TxUpdaterInterface'
@@ -94,35 +95,42 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
     }
   }
 
-  override async removeData(configurations: RemovalConfiguration[]) {
+  override async wipeData(configurations: WipeRemovalConfiguration[]) {
+    const ids = configurations.map((c) => c.id)
+    await this.$.db.liveness.deleteByConfigIds(ids)
+    await this.$.db.l2Cost.deleteByConfigIds(ids)
+  }
+
+  override async trimData(configurations: TrimRemovalConfiguration[]) {
     for (const configuration of configurations) {
+      const [from, to] = configuration.range
       const [livenessDeletedRecords, l2CostsDeletedRecords] = await Promise.all(
         [
           this.$.db.liveness.deleteByConfigInTimeRange(
             configuration.id,
-            UnixTime(configuration.from),
-            UnixTime(configuration.to),
+            from,
+            to,
           ),
           this.$.db.l2Cost.deleteByConfigInTimeRange(
             configuration.id,
-            UnixTime(configuration.from),
-            UnixTime(configuration.to),
+            from,
+            to,
           ),
         ],
       )
 
       if (livenessDeletedRecords > 0) {
         this.logger.info('Deleted liveness records', {
-          from: configuration.from,
-          to: configuration.to,
+          from,
+          to,
           id: configuration.id,
           livenessDeletedRecords,
         })
       }
       if (l2CostsDeletedRecords > 0) {
         this.logger.info('Deleted L2 costs records', {
-          from: configuration.from,
-          to: configuration.to,
+          from,
+          to,
           id: configuration.id,
           l2CostsDeletedRecords,
         })

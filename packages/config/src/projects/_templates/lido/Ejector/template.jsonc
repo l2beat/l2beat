@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Submits triggerable full-withdrawal requests for validators. Node operators may voluntarily eject their own validators, while ValidatorStrikes can eject validators for poor performance.",
+  "category": "core",
+  "fields": {
+    "accessControl": {
+      "handler": { "type": "accessControl", "includeEmptyRoles": true }
+    },
+    "defaultAdmins": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        { "type": "interact", "description": "grant or revoke Ejector roles." }
+      ]
+    },
+    "pausers": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSE_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause validator ejection requests."
+        }
+      ]
+    },
+    "resumers": {
+      "copy": "accessControl",
+      "edit": ["get", "RESUME_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "resume validator ejection requests."
+        }
+      ]
+    },
+    "assetRecoverers": {
+      "copy": "accessControl",
+      "edit": ["get", "RECOVERER_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "recover ETH, ERC-20, ERC-721 and ERC-1155 assets accidentally held by Ejector, subject to protected-token restrictions."
+        }
+      ]
+    },
+    "STRIKES": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "request the full withdrawal of a validator identified as a poor performer."
+        }
+      ]
+    }
+  }
+}

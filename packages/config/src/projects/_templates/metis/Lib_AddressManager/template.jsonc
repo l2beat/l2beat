@@ -100,7 +100,8 @@
       },
       "permissions": [
         {
-          "type": "propose"
+          "type": "interact",
+          "description": "Allowed to post new state roots of the current layer to the host chain."
         }
       ]
     },
@@ -141,7 +142,7 @@
       },
       "permissions": [
         {
-          "type": "stateDeleterMetis",
+          "type": "interact",
           "description": "Can delete batches from the StateCommitmentChain."
         }
       ]
@@ -182,7 +183,8 @@
     //   },
     //   "permissions": [
     //     {
-    //       "type": "sequence"
+    //       "type": "interact",
+    //       "description": "Allowed to commit transactions from the current layer to the host chain."
     //     }
     //   ]
     // },
@@ -198,7 +200,8 @@
         },
         "permissions": [
           {
-            "type": "sequence"
+            "type": "interact",
+            "description": "Allowed to commit transactions from the current layer to the host chain."
           }
         ]
       }

@@ -26,6 +26,8 @@ export const cronoszkevm: ScalingProject = zkStackL2({
     name: 'Cronos zkEVM',
     aliases: ['Crypto.com'],
     slug: 'cronoszkevm',
+    headerWarning:
+      'Cronos zkEVM is sunsetting. See the [announcement](https://x.com/CronosNetwork/status/2062006553595785239) - withdrawals via the official bridge are open until June 3, 2027.',
     description:
       'Cronos zkEVM is a general-purpose Validium on Ethereum built on the ZK Stack, scaling the existing portfolio of Cronos apps and chains.',
     links: {

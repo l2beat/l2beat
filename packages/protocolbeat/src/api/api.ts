@@ -1,3 +1,7 @@
+import {
+  AnalyzerResultApiResponse,
+  AnalyzersApiResponse,
+} from '@l2beat/shared-pure'
 import { withoutUndefinedKeys } from '../utils/withoutUndefinedKeys'
 import type {
   ApiCodeResponse,
@@ -11,6 +15,8 @@ import type {
   ApiHandlersResponse,
   ApiListTemplatesResponse,
   ApiPreviewResponse,
+  ApiProjectLayoutResponse,
+  ApiProjectLayoutsResponse,
   ApiProjectResponse,
   ApiProjectsResponse,
   ApiTemplateFileResponse,
@@ -174,6 +180,56 @@ export async function getDiffHistory(
   return data as ApiDiffHistoryResponse
 }
 
+export async function listProjectLayouts(
+  project: string,
+): Promise<ApiProjectLayoutsResponse> {
+  const res = await fetch(`/api/projects/${project}/layouts`)
+  if (!res.ok) {
+    throw new Error(await readErrorMessage(res))
+  }
+  const data = await res.json()
+  return data as ApiProjectLayoutsResponse
+}
+
+export async function getProjectLayout(
+  project: string,
+  name: string,
+): Promise<ApiProjectLayoutResponse> {
+  const res = await fetch(
+    `/api/projects/${project}/layouts/${encodeURIComponent(name)}`,
+  )
+  if (!res.ok) {
+    throw new Error(await readErrorMessage(res))
+  }
+  const data = await res.json()
+  return data as ApiProjectLayoutResponse
+}
+
+export async function saveProjectLayout(
+  project: string,
+  name: string,
+  layout: unknown,
+  overwrite = false,
+): Promise<ApiProjectLayoutResponse> {
+  const res = await fetch(
+    `/api/projects/${project}/layouts/${encodeURIComponent(name)}`,
+    {
+      method: 'PUT',
+      body: JSON.stringify({ layout, overwrite }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  )
+
+  if (!res.ok) {
+    throw new Error(await readErrorMessage(res))
+  }
+
+  const data = await res.json()
+  return data as ApiProjectLayoutResponse
+}
+
 export async function getConfigSyncStatus(
   project: string,
 ): Promise<ApiConfigSyncStatusResponse> {
@@ -259,6 +315,37 @@ export async function getHandlers(): Promise<ApiHandlersResponse> {
   return data as ApiHandlersResponse
 }
 
+export async function getAnalyzers(): Promise<AnalyzersApiResponse> {
+  const res = await fetch('/api/analyze/analyzers')
+  if (!res.ok) {
+    throw new Error(await readErrorMessage(res))
+  }
+  const data = await res.json()
+  return AnalyzersApiResponse.parse(data)
+}
+
+export async function runAnalyzer(
+  project: string,
+  address: string,
+  analyzerId: string,
+  entrypoint: string,
+): Promise<AnalyzerResultApiResponse> {
+  const res = await fetch(`/api/projects/${project}/analyze/${address}`, {
+    method: 'POST',
+    body: JSON.stringify({ analyzerId, entrypoint }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (!res.ok) {
+    throw new Error(await readErrorMessage(res))
+  }
+
+  const data = await res.json()
+  return AnalyzerResultApiResponse.parse(data)
+}
+
 export async function createShape(
   chain: string,
   addresses: string[],
@@ -299,4 +386,17 @@ export function executeFindMinters(address: string): EventSource {
     address,
   })
   return new EventSource(`/api/terminal/find-minters?${params}`)
+}
+
+async function readErrorMessage(res: Response): Promise<string> {
+  try {
+    const data = (await res.json()) as {
+      error?: string
+      errors?: string
+      message?: string
+    }
+    return data.error ?? data.errors ?? data.message ?? res.statusText
+  } catch {
+    return res.statusText
+  }
 }

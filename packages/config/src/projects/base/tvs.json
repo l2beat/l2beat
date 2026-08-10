@@ -117,6 +117,26 @@
     },
     {
       "mode": "auto",
+      "id": "base-AMO",
+      "priceId": "amino",
+      "symbol": "AMO",
+      "name": "Amino",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32677/large/IMG_6956.png?1698920127",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1a2EB478FA07125C9935A77b3C03a82470801E30",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1698969600,
+        "untilTimestamp": 1747440000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-AMP",
       "priceId": "amp-token",
       "symbol": "AMP",
@@ -905,6 +925,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-ELON",
+      "priceId": "dogelon-mars",
+      "symbol": "ELON",
+      "name": "Dogelon",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14962/large/6GxcPRo3_400x400.jpg?1696514622",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x761D38e5ddf6ccf6Cf7c55759d5210750B5D60F3",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1686793895
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-ENA-1",
       "priceId": "ethena",
       "symbol": "ENA",
@@ -1260,6 +1299,25 @@
       },
       "category": "other",
       "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-fxUSD",
+      "priceId": "f-x-protocol-fxusd",
+      "symbol": "fxUSD",
+      "name": "f(x) USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36202/large/fxUSD.jpg?1710833113",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x085780639CC2cACd35E474e71f4d000e2405d8f6",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1710979200
+      },
+      "category": "stablecoin",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -2804,61 +2862,18 @@
       "isAssociated": false
     },
     {
-      "mode": "custom",
-      "id": "base-sUSDS",
+      "mode": "auto",
+      "id": "base-sUSDS-1",
       "priceId": "susds",
       "symbol": "sUSDS",
       "name": "Savings USDS",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-        "chain": "ethereum",
-        "escrowAddress": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
+        "type": "totalSupply",
+        "address": "0x5875eEE11Cf8398102FdAd704C9E96607675467a",
+        "chain": "base",
         "decimals": 18,
         "sinceTimestamp": 1734048000
-      },
-      "valueForProject": {
-        "type": "calculation",
-        "operator": "diff",
-        "arguments": [
-          {
-            "type": "value",
-            "priceId": "susds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-              "chain": "ethereum",
-              "escrowAddress": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
-              "decimals": 18,
-              "sinceTimestamp": 1734048000
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "susds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0x5875eEE11Cf8398102FdAd704C9E96607675467a",
-              "chain": "base",
-              "escrowAddress": "0x1601843c5E9bC251A3272907010AFa41Fa18347E",
-              "decimals": 18,
-              "sinceTimestamp": 1738625028
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "susds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0x5875eEE11Cf8398102FdAd704C9E96607675467a",
-              "chain": "base",
-              "escrowAddress": "0x2917956eFF0B5eaF030abDB4EF4296DF775009cA",
-              "decimals": 18,
-              "sinceTimestamp": 1738625028
-            }
-          }
-        ]
       },
       "category": "stablecoin",
       "source": "canonical",
@@ -2923,6 +2938,25 @@
         "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "decimals": 18,
         "sinceTimestamp": 1686793895
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-SYND",
+      "priceId": "syndicate-3",
+      "symbol": "SYND",
+      "name": "Syndicate",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/69122/large/synd.png?1757576144",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1bAB804803159aD84b8854581AA53AC72455614E",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1758153600
       },
       "category": "other",
       "source": "canonical",
@@ -3269,61 +3303,18 @@
       }
     },
     {
-      "mode": "custom",
-      "id": "base-USDS",
+      "mode": "auto",
+      "id": "base-USDS-1",
       "priceId": "usds",
       "symbol": "USDS",
       "name": "USDS Stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-        "chain": "ethereum",
-        "escrowAddress": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
+        "type": "totalSupply",
+        "address": "0x820C137fa70C8691f0e44Dc420a5e53c168921Dc",
+        "chain": "base",
         "decimals": 18,
-        "sinceTimestamp": 1728571115
-      },
-      "valueForProject": {
-        "type": "calculation",
-        "operator": "diff",
-        "arguments": [
-          {
-            "type": "value",
-            "priceId": "usds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-              "chain": "ethereum",
-              "escrowAddress": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
-              "decimals": 18,
-              "sinceTimestamp": 1728571115
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "usds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0x820C137fa70C8691f0e44Dc420a5e53c168921Dc",
-              "chain": "base",
-              "escrowAddress": "0x1601843c5E9bC251A3272907010AFa41Fa18347E",
-              "decimals": 18,
-              "sinceTimestamp": 1738625028
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "usds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0x820C137fa70C8691f0e44Dc420a5e53c168921Dc",
-              "chain": "base",
-              "escrowAddress": "0x2917956eFF0B5eaF030abDB4EF4296DF775009cA",
-              "decimals": 18,
-              "sinceTimestamp": 1738625028
-            }
-          }
-        ]
+        "sinceTimestamp": 1728558915
       },
       "category": "stablecoin",
       "source": "canonical",
@@ -3650,7 +3641,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-wOETH",
+      "id": "base-wOETH-1",
       "priceId": "wrapped-oeth",
       "symbol": "wOETH",
       "name": "Wrapped OETH",

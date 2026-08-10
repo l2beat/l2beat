@@ -38,5 +38,10 @@
     "hash": "0x8c1e8d72f479be706a4a4e2347f8720df282d156fe80278400864c17c67e2490",
     "address": "ethereal:0xF0597CF73cBdB97484c439533bdDBF733BfDf84B",
     "blockNumber": 4259455
+  },
+  "PerpEngine_v2.sol": {
+    "hash": "0xf4bcc9541f9421e3bbdd03a5a256bf9f7ab28d0e6998a3485d9e6166620a6f6c",
+    "address": "ethereal:0x5e26faca3898F6fF88A6ae0Be08a290Ad9f3C3c8",
+    "blockNumber": 5130844
   }
 }

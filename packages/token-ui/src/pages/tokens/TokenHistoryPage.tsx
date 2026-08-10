@@ -1,10 +1,12 @@
 import { formatAddress, UnixTime } from '@l2beat/shared-pure'
 import type { RouterOutputs } from '@l2beat/token-backend'
+import { useQuery } from '@tanstack/react-query'
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   EyeIcon,
   HistoryIcon,
+  SearchIcon,
 } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { useEffect, useMemo, useState } from 'react'
@@ -25,6 +27,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from '~/components/core/Empty'
+import { Input } from '~/components/core/Input'
 import {
   Sheet,
   SheetContent,
@@ -43,8 +46,9 @@ import {
 import { Diff, ObjectDiff } from '~/components/Diff'
 import { IngestionLog } from '~/components/IngestionLog'
 import { LoadingState } from '~/components/LoadingState'
+import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { AppLayout } from '~/layouts/AppLayout'
-import { api } from '~/react-query/trpc'
+import { useTRPC } from '~/react-query/trpc'
 import { diff } from '~/utils/getDiff'
 
 const PAGE_SIZE = 100
@@ -57,6 +61,7 @@ interface TokenInfo {
   primary: ReactNode
   secondary?: ReactNode
   iconUrl?: string
+  icon?: ReactNode
 }
 
 interface AbstractTokenInfo {
@@ -64,24 +69,35 @@ interface AbstractTokenInfo {
   iconUrl: string | null
 }
 
+type DeployedTokenLookupEntry =
+  RouterOutputs['deployedTokens']['getByChainAndAddress'][number]
+
 export function TokenHistoryPage() {
+  const trpc = useTRPC()
   const [page, setPage] = useState(1)
+  const [search, setSearch] = useState('')
+  const debouncedSearch = useDebouncedValue(search.trim(), 300)
   const [selectedEntry, setSelectedEntry] = useState<HistoryEntry>()
-  const { data: historyPage, isLoading } = api.tokenDbHistory.getPage.useQuery(
-    { page, pageSize: PAGE_SIZE },
-    {
-      refetchInterval: 10_000,
-      refetchOnMount: 'always',
-      staleTime: 0,
-    },
+  const { data: historyPage, isLoading } = useQuery(
+    trpc.tokenDbHistory.getPage.queryOptions(
+      {
+        page,
+        pageSize: PAGE_SIZE,
+        search: debouncedSearch || undefined,
+      },
+      {
+        refetchInterval: 10_000,
+        refetchOnMount: 'always',
+        staleTime: 0,
+      },
+    ),
   )
-  const { data: abstractTokens } = api.abstractTokens.getAll.useQuery(
-    undefined,
-    {
+  const { data: abstractTokens } = useQuery(
+    trpc.abstractTokens.getAll.queryOptions(undefined, {
       refetchInterval: 10_000,
       refetchOnMount: 'always',
       staleTime: 0,
-    },
+    }),
   )
   const abstractTokensById = useMemo(
     () =>
@@ -95,6 +111,25 @@ export function TokenHistoryPage() {
   )
 
   const entries = historyPage?.entries ?? []
+  const relationTokenKeys = useMemo(
+    () => getRelationTokenKeys(entries),
+    [entries],
+  )
+  const { data: relationTokens } = useQuery(
+    trpc.deployedTokens.getByChainAndAddress.queryOptions(relationTokenKeys, {
+      enabled: relationTokenKeys.length > 0,
+      refetchInterval: 10_000,
+      refetchOnMount: 'always',
+      staleTime: 0,
+    }),
+  )
+  const deployedTokensByKey = useMemo(
+    () =>
+      new Map(
+        relationTokens?.map((entry) => [tokenKey(entry.deployedToken), entry]),
+      ),
+    [relationTokens],
+  )
   const totalCount = historyPage?.totalCount ?? 0
   const pageCount = historyPage
     ? Math.max(1, Math.ceil(historyPage.totalCount / PAGE_SIZE))
@@ -116,35 +151,49 @@ export function TokenHistoryPage() {
               {formatHistoryRange(page, totalCount)}
             </CardDescription>
           )}
-          {historyPage && totalCount > PAGE_SIZE && (
-            <CardAction>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={page <= 1}
-                  onClick={() => setPage((page) => Math.max(1, page - 1))}
-                >
-                  <ChevronLeftIcon />
-                  Previous
-                </Button>
-                <div className="whitespace-nowrap text-muted-foreground text-sm tabular-nums">
-                  Page {page} of {pageCount}
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={page >= pageCount}
-                  onClick={() =>
-                    setPage((page) => Math.min(pageCount, page + 1))
-                  }
-                >
-                  Next
-                  <ChevronRightIcon />
-                </Button>
+          <CardAction>
+            <div className="flex flex-col items-end gap-2">
+              <div className="relative w-64">
+                <SearchIcon className="-translate-y-1/2 pointer-events-none absolute top-1/2 left-2.5 size-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search by token data..."
+                  className="h-8 pl-8"
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value)
+                    setPage(1)
+                  }}
+                />
               </div>
-            </CardAction>
-          )}
+              {historyPage && totalCount > PAGE_SIZE && (
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={page <= 1}
+                    onClick={() => setPage((page) => Math.max(1, page - 1))}
+                  >
+                    <ChevronLeftIcon />
+                    Previous
+                  </Button>
+                  <div className="whitespace-nowrap text-muted-foreground text-sm tabular-nums">
+                    Page {page} of {pageCount}
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={page >= pageCount}
+                    onClick={() =>
+                      setPage((page) => Math.min(pageCount, page + 1))
+                    }
+                  >
+                    Next
+                    <ChevronRightIcon />
+                  </Button>
+                </div>
+              )}
+            </div>
+          </CardAction>
         </CardHeader>
         <CardContent className="min-h-0 flex-1 overflow-y-auto">
           {isLoading ? (
@@ -155,7 +204,11 @@ export function TokenHistoryPage() {
                 <EmptyMedia variant="icon">
                   <HistoryIcon />
                 </EmptyMedia>
-                <EmptyTitle>No history entries</EmptyTitle>
+                <EmptyTitle>
+                  {debouncedSearch
+                    ? 'No entries match your search'
+                    : 'No history entries'}
+                </EmptyTitle>
               </EmptyHeader>
             </Empty>
           ) : (
@@ -172,7 +225,11 @@ export function TokenHistoryPage() {
               </TableHeader>
               <TableBody>
                 {entries.map((entry) => {
-                  const token = getTokenInfo(entry, abstractTokensById)
+                  const token = getTokenInfo(
+                    entry,
+                    abstractTokensById,
+                    deployedTokensByKey,
+                  )
 
                   return (
                     <TableRow key={entry.id}>
@@ -184,15 +241,16 @@ export function TokenHistoryPage() {
                       </TableCell>
                       <TableCell className="max-w-[360px] whitespace-normal break-words">
                         <div className="flex items-center gap-2">
-                          {token.iconUrl && (
-                            <img
-                              src={token.iconUrl}
-                              alt=""
-                              width={24}
-                              height={24}
-                              className="shrink-0 rounded-full"
-                            />
-                          )}
+                          {token.icon ??
+                            (token.iconUrl && (
+                              <img
+                                src={token.iconUrl}
+                                alt=""
+                                width={24}
+                                height={24}
+                                className="shrink-0 rounded-full"
+                              />
+                            ))}
                           <div>
                             <div>{token.primary}</div>
                             {token.secondary && (
@@ -261,6 +319,7 @@ function HistoryDetails({
             </SheetHeader>
             <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 pb-4">
               <CommandDiff entry={entry} />
+              {entry.intent !== null && <IntentDetails intent={entry.intent} />}
               {entry.ingestionLog && <IngestionLog log={entry.ingestionLog} />}
             </div>
           </>
@@ -276,9 +335,21 @@ function SourceLabel({ entry }: { entry: HistoryEntry }) {
       <Badge variant={entry.source === 'manual' ? 'secondary' : 'default'}>
         {entry.source}
       </Badge>
+      {entry.intent !== null && <Badge variant="outline">intent</Badge>}
       {entry.userEmail && (
         <div className="text-muted-foreground text-xs">{entry.userEmail}</div>
       )}
+    </div>
+  )
+}
+
+function IntentDetails({ intent }: { intent: unknown }) {
+  return (
+    <div className="space-y-2 rounded-md border p-3">
+      <div className="font-medium text-sm">Intent</div>
+      <pre className="overflow-x-auto rounded bg-muted p-2 text-xs">
+        {JSON.stringify(intent, null, 2)}
+      </pre>
     </div>
   )
 }
@@ -309,8 +380,11 @@ function getChangedFields(entry: HistoryEntry) {
     case 'AddAbstractTokenCommand':
     case 'AddDeployedTokenCommand':
       return []
+    case 'AddTokenRelationCommand':
+      return ['plugin', 'bridgeType']
     case 'UpdateAbstractTokenCommand':
     case 'UpdateDeployedTokenCommand':
+    case 'UpdateTokenRelationCommand':
       return Array.from(
         new Set(
           (getCommandDifferences(entry) ?? []).map((difference) =>
@@ -320,6 +394,7 @@ function getChangedFields(entry: HistoryEntry) {
       )
     case 'DeleteAbstractTokenCommand':
     case 'DeleteDeployedTokenCommand':
+    case 'DeleteTokenRelationCommand':
       return ['deleted']
     default:
       return []
@@ -329,6 +404,7 @@ function getChangedFields(entry: HistoryEntry) {
 function getTokenInfo(
   entry: HistoryEntry,
   abstractTokensById: Map<string, AbstractTokenInfo>,
+  deployedTokensByKey: Map<string, DeployedTokenLookupEntry>,
 ): TokenInfo {
   const command = asRecord(entry.command)
   switch (entry.commandType) {
@@ -365,6 +441,22 @@ function getTokenInfo(
       return abstractInfo(asRecord(command.existing), undefined, {
         id: command.id,
       })
+    case 'AddTokenRelationCommand':
+      return relationInfo(asRecord(command.record), deployedTokensByKey)
+    case 'UpdateTokenRelationCommand':
+      return relationInfo(
+        asRecord(command.existing),
+        deployedTokensByKey,
+        asRecord(command.update),
+        asRecord(command.pk),
+      )
+    case 'DeleteTokenRelationCommand':
+      return relationInfo(
+        asRecord(command.existing),
+        deployedTokensByKey,
+        undefined,
+        asRecord(command.pk),
+      )
     default:
       return { primary: '?' }
   }
@@ -423,6 +515,164 @@ function abstractInfo(
   }
 }
 
+function relationInfo(
+  record: Record<string, unknown>,
+  deployedTokensByKey: Map<string, DeployedTokenLookupEntry>,
+  _update?: Record<string, unknown>,
+  fallback: Record<string, unknown> = {},
+): TokenInfo {
+  const chainA = endpointValue(record, fallback, 'tokenAChain') ?? '?'
+  const addressA = endpointValue(record, fallback, 'tokenAAddress') ?? '?'
+  const chainB = endpointValue(record, fallback, 'tokenBChain') ?? '?'
+  const addressB = endpointValue(record, fallback, 'tokenBAddress') ?? '?'
+  const plugin =
+    stringValue(fallback.plugin) ?? stringValue(record.plugin) ?? '?'
+  const bridgeType =
+    stringValue(fallback.bridgeType) ?? stringValue(record.bridgeType) ?? '?'
+  const tokenA = deployedTokensByKey.get(
+    tokenKey({ chain: chainA, address: addressA }),
+  )
+  const tokenB = deployedTokensByKey.get(
+    tokenKey({ chain: chainB, address: addressB }),
+  )
+  const iconUrlA = tokenA?.abstractToken?.iconUrl ?? undefined
+  const iconUrlB = tokenB?.abstractToken?.iconUrl ?? undefined
+
+  return {
+    icon:
+      iconUrlA || iconUrlB ? (
+        <RelationIcons iconUrlA={iconUrlA} iconUrlB={iconUrlB} />
+      ) : undefined,
+    primary: (
+      <>
+        <TokenLink
+          to={`/tokens/${chainA}/${addressA}`}
+          label={formatRelationTokenLabel(
+            tokenA?.deployedToken.symbol,
+            chainA,
+            addressA,
+          )}
+        />{' '}
+        &lt;-&gt;{' '}
+        <TokenLink
+          to={`/tokens/${chainB}/${addressB}`}
+          label={formatRelationTokenLabel(
+            tokenB?.deployedToken.symbol,
+            chainB,
+            addressB,
+          )}
+        />
+      </>
+    ),
+    secondary: [`plugin: ${plugin}`, `bridge: ${bridgeType}`].join(' | '),
+  }
+}
+
+// A history entry is an immutable snapshot of the command that was executed, so
+// entries recorded before the endpoints were renamed still spell them
+// `tokenFrom*`/`tokenTo*`. Both spellings have to be read forever; a single
+// snapshot only ever uses one of them.
+const LEGACY_ENDPOINT_FIELDS = {
+  tokenAChain: 'tokenFromChain',
+  tokenAAddress: 'tokenFromAddress',
+  tokenBChain: 'tokenToChain',
+  tokenBAddress: 'tokenToAddress',
+} as const
+
+function endpointValue(
+  record: Record<string, unknown>,
+  fallback: Record<string, unknown>,
+  field: keyof typeof LEGACY_ENDPOINT_FIELDS,
+): string | undefined {
+  const legacyField = LEGACY_ENDPOINT_FIELDS[field]
+  return (
+    stringValue(fallback[field]) ??
+    stringValue(record[field]) ??
+    stringValue(fallback[legacyField]) ??
+    stringValue(record[legacyField])
+  )
+}
+
+function RelationIcons({
+  iconUrlA,
+  iconUrlB,
+}: {
+  iconUrlA: string | undefined
+  iconUrlB: string | undefined
+}) {
+  return (
+    <div className="flex shrink-0 items-center">
+      {iconUrlA && (
+        <img
+          src={iconUrlA}
+          alt=""
+          width={24}
+          height={24}
+          className="rounded-full border border-background bg-background"
+        />
+      )}
+      {iconUrlB && (
+        <img
+          src={iconUrlB}
+          alt=""
+          width={24}
+          height={24}
+          className="-ml-2 rounded-full border border-background bg-background"
+        />
+      )}
+    </div>
+  )
+}
+
+function getRelationTokenKeys(entries: HistoryEntry[]) {
+  return Array.from(
+    new Map(
+      entries
+        .flatMap(relationTokenKeysFromEntry)
+        .map((token) => [tokenKey(token), token]),
+    ).values(),
+  )
+}
+
+function relationTokenKeysFromEntry(entry: HistoryEntry) {
+  const command = asRecord(entry.command)
+  switch (entry.commandType) {
+    case 'AddTokenRelationCommand':
+      return relationTokenKeysFromRecord(asRecord(command.record))
+    case 'UpdateTokenRelationCommand':
+    case 'DeleteTokenRelationCommand':
+      return relationTokenKeysFromRecord(
+        asRecord(command.existing),
+        asRecord(command.pk),
+      )
+    default:
+      return []
+  }
+}
+
+function relationTokenKeysFromRecord(
+  record: Record<string, unknown>,
+  fallback: Record<string, unknown> = {},
+) {
+  const chainA = endpointValue(record, fallback, 'tokenAChain')
+  const addressA = endpointValue(record, fallback, 'tokenAAddress')
+  const chainB = endpointValue(record, fallback, 'tokenBChain')
+  const addressB = endpointValue(record, fallback, 'tokenBAddress')
+
+  return [
+    chainA && addressA ? { chain: chainA, address: addressA } : undefined,
+    chainB && addressB ? { chain: chainB, address: addressB } : undefined,
+  ].filter((token): token is { chain: string; address: string } => !!token)
+}
+
+function formatRelationTokenLabel(
+  symbol: string | undefined,
+  chain: string,
+  address: string,
+) {
+  return `${symbol ?? 'Unknown'} ${chain}:${shortAddress(address)}`
+}
+
 function TokenLink({ to, label }: { to: string; label: string }) {
   if (label.includes('?') || to.includes('?')) {
     return <>{label}</>
@@ -449,6 +699,7 @@ function getCommandDifferences(entry: HistoryEntry) {
   switch (entry.commandType) {
     case 'UpdateAbstractTokenCommand':
     case 'UpdateDeployedTokenCommand':
+    case 'UpdateTokenRelationCommand':
       return diff(asRecord(command.existing), {
         ...asRecord(command.existing),
         ...asRecord(command.update),
@@ -487,7 +738,12 @@ function abstractTokenRef(
 
 function shortAddress(address: string) {
   if (address === '?') return '?'
+  if (!address.startsWith('0x')) return address
   return formatAddress(address)
+}
+
+function tokenKey(token: { chain: string; address: string }) {
+  return `${token.chain}:${token.address.toLowerCase()}`
 }
 
 function asRecord(value: unknown): Record<string, unknown> {

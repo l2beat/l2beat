@@ -15,11 +15,12 @@ import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { isAnomalyOngoing } from '~/utils/project/liveness/isAnomalyOngoing'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectInteropData } from '../../scaling/interop/getProjectInteropData'
 import { getLiveness } from '../../scaling/liveness/getLiveness'
 import type { ProjectVerificationWarnings } from '../../utils/getCommonProjectEntry'
-import { getProjectVerificationWarnings } from '../../utils/getIsProjectVerified'
+import { getProjectVerification } from '../../utils/getIsProjectVerified'
 import { getDaLayerRisks } from '../utils/getDaLayerRisks'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaProjectEconomicSecurity } from './utils/getDaProjectEconomicSecurity'
@@ -118,11 +119,7 @@ export async function getDaProjectEntry(
   ).filter((x) => x.daBridge.daLayer === layer.id)
 
   const selected = bridges.find((x) => x.slug === bridgeSlug)
-  if (
-    !selected &&
-    bridgeSlug !== 'no-bridge' &&
-    layer.daLayer.usedWithoutBridgeIn.length === 0
-  ) {
+  if (!selected && bridgeSlug !== 'no-bridge') {
     return
   }
 
@@ -147,7 +144,7 @@ export async function getDaProjectEntry(
   const projectLiveness =
     selected && liveness ? liveness[selected.id] : undefined
   const ongoingAnomalies = projectLiveness?.anomalies.filter(
-    (a) => a.end === undefined,
+    (anomaly) => isAnomalyOngoing(anomaly) && anomaly.isApproved,
   )
 
   const layerTvs = tvsPerProject.reduce((acc, value) => acc + value.tvs, 0)
@@ -194,10 +191,10 @@ export async function getDaProjectEntry(
     bridges: bridges.map((bridge) => ({
       name: bridge.daBridge.name,
       slug: bridge.slug,
-      verificationWarnings: getProjectVerificationWarnings(
+      verificationWarnings: getProjectVerification(
         bridge,
         projectsChangeReport.getChanges(bridge.id),
-      ),
+      ).warnings,
       impactfulChangeWarning: projectsChangeReport.getChanges(bridge.id)
         .impactfulChange,
       isNoBridge: !!bridge.daBridge.risks.isNoBridge,

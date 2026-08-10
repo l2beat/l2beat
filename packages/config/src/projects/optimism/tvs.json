@@ -61,6 +61,26 @@
     },
     {
       "mode": "auto",
+      "id": "optimism-AMO",
+      "priceId": "amino",
+      "symbol": "AMO",
+      "name": "Amino",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/32677/large/IMG_6956.png?1698920127",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1a2EB478FA07125C9935A77b3C03a82470801E30",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1698969600,
+        "untilTimestamp": 1747440000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "optimism-APE",
       "priceId": "apecoin",
       "symbol": "APE",
@@ -1856,61 +1876,18 @@
       }
     },
     {
-      "mode": "custom",
-      "id": "optimism-sUSDS",
+      "mode": "auto",
+      "id": "optimism-sUSDS-1",
       "priceId": "susds",
       "symbol": "sUSDS",
       "name": "Savings USDS",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-        "chain": "ethereum",
-        "escrowAddress": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+        "type": "totalSupply",
+        "address": "0xb5B2dc7fd34C249F4be7fB1fCea07950784229e0",
+        "chain": "optimism",
         "decimals": 18,
-        "sinceTimestamp": 1734048000
-      },
-      "valueForProject": {
-        "type": "calculation",
-        "operator": "diff",
-        "arguments": [
-          {
-            "type": "value",
-            "priceId": "susds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-              "chain": "ethereum",
-              "escrowAddress": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
-              "decimals": 18,
-              "sinceTimestamp": 1734048000
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "susds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xb5B2dc7fd34C249F4be7fB1fCea07950784229e0",
-              "chain": "optimism",
-              "escrowAddress": "0xe0F9978b907853F354d79188A3dEfbD41978af62",
-              "decimals": 18,
-              "sinceTimestamp": 1746618631
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "susds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xb5B2dc7fd34C249F4be7fB1fCea07950784229e0",
-              "chain": "optimism",
-              "escrowAddress": "0x876664f0c9Ff24D1aa355Ce9f1680AE1A5bf36fB",
-              "decimals": 18,
-              "sinceTimestamp": 1746618631
-            }
-          }
-        ]
+        "sinceTimestamp": 1746045509
       },
       "category": "stablecoin",
       "source": "canonical",
@@ -2297,61 +2274,18 @@
       }
     },
     {
-      "mode": "custom",
-      "id": "optimism-USDS",
+      "mode": "auto",
+      "id": "optimism-USDS-1",
       "priceId": "usds",
       "symbol": "USDS",
       "name": "USDS Stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-        "chain": "ethereum",
-        "escrowAddress": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+        "type": "totalSupply",
+        "address": "0x4F13a96EC5C4Cf34e442b46Bbd98a0791F20edC3",
+        "chain": "optimism",
         "decimals": 18,
-        "sinceTimestamp": 1727136000
-      },
-      "valueForProject": {
-        "type": "calculation",
-        "operator": "diff",
-        "arguments": [
-          {
-            "type": "value",
-            "priceId": "usds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
-              "chain": "ethereum",
-              "escrowAddress": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
-              "decimals": 18,
-              "sinceTimestamp": 1727136000
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "usds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0x4F13a96EC5C4Cf34e442b46Bbd98a0791F20edC3",
-              "chain": "optimism",
-              "escrowAddress": "0xe0F9978b907853F354d79188A3dEfbD41978af62",
-              "decimals": 18,
-              "sinceTimestamp": 1738625028
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "usds",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0x4F13a96EC5C4Cf34e442b46Bbd98a0791F20edC3",
-              "chain": "optimism",
-              "escrowAddress": "0x876664f0c9Ff24D1aa355Ce9f1680AE1A5bf36fB",
-              "decimals": 18,
-              "sinceTimestamp": 1738625028
-            }
-          }
-        ]
+        "sinceTimestamp": 1745995631
       },
       "category": "stablecoin",
       "source": "canonical",

@@ -1,3 +1,62 @@
+Generated with discovered.json: 0x7731a3eca8c7801b638aa412a97902ac56a0b496
+
+# Diff at Tue, 07 Jul 2026 14:19:42 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1fd9d39064602bc28714717ec6eae23c740b472b block: 1771857552
+- current timestamp: 1783433878
+
+## Description
+
+RollupProxy `stakerCount: 1 → 0` — the only active BoLD staker unstaked. Project archived (2026-06-30).
+
+## Watched changes
+
+```diff
+    contract RollupProxy (eth:0x09eD7e66Dd7c7129Ec3994498A521B502Ca7D61b) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      values.stakerCount:
+-        1
++        0
+    }
+```
+
+Generated with discovered.json: 0x49404390c2d19c629eb1470c6e76191fae30dd22
+
+# Diff at Tue, 09 Jun 2026 12:43:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1771857552
+- current timestamp: 1771857552
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1771857552 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0xe2F1D1E0ACc476455044a9D053B5d667C0a2D61c) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xfFb9B41320a47FDE7c2939BA0c1f1d58E80648FB) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x890e3142ffb67e19fbff5fde1fcf3424577d3e3e
 
 # Diff at Fri, 22 May 2026 15:39:31 GMT:

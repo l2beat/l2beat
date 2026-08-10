@@ -36,7 +36,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "propose",
+          "permission": "interact",
           "from": "eth:0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b",
           "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.",
           "role": ".whitelistedProposers"
@@ -621,5 +621,5 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": { "ethereum": 24333185, "ethscriptions": 6903865 },
-  "permissionsConfigHash": "0xe5b2c99ea093e38da766469dd8e257c269083a2dc3ca54e3cca28ecf38229ad1"
+  "permissionsConfigHash": "0x3b5a46e70ac43b6160cf9a3148b01ecf98c18dd31e09e0d359d6d9911b59084a"
 }

@@ -69,6 +69,7 @@ function getLogFn(error: TRPCError) {
   switch (error.code) {
     case 'UNAUTHORIZED':
     case 'BAD_REQUEST':
+    case 'METHOD_NOT_SUPPORTED':
       return logger.warn
     case 'PARSE_ERROR':
     case 'INTERNAL_SERVER_ERROR':
@@ -76,15 +77,16 @@ function getLogFn(error: TRPCError) {
     case 'BAD_GATEWAY':
     case 'SERVICE_UNAVAILABLE':
     case 'GATEWAY_TIMEOUT':
+    case 'PAYMENT_REQUIRED':
     case 'FORBIDDEN':
     case 'NOT_FOUND':
-    case 'METHOD_NOT_SUPPORTED':
     case 'TIMEOUT':
     case 'CONFLICT':
     case 'PRECONDITION_FAILED':
     case 'PAYLOAD_TOO_LARGE':
     case 'UNSUPPORTED_MEDIA_TYPE':
     case 'UNPROCESSABLE_CONTENT':
+    case 'PRECONDITION_REQUIRED':
     case 'TOO_MANY_REQUESTS':
     case 'CLIENT_CLOSED_REQUEST':
       return logger.error

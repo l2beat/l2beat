@@ -1,5 +1,10 @@
 import type { Milestone } from '@l2beat/config'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  formatActivityCount,
+  formatInteger,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { AreaChart } from 'recharts'
 import {
@@ -38,8 +43,6 @@ import {
 import type { RecategorisedActivityChartData } from '~/server/features/scaling/activity/getRecategorisedActivityChart'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/countPerSecond'
 import { formatRange } from '~/utils/dates'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { ChartScale } from '../types'
 
 export const RECATEGORISED_ACTIVITY_CHART_META = {

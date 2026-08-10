@@ -8,5 +8,11 @@
     "hash": "0x1e27889ae9ce2358b6248afde8e8b6f7c4ccf0b308a9d9ecb629369ce110ea23",
     "address": "ink:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
     "blockNumber": 10183769
+  },
+  "L2ToL1MessagePasser_v1_2_0": {
+    "hash": "0xb5be3cf9878e914d0b7feef281dbcc2b72d7c7e9106e44a7dfd516d48de8a62a",
+    "address": "ink:0x27E51B2254433A3284D9ba73Ea551C397DB2a124",
+    "chain": "ink",
+    "blockNumber": 50094988
   }
 }

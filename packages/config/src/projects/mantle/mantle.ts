@@ -67,7 +67,7 @@ export const mantle: ScalingProject = opStackL2({
   },
   nonTemplateProofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('sp1hypercube'),
+    zkCatalogIds: [ProjectId('sp1hypercube')],
   },
 
   nonTemplateTrackedTxs: [
@@ -125,6 +125,13 @@ export const mantle: ScalingProject = opStackL2({
     },
   ],
   nonTemplateDaTracking: [
+    {
+      type: 'eigen-da',
+      customerId: '0x24f0a3716805e8973bf48eb908d6d4a2f34af785',
+      daLayer: ProjectId('eigenda'),
+      sinceTimestamp: UnixTime(1738821600),
+      untilTimestamp: UnixTime(1776322715), // Arsia upgrade: EigenDA code path removed, DA is Ethereum only
+    },
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),

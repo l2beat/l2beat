@@ -1,4 +1,9 @@
-import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -15,6 +20,7 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('hyperliquid')
 
@@ -74,6 +80,32 @@ export const hyperliquid: ScalingProject = {
         tokens: ['USDC'],
         description: 'Hyperliquid bridge escrow on Arbitrum.',
       }),
+      discovery.getEscrowDetails({
+        includeInTotal: false,
+        address: ChainSpecificAddress(
+          'hyperevm:0x6B9E773128f453f5c2C60935Ee2DE2CBc5390A24',
+        ),
+        sinceTimestamp: UnixTime(1763482980),
+        tokens: ['USDC'],
+        description: 'Hyperliquid bridge escrow on HyperEVM.',
+      }),
+      // Coinbase-operated EOAs ('USDC treasury wallets', AQAv2) holding native
+      // USDC that backs USDC on HyperCore. Rebalanced 9:1 with the
+      // CoreDepositWallet on every deposit/withdrawal.
+      {
+        chain: 'hyperevm',
+        includeInTotal: false,
+        address: EthereumAddress('0xc20699185c15D0a2fD65779BB5d69f5b0B113c00'),
+        sinceTimestamp: UnixTime(1781236750),
+        tokens: ['USDC'],
+      },
+      {
+        chain: 'hyperevm',
+        includeInTotal: false,
+        address: EthereumAddress('0x4E5319dEb1072B01439EE674db5C321d11fd96F8'),
+        sinceTimestamp: UnixTime(1781236750),
+        tokens: ['USDC'],
+      },
     ],
   },
   dataAvailability: {
@@ -120,7 +152,10 @@ export const hyperliquid: ScalingProject = {
   technology: {
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
-      description: `Hyperliquid is composed of two sets of permissioned validators: a "hot" validator set and a "cold" validator set. The hot validator set is responsible for initiating withdrawals upon user requests, while cold validators can invalidate them during the ${challengePeriod}s challenge period and rotate validator sets after an emergency pause. Both sets are currently composed of ${validatorSetSize} validators with equal power. The system accepts a request if signed by 2/3+1 of validator power.`,
+      description: readProjectMarkdown('hyperliquid', 'technologyOperator', {
+        challengePeriod,
+        validatorSetSize,
+      }),
       references: [
         {
           title: 'Bridge2 - Hyperliquid docs',

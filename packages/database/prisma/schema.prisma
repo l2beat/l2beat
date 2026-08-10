@@ -116,6 +116,8 @@ model Liveness {
   blockNumber     Int
   txHash          String   @db.VarChar(255)
   configurationId String   @db.VarChar(12)
+  // Partial unique grouping index: migration 20260723120001.
+  groupingKey     String?  @db.VarChar(255)
 
   @@id([configurationId, txHash])
   @@index([configurationId, timestamp])
@@ -126,6 +128,8 @@ model RealTimeLiveness {
   txHash          String   @db.VarChar(255)
   timestamp       DateTime @db.Timestamp(6)
   blockNumber     Int
+  // Partial unique grouping index: migration 20260723120002.
+  groupingKey     String?  @db.VarChar(255)
 
   @@id([configurationId, txHash])
   @@index([configurationId, timestamp])
@@ -459,6 +463,8 @@ model InteropTransfer {
   @@index([isProcessed, srcValueUsd, dstValueUsd])
   @@index([type, duration, srcValueUsd, dstValueUsd])
   @@index([plugin, srcChain, dstChain, timestamp(sort: Desc), transferId(sort: Desc)])
+  @@index([srcAbstractTokenId, timestamp(sort: Desc)])
+  @@index([dstAbstractTokenId, timestamp(sort: Desc)])
 }
 
 model EcosystemToken {
@@ -478,16 +484,17 @@ model EcosystemToken {
 }
 
 model AbstractToken {
-  id                        String    @db.Char(6)
-  issuer                    String?   @db.VarChar(255)
-  symbol                    String    @db.VarChar(255)
-  category                  String?   @db.VarChar(255)
-  iconUrl                   String?   @db.VarChar(255)
-  coingeckoId               String?   @db.VarChar(255)
-  coingeckoListingTimestamp DateTime? @db.Timestamp(6)
-  comment                   String?   @db.Text
-  reviewed                  Boolean   @default(false)
-  isPriceUnreliable         Boolean   @default(false)
+  id                         String    @db.Char(6)
+  issuer                     String?   @db.VarChar(255)
+  symbol                     String    @db.VarChar(255)
+  category                   String?   @db.VarChar(255)
+  iconUrl                    String?   @db.VarChar(255)
+  coingeckoId                String?   @db.VarChar(255)
+  coingeckoListingTimestamp  DateTime? @db.Timestamp(6)
+  additionalCoingeckoEntries Json?
+  comment                    String?   @db.Text
+  reviewed                   Boolean   @default(false)
+  isPriceUnreliable          Boolean   @default(false)
 
   deployedTokens DeployedToken[]
 
@@ -506,10 +513,8 @@ model DeployedToken {
   metadata                     Json?
   abstractTokenAssignmentProof Json?
 
-  chainRelation   Chain?            @relation(fields: [chain], references: [name], onDelete: Restrict)
-  abstractToken   AbstractToken?    @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
-  connectionsFrom TokenConnection[] @relation("TokenConnection_tokenFrom")
-  connectionsTo   TokenConnection[] @relation("TokenConnection_tokenTo")
+  chainRelation Chain?         @relation(fields: [chain], references: [name], onDelete: Restrict)
+  abstractToken AbstractToken? @relation(fields: [abstractTokenId], references: [id], onDelete: Restrict)
 
   @@id([chain, address])
   @@index([abstractTokenId])
@@ -521,7 +526,7 @@ model TokenIngestionQueue {
   state     String   @default("pending") @db.VarChar(32)
   message   String?  @db.Text
   createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @updatedAt @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
 
   @@id([chain, address])
   @@index([state, updatedAt])
@@ -530,7 +535,7 @@ model TokenIngestionQueue {
 model TokenDbSettings {
   key       String   @db.VarChar(255)
   value     String   @db.Text
-  updatedAt DateTime @updatedAt @db.Timestamp(6)
+  updatedAt DateTime @db.Timestamp(6)
 
   @@id([key])
 }
@@ -542,27 +547,39 @@ model TokenDbHistory {
   userEmail    String?  @db.VarChar(255)
   commandType  String   @db.VarChar(64)
   command      Json
+  intent       Json?
   ingestionLog String?  @db.Text
 
   @@index([timestamp])
   @@index([commandType, timestamp])
 }
 
-model TokenConnection {
-  tokenFromChain   String  @db.VarChar(32)
-  tokenFromAddress String  @db.VarChar(255)
-  tokenToChain     String  @db.VarChar(32)
-  tokenToAddress   String  @db.VarChar(255)
-  type             String  @db.VarChar(32)
-  params           Json?
-  comment          String? @db.Text
+// Deliberately no relations to DeployedToken: a TokenRelation is an
+// observation of an on-chain transfer between two token addresses and must be
+// recordable before (or without) either endpoint being catalogued as a
+// deployed token. The observed burn/mint flags are deliberately not columns —
+// they are nullable per-transfer observations and live in the `transfer`
+// evidence JSON.
+//
+// A relation describes an unordered pair of tokens, so the endpoints are named
+// `tokenA`/`tokenB` rather than from/to: there is no direction between them.
+// They are stored in a fixed lexicographic order — A before B — so one pair
+// cannot occupy two rows, and `lockedToken` ('A' or 'B') names the endpoint
+// holding the locked token of a `lockAndMint` pair.
+// See docs/mdbook/specs/l2b_specs/token_db/token_relations.md.
+model TokenRelation {
+  tokenAChain   String  @db.VarChar(32)
+  tokenAAddress String  @db.VarChar(255)
+  tokenBChain   String  @db.VarChar(32)
+  tokenBAddress String  @db.VarChar(255)
+  plugin        String  @db.VarChar(64)
+  bridgeType    String  @db.VarChar(32)
+  lockedToken   String? @db.Char(1)
+  transfer      Json
 
-  tokenFrom DeployedToken @relation("TokenConnection_tokenFrom", fields: [tokenFromChain, tokenFromAddress], references: [chain, address], onDelete: Restrict)
-  tokenTo   DeployedToken @relation("TokenConnection_tokenTo", fields: [tokenToChain, tokenToAddress], references: [chain, address], onDelete: Restrict)
-
-  @@id([tokenFromChain, tokenFromAddress, tokenToChain, tokenToAddress, type])
-  @@index([tokenFromChain, tokenFromAddress])
-  @@index([tokenToChain, tokenToAddress])
+  @@id([tokenAChain, tokenAAddress, tokenBChain, tokenBAddress, plugin, bridgeType])
+  @@index([tokenAChain, tokenAAddress])
+  @@index([tokenBChain, tokenBAddress])
 }
 
 model InteropRecentPrices {
@@ -662,6 +679,29 @@ model AggregatedInteropToken {
   @@index([timestamp, srcChain, dstChain, id, bridgeType])
 }
 
+model AggregatedInteropDeployedToken {
+  timestamp                  DateTime @db.Timestamp(6)
+  id                         String   @db.VarChar(255)
+  srcChain                   String   @db.VarChar(255)
+  dstChain                   String   @db.VarChar(255)
+  bridgeType                 String   @default("unknown") @db.VarChar(255)
+  tokenChain                 String   @db.VarChar(255)
+  tokenAddress               String   @db.VarChar(255)
+  transferTypeStats          Json?
+  mintedValueUsd             Float?   @db.Real
+  burnedValueUsd             Float?   @db.Real
+  transferCount              Int
+  transfersWithDurationCount Int      @default(0)
+  totalDurationSum           Int
+  volume                     Float    @db.Real
+  minTransferValueUsd        Float?   @db.Real
+  maxTransferValueUsd        Float?   @db.Real
+
+  @@id([timestamp, srcChain, dstChain, bridgeType, id, tokenChain, tokenAddress])
+  @@index([timestamp, srcChain, dstChain, id, bridgeType])
+  @@index([timestamp, tokenChain, tokenAddress])
+}
+
 model TokenFactInput {
   id        Int    @id @default(autoincrement())
   name      String @db.VarChar(255)
@@ -689,4 +729,20 @@ model AggregatedInteropTokensPair {
 
   @@id([timestamp, srcChain, dstChain, bridgeType, id, tokenA, tokenB])
   @@index([timestamp, srcChain, dstChain, id, bridgeType])
+}
+
+model InteropAggregateStatus {
+  timestamp  DateTime @id @db.Timestamp(6) // = aggregate snapshot `to`
+  status     String   @db.VarChar(16) // 'promoted' | 'blocked'
+  promotedBy String?  @db.VarChar(255) // 'auto' (engine/backfill) | operator email
+  reasons    String?  @db.Text // RuleViolation[] as JSON text (blocked only)
+  checkedAt  DateTime @db.Timestamp(6)
+  updatedAt  DateTime @db.Timestamp(6)
+}
+
+model AppState {
+  key       String   @id @db.VarChar(255)
+  value     String   @db.Text
+  updatedAt DateTime @db.Timestamp(6)
+  updatedBy String   @db.VarChar(255)
 }

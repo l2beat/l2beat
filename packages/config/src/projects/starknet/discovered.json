@@ -1,7 +1,7 @@
 {
   "name": "starknet",
-  "timestamp": 1776761835,
-  "configHash": "0xbe5c64d0d01eeb9842271962a61bc6e5e8d632b5ebcae3221fb17912bec8835a",
+  "timestamp": 1784036617,
+  "configHash": "0xae977e3db9220e228674be34897a37d1cca9030b01c2fc8777d7710e9b714112",
   "entries": [
     {
       "name": "Starkware Multisig 2",
@@ -565,15 +565,16 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "governStarknet",
-          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
-          "role": ".$admin"
-        },
-        {
           "permission": "interact",
           "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
           "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
           "role": ".govAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "description": "Permissioned to manage the Operator role, finalize the application configuration, and change the OS program hash, aggregator program hash, OS-config hash, fee collector, or message cancellation delay.",
+          "role": ".$admin"
         },
         {
           "permission": "interact",
@@ -608,8 +609,8 @@
           "eth:0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c",
           "eth:0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F",
           "eth:0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c",
-          "eth:0x2914767E232FD7708ab06bA60dB16c36C555751d",
-          "eth:0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0",
+          "eth:0x49C6396070D3310f335AE19169Da6B80ea67B831",
+          "eth:0x16117672EBF77d5DE9a1Af91F8F79b26421b310F",
           "eth:0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8",
           "eth:0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
           "eth:0x10277B1922e56d1B69f4dCe5A35696C791F78cac",
@@ -623,7 +624,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -636,6 +637,11 @@
           "href": "https://governance.starknet.io/learn/security_council"
         }
       ]
+    },
+    {
+      "address": "eth:0x16117672EBF77d5DE9a1Af91F8F79b26421b310F",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
@@ -814,18 +820,14 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x2914767E232FD7708ab06bA60dB16c36C555751d",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "operateStarknet",
+          "permission": "interact",
           "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "description": "Permissioned to regularly post L2 state updates and choose an available data-availability entry point. Under the current implementation, every update still needs a fact accepted by SHARP and cannot bypass the pinned program and config hashes.",
           "role": ".operators"
         }
       ]
@@ -923,6 +925,11 @@
       "targetProject": "shared-sharp-verifier"
     },
     {
+      "address": "eth:0x49C6396070D3310f335AE19169Da6B80ea67B831",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x5540E5e19a48172C37d3D79523ab7737c5b2033F",
       "type": "EOA",
       "proxyType": "EOA"
@@ -963,9 +970,64 @@
     },
     {
       "address": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
-      "type": "Reference",
-      "targetType": "EOA",
-      "targetProject": "shared-sharp-verifier"
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
+          "via": [
+            { "address": "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }
+          ]
+        }
+      ]
     },
     {
       "address": "eth:0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F",
@@ -1228,8 +1290,9 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "governStarknet",
+          "permission": "interact",
           "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "description": "Permissioned to manage the Operator role, finalize the application configuration, and change the OS program hash, aggregator program hash, OS-config hash, fee collector, or message cancellation delay.",
           "role": ".$admin",
           "via": [
             {
@@ -1300,7 +1363,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 6 (33%)",
-        "nonce": 39,
+        "nonce": 41,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1421,7 +1484,12 @@
         "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e": "ProxyV5",
         "eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff": "StarknetTokenBridge"
       },
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Non-Critical", "priority": 0 }
+    },
+    {
+      "address": "eth:0x99E84d004E73CC41eFacd382ef6FD34208B0F122",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "L1DaiGateway",
@@ -1594,7 +1662,7 @@
         "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10": "ProxyV5",
         "eth:0x205Fef0daB48D83CbA6888C5F050FeE36C4762B7": "StarknetTokenBridge"
       },
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "address": "eth:0xaDB26E60FA6e326B9Ee444D886B4B62EC7FA38fc",
@@ -1771,6 +1839,11 @@
         }
       ],
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "eth:0xb731B63eC22904A17d1cf6fD771eb5BA87f35Fa3",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "USDTBridge",
@@ -2089,7 +2162,7 @@
         "0xef60960a959a9506c3f6eece9374f7fbcd095a488763801577ae88e427fd3d51"
       ],
       "proxyType": "StarkWare proxy",
-      "description": "Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
+      "description": "Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.",
       "ignoreInWatchMode": [
         "l1ToL2MessageNonce",
         "stateBlockNumber",
@@ -2164,25 +2237,38 @@
           ]
         ],
         "$upgradeCount": 11,
-        "aggregatorHashMapped": "2571508110958925737463010241874806654058743535666147712534445437599630018294",
-        "aggregatorProgramHash": "2571508110958925737463010241874806654058743535666147712534445437599630018294",
-        "configHash": "3188242426588271529884520804512942022765170489242162533995649881904346336763",
+        "aggregatorHashMapped": "1050253032170513549151251823521174837478197699740478552102884446098263561922",
+        "aggregatorProgramHash": "1050253032170513549151251823521174837478197699740478552102884446098263561922",
+        "aggregatorProgramHashHistory": [
+          0,
+          "1161178844461337253856226043908368523817098764221830529880464854589141231910",
+          "15787695375210609250491147414005894154890873413229882671403677761527504080",
+          "273279642033703284306509103355536170486431195329675679055627933497997642494",
+          "760308386675154762009993173725077399730170358078020153308029499928875469870",
+          "1701025211190912681772481128523426351562426117847395998223683709327746845867",
+          "2571508110958925737463010241874806654058743535666147712534445437599630018294"
+        ],
+        "configHash": "Starknet OS config V4 (SN_MAIN, STRK fee token, no state-diff encryption)",
+        "configHashHistory": [
+          "671483050609816861429812414688707376174032882875357307847551691140236175837",
+          "2590421891839256512113614983194993186457498815986333310670788206383913888162",
+          "3188242426588271529884520804512942022765170489242162533995649881904346336763"
+        ],
         "feeCollector": "eth:0x0000000000000000000000000000000000000000",
         "getMaxL1MsgFee": "1000000000000000000",
         "getUpgradeActivationDelay": 0,
-        "governedFinalized": 0,
         "identify": "StarkWare_Starknet_2026_11",
         "implementation": "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A",
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1693195,
+        "l1ToL2MessageNonce": 1696230,
         "messageCancellationDelay": 432100,
         "operators": [
           "eth:0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
           "eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
         ],
-        "programHash": "2733003247060056328192560178934419513655729851806095615814023997114795707702",
+        "programHash": "2006389624453304912912750132846114593020263069652857561377702883656839453432",
         "programHashHistory": [
           "1921772108187713503530008849184725638117898887391063185252422808224349294626",
           "3258367057337572248818716706664617507069572185152472699066582725377748079373",
@@ -2197,31 +2283,73 @@
           "2231644845387633655859130162745748394456578773184260372693322394988769337368",
           "2534935718742676028234156221136000178296467523045214874259117268197132196876",
           "793595346346724189681221050719974054861327641387231526786912662354259445535",
-          "918745833886511857768061986591752808672496300091957204265383861063635175685"
+          "918745833886511857768061986591752808672496300091957204265383861063635175685",
+          "2733003247060056328192560178934419513655729851806095615814023997114795707702"
         ],
-        "programHashMapped": "2733003247060056328192560178934419513655729851806095615814023997114795707702",
+        "programHashMapped": "2006389624453304912912750132846114593020263069652857561377702883656839453432",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1157353749876318293424436310711911021457063744068332438891973851713211617769",
-        "stateBlockNumber": 9006331,
-        "stateRoot": "184450255805653895831212569900445965339058658574853059829075312504805448675",
+        "stateBlockHash": "3258949359598867981118512513858741206324439976304817540590561633668036655482",
+        "stateBlockNumber": 11838783,
+        "stateRoot": "2998318177306854875512855887843976845528800634535496288445148486038690637403",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
       "fieldMeta": {
         "$admin": {
           "severity": "HIGH",
-          "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls."
+          "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` calls. While the contract is not finalized, governance can replace the OS program hash, aggregator program hash, and OS-config hash. An implementation upgrade can also replace the verifier address or bypass all proof checks."
         },
         "isFinalized": {
           "severity": "HIGH",
-          "description": "Finalizes most of the configuration of the contract, which cannot be changed afterwards (only thorugh an upgrade)."
+          "description": "Locks the current implementation's setters for the Starknet OS hash, aggregator hash, OS-config hash, and message-cancellation delay. It does not lock the fee collector or freeze the proxy, so an implementation upgrade can replace or bypass every pin."
+        },
+        "programHashHistory": {
+          "severity": "HIGH",
+          "description": "Previous Starknet OS program hashes emitted on each governance update. The current value is exposed separately as `programHash`.",
+          "type": "CODE_CHANGE"
+        },
+        "aggregatorProgramHashHistory": {
+          "severity": "HIGH",
+          "description": "Previous Starknet aggregator program hashes emitted on each governance update. The current value is exposed separately as `aggregatorProgramHash`.",
+          "type": "CODE_CHANGE"
+        },
+        "configHashHistory": {
+          "severity": "HIGH",
+          "description": "Previous Starknet OS-configuration commitments emitted on each governance update. The current value is exposed separately as `configHash`.",
+          "type": "CODE_CHANGE"
+        },
+        "verifier": {
+          "severity": "HIGH",
+          "description": "SHARP fact registry used by `updateStateInternal`. It is initialized once and currently points to an upgradeable call proxy. Starknet calls the proxy's explicit `isValid` function, which always queries the default target and its active reference registries; caller-specific fallback routes affect proof submission but not this lookup. All programs pinned by the default target and active references are part of Starknet's proof trust chain. Changing this address requires upgrading the Starknet implementation.",
+          "type": "CODE_CHANGE"
+        },
+        "feeCollector": {
+          "severity": "HIGH",
+          "description": "Address receiving consumed L1 -> L2 message fees. Governance can change it even after application configuration is finalized; the zero address makes the submitting Operator the recipient.",
+          "type": "RISK_PARAMETER"
         },
         "programHash": {
           "severity": "HIGH",
-          "description": "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.",
+          "description": "Starknet OS program hash. In direct mode it is included in the SHARP fact key; in aggregator mode the aggregator's public output must contain this exact OS hash. A malicious OS program could prove arbitrary state transitions. Update the program-hash catalog and liveness tracking whenever this changes.",
           "type": "CODE_CHANGE"
+        },
+        "aggregatorProgramHash": {
+          "severity": "HIGH",
+          "description": "Cairo aggregator program hash used in the SHARP fact key when the program output declares aggregator mode. The output must also name the current Starknet OS hash. A malicious aggregator could fabricate the transition output attributed to otherwise valid OS executions.",
+          "type": "CODE_CHANGE"
+        },
+        "configHash": {
+          "severity": "HIGH",
+          "description": "Commitment to the Starknet OS execution environment which every direct or aggregated program output must equal. The current V4 commitment is reproducible from `StarknetOsConfig4`, chain ID `SN_MAIN`, the STRK fee-token address, and no state-diff encryption public keys. A malicious value can authorize proofs under a different chain ID, fee token, or optional public-key configuration.",
+          "type": "CODE_CHANGE"
+        },
+        "programHashMapped": {
+          "description": "Human-readable label for the current Starknet OS program hash."
+        },
+        "aggregatorHashMapped": {
+          "description": "Human-readable label for the current Starknet aggregator program hash."
         }
       },
       "implementationNames": {
@@ -2229,6 +2357,12 @@
         "eth:0x9961D34D3baE6914635c882e8FE382e14E0F172A": "Starknet"
       },
       "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "2579130946496422157802313572919622021390761807038780433165936715591440018810": "Starknet OS config V4 (SN_MAIN, STRK fee token, no state-diff encryption)"
+          }
+        },
         {
           "typeCaster": "Mapping",
           "arg": {
@@ -2273,8 +2407,9 @@
       "description": "A simple Timelock contract with an immutable delay of 8d. The owner (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.",
       "directlyReceivedPermissions": [
         {
-          "permission": "governStarknet",
+          "permission": "interact",
           "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "description": "Permissioned to manage the Operator role, finalize the application configuration, and change the OS program hash, aggregator program hash, OS-config hash, fee collector, or message cancellation delay.",
           "role": ".$admin"
         },
         {
@@ -3076,7 +3211,7 @@
           }
         }
       ],
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
       "name": "MultiBridge",
@@ -3437,14 +3572,15 @@
         },
         {
           "permission": "interact",
+          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "description": "Permissioned to regularly post L2 state updates and choose an available data-availability entry point. Under the current implementation, every update still needs a fact accepted by SHARP and cannot bypass the pinned program and config hashes.",
+          "role": ".operators"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
           "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
           "role": ".secAdminAC"
-        },
-        {
-          "permission": "operateStarknet",
-          "from": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
-          "role": ".operators"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -3455,11 +3591,11 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "eth:0x2914767E232FD7708ab06bA60dB16c36C555751d",
-          "eth:0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c",
-          "eth:0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F",
+          "eth:0x49C6396070D3310f335AE19169Da6B80ea67B831",
+          "eth:0x99E84d004E73CC41eFacd382ef6FD34208B0F122",
+          "eth:0xb731B63eC22904A17d1cf6fD771eb5BA87f35Fa3",
           "eth:0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c",
-          "eth:0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0",
+          "eth:0x16117672EBF77d5DE9a1Af91F8F79b26421b310F",
           "eth:0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8",
           "eth:0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
           "eth:0x10277B1922e56d1B69f4dCe5A35696C791F78cac",
@@ -3473,7 +3609,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 12 (25%)",
-        "nonce": 7,
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3616,11 +3752,6 @@
         }
       ],
       "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "address": "eth:0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "eth:0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90",
@@ -4963,12 +5094,12 @@
     "starknet/LordsL1Bridge": "0x6f155638dd1434607b38c9304ae5de49b108365e50ae6968b56c16cab946c1f4",
     "starknet/StarkgateManager": "0x4b9115f849ab55459358778c2380fc07a7c113eba4d1ea123fccc3b0ee31385d",
     "starknet/StarkgateRegistry": "0x146d95b0ca7a2c08ff095b65a07bf282d92759ed499c9c175b0aae23c17c1072",
-    "starknet/Starknet": "0x94ec7824dea8f420d9b02624ccb3fee6ea169600cf6665c49d0c82cbc2651cc3",
+    "starknet/Starknet": "0xfadaad9feb97c113d19f43abb4e24ed692a26a6efc6094ada095836e6793f431",
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6",
     "starknet/StarknetEthBridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6",
     "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b",
     "starknet/StarknetMultiBridge_haltable": "0xe8353adf6ac366e8437be00a65d081e1d14c386d2b59bbfc9f50dcc2d80299b9"
   },
-  "usedBlockNumbers": { "ethereum": 24927241 },
-  "permissionsConfigHash": "0xa4d7d4b4ca08ed468ecc8a9bbfdc82705f284f1b4fc9a694bf9a7859c27002fb"
+  "usedBlockNumbers": { "ethereum": 25531259 },
+  "permissionsConfigHash": "0x8d7e07bdf23362ed999fa6b9521fb6f1214328b6851e693ccb9805ebe31ff9d2"
 }

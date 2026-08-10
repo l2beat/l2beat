@@ -1,13 +1,80 @@
 {
   "name": "sophon",
-  "timestamp": 1771251793,
-  "configHash": "0x839c616f59c8ba2272d40db916653a970b6447f43f6a597dc5e92a68c9d8a1f1",
-  "sharedModules": ["shared-zk-stack", "shared-sp1", "vector"],
+  "timestamp": 1785925747,
+  "configHash": "0xf2e4e55652de287f26914a9ad50e3b40fd8622e2413d313194bfe5fc53495873",
   "entries": [
     {
-      "address": "eth:0x0000000000000000000000000000000000010003",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "name": "SophonTransactionFilterer",
+      "address": "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41",
+      "type": "Contract",
+      "template": "sophon/SophonTransactionFilterer",
+      "sourceHashes": [
+        "0x1052653f60cc81af31cb1eed87f216a9798831a093b79949e6c8dab4127fd378"
+      ],
+      "proxyType": "immutable",
+      "description": "A contract implementing the ITransactionFilterer interface, allows only trxs from whitelisted superusers. The whitelist is defined in AccessControl roles.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
+          "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.",
+          "role": ".getTransactionFilterer"
+        }
+      ],
+      "deployerAddress": "eth:0x4cB9ac68A2151f14E8242a984b1F1faDb36EBF60",
+      "sinceTimestamp": 1780847111,
+      "sinceBlock": 25266497,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x50B238788747B26c408681283D148659F9da7Cf9"]
+          },
+          "SUPERUSER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0x50B238788747B26c408681283D148659F9da7Cf9",
+              "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+              "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
+              "eth:0x5afeCA1153D94750e170e6021B95416A68c60f4E",
+              "eth:0xBaEb92889696217A3A6be2175E5a95dC4cFFC9f7"
+            ]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x50B238788747B26c408681283D148659F9da7Cf9"],
+        "SUPERUSER_ROLE": "0x756df11799aaceda4067614c35fe47ff6a75745e0c15792193c7bad56a1ad932",
+        "superuserAC": [
+          "eth:0x50B238788747B26c408681283D148659F9da7Cf9",
+          "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
+          "eth:0x5afeCA1153D94750e170e6021B95416A68c60f4E",
+          "eth:0xBaEb92889696217A3A6be2175E5a95dC4cFFC9f7"
+        ]
+      },
+      "fieldMeta": {
+        "superuserAC": {
+          "description": "Addresses with this role are on the whitelist as senders for requestL2Transaction() calls."
+        }
+      },
+      "implementationNames": {
+        "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41": "SophonTransactionFilterer"
+      }
+    },
+    {
+      "name": "Vector",
+      "address": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "vector"
+    },
+    {
+      "name": "AvailBridgeV1",
+      "address": "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "vector"
     },
     {
       "name": "Diamond",
@@ -146,11 +213,21 @@
               "eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45",
               "eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"
             ]
+          ],
+          [
+            "2026-08-04T14:53:47.000Z",
+            "0x6c47ec4cd22ac63a14d8e2e8f6f931af61e7b734b54153e63cd7970b2c598d4e",
+            [
+              "eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253",
+              "eth:0x1666124221622eb6154306Ea9BA87043e8be88B2",
+              "eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45",
+              "eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"
+            ]
           ]
         ],
-        "$upgradeCount": 10,
-        "baseTokenGasPriceMultiplierDenominator": 499,
-        "baseTokenGasPriceMultiplierNominator": 100000000,
+        "$upgradeCount": 11,
+        "baseTokenGasPriceMultiplierDenominator": 21,
+        "baseTokenGasPriceMultiplierNominator": 10000000,
         "facetAddresses": [
           "eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253",
           "eth:0x1666124221622eb6154306Ea9BA87043e8be88B2",
@@ -266,7 +343,7 @@
           "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120",
           "eth:0xf39dE5c61b276391b913cAFB057DC8B9de5d58dA"
         ],
-        "getFirstUnprocessedPriorityTx": 10090,
+        "getFirstUnprocessedPriorityTx": 10212,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -275,23 +352,23 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x4f6d40ba1d106aad075990481422b554c1a98a77edde5ee20291c0c9fc85dd44",
+        "getPriorityTreeRoot": "0xbea1cafb7b4d041977c4b41d3b0061c691192beef9c3eab32e79007b59af0a6b",
         "getPriorityTreeStartIndex": 4136,
         "getPriorityTxMaxGasLimit": 72000000,
-        "getProtocolVersion": 124554051588,
+        "getProtocolVersion": 124554051589,
         "getPubdataPricingMode": 1,
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
-        "getSemverProtocolVersion": [0, 29, 4],
+        "getSemverProtocolVersion": [0, 29, 5],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 37787,
-        "getTotalBatchesExecuted": 37785,
-        "getTotalBatchesVerified": 37787,
-        "getTotalBlocksCommitted": 37787,
-        "getTotalBlocksExecuted": 37785,
-        "getTotalBlocksVerified": 37787,
-        "getTotalPriorityTxs": 10090,
-        "getTransactionFilterer": "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063",
-        "getVerifier": "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45",
+        "getTotalBatchesCommitted": 39147,
+        "getTotalBatchesExecuted": 39146,
+        "getTotalBatchesVerified": 39147,
+        "getTotalBlocksCommitted": 39147,
+        "getTotalBlocksExecuted": 39146,
+        "getTotalBlocksVerified": 39147,
+        "getTotalPriorityTxs": 10212,
+        "getTransactionFilterer": "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41",
+        "getVerifier": "eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
           "recursionLeafLevelVkHash": "0xf9664f4324c1400fa5c3822d667f30e873f53f1b8033180cd15fe41c1e2355c6",
@@ -354,27 +431,7 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "eth:0x0BA5557075B4E30bA409B01797c9c78b3Ce192bF",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x0F44bac3ec514BE912aa4359017593B35E868d74",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x11BB5F79750de2Cc71e80cB2C59cF0a60EFFa95d",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x14574dfC6B7aF658c5033BA95673864947956521",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x20719Abd2E63518e68D30a295388cAd6B542dCEf",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -430,43 +487,43 @@
         "revertedBlocks": [],
         "REVERTER_ROLE": "0x30085792330f3f9ee2ee216aea0321c55a0909b87c51ee9ab49d05ca4a4c2ecb",
         "validatorsVTL": [
-          "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
-          "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+          "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B",
+          "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
         ],
         "validatorsVTLFullAC": {
           "PRECOMMITTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
-              "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+              "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B",
+              "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
             ]
           },
           "COMMITTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
-              "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+              "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B",
+              "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
             ]
           },
           "REVERTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
-              "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+              "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B",
+              "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
             ]
           },
           "PROVER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
-              "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+              "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B",
+              "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
             ]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
-              "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+              "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B",
+              "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3"
             ]
           }
         }
@@ -478,6 +535,11 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "address": "eth:0x2Ea9CcB15Ceb6c228786a3d4837B0bA3e9736D97",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "BridgeHub",
       "address": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
       "type": "Reference",
@@ -486,6 +548,39 @@
     },
     {
       "address": "eth:0x3b6036d410cA018661324766680674921a8b2d89",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "DualVerifier",
+      "address": "eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e",
+      "type": "Contract",
+      "template": "shared-zk-stack/DualVerifier",
+      "sourceHashes": [
+        "0x3053378d5ee24f71669b27b5b3cd0d74206379e6b43a9af084c2eb886712773e"
+      ],
+      "proxyType": "immutable",
+      "description": "A router contract for verifiers. Routes verification requests to eth:0x9f5C39a2790f38542065E7854b90407371923375 or eth:0xd22cA89e8991FCE568456914c616d303e3142395 depending on the supplied proof type.",
+      "deployerAddress": "eth:0x0ECbc04414B2890695BcD5864e3b23303D9f85ec",
+      "sinceTimestamp": 1784751431,
+      "sinceBlock": 25590598,
+      "values": {
+        "$immutable": true,
+        "FFLONK_VERIFIER": "eth:0x9f5C39a2790f38542065E7854b90407371923375",
+        "PLONK_VERIFIER": "eth:0xd22cA89e8991FCE568456914c616d303e3142395",
+        "verificationKeyHash": "0x18bdc7272350532ca7c3d4d613f0f22aa4100bcddd06722b2f8c6896ca5f5ad3"
+      },
+      "fieldMeta": {
+        "verificationKeyHash": {
+          "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
+        }
+      },
+      "implementationNames": {
+        "eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e": "DualVerifier"
+      }
+    },
+    {
+      "address": "eth:0x4BBBaCCbA75dbb482619722FFE68bBddC9CCc336",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -503,61 +598,39 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063",
+          "from": "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41",
           "description": "call requestL2Transaction() with any target/calldata (whitelisted superuser sender).",
-          "role": ".whitelistedSendersAC"
+          "role": ".superuserAC"
         },
         {
           "permission": "interact",
-          "from": "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063",
+          "from": "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41",
           "description": "manage the whitelist.",
           "role": ".defaultAdminAC"
         }
       ]
     },
     {
-      "address": "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30",
+      "address": "eth:0x5afeCA1153D94750e170e6021B95416A68c60f4E",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validateZkStack",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "role": ".validatorsVTLFullAC"
+          "permission": "interact",
+          "from": "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41",
+          "description": "call requestL2Transaction() with any target/calldata (whitelisted superuser sender).",
+          "role": ".superuserAC"
         }
       ]
     },
     {
-      "name": "L1VerifierPlonk",
-      "address": "eth:0x7f33D100f482093182111d69a4a457289e99f4ec",
-      "type": "Contract",
-      "template": "shared-zk-stack/L1VerifierPlonk",
-      "sourceHashes": [
-        "0xe38966c281da6e4e3ddc5ab7742793830661367f328c4431e577bb310435f470"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
-      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
-      "sinceTimestamp": 1770209963,
-      "sinceBlock": 24383644,
-      "values": {
-        "$immutable": true,
-        "verificationKeyHash": "0xb2f50340e0edbe49dc657d4eb298e07f13860c1be0fe2e438e44ef8fad133d84"
-      },
-      "fieldMeta": {
-        "verificationKeyHash": {
-          "severity": "HIGH",
-          "description": "keccak256 hash of the verification keys."
-        }
-      },
-      "implementationNames": {
-        "eth:0x7f33D100f482093182111d69a4a457289e99f4ec": "L1VerifierPlonk"
-      }
-    },
-    {
-      "address": "eth:0x7f413262Cb811B034d077d9184b5Efda6943f2c3",
+      "address": "eth:0x891F19CdefBce82e2F39f34C2322526c01E7A845",
       "type": "EOA",
-      "proxyType": "EOA"
+      "unverified": true,
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0xe40ccB2D94975c51bff0C004eFDfd9B3a5796fA4"
+      }
     },
     {
       "name": "AvailL1DAValidator",
@@ -583,91 +656,21 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "SophonTransactionFilterer",
-      "address": "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063",
-      "type": "Contract",
-      "template": "shared-zk-stack/TransactionFilterer",
-      "sourceHashes": [
-        "0x08cd75dea5c240e0976d0cd36d8fd8c48b2e3a15e47c8c920e35283f6b25ef62"
-      ],
-      "proxyType": "immutable",
-      "description": "A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender- OR contractL2 (target) addresses. The whitelist is defined in AccessControl roles.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
-          "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.",
-          "role": ".getTransactionFilterer"
-        }
-      ],
-      "deployerAddress": "eth:0x4cB9ac68A2151f14E8242a984b1F1faDb36EBF60",
-      "sinceTimestamp": 1746728915,
-      "sinceBlock": 22440582,
-      "values": {
-        "$immutable": true,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0x50B238788747B26c408681283D148659F9da7Cf9",
-              "eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1"
-            ]
-          },
-          "WHITELISTED_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0x0000000000000000000000000000000000010003",
-              "eth:0x0F44bac3ec514BE912aa4359017593B35E868d74"
-            ]
-          },
-          "SUPERUSER_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0x50B238788747B26c408681283D148659F9da7Cf9"]
-          }
-        },
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "defaultAdminAC": [
-          "eth:0x50B238788747B26c408681283D148659F9da7Cf9",
-          "eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1"
-        ],
-        "SUPERUSER_ROLE": "0x756df11799aaceda4067614c35fe47ff6a75745e0c15792193c7bad56a1ad932",
-        "WHITELISTED_ROLE": "0x8429d542926e6695b59ac6fbdcd9b37e8b1aeb757afab06ab60b1bb5878c3b49",
-        "whitelistedContractsAC": [
-          "eth:0x0000000000000000000000000000000000010003",
-          "eth:0x0F44bac3ec514BE912aa4359017593B35E868d74"
-        ],
-        "whitelistedSendersAC": [
-          "eth:0x50B238788747B26c408681283D148659F9da7Cf9"
-        ]
-      },
-      "fieldMeta": {
-        "whitelistedContractsAC": {
-          "description": "Addresses with this role are on the whitelist as contract targets for requestL2Transaction() calls. The L2AssetRouter is whitelisted here so that users can bridge assets."
-        },
-        "whitelistedSendersAC": {
-          "description": "Addresses with this role are on the whitelist as senders for requestL2Transaction() calls."
-        }
-      },
-      "implementationNames": {
-        "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063": "SophonTransactionFilterer"
-      }
-    },
-    {
       "name": "L1VerifierFflonk",
-      "address": "eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442",
+      "address": "eth:0x9f5C39a2790f38542065E7854b90407371923375",
       "type": "Contract",
       "template": "shared-zk-stack/L1VerifierFflonk",
       "sourceHashes": [
-        "0x3d80c4cef4b064c6aa35b40463287e7e4430c33c3ca17027c4b7855f9cfec730"
+        "0x5bfaff4e5dd264277b42d20a688c4f4f211abc9d707e3658a1ec3e23ef95a808"
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
-      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
-      "sinceTimestamp": 1770209927,
-      "sinceBlock": 24383641,
+      "deployerAddress": "eth:0x0ECbc04414B2890695BcD5864e3b23303D9f85ec",
+      "sinceTimestamp": 1784751431,
+      "sinceBlock": 25590598,
       "values": {
         "$immutable": true,
-        "verificationKeyHash": "0xc8cd705a0db89577146137de78eba6bd1f1c9c3f66dc52f7627e7c2df30895b2"
+        "verificationKeyHash": "0x34e7f769253b128e4ac6fbf71b3f8471d507c4f93bc50dcf26509ed1bae25122"
       },
       "fieldMeta": {
         "verificationKeyHash": {
@@ -676,8 +679,52 @@
         }
       },
       "implementationNames": {
-        "eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442": "L1VerifierFflonk"
+        "eth:0x9f5C39a2790f38542065E7854b90407371923375": "L1VerifierFflonk"
       }
+    },
+    {
+      "address": "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
+          "role": ".validatorsVTLFullAC"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xB1e2974E81922c1d5923dB4580292fB9954E9E05",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
+          "description": "set the conversion factor for gas token deposits.",
+          "role": ".tokenMultiplierSetter"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xBaEb92889696217A3A6be2175E5a95dC4cFFC9f7",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41",
+          "description": "call requestL2Transaction() with any target/calldata (whitelisted superuser sender).",
+          "role": ".superuserAC"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xbe6D418089AaFeD4f95e516F21b2F56027a2E263",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ProxyAdmin",
@@ -694,62 +741,31 @@
       "targetProject": "shared-zk-stack"
     },
     {
-      "address": "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
-          "role": ".validatorsVTLFullAC"
-        }
-      ]
-    },
-    {
-      "name": "DualVerifier",
-      "address": "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45",
+      "name": "L1VerifierPlonk",
+      "address": "eth:0xd22cA89e8991FCE568456914c616d303e3142395",
       "type": "Contract",
-      "template": "shared-zk-stack/DualVerifier",
+      "template": "shared-zk-stack/L1VerifierPlonk",
       "sourceHashes": [
-        "0x3053378d5ee24f71669b27b5b3cd0d74206379e6b43a9af084c2eb886712773e"
+        "0x354ed18832eff6fedf48d1200929d8d1c523b199f1e7ad95aa11856b4aa26cf3"
       ],
       "proxyType": "immutable",
-      "description": "A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.",
-      "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
-      "sinceTimestamp": 1770210095,
-      "sinceBlock": 24383655,
+      "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
+      "deployerAddress": "eth:0x0ECbc04414B2890695BcD5864e3b23303D9f85ec",
+      "sinceTimestamp": 1784751431,
+      "sinceBlock": 25590598,
       "values": {
         "$immutable": true,
-        "FFLONK_VERIFIER": "eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442",
-        "PLONK_VERIFIER": "eth:0x7f33D100f482093182111d69a4a457289e99f4ec",
-        "verificationKeyHash": "0xb2f50340e0edbe49dc657d4eb298e07f13860c1be0fe2e438e44ef8fad133d84"
+        "verificationKeyHash": "0x18bdc7272350532ca7c3d4d613f0f22aa4100bcddd06722b2f8c6896ca5f5ad3"
       },
       "fieldMeta": {
         "verificationKeyHash": {
-          "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
+          "severity": "HIGH",
+          "description": "keccak256 hash of the verification keys."
         }
       },
       "implementationNames": {
-        "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45": "DualVerifier"
+        "eth:0xd22cA89e8991FCE568456914c616d303e3142395": "L1VerifierPlonk"
       }
-    },
-    {
-      "address": "eth:0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xe14828E4405239dD331F194F1B7883eeD73bCBF3",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
-          "description": "set the conversion factor for gas token deposits.",
-          "role": ".tokenMultiplierSetter"
-        }
-      ]
     },
     {
       "name": "SophonZkEvmAdmin",
@@ -764,6 +780,12 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41",
+          "description": "call requestL2Transaction() with any target/calldata (whitelisted superuser sender).",
+          "role": ".superuserAC"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
           "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
@@ -776,7 +798,7 @@
         "$immutable": true,
         "owner": "eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "tokenMultiplierSetter": "eth:0xe14828E4405239dD331F194F1B7883eeD73bCBF3",
+        "tokenMultiplierSetter": "eth:0xB1e2974E81922c1d5923dB4580292fB9954E9E05",
         "upgradeTimestamps": [
           { "_protocolVersion": 107374182400, "_upgradeTimestamp": 1738591200 },
           { "_protocolVersion": 111669149696, "_upgradeTimestamp": 1742454000 },
@@ -799,6 +821,19 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "address": "eth:0xE2DDB84786aff975FE7B511acCc3AF5a1657AbF3",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "description": "Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.",
+          "role": ".validatorsVTLFullAC"
+        }
+      ]
+    },
+    {
       "name": "ProtocolUpgradeHandler",
       "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
       "type": "Reference",
@@ -818,18 +853,21 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
-          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
-          "role": ".getAdmin",
+          "from": "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41",
+          "description": "call requestL2Transaction() with any target/calldata (whitelisted superuser sender).",
+          "role": ".superuserAC",
           "via": [
             { "address": "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3" }
           ]
         },
         {
           "permission": "interact",
-          "from": "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063",
-          "description": "manage the whitelist.",
-          "role": ".defaultAdminAC"
+          "from": "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "role": ".getAdmin",
+          "via": [
+            { "address": "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
@@ -847,20 +885,19 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "eth:0x11BB5F79750de2Cc71e80cB2C59cF0a60EFFa95d",
-          "eth:0x0BA5557075B4E30bA409B01797c9c78b3Ce192bF",
+          "eth:0x891F19CdefBce82e2F39f34C2322526c01E7A845",
+          "eth:0x4BBBaCCbA75dbb482619722FFE68bBddC9CCc336",
+          "eth:0x2Ea9CcB15Ceb6c228786a3d4837B0bA3e9736D97",
           "eth:0x3b6036d410cA018661324766680674921a8b2d89",
-          "eth:0x20719Abd2E63518e68D30a295388cAd6B542dCEf",
           "eth:0x14574dfC6B7aF658c5033BA95673864947956521",
-          "eth:0x7f413262Cb811B034d077d9184b5Efda6943f2c3",
-          "eth:0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69"
+          "eth:0xbe6D418089AaFeD4f95e516F21b2F56027a2E263"
         ],
-        "$threshold": 4,
+        "$threshold": 3,
         "domainSeparator": "0x4ee440c593310d163ce5ee409e8b60941e58aa6b74d5cf7b249e342d0e5189fd",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 33,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 45,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -925,6 +962,23 @@
     }
   ],
   "abis": {
+    "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41": [
+      "constructor(address initialAdmin)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function SUPERUSER_ROLE() view returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function isTransactionAllowed(address sender, address, uint256, uint256, bytes, address) view returns (bool)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
     "eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691": [
       "constructor(uint256 _l1ChainId)",
       "error BatchHashMismatch(bytes32 expected, bytes32 actual)",
@@ -1278,6 +1332,16 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e": [
+      "constructor(address _fflonkVerifier, address _plonkVerifier)",
+      "error EmptyProofLength()",
+      "error UnknownVerifierType()",
+      "function FFLONK_VERIFIER() view returns (address)",
+      "function PLONK_VERIFIER() view returns (address)",
+      "function verificationKeyHash() view returns (bytes32)",
+      "function verificationKeyHash(uint256 _verifierType) view returns (bytes32)",
+      "function verify(uint256[] _publicInputs, uint256[] _proof) view returns (bool)"
+    ],
     "eth:0x6086051f93412F550C0820e76f0fbE85F64C7ef8": [
       "constructor(address _bridgehubAddr)",
       "error DefaultAdminTransferNotAllowed()",
@@ -1339,10 +1403,6 @@
       "function setRoleAdmin(address _chainAddress, bytes32 _role, bytes32 _adminRole)",
       "function transferOwnership(address newOwner)"
     ],
-    "eth:0x7f33D100f482093182111d69a4a457289e99f4ec": [
-      "function verificationKeyHash() pure returns (bytes32 vkHash)",
-      "function verify(uint256[], uint256[]) view returns (bool)"
-    ],
     "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120": [
       "constructor(address _availBridge)",
       "error InvalidAttestationProof()",
@@ -1352,37 +1412,13 @@
       "function checkDA(uint256, uint256, bytes32 l2DAValidatorOutputHash, bytes operatorDAInput, uint256 maxBlobsSupported) returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)",
       "function vectorx() view returns (address)"
     ],
-    "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063": [
-      "constructor(address initialAdmin)",
-      "error AccessControlBadConfirmation()",
-      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function SUPERUSER_ROLE() view returns (bytes32)",
-      "function WHITELISTED_ROLE() view returns (bytes32)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function isTransactionAllowed(address sender, address contractL2, uint256, uint256, bytes l2Calldata, address) view returns (bool)",
-      "function renounceRole(bytes32 role, address callerConfirmation)",
-      "function revokeRole(bytes32 role, address account)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
-    ],
-    "eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442": [
+    "eth:0x9f5C39a2790f38542065E7854b90407371923375": [
       "function verificationKeyHash() pure returns (bytes32)",
       "function verify(uint256[], uint256[]) view returns (bool)"
     ],
-    "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45": [
-      "constructor(address _fflonkVerifier, address _plonkVerifier)",
-      "error EmptyProofLength()",
-      "error UnknownVerifierType()",
-      "function FFLONK_VERIFIER() view returns (address)",
-      "function PLONK_VERIFIER() view returns (address)",
-      "function verificationKeyHash() view returns (bytes32)",
-      "function verificationKeyHash(uint256 _verifierType) view returns (bytes32)",
-      "function verify(uint256[] _publicInputs, uint256[] _proof) view returns (bool)"
+    "eth:0xd22cA89e8991FCE568456914c616d303e3142395": [
+      "function verificationKeyHash() pure returns (bytes32 vkHash)",
+      "function verify(uint256[], uint256[]) view returns (bool)"
     ],
     "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3": [
       "constructor(address _initialOwner, address _initialTokenMultiplierSetter)",
@@ -1418,16 +1454,16 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "shared-zk-stack/AvailL1DAValidator": "0xb0d552fff2582ff6cb7f9fad04a31ee03fa589ac2c852310fc3771f9367afc08",
+    "shared-zk-stack/AvailL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1USDCBridge": "0x061dba0e24ed75235f2eb19caf0c4adfa7896c607bd4b2400c7af30c3bc614ae",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/TransactionFilterer": "0x590d37dd842667198e464e09383d8240a77ae5af274853f992c7c5fc1b70de2a",
-    "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
+    "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6",
+    "sophon/SophonTransactionFilterer": "0x5af79cc105e47429633fc735f1601adf54bbd92b355c622bdab306600a542b7c"
   },
-  "usedBlockNumbers": { "ethereum": 24469954 },
-  "permissionsConfigHash": "0x803b33ddecc96136b9acae722d8f4f7ac233410e309cbf9a1cae4055e2a1aa65"
+  "usedBlockNumbers": { "ethereum": 25688132 },
+  "permissionsConfigHash": "0x75e6bf94264af9427936bfbbc4bf6709266c5552bf8e5ee7a8fe70095af94b36"
 }

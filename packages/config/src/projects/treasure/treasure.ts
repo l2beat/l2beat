@@ -21,6 +21,30 @@ export const treasure: ScalingProject = zkStackL2({
   additionalBadges: [BADGES.DA.CustomDA],
   addedAt: UnixTime(1733875200), // 2024-12-11T00:00:00Z
   archivedAt: UnixTime(1752676593), // 2025-07-16T15:36:00Z
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 21272191, // first batch on the old shared ValidatorTimelock
+      untilBlock: 22126211, // migration to the new shared ValidatorTimelock, last old batch @ 22126178
+      inbox: EthereumAddress('0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E'),
+      sequencers: [
+        EthereumAddress('0x2572835e02b59078711aa0800490e80975e4169d'),
+        EthereumAddress('0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283'),
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 22126211, // first batch on the new shared ValidatorTimelock
+      untilBlock: 22925013, // last batch before archival
+      inbox: EthereumAddress('0x8c0Bfc04AdA21fd496c55B8C50331f904306F564'),
+      sequencers: [
+        EthereumAddress('0x2572835e02b59078711aa0800490e80975e4169d'),
+        EthereumAddress('0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283'),
+      ],
+    },
+  ],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {

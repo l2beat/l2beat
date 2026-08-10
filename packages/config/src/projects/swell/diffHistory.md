@@ -1,3 +1,297 @@
+Generated with discovered.json: 0x50f1853703671f3ca041ca2e33ccaaddf30f7810
+
+# Diff at Fri, 17 Jul 2026 10:16:40 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5a5b552776f13efe49c744667945e52e0a8f9718 block: 1783324414
+- current timestamp: 1784283289
+
+## Description
+
+OpFoundation shared Safes (UpgradeSafe + OperationsSafe): 2 members rotated.
+
+## Watched changes
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x6419F81580343DF023E68715C6e269aFb00a2cc7"
++        "eth:0xf1EfbdC2C0BDC4554E0f1639D7fe88cD870a4639"
+      values.$members.3:
+-        "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8"
++        "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x6419F81580343DF023E68715C6e269aFb00a2cc7"
++        "eth:0xf1EfbdC2C0BDC4554E0f1639D7fe88cD870a4639"
+      values.$members.3:
+-        "eth:0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8"
++        "eth:0x7F1D4FE689B73B628285454667B93cfd09409f27"
+    }
+```
+
+Generated with discovered.json: 0x5999128d45ab2b68231a77abe29c1ceb53b0ad40
+
+# Diff at Mon, 06 Jul 2026 07:54:58 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4572e5b954c85d78517dc66fc4a82b8ddc679e2a block: 1781176909
+- current timestamp: 1783324414
+
+## Description
+
+Shared SuperchainConfig upgraded 2.4.0 → 2.4.2 ([diff](https://disco.l2beat.com/diff/eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957/eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550)). No behavioral change — `ProxyAdminOwnedBase` import moved, misleading pause-state warning removed, and 5 new unused constants added to the shared `Constants` library (forward-plumbing for OPCM tooling).
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) [opstack/SuperchainConfig_expiry] {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      sourceHashes.1:
+-        "0x5fb525d1572fb90d060d122143b915059cbff39e0298b345857fd4267d7f6b28"
++        "0x2cd597b7305a446a1df355e6909cbd75fe38aa045faf4876a8e5496eebc1734f"
+      values.$implementation:
+-        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"
++        "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"
+      values.$pastUpgrades.6:
++        ["2026-06-25T23:05:47.000Z","0xbfdac60c9687a2e469159bf2458e73de2915a0a5eb53c4991a7ecde2b1fb3f15",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.7:
++        ["2026-06-25T23:05:47.000Z","0xbfdac60c9687a2e469159bf2458e73de2915a0a5eb53c4991a7ecde2b1fb3f15",["eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"]]
+      values.$upgradeCount:
+-        6
++        8
+      values.version:
+-        "2.4.0"
++        "2.4.2"
+      implementationNames.eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957:
+-        "SuperchainConfig"
+      implementationNames.eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550:
++        "SuperchainConfig"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol          | 34 ++++++++++++++++++----
+ 1 file changed, 28 insertions(+), 6 deletions(-)
+```
+
+Generated with discovered.json: 0x111e8ebfa8f1807e5540213a99d5dc96c905626f
+
+# Diff at Tue, 30 Jun 2026 20:24:47 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1781176909
+- current timestamp: 1781176909
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781176909 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x758E0EE66102816F5C3Ec9ECc1188860fbb87812) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.8:
++        "FaultDisputeGame"
+    }
+```
+
+Generated with discovered.json: 0x663c6e68f4271708d1b640845105ca573c987edf
+
+# Diff at Thu, 11 Jun 2026 11:23:23 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@91b2eba1ff9c1c8341d0eaf6594dac4179405ef6 block: 1780925482
+- current timestamp: 1781176909
+
+## Description
+
+SystemConfig `unsafeBlockSigner` rotated.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.unsafeBlockSigner:
+-        "eth:0xc28bAd2A2D3E915d132795D2963D0e0459664D68"
++        "eth:0x0c54D3c298c598b0cd5102529B75f51D4c00cf00"
+    }
+```
+
+Generated with discovered.json: 0x04e88cef3acdd8e17a428de683a5676968190166
+
+# Diff at Tue, 09 Jun 2026 12:43:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780925482
+- current timestamp: 1780925482
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780925482 (main branch discovery), not current.
+
+```diff
+    contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) [GnosisSafe] {
+    +++ description: None
+      directlyReceivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      directlyReceivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA Optimism EOA 1 (eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0x37804a4f63Ab1dCf96A48B1DCE8c03492f539fE9) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xA2Acb8142b64fabda103DA19b0075aBB56d29FbD) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) [gnosisSafeModules/SaferSafes] {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      receivedPermissions.0.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.0.permission:
+-        "challenge"
++        "interact"
+      receivedPermissions.1.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x69358a0cec293275cc47d95bf40f561f682d7dae
+
+# Diff at Mon, 08 Jun 2026 13:32:33 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@7b249a098f7367cb0ead3d881bbc57b408521134 block: 1778850530
+- current timestamp: 1780925482
+
+## Description
+
+SystemConfig `batcherHash` rotated.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.batcherHash:
+-        "eth:0xeb18EA5dEDeE42e7af378991DFEb719D21c17b4C"
++        "eth:0x37804a4f63Ab1dCf96A48B1DCE8c03492f539fE9"
+    }
+```
+
+Generated with discovered.json: 0xc5b9e014dafff28f055d52466ac902b88f754a21
+
+# Diff at Thu, 04 Jun 2026 17:45:20 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8ad83b88dd9180e282e419267cebe10e93daf01d block: 1778850530
+- current timestamp: 1778850530
+
+## Description
+
+New game name (aggregateVerifier) added to portal.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778850530 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x758E0EE66102816F5C3Ec9ECc1188860fbb87812) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.621:
++        "AggregateVerifier"
+    }
+```
+
 Generated with discovered.json: 0x47abac07f74095b089834e09edc25054b87a5044
 
 # Diff at Fri, 15 May 2026 13:11:10 GMT:

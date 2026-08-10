@@ -1,3 +1,131 @@
+Generated with discovered.json: 0xff3dda25798092d14c7e1f43ebe0b5b12d6079a4
+
+# Diff at Mon, 10 Aug 2026 09:02:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@be83079eed365197a392b6bfd65fa6506007093c block: 1784814910
+- current timestamp: 1786352489
+
+## Description
+
+Multisig member change.
+
+## Watched changes
+
+```diff
+    contract LayerZero Multisig (eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478) [layerzero/OneSigMultisig] {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      values.$members.5:
++        "eth:0xdFE4027209C795B84d39FfBfF86bf73572571BAd"
+      values.$members.6:
++        "eth:0x2be094F1C9AaF76aD3A789EA4f047BBE7D1DB552"
+      values.$threshold:
+-        3
++        5
+      values.totalSigners:
+-        5
++        7
+    }
+```
+
+Generated with discovered.json: 0x479d6b65bb1111ff43d5e53f296377575a5a2e4d
+
+# Diff at Thu, 23 Jul 2026 13:56:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@efd03446560a8d585747f124c71622cbfa33fca4 block: 1784274500
+- current timestamp: 1784814910
+
+## Description
+
+One Safe signer was rotated.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x86CbBAEB08861D005fD2147A5123E43e558db167"
++        "eth:0xb859DD2Cb50F19a53Ad25b279750ba5DEC76D306"
+    }
+```
+
+Generated with discovered.json: 0x15dc33d0d7a05c4ded07820ef7b4984f3277674b
+
+# Diff at Fri, 17 Jul 2026 07:49:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5a5b552776f13efe49c744667945e52e0a8f9718 block: 1781603942
+- current timestamp: 1784274500
+
+## Description
+
+Single signer change.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1) [GnosisSafe] {
+    +++ description: None
+      values.$members.5:
+-        "eth:0xFbF8084Fb81da2e24f9EdD821172efef1b74F218"
++        "eth:0xa85B57bD7433dCC4679d638b87d80F155A689Fc1"
+    }
+```
+
+Generated with discovered.json: 0x4a58a3500fa2244c29fda481586d2a127c8f7207
+
+# Diff at Tue, 16 Jun 2026 10:00:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b8fe7ad12211d67626f7d23839b5be1f7ba15bb5 block: 1777285916
+- current timestamp: 1781603942
+
+## Description
+
+Unichain peer blocked in ethereum rsETH OApp.
+
+## Watched changes
+
+```diff
+    contract RsETHOFTAdapter (eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3) [layerzero/OFTAdapter] {
+    +++ description: An OApp in the LayerZero protocol that adapts an existing ERC20 token into the OFT standard. Its owner can configure peers and LayerZero security settings for connected routes.
++++ description: The configured peer for the rsETH OFT route from Unichain.
+      values.peerUnichain:
+-        "unichain:0xc3eACf0612346366Db554C991D7858716db09f58"
++        "unichain:0x0000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x9921aa9eaabd740f707a49d2755d084d0b189441
+
+# Diff at Fri, 12 Jun 2026 10:18:53 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1777285916
+- current timestamp: 1777285916
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1777285916 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
 Generated with discovered.json: 0xfcde0409fb986436d88dc3c24c25b3f1d0cff1fd
 
 # Diff at Mon, 11 May 2026 11:10:28 GMT:

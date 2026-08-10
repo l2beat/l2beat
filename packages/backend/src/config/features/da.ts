@@ -1,11 +1,7 @@
 import type { Env } from '@l2beat/backend-tools'
-import type { ProjectDaTrackingConfig, ProjectService } from '@l2beat/config'
-import {
-  assertUnreachable,
-  notUndefined,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import type { ProjectService } from '@l2beat/config'
+import { createDaTrackingId } from '@l2beat/shared'
+import { notUndefined, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import type {
   BlockDaIndexedConfig,
@@ -79,6 +75,7 @@ export async function getDaTrackingConfig(
         'CELESTIA_BLOBS_API_CALLS_PER_MINUTE',
         20_000,
       ),
+      timeout: env.integer('CELESTIA_BLOBS_API_TIMEOUT', 30_000),
       batchSize: env.integer('CELESTIA_BLOBS_BATCH_SIZE', 100),
       startingBlock: CELESTIA_START_BLOCK,
     })
@@ -127,27 +124,31 @@ export async function getDaTrackingConfig(
   }
 
   if (eigenDaEnabled) {
+    const eigenStartTimestamp = env.integer(
+      'EIGEN_DA_START_TIMESTAMP',
+      EIGEN_START_TIMESTAMP,
+    )
     timestampLayers.push({
       type: 'eigen-da' as const,
       name: 'eigenda',
       url: env.string('EIGEN_DA_API_URL'),
       perProjectUrl: env.string('EIGEN_DA_PER_PROJECT_API_URL'),
       callsPerMinute: env.integer('EIGEN_DA_API_CALLS_PER_MINUTE', 2000),
-      startingTimestamp: EIGEN_START_TIMESTAMP,
+      startingTimestamp: eigenStartTimestamp,
     })
     timestampProjectsForLayers.push({
       configurationId: createDaLayerConfigId('eigenda'),
       projectId: ProjectId('eigenda'),
       type: 'baseLayer' as const,
       daLayer: 'eigenda',
-      sinceTimestamp: EIGEN_START_TIMESTAMP,
+      sinceTimestamp: eigenStartTimestamp,
     })
 
     const sovereignProjectsOnEigen =
       await getTimestampDaTrackingSovereignProjects(
         ps,
         ProjectId('eigenda'),
-        EIGEN_START_TIMESTAMP,
+        eigenStartTimestamp,
       )
     sovereignTimestampProjects.push(...sovereignProjectsOnEigen)
   }
@@ -339,41 +340,6 @@ async function getTimestampDaTrackingSovereignProjects(
   }
 
   return indexedConfigs
-}
-
-function createDaTrackingId(config: ProjectDaTrackingConfig): string {
-  const input = []
-
-  input.push(config.type)
-  input.push(config.daLayer)
-  // we're running two versions of DA in parallel to rollout new features
-  input.push('v2')
-
-  switch (config.type) {
-    case 'ethereum':
-      input.push(config.inbox)
-      if (config.sequencers) {
-        input.push(...config.sequencers.sort((a, b) => a.localeCompare(b)))
-      }
-      if (config.topics) {
-        input.push(...config.topics.sort((a, b) => a.localeCompare(b)))
-      }
-      break
-    case 'celestia':
-      input.push(config.namespace)
-      break
-    case 'avail':
-      input.push(...config.appIds.sort((a, b) => a.localeCompare(b)))
-      break
-    case 'eigen-da':
-      input.push(config.customerId)
-      break
-    default:
-      assertUnreachable(config)
-  }
-
-  const hash = createHash('sha1').update(input.join('')).digest('hex')
-  return hash.slice(0, 12)
 }
 
 function createDaLayerConfigId(daLayerName: string): string {

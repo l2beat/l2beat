@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from 'express'
 import { getContext } from '../context/context'
 
 export function loggerMiddleware(logger: Logger) {
+  logger = logger.for('Http')
   return (req: Request, res: Response, next: NextFunction) => {
     if (req.headers['user-agent']?.includes('Cloudflare-Healthchecks')) {
       return next()
@@ -43,7 +44,7 @@ export function loggerMiddleware(logger: Logger) {
 }
 
 const dummyUrl = 'https://api.l2beat.com'
-function getParamsWithoutApiKey(url: string) {
+export function getParamsWithoutApiKey(url: string) {
   const urlObj = new URL(`${dummyUrl}${url}`)
   urlObj.searchParams.delete('apiKey')
   const queryParams = Object.fromEntries(urlObj.searchParams.entries())

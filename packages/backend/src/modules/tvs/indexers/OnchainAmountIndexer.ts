@@ -9,7 +9,7 @@ import type {
   StarknetTotalSupplyProvider,
   TotalSupplyProvider,
 } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { withCoreFeatureRpcMetricsContext } from '../../../tools/coreFeatureRpcMetrics'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
@@ -17,7 +17,8 @@ import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexe
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
-  RemovalConfiguration,
+  TrimRemovalConfiguration,
+  WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
 import type { SyncOptimizer } from '../tools/SyncOptimizer'
 
@@ -234,19 +235,27 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
     }))
   }
 
-  override async removeData(configurations: RemovalConfiguration[]) {
-    if (configurations.length === 0) return
+  override async wipeData(configurations: WipeRemovalConfiguration[]) {
+    const deletedRecords = await this.$.db.tvsAmount.deleteByConfigIds(
+      configurations.map((c) => c.id),
+    )
+    if (deletedRecords > 0) {
+      this.logger.info('Wiped records for configurations', {
+        configurations: configurations.length,
+        deletedRecords,
+      })
+    }
+  }
 
+  override async trimData(configurations: TrimRemovalConfiguration[]) {
     const configs = configurations.map((c) => ({
       configurationId: c.id,
-      fromInclusive: UnixTime(c.from),
-      toInclusive: UnixTime(c.to),
+      fromInclusive: c.range[0],
+      toInclusive: c.range[1],
     }))
-
     const deletedRecords = await this.$.db.tvsAmount.deleteByConfigs(configs)
-
     if (deletedRecords > 0) {
-      this.logger.info('Deleted records for configurations', {
+      this.logger.info('Trimmed records for configurations', {
         configurations: configurations.length,
         deletedRecords,
       })

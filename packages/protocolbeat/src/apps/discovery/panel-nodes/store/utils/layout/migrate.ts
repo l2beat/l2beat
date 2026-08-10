@@ -1,9 +1,11 @@
 import { LayoutV1 } from './v1'
 import { LayoutV2 } from './v2'
+import { LayoutV3 } from './v3'
+import { LayoutV4 } from './v4'
 
-export const CURRENT_LAYOUT_VERSION = 2
+export const CURRENT_LAYOUT_VERSION = 4
 
-export type Layout = LayoutV2
+export type Layout = LayoutV4
 
 export type MigrateFailureReason = 'invalid' | 'unsupported-version' | 'too-new'
 
@@ -56,7 +58,7 @@ export function migrateLayout(raw: unknown): MigrateResult {
       }
       return {
         ok: true,
-        layout: migrateV1toV2(parsed.data),
+        layout: migrateV3toV4(migrateV2toV3(migrateV1toV2(parsed.data))),
         migratedFrom: 1,
       }
     }
@@ -69,7 +71,33 @@ export function migrateLayout(raw: unknown): MigrateResult {
           message: 'File is not a valid layout file.',
         }
       }
-      return { ok: true, layout: parsed.data, migratedFrom: 2 }
+      return {
+        ok: true,
+        layout: migrateV3toV4(migrateV2toV3(parsed.data)),
+        migratedFrom: 2,
+      }
+    }
+    case 3: {
+      const parsed = LayoutV3.safeParse(raw)
+      if (!parsed.success) {
+        return {
+          ok: false,
+          reason: 'invalid',
+          message: 'File is not a valid layout file.',
+        }
+      }
+      return { ok: true, layout: migrateV3toV4(parsed.data), migratedFrom: 3 }
+    }
+    case 4: {
+      const parsed = LayoutV4.safeParse(raw)
+      if (!parsed.success) {
+        return {
+          ok: false,
+          reason: 'invalid',
+          message: 'File is not a valid layout file.',
+        }
+      }
+      return { ok: true, layout: parsed.data, migratedFrom: 4 }
     }
     default:
       return {
@@ -107,6 +135,35 @@ function migrateV1toV2(input: LayoutV1): LayoutV2 {
   }
 }
 
+function migrateV2toV3(input: LayoutV2): LayoutV3 {
+  return {
+    version: 3,
+    projectId: input.projectId,
+    metadata: undefined,
+    locations: input.locations,
+    colors: input.colors,
+    hiddenFields: input.hiddenFields,
+    hiddenNodes: input.hiddenNodes,
+  }
+}
+
+// Groups did not exist before v4, so older layouts simply have none.
+function migrateV3toV4(input: LayoutV3): LayoutV4 {
+  return {
+    version: 4,
+    projectId: input.projectId,
+    metadata: input.metadata,
+    locations: input.locations,
+    colors: input.colors,
+    hiddenFields: input.hiddenFields,
+    hiddenNodes: input.hiddenNodes,
+    groups: undefined,
+  }
+}
+
+// Legacy oklch color objects are skipped instead of inventing palette index 0.
+// This preserves explicit numeric overrides while leaving historical auto-chain
+// colors unset.
 function normalizeColors(
   colors: NonNullable<LayoutV1['colors']>,
 ): Record<string, number> | undefined {

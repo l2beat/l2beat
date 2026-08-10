@@ -15,10 +15,12 @@ export function AvgDurationCell({
   averageDuration,
   className,
   splitClassName,
+  splitItemClassName,
 }: {
   averageDuration: AverageDuration
   className?: string
   splitClassName?: string
+  splitItemClassName?: string
 }) {
   switch (averageDuration.type) {
     case 'unknown':
@@ -50,7 +52,11 @@ export function AvgDurationCell({
           )}
         >
           {averageDuration.splits.map((split) => (
-            <DurationCellItem key={split.label} split={split} />
+            <DurationCellItem
+              key={split.label}
+              split={split}
+              className={splitItemClassName}
+            />
           ))}
         </div>
       )
@@ -61,16 +67,18 @@ export function AvgDurationCell({
 
 function DurationCellItem({
   split,
+  className,
 }: {
   split: SplitAverageDuration['splits'][number]
+  className?: string
 }) {
   return (
-    <div className="flex items-baseline">
+    <div className={cn('flex items-center gap-1 whitespace-nowrap', className)}>
       <span className="text-[13px] text-secondary leading-none">
-        {split.label}:{' '}
+        {split.label}:
       </span>
       {split.duration !== null ? (
-        formatSeconds(split.duration)
+        <span className="leading-none">{formatSeconds(split.duration)}</span>
       ) : (
         <Badge type="gray" size="extraSmall">
           N/A

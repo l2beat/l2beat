@@ -1,8 +1,7 @@
 {
   "name": "molten",
-  "timestamp": 1779719447,
-  "configHash": "0xfd7dd88e42225e13a9c91943c35dd6d53c7270a80461369d28c2b22d2d0dd40f",
-  "sharedModules": ["shared-sp1", "blobstream"],
+  "timestamp": 1782746641,
+  "configHash": "0xc9ff4efce419519b31750f2556f0cea96da9e8be147e885170c2aee80cf74acd",
   "entries": [
     {
       "address": "arb1:0x00B96a8454dc757240e475B5e6e7DcAAf401930f",
@@ -33,9 +32,9 @@
         "owner": "arb1:0xf37831515e1ddf6bB30eE612545bf87047946602",
         "rootCert": "0x641a0321a3e244efe456463195d606317ed7cdcc3c1756e09893f3c68f79bb5b",
         "succintZkConfig": {
-          "verifierId": "0x00e874289e8c7f42381b6220f438801d2d1478dc8230f866a31e5ceec6e93322",
-          "aggregatorId": "0x002bb66c60302a81a621d7899e3f6ee1d0db9fb1eae5d1e80e94a33cb1e24922",
-          "zkVerifier": "arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D"
+          "verifierId": "0x00643c7149cf335e7ec9d3f3301e69658a7f0ef2bc7546509c257ed8809f28e1",
+          "aggregatorId": "0x00294928e44f0cdc9c74848c4cafcdb29f733a3bc07408c240be3d5afe750b3e",
+          "zkVerifier": "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D"
         }
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
@@ -297,7 +296,7 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validate",
+          "permission": "interact",
           "from": "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
@@ -400,7 +399,7 @@
       "address": "arb1:0x2E5d207a4C0F7e7C52F6622DCC6EB44bC0fE1A13",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
+      "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -521,7 +520,7 @@
           "role": ".batchPosterManager"
         },
         {
-          "permission": "sequence",
+          "permission": "interact",
           "from": "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
@@ -755,7 +754,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 23,
+        "nonce": 28,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -892,7 +891,7 @@
           "arb1:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A",
           "arb1:0x9e14B1baFCEB80B67934aBE4fB00a7291aCfBcD0",
           "arb1:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
-          "arb1:0xEC114946E7213d113c9B9481028271B5E9e09371",
+          "arb1:0xFcB26a1DbFafF84b91f1b7D9026DA63007b88D3c",
           "arb1:0xbf853295743511e8DC5F03809d209C33fC136d24",
           "arb1:0x356000Cec4fC967f8FC372381D983426760A0391"
         ],
@@ -901,7 +900,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 122,
+        "nonce": 123,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1293,6 +1292,13 @@
       "proxyType": "EOA"
     },
     {
+      "name": "ArbitrumBlobstream",
+      "address": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+      "type": "Reference",
+      "targetType": "Contract",
+      "targetProject": "blobstream"
+    },
+    {
       "address": "arb1:0xa8973BDEf20fe4112C920582938EF2F022C911f5",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1433,28 +1439,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "SP1Verifier",
-      "address": "arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0x3430123e1fec5a2451a38fcf0a62fdd0cc482b69740ab632ef580e1a44122702"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs (v5.0.0).",
-      "deployerAddress": "arb1:0xf37831515e1ddf6bB30eE612545bf87047946602",
-      "sinceTimestamp": 1774475696,
-      "sinceBlock": 445637098,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913",
-        "VERSION": "v5.0.0"
-      },
-      "implementationNames": {
-        "arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D": "SP1Verifier"
-      }
-    },
-    {
       "address": "arb1:0xD45Aa46e2496dFa1300305a705739FE5023b6f3A",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1468,6 +1452,29 @@
       "address": "arb1:0xd7d94B63F021ebD45d2ADd7E5DABf36C981e5878",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0xaed0a260d9c0355e7e6fcf19f18136f914582d20027b440b0c04b762e521b2d6"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v6.1.0).",
+      "deployerAddress": "arb1:0xba1E3EFfD2DD8CEb7054FEfb0cee8C4300D82C1a",
+      "sinceTimestamp": 1779890004,
+      "sinceBlock": 467227062,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x4388a21c687fdd5f218d7e3d13190cac4c5355818d3605fd5fb811df468ee696",
+        "VERSION": "v6.1.0",
+        "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "implementationNames": {
+        "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D": "SP1Verifier"
+      }
     },
     {
       "name": "Bridge",
@@ -1669,11 +1676,6 @@
       }
     },
     {
-      "address": "arb1:0xEC114946E7213d113c9B9481028271B5E9e09371",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "arb1:0xeC3B6b96642D5f2b8851409353def2e78f2B2227",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1738,6 +1740,11 @@
       "implementationNames": {
         "arb1:0xF99De72165cB3A56766e118B3a20874d4A0aCa89": "EspressoNitroTEEVerifier"
       }
+    },
+    {
+      "address": "arb1:0xFcB26a1DbFafF84b91f1b7D9026DA63007b88D3c",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -2506,19 +2513,6 @@
       "function unpause()",
       "function unsafeCreateRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, uint256 tokenTotalFeeAmount, bytes data) returns (uint256)"
     ],
-    "arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D": [
-      "error InvalidProof()",
-      "error ProofInvalid()",
-      "error PublicInputNotInField()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(uint256[8] proof, uint256[2] input) view",
-      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "arb1:0xCa2F31F3C6553c2FD9897f7AA464406a431959A9": [
       "error AlreadyInit()",
       "error AlreadySpent(uint256 index)",
@@ -2556,6 +2550,22 @@
       "function spent(uint256) view returns (bytes32)",
       "function updateRollupAddress()",
       "function updateSendRoot(bytes32 root, bytes32 l2BlockHash)"
+    ],
+    "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D": [
+      "error InvalidExitCode()",
+      "error InvalidProof()",
+      "error InvalidVkRoot()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function VK_ROOT() pure returns (bytes32)",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[5] input) view",
+      "function verifyProof(uint256[8] proof, uint256[5] input) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "arb1:0xE1d32C985825562edAa906fAC39295370Db72195": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -2653,7 +2663,7 @@
     "orbitstack/Inbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProofEntry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProver0": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/OneStepProverHostIo_Celestia": "0xdfb89dfaf2aa0cc0cb0a1be0072f20b1716aa3be62152610175c896630a839de",
+    "orbitstack/OneStepProverHostIo_Celestia": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMath": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/Outbox": "0x8dbaaf653890815197f4c39ef9d1000a8dfc0338ef34b273788a6d2087d4cfec",
@@ -2664,6 +2674,6 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 466549338 },
-  "permissionsConfigHash": "0xd3341955ab62200f15bbf79c1a15e81bb3127ed8d8e5b3777ac6813e3dc4650d"
+  "usedBlockNumbers": { "arbitrum": 478619686 },
+  "permissionsConfigHash": "0x6d90512419b13f5b5073480fdd9d5c9738e5ec74e8da1ffbd757dbfeee166816"
 }

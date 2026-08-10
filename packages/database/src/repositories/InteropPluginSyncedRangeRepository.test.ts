@@ -268,6 +268,54 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
       })
     },
   )
+
+  describe(
+    InteropPluginSyncedRangeRepository.prototype.deleteNotInChains.name,
+    () => {
+      it('deletes records with chains not in the list', async () => {
+        const a1 = range({ pluginName: 'plugin-a', chain: 'ethereum' })
+        const a2 = range({ pluginName: 'plugin-a', chain: 'apechain' })
+        const b1 = range({ pluginName: 'plugin-b', chain: 'arbitrum' })
+        const b2 = range({ pluginName: 'plugin-b', chain: 'forknet' })
+        await repository.upsert(a1)
+        await repository.upsert(a2)
+        await repository.upsert(b1)
+        await repository.upsert(b2)
+
+        const deleted = await repository.deleteNotInChains([
+          'ethereum',
+          'arbitrum',
+        ])
+        expect(deleted).toEqual(2)
+
+        const all = await repository.getAll()
+        expect(all).toEqualUnsorted([a1, b1])
+      })
+
+      it('returns 0 when list is empty', async () => {
+        await repository.upsert(
+          range({ pluginName: 'plugin-a', chain: 'ethereum' }),
+        )
+
+        const deleted = await repository.deleteNotInChains([])
+        expect(deleted).toEqual(0)
+
+        const all = await repository.getAll()
+        expect(all.length).toEqual(1)
+      })
+
+      it('returns 0 when all records match the valid list', async () => {
+        const a1 = range({ pluginName: 'plugin-a', chain: 'ethereum' })
+        await repository.upsert(a1)
+
+        const deleted = await repository.deleteNotInChains(['ethereum'])
+        expect(deleted).toEqual(0)
+
+        const all = await repository.getAll()
+        expect(all).toEqual([a1])
+      })
+    },
+  )
 })
 
 function range(

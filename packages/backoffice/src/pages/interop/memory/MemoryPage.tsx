@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query'
 import {
   Card,
   CardContent,
@@ -8,15 +9,14 @@ import {
 import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
-import { useBackendApi } from '~/react-query/trpc'
+import { useBackendTrpc } from '~/react-query/trpc'
 
 export function MemoryPage() {
-  const api = useBackendApi()
-  const { data, error, isPending } = api.interop.status.memory.useQuery(
-    undefined,
-    {
+  const trpc = useBackendTrpc()
+  const { data, error, isPending } = useQuery(
+    trpc.interop.status.memory.queryOptions(undefined, {
       refetchInterval: 2_500,
-    },
+    }),
   )
 
   return (

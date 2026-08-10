@@ -4,6 +4,15 @@
   "description": "The main entry point to deposit funds from the host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a time defined by the {{l2Oracle}}.",
   "ignoreMethods": ["isOutputFinalized"],
   "ignoreInWatchMode": ["params"],
-  "fields": { "guardian": { "permissions": [{ "type": "guard" }] } },
+  "fields": {
+    "guardian": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless)."
+        }
+      ]
+    }
+  },
   "category": "core"
 }

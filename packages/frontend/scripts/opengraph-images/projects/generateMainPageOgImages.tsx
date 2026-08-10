@@ -7,12 +7,31 @@ import { MainPageOpengraphImage } from '~/components/opengraph-image/MainPage'
 
 const mainPages: MainPage[] = [
   {
+    title: 'Home',
+  },
+  {
     type: 'scaling',
     title: 'Summary',
   },
   {
     type: 'scaling',
-    title: 'Risk Analysis',
+    secondaryLabel: 'RISKS',
+    title: 'Overview',
+  },
+  {
+    type: 'scaling',
+    secondaryLabel: 'RISKS',
+    title: 'Data Availability',
+  },
+  {
+    type: 'scaling',
+    secondaryLabel: 'RISKS',
+    title: 'State Validation',
+  },
+  {
+    type: 'scaling',
+    secondaryLabel: 'RISKS',
+    title: 'Sequencing',
   },
   {
     type: 'scaling',
@@ -22,10 +41,7 @@ const mainPages: MainPage[] = [
     type: 'scaling',
     title: 'Activity',
   },
-  {
-    type: 'scaling',
-    title: 'Data Availability',
-  },
+
   {
     type: 'scaling',
     title: 'Liveness',
@@ -61,6 +77,10 @@ const mainPages: MainPage[] = [
   {
     type: 'interop',
     title: 'Token Frameworks',
+  },
+  {
+    type: 'interop',
+    title: 'Intent Bridges',
   },
   {
     type: 'data-availability',
@@ -112,6 +132,9 @@ const mainPages: MainPage[] = [
   {
     title: 'DA Risk Framework',
   },
+  {
+    title: 'Native Rollups',
+  },
 ]
 
 export async function generateMainPageOgImages(
@@ -126,7 +149,10 @@ export async function generateMainPageOgImages(
       process.cwd(),
       'static/meta-images',
       mainPage.type ?? '',
-      `/${mainPage.title.toLowerCase().split(' ').join('-')}`,
+      mainPage.secondaryLabel
+        ? mainPage.secondaryLabel.toLowerCase().split(' ').join('-')
+        : '',
+      mainPage.title.toLowerCase().split(' ').join('-'),
     )
     const outputFile = path.join(outputDir, 'opengraph-image.png')
     if (existsSync(outputFile)) {

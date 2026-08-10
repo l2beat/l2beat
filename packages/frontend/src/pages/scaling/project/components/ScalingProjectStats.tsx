@@ -1,4 +1,8 @@
-import { pluralize } from '@l2beat/shared-pure'
+import {
+  formatActivityCount,
+  formatCurrency,
+  pluralize,
+} from '@l2beat/shared-pure'
 import chunk from 'lodash/chunk'
 import compact from 'lodash/compact'
 import isEmpty from 'lodash/isEmpty'
@@ -21,8 +25,6 @@ import {
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { cn } from '~/utils/cn'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 interface Props {
   project: ProjectScalingEntry
@@ -33,6 +35,7 @@ export function ProjectScalingStats({ project, className }: Props) {
   const stats = compact([
     <ProjectSummaryStat
       key="tvs"
+      titleAsChild
       title={
         <div>
           <span className="lg:max-xl:hidden">Total Value Secured</span>
@@ -59,6 +62,7 @@ export function ProjectScalingStats({ project, className }: Props) {
               className="!text-base !font-medium !leading-[100%] text-nowrap"
               changeClassName="text-label-value-14 font-bold"
               change={project.header.tvs.breakdown.totalChange}
+              changePeriod={project.header.tvs.breakdown.totalChangePeriod}
             >
               {formatCurrency(project.header.tvs.breakdown.total, 'usd')}
             </ValueWithPercentageChange>
@@ -70,6 +74,7 @@ export function ProjectScalingStats({ project, className }: Props) {
     />,
     <ProjectSummaryStat
       key="ops-count"
+      titleAsChild
       title={
         <div>
           <span className="lg:max-xl:hidden">Past day UOPS</span>
@@ -81,6 +86,7 @@ export function ProjectScalingStats({ project, className }: Props) {
         project.header.activity ? (
           <ValueWithPercentageChange
             change={project.header.activity.uopsWeeklyChange}
+            changePeriod={project.header.activity.uopsWeeklyChangePeriod}
             className="text-nowrap font-medium! text-base! leading-[100%]!"
             changeClassName="text-label-value-14 font-bold"
           >

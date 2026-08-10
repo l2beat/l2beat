@@ -13,5 +13,10 @@
     "hash": "0x6c8fe2017652e376f87e63411537a85b1d70d09248914a9d1b8f560d9af0f15e",
     "address": "eth:0x315BCD0f31EF8b1124382f3acab3913f791C09E7",
     "blockNumber": 24643873
+  },
+  "StrategyFactory_v1.13.0": {
+    "hash": "0x84efd26dd6dea827afe7cca007745bb205c21213b359c931c24f75e451d88644",
+    "address": "eth:0xbbc4124C74C567396181fBfbaE746b80619D2b76",
+    "blockNumber": 25429959
   }
 }

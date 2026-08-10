@@ -268,12 +268,7 @@ function LivenessCustomTooltip({
         <div className="mb-1 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatRange(
             timestamp,
-            timestamp +
-              (resolution === 'hourly'
-                ? UnixTime.HOUR
-                : resolution === 'sixHourly'
-                  ? UnixTime.SIX_HOURS
-                  : UnixTime.DAY),
+            timestamp + UnixTime.periodToSeconds(resolution),
           )}
         </div>
         <HorizontalSeparator className="mt-1.5" />

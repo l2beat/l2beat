@@ -1,3 +1,4 @@
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { type ReactNode, useContext } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
@@ -10,8 +11,6 @@ import { EM_DASH } from '~/consts/characters'
 import { InfoIcon } from '~/icons/Info'
 import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import { InteropSelectedChainsContext } from '../../utils/InteropSelectedChainsContext'
 import type { InteropSelection } from '../../utils/types'
@@ -116,8 +115,7 @@ function TopTokenIdentity({
   const selectedChainsContext = useContext(InteropSelectedChainsContext)
   const selection =
     apiSelection ?? selectedChainsContext?.selectedChains ?? undefined
-  const href =
-    topToken && selection ? getInteropTokenUrl(topToken, selection) : undefined
+  const href = topToken && selection ? getInteropTokenUrl(topToken) : undefined
   const content = isLoading ? (
     <Skeleton className="h-8 w-28" />
   ) : topToken ? (

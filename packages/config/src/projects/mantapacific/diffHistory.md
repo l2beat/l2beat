@@ -1,3 +1,64 @@
+Generated with discovered.json: 0xb37bf783180fd6eaf70261a7acd75e7a6c6dae4c
+
+# Diff at Tue, 09 Jun 2026 12:43:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1761589819
+- current timestamp: 1761589819
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761589819 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0x30c789674ad3B458886BBC9abf42EEe19EA05C1D","role":".CHALLENGER"}
+      receivedPermissions.1.description:
++        "Allowed to challenge or delete state roots proposed by a Proposer."
+      receivedPermissions.1.role:
+-        ".GUARDIAN"
++        ".CHALLENGER"
+      receivedPermissions.1.from:
+-        "eth:0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622"
++        "eth:0x30c789674ad3B458886BBC9abf42EEe19EA05C1D"
+      receivedPermissions.1.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".GUARDIAN"}
+    }
+```
+
+```diff
+    EOA  (eth:0x853bDfF715eFeDc280C16241dD30A6d651f90aCa) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to post new state roots of the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (eth:0xA76E31D8471D569EfDd3D95d1b11Ce6710f4533F) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "Allowed to commit transactions from the current layer to the host chain."
+      receivedPermissions.0.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x35f71791f752c8747d8713c1ee9205bcdf1abe18
 
 # Diff at Fri, 08 May 2026 07:51:36 GMT:

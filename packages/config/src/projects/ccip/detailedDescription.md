@@ -1,0 +1,25 @@
+# v1.6 Architecture
+All crosschain messages in Chainlink CCIP are (supposed to be) validated and signed by a fixed signer set (OCR), currently equivalent to a {{ocrCommitQuorum}}/{{ocrCommitN}} multisig on Ethereum. The router is the main entrypoint of the system, used to send messages to other chains or receive them. While in this page we only analyze the contracts and permissions on Ethereum, it's important to understand that a full risk assessment requires reviewing all contracts on all supported chains, as a single misconfiguration or compromise on a single chain can cause loss of funds on other chains too. At the time of writing, CCIP supports [more than 70 chains](https://docs.chain.link/ccip/directory/mainnet).
+
+
+
+Outgoing messages go through an "OnRamp" contract, which is tasked to perform fee estimation through a "FeeQuoter" contract, and fetch the proper token pool to ultimately redirect funds through a "TokenAdminRegistry" contract. The pool either locks or burns the funds, depending on the specific pool contract logic. Pools can be managed either by Chainlink or the actual token owner, and can therefore have custom governance which needs to be additionally assessed per token. Some pools, but not all, implement crosschain rate limiters. The OnRamp may also enable "filterers" to exclude the relaying of messages based on sender or content.
+
+
+
+Incoming messages go through an "OffRamp" contract, which checks whether they have been validated by the OCR set. Tokens are then either released or minted from the proper pool, depending on the specific pool contract logic. Standard non-token messages go through the main Router first before the external call is actually performed. Messages can only be executed by a set of permissioned "transmitters" within {{permissionLessExecutionThresholdFmt}}, otherwise anyone can do it.
+
+# OCR set updates
+The OCR set corresponds to a {{ocrCommitQuorum}}/{{ocrCommitN}} multisig on Ethereum. The owner of the OffRamp can arbitrarily update the threshold and signer set used to validate messages, so trust in this permissioned actor is required. The actual permission structure behind this role is complex, see the Permissions section for more details.
+
+# Fee estimation
+The FeeQuoter contract holds configuration for each destination chain such as whether the route is enabled, maximum message size and gas limit, gas overheads, a flat per-byte gas rate, a flat network fee and a LINK fee discount. It also stores token prices and destination chain gas prices to estimate fees, without checking them for staleness. A whitelist of addresses is permissioned to update such prices, and any token they price is automatically accepted as a fee token.
+
+# Cursing
+The Risk Management Network (RMN) is a contract that allows to blacklist either all paths with a universal "curse" or specific paths with more targeted curses. The RMN is represented by its own timelock and set of multisigs that can either propose, cancel, or immediately execute, bypassing any delay. The network can both block incoming and outgoing messages concerning all or specific chains. See Permissions section for more details.
+
+# v1.5 Architecture
+While in v1.6 many source and destination chains can use share the same OnRamp and OffRamp, in v1.5 there is one OnRamp and one OffRamp for each active path. The current analysis only covers v1.6, but token pools can accept incoming messages from both v1.5 and v1.6 OffRamps at the same time. A complete risk assessment for a token requires looking into all OffRamps.
+
+# Monitoring
+  Chainlink provides [an explorer](https://ccip.chain.link/) for crosschain transactions and a [directory](https://docs.chain.link/ccip/directory/mainnet) for registered offramps and onramps, both globally and by token, but doesn't present sufficient information around permissioned actors involved when interacting with a token using CCIP.

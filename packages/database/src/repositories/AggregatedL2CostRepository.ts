@@ -145,4 +145,21 @@ export class AggregatedL2CostRepository extends BaseRepository {
     const rows = await query.execute()
     return rows.map(toRecord)
   }
+
+  async getFirstTimestampByProjects(
+    projectIds: ProjectId[],
+  ): Promise<UnixTime | undefined> {
+    if (projectIds.length === 0) return undefined
+    const row = await this.db
+      .selectFrom('AggregatedL2Cost')
+      .select((eb) => eb.fn.min('timestamp').as('timestamp'))
+      .where(
+        'projectId',
+        'in',
+        projectIds.map((p) => p.toString()),
+      )
+      .executeTakeFirst()
+
+    return row?.timestamp ? UnixTime.fromDate(row.timestamp) : undefined
+  }
 }

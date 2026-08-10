@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x80b6786b458bb7d7e4ce214aa98baa2fd3882b24
+
+# Diff at Thu, 30 Jul 2026 14:13:58 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@66fa629d20cb3eebcd8a566401e5b4f335fafdf2 block: 1783068981
+- current timestamp: 1783068981
+
+## Description
+
+Added TORN balances to gov staking and the treasury.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783068981 (main branch discovery), not current.
+
+```diff
+    contract TornadoVault (eth:0x2F50508a8a3D323B91336FA3eA6ae50E55f32185) [tornado-cash/TornadoVault] {
+    +++ description: Vault that escrows locked TORN of governance participants who wish to receive voting rights.
+      fieldMeta:
++        {"TORNStaked":{"description":"TORN locked by governance participants for voting power, escrowed in this vault."}}
+    }
+```
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
+      fieldMeta.TORNTreasury:
++        {"description":"TORN held by the governance contract itself (the governance treasury). Does not include TORN locked by users for voting, which is escrowed in userVault."}
+    }
+```
+
+Generated with discovered.json: 0x757a65684bafe278143f918b51bbfbb15873ed73
+
+# Diff at Fri, 03 Jul 2026 08:58:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5c2c1f8c2ecc3435b5c793f216a30d876a29ac0a block: 1782391445
+- current timestamp: 1783068981
+
+## Description
+
+Manually verified the Tornado Cash MiMC hasher against the pinned Tornado circomlib MiMC sponge generator and deployment bytecode.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782391445 (main branch discovery), not current.
+
+```diff
+    contract MiMCHasher (eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe) [N/A] {
+    +++ description: MiMC hasher used by newer Tornado pool generations for commitment-tree operations, manually verified against the pinned Tornado circomlib generator.
+      unverified:
+-        true
+      description:
+-        "Unverified MiMC hasher used by newer Tornado pool generations for commitment-tree operations. If this contract were malicious or had a backdoor, all pools using it would be compromised."
++        "MiMC hasher used by newer Tornado pool generations for commitment-tree operations, manually verified against the pinned Tornado circomlib generator."
+      sourceHashes:
++        ["0x96acbaf2288d4cc44cf8e9634da42d922960c005a6982e0b54a84823be2776f2"]
+      references:
++        [{"text":"Tornado Cash hasher build script","href":"https://github.com/tornadocash/tornado-core/blob/master/scripts/compileHasher.js"},{"text":"Source Code","href":"https://github.com/tornadocash/circomlib/blob/c372f14d324d57339c88451834bf2824e73bbdbc/src/mimcsponge_gencontract.js"}]
+    }
+```
+
+Generated with discovered.json: 0x29e07dffcaf2328a9178fd62c8aceebe29247046
+
+# Diff at Thu, 25 Jun 2026 12:45:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8df370c30d58cf2a24a9fe5df1aafba41971f447 block: 1779439938
+- current timestamp: 1782391445
+
+## Description
+
+New proposal, (yet) unverified and malicious, see https://x.com/pcaversaccio/status/2070125180261896246 .
+
+## Watched changes
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
+      values.proposalCount:
+-        66
++        67
+    }
+```
+
 Generated with discovered.json: 0x925773d2287b4e6481fbbc071a65518ced353c0d
 
 # Diff at Mon, 25 May 2026 09:49:32 GMT:

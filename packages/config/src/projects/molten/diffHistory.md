@@ -1,3 +1,162 @@
+Generated with discovered.json: 0x3c7da19481c858ec66f7d68f81156e07d695d4b8
+
+# Diff at Wed, 29 Jul 2026 11:32:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@7ee6102e023331dc2bb11a8e7d9b8b29863dccce block: 1782746641
+- current timestamp: 1782746641
+
+## Description
+
+Make blobstream use entrypoints and rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782746641 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    reference ArbitrumBlobstream (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x977ef453050843580e744fdc4c900530ffb3afad
+
+# Diff at Mon, 29 Jun 2026 15:29:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@d6a4cf0104ece715f88d9597c7e158a2841e88fd block: 1780654176
+- current timestamp: 1782746641
+
+## Description
+
+Caldera Multisig 1 (shared with blessnet, inevm, rari): member rotated.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 1 (arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "arb1:0xEC114946E7213d113c9B9481028271B5E9e09371"
++        "arb1:0xFcB26a1DbFafF84b91f1b7D9026DA63007b88D3c"
+    }
+```
+
+Generated with discovered.json: 0xc57abece6053f7e812d4a86bb12da9c260b2fd8b
+
+# Diff at Fri, 12 Jun 2026 10:18:55 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@6a183e6009109d4e62087499f44eca4aceea9086 block: 1780654176
+- current timestamp: 1780654176
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780654176 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0x2E5d207a4C0F7e7C52F6622DCC6EB44bC0fE1A13) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+Generated with discovered.json: 0x777435225bb5fb65a1099b7fb61d09a2bc571e68
+
+# Diff at Tue, 09 Jun 2026 12:43:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae67a38d37457ad735e5d55080d2e5479d5df7dc block: 1780654176
+- current timestamp: 1780654176
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780654176 (main branch discovery), not current.
+
+```diff
+    EOA  (arb1:0x152FFeF04881BD1390D2A52009f42d56EaC7AA03) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "validate"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (arb1:0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738) {
+    +++ description: None
+      receivedPermissions.1.permission:
+-        "sequence"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x6870ab4bd4c113ef385349199edad6d6e4d5de41
+
+# Diff at Fri, 05 Jun 2026 10:11:37 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@3501d14787f111a20580bca1fdb97e32abfb1f2c block: 1779719447
+- current timestamp: 1780654176
+
+## Description
+
+Molten changed to reproducible TEE verification SP1 programs, also upgraded to SP1 v6.1.0.
+
+## Watched changes
+
+```diff
+    contract NitroEnclaveVerifier (arb1:0x0d4cD6C0E9a0f2e744C83547f22Caf03414A3B22) [espresso/Sequencing/NitroEnclaveVerifier] {
+    +++ description: ZK-backed verifier for AWS Nitro enclave attestations. Verifies ZK proofs (RiscZero, Succinct SP1 or Pico) that attest AWS Nitro cert chain validation was executed correctly off-chain.
+      values.succintZkConfig.verifierId:
+-        "0x00e874289e8c7f42381b6220f438801d2d1478dc8230f866a31e5ceec6e93322"
++        "0x00643c7149cf335e7ec9d3f3301e69658a7f0ef2bc7546509c257ed8809f28e1"
+      values.succintZkConfig.aggregatorId:
+-        "0x002bb66c60302a81a621d7899e3f6ee1d0db9fb1eae5d1e80e94a33cb1e24922"
++        "0x00294928e44f0cdc9c74848c4cafcdb29f733a3bc07408c240be3d5afe750b3e"
+      values.succintZkConfig.zkVerifier:
+-        "arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D"
++        "arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (arb1:0xC513d6E8C8f915B1DA2f6eAC4C6d755ff3d5f21D) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1779719447 => .flat}/SP1Verifier.sol    | 114 +++++++++++++++------
+ 1 file changed, 82 insertions(+), 32 deletions(-)
+```
+
 Generated with discovered.json: 0xc4133f2ab037b45c02e16f7dad7dda9d35b8b01e
 
 # Diff at Mon, 25 May 2026 14:33:27 GMT:

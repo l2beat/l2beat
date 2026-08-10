@@ -1,15 +1,20 @@
-import { InMemoryCache, unique } from '@l2beat/shared-pure'
+import type { Project } from '@l2beat/config'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
+import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import type {
+  AggregatedInteropTransferWithTokens,
   InteropTokensResponse,
   InteropTopItemsInfiniteParams,
   InteropTopItemsParams,
   TokenData,
 } from './types'
 import { buildTokensDataMap } from './utils/buildTokensDataMap'
-import { buildTokensDetailsMap } from './utils/buildTokensDetailsMap'
+import {
+  buildTokensDetailsMapForRecords,
+  type TokensDetailsMap,
+} from './utils/buildTokensDetailsMap'
 import { getDurationSplit } from './utils/getAverageDuration'
 import { getLatestAggregatedInteropTransferWithTokens } from './utils/getLatestAggregatedInteropTransferWithTokens'
 import { getRelevantBridgeTypes } from './utils/getRelevantBridgeTypes'
@@ -18,7 +23,7 @@ import { sortInteropTopItems } from './utils/sortInteropTopItems'
 
 const logger = getLogger().for('getInteropTokens')
 const PAGE_SIZE = 100
-const interopTokensCache = new InMemoryCache({})
+const interopTokensCache = new FrontendInMemoryCache('getInteropTokensInfinite')
 
 export async function getInteropTokensInfinite({
   cursor,
@@ -45,6 +50,7 @@ async function getCachedInteropTokens(params: InteropTopItemsParams) {
         [...params.from].sort().join(','),
         [...params.to].sort().join(','),
         [...(params.protocolIds ?? [])].sort().join(','),
+        params.anchorChain ?? 'all',
       ],
       ttl: 60 * 10,
       staleWhileRevalidate: 60 * 15,
@@ -59,6 +65,7 @@ async function getInteropTokensData({
   to,
   type,
   protocolIds,
+  anchorChain,
 }: InteropTopItemsParams): Promise<TokenData[]> {
   if (env.MOCK) {
     return getMockInteropTokens()
@@ -72,12 +79,35 @@ async function getInteropTokensData({
     return []
   }
 
-  const { records } = await getLatestAggregatedInteropTransferWithTokens(
-    { from, to },
-    type ? [type] : undefined,
-    id ? [id] : protocolIds,
-  )
+  const { records } = await getLatestAggregatedInteropTransferWithTokens({
+    selection: { from, to },
+    types: type ? [type] : undefined,
+    protocolIds: id ? [id] : protocolIds,
+    anchorChain,
+  })
 
+  return buildInteropTokenData({
+    records,
+    interopProject,
+    interopProjects,
+    type,
+    tokensDetailsMap: await buildTokensDetailsMapForRecords(records),
+  })
+}
+
+export function buildInteropTokenData({
+  records,
+  interopProject,
+  interopProjects,
+  type,
+  tokensDetailsMap,
+}: {
+  records: AggregatedInteropTransferWithTokens[]
+  interopProject: Project<'interopConfig'> | undefined
+  interopProjects: Project<'interopConfig'>[]
+  type: InteropTopItemsParams['type']
+  tokensDetailsMap: TokensDetailsMap
+}): TokenData[] {
   const counts = {
     transferCount: records.reduce(
       (acc, transfer) => acc + transfer.transferCount,
@@ -88,13 +118,6 @@ async function getInteropTokensData({
       0,
     ),
   }
-
-  const abstractTokenIds = unique(
-    records.flatMap((record) =>
-      record.tokens.map((token) => token.abstractTokenId),
-    ),
-  )
-  const tokensDetailsMap = await buildTokensDetailsMap(abstractTokenIds)
 
   const relevantBridgeTypes = interopProject
     ? getRelevantBridgeTypes(interopProject, type)

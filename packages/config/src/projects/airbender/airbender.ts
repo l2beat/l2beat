@@ -3,6 +3,7 @@ import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 export const airbender: BaseProject = {
   id: ProjectId('airbender'),
@@ -48,21 +49,7 @@ export const airbender: BaseProject = {
         // ZK_CATALOG_TAGS.PCS.KZG,
       ],
     },
-    proofSystemInfo: `
-    ## Description
-
-    Airbender is the most advanced zkVM developed by Matter Labs. It operates on RISC-V ISA and is designed to prove state transition function of [zk stack](https://zkstack.io) chains in combination with [ZKsync OS](https://github.com/matter-labs/zksync-os), but also more general RISC-V programs. Airbender proofs could be [wrapped into Fflonk SNARK](https://github.com/matter-labs/zkos-wrapper) for efficient onchain verification. Airbender initial release [targets 81 bits of security](https://x.com/eth_proofs/status/1942468407896543694).
-
-    ## Proof system
-
-    Airbender implements a rather standard zkVM: AIR constraints, [DEEP-FRI](https://eprint.iacr.org/2019/336) polynomial testing, RISC-V instructions with the program being stored in read-only memory and accessed by lookup arguments, recursive proving. 
-
-    Many parts of the stack are optimized for speed and efficiency, including a small Mersenne31 field over which the computation trace is generated and a simple degree 2 AIR constraints. Airbender prover could also be run in application mode without signed multiplication and division operations, thus reducing circuit complexity.
-
-    ### Recursion circuits
-
-    Airbender targets proving batches of size 2**22 (~4 M) clock cycles. The proofs of such batches are pairwise recursively aggregated using zkVM in recursion mode. For onchain verification, the final Airbender STARK is [compressed using Boojum compressor](https://github.com/matter-labs/zkos-wrapper) and then wrapped into a Fflonk SNARK with KZG. The KZG commitment is done over BN254 curve and it uses Aztec Ignition trusted setup ceremony, see [below](#trusted-setups) for more details.
-    `,
+    proofSystemInfo: readProjectMarkdown('airbender', 'proofSystemInfo'),
     trustedSetups: [
       {
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
@@ -106,26 +93,26 @@ export const airbender: BaseProject = {
       //   ],
       //   verificationStatus: 'notVerified',
       // },
-      {
-        // Is a dummy to show adi as using airbender proof system. Verifier
-        // contract sources are unknown, so the actual hash cannot be computed.
-        // Fix once the sources are on etherscan.
-        hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
-        name: 'Airbender Fflonk Adi verifier',
-        proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A',
-            ),
-          },
-        ],
-        verificationStatus: 'notVerified',
-      },
+      // {
+      //   // ADI doesn't use the fflonk verifier, it is not accessible on DualVerifier level
+      //   hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
+      //   name: 'Airbender Fflonk Adi verifier',
+      //   proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
+      //   knownDeployments: [
+      //     {
+      //       address: ChainSpecificAddress.fromLong(
+      //         'ethereum',
+      //         '0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A',
+      //       ),
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      // },
       {
         hash: '0x124ebcd537a1e1c152774dd18f67660e35625bba0b669bf3b4836d636b105337',
         name: 'Airbender Plonk Adi verifier',
+        sourceLink:
+          'https://github.com/matter-labs/zksync-os/tree/v0.2.5/zksync_os',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
@@ -135,8 +122,12 @@ export const airbender: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'airbender',
+          'verificationSteps-0x124ebcd5',
+        ),
       },
     ],
   },

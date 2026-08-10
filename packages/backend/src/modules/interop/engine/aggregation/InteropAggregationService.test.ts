@@ -270,7 +270,74 @@ describe(InteropAggregationService.name, () => {
 
       expect(result.aggregatedTransfers).toEqual([])
       expect(result.aggregatedTokens).toEqual([])
+      expect(result.aggregatedDeployedTokens).toEqual([])
       expect(result.aggregatedTokensPairs).toEqual([])
+    })
+
+    it('aggregates deployed tokens per address with net minted', () => {
+      const transfers: InteropTransferRecord[] = [
+        createTransfer('across', 'msg1', 'deposit', to - UnixTime.HOUR, {
+          srcChain: 'ethereum',
+          dstChain: 'arbitrum',
+          srcAbstractTokenId: 'eth',
+          dstAbstractTokenId: 'eth',
+          srcTokenAddress: '0xeth',
+          dstTokenAddress: '0xarb',
+          duration: 5000,
+          srcValueUsd: 2000,
+          dstValueUsd: 2000,
+          srcWasBurned: false,
+          dstWasMinted: true,
+        }),
+      ]
+
+      const configs: InteropAggregationConfig[] = [
+        {
+          id: 'config1',
+          plugins: [{ plugin: 'across', bridgeType: 'lockAndMint' }],
+          type: 'other',
+        },
+      ]
+
+      const classifier = new InteropTransferClassifier()
+      const service = new InteropAggregationService(classifier)
+
+      const result = service.aggregate(transfers, configs, to)
+
+      expect(result.aggregatedDeployedTokens).toHaveLength(2)
+
+      const srcToken = result.aggregatedDeployedTokens.find(
+        (t) => t.tokenChain === 'ethereum' && t.tokenAddress === '0xeth',
+      )
+      const dstToken = result.aggregatedDeployedTokens.find(
+        (t) => t.tokenChain === 'arbitrum' && t.tokenAddress === '0xarb',
+      )
+
+      expect(srcToken).toEqual({
+        timestamp: to,
+        id: 'config1',
+        srcChain: 'ethereum',
+        dstChain: 'arbitrum',
+        tokenChain: 'ethereum',
+        tokenAddress: '0xeth',
+        transferTypeStats: {
+          deposit: { transferCount: 1, totalDurationSum: 5000 },
+        },
+        transferCount: 1,
+        transfersWithDurationCount: 1,
+        totalDurationSum: 5000,
+        volume: 2000,
+        minTransferValueUsd: 2000,
+        maxTransferValueUsd: 2000,
+        bridgeType: 'lockAndMint',
+        mintedValueUsd: 0,
+        burnedValueUsd: 0,
+      })
+
+      // The newly minted supply is attributed to the destination token.
+      expect(dstToken?.mintedValueUsd).toEqual(2000)
+      expect(dstToken?.burnedValueUsd).toEqual(0)
+      expect(dstToken?.volume).toEqual(2000)
     })
 
     it('aggregates one-sided transfers even when their bridge type cannot be inferred', () => {
@@ -361,6 +428,8 @@ function createTransfer(
     dstChain: string
     srcAbstractTokenId: string
     dstAbstractTokenId: string
+    srcTokenAddress?: string
+    dstTokenAddress?: string
     duration: number
     srcValueUsd?: number
     dstValueUsd?: number
@@ -384,7 +453,7 @@ function createTransfer(
     // transfer two-sided again.
     srcEventId:
       'srcEventId' in overrides ? overrides.srcEventId : 'random-event-id',
-    srcTokenAddress: undefined,
+    srcTokenAddress: overrides.srcTokenAddress,
     srcRawAmount: undefined,
     srcWasBurned: overrides.srcWasBurned,
     srcSymbol: undefined,
@@ -395,7 +464,7 @@ function createTransfer(
     dstLogIndex: 0,
     dstEventId:
       'dstEventId' in overrides ? overrides.dstEventId : 'random-event-id',
-    dstTokenAddress: undefined,
+    dstTokenAddress: overrides.dstTokenAddress,
     dstRawAmount: undefined,
     dstWasMinted: overrides.dstWasMinted,
     dstSymbol: undefined,

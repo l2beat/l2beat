@@ -3,17 +3,23 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import { BaseRepository } from '../BaseRepository'
 import type { Liveness } from '../kysely/generated/types'
+import {
+  insertGroupedKeepingEarliest,
+  splitLivenessRecords,
+} from './utils/livenessGrouping'
 
 export interface LivenessRecord {
   timestamp: UnixTime
   blockNumber: number
   txHash: string
   configurationId: TrackedTxId
+  groupingKey?: string
 }
 
 export function toRecord(row: Selectable<Liveness>): LivenessRecord {
   return {
     ...row,
+    groupingKey: row.groupingKey ?? undefined,
     timestamp: UnixTime.fromDate(row.timestamp),
   }
 }
@@ -21,6 +27,7 @@ export function toRecord(row: Selectable<Liveness>): LivenessRecord {
 export function toRow(record: LivenessRecord): Insertable<Liveness> {
   return {
     ...record,
+    groupingKey: record.groupingKey ?? null,
     timestamp: UnixTime.toDate(record.timestamp),
   }
 }
@@ -95,11 +102,15 @@ export class LivenessRepository extends BaseRepository {
   async insertMany(records: LivenessRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
-    const rows = records.map(toRow)
-    await this.batch(rows, 10_000, async (batch) => {
+    const { ungrouped, groupedEarliest } = splitLivenessRecords(records)
+
+    await this.batch(ungrouped.map(toRow), 10_000, async (batch) => {
       await this.db.insertInto('Liveness').values(batch).execute()
     })
-    return rows.length
+    await this.batch(groupedEarliest.map(toRow), 10_000, async (batch) => {
+      await insertGroupedKeepingEarliest(this.db, 'Liveness', batch)
+    })
+    return records.length
   }
 
   async deleteFromById(
@@ -110,6 +121,15 @@ export class LivenessRepository extends BaseRepository {
       .deleteFrom('Liveness')
       .where('configurationId', '=', id.toString())
       .where('timestamp', '>=', UnixTime.toDate(deleteFromInclusive))
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  async deleteByConfigIds(ids: string[]): Promise<number> {
+    if (ids.length === 0) return 0
+    const result = await this.db
+      .deleteFrom('Liveness')
+      .where('configurationId', 'in', ids)
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

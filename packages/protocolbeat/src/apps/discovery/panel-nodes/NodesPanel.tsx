@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import type {
   Field as ApiField,
@@ -11,10 +11,34 @@ import { LoadingState } from '../../../components/LoadingState'
 import { useProjectQueryOptions } from '../hooks/projectQuery'
 import { usePanelStore } from '../store/panel-store'
 import { Controls } from './controls/Controls'
+import type { AutoGroup } from './store/actions/loadNodes'
 import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
+import { getGraphProjection } from './store/utils/graphProjection'
+import { topLevelByDescendant } from './store/utils/subnodes'
 import { Viewport } from './view/Viewport'
+
+// Leaf ids of every node that is selected or sits inside a selected one, so a
+// member selected inside an opened group still resolves to its address.
+function selectedLeafIds(
+  nodes: readonly Node[],
+  selected: ReadonlySet<string>,
+): string[] {
+  const ids: string[] = []
+  const walk = (list: readonly Node[], underSelected: boolean) => {
+    for (const node of list) {
+      const on = underSelected || selected.has(node.id)
+      if (node.subnodes.length > 0) {
+        walk(node.subnodes, on)
+      } else if (on) {
+        ids.push(node.id)
+      }
+    }
+  }
+  walk(nodes, false)
+  return ids
+}
 
 export function NodesPanel() {
   const { project } = useParams()
@@ -54,8 +78,12 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
       return
     }
     const nodes: Node[] = []
+    const autoGroups: AutoGroup[] = []
     for (const chain of data.entries) {
-      const hueShift = chain.project.startsWith('shared') ? 90 : 0
+      const isSharedModule =
+        chain.project !== project && chain.project.startsWith('shared-')
+      const hueShift = isSharedModule ? 90 : 0
+      const chainNodesStartIndex = nodes.length
 
       const initialAddresses = chain.initialContracts.map((x) => x.address)
       for (const contract of [
@@ -85,6 +113,8 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           data: null,
           fields: toNodeFields(contract.fields),
           hiddenFields: keysToHideOnLoad,
+          opened: false,
+          subnodes: [],
         }
         nodes.push(node)
       }
@@ -105,11 +135,22 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           data: null,
           fields: [],
           hiddenFields: [],
+          opened: false,
+          subnodes: [],
         }
         nodes.push(node)
       }
+
+      const memberIds = nodes.slice(chainNodesStartIndex).map((node) => node.id)
+      if (isSharedModule && memberIds.length > 0) {
+        autoGroups.push({
+          id: `group:shared:${chain.project}`,
+          name: chain.project,
+          memberIds,
+        })
+      }
     }
-    loadNodes(project, nodes)
+    loadNodes(project, nodes, autoGroups)
   }, [project, data, clear, loadNodes])
 }
 
@@ -124,27 +165,37 @@ function useSynchronizeSelection() {
   const highlightGlobal = usePanelStore((state) => state.highlight)
   const selectGlobal = usePanelStore((state) => state.select)
   const selectedNodes = useStore((state) => state.selected)
-  const hiddenNodes = useStore((state) => state.hidden)
+  const nodes = useStore((state) => state.nodes)
+  const hiddenNodes = useMemo(
+    () => getGraphProjection(nodes).hiddenNodeIds,
+    [nodes],
+  )
   const selectAndFocus = useStore((state) => state.selectAndFocus)
 
   useEffect(() => {
     const visibleSelectedNodes = selectedNodes.filter(
-      (id) => !hiddenNodes.includes(id),
+      (id) => !hiddenNodes.has(id),
     )
     highlightGlobal(visibleSelectedNodes)
   }, [selectedNodes, hiddenNodes, highlightGlobal])
 
   useEffect(() => {
-    if (selectedNodes.length > 0 && !eq(lastSelection, selectedNodes)) {
-      rememberSelection(selectedNodes)
-      selectGlobal(selectedNodes[0])
+    const firstGlobal = selectedGlobal[0]
+    const selectedAddresses = selectedLeafIds(nodes, new Set(selectedNodes))
+
+    if (selectedAddresses.length > 0 && !eq(lastSelection, selectedAddresses)) {
+      rememberSelection(selectedAddresses)
+      selectGlobal(selectedAddresses)
     } else if (
-      selectedGlobal &&
-      !lastSelection.includes(selectedGlobal) &&
+      firstGlobal !== undefined &&
+      !lastSelection.includes(firstGlobal) &&
       loaded
     ) {
-      rememberSelection([selectedGlobal])
-      selectAndFocus(selectedGlobal)
+      const containing = topLevelByDescendant(nodes).get(firstGlobal)
+      rememberSelection(selectedGlobal)
+      if (containing) {
+        selectAndFocus(containing.id)
+      }
     }
   }, [
     lastSelection,
@@ -153,6 +204,7 @@ function useSynchronizeSelection() {
     selectGlobal,
     selectedNodes,
     hiddenNodes,
+    nodes,
     selectAndFocus,
     loaded,
   ])
@@ -162,10 +214,15 @@ function toNodeFields(input: ApiField[]): Field[] {
   const implementation = input.find((x) => x.name === '$implementation')
   const bannedKeys: string[] = ['$pastUpgrades']
   const bannedValues: string[] = getAddresses(implementation?.value)
-
-  return input.flatMap((x) =>
+  const fields = input.flatMap((x) =>
     getNodeFields(x.name, x.value, bannedKeys, bannedValues),
   )
+  const names = new Set<string>()
+  return fields.filter((field) => {
+    if (names.has(field.name)) return false
+    names.add(field.name)
+    return true
+  })
 }
 
 function getNodeFields(
@@ -244,6 +301,7 @@ const LARGE_ARRAY_THRESHOLD = 10
 function getKeysToHideOnLoad(fields: ApiField[]): string[] {
   const largeArrays = fields.filter(
     (field) =>
+      field.name !== '$members' &&
       field.value.type === 'array' &&
       field.value.values.length > LARGE_ARRAY_THRESHOLD,
   )

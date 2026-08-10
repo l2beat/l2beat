@@ -1,8 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
+import type { ConfigReader } from '../config/ConfigReader'
 import type { Entrypoint } from '../config/StructureConfig'
-import { generateEntrypoints } from './generateEntrypoints'
+import {
+  generateEntrypoints,
+  generateEntrypointsForProject,
+} from './generateEntrypoints'
 
 const entrypoint1: Entrypoint = {
   project: 'project1',
@@ -109,6 +113,167 @@ describe(generateEntrypoints.name, () => {
       [ChainSpecificAddress.from('eth', '0x01')]: {
         ...entrypoint1,
         isLegacy: true,
+      },
+    })
+  })
+
+  it('drops legacy EOA entrypoints because EOAs must come from current initial addresses', () => {
+    const old = {
+      entrypoints: {
+        [ChainSpecificAddress.from('eth', '0x01')]: entrypoint1,
+        [ChainSpecificAddress.from('eth', '0x02')]: entrypoint2,
+      },
+    }
+    const generator = mockFn().returns({ entrypoints: {} })
+    const result = generateEntrypoints(
+      'testProject',
+      old,
+      generator,
+      Logger.SILENT,
+      { updateOnly: true, keepLegacy: true },
+    )
+
+    expect(result?.entrypoints).toEqual({
+      [ChainSpecificAddress.from('eth', '0x01')]: {
+        ...entrypoint1,
+        isLegacy: true,
+      },
+    })
+  })
+})
+
+describe(generateEntrypointsForProject.name, () => {
+  it('generates entrypoints from contracts and initial addresses only', () => {
+    const discovery = {
+      entries: [
+        {
+          address: ChainSpecificAddress.from('eth', '0x01'),
+          type: 'Contract',
+          name: 'Contract1',
+          values: { owner: ChainSpecificAddress.from('eth', '0x02') },
+        },
+        {
+          address: ChainSpecificAddress.from('eth', '0x02'),
+          type: 'EOA',
+          name: 'MultisigSigner',
+        },
+        {
+          address: ChainSpecificAddress.from('eth', '0x03'),
+          type: 'Reference',
+          targetProject: 'other-project',
+        },
+        {
+          address: ChainSpecificAddress.from('eth', '0x04'),
+          type: 'EOA',
+          name: 'InitialEoa',
+        },
+      ],
+    }
+    const configReader = {
+      readDiscovery: mockFn().returns(discovery),
+      readConfig: mockFn().returns({
+        structure: {
+          initialAddresses: [ChainSpecificAddress.from('eth', '0x04')],
+        },
+      }),
+    } as unknown as ConfigReader
+
+    const result = generateEntrypointsForProject('project', configReader)
+
+    expect(result.entrypoints).toEqual({
+      [ChainSpecificAddress.from('eth', '0x01')]: {
+        name: 'Contract1',
+        type: 'Contract',
+        project: 'project',
+      },
+      [ChainSpecificAddress.from('eth', '0x04')]: {
+        name: 'InitialEoa',
+        type: 'EOA',
+        project: 'project',
+      },
+    })
+  })
+
+  it('skips leaf contracts, keeps ones referencing others through values or issued permissions', () => {
+    const discovery = {
+      entries: [
+        {
+          address: ChainSpecificAddress.from('eth', '0x01'),
+          type: 'Contract',
+          name: 'Gateway',
+          values: { verifiers: [ChainSpecificAddress.from('eth', '0x02')] },
+        },
+        {
+          address: ChainSpecificAddress.from('eth', '0x02'),
+          type: 'Contract',
+          name: 'ImmutableVerifier',
+        },
+        {
+          address: ChainSpecificAddress.from('eth', '0x03'),
+          type: 'Contract',
+          name: 'Proxy',
+          values: {
+            $implementation: ChainSpecificAddress.from('eth', '0x02'),
+          },
+        },
+        {
+          address: ChainSpecificAddress.from('eth', '0x04'),
+          type: 'Contract',
+          name: 'PermissionIssuer',
+        },
+        {
+          address: ChainSpecificAddress.from('eth', '0x05'),
+          type: 'Contract',
+          name: 'PermissionReceiver',
+          receivedPermissions: [
+            {
+              permission: 'upgrade',
+              from: ChainSpecificAddress.from('eth', '0x04'),
+            },
+          ],
+        },
+      ],
+    }
+    const configReader = {
+      readDiscovery: mockFn().returns(discovery),
+      readConfig: mockFn().returns({ structure: { initialAddresses: [] } }),
+    } as unknown as ConfigReader
+
+    const result = generateEntrypointsForProject('project', configReader)
+
+    expect(Object.keys(result.entrypoints)).toEqual([
+      ChainSpecificAddress.from('eth', '0x01'),
+      ChainSpecificAddress.from('eth', '0x03'),
+      ChainSpecificAddress.from('eth', '0x04'),
+    ])
+  })
+
+  it('keeps a leaf contract when it is an initial address', () => {
+    const discovery = {
+      entries: [
+        {
+          address: ChainSpecificAddress.from('eth', '0x01'),
+          type: 'Contract',
+          name: 'LoneVerifier',
+        },
+      ],
+    }
+    const configReader = {
+      readDiscovery: mockFn().returns(discovery),
+      readConfig: mockFn().returns({
+        structure: {
+          initialAddresses: [ChainSpecificAddress.from('eth', '0x01')],
+        },
+      }),
+    } as unknown as ConfigReader
+
+    const result = generateEntrypointsForProject('project', configReader)
+
+    expect(result.entrypoints).toEqual({
+      [ChainSpecificAddress.from('eth', '0x01')]: {
+        name: 'LoneVerifier',
+        type: 'Contract',
+        project: 'project',
       },
     })
   })
