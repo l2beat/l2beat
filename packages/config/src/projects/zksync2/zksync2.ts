@@ -229,12 +229,12 @@ export const zksync2: ScalingProject = zkStackL2({
       'Members public': `**Mapped** — ${scMemberCount} representatives of different orgs + signer addresses [published in Schedule 3](https://docs.zknation.io/zksync-governance-procedures/schedule-3-zksync-security-council).`,
       Charter:
         '[ZKsync Governance Procedures, Schedules 2–3](https://docs.zknation.io/zksync-governance-procedures/schedule-3-zksync-security-council) + bylaws of the ZKsync Security Council entity.',
-      'Can bypass DAO?': `**Freeze yes, upgrade no (alone)** — can unilaterally and immideately freeze the protocol: ${formatSeconds(softFreezeS)} soft freeze (${scSoftFreezeThreshold}/${scMemberCount}) or ${formatSeconds(hardFreezeS)} hard freeze (${scHardFreezeThreshold}/${scMemberCount}).`,
+      'Can bypass DAO?': `**Freeze yes, upgrade no (alone)** — can unilaterally and immideately freeze the protocol: ${formatSeconds(softFreezeS)} soft freeze (${scSoftFreezeThreshold}/${scMemberCount}) or ${formatSeconds(hardFreezeS)} hard freeze (${scHardFreezeThreshold}/${scMemberCount}). Upgrades require approvals from ${guardiansMainThreshold}/${guardiansMemberCount} Guardians and ${zkFoundationStats} ZK Foundation Multisig.`,
       'DAO can override SC?': `**Partially** — the Token Assembly can pass a Protocol Governor proposal replacing SC members, but it needs SC approval (${scApprovalThreshold}/${scMemberCount}) or ${guardiansMainThreshold}/${guardiansMemberCount} Guardians as fallback. No unconditional tokenholder path.`,
     },
     guardians: {
       Composition: `**${guardiansMainThreshold}/${guardiansMemberCount}** for vetoes and approvals, no fixed terms. Addresses and names of individuals that take Guardian role are [published in Schedule 4](https://docs.zknation.io/zksync-governance-procedures/schedule-4-zksync-guardians).`,
-      Powers: `**Veto + fallback approval + emergency co-sign.** Onchain veto (${guardiansMainThreshold}/${guardiansMemberCount}) cancels Token/GovOps proposals during voting delay or vote. Offchain veto (${guardiansMainThreshold} signed statements to the SC Foundation) blocks Protocol proposals during the ${formatSeconds(legalVetoStandardS)} post-vote window; ${guardiansExtendThreshold}/${guardiansMemberCount} can extend it to ${formatSeconds(legalVetoExtendedS)}. ${guardiansMainThreshold}/${guardiansMemberCount} can approve a Protocol proposal in risk review if the SC won't. The Guardian multisig is 1 of 3 emergency upgrade signers. Veto justification due on the forum within 48h.`,
+      Powers: `**Veto + fallback approval + emergency co-sign.** L1 Onchain veto (${guardiansMainThreshold}/${guardiansMemberCount}) cancels Token/GovOps proposals during voting delay or vote. Offchain veto (${guardiansMainThreshold} signed statements to the SC Foundation) blocks Protocol proposals during the ${formatSeconds(legalVetoStandardS)} legal veto period; ${guardiansExtendThreshold}/${guardiansMemberCount} can extend it to ${formatSeconds(legalVetoExtendedS)}. ${guardiansMainThreshold}/${guardiansMemberCount} can approve a Protocol proposal in risk review if the SC won't. The Guardian multisig is 1 of 3 emergency upgrade signers. Veto justification due on the forum within 48h.`,
       'Self-protection':
         '**Yes** — Guardian membership is changed via Protocol Governor proposal, but Guardians may explicitly veto proposals affecting the Guardian body itself (Schedule 4 §5.2). Token holders have no unconditional onchain removal path.',
     },
@@ -252,7 +252,7 @@ export const zksync2: ScalingProject = zkStackL2({
       'Proposal threshold': `**${proposalThresholdM},000,000 ZK** delegated (0.1% of the ${zkMaxSupply} max mintable supply), identical for all three governors.`,
       Quorum: `**${quorumM},000,000 ZK** (3% of max mintable supply) for all three governors. Simple majority of For vs Against; abstentions don't count. Late-quorum extension: +${formatSeconds(protLateQuorumExtensionS)} (Protocol), +${formatSeconds(tokenLateQuorumExtensionS)} (Token/GovOps).`,
       'Execution model':
-        '**Mixed.** Protocol proposals commit to a spec hash, travel via L2→L1 message and are permissionlessly executed on Ethereum after review + timelock; Token proposals execute permissionlessly on Era after their timelock. GovOps proposals are advisory and not trustlessly executed.',
+        '**On-chain payload · Permissionless execute.** Protocol proposals travel via L2→L1 message and are permissionlessly executed on Ethereum after review + timelock; Token proposals execute permissionlessly on Era after their timelock.',
     },
   },
   ecosystemInfo: {

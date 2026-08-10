@@ -466,11 +466,9 @@ export const starknet: ScalingProject = {
           '**No**, the community can only dispute the emergency upgrades after the fact in advisory way.',
       },
       upgrades: {
-        'DelayedExecutor timelock': `The standard deployment vehicle for the core contracts, controlled by the Starkware Foundation. Owned by the ${starkwareMultisig1Stats} Starkware Multisig 1, has the immutable ${executionDelay} delay, after which anyone can execute a matured action.`,
-        'Major upgrade path': `Release announcement (≥1 SNIP + specific GitHub commit) → 2-week community deliberation → 1-week final review → 1-week STRK vote on the [Governance Hub](https://governance.starknet.io/) → Security Council vetting → deployment queued in the DelayedExecutor by the ${starkwareMultisig1Stats} Starkware Multisig 1, whose ${executionDelay} onchain delay covers the procedural ≥7-day freeze → execution. Minimum wall-clock ≈ **5 weeks**.`,
-        'Minor upgrade path': `Announcement (SNIP may be submitted in parallel) → 1-week review → 1-week vote → deployment queued in the DelayedExecutor, whose ${executionDelay} onchain delay covers the procedural ≥5-day freeze → execution. No Security Council approval required. Minimum wall-clock ≈ **22 days**.`,
+        'Major upgrade path': `Release announcement (≥1 SNIP + specific GitHub commit) → 2-week community deliberation → 1-week final review → 1-week STRK vote on the [Governance Hub on L2](https://governance.starknet.io/) → Security Council vetting → deployment queued in the DelayedExecutor by the ${starkwareMultisig1Stats} Starkware Multisig 1, whose ${executionDelay} onchain delay covers the procedural ≥7-day freeze → execution. Minimum wall-clock ≈ **5 weeks** (${executionDelay} onchain-enforced if executed via DelayedExecutor).`,
+        'Minor upgrade path': `Announcement (SNIP may be submitted in parallel) → 1-week review → 1-week STRK vote on L2 → deployment queued in the DelayedExecutor, whose ${executionDelay} onchain delay covers the procedural ≥5-day freeze → execution. No Security Council approval required. Minimum wall-clock ≈ **22 days** (${executionDelay} onchain-enforced if executed via DelayedExecutor).`,
         'Emergency upgrade path': `**${scThreshold} Security Council, instant**.`,
-        'Offchain enforcement': `**None of the voting or freeze periods are enforced onchain.** All procedural freezes are assumed to be honored by the deploying entities; the only onchain-enforced delay is the ${executionDelay} DelayedExecutor timelock on the normal path, and the ${scThreshold} Security Council Safe can upgrade the core contracts with zero delay at any time.`,
         'Exit window': `**${executionDelay}** enforced onchain by the DelayedExecutor on the normal upgrade path (procedurally ≥7 days after the vote for major releases, ≥5 days for minor). **0** for emergency upgrades by the Security Council.`,
       },
       tokenGovernance: {
@@ -482,7 +480,7 @@ export const starknet: ScalingProject = {
           '**None**, but proposal admission is curated, not triggered permissionlessly by an onchain token threshold.',
         Quorum:
           '**No protocol-wide quorum rule published.** Historical votes used a simple majority with no minimum quorum.',
-        'Execution model': `**Vote as onchain record, manual deployment** — passed proposals are queued in the DelayedExecutor by the ${starkwareMultisig1Stats} Starkware Multisig 1 and execute after ${executionDelay}.`,
+        'Execution model': `**Vote as onchain record, permissioned deployment** — passed proposals are queued in the DelayedExecutor by the ${starkwareMultisig1Stats} Starkware Multisig 1 and execute after ${executionDelay}.`,
       },
     },
   },
