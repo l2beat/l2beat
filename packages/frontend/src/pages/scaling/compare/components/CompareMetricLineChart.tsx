@@ -19,13 +19,13 @@ import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
-import { generateAccessibleColors } from '~/utils/generateColors'
 import { formatNumber } from '~/utils/number-format/formatNumber'
 import type { CompareViewMode } from '../utils/compareChartState'
 import {
   type CompareChartPoint,
   toIndexedChartData,
 } from '../utils/toIndexedChartData'
+import { useCompareSeries } from './CompareSeriesContext'
 
 interface Props {
   projects: CompareProjectEntry[]
@@ -57,9 +57,9 @@ export function CompareMetricLineChart({
   formatTooltipValue,
   renderTooltipTimestamp,
 }: Props) {
+  const { colors, hoveredProjectId } = useCompareSeries()
   const chartMeta = useMemo<ChartMeta>(() => {
-    const colors = generateAccessibleColors(projects.length)
-    return projects.reduce<ChartMeta>((acc, project, index) => {
+    return projects.reduce<ChartMeta>((acc, project) => {
       acc[project.id] = {
         label: (
           <span className="inline-flex items-center gap-1">
@@ -74,12 +74,12 @@ export function CompareMetricLineChart({
           </span>
         ),
         legendLabel: project.shortName ?? project.name,
-        color: colors[index] ?? 'var(--secondary)',
+        color: colors[project.id] ?? 'var(--secondary)',
         indicatorType: { shape: 'line' },
       }
       return acc
     }, {})
-  }, [projects])
+  }, [projects, colors])
 
   const { dataKeys, toggleDataKey, toggleAllDataKeys, showAllSelected } =
     useChartDataKeys(chartMeta)
@@ -127,6 +127,13 @@ export function CompareMetricLineChart({
               dataKey={project.id}
               hide={!dataKeys.includes(project.id)}
               stroke={chartMeta[project.id]?.color}
+              strokeOpacity={
+                hoveredProjectId !== undefined &&
+                hoveredProjectId !== project.id
+                  ? 0.2
+                  : 1
+              }
+              className="[&_.recharts-line-curve]:transition-[stroke-opacity] [&_.recharts-line-curve]:duration-200 motion-reduce:[&_.recharts-line-curve]:transition-none"
               strokeWidth={2}
               dot={false}
               isAnimationActive={false}
