@@ -2,6 +2,7 @@ import type {
   ProjectAssociatedToken,
   WarningWithSentiment,
 } from '@l2beat/config'
+import { formatDollarValueNumber } from '@l2beat/shared-pure'
 import {
   AdditionalTrustAssumptionsBanner,
   AdditionalTrustAssumptionsText,
@@ -24,7 +25,6 @@ import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
-import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
 import { TableLink } from '../../../../../components/table/TableLink'
 
 interface TotalValueSecuredCellProps {

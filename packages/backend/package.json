@@ -47,12 +47,13 @@
     "dev": "pnpm start:dev",
     "tvs:generate": "pnpm build:config && tsx ./scripts/tvs/generate-config.ts",
     "tvs:execute": "pnpm build:config && tsx ./scripts/tvs/execute.ts",
+    "da:preview": "pnpm build:config && tsx ./scripts/da/preview.ts",
     "tvs:calculate-ids": "tsx ./scripts/tvs/calculate-ids.ts",
     "tvs:translate-id": "tsx ./scripts/tvs/translate-id.ts",
     "anomalies": "tsx ./scripts/anomalies/anomalies.ts",
     "interop:example": "tsx ./src/modules/interop/examples/script.ts",
     "interop:find-opstack": "tsx ./src/modules/interop/examples/findOpstackExamples.ts",
-    "restore-table": "cd ../database && ./scripts/db-restore/table-restore.sh"
+    "restore-table": "cd ../database && pnpm db:restore-table"
   },
   "dependencies": {
     "@koa/router": "^12.0.0",
@@ -104,6 +105,7 @@
     "@types/react-dom": "^19.0.4",
     "@types/supertest": "^2.0.12",
     "cmd-ts": "^0.13.0",
+    "dotenv": "^16.3.1",
     "supertest": "^6.2.3",
     "tsx": "^4.9.3"
   }

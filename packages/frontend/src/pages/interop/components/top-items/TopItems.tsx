@@ -1,13 +1,14 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { cva, type VariantProps } from 'class-variance-authority'
 import {
   Tooltip,
   TooltipContent,
+  TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { EM_DASH } from '~/consts/characters'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 export type TopItem = {
   id?: string
@@ -155,17 +156,19 @@ function ItemIconWithTooltip({
       <TooltipTrigger asChild>
         {href ? <a href={href}>{icon}</a> : icon}
       </TooltipTrigger>
-      <TooltipContent>
-        <p className="font-bold text-label-value-15">{item.displayName}</p>
-        {item.issuer && (
+      <TooltipPortal>
+        <TooltipContent>
+          <p className="font-bold text-label-value-15">{item.displayName}</p>
+          {item.issuer && (
+            <p className="text-label-value-13 text-secondary">
+              Issued by <span className="capitalize">{item.issuer}</span>
+            </p>
+          )}
           <p className="text-label-value-13 text-secondary">
-            Issued by <span className="capitalize">{item.issuer}</span>
+            {item.volume ? formatCurrency(item.volume, 'usd') : EM_DASH}
           </p>
-        )}
-        <p className="text-label-value-13 text-secondary">
-          {item.volume ? formatCurrency(item.volume, 'usd') : EM_DASH}
-        </p>
-      </TooltipContent>
+        </TooltipContent>
+      </TooltipPortal>
     </Tooltip>
   )
 }

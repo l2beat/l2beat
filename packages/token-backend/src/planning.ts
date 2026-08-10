@@ -1,4 +1,8 @@
-import type { DeployedTokenRecord, TokenDatabase } from '@l2beat/database'
+import {
+  type DeployedTokenRecord,
+  normalizeTokenRelation,
+  type TokenDatabase,
+} from '@l2beat/database'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { Command } from './commands'
@@ -400,19 +404,22 @@ async function planAddTokenRelation(
 ): Promise<Command[]> {
   await assertRelationEndpointsExist(db, intent.record)
 
+  // A human names the two endpoints in whatever order they think of them; the
+  // pair is unordered, so the stored order is derived rather than taken.
+  const record = normalizeTokenRelation(intent.record)
   const existing = await db.tokenRelation.findByPrimaryKey(
-    toTokenRelationPrimaryKey(intent.record),
+    toTokenRelationPrimaryKey(record),
   )
   if (existing !== undefined) {
     throw new PlanningError(
-      `TokenRelation ${formatTokenRelationPrimaryKey(intent.record)} already exists`,
+      `TokenRelation ${formatTokenRelationPrimaryKey(record)} already exists`,
     )
   }
 
   return [
     {
       type: 'AddTokenRelationCommand',
-      record: intent.record,
+      record,
     },
   ]
 }
@@ -461,31 +468,31 @@ async function planDeleteTokenRelation(
 async function assertRelationEndpointsExist(
   db: TokenDatabase,
   relation: {
-    tokenFromChain: string
-    tokenFromAddress: string
-    tokenToChain: string
-    tokenToAddress: string
+    tokenAChain: string
+    tokenAAddress: string
+    tokenBChain: string
+    tokenBAddress: string
   },
 ): Promise<void> {
-  const [tokenFrom, tokenTo] = await Promise.all([
+  const [tokenA, tokenB] = await Promise.all([
     db.deployedToken.findByChainAndAddress({
-      chain: relation.tokenFromChain,
-      address: relation.tokenFromAddress,
+      chain: relation.tokenAChain,
+      address: relation.tokenAAddress,
     }),
     db.deployedToken.findByChainAndAddress({
-      chain: relation.tokenToChain,
-      address: relation.tokenToAddress,
+      chain: relation.tokenBChain,
+      address: relation.tokenBAddress,
     }),
   ])
 
-  if (tokenFrom === undefined) {
+  if (tokenA === undefined) {
     throw new PlanningError(
-      `DeployedToken ${relation.tokenFromChain}+${relation.tokenFromAddress} doesn't exist`,
+      `DeployedToken ${relation.tokenAChain}+${relation.tokenAAddress} doesn't exist`,
     )
   }
-  if (tokenTo === undefined) {
+  if (tokenB === undefined) {
     throw new PlanningError(
-      `DeployedToken ${relation.tokenToChain}+${relation.tokenToAddress} doesn't exist`,
+      `DeployedToken ${relation.tokenBChain}+${relation.tokenBAddress} doesn't exist`,
     )
   }
 }
@@ -494,17 +501,17 @@ function toTokenRelationPrimaryKey(
   relation: TokenRelationRecord,
 ): TokenRelationPrimaryKey {
   return {
-    tokenFromChain: relation.tokenFromChain,
-    tokenFromAddress: relation.tokenFromAddress,
-    tokenToChain: relation.tokenToChain,
-    tokenToAddress: relation.tokenToAddress,
+    tokenAChain: relation.tokenAChain,
+    tokenAAddress: relation.tokenAAddress,
+    tokenBChain: relation.tokenBChain,
+    tokenBAddress: relation.tokenBAddress,
     plugin: relation.plugin,
     bridgeType: relation.bridgeType,
   }
 }
 
 function formatTokenRelationPrimaryKey(pk: TokenRelationPrimaryKey): string {
-  return `${pk.tokenFromChain}+${pk.tokenFromAddress} -> ${pk.tokenToChain}+${pk.tokenToAddress} via ${pk.plugin} (${pk.bridgeType})`
+  return `${pk.tokenAChain}+${pk.tokenAAddress} <-> ${pk.tokenBChain}+${pk.tokenBAddress} via ${pk.plugin} (${pk.bridgeType})`
 }
 
 function stampInsertProof(

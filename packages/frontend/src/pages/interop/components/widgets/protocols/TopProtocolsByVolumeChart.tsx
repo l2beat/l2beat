@@ -1,6 +1,6 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { ChartMeta } from '~/components/core/chart/Chart'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { ProtocolsPieChart } from './ProtocolsPieChart'
 import type { DisplayProtocol } from './TopProtocolsWidget'
 

@@ -112,6 +112,12 @@ export const lighterprover: BaseProject = {
               '0x866418061d4C1168e1c8E8f6facE79675395E008',
             ),
           },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'robinhood',
+              '0x56aeED6920DBB9E198C2C0072147A45684A06E10',
+            ),
+          },
         ],
         verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],

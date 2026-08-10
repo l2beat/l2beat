@@ -14,6 +14,7 @@ export const race: ScalingProject = opStackL2({
   additionalPurposes: ['RWA'],
   discovery,
   addedAt: UnixTime(1726563843), // 2024-09-17T09:04:03Z
+  archivedAt: UnixTime(1785971449), // Wed, 06 Aug 2026
   genesisTimestamp: UnixTime(1720421591),
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   isPartOfSuperchain: true,
@@ -48,6 +49,7 @@ export const race: ScalingProject = opStackL2({
         callsPerMinute: 300,
       },
     ],
+    untilTimestamp: UnixTime(1785971449), // Wed, 06 Aug 2026
   },
   isNodeAvailable: true,
 })

@@ -106,6 +106,15 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     ],
   },
   {
+    type: 'single',
+    title: 'Privacy',
+    match: 'privacy',
+    href: '/privacy',
+    icon: (
+      <PrivacyIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+    ),
+  },
+  {
     type: 'multiple',
     title: 'Data Availability',
     match: 'data-availability',
@@ -147,15 +156,6 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     href: '/zk-catalog',
     icon: (
       <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
-    ),
-  },
-  {
-    type: 'single',
-    title: 'Privacy',
-    match: 'privacy',
-    href: '/privacy',
-    icon: (
-      <PrivacyIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
   },
   {

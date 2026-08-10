@@ -1,6 +1,6 @@
 {
   "name": "zama-cw",
-  "timestamp": 1784815701,
+  "timestamp": 1786107356,
   "configHash": "0x9966c7120d6e80774741b8e28cd70224af776aa48ce73e46d22e41344c8dadd2",
   "entries": [
     {
@@ -30,6 +30,11 @@
     },
     {
       "address": "eth:0x23Cd5e0f3bd1543CBCc5d05bB55e5446be4AD96b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x27B1c34F2aeEc91F9704BD1CE288E5c667F29045",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -214,11 +219,6 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "address": "eth:0x32f3D0D7E20Ca11Cad21f32Dad91506ea89f5897",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x373E36A8684A3344E177C5894179845Cbe57AE44",
       "type": "EOA",
       "proxyType": "EOA",
@@ -270,7 +270,7 @@
         "aclAddress": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
         "aclOwner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
         "blockHCUWhitelist": [],
-        "getBlockMeter": { "blockNumber": 25595925, "usedHCU": 0 },
+        "getBlockMeter": { "blockNumber": 25703226, "usedHCU": 0 },
         "getFHEVMExecutorAddress": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
         "getGlobalHCUCapPerBlock": 281474976710655,
         "getMaxHCUDepthPerTx": 5000000,
@@ -374,7 +374,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 280,
+        "nonce": 293,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -430,22 +430,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x6681101780Fb503591535B36bB3F15781f01EAAF",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
-          "description": "pause the ACL.",
-          "role": ".pausers",
-          "via": [
-            { "address": "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4" }
-          ]
-        }
-      ]
-    },
-    {
       "name": "ConfidentialSteakcUSDCWrapper",
       "address": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
       "type": "Contract",
@@ -478,7 +462,7 @@
         "$upgradeCount": 2,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x811963cda2ce7a2e8e1e530718cb4e321f75aa0e5bff00000000000000010500",
+        "confidentialTotalSupply": "0xa964d7d05c23b90b3b9d29b2cc222b10564fd1387aff00000000000000010500",
         "constructorArgs": [
           "eth:0xAea1d2cc69aF93CA0fdd34426E74Ad7cB19E9745",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000beef00a59b577423653a1526c7009bde103f542b000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000017436f6e666964656e7469616c20737465616b6355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000b63737465616b635553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ae646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c20737465616b6355534443222c2273796d626f6c223a2263737465616b6355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f6620737465616b635553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d000000000000000000000000000000000000"
@@ -492,7 +476,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 18449539524241,
+        "inferredTotalSupply": 34267556785354,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential steakcUSDC",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -571,7 +555,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 24,
+        "nonce": 26,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -675,7 +659,7 @@
             ]
           }
         },
-        "clock": 25595925,
+        "clock": 25703226,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -711,8 +695,8 @@
         "rewardRate": "6970000000000000000",
         "stakingToken": "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
         "symbol": "stZAMA-Coprocessor",
-        "totalStakedWeight": 56742941172867,
-        "totalSupply": "643984645061875161337008252",
+        "totalStakedWeight": 58463208989376,
+        "totalSupply": "683621242106326911397889588",
         "unstakeCooldownPeriod": 604800,
         "unstakeCooldownPeriod_fmt": "7d",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -1107,7 +1091,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0xdb484e837d517b659e610756964b8719886156d584ff00000000000000010500",
+        "confidentialTotalSupply": "0x9039c422fa89befc035579e234d15e1ee30f06c967ff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000a12cc123ba206d4031d1c7f6223d1c2ec249f4f3000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205a414d410000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005635a414d41000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c205a414d41222c2273796d626f6c223a22635a414d41222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205a414d4120736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1121,7 +1105,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 181147984009034,
+        "inferredTotalSupply": 153141019083403,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential ZAMA",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -1214,7 +1198,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x4c2cdee317708d01e4e60338c1bd40f3ba2b6081cdff00000000000000010500",
+        "confidentialTotalSupply": "0x9e0c5b78b11eb9a128e0501241ec298cd815979f85ff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000ba2c598e11ed093079cc324fca5bbba99f616e83000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c2042524f4e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056342524f4e000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2042524f4e222c2273796d626f6c223a226342524f4e222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f662042524f4e20736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1228,7 +1212,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 10609146191145,
+        "inferredTotalSupply": 10545258524717,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential BRON",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -1311,7 +1295,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 24,
+        "nonce": 26,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1394,7 +1378,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 320,
+        "nonce": 322,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1581,7 +1565,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x7beff19ecf950a1a4755f72dbfedc956f14dd0623fff00000000000000010500",
+        "confidentialTotalSupply": "0x54263e259486e620f2f807dfec02b2de58fada15feff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205553445400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056355534454000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2055534454222c2273796d626f6c223a226355534454222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205553445420736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1595,7 +1579,7 @@
           "isSet": true,
           "selector": "0x59bf1abe"
         },
-        "inferredTotalSupply": 7970017582360,
+        "inferredTotalSupply": 7886876470062,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential USDT",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -2723,22 +2707,6 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "address": "eth:0xBdBA7b00A4b2dd3d3382a4217e82C5930791E2aA",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
-          "description": "pause the ACL.",
-          "role": ".pausers",
-          "via": [
-            { "address": "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4" }
-          ]
-        }
-      ]
-    },
-    {
       "address": "eth:0xBe8b485D4029253375b11dEaAF506eEA781Bb192",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2758,6 +2726,11 @@
     },
     {
       "address": "eth:0xc2e5960EDa1E8D801b19e96D886B946Dfb4bE709",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xc49376C4D044011eEce6eE69eFAe06f0Cc2bd008",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3062,7 +3035,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0xb3166966dd302d6efac954feffb6f9c8ae8325a01eff00000000000000010500",
+        "confidentialTotalSupply": "0xd29ff54c3edf38ba0f57c7076aa30028d6d28fc61dff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205745544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056357455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2057455448222c2273796d626f6c223a226357455448222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205745544820736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -3076,7 +3049,7 @@
           "isSet": false,
           "selector": "0x00000000"
         },
-        "inferredTotalSupply": 21686368,
+        "inferredTotalSupply": 22465070,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential WETH",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -3544,8 +3517,6 @@
           "eth:0x0321a4Ee7E843A83Fa314f4e76E756864CBdE62e",
           "eth:0x0f81fd435d44Cc49f90BB74bF4BdE0e9A0554ae6",
           "eth:0x931FB6Ec104dDc9bc556983032b5b85b671db000",
-          "eth:0x32f3D0D7E20Ca11Cad21f32Dad91506ea89f5897",
-          "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4",
           "eth:0xc2e5960EDa1E8D801b19e96D886B946Dfb4bE709",
           "eth:0x8c0E2c46F96756C49DBd6723F4C57a03a254B4B0",
           "eth:0x23Cd5e0f3bd1543CBCc5d05bB55e5446be4AD96b",
@@ -3555,7 +3526,9 @@
           "eth:0x705380c013c13B4ce62338ab1F012036BAC802b3",
           "eth:0x97E18544e156724E4076945F10c288ecBBC94e54",
           "eth:0xE9AAc45091bF5d52AD7BC109497DAA7cD0245BdB",
-          "eth:0xD92e1C1Ec65aBe6C6891EcE56a00c6b79A09C8AE"
+          "eth:0xD92e1C1Ec65aBe6C6891EcE56a00c6b79A09C8AE",
+          "eth:0xc49376C4D044011eEce6eE69eFAe06f0Cc2bd008",
+          "eth:0x27B1c34F2aeEc91F9704BD1CE288E5c667F29045"
         ],
         "$pastUpgrades": [
           [
@@ -3616,49 +3589,6 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "Safe",
-      "address": "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
-      ],
-      "proxyType": "gnosis safe",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xbBfE1680b4a63ED05f7F80CE330BED7C992A586C",
-          "description": "pause the ACL.",
-          "role": ".pausers"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0xBdBA7b00A4b2dd3d3382a4217e82C5930791E2aA",
-      "sinceTimestamp": 1766445107,
-      "sinceBlock": 24071353,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "eth:0xBdBA7b00A4b2dd3d3382a4217e82C5930791E2aA",
-          "eth:0x6681101780Fb503591535B36bB3F15781f01EAAF"
-        ],
-        "$threshold": 1,
-        "domainSeparator": "0xbc40a6a59cd8833004026551796d8fe8a1a37729789a54f9b60983bb0abafa63",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 8,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4": "SafeProxy",
-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      },
-      "category": { "name": "Spam", "priority": -1 }
-    },
-    {
       "name": "ConfidentialUSDCWrapper",
       "address": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
       "type": "Contract",
@@ -3696,7 +3626,7 @@
         "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0xd860770c07cad7492065d5edbc1572d853b41af79bff00000000000000010500",
+        "confidentialTotalSupply": "0xf758d5f7cfbdafc30948d85e7b03d4a9b1f2b24306ff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2055534443222c2273796d626f6c223a226355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -3710,7 +3640,7 @@
           "isSet": true,
           "selector": "0xfe575a87"
         },
-        "inferredTotalSupply": 5292202968856,
+        "inferredTotalSupply": 4622138676922,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential USDC",
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
@@ -3824,7 +3754,7 @@
             ]
           }
         },
-        "clock": 25595925,
+        "clock": 25703226,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -3868,8 +3798,8 @@
         "rewardRate": "10460000000000000000",
         "stakingToken": "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
         "symbol": "stZAMA-KMS",
-        "totalStakedWeight": 111481181229864,
-        "totalSupply": "967589111057656002771952041",
+        "totalStakedWeight": 127494192457597,
+        "totalSupply": "1446419976725919668212705716",
         "unstakeCooldownPeriod": 604800,
         "unstakeCooldownPeriod_fmt": "7d",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -4213,14 +4143,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
+          "description": "submit KMS decryption responses to gateway contracts.",
           "role": ".getKmsTxSenders"
         }
       ]
@@ -4229,19 +4153,19 @@
       "name": "Decryption",
       "address": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
       "type": "Contract",
-      "template": "zama/Decryption_v0_4_0",
+      "template": "zama/Decryption_v0_5_0",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0xcd821ac822a19a355acde1dd7ce435e2a6e16e21017756b899c058ee64552e28"
+        "0x1dd2af26cc2be12ff30232e8df9c95ec66fcbc987f40372ad56a9d8f1073260c"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Gateway contract that orchestrates public and user decryption requests and checks committed ciphertext material. Each response independently selects a KMS context through extraData, or uses the context current when the response executes; requests do not store a context. KMS nodes enforce host-chain ACL state offchain, and Ethereum KMSVerifier verifies public results against this contract's EIP-712 domain.",
+      "description": "Gateway contract that orchestrates public and user decryption requests and checks committed ciphertext material. Each request pins a KMS context at request time (explicitly through extraData or the then-current context) and rejects unknown or destroyed contexts; responses must reference the pinned context. Requests recorded before v0.5.0 fall back to the context declared by each response. KMS nodes enforce host-chain ACL state offchain, and Ethereum KMSVerifier verifies public results against this contract's EIP-712 domain.",
       "deployerAddress": "zama:0x2D0b9A711A887E8a5678400b2311012fEB9BeBF9",
       "sinceTimestamp": 1763504841,
       "sinceBlock": 1524,
       "values": {
         "$admin": "zama:0x0000000000000000000000000000000000000000",
-        "$implementation": "zama:0x943CEfD1A00d3ae5b298bB10D4EddA09B279C8B0",
+        "$implementation": "zama:0x86F8e9626cCff3f2eB3dA248F33DfF43531DBFD8",
         "$pastUpgrades": [
           [
             "2025-11-18T22:27:21.000Z",
@@ -4262,9 +4186,14 @@
             "2026-07-10T08:15:40.000Z",
             "0x5d63d8d9bf4790e7169cd1d6c440262aad29368190932f823377df311f389217",
             ["zama:0x943CEfD1A00d3ae5b298bB10D4EddA09B279C8B0"]
+          ],
+          [
+            "2026-08-06T17:11:04.000Z",
+            "0x350755101263bed64dc377ef6f3ef07f95f97918b689967a60ee625d0d9e025c",
+            ["zama:0x86F8e9626cCff3f2eB3dA248F33DfF43531DBFD8"]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 5,
         "eip712Domain": {
           "fields": "0x0f",
           "name": "Decryption",
@@ -4312,7 +4241,7 @@
         "gatewayProtocolPayment": "zama:0x7E179E45E5fe0a21015Be25185363B4F2F2F7e89",
         "gatewayPublicDecryptionThreshold": 7,
         "gatewayUserDecryptionThreshold": 9,
-        "getVersion": "Decryption v0.4.0",
+        "getVersion": "Decryption v0.5.0",
         "initialMigratedKmsContextId": "3166189940082864718613269121331309980362851143201109172953918312716374638593",
         "initialMigratedKmsSigners": [
           "zama:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f",
@@ -4367,7 +4296,7 @@
           "type": "EXTERNAL"
         },
         "gatewayMultichainACL": {
-          "description": "MultichainACL contract containing the gateway-side host-chain ACL mirror. The upgraded Decryption contract no longer checks it onchain and relies on KMS nodes to enforce ACL state.",
+          "description": "MultichainACL contract containing the gateway-side host-chain ACL mirror. Decryption does not check it onchain and relies on KMS nodes to enforce ACL state.",
           "type": "EXTERNAL"
         },
         "gatewayCiphertextCommits": {
@@ -4376,27 +4305,27 @@
         },
         "gatewayKmsTxSenders": {
           "severity": "HIGH",
-          "description": "KMS transaction-sender addresses configured in the current GatewayConfig context. Historical context senders can also submit responses when response extraData explicitly selects their retained context. Post-migration contexts are indexed on GatewayConfig; migration-created membership requires a project override because no creation event was emitted.",
+          "description": "KMS transaction-sender addresses configured in the current GatewayConfig context. Senders from other live contexts can still submit responses to requests that pinned their context; destroying a context revokes this. Post-migration contexts are indexed on GatewayConfig; migration-created membership requires a project override because no creation event was emitted.",
           "type": "PERMISSION"
         },
         "gatewayKmsSigners": {
           "severity": "HIGH",
-          "description": "KMS signer addresses configured in the current GatewayConfig context. Historical context signers can also sign responses when response extraData explicitly selects their retained context. Post-migration contexts are indexed on GatewayConfig; migration-created membership requires a project override because no creation event was emitted.",
+          "description": "KMS signer addresses configured in the current GatewayConfig context. Signers from other live contexts can still sign responses to requests that pinned their context; destroying a context revokes this. Post-migration contexts are indexed on GatewayConfig; migration-created membership requires a project override because no creation event was emitted.",
           "type": "PERMISSION"
         },
         "gatewayKmsContextId": {
           "severity": "HIGH",
-          "description": "Current GatewayConfig KMS context used by responses whose extraData is empty or starts with version 0. Requests do not bind this value, so a rotation can change the context used to answer an already pending request.",
+          "description": "Current GatewayConfig KMS context, pinned by new requests whose extraData is empty or starts with version 0. The pin is stored per request, so a later rotation does not change the context or thresholds used to answer a pending request. Requests recorded before v0.5.0 have no pin and fall back to the context declared by each response.",
           "type": "RISK_PARAMETER"
         },
         "gatewayPublicDecryptionThreshold": {
           "severity": "HIGH",
-          "description": "Minimum matching-signature count for the current context. Public responses are grouped by a digest containing raw extraData; identical empty or version 0 extraData can accumulate responses across a context rotation while the last response selects the threshold checked.",
+          "description": "Minimum matching-signature count for public decryption consensus in the current context. Each request is answered under the threshold of its pinned context, which the GatewayConfig owner can retune per context.",
           "type": "RISK_PARAMETER"
         },
         "gatewayUserDecryptionThreshold": {
           "severity": "HIGH",
-          "description": "Minimum response count for the current context. User response counts are stored per request rather than per context, so valid shares submitted under different contexts can be combined and the last response selects the threshold checked.",
+          "description": "Minimum response count for user decryption consensus in the current context. Each request is answered under the threshold of its pinned context, which the GatewayConfig owner can retune per context.",
           "type": "RISK_PARAMETER"
         },
         "maxUserDecryptDurationDays": {
@@ -4424,33 +4353,33 @@
         },
         "initialMigratedKmsContextId": {
           "severity": "HIGH",
-          "description": "Identifier assigned to the Gateway KMS context created by the v0.5 migration. Version 1 Decryption response metadata can continue to select it after later rotations.",
+          "description": "Identifier assigned to the Gateway KMS context created by the v0.5 migration. Since Decryption v0.5.0 requests pin a context at request time; this context stays selectable after later rotations until the owner destroys it (only possible once it is no longer current).",
           "type": "RISK_PARAMETER"
         },
         "initialMigratedKmsTxSenders": {
           "severity": "HIGH",
-          "description": "KMS transaction senders in the Gateway context created by the v0.5 migration. Node membership is immutable and GatewayConfig cannot destroy contexts, so these accounts remain authorized to submit responses to Decryption after future rotations.",
+          "description": "KMS transaction senders in the Gateway context created by the v0.5 migration. Node membership is immutable, so these accounts remain authorized to submit responses for requests pinned to this context after future rotations, until the owner destroys the context (only possible once it is no longer current).",
           "type": "PERMISSION"
         },
         "initialMigratedKmsSigners": {
           "severity": "HIGH",
-          "description": "KMS signers in the Gateway context created by the v0.5 migration. Node membership is immutable and GatewayConfig cannot destroy contexts, so this signer set remains authorized for Decryption responses after future rotations.",
+          "description": "KMS signers in the Gateway context created by the v0.5 migration. Node membership is immutable, so this signer set remains authorized for requests pinned to this context after future rotations, until the owner destroys the context (only possible once it is no longer current).",
           "type": "PERMISSION"
         },
         "initialMigratedPublicDecryptionThreshold": {
           "severity": "HIGH",
-          "description": "Snapshot of the public-decryption threshold in the context created by the v0.5 migration. Update this project-specific value if governance changes the initial context while it is current. This value remains security-critical after future context rotations.",
+          "description": "Snapshot of the public-decryption threshold in the context created by the v0.5 migration. Update this project-specific value if governance retunes this context's threshold (possible for any live context since GatewayConfig v0.6.0). This value remains security-critical after future context rotations while the context is live.",
           "type": "RISK_PARAMETER"
         },
         "initialMigratedUserDecryptionThreshold": {
           "severity": "HIGH",
-          "description": "Snapshot of the user-decryption threshold in the context created by the v0.5 migration. Update this project-specific value if governance changes the initial context while it is current. This value remains security-critical after future context rotations.",
+          "description": "Snapshot of the user-decryption threshold in the context created by the v0.5 migration. Update this project-specific value if governance retunes this context's threshold (possible for any live context since GatewayConfig v0.6.0). This value remains security-critical after future context rotations while the context is live.",
           "type": "RISK_PARAMETER"
         }
       },
       "implementationNames": {
         "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24": "ERC1967Proxy",
-        "zama:0x943CEfD1A00d3ae5b298bB10D4EddA09B279C8B0": "Decryption"
+        "zama:0x86F8e9626cCff3f2eB3dA248F33DfF43531DBFD8": "Decryption"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -4458,19 +4387,19 @@
       "name": "KMSGeneration",
       "address": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
       "type": "Contract",
-      "template": "zama/KMSGeneration",
+      "template": "zama/KMSGeneration_v0_5_0",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0x24b946dbf9b33a087ddcfba5bef6adfb4fb85c47ee48d0f3d35487b5a76900dc"
+        "0x19abe2dec360556cd7dd3bbf0197f56dcaf76dc5889859f0e18046a971c70498"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Gateway contract that orchestrates FHE key generation, CRS generation, PRSS initialization, and key resharing through threshold KMS responses.",
+      "description": "View-only gateway contract retaining historical queries for previously generated FHE keys and CRS materials. All state-changing key-generation, CRS-generation, PRSS, and key-resharing workflows were removed in v0.5.0 after their move to Ethereum.",
       "deployerAddress": "zama:0x2D0b9A711A887E8a5678400b2311012fEB9BeBF9",
       "sinceTimestamp": 1763504841,
       "sinceBlock": 1525,
       "values": {
         "$admin": "zama:0x0000000000000000000000000000000000000000",
-        "$implementation": "zama:0x3d345DFc156381E6060Cdf652cDf7f92DF94fAFF",
+        "$implementation": "zama:0x68CEb7709aC1bcD60e36c4144a243A445A2cb076",
         "$pastUpgrades": [
           [
             "2025-11-18T22:27:21.000Z",
@@ -4486,9 +4415,14 @@
             "2025-12-09T14:44:10.000Z",
             "0xf37c1f04d35127d17f35fda57e53b68bc8063c1d3b08a05bdbbfec12eb7e447d",
             ["zama:0x3d345DFc156381E6060Cdf652cDf7f92DF94fAFF"]
+          ],
+          [
+            "2026-08-06T17:11:04.000Z",
+            "0x350755101263bed64dc377ef6f3ef07f95f97918b689967a60ee625d0d9e025c",
+            ["zama:0x68CEb7709aC1bcD60e36c4144a243A445A2cb076"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "eip712Domain": {
           "fields": "0x0f",
           "name": "KMSGeneration",
@@ -4499,85 +4433,27 @@
           "extensions": []
         },
         "gatewayConfig": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-        "gatewayKmsGenThreshold": 7,
-        "gatewayKmsSigners": [
-          "zama:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f",
-          "zama:0xdC472efa1642D5afB684aAaa546E22FB24AAB965",
-          "zama:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3",
-          "zama:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f",
-          "zama:0x41b19EB4585450db79ac03ba9503106EC7895905",
-          "zama:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921",
-          "zama:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D",
-          "zama:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8",
-          "zama:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f",
-          "zama:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58",
-          "zama:0x7C17BE232e5968BDa9516478B798b9E90D013fCC",
-          "zama:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385",
-          "zama:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb"
-        ],
-        "gatewayKmsTxSenders": [
-          "zama:0x711EBE8aA590f9C9904ff279239E89dB2eFbC890",
-          "zama:0xB4CE988D382425F64c99A352375F72A5f1cf6FFB",
-          "zama:0x4eC7200E392B97913cbD6d8160B011406EB019F1",
-          "zama:0xEd1D622bd59d657580aBAc65312b40B4B2dA6236",
-          "zama:0x74a1E2e87a4026b7B8b5252c747E514159515e9a",
-          "zama:0x0e25B8DB74c754C8275C0B219ba2A6CD7c59E31D",
-          "zama:0x577Fd21e4BC7D644A4177C4B89146e1Ab394De04",
-          "zama:0xbaac6F9DD84bFB303F05B4DE45A88Eec86855BD0",
-          "zama:0x43e4c21cf9d24Dc5b4e00031349EC213A2ba8340",
-          "zama:0xC105B5933446658D226582f7A112F49a70b54364",
-          "zama:0xbcF4943A856497FB2345409D35f4d1eae9A0363E",
-          "zama:0xD227C4B573800EdA3bAdA6DAC872E9134E012e6D",
-          "zama:0x487e41623b7FeB464ff79F7326DCa791c9a1c5EC"
-        ],
         "gatewayOwner": "zama:0x5f0F86BcEad6976711C9B131bCa5D30E767fe2bE",
-        "getActiveCrsId": "2261564242916331941866620800950935700259179388000792266395655937654553313281",
-        "getActiveKeyId": "1809251394333065553493296640760748560207343510400633813116524750123642650625",
-        "getVersion": "KMSGeneration v0.4.0",
+        "getVersion": "KMSGeneration v0.5.0",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "fieldMeta": {
         "gatewayConfig": {
-          "description": "GatewayConfig contract used as the source of truth for the gateway owner, KMS set, and KMS generation threshold.",
+          "description": "GatewayConfig contract used as the source of truth for the gateway owner and for resolving KMS node storage URLs in historical material queries.",
           "type": "EXTERNAL"
         },
         "gatewayOwner": {
           "severity": "HIGH",
-          "description": "Owner of GatewayConfig. This account authorizes KMSGeneration upgrades and can trigger key, CRS, PRSS, and key-resharing workflows.",
+          "description": "Owner of GatewayConfig. This account authorizes KMSGeneration upgrades.",
           "type": "PERMISSION"
-        },
-        "gatewayKmsTxSenders": {
-          "severity": "HIGH",
-          "description": "KMS transaction-sender addresses configured in GatewayConfig. These accounts may submit preprocessing keygen, keygen, and CRS generation responses.",
-          "type": "PERMISSION"
-        },
-        "gatewayKmsSigners": {
-          "severity": "HIGH",
-          "description": "KMS signer addresses configured in GatewayConfig. Their EIP-712 signatures determine whether key and CRS generation responses reach threshold.",
-          "type": "PERMISSION"
-        },
-        "gatewayKmsGenThreshold": {
-          "severity": "HIGH",
-          "description": "Minimum number of matching KMS responses required before key or CRS generation reaches consensus.",
-          "type": "RISK_PARAMETER"
-        },
-        "getActiveKeyId": {
-          "severity": "HIGH",
-          "description": "Identifier of the active FHE key generated through KMS consensus.",
-          "type": "RISK_PARAMETER"
-        },
-        "getActiveCrsId": {
-          "severity": "HIGH",
-          "description": "Identifier of the active CRS generated through KMS consensus.",
-          "type": "RISK_PARAMETER"
         },
         "eip712Domain": {
-          "description": "EIP-712 domain used when validating KMS signatures over key-generation and CRS-generation responses."
+          "description": "EIP-712 domain retained from the KMS generation workflows removed in v0.5.0."
         }
       },
       "implementationNames": {
         "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3": "ERC1967Proxy",
-        "zama:0x3d345DFc156381E6060Cdf652cDf7f92DF94fAFF": "KMSGeneration"
+        "zama:0x68CEb7709aC1bcD60e36c4144a243A445A2cb076": "KMSGeneration"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -4637,14 +4513,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
           "role": ".getKmsSigners"
         }
       ]
@@ -4662,14 +4532,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
+          "description": "submit KMS decryption responses to gateway contracts.",
           "role": ".getKmsTxSenders"
         }
       ]
@@ -4687,14 +4551,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
+          "description": "submit KMS decryption responses to gateway contracts.",
           "role": ".getKmsTxSenders"
         }
       ]
@@ -4712,14 +4570,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
+          "description": "submit KMS decryption responses to gateway contracts.",
           "role": ".getKmsTxSenders"
         }
       ]
@@ -4796,14 +4648,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
+          "description": "submit KMS decryption responses to gateway contracts.",
           "role": ".getKmsTxSenders"
         }
       ]
@@ -4821,14 +4667,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
           "role": ".getKmsSigners"
         }
       ]
@@ -4853,12 +4693,6 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "start KMS key generation, CRS generation, PRSS initialization, and key resharing.",
-          "role": ".gatewayOwner"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0x571ecb596fCc5c840DA35CbeCA175580db50ac1b",
           "description": "add, remove, or swap gateway pausers.",
           "role": ".gatewayOwner"
@@ -4878,7 +4712,7 @@
         {
           "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "create KMS contexts that immediately become current, update current thresholds and other gateway configuration, transfer ownership, and unpause gateway workflow contracts. Historical KMS contexts cannot be removed in this version.",
+          "description": "create KMS contexts that immediately become current, destroy historical KMS contexts, update thresholds of any live context, manage coprocessors, custodians and host chains, transfer ownership, and unpause gateway workflow contracts.",
           "role": ".owner"
         },
         {
@@ -4965,14 +4799,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
           "role": ".getKmsSigners"
         }
       ]
@@ -5003,14 +4831,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
           "role": ".getKmsSigners"
         }
       ]
@@ -5041,14 +4863,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
+          "description": "submit KMS decryption responses to gateway contracts.",
           "role": ".getKmsTxSenders"
         }
       ]
@@ -5066,14 +4882,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
+          "description": "submit KMS decryption responses to gateway contracts.",
           "role": ".getKmsTxSenders"
         }
       ]
@@ -5091,14 +4901,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
           "role": ".getKmsSigners"
         }
       ]
@@ -5116,14 +4920,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
           "role": ".getKmsSigners"
         }
       ]
@@ -5244,14 +5042,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
           "role": ".getKmsSigners"
         }
       ]
@@ -5269,14 +5061,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
           "role": ".getKmsSigners"
         }
       ]
@@ -5307,14 +5093,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
+          "description": "submit KMS decryption responses to gateway contracts.",
           "role": ".getKmsTxSenders"
         }
       ]
@@ -5332,14 +5112,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
           "role": ".getKmsSigners"
         }
       ]
@@ -5357,14 +5131,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
+          "description": "submit KMS decryption responses to gateway contracts.",
           "role": ".getKmsTxSenders"
         }
       ]
@@ -5382,14 +5150,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
+          "description": "submit KMS decryption responses to gateway contracts.",
           "role": ".getKmsTxSenders"
         }
       ]
@@ -5407,14 +5169,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
           "role": ".getKmsSigners"
         }
       ]
@@ -5432,14 +5188,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
+          "description": "submit KMS decryption responses to gateway contracts.",
           "role": ".getKmsTxSenders"
         }
       ]
@@ -5451,16 +5201,16 @@
       "template": "zama/InputVerification",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0x52c38ce781ecef28b118222541c9b079f2ae7d6402452584e620e84ca347875f"
+        "0x58bb055397e294a46ebccbc53c94bb2494bf05acd7ad77f2fb7cc46b3ef1eb92"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Gateway contract that receives encrypted input verification requests from registered host chains, collects coprocessor responses, and emits a threshold-signed attestation once coprocessor consensus is reached. Ethereum InputVerifier verifies attestations against this contract's EIP-712 domain.",
+      "description": "Gateway contract that receives encrypted input verification requests from registered and enabled host chains, collects coprocessor responses, and emits a threshold-signed attestation once coprocessor consensus is reached. Ethereum InputVerifier verifies attestations against this contract's EIP-712 domain.",
       "deployerAddress": "zama:0x2D0b9A711A887E8a5678400b2311012fEB9BeBF9",
       "sinceTimestamp": 1763504842,
       "sinceBlock": 1526,
       "values": {
         "$admin": "zama:0x0000000000000000000000000000000000000000",
-        "$implementation": "zama:0xA08c4367eB984945da2dad5BF7d94D1B2863197A",
+        "$implementation": "zama:0xf9f0F5ef8301CF1573EBe0F45E13A4CabB621821",
         "$pastUpgrades": [
           [
             "2025-11-18T22:27:22.000Z",
@@ -5476,9 +5226,14 @@
             "2025-12-09T14:41:55.000Z",
             "0x1be878372ad005809903c742e7c3ea908bfcaa1f1e63ebac2eeb0834d499fcc7",
             ["zama:0xA08c4367eB984945da2dad5BF7d94D1B2863197A"]
+          ],
+          [
+            "2026-08-06T17:11:04.000Z",
+            "0x350755101263bed64dc377ef6f3ef07f95f97918b689967a60ee625d0d9e025c",
+            ["zama:0xf9f0F5ef8301CF1573EBe0F45E13A4CabB621821"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "eip712Domain": {
           "fields": "0x0f",
           "name": "InputVerification",
@@ -5498,7 +5253,7 @@
         ],
         "gatewayOwner": "zama:0x5f0F86BcEad6976711C9B131bCa5D30E767fe2bE",
         "gatewayProtocolPayment": "zama:0x7E179E45E5fe0a21015Be25185363B4F2F2F7e89",
-        "getVersion": "InputVerification v0.3.0",
+        "getVersion": "InputVerification v0.4.0",
         "paused": false,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
@@ -5542,7 +5297,7 @@
       },
       "implementationNames": {
         "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287": "ERC1967Proxy",
-        "zama:0xA08c4367eB984945da2dad5BF7d94D1B2863197A": "InputVerification"
+        "zama:0xf9f0F5ef8301CF1573EBe0F45E13A4CabB621821": "InputVerification"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -5559,14 +5314,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
+          "description": "submit KMS decryption responses to gateway contracts.",
           "role": ".getKmsTxSenders"
         }
       ]
@@ -5578,16 +5327,16 @@
       "template": "zama/CiphertextCommits",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0x70a834887489420cb7ea7044739bcc74d735be01e262a27ea23132992d21a898"
+        "0xa3aa22a184258ca16a5d83ce495ae0d307d4c5ec9fda8a7622d4f95728f4af03"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Gateway contract that stores ciphertext and SNS ciphertext digests after coprocessor consensus, allowing decryption requests to reference committed ciphertext material.",
+      "description": "Gateway contract that stores ciphertext and SNS ciphertext digests after coprocessor consensus, allowing decryption requests to reference committed ciphertext material. Digests referencing unregistered or disabled host chains are rejected.",
       "deployerAddress": "zama:0x2D0b9A711A887E8a5678400b2311012fEB9BeBF9",
       "sinceTimestamp": 1763504840,
       "sinceBlock": 1523,
       "values": {
         "$admin": "zama:0x0000000000000000000000000000000000000000",
-        "$implementation": "zama:0xC92f2dc7eF79728ed32e745020EF463270217e78",
+        "$implementation": "zama:0xB373Ae42736E3C266D4A5D090c00c7f0Bda06622",
         "$pastUpgrades": [
           [
             "2025-11-18T22:27:20.000Z",
@@ -5603,17 +5352,21 @@
             "2025-12-09T14:37:21.000Z",
             "0x36d9d960dd681eff0022eac04f63b06c514b54296f7c248ea6041b785ef59977",
             ["zama:0xC92f2dc7eF79728ed32e745020EF463270217e78"]
+          ],
+          [
+            "2026-08-06T17:11:04.000Z",
+            "0x350755101263bed64dc377ef6f3ef07f95f97918b689967a60ee625d0d9e025c",
+            ["zama:0xB373Ae42736E3C266D4A5D090c00c7f0Bda06622"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "gatewayConfig": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
         "gatewayCoprocessorMajorityThreshold": 1,
         "gatewayCoprocessorTxSenders": [
           "zama:0x373E36A8684A3344E177C5894179845Cbe57AE44"
         ],
         "gatewayOwner": "zama:0x5f0F86BcEad6976711C9B131bCa5D30E767fe2bE",
-        "getVersion": "CiphertextCommits v0.3.0",
-        "kmsGeneration": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
+        "getVersion": "CiphertextCommits v0.4.0",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "fieldMeta": {
@@ -5625,10 +5378,6 @@
           "severity": "HIGH",
           "description": "Owner of GatewayConfig. This account authorizes CiphertextCommits upgrades.",
           "type": "PERMISSION"
-        },
-        "kmsGeneration": {
-          "description": "KMSGeneration contract referenced by the CiphertextCommits implementation for KMS key material context.",
-          "type": "EXTERNAL"
         },
         "gatewayCoprocessorTxSenders": {
           "severity": "HIGH",
@@ -5643,7 +5392,7 @@
       },
       "implementationNames": {
         "zama:0xd82cF70FC102028cd01acB87D0E107780ae4F41F": "ERC1967Proxy",
-        "zama:0xC92f2dc7eF79728ed32e745020EF463270217e78": "CiphertextCommits"
+        "zama:0xB373Ae42736E3C266D4A5D090c00c7f0Bda06622": "CiphertextCommits"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -5660,14 +5409,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
           "role": ".getKmsSigners"
         }
       ]
@@ -5676,19 +5419,19 @@
       "name": "GatewayConfig",
       "address": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
       "type": "Contract",
-      "template": "zama/GatewayConfig_v0_5_0",
+      "template": "zama/GatewayConfig_v0_6_0",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0x1089121569189032b8cee0dae0c71eedecf7757f712a6d14ef684915093c6747"
+        "0xe903576aaecdd97c5036c6bc029149a11b44484c78d9c6b0d802a882d4744597"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Central configuration contract for the Zama Gateway. A KMS context snapshots node transaction senders, signers, and workflow thresholds; historical contexts remain stored and selectable by Decryption because this version has no context-destruction function.",
+      "description": "Central configuration contract for the Zama Gateway. A KMS context snapshots node transaction senders, signers, and workflow thresholds; the owner can create new contexts, retune the thresholds of any live context, and destroy non-current contexts, which immediately invalidates them for decryption. Registered host chains can be disabled, re-enabled, or removed by the owner.",
       "deployerAddress": "zama:0x2D0b9A711A887E8a5678400b2311012fEB9BeBF9",
       "sinceTimestamp": 1763504825,
       "sinceBlock": 1520,
       "values": {
         "$admin": "zama:0x5f0F86BcEad6976711C9B131bCa5D30E767fe2bE",
-        "$implementation": "zama:0x2294E3C211238Ae31E2824576CCd7f996CC7Dc00",
+        "$implementation": "zama:0x1950aD98e834f6c07553365196d4CddeD179c536",
         "$pastUpgrades": [
           [
             "2025-11-18T22:27:05.000Z",
@@ -5709,13 +5452,20 @@
             "2026-07-10T08:15:40.000Z",
             "0x5d63d8d9bf4790e7169cd1d6c440262aad29368190932f823377df311f389217",
             ["zama:0x2294E3C211238Ae31E2824576CCd7f996CC7Dc00"]
+          ],
+          [
+            "2026-08-06T17:11:04.000Z",
+            "0x350755101263bed64dc377ef6f3ef07f95f97918b689967a60ee625d0d9e025c",
+            ["zama:0x1950aD98e834f6c07553365196d4CddeD179c536"]
           ]
         ],
-        "$upgradeCount": 4,
+        "$upgradeCount": 5,
         "createdKmsContexts": [],
         "createdKmsContextSigners": [],
         "createdKmsContextTxSenders": [],
         "decryption": "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24",
+        "destroyedKmsContexts": [],
+        "disabledHostChains": [],
         "ethereumHostChains": [
           {
             "chainId": 1,
@@ -5747,6 +5497,13 @@
             "aclAddress": "zama:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
             "name": "ethereum",
             "website": "https://ethereum.org/"
+          },
+          {
+            "chainId": 137,
+            "fhevmExecutorAddress": "zama:0xAB0075E77fe06083f52bdf10e2ccDB3712483057",
+            "aclAddress": "zama:0x6737F17e31cf26a1b62fb0362acC5a16CB156F49",
+            "name": "polygon",
+            "website": "https://polygonscan.com"
           }
         ],
         "getKmsGenThreshold": 7,
@@ -5787,7 +5544,7 @@
         },
         "getPublicDecryptionThresholdForContext": 7,
         "getUserDecryptionThresholdForContext": 9,
-        "getVersion": "GatewayConfig v0.5.0",
+        "getVersion": "GatewayConfig v0.6.0",
         "inputVerification": "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287",
         "owner": "zama:0x5f0F86BcEad6976711C9B131bCa5D30E767fe2bE",
         "pendingOwner": "zama:0x0000000000000000000000000000000000000000",
@@ -5796,7 +5553,7 @@
       "fieldMeta": {
         "owner": {
           "severity": "HIGH",
-          "description": "Owner of GatewayConfig. This account creates KMS contexts, changes the current context's thresholds, manages coprocessors, custodians and host chains, transfers ownership, and unpauses gateway contracts. A newly created context becomes current immediately, while all older contexts remain selectable by Decryption.",
+          "description": "Owner of GatewayConfig. This account creates and destroys KMS contexts, changes the thresholds of any live context, manages coprocessors, custodians and host chains (including disabling and removing them), transfers ownership, and unpauses gateway contracts. A newly created context becomes current immediately; older contexts remain selectable by Decryption requests until destroyed.",
           "type": "PERMISSION"
         },
         "pendingOwner": {
@@ -5813,37 +5570,42 @@
           "type": "EXTERNAL"
         },
         "inputVerification": {
-          "description": "InputVerification workflow contract paused and unpaused by GatewayConfig.",
+          "description": "InputVerification workflow contract paused and unpaused by GatewayConfig. Coprocessor set and threshold updates require this contract to be paused first.",
           "type": "EXTERNAL"
         },
         "ethereumHostChains": {
           "severity": "HIGH",
-          "description": "Ethereum host-chain endpoints registered in GatewayConfig, derived from getHostChains entries with chainId 1. These are the L1 FHEVMExecutor and ACL contracts whose state is used by the Gateway workflows.",
+          "description": "Ethereum host-chain endpoints registered in GatewayConfig, derived from getHostChains entries with chainId 1. These are the L1 FHEVMExecutor and ACL contracts whose state is used by the Gateway workflows. Disabled-but-not-removed chains still appear here; see disabledHostChains.",
           "type": "EXTERNAL"
         },
         "getKmsTxSenders": {
           "severity": "HIGH",
-          "description": "KMS transaction-sender addresses in the current Gateway context. Historical context senders remain authorized for Decryption responses that explicitly select their context; post-migration contexts are indexed here and the migrated context is indexed on Decryption.",
+          "description": "KMS transaction-sender addresses in the current Gateway context. Senders from other live contexts remain authorized for Decryption requests that pinned their context until the context is destroyed; post-migration contexts are indexed here and the migrated context is indexed on Decryption.",
           "type": "PERMISSION"
         },
         "getKmsSigners": {
           "severity": "HIGH",
-          "description": "KMS signer addresses in the current Gateway context. Historical context signers remain authorized for explicitly selected Decryption responses; post-migration contexts are indexed here and the migrated context is indexed on Decryption.",
+          "description": "KMS signer addresses in the current Gateway context. Signers from other live contexts remain authorized for Decryption requests that pinned their context until the context is destroyed; post-migration contexts are indexed here and the migrated context is indexed on Decryption.",
           "type": "PERMISSION"
         },
         "createdKmsContexts": {
           "severity": "HIGH",
-          "description": "KMS contexts created after migration, reconstructed from UpdateKmsContext events with their node set and creation thresholds. Nodes remain authorized for Decryption indefinitely; later threshold-update events do not identify a context, so final historical thresholds must be read through context-specific getters or project overrides.",
+          "description": "KMS contexts created after migration, reconstructed from UpdateKmsContext events with their node set and creation thresholds. Contexts stay selectable by Decryption requests until destroyed (see destroyedKmsContexts). Thresholds can be retuned per context after creation; current values must be read through context-specific getters or project overrides.",
+          "type": "RISK_PARAMETER"
+        },
+        "destroyedKmsContexts": {
+          "severity": "HIGH",
+          "description": "KMS contexts destroyed by the owner. Destroyed contexts are invalid: their per-context getters revert, new requests cannot pin them, and pending requests pinned to them can no longer reach consensus.",
           "type": "RISK_PARAMETER"
         },
         "createdKmsContextTxSenders": {
           "severity": "HIGH",
-          "description": "KMS transaction senders from contexts created after migration. They remain authorized for Decryption responses that select their context because GatewayConfig has no context-destruction function.",
+          "description": "KMS transaction senders from contexts created after migration. They remain authorized for Decryption requests that pinned their context until the owner destroys that context.",
           "type": "PERMISSION"
         },
         "createdKmsContextSigners": {
           "severity": "HIGH",
-          "description": "KMS signers from contexts created after migration. They remain authorized for Decryption responses that select their context because GatewayConfig has no context-destruction function.",
+          "description": "KMS signers from contexts created after migration. They remain authorized for Decryption requests that pinned their context until the owner destroys that context.",
           "type": "PERMISSION"
         },
         "getCoprocessorTxSenders": {
@@ -5868,32 +5630,37 @@
         },
         "getMpcThreshold": {
           "severity": "HIGH",
-          "description": "MPC threshold for KMS key material generation in the current context.",
+          "description": "MPC threshold for KMS key material generation in the current context. The owner can retune it per context.",
           "type": "RISK_PARAMETER"
         },
         "getCurrentKmsContextId": {
           "severity": "HIGH",
-          "description": "Identifier of the context used when a Decryption response has empty or version 0 extraData. Version 1 responses can explicitly select any historical context, and requests do not store or bind a context.",
+          "description": "Identifier of the context pinned by new Decryption requests whose extraData is empty or starts with version 0. Version 1 request extraData can explicitly pin any live context; responses must match the pinned context.",
           "type": "RISK_PARAMETER"
         },
         "getPublicDecryptionThresholdForContext": {
           "severity": "HIGH",
-          "description": "Minimum number of KMS signatures required for public decryption consensus in the current context.",
+          "description": "Minimum number of KMS signatures required for public decryption consensus in the current context. The owner can retune it per context.",
           "type": "RISK_PARAMETER"
         },
         "getUserDecryptionThresholdForContext": {
           "severity": "HIGH",
-          "description": "Minimum number of KMS shares required for user decryption consensus in the current context.",
+          "description": "Minimum number of KMS shares required for user decryption consensus in the current context. The owner can retune it per context.",
           "type": "RISK_PARAMETER"
         },
         "getKmsGenThreshold": {
           "severity": "HIGH",
-          "description": "Minimum number of KMS signatures required for key and CRS generation consensus in the current context.",
+          "description": "Minimum number of KMS signatures required for key and CRS generation consensus in the current context. Consumed by the Ethereum-side KMS generation since gateway KMSGeneration v0.5.0.",
           "type": "RISK_PARAMETER"
         },
         "getCoprocessorMajorityThreshold": {
           "severity": "HIGH",
-          "description": "Minimum number of matching coprocessor messages required for gateway coprocessor consensus.",
+          "description": "Minimum number of matching coprocessor messages required for gateway coprocessor consensus. Updates require InputVerification to be paused first.",
+          "type": "RISK_PARAMETER"
+        },
+        "disabledHostChains": {
+          "severity": "HIGH",
+          "description": "Registered host chains currently disabled by the owner. Gateway workflows reject requests and ciphertext handles referencing disabled chains; a chain must be disabled before it can be removed.",
           "type": "RISK_PARAMETER"
         },
         "getHostChains": {
@@ -5905,7 +5672,7 @@
       },
       "implementationNames": {
         "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab": "ERC1967Proxy",
-        "zama:0x2294E3C211238Ae31E2824576CCd7f996CC7Dc00": "GatewayConfig"
+        "zama:0x1950aD98e834f6c07553365196d4CddeD179c536": "GatewayConfig"
       },
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }
@@ -5925,14 +5692,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
           "role": ".getKmsSigners"
         }
       ]
@@ -5950,14 +5711,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "sign KMS key-generation and CRS-generation material accepted by KMSGeneration.",
-          "role": ".gatewayKmsSigners"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "sign KMS decryption, key-generation, and CRS-generation material accepted by gateway contracts.",
+          "description": "sign KMS decryption material accepted by gateway contracts.",
           "role": ".getKmsSigners"
         }
       ]
@@ -5975,14 +5730,8 @@
         },
         {
           "permission": "interact",
-          "from": "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3",
-          "description": "submit KMS key-generation and CRS-generation responses to KMSGeneration.",
-          "role": ".gatewayKmsTxSenders"
-        },
-        {
-          "permission": "interact",
           "from": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab",
-          "description": "submit KMS decryption, key-generation, and CRS-generation responses to gateway contracts.",
+          "description": "submit KMS decryption responses to gateway contracts.",
           "role": ".getKmsTxSenders"
         }
       ]
@@ -6875,9 +6624,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0xE53e32a669357Ab0360103d8f294812B914AF9e4": [
-      "constructor(address _singleton)"
-    ],
     "eth:0xe978F22157048E5DB8E5d07971376e86671672B2": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -7038,12 +6784,15 @@
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "zama:0x2294E3C211238Ae31E2824576CCd7f996CC7Dc00": [
+    "zama:0x1950aD98e834f6c07553365196d4CddeD179c536": [
       "constructor()",
       "error AddressEmptyCode(address target)",
+      "error AllGatewayContractsAlreadyPaused()",
+      "error AllGatewayContractsAlreadyUnpaused()",
       "error ChainIdNotUint64(uint256 chainId)",
       "error CoprocessorSignerAlreadyRegistered(address coprocessorSignerAddress)",
       "error CoprocessorTxSenderAlreadyRegistered(address coprocessorTxSenderAddress)",
+      "error CurrentKmsContextCannotBeDestroyed(uint256 currentKmsContextId)",
       "error CustodianSignerAlreadyRegistered(address custodianSignerAddress)",
       "error CustodianTxSenderAlreadyRegistered(address custodianTxSenderAddress)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -7052,13 +6801,19 @@
       "error EmptyCustodians()",
       "error EmptyKmsNodes()",
       "error FailedCall()",
+      "error HostChainAlreadyDisabled(uint256 chainId)",
+      "error HostChainAlreadyEnabled(uint256 chainId)",
       "error HostChainAlreadyRegistered(uint256 chainId)",
+      "error HostChainNotDisabled(uint256 chainId)",
+      "error HostChainNotRegistered(uint256 chainId)",
+      "error InputVerificationMustBePaused()",
       "error InvalidHighCoprocessorThreshold(uint256 coprocessorThreshold, uint256 nCoprocessors)",
       "error InvalidHighKmsGenThreshold(uint256 kmsGenThreshold, uint256 nKmsNodes)",
       "error InvalidHighMpcThreshold(uint256 mpcThreshold, uint256 nKmsNodes)",
       "error InvalidHighPublicDecryptionThreshold(uint256 publicDecryptionThreshold, uint256 nKmsNodes)",
       "error InvalidHighUserDecryptionThreshold(uint256 userDecryptionThreshold, uint256 nKmsNodes)",
       "error InvalidInitialization()",
+      "error InvalidKmsContext(uint256 kmsContextId)",
       "error InvalidNullChainId()",
       "error InvalidNullCoprocessorThreshold()",
       "error InvalidNullKmsContextId()",
@@ -7067,33 +6822,42 @@
       "error InvalidNullUserDecryptionThreshold()",
       "error KmsContextAlreadyRegistered(uint256 contextId, uint256 currentKmsContextId)",
       "error KmsSignerAlreadyRegistered(address kmsSignerAddress)",
+      "error KmsSignerSetExceedsProofFormatLimit(uint256 signerCount, uint256 maxAllowed)",
       "error KmsTxSenderAlreadyRegistered(address kmsTxSenderAddress)",
       "error NotInitializing()",
       "error NotInitializingFromEmptyProxy()",
       "error NotPauser(address account)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
+      "error ThresholdExceedsProofFormatLimit(string thresholdName, uint256 threshold, uint256 maxAllowed)",
       "error UUPSUnauthorizedCallContext()",
       "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
       "event AddHostChain(tuple(uint256 chainId, address fhevmExecutorAddress, address aclAddress, string name, string website) hostChain)",
+      "event DestroyKmsContext(uint256 indexed kmsContextId)",
+      "event DisableHostChain(uint256 indexed chainId)",
+      "event EnableHostChain(uint256 indexed chainId)",
       "event InitializeGatewayConfig(uint256 indexed kmsContextId, tuple(string name, string website) metadata, tuple(uint256 mpcThreshold, uint256 publicDecryptionThreshold, uint256 userDecryptionThreshold, uint256 kmsGenThreshold, uint256 coprocessorThreshold) thresholds, tuple(address txSenderAddress, address signerAddress, string ipAddress, string storageUrl)[] kmsNodes, tuple(address txSenderAddress, address signerAddress, string s3BucketUrl)[] coprocessors, tuple(address txSenderAddress, address signerAddress, bytes encryptionKey)[] custodians)",
       "event Initialized(uint64 version)",
       "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event PauseAllGatewayContracts()",
+      "event RemoveHostChain(uint256 indexed chainId)",
       "event UnpauseAllGatewayContracts()",
       "event UpdateCoprocessorThreshold(uint256 newCoprocessorThreshold)",
       "event UpdateCoprocessors(tuple(address txSenderAddress, address signerAddress, string s3BucketUrl)[] newCoprocessors, uint256 newCoprocessorThreshold)",
       "event UpdateCustodians(tuple(address txSenderAddress, address signerAddress, bytes encryptionKey)[] newCustodians)",
       "event UpdateKmsContext(uint256 indexed newContextId, tuple(address txSenderAddress, address signerAddress, string ipAddress, string storageUrl)[] newKmsNodes, uint256 newMpcThreshold, uint256 newPublicDecryptionThreshold, uint256 newUserDecryptionThreshold, uint256 newKmsGenThreshold)",
-      "event UpdateKmsGenThreshold(uint256 newKmsGenThreshold)",
-      "event UpdateMpcThreshold(uint256 newMpcThreshold)",
-      "event UpdatePublicDecryptionThreshold(uint256 newPublicDecryptionThreshold)",
-      "event UpdateUserDecryptionThreshold(uint256 newUserDecryptionThreshold)",
+      "event UpdateKmsGenThresholdForContext(uint256 indexed contextId, uint256 newKmsGenThreshold)",
+      "event UpdateMpcThresholdForContext(uint256 indexed contextId, uint256 newMpcThreshold)",
+      "event UpdatePublicDecryptionThresholdForContext(uint256 indexed contextId, uint256 newPublicDecryptionThreshold)",
+      "event UpdateUserDecryptionThresholdForContext(uint256 indexed contextId, uint256 newUserDecryptionThreshold)",
       "event Upgraded(address indexed implementation)",
       "function UPGRADE_INTERFACE_VERSION() view returns (string)",
       "function acceptOwnership()",
       "function addHostChain(tuple(uint256 chainId, address fhevmExecutorAddress, address aclAddress, string name, string website) hostChain)",
+      "function destroyKmsContext(uint256 kmsContextId)",
+      "function disableHostChain(uint256 chainId)",
+      "function enableHostChain(uint256 chainId)",
       "function getCoprocessor(address coprocessorTxSenderAddress) view returns (tuple(address txSenderAddress, address signerAddress, string s3BucketUrl))",
       "function getCoprocessorMajorityThreshold() view returns (uint256)",
       "function getCoprocessorSigners() view returns (address[])",
@@ -7121,17 +6885,20 @@
       "function isCoprocessorTxSender(address txSenderAddress) view returns (bool)",
       "function isCustodianSigner(address signerAddress) view returns (bool)",
       "function isCustodianTxSender(address txSenderAddress) view returns (bool)",
+      "function isHostChainDisabled(uint256 chainId) view returns (bool)",
       "function isHostChainRegistered(uint256 chainId) view returns (bool)",
       "function isKmsSigner(address signerAddress) view returns (bool)",
       "function isKmsSignerForContext(uint256 contextId, address signerAddress) view returns (bool)",
       "function isKmsTxSender(address txSenderAddress) view returns (bool)",
       "function isKmsTxSenderForContext(uint256 contextId, address txSenderAddress) view returns (bool)",
       "function isPauser(address account) view returns (bool)",
+      "function isValidKmsContext(uint256 contextId) view returns (bool)",
       "function owner() view returns (address)",
       "function pauseAllGatewayContracts()",
       "function pendingOwner() view returns (address)",
       "function proxiableUUID() view returns (bytes32)",
-      "function reinitializeV5(uint256 initialKmsContextId)",
+      "function reinitializeV7()",
+      "function removeHostChain(uint256 chainId)",
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function unpauseAllGatewayContracts()",
@@ -7139,10 +6906,10 @@
       "function updateCoprocessors(tuple(address txSenderAddress, address signerAddress, string s3BucketUrl)[] newCoprocessors, uint256 newCoprocessorThreshold)",
       "function updateCustodians(tuple(address txSenderAddress, address signerAddress, bytes encryptionKey)[] newCustodians)",
       "function updateKmsContext(uint256 newContextId, tuple(address txSenderAddress, address signerAddress, string ipAddress, string storageUrl)[] newKmsNodes, uint256 newMpcThreshold, uint256 newPublicDecryptionThreshold, uint256 newUserDecryptionThreshold, uint256 newKmsGenThreshold)",
-      "function updateKmsGenThreshold(uint256 newKmsGenThreshold)",
-      "function updateMpcThreshold(uint256 newMpcThreshold)",
-      "function updatePublicDecryptionThreshold(uint256 newPublicDecryptionThreshold)",
-      "function updateUserDecryptionThreshold(uint256 newUserDecryptionThreshold)",
+      "function updateKmsGenThresholdForContext(uint256 contextId, uint256 newKmsGenThreshold)",
+      "function updateMpcThresholdForContext(uint256 contextId, uint256 newMpcThreshold)",
+      "function updatePublicDecryptionThresholdForContext(uint256 contextId, uint256 newPublicDecryptionThreshold)",
+      "function updateUserDecryptionThresholdForContext(uint256 contextId, uint256 newUserDecryptionThreshold)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "zama:0x290947F9fed2d91fdB22f35E162aDfA744b7aEe3": [
@@ -7202,76 +6969,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "zama:0x3d345DFc156381E6060Cdf652cDf7f92DF94fAFF": [
-      "constructor()",
-      "error AddressEmptyCode(address target)",
-      "error CoprocessorSignerDoesNotMatchTxSender(address signerAddress, address txSenderAddress)",
-      "error CrsNotGenerated(uint256 crsId)",
-      "error CrsgenNotRequested(uint256 crsId)",
-      "error CrsgenOngoing(uint256 crsId)",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error EmptyKeyDigests(uint256 keyId)",
-      "error FailedCall()",
-      "error HostChainNotRegistered(uint256 chainId)",
-      "error InvalidInitialization()",
-      "error KeyNotGenerated(uint256 keyId)",
-      "error KeygenNotRequested(uint256 keyId)",
-      "error KeygenOngoing(uint256 keyId)",
-      "error KmsAlreadySignedForCrsgen(uint256 crsId, address kmsSigner)",
-      "error KmsAlreadySignedForKeygen(uint256 keyId, address kmsSigner)",
-      "error KmsAlreadySignedForPrepKeygen(uint256 prepKeygenId, address kmsSigner)",
-      "error KmsSignerDoesNotMatchTxSender(address signerAddress, address txSenderAddress)",
-      "error NotCoprocessorSigner(address signerAddress)",
-      "error NotCoprocessorTxSender(address txSenderAddress)",
-      "error NotCustodianSigner(address signerAddress)",
-      "error NotCustodianTxSender(address txSenderAddress)",
-      "error NotGatewayOwner(address sender)",
-      "error NotInitializing()",
-      "error NotInitializingFromEmptyProxy()",
-      "error NotKmsSigner(address signerAddress)",
-      "error NotKmsTxSender(address txSenderAddress)",
-      "error PrepKeygenNotRequested(uint256 prepKeygenId)",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "event ActivateCrs(uint256 crsId, string[] kmsNodeStorageUrls, bytes crsDigest)",
-      "event ActivateKey(uint256 keyId, string[] kmsNodeStorageUrls, tuple(uint8 keyType, bytes digest)[] keyDigests)",
-      "event CrsgenRequest(uint256 crsId, uint256 maxBitLength, uint8 paramsType)",
-      "event CrsgenResponse(uint256 crsId, bytes crsDigest, bytes signature, address kmsTxSender)",
-      "event EIP712DomainChanged()",
-      "event Initialized(uint64 version)",
-      "event KeyReshareSameSet(uint256 prepKeygenId, uint256 keyId, uint256 keyReshareId, uint8 paramsType)",
-      "event KeygenRequest(uint256 prepKeygenId, uint256 keyId)",
-      "event KeygenResponse(uint256 keyId, tuple(uint8 keyType, bytes digest)[] keyDigests, bytes signature, address kmsTxSender)",
-      "event PRSSInit()",
-      "event PrepKeygenRequest(uint256 prepKeygenId, uint256 epochId, uint8 paramsType)",
-      "event PrepKeygenResponse(uint256 prepKeygenId, bytes signature, address kmsTxSender)",
-      "event Upgraded(address indexed implementation)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function crsgenRequest(uint256 maxBitLength, uint8 paramsType)",
-      "function crsgenResponse(uint256 crsId, bytes crsDigest, bytes signature)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function getActiveCrsId() view returns (uint256)",
-      "function getActiveKeyId() view returns (uint256)",
-      "function getConsensusTxSenders(uint256 requestId) view returns (address[])",
-      "function getCrsMaterials(uint256 crsId) view returns (string[], bytes)",
-      "function getCrsParamsType(uint256 crsId) view returns (uint8)",
-      "function getKeyMaterials(uint256 keyId) view returns (string[], tuple(uint8 keyType, bytes digest)[])",
-      "function getKeyParamsType(uint256 keyId) view returns (uint8)",
-      "function getVersion() pure returns (string)",
-      "function initializeFromEmptyProxy()",
-      "function keyReshareSameSet(uint256 keyId)",
-      "function keygen(uint8 paramsType)",
-      "function keygenResponse(uint256 keyId, tuple(uint8 keyType, bytes digest)[] keyDigests, bytes signature)",
-      "function prepKeygenResponse(uint256 prepKeygenId, bytes signature)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function prssInit()",
-      "function reinitializeV4()",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "zama:0x571ecb596fCc5c840DA35CbeCA175580db50ac1b": [
       "error AccountAlreadyPauser(address account)",
       "error AccountNotPauser(address account)",
@@ -7289,6 +6986,35 @@
     "zama:0x5f0F86BcEad6976711C9B131bCa5D30E767fe2bE": [
       "constructor(address _singleton)"
     ],
+    "zama:0x68CEb7709aC1bcD60e36c4144a243A445A2cb076": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error CrsNotGenerated(uint256 crsId)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error InvalidInitialization()",
+      "error KeyNotGenerated(uint256 keyId)",
+      "error NotGatewayOwner(address sender)",
+      "error NotInitializing()",
+      "error NotInitializingFromEmptyProxy()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint64 version)",
+      "event Upgraded(address indexed implementation)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getConsensusTxSenders(uint256 requestId) view returns (address[])",
+      "function getCrsMaterials(uint256 crsId) view returns (string[], bytes)",
+      "function getCrsParamsType(uint256 crsId) view returns (uint8)",
+      "function getKeyMaterials(uint256 keyId) view returns (string[], tuple(uint8 keyType, bytes digest)[])",
+      "function getKeyParamsType(uint256 keyId) view returns (uint8)",
+      "function getVersion() pure returns (string)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function reinitializeV5()",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "zama:0x7E179E45E5fe0a21015Be25185363B4F2F2F7e89": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -7297,13 +7023,14 @@
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "zama:0x943CEfD1A00d3ae5b298bB10D4EddA09B279C8B0": [
+    "zama:0x86F8e9626cCff3f2eB3dA248F33DfF43531DBFD8": [
       "constructor()",
       "error AddressEmptyCode(address target)",
       "error ContractAddressesMaxLengthExceeded(uint256 maxLength, uint256 actualLength)",
       "error ContractNotInContractAddresses(address contractAddress, address[] contractAddresses)",
       "error CoprocessorSignerDoesNotMatchTxSender(address signerAddress, address txSenderAddress)",
       "error CtHandleChainIdDiffersFromContractChainId(bytes32 ctHandle, uint256 chainId, uint256 contractChainId)",
+      "error DecryptionContextMismatch(uint256 decryptionId, uint256 requestContextId, uint256 responseContextId)",
       "error DecryptionNotRequested(uint256 decryptionId)",
       "error DelegatorAddressInContractAddresses(address delegatorAddress, address[] contractAddresses)",
       "error DifferentKeyIdsNotAllowed(tuple(bytes32 ctHandle, uint256 keyId, bytes32 snsCiphertextDigest, address[] coprocessorTxSenderAddresses) firstSnsCtMaterial, tuple(bytes32 ctHandle, uint256 keyId, bytes32 snsCiphertextDigest, address[] coprocessorTxSenderAddresses) invalidSnsCtMaterial)",
@@ -7318,10 +7045,13 @@
       "error EnforcedPause()",
       "error ExpectedPause()",
       "error FailedCall()",
+      "error HostChainDisabled(uint256 chainId)",
       "error HostChainNotRegistered(uint256 chainId)",
       "error InvalidExtraDataLength(uint256 length, uint256 minimumLength)",
       "error InvalidFHEType(uint8 fheTypeUint8)",
       "error InvalidInitialization()",
+      "error InvalidKmsContext(uint256 kmsContextId)",
+      "error InvalidNullContextId()",
       "error InvalidNullDurationDays()",
       "error InvalidUserSignature(bytes signature)",
       "error KmsNodeAlreadySigned(uint256 decryptionId, address signer)",
@@ -7330,8 +7060,6 @@
       "error MaxDurationDaysExceeded(uint256 maxValue, uint256 actualValue)",
       "error NotCoprocessorSigner(address signerAddress)",
       "error NotCoprocessorTxSender(address txSenderAddress)",
-      "error NotCustodianSigner(address signerAddress)",
-      "error NotCustodianTxSender(address txSenderAddress)",
       "error NotGatewayOwner(address sender)",
       "error NotInitializing()",
       "error NotInitializingFromEmptyProxy()",
@@ -7373,7 +7101,7 @@
       "function proxiableUUID() view returns (bytes32)",
       "function publicDecryptionRequest(bytes32[] ctHandles, bytes extraData)",
       "function publicDecryptionResponse(uint256 decryptionId, bytes decryptedResult, bytes signature, bytes extraData)",
-      "function reinitializeV4()",
+      "function reinitializeV5()",
       "function unpause()",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function userDecryptionRequest(tuple(bytes32 ctHandle, address contractAddress)[] ctHandleContractPairs, tuple(uint256 startTimestamp, uint256 durationDays) requestValidity, tuple(uint256 chainId, address[] addresses) contractsInfo, address userAddress, bytes publicKey, bytes signature, bytes extraData)",
@@ -7436,66 +7164,7 @@
       "function revokeUserDecryptionDelegation(uint256 chainId, address delegator, address delegate, address contractAddress, uint64 delegationCounter, uint64 expirationDate)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "zama:0xA08c4367eB984945da2dad5BF7d94D1B2863197A": [
-      "constructor()",
-      "error AddressEmptyCode(address target)",
-      "error CoprocessorAlreadyRejected(uint256 zkProofId, address txSender, address signer)",
-      "error CoprocessorAlreadyVerified(uint256 zkProofId, address txSender, address signer)",
-      "error CoprocessorSignerDoesNotMatchTxSender(address signerAddress, address txSenderAddress)",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error EnforcedPause()",
-      "error ExpectedPause()",
-      "error FailedCall()",
-      "error HostChainNotRegistered(uint256 chainId)",
-      "error InvalidInitialization()",
-      "error KmsSignerDoesNotMatchTxSender(address signerAddress, address txSenderAddress)",
-      "error NotCoprocessorSigner(address signerAddress)",
-      "error NotCoprocessorTxSender(address txSenderAddress)",
-      "error NotCustodianSigner(address signerAddress)",
-      "error NotCustodianTxSender(address txSenderAddress)",
-      "error NotGatewayOwner(address sender)",
-      "error NotInitializing()",
-      "error NotInitializingFromEmptyProxy()",
-      "error NotKmsSigner(address signerAddress)",
-      "error NotKmsTxSender(address txSenderAddress)",
-      "error NotOwnerOrGatewayConfig(address notOwnerOrGatewayConfig)",
-      "error NotPauserOrGatewayConfig(address notPauserOrGatewayConfig)",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "error VerifyProofNotRequested(uint256 zkProofId)",
-      "event EIP712DomainChanged()",
-      "event Initialized(uint64 version)",
-      "event Paused(address account)",
-      "event RejectProofResponse(uint256 indexed zkProofId)",
-      "event RejectProofResponseCall(uint256 indexed zkProofId, bytes extraData)",
-      "event Unpaused(address account)",
-      "event Upgraded(address indexed implementation)",
-      "event VerifyProofRequest(uint256 indexed zkProofId, uint256 indexed contractChainId, address contractAddress, address userAddress, bytes ciphertextWithZKProof, bytes extraData)",
-      "event VerifyProofResponse(uint256 indexed zkProofId, bytes32[] ctHandles, bytes[] signatures)",
-      "event VerifyProofResponseCall(uint256 indexed zkProofId, bytes32[] ctHandles, bytes signature, address coprocessorTxSender, bytes extraData)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function getRejectProofConsensusTxSenders(uint256 zkProofId) view returns (address[])",
-      "function getVerifyProofConsensusTxSenders(uint256 zkProofId) view returns (address[])",
-      "function getVersion() pure returns (string)",
-      "function initializeFromEmptyProxy()",
-      "function isProofRejected(uint256 zkProofId) view returns (bool)",
-      "function isProofVerified(uint256 zkProofId) view returns (bool)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function reinitializeV3()",
-      "function rejectProofResponse(uint256 zkProofId, bytes extraData)",
-      "function unpause()",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function verifyProofRequest(uint256 contractChainId, address contractAddress, address userAddress, bytes ciphertextWithZKProof, bytes extraData)",
-      "function verifyProofResponse(uint256 zkProofId, bytes32[] ctHandles, bytes signature, bytes extraData)"
-    ],
-    "zama:0xC92f2dc7eF79728ed32e745020EF463270217e78": [
+    "zama:0xB373Ae42736E3C266D4A5D090c00c7f0Bda06622": [
       "constructor()",
       "error AddressEmptyCode(address target)",
       "error CiphertextMaterialNotFound(bytes32 ctHandle)",
@@ -7505,13 +7174,12 @@
       "error ERC1967NonPayable()",
       "error EmptyCtHandles()",
       "error FailedCall()",
+      "error HostChainDisabled(uint256 chainId)",
       "error HostChainNotRegistered(uint256 chainId)",
       "error InvalidInitialization()",
       "error KmsSignerDoesNotMatchTxSender(address signerAddress, address txSenderAddress)",
       "error NotCoprocessorSigner(address signerAddress)",
       "error NotCoprocessorTxSender(address txSenderAddress)",
-      "error NotCustodianSigner(address signerAddress)",
-      "error NotCustodianTxSender(address txSenderAddress)",
       "error NotGatewayOwner(address sender)",
       "error NotInitializing()",
       "error NotInitializingFromEmptyProxy()",
@@ -7532,7 +7200,7 @@
       "function initializeFromEmptyProxy()",
       "function isCiphertextMaterialAdded(bytes32 ctHandle) view returns (bool)",
       "function proxiableUUID() view returns (bytes32)",
-      "function reinitializeV3()",
+      "function reinitializeV4()",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "zama:0xcB1bB072f38bdAF0F328CdEf1Fc6eDa1DF029287": [
@@ -7593,18 +7261,76 @@
       "function setPublicDecryptionPrice(uint256 price)",
       "function setUserDecryptionPrice(uint256 price)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "zama:0xf9f0F5ef8301CF1573EBe0F45E13A4CabB621821": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error CoprocessorAlreadyRejected(uint256 zkProofId, address txSender, address signer)",
+      "error CoprocessorAlreadyVerified(uint256 zkProofId, address txSender, address signer)",
+      "error CoprocessorSignerDoesNotMatchTxSender(address signerAddress, address txSenderAddress)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedCall()",
+      "error HostChainDisabled(uint256 chainId)",
+      "error HostChainNotRegistered(uint256 chainId)",
+      "error InvalidInitialization()",
+      "error KmsSignerDoesNotMatchTxSender(address signerAddress, address txSenderAddress)",
+      "error NotCoprocessorSigner(address signerAddress)",
+      "error NotCoprocessorTxSender(address txSenderAddress)",
+      "error NotGatewayOwner(address sender)",
+      "error NotInitializing()",
+      "error NotInitializingFromEmptyProxy()",
+      "error NotKmsSigner(address signerAddress)",
+      "error NotKmsTxSender(address txSenderAddress)",
+      "error NotOwnerOrGatewayConfig(address notOwnerOrGatewayConfig)",
+      "error NotPauserOrGatewayConfig(address notPauserOrGatewayConfig)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error VerifyProofNotRequested(uint256 zkProofId)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint64 version)",
+      "event Paused(address account)",
+      "event RejectProofResponse(uint256 indexed zkProofId)",
+      "event RejectProofResponseCall(uint256 indexed zkProofId, bytes extraData)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "event VerifyProofRequest(uint256 indexed zkProofId, uint256 indexed contractChainId, address contractAddress, address userAddress, bytes ciphertextWithZKProof, bytes extraData)",
+      "event VerifyProofResponse(uint256 indexed zkProofId, bytes32[] ctHandles, bytes[] signatures)",
+      "event VerifyProofResponseCall(uint256 indexed zkProofId, bytes32[] ctHandles, bytes signature, address coprocessorTxSender, bytes extraData)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getRejectProofConsensusTxSenders(uint256 zkProofId) view returns (address[])",
+      "function getVerifyProofConsensusTxSenders(uint256 zkProofId) view returns (address[])",
+      "function getVersion() pure returns (string)",
+      "function initializeFromEmptyProxy()",
+      "function isProofRejected(uint256 zkProofId) view returns (bool)",
+      "function isProofVerified(uint256 zkProofId) view returns (bool)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function reinitializeV4()",
+      "function rejectProofResponse(uint256 zkProofId, bytes extraData)",
+      "function unpause()",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function verifyProofRequest(uint256 contractChainId, address contractAddress, address userAddress, bytes ciphertextWithZKProof, bytes extraData)",
+      "function verifyProofResponse(uint256 zkProofId, bytes32[] ctHandles, bytes signature, bytes extraData)"
     ]
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "zama/CiphertextCommits": "0xe2f42de1746de3eb1b71992159aea607195d575a68c009d46a71c73fe3274fb5",
+    "zama/CiphertextCommits": "0x4af301cefd395479dd672918f72424dfe344bf949d3cda2b65fc5cf5316816bd",
     "zama/ConfidentialTokenWrappersRegistry": "0xac4c61aea2fe3548481375913505c610bc9a6c1ea7a22dfc9ac73d0c1a5b9a66",
     "zama/ConfidentialWrapperV3": "0x4c4042fbf171de0b14b575e4bde209e4e75a7cac9f7ef1ed7fe20dadf9a65cb3",
-    "zama/Decryption_v0_4_0": "0xf7de11ef6782ebf68e102501316d7179c6213af2476f361584c01ea2773ffddb",
-    "zama/GatewayConfig_v0_5_0": "0x8947116076120b4b30c71e6c0a54c165590b9ec24ecd73f8eb57faa66c795081",
+    "zama/Decryption_v0_5_0": "0xf7de11ef6782ebf68e102501316d7179c6213af2476f361584c01ea2773ffddb",
+    "zama/GatewayConfig_v0_6_0": "0xc7f5e473c5e69c597defe4fd99d83e82d01187142d8ed30c1451e9861e093fa2",
     "zama/GatewayPauserSet": "0x6e3bdded022ec01666a6e04d5f08b9f51c449213ba48bee15c272d39a5e512c8",
     "zama/InputVerification": "0x49169792925bc07875f203d69cfb1133de2899d7ae282dac55fbbf0033110aad",
-    "zama/KMSGeneration": "0xc877c3bafaf8baea14b623212efdd78a859acce207e54911ac68cc3e627b0db8",
+    "zama/KMSGeneration_v0_5_0": "0x25ad31975763e222ff68726d3e7ecd47ff0d78296d0367b9628840fbd4da6c3f",
     "zama/MultichainACL": "0xde7a4e3a2b30064cebf3267c3b75bc1619f2e078f3c6fc05c4ead1aa87a3d5bd",
     "zama/Multisig": "0xfacece6ea884ad4d49a3d294d69053b6102e847852204f7f3a65f9980facf297",
     "zama/ProtocolPayment": "0x29f359a705738f82d1d996c1d6568c5ccc8dcb572fd3049117a3194f86f50ab7",
@@ -7617,6 +7343,6 @@
     "zama/ZamaKMSVerifier_v0_2_0": "0x7fc4e3ae2be7d94f782720d3adb57b48f46f25266cbde808b3ce285721e9f7e4",
     "zama/ZamaPauserSet": "0x1af56cc25e42342b2f464add26e41d36787603eb96bf24f0923abdf7caf5d35f"
   },
-  "usedBlockNumbers": { "ethereum": 25595925, "zama": 2004406 },
-  "permissionsConfigHash": "0xc9fb44b7283796989e0c254403579db8a8ac467aad5a0370a1d6a964fc7df888"
+  "usedBlockNumbers": { "ethereum": 25703226, "zama": 2121126 },
+  "permissionsConfigHash": "0x18240e431ed47fe937902218695bad318ca217a5204bfe6e834b9c50c30fc886"
 }

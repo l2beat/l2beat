@@ -1,7 +1,13 @@
-import type { Database, InteropMissingTokenInfo } from '@l2beat/database'
+import type {
+  Database,
+  InteropMissingTokenInfo,
+  InteropTransferTimeRange,
+} from '@l2beat/database'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { DeployedTokenId } from '../../financials/DeployedTokenId'
 import { toDeployedId } from '../../financials/InteropFinancialsLoop'
+
+const TOKEN_DB_LOOKUP_BATCH_SIZE = 2_000
 
 export type MissingTokenDbStatus =
   | 'missing'
@@ -38,8 +44,9 @@ export function dedupeMissingTokens<T extends MissingTokenSelection>(
 export async function getMissingTokens(
   db: Database,
   deps: MissingTokensDeps,
+  timeRange?: InteropTransferTimeRange,
 ): Promise<MissingTokenRecord[]> {
-  const rows = await db.interopTransfer.getMissingTokensInfo()
+  const rows = await db.interopTransfer.getMissingTokensInfo(timeRange)
   return mapMissingTokensWithStatus(rows, deps)
 }
 
@@ -98,15 +105,28 @@ export async function getMissingTokenStatuses(
     return statuses
   }
 
-  const tokenInfos =
-    await deps.tokenDbClient.deployedTokens.getByChainAndAddress.query(
-      Array.from(new Set(deployedTokenIdsByKey.values())).map(
-        (deployedTokenId) => ({
-          chain: DeployedTokenId.chain(deployedTokenId),
-          address: DeployedTokenId.address(deployedTokenId),
-        }),
+  const deployedTokens = Array.from(
+    new Set(deployedTokenIdsByKey.values()),
+  ).map((deployedTokenId) => ({
+    chain: DeployedTokenId.chain(deployedTokenId),
+    address: DeployedTokenId.address(deployedTokenId),
+  }))
+  const tokenInfos = (
+    await Promise.all(
+      Array.from(
+        {
+          length: Math.ceil(deployedTokens.length / TOKEN_DB_LOOKUP_BATCH_SIZE),
+        },
+        (_, index) =>
+          deps.tokenDbClient.deployedTokens.getByChainAndAddress.query(
+            deployedTokens.slice(
+              index * TOKEN_DB_LOOKUP_BATCH_SIZE,
+              (index + 1) * TOKEN_DB_LOOKUP_BATCH_SIZE,
+            ),
+          ),
       ),
     )
+  ).flat()
 
   const tokenInfoById = new Map(
     tokenInfos.map((tokenInfo) => [

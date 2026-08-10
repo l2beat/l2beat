@@ -1,13 +1,22 @@
-import type { RouterOutputs } from '@l2beat/token-backend'
-import { useQuery } from '@tanstack/react-query'
-import { ArrowRightIcon, ExternalLinkIcon, XIcon } from 'lucide-react'
-import type { ReactNode } from 'react'
+import type { Plan, RouterOutputs } from '@l2beat/token-backend'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import {
+  ArrowLeftRightIcon,
+  ArrowRightIcon,
+  ExternalLinkIcon,
+  TrashIcon,
+  XIcon,
+} from 'lucide-react'
+import { type ReactNode, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'sonner'
+import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Badge } from '~/components/core/Badge'
 import { Button } from '~/components/core/Button'
 import { Separator } from '~/components/core/Separator'
 import { ExplorerLink } from '~/components/ExplorerLink'
 import { LoadingState } from '~/components/LoadingState'
+import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useTRPC } from '~/react-query/trpc'
 import {
   nodeLabel,
@@ -17,8 +26,11 @@ import {
   type RelationGraphRelation,
   type RelationGraphSelection,
   relationColor,
+  relationDirectionLabel,
   relationId,
+  relationIsDirectional,
   relationPrimaryKey,
+  relationRoleLabel,
   relationTypeLabel,
   sourceId,
   targetId,
@@ -33,14 +45,18 @@ export function TokenRelationsGraphDetailsPanel({
   chains,
   selection,
   highlightAnomalies,
+  deletedRelationIds,
   onSelectionChange,
+  onRelationDeleted,
   onClose,
 }: {
   graph: RelationGraph
   chains: Chain[]
   selection: RelationGraphSelection
   highlightAnomalies: boolean
+  deletedRelationIds: ReadonlySet<string>
   onSelectionChange: (selection: RelationGraphSelection) => void
+  onRelationDeleted: (relationId: string) => void
   onClose: () => void
 }) {
   return (
@@ -76,6 +92,7 @@ export function TokenRelationsGraphDetailsPanel({
             graph={graph}
             chains={chains}
             highlightAnomalies={highlightAnomalies}
+            deletedRelationIds={deletedRelationIds}
             onRelationClick={(relation) =>
               onSelectionChange({
                 type: 'relation',
@@ -89,6 +106,7 @@ export function TokenRelationsGraphDetailsPanel({
             graph={graph}
             chains={chains}
             highlightAnomalies={highlightAnomalies}
+            onRelationDeleted={onRelationDeleted}
           />
         )}
       </div>
@@ -101,12 +119,14 @@ function GraphNodeDetails({
   graph,
   chains,
   highlightAnomalies,
+  deletedRelationIds,
   onRelationClick,
 }: {
   node: RelationGraphNode
   graph: RelationGraph
   chains: Chain[]
   highlightAnomalies: boolean
+  deletedRelationIds: ReadonlySet<string>
   onRelationClick: (relation: RelationGraphRelation) => void
 }) {
   const trpc = useTRPC()
@@ -116,11 +136,12 @@ function GraphNodeDetails({
       address: node.address,
     }),
   )
-  const outgoing = graph.relations.filter(
-    (relation) => sourceId(relation) === node.id,
-  )
-  const incoming = graph.relations.filter(
-    (relation) => targetId(relation) === node.id,
+  // One list, not an inbound/outbound split: endpoint order is not a direction.
+  // Each entry is labelled with this token's role in that relation instead.
+  const relations = graph.relations.filter(
+    (relation) =>
+      !deletedRelationIds.has(relationId(relation)) &&
+      (sourceId(relation) === node.id || targetId(relation) === node.id),
   )
 
   return (
@@ -159,18 +180,7 @@ function GraphNodeDetails({
       <div className="space-y-4">
         <h3 className="font-medium">Relations visible on this graph</h3>
         <GraphRelationList
-          title="Outgoing"
-          emptyText="No outgoing relations."
-          relations={outgoing}
-          node={node}
-          graph={graph}
-          highlightAnomalies={highlightAnomalies}
-          onRelationClick={onRelationClick}
-        />
-        <GraphRelationList
-          title="Incoming"
-          emptyText="No incoming relations."
-          relations={incoming}
+          relations={relations}
           node={node}
           graph={graph}
           highlightAnomalies={highlightAnomalies}
@@ -316,16 +326,12 @@ function DeployedTokenDetails({
 }
 
 function GraphRelationList({
-  title,
-  emptyText,
   relations,
   node,
   graph,
   highlightAnomalies,
   onRelationClick,
 }: {
-  title: string
-  emptyText: string
   relations: RelationGraphRelation[]
   node: RelationGraphNode
   graph: RelationGraph
@@ -335,10 +341,10 @@ function GraphRelationList({
   return (
     <div className="space-y-2">
       <div className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
-        {title} ({relations.length})
+        This token ({relations.length})
       </div>
       {relations.length === 0 ? (
-        <div className="text-muted-foreground text-sm">{emptyText}</div>
+        <div className="text-muted-foreground text-sm">No relations.</div>
       ) : (
         <div className="space-y-1.5">
           {relations.map((relation) => {
@@ -365,6 +371,7 @@ function GraphRelationList({
                 />
                 <span className="min-w-0 flex-1">
                   <span className="block truncate font-medium">
+                    {relationRoleLabel(relation, node.id)} ·{' '}
                     {nodeLabel(otherNode)} on {otherNode.chain}
                   </span>
                   <span className="block truncate text-muted-foreground text-xs">
@@ -386,11 +393,13 @@ function GraphRelationDetails({
   graph,
   chains,
   highlightAnomalies,
+  onRelationDeleted,
 }: {
   relation: RelationGraphRelation
   graph: RelationGraph
   chains: Chain[]
   highlightAnomalies: boolean
+  onRelationDeleted: (relationId: string) => void
 }) {
   const trpc = useTRPC()
   const { data, isLoading, error } = useQuery(
@@ -398,12 +407,31 @@ function GraphRelationDetails({
       relationPrimaryKey(relation),
     ),
   )
+  const [deletePlan, setDeletePlan] = useState<Plan | undefined>(undefined)
+  const { mutate: planDelete, isPending: isDeletePlanPending } = useMutation(
+    trpc.plan.generate.mutationOptions({
+      onSuccess: (data) => {
+        if (data.outcome === 'success') {
+          setDeletePlan(data.plan)
+        } else {
+          toast.error(data.error)
+        }
+      },
+    }),
+  )
   const source = findNode(graph, sourceId(relation))
   const target = findNode(graph, targetId(relation))
   const color = displayedRelationColor(relation, highlightAnomalies)
+  const directional = relationIsDirectional(relation)
 
   return (
     <div className="space-y-5">
+      <PlanConfirmationDialog
+        plan={deletePlan}
+        setPlan={setDeletePlan}
+        onSuccess={() => onRelationDeleted(relationId(relation))}
+        note="The removal is recorded in the token history together with the full relation record, so it leaves a trace and the relation can be recovered from there if needed."
+      />
       <div className="space-y-3">
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant="outline" style={{ borderColor: color, color }}>
@@ -415,20 +443,24 @@ function GraphRelationDetails({
         </div>
         <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
           <EndpointCard node={source} chains={chains} />
-          <ArrowRightIcon className="size-5 text-muted-foreground" />
+          {directional ? (
+            <ArrowRightIcon className="size-5 text-muted-foreground" />
+          ) : (
+            <ArrowLeftRightIcon className="size-5 text-muted-foreground" />
+          )}
           <EndpointCard node={target} chains={chains} />
         </div>
         <div className="text-center text-muted-foreground text-xs">
-          Observed direction
+          {relationDirectionLabel(relation)}
         </div>
       </div>
 
       <DetailsSection title="Relation">
         <DetailRows>
-          <DetailRow label="From">
+          <DetailRow label={directional ? 'Locked token' : 'Token'}>
             {source.chain}:{source.address}
           </DetailRow>
-          <DetailRow label="To">
+          <DetailRow label={directional ? 'Minted token' : 'Token'}>
             {target.chain}:{target.address}
           </DetailRow>
           <DetailRow label="Bridge type">
@@ -450,6 +482,28 @@ function GraphRelationDetails({
       ) : data ? (
         <RelationEvidence relation={data} chains={chains} />
       ) : null}
+
+      <Separator />
+      <DetailsSection title="Delete relation">
+        <p className="text-muted-foreground text-sm">
+          Remove this relation if it was ingested from an incorrect interop
+          transfer. The graph keeps its current layout — refresh the page to see
+          the re-clustered graph.
+        </p>
+        <ButtonWithSpinner
+          variant="destructive"
+          className="w-full"
+          isLoading={isDeletePlanPending}
+          onClick={() =>
+            planDelete({
+              type: 'DeleteTokenRelationIntent',
+              pk: relationPrimaryKey(relation),
+            })
+          }
+        >
+          <TrashIcon /> Delete relation
+        </ButtonWithSpinner>
+      </DetailsSection>
     </div>
   )
 }
@@ -507,16 +561,19 @@ function RelationEvidence({
             {formatUnixTimestamp(evidence.timestamp)}
           </DetailRow>
         )}
-        <DetailRow label={`${relation.tokenFromChain} tx`}>
+        {/* The chains come from the evidence, not from the relation columns:
+            the sample transfer keeps its own observed direction, which the
+            relation's lexicographic endpoint order says nothing about. */}
+        <DetailRow label={`${evidence.srcChain ?? 'Source'} tx`}>
           <TransactionValue
-            chain={relation.tokenFromChain}
+            chain={evidence.srcChain}
             txHash={evidence.srcTxHash}
             chains={chains}
           />
         </DetailRow>
-        <DetailRow label={`${relation.tokenToChain} tx`}>
+        <DetailRow label={`${evidence.dstChain ?? 'Destination'} tx`}>
           <TransactionValue
-            chain={relation.tokenToChain}
+            chain={evidence.dstChain}
             txHash={evidence.dstTxHash}
             chains={chains}
           />
@@ -532,11 +589,11 @@ function TransactionValue({
   txHash,
   chains,
 }: {
-  chain: string
+  chain: string | undefined
   txHash: string | undefined
   chains: Chain[]
 }) {
-  if (txHash === undefined) {
+  if (txHash === undefined || chain === undefined) {
     return <span className="text-muted-foreground">Not present</span>
   }
   const explorerUrl = findExplorerUrl(chains, chain)
@@ -714,7 +771,9 @@ function readTransferEvidence(transfer: RelationDetails['transfer']) {
     transferId: optionalString(transfer, 'transferId'),
     type: optionalString(transfer, 'type'),
     timestamp: optionalNumber(transfer, 'timestamp'),
+    srcChain: optionalString(transfer, 'srcChain'),
     srcTxHash: optionalString(transfer, 'srcTxHash'),
+    dstChain: optionalString(transfer, 'dstChain'),
     dstTxHash: optionalString(transfer, 'dstTxHash'),
   }
 }

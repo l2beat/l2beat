@@ -85,6 +85,7 @@ export {
   type InteropTransferRecord,
   type InteropTransfersDetailedStatsRecord,
   type InteropTransfersStatsRecord,
+  type InteropTransferTimeRange,
   type InteropTransferTokenInfo,
   type InteropTransferUpdate,
 } from './repositories/InteropTransferRepository'
@@ -128,11 +129,13 @@ export type {
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
 export type {
   JsonValue,
+  TokenRelationLockedToken,
   TokenRelationPrimaryKey,
   TokenRelationRecord,
   TokenRelationRoute,
   TokenRelationUpdateable,
 } from './repositories/TokenRelationRepository'
+export { normalizeTokenRelation } from './repositories/TokenRelationRepository'
 export type {
   SummedByTimestampTokenValuePerProjectRecord,
   SummedByTimestampTokenValueRecord,

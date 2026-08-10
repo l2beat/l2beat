@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Immutable verifier policy contract for Taiko mainnet. Every accepted proof contains exactly two ordered sub-proofs and at least one must be a ZK proof. Accepted pairs are SGX-GETH or SGX-RETH with RISC0-RETH or SP1-RETH, and RISC0-RETH with SP1-RETH. The SGX-GETH plus SGX-RETH pair is not accepted.",
+  "category": "core",
+  "fields": {
+    "sgxGethVerifier": {
+      "description": "SGX verifier for Geth-based proofs. It can only be paired with a ZK verifier."
+    },
+    "sgxRethVerifier": {
+      "description": "SGX verifier for Reth-based proofs. It can only be paired with a ZK verifier."
+    },
+    "risc0RethVerifier": {
+      "description": "RISC Zero verifier for Reth-based validity proofs."
+    },
+    "sp1RethVerifier": {
+      "description": "SP1 verifier for Reth-based validity proofs."
+    },
+    "opVerifier": {
+      "description": "Optional optimistic verifier slot. It is zero and cannot satisfy the mainnet policy."
+    },
+    "tdxGethVerifier": {
+      "description": "Optional TDX verifier slot. It is zero and cannot satisfy the mainnet policy."
+    }
+  }
+}

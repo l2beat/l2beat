@@ -8247,6 +8247,22 @@
   ],
   "morph": [
     {
+      "symbol": "BGBTC",
+      "category": "btc",
+      "coingeckoId": "bitget-wrapped-btc",
+      "address": "0x31011317764E097b28d159a8145B92BFA453F606",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP",
+            "slug": "ccip"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USDT0",
       "address": "0xe7cd86e13AC4309349F30B3435a9d337750fC82D",
       "category": "stablecoin",

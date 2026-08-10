@@ -14,9 +14,11 @@ export interface HomeRecentChangesProject {
 export function HomeRecentChangesTile({
   recentChangesCount,
   recentChangesProjects,
+  className,
 }: {
   recentChangesCount: number
   recentChangesProjects: HomeRecentChangesProject[]
+  className?: string
 }) {
   const [dialogOpen, setDialogOpen] = useState(false)
   const disabled = recentChangesCount === 0
@@ -28,13 +30,13 @@ export function HomeRecentChangesTile({
   const restCount = recentChangesProjects.length - visibleProjects.length
 
   return (
-    <HomeCard className="p-0 md:p-0">
+    <HomeCard className={cn('p-0 md:p-1', className)}>
       <button
         type="button"
         onClick={() => setDialogOpen(true)}
         disabled={disabled}
         className={cn(
-          'group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors md:rounded-xl md:px-7 md:py-5',
+          'group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors md:rounded-lg md:px-7 md:py-5',
           !disabled && 'hover:bg-surface-secondary/50',
           disabled && 'cursor-default',
         )}
@@ -42,17 +44,25 @@ export function HomeRecentChangesTile({
         <div className="flex min-w-0 flex-1 flex-col">
           <span
             className={cn(
-              'truncate font-bold text-label-value-14 leading-tight transition-colors',
+              'font-bold text-label-value-14 leading-tight transition-colors lg:truncate',
               !disabled && 'group-hover:text-link',
             )}
           >
-            Recent changes{' '}
-            <span className="font-medium text-secondary">(past 7 days)</span>
+            <span className="lg:hidden">Recent changes</span>
+            <span className="max-lg:hidden">Updates</span>
+            <span className="font-medium text-secondary lg:hidden">
+              {' '}
+              (last 7 days)
+            </span>
           </span>
+
           <span className="mt-0.5 truncate font-medium text-label-value-12 text-secondary">
-            {disabled
-              ? 'No project changes handled this week'
-              : `${recentChangesCount} project ${recentChangesCount === 1 ? 'change' : 'changes'} handled by the L2BEAT team`}
+            <span className="lg:hidden">
+              {disabled
+                ? 'No project changes handled this week'
+                : `${recentChangesCount} project ${recentChangesCount === 1 ? 'change' : 'changes'} handled by the L2BEAT team`}
+            </span>
+            <span className="max-lg:hidden">Last 7 days</span>
           </span>
         </div>
         {!disabled && (

@@ -1,16 +1,21 @@
 import { type InMemoryCache, ProjectId } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getChangelogEntries } from '~/server/features/changelog/getChangelogEntries'
+import {
+  getChangelogEntries,
+  selectActiveWhatsNewEntry,
+} from '~/server/features/changelog/getChangelogEntries'
 import { getDaProjectEconomicSecurity } from '~/server/features/data-availability/project/utils/getDaProjectEconomicSecurity'
 import { getHomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { getHomeScalingCharts } from '~/server/features/home/getHomeScalingCharts'
 import { getHomeTopChainsTvsData } from '~/server/features/home/getHomeTopChainsTvsData'
+import { getPrivacySummaryEntries } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { getRecentChangesOverview } from '~/server/features/projects/recent-changes/getRecentChangesOverview'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
 import { TOP_PROTOCOLS_LIMIT } from '~/server/features/scaling/interop/utils/pickTopProtocolEntries'
 import { getOngoingAnomaliesOverview } from '~/server/features/scaling/liveness/getOngoingAnomaliesOverview'
 import { getScalingSummaryData } from '~/server/features/scaling/summary/getScalingSummaryEntries'
+import { getZkCatalogEntries } from '~/server/features/zk-catalog/getZkCatalogEntries'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -23,13 +28,16 @@ import {
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '../interop/components/flows/consts'
+import { getInteropChainHref } from '../interop/utils/getInteropChainHref'
 import type { HomeScalingCategoryCounts } from './components/HomeScalingCard'
 import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
 import { getHomeProjectCounts } from './getHomeProjectCounts'
 import { HOME_CHART_RANGE } from './homeChartRanges'
 
 const TOP_CHAINS_COUNT = 5
-const RECENT_PROJECTS_COUNT = 5
+const TOP_PRIVACY_PROTOCOLS_COUNT = 5
+const TOP_ZK_PROVERS_COUNT = 5
+const RECENT_PROJECTS_COUNT = 6
 
 export async function getHomeData(
   req: Request,
@@ -52,7 +60,7 @@ export async function getHomeData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Home - L2BEAT',
+        title: 'L2BEAT',
         description:
           'Bird-eye view of the Ethereum scaling ecosystem: total value secured, activity, interoperability, recent additions and what L2BEAT is currently tracking.',
         url: req.originalUrl,
@@ -74,11 +82,19 @@ export async function getHomeData(
 async function getCachedData(manifest: Manifest) {
   const helpers = getSsrHelpers()
 
+  const scalingProjects = await ps.getProjects({
+    select: ['scalingInfo'],
+  })
+  const scalingProjectSlugById = new Map(
+    scalingProjects.map((p) => [p.id, p.slug]),
+  )
+
   const interopChainsRaw = getInteropChains()
   const interopChains: InteropChainWithIcon[] = interopChainsRaw.map(
     (chain) => ({
       ...chain,
       iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
+      href: getInteropChainHref(chain.id, scalingProjectSlugById),
     }),
   )
   const activeInteropChains = interopChains.filter((chain) => !chain.isUpcoming)
@@ -108,6 +124,8 @@ async function getCachedData(manifest: Manifest) {
     scalingCharts,
     ethereumCharts,
     ethereumEconomicSecurity,
+    privacyEntries,
+    zkCatalogEntries,
   ] = await Promise.all([
     getScalingSummaryData(),
     getRecentProjectsForHome(manifest),
@@ -118,6 +136,8 @@ async function getCachedData(manifest: Manifest) {
     getHomeScalingCharts(chartRange),
     getHomeEthereumCharts(chartRange),
     getEthereumEconomicSecurity(),
+    getPrivacyEntriesForHome(),
+    getZkCatalogEntries(),
     defaultSelectedFlowChains.length > 0
       ? helpers.queryClient.prefetchQuery(
           helpers.trpc.interop.dashboard.queryOptions({
@@ -168,6 +188,8 @@ async function getCachedData(manifest: Manifest) {
     projectCounts,
     topChains,
     topChainsTvsData,
+    topPrivacyProtocols: privacyEntries.slice(0, TOP_PRIVACY_PROTOCOLS_COUNT),
+    topZkProvers: zkCatalogEntries.slice(0, TOP_ZK_PROVERS_COUNT),
     scalingCharts,
     ethereumCharts,
     ethereumEconomicSecurity,
@@ -182,8 +204,23 @@ async function getCachedData(manifest: Manifest) {
       iconUrl: group.iconUrl,
     })),
     ongoingAnomalies,
-    whatsNewItems: getHomeWhatsNewItems(),
+    whatsNewItem: getHomeWhatsNewItem(),
   }
+}
+
+async function getPrivacyEntriesForHome() {
+  const projects = await ps.getProjects({
+    where: ['privacyInfo'],
+    select: ['display', 'privacyInfo', 'statuses'],
+    optional: [
+      'tvsConfig',
+      'contracts',
+      'permissions',
+      'discoveryInfo',
+      'zkCatalogInfo',
+    ],
+  })
+  return getPrivacySummaryEntries(projects)
 }
 
 async function getEthereumEconomicSecurity(): Promise<number | undefined> {
@@ -200,22 +237,26 @@ async function getEthereumEconomicSecurity(): Promise<number | undefined> {
   )
 }
 
-function getHomeWhatsNewItems(): HomeWhatsNewItem[] {
-  const entry = getChangelogEntries().find((entry) => entry.whatsNew)
+function getHomeWhatsNewItem(): HomeWhatsNewItem | undefined {
+  // The card is a permanent part of the desktop layout, so unlike the
+  // floating widget it falls back to the most recent entry when no
+  // campaign is currently active.
+  const entries = getChangelogEntries()
+  const entry =
+    selectActiveWhatsNewEntry(entries, new Date()) ??
+    entries.find((entry) => entry.whatsNew)
   if (!entry?.whatsNew) {
-    return []
+    return undefined
   }
-  return [
-    {
-      id: `changelog-${entry.id}`,
-      title: entry.title,
-      description: entry.summary,
-      href: entry.whatsNew.href ?? `/changelog#${entry.id}`,
-      imageSrc: entry.whatsNew.image,
-      verticalImageSrc: entry.whatsNew.verticalImage,
-      imageAlt: entry.whatsNew.alt,
-    },
-  ]
+  return {
+    id: `changelog-${entry.id}`,
+    title: entry.title,
+    description: entry.summary,
+    href: entry.whatsNew.href ?? `/changelog#${entry.id}`,
+    imageSrc: entry.whatsNew.image,
+    verticalImageSrc: entry.whatsNew.verticalImage,
+    imageAlt: entry.whatsNew.alt,
+  }
 }
 
 export interface HomeRecentProject {

@@ -1,10 +1,15 @@
 {
   "name": "grvt",
-  "timestamp": 1783332198,
+  "timestamp": 1785925620,
   "configHash": "0xd415693d334ef0cf60a29abfb286b598afcd834376882d62be5dcf556d5b5f66",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x293d3512083507664Ee5EDe44c0477f600e3A3BE",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -125,16 +130,20 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "eth:0x293d3512083507664Ee5EDe44c0477f600e3A3BE",
+          "eth:0xe224125147fB0a3d0e1eC30Ed1573ed0632727CC",
+          "eth:0x79BfE9868a2613F3327FB2B9e3a39959165118F4",
+          "eth:0xC8552d52A6a8e92Ea37f3a305dE5e8dDbeB6e490",
           "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4",
           "eth:0xE1Fd2981A9FbAAfBB73Cf253234516ECcaf4AFcE",
           "eth:0x9A4484BBDae765A84c802Cf0A4777D8b16AB1270"
         ],
-        "$threshold": 2,
+        "$threshold": 4,
         "domainSeparator": "0x595c085e1d2c5de315ddc014fe37e43279cdbccafa1bf9295d15b850b2d57550",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 44,
+        "multisigThreshold": "4 of 7 (57%)",
+        "nonce": 54,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -173,11 +182,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "acAdmin": ["eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b"],
+        "acAdmin": ["eth:0x5CC33778d3aFa0979e6C59efEE27b73496c1B65c"],
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b"]
+            "members": ["eth:0x5CC33778d3aFa0979e6C59efEE27b73496c1B65c"]
           },
           "L2_TX_SENDER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -226,6 +235,53 @@
       ]
     },
     {
+      "name": "GrvtBridgeAdminMultisig",
+      "address": "eth:0x5CC33778d3aFa0979e6C59efEE27b73496c1B65c",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
+          "description": "manage the whitelist of addresses.",
+          "role": ".acAdmin"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4",
+      "sinceTimestamp": 1785559379,
+      "sinceBlock": 25657701,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "eth:0x4738eDE7Fb2d3E5596867cf60c668779de7CE8C4",
+          "eth:0xE1Fd2981A9FbAAfBB73Cf253234516ECcaf4AFcE",
+          "eth:0x9A4484BBDae765A84c802Cf0A4777D8b16AB1270",
+          "eth:0xC8552d52A6a8e92Ea37f3a305dE5e8dDbeB6e490",
+          "eth:0x79BfE9868a2613F3327FB2B9e3a39959165118F4",
+          "eth:0xe224125147fB0a3d0e1eC30Ed1573ed0632727CC",
+          "eth:0x293d3512083507664Ee5EDe44c0477f600e3A3BE"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x78127ead45fe7340f431e1854f946a33a5b92d95144f7e724bc14b5503d1d22d",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 7 (57%)",
+        "nonce": 2,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "eth:0x5CC33778d3aFa0979e6C59efEE27b73496c1B65c": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
       "name": "GrvtZkEvmAdmin",
       "address": "eth:0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D",
       "type": "Contract",
@@ -270,6 +326,11 @@
         "eth:0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D": "ChainAdmin"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "address": "eth:0x79BfE9868a2613F3327FB2B9e3a39959165118F4",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "L1VerifierPlonk",
@@ -389,12 +450,12 @@
       "sinceBlock": 22866325,
       "values": {
         "$immutable": true,
-        "executedCount": 48,
+        "executedCount": 50,
         "minDelay": 0,
-        "owner": "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
+        "owner": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "scheduledShadowCount": 0,
-        "scheduledTransparentCount": 48,
+        "scheduledTransparentCount": 50,
         "securityCouncil": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
@@ -427,6 +488,11 @@
       "type": "Reference",
       "targetType": "Contract",
       "targetProject": "shared-zk-stack"
+    },
+    {
+      "address": "eth:0xC8552d52A6a8e92Ea37f3a305dE5e8dDbeB6e490",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "DualVerifier",
@@ -518,7 +584,7 @@
           "beaconProxyBytecodeHash": "0x0100010965f47574acde5c31b36ada1f247fa8a94744d0fbf7e107c014d2b90a",
           "depositProxyBeacon": "eth:0x8E2A969f6685e27439D9F25630E62c8A2203B5Db"
         },
-        "owner": "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
+        "owner": "eth:0x5CC33778d3aFa0979e6C59efEE27b73496c1B65c",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
@@ -528,6 +594,11 @@
     },
     {
       "address": "eth:0xE1Fd2981A9FbAAfBB73Cf253234516ECcaf4AFcE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xe224125147fB0a3d0e1eC30Ed1573ed0632727CC",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -785,7 +856,7 @@
           "eth:0x907b30407249949521Bf0c89A43558dae200146A",
           "eth:0xFa30EAe30351A83809657299F6Cad9557c232e8C"
         ],
-        "getFirstUnprocessedPriorityTx": 4646,
+        "getFirstUnprocessedPriorityTx": 4831,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -793,8 +864,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 1,
-        "getPriorityTreeRoot": "0xb8548b593605ff917c13167c160e874ff1d3f6922f160ccf5f81409537c03a9e",
+        "getPriorityQueueSize": 2,
+        "getPriorityTreeRoot": "0x58b81e7742363d95a65cb820534e7eddbaf15049fe9d8359ca4736bc8ac1396c",
         "getPriorityTreeStartIndex": 440,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 124554051588,
@@ -802,13 +873,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 29, 4],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 90489,
-        "getTotalBatchesExecuted": 90439,
-        "getTotalBatchesVerified": 90461,
-        "getTotalBlocksCommitted": 90489,
-        "getTotalBlocksExecuted": 90439,
-        "getTotalBlocksVerified": 90461,
-        "getTotalPriorityTxs": 4647,
+        "getTotalBatchesCommitted": 100563,
+        "getTotalBatchesExecuted": 100525,
+        "getTotalBatchesVerified": 100551,
+        "getTotalBlocksCommitted": 100563,
+        "getTotalBlocksExecuted": 100525,
+        "getTotalBlocksVerified": 100551,
+        "getTotalPriorityTxs": 4833,
         "getTransactionFilterer": "eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
         "getVerifier": "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45",
         "getVerifierParams": {
@@ -901,7 +972,7 @@
       "values": {
         "$immutable": true,
         "minDelay": 0,
-        "owner": "eth:0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
+        "owner": "eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "securityCouncil": "eth:0x0000000000000000000000000000000000000000"
       },
@@ -919,12 +990,6 @@
           "from": "eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
           "description": "address is part of the GRVTTransactionFilterer whitelist.",
           "role": ".whitelistedSender"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
-          "description": "manage the whitelist of addresses.",
-          "role": ".acAdmin"
         }
       ]
     },
@@ -1251,6 +1316,9 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "eth:0x5CC33778d3aFa0979e6C59efEE27b73496c1B65c": [
+      "constructor(address _singleton)"
+    ],
     "eth:0x6086051f93412F550C0820e76f0fbE85F64C7ef8": [
       "constructor(address _bridgehubAddr)",
       "error DefaultAdminTransferNotAllowed()",
@@ -1511,6 +1579,6 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25472768 },
-  "permissionsConfigHash": "0x3f18d5eed2df6cf21f67a2a3a4f8996d575b142964e34fde4122c1e50e421dca"
+  "usedBlockNumbers": { "ethereum": 25688122 },
+  "permissionsConfigHash": "0xc3147fd174c7bf987685430941d505003201ecd228ce19263742682f4d7640f7"
 }

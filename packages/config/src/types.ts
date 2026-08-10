@@ -1,4 +1,7 @@
-import type { RetryHandlerVariant, TrackedTxConfigEntry } from '@l2beat/shared'
+import type {
+  RetryHandlerVariant,
+  TrackedTxConfigEntryWithoutId,
+} from '@l2beat/shared'
 import {
   type ChainSpecificAddress,
   type CoingeckoId,
@@ -188,6 +191,12 @@ export interface BaseProject {
   // privacy data
   privacyInfo?: ProjectPrivacyInfo
 
+  // defi data
+  defiInfo?: ProjectDefiInfo
+
+  // external dependency data
+  externalDependencies?: ProjectExternalDependency[]
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -195,7 +204,7 @@ export interface BaseProject {
   livenessInfo?: ProjectLivenessInfo
   livenessConfig?: ProjectLivenessConfig
   costsInfo?: ProjectCostsInfo
-  trackedTxsConfig?: Omit<TrackedTxConfigEntry, 'id'>[]
+  trackedTxsConfig?: TrackedTxConfigEntryWithoutId[]
   daTrackingConfig?: ProjectDaTrackingConfig[]
   ecosystemInfo?: ProjectEcosystemInfo
   ecosystemConfig?: ProjectEcosystemConfig
@@ -234,6 +243,7 @@ export interface ProjectStatuses {
 export interface ProjectDisplay {
   description: string
   detailedDescription?: string
+  references?: ReferenceLink[]
   links: ProjectLinks
   badges: Badge[]
   redWarning?: ProjectRedWarning
@@ -473,10 +483,10 @@ export type ProjectScalingCategory =
 export interface ProjectScalingProofSystem {
   /** Type of proof system */
   type: 'Optimistic' | 'Validity'
-  /** Name of the proof system. Only one of name or zkCatalogId should be provided. */
+  /** Custom display name of the proof system. Derived from the ZK Catalog projects' names when not set. */
   name?: string
-  /** Id for ZkCatalog project to link to. Only one of name or zkCatalogId should be provided. */
-  zkCatalogId?: string
+  /** Ids of the ZK Catalog projects describing the proof system. */
+  zkCatalogIds?: ProjectId[]
   /** Challenge protocol of the proof system. Configured only for optimistic proof systems. */
   challengeProtocol?: 'Interactive' | 'Single-step'
 }
@@ -949,6 +959,35 @@ export interface TrustedSetup {
 
 // #endregion
 
+// #region defi data
+
+export type ProjectDefiCategory = 'DEX' | 'Oracle' | 'Stablecoin'
+
+export interface ProjectDefiInfo {
+  /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
+  category: ProjectDefiCategory
+}
+
+export type ProjectExternalDependency =
+  | {
+      type: 'tracked'
+      /** An L2BEAT project this project depends on. */
+      projectId: ProjectId
+      /** How this project depends on the referenced project. */
+      description: string
+    }
+  | {
+      type: 'not-tracked'
+      /** An external dependency that is not represented by an L2BEAT project. */
+      name: string
+      /** Icon slug under /icons, e.g. "reth" for /icons/reth.png. */
+      icon: string
+      /** How this project depends on the external dependency. */
+      description: string
+    }
+
+// #endregion
+
 // #region privacy data
 
 export interface ProjectPrivacyInfo {
@@ -964,7 +1003,7 @@ export interface ProjectPrivacyInfo {
    */
   quantumResistant?: true
   riskSummary?: string
-  upgradesAndGovernance?: string
+  upgradesAndGovernance?: ProjectUpgradesAndGovernance
 }
 
 export interface PrivacyExitWindow extends ExitWindowRisk {
@@ -1032,6 +1071,12 @@ export type PrivacyFlowExtractorConfig =
     }
   | {
       extractor: 'railgunUnshield'
+      params: {
+        tokenAddress: EthereumAddress
+      }
+    }
+  | {
+      extractor: 'umbraAmount'
       params: {
         tokenAddress: EthereumAddress
       }
@@ -1406,11 +1451,13 @@ export type InteropPluginName =
   | 'cctp-v1'
   | 'cctp-v2'
   | 'celer'
+  | 'butternetwork'
   | 'centrifuge'
   | 'circle-gateway'
   | 'debridge'
   | 'debridge-dln'
   | 'gaszip'
+  | 'gnosisbridge'
   | 'hyperlane'
   | 'hyperlane-eco'
   | 'hyperlane-hwr'

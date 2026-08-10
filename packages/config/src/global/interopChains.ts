@@ -94,6 +94,14 @@ export const INTEROP_CHAINS: InteropChain[] = [
     explorerUrl: 'https://bscscan.com',
   },
   {
+    id: 'gnosis',
+    name: 'Gnosis Chain',
+    type: 'evm',
+    display: 'GNO',
+    color: '#04795B',
+    explorerUrl: 'https://gnosis.blockscout.com',
+  },
+  {
     id: 'solana',
     name: 'Solana',
     type: 'evm',

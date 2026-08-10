@@ -1,6 +1,6 @@
 {
   "name": "hop",
-  "timestamp": 1711616603,
+  "timestamp": 1785844290,
   "configHash": "0x86f37ca05bcd77f035c2d64e5dbe1150c06c2f729b32afb2c0857b2cb0729804",
   "entries": [
     {
@@ -31,7 +31,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
         "NAME": "Gnosis Safe",
-        "nonce": 592,
+        "nonce": 628,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -304,7 +304,7 @@
         "name": "HOP Governor",
         "proposalThreshold": "1000000000000000000000000",
         "quorumDenominator": 10000,
-        "quorumNumerator": 30,
+        "quorumNumerator": 600,
         "state": [],
         "timelock": "eth:0xeeA8422a08258e73c139Fc32a25e10410c14bd7a",
         "token": "eth:0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC",
@@ -1014,6 +1014,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 19531595 },
+  "usedBlockNumbers": { "ethereum": 25681366 },
   "permissionsConfigHash": "0x165a481239508da26304328fb198647ede8490aec429e605521c0318a1863c46"
 }

@@ -1,4 +1,9 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import {
+  formatBpsToMbps,
+  formatCurrency,
+  formatNumber,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { Fragment } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -12,9 +17,6 @@ import type {
   EthereumDaProjectPageEntry,
 } from '~/server/features/data-availability/project/getDaProjectEntry'
 import { cn } from '~/utils/cn'
-import { formatBpsToMbps } from '~/utils/number-format/formatBytes'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatNumber } from '~/utils/number-format/formatNumber'
 
 interface Props {
   stats: (ProjectSummaryStatProps & { key: string })[]

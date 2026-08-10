@@ -1,10 +1,9 @@
 import { expect } from 'earl'
 import {
-  getClusterLabelStyle,
+  getClusterLabelOpacity,
   getExistingRelationGraphSelection,
   getNodeVisualScale,
   getRelationGraphFocus,
-  getRelationLabelStyle,
   mostCommonDeployedSymbol,
   type RelationGraph,
   type RelationGraphFocus,
@@ -12,7 +11,10 @@ import {
   type RelationGraphRelation,
   relationId,
   relationIsDirectional,
+  relationRoleLabel,
   searchRelationGraphNodes,
+  sourceId,
+  targetId,
   tokenId,
 } from './relationGraphModel'
 
@@ -44,20 +46,21 @@ describe(mostCommonDeployedSymbol.name, () => {
   })
 })
 
-describe(getClusterLabelStyle.name, () => {
-  it('stops increasing labels below the minimum scale', () => {
-    expect(getClusterLabelStyle(1).fontSize).toEqual(18)
-    expect(getClusterLabelStyle(1).strokeWidth).toEqual(4)
-    expect(getClusterLabelStyle(0.1).fontSize).toEqual(18)
-    expect(getClusterLabelStyle(0.1).strokeWidth).toEqual(4)
+describe(getClusterLabelOpacity.name, () => {
+  it('keeps labels visible at overview and zoomed-in scales', () => {
+    expect(getClusterLabelOpacity(0.3)).toEqual(0.8)
+    expect(getClusterLabelOpacity(1)).toEqual(0.8)
+    expect(getClusterLabelOpacity(2)).toEqual(0.8)
   })
 
-  it('hides labels at extreme zoom-out', () => {
-    expect(getClusterLabelStyle(0.05).opacity).toEqual(0)
+  it('fades labels away at extreme zoom-out', () => {
+    // The exact fade thresholds are tuning knobs; the contract is only that
+    // labels are gone once the zoom-out is extreme enough.
+    expect(getClusterLabelOpacity(0.01)).toEqual(0)
   })
 
   it('rejects invalid scales', () => {
-    expect(() => getClusterLabelStyle(0)).toThrow(
+    expect(() => getClusterLabelOpacity(0)).toThrow(
       'Graph scale must be a positive finite number',
     )
   })
@@ -71,18 +74,8 @@ describe(getNodeVisualScale.name, () => {
   })
 })
 
-describe(getRelationLabelStyle.name, () => {
-  it('shows constant-size labels above 2.5x zoom', () => {
-    expect(getRelationLabelStyle(2.5).visible).toEqual(false)
-    const style = getRelationLabelStyle(4)
-    expect(style.visible).toEqual(true)
-    expect(style.fontSize * 4).toEqual(10)
-    expect(style.strokeWidth * 4).toEqual(3)
-  })
-})
-
 describe(relationIsDirectional.name, () => {
-  it('only treats Lock & Mint relations as directional', () => {
+  it('only treats Lock & Mint relations with an identified locked token as directional', () => {
     expect(
       relationIsDirectional(
         relation('ethereum', '0xaaa', 'base', '0xbbb', 'lock', 'lockAndMint'),
@@ -93,6 +86,99 @@ describe(relationIsDirectional.name, () => {
         relation('ethereum', '0xaaa', 'base', '0xbbb', 'burn', 'burnAndMint'),
       ),
     ).toEqual(false)
+    // Drawing an arrow here would mean guessing which token is the original.
+    expect(
+      relationIsDirectional(
+        relation(
+          'ethereum',
+          '0xaaa',
+          'base',
+          '0xbbb',
+          'lock',
+          'lockAndMint',
+          null,
+        ),
+      ),
+    ).toEqual(false)
+  })
+})
+
+describe('relation endpoint order', () => {
+  it('draws a directional relation from the locked token to the minted one', () => {
+    // The A/B slots are lexicographic, so the arrow must follow `lockedToken`
+    // rather than the slot order.
+    const lockedIsSecondEndpoint = relation(
+      'base',
+      '0xbbb',
+      'ethereum',
+      '0xaaa',
+      'lock',
+      'lockAndMint',
+      'B',
+    )
+
+    expect(sourceId(lockedIsSecondEndpoint)).toEqual(
+      tokenId('ethereum', '0xaaa'),
+    )
+    expect(targetId(lockedIsSecondEndpoint)).toEqual(tokenId('base', '0xbbb'))
+  })
+
+  it('keeps the stored order for relations without a direction', () => {
+    const symmetric = relation(
+      'base',
+      '0xbbb',
+      'ethereum',
+      '0xaaa',
+      'burn',
+      'burnAndMint',
+      null,
+    )
+
+    expect(sourceId(symmetric)).toEqual(tokenId('base', '0xbbb'))
+    expect(targetId(symmetric)).toEqual(tokenId('ethereum', '0xaaa'))
+  })
+})
+
+describe(relationRoleLabel.name, () => {
+  it('labels each endpoint by what it is to the other', () => {
+    const lockAndMint = relation(
+      'base',
+      '0xbbb',
+      'ethereum',
+      '0xaaa',
+      'lock',
+      'lockAndMint',
+      'B',
+    )
+
+    expect(
+      relationRoleLabel(lockAndMint, tokenId('ethereum', '0xaaa')),
+    ).toEqual('Locked')
+    expect(relationRoleLabel(lockAndMint, tokenId('base', '0xbbb'))).toEqual(
+      'Minted',
+    )
+    // A burn-and-mint pair is symmetric, so each endpoint's role is Minted;
+    // the relation type label is what shows the symmetry.
+    expect(
+      relationRoleLabel(
+        relation('base', '0xbbb', 'ethereum', '0xaaa', 'burn', 'burnAndMint'),
+        tokenId('base', '0xbbb'),
+      ),
+    ).toEqual('Minted')
+    expect(
+      relationRoleLabel(
+        relation(
+          'base',
+          '0xbbb',
+          'ethereum',
+          '0xaaa',
+          'lock',
+          'lockAndMint',
+          null,
+        ),
+        tokenId('base', '0xbbb'),
+      ),
+    ).toEqual('Unknown role')
   })
 })
 
@@ -134,6 +220,26 @@ describe(getExistingRelationGraphSelection.name, () => {
         type: 'relation',
         id: 'missing:relation',
       }),
+    ).toEqual(undefined)
+  })
+
+  it('clears a relation selection that was deleted from the graph view', () => {
+    const deletedRelation = relations[0]
+    if (deletedRelation === undefined) throw new Error('Missing test relation')
+    const selection = {
+      type: 'relation',
+      id: relationId(deletedRelation),
+    } as const
+
+    expect(getExistingRelationGraphSelection(graph, selection)).toEqual(
+      selection,
+    )
+    expect(
+      getExistingRelationGraphSelection(
+        graph,
+        selection,
+        new Set([relationId(deletedRelation)]),
+      ),
     ).toEqual(undefined)
   })
 })
@@ -202,14 +308,46 @@ describe(getRelationGraphFocus.name, () => {
 
     expect([...focus.nodeIds].sort()).toEqual(
       [
-        tokenId(
-          selectedRelation.tokenFromChain,
-          selectedRelation.tokenFromAddress,
-        ),
-        tokenId(selectedRelation.tokenToChain, selectedRelation.tokenToAddress),
+        tokenId(selectedRelation.tokenAChain, selectedRelation.tokenAAddress),
+        tokenId(selectedRelation.tokenBChain, selectedRelation.tokenBAddress),
       ].sort(),
     )
     expect([...focus.relationIds]).toEqual([relationId(selectedRelation)])
+  })
+
+  it('skips deleted relations when collecting a node neighborhood', () => {
+    const deletedRelation = relations[0]
+    const keptRelation = relations[1]
+    if (deletedRelation === undefined || keptRelation === undefined) {
+      throw new Error('Missing test relation')
+    }
+    const focus = requiredFocus(
+      getRelationGraphFocus(
+        graph,
+        { type: 'node', id: tokenId('ethereum', '0xaaa') },
+        new Set([relationId(deletedRelation)]),
+      ),
+    )
+
+    expect([...focus.nodeIds].sort()).toEqual(
+      [tokenId('ethereum', '0xaaa'), tokenId('optimism', '0xccc')].sort(),
+    )
+    expect([...focus.relationIds]).toEqual([relationId(keptRelation)])
+  })
+
+  it('rejects a selected relation that was deleted', () => {
+    const deletedRelation = relations[0]
+    if (deletedRelation === undefined) throw new Error('Missing test relation')
+
+    expect(() =>
+      getRelationGraphFocus(
+        graph,
+        { type: 'relation', id: relationId(deletedRelation) },
+        new Set([relationId(deletedRelation)]),
+      ),
+    ).toThrow(
+      `Selected relation ${relationId(deletedRelation)} is not in graph`,
+    )
   })
 })
 
@@ -252,20 +390,22 @@ function graphNode(chain: string, address: string): RelationGraphNode {
 }
 
 function relation(
-  tokenFromChain: string,
-  tokenFromAddress: string,
-  tokenToChain: string,
-  tokenToAddress: string,
+  tokenAChain: string,
+  tokenAAddress: string,
+  tokenBChain: string,
+  tokenBAddress: string,
   plugin: string,
   bridgeType: RelationGraphRelation['bridgeType'] = 'lockAndMint',
+  lockedToken: RelationGraphRelation['lockedToken'] = 'A',
 ): RelationGraphRelation {
   return {
-    tokenFromChain,
-    tokenFromAddress,
-    tokenToChain,
-    tokenToAddress,
+    tokenAChain,
+    tokenAAddress,
+    tokenBChain,
+    tokenBAddress,
     plugin,
     bridgeType,
+    lockedToken,
     isConflict: false,
   }
 }

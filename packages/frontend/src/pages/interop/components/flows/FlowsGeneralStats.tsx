@@ -1,3 +1,4 @@
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { type ReactNode, useState } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -6,9 +7,9 @@ import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
+import { buildInteropUrl } from '../../utils/buildInteropUrl'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
+import type { InteropChainWithIcon } from '../chain-selector/types'
 import { TokensDialog } from '../tokens/TokensDialog'
 import { InteropTopItems } from '../top-items/TopItems'
 import { FlowsParticleLegend } from './FlowsParticleLegend'
@@ -19,10 +20,16 @@ export function FlowsGeneralStats({
   title = 'General stats',
   description = 'For past 24h between the selected chains and protocols',
   className,
+  linkTopRouteToSummary = false,
 }: {
   title?: string
   description?: string
   className?: string
+  /**
+   * Link the top route to /interop/summary with the pair preselected
+   * instead of highlighting it on the local graph. Used on the home page.
+   */
+  linkTopRouteToSummary?: boolean
 }) {
   const trpc = useTRPC()
   const [isTokensDialogOpen, setIsTokensDialogOpen] = useState(false)
@@ -75,16 +82,20 @@ export function FlowsGeneralStats({
   return (
     <div
       className={cn(
-        'flex h-full flex-col rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary',
+        '@container flex h-full flex-col rounded-lg bg-surface-secondary p-4 dark:bg-header-secondary',
         className,
       )}
     >
-      <div className="font-bold text-heading-20">{title}</div>
-      <div className="mt-1 font-medium text-label-value-14 text-secondary">
-        {description}
-      </div>
-      <div className="mt-1.5 space-y-2">
-        <div className="grid grid-cols-1 gap-2 md:max-lg:grid-cols-3">
+      {!!title && <div className="font-bold text-heading-20">{title}</div>}
+      {!!description && (
+        <div className="mt-1 font-medium text-label-value-14 text-secondary">
+          {description}
+        </div>
+      )}
+      <div className={cn('space-y-2', (!!title || !!description) && 'mt-1.5')}>
+        {/* Sized by the panel itself (container query) so it works both as
+            a full-width strip (summary below lg) and a narrow side column */}
+        <div className="grid @min-[400px]:grid-cols-3 grid-cols-1 gap-2">
           <Card
             title="Volume"
             value={formatCurrency(data?.stats.totalVolume ?? 0, 'usd')}
@@ -122,25 +133,27 @@ export function FlowsGeneralStats({
             className="border-0 p-0!"
             value={
               srcChain && dstChain ? (
-                <button
-                  type="button"
-                  onClick={() =>
-                    setHighlightedChainPair(srcChain.id, dstChain.id)
-                  }
-                  className="flex items-center gap-1.5 rounded p-1 transition-opacity hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
-                >
-                  <img
-                    src={srcChain.iconUrl}
-                    alt={srcChain.id}
-                    className="size-5"
-                  />
-                  <ArrowRightIcon className="size-4 fill-brand" />
-                  <img
-                    src={dstChain.iconUrl}
-                    alt={dstChain.id}
-                    className="size-5"
-                  />
-                </button>
+                linkTopRouteToSummary ? (
+                  <a
+                    href={buildInteropUrl('/interop/summary', {
+                      from: [srcChain.id],
+                      to: [dstChain.id],
+                    })}
+                    className="flex items-center gap-1.5 rounded p-1 transition-opacity hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
+                  >
+                    <TopRouteIcons srcChain={srcChain} dstChain={dstChain} />
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setHighlightedChainPair(srcChain.id, dstChain.id)
+                    }
+                    className="flex items-center gap-1.5 rounded p-1 transition-opacity hover:bg-pure-black/5 dark:hover:bg-pure-white/10"
+                  >
+                    <TopRouteIcons srcChain={srcChain} dstChain={dstChain} />
+                  </button>
+                )
               ) : (
                 '-'
               )
@@ -220,6 +233,22 @@ export function FlowsGeneralStats({
         showFlowsColumn={false}
       />
     </div>
+  )
+}
+
+function TopRouteIcons({
+  srcChain,
+  dstChain,
+}: {
+  srcChain: InteropChainWithIcon
+  dstChain: InteropChainWithIcon
+}) {
+  return (
+    <>
+      <img src={srcChain.iconUrl} alt={srcChain.id} className="size-5" />
+      <ArrowRightIcon className="size-4 fill-brand" />
+      <img src={dstChain.iconUrl} alt={dstChain.id} className="size-5" />
+    </>
   )
 }
 

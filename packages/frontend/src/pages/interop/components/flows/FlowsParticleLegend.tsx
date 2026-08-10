@@ -1,7 +1,6 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { formatCurrency, UnixTime } from '@l2beat/shared-pure'
 import { Skeleton } from '~/components/core/Skeleton'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 interface FlowsParticleLegendProps {
   totalVolume: number

@@ -1,3 +1,4 @@
+import { formatActivityCount } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { Skeleton } from '~/components/core/Skeleton'
@@ -7,7 +8,6 @@ import { ActivityMetricContextProvider } from '~/pages/scaling/activity/componen
 import type { RecategorisedActivityChartData } from '~/server/features/scaling/activity/getRecategorisedActivityChart'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/countPerSecond'
 import { useTRPC } from '~/trpc/React'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import type { ChartRange } from '~/utils/range/range'
 import {
   RECATEGORISED_ACTIVITY_CHART_META,

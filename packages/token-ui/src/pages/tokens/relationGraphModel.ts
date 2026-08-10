@@ -25,20 +25,24 @@ export const NODE_COLORS = {
   missing: '#f97316',
 } as const
 
-const CLUSTER_LABEL_MIN_SCALE = 1
-const CLUSTER_LABEL_FADE_OUT_SCALE = 0.05
+/** Zoomed out to this scale or further, cluster labels are gone entirely. */
+const CLUSTER_LABEL_FADE_OUT_SCALE = 0.15
+/**
+ * At this scale and closer, cluster labels are fully shown; between the two
+ * scales they fade linearly. Raise both to make labels vanish sooner when
+ * zooming out.
+ */
 const CLUSTER_LABEL_FULL_OPACITY_SCALE = 0.2
 const CLUSTER_LABEL_MAX_OPACITY = 0.8
 const SEARCH_RESULT_LIMIT = 5
 const NODE_VISUAL_MAX_SCALE = 1.2
-const RELATION_LABEL_MIN_SCALE = 2.5
 
 export function relationId(relation: RelationGraphRelation) {
   return [
-    relation.tokenFromChain,
-    relation.tokenFromAddress,
-    relation.tokenToChain,
-    relation.tokenToAddress,
+    relation.tokenAChain,
+    relation.tokenAAddress,
+    relation.tokenBChain,
+    relation.tokenBAddress,
     relation.plugin,
     relation.bridgeType,
   ].join(':')
@@ -46,21 +50,34 @@ export function relationId(relation: RelationGraphRelation) {
 
 export function relationPrimaryKey(relation: RelationGraphRelation) {
   return {
-    tokenFromChain: relation.tokenFromChain,
-    tokenFromAddress: relation.tokenFromAddress,
-    tokenToChain: relation.tokenToChain,
-    tokenToAddress: relation.tokenToAddress,
+    tokenAChain: relation.tokenAChain,
+    tokenAAddress: relation.tokenAAddress,
+    tokenBChain: relation.tokenBChain,
+    tokenBAddress: relation.tokenBAddress,
     plugin: relation.plugin,
     bridgeType: relation.bridgeType,
   }
 }
 
+/**
+ * Where a drawn connection starts. The A/B slots are lexicographic, not a
+ * direction, so for a directional relation the start is the locked token —
+ * never the slot order.
+ */
 export function sourceId(relation: RelationGraphRelation) {
-  return tokenId(relation.tokenFromChain, relation.tokenFromAddress)
+  return relation.lockedToken === 'B' ? idB(relation) : idA(relation)
 }
 
 export function targetId(relation: RelationGraphRelation) {
-  return tokenId(relation.tokenToChain, relation.tokenToAddress)
+  return relation.lockedToken === 'B' ? idA(relation) : idB(relation)
+}
+
+function idA(relation: RelationGraphRelation) {
+  return tokenId(relation.tokenAChain, relation.tokenAAddress)
+}
+
+function idB(relation: RelationGraphRelation) {
+  return tokenId(relation.tokenBChain, relation.tokenBAddress)
 }
 
 export function tokenId(chain: string, address: string) {
@@ -93,17 +110,43 @@ export function relationTypeLabel(relation: RelationGraphRelation) {
   }
 }
 
+/**
+ * An arrow is drawn only when the relation has a direction to show: a
+ * lock-and-mint pair whose locked endpoint is identified. A burn-and-mint pair
+ * is symmetric, and an unidentified locked endpoint would mean guessing.
+ */
 export function relationIsDirectional(relation: RelationGraphRelation) {
   switch (relation.bridgeType) {
     case 'burnAndMint':
       return false
     case 'lockAndMint':
-      return true
+      return relation.lockedToken !== null
     default:
       throw new Error(
         `Unexpected bridge type in relations graph: ${relation.bridgeType}`,
       )
   }
+}
+
+/** What the connection as a whole says about the two tokens. */
+export function relationDirectionLabel(relation: RelationGraphRelation) {
+  if (relationIsDirectional(relation)) return 'Locked → Minted'
+  if (relation.bridgeType === 'burnAndMint') {
+    return 'Both sides burn and mint'
+  }
+  return 'Locked endpoint not identified'
+}
+
+/** What one endpoint of the connection is to the other. */
+export function relationRoleLabel(
+  relation: RelationGraphRelation,
+  nodeId: string,
+) {
+  // A burn-and-mint pair is symmetric — both endpoints are minted — so each
+  // side's role reads Minted; the relation type label carries the symmetry.
+  if (relation.bridgeType === 'burnAndMint') return 'Minted'
+  if (relation.lockedToken === null) return 'Unknown role'
+  return sourceId(relation) === nodeId ? 'Locked' : 'Minted'
 }
 
 export function nodeColor(node: RelationGraphNode) {
@@ -129,15 +172,24 @@ export function mostCommonDeployedSymbol(nodes: RelationGraphNode[]) {
     .at(0)?.[0]
 }
 
-export function getClusterLabelStyle(scale: number) {
+/**
+ * Cluster labels hang above their cluster, so they never cover nodes and can
+ * stay visible at any zoom-in level. They only fade away at extreme zoom-out,
+ * where clusters shrink to specks and neighboring labels would pile up into
+ * unreadable overlap.
+ */
+export function getClusterLabelOpacity(scale: number) {
   assertGraphScale(scale)
-
-  const clampedScale = Math.max(scale, CLUSTER_LABEL_MIN_SCALE)
-  return {
-    fontSize: 18 / clampedScale,
-    strokeWidth: 4 / clampedScale,
-    opacity: clusterLabelOpacity(scale),
+  if (scale <= CLUSTER_LABEL_FADE_OUT_SCALE) return 0
+  if (scale < CLUSTER_LABEL_FULL_OPACITY_SCALE) {
+    const fadeRange =
+      CLUSTER_LABEL_FULL_OPACITY_SCALE - CLUSTER_LABEL_FADE_OUT_SCALE
+    return (
+      CLUSTER_LABEL_MAX_OPACITY *
+      ((scale - CLUSTER_LABEL_FADE_OUT_SCALE) / fadeRange)
+    )
   }
+  return CLUSTER_LABEL_MAX_OPACITY
 }
 
 export function getNodeVisualScale(scale: number) {
@@ -145,28 +197,21 @@ export function getNodeVisualScale(scale: number) {
   return Math.min(1, NODE_VISUAL_MAX_SCALE / scale)
 }
 
-export function getRelationLabelStyle(scale: number) {
-  assertGraphScale(scale)
-  return {
-    visible: scale > RELATION_LABEL_MIN_SCALE,
-    fontSize: 10 / scale,
-    strokeWidth: 3 / scale,
-    offset: -5 / scale,
-  }
-}
-
 export function getExistingRelationGraphSelection(
   graph: RelationGraph,
   selection: RelationGraphSelection | undefined,
+  deletedRelationIds?: ReadonlySet<string>,
 ): RelationGraphSelection | undefined {
   if (selection === undefined) return undefined
 
+  if (selection.type === 'node') {
+    return graph.nodes.some((node) => node.id === selection.id)
+      ? selection
+      : undefined
+  }
   const exists =
-    selection.type === 'node'
-      ? graph.nodes.some((node) => node.id === selection.id)
-      : graph.relations.some(
-          (relation) => relationId(relation) === selection.id,
-        )
+    !deletedRelationIds?.has(selection.id) &&
+    graph.relations.some((relation) => relationId(relation) === selection.id)
   return exists ? selection : undefined
 }
 
@@ -213,24 +258,10 @@ function assertGraphScale(scale: number) {
   }
 }
 
-function clusterLabelOpacity(scale: number) {
-  if (scale <= CLUSTER_LABEL_FADE_OUT_SCALE) return 0
-  if (scale < CLUSTER_LABEL_FULL_OPACITY_SCALE) {
-    const fadeRange =
-      CLUSTER_LABEL_FULL_OPACITY_SCALE - CLUSTER_LABEL_FADE_OUT_SCALE
-    return (
-      CLUSTER_LABEL_MAX_OPACITY *
-      ((scale - CLUSTER_LABEL_FADE_OUT_SCALE) / fadeRange)
-    )
-  }
-  if (scale <= 0.6) return CLUSTER_LABEL_MAX_OPACITY
-  if (scale >= 1) return 0
-  return CLUSTER_LABEL_MAX_OPACITY * ((1 - scale) / 0.4)
-}
-
 export function getRelationGraphFocus(
   graph: RelationGraph,
   selection: RelationGraphSelection | undefined,
+  deletedRelationIds?: ReadonlySet<string>,
 ): RelationGraphFocus | undefined {
   if (selection === undefined) return undefined
 
@@ -240,6 +271,7 @@ export function getRelationGraphFocus(
   if (selection.type === 'node') {
     nodeIds.add(selection.id)
     for (const relation of graph.relations) {
+      if (deletedRelationIds?.has(relationId(relation))) continue
       const source = sourceId(relation)
       const target = targetId(relation)
       if (source !== selection.id && target !== selection.id) continue
@@ -254,7 +286,7 @@ export function getRelationGraphFocus(
   const relation = graph.relations.find(
     (relation) => relationId(relation) === selection.id,
   )
-  if (relation === undefined) {
+  if (relation === undefined || deletedRelationIds?.has(selection.id)) {
     throw new Error(`Selected relation ${selection.id} is not in graph`)
   }
   nodeIds.add(sourceId(relation))

@@ -521,57 +521,45 @@ function relationInfo(
   _update?: Record<string, unknown>,
   fallback: Record<string, unknown> = {},
 ): TokenInfo {
-  const fromChain =
-    stringValue(fallback.tokenFromChain) ??
-    stringValue(record.tokenFromChain) ??
-    '?'
-  const fromAddress =
-    stringValue(fallback.tokenFromAddress) ??
-    stringValue(record.tokenFromAddress) ??
-    '?'
-  const toChain =
-    stringValue(fallback.tokenToChain) ??
-    stringValue(record.tokenToChain) ??
-    '?'
-  const toAddress =
-    stringValue(fallback.tokenToAddress) ??
-    stringValue(record.tokenToAddress) ??
-    '?'
+  const chainA = endpointValue(record, fallback, 'tokenAChain') ?? '?'
+  const addressA = endpointValue(record, fallback, 'tokenAAddress') ?? '?'
+  const chainB = endpointValue(record, fallback, 'tokenBChain') ?? '?'
+  const addressB = endpointValue(record, fallback, 'tokenBAddress') ?? '?'
   const plugin =
     stringValue(fallback.plugin) ?? stringValue(record.plugin) ?? '?'
   const bridgeType =
     stringValue(fallback.bridgeType) ?? stringValue(record.bridgeType) ?? '?'
-  const fromToken = deployedTokensByKey.get(
-    tokenKey({ chain: fromChain, address: fromAddress }),
+  const tokenA = deployedTokensByKey.get(
+    tokenKey({ chain: chainA, address: addressA }),
   )
-  const toToken = deployedTokensByKey.get(
-    tokenKey({ chain: toChain, address: toAddress }),
+  const tokenB = deployedTokensByKey.get(
+    tokenKey({ chain: chainB, address: addressB }),
   )
-  const fromIconUrl = fromToken?.abstractToken?.iconUrl ?? undefined
-  const toIconUrl = toToken?.abstractToken?.iconUrl ?? undefined
+  const iconUrlA = tokenA?.abstractToken?.iconUrl ?? undefined
+  const iconUrlB = tokenB?.abstractToken?.iconUrl ?? undefined
 
   return {
     icon:
-      fromIconUrl || toIconUrl ? (
-        <RelationIcons fromIconUrl={fromIconUrl} toIconUrl={toIconUrl} />
+      iconUrlA || iconUrlB ? (
+        <RelationIcons iconUrlA={iconUrlA} iconUrlB={iconUrlB} />
       ) : undefined,
     primary: (
       <>
         <TokenLink
-          to={`/tokens/${fromChain}/${fromAddress}`}
+          to={`/tokens/${chainA}/${addressA}`}
           label={formatRelationTokenLabel(
-            fromToken?.deployedToken.symbol,
-            fromChain,
-            fromAddress,
+            tokenA?.deployedToken.symbol,
+            chainA,
+            addressA,
           )}
         />{' '}
-        -&gt;{' '}
+        &lt;-&gt;{' '}
         <TokenLink
-          to={`/tokens/${toChain}/${toAddress}`}
+          to={`/tokens/${chainB}/${addressB}`}
           label={formatRelationTokenLabel(
-            toToken?.deployedToken.symbol,
-            toChain,
-            toAddress,
+            tokenB?.deployedToken.symbol,
+            chainB,
+            addressB,
           )}
         />
       </>
@@ -580,27 +568,52 @@ function relationInfo(
   }
 }
 
+// A history entry is an immutable snapshot of the command that was executed, so
+// entries recorded before the endpoints were renamed still spell them
+// `tokenFrom*`/`tokenTo*`. Both spellings have to be read forever; a single
+// snapshot only ever uses one of them.
+const LEGACY_ENDPOINT_FIELDS = {
+  tokenAChain: 'tokenFromChain',
+  tokenAAddress: 'tokenFromAddress',
+  tokenBChain: 'tokenToChain',
+  tokenBAddress: 'tokenToAddress',
+} as const
+
+function endpointValue(
+  record: Record<string, unknown>,
+  fallback: Record<string, unknown>,
+  field: keyof typeof LEGACY_ENDPOINT_FIELDS,
+): string | undefined {
+  const legacyField = LEGACY_ENDPOINT_FIELDS[field]
+  return (
+    stringValue(fallback[field]) ??
+    stringValue(record[field]) ??
+    stringValue(fallback[legacyField]) ??
+    stringValue(record[legacyField])
+  )
+}
+
 function RelationIcons({
-  fromIconUrl,
-  toIconUrl,
+  iconUrlA,
+  iconUrlB,
 }: {
-  fromIconUrl: string | undefined
-  toIconUrl: string | undefined
+  iconUrlA: string | undefined
+  iconUrlB: string | undefined
 }) {
   return (
     <div className="flex shrink-0 items-center">
-      {fromIconUrl && (
+      {iconUrlA && (
         <img
-          src={fromIconUrl}
+          src={iconUrlA}
           alt=""
           width={24}
           height={24}
           className="rounded-full border border-background bg-background"
         />
       )}
-      {toIconUrl && (
+      {iconUrlB && (
         <img
-          src={toIconUrl}
+          src={iconUrlB}
           alt=""
           width={24}
           height={24}
@@ -641,21 +654,14 @@ function relationTokenKeysFromRecord(
   record: Record<string, unknown>,
   fallback: Record<string, unknown> = {},
 ) {
-  const fromChain =
-    stringValue(fallback.tokenFromChain) ?? stringValue(record.tokenFromChain)
-  const fromAddress =
-    stringValue(fallback.tokenFromAddress) ??
-    stringValue(record.tokenFromAddress)
-  const toChain =
-    stringValue(fallback.tokenToChain) ?? stringValue(record.tokenToChain)
-  const toAddress =
-    stringValue(fallback.tokenToAddress) ?? stringValue(record.tokenToAddress)
+  const chainA = endpointValue(record, fallback, 'tokenAChain')
+  const addressA = endpointValue(record, fallback, 'tokenAAddress')
+  const chainB = endpointValue(record, fallback, 'tokenBChain')
+  const addressB = endpointValue(record, fallback, 'tokenBAddress')
 
   return [
-    fromChain && fromAddress
-      ? { chain: fromChain, address: fromAddress }
-      : undefined,
-    toChain && toAddress ? { chain: toChain, address: toAddress } : undefined,
+    chainA && addressA ? { chain: chainA, address: addressA } : undefined,
+    chainB && addressB ? { chain: chainB, address: addressB } : undefined,
   ].filter((token): token is { chain: string; address: string } => !!token)
 }
 

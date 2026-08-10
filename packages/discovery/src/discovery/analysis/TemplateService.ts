@@ -27,7 +27,7 @@ import type { ConfigRegistry } from '../config/ConfigRegistry'
 import { hashJsonStable } from '../config/hashJsonStable'
 import { ContractPermission } from '../config/PermissionConfig'
 import type { ShapeSchema } from '../config/ShapeSchema'
-import { StructureContract } from '../config/StructureConfig'
+import { type Entrypoint, StructureContract } from '../config/StructureConfig'
 import { generateStructureHash } from '../output/structureOutput'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
@@ -58,6 +58,11 @@ export type RefreshReason =
   | {
       type: 'TEMPLATE_CONFIG_CHANGED'
       templates: string[]
+    }
+  | {
+      type: 'ENTRYPOINTS_CHANGED'
+      contract: string
+      detail: string
     }
 
 export interface ShapeCriteria {
@@ -278,6 +283,8 @@ export class TemplateService {
         return 'project config or used template has changed'
       case 'TEMPLATE_CONFIG_CHANGED':
         return `template configs has changed: ${reason.templates.join(', ')}`
+      case 'ENTRYPOINTS_CHANGED':
+        return `entrypoints changed: "${reason.contract}" ${reason.detail}`
       default:
         assertUnreachable(reason)
     }
@@ -366,6 +373,47 @@ export class TemplateService {
         type: 'TEMPLATE_CONFIG_CHANGED',
         templates: outdatedTemplates,
       })
+    }
+
+    reasons.push(...this.entrypointsNeedRefresh(discovery, config))
+
+    return reasons
+  }
+
+  // Entrypoints are global and deliberately excluded from the config hash, so
+  // promoting an address to an entrypoint does not change any consumer's hash.
+  // Without this, a consumer keeps a stale full copy of something it should now
+  // only reference, and the drift only ever surfaces as a CI failure.
+  private entrypointsNeedRefresh(
+    discovery: DiscoveryOutput,
+    config: ConfigRegistry,
+  ): RefreshReason[] {
+    const reasons: RefreshReason[] = []
+    const entrypoints = config.structure.entrypoints ?? {}
+
+    for (const entry of discovery.entries) {
+      const entrypoint = entrypoints[entry.address]
+      const contract = entry.name ?? entry.address.toString()
+
+      if (entry.type === 'Reference') {
+        const detail = referenceRefreshDetail(entry.targetProject, entrypoint)
+        if (detail !== undefined) {
+          reasons.push({ type: 'ENTRYPOINTS_CHANGED', contract, detail })
+        }
+        continue
+      }
+
+      if (
+        entrypoint !== undefined &&
+        !entrypoint.isLegacy &&
+        entrypoint.project !== config.structure.name
+      ) {
+        reasons.push({
+          type: 'ENTRYPOINTS_CHANGED',
+          contract,
+          detail: `is discovered but is now an entrypoint of ${entrypoint.project}`,
+        })
+      }
     }
 
     return reasons
@@ -529,6 +577,22 @@ export class TemplateService {
     const filePath = join(templatePath, 'criteria.json')
     return existsSync(filePath) ? readFileSync(filePath, 'utf8') : undefined
   }
+}
+
+function referenceRefreshDetail(
+  targetProject: string | undefined,
+  entrypoint: Entrypoint | undefined,
+): string | undefined {
+  if (entrypoint === undefined) {
+    return 'is a reference to an entrypoint that no longer exists'
+  }
+  if (entrypoint.isLegacy) {
+    return 'is a reference to an entrypoint that became legacy'
+  }
+  if (entrypoint.project !== targetProject) {
+    return `references ${targetProject} but the entrypoint is owned by ${entrypoint.project}`
+  }
+  return undefined
 }
 
 function listAllPaths(path: string): string[] {

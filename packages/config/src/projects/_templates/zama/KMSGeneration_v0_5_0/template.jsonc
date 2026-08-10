@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "KMSGeneration",
+  "description": "View-only gateway contract retaining historical queries for previously generated FHE keys and CRS materials. All state-changing key-generation, CRS-generation, PRSS, and key-resharing workflows were removed in v0.5.0 after their move to Ethereum.",
+  "category": "core",
+  "ignoreMethods": [
+    "proxiableUUID",
+    "getConsensusTxSenders",
+    "getKeyMaterials",
+    "getCrsMaterials",
+    "getKeyParamsType",
+    "getCrsParamsType"
+  ],
+  "fields": {
+    "gatewayConfig": {
+      "description": "GatewayConfig contract used as the source of truth for the gateway owner and for resolving KMS node storage URLs in historical material queries.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "zama:0xDE537Be194777A56f8B19d14079E6a78249390ab"
+      }
+    },
+    "gatewayOwner": {
+      "description": "Owner of GatewayConfig. This account authorizes KMSGeneration upgrades.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "{{ gatewayConfig }}"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the KMSGeneration implementation."
+        }
+      ]
+    },
+    "eip712Domain": {
+      "description": "EIP-712 domain retained from the KMS generation workflows removed in v0.5.0."
+    }
+  }
+}

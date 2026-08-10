@@ -10,13 +10,3 @@ export type AbstractTokenWithDeployedTokens = AbstractToken & {
 }
 
 export type DeployedToken = DeployedTokenRecord
-
-export type TokenRelation = {
-  tokenFromChain: string
-  tokenFromAddress: string
-  tokenToChain: string
-  tokenToAddress: string
-  plugin: string
-  bridgeType: string
-  transfer: unknown
-}

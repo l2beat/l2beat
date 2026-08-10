@@ -14,6 +14,28 @@ export const mint: ScalingProject = opStackL2({
   addedAt: UnixTime(1715644800), // 2024-05-14T00:00:00Z
   archivedAt: UnixTime(1775534349), // 2026-04-07T03:59:09Z
   discovery,
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 19862462, // first batch of the original batcher
+      untilBlock: 23979599, // batcher rotation, last old-batcher batch @ 23969121
+      inbox: EthereumAddress('0x4e31448a098393727b786e25B54E59DcA1b77FE1'),
+      sequencers: [
+        EthereumAddress('0x68bdFecE01535090c8f3C27ec3b1AE97E83fA4aA'),
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 23979599, // first batch of the rotated batcher
+      untilBlock: 24824990, // last batch before archival
+      inbox: EthereumAddress('0x4e31448a098393727b786e25B54E59DcA1b77FE1'),
+      sequencers: [
+        EthereumAddress('0x560aFA9cF6B39D8C83938C77036E80807a56Da16'),
+      ],
+    },
+  ],
   additionalBadges: [],
   additionalPurposes: ['NFT'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],

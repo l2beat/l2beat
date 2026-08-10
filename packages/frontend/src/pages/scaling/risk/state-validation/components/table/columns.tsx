@@ -78,17 +78,15 @@ export const scalingRiskStateValidationValidityColumns = [
     id: 'verifiers',
     header: 'Verifiers',
     cell: (ctx) => {
-      const trustedSetupEntries = Object.entries(
-        ctx.row.original.trustedSetupsByProofSystem ?? {},
-      )
+      const trustedSetups = ctx.row.original.trustedSetups
 
-      if (trustedSetupEntries.length === 0) {
+      if (trustedSetups.length === 0) {
         return <TableValueCell value={undefined} emptyMode="n/a" />
       }
       return (
         <div className="flex flex-col gap-2 py-2">
-          {trustedSetupEntries.map(([key, ts]) => (
-            <VerifiedCountWithDetails key={key} data={ts.verifiers} />
+          {trustedSetups.map((ts, i) => (
+            <VerifiedCountWithDetails key={i} data={ts.verifiers} />
           ))}
         </div>
       )
@@ -141,20 +139,18 @@ export const scalingRiskStateValidationValidityColumns = [
         'Instruction Set Architecture (ISA) specifies the virtual machine or computational model that the proof system targets when generating proofs.',
     },
   }),
-  validityColumnHelper.accessor('trustedSetupsByProofSystem', {
+  validityColumnHelper.accessor('trustedSetups', {
     header: 'Trusted setup',
     cell: (ctx) => {
-      const trustedSetupEntries = Object.entries(
-        ctx.row.original.trustedSetupsByProofSystem ?? {},
-      )
+      const trustedSetups = ctx.row.original.trustedSetups
 
-      if (trustedSetupEntries.length === 0) {
+      if (trustedSetups.length === 0) {
         return <TableValueCell value={undefined} emptyMode="n/a" />
       }
       return (
         <div className="flex flex-col gap-2 py-2">
-          {trustedSetupEntries.map(([key, ts]) => (
-            <TrustedSetupCell key={key} trustedSetups={ts.trustedSetups} />
+          {trustedSetups.map((ts, i) => (
+            <TrustedSetupCell key={i} trustedSetups={ts.trustedSetups} />
           ))}
         </div>
       )

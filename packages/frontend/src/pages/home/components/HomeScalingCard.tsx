@@ -1,11 +1,13 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import {
+  formatActivityCount,
+  formatCurrency,
+  formatInteger,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { HomeScalingCharts } from '~/server/features/home/getHomeScalingCharts'
 import { cn } from '~/utils/cn'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { HomeChartDataPoint } from './charts/HomeChart'
 import { HomeChart } from './charts/HomeChart'
 import { HomeCard } from './HomeCard'
@@ -49,16 +51,20 @@ export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
     [tvsChartData],
   )
 
-  const activityChartData = useMemo(
+  const activityChartData = useMemo<HomeChartDataPoint[]>(
     () =>
-      charts.activity.chart.map(([timestamp, rollupsUops, vAndOUops]) => {
-        const hasAny = rollupsUops !== null || vAndOUops !== null
-        const sum = (rollupsUops ?? 0) + (vAndOUops ?? 0)
-        return {
-          timestamp,
-          value: hasAny ? sum / UnixTime.DAY : null,
-        }
-      }),
+      charts.activity.chart.map(
+        ([timestamp, rollupsUops, vAndOUops, ethereumUops]) => {
+          const hasAny = rollupsUops !== null || vAndOUops !== null
+          const sum = (rollupsUops ?? 0) + (vAndOUops ?? 0)
+          return {
+            timestamp,
+            value: hasAny ? sum / UnixTime.DAY : null,
+            ethereum:
+              ethereumUops !== null ? ethereumUops / UnixTime.DAY : null,
+          }
+        },
+      ),
     [charts.activity.chart],
   )
 
@@ -117,11 +123,12 @@ export function HomeScalingCard({ charts, scalingCategoryCounts }: Props) {
             data={activityChartData}
             isLoading={false}
             color="pink"
-            tooltipLabel="UOPS"
+            tooltipLabel="Layer 2s"
             formatValue={(value) => formatActivityCount(value)}
             yAxisUnit=" UOPS"
             syncedUntil={charts.activity.syncedUntil}
             tooltipDayRange
+            withEthereum
           />
         </HomeChartSection>
       </div>

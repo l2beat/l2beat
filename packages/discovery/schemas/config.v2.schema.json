@@ -779,7 +779,6 @@
         }
       }
     },
-    "sharedModules": { "type": "array", "items": { "type": "string" } },
     "types": {
       "type": "object",
       "propertyNames": { "type": "string" },

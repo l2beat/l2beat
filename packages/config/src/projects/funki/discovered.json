@@ -1,6 +1,6 @@
 {
   "name": "funki",
-  "timestamp": 1784282928,
+  "timestamp": 1785878806,
   "configHash": "0xb07bae2802318532226565e278a4c64eccdf9d00a37b61d182d861e0b38cc43d",
   "entries": [
     {
@@ -309,7 +309,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 36,
+        "nonce": 38,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -377,9 +377,19 @@
             "2025-11-26T02:51:59.000Z",
             "0xb5d4847ed89e5395e3b7cf0cca775ccbe084de9d7cf2b9d2901f8c318fde5bfd",
             ["eth:0xe2F826324b2faf99E513D16D266c3F80aE87832B"]
+          ],
+          [
+            "2026-08-04T16:03:59.000Z",
+            "0x8ae9c575a81b99b976cceca3ea4e08fdf2232457ebc85647258a002bd7077ef2",
+            ["eth:0xa702D767ef8a7ba06eD0d605Fe584e2C42eeED44"]
+          ],
+          [
+            "2026-08-04T16:10:23.000Z",
+            "0x528836e8c2f19b30fdecacb75a0bcf31e85f9b6dd7363a0b73f47daa42484d9c",
+            ["eth:0xe2F826324b2faf99E513D16D266c3F80aE87832B"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 5,
         "disputeGameFactory": "eth:0xc371fD8C4AB7F585BDCA7aA19c2A680a70920c98",
         "disputeGameFinalityDelaySeconds": 302400,
         "guardian": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
@@ -387,7 +397,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 492334,
-          "prevBlockNum": 25538378
+          "prevBlockNum": 25621455
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -674,7 +684,7 @@
           "eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a"
         ],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 62,
+        "nonce": 64,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -854,7 +864,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 25,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -900,7 +910,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620122",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620123",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1285,7 +1295,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 60,
+        "nonce": 62,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1332,7 +1342,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 238,
+        "gameCount": 258,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x63A70Bb5e1C613B5D2fCA1dac70C1408A271C0bE",
@@ -1346,7 +1356,7 @@
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x89CB6669f87c165E7128F4a57476EE4Daa7ffbCD",
         "permissionedGameArgs": "EXPECT_REVERT",
-        "permissionedGamesTotal": 238,
+        "permissionedGamesTotal": 258,
         "proposerFromDGF": "UNRESOLVED",
         "version": "1.0.0",
         "wethFromDGF": "UNRESOLVED"
@@ -1591,9 +1601,19 @@
             "2025-11-18T02:39:47.000Z",
             "0x2225d6018a0be125bded604db70b5f18f323ff018fba3933b756c1678981a980",
             ["eth:0xf6746e055414a3FcA38F0e8e9dD3926A9A518719"]
+          ],
+          [
+            "2026-08-04T15:46:11.000Z",
+            "0x33432ac905eeae713da21603bc69ede8dfadcf94fcdd49f234e77d7550bc9d53",
+            ["eth:0x46D4f9b61cEC319902b007F4253d376ecA73875F"]
+          ],
+          [
+            "2026-08-04T16:04:59.000Z",
+            "0x30d1456049b58e81d1504f46ef56bd93c735e26e4d5ad8c0b34fde1563f87506",
+            ["eth:0xf6746e055414a3FcA38F0e8e9dD3926A9A518719"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 3,
         "disputeGameFactory": "eth:0xc371fD8C4AB7F585BDCA7aA19c2A680a70920c98",
         "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.0.0"
@@ -2612,6 +2632,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25551711 },
+  "usedBlockNumbers": { "ethereum": 25684238 },
   "permissionsConfigHash": "0x8893d67ac5f3d367cdbc8824cf1a43c4cb90d1514f6e14ad546d76c49823e781"
 }

@@ -45,6 +45,7 @@ export const onChainProjects: string[] = [
   'privacy-pools',
   'railgun',
   'tornado-cash',
+  'butternetwork',
 ]
 
 describe('discovery config.jsonc', () => {
@@ -314,19 +315,6 @@ describe('discovery config.jsonc', () => {
             ).not.toThrow()
           })
         }
-      }
-    })
-
-    describe('all shared modules exist', () => {
-      for (const c of configs ?? []) {
-        it(c.name, () => {
-          for (const sharedModule of c.structure.sharedModules) {
-            assert(
-              configs?.flat()?.some((x) => x.name === sharedModule),
-              `Shared module ${sharedModule} does not exist (${c.name})`,
-            )
-          }
-        })
       }
     })
 

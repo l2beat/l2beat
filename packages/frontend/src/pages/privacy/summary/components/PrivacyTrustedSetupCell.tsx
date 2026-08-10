@@ -1,11 +1,11 @@
 import type { TrustedSetup } from '@l2beat/config'
+import { formatInteger } from '@l2beat/shared-pure'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 
 export function PrivacyTrustedSetupCell({
   trustedSetup,

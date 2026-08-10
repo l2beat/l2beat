@@ -52,6 +52,21 @@
         }
       ]
     },
+    "committers": {
+      "handler": {
+        "type": "crossChainAccessControl",
+        "roleNames": {
+          "0x0b60b5d7f7e737e4561eecda7c6a01e19e626c495c26e6f45e5b255f76a20106": "COMMITTER_ROLE"
+        },
+        "pickRoleMembers": "COMMITTER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit batches on L1 if approved by enough Validator Multisig members."
+        }
+      ]
+    },
     "threshold": { "severity": "HIGH" },
     "$threshold": {
       "copy": "threshold"

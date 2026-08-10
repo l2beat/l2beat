@@ -5,7 +5,7 @@ import type { ContractUtils } from '../../contracts-and-permissions/getContractU
 import { getProgramHashes } from '../../contracts-and-permissions/getProgramHashes'
 import { getDiagramParams } from '../../getDiagramParams'
 import type { ProjectWithPageMetadata } from '../../getProjectUrl'
-import { getProverInfo } from './getProverInfo'
+import { getProverInfos } from './getProverInfo'
 
 export function getStateValidationSection(
   project: Project<
@@ -31,7 +31,7 @@ export function getStateValidationSection(
     isUnderReview:
       !!project.statuses.reviewStatus ||
       !!project.scalingTechnology.stateValidation.isUnderReview,
-    proverInfo: getProverInfo(
+    proverInfos: getProverInfos(
       project,
       zkCatalogProjects,
       contractUtils,

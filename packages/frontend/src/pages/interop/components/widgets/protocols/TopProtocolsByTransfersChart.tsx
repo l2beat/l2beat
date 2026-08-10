@@ -1,6 +1,6 @@
+import { formatInteger } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { ChartMeta } from '~/components/core/chart/Chart'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { ProtocolsPieChart } from './ProtocolsPieChart'
 import type { DisplayProtocol } from './TopProtocolsWidget'
 

@@ -16,6 +16,27 @@ export const ink: ScalingProject = opStackL2({
   addedAt: UnixTime(1734480000), // 2024-10-18T00:00:00Z
   additionalBadges: [BADGES.RaaS.Gelato],
   discovery,
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 21344310,
+      untilBlock: 25631821, // batcherHash rotation
+      inbox: EthereumAddress('0x005969bf0EcbF6eDB6C47E5e94693b1C3651Be97'),
+      sequencers: [
+        EthereumAddress('0x500d7Ea63CF2E501dadaA5feeC1FC19FE2Aa72Ac'),
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 25631821, // batcherHash rotation
+      inbox: EthereumAddress('0x005969bf0EcbF6eDB6C47E5e94693b1C3651Be97'),
+      sequencers: [
+        EthereumAddress('0x6db6161fC5662450E801398Bad62dD9921216B98'),
+      ],
+    },
+  ],
   display: {
     name: 'Ink',
     aliases: ['Kraken'],

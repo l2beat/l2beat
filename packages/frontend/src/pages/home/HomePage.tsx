@@ -6,9 +6,11 @@ import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import type { HomeScalingCharts } from '~/server/features/home/getHomeScalingCharts'
+import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import type { OngoingAnomaliesOverview } from '~/server/features/scaling/liveness/getOngoingAnomaliesOverview'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import type { TvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
+import type { ZkCatalogEntry } from '~/server/features/zk-catalog/getZkCatalogEntries'
 import type { InteropChainWithIcon } from '../interop/components/chain-selector/types'
 import type { InteropFlowsProtocol } from '../interop/components/flows/utils/InteropFlowsContext'
 import { HomeAnomaliesTile } from './components/HomeAnomaliesTile'
@@ -22,6 +24,8 @@ import { HomeScalingCard } from './components/HomeScalingCard'
 import { HomeStatsStrip } from './components/HomeStatsStrip'
 import { HomeTopChainsCard } from './components/HomeTopChainsCard'
 import { HomeTopInteropProtocolsCard } from './components/HomeTopInteropProtocolsCard'
+import { HomeTopPrivacyProtocolsCard } from './components/HomeTopPrivacyProtocolsCard'
+import { HomeTopZkProversCard } from './components/HomeTopZkProversCard'
 import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
 import { HomeWhatsNewCard } from './components/HomeWhatsNewCard'
 import type { HomeRecentProject } from './getHomeData'
@@ -32,6 +36,8 @@ interface Props extends AppLayoutProps {
   projectCounts: HomeProjectCounts
   topChains: ScalingSummaryEntry[]
   topChainsTvsData: TvsTableData
+  topPrivacyProtocols: PrivacySummaryEntry[]
+  topZkProvers: ZkCatalogEntry[]
   scalingCharts: HomeScalingCharts
   ethereumCharts: HomeEthereumCharts
   ethereumEconomicSecurity: number | undefined
@@ -43,7 +49,7 @@ interface Props extends AppLayoutProps {
   recentChangesCount: number
   recentChangesProjects: HomeRecentChangesProject[]
   ongoingAnomalies: OngoingAnomaliesOverview
-  whatsNewItems: HomeWhatsNewItem[]
+  whatsNewItem: HomeWhatsNewItem | undefined
 }
 
 export function HomePage({
@@ -51,6 +57,8 @@ export function HomePage({
   projectCounts,
   topChains,
   topChainsTvsData,
+  topPrivacyProtocols,
+  topZkProvers,
   scalingCharts,
   ethereumCharts,
   ethereumEconomicSecurity,
@@ -62,7 +70,7 @@ export function HomePage({
   recentChangesCount,
   recentChangesProjects,
   ongoingAnomalies,
-  whatsNewItems,
+  whatsNewItem,
   ...props
 }: Props) {
   return (
@@ -73,62 +81,67 @@ export function HomePage({
           childrenWrapperClassName="max-md:bg-surface-primary"
         >
           <MainPageHeader>Home</MainPageHeader>
-          <div className="flex flex-col md:gap-6 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
-            <div className="grid grid-cols-1 items-stretch md:gap-4 xl:gap-6 2xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)]">
-              <div className="flex h-full min-w-0 flex-col md:gap-4 xl:grid xl:grid-cols-3 xl:gap-6 2xl:flex">
-                <HomeStatsStrip counts={projectCounts} />
+          <div className="flex flex-col md:gap-4 xl:gap-6 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
+            <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-[minmax(260px,280px)_minmax(280px,1fr)] xl:gap-6 2xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)]">
+              <HomeStatsStrip counts={projectCounts} className="lg:hidden" />
+              <div className="flex min-w-0 flex-col gap-4 max-lg:hidden">
                 <HomeRecentProjectsCard
-                  className="hidden h-auto xl:flex"
+                  className="h-auto"
                   projects={recentProjects}
                 />
                 <HomeWhatsNewCard
-                  items={whatsNewItems}
-                  className="min-h-0 xl:flex-1"
+                  item={whatsNewItem}
+                  className="min-h-0 flex-1"
+                />
+                <HomeAnomaliesTile ongoingAnomalies={ongoingAnomalies} />
+                <HomeRecentChangesTile
+                  recentChangesCount={recentChangesCount}
+                  recentChangesProjects={recentChangesProjects}
                 />
               </div>
-              <div className="flex h-full min-h-0 min-w-0 flex-col md:grid md:grid-cols-2 md:gap-4 xl:gap-6 2xl:flex 2xl:flex-col">
-                <div className="flex min-h-0 min-w-0 flex-col xl:flex-1">
-                  <HomeScalingCard
-                    charts={scalingCharts}
-                    scalingCategoryCounts={scalingCategoryCounts}
-                  />
-                </div>
-                <div className="flex min-h-0 min-w-0 flex-col xl:flex-1">
-                  <HomeEthereumCard
-                    charts={ethereumCharts}
-                    economicSecurity={ethereumEconomicSecurity}
-                  />
-                </div>
-              </div>
-              <div className="flex h-full min-h-0 min-w-0 flex-col">
+              <div className="flex min-h-0 min-w-0 flex-col 2xl:order-last">
                 <HomeInteropCard
                   interopChains={interopChains}
                   interopProtocols={interopProtocols}
                   defaultSelectedFlowChains={defaultSelectedFlowChains}
                 />
               </div>
+              <div className="flex min-h-0 min-w-0 flex-col md:grid md:grid-cols-2 md:gap-4 lg:max-2xl:col-span-full xl:gap-6 2xl:flex">
+                <div className="flex min-h-0 min-w-0 flex-col 2xl:flex-1">
+                  <HomeScalingCard
+                    charts={scalingCharts}
+                    scalingCategoryCounts={scalingCategoryCounts}
+                  />
+                </div>
+                <div className="flex min-h-0 min-w-0 flex-col 2xl:flex-1">
+                  <HomeEthereumCard
+                    charts={ethereumCharts}
+                    economicSecurity={ethereumEconomicSecurity}
+                  />
+                </div>
+              </div>
             </div>
-            <div className="grid grid-cols-1 gap-4 max-md:contents sm:grid-cols-2 xl:gap-6">
+            <div className="grid grid-cols-1 gap-4 max-md:contents lg:hidden">
               <HomeAnomaliesTile ongoingAnomalies={ongoingAnomalies} />
               <HomeRecentChangesTile
                 recentChangesCount={recentChangesCount}
                 recentChangesProjects={recentChangesProjects}
               />
+              <HomeWhatsNewCard item={whatsNewItem} />
+              <HomeRecentProjectsCard projects={recentProjects} />
             </div>
-            <div className="grid grid-cols-1 items-stretch md:gap-4 xl:gap-6 min-[1650px]:grid-cols-2">
-              <HomeTopChainsCard
-                entries={topChains}
-                tvsData={topChainsTvsData}
-              />
+            <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-2 xl:gap-6">
               <HomeTopInteropProtocolsCard
                 interopChains={interopChains}
                 defaultSelectedFlowChains={defaultSelectedFlowChains}
               />
+              <HomeTopPrivacyProtocolsCard entries={topPrivacyProtocols} />
+              <HomeTopChainsCard
+                entries={topChains}
+                tvsData={topChainsTvsData}
+              />
+              <HomeTopZkProversCard entries={topZkProvers} />
             </div>
-            <HomeRecentProjectsCard
-              className="max-md:border-b-0! xl:hidden"
-              projects={recentProjects}
-            />
           </div>
         </SideNavLayout>
       </HydrationBoundary>

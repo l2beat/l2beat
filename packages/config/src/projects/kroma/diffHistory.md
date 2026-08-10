@@ -1,3 +1,235 @@
+Generated with discovered.json: 0x38fb463ee7515f9fdc4fdba870cfbe5f7d07cb06
+
+# Diff at Thu, 30 Jul 2026 11:44:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@582e1a34fd1cba95db9957343b373cd84374dd99 block: 1752575723
+- current timestamp: 1752575723
+
+## Description
+
+Make shared-sp1 use entrypoints and rediscover
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752575723 (main branch discovery), not current.
+
+```diff
+    contract ZKProofVerifier (eth:0x005DDC466C804c79adB079c120347dDE48132105) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x8b92d5e0137768d72db79ce9eeffbfaae0d55d02e0c3f2f4d87e0ae24beb94d1"
++        "0xd3e4f3250bd3f224622cecd73d2ad6d248e315088a5b1e6daf2dc67b6db1fbcb"
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6) [N/A] {
+    +++ description: The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Anyone can participate as a Proposer by depositing in the ValidatorPool. A root can be proposed every 1800 blocks (2s block time).
+      sourceHashes.1:
+-        "0x3e082acc764e6210a6d92e75bffb677ec096ac9d382eef70ea3152f9eeb72791"
++        "0x085642446afc67e17a929b772b142ea0639bbac5848171bc0ab576b53e5c39f2"
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract Timelock (eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1) [global/Timelock] {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      sourceHashes.1:
+-        "0x6bcef64b35598149aee2e622e06fb8e414063ee43de09312ca4bbd0306b0eea9"
++        "0x584154d28ea3a972be7fd86502dff0d6d9727223eaab86c1d2dd5fae52254192"
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract ValidatorManager (eth:0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363) [N/A] {
+    +++ description: Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the window to submit the output root within 30m, after which anyone can propose for them. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.
+      sourceHashes.1:
+-        "0x9352046e1debd70d6603f184b60930075d5445af5ed02e1e4b299010ec5d7348"
++        "0x82a93bc8eabfbb6da09fad217163a62c6b8d3317f477c5b66adb0e9b85ce8d21"
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract KromaPortal (eth:0x31F648572b67e60Ec6eb8E197E1848CC5F5558de) [N/A] {
+    +++ description: This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.
+      sourceHashes.1:
+-        "0x380ba7ac243cd77b18b24f82aba2b0b2b32ae18c02f8ae15db16810fb9f205ca"
++        "0x80515e423f084fb2c13f676cb4e7e99c6f2d5a9c0958d7059cf84cfc08956ec6"
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract ZKMerkleTrie (eth:0x339208824010425cBE73201ceD4372308ACD610B) [N/A] {
+    +++ description: Merkle Trie contract used to prove withdrawals that were initiated in the legacy system, deprecated for new withdrawals and succeeded by a merkle tree library in the KromaPortal.
+      sourceHashes.0:
+-        "0x90927c331f5a5d562d23263a9343eb8828b5dc83798239506f42fcd382b903a4"
++        "0xa04ee6b52bf7aab716ddac3231646a131f0c4a6283924fed8665f4cf086d1a75"
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x579a99eb751c6e2b976e753d11220cfa89229ac2225f9ce87d4dfdabc7371ff0"
++        "0xae52fa50e75cede53289f404b122cb82eeca5885a446c0301044db0df36d1305"
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract KromaSecurityCouncil (eth:0x3de211088dF516da72efe68D386b561BEE256Ec4) [N/A] {
+    +++ description: Custom Multisig contract in which each signer is identified by a token. The threshold is 8 and the token contract is called SecurityCouncilToken.
+      sourceHashes.1:
+-        "0x1a3ad305d7acaa5f74c8de3149553a1eb31fa3be9e4649c601512623645015a4"
++        "0x096d2674f5f7697734ec6e23b7fae96d1d809dc8df61ee90ed9ca9181dcd87f9"
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0xaff375ae74ed132384e4286ac5de5830f7c8e7c3f2bb6b31f4f2251e0dc2b8d2"
++        "0xc39b81d9ff23c01c00231d0f53fe1aea394e3c4d88ab049b06ee034624b96653"
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x46d07221dfC313afe1BF104F4bB1f185301D65B9) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x4a2ad213ff7b5da7d065bc134bb2392837364747089248e4083d17a39ea87fd7"
++        "0x47c0991c31a0666bf7271ba868479c71ead7c6b2eaf2c04fd6d7a3e5171750f6"
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd) [global/ProxyAdmin] {
+    +++ description: None
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract ZkVerifier (eth:0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7) [N/A] {
+    +++ description: ZK verifier used to verify the last step of a legacy zkEVM proof, which corresponds to a block.
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract Colosseum (eth:0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) [N/A] {
+    +++ description: Contract used to challenge state roots and prove fraud. If successful, the wrong state root in the eth:0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6 is replaced.
+      sourceHashes.1:
+-        "0x6f653563abba409e3c26569deb686f8f22823bd92ef3d658b4bc77ba630236c7"
++        "0xfb1caecdb948cb2f7874eb36beca453d0b0962cb9edc43b569288c8211c50913"
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract USDCBridge (eth:0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x531e0a3d7e3c3cf7433e6462f1606d0470104dfd9eb9e500fecc14e8334670dd"
++        "0x9ce6446f92ddf268c9e21c8943910a0ec43dd113eb12b022cfa680a4953db632"
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x827962404D7104202C5aaa6b929115C8211d9596) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0xe4eddca14af777a8abcb70781c5881acfaec17ce822a4231242061a4032ace9a"
++        "0x20a44a3a53829da1789edacb694480bf7ae91ac5ad6a90acc4c5692092c9705f"
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract AssetManager (eth:0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3) [N/A] {
+    +++ description: Manages the delegation and undelegation of KRO tokens and Kroma Guardian House (KGH) NFTs for Proposers (Kroma Validators) and distributes rewards.
+      sourceHashes.1:
+-        "0x59a4633c528a59f6b040de0109dcbf2d648d32898f6ff0533fe1585e26f08ef0"
++        "0x2983b38cc1be56d4ccb265ca7acbefc844b8c2e465b1e0ca72e8c1b2ddda7b8c"
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract UpgradeGovernor (eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537) [N/A] {
+    +++ description: A governance proxy contract using token voting with eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c as identification of actors allowed to vote/sign a proposal which is passed to the eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1 afterwards.
+      sourceHashes.1:
+-        "0x83b27c2e32131de05d6b3676aea653f8a46267dd75c421acd51b2c53fa145604"
++        "0xe0de532833d0b1e2591aefa46a14fa4db4ce8ddb1bd43036b3c443bf635e6de5"
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract SecurityCouncilTokenOwners (eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) [N/A] {
+    +++ description: A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members.
+      sourceHashes.1:
+-        "0x5143e277c3037f518a48916fbdf29d6ab69cb265fedb2d68e4e2ba404b42a453"
++        "0xaeacd2207b273b2edba9670ace795b61a4ee70c888a19fa694a9f37719ebe5d9"
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
+```diff
+    contract Kroma Multisig (eth:0xe57E217d8ed498992452791622711B866403E950) [GnosisSafe] {
+    +++ description: Escrows a pool of KRO used as validator rewards by the AssetManager.
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      deployerAddress:
++        "eth:0x547fc089E9f2971d27b9780214ED891F6d154faa"
+    }
+```
+
+```diff
+    contract ValidatorPool (eth:0xFdFF462845953D90719A78Fd12a2d103541d2103) [N/A] {
+    +++ description: Contract used to manage the Proposers. Anyone can submit a deposit and bond to a state root, or create a challenge. It also manages the Proposer rotation for each submittable block using a random selection. If the selected proposer fails to publish a root within 30m then the submission becomes open to everyone.
+      sourceHashes.1:
+-        "0xac308f84cc546d491c72f2e9d4309c3e67334cd61b5300e0eb259d2950e20511"
++        "0xb0ea0d73cab363c046245a0abab4a7426dc08bd1d223dcd720fdf16183506670"
+      deployerAddress:
++        "eth:0xcc56801a72463d39903A4a4632E600289178F6bC"
+    }
+```
+
 Generated with discovered.json: 0x0a30fa2634bae43b46cc18abf3b67036decb1486
 
 # Diff at Tue, 09 Jun 2026 12:43:35 GMT:

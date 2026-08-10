@@ -1,4 +1,5 @@
 import type { ProjectZkCatalogInfo } from '@l2beat/config'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
@@ -17,7 +18,6 @@ import { InfoIcon } from '~/icons/Info'
 import type { ProjectZkCatalogEntry } from '~/server/features/zk-catalog/project/getZkCatalogProjectEntry'
 import type { TrustedSetupsByProofSystem } from '~/server/features/zk-catalog/utils/getTrustedSetupsWithVerifiersAndAttesters'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { TechStackCell } from '../../../components/TechStackCell'
 import { TrustedSetupCell } from '../../../components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '../../../components/VerifiedCountWithDetails'

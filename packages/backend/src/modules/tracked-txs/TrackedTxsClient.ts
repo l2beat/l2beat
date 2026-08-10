@@ -17,6 +17,9 @@ import {
   type TrackedTxResult,
   type TrackedTxTransferResult,
 } from './types/model'
+import { SELECTOR_BYTES } from './utils/const'
+import { getFunctionCallParameterPrefix } from './utils/functionCallParameter'
+import { hasLivenessGrouping } from './utils/getLivenessGroupingKey'
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
 import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
 import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'
@@ -138,10 +141,10 @@ export class TrackedTxsClient {
     )
       return Promise.resolve([])
 
-    // function calls and sharp submissions will be batched into one query to save costs
+    // Function calls, SHARP submissions and shared bridges are batched to save costs.
     const query = getFunctionCallQuery(
       combineCalls(
-        functionCallsConfig.map((c) => c.properties.params),
+        functionCallsConfig,
         sharpSubmissionsConfig.map((c) => c.properties.params),
         sharedBridgesConfig.map((c) => c.properties.params),
       ),
@@ -162,19 +165,38 @@ export class TrackedTxsClient {
       sharpSubmissionsConfig,
       sharedBridgesConfig,
       queryResult,
+      this.logger,
     )
   }
 }
 
 function combineCalls(
-  functionCallsConfig: TrackedTxFunctionCallConfig[],
+  functionCallsConfig: Configuration<
+    TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
+  >[],
   sharpSubmissionsConfig: TrackedTxSharpSubmissionConfig[],
   sharedBridgesConfig: TrackedTxSharedBridgeConfig[],
 ) {
-  // TODO: unique
   return [
-    ...functionCallsConfig.map((c) => ({ ...c, getFullInput: false })),
-    ...sharpSubmissionsConfig.map((c) => ({ ...c, getFullInput: true })),
-    ...sharedBridgesConfig.map((c) => ({ ...c, getFullInput: true })),
+    ...functionCallsConfig.map((config) => ({
+      address: config.properties.params.address,
+      selector: config.properties.params.selector,
+      inputBytes: hasLivenessGrouping(config.properties)
+        ? getFunctionCallParameterPrefix(
+            config.properties.params.signature,
+            config.properties.groupBy.path,
+          )
+        : SELECTOR_BYTES,
+    })),
+    ...sharpSubmissionsConfig.map((config) => ({
+      address: config.address,
+      selector: config.selector,
+      inputBytes: 'full' as const,
+    })),
+    ...sharedBridgesConfig.map((config) => ({
+      address: config.address,
+      selector: config.selector,
+      inputBytes: 'full' as const,
+    })),
   ]
 }

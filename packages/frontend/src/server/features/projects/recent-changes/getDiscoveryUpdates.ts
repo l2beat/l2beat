@@ -9,12 +9,13 @@ import { existsSync, readFileSync, statSync } from 'fs'
 import path from 'path'
 import {
   countDiffChanges,
+  extractDiffBlockSpans,
   isHighSeverityDiffBody,
 } from '~/utils/diffHistory/diffHistoryMarkdown'
 
 export type DiscoveryUpdateSectionKind = Extract<
   DiffHistorySectionKind,
-  'initial-discovery' | 'watched-changes'
+  'config-related-changes' | 'initial-discovery' | 'watched-changes'
 >
 
 export interface DiscoveryUpdateSection {
@@ -36,6 +37,9 @@ const PUBLIC_SECTION_KINDS = new Set<DiscoveryUpdateSectionKind>([
   'initial-discovery',
   'watched-changes',
 ])
+const CONTRACT_CREATED_RE = /^\+\s+Status: CREATED\s*\n\s+contract\b/m
+const CONTRACT_BECAME_VERIFIED_RE =
+  /^\s+contract\b[\s\S]*?^\s+unverified:\s*\n-\s+true\s*$/m
 
 const PROJECT_ID_RE = /^[a-z0-9-]+$/i
 const DEFAULT_LIMIT = 50
@@ -118,6 +122,10 @@ function toPublicDiscoveryUpdate(
 ): DiscoveryUpdate | null {
   const sections: DiscoveryUpdateSection[] = entry.sections.flatMap(
     (section) => {
+      if (section.kind === 'config-related-changes') {
+        const body = getPublicConfigRelatedChanges(section.body)
+        return body.length > 0 ? [{ kind: section.kind, body }] : []
+      }
       if (
         !PUBLIC_SECTION_KINDS.has(section.kind as DiscoveryUpdateSectionKind)
       ) {
@@ -150,6 +158,18 @@ function toPublicDiscoveryUpdate(
     changeCount: bodies.reduce((sum, body) => sum + countDiffChanges(body), 0),
     sections,
   }
+}
+
+function getPublicConfigRelatedChanges(body: string): string {
+  return extractDiffBlockSpans(body)
+    .filter(({ content }) => {
+      return (
+        CONTRACT_CREATED_RE.test(content) ||
+        CONTRACT_BECAME_VERIFIED_RE.test(content)
+      )
+    })
+    .map(({ start, end }) => body.slice(start, end))
+    .join('\n\n')
 }
 
 function getUpdateId(entry: DiffHistoryEntry): string {

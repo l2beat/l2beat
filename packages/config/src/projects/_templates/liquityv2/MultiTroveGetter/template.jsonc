@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "MultiTroveGetter",
+  "description": "A read-only helper that returns trove data in bulk, so front-ends and indexers can page through a branch's troves in a single call. It holds no funds and changes no state."
+}

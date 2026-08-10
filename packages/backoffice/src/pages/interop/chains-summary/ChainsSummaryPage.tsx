@@ -8,6 +8,8 @@ import { ErrorState } from '~/components/ErrorState'
 import { LoadingState } from '~/components/LoadingState'
 import { TablePageLayout } from '~/components/table/TablePageLayout'
 import { useBackendTrpc } from '~/react-query/trpc'
+import { TransferDataRangeSelect } from '../TransferDataRangeSelect'
+import { useTransferDataRange } from '../transferDataRange'
 import { ChainsSummaryTable } from './table/ChainsSummaryTable'
 import { getChainsSummaryRows, getSummaryStats } from './utils'
 
@@ -17,6 +19,7 @@ export function ChainsSummaryPage() {
   const stagingApi = useBackendTrpc('staging')
   const productionFrontend = useFrontendApi('production')
   const stagingFrontend = useFrontendApi('staging')
+  const [range, setRange] = useTransferDataRange()
 
   const productionBackend = useQuery(
     productionApi.interop.chains.summary.queryOptions(undefined, {
@@ -40,10 +43,10 @@ export function ChainsSummaryPage() {
   })
 
   const missingTokensQuery = useQuery(
-    trpc.interop.missingTokens.list.queryOptions(),
+    trpc.interop.missingTokens.list.queryOptions({ range }),
   )
   const suspiciousTransfersQuery = useQuery(
-    trpc.interop.activity.suspiciousTransfers.queryOptions(),
+    trpc.interop.activity.suspiciousTransfers.queryOptions({ range }),
   )
   const aggregatesQuery = useQuery(
     trpc.interop.aggregates.latest.queryOptions(),
@@ -57,6 +60,8 @@ export function ChainsSummaryPage() {
   ]
   const isLoading = sources.some(({ query }) => query.isLoading)
   const isFetching = sources.some(({ query }) => query.isFetching)
+  const isTransferDataFetching =
+    missingTokensQuery.isFetching || suspiciousTransfersQuery.isFetching
   const errors = sources.flatMap(({ label, query }) =>
     query.error instanceof Error ? [{ label, error: query.error }] : [],
   )
@@ -98,15 +103,22 @@ export function ChainsSummaryPage() {
       title="Chains summary"
       description="Interop chain enablement across production and staging frontends and backends."
       actions={
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={refetchAll}
-          disabled={isFetching}
-        >
-          <RefreshCwIcon className={isFetching ? 'animate-spin' : ''} />
-          Refresh
-        </Button>
+        <>
+          <TransferDataRangeSelect
+            value={range}
+            onValueChange={setRange}
+            disabled={isTransferDataFetching}
+          />
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={refetchAll}
+            disabled={isFetching}
+          >
+            <RefreshCwIcon className={isFetching ? 'animate-spin' : ''} />
+            Refresh
+          </Button>
+        </>
       }
       summary={
         <>

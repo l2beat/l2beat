@@ -1,3 +1,4 @@
-There is no general mechanism to force the sequencer to include a transaction.
-Forced inclusions are disabled in the current `MainnetInbox` implementation: `saveForcedInclusion()` always reverts and `propose()` only accepts zero forced inclusions.
-If the selected proposer is down or censoring, user transactions that are not included by the permissioned proposer remain non-included.
+Users can submit a forced inclusion directly to `MainnetInbox` on L1 by publishing a blob containing one L2 block manifest and calling `saveForcedInclusion()`.
+Requests are stored in a FIFO queue and cost a dynamic fee that starts at {{forcedInclusionBaseFee}}. The fee increases linearly with the queue size and doubles when {{forcedInclusionFeeDoubleThreshold}} requests are pending.
+After {{forcedInclusionDelay}}, a request is due. Every subsequent proposal must process the due requests at the head of the queue, up to ten per proposal, before the proposer's own derivation source. This prevents an active proposer from advancing the chain while selectively skipping a due request.
+However, `propose()` still unconditionally checks `PreconfWhitelist`. The configured {{configuredPermissionlessInclusionDelay}} permissionless inclusion threshold is not used, so users and other unpermissioned actors cannot process the queue themselves. If all whitelisted proposers stop, the queue and the whole chain stop progressing.

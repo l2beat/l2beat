@@ -26,6 +26,7 @@ export interface UpdatesSectionProps extends ProjectSectionProps {
 }
 
 const SECTION_TITLES = {
+  'config-related-changes': 'New and verified contracts',
   'initial-discovery': 'Initial discovery',
   'watched-changes': null,
 } satisfies Record<DiscoveryUpdate['sections'][number]['kind'], string | null>
@@ -135,9 +136,11 @@ function UpdatesPagination({
 export function UpdateCard({
   update,
   isSelected,
+  copyLinkPath,
 }: {
   update: DiscoveryUpdate
   isSelected: boolean
+  copyLinkPath?: string
 }) {
   return (
     <details
@@ -164,7 +167,7 @@ export function UpdateCard({
               </span>
               <CopyButton
                 toCopy={() =>
-                  `${window.location.origin}${window.location.pathname}?update=${update.id}`
+                  `${window.location.origin}${copyLinkPath ?? window.location.pathname}?update=${update.id}`
                 }
                 copyText="Copy link to update"
                 className="rounded-sm text-secondary hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"

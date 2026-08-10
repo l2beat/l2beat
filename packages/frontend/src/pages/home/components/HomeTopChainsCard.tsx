@@ -1,3 +1,4 @@
+import { formatDollarValueNumber } from '@l2beat/shared-pure'
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -17,11 +18,10 @@ import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPer
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
+import { TopNBadge } from '~/pages/interop/summary/components/TopNBadge'
 import { toTableRows } from '~/pages/scaling/summary/utils/toTableRows'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import type { TvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
-import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 
@@ -56,7 +56,8 @@ export function HomeTopChainsCard({ entries, tvsData }: Props) {
   return (
     <HomeCard className="flex h-full min-w-0 flex-col">
       <HomeCardHeader
-        title="Top chains"
+        title="Chains"
+        badge={<TopNBadge n={5} />}
         href="/scaling/summary"
         linkLabel="View all"
       />
@@ -151,32 +152,6 @@ function getHomeTopChainsColumns() {
         cellClassName: 'pl-3',
         tooltip:
           'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
-      },
-    }),
-    columnHelper.accessor('activity.pastDayUops', {
-      id: 'uops',
-      header: 'Past day UOPS',
-      cell: (ctx) => {
-        const data = ctx.row.original.activity
-        if (!data) {
-          return <NoDataBadge />
-        }
-        return (
-          <TableLink
-            href={`/scaling/activity?highlight=${ctx.row.original.slug}`}
-          >
-            <SyncStatusWrapper isSynced={data.isSynced}>
-              <ValueWithPercentageChange change={data.change}>
-                {formatActivityCount(ctx.getValue() ?? 0)}
-              </ValueWithPercentageChange>
-            </SyncStatusWrapper>
-          </TableLink>
-        )
-      },
-      meta: {
-        align: 'right',
-        tooltip:
-          'User operations per second averaged over the past day, shown together with a percentage change compared to 7D ago.',
       },
     }),
   ]

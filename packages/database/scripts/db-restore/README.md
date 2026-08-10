@@ -1,13 +1,13 @@
 # DB restore scripts
 
-Restore data from a remote database into your local DB, either by feature (`db-restore.sh`) or by individual tables (`table-restore.sh`).
+Restore data from a remote database into your local DB, either by feature (`db:restore`) or by individual tables (`db:restore-table`).
 
 > ⚠️ **These scripts wipe the affected local tables before restoring.** Be careful.
 
 ## Prerequisites
 
 1. Install the PostgreSQL client tools (`psql`, `pg_dump`, `pg_restore`) via the `postgres` or `libpq` package, and make sure they are on your `PATH`.
-2. Run the scripts from the package root (`packages/database`) — Prisma needs it.
+2. Run the commands from the package root (`packages/database`) — Prisma needs it.
 3. Add variables to a `.env` file in `packages/database`:
 
    ```
@@ -20,19 +20,27 @@ Restore data from a remote database into your local DB, either by feature (`db-r
 ## Restore by feature
 
 ```bash
-./scripts/db-restore/db-restore.sh <FEATURE>
+pnpm db:restore <FEATURE> [SINCE]
 ```
 
 Run without arguments to list the available features. Currently:
 `da`, `liveness`, `tvs`, `activity`, `shared`, `interop`, `interop-aggregates`, `token-db`, `tracked-txs`, `privacy`.
+
+`SINCE` is an optional cutoff (any Postgres-parseable timestamp, e.g. `2026-07-01`). Tables with a `timestamp` column only get rows where `timestamp >= SINCE`; tables without one (e.g. `IndexerState`, `IndexerConfiguration`) are still copied in full.
+
+```bash
+pnpm db:restore interop 2026-07-01
+```
+
+> Note: with `SINCE`, indexer state still reflects the full remote sync range, while older rows are missing locally — fine for working on the frontend/API, but backfills won't re-fetch the missing range.
 
 ## Restore by table
 
 Restore one or more specific tables:
 
 ```bash
-./scripts/db-restore/table-restore.sh IndexerState
-./scripts/db-restore/table-restore.sh IndexerState IndexerConfiguration
+pnpm db:restore-table IndexerState
+pnpm db:restore-table IndexerState IndexerConfiguration
 ```
 
 ## What the scripts do

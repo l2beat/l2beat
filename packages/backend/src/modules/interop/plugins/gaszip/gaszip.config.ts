@@ -127,6 +127,12 @@ export const GASZIP_NETWORKS = defineNetworks<GasZipNetwork>('gaszip', [
     customGas: true,
   }),
   gasZipNetwork({
+    chain: 'gnosis',
+    gaszipId: 16,
+    chainId: 100,
+    customGas: true,
+  }),
+  gasZipNetwork({
     chain: 'celo',
     gaszipId: 21,
     chainId: 42220,

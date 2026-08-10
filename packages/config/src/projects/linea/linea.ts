@@ -125,7 +125,7 @@ export const linea: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('lineaprover'),
+    zkCatalogIds: [ProjectId('lineaprover')],
   },
   config: {
     associatedTokens: ['LINEA'],

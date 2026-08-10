@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -15,6 +15,28 @@ export const thebinaryholdings: ScalingProject = opStackL2({
   addedAt: UnixTime(1726668186), // 2024-09-18T14:03:06Z
   archivedAt: UnixTime(1737676800), // 2025-01-24T00:00:00.000Z,
   discovery,
+  nonTemplateDaTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 20175709, // first batch of the original batcher
+      untilBlock: 21394748, // batcher rotation, last old-batcher batch @ 21308840
+      inbox: EthereumAddress('0xFF00000000000000000000000000000000000624'),
+      sequencers: [
+        EthereumAddress('0x7f9D9c1BCE1062E1077845eA39a0303429600a06'),
+      ],
+    },
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 21394748, // first batch of the rotated batcher
+      untilBlock: 22594787, // last batch, chain dormant since
+      inbox: EthereumAddress('0xFF00000000000000000000000000000000000624'),
+      sequencers: [
+        EthereumAddress('0x68d5BBf3a01ECbB47CE38Cf64a7d6C0eA618040f'),
+      ],
+    },
+  ],
   additionalBadges: [BADGES.RaaS.Zeeve],
   associatedTokens: ['BNRY'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],

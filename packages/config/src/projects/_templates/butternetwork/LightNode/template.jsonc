@@ -1,0 +1,70 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Butter MAP LightNode",
+  "category": "bridge-external",
+  "description": "Upgradeable MAP relay-chain light client used by Butter bridges. It verifies relay-chain headers with the stored BLS validator set and verifies receipt Merkle proofs against accepted headers. It is the destination-chain validation boundary for bridged messages.",
+  "ignoreMethods": ["epochs", "getEpoch", "getValidators", "proxiableUUID"],
+  "fields": {
+    "$admin": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the pending LightNode administrator or the VerifyTool used by proof verification."
+        }
+      ]
+    },
+    "verifyTool": {
+      "description": "VerifyTool contract used for header-signature and receipt Merkle-proof primitives. Replacing it changes the cryptographic validation logic used by the LightNode.",
+      "severity": "HIGH",
+      "type": "CODE_CHANGE"
+    },
+    "headerHeight": {
+      "description": "Highest MAP relay-chain header accepted by this LightNode. Receipt proofs outside the rolling verifiable range cannot be used by the Bridge.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "epochSize": {
+      "description": "Number of MAP relay-chain blocks in one LightNode epoch. It determines the required spacing between accepted validator-set checkpoints and the block-height boundaries used for header validation.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "epochSummary": {
+      "description": "Latest epoch stats (vali set size). Complicated handler because of the ring buffer.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "array",
+        "method": "function getEpoch(uint256 id) view returns (uint256 epoch, uint256 length)",
+        "indices": [
+          0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+          20, 21, 22, 23, 24, 25, 26, 27, 28, 29
+        ]
+      },
+      "edit": ["pipe", ["sort", ["get", "epoch"]], ["get", 29]]
+    },
+    "quorum": {
+      "description": "Signature threshold for the latest initialized LightNode epoch.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "array",
+        "method": "function epochs(uint256 id) view returns (uint256 epoch, uint256 quorum)",
+        "indices": [
+          0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+          20, 21, 22, 23, 24, 25, 26, 27, 28, 29
+        ]
+      },
+      "edit": ["pipe", ["sort", ["get", "epoch"]], ["get", 29, "quorum"]]
+    },
+    "verifiableHeaderRange": {
+      "description": "Current range of MAP relay-chain block heights accepted by the LightNode. The range is derived from the last accepted header and the configured epoch retention window.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getValidators": {
+      "description": "Stored BLS validator public keys used to authenticate MAP relay-chain headers. The active set and its 2/3-style threshold determine which relay-chain history the Bridge accepts.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}

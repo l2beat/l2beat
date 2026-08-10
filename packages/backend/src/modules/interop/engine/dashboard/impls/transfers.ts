@@ -3,6 +3,7 @@ import type {
   InteropTransferRecord,
   InteropTransfersDetailedStatsRecord,
   InteropTransfersStatsRecord,
+  InteropTransferTimeRange,
 } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
 import type { InteropBridgeType } from '@l2beat/shared-pure'
@@ -11,6 +12,7 @@ export interface InteropTransferFilters {
   plugin?: string
   srcChain?: string
   dstChain?: string
+  timeRange?: InteropTransferTimeRange
 }
 
 export interface InteropTransferDetailsRecord {
@@ -89,10 +91,11 @@ export async function getInteropTransferDetails(
 
 export async function getInteropTransferStats(
   db: Database,
+  timeRange?: InteropTransferTimeRange,
 ): Promise<InteropTransferStatsItem[]> {
   const [stats, detailedStats] = await Promise.all([
-    db.interopTransfer.getStats(),
-    db.interopTransfer.getDetailedStats(),
+    db.interopTransfer.getStats(timeRange),
+    db.interopTransfer.getDetailedStats(timeRange),
   ])
   const chainsByTransfer = new Map<
     string,

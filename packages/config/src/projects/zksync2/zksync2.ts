@@ -18,8 +18,8 @@ const chainId = 324
 const l1migrationTs = UnixTime(1769897051) // 2023-11-03T00:32:11Z
 
 // timestamp of the first executeBatchesSharedBridge trx on 0xdC26B08F0335b68721F64001C38b05D0BC9B539d
-const eraMultisigValidatorTs = UnixTime(1777393175)
-const eraMultisigValidatorBlock = 24979712 // block with timestamp eraMultisigValidatorTs
+const eraMultisigValidatorTs = UnixTime(1777393451)
+const eraMultisigValidatorBlock = 24979735 // block with timestamp eraMultisigValidatorTs
 
 export const zksync2: ScalingProject = zkStackL2({
   chainId,
@@ -134,6 +134,9 @@ export const zksync2: ScalingProject = zkStackL2({
       sequencers: [
         '0x14F19299476664665eDa17DBb7dA7e62E3253aa8',
         '0x7d95f0B9D3383D58E39a75a67760aA2153D355A2',
+        '0xc75cDcBEef3aE3365ABF0217815748586F9047F1',
+        '0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7',
+        '0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd',
       ],
     },
     {
@@ -144,6 +147,8 @@ export const zksync2: ScalingProject = zkStackL2({
       sequencers: [
         '0xa90c7CDB553332948E2943431436117eCFb1e781',
         '0x28942E6870612893B96F77De0F485fcE3497AAA8',
+        '0xc75cDcBEef3aE3365ABF0217815748586F9047F1',
+        '0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd',
       ],
     },
   ],

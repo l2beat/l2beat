@@ -5,6 +5,8 @@
     "../projects/shared-polygon-cdk/entrypoints.json",
     "../projects/shared-eigenlayer/entrypoints.json",
     "../projects/blobstream/entrypoints.json",
-    "../projects/vector/entrypoints.json"
+    "../projects/vector/entrypoints.json",
+    "../projects/shared-sp1/entrypoints.json",
+    "../projects/chainlink/entrypoints.json"
   ]
 }

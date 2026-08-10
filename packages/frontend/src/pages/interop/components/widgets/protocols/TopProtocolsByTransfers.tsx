@@ -1,5 +1,5 @@
+import { formatInteger } from '@l2beat/shared-pure'
 import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { TopProtocolsWidget } from './TopProtocolsWidget'
 
 export function TopProtocolsByTransfers({

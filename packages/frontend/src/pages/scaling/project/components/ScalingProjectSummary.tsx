@@ -1,3 +1,4 @@
+import { formatActivityCount, formatCurrency } from '@l2beat/shared-pure'
 import type { HTMLAttributes } from 'react'
 import {
   AdditionalTrustAssumptionsBanner,
@@ -28,8 +29,6 @@ import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { InteropTopItems } from '~/pages/interop/components/top-items/TopItems'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { cn } from '~/utils/cn'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { ProjectScalingRosette } from './ScalingProjectRosette'
 import { ProjectScalingStats } from './ScalingProjectStats'
 

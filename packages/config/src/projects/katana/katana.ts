@@ -89,7 +89,7 @@ export const katana: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('sp1turbo'),
+    zkCatalogIds: [ProjectId('sp1turbo')],
   },
   config: {
     trackedTxs: [

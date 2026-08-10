@@ -1,5 +1,5 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 export type TokenFlowDisplayData = {
   srcChain: {
