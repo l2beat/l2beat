@@ -70,7 +70,9 @@ const NODE_RADIUS = 7
 const NODE_HOVER_RADIUS = 8.5
 export const NODE_RING_RADIUS = 12
 const NODE_LABEL_FONT_SIZE = 11
-const NODE_LABEL_OFFSET_Y = -12
+const NODE_CHAIN_LABEL_FONT_SIZE = 9
+/** The chain subtitle keeps the old label position, directly above the node. */
+const NODE_CHAIN_LABEL_OFFSET_Y = -12
 /** Below this on-screen font size node labels are illegible — skip them. */
 const NODE_LABEL_MIN_FONT_SIZE = 8
 const RELATION_LABEL_MIN_SCALE = 2.5
@@ -84,12 +86,6 @@ const CLUSTER_LABEL_FONT_SIZE = 16
  */
 const CLUSTER_LABEL_GROWTH_START_SCALE = 0.7
 const CLUSTER_LABEL_MAX_GROWTH = 3
-/**
- * Screen distance from the topmost node's center up to the cluster label.
- * Scaled like node geometry, it clears the node disc and its label (which
- * both scale the same way) at every zoom level.
- */
-const CLUSTER_LABEL_CLEARANCE = 34
 /** Where along a directional link its arrow sits. */
 const ARROW_POSITION = 0.65
 const ARROW_LENGTH = 6
@@ -258,20 +254,53 @@ function drawNodeLabels(
   view: RelationGraphViewState,
 ) {
   const { camera, focus, hovered, theme } = view
-  const visualScale = nodeVisualScreenScale(camera.k)
-  const fontSize = NODE_LABEL_FONT_SIZE * visualScale
+  const layout = getNodeLabelLayout(camera.k)
   // Zoomed out, labels are only kept for the hovered and focused nodes — a
   // handful — clamped up to stay legible; cluster labels carry that view.
-  const showAll = fontSize >= NODE_LABEL_MIN_FONT_SIZE
-  if (!showAll && hovered === undefined && focus === undefined) return
+  if (!layout.showAll && hovered === undefined && focus === undefined) return
 
-  ctx.font = `600 ${Math.max(fontSize, NODE_LABEL_MIN_FONT_SIZE)}px ${theme.fontFamily}`
   ctx.textAlign = 'center'
   ctx.textBaseline = 'alphabetic'
   ctx.lineJoin = 'round'
-  ctx.lineWidth = Math.max(3 * visualScale, 2)
+  ctx.lineWidth = Math.max(3 * layout.labelScale, 2)
   ctx.strokeStyle = theme.background
   ctx.fillStyle = theme.foreground
+
+  drawNodeLabelLine(
+    ctx,
+    scene,
+    view,
+    layout.showAll,
+    `600 ${layout.symbolFontSize}px ${theme.fontFamily}`,
+    layout.symbolLabelOffsetY,
+    (node) => node.label,
+    1,
+  )
+  drawNodeLabelLine(
+    ctx,
+    scene,
+    view,
+    layout.showAll,
+    `500 ${layout.chainFontSize}px ${theme.fontFamily}`,
+    layout.chainLabelOffsetY,
+    (node) => node.data.chain,
+    0.8,
+  )
+  ctx.globalAlpha = 1
+}
+
+function drawNodeLabelLine(
+  ctx: CanvasRenderingContext2D,
+  scene: RelationGraphScene,
+  view: RelationGraphViewState,
+  showAll: boolean,
+  font: string,
+  offsetY: number,
+  text: (node: SceneNode) => string,
+  opacity: number,
+) {
+  const { camera, focus, hovered } = view
+  ctx.font = font
   for (const node of scene.nodes) {
     const id = node.data.id
     const emphasized =
@@ -282,12 +311,46 @@ function drawNodeLabels(
     const y = node.y * camera.k + camera.y
     if (isPointOutsideViewport(x, y, view)) continue
 
-    ctx.globalAlpha = focus === undefined || focus.nodeIds.has(id) ? 1 : 0.12
-    const labelY = y + NODE_LABEL_OFFSET_Y * visualScale
-    ctx.strokeText(node.label, x, labelY)
-    ctx.fillText(node.label, x, labelY)
+    const focusOpacity = focus === undefined || focus.nodeIds.has(id) ? 1 : 0.12
+    ctx.globalAlpha = focusOpacity * opacity
+    const labelY = y + offsetY
+    const label = text(node)
+    ctx.strokeText(label, x, labelY)
+    ctx.fillText(label, x, labelY)
   }
-  ctx.globalAlpha = 1
+}
+
+function getNodeLabelLayout(scale: number) {
+  const visualScale = nodeVisualScreenScale(scale)
+  const naturalSymbolFontSize = NODE_LABEL_FONT_SIZE * visualScale
+  // Focused labels remain legible even when the graph is zoomed far out. Use
+  // the same minimum scale for their offsets so the two lines do not overlap.
+  const labelScale = Math.max(
+    visualScale,
+    NODE_LABEL_MIN_FONT_SIZE / NODE_LABEL_FONT_SIZE,
+  )
+  const symbolFontSize = Math.max(
+    naturalSymbolFontSize,
+    NODE_LABEL_MIN_FONT_SIZE,
+  )
+  const chainFontSize = Math.max(
+    NODE_CHAIN_LABEL_FONT_SIZE * visualScale,
+    NODE_LABEL_MIN_FONT_SIZE,
+  )
+  const chainLabelOffsetY = NODE_CHAIN_LABEL_OFFSET_Y * labelScale
+  const symbolLabelOffsetY = chainLabelOffsetY - chainFontSize - labelScale
+
+  return {
+    showAll: naturalSymbolFontSize >= NODE_LABEL_MIN_FONT_SIZE,
+    labelScale,
+    symbolFontSize,
+    chainFontSize,
+    chainLabelOffsetY,
+    symbolLabelOffsetY,
+    // The cluster heading uses a bottom baseline. Keep it above the symbol's
+    // approximate em box plus the same gap used between the two node lines.
+    clusterClearance: -symbolLabelOffsetY + symbolFontSize + labelScale,
+  }
 }
 
 function drawClusterLabels(
@@ -299,7 +362,7 @@ function drawClusterLabels(
   const opacity = getClusterLabelOpacity(camera.k)
   if (opacity === 0) return
 
-  const clearance = CLUSTER_LABEL_CLEARANCE * nodeVisualScreenScale(camera.k)
+  const clearance = getNodeLabelLayout(camera.k).clusterClearance
   const fontSize =
     CLUSTER_LABEL_FONT_SIZE *
     Math.min(
