@@ -103,7 +103,7 @@ export function CompareMetricLineChart({
 
   return (
     <div className="flex flex-col">
-      <div className="mt-1 mb-2">
+      <div className="mt-3 mb-2">
         <ChartTimeRange timeRange={timeRange} />
       </div>
       <ChartContainer
