@@ -13,11 +13,18 @@ import { CloseIcon } from '~/icons/Close'
 import { PlusIcon } from '~/icons/Plus'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
 import { cn } from '~/utils/cn'
+import type { CompareMetric } from '../metrics/types'
 import { MAX_COMPARE_PROJECTS } from '../utils/compareChartState'
 import { useCompareSeries } from './CompareSeriesContext'
 
 interface Props {
   allProjects: CompareProjectEntry[]
+  /**
+   * The active metric, for marking projects it has no data for. The chips
+   * double as the chart legend, so the "no data" note lives here instead of
+   * an empty series in the chart.
+   */
+  metric: CompareMetric
   /**
    * The effective selection shown on the chart: the explicit URL selection,
    * or the top-N defaults when nothing is selected. Editing it always emits
@@ -33,6 +40,7 @@ interface Props {
 
 export function CompareProjectPicker({
   allProjects,
+  metric,
   selectedProjects,
   isDefaultSelection,
   onChange,
@@ -48,6 +56,8 @@ export function CompareProjectPicker({
 
   const selectedSlugs = selectedProjects.map((project) => project.slug)
   const atCap = selectedSlugs.length >= MAX_COMPARE_PROJECTS
+  const hasMetricData = metric.hasData ?? (() => true)
+  const noDataLabel = metric.noDataLabel ?? 'No data'
 
   const filteredProjects = useMemo(() => {
     const pinned = new Set(pinnedSlugs)
@@ -100,20 +110,38 @@ export function CompareProjectPicker({
           onFocus={() => setHoveredProjectId(project.id)}
           onBlur={() => setHoveredProjectId(undefined)}
           className="flex h-7 items-center gap-1.5 rounded-full border border-divider bg-surface-primary primary-card:bg-surface-secondary py-1 pr-1.5 pl-1"
-          style={{ borderColor: colors[project.id] }}
+          // The ring makes the chip strip double as the chart's color key,
+          // so it must show exactly the series color the chart uses - and no
+          // color at all when the metric has no series for the project.
+          style={
+            hasMetricData(project)
+              ? { borderColor: colors[project.id] }
+              : undefined
+          }
         >
-          {/* The ring makes the chip strip double as the chart's color key,
-              so it must show exactly the series color the chart uses. */}
           <img
             src={project.iconUrl}
             alt=""
             width={18}
             height={18}
-            className="size-[18px] rounded-full"
+            className={cn(
+              'size-[18px] rounded-full',
+              !hasMetricData(project) && 'opacity-50',
+            )}
           />
-          <span className="font-medium text-sm leading-none">
+          <span
+            className={cn(
+              'font-medium text-sm leading-none',
+              !hasMetricData(project) && 'text-secondary',
+            )}
+          >
             {project.shortName ?? project.name}
           </span>
+          {!hasMetricData(project) && (
+            <span className="font-medium text-2xs text-secondary leading-none">
+              {noDataLabel}
+            </span>
+          )}
           <button
             type="button"
             aria-label={`Remove ${project.name}`}
@@ -196,6 +224,11 @@ export function CompareProjectPicker({
                   <span className="font-medium text-sm leading-none tracking-[-1%]">
                     {project.name}
                   </span>
+                  {!hasMetricData(project) && (
+                    <span className="ml-auto font-medium text-2xs text-secondary">
+                      {noDataLabel}
+                    </span>
+                  )}
                 </CommandItem>
               )
             })}

@@ -1,15 +1,18 @@
 import {
   COMPARE_ACTIVITY_UNITS,
+  COMPARE_COSTS_UNITS,
   COMPARE_METRIC_IDS,
   COMPARE_RANGE_OPTIONS,
   COMPARE_TVS_UNITS,
   type CompareActivityUnit,
   type CompareChartState,
+  type CompareCostsUnit,
   type CompareMetricId,
   type CompareRange,
   type CompareRangeOption,
   type CompareTvsUnit,
   DEFAULT_COMPARE_ACTIVITY_UNIT,
+  DEFAULT_COMPARE_COSTS_UNIT,
   DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS,
   DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS,
   DEFAULT_COMPARE_METRIC,
@@ -31,8 +34,10 @@ export function parseCompareStateFromSearchParams({
   searchParams: URLSearchParams
   validSlugs: string[]
 }): CompareChartState {
+  const metric = parseMetric(searchParams.get('metric'))
+  const unit = searchParams.get('unit')
   return {
-    metric: parseMetric(searchParams.get('metric')),
+    metric,
     projects: parseProjects(searchParams.get('projects'), validSlugs),
     range: parseRange(searchParams.get('range')),
     scale:
@@ -41,10 +46,17 @@ export function parseCompareStateFromSearchParams({
       searchParams.get('mode') === 'indexed'
         ? 'indexed'
         : DEFAULT_COMPARE_VIEW_MODE,
-    // The `unit` param is shared between metrics; the value sets are
-    // disjoint, so each metric picks up only its own units.
-    activityUnit: parseActivityUnit(searchParams.get('unit')),
-    tvsUnit: parseTvsUnit(searchParams.get('unit')),
+    // The `unit` param is shared between metrics and only encoded for the
+    // active one, so it is only applied to the active metric here - the
+    // value sets overlap (usd/eth), and without the gate a costs URL would
+    // leak its unit into the TVS control.
+    activityUnit:
+      metric === 'activity'
+        ? parseActivityUnit(unit)
+        : DEFAULT_COMPARE_ACTIVITY_UNIT,
+    tvsUnit: metric === 'tvs' ? parseTvsUnit(unit) : DEFAULT_COMPARE_TVS_UNIT,
+    costsUnit:
+      metric === 'costs' ? parseCostsUnit(unit) : DEFAULT_COMPARE_COSTS_UNIT,
     excludeAssociatedTokens: parseBoolean(
       searchParams.get('excludeAssociated'),
       DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS,
@@ -69,6 +81,11 @@ function parseActivityUnit(value: string | null): CompareActivityUnit {
 function parseTvsUnit(value: string | null): CompareTvsUnit {
   const unit = COMPARE_TVS_UNITS.find((unit) => unit === value)
   return unit ?? DEFAULT_COMPARE_TVS_UNIT
+}
+
+function parseCostsUnit(value: string | null): CompareCostsUnit {
+  const unit = COMPARE_COSTS_UNITS.find((unit) => unit === value)
+  return unit ?? DEFAULT_COMPARE_COSTS_UNIT
 }
 
 function parseBoolean(value: string | null, defaultValue: boolean): boolean {
