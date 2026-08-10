@@ -14,6 +14,9 @@ export type CompareMetricId = (typeof COMPARE_METRIC_IDS)[number]
 export const COMPARE_ACTIVITY_UNITS = ['uops', 'tps'] as const
 export type CompareActivityUnit = (typeof COMPARE_ACTIVITY_UNITS)[number]
 
+export const COMPARE_VIEW_MODES = ['absolute', 'indexed'] as const
+export type CompareViewMode = (typeof COMPARE_VIEW_MODES)[number]
+
 export const COMPARE_RANGE_OPTIONS = [
   '7d',
   '30d',
@@ -33,6 +36,8 @@ export interface CompareChartState {
   projects: string[]
   range: CompareRange
   scale: ChartScale
+  /** Absolute values or every series rebased to 100 at range start. */
+  mode: CompareViewMode
   /** Per-metric control of the activity metric; ignored elsewhere. */
   activityUnit: CompareActivityUnit
 }
@@ -46,6 +51,7 @@ export interface CompareClientState {
   metric: CompareMetricId
   projects: string[]
   scale: ChartScale
+  mode: CompareViewMode
   activityUnit: CompareActivityUnit
   chartRange: ChartRange
 }
@@ -57,6 +63,7 @@ export function toCompareUrlState(
     metric: state.metric,
     projects: state.projects,
     scale: state.scale,
+    mode: state.mode,
     activityUnit: state.activityUnit,
     range: chartRangeToCompareRange(state.chartRange),
   }
@@ -70,6 +77,7 @@ export function toCompareClientState(
     metric: state.metric,
     projects: state.projects,
     scale: state.scale,
+    mode: state.mode,
     activityUnit: state.activityUnit,
     chartRange,
   }
@@ -78,6 +86,7 @@ export function toCompareClientState(
 export const DEFAULT_COMPARE_METRIC: CompareMetricId = 'tvs'
 export const DEFAULT_COMPARE_RANGE: CompareRangeOption = '1y'
 export const DEFAULT_COMPARE_SCALE: ChartScale = 'linear'
+export const DEFAULT_COMPARE_VIEW_MODE: CompareViewMode = 'absolute'
 export const DEFAULT_COMPARE_ACTIVITY_UNIT: CompareActivityUnit = 'uops'
 export const MAX_COMPARE_PROJECTS = 10
 export const DEFAULT_COMPARE_PROJECTS_COUNT = 5
@@ -114,7 +123,10 @@ export function isSameCompareState(
 ): boolean {
   return (
     left.metric === right.metric &&
-    left.scale === right.scale &&
+    left.mode === right.mode &&
+    // The scale toggle is hidden in indexed mode, so two states that differ
+    // solely by a hidden scale map to the same URL.
+    (left.mode === 'indexed' || left.scale === right.scale) &&
     // The unit is only encoded for the activity metric, so two states that
     // differ solely by a hidden unit map to the same URL.
     (left.metric !== 'activity' || left.activityUnit === right.activityUnit) &&
