@@ -1602,5 +1602,7 @@
   "static/icons/umbra.png": "8b47b89257e3f1aaf2d5c2e9a46abd3f",
   "static/meta-images/privacy/projects/umbra/opengraph-image.png": "103c3e0d6a28e560431d7bf99088555d",
   "static/meta-images/interop/projects/butternetwork/opengraph-image.png": "1e64ddc0355ca0572d66233a42a5a6c0",
-  "static/icons/butternetwork.png": "d703eb0a0ad7bd2e852192bdb4adc769"
+  "static/icons/butternetwork.png": "d703eb0a0ad7bd2e852192bdb4adc769",
+  "static/meta-images/publications/privacy-page-banner-vertical.png": "fb148abe3b9006f56d53e26ead741cbc",
+  "static/meta-images/publications/privacy-page-banner.png": "11442ded6dc5de66cc9f84afe0399187"
 }
