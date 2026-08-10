@@ -1,13 +1,20 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { env } from '~/env'
 import { ps } from '~/server/projects'
-import { getSearchBarProjects } from './getSearchBarProjects'
+import { getSearchBarEntries } from './getSearchBarEntries'
 
-describe(getSearchBarProjects.name, () => {
+describe(getSearchBarEntries.name, () => {
   const originalGetProjects = ps.getProjects.bind(ps)
+  const originalMock = env.MOCK
+
+  beforeEach(() => {
+    env.MOCK = true
+  })
 
   afterEach(() => {
     ps.getProjects = originalGetProjects
+    env.MOCK = originalMock
   })
 
   it('keeps only direct project matches when they exist', async () => {
@@ -19,7 +26,7 @@ describe(getSearchBarProjects.name, () => {
         daBridgeProject('enshrined-bridge', 'Enshrined Bridge', 'ethereum'),
       ] as never
 
-    const result = await getSearchBarProjects('ethere')
+    const result = await getSearchBarEntries('ethere')
 
     expect(result.map((entry) => entry.name)).toEqual([
       'Ethereal',
@@ -35,10 +42,22 @@ describe(getSearchBarProjects.name, () => {
     ps.getProjects = async () =>
       [scalingProject('jetstreamchain', 'Jetstream')] as never
 
-    const result = await getSearchBarProjects('jtsrm')
+    const result = await getSearchBarEntries('jtsrm')
 
     expect(result.map((entry) => entry.name)).toEqual(['Jetstream'])
     expect(result[0]?.searchMatchKind).toEqual('fuzzy')
+  })
+
+  it('allows searching interop tokens by symbol', async () => {
+    ps.getProjects = async () => [] as never
+
+    const result = await getSearchBarEntries('usdc')
+
+    expect(result).toHaveLength(1)
+    expect(result[0]?.type).toEqual('token')
+    expect(result[0]?.category).toEqual('tokens')
+    expect(result[0]?.name).toEqual('USDC')
+    expect(result[0]?.searchMatchKind).toEqual('direct')
   })
 })
 
