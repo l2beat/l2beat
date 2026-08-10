@@ -2736,6 +2736,158 @@
       "wormhole-ntt.Transfer"
     ]
   },
+  "wormhole-ntt-multitransceiver": {
+    "description": "NTT transfer completed by the second of two transceivers",
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      // Source: burn wstETH on BSC and send the NTT message.
+      {
+        "chain": "bsc",
+        "tx": "0x30660a3957f5a8856f6fd58e779994d3dab3e2ee450e42782b0bbe46e0192f62"
+      },
+      // Destination attestation 1/2: Wormhole, without token redemption.
+      {
+        "chain": "ethereum",
+        "tx": "0x88a464caf07a9fb9ac15108eefeb53940b14894a8501de18dda3ec15c376b69b"
+      },
+      // Destination attestation 2/2: Axelar, followed by the wstETH redemption.
+      {
+        "chain": "ethereum",
+        "tx": "0xb8bc02b3a333daa7deaf7e2124dcbe36050fa6109b91fc8e445029dec10b8ca3"
+      }
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "wormhole-ntt.Transfer",
+          "plugin": "wormhole-ntt",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "event": {
+              "ctx": {
+                "chain": "bsc",
+                "txHash": "0x30660a3957f5a8856f6fd58e779994d3dab3e2ee450e42782b0bbe46e0192f62"
+              }
+            },
+            "tokenAddress": "0x00000000000000000000000026c5e01524d2e6280a48f2c50ff6de7e52e9611c",
+            "tokenAmount": "562738060000000000",
+            "wasBurned": true,
+            "financials": { "symbol": "wstETH" }
+          },
+          "dst": {
+            "event": {
+              "ctx": {
+                "chain": "ethereum",
+                "txHash": "0xb8bc02b3a333daa7deaf7e2124dcbe36050fa6109b91fc8e445029dec10b8ca3"
+              }
+            },
+            "tokenAddress": "0x0000000000000000000000007f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+            "tokenAmount": "562738060000000000",
+            "wasMinted": false,
+            "financials": { "symbol": "wstETH" }
+          }
+        }
+      ]
+    }
+  },
+  "wormhole-ntt-lock-and-mint-batch": {
+    "description": "NTT lock-and-mint transfer redeemed inside a batched transaction",
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      // Source: lock L3 on Ethereum.
+      {
+        "chain": "ethereum",
+        "tx": "0x1c29a8aca3207cadc00833d714f1843bbaf96bf90b7c3d65bb94e8935b4ee0c0"
+      },
+      // Destination: mint L3 on Polygon around log index 1500.
+      {
+        "chain": "polygonpos",
+        "tx": "0x56bc1193ca8c8e2e5def6d68a8f8ec832aef9b941bbd8c1cd38eafd8b9efca28"
+      }
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "wormhole-ntt.Transfer",
+          "plugin": "wormhole-ntt",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "event": {
+              "ctx": {
+                "chain": "ethereum",
+                "txHash": "0x1c29a8aca3207cadc00833d714f1843bbaf96bf90b7c3d65bb94e8935b4ee0c0"
+              }
+            },
+            "tokenAddress": "0x00000000000000000000000088909d489678dd17aa6d9609f89b0419bf78fd9a",
+            "tokenAmount": "1533883220100000000000",
+            "wasBurned": false,
+            "financials": { "symbol": "L3" }
+          },
+          "dst": {
+            "event": {
+              "ctx": {
+                "chain": "polygonpos",
+                "txHash": "0x56bc1193ca8c8e2e5def6d68a8f8ec832aef9b941bbd8c1cd38eafd8b9efca28"
+              }
+            },
+            "tokenAddress": "0x00000000000000000000000046777c76dbbe40fabb2aab99e33ce20058e76c59",
+            "tokenAmount": "1533883220100000000000",
+            "wasMinted": true,
+            "financials": { "symbol": "L3" }
+          }
+        }
+      ]
+    }
+  },
+  "wormhole-ntt-burn-and-unlock-batch": {
+    "description": "NTT burn-and-unlock transfer redeemed inside a batched transaction",
+    "loadConfigs": ["wormhole"],
+    "txs": [
+      // Source: burn L3 on Base.
+      {
+        "chain": "base",
+        "tx": "0x84a6408f4cc51ff041534826b6b22fe1670f79c0d9e8c2960a899e8efc263e4e"
+      },
+      // Destination: unlock L3 on Ethereum around log index 1085.
+      {
+        "chain": "ethereum",
+        "tx": "0x4345b8f05901cf596e47044a084045512643fae181dd4da8dd69892fa14ba1c3"
+      }
+    ],
+    "expects": {
+      "transfers": [
+        {
+          "type": "wormhole-ntt.Transfer",
+          "plugin": "wormhole-ntt",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "event": {
+              "ctx": {
+                "chain": "base",
+                "txHash": "0x84a6408f4cc51ff041534826b6b22fe1670f79c0d9e8c2960a899e8efc263e4e"
+              }
+            },
+            "tokenAddress": "0x00000000000000000000000046777c76dbbe40fabb2aab99e33ce20058e76c59",
+            "tokenAmount": "14494200000000000000000",
+            "wasBurned": true,
+            "financials": { "symbol": "L3" }
+          },
+          "dst": {
+            "event": {
+              "ctx": {
+                "chain": "ethereum",
+                "txHash": "0x4345b8f05901cf596e47044a084045512643fae181dd4da8dd69892fa14ba1c3"
+              }
+            },
+            "tokenAddress": "0x00000000000000000000000088909d489678dd17aa6d9609f89b0419bf78fd9a",
+            "tokenAmount": "14494200000000000000000",
+            "wasMinted": false,
+            "financials": { "symbol": "L3" }
+          }
+        }
+      ]
+    }
+  },
   "wormhole-nttonesided": {
     "loadConfigs": ["wormhole"],
     "txs": [
