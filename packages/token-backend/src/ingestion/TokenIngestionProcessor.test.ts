@@ -1232,6 +1232,77 @@ describe(TokenIngestionProcessor.name, () => {
       expect(remove).toHaveBeenCalledWith(queueEntry(address))
     })
 
+    it('skips the write when the address was denylisted after planning', async () => {
+      // plan() consults the denylist, but fetch() makes slow external calls —
+      // an operator can denylist the address in between. The write
+      // transaction rechecks, so no token is created next to its ban.
+      const address = token('ethereum', '0xaaa')
+      const neighbor = token('base', '0xbbb')
+      const insert = mockFn().resolvesTo(undefined)
+      const enqueue = mockFn().resolvesTo(undefined)
+      const remove = mockFn().resolvesTo(1)
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: mockObject<TokenDatabase['tokenDenylist']>({
+            findByChainAndAddress: mockFn().resolvesTo({
+              ...address,
+              reason: 'test token',
+              createdAt: UnixTime(1),
+            }),
+          }),
+          transaction: async (callback) => await callback(),
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+            insert,
+          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              enqueue,
+              remove,
+            },
+          ),
+        }),
+      })
+
+      const trace: IngestionTrace = {
+        id: 'ing_test',
+        address,
+        existingDeployedToken: undefined,
+        steps: [],
+        outcome: {
+          kind: 'write',
+          newAbstractToken: undefined,
+          deployedToken: {
+            type: 'insert',
+            record: {
+              ...address,
+              abstractTokenId: 'USDC01',
+              symbol: 'USDC',
+              decimals: 6,
+              deploymentTimestamp: UnixTime(1),
+              comment: null,
+              metadata: null,
+              abstractTokenAssignmentProof: { kind: 'coingecko' },
+            },
+          },
+          neighborsToEnqueue: [neighbor],
+        },
+      }
+
+      const result = await processor.apply(queueEntry(address), trace)
+
+      expect(insert).toHaveBeenCalledTimes(0)
+      expect(enqueue).toHaveBeenCalledTimes(0)
+      expect(remove).toHaveBeenCalledWith(queueEntry(address))
+      expect(result.outcome).toEqual({
+        kind: 'skip',
+        reason: 'Address is denylisted: test token',
+      })
+      expect(result.steps).toEqual([
+        { kind: 'token-denylisted', reason: 'test token' },
+      ])
+    })
+
     it('throws when called with a pending outcome', async () => {
       const processor = createProcessor({})
       const trace: IngestionTrace = {

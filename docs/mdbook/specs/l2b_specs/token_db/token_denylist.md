@@ -80,8 +80,15 @@ Five entry points, all additive "if banned → skip/refuse" checks:
    short-circuits to a terminal `skip` with a `token-denylisted` trace
    step. The queue entry is removed; nothing is resolved, written, or
    propagated. Enqueueing a denylisted address is always harmless.
+   Because `fetch()` makes slow external calls, `apply()` rechecks the
+   denylist inside the same serializable transaction as the write — an
+   address denylisted between planning and applying is skipped, not
+   written next to its own ban.
 2. **Relation ingestion** — transfers with a denylisted endpoint are not
-   turned into relations (see below).
+   turned into relations (see below). The denylist is read inside each
+   batch's serializable write transaction, never cached for a whole run,
+   so an address denylisted mid-run cannot slip back in with a later
+   batch.
 3. **The add path** — `planAddDeployedToken` refuses denylisted addresses,
    and the `deployedTokens.checks` route returns a `denylisted` error so
    the add form blocks before a plan is even attempted.

@@ -64,16 +64,17 @@ describe(TokenRelationIngestion.name, () => {
     expect(set).toHaveBeenCalledWith({ key: CURSOR_KEY, value: '12' })
   })
 
-  it('commits all new relations of a batch in a single transaction', async () => {
+  it('commits all new relations of a batch in a single serializable transaction', async () => {
     const events: string[] = []
     const insert = mockFn().executes(async () => {
       events.push('insert')
     })
     const transaction = mockFn().executes(
-      async (callback: () => Promise<void>) => {
-        events.push('begin')
-        await callback()
+      async (callback: () => Promise<unknown>, isolation?: string) => {
+        events.push(`begin:${isolation}`)
+        const result = await callback()
         events.push('commit')
+        return result
       },
     )
     const getAfterSerialId = mockFn()
@@ -98,7 +99,7 @@ describe(TokenRelationIngestion.name, () => {
 
     await ingestion.runOnce()
 
-    expect(events).toEqual(['begin', 'insert', 'insert', 'commit'])
+    expect(events).toEqual(['begin:serializable', 'insert', 'insert', 'commit'])
   })
 
   it('creates relations without ever consulting the token catalogue', async () => {
@@ -152,6 +153,50 @@ describe(TokenRelationIngestion.name, () => {
     expect(insert).toHaveBeenCalledTimes(1)
     const inserted = insert.calls[0]?.args[0] as TokenRelationRecord
     expect(evidenceTransferId(inserted)).toEqual('regular')
+  })
+
+  it('honors a denylist entry added while a run is in progress', async () => {
+    // The denylist is read inside every batch's write transaction — a run
+    // processes up to 50 pages, so a run-level snapshot could go stale and
+    // re-insert a relation right after a denylist plan deleted it.
+    const insert = mockFn().resolvesTo(undefined)
+    const denylistGetAll = mockFn()
+      .resolvesToOnce([])
+      .resolvesToOnce([
+        {
+          chain: 'base',
+          address: token('0xbbb'),
+          reason: 'test token',
+          createdAt: UnixTime(1),
+        },
+      ])
+
+    const ingestion = createIngestion({
+      getAfterSerialId: mockFn()
+        .resolvesToOnce({
+          latestSerialId: '1',
+          transfers: [transfer({ transferId: 'before-denylisting' })],
+        })
+        .resolvesToOnce({
+          latestSerialId: '2',
+          transfers: [
+            transfer({
+              transferId: 'after-denylisting',
+              plugin: 'other-plugin',
+            }),
+          ],
+        })
+        .resolvesToOnce(emptyBatch()),
+      insert,
+      denylistGetAll,
+    })
+
+    await ingestion.runOnce()
+
+    expect(denylistGetAll).toHaveBeenCalledTimes(2)
+    expect(insert).toHaveBeenCalledTimes(1)
+    const inserted = insert.calls[0]?.args[0] as TokenRelationRecord
+    expect(evidenceTransferId(inserted)).toEqual('before-denylisting')
   })
 
   it('records one relation for both observed directions of a lock-and-mint route', async () => {
@@ -581,6 +626,7 @@ function createIngestion(opts: {
   set?: ReturnType<typeof mockFn>
   transaction?: ReturnType<typeof mockFn>
   denylisted?: { chain: string; address: string }[]
+  denylistGetAll?: ReturnType<typeof mockFn>
 }) {
   const db = mockObject<Database>({
     interopTransfer: mockObject<Database['interopTransfer']>({
@@ -590,13 +636,15 @@ function createIngestion(opts: {
   })
   const tokenDb = mockObject<TokenDatabase>({
     tokenDenylist: mockObject<TokenDatabase['tokenDenylist']>({
-      getAll: mockFn().resolvesTo(
-        (opts.denylisted ?? []).map((entry) => ({
-          ...entry,
-          reason: 'test token',
-          createdAt: UnixTime(1),
-        })),
-      ),
+      getAll:
+        opts.denylistGetAll ??
+        mockFn().resolvesTo(
+          (opts.denylisted ?? []).map((entry) => ({
+            ...entry,
+            reason: 'test token',
+            createdAt: UnixTime(1),
+          })),
+        ),
     }),
     transaction: (opts.transaction ??
       (async (callback) => await callback())) as TokenDatabase['transaction'],

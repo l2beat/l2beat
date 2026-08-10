@@ -123,8 +123,7 @@ export class TokenIngestionProcessor {
   ): Promise<IngestionTrace> {
     const planned = await this.plan(entry, transferIndex)
     const trace = await this.fetch(planned)
-    await this.apply(entry, trace)
-    return trace
+    return await this.apply(entry, trace)
   }
 
   async plan(
@@ -346,23 +345,23 @@ export class TokenIngestionProcessor {
   async apply(
     entry: TokenIngestionQueueRecord,
     trace: IngestionTrace,
-  ): Promise<void> {
+  ): Promise<IngestionTrace> {
     const { outcome } = trace
     const queue = this.deps.tokenDb.tokenIngestionQueue
 
     switch (outcome.kind) {
       case 'skip':
         await queue.remove(entry)
-        return
+        return trace
       case 'conflict':
         await queue.markConflict(entry, outcome.message)
-        return
+        return trace
       case 'error':
         await queue.markError(entry, outcome.message)
-        return
+        return trace
       case 'noop':
         await queue.remove(entry)
-        return
+        return trace
       case 'pending':
         throw new Error(
           'apply() called with a pending outcome; call fetch() first',
@@ -370,12 +369,42 @@ export class TokenIngestionProcessor {
       case 'write': {
         const commands = buildWriteCommands(outcome)
         const log = formatIngestionTrace(trace)
-        await this.deps.tokenDb.transaction(async () => {
+        // plan() already consulted the denylist, but fetch() makes slow
+        // external calls — an operator may denylist the address in between,
+        // and their plan would see nothing to delete. Rechecking inside the
+        // same serializable transaction as the write closes the race: either
+        // this transaction sees the entry and skips, or it serializes before
+        // the denylist execution, whose in-transaction plan regeneration then
+        // sees this token and makes the operator re-plan the deletion.
+        const denylisted = await this.deps.tokenDb.transaction(async () => {
+          const denylistEntry =
+            await this.deps.tokenDb.tokenDenylist.findByChainAndAddress(
+              trace.address,
+            )
+          if (denylistEntry) {
+            return denylistEntry
+          }
           await commitTokenChanges(this.deps.tokenDb, commands, {
             kind: 'ingestion',
             log,
           })
+          return undefined
         }, 'serializable')
+
+        if (denylisted) {
+          await queue.remove(entry)
+          return {
+            ...trace,
+            steps: [
+              ...trace.steps,
+              { kind: 'token-denylisted', reason: denylisted.reason },
+            ],
+            outcome: {
+              kind: 'skip',
+              reason: `Address is denylisted: ${denylisted.reason}`,
+            },
+          }
+        }
 
         for (const neighbor of outcome.neighborsToEnqueue) {
           await this.deps.tokenDb.tokenIngestionQueue.enqueue(
@@ -384,7 +413,7 @@ export class TokenIngestionProcessor {
           )
         }
         await queue.remove(entry)
-        return
+        return trace
       }
     }
   }

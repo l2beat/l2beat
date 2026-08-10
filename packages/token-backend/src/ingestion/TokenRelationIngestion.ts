@@ -55,14 +55,6 @@ export class TokenRelationIngestion {
     )
     let lastSerialId = setting?.value ?? '0'
 
-    // Relations are recorded without consulting the token *catalogue* — but
-    // the denylist is not the catalogue. An entry is an explicit human ban
-    // ("this address is not a real asset; refuse to observe it"), the same
-    // category as the address normalization that already drops 0x0. Without
-    // this, a denylisted test token's edge would reappear on the graph with
-    // the next test transfer.
-    const denylisted = tokenKeySet(await this.tokenDb.tokenDenylist.getAll())
-
     for (let page = 0; page < MAX_PAGES_PER_RUN; page++) {
       const batch = await this.db.interopTransfer.getAfterSerialId(
         lastSerialId,
@@ -72,7 +64,7 @@ export class TokenRelationIngestion {
         break
       }
 
-      const outcome = await this.ingestBatch(batch.transfers, denylisted)
+      const outcome = await this.ingestBatch(batch.transfers)
       inserted += outcome.inserted
       resolved += outcome.resolved
       scanned += batch.transfers.length
@@ -99,7 +91,6 @@ export class TokenRelationIngestion {
 
   private async ingestBatch(
     transfers: InteropTransferRecord[],
-    denylisted: Set<string>,
   ): Promise<{ inserted: number; resolved: number }> {
     const candidates = new Map<
       string,
@@ -107,9 +98,6 @@ export class TokenRelationIngestion {
     >()
     for (const transfer of transfers) {
       const route = tokenRouteFromTransfer(transfer)
-      if (route && hasDenylistedEndpoint(route, denylisted)) {
-        continue
-      }
       if (route && !candidates.has(relationKey(route))) {
         candidates.set(relationKey(route), { route, transfer })
       }
@@ -153,15 +141,34 @@ export class TokenRelationIngestion {
         ),
       }),
     )
-    await this.tokenDb.transaction(async () => {
-      for (const relation of newRelations) {
+    // Relations are recorded without consulting the token *catalogue* — but
+    // the denylist is not the catalogue. An entry is an explicit human ban
+    // ("this address is not a real asset; refuse to observe it"), the same
+    // category as the address normalization that already drops 0x0. Without
+    // this, a denylisted test token's edge would reappear on the graph with
+    // the next test transfer. The denylist is read inside the serializable
+    // write transaction — a run processes up to 50 pages, so a run-level
+    // snapshot could go stale mid-run and insert a relation right after a
+    // denylist plan deleted it. Reading here means this transaction either
+    // sees the entry, or serializes before the denylist execution, whose
+    // in-transaction plan regeneration then sees the new relation and makes
+    // the operator re-plan the deletion.
+    return await this.tokenDb.transaction(async () => {
+      const denylisted = tokenKeySet(await this.tokenDb.tokenDenylist.getAll())
+      const inserts = newRelations.filter(
+        (relation) => !hasDenylistedEndpoint(relation, denylisted),
+      )
+      const updates = resolutions.filter(
+        (relation) => !hasDenylistedEndpoint(relation, denylisted),
+      )
+      for (const relation of inserts) {
         await commitTokenChanges(
           this.tokenDb,
           [{ type: 'AddTokenRelationCommand', record: relation }],
           { kind: 'ingestion', log: formatRelationLog(relation) },
         )
       }
-      for (const relation of resolutions) {
+      for (const relation of updates) {
         await commitTokenChanges(
           this.tokenDb,
           [
@@ -175,8 +182,8 @@ export class TokenRelationIngestion {
           { kind: 'ingestion', log: formatResolutionLog(relation) },
         )
       }
-    })
-    return { inserted: newRelations.length, resolved: resolutions.length }
+      return { inserted: inserts.length, resolved: updates.length }
+    }, 'serializable')
   }
 }
 
