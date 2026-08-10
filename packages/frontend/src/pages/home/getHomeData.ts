@@ -28,6 +28,7 @@ import {
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '../interop/components/flows/consts'
+import { getFlowChainOrderByVolume } from '../interop/utils/getFlowChainOrderByVolume'
 import { getInteropChainHref } from '../interop/utils/getInteropChainHref'
 import type { HomeScalingCategoryCounts } from './components/HomeScalingCard'
 import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
@@ -99,9 +100,23 @@ async function getCachedData(manifest: Manifest) {
   )
   const activeInteropChains = interopChains.filter((chain) => !chain.isUpcoming)
 
-  const sortedChains: InteropChainWithIcon[] = activeInteropChains.toSorted(
-    (a, b) => a.name.localeCompare(b.name),
+  const interopProtocols = await ps.getProjects({ select: ['interopConfig'] })
+  const protocolIds = interopProtocols.map((protocol) => protocol.id)
+
+  // Order chains and pick defaults the same way as the interop summary page
+  // (top chains by 24h volume) so both flows charts show the same data.
+  const activeChainIds = activeInteropChains.map((chain) => chain.id)
+  const defaultFlowChainOrder =
+    activeChainIds.length > 0 && protocolIds.length > 0
+      ? await getFlowChainOrderByVolume(activeChainIds, protocolIds)
+      : activeChainIds
+
+  const activeInteropChainsById = new Map(
+    activeInteropChains.map((chain) => [chain.id, chain]),
   )
+  const sortedChains: InteropChainWithIcon[] = defaultFlowChainOrder
+    .map((chainId) => activeInteropChainsById.get(chainId))
+    .filter((chain) => chain !== undefined)
 
   const defaultSelectedFlowChains = sortedChains
     .slice(0, MAX_SELECTED_CHAINS)
@@ -112,13 +127,10 @@ async function getCachedData(manifest: Manifest) {
   // refetch.
   const chartRange = optionToRange(HOME_CHART_RANGE)
 
-  const interopProtocolsPromise = ps.getProjects({ select: ['interopConfig'] })
-
   const [
     summaryData,
     recentProjects,
     projectCounts,
-    interopProtocols,
     recentChanges,
     ongoingAnomalies,
     scalingCharts,
@@ -130,7 +142,6 @@ async function getCachedData(manifest: Manifest) {
     getScalingSummaryData(),
     getRecentProjectsForHome(manifest),
     getHomeProjectCounts(),
-    interopProtocolsPromise,
     getRecentChangesOverview(),
     getOngoingAnomaliesOverview(),
     getHomeScalingCharts(chartRange),
@@ -147,21 +158,15 @@ async function getCachedData(manifest: Manifest) {
           }),
         )
       : undefined,
-    interopProtocolsPromise.then((projects) => {
-      const protocolIds = projects.map((protocol) => protocol.id)
-      if (
-        defaultSelectedFlowChains.length < MIN_SELECTED_CHAINS ||
-        protocolIds.length < MIN_SELECTED_PROTOCOLS
-      ) {
-        return
-      }
-      return helpers.queryClient.prefetchQuery(
-        helpers.trpc.interop.flows.queryOptions({
-          chains: defaultSelectedFlowChains,
-          protocolIds,
-        }),
-      )
-    }),
+    defaultSelectedFlowChains.length >= MIN_SELECTED_CHAINS &&
+    protocolIds.length >= MIN_SELECTED_PROTOCOLS
+      ? helpers.queryClient.prefetchQuery(
+          helpers.trpc.interop.flows.queryOptions({
+            chains: defaultSelectedFlowChains,
+            protocolIds,
+          }),
+        )
+      : undefined,
   ])
 
   const summaryTabs = summaryData.tabs

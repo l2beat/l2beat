@@ -5,11 +5,11 @@ import { getInteropChains } from '~/server/features/scaling/interop/utils/getInt
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
-import type { RouterOutputs } from '~/trpc/React'
 import { getSsrHelpers } from '~/trpc/server'
 import { type Manifest, manifest } from '~/utils/Manifest'
 import { MAX_SELECTED_CHAINS } from '../components/flows/consts'
 import type { InteropQuery } from '../InteropRouter'
+import { getFlowChainOrderByVolume } from '../utils/getFlowChainOrderByVolume'
 import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
 import { getInteropChainHref } from '../utils/getInteropChainHref'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
@@ -126,23 +126,10 @@ async function getCachedData(
 
   if (shouldPrefetchFlows) {
     const protocolIds = protocols.map((protocol) => protocol.id)
-    // Determine the volume order across all chains on a throwaway client so the
-    // all-chains query is not dehydrated (the client never requests it).
-    const ordering = getSsrHelpers()
-    const flowsData: RouterOutputs['interop']['flows'] =
-      await ordering.queryClient.fetchQuery(
-        ordering.trpc.interop.flows.queryOptions({
-          chains: initialFlowsChains,
-          protocolIds,
-        }),
-      )
-    const chainsByVolume = flowsData.chainData
-      .toSorted((a, b) => b.totalVolume - a.totalVolume)
-      .map((chain) => chain.chainId)
-
-    if (chainsByVolume.length > 0) {
-      defaultFlowChainOrder = chainsByVolume
-    }
+    defaultFlowChainOrder = await getFlowChainOrderByVolume(
+      initialFlowsChains,
+      protocolIds,
+    )
 
     // The client's flows chart defaults to the top chains by volume, so
     // prefetch that exact query to hydrate it from cache.
