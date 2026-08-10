@@ -67,7 +67,8 @@ export async function getInteropTokenPageData(
         description: `Interoperability activity for ${data.token.symbol} across the Ethereum ecosystem.`,
         url: req.originalUrl,
         openGraph: {
-          image: '/meta-images/interop/summary/opengraph-image.png',
+          image: `/interop/tokens/${data.token.slug}/opengraph-image.png`,
+          dynamic: true,
         },
       }),
     },
