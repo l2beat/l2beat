@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, formatCurrency } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { Label, Pie, PieChart } from 'recharts'
 import { assetCategoryTvsChartMeta } from '~/components/chart/tvs/stacked/AssetCategoryTvsChart'
@@ -18,7 +18,6 @@ import { useBreakpoint } from '~/hooks/useBreakpoint'
 import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import type { TvsByTokenType } from '~/server/features/ecosystems/getTvsByTokenType'
 import { formatPercent } from '~/utils/calculatePercentageChange'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { EcosystemWidget, EcosystemWidgetTitle } from './EcosystemWidget'
 
 const chartMeta = assetCategoryTvsChartMeta satisfies ChartMeta

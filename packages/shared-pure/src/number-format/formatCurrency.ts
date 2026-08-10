@@ -1,6 +1,6 @@
-import type { StringWithAutocomplete } from '@l2beat/shared-pure'
-import { assert } from '@l2beat/shared-pure'
-import { formatNumber } from './formatNumber'
+import { assert } from '../tools/assert.js'
+import type { StringWithAutocomplete } from '../types/StringWithAutocomplete.js'
+import { formatNumber } from './formatNumber.js'
 
 const currencyToSymbol: Record<string, string> = {
   usd: '$',

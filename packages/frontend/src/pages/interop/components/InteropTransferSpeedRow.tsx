@@ -1,5 +1,4 @@
-import { formatSeconds } from '@l2beat/shared-pure'
-import { formatInteger } from '~/utils/number-format/formatInteger'
+import { formatInteger, formatSeconds } from '@l2beat/shared-pure'
 
 export function InteropTransferSpeedRow({
   slug,

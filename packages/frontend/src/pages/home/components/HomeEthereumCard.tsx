@@ -1,11 +1,13 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import {
+  formatActivityCount,
+  formatBytes,
+  formatCurrency,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
 import { formatPercent } from '~/utils/calculatePercentageChange'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
-import { formatBytes } from '~/utils/number-format/formatBytes'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { HomeChart } from './charts/HomeChart'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'

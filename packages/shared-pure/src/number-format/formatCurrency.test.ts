@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { formatCurrency } from './formatCurrency'
+import { formatCurrency } from './formatCurrency.js'
 
 describe(formatCurrency.name, () => {
   it('formats positive usd values with symbol first', () => {

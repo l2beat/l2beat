@@ -1,5 +1,5 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { INFINITY } from '~/consts/characters'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartRange } from '~/utils/range/range'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { Skeleton } from '../../core/Skeleton'

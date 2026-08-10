@@ -1,5 +1,5 @@
+import { formatDollarValueNumber } from '@l2beat/shared-pure'
 import type { DaBridgeSummaryEntry } from '~/server/features/data-availability/summary/getDaSummaryEntries'
-import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
 
 export function BridgeValueSecuredCell({
   bridge,

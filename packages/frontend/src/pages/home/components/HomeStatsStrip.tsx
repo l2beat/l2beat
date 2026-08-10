@@ -1,3 +1,4 @@
+import { formatInteger } from '@l2beat/shared-pure'
 import { ChevronIcon } from '~/icons/Chevron'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
@@ -6,7 +7,6 @@ import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { ScalingIcon } from '~/icons/pages/Scaling'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { cn } from '~/utils/cn'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import type { HomeProjectCounts } from '../getHomeProjectCounts'
 import { HomeCard } from './HomeCard'
 

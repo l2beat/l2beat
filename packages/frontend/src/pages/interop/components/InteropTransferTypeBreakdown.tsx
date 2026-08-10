@@ -1,3 +1,4 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { Breakdown } from '~/components/breakdown/Breakdown'
 import {
   Tooltip,
@@ -5,7 +6,6 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type { TransferTypeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import {
   INTEROP_TYPE_TO_BG_COLOR,
   TRANSFER_TYPE_DISPLAY,

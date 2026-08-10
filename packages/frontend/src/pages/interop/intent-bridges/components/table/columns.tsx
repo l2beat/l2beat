@@ -1,3 +1,4 @@
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
@@ -5,8 +6,6 @@ import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import {
   type InteropTransferDefaults,
   InteropTransferTrigger,

@@ -1,6 +1,6 @@
+import { formatDollarValueNumber } from '@l2beat/shared-pure'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
-import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
 
 interface ValueSecuredCellProps {
   value: number

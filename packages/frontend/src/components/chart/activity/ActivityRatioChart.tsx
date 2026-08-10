@@ -1,4 +1,4 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, formatActivityCount, UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { Area, AreaChart } from 'recharts'
 import type {
@@ -17,7 +17,6 @@ import { ChartCommonComponents } from '~/components/core/chart/ChartCommonCompon
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
 import { formatRange } from '~/utils/dates'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 
 interface ActivityRatioChartDataPoint {
   timestamp: number
