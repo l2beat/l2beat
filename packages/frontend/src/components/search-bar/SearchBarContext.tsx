@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react'
-import type { SearchBarProject } from '~/server/features/projects/search-bar/types'
+import type { SearchBarProject } from '~/server/features/search-bar/types'
 import { SearchBarDialog } from './SearchBarDialog'
 
 type SearchBarContextValue = {

@@ -11,7 +11,7 @@ import { SearchBarContextProvider } from '~/components/search-bar/SearchBarConte
 import { WhatsNewContextProvider } from '~/components/whats-new/WhatsNewContext'
 import type { WhatsNewWidget } from '~/components/whats-new/WhatsNewWidget'
 import { env } from '~/env'
-import type { SearchBarProject } from '~/server/features/projects/search-bar/types'
+import type { SearchBarProject } from '~/server/features/search-bar/types'
 import { TRPCReactProvider } from '~/trpc/React'
 
 export interface AppLayoutProps {

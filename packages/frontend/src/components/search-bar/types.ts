@@ -1,7 +1,7 @@
 import type {
   SearchBarProject,
   SearchBarToken,
-} from '~/server/features/projects/search-bar/types'
+} from '~/server/features/search-bar/types'
 import type { SearchBarCategory } from './searchBarCategories'
 import type { SearchBarPage } from './searchBarPages'
 

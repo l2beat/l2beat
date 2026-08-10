@@ -17,7 +17,7 @@ import { useGlobalShortcut } from '~/hooks/useGlobalShortcut'
 import { useOnClickOutside } from '~/hooks/useOnClickOutside'
 import { useRouter } from '~/hooks/useRouter'
 import { useTracking } from '~/hooks/useTracking'
-import type { SearchBarProject } from '~/server/features/projects/search-bar/types'
+import type { SearchBarProject } from '~/server/features/search-bar/types'
 import { useTRPC } from '~/trpc/React'
 import { Skeleton } from '../core/Skeleton'
 import { useSearchBarContext } from './SearchBarContext'
@@ -42,8 +42,8 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
 
   useGlobalShortcut('/', () => setOpen((open) => !open))
 
-  const { data: allProjects, isFetching } = useQuery(
-    trpc.projects.searchBar.queryOptions(debouncedValue, {
+  const { data: searchResults, isFetching } = useQuery(
+    trpc.searchBar.search.queryOptions(debouncedValue, {
       enabled: debouncedValue !== '',
     }),
   )
@@ -59,10 +59,10 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
   )
 
   const grouped = useMemo(() => {
-    if (!allProjects) return []
+    if (!searchResults) return []
 
-    return groupSearchResults([...allProjects, ...filteredPages])
-  }, [allProjects, filteredPages])
+    return groupSearchResults([...searchResults, ...filteredPages])
+  }, [searchResults, filteredPages])
 
   const onEscapeKeyDown = (e?: KeyboardEvent) => {
     e?.preventDefault()

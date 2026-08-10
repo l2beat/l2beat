@@ -2,9 +2,9 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
-import { getSearchBarProjects } from './getSearchBarProjects'
+import { getSearchBarEntries } from './getSearchBarEntries'
 
-describe(getSearchBarProjects.name, () => {
+describe(getSearchBarEntries.name, () => {
   const originalGetProjects = ps.getProjects.bind(ps)
   const originalMock = env.MOCK
 
@@ -26,7 +26,7 @@ describe(getSearchBarProjects.name, () => {
         daBridgeProject('enshrined-bridge', 'Enshrined Bridge', 'ethereum'),
       ] as never
 
-    const result = await getSearchBarProjects('ethere')
+    const result = await getSearchBarEntries('ethere')
 
     expect(result.map((entry) => entry.name)).toEqual([
       'Ethereal',
@@ -42,7 +42,7 @@ describe(getSearchBarProjects.name, () => {
     ps.getProjects = async () =>
       [scalingProject('jetstreamchain', 'Jetstream')] as never
 
-    const result = await getSearchBarProjects('jtsrm')
+    const result = await getSearchBarEntries('jtsrm')
 
     expect(result.map((entry) => entry.name)).toEqual(['Jetstream'])
     expect(result[0]?.searchMatchKind).toEqual('fuzzy')
@@ -51,7 +51,7 @@ describe(getSearchBarProjects.name, () => {
   it('allows searching interop tokens by symbol', async () => {
     ps.getProjects = async () => [] as never
 
-    const result = await getSearchBarProjects('usdc')
+    const result = await getSearchBarEntries('usdc')
 
     expect(result).toHaveLength(1)
     expect(result[0]?.type).toEqual('token')

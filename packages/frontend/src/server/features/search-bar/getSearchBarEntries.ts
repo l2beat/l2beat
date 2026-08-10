@@ -2,7 +2,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { searchEntries } from '~/components/search-bar/searchBarResults'
 import { getActiveInteropAbstractTokens } from '~/server/features/scaling/interop/token/getInteropAbstractTokens'
 import { ps } from '~/server/projects'
-import { getLogger } from '../../../utils/logger'
+import { getLogger } from '../../utils/logger'
 import type { SearchBarProjectEntry, SearchBarTokenEntry } from './types'
 import { getSearchBarProjectEntries } from './utils/getSearchBarProjectEntries'
 import { getSearchBarTokenEntries } from './utils/getSearchBarTokenEntries'
@@ -25,8 +25,8 @@ function formatSearchResult(entry: SearchBarSearchEntry) {
   }
 }
 
-export async function getSearchBarProjects(search: string) {
-  const logger = getLogger().for('getSearchBarProjects')
+export async function getSearchBarEntries(search: string) {
+  const logger = getLogger().for('getSearchBarEntries')
 
   const [projects, tokens] = await Promise.all([
     ps.getProjects({
@@ -61,7 +61,7 @@ export async function getSearchBarProjects(search: string) {
         searchScore: list.length - index,
       }))
 
-    logger.info('Search bar projects result', {
+    logger.info('Search bar result', {
       search,
       projectIds: matched.map((r) => r.id),
       type: 'address',
@@ -76,7 +76,7 @@ export async function getSearchBarProjects(search: string) {
     scoreMultiplier: (entry) => (entry.category === 'zkCatalog' ? 0.9 : 1),
   }).map(formatSearchResult)
 
-  logger.info('Search bar projects result', {
+  logger.info('Search bar result', {
     search,
     resultIds: result.map((r) => r.id),
     type: 'name',

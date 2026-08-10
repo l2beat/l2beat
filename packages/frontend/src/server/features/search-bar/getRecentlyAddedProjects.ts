@@ -1,4 +1,4 @@
-import type { SearchBarProject } from '~/server/features/projects/search-bar/types'
+import type { SearchBarProject } from '~/server/features/search-bar/types'
 import { ps } from '~/server/projects'
 import { getSearchBarProjectEntries } from './utils/getSearchBarProjectEntries'
 import { toSearchBarProject } from './utils/toSearchBarProject'
