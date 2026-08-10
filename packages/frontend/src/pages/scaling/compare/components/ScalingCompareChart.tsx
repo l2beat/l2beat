@@ -65,13 +65,8 @@ export function ScalingCompareChart({
   const metric = COMPARE_METRICS[state.metric]
 
   return (
-    <section className="mt-4 flex flex-col gap-2 md:mt-6">
-      <CompareProjectPicker
-        allProjects={allProjects}
-        selectedProjects={selectedProjects}
-        onChange={(projects) => setState((prev) => ({ ...prev, projects }))}
-      />
-      <div className="flex items-center justify-between gap-2">
+    <section className="flex flex-col">
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <MetricSwitcher
           value={state.metric}
           onValueChange={(metric) => setState((prev) => ({ ...prev, metric }))}
@@ -80,6 +75,13 @@ export function ScalingCompareChart({
           <metric.Controls state={state} setState={setState} />
         )}
       </div>
+      <CompareProjectPicker
+        allProjects={allProjects}
+        selectedProjects={selectedProjects}
+        isDefaultSelection={state.projects.length === 0}
+        onChange={(projects) => setState((prev) => ({ ...prev, projects }))}
+        className="mt-3 border-divider border-b pb-3"
+      />
       <metric.Chart projects={selectedProjects} state={state} />
       <Controls
         mode={state.mode}
@@ -154,11 +156,12 @@ function MetricSwitcher({
 }) {
   const isClient = useIsClient()
   if (!isClient) {
-    return <Skeleton className="h-9 w-[180px]" />
+    return <Skeleton className="h-9 w-[190px]" />
   }
   return (
     <RadioGroup
       name="compareMetric"
+      aria-label="Chart metric"
       value={value}
       onValueChange={(value) => onValueChange(value as CompareMetricId)}
       variant="highlighted"
@@ -194,12 +197,13 @@ function Controls({
 }) {
   const isClient = useIsClient()
   return (
-    <ChartControlsWrapper>
-      <div className="flex gap-1">
+    <ChartControlsWrapper className="mt-2">
+      <div className="flex flex-wrap gap-1">
         {isClient ? (
           <>
             <RadioGroup
               name="compareViewMode"
+              aria-label="View mode"
               value={mode}
               onValueChange={(value) => setMode(value as CompareViewMode)}
             >
@@ -211,6 +215,7 @@ function Controls({
             {mode === 'absolute' && (
               <RadioGroup
                 name="compareChartScale"
+                aria-label="Chart scale"
                 value={scale}
                 onValueChange={(value) => setScale(value as ChartScale)}
               >

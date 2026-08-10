@@ -1,6 +1,7 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -29,13 +30,17 @@ export function ScalingComparePage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout>
-          <MainPageHeader>Compare Projects</MainPageHeader>
-          <ScalingCompareChart
-            allProjects={allProjects}
-            initialState={initialState}
-            defaultProjectSlugs={defaultProjectSlugs}
-            initialChartRange={initialChartRange}
-          />
+          <MainPageHeader description="Compare Ethereum scaling projects on a single chart. Pick up to 10 projects, switch between metrics, and share the exact view with a link.">
+            Compare Projects
+          </MainPageHeader>
+          <PrimaryCard className="max-md:mt-4 md:mt-2">
+            <ScalingCompareChart
+              allProjects={allProjects}
+              initialState={initialState}
+              defaultProjectSlugs={defaultProjectSlugs}
+              initialChartRange={initialChartRange}
+            />
+          </PrimaryCard>
         </SideNavLayout>
       </HydrationBoundary>
     </AppLayout>
