@@ -65,9 +65,12 @@ export function buildCompareUrl(
     ) {
       params.set('excludeAssociated', String(state.excludeAssociatedTokens))
     }
+    // The exclude-restricted-RWA toggle is disabled and overridden while
+    // the Restricted RWAs filter is active, so its value is not encoded.
     if (
+      state.tvsFilter !== 'rwaRestricted' &&
       state.excludeRwaRestrictedTokens !==
-      DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS
+        DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS
     ) {
       params.set('excludeRwa', String(state.excludeRwaRestrictedTokens))
     }

@@ -15,6 +15,12 @@ const TVS_FILTER_VALUE_INDEX: Record<CompareTvsFilter, number> = {
   canonical: 1,
   external: 2,
   native: 3,
+  ether: 4,
+  stablecoin: 5,
+  btc: 6,
+  rwaRestricted: 7,
+  rwaPublic: 8,
+  other: 9,
 }
 
 export function TvsCompareChart({ projects, state }: CompareMetricChartProps) {
