@@ -21,6 +21,7 @@ import {
   toCompareUrlState,
 } from '../utils/compareChartState'
 import { parseCompareStateFromSearchParams } from '../utils/parseCompareStateFromSearchParams'
+import { CompareProjectPicker } from './CompareProjectPicker'
 
 interface Props {
   allProjects: CompareProjectEntry[]
@@ -64,6 +65,11 @@ export function ScalingCompareChart({
 
   return (
     <section className="mt-4 flex flex-col gap-2 md:mt-6">
+      <CompareProjectPicker
+        allProjects={allProjects}
+        selectedProjects={selectedProjects}
+        onChange={(projects) => setState((prev) => ({ ...prev, projects }))}
+      />
       <div className="flex items-center justify-between gap-2">
         <MetricSwitcher
           value={state.metric}
