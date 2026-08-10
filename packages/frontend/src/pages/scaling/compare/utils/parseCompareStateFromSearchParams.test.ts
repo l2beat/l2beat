@@ -25,6 +25,9 @@ describe(parseCompareStateFromSearchParams.name, () => {
       scale: 'symlog',
       mode: 'absolute',
       activityUnit: 'tps',
+      tvsUnit: 'usd',
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
     })
   })
 
@@ -38,6 +41,9 @@ describe(parseCompareStateFromSearchParams.name, () => {
       scale: 'linear',
       mode: 'absolute',
       activityUnit: 'uops',
+      tvsUnit: 'usd',
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
     })
   })
 
@@ -45,6 +51,20 @@ describe(parseCompareStateFromSearchParams.name, () => {
     const result = parse('mode=indexed')
 
     expect(result.mode).toEqual('indexed')
+  })
+
+  it('parses the tvs unit from the shared unit param', () => {
+    const result = parse('unit=eth')
+
+    expect(result.tvsUnit).toEqual('eth')
+    expect(result.activityUnit).toEqual('uops')
+  })
+
+  it('parses the tvs token exclusion toggles', () => {
+    const result = parse('excludeAssociated=true&excludeRwa=false')
+
+    expect(result.excludeAssociatedTokens).toEqual(true)
+    expect(result.excludeRwaRestrictedTokens).toEqual(false)
   })
 
   it('drops unknown slugs and deduplicates', () => {
@@ -71,7 +91,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
 
   it('falls back to defaults on garbage values', () => {
     const result = parse(
-      'metric=bogus&range=yesterday&scale=cubic&unit=gas&mode=sideways',
+      'metric=bogus&range=yesterday&scale=cubic&unit=gas&mode=sideways&excludeAssociated=maybe&excludeRwa=nonsense',
     )
 
     expect(result).toEqual({
@@ -81,6 +101,9 @@ describe(parseCompareStateFromSearchParams.name, () => {
       scale: 'linear',
       mode: 'absolute',
       activityUnit: 'uops',
+      tvsUnit: 'usd',
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
     })
   })
 
@@ -98,6 +121,9 @@ describe(parseCompareStateFromSearchParams.name, () => {
       scale: 'symlog',
       mode: 'absolute',
       activityUnit: 'uops',
+      tvsUnit: 'usd',
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
     }
 
     const url = buildCompareUrl('/scaling/compare', state)
@@ -114,6 +140,9 @@ describe(parseCompareStateFromSearchParams.name, () => {
       scale: 'linear',
       mode: 'absolute',
       activityUnit: 'uops',
+      tvsUnit: 'usd',
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
     }
 
     const url = buildCompareUrl('/scaling/compare', state)
@@ -130,6 +159,28 @@ describe(parseCompareStateFromSearchParams.name, () => {
       scale: 'linear',
       mode: 'absolute',
       activityUnit: 'tps',
+      tvsUnit: 'usd',
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
+    }
+
+    const url = buildCompareUrl('/scaling/compare', state)
+    const search = url.split('?')[1] ?? ''
+
+    expect(parse(search)).toEqual(state)
+  })
+
+  it('round-trips the tvs metric with all its controls through buildCompareUrl', () => {
+    const state: CompareChartState = {
+      metric: 'tvs',
+      projects: ['arbitrum'],
+      range: '30d',
+      scale: 'linear',
+      mode: 'absolute',
+      activityUnit: 'uops',
+      tvsUnit: 'eth',
+      excludeAssociatedTokens: true,
+      excludeRwaRestrictedTokens: false,
     }
 
     const url = buildCompareUrl('/scaling/compare', state)
@@ -146,6 +197,9 @@ describe(parseCompareStateFromSearchParams.name, () => {
       scale: 'linear',
       mode: 'indexed',
       activityUnit: 'uops',
+      tvsUnit: 'usd',
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
     }
 
     const url = buildCompareUrl('/scaling/compare', state)

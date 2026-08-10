@@ -2,10 +2,13 @@ import { getActivityLatestUops } from '~/server/features/scaling/activity/getAct
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
 import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import type { getSsrHelpers } from '~/trpc/server'
-import { type ChartRange, optionToRange } from '~/utils/range/range'
+import { optionToRange } from '~/utils/range/range'
 import { getActivityCompareChartParams } from '../metrics/activity/getActivityCompareChartParams'
 import { getTvsCompareChartParams } from '../metrics/tvs/getTvsCompareChartParams'
-import type { CompareMetricId } from '../utils/compareChartState'
+import type {
+  CompareClientState,
+  CompareMetricId,
+} from '../utils/compareChartState'
 
 type SsrHelpers = ReturnType<typeof getSsrHelpers>
 
@@ -21,7 +24,7 @@ interface CompareServerMetric {
   prefetch: (
     helpers: SsrHelpers,
     projects: CompareProjectEntry[],
-    range: ChartRange,
+    state: CompareClientState,
   ) => Promise<void>
 }
 
@@ -41,10 +44,10 @@ export const COMPARE_SERVER_METRICS: Record<
         .slice(0, count)
         .map(({ project }) => project)
     },
-    prefetch: async (helpers, projects, range) => {
+    prefetch: async (helpers, projects, state) => {
       await helpers.queryClient.prefetchQuery(
         helpers.trpc.tvs.detailedChartWithProjectsRanges.queryOptions(
-          getTvsCompareChartParams(projects, range),
+          getTvsCompareChartParams(projects, state),
         ),
       )
     },
@@ -63,10 +66,10 @@ export const COMPARE_SERVER_METRICS: Record<
         .slice(0, count)
         .map(({ project }) => project)
     },
-    prefetch: async (helpers, projects, range) => {
+    prefetch: async (helpers, projects, state) => {
       await helpers.queryClient.prefetchQuery(
         helpers.trpc.activity.detailedChartWithProjectsRanges.queryOptions(
-          getActivityCompareChartParams(projects, range),
+          getActivityCompareChartParams(projects, state.chartRange),
         ),
       )
     },

@@ -14,6 +14,9 @@ export type CompareMetricId = (typeof COMPARE_METRIC_IDS)[number]
 export const COMPARE_ACTIVITY_UNITS = ['uops', 'tps'] as const
 export type CompareActivityUnit = (typeof COMPARE_ACTIVITY_UNITS)[number]
 
+export const COMPARE_TVS_UNITS = ['usd', 'eth'] as const
+export type CompareTvsUnit = (typeof COMPARE_TVS_UNITS)[number]
+
 export const COMPARE_VIEW_MODES = ['absolute', 'indexed'] as const
 export type CompareViewMode = (typeof COMPARE_VIEW_MODES)[number]
 
@@ -40,6 +43,10 @@ export interface CompareChartState {
   mode: CompareViewMode
   /** Per-metric control of the activity metric; ignored elsewhere. */
   activityUnit: CompareActivityUnit
+  /** Per-metric controls of the TVS metric; ignored elsewhere. */
+  tvsUnit: CompareTvsUnit
+  excludeAssociatedTokens: boolean
+  excludeRwaRestrictedTokens: boolean
 }
 
 /**
@@ -53,6 +60,9 @@ export interface CompareClientState {
   scale: ChartScale
   mode: CompareViewMode
   activityUnit: CompareActivityUnit
+  tvsUnit: CompareTvsUnit
+  excludeAssociatedTokens: boolean
+  excludeRwaRestrictedTokens: boolean
   chartRange: ChartRange
 }
 
@@ -65,6 +75,9 @@ export function toCompareUrlState(
     scale: state.scale,
     mode: state.mode,
     activityUnit: state.activityUnit,
+    tvsUnit: state.tvsUnit,
+    excludeAssociatedTokens: state.excludeAssociatedTokens,
+    excludeRwaRestrictedTokens: state.excludeRwaRestrictedTokens,
     range: chartRangeToCompareRange(state.chartRange),
   }
 }
@@ -79,6 +92,9 @@ export function toCompareClientState(
     scale: state.scale,
     mode: state.mode,
     activityUnit: state.activityUnit,
+    tvsUnit: state.tvsUnit,
+    excludeAssociatedTokens: state.excludeAssociatedTokens,
+    excludeRwaRestrictedTokens: state.excludeRwaRestrictedTokens,
     chartRange,
   }
 }
@@ -88,6 +104,11 @@ export const DEFAULT_COMPARE_RANGE: CompareRangeOption = '1y'
 export const DEFAULT_COMPARE_SCALE: ChartScale = 'linear'
 export const DEFAULT_COMPARE_VIEW_MODE: CompareViewMode = 'absolute'
 export const DEFAULT_COMPARE_ACTIVITY_UNIT: CompareActivityUnit = 'uops'
+export const DEFAULT_COMPARE_TVS_UNIT: CompareTvsUnit = 'usd'
+// The TVS control defaults match the /scaling/tvs page so the default
+// comparison reproduces the numbers shown there.
+export const DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS = false
+export const DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS = true
 export const MAX_COMPARE_PROJECTS = 10
 export const DEFAULT_COMPARE_PROJECTS_COUNT = 5
 
@@ -127,9 +148,15 @@ export function isSameCompareState(
     // The scale toggle is hidden in indexed mode, so two states that differ
     // solely by a hidden scale map to the same URL.
     (left.mode === 'indexed' || left.scale === right.scale) &&
-    // The unit is only encoded for the activity metric, so two states that
-    // differ solely by a hidden unit map to the same URL.
+    // Per-metric controls are only encoded for the metric they belong to,
+    // so two states that differ solely by a hidden control map to the same
+    // URL.
     (left.metric !== 'activity' || left.activityUnit === right.activityUnit) &&
+    (left.metric !== 'tvs' ||
+      (left.tvsUnit === right.tvsUnit &&
+        left.excludeAssociatedTokens === right.excludeAssociatedTokens &&
+        left.excludeRwaRestrictedTokens ===
+          right.excludeRwaRestrictedTokens)) &&
     isSameRange(left.range, right.range) &&
     left.projects.length === right.projects.length &&
     left.projects.every((slug, index) => slug === right.projects[index])

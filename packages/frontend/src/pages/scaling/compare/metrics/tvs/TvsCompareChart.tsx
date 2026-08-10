@@ -12,20 +12,26 @@ export function TvsCompareChart({ projects, state }: CompareMetricChartProps) {
   const trpc = useTRPC()
   const { data, isLoading } = useQuery(
     trpc.tvs.detailedChartWithProjectsRanges.queryOptions(
-      getTvsCompareChartParams(projects, state.chartRange),
+      getTvsCompareChartParams(projects, state),
     ),
   )
+  const unit = state.tvsUnit
 
   const chartData = useMemo(
     () =>
-      data?.chart.map(([timestamp, _ethPrice, valuesByProject]) => {
+      data?.chart.map(([timestamp, ethPrice, valuesByProject]) => {
         const point: CompareChartPoint = { timestamp }
+        const divider = unit === 'usd' ? 1 : ethPrice
         for (const project of projects) {
-          point[project.id] = valuesByProject[project.id]?.[0] ?? null
+          const value = valuesByProject[project.id]?.[0]
+          point[project.id] =
+            value !== undefined && divider !== null && divider !== 0
+              ? value / divider
+              : null
         }
         return point
       }),
-    [data, projects],
+    [data, projects, unit],
   )
 
   return (
@@ -36,8 +42,8 @@ export function TvsCompareChart({ projects, state }: CompareMetricChartProps) {
       syncedUntil={data?.syncedUntil}
       scale={state.scale}
       mode={state.mode}
-      formatYAxisLabel={(value) => formatCurrency(value, 'usd')}
-      formatTooltipValue={(value) => formatCurrency(value, 'usd')}
+      formatYAxisLabel={(value) => formatCurrency(value, unit)}
+      formatTooltipValue={(value) => formatCurrency(value, unit)}
       renderTooltipTimestamp={(label) =>
         formatTimestamp(label, {
           longMonthName: true,
