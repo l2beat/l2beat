@@ -15,6 +15,7 @@ import { providers } from 'ethers'
 import { existsSync, readFileSync, unlinkSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { getProjects } from '../../src/processing/getProjects'
+import { ethereum } from '../../src/projects/ethereum/ethereum'
 import {
   daTrackingHistoryPath,
   getDaTrackingResolutions,
@@ -37,8 +38,9 @@ import {
  * On a rotation the old era is closed and the new one opened with a
  * deliberately overlapping 'bracketed' boundary derived from the discovery
  * run timestamps (previous run = new era start, current run = old era end).
- * The overlap is safe because era identities are disjoint filters. Needs
- * ETHEREUM_RPC_URL in .env for the timestamp -> block resolution.
+ * The overlap is safe because era identities are disjoint filters. The
+ * timestamp -> block resolution uses ETHEREUM_RPC_URL when set, falling back
+ * to the public rpc from the ethereum chain config.
  */
 
 dotenv.config()
@@ -168,8 +170,9 @@ async function main(args: CliArgs) {
       anythingChanged = true
       if (result.changes.some((c) => c.includes('closed era'))) {
         console.log(
-          `${projectName}: NOTE - closing an era changes that configuration's range; ` +
-            'on deploy the backend wipes and resyncs it (DaIndexer has no trimData)',
+          `${projectName}: NOTE - closing an era makes the backend resync ` +
+            "that configuration's data on the next deploy; this is safe, the " +
+            'data is refetched automatically',
         )
       }
     } else {
@@ -213,10 +216,12 @@ function discoveredTimestampOnMain(projectName: string): number | undefined {
 }
 
 function makeEthereumBlockResolver() {
-  const rpcUrl = process.env.ETHEREUM_RPC_URL
+  const rpcUrl =
+    process.env.ETHEREUM_RPC_URL ??
+    ethereum.chainConfig?.apis.find((a) => a.type === 'rpc')?.url
   if (!rpcUrl) {
     throw new Error(
-      'ETHEREUM_RPC_URL not set - add it to packages/config/.env or pass --since-block/--until-block',
+      'No ethereum rpc available - set ETHEREUM_RPC_URL in packages/config/.env or pass --since-block/--until-block',
     )
   }
   const provider = new providers.StaticJsonRpcProvider(rpcUrl)
