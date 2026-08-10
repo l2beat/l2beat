@@ -12,6 +12,7 @@ const DEFAULT_STATE: CompareChartState = {
   mode: 'absolute',
   activityUnit: 'uops',
   tvsUnit: 'usd',
+  tvsFilter: 'all',
   costsUnit: 'usd',
   excludeAssociatedTokens: false,
   excludeRwaRestrictedTokens: true,
@@ -155,11 +156,21 @@ describe(buildCompareUrl.name, () => {
     )
   })
 
+  it('serializes the non-default tvs filter', () => {
+    const url = buildCompareUrl(PATH, {
+      ...DEFAULT_STATE,
+      tvsFilter: 'canonical',
+    })
+
+    expect(url).toEqual('/scaling/compare?filter=canonical')
+  })
+
   it('omits the tvs controls for other metrics', () => {
     const url = buildCompareUrl(PATH, {
       ...DEFAULT_STATE,
       metric: 'activity',
       tvsUnit: 'eth',
+      tvsFilter: 'native',
       excludeAssociatedTokens: true,
       excludeRwaRestrictedTokens: false,
     })
