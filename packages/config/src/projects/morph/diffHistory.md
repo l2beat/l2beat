@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x0075c98aa0fb54edbdad8ef48191db99285160d2
+
+# Diff at Mon, 10 Aug 2026 09:06:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@be83079eed365197a392b6bfd65fa6506007093c block: 1780914460
+- current timestamp: 1786352698
+
+## Description
+
+Owner switched to second Morph multisig. L1CDM owner can set rollup reference and change fee / critical configs.
+
+## Watched changes
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304) [morph/L1CrossDomainMessenger] {
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+      values.owner:
+-        "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377"
++        "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
+    }
+```
+
 Generated with discovered.json: 0x084c50cdf025857366a0f87dbb96cd09e316f4f1
 
 # Diff at Tue, 09 Jun 2026 12:43:36 GMT:

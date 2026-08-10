@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x81fa95c3f52a784419e01c024be5c6e53f5dd910
+
+# Diff at Mon, 10 Aug 2026 09:00:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@be83079eed365197a392b6bfd65fa6506007093c block: 1785915246
+- current timestamp: 1786352166
+
+## Description
+
+Config: ignore in watchmode.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785915246 (main branch discovery), not current.
+
+```diff
+    contract Butter MAP LightNode (base:0x0001805c0B57DBd48B5c5c26E237a135dDC678ae) [butternetwork/LightNode] {
+    +++ description: Upgradeable MAP relay-chain light client used by Butter bridges. It verifies relay-chain headers with the stored BLS validator set and verifies receipt Merkle proofs against accepted headers. It is the destination-chain validation boundary for bridged messages.
+      fieldMeta.headerHeight.severity:
+-        "HIGH"
+      fieldMeta.epochSummary.severity:
+-        "HIGH"
+      fieldMeta.verifiableHeaderRange.severity:
+-        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0xb36c1f52ebe9cbebf0c59f41c05a60bd99ee3123
 
 # Diff at Wed, 05 Aug 2026 09:02:43 GMT:

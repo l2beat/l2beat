@@ -20,7 +20,6 @@
     },
     "headerHeight": {
       "description": "Highest MAP relay-chain header accepted by this LightNode. Receipt proofs outside the rolling verifiable range cannot be used by the Bridge.",
-      "severity": "HIGH",
       "type": "RISK_PARAMETER"
     },
     "epochSize": {
@@ -30,7 +29,6 @@
     },
     "epochSummary": {
       "description": "Latest epoch stats (vali set size). Complicated handler because of the ring buffer.",
-      "severity": "HIGH",
       "type": "RISK_PARAMETER",
       "handler": {
         "type": "array",
@@ -58,7 +56,6 @@
     },
     "verifiableHeaderRange": {
       "description": "Current range of MAP relay-chain block heights accepted by the LightNode. The range is derived from the last accepted header and the configured epoch retention window.",
-      "severity": "HIGH",
       "type": "RISK_PARAMETER"
     },
     "getValidators": {
@@ -66,5 +63,6 @@
       "severity": "HIGH",
       "type": "RISK_PARAMETER"
     }
-  }
+  },
+  "ignoreInWatchMode": ["headerHeight", "epochSummary", "verifiableHeaderRange"]
 }
