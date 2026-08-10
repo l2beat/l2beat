@@ -24,7 +24,7 @@ export type ActivityLatestUopsData = Record<
 >
 
 export async function getActivityLatestUops(
-  projects: Project[],
+  projects: Pick<Project, 'id'>[],
   range?: ChartRange,
 ): Promise<ActivityLatestUopsData> {
   if (env.MOCK) {
@@ -89,7 +89,7 @@ export async function getActivityLatestUops(
 }
 
 function getMockActivityLatestUopsData(
-  projects: Project[],
+  projects: Pick<Project, 'id'>[],
 ): ActivityLatestUopsData {
   return Object.fromEntries(
     projects.map((p) => [

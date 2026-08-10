@@ -15,6 +15,7 @@ import {
   COMPARE_RANGE_OPTIONS,
   type CompareChartState,
   type CompareClientState,
+  type CompareMetricId,
   isSameCompareState,
   toCompareClientState,
   toCompareUrlState,
@@ -63,11 +64,16 @@ export function ScalingCompareChart({
 
   return (
     <section className="mt-4 flex flex-col gap-2 md:mt-6">
-      <metric.Chart
-        projects={selectedProjects}
-        range={state.chartRange}
-        scale={state.scale}
-      />
+      <div className="flex items-center justify-between gap-2">
+        <MetricSwitcher
+          value={state.metric}
+          onValueChange={(metric) => setState((prev) => ({ ...prev, metric }))}
+        />
+        {metric.Controls && (
+          <metric.Controls state={state} setState={setState} />
+        )}
+      </div>
+      <metric.Chart projects={selectedProjects} state={state} />
       <Controls
         scale={state.scale}
         setScale={(scale) => setState((prev) => ({ ...prev, scale }))}
@@ -124,6 +130,42 @@ function useCompareUrlSync(
       }),
     )
   })
+}
+
+/**
+ * The metric switcher, driven entirely by the registry so new metrics show
+ * up without page changes. Switching keeps projects, range and view mode.
+ */
+function MetricSwitcher({
+  value,
+  onValueChange,
+}: {
+  value: CompareMetricId
+  onValueChange: (metric: CompareMetricId) => void
+}) {
+  const isClient = useIsClient()
+  if (!isClient) {
+    return <Skeleton className="h-9 w-[180px]" />
+  }
+  return (
+    <RadioGroup
+      name="compareMetric"
+      value={value}
+      onValueChange={(value) => onValueChange(value as CompareMetricId)}
+      variant="highlighted"
+      className="h-9"
+    >
+      {Object.values(COMPARE_METRICS).map((metric) => (
+        <RadioGroupItem
+          key={metric.id}
+          value={metric.id}
+          className="h-full px-2 text-sm"
+        >
+          {metric.label}
+        </RadioGroupItem>
+      ))}
+    </RadioGroup>
+  )
 }
 
 function Controls({
