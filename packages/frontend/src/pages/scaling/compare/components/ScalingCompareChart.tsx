@@ -28,6 +28,7 @@ import {
 } from '../utils/compareChartState'
 import { parseCompareStateFromSearchParams } from '../utils/parseCompareStateFromSearchParams'
 import { CompareProjectPicker } from './CompareProjectPicker'
+import { CompareSeriesProvider } from './CompareSeriesContext'
 
 interface Props {
   allProjects: CompareProjectEntry[]
@@ -80,14 +81,16 @@ export function ScalingCompareChart({
           <metric.Controls state={state} setState={setState} />
         )}
       </div>
-      <CompareProjectPicker
-        allProjects={allProjects}
-        selectedProjects={selectedProjects}
-        isDefaultSelection={state.projects.length === 0}
-        onChange={(projects) => setState((prev) => ({ ...prev, projects }))}
-        className="mt-3 border-divider border-b pb-3"
-      />
-      <metric.Chart projects={selectedProjects} state={state} />
+      <CompareSeriesProvider projects={selectedProjects}>
+        <CompareProjectPicker
+          allProjects={allProjects}
+          selectedProjects={selectedProjects}
+          isDefaultSelection={state.projects.length === 0}
+          onChange={(projects) => setState((prev) => ({ ...prev, projects }))}
+          className="mt-3 border-divider border-b pb-3"
+        />
+        <metric.Chart projects={selectedProjects} state={state} />
+      </CompareSeriesProvider>
       <Controls
         mode={state.mode}
         setMode={(mode) => setState((prev) => ({ ...prev, mode }))}

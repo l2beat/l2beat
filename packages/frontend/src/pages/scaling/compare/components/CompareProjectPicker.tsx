@@ -14,6 +14,7 @@ import { PlusIcon } from '~/icons/Plus'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
 import { cn } from '~/utils/cn'
 import { MAX_COMPARE_PROJECTS } from '../utils/compareChartState'
+import { useCompareSeries } from './CompareSeriesContext'
 
 interface Props {
   allProjects: CompareProjectEntry[]
@@ -39,6 +40,7 @@ export function CompareProjectPicker({
 }: Props) {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
+  const { colors, setHoveredProjectId } = useCompareSeries()
   // Selection snapshotted when the dialog opens. Sorting by the snapshot
   // instead of the live selection keeps rows from jumping under the pointer
   // while toggling; the fresh order applies on the next open.
@@ -91,16 +93,25 @@ export function CompareProjectPicker({
   return (
     <div className={cn('flex flex-wrap items-center gap-1.5', className)}>
       {selectedProjects.map((project) => (
+        // Focus and blur bubble in React, so keyboard-focusing the remove
+        // button highlights the series the same way hovering the chip does.
         <div
           key={project.slug}
+          onMouseEnter={() => setHoveredProjectId(project.id)}
+          onMouseLeave={() => setHoveredProjectId(undefined)}
+          onFocus={() => setHoveredProjectId(project.id)}
+          onBlur={() => setHoveredProjectId(undefined)}
           className="flex h-7 items-center gap-1.5 rounded-full border border-divider bg-surface-primary primary-card:bg-surface-secondary py-1 pr-1.5 pl-1"
         >
+          {/* The ring makes the chip strip double as the chart's color key,
+              so it must show exactly the series color the chart uses. */}
           <img
             src={project.iconUrl}
             alt=""
             width={18}
             height={18}
             className="size-[18px] rounded-full"
+            style={{ boxShadow: `0 0 0 2px ${colors[project.id]}` }}
           />
           <span className="font-medium text-sm leading-none">
             {project.shortName ?? project.name}
