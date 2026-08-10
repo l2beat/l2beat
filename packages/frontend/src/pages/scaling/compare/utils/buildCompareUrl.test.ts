@@ -10,6 +10,7 @@ describe(buildCompareUrl.name, () => {
       projects: [],
       range: '1y',
       scale: 'linear',
+      activityUnit: 'uops',
     })
 
     expect(url).toEqual(PATH)
@@ -21,6 +22,7 @@ describe(buildCompareUrl.name, () => {
       projects: ['arbitrum', 'base'],
       range: '1y',
       scale: 'linear',
+      activityUnit: 'uops',
     })
 
     expect(url).toEqual('/scaling/compare?projects=arbitrum,base')
@@ -32,6 +34,7 @@ describe(buildCompareUrl.name, () => {
       projects: ['arbitrum'],
       range: '30d',
       scale: 'symlog',
+      activityUnit: 'uops',
     })
 
     expect(url).toEqual(
@@ -45,8 +48,45 @@ describe(buildCompareUrl.name, () => {
       projects: [],
       range: { from: 1700000000, to: 1710000000 },
       scale: 'linear',
+      activityUnit: 'uops',
     })
 
     expect(url).toEqual('/scaling/compare?range=1700000000-1710000000')
+  })
+
+  it('serializes a non-default metric with its non-default unit', () => {
+    const url = buildCompareUrl(PATH, {
+      metric: 'activity',
+      projects: [],
+      range: '1y',
+      scale: 'linear',
+      activityUnit: 'tps',
+    })
+
+    expect(url).toEqual('/scaling/compare?metric=activity&unit=tps')
+  })
+
+  it('omits the default activity unit', () => {
+    const url = buildCompareUrl(PATH, {
+      metric: 'activity',
+      projects: [],
+      range: '1y',
+      scale: 'linear',
+      activityUnit: 'uops',
+    })
+
+    expect(url).toEqual('/scaling/compare?metric=activity')
+  })
+
+  it('omits the activity unit for other metrics', () => {
+    const url = buildCompareUrl(PATH, {
+      metric: 'tvs',
+      projects: [],
+      range: '1y',
+      scale: 'linear',
+      activityUnit: 'tps',
+    })
+
+    expect(url).toEqual(PATH)
   })
 })

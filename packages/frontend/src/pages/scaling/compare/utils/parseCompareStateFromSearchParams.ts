@@ -1,10 +1,13 @@
 import {
+  COMPARE_ACTIVITY_UNITS,
   COMPARE_METRIC_IDS,
   COMPARE_RANGE_OPTIONS,
+  type CompareActivityUnit,
   type CompareChartState,
   type CompareMetricId,
   type CompareRange,
   type CompareRangeOption,
+  DEFAULT_COMPARE_ACTIVITY_UNIT,
   DEFAULT_COMPARE_METRIC,
   DEFAULT_COMPARE_RANGE,
   DEFAULT_COMPARE_SCALE,
@@ -28,12 +31,18 @@ export function parseCompareStateFromSearchParams({
     range: parseRange(searchParams.get('range')),
     scale:
       searchParams.get('scale') === 'log' ? 'symlog' : DEFAULT_COMPARE_SCALE,
+    activityUnit: parseActivityUnit(searchParams.get('unit')),
   }
 }
 
 function parseMetric(value: string | null): CompareMetricId {
   const metric = COMPARE_METRIC_IDS.find((id) => id === value)
   return metric ?? DEFAULT_COMPARE_METRIC
+}
+
+function parseActivityUnit(value: string | null): CompareActivityUnit {
+  const unit = COMPARE_ACTIVITY_UNITS.find((unit) => unit === value)
+  return unit ?? DEFAULT_COMPARE_ACTIVITY_UNIT
 }
 
 function parseProjects(value: string | null, validSlugs: string[]): string[] {
