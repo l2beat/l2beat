@@ -1,9 +1,11 @@
 import { getProjectsDataPosted } from '~/server/features/data-availability/throughput/getProjectsDataPosted'
 import { getActivityLatestUops } from '~/server/features/scaling/activity/getActivityLatestTps'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
+import { getCostsTotalUsdForProjects } from '~/server/features/scaling/costs/getCostsTotalUsdForProjects'
 import type { getSsrHelpers } from '~/trpc/server'
 import { optionToRange } from '~/utils/range/range'
 import { getActivityCompareChartParams } from '../metrics/activity/getActivityCompareChartParams'
+import { getCostsCompareChartParams } from '../metrics/costs/getCostsCompareChartParams'
 import { getDataPostedCompareChartParams } from '../metrics/data-posted/getDataPostedCompareChartParams'
 import { getTvsCompareChartParams } from '../metrics/tvs/getTvsCompareChartParams'
 import type {
@@ -62,6 +64,34 @@ export const COMPARE_SERVER_METRICS: Record<
       await helpers.queryClient.prefetchQuery(
         helpers.trpc.activity.detailedChartWithProjectsRanges.queryOptions(
           getActivityCompareChartParams(projects, state.chartRange),
+        ),
+      )
+    },
+  },
+  costs: {
+    getDefaultProjects: async (universe, count) => {
+      // Only projects with costs tracking can rank; the recent window keeps
+      // the query cheap while still reflecting current spending.
+      const tracked = universe.filter(
+        (project) => project.costsSinceTimestamp !== undefined,
+      )
+      const totals = await getCostsTotalUsdForProjects(
+        tracked,
+        optionToRange('30d'),
+      )
+      return tracked
+        .map((project) => ({
+          project,
+          usd: totals[project.id.toString()] ?? -1,
+        }))
+        .sort((a, b) => b.usd - a.usd)
+        .slice(0, count)
+        .map(({ project }) => project)
+    },
+    prefetch: async (helpers, projects, state) => {
+      await helpers.queryClient.prefetchQuery(
+        helpers.trpc.costs.detailedChartWithProjectsRanges.queryOptions(
+          getCostsCompareChartParams(projects, state.chartRange),
         ),
       )
     },

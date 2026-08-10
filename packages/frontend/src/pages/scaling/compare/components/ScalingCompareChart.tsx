@@ -84,9 +84,9 @@ export function ScalingCompareChart({
       <CompareSeriesProvider projects={selectedProjects}>
         <CompareProjectPicker
           allProjects={allProjects}
+          metric={metric}
           selectedProjects={selectedProjects}
           isDefaultSelection={state.projects.length === 0}
-          metric={metric}
           onChange={(projects) => setState((prev) => ({ ...prev, projects }))}
           className="mt-3 border-divider border-b pb-3"
         />
@@ -171,7 +171,7 @@ function MetricSwitcher({
 }) {
   const isClient = useIsClient()
   if (!isClient) {
-    return <Skeleton className="h-9 w-[190px]" />
+    return <Skeleton className="h-9 w-[340px]" />
   }
   return (
     <RadioGroup

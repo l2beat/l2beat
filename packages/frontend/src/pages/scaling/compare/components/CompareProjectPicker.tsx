@@ -20,6 +20,12 @@ import { useCompareSeries } from './CompareSeriesContext'
 interface Props {
   allProjects: CompareProjectEntry[]
   /**
+   * The active metric, for marking projects it has no data for. The chips
+   * double as the chart legend, so the "no data" note lives here instead of
+   * an empty series in the chart.
+   */
+  metric: CompareMetric
+  /**
    * The effective selection shown on the chart: the explicit URL selection,
    * or the top-N defaults when nothing is selected. Editing it always emits
    * the full explicit slug list, so the first edit materializes the defaults
@@ -28,17 +34,15 @@ interface Props {
   selectedProjects: CompareProjectEntry[]
   /** True when the chips show the top-N defaults instead of a user selection. */
   isDefaultSelection: boolean
-  /** The active metric, marking projects it has no data for. */
-  metric: CompareMetric
   onChange: (slugs: string[]) => void
   className?: string
 }
 
 export function CompareProjectPicker({
   allProjects,
+  metric,
   selectedProjects,
   isDefaultSelection,
-  metric,
   onChange,
   className,
 }: Props) {
@@ -52,17 +56,13 @@ export function CompareProjectPicker({
 
   const selectedSlugs = selectedProjects.map((project) => project.slug)
   const atCap = selectedSlugs.length >= MAX_COMPARE_PROJECTS
-  const isAvailable = (project: CompareProjectEntry) =>
-    metric.isProjectAvailable?.(project) ?? true
+  const hasMetricData = metric.hasData ?? (() => true)
+  const noDataLabel = metric.noDataLabel ?? 'No data'
 
   const filteredProjects = useMemo(() => {
     const pinned = new Set(pinnedSlugs)
     const sorted = [...allProjects].sort(
-      (a, b) =>
-        Number(pinned.has(b.slug)) - Number(pinned.has(a.slug)) ||
-        // Projects the metric has no data for sink below the available ones.
-        Number(metric.isProjectAvailable?.(b) ?? true) -
-          Number(metric.isProjectAvailable?.(a) ?? true),
+      (a, b) => Number(pinned.has(b.slug)) - Number(pinned.has(a.slug)),
     )
     const query = search.trim().toLowerCase()
     if (!query) return sorted
@@ -71,7 +71,7 @@ export function CompareProjectPicker({
         project.name.toLowerCase().includes(query) ||
         project.shortName?.toLowerCase().includes(query),
     )
-  }, [allProjects, search, pinnedSlugs, metric])
+  }, [allProjects, search, pinnedSlugs])
 
   const toggleProject = (slug: string) => {
     if (selectedSlugs.includes(slug)) {
@@ -109,15 +109,12 @@ export function CompareProjectPicker({
           onMouseLeave={() => setHoveredProjectId(undefined)}
           onFocus={() => setHoveredProjectId(project.id)}
           onBlur={() => setHoveredProjectId(undefined)}
-          title={isAvailable(project) ? undefined : metric.unavailableReason}
-          className={cn(
-            'flex h-7 items-center gap-1.5 rounded-full border border-divider bg-surface-primary primary-card:bg-surface-secondary py-1 pr-1.5 pl-1',
-            !isAvailable(project) && 'border-dashed opacity-60',
-          )}
-          // The ring makes the chip strip double as the chart's color key, so
-          // a project with no series on this metric keeps the plain border.
+          className="flex h-7 items-center gap-1.5 rounded-full border border-divider bg-surface-primary primary-card:bg-surface-secondary py-1 pr-1.5 pl-1"
+          // The ring makes the chip strip double as the chart's color key,
+          // so it must show exactly the series color the chart uses - and no
+          // color at all when the metric has no series for the project.
           style={
-            isAvailable(project)
+            hasMetricData(project)
               ? { borderColor: colors[project.id] }
               : undefined
           }
@@ -127,11 +124,24 @@ export function CompareProjectPicker({
             alt=""
             width={18}
             height={18}
-            className="size-[18px] rounded-full"
+            className={cn(
+              'size-[18px] rounded-full',
+              !hasMetricData(project) && 'opacity-50',
+            )}
           />
-          <span className="font-medium text-sm leading-none">
+          <span
+            className={cn(
+              'font-medium text-sm leading-none',
+              !hasMetricData(project) && 'text-secondary',
+            )}
+          >
             {project.shortName ?? project.name}
           </span>
+          {!hasMetricData(project) && (
+            <span className="font-medium text-2xs text-secondary leading-none">
+              {noDataLabel}
+            </span>
+          )}
           <button
             type="button"
             aria-label={`Remove ${project.name}`}
@@ -190,19 +200,13 @@ export function CompareProjectPicker({
             <CommandEmpty>No projects found.</CommandEmpty>
             {filteredProjects.map((project) => {
               const isSelected = selectedSlugs.includes(project.slug)
-              const available = isAvailable(project)
               return (
                 <CommandItem
                   key={project.slug}
                   value={project.slug}
-                  // A selected-but-unavailable project (carried over from
-                  // another metric) stays enabled so it can be removed.
-                  disabled={!isSelected && (atCap || !available)}
+                  disabled={atCap && !isSelected}
                   onSelect={() => toggleProject(project.slug)}
-                  className={cn(
-                    'cursor-pointer gap-2 rounded-lg',
-                    !available && 'opacity-50',
-                  )}
+                  className="cursor-pointer gap-2 rounded-lg"
                 >
                   <CheckIcon
                     className={cn(
@@ -220,9 +224,9 @@ export function CompareProjectPicker({
                   <span className="font-medium text-sm leading-none tracking-[-1%]">
                     {project.name}
                   </span>
-                  {!available && (
-                    <span className="ml-auto whitespace-nowrap text-2xs text-secondary">
-                      {metric.unavailableReason}
+                  {!hasMetricData(project) && (
+                    <span className="ml-auto font-medium text-2xs text-secondary">
+                      {noDataLabel}
                     </span>
                   )}
                 </CommandItem>

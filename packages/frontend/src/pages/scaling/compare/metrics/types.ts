@@ -34,11 +34,12 @@ export interface CompareMetric {
    */
   Controls?: ComponentType<CompareMetricControlsProps>
   /**
-   * Marks projects the metric has no data for. The picker greys them out
-   * with `unavailableReason` and the metric's chart must never render a
-   * series for them. Omitted = every project is available.
+   * Whether the project has data for this metric. Projects failing this
+   * check stay selectable but are marked with `noDataLabel` in the picker
+   * and chip strip instead of rendering an empty series. Omit when every
+   * project has the metric.
    */
-  isProjectAvailable?: (project: CompareProjectEntry) => boolean
-  /** Short note shown on unavailable projects in the picker and chips. */
-  unavailableReason?: string
+  hasData?: (project: CompareProjectEntry) => boolean
+  /** Shown on chips and picker rows of projects failing `hasData`. */
+  noDataLabel?: string
 }
