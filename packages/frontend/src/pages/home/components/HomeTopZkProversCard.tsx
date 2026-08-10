@@ -1,4 +1,3 @@
-import type { TrustedSetup, ZkCatalogTag } from '@l2beat/config'
 import { formatCurrency } from '@l2beat/shared-pure'
 import { createColumnHelper, getCoreRowModel } from '@tanstack/react-table'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
@@ -93,9 +92,7 @@ const columns = [
     header: 'Trusted setups',
     cell: (ctx) => (
       <TrustedSetupsSummaryCell
-        trustedSetups={Object.values(
-          ctx.row.original.trustedSetupsByProofSystem,
-        ).flatMap((ts) => ts.trustedSetups)}
+        trustedSetupsByProofSystem={ctx.row.original.trustedSetupsByProofSystem}
       />
     ),
     meta: {
@@ -137,14 +134,19 @@ const columns = [
 const RISK_ORDER = ['red', 'yellow', 'green', 'N/A'] as const
 
 function TrustedSetupsSummaryCell({
-  trustedSetups,
+  trustedSetupsByProofSystem,
 }: {
-  trustedSetups: (TrustedSetup & { proofSystem: ZkCatalogTag })[]
+  trustedSetupsByProofSystem: ZkCatalogEntry['trustedSetupsByProofSystem']
 }) {
-  if (trustedSetups.length === 0) return null
+  const groups = Object.entries(trustedSetupsByProofSystem).filter(
+    ([, { trustedSetups }]) => trustedSetups.length > 0,
+  )
+  if (groups.length === 0) return null
 
   const risks = RISK_ORDER.filter((risk) =>
-    trustedSetups.some((ts) => ts.risk === risk),
+    groups.some(([, { trustedSetups }]) =>
+      trustedSetups.some((ts) => ts.risk === risk),
+    ),
   )
 
   return (
@@ -160,23 +162,38 @@ function TrustedSetupsSummaryCell({
         ))}
       </TooltipTrigger>
       <TooltipContent className="flex max-w-[320px] flex-col gap-3">
-        {trustedSetups.map((trustedSetup) => (
-          <div key={trustedSetup.id}>
-            <div className="text-paragraph-14">
-              <span className="font-bold">{trustedSetup.name}</span>{' '}
-              <span className="text-secondary">for</span>{' '}
-              <TechStackTag
-                tag={trustedSetup.proofSystem}
-                className="inline-block"
-                withoutTooltip
-                displayType="type"
-              />
+        {groups.map(([key, { trustedSetups }]) => {
+          const proofSystem = trustedSetups[0]?.proofSystem
+          if (!proofSystem) return null
+          return (
+            <div key={key}>
+              <div className="mb-3 text-paragraph-14">
+                Trusted setup for{' '}
+                {/* The cell shows one dot per risk color, not per proof system,
+                    so the proof systems have to be named precisely to tell the
+                    groups apart (e.g. Groth16: SP1 v6.0.0 vs SP1 v6.1.0). */}
+                <TechStackTag
+                  tag={proofSystem}
+                  className="inline-block"
+                  withoutTooltip
+                  displayType="typeAndName"
+                />
+              </div>
+              {trustedSetups.map((trustedSetup) => (
+                <div key={trustedSetup.id} className="flex gap-2">
+                  <TrustedSetupRiskDot
+                    risk={trustedSetup.risk}
+                    size="sm"
+                    className="shrink-0"
+                  />
+                  <span className="text-xs leading-normal">
+                    {trustedSetup.shortDescription}
+                  </span>
+                </div>
+              ))}
             </div>
-            <p className="mt-1 text-xs leading-normal">
-              {trustedSetup.shortDescription}
-            </p>
-          </div>
-        ))}
+          )
+        })}
       </TooltipContent>
     </Tooltip>
   )
