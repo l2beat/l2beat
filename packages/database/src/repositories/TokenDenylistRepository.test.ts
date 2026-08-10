@@ -24,7 +24,7 @@ describeTokenDatabase(TokenDenylistRepository.name, (db) => {
         reason: 'test token',
       },
     ])
-    expect(stored[0]?.createdAt).toBeGreaterThan(0)
+    expect(stored[0]?.createdAt ?? 0).toBeGreaterThan(0)
   })
 
   it('finds an entry with case-insensitive address matching', async () => {
