@@ -33,4 +33,13 @@ export interface CompareMetric {
    * per-metric slot next to the metric switcher.
    */
   Controls?: ComponentType<CompareMetricControlsProps>
+  /**
+   * Whether the project has data for this metric. Projects failing this
+   * check stay selectable but are marked with `noDataLabel` in the picker
+   * and chip strip instead of rendering an empty series. Omit when every
+   * project has the metric.
+   */
+  hasData?: (project: CompareProjectEntry) => boolean
+  /** Shown on chips and picker rows of projects failing `hasData`. */
+  noDataLabel?: string
 }
