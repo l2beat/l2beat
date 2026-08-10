@@ -31,6 +31,7 @@ export const swell = opStackL2({
     isPartOfSuperchain: true,
   },
   addedAt: UnixTime(1734566400), // 2024-12-19T00:00:00Z
+  archivedAt: UnixTime(1785940019), // 2026-08-05T14:26:59Z
   discovery,
   genesisTimestamp,
   nonTemplateDaTracking: [
@@ -96,6 +97,7 @@ export const swell = opStackL2({
     name: 'swell',
     chainId: 1923,
     sinceTimestamp: UnixTime(1732696703),
+    untilTimestamp: UnixTime(1785940019),
     coingeckoPlatform: 'swellchain',
     apis: [
       {
