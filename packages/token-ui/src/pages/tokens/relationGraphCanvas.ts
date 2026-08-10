@@ -70,7 +70,9 @@ const NODE_RADIUS = 7
 const NODE_HOVER_RADIUS = 8.5
 export const NODE_RING_RADIUS = 12
 const NODE_LABEL_FONT_SIZE = 11
-const NODE_LABEL_OFFSET_Y = -12
+const NODE_CHAIN_LABEL_FONT_SIZE = 9
+/** The chain subtitle keeps the old label position, directly above the node. */
+const NODE_CHAIN_LABEL_OFFSET_Y = -12
 /** Below this on-screen font size node labels are illegible — skip them. */
 const NODE_LABEL_MIN_FONT_SIZE = 8
 const RELATION_LABEL_MIN_SCALE = 2.5
@@ -265,13 +267,61 @@ function drawNodeLabels(
   const showAll = fontSize >= NODE_LABEL_MIN_FONT_SIZE
   if (!showAll && hovered === undefined && focus === undefined) return
 
-  ctx.font = `600 ${Math.max(fontSize, NODE_LABEL_MIN_FONT_SIZE)}px ${theme.fontFamily}`
+  // Focused labels remain legible even when the graph is zoomed far out. Use
+  // the same minimum scale for their offsets so the two lines do not overlap.
+  const labelScale = Math.max(
+    visualScale,
+    NODE_LABEL_MIN_FONT_SIZE / NODE_LABEL_FONT_SIZE,
+  )
+  const chainFontSize = Math.max(
+    NODE_CHAIN_LABEL_FONT_SIZE * visualScale,
+    NODE_LABEL_MIN_FONT_SIZE,
+  )
+  const chainLabelOffsetY = NODE_CHAIN_LABEL_OFFSET_Y * labelScale
+  const symbolLabelOffsetY = chainLabelOffsetY - chainFontSize - labelScale
+
   ctx.textAlign = 'center'
   ctx.textBaseline = 'alphabetic'
   ctx.lineJoin = 'round'
-  ctx.lineWidth = Math.max(3 * visualScale, 2)
+  ctx.lineWidth = Math.max(3 * labelScale, 2)
   ctx.strokeStyle = theme.background
   ctx.fillStyle = theme.foreground
+
+  drawNodeLabelLine(
+    ctx,
+    scene,
+    view,
+    showAll,
+    `600 ${Math.max(fontSize, NODE_LABEL_MIN_FONT_SIZE)}px ${theme.fontFamily}`,
+    symbolLabelOffsetY,
+    (node) => node.label,
+    1,
+  )
+  drawNodeLabelLine(
+    ctx,
+    scene,
+    view,
+    showAll,
+    `500 ${chainFontSize}px ${theme.fontFamily}`,
+    chainLabelOffsetY,
+    (node) => node.data.chain,
+    0.8,
+  )
+  ctx.globalAlpha = 1
+}
+
+function drawNodeLabelLine(
+  ctx: CanvasRenderingContext2D,
+  scene: RelationGraphScene,
+  view: RelationGraphViewState,
+  showAll: boolean,
+  font: string,
+  offsetY: number,
+  text: (node: SceneNode) => string,
+  opacity: number,
+) {
+  const { camera, focus, hovered } = view
+  ctx.font = font
   for (const node of scene.nodes) {
     const id = node.data.id
     const emphasized =
@@ -282,12 +332,13 @@ function drawNodeLabels(
     const y = node.y * camera.k + camera.y
     if (isPointOutsideViewport(x, y, view)) continue
 
-    ctx.globalAlpha = focus === undefined || focus.nodeIds.has(id) ? 1 : 0.12
-    const labelY = y + NODE_LABEL_OFFSET_Y * visualScale
-    ctx.strokeText(node.label, x, labelY)
-    ctx.fillText(node.label, x, labelY)
+    const focusOpacity = focus === undefined || focus.nodeIds.has(id) ? 1 : 0.12
+    ctx.globalAlpha = focusOpacity * opacity
+    const labelY = y + offsetY
+    const label = text(node)
+    ctx.strokeText(label, x, labelY)
+    ctx.fillText(label, x, labelY)
   }
-  ctx.globalAlpha = 1
 }
 
 function drawClusterLabels(
