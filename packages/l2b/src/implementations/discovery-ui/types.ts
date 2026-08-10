@@ -30,6 +30,13 @@ export interface ApiTvlMapResponse {
   entries: ApiTvlMapEntry[]
 }
 
+// Streamed while the map is being built. `done` counts addresses whose balances
+// have landed, so it stays at zero until the first one does.
+export interface ApiTvlMapProgress {
+  done: number
+  total: number
+}
+
 export interface ApiTvlMapEntry {
   address: string
   name: string | undefined

@@ -10,7 +10,7 @@ import { DiffHistoryParser } from '@l2beat/shared'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { toJsonSchema, v as z } from '@l2beat/validate'
 import { config as dotenv } from 'dotenv'
-import express from 'express'
+import express, { type Response } from 'express'
 import { existsSync, readFileSync } from 'fs'
 import type { Server } from 'http'
 import path, { join } from 'path'
@@ -194,6 +194,12 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     }
     const { project } = paramsValidation.data
 
+    // Streamed, because sweeping a whole project takes long enough that the UI
+    // needs to show how far along it is.
+    res.setHeader('Content-Type', 'text/event-stream')
+    res.setHeader('Cache-Control', 'no-cache')
+    res.setHeader('Connection', 'keep-alive')
+
     try {
       const response = await getTvlMap(
         configReader,
@@ -201,12 +207,14 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
         providerCache,
         tvlCache,
         project,
+        (progress) => sendEvent(res, 'progress', progress),
       )
-      res.json(response)
+      sendEvent(res, 'result', response)
     } catch (e) {
       console.error(e)
-      res.status(500).json({ error: 'Failed to estimate project TVL' })
+      sendEvent(res, 'failure', { error: 'Failed to estimate project TVL' })
     }
+    res.end()
   })
 
   app.get('/api/projects/:project/code/:address', async (req, res) => {
@@ -437,6 +445,12 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   })
 
   attachGracefulShutdown(server)
+}
+
+// JSON never contains a raw newline, so the payload needs no escaping to stay
+// inside one server-sent event.
+function sendEvent(res: Response, event: string, payload: unknown): void {
+  res.write(`event: ${event}\ndata: ${JSON.stringify(payload)}\n\n`)
 }
 
 function shutdown(server: Server) {

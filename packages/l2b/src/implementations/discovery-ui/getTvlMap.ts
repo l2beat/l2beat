@@ -1,5 +1,5 @@
 import type { ConfigReader, TemplateService } from '@l2beat/discovery'
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import {
   calculateValue,
   getBalances,
@@ -13,6 +13,7 @@ import type {
   ApiAddressType,
   ApiProjectResponse,
   ApiTvlMapEntry,
+  ApiTvlMapProgress,
   ApiTvlMapResponse,
 } from './types'
 
@@ -26,6 +27,13 @@ const TOKENS_PER_CHAIN = 500
 // How many tokens a single tile names.
 const TOKENS_PER_ENTRY = 3
 
+// Asking for every holder at once reports no progress at all: the provider
+// coalesces one tick's calls into a single set and resolves the whole set
+// together, so all holders would finish in the same millisecond. Holders are
+// swept in groups of roughly this many calls instead, which costs a drain of
+// the batch pipeline per group and buys a progress step per group.
+const CALLS_PER_GROUP = 6000
+
 interface Holder {
   address: ChainSpecificAddress
   name: string | undefined
@@ -38,15 +46,32 @@ export async function getTvlMap(
   providerCache: ProviderCache,
   tvlCache: TvlCache,
   project: string,
+  onProgress: (progress: ApiTvlMapProgress) => void,
 ): Promise<ApiTvlMapResponse> {
   const holders = collectHolders(
     getProject(configReader, templateService, project),
   )
   const holdersPerChain = groupByChain(holders)
 
+  // The count lives here rather than in the per-chain sweeps, so that chains
+  // running in parallel report one number instead of one each.
+  let done = 0
+  const total = holders.length
+  onProgress({ done, total })
+  const onHoldersDone = (count: number) => {
+    done += count
+    onProgress({ done, total })
+  }
+
   const entriesPerChain = await Promise.all(
     [...holdersPerChain].map(([chain, chainHolders]) =>
-      getChainEntries(providerCache, tvlCache, chain, chainHolders),
+      getChainEntries(
+        providerCache,
+        tvlCache,
+        chain,
+        chainHolders,
+        onHoldersDone,
+      ),
     ),
   )
 
@@ -57,30 +82,46 @@ export async function getTvlMap(
   }
 }
 
-// Every holder of a chain is queried in one go, because the provider coalesces
-// whatever is asked for within a tick into as few multicalls as it can.
 async function getChainEntries(
   providerCache: ProviderCache,
   tvlCache: TvlCache,
   chain: string,
   holders: Holder[],
+  onHoldersDone: (count: number) => void,
 ): Promise<ApiTvlMapEntry[]> {
   const provider = await providerCache.get(chain)
   const tokens = await tvlCache.getTokens(chain)
   const market = await tvlCache.getMarket(provider, tokens)
   const swept = topByMarketCap(tokens, market, TOKENS_PER_CHAIN)
 
-  const entries = await Promise.all(
-    holders.map(async (holder) =>
-      toEntry(
-        holder,
-        chain,
-        await getBalances(provider, holder.address, swept),
-        market,
+  const entries: ApiTvlMapEntry[] = []
+  // Holders within a group still coalesce into as few multicalls as they can.
+  const groupSize = Math.max(1, Math.floor(CALLS_PER_GROUP / swept.length))
+  for (const group of toGroups(holders, groupSize)) {
+    const groupEntries = await Promise.all(
+      group.map(async (holder) =>
+        toEntry(
+          holder,
+          chain,
+          await getBalances(provider, holder.address, swept),
+          market,
+        ),
       ),
-    ),
-  )
+    )
+    entries.push(...groupEntries)
+    onHoldersDone(group.length)
+  }
+
   return entries.filter((entry) => entry.tvl > 0)
+}
+
+function toGroups(holders: Holder[], groupSize: number): Holder[][] {
+  assert(groupSize > 0, 'A group has to fit at least one holder')
+  const groups: Holder[][] = []
+  for (let index = 0; index < holders.length; index += groupSize) {
+    groups.push(holders.slice(index, index + groupSize))
+  }
+  return groups
 }
 
 function toEntry(
