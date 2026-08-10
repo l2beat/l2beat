@@ -1,10 +1,9 @@
 import { useState } from 'react'
+import { useDevice } from '~/hooks/useDevice'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { HomeCard } from './HomeCard'
 import { RecentChangesDialog } from './RecentChangesDialog'
-
-const VISIBLE_PROJECT_ICONS_COUNT = 5
 
 export interface HomeRecentChangesProject {
   name: string
@@ -20,13 +19,12 @@ export function HomeRecentChangesTile({
   recentChangesProjects: HomeRecentChangesProject[]
   className?: string
 }) {
+  const { isDesktop } = useDevice()
+  const visibleIcons = isDesktop ? 3 : 5
   const [dialogOpen, setDialogOpen] = useState(false)
   const disabled = recentChangesCount === 0
 
-  const visibleProjects = recentChangesProjects.slice(
-    0,
-    VISIBLE_PROJECT_ICONS_COUNT,
-  )
+  const visibleProjects = recentChangesProjects.slice(0, visibleIcons)
   const restCount = recentChangesProjects.length - visibleProjects.length
 
   return (
