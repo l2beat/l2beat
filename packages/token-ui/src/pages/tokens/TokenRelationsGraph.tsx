@@ -414,7 +414,7 @@ export function TokenRelationsGraph({
       <div
         ref={tooltipRef}
         className={cn(
-          'pointer-events-none absolute top-0 left-0 z-10 w-max max-w-72',
+          'pointer-events-none absolute top-0 left-0 z-10 w-max',
           'whitespace-pre-line rounded-md border bg-background px-2.5 py-1.5 text-xs shadow-md',
           tooltip === undefined && 'hidden',
         )}
@@ -442,7 +442,7 @@ function nodeTooltip(node: SceneNode) {
   const { data } = node
   return [
     `${node.label} on ${data.chain}`,
-    `${data.chain}:${data.address}`,
+    data.address,
     data.isDeployed ? 'Deployed token exists' : 'Missing deployed token',
   ].join('\n')
 }
