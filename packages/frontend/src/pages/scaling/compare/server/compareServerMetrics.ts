@@ -1,8 +1,10 @@
+import { getProjectsDataPosted } from '~/server/features/data-availability/throughput/getProjectsDataPosted'
 import { getActivityLatestUops } from '~/server/features/scaling/activity/getActivityLatestTps'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
 import type { getSsrHelpers } from '~/trpc/server'
 import { optionToRange } from '~/utils/range/range'
 import { getActivityCompareChartParams } from '../metrics/activity/getActivityCompareChartParams'
+import { getDataPostedCompareChartParams } from '../metrics/data-posted/getDataPostedCompareChartParams'
 import { getTvsCompareChartParams } from '../metrics/tvs/getTvsCompareChartParams'
 import type {
   CompareClientState,
@@ -60,6 +62,29 @@ export const COMPARE_SERVER_METRICS: Record<
       await helpers.queryClient.prefetchQuery(
         helpers.trpc.activity.detailedChartWithProjectsRanges.queryOptions(
           getActivityCompareChartParams(projects, state.chartRange),
+        ),
+      )
+    },
+  },
+  'data-posted': {
+    getDefaultProjects: async (universe, count) => {
+      const tracked = universe.filter((project) => project.hasDaTracking)
+      const dataPosted = await getProjectsDataPosted(
+        tracked.map((project) => project.id),
+      )
+      return tracked
+        .map((project) => ({
+          project,
+          pastDay: dataPosted[project.id.toString()]?.pastDay ?? -1,
+        }))
+        .sort((a, b) => b.pastDay - a.pastDay)
+        .slice(0, count)
+        .map(({ project }) => project)
+    },
+    prefetch: async (helpers, projects, state) => {
+      await helpers.queryClient.prefetchQuery(
+        helpers.trpc.da.detailedChartWithProjectsRanges.queryOptions(
+          getDataPostedCompareChartParams(projects, state.chartRange),
         ),
       )
     },

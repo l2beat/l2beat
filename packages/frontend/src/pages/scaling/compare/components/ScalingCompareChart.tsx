@@ -86,6 +86,7 @@ export function ScalingCompareChart({
           allProjects={allProjects}
           selectedProjects={selectedProjects}
           isDefaultSelection={state.projects.length === 0}
+          metric={metric}
           onChange={(projects) => setState((prev) => ({ ...prev, projects }))}
           className="mt-3 border-divider border-b pb-3"
         />

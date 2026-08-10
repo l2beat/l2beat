@@ -22,6 +22,8 @@ export interface CompareProjectEntry {
   tvsSinceTimestamp: number | undefined
   /** Latest total TVS, used to order the picker. 0 when not tracked. */
   tvs: number
+  /** False when the project has no DA tracking, so no data-posted data. */
+  hasDaTracking: boolean
 }
 
 /**
@@ -36,7 +38,7 @@ export async function getCompareProjectEntries(): Promise<
   const [projects, tvs] = await Promise.all([
     ps.getProjects({
       select: ['scalingInfo'],
-      optional: ['tvsConfig'],
+      optional: ['tvsConfig', 'daTrackingConfig'],
       where: ['scalingInfo'],
       whereNot: ['archivedAt'],
     }),
@@ -52,6 +54,7 @@ export async function getCompareProjectEntries(): Promise<
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       tvsSinceTimestamp: getTvsSinceTimestamp(project.tvsConfig),
       tvs: tvs.projects[project.id.toString()]?.breakdown.total ?? 0,
+      hasDaTracking: (project.daTrackingConfig?.length ?? 0) > 0,
     }))
     .sort((a, b) => b.tvs - a.tvs || a.name.localeCompare(b.name))
 }

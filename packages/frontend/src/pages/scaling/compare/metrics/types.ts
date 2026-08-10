@@ -33,4 +33,12 @@ export interface CompareMetric {
    * per-metric slot next to the metric switcher.
    */
   Controls?: ComponentType<CompareMetricControlsProps>
+  /**
+   * Marks projects the metric has no data for. The picker greys them out
+   * with `unavailableReason` and the metric's chart must never render a
+   * series for them. Omitted = every project is available.
+   */
+  isProjectAvailable?: (project: CompareProjectEntry) => boolean
+  /** Short note shown on unavailable projects in the picker and chips. */
+  unavailableReason?: string
 }

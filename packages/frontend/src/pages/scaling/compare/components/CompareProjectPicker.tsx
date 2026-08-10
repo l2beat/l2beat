@@ -13,6 +13,7 @@ import { CloseIcon } from '~/icons/Close'
 import { PlusIcon } from '~/icons/Plus'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
 import { cn } from '~/utils/cn'
+import type { CompareMetric } from '../metrics/types'
 import { MAX_COMPARE_PROJECTS } from '../utils/compareChartState'
 import { useCompareSeries } from './CompareSeriesContext'
 
@@ -27,6 +28,8 @@ interface Props {
   selectedProjects: CompareProjectEntry[]
   /** True when the chips show the top-N defaults instead of a user selection. */
   isDefaultSelection: boolean
+  /** The active metric, marking projects it has no data for. */
+  metric: CompareMetric
   onChange: (slugs: string[]) => void
   className?: string
 }
@@ -35,6 +38,7 @@ export function CompareProjectPicker({
   allProjects,
   selectedProjects,
   isDefaultSelection,
+  metric,
   onChange,
   className,
 }: Props) {
@@ -48,11 +52,17 @@ export function CompareProjectPicker({
 
   const selectedSlugs = selectedProjects.map((project) => project.slug)
   const atCap = selectedSlugs.length >= MAX_COMPARE_PROJECTS
+  const isAvailable = (project: CompareProjectEntry) =>
+    metric.isProjectAvailable?.(project) ?? true
 
   const filteredProjects = useMemo(() => {
     const pinned = new Set(pinnedSlugs)
     const sorted = [...allProjects].sort(
-      (a, b) => Number(pinned.has(b.slug)) - Number(pinned.has(a.slug)),
+      (a, b) =>
+        Number(pinned.has(b.slug)) - Number(pinned.has(a.slug)) ||
+        // Projects the metric has no data for sink below the available ones.
+        Number(metric.isProjectAvailable?.(b) ?? true) -
+          Number(metric.isProjectAvailable?.(a) ?? true),
     )
     const query = search.trim().toLowerCase()
     if (!query) return sorted
@@ -61,7 +71,7 @@ export function CompareProjectPicker({
         project.name.toLowerCase().includes(query) ||
         project.shortName?.toLowerCase().includes(query),
     )
-  }, [allProjects, search, pinnedSlugs])
+  }, [allProjects, search, pinnedSlugs, metric])
 
   const toggleProject = (slug: string) => {
     if (selectedSlugs.includes(slug)) {
@@ -99,11 +109,19 @@ export function CompareProjectPicker({
           onMouseLeave={() => setHoveredProjectId(undefined)}
           onFocus={() => setHoveredProjectId(project.id)}
           onBlur={() => setHoveredProjectId(undefined)}
-          className="flex h-7 items-center gap-1.5 rounded-full border border-divider bg-surface-primary primary-card:bg-surface-secondary py-1 pr-1.5 pl-1"
-          style={{ borderColor: colors[project.id] }}
+          title={isAvailable(project) ? undefined : metric.unavailableReason}
+          className={cn(
+            'flex h-7 items-center gap-1.5 rounded-full border border-divider bg-surface-primary primary-card:bg-surface-secondary py-1 pr-1.5 pl-1',
+            !isAvailable(project) && 'border-dashed opacity-60',
+          )}
+          // The ring makes the chip strip double as the chart's color key, so
+          // a project with no series on this metric keeps the plain border.
+          style={
+            isAvailable(project)
+              ? { borderColor: colors[project.id] }
+              : undefined
+          }
         >
-          {/* The ring makes the chip strip double as the chart's color key,
-              so it must show exactly the series color the chart uses. */}
           <img
             src={project.iconUrl}
             alt=""
@@ -172,13 +190,19 @@ export function CompareProjectPicker({
             <CommandEmpty>No projects found.</CommandEmpty>
             {filteredProjects.map((project) => {
               const isSelected = selectedSlugs.includes(project.slug)
+              const available = isAvailable(project)
               return (
                 <CommandItem
                   key={project.slug}
                   value={project.slug}
-                  disabled={atCap && !isSelected}
+                  // A selected-but-unavailable project (carried over from
+                  // another metric) stays enabled so it can be removed.
+                  disabled={!isSelected && (atCap || !available)}
                   onSelect={() => toggleProject(project.slug)}
-                  className="cursor-pointer gap-2 rounded-lg"
+                  className={cn(
+                    'cursor-pointer gap-2 rounded-lg',
+                    !available && 'opacity-50',
+                  )}
                 >
                   <CheckIcon
                     className={cn(
@@ -196,6 +220,11 @@ export function CompareProjectPicker({
                   <span className="font-medium text-sm leading-none tracking-[-1%]">
                     {project.name}
                   </span>
+                  {!available && (
+                    <span className="ml-auto whitespace-nowrap text-2xs text-secondary">
+                      {metric.unavailableReason}
+                    </span>
+                  )}
                 </CommandItem>
               )
             })}
