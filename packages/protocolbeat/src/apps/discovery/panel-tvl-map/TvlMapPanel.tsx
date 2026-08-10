@@ -3,11 +3,14 @@ import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getTvlMap } from '../../../api/api'
-import type { ApiTvlMapEntry, ApiTvlMapResponse } from '../../../api/types'
+import { streamTvlMap } from '../../../api/api'
+import type {
+  ApiTvlMapEntry,
+  ApiTvlMapProgress,
+  ApiTvlMapResponse,
+} from '../../../api/types'
 import { ActionNeededState } from '../../../components/ActionNeededState'
 import { AddressIcon } from '../../../components/AddressIcon'
-import { LoadingState } from '../../../components/LoadingState'
 import { toShortenedAddress } from '../../../utils/toShortenedAddress'
 import { usePanelStore } from '../store/panel-store'
 import { squarify, type Tile } from './squarify'
@@ -39,11 +42,15 @@ export function TvlMapPanel() {
     throw new Error('Cannot use component outside of project page!')
   }
 
+  const [progress, setProgress] = useState<ApiTvlMapProgress>()
+
   const mapResponse = useQuery({
     queryKey: ['projects', project, 'tvl-map'],
-    queryFn: () => getTvlMap(project),
+    queryFn: ({ signal }) => streamTvlMap(project, signal, setProgress),
     staleTime: STALE_MS,
     refetchOnWindowFocus: false,
+    // A retry would silently start another sweep of the whole project.
+    retry: false,
   })
 
   if (mapResponse.isError) {
@@ -51,13 +58,60 @@ export function TvlMapPanel() {
   }
   const response = mapResponse.data
   if (response === undefined) {
-    return <LoadingState />
+    return <Progress progress={progress} />
   }
   if (response.entries.length === 0) {
     return <ActionNeededState message="No value held by this project" />
   }
 
   return <TvlMap response={response} />
+}
+
+function Progress(props: { progress: ApiTvlMapProgress | undefined }) {
+  const done = props.progress?.done ?? 0
+  const total = props.progress?.total ?? 0
+  const ratio = total > 0 ? done / total : 0
+
+  return (
+    <div className="flex h-full w-full flex-col items-center justify-center bg-coffee-900">
+      <div className="w-64 max-w-[80%]">
+        <div className="mb-1 flex items-baseline justify-between gap-2 text-2xs text-coffee-400 uppercase tracking-wider">
+          <span>{toProgressLabel(props.progress)}</span>
+          {total > 0 && (
+            <span className="font-mono tabular-nums">
+              {done}/{total}
+            </span>
+          )}
+        </div>
+        <div
+          className={clsx(
+            'h-1.5 w-full bg-coffee-700',
+            done === 0 && 'animate-pulse',
+          )}
+        >
+          <div
+            className="h-full bg-autumn-300 transition-[width] duration-200"
+            style={{ width: `${(ratio * 100).toFixed(1)}%` }}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Nothing has finished yet means the sweep is still collecting tokens and
+// prices, or waiting on the first batch of balances to come back.
+function toProgressLabel(progress: ApiTvlMapProgress | undefined): string {
+  if (progress === undefined) {
+    return 'Connecting'
+  }
+  if (progress.done === 0) {
+    return 'Fetching tokens and prices'
+  }
+  if (progress.done === progress.total) {
+    return 'Drawing the map'
+  }
+  return 'Reading balances'
 }
 
 function TvlMap(props: { response: ApiTvlMapResponse }) {
