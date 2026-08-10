@@ -54,6 +54,7 @@ export function PrivacyTvlSection({
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
+        project={project}
       />
     </ProjectSection>
   )
