@@ -181,20 +181,15 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                           : entryToValue(item)
                       }
                     >
-                      {item.type === 'project' && (
+                      {item.type !== 'page' && (
                         <img
                           src={item.iconUrl}
-                          alt={`${item.name} logo`}
-                          className="rounded-sm"
-                          width={20}
-                          height={20}
-                        />
-                      )}
-                      {item.type === 'token' && (
-                        <img
-                          src={item.iconUrl}
-                          alt={`${item.name} icon`}
-                          className="rounded-full"
+                          alt={`${item.name} ${item.type === 'token' ? 'icon' : 'logo'}`}
+                          className={
+                            item.type === 'token'
+                              ? 'rounded-full'
+                              : 'rounded-sm'
+                          }
                           width={20}
                           height={20}
                         />

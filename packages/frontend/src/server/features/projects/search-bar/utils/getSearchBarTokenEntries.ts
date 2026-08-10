@@ -17,6 +17,5 @@ export function getSearchBarTokenEntries(
       href: `/interop/tokens/${getAbstractTokenSlug(token)}`,
       iconUrl: token.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
       issuer: token.issuer,
-      tags: [token.symbol],
     }))
 }

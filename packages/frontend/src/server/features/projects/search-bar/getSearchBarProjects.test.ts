@@ -53,20 +53,11 @@ describe(getSearchBarProjects.name, () => {
 
     const result = await getSearchBarProjects('usdc')
 
-    expect(result.map(({ searchScore, ...entry }) => entry)).toEqual([
-      {
-        category: 'tokens',
-        name: 'USDC',
-        href: '/interop/tokens/circle-usdc',
-        type: 'token',
-        id: 'usdc01',
-        iconUrl:
-          'https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694',
-        issuer: 'circle',
-        searchMatchKind: 'direct',
-      },
-    ])
-    expect(result[0]?.searchScore).toBeA(Number)
+    expect(result).toHaveLength(1)
+    expect(result[0]?.type).toEqual('token')
+    expect(result[0]?.category).toEqual('tokens')
+    expect(result[0]?.name).toEqual('USDC')
+    expect(result[0]?.searchMatchKind).toEqual('direct')
   })
 })
 

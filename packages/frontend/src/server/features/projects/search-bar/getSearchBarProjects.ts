@@ -6,6 +6,8 @@ import { getLogger } from '../../../utils/logger'
 import type { SearchBarProjectEntry, SearchBarTokenEntry } from './types'
 import { getSearchBarProjectEntries } from './utils/getSearchBarProjectEntries'
 import { getSearchBarTokenEntries } from './utils/getSearchBarTokenEntries'
+import { toSearchBarProject } from './utils/toSearchBarProject'
+import { toSearchBarToken } from './utils/toSearchBarToken'
 
 type SearchBarSearchEntry = (SearchBarProjectEntry | SearchBarTokenEntry) & {
   searchMatchKind: 'direct' | 'fuzzy'
@@ -13,29 +15,11 @@ type SearchBarSearchEntry = (SearchBarProjectEntry | SearchBarTokenEntry) & {
 }
 
 function formatSearchResult(entry: SearchBarSearchEntry) {
-  if (entry.type === 'token') {
-    return {
-      category: entry.category,
-      name: entry.name,
-      href: entry.href,
-      type: entry.type,
-      id: entry.id,
-      iconUrl: entry.iconUrl,
-      issuer: entry.issuer,
-      searchMatchKind: entry.searchMatchKind,
-      searchScore: entry.searchScore,
-    }
-  }
+  const base =
+    entry.type === 'token' ? toSearchBarToken(entry) : toSearchBarProject(entry)
 
   return {
-    category: entry.category,
-    name: entry.name,
-    href: entry.href,
-    type: entry.type,
-    id: entry.id,
-    iconUrl: entry.iconUrl,
-    kind: entry.kind,
-    scalingCategory: entry.scalingCategory,
+    ...base,
     searchMatchKind: entry.searchMatchKind,
     searchScore: entry.searchScore,
   }
@@ -44,20 +28,23 @@ function formatSearchResult(entry: SearchBarSearchEntry) {
 export async function getSearchBarProjects(search: string) {
   const logger = getLogger().for('getSearchBarProjects')
 
-  const projects = await ps.getProjects({
-    optional: [
-      'scalingInfo',
-      'daLayer',
-      'daBridge',
-      'ecosystemConfig',
-      'interopConfig',
-      'zkCatalogInfo',
-      'privacyInfo',
-      'contracts',
-      'permissions',
-      'aliases',
-    ],
-  })
+  const [projects, tokens] = await Promise.all([
+    ps.getProjects({
+      optional: [
+        'scalingInfo',
+        'daLayer',
+        'daBridge',
+        'ecosystemConfig',
+        'interopConfig',
+        'zkCatalogInfo',
+        'privacyInfo',
+        'contracts',
+        'permissions',
+        'aliases',
+      ],
+    }),
+    getActiveInteropAbstractTokens(),
+  ])
 
   const searchBarEntries = projects.flatMap((p) =>
     getSearchBarProjectEntries(p, projects),
@@ -82,7 +69,6 @@ export async function getSearchBarProjects(search: string) {
     return matched.map(formatSearchResult)
   }
 
-  const tokens = await getActiveInteropAbstractTokens()
   const tokenEntries = getSearchBarTokenEntries(tokens)
 
   const result = searchEntries(search, [...searchBarEntries, ...tokenEntries], {

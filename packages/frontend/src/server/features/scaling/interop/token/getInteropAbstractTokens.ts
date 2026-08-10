@@ -1,7 +1,8 @@
 import type { AbstractTokenRecord } from '@l2beat/database'
-import { InMemoryCache, unique } from '@l2beat/shared-pure'
+import { unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getTokenDb } from '~/server/tokenDb'
+import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { getInteropChains } from '../utils/getInteropChains'
 import { getLatestAggregatedInteropTransferWithTokens } from '../utils/getLatestAggregatedInteropTransferWithTokens'
 
@@ -10,7 +11,9 @@ export type InteropAbstractToken = Pick<
   'id' | 'symbol' | 'issuer' | 'iconUrl' | 'category'
 >
 
-const interopAbstractTokensCache = new InMemoryCache({})
+const interopAbstractTokensCache = new FrontendInMemoryCache(
+  'getInteropAbstractTokens',
+)
 
 export function getActiveInteropAbstractTokens(): Promise<
   InteropAbstractToken[]

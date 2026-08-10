@@ -108,7 +108,7 @@ describe(groupSearchResults.name, () => {
   it('places tokens as the last shown group', () => {
     const grouped = groupSearchResults(
       searchEntries('eth', [
-        tokenEntry({ name: 'ETH', tags: ['ETH'] }),
+        tokenEntry({ name: 'ETH' }),
         projectEntry({
           name: 'Ethereal',
           tags: ['ethereal', 'Ethereal'],
@@ -139,12 +139,11 @@ function projectEntry({
   }
 }
 
-function tokenEntry({ name, tags }: { name: string; tags: string[] }) {
+function tokenEntry({ name }: { name: string }) {
   return {
     type: 'token' as const,
     category: 'tokens' as const,
     name,
-    tags,
     href: `/interop/tokens/${name.toLowerCase()}`,
   }
 }

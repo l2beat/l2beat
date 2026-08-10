@@ -2,6 +2,7 @@ import type { ProjectScalingCategory } from '@l2beat/config'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import type { SearchBarEntry } from '~/components/search-bar/types'
 import type { SEARCH_BAR_PROJECT_KEYS } from './utils/toSearchBarProject'
+import type { SEARCH_BAR_TOKEN_KEYS } from './utils/toSearchBarToken'
 
 export type SearchBarProjectEntry = SearchBarEntry & {
   type: 'project'
@@ -35,5 +36,5 @@ export type SearchBarProject = Pick<
 
 export type SearchBarToken = Pick<
   SearchBarTokenEntry,
-  'category' | 'name' | 'href' | 'type' | 'id' | 'iconUrl' | 'issuer'
+  (typeof SEARCH_BAR_TOKEN_KEYS)[number]
 >
