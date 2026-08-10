@@ -2,12 +2,14 @@ import {
   COMPARE_ACTIVITY_UNITS,
   COMPARE_METRIC_IDS,
   COMPARE_RANGE_OPTIONS,
+  COMPARE_TVS_FILTERS,
   COMPARE_TVS_UNITS,
   type CompareActivityUnit,
   type CompareChartState,
   type CompareMetricId,
   type CompareRange,
   type CompareRangeOption,
+  type CompareTvsFilter,
   type CompareTvsUnit,
   DEFAULT_COMPARE_ACTIVITY_UNIT,
   DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS,
@@ -15,6 +17,7 @@ import {
   DEFAULT_COMPARE_METRIC,
   DEFAULT_COMPARE_RANGE,
   DEFAULT_COMPARE_SCALE,
+  DEFAULT_COMPARE_TVS_FILTER,
   DEFAULT_COMPARE_TVS_UNIT,
   DEFAULT_COMPARE_VIEW_MODE,
   MAX_COMPARE_PROJECTS,
@@ -45,6 +48,7 @@ export function parseCompareStateFromSearchParams({
     // disjoint, so each metric picks up only its own units.
     activityUnit: parseActivityUnit(searchParams.get('unit')),
     tvsUnit: parseTvsUnit(searchParams.get('unit')),
+    tvsFilter: parseTvsFilter(searchParams.get('filter')),
     excludeAssociatedTokens: parseBoolean(
       searchParams.get('excludeAssociated'),
       DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS,
@@ -69,6 +73,11 @@ function parseActivityUnit(value: string | null): CompareActivityUnit {
 function parseTvsUnit(value: string | null): CompareTvsUnit {
   const unit = COMPARE_TVS_UNITS.find((unit) => unit === value)
   return unit ?? DEFAULT_COMPARE_TVS_UNIT
+}
+
+function parseTvsFilter(value: string | null): CompareTvsFilter {
+  const filter = COMPARE_TVS_FILTERS.find((filter) => filter === value)
+  return filter ?? DEFAULT_COMPARE_TVS_FILTER
 }
 
 function parseBoolean(value: string | null, defaultValue: boolean): boolean {

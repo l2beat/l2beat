@@ -17,6 +17,23 @@ export type CompareActivityUnit = (typeof COMPARE_ACTIVITY_UNITS)[number]
 export const COMPARE_TVS_UNITS = ['usd', 'eth'] as const
 export type CompareTvsUnit = (typeof COMPARE_TVS_UNITS)[number]
 
+export const COMPARE_TVS_BRIDGE_TYPES = [
+  'canonical',
+  'native',
+  'external',
+] as const
+export type CompareTvsBridgeType = (typeof COMPARE_TVS_BRIDGE_TYPES)[number]
+
+/**
+ * The TVS component filter, restricting the compared value to a single
+ * component of the split. A single field rather than one field per grouping:
+ * the data carries the groupings as independent axes with no cross-product
+ * (bridge type now, asset category later), so only one grouping can be
+ * non-"all" at a time.
+ */
+export const COMPARE_TVS_FILTERS = ['all', ...COMPARE_TVS_BRIDGE_TYPES] as const
+export type CompareTvsFilter = (typeof COMPARE_TVS_FILTERS)[number]
+
 export const COMPARE_VIEW_MODES = ['absolute', 'indexed'] as const
 export type CompareViewMode = (typeof COMPARE_VIEW_MODES)[number]
 
@@ -45,6 +62,7 @@ export interface CompareChartState {
   activityUnit: CompareActivityUnit
   /** Per-metric controls of the TVS metric; ignored elsewhere. */
   tvsUnit: CompareTvsUnit
+  tvsFilter: CompareTvsFilter
   excludeAssociatedTokens: boolean
   excludeRwaRestrictedTokens: boolean
 }
@@ -61,6 +79,7 @@ export interface CompareClientState {
   mode: CompareViewMode
   activityUnit: CompareActivityUnit
   tvsUnit: CompareTvsUnit
+  tvsFilter: CompareTvsFilter
   excludeAssociatedTokens: boolean
   excludeRwaRestrictedTokens: boolean
   chartRange: ChartRange
@@ -76,6 +95,7 @@ export function toCompareUrlState(
     mode: state.mode,
     activityUnit: state.activityUnit,
     tvsUnit: state.tvsUnit,
+    tvsFilter: state.tvsFilter,
     excludeAssociatedTokens: state.excludeAssociatedTokens,
     excludeRwaRestrictedTokens: state.excludeRwaRestrictedTokens,
     range: chartRangeToCompareRange(state.chartRange),
@@ -93,6 +113,7 @@ export function toCompareClientState(
     mode: state.mode,
     activityUnit: state.activityUnit,
     tvsUnit: state.tvsUnit,
+    tvsFilter: state.tvsFilter,
     excludeAssociatedTokens: state.excludeAssociatedTokens,
     excludeRwaRestrictedTokens: state.excludeRwaRestrictedTokens,
     chartRange,
@@ -105,6 +126,7 @@ export const DEFAULT_COMPARE_SCALE: ChartScale = 'linear'
 export const DEFAULT_COMPARE_VIEW_MODE: CompareViewMode = 'absolute'
 export const DEFAULT_COMPARE_ACTIVITY_UNIT: CompareActivityUnit = 'uops'
 export const DEFAULT_COMPARE_TVS_UNIT: CompareTvsUnit = 'usd'
+export const DEFAULT_COMPARE_TVS_FILTER: CompareTvsFilter = 'all'
 // The TVS control defaults match the /scaling/tvs page so the default
 // comparison reproduces the numbers shown there.
 export const DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS = false
@@ -154,6 +176,7 @@ export function isSameCompareState(
     (left.metric !== 'activity' || left.activityUnit === right.activityUnit) &&
     (left.metric !== 'tvs' ||
       (left.tvsUnit === right.tvsUnit &&
+        left.tvsFilter === right.tvsFilter &&
         left.excludeAssociatedTokens === right.excludeAssociatedTokens &&
         left.excludeRwaRestrictedTokens ===
           right.excludeRwaRestrictedTokens)) &&
