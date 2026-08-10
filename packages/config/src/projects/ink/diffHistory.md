@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x5799bb7272a1ef0b201e6615df55624cc107bb0c
+
+# Diff at Mon, 10 Aug 2026 11:03:38 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b69b5b6595d9041cb4e6d7872e95451210cc7bd7 block: 1785409481
+- current timestamp: 1786359753
+
+## Description
+
+DisputeGameFactory: the proposer key was rotated. L1FeeVault: the recipient changed to a new address and the minimum withdrawal dropped from 2 ETH to 0.15 ETH. This vault collects only the L1 data-fee component of L2 transaction fees; the BaseFeeVault and SequencerFeeVault still pay out to the previous recipient at the 2 ETH threshold.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      values.proposerFromDGF:
+-        "eth:0x65436ddCbc026F34118954F229f7F132b696b3B4"
++        "eth:0x3832bfbeF03173E4C49a00ec0DD178817A02D177"
+    }
+```
+
+```diff
+    contract L1FeeVault (ink:0x420000000000000000000000000000000000001A) [opstack/Layer2/L1FeeVault_karst] {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      values.MIN_WITHDRAWAL_AMOUNT:
+-        "2000000000000000000"
++        "150000000000000000"
+      values.minWithdrawalAmount:
+-        "2000000000000000000"
++        "150000000000000000"
+      values.recipient:
+-        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "ink:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9"
+      values.RECIPIENT:
+-        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "ink:0x1eB630b2e7409597D462dd5f3D21E305FC56B8C9"
+    }
+```
+
 Generated with discovered.json: 0x06898bb4ee003fc2a23469a1b0933d268ce6bb54
 
 # Diff at Thu, 30 Jul 2026 11:05:46 GMT:
