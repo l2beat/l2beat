@@ -56,7 +56,7 @@ export function HomeRecentChangesTile({
             </span>
           </span>
 
-          <span className="mt-0.5 truncate font-medium text-label-value-12 text-secondary">
+          <span className="mt-0.5 truncate font-medium text-label-value-12 text-secondary leading-tight">
             <span className="lg:hidden">
               {disabled
                 ? 'No project changes handled this week'

@@ -269,10 +269,10 @@ function StatTile({
             )}
           >
             {icon}
-            <span className="min-w-0 truncate">{primary}</span>
+            <span className="min-w-0 truncate leading-tight">{primary}</span>
           </ValueWrapper>
           {secondary !== undefined && (
-            <span className="truncate font-medium text-label-value-12 text-secondary">
+            <span className="truncate font-medium text-label-value-12 text-secondary leading-tight">
               {secondary}
             </span>
           )}
