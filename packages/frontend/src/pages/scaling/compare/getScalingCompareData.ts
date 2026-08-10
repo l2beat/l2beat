@@ -13,6 +13,7 @@ import {
   type CompareChartState,
   compareRangeToChartRange,
   DEFAULT_COMPARE_PROJECTS_COUNT,
+  toCompareClientState,
 } from './utils/compareChartState'
 import { parseCompareStateFromSearchParams } from './utils/parseCompareStateFromSearchParams'
 
@@ -100,7 +101,11 @@ async function getPrefetchedChartData(
 
   const initialChartRange = compareRangeToChartRange(initialState.range)
   const helpers = getSsrHelpers()
-  await serverMetric.prefetch(helpers, selectedProjects, initialChartRange)
+  await serverMetric.prefetch(
+    helpers,
+    selectedProjects,
+    toCompareClientState(initialState, initialChartRange),
+  )
 
   return {
     defaultProjectSlugs: defaultProjects.map((project) => project.slug),
