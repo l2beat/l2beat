@@ -15,9 +15,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartCommonComponents } from '~/components/core/chart/ChartCommonComponents'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { ChartLegendToggleAll } from '~/components/core/chart/ChartLegendToggleAll'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
-import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
 import type { CompareViewMode } from '../utils/compareChartState'
@@ -41,7 +39,7 @@ interface Props {
 }
 
 /**
- * The shared compare chart renderer: legend, lines, axes and tooltip for any
+ * The shared compare chart renderer: lines, axes and tooltip for any
  * registry metric. Also the single place implementing the indexed view mode -
  * every series is rebased to 100 client-side, so metrics only supply data and
  * absolute-value formatting.
@@ -73,16 +71,12 @@ export function CompareMetricLineChart({
             {project.name}
           </span>
         ),
-        legendLabel: project.shortName ?? project.name,
         color: colors[project.id] ?? 'var(--secondary)',
         indicatorType: { shape: 'line' },
       }
       return acc
     }, {})
   }, [projects, colors])
-
-  const { dataKeys, toggleDataKey, toggleAllDataKeys, showAllSelected } =
-    useChartDataKeys(chartMeta)
 
   const indexed = mode === 'indexed'
   const { chartData, rebasedMidRange } = useMemo(() => {
@@ -106,26 +100,13 @@ export function CompareMetricLineChart({
       <div className="mt-3 mb-2">
         <ChartTimeRange timeRange={timeRange} />
       </div>
-      <ChartContainer
-        data={chartData}
-        meta={chartMeta}
-        isLoading={isLoading}
-        interactiveLegend={{
-          dataKeys,
-          onItemClick: toggleDataKey,
-        }}
-      >
+      <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
         {/* Without right:1 the chart last point is not hoverable for some reason */}
         <LineChart responsive data={chartData} margin={{ top: 20, right: 1 }}>
-          <ChartLegendToggleAll
-            showAllSelected={showAllSelected}
-            onToggleAll={toggleAllDataKeys}
-          />
           {projects.map((project) => (
             <Line
               key={project.id}
               dataKey={project.id}
-              hide={!dataKeys.includes(project.id)}
               stroke={chartMeta[project.id]?.color}
               strokeOpacity={
                 hoveredProjectId !== undefined &&

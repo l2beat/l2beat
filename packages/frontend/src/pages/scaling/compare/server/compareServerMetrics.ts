@@ -1,6 +1,5 @@
 import { getActivityLatestUops } from '~/server/features/scaling/activity/getActivityLatestTps'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
-import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import type { getSsrHelpers } from '~/trpc/server'
 import { optionToRange } from '~/utils/range/range'
 import { getActivityCompareChartParams } from '../metrics/activity/getActivityCompareChartParams'
@@ -33,17 +32,8 @@ export const COMPARE_SERVER_METRICS: Record<
   CompareServerMetric
 > = {
   tvs: {
-    getDefaultProjects: async (universe, count) => {
-      const tvs = await get7dTvsBreakdown({ type: 'layer2' })
-      return universe
-        .map((project) => ({
-          project,
-          tvs: tvs.projects[project.id.toString()]?.breakdown.total ?? -1,
-        }))
-        .sort((a, b) => b.tvs - a.tvs)
-        .slice(0, count)
-        .map(({ project }) => project)
-    },
+    // The universe is already ordered by TVS descending.
+    getDefaultProjects: async (universe, count) => universe.slice(0, count),
     prefetch: async (helpers, projects, state) => {
       await helpers.queryClient.prefetchQuery(
         helpers.trpc.tvs.detailedChartWithProjectsRanges.queryOptions(
