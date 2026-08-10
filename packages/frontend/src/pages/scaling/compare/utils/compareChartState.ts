@@ -8,7 +8,12 @@ import {
 } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 
-export const COMPARE_METRIC_IDS = ['tvs', 'activity', 'costs'] as const
+export const COMPARE_METRIC_IDS = [
+  'tvs',
+  'activity',
+  'costs',
+  'data-posted',
+] as const
 export type CompareMetricId = (typeof COMPARE_METRIC_IDS)[number]
 
 export const COMPARE_ACTIVITY_UNITS = ['uops', 'tps'] as const

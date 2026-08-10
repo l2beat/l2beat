@@ -171,7 +171,7 @@ function MetricSwitcher({
 }) {
   const isClient = useIsClient()
   if (!isClient) {
-    return <Skeleton className="h-9 w-[248px]" />
+    return <Skeleton className="h-9 w-[340px]" />
   }
   return (
     <RadioGroup
