@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DepositWallet",
+  "description": "Per-user smart wallet implementation shared through a beacon: every call batch needs the owner's (or a time-limited session signer's) EIP-712 signature, and direct withdrawals are owner-only and unlock only while the wallet is paused. The beacon owner can replace every wallet's code at once; owners can opt out by pinning the current implementation.",
+  "ignoreMethods": ["factory", "id"]
+}

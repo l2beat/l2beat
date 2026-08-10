@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ProxyWallet",
+  "description": "Per-user proxy wallet implementation cloned by its factory; only the owner set at initialization can execute batches of arbitrary calls through it.",
+  "category": "core"
+}

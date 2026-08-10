@@ -8125,6 +8125,27 @@
       }
     },
     {
+      "name": "USD Coin (PoS)",
+      "coingeckoId": "usd-coin",
+      "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1601199611,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 137,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Polygon PoS"
+          }
+        ]
+      }
+    },
+    {
       "name": "USD Coin",
       "coingeckoId": "usd-coin",
       "address": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",

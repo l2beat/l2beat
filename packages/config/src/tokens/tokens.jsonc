@@ -9005,6 +9005,24 @@
         ]
       }
     },
+    // Bridged USDC.e. Its on-chain symbol is still "USDC" (unlike Arbitrum's,
+    // it was never renamed), and the generator asserts the two match, so it is
+    // registered under that symbol and distinguished by address.
+    {
+      "symbol": "USDC",
+      "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Polygon PoS"
+          }
+        ]
+      }
+    },
     {
       "symbol": "USDC",
       "address": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",

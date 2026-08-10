@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CombosExchange",
+  "description": "Upgradeable request-for-quote exchange where operator-role holders settle EIP-712 signed orders for combination positions. The fee on each fill is bounded by the order's signed rate and a global maximum of {{ MAX_FEE_RATE }} bps fixed at deployment.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "ignoreRelative": true,
+        "select": ["user", "roles"],
+        "add": { "event": "RolesUpdated" },
+        "dedupBy": "user"
+      },
+      "severity": "HIGH",
+      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (1) admin, bit 1 (2) operator."
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can upgrade the exchange implementation, and grant or revoke the admin role."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "MAX_FEE_RATE": {
+      "handler": {
+        "type": "call",
+        "method": "function MAX_FEE_RATE() view returns (uint256)",
+        "args": []
+      },
+      "description": "Global upper bound on the fee rate charged at settlement, in basis points. Fixed at deployment."
+    },
+    "FEE_RECEIVER": {
+      "description": "Address receiving all trading fees collected at settlement."
+    },
+    "POSITION_MANAGER": {
+      "description": "The outcome-token ledger whose positions are traded on this exchange."
+    },
+    "COLLATERAL_TOKEN": {
+      "description": "The collateral token used to pay for positions and fees."
+    }
+  }
+}

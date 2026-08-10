@@ -1,0 +1,59 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UmaCtfAdapter",
+  "description": "Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger; initializing and resolving are permissionless. Admins can pause or reset any question, and can flag one and resolve it manually with an outcome of their choosing after {{ safetyPeriodFormatted }}.",
+  "ignoreRelatives": ["collateralWhitelist"],
+  "fields": {
+    "safetyPeriodFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function SAFETY_PERIOD() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "admins": {
+      "handler": {
+        "type": "event",
+        "select": "member",
+        "add": {
+          "event": "event NewAdmin(address indexed admin, address indexed member)"
+        },
+        "remove": {
+          "event": "event RemovedAdmin(address indexed admin, address indexed member)"
+        }
+      },
+      "severity": "HIGH",
+      "description": "Can pause, unpause, reset and flag any question, and manually resolve a flagged question with an arbitrary outcome after the safety period.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause, unpause, reset and flag questions, and resolve a flagged question manually with an outcome of their choosing after the {{ safetyPeriodFormatted }} safety period."
+        }
+      ]
+    },
+    "ctf": {
+      "description": "Outcome-token ledger that this adapter reports payouts to."
+    },
+    "optimisticOracle": {
+      "description": "UMA optimistic oracle that price requests for questions are sent to."
+    },
+    "adminsEverObserved": {
+      "handler": {
+        "type": "event",
+        "ignoreRelative": true,
+        "select": "admin",
+        "add": [
+          {
+            "event": "event NewAdmin(address indexed admin, address indexed member)"
+          },
+          {
+            "event": "event RemovedAdmin(address indexed admin, address indexed member)"
+          }
+        ]
+      },
+      "description": "Every address ever observed exercising an admin power, taken from the granter recorded in each authorization event. The authorization mixin grants admin in the constructor without emitting an event, so such an admin is invisible in the added/removed sets and only shows up here. The list is historical and not a live permission set - confirm current status with isAdmin().",
+      "severity": "HIGH"
+    }
+  }
+}

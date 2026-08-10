@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "BinaryModule",
+  "description": "Upgradeable outcome module for two-sided markets: anyone can split collateral into outcome positions, merge them back, or redeem resolved ones. Bridge-role holders can mint positions without collateral backing, and resolver-role holders can report results directly, bypassing the oracle path.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "select": ["user", "roles"],
+        "add": { "event": "RolesUpdated" },
+        "dedupBy": "user"
+      },
+      "severity": "HIGH",
+      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (1) admin, bit 1 (2) operator, bit 2 (4) creator, bit 3 (8) bridge, bit 4 (16) resolver."
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can upgrade the module implementation, and grant or revoke the admin role."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "POSITION_MANAGER": {
+      "description": "The outcome-token ledger this module mints and burns positions on."
+    },
+    "COLLATERAL_TOKEN": {
+      "description": "The collateral token minted and burned by this module on split, merge and redemption."
+    }
+  }
+}

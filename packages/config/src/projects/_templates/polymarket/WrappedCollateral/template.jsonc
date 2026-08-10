@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "WrappedCollateral",
+  "description": "ERC20 wrapper around an underlying token, owned by the single adapter that deployed it. Anyone can unwrap; only the owner can wrap, mint without backing, and release the underlying held here to any recipient.",
+  "category": "core",
+  "fields": {
+    "owner": {
+      "description": "Adapter contract fixed at deployment.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can mint wrapper units without underlying backing and release arbitrary amounts of the underlying held by this contract to any recipient. This owner is immutable and cannot be changed."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "underlying": {
+      "description": "Underlying token backing the circulating wrapper supply."
+    },
+    "totalSupply": {
+      "description": "Circulating supply of the wrapper token.",
+      "ignoreInWatchMode": true
+    }
+  }
+}

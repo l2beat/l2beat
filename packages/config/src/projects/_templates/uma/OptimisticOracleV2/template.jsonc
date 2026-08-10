@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OptimisticOracleV2",
+  "category": "shared",
+  "description": "Standard permissionless UMA Optimistic Oracle V2. Anyone can request a price for a registered identifier, anyone can propose an answer by posting a bond, and anyone can dispute a proposal within its liveness window ({{ defaultLivenessFormatted }} by default, customizable per request). Undisputed proposals become final and settleable once the liveness window has passed, while disputes are escalated to UMA's DVM, where UMA token holders vote on the outcome and the loser's bond is partly awarded to the winner.",
+  "ignoreMethods": ["getCurrentTime"],
+  "ignoreRelatives": ["finder"],
+  "fields": {
+    "defaultLivenessFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function defaultLiveness() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    }
+  }
+}

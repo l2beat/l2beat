@@ -1,0 +1,14 @@
+{
+  "CtfCollateralAdapter-matic:0xADa100874d00e3331D00F2007a9c336a65009718": {
+    "hash": "0x50374cb0e7b71c78ef59b0ff8e78e47c5e73d7f532d5da16229e51e8c82f5285",
+    "address": "matic:0xADa100874d00e3331D00F2007a9c336a65009718",
+    "chain": "polygonpos",
+    "blockNumber": 91023912
+  },
+  "CtfCollateralAdapter-matic:0xAdA100Db00Ca00073811820692005400218FcE1f": {
+    "hash": "0x7b4f9c2a2ee857caf659d607fa024b31e5a2b192d4f3534bf02779c6e9de371b",
+    "address": "matic:0xAdA100Db00Ca00073811820692005400218FcE1f",
+    "chain": "polygonpos",
+    "blockNumber": 91023912
+  }
+}

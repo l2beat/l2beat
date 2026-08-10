@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DepositWalletBeacon",
+  "description": "Beacon holding the implementation pointer for every wallet deployed by the wallet factory. Its owner can replace the implementation of all of them in one transaction; individual wallets can opt out by pinning the current implementation.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can replace the implementation of every smart wallet proxy pointing at this beacon in a single transaction, except wallets that have pinned their implementation."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "defaultImplementation": {
+      "description": "The implementation all non-opted-out wallet proxies delegate to.",
+      "severity": "HIGH"
+    }
+  }
+}
