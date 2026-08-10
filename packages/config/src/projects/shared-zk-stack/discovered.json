@@ -1,6 +1,6 @@
 {
   "name": "shared-zk-stack",
-  "timestamp": 1785168665,
+  "timestamp": 1786358175,
   "configHash": "0x3cfbef9b419550ca818702997dd476035cf856077dc776dc57bf78ae7be2c697",
   "entries": [
     {
@@ -156,6 +156,11 @@
       "implementationNames": {
         "eth:0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B": "ProxyAdmin"
       }
+    },
+    {
+      "address": "eth:0x2696e6B444Be2f1C99A8C84f16397cAEa0d546Dc",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "GnosisSafe",
@@ -687,7 +692,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 281,
+        "nonce": 283,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1480,6 +1485,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x2696e6B444Be2f1C99A8C84f16397cAEa0d546Dc",
           "eth:0xA10fcD4B012467FAC48ce63838B7bE56AB16bE52",
           "eth:0x56B3120c32AE9C3188fafc5Cc542F9c53B0b2222",
           "eth:0x441e5c8910Ef39996B2D01499509861228cbc2d1",
@@ -1490,8 +1496,8 @@
         "domainSeparator": "0xc1ce7878e80d133721dfd6dabac04460cfb8e96b0f8a46b772c445cb13550400",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 6,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 7,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1631,7 +1637,7 @@
         "0xb0eebc8da1c8b487e37ce835acafbb43e7540c68772e535769e5a1a1620c2b89"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,5.",
+      "description": "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,0.",
       "deployerAddress": "eth:0x71d84c3404a6ae258E6471d4934B96a2033F9438",
       "sinceTimestamp": 1717520663,
       "sinceBlock": 20019830,
@@ -1678,13 +1684,13 @@
         "$upgradeCount": 7,
         "admin": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063",
         "BRIDGE_HUB": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getSemverProtocolVersion": [0, 29, 5],
-        "initialCutHash": "0x08ed3641fe05a42d8eeef971ecfc8bbcce46b97373ed02cd4cb9eb994e4d487a",
+        "getSemverProtocolVersion": [0, 30, 0],
+        "initialCutHash": "0xf07174741aabf0e70c64822a1e72400ac7686c001b41fdd917e0a5d577daa0be",
         "initialForceDeploymentHash": "0xad3fb7f31b114db9c3bce490d6ff173ee5bb075efddae0bd6ed01432f5c09860",
         "l1GenesisUpgrade": "eth:0x390bc10e854e137d2625573272b3fEe2C615eBA4",
         "owner": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "protocolVersion": 124554051589,
+        "protocolVersion": 128849018880,
         "serverNotifierAddress": "eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31",
         "storedBatchZero": "0x4e89e7408b8a0abb45917cb07d586b1b0affca0ba4e6fd450504bdea9dd079a1",
         "validatorTimelock": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
@@ -2025,7 +2031,10 @@
           "0x242217717fcebdc4c9fc1bba134ee7b2131deb4dca151a69ad05ff61b6c9c12e",
           "0x03264a5977425fc58cac85729ef3eb6b3c60a6916f1e54ba2cd74b76fb6ba31f",
           "0x5925465d7a8bc46307b7867fcda93e445af7e6479370d34be058639453b4651a",
-          "0x42432d865969ab601b7f4016895e1426f224bc02a1250008742443ac89511e8d"
+          "0x42432d865969ab601b7f4016895e1426f224bc02a1250008742443ac89511e8d",
+          "0xaea95768201a44ce4ef619ef097306ba35fe618e0ed279a29fe7026b1e6ff59b",
+          "0x351bd26b0db85aa9a209c61f4eefae078ffcbd2cb77c8408a2aaba775812bc3d",
+          "0xff0383a64e8bd76bcdffc84a15f2c5061c423ef9d74cde6c0bc9ffca57428cdf"
         ],
         "EXTENDED_LEGAL_VETO_PERIOD": 604800,
         "guardians": "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8",
@@ -2541,7 +2550,7 @@
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1785168665,
+        "clock": 1786358167,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -2563,7 +2572,7 @@
         "MinterAdmin": ["zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"],
         "name": "ZKsync",
         "symbol": "ZK",
-        "totalSupply": "14826835215600284233696310006"
+        "totalSupply": "14832834715600284233696310006"
       },
       "implementationNames": {
         "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": "TransparentUpgradeableProxy",
@@ -2658,7 +2667,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1785168665,
+        "clock": 1786358167,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -2768,7 +2777,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1785168665,
+        "clock": 1786358167,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -3040,7 +3049,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1785168665,
+        "clock": 1786358167,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -4516,6 +4525,6 @@
     "shared-zk-stack/ZkGovernor": "0x0d0c5f1209dfd254e3b76edce6803b2c607f359320da39df8a032f146ab1c46c",
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
-  "usedBlockNumbers": { "ethereum": 25625253, "zksync2": 71330857 },
-  "permissionsConfigHash": "0x93d3eb9b55ce9b9baa2a208d2fb0feb296636908f2faf8e8ff2740467916d3cc"
+  "usedBlockNumbers": { "ethereum": 25724037, "zksync2": 71507447 },
+  "permissionsConfigHash": "0x23230ba2ca2a4ebd4f3a94d57cb6737f18b91425c44bcbb6a653f4dc46800ec0"
 }

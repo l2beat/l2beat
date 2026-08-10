@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x87122799d80658a4617507ca2e825b141e0e89ba
+
+# Diff at Mon, 10 Aug 2026 10:37:20 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@352ff1eba99519e3c6090fccec5796e0475edcfa block: 1785168665
+- current timestamp: 1786358175
+
+## Description
+
+- Updated chain creation params and chain type manager version via this emergency proposal: https://tools.l2beat.com/decoder-new/?hash=0xc88fb3399a6edf512e2d5e87c2169ba474c2135e406822936656fac4d979949f&data=AwA. The diff is the boojum verifier (dual verifier `0xc47d355402e78b886b628914b3b129f236fee3cc`), which is already deployed for zksync era and 3 more chains. Two other emergency upgrades are standard pre- and post-upgrade actions.
+- Added a member to zk foundation ms.
+
+## Watched changes
+
+```diff
+    contract ZK Foundation Multisig (eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x2696e6B444Be2f1C99A8C84f16397cAEa0d546Dc"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
+```diff
+    contract ChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) [shared-zk-stack/ChainTypeManager] {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,0.
+      description:
+-        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,29,5."
++        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,0."
+      values.getSemverProtocolVersion.1:
+-        29
++        30
+      values.getSemverProtocolVersion.2:
+-        5
++        0
+      values.initialCutHash:
+-        "0x08ed3641fe05a42d8eeef971ecfc8bbcce46b97373ed02cd4cb9eb994e4d487a"
++        "0xf07174741aabf0e70c64822a1e72400ac7686c001b41fdd917e0a5d577daa0be"
+      values.protocolVersion:
+-        124554051589
++        128849018880
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.14:
++        "0xaea95768201a44ce4ef619ef097306ba35fe618e0ed279a29fe7026b1e6ff59b"
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.15:
++        "0x351bd26b0db85aa9a209c61f4eefae078ffcbd2cb77c8408a2aaba775812bc3d"
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.16:
++        "0xff0383a64e8bd76bcdffc84a15f2c5061c423ef9d74cde6c0bc9ffca57428cdf"
+    }
+```
+
 Generated with discovered.json: 0x1a3e6a1fcefdf5c52851f44f3c54655fda0fb979
 
 # Diff at Thu, 30 Jul 2026 13:10:30 GMT:

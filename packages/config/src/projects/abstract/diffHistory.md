@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xd2c1d1ade0e7897a9171fe894086823a4472de90
+Generated with discovered.json: 0xf6e982351c12e7c32c96dc9d1e1fea28aef7e1d4
 
-# Diff at Wed, 05 Aug 2026 10:22:44 GMT:
+# Diff at Mon, 10 Aug 2026 10:25:50 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@352ff1eba99519e3c6090fccec5796e0475edcfa block: 1782810164
-- current timestamp: 1785925299
+- current timestamp: 1786357487
 
 ## Description
 
-Upgraded boojum verifiers to the latest version (the same as zksync Era, not yet reproduced). Also added one validator to the validator MS and removed one ms member of a gnosis safe.
+Abstract multisig upgraded boojum verifiers to the latest version (the same as zksync Era, not yet reproduced). Also added one validator to the validator MS and removed one ms member of a gnosis safe.
 
 ## Watched changes
 
@@ -17,20 +17,25 @@ Upgraded boojum verifiers to the latest version (the same as zksync Era, not yet
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       values.$pastUpgrades.11:
 +        ["2026-08-04T11:25:23.000Z","0xb0fa77c3fac001aff58b0cbeef7894fd44b89b3f62a4bd72df9de38072811092",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
+      values.$pastUpgrades.12:
++        ["2026-08-08T20:30:11.000Z","0x7b15fc436b4e0afacf42accd854927504dc817cfc752ce1a4fad75b7631d8071",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
       values.$upgradeCount:
 -        11
-+        12
++        13
 +++ description: Protocol version, increments with each protocol upgrade.
 +++ severity: HIGH
       values.getProtocolVersion:
 -        124554051588
-+        124554051589
++        128849018880
+      values.getSemverProtocolVersion.1:
+-        29
++        30
       values.getSemverProtocolVersion.2:
 -        4
-+        5
++        0
       values.getVerifier:
 -        "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45"
-+        "eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e"
++        "eth:0xC47D355402E78b886B628914B3b129F236fEe3cc"
     }
 ```
 
@@ -76,20 +81,20 @@ Upgraded boojum verifiers to the latest version (the same as zksync Era, not yet
 
 ```diff
 +   Status: CREATED
-    contract DualVerifier (eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e) [shared-zk-stack/DualVerifier]
-    +++ description: A router contract for verifiers. Routes verification requests to eth:0x9f5C39a2790f38542065E7854b90407371923375 or eth:0xd22cA89e8991FCE568456914c616d303e3142395 depending on the supplied proof type.
+    contract L1VerifierPlonk (eth:0x35CD3865199F2D9c574f34DD72520B19842d440c) [N/A]
+    +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract L1VerifierFflonk (eth:0x9f5C39a2790f38542065E7854b90407371923375) [shared-zk-stack/L1VerifierFflonk]
-    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+    contract L1VerifierFflonk (eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66) [N/A]
+    +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract L1VerifierPlonk (eth:0xd22cA89e8991FCE568456914c616d303e3142395) [shared-zk-stack/L1VerifierPlonk]
-    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+    contract DualVerifier (eth:0xC47D355402E78b886B628914B3b129F236fEe3cc) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66 or eth:0x35CD3865199F2D9c574f34DD72520B19842d440c depending on the supplied proof type.
 ```
 
 ## Source code changes
