@@ -41,12 +41,21 @@ export function CompareProjectPicker({
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
   const { colors, setHoveredProjectId } = useCompareSeries()
+  // Selection snapshotted when the dialog opens. Sorting by the snapshot
+  // instead of the live selection keeps rows from jumping under the pointer
+  // while toggling; the fresh order applies on the next open.
+  const [pinnedSlugs, setPinnedSlugs] = useState<string[]>([])
 
   const selectedSlugs = selectedProjects.map((project) => project.slug)
   const atCap = selectedSlugs.length >= MAX_COMPARE_PROJECTS
 
   const filteredProjects = useMemo(() => {
-    const sorted = [...allProjects].sort((a, b) => a.name.localeCompare(b.name))
+    const pinned = new Set(pinnedSlugs)
+    const sorted = [...allProjects].sort(
+      (a, b) =>
+        Number(pinned.has(b.slug)) - Number(pinned.has(a.slug)) ||
+        a.name.localeCompare(b.name),
+    )
     const query = search.trim().toLowerCase()
     if (!query) return sorted
     return sorted.filter(
@@ -54,7 +63,7 @@ export function CompareProjectPicker({
         project.name.toLowerCase().includes(query) ||
         project.shortName?.toLowerCase().includes(query),
     )
-  }, [allProjects, search])
+  }, [allProjects, search, pinnedSlugs])
 
   const toggleProject = (slug: string) => {
     if (selectedSlugs.includes(slug)) {
@@ -119,7 +128,10 @@ export function CompareProjectPicker({
       ))}
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setPinnedSlugs(selectedSlugs)
+          setOpen(true)
+        }}
         className="flex h-7 cursor-pointer items-center gap-1.5 rounded-full border border-divider border-dashed py-1 pr-2.5 pl-1.5 font-medium text-secondary text-sm leading-none hover:bg-surface-secondary primary-card:hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
       >
         <PlusIcon className="size-4" />

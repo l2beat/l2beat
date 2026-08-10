@@ -4,10 +4,15 @@ import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapp
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
+import { useCopyToClipboard } from '~/hooks/useCopyToClipboard'
 import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useEventListener } from '~/hooks/useEventListener'
 import { useIsClient } from '~/hooks/useIsClient'
+import { useTimeout } from '~/hooks/useTimeout'
+import { CheckIcon } from '~/icons/Check'
+import { CopyIcon } from '~/icons/Copy'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
+import { cn } from '~/utils/cn'
 import type { ChartRange } from '~/utils/range/range'
 import { COMPARE_METRICS } from '../metrics'
 import { buildCompareUrl } from '../utils/buildCompareUrl'
@@ -93,6 +98,12 @@ export function ScalingCompareChart({
         setScale={(scale) => setState((prev) => ({ ...prev, scale }))}
         range={state.chartRange}
         setRange={(chartRange) => setState((prev) => ({ ...prev, chartRange }))}
+        // Serialized on click from the live state, because the address bar
+        // only catches up after the URL-sync debounce.
+        getShareUrl={() =>
+          window.location.origin +
+          buildCompareUrl(window.location.pathname, toCompareUrlState(state))
+        }
       />
     </section>
   )
@@ -190,6 +201,7 @@ function Controls({
   setScale,
   range,
   setRange,
+  getShareUrl,
 }: {
   mode: CompareViewMode
   setMode: (mode: CompareViewMode) => void
@@ -197,6 +209,7 @@ function Controls({
   setScale: (scale: ChartScale) => void
   range: ChartRange
   setRange: (range: ChartRange) => void
+  getShareUrl: () => string
 }) {
   const isClient = useIsClient()
   return (
@@ -230,6 +243,7 @@ function Controls({
         ) : (
           <Skeleton className="h-8 w-[91px] md:w-[95px]" />
         )}
+        <CopyLinkButton getShareUrl={getShareUrl} />
       </div>
       <ChartRangeControls
         name="compareChart"
@@ -241,5 +255,31 @@ function Controls({
         }))}
       />
     </ChartControlsWrapper>
+  )
+}
+
+function CopyLinkButton({ getShareUrl }: { getShareUrl: () => string }) {
+  const copy = useCopyToClipboard()
+  const [copied, setCopied] = useState(false)
+  useTimeout(() => setCopied(false), copied ? 1400 : null)
+
+  return (
+    <button
+      type="button"
+      aria-live="polite"
+      onClick={() => void copy(getShareUrl()).then(setCopied)}
+      className={cn(
+        'inline-flex h-8 items-center gap-1.5 rounded-lg px-2 font-medium text-xs md:text-sm',
+        'bg-surface-primary primary-card:bg-surface-secondary',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
+      )}
+    >
+      {copied ? (
+        <CheckIcon className="size-4 stroke-green-700 dark:stroke-green-450" />
+      ) : (
+        <CopyIcon className="size-4 fill-current" />
+      )}
+      {copied ? 'Copied' : 'Copy link'}
+    </button>
   )
 }
