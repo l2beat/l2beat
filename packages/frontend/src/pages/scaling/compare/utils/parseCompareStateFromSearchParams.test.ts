@@ -55,6 +55,32 @@ describe(parseCompareStateFromSearchParams.name, () => {
     expect(result.mode).toEqual('indexed')
   })
 
+  it('parses the data-posted metric', () => {
+    const result = parse('metric=data-posted')
+
+    expect(result.metric).toEqual('data-posted')
+  })
+
+  it('round-trips the data-posted metric through buildCompareUrl', () => {
+    const state: CompareChartState = {
+      metric: 'data-posted',
+      projects: ['arbitrum', 'base'],
+      range: '30d',
+      scale: 'symlog',
+      mode: 'absolute',
+      activityUnit: 'uops',
+      tvsUnit: 'usd',
+      costsUnit: 'usd',
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
+    }
+
+    const url = buildCompareUrl('/scaling/compare', state)
+    const search = url.split('?')[1] ?? ''
+
+    expect(parse(search)).toEqual(state)
+  })
+
   it('parses the tvs unit from the shared unit param', () => {
     const result = parse('unit=eth')
 

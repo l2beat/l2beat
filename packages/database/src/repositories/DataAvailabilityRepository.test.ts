@@ -822,6 +822,53 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
   )
 
   describe(
+    DataAvailabilityRepository.prototype.getFirstTimestampsByProjectIds.name,
+    () => {
+      it('returns the earliest timestamp per project, scoped to the given ids', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+          record(
+            'project-a',
+            'layer-b',
+            'config-id-2',
+            START - 2 * UnixTime.DAY,
+            100n,
+          ),
+          record(
+            'project-b',
+            'layer-a',
+            'config-id-3',
+            START - 5 * UnixTime.DAY,
+            100n,
+          ),
+          record('project-c', 'layer-a', 'config-id-4', START, 100n),
+        ])
+
+        const result = await repository.getFirstTimestampsByProjectIds([
+          'project-a',
+          'project-b',
+          'missing',
+        ])
+
+        expect(result).toEqual({
+          'project-a': START - 2 * UnixTime.DAY,
+          'project-b': START - 5 * UnixTime.DAY,
+        })
+      })
+
+      it('returns an empty object for an empty project list', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+        ])
+
+        const result = await repository.getFirstTimestampsByProjectIds([])
+
+        expect(result).toEqual({})
+      })
+    },
+  )
+
+  describe(
     DataAvailabilityRepository.prototype
       .getFirstTimestampOfSummedProjectsByDaLayers.name,
     () => {

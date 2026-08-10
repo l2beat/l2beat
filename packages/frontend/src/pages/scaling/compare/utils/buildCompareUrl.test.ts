@@ -130,6 +130,18 @@ describe(buildCompareUrl.name, () => {
     expect(url).toEqual(PATH)
   })
 
+  it('serializes the data-posted metric without any unit', () => {
+    const url = buildCompareUrl(PATH, {
+      ...DEFAULT_STATE,
+      metric: 'data-posted',
+      activityUnit: 'tps',
+      tvsUnit: 'eth',
+      costsUnit: 'gas',
+    })
+
+    expect(url).toEqual('/scaling/compare?metric=data-posted')
+  })
+
   it('serializes the non-default tvs controls', () => {
     const url = buildCompareUrl(PATH, {
       ...DEFAULT_STATE,
