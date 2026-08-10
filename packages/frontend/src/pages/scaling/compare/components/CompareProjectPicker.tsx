@@ -24,13 +24,18 @@ interface Props {
    * into the URL.
    */
   selectedProjects: CompareProjectEntry[]
+  /** True when the chips show the top-N defaults instead of a user selection. */
+  isDefaultSelection: boolean
   onChange: (slugs: string[]) => void
+  className?: string
 }
 
 export function CompareProjectPicker({
   allProjects,
   selectedProjects,
+  isDefaultSelection,
   onChange,
+  className,
 }: Props) {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
@@ -75,7 +80,7 @@ export function CompareProjectPicker({
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-1.5">
+    <div className={cn('flex flex-wrap items-center gap-1.5', className)}>
       {selectedProjects.map((project) => (
         <div
           key={project.slug}
@@ -95,7 +100,7 @@ export function CompareProjectPicker({
             type="button"
             aria-label={`Remove ${project.name}`}
             onClick={() => toggleProject(project.slug)}
-            className="flex size-4 cursor-pointer items-center justify-center rounded-full hover:bg-surface-tertiary"
+            className="flex size-4 cursor-pointer items-center justify-center rounded-full hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
           >
             <CloseIcon className="size-2 fill-secondary" aria-hidden />
           </button>
@@ -104,11 +109,20 @@ export function CompareProjectPicker({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex h-7 cursor-pointer items-center gap-1.5 rounded-full border border-divider border-dashed py-1 pr-2.5 pl-1.5 font-medium text-secondary text-sm leading-none hover:bg-surface-secondary"
+        className="flex h-7 cursor-pointer items-center gap-1.5 rounded-full border border-divider border-dashed py-1 pr-2.5 pl-1.5 font-medium text-secondary text-sm leading-none hover:bg-surface-secondary primary-card:hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
       >
         <PlusIcon className="size-4" />
         Add project
       </button>
+      <span className="ml-auto whitespace-nowrap font-medium text-2xs text-secondary tabular-nums">
+        {selectedSlugs.length}/{MAX_COMPARE_PROJECTS}
+      </span>
+      {isDefaultSelection && (
+        <p className="w-full font-medium text-2xs text-secondary">
+          Showing top projects by default. Add or remove projects to build your
+          own comparison.
+        </p>
+      )}
       <CommandDialog
         title="Add projects to compare"
         description="Search for scaling projects to add to the comparison"
