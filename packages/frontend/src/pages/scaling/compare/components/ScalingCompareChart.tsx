@@ -16,6 +16,7 @@ import {
   type CompareChartState,
   type CompareClientState,
   type CompareMetricId,
+  type CompareViewMode,
   isSameCompareState,
   toCompareClientState,
   toCompareUrlState,
@@ -81,6 +82,8 @@ export function ScalingCompareChart({
       </div>
       <metric.Chart projects={selectedProjects} state={state} />
       <Controls
+        mode={state.mode}
+        setMode={(mode) => setState((prev) => ({ ...prev, mode }))}
         scale={state.scale}
         setScale={(scale) => setState((prev) => ({ ...prev, scale }))}
         range={state.chartRange}
@@ -175,11 +178,15 @@ function MetricSwitcher({
 }
 
 function Controls({
+  mode,
+  setMode,
   scale,
   setScale,
   range,
   setRange,
 }: {
+  mode: CompareViewMode
+  setMode: (mode: CompareViewMode) => void
   scale: ChartScale
   setScale: (scale: ChartScale) => void
   range: ChartRange
@@ -190,14 +197,28 @@ function Controls({
     <ChartControlsWrapper>
       <div className="flex gap-1">
         {isClient ? (
-          <RadioGroup
-            name="compareChartScale"
-            value={scale}
-            onValueChange={(value) => setScale(value as ChartScale)}
-          >
-            <RadioGroupItem value="symlog">LOG</RadioGroupItem>
-            <RadioGroupItem value="linear">LIN</RadioGroupItem>
-          </RadioGroup>
+          <>
+            <RadioGroup
+              name="compareViewMode"
+              value={mode}
+              onValueChange={(value) => setMode(value as CompareViewMode)}
+            >
+              <RadioGroupItem value="absolute">ABSOLUTE</RadioGroupItem>
+              <RadioGroupItem value="indexed">INDEXED</RadioGroupItem>
+            </RadioGroup>
+            {/* Log scale of an index is meaningless, so the toggle is hidden
+                in indexed mode. */}
+            {mode === 'absolute' && (
+              <RadioGroup
+                name="compareChartScale"
+                value={scale}
+                onValueChange={(value) => setScale(value as ChartScale)}
+              >
+                <RadioGroupItem value="symlog">LOG</RadioGroupItem>
+                <RadioGroupItem value="linear">LIN</RadioGroupItem>
+              </RadioGroup>
+            )}
+          </>
         ) : (
           <Skeleton className="h-8 w-[91px] md:w-[95px]" />
         )}

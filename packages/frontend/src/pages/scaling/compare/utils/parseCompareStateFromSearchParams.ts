@@ -11,6 +11,7 @@ import {
   DEFAULT_COMPARE_METRIC,
   DEFAULT_COMPARE_RANGE,
   DEFAULT_COMPARE_SCALE,
+  DEFAULT_COMPARE_VIEW_MODE,
   MAX_COMPARE_PROJECTS,
 } from './compareChartState'
 
@@ -31,6 +32,10 @@ export function parseCompareStateFromSearchParams({
     range: parseRange(searchParams.get('range')),
     scale:
       searchParams.get('scale') === 'log' ? 'symlog' : DEFAULT_COMPARE_SCALE,
+    mode:
+      searchParams.get('mode') === 'indexed'
+        ? 'indexed'
+        : DEFAULT_COMPARE_VIEW_MODE,
     activityUnit: parseActivityUnit(searchParams.get('unit')),
   }
 }
