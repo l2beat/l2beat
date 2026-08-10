@@ -63,7 +63,7 @@ export async function getHomeData(
       metadata: getMetadata(manifest, {
         title: 'L2BEAT',
         description:
-          'Bird-eye view of the Ethereum scaling ecosystem: total value secured, activity, interoperability, recent additions and what L2BEAT is currently tracking.',
+          'Track the Ethereum ecosystem in one view: L2s and Ethereum metrics, interoperability flows, privacy protocols and ZK provers, ongoing anomalies, new projects, and the latest additions to L2BEAT.',
         url: req.originalUrl,
         openGraph: {
           image: '/meta-images/home/opengraph-image.png',
