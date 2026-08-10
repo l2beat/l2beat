@@ -24,11 +24,12 @@ import type { Manifest } from '~/utils/Manifest'
 import { optionToRange } from '~/utils/range/range'
 import type { InteropChainWithIcon } from '../interop/components/chain-selector/types'
 import {
-  MAX_SELECTED_CHAINS,
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '../interop/components/flows/consts'
+import { getFlowChainOrderByVolume } from '../interop/utils/getFlowChainOrderByVolume'
 import { getInteropChainHref } from '../interop/utils/getInteropChainHref'
+import { selectDefaultFlowChains } from '../interop/utils/selectDefaultFlowChains'
 import type { HomeScalingCategoryCounts } from './components/HomeScalingCard'
 import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
 import { getHomeProjectCounts } from './getHomeProjectCounts'
@@ -99,26 +100,31 @@ async function getCachedData(manifest: Manifest) {
   )
   const activeInteropChains = interopChains.filter((chain) => !chain.isUpcoming)
 
-  const sortedChains: InteropChainWithIcon[] = activeInteropChains.toSorted(
-    (a, b) => a.name.localeCompare(b.name),
-  )
+  const interopProtocols = await ps.getProjects({ select: ['interopConfig'] })
+  const protocolIds = interopProtocols.map((protocol) => protocol.id)
 
-  const defaultSelectedFlowChains = sortedChains
-    .slice(0, MAX_SELECTED_CHAINS)
-    .map((chain) => chain.id)
+  // Order chains and pick defaults the same way as the interop summary page
+  // (top chains by 24h volume) so both flows charts show the same data.
+  const activeChainIds = activeInteropChains.map((chain) => chain.id)
+  const defaultFlowChainOrder =
+    activeChainIds.length > 0 && protocolIds.length > 0
+      ? await getFlowChainOrderByVolume(activeChainIds, protocolIds)
+      : activeChainIds
+
+  const { sortedChains, defaultSelectedFlowChains } = selectDefaultFlowChains(
+    activeInteropChains,
+    defaultFlowChainOrder,
+  )
 
   // The interop prefetch inputs must match the client queries exactly
   // (HomeTopInteropProtocolsCard, HomeInteropCard) so hydration avoids a
   // refetch.
   const chartRange = optionToRange(HOME_CHART_RANGE)
 
-  const interopProtocolsPromise = ps.getProjects({ select: ['interopConfig'] })
-
   const [
     summaryData,
     recentProjects,
     projectCounts,
-    interopProtocols,
     recentChanges,
     ongoingAnomalies,
     scalingCharts,
@@ -130,7 +136,6 @@ async function getCachedData(manifest: Manifest) {
     getScalingSummaryData(),
     getRecentProjectsForHome(manifest),
     getHomeProjectCounts(),
-    interopProtocolsPromise,
     getRecentChangesOverview(),
     getOngoingAnomaliesOverview(),
     getHomeScalingCharts(chartRange),
@@ -147,21 +152,15 @@ async function getCachedData(manifest: Manifest) {
           }),
         )
       : undefined,
-    interopProtocolsPromise.then((projects) => {
-      const protocolIds = projects.map((protocol) => protocol.id)
-      if (
-        defaultSelectedFlowChains.length < MIN_SELECTED_CHAINS ||
-        protocolIds.length < MIN_SELECTED_PROTOCOLS
-      ) {
-        return
-      }
-      return helpers.queryClient.prefetchQuery(
-        helpers.trpc.interop.flows.queryOptions({
-          chains: defaultSelectedFlowChains,
-          protocolIds,
-        }),
-      )
-    }),
+    defaultSelectedFlowChains.length >= MIN_SELECTED_CHAINS &&
+    protocolIds.length >= MIN_SELECTED_PROTOCOLS
+      ? helpers.queryClient.prefetchQuery(
+          helpers.trpc.interop.flows.queryOptions({
+            chains: defaultSelectedFlowChains,
+            protocolIds,
+          }),
+        )
+      : undefined,
   ])
 
   const summaryTabs = summaryData.tabs
