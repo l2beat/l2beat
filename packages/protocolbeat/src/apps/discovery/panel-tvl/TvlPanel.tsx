@@ -1,4 +1,4 @@
-import { formatLargeNumber } from '@l2beat/shared-pure'
+import { formatCurrency, formatNumber } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import type { ReactNode } from 'react'
@@ -48,7 +48,7 @@ export function TvlPanel() {
           Total
         </span>
         <span className="ml-auto font-bold font-mono text-base text-coffee-200 tabular-nums">
-          ${formatLargeNumber(total)}
+          {formatCurrency(total, 'usd')}
         </span>
       </div>
 
@@ -91,13 +91,13 @@ function TvlRow(props: { entry: ApiTvlEntry; share: number }) {
           {props.entry.ticker}
         </span>
       </div>
-      <Cell>{formatLargeNumber(props.entry.balance)}</Cell>
+      <Cell>{formatNumber(props.entry.balance)}</Cell>
       <Cell>
         {props.entry.price === undefined
           ? '-'
-          : `$${formatLargeNumber(props.entry.price)}`}
+          : `${formatCurrency(props.entry.price, 'usd')}`}
       </Cell>
-      <Cell bright>${formatLargeNumber(props.entry.tvl)}</Cell>
+      <Cell bright>${formatNumber(props.entry.tvl)}</Cell>
     </div>
   )
 }

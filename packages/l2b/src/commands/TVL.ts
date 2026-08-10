@@ -1,5 +1,5 @@
 import { getChainConfig } from '@l2beat/discovery'
-import { ChainSpecificAddress, formatLargeNumber } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, formatCurrency } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, flag, positional } from 'cmd-ts'
 import { getProvider } from '../implementations/common/GetProvider'
@@ -49,7 +49,7 @@ export const TVL = command({
       for (const { symbol, value } of sorted) {
         const formattedSymbol = `${symbol}:`.padEnd(longestSymbol + 1)
         const formattedValue = chalk.green(
-          `$${formatLargeNumber(Number(value / 100n))}`,
+          `${formatCurrency(Number(value / 100n), 'usd')}`,
         )
 
         logger.info(`${formattedSymbol} ${formattedValue}`)
@@ -60,7 +60,7 @@ export const TVL = command({
       usdValue.reduce((acc, { value }) => acc + Number(value), 0) / 100
 
     logger.info(
-      `Estimated TVL: ${chalk.green(`$${formatLargeNumber(totalValue)}`)}`,
+      `Estimated TVL: ${chalk.green(`${formatCurrency(totalValue, 'usd')}`)}`,
     )
   },
 })
