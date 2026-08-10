@@ -8,6 +8,11 @@ import {
   CommandItem,
   CommandList,
 } from '~/components/core/Command'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { CheckIcon } from '~/icons/Check'
 import { CloseIcon } from '~/icons/Close'
 import { PlusIcon } from '~/icons/Plus'
@@ -21,8 +26,8 @@ interface Props {
   allProjects: CompareProjectEntry[]
   /**
    * The active metric, for marking projects it has no data for. The chips
-   * double as the chart legend, so the "no data" note lives here instead of
-   * an empty series in the chart.
+   * double as the chart legend, so the "no data" note lives here (as a
+   * tooltip on the dimmed chip) instead of an empty series in the chart.
    */
   metric: CompareMetric
   /**
@@ -101,56 +106,57 @@ export function CompareProjectPicker({
   return (
     <div className={cn('flex flex-wrap items-center gap-1.5', className)}>
       {selectedProjects.map((project) => (
-        // Focus and blur bubble in React, so keyboard-focusing the remove
-        // button highlights the series the same way hovering the chip does.
-        <div
-          key={project.slug}
-          onMouseEnter={() => setHoveredProjectId(project.id)}
-          onMouseLeave={() => setHoveredProjectId(undefined)}
-          onFocus={() => setHoveredProjectId(project.id)}
-          onBlur={() => setHoveredProjectId(undefined)}
-          className="flex h-7 items-center gap-1.5 rounded-full border border-divider bg-surface-primary primary-card:bg-surface-secondary py-1 pr-1.5 pl-1"
-          // The ring makes the chip strip double as the chart's color key,
-          // so it must show exactly the series color the chart uses - and no
-          // color at all when the metric has no series for the project.
-          style={
-            hasMetricData(project)
-              ? { borderColor: colors[project.id] }
-              : undefined
-          }
-        >
-          <img
-            src={project.iconUrl}
-            alt=""
-            width={18}
-            height={18}
-            className={cn(
-              'size-[18px] rounded-full',
-              !hasMetricData(project) && 'opacity-50',
-            )}
-          />
-          <span
-            className={cn(
-              'font-medium text-sm leading-none',
-              !hasMetricData(project) && 'text-secondary',
-            )}
-          >
-            {project.shortName ?? project.name}
-          </span>
-          {!hasMetricData(project) && (
-            <span className="font-medium text-2xs text-secondary leading-none">
-              {noDataLabel}
-            </span>
-          )}
-          <button
-            type="button"
-            aria-label={`Remove ${project.name}`}
-            onClick={() => toggleProject(project.slug)}
-            className="flex size-4 cursor-pointer items-center justify-center rounded-full hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
-          >
-            <CloseIcon className="size-2 fill-secondary" aria-hidden />
-          </button>
-        </div>
+        // The tooltip trigger is disabled when the metric has data, so the
+        // "no data" explanation only appears on the dimmed chips.
+        <Tooltip key={project.slug}>
+          <TooltipTrigger asChild disabled={hasMetricData(project)}>
+            {/* Focus and blur bubble in React, so keyboard-focusing the remove
+                button highlights the series the same way hovering the chip does. */}
+            <div
+              onMouseEnter={() => setHoveredProjectId(project.id)}
+              onMouseLeave={() => setHoveredProjectId(undefined)}
+              onFocus={() => setHoveredProjectId(project.id)}
+              onBlur={() => setHoveredProjectId(undefined)}
+              className="flex h-7 items-center gap-1.5 rounded-full border border-divider bg-surface-primary primary-card:bg-surface-secondary py-1 pr-1.5 pl-1"
+              // The ring makes the chip strip double as the chart's color key,
+              // so it must show exactly the series color the chart uses - and no
+              // color at all when the metric has no series for the project.
+              style={
+                hasMetricData(project)
+                  ? { borderColor: colors[project.id] }
+                  : undefined
+              }
+            >
+              <img
+                src={project.iconUrl}
+                alt=""
+                width={18}
+                height={18}
+                className={cn(
+                  'size-[18px] rounded-full',
+                  !hasMetricData(project) && 'opacity-50',
+                )}
+              />
+              <span
+                className={cn(
+                  'font-medium text-sm leading-none',
+                  !hasMetricData(project) && 'text-secondary',
+                )}
+              >
+                {project.shortName ?? project.name}
+              </span>
+              <button
+                type="button"
+                aria-label={`Remove ${project.name}`}
+                onClick={() => toggleProject(project.slug)}
+                className="flex size-4 cursor-pointer items-center justify-center rounded-full hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+              >
+                <CloseIcon className="size-2 fill-secondary" aria-hidden />
+              </button>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>{noDataLabel}</TooltipContent>
+        </Tooltip>
       ))}
       <button
         type="button"
