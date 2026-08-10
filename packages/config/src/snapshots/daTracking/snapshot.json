@@ -89,8 +89,16 @@
   ],
   "arbitrum": [
     {
+      "id": "44b2139c580b",
+      "label": "ethereum inbox 0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6 sequencers[1] since 15447728"
+    },
+    {
+      "id": "ca30fc63f237",
+      "label": "ethereum inbox 0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6 sequencers[2] since 16335392"
+    },
+    {
       "id": "f2eb27779e5d",
-      "label": "ethereum inbox 0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6 sequencers[3] since 15411056"
+      "label": "ethereum inbox 0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6 sequencers[3] since 22618104"
     }
   ],
   "arenaz": [
