@@ -21,6 +21,7 @@ import { IconSigma } from '../../../icons/IconSigma'
 import { IconStamp } from '../../../icons/IconStamp'
 import { IconTerminal } from '../../../icons/IconTerminal'
 import { IconToken } from '../../../icons/IconToken'
+import { IconTreemap } from '../../../icons/IconTreemap'
 import { IconWebApp } from '../../../icons/IconWebApp'
 import { AnalyzePanel } from '../panel-analyze/AnalyzePanel'
 import { CodePanel } from '../panel-code/CodePanel'
@@ -32,6 +33,7 @@ import { PreviewPanel } from '../panel-preview/PreviewPanel'
 import { TemplatePanel } from '../panel-template/TemplatePanel'
 import { TerminalPanel } from '../panel-terminal/TerminalPanel'
 import { TvlPanel } from '../panel-tvl/TvlPanel'
+import { TvlMapPanel } from '../panel-tvl-map/TvlMapPanel'
 import { ValuesPanel } from '../panel-values/ValuesPanel'
 import { TabExtras } from './TabExtras'
 
@@ -47,6 +49,7 @@ export const PANEL_IDS = [
   'config',
   'diffHistory',
   'tvl',
+  'tvlMap',
 ] as const
 
 export type PanelId = (typeof PANEL_IDS)[number]
@@ -68,6 +71,7 @@ const PANELS: Record<PanelId, Panel> = {
   config: { icon: IconGear, body: ConfigPanel },
   diffHistory: { icon: IconFileDiff, body: DiffHistoryPanel },
   tvl: { icon: IconToken, body: TvlPanel },
+  tvlMap: { icon: IconTreemap, body: TvlMapPanel },
 }
 
 export function isAllowedPanel(id: PanelId): boolean {

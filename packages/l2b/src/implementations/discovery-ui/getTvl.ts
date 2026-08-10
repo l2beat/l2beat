@@ -15,12 +15,12 @@ export async function getTvl(
   const provider = await providerCache.get(chainName)
 
   const tokens = await tvlCache.getTokens(chainName)
-  const prices = await tvlCache.getPrices(provider, tokens)
+  const market = await tvlCache.getMarket(provider, tokens)
   const balances = await getBalances(provider, holder, tokens)
 
   return balances
     .map((balance) => {
-      const price = prices[balance.coingeckoId.toString()]
+      const price = market[balance.coingeckoId.toString()]?.priceUsd
       const value = price
         ? calculateValue(balance.balance, price, balance.decimals)
         : 0n

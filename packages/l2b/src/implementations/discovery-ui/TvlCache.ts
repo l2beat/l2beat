@@ -17,7 +17,12 @@ const IDS_PER_REQUEST = 250
 // absent address.
 const NATIVE_ADDRESS = 'native'
 
-export type Prices = Record<string, number>
+export interface MarketEntry {
+  priceUsd: number
+  marketCapUsd: number
+}
+
+export type Market = Record<string, MarketEntry>
 
 export class TvlCache {
   private readonly cache = new InMemoryCache({})
@@ -53,30 +58,37 @@ export class TvlCache {
     )
   }
 
-  getPrices(provider: IProvider, tokens: Token[]): Promise<Prices> {
+  // Keyed by chain only, so it must always be asked for every token of the
+  // chain. A caller interested in a subset reads that subset out of the result.
+  getMarket(provider: IProvider, tokens: Token[]): Promise<Market> {
     return this.cache.get(
-      { key: ['tvl-prices', provider.chain], ttl: TTL_SECONDS },
-      () => fetchPrices(provider, tokens),
+      { key: ['tvl-market', provider.chain], ttl: TTL_SECONDS },
+      () => fetchMarket(provider, tokens),
     )
   }
 }
 
-async function fetchPrices(
+async function fetchMarket(
   provider: IProvider,
   tokens: Token[],
-): Promise<Prices> {
+): Promise<Market> {
   const ids = unique(tokens.map((token) => token.coingeckoId))
   const chunks = toChunks(ids, IDS_PER_REQUEST)
   const responses = await Promise.all(
     chunks.map((chunk) => getCoinsMarket(provider, chunk)),
   )
 
-  const prices: Prices = {}
+  const market: Market = {}
   for (const entry of responses.flat()) {
     if (entry.current_price === null) continue
-    prices[entry.id] = entry.current_price
+    market[entry.id] = {
+      priceUsd: entry.current_price,
+      // The response carries no market cap field, but the product of the two
+      // fields it does carry is the same number.
+      marketCapUsd: entry.current_price * (entry.circulating_supply ?? 0),
+    }
   }
-  return prices
+  return market
 }
 
 function getCoinsMarket(provider: IProvider, coingeckoIds: CoingeckoId[]) {

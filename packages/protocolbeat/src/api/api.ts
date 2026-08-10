@@ -20,6 +20,7 @@ import type {
   ApiProjectResponse,
   ApiProjectsResponse,
   ApiTemplateFileResponse,
+  ApiTvlMapResponse,
   ApiTvlResponse,
 } from './types'
 
@@ -102,6 +103,15 @@ export async function getTvl(
   }
   const data = await res.json()
   return data as ApiTvlResponse
+}
+
+export async function getTvlMap(project: string): Promise<ApiTvlMapResponse> {
+  const res = await fetch(`/api/projects/${project}/tvl-map`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiTvlMapResponse
 }
 
 export function executeDiscover(

@@ -30,6 +30,21 @@ export interface ApiTvlEntry {
   price: number | undefined
 }
 
+export interface ApiTvlMapResponse {
+  addressCount: number
+  tokensPerChain: number
+  entries: ApiTvlMapEntry[]
+}
+
+export interface ApiTvlMapEntry {
+  address: string
+  name: string | undefined
+  type: ApiAddressType
+  chain: string
+  tvl: number
+  tokens: { ticker: string; tvl: number }[]
+}
+
 export interface ApiPreviewResponse {
   permissionsPerChain: { chain: string; permissions: ApiPreviewPermissions }[]
   contractsPerChain: { chain: string; contracts: ApiPreviewContract[] }[]
