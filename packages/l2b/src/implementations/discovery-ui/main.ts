@@ -31,6 +31,7 @@ import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 import { getTvl } from './getTvl'
+import { getTvlMap } from './getTvlMap'
 import { attachLayoutRouter } from './layouts/router'
 import { ProviderCache } from './ProviderCache'
 import { searchCode } from './searchCode'
@@ -182,6 +183,29 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     } catch (e) {
       console.error(e)
       res.status(500).json({ error: 'Failed to estimate TVL' })
+    }
+  })
+
+  app.get('/api/projects/:project/tvl-map', async (req, res) => {
+    const paramsValidation = projectParamsSchema.safeParse(req.params)
+    if (!paramsValidation.success) {
+      res.status(400).json({ errors: paramsValidation.message })
+      return
+    }
+    const { project } = paramsValidation.data
+
+    try {
+      const response = await getTvlMap(
+        configReader,
+        templateService,
+        providerCache,
+        tvlCache,
+        project,
+      )
+      res.json(response)
+    } catch (e) {
+      console.error(e)
+      res.status(500).json({ error: 'Failed to estimate project TVL' })
     }
   })
 
