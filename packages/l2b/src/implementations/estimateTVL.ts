@@ -1,6 +1,10 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { IProvider } from '@l2beat/discovery'
-import { assert, ChainSpecificAddress, CoingeckoId } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  type CoingeckoId,
+} from '@l2beat/shared-pure'
 import { type BigNumber, utils } from 'ethers'
 
 export interface TokenValue {
@@ -60,14 +64,6 @@ export async function estimateTVL(
   })
 }
 
-const ETHER: Token = {
-  symbol: 'ETH',
-  coingeckoId: CoingeckoId('ethereum'),
-  decimals: 18,
-  iconUrl: undefined,
-  address: undefined,
-}
-
 export async function getTokensOnChain(
   logger: Logger,
   chain: string,
@@ -86,9 +82,10 @@ export async function getTokensOnChain(
           : ChainSpecificAddress.fromLong(chain, token.address),
     }))
 
-  if (tokens.every((token) => token.address !== undefined)) {
-    logger.info(`No native token configured for ${chain}, assuming ether`)
-    tokens.push(ETHER)
+  if (!tokens.some((token) => token.address === undefined)) {
+    logger.warn(
+      `No gas token configured for ${chain}, its balance is not counted`,
+    )
   }
 
   return tokens
