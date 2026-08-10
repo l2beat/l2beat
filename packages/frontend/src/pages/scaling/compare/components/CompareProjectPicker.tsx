@@ -40,7 +40,7 @@ export function CompareProjectPicker({
 }: Props) {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
-  const { colors } = useCompareSeries()
+  const { colors, setHoveredProjectId } = useCompareSeries()
 
   const selectedSlugs = selectedProjects.map((project) => project.slug)
   const atCap = selectedSlugs.length >= MAX_COMPARE_PROJECTS
@@ -84,8 +84,14 @@ export function CompareProjectPicker({
   return (
     <div className={cn('flex flex-wrap items-center gap-1.5', className)}>
       {selectedProjects.map((project) => (
+        // Focus and blur bubble in React, so keyboard-focusing the remove
+        // button highlights the series the same way hovering the chip does.
         <div
           key={project.slug}
+          onMouseEnter={() => setHoveredProjectId(project.id)}
+          onMouseLeave={() => setHoveredProjectId(undefined)}
+          onFocus={() => setHoveredProjectId(project.id)}
+          onBlur={() => setHoveredProjectId(undefined)}
           className="flex h-7 items-center gap-1.5 rounded-full border border-divider bg-surface-primary primary-card:bg-surface-secondary py-1 pr-1.5 pl-1"
         >
           {/* The ring makes the chip strip double as the chart's color key,

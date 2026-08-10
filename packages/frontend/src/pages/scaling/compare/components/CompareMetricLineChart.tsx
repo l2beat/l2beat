@@ -57,7 +57,7 @@ export function CompareMetricLineChart({
   formatTooltipValue,
   renderTooltipTimestamp,
 }: Props) {
-  const { colors } = useCompareSeries()
+  const { colors, hoveredProjectId } = useCompareSeries()
   const chartMeta = useMemo<ChartMeta>(() => {
     return projects.reduce<ChartMeta>((acc, project) => {
       acc[project.id] = {
@@ -127,6 +127,13 @@ export function CompareMetricLineChart({
               dataKey={project.id}
               hide={!dataKeys.includes(project.id)}
               stroke={chartMeta[project.id]?.color}
+              strokeOpacity={
+                hoveredProjectId !== undefined &&
+                hoveredProjectId !== project.id
+                  ? 0.2
+                  : 1
+              }
+              className="[&_.recharts-line-curve]:transition-[stroke-opacity] [&_.recharts-line-curve]:duration-200 motion-reduce:[&_.recharts-line-curve]:transition-none"
               strokeWidth={2}
               dot={false}
               isAnimationActive={false}
