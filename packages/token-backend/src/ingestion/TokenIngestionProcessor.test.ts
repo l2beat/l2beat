@@ -748,6 +748,283 @@ describe(TokenIngestionProcessor.name, () => {
       })
     })
 
+    it('adopts the deployed-token symbol when the CoinGecko symbol differs only in punctuation', async () => {
+      const address = token('ethereum', '0xaaa')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<TokenDatabase['chain']>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+            findById: mockFn().resolvesTo(undefined),
+          }),
+        }),
+        coingeckoClient: mockObject<CoingeckoClient>({
+          getCoinDataById: mockFn().resolvesTo({
+            id: 'pepe-coin',
+            symbol: '$pepe',
+            image: { large: 'https://example.com/pepe.png' },
+            platforms: {},
+          }),
+          getCoinMarketChartRange: mockFn().resolvesTo({
+            prices: [{ date: new Date('2024-01-01T00:00:00Z'), value: 1 }],
+            marketCaps: [],
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: 'Pepe',
+          symbolSource: 'rpc' as const,
+          decimals: 18,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        }),
+        generateAbstractTokenId: () => 'ABC123',
+      })
+
+      const result = await processor.fetch({
+        id: 'ing_test',
+        address,
+        existingDeployedToken: undefined,
+        steps: [],
+        outcome: {
+          kind: 'pending',
+          operation: 'insert',
+          existing: undefined,
+          abstract: {
+            kind: 'new-coingecko',
+            coingeckoId: 'pepe-coin',
+            symbol: '$pepe',
+          },
+          symbolFallback: '$PEPE',
+          neighborsToEnqueue: [],
+          proof: { kind: 'coingecko' },
+        },
+      })
+
+      expect(result.outcome.kind).toEqual('write')
+      if (result.outcome.kind !== 'write') return
+      expect(result.outcome.newAbstractToken?.symbol).toEqual('Pepe')
+      expect(result.outcome.newAbstractToken?.comment).toEqual(
+        'CoinGecko symbol "$PEPE" differs only in punctuation from the deployed token symbol "Pepe"; automatic ingestion used the deployed token symbol.',
+      )
+      const adoptionStep = result.steps.find(
+        (step) => step.kind === 'adopted-deployed-token-symbol',
+      )
+      expect(adoptionStep).toEqual({
+        kind: 'adopted-deployed-token-symbol',
+        from: '$PEPE',
+        to: 'Pepe',
+      })
+    })
+
+    it('does not treat two all-punctuation symbols as matching', async () => {
+      const address = token('ethereum', '0xaaa')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<TokenDatabase['chain']>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+            findById: mockFn().resolvesTo(undefined),
+          }),
+        }),
+        coingeckoClient: mockObject<CoingeckoClient>({
+          getCoinDataById: mockFn().resolvesTo({
+            id: 'alchemist',
+            symbol: '⚗️',
+            image: { large: 'https://example.com/mist.png' },
+            platforms: {},
+          }),
+          getCoinMarketChartRange: mockFn().resolvesTo({
+            prices: [{ date: new Date('2024-01-01T00:00:00Z'), value: 1 }],
+            marketCaps: [],
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: '$',
+          symbolSource: 'rpc' as const,
+          decimals: 18,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        }),
+        generateAbstractTokenId: () => 'ABC123',
+      })
+
+      const result = await processor.fetch({
+        id: 'ing_test',
+        address,
+        existingDeployedToken: undefined,
+        steps: [],
+        outcome: {
+          kind: 'pending',
+          operation: 'insert',
+          existing: undefined,
+          abstract: {
+            kind: 'new-coingecko',
+            coingeckoId: 'alchemist',
+            symbol: '⚗️',
+          },
+          symbolFallback: '⚗️',
+          neighborsToEnqueue: [],
+          proof: { kind: 'coingecko' },
+        },
+      })
+
+      expect(result.outcome.kind).toEqual('conflict')
+    })
+
+    it('uses the chosen symbol when a symbol-conflict resolution is provided', async () => {
+      const address = token('ethereum', '0xaaa')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<TokenDatabase['chain']>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+            findById: mockFn().resolvesTo(undefined),
+          }),
+        }),
+        coingeckoClient: mockObject<CoingeckoClient>({
+          getCoinDataById: mockFn().resolvesTo({
+            id: 'wrapped-bepe',
+            symbol: 'bepe',
+            image: { large: 'https://example.com/bepe.png' },
+            platforms: {},
+          }),
+          getCoinMarketChartRange: mockFn().resolvesTo({
+            prices: [{ date: new Date('2024-01-01T00:00:00Z'), value: 1 }],
+            marketCaps: [],
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: 'wBEPE',
+          symbolSource: 'rpc' as const,
+          decimals: 18,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        }),
+        generateAbstractTokenId: () => 'ABC123',
+      })
+
+      const result = await processor.fetch(
+        {
+          id: 'ing_test',
+          address,
+          existingDeployedToken: undefined,
+          steps: [],
+          outcome: {
+            kind: 'pending',
+            operation: 'insert',
+            existing: undefined,
+            abstract: {
+              kind: 'new-coingecko',
+              coingeckoId: 'wrapped-bepe',
+              symbol: 'bepe',
+            },
+            symbolFallback: 'BEPE',
+            neighborsToEnqueue: [],
+            proof: { kind: 'coingecko' },
+          },
+        },
+        { chosenSymbol: 'wBEPE', user: 'researcher@l2beat.com' },
+      )
+
+      expect(result.outcome.kind).toEqual('write')
+      if (result.outcome.kind !== 'write') return
+      expect(result.outcome.newAbstractToken?.symbol).toEqual('wBEPE')
+      expect(result.outcome.newAbstractToken?.comment).toEqual(
+        'Symbol conflict resolved by researcher@l2beat.com: CoinGecko symbol is "BEPE", the deployed token symbol is "wBEPE"; chose "wBEPE".',
+      )
+      const resolutionStep = result.steps.find(
+        (step) => step.kind === 'resolved-symbol-conflict',
+      )
+      expect(resolutionStep).toEqual({
+        kind: 'resolved-symbol-conflict',
+        coingeckoSymbol: 'BEPE',
+        deployedTokenSymbol: 'wBEPE',
+        chosenSymbol: 'wBEPE',
+        user: 'researcher@l2beat.com',
+      })
+    })
+
+    it('does not let a symbol-conflict resolution suppress a transfer-abstract conflict', async () => {
+      const address = token('ethereum', '0xaaa')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<TokenDatabase['chain']>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: 'WETH',
+          symbolSource: 'rpc' as const,
+          decimals: 18,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        }),
+      })
+
+      const result = await processor.fetch(
+        {
+          id: 'ing_test',
+          address,
+          steps: [],
+          existingDeployedToken: undefined,
+          outcome: {
+            kind: 'pending',
+            operation: 'insert',
+            existing: undefined,
+            abstract: {
+              kind: 'existing',
+              token: { id: 'USDC01', symbol: 'USDC' },
+            },
+            symbolFallback: undefined,
+            neighborsToEnqueue: [],
+            proof: nonSwappingProof(),
+          },
+        },
+        { chosenSymbol: 'WETH', user: 'researcher@l2beat.com' },
+      )
+
+      expect(result.outcome).toEqual({
+        kind: 'conflict',
+        message:
+          'Non-swapping transfers point to abstract token USDC01:USDC, but the deployed token symbol is WETH.',
+      })
+    })
+
     it('downgrades pending insert with a new CoinGecko abstract to conflict when symbols differ', async () => {
       const address = token('ethereum', '0xaaa')
 
@@ -813,6 +1090,11 @@ describe(TokenIngestionProcessor.name, () => {
         kind: 'conflict',
         message:
           'CoinGecko would create abstract token ABC123:USDC, but the deployed token symbol is DAI.',
+        symbolConflict: {
+          coingeckoId: 'usd-coin',
+          coingeckoSymbol: 'USDC',
+          deployedTokenSymbol: 'DAI',
+        },
       })
       expect(
         result.steps.some((step) => step.kind === 'fetched-coingecko-abstract'),
@@ -1059,6 +1341,11 @@ describe(TokenIngestionProcessor.name, () => {
         kind: 'conflict',
         message:
           'CoinGecko would create abstract token ABC123:USDC, but the deployed token symbol is DAI.',
+        symbolConflict: {
+          coingeckoId: 'usd-coin',
+          coingeckoSymbol: 'USDC',
+          deployedTokenSymbol: 'DAI',
+        },
       })
     })
 
@@ -1165,6 +1452,62 @@ describe(TokenIngestionProcessor.name, () => {
       expect(insert).toHaveBeenCalledTimes(1)
       expect(enqueue).toHaveBeenCalledWith(neighbor, 'pending')
       expect(remove).toHaveBeenCalledWith(queueEntry(address))
+    })
+
+    it('records the resolving user on history rows when provided', async () => {
+      const address = token('ethereum', '0xaaa')
+      const historyInsert = mockFn().resolvesTo(undefined)
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          transaction: async (callback) => await callback(),
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+            insert: mockFn().resolvesTo(undefined),
+          }),
+          tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({
+            insert: historyInsert,
+          }),
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              enqueue: mockFn().resolvesTo(undefined),
+              remove: mockFn().resolvesTo(1),
+            },
+          ),
+        }),
+      })
+
+      const trace: IngestionTrace = {
+        id: 'ing_test',
+        address,
+        existingDeployedToken: undefined,
+        steps: [],
+        outcome: {
+          kind: 'write',
+          newAbstractToken: undefined,
+          deployedToken: {
+            type: 'insert',
+            record: {
+              ...address,
+              abstractTokenId: 'USDC01',
+              symbol: 'USDC',
+              decimals: 6,
+              deploymentTimestamp: UnixTime(1),
+              comment: null,
+              metadata: null,
+              abstractTokenAssignmentProof: { kind: 'coingecko' },
+            },
+          },
+          neighborsToEnqueue: [],
+        },
+      }
+
+      await processor.apply(queueEntry(address), trace, 'researcher@l2beat.com')
+
+      expect(historyInsert).toHaveBeenCalledTimes(1)
+      expect(historyInsert.calls[0]?.args[0]).toHaveSubset({
+        source: 'ingestion',
+        userEmail: 'researcher@l2beat.com',
+      })
     })
 
     it('throws when called with a pending outcome', async () => {

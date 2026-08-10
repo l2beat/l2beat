@@ -60,11 +60,14 @@ export function manualProof(user: string): AbstractTokenAssignmentProof {
  * Who is making this write. Recorded in `TokenDbHistory.source` so every
  * change to TokenDB has a traceable origin. The ingestion variant carries the
  * formatted ingestion trace (`log`) so that the reasoning that produced the
- * commands is persisted on every resulting history row.
+ * commands is persisted on every resulting history row; its optional `user`
+ * is set when a human decision (e.g. resolving a symbol conflict from the
+ * queue UI) triggered the ingestion write, so the history row records who
+ * made the call while keeping the ingestion log.
  */
 export type WriteSource =
   | { kind: 'manual'; user: string; intent: Intent | null }
-  | { kind: 'ingestion'; log: string }
+  | { kind: 'ingestion'; log: string; user?: string }
 
 /**
  * The single write boundary for TokenDB. Both the user-driven
@@ -130,7 +133,7 @@ function buildHistoryEntry(
   return {
     timestamp: UnixTime.now(),
     source: source.kind === 'manual' ? 'manual' : 'ingestion',
-    userEmail: source.kind === 'manual' ? source.user : null,
+    userEmail: source.user ?? null,
     commandType: command.type,
     command,
     intent: source.kind === 'manual' ? source.intent : null,

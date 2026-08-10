@@ -8,6 +8,7 @@ import {
   EyeIcon,
   ListChecksIcon,
   RotateCwIcon,
+  WrenchIcon,
 } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
@@ -50,6 +51,10 @@ import {
 } from '~/components/IngestionPreviewDialog'
 import { LoadingState } from '~/components/LoadingState'
 import { MultiSelectCombobox } from '~/components/MultiSelectCombobox'
+import {
+  ResolveSymbolConflictDialog,
+  type ResolveSymbolConflictTarget,
+} from '~/components/ResolveSymbolConflictDialog'
 import { AppLayout } from '~/layouts/AppLayout'
 import { useTRPC } from '~/react-query/trpc'
 
@@ -61,6 +66,9 @@ export function TokenIngestionQueuePage() {
   const [approvingKey, setApprovingKey] = useState<string | undefined>()
   const [retryingKey, setRetryingKey] = useState<string | undefined>()
   const [preview, setPreview] = useState<IngestionPreviewState | undefined>()
+  const [resolveTarget, setResolveTarget] = useState<
+    ResolveSymbolConflictTarget | undefined
+  >()
   const [page, setPage] = useState(1)
   const [selectedChains, setSelectedChains] = useState<string[]>([])
   const { data: queuePage, isLoading } = useQuery(
@@ -78,6 +86,9 @@ export function TokenIngestionQueuePage() {
   const totalCount = queuePage?.totalCount ?? 0
   const stagedEntries = rows
     .filter((row) => row.entry.state === 'staged')
+    .map((row) => row.entry)
+  const conflictEntries = rows
+    .filter((row) => row.entry.state === 'conflict')
     .map((row) => row.entry)
   const pageCount = queuePage
     ? Math.max(1, Math.ceil(queuePage.totalCount / PAGE_SIZE))
@@ -132,6 +143,17 @@ export function TokenIngestionQueuePage() {
       onSettled: () => setRetryingKey(undefined),
     }),
   )
+  const retryMany = useMutation(
+    trpc.tokenIngestionQueue.retryMany.mutationOptions({
+      onSuccess: async ({ retried }) => {
+        await queryClient.invalidateQueries(
+          trpc.tokenIngestionQueue.getPage.queryFilter(),
+        )
+        toast.success(`Queued ${retried} entries for retry`)
+      },
+      onError: (error) => toast.error(error.message),
+    }),
+  )
   const previewMutation = useMutation(
     trpc.tokenIngestionQueue.preview.mutationOptions({
       onSuccess: (trace) => {
@@ -175,6 +197,23 @@ export function TokenIngestionQueuePage() {
     )
   }
 
+  function retryAllConflictsOnPage() {
+    if (conflictEntries.length === 0) {
+      return
+    }
+
+    const confirmed = window.confirm(
+      `Retry ${conflictEntries.length} conflict queue entries on this page? Entries whose conflict still holds will come back with a fresh message.`,
+    )
+    if (!confirmed) {
+      return
+    }
+
+    retryMany.mutate(
+      conflictEntries.map(({ chain, address }) => ({ chain, address })),
+    )
+  }
+
   return (
     <AppLayout>
       <Card className="flex h-[calc(100vh-16px)] flex-col">
@@ -207,6 +246,16 @@ export function TokenIngestionQueuePage() {
               >
                 <CheckIcon />
                 Approve all on this page
+              </ButtonWithSpinner>
+              <ButtonWithSpinner
+                variant="outline"
+                size="sm"
+                isLoading={retryMany.isPending}
+                disabled={conflictEntries.length === 0}
+                onClick={retryAllConflictsOnPage}
+              >
+                <RotateCwIcon />
+                Retry conflicts on this page
               </ButtonWithSpinner>
               {totalCount > PAGE_SIZE && (
                 <>
@@ -264,7 +313,12 @@ export function TokenIngestionQueuePage() {
               </TableHeader>
               <TableBody>
                 {rows.map(
-                  ({ entry, predictedOutcome, deployedTokenExists }) => {
+                  ({
+                    entry,
+                    predictedOutcome,
+                    deployedTokenExists,
+                    resolvableSymbolConflict,
+                  }) => {
                     const key = getQueueEntryKey(entry)
                     const chain = chainsByName.get(entry.chain)
 
@@ -330,6 +384,21 @@ export function TokenIngestionQueuePage() {
                                 Approve
                               </ButtonWithSpinner>
                             )}
+                            {resolvableSymbolConflict && (
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() =>
+                                  setResolveTarget({
+                                    chain: entry.chain,
+                                    address: entry.address,
+                                  })
+                                }
+                              >
+                                <WrenchIcon />
+                                Resolve
+                              </Button>
+                            )}
                             {(entry.state === 'conflict' ||
                               entry.state === 'error') && (
                               <ButtonWithSpinner
@@ -364,6 +433,10 @@ export function TokenIngestionQueuePage() {
       <IngestionPreviewDialog
         state={preview}
         onClose={() => setPreview(undefined)}
+      />
+      <ResolveSymbolConflictDialog
+        target={resolveTarget}
+        onClose={() => setResolveTarget(undefined)}
       />
     </AppLayout>
   )

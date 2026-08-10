@@ -43,6 +43,8 @@ describe('tokenIngestionQueueRouter', () => {
         chain: 'ethereum',
         address: '0x111',
         state: 'conflict',
+        message:
+          'CoinGecko would create abstract token ABC123:WKAS, but the deployed token symbol is KAS.',
       })
       const newEntry = queueEntry({
         chain: 'base',
@@ -97,6 +99,7 @@ describe('tokenIngestionQueueRouter', () => {
             description: expect.a(String),
           },
           deployedTokenExists: true,
+          resolvableSymbolConflict: true,
         },
         {
           entry: newEntry,
@@ -106,6 +109,7 @@ describe('tokenIngestionQueueRouter', () => {
             description: expect.a(String),
           },
           deployedTokenExists: false,
+          resolvableSymbolConflict: false,
         },
       ])
       expect(getPage).toHaveBeenCalledWith({
@@ -255,6 +259,155 @@ describe('tokenIngestionQueueRouter', () => {
       ).toBeRejectedWith(TRPCError)
     })
   })
+
+  describe('retryMany', () => {
+    it('retries supplied entries and returns the count', async () => {
+      const retry = mockFn().resolvesToOnce(1).resolvesToOnce(0)
+      const caller = createRouter(
+        mockObject<TokenDatabase>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              retry,
+            },
+          ),
+        }),
+      )
+
+      const first = { chain: 'ethereum', address: '0x111' }
+      const second = { chain: 'base', address: '0x222' }
+      const result = await caller.retryMany([first, second])
+
+      expect(result).toEqual({ success: true, retried: 1 })
+      expect(retry).toHaveBeenCalledTimes(2)
+      expect(retry.calls[0]?.args[0]).toEqual(first)
+      expect(retry.calls[1]?.args[0]).toEqual(second)
+    })
+  })
+
+  describe('resolveConflict', () => {
+    it('reprocesses a conflict entry with the chosen symbol and the session user', async () => {
+      const entry = queueEntry({
+        chain: 'ethereum',
+        address: '0x111',
+        state: 'conflict',
+        message:
+          'CoinGecko would create abstract token ABC123:WKAS, but the deployed token symbol is KAS.',
+      })
+      const findByChainAndAddress = mockFn().resolvesTo(entry)
+      const trace = {
+        id: 'ing_test',
+        address: { chain: entry.chain, address: entry.address },
+        existingDeployedToken: undefined,
+        steps: [],
+        outcome: { kind: 'skip' as const, reason: 'test' },
+      }
+      const resolveSymbolConflict = mockFn().resolvesTo(trace)
+
+      const caller = createRouter({
+        tokenDb: mockObject<TokenDatabase>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              findByChainAndAddress,
+            },
+          ),
+        }),
+        processor: mockObject<TokenIngestionProcessor>({
+          resolveSymbolConflict,
+        }),
+      })
+
+      const result = await caller.resolveConflict({
+        chain: entry.chain,
+        address: entry.address,
+        symbol: ' WKAS ',
+      })
+
+      expect(result.outcome).toHaveSubset({
+        kind: 'skip',
+        reason: 'test',
+        description: expect.a(String),
+      })
+      expect(findByChainAndAddress).toHaveBeenCalledWith({
+        chain: entry.chain,
+        address: entry.address,
+      })
+      expect(resolveSymbolConflict).toHaveBeenCalledWith(entry, {
+        chosenSymbol: 'WKAS',
+        user: 'dev@l2beat.com',
+      })
+    })
+
+    it('fails when the entry is not in conflict state', async () => {
+      const caller = createRouter({
+        tokenDb: mockObject<TokenDatabase>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              findByChainAndAddress: mockFn().resolvesTo(
+                queueEntry({
+                  chain: 'ethereum',
+                  address: '0x111',
+                  state: 'error',
+                }),
+              ),
+            },
+          ),
+        }),
+        processor: mockObject<TokenIngestionProcessor>({}),
+      })
+
+      await expect(
+        caller.resolveConflict({
+          chain: 'ethereum',
+          address: '0x111',
+          symbol: 'WKAS',
+        }),
+      ).toBeRejectedWith(TRPCError)
+    })
+
+    it('fails when the entry does not exist', async () => {
+      const caller = createRouter({
+        tokenDb: mockObject<TokenDatabase>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              findByChainAndAddress: mockFn().resolvesTo(undefined),
+            },
+          ),
+        }),
+        processor: mockObject<TokenIngestionProcessor>({}),
+      })
+
+      await expect(
+        caller.resolveConflict({
+          chain: 'ethereum',
+          address: '0x111',
+          symbol: 'WKAS',
+        }),
+      ).toBeRejectedWith(TRPCError)
+    })
+
+    it('fails when the symbol is empty after trimming', async () => {
+      const findByChainAndAddress = mockFn().resolvesTo(undefined)
+      const caller = createRouter({
+        tokenDb: mockObject<TokenDatabase>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              findByChainAndAddress,
+            },
+          ),
+        }),
+        processor: mockObject<TokenIngestionProcessor>({}),
+      })
+
+      await expect(
+        caller.resolveConflict({
+          chain: 'ethereum',
+          address: '0x111',
+          symbol: '   ',
+        }),
+      ).toBeRejectedWith(TRPCError)
+      expect(findByChainAndAddress).toHaveBeenCalledTimes(0)
+    })
+  })
 })
 
 function createRouter(
@@ -287,11 +440,12 @@ function queueEntry(overrides: {
   chain: string
   address: string
   state: TokenIngestionQueueRecord['state']
+  message?: string
 }): TokenIngestionQueueRecord {
   return {
-    ...overrides,
     message: null,
     createdAt: UnixTime(1),
     updatedAt: UnixTime(1),
+    ...overrides,
   }
 }
