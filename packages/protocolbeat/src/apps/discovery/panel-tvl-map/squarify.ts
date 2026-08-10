@@ -82,9 +82,8 @@ function findRowEnd(
   let rowEnd = rowStart + 1
   while (rowEnd < entries.length) {
     const next = entries[rowEnd]
-    if (next === undefined) {
-      break
-    }
+    assert(next !== undefined, 'Row runs past the end of the item list')
+
     const ratio = worstRatio(shorterSide, sum + next.area, head.area, next.area)
     if (ratio > worst) {
       break

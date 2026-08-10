@@ -30,28 +30,6 @@ export interface ApiTvlEntry {
   price: number | undefined
 }
 
-export interface ApiTvlMapResponse {
-  addressCount: number
-  tokensPerChain: number
-  entries: ApiTvlMapEntry[]
-}
-
-// Streamed while the map is being built. `done` counts addresses whose balances
-// have landed, so it stays at zero until the first one does.
-export interface ApiTvlMapProgress {
-  done: number
-  total: number
-}
-
-export interface ApiTvlMapEntry {
-  address: string
-  name: string | undefined
-  type: ApiAddressType
-  chain: string
-  tvl: number
-  tokens: { ticker: string; tvl: number }[]
-}
-
 export interface ApiPreviewResponse {
   permissionsPerChain: { chain: string; permissions: ApiPreviewPermissions }[]
   contractsPerChain: { chain: string; contracts: ApiPreviewContract[] }[]
