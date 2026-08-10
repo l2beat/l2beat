@@ -24,12 +24,12 @@ import type { Manifest } from '~/utils/Manifest'
 import { optionToRange } from '~/utils/range/range'
 import type { InteropChainWithIcon } from '../interop/components/chain-selector/types'
 import {
-  MAX_SELECTED_CHAINS,
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '../interop/components/flows/consts'
 import { getFlowChainOrderByVolume } from '../interop/utils/getFlowChainOrderByVolume'
 import { getInteropChainHref } from '../interop/utils/getInteropChainHref'
+import { selectDefaultFlowChains } from '../interop/utils/selectDefaultFlowChains'
 import type { HomeScalingCategoryCounts } from './components/HomeScalingCard'
 import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
 import { getHomeProjectCounts } from './getHomeProjectCounts'
@@ -111,16 +111,10 @@ async function getCachedData(manifest: Manifest) {
       ? await getFlowChainOrderByVolume(activeChainIds, protocolIds)
       : activeChainIds
 
-  const activeInteropChainsById = new Map(
-    activeInteropChains.map((chain) => [chain.id, chain]),
+  const { sortedChains, defaultSelectedFlowChains } = selectDefaultFlowChains(
+    activeInteropChains,
+    defaultFlowChainOrder,
   )
-  const sortedChains: InteropChainWithIcon[] = defaultFlowChainOrder
-    .map((chainId) => activeInteropChainsById.get(chainId))
-    .filter((chain) => chain !== undefined)
-
-  const defaultSelectedFlowChains = sortedChains
-    .slice(0, MAX_SELECTED_CHAINS)
-    .map((chain) => chain.id)
 
   // The interop prefetch inputs must match the client queries exactly
   // (HomeTopInteropProtocolsCard, HomeInteropCard) so hydration avoids a

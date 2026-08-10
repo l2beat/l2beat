@@ -13,6 +13,7 @@ import { getFlowChainOrderByVolume } from '../utils/getFlowChainOrderByVolume'
 import { getInitialInteropSelection } from '../utils/getInitialInteropSelection'
 import { getInteropChainHref } from '../utils/getInteropChainHref'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
+import { selectDefaultFlowChains } from '../utils/selectDefaultFlowChains'
 import type { InteropSelection } from '../utils/types'
 
 export async function getInteropSummaryData(
@@ -67,15 +68,13 @@ export async function getInteropSummaryData(
       ),
   )
 
-  const activeInteropChainsById = new Map(
-    activeInteropChains.map((chain) => [chain.id, chain]),
+  const {
+    sortedChains: activeInteropChainsSortedByVolume,
+    defaultSelectedFlowChains,
+  } = selectDefaultFlowChains(
+    activeInteropChains,
+    queryState.defaultFlowChainOrder,
   )
-  const activeInteropChainsSortedByVolume = queryState.defaultFlowChainOrder
-    .map((chainId) => activeInteropChainsById.get(chainId))
-    .filter((chain) => chain !== undefined)
-  const defaultSelectedFlowChains = activeInteropChainsSortedByVolume
-    .slice(0, MAX_SELECTED_CHAINS)
-    .map((chain) => chain.id)
 
   return {
     head: {
