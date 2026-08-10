@@ -32,7 +32,7 @@ describe(getLivenessGroupingKey.name, () => {
         type: 'functionCallParameter',
         path: [0],
       }),
-    ).toThrow('Grouping parameter must be a scalar')
+    ).toThrow('Grouping parameter cannot be extracted from a bounded prefix')
   })
 
   it('rejects a missing parameter', () => {
