@@ -1,23 +1,55 @@
-import type { Logger } from '@l2beat/backend-tools'
 import type { IProvider } from '@l2beat/discovery'
-import { type CoingeckoId, InMemoryCache } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  CoingeckoId,
+  InMemoryCache,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { getTokensOnChain, type Token } from '../estimateTVL'
+import type { Token } from '../estimateTVL'
+import { type BackendToken, fetchTokens } from './tokenBackend'
 
 const TTL_SECONDS = 60 * 60
 
 // getCoinsMarket does not paginate, so ids have to be split by the page size.
 const IDS_PER_REQUEST = 250
 
+// How the backend spells the gas token of a chain. Token represents it as an
+// absent address.
+const NATIVE_ADDRESS = 'native'
+
 export type Prices = Record<string, number>
 
 export class TvlCache {
   private readonly cache = new InMemoryCache({})
 
-  getTokens(logger: Logger, chainName: string): Promise<Token[]> {
+  // One fetch covers every chain, so it is cached whole and sliced per chain.
+  private allTokens(): Promise<BackendToken[]> {
+    return this.cache.get(
+      { key: ['tvl-tokens-backend'], ttl: TTL_SECONDS },
+      () => fetchTokens(),
+    )
+  }
+
+  getTokens(chainName: string): Promise<Token[]> {
     return this.cache.get(
       { key: ['tvl-tokens', chainName], ttl: TTL_SECONDS },
-      () => getTokensOnChain(logger, chainName),
+      async () => {
+        const tokens = await this.allTokens()
+        return tokens
+          .filter((token) => token.chain === chainName)
+          .map(
+            (token): Token => ({
+              symbol: token.symbol,
+              coingeckoId: CoingeckoId(token.coingeckoId),
+              decimals: token.decimals,
+              iconUrl: token.iconUrl,
+              address:
+                token.address === NATIVE_ADDRESS
+                  ? undefined
+                  : ChainSpecificAddress.fromLong(chainName, token.address),
+            }),
+          )
+      },
     )
   }
 
