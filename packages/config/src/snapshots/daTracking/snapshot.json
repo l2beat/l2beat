@@ -427,6 +427,10 @@
   ],
   "hypr": [
     {
+      "id": "15c149d86d11",
+      "label": "ethereum inbox 0x0C57B7f3bAc278bE091431B52470fBAdBc4240E6 sequencers[1] since 19028146"
+    },
+    {
       "id": "44b9bc7dd0a3",
       "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAABqVjuNvNnoE= since 0"
     }
@@ -575,9 +579,17 @@
     {
       "id": "43f8068a2801",
       "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAACLkdk+ILapw= since 0"
+    },
+    {
+      "id": "98d4c99c5825",
+      "label": "ethereum inbox 0x5f7f7f6DB967F0ef10BdA0678964DBA185d16c50 sequencers[1] since 18574910"
     }
   ],
   "mantapacific": [
+    {
+      "id": "8fdcc48f4af9",
+      "label": "ethereum inbox 0xAEbA8e2307A22B6824a9a7a39f8b016C357Cd1Fe sequencers[1] since 18095772"
+    },
     {
       "id": "b90581385a42",
       "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAIZiad33fbxA7Z0= since 0"
@@ -713,6 +725,10 @@
     {
       "id": "89362db2d62d",
       "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAABYTLU4hLOUU= since 0"
+    },
+    {
+      "id": "bb154c3a5f6e",
+      "label": "ethereum inbox 0x08aA34cC843CeEBcC88A627F18430294aA9780be sequencers[1] since 18292645"
     }
   ],
   "paradex": [
