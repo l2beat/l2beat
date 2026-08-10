@@ -52,9 +52,7 @@ export function CompareProjectPicker({
   const filteredProjects = useMemo(() => {
     const pinned = new Set(pinnedSlugs)
     const sorted = [...allProjects].sort(
-      (a, b) =>
-        Number(pinned.has(b.slug)) - Number(pinned.has(a.slug)) ||
-        a.name.localeCompare(b.name),
+      (a, b) => Number(pinned.has(b.slug)) - Number(pinned.has(a.slug)),
     )
     const query = search.trim().toLowerCase()
     if (!query) return sorted
@@ -102,6 +100,7 @@ export function CompareProjectPicker({
           onFocus={() => setHoveredProjectId(project.id)}
           onBlur={() => setHoveredProjectId(undefined)}
           className="flex h-7 items-center gap-1.5 rounded-full border border-divider bg-surface-primary primary-card:bg-surface-secondary py-1 pr-1.5 pl-1"
+          style={{ borderColor: colors[project.id] }}
         >
           {/* The ring makes the chip strip double as the chart's color key,
               so it must show exactly the series color the chart uses. */}
@@ -111,7 +110,6 @@ export function CompareProjectPicker({
             width={18}
             height={18}
             className="size-[18px] rounded-full"
-            style={{ boxShadow: `0 0 0 2px ${colors[project.id]}` }}
           />
           <span className="font-medium text-sm leading-none">
             {project.shortName ?? project.name}
