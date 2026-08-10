@@ -1,5 +1,8 @@
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
-import type { CompareClientState } from '../../utils/compareChartState'
+import {
+  type CompareClientState,
+  effectiveExcludeRwaRestrictedTokens,
+} from '../../utils/compareChartState'
 
 /**
  * Builds the `tvs.detailedChartWithProjectsRanges` input for the compare
@@ -10,13 +13,16 @@ export function getTvsCompareChartParams(
   projects: CompareProjectEntry[],
   state: Pick<
     CompareClientState,
-    'chartRange' | 'excludeAssociatedTokens' | 'excludeRwaRestrictedTokens'
+    | 'chartRange'
+    | 'tvsFilter'
+    | 'excludeAssociatedTokens'
+    | 'excludeRwaRestrictedTokens'
   >,
 ) {
   return {
     range: state.chartRange,
     excludeAssociatedTokens: state.excludeAssociatedTokens,
-    excludeRwaRestrictedTokens: state.excludeRwaRestrictedTokens,
+    excludeRwaRestrictedTokens: effectiveExcludeRwaRestrictedTokens(state),
     projects: projects.flatMap((project) =>
       project.tvsSinceTimestamp !== undefined
         ? [

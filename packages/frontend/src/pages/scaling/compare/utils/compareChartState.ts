@@ -29,14 +29,29 @@ export const COMPARE_TVS_BRIDGE_TYPES = [
 ] as const
 export type CompareTvsBridgeType = (typeof COMPARE_TVS_BRIDGE_TYPES)[number]
 
+export const COMPARE_TVS_ASSET_CATEGORIES = [
+  'ether',
+  'stablecoin',
+  'btc',
+  'rwaPublic',
+  'rwaRestricted',
+  'other',
+] as const
+export type CompareTvsAssetCategory =
+  (typeof COMPARE_TVS_ASSET_CATEGORIES)[number]
+
 /**
  * The TVS component filter, restricting the compared value to a single
  * component of the split. A single field rather than one field per grouping:
- * the data carries the groupings as independent axes with no cross-product
- * (bridge type now, asset category later), so only one grouping can be
+ * the data carries the two groupings (bridge type and asset category) as
+ * independent axes with no cross-product, so only one grouping can be
  * non-"all" at a time.
  */
-export const COMPARE_TVS_FILTERS = ['all', ...COMPARE_TVS_BRIDGE_TYPES] as const
+export const COMPARE_TVS_FILTERS = [
+  'all',
+  ...COMPARE_TVS_BRIDGE_TYPES,
+  ...COMPARE_TVS_ASSET_CATEGORIES,
+] as const
 export type CompareTvsFilter = (typeof COMPARE_TVS_FILTERS)[number]
 
 export const COMPARE_COSTS_UNITS = ['usd', 'eth', 'gas'] as const
@@ -148,6 +163,21 @@ export const DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS = true
 export const MAX_COMPARE_PROJECTS = 10
 export const DEFAULT_COMPARE_PROJECTS_COUNT = 5
 
+/**
+ * The exclude-restricted-RWA toggle conflicts with the Restricted RWAs
+ * filter: combined they would render an all-zero chart. While that filter is
+ * active the toggle is disabled and overridden to false; the stored value is
+ * kept so switching the filter away restores the user's choice.
+ */
+export function effectiveExcludeRwaRestrictedTokens(state: {
+  tvsFilter: CompareTvsFilter
+  excludeRwaRestrictedTokens: boolean
+}): boolean {
+  return state.tvsFilter === 'rwaRestricted'
+    ? false
+    : state.excludeRwaRestrictedTokens
+}
+
 export function compareRangeToChartRange(range: CompareRange): ChartRange {
   if (typeof range === 'string') {
     return optionToRange(range)
@@ -193,8 +223,12 @@ export function isSameCompareState(
       (left.tvsUnit === right.tvsUnit &&
         left.tvsFilter === right.tvsFilter &&
         left.excludeAssociatedTokens === right.excludeAssociatedTokens &&
-        left.excludeRwaRestrictedTokens ===
-          right.excludeRwaRestrictedTokens)) &&
+        // The exclude-restricted-RWA toggle is disabled and overridden while
+        // the Restricted RWAs filter is active, so its stored value is
+        // hidden and not encoded.
+        (left.tvsFilter === 'rwaRestricted' ||
+          left.excludeRwaRestrictedTokens ===
+            right.excludeRwaRestrictedTokens))) &&
     isSameRange(left.range, right.range) &&
     left.projects.length === right.projects.length &&
     left.projects.every((slug, index) => slug === right.projects[index])

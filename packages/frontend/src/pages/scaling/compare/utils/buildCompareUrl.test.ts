@@ -165,6 +165,25 @@ describe(buildCompareUrl.name, () => {
     expect(url).toEqual('/scaling/compare?filter=canonical')
   })
 
+  it('serializes an asset category tvs filter', () => {
+    const url = buildCompareUrl(PATH, {
+      ...DEFAULT_STATE,
+      tvsFilter: 'stablecoin',
+    })
+
+    expect(url).toEqual('/scaling/compare?filter=stablecoin')
+  })
+
+  it('omits the overridden rwa toggle while the restricted rwa filter is active', () => {
+    const url = buildCompareUrl(PATH, {
+      ...DEFAULT_STATE,
+      tvsFilter: 'rwaRestricted',
+      excludeRwaRestrictedTokens: false,
+    })
+
+    expect(url).toEqual('/scaling/compare?filter=rwaRestricted')
+  })
+
   it('omits the tvs controls for other metrics', () => {
     const url = buildCompareUrl(PATH, {
       ...DEFAULT_STATE,

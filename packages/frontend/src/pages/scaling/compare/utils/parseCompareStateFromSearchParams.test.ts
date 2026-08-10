@@ -72,6 +72,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
       mode: 'absolute',
       activityUnit: 'uops',
       tvsUnit: 'usd',
+      tvsFilter: 'all',
       costsUnit: 'usd',
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
@@ -92,6 +93,18 @@ describe(parseCompareStateFromSearchParams.name, () => {
 
   it('parses the tvs filter', () => {
     const result = parse('filter=canonical')
+
+    expect(result.tvsFilter).toEqual('canonical')
+  })
+
+  it('parses an asset category tvs filter', () => {
+    const result = parse('filter=stablecoin')
+
+    expect(result.tvsFilter).toEqual('stablecoin')
+  })
+
+  it('keeps bridge type and asset category mutually exclusive by holding a single filter value', () => {
+    const result = parse('filter=canonical&filter=stablecoin')
 
     expect(result.tvsFilter).toEqual('canonical')
   })
@@ -269,6 +282,51 @@ describe(parseCompareStateFromSearchParams.name, () => {
     const url = buildCompareUrl('/scaling/compare', state)
     const search = url.split('?')[1] ?? ''
 
+    expect(parse(search)).toEqual(state)
+  })
+
+  it('round-trips an asset category filter through buildCompareUrl', () => {
+    const state: CompareChartState = {
+      metric: 'tvs',
+      projects: ['base'],
+      range: '90d',
+      scale: 'linear',
+      mode: 'absolute',
+      activityUnit: 'uops',
+      tvsUnit: 'usd',
+      tvsFilter: 'stablecoin',
+      costsUnit: 'usd',
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: true,
+    }
+
+    const url = buildCompareUrl('/scaling/compare', state)
+    const search = url.split('?')[1] ?? ''
+
+    expect(parse(search)).toEqual(state)
+  })
+
+  it('round-trips the restricted rwa filter through buildCompareUrl', () => {
+    const state: CompareChartState = {
+      metric: 'tvs',
+      projects: [],
+      range: '1y',
+      scale: 'linear',
+      mode: 'absolute',
+      activityUnit: 'uops',
+      tvsUnit: 'usd',
+      tvsFilter: 'rwaRestricted',
+      costsUnit: 'usd',
+      // The stored toggle value stays at the default; while this filter is
+      // active it is overridden to false everywhere it is applied.
+      excludeRwaRestrictedTokens: true,
+      excludeAssociatedTokens: false,
+    }
+
+    const url = buildCompareUrl('/scaling/compare', state)
+    const search = url.split('?')[1] ?? ''
+
+    expect(url).toEqual('/scaling/compare?filter=rwaRestricted')
     expect(parse(search)).toEqual(state)
   })
 

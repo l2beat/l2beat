@@ -29,10 +29,13 @@ import {
 interface Props<K extends DisplayOptionsKey> {
   display: Record<K, boolean>
   setDisplay: (key: K, value: boolean) => void
+  /** Options to disable, mapped to the hint explaining why. */
+  disabled?: Partial<Record<K, string>>
 }
 export function DisplayControls<K extends DisplayOptionsKey>({
   display,
   setDisplay,
+  disabled,
 }: Props<K>) {
   const providedEntries = Object.entries(display) as [K, boolean][]
 
@@ -74,6 +77,7 @@ export function DisplayControls<K extends DisplayOptionsKey>({
               optionKey={key}
               value={value}
               setDisplay={setDisplay}
+              disabledReason={disabled?.[key]}
             />
           ))}
         </PopoverContent>
@@ -98,6 +102,7 @@ export function DisplayControls<K extends DisplayOptionsKey>({
                 optionKey={key}
                 value={value}
                 setDisplay={setDisplay}
+                disabledReason={disabled?.[key]}
               />
             ))}
           </div>
@@ -111,27 +116,30 @@ function DisplayCheckbox<K extends DisplayOptionsKey>({
   optionKey,
   value,
   setDisplay,
+  disabledReason,
 }: {
   optionKey: K
   value: boolean
   setDisplay: (key: K, value: boolean) => void
+  disabledReason?: string
 }) {
   const option: DisplayOption = DISPLAY_OPTIONS[optionKey]
   return (
     <Checkbox
       name={optionKey}
       checked={value}
+      disabled={disabledReason !== undefined}
       onCheckedChange={(checked) => setDisplay(optionKey, !!checked)}
       className="w-full rounded-sm hover:bg-surface-primary-hover max-md:pl-0"
     >
       <div className="flex items-center gap-1 text-sm">
         {option.label}
-        {option.tooltip && (
+        {(disabledReason ?? option.tooltip) && (
           <Tooltip>
             <TooltipTrigger>
               <InfoIcon className="size-3.5" />
             </TooltipTrigger>
-            <TooltipContent>{option.tooltip}</TooltipContent>
+            <TooltipContent>{disabledReason ?? option.tooltip}</TooltipContent>
           </Tooltip>
         )}
       </div>
