@@ -724,7 +724,7 @@
   "pepeunchained": [
     {
       "id": "465561f40619",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAADzZzvipmzP4= since 21314461"
+      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAADzZzvipmzP4= since 2920309"
     }
   ],
   "perennial": [
@@ -771,8 +771,12 @@
   ],
   "r0ar": [
     {
+      "id": "a0c84e18d366",
+      "label": "ethereum inbox 0xFF00000000000000000000000000000000193939 sequencers[1] since 20912449"
+    },
+    {
       "id": "b005d8668b33",
-      "label": "ethereum inbox 0xFF00000000000000000000000000000000193939 sequencers[1] since 20912148"
+      "label": "ethereum inbox 0xFF00000000000000000000000000000000193939 sequencers[1] since 21372120"
     }
   ],
   "race": [
