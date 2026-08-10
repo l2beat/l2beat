@@ -8,22 +8,21 @@ describe(getScaledParticleCounts.name, () => {
     expect(result.dollarsPerParticle).toEqual(50)
   })
 
-  it('increases dollars per particle in $25 steps when per-flow cap is exceeded', () => {
+  it('increases dollars per particle in $5 steps when per-flow cap is exceeded', () => {
     // base counts [100, 70, 10] — max=100 > 60, need to step up
-    // $75: 100*(50/75)=66.67 > 60, fail
-    // $100: 100*(50/100)=50 ≤ 60, total=90 ≤ 700, pass
+    // minByMax = 100*50/60 ≈ 83.33, rounded up to $85
     const result = getScaledParticleCounts([100, 70, 10])
-    expect(result.counts).toEqual([50, 35, 5])
-    expect(result.dollarsPerParticle).toEqual(100)
+    expect(result.dollarsPerParticle).toEqual(85)
+    expect(Math.max(...result.counts) <= 60).toEqual(true)
+    expect(result.counts.reduce((s, c) => s + c, 0) <= 700).toEqual(true)
   })
 
   it('increases dollars per particle when global cap is exceeded', () => {
     // 20 flows of 60 each — total=1200 > 700
-    // $75: 60*(50/75)=40, total=800 > 700, fail
-    // $100: 60*(50/100)=30, total=600 ≤ 700, pass
+    // minByTotal = 1200*50/700 ≈ 85.71, rounded up to $90
     const result = getScaledParticleCounts(Array.from({ length: 20 }, () => 60))
-    expect(result.counts).toEqual(Array.from({ length: 20 }, () => 30))
-    expect(result.dollarsPerParticle).toEqual(100)
+    expect(result.dollarsPerParticle).toEqual(90)
+    expect(result.counts.reduce((s, c) => s + c, 0) <= 700).toEqual(true)
   })
 
   it('returns empty counts for empty input', () => {
@@ -52,20 +51,18 @@ describe(getScaledParticleCounts.name, () => {
 
   it('respects a custom baseDollarsPerParticle', () => {
     // Same shape as the per-flow-cap test but starting at $100.
-    // minByMax = 100*100/60 ≈ 166.67, step up from 100 in $25s → 175.
+    // minByMax = 100*100/60 ≈ 166.67, rounded up to $170.
     const result = getScaledParticleCounts([100, 70, 10], 100)
     expect(Math.max(...result.counts) <= 60).toEqual(true)
     expect(result.counts.reduce((s, c) => s + c, 0) <= 700).toEqual(true)
-    expect(result.dollarsPerParticle).toEqual(175)
+    expect(result.dollarsPerParticle).toEqual(170)
   })
 
   it('scales a low base up to a clean step multiple', () => {
-    // base 1, max=100 > 60 → minByMax = 100*1/60 ≈ 1.67, rounded up to 25
+    // base 1, max=100 > 60 → minByMax = 100*1/60 ≈ 1.67, rounded up to 5
     const result = getScaledParticleCounts([100, 70, 10], 1)
-    expect(result.dollarsPerParticle).toEqual(25)
-    expect(result.counts.map((c) => Math.round(c * 10) / 10)).toEqual([
-      4, 2.8, 0.4,
-    ])
+    expect(result.dollarsPerParticle).toEqual(5)
+    expect(result.counts).toEqual([20, 14, 2])
   })
 
   it('handles a single flow exactly at the per-flow cap', () => {

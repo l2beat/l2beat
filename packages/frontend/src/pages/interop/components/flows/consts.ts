@@ -7,8 +7,8 @@ export const DOLLARS_PER_PARTICLE = 50
 // Lower base for embedded volume graphs (token page, project sections) —
 // kept very low so graphs of low-volume tokens still show movement
 export const EMBEDDED_FLOWS_DOLLARS_PER_PARTICLE = 1
-// Step size when increasing particle value to satisfy constraints
-export const DOLLARS_PER_PARTICLE_STEP = 25
+// Scaled-up particle values are rounded to a multiple of this step
+export const DOLLARS_PER_PARTICLE_STEP = 5
 // Travel time (seconds) for the longest path — shorter paths take proportionally less
 export const BASE_DURATION_S = 6
 // Per-flow upper bound to avoid excessive DOM nodes
