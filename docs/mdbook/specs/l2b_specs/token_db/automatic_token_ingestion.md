@@ -419,10 +419,15 @@ on the new abstract token depends on how the raw values differed:
   the abstract record, and a `corrected-coingecko-symbol-casing` step is
   appended to the trace.
 - **Punctuation difference**: the deployed-token symbol is adopted
-  wholesale (it is on-chain truth and carries real casing), an
-  `adopted-deployed-token-symbol` step is appended to the trace, and the
-  CoinGecko spelling is recorded in the abstract token's `comment` so
-  the substitution stays traceable on the record itself.
+  (it is on-chain truth and carries real casing) with edge whitespace
+  stripped — an invisible stray space on an abstract symbol would
+  spuriously conflict with clean deployments of the same asset later.
+  An `adopted-deployed-token-symbol` step is appended to the trace, and
+  the CoinGecko spelling is recorded in the abstract token's `comment`
+  so the substitution stays traceable on the record itself. (The
+  deployed-token *record* keeps its RPC symbol verbatim; only the
+  abstract token symbol is curated. The manual resolution flow below
+  trims its chosen symbol for the same reason.)
 - **Genuine difference** (e.g. `USDC` vs. `DAI`, `WKAS` vs. `KAS`): still
   a `conflict`.
 

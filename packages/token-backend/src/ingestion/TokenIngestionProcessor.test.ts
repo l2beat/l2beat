@@ -825,6 +825,86 @@ describe(TokenIngestionProcessor.name, () => {
       })
     })
 
+    it('strips edge whitespace when adopting a deployed-token symbol that differs only in punctuation', async () => {
+      const address = token('ethereum', '0xaaa')
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          chain: mockObject<TokenDatabase['chain']>({
+            findByName: mockFn().resolvesTo({
+              name: 'ethereum',
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }),
+          }),
+          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+            findById: mockFn().resolvesTo(undefined),
+          }),
+        }),
+        coingeckoClient: mockObject<CoingeckoClient>({
+          getCoinDataById: mockFn().resolvesTo({
+            id: 'virtu-coin',
+            symbol: 'virtu',
+            image: { large: 'https://example.com/virtu.png' },
+            platforms: {},
+          }),
+          getCoinMarketChartRange: mockFn().resolvesTo({
+            prices: [{ date: new Date('2024-01-01T00:00:00Z'), value: 1 }],
+            marketCaps: [],
+          }),
+        }),
+        fetchDeployedTokenFacts: mockFn().resolvesTo({
+          isContract: true,
+          symbol: 'VIRTU ',
+          symbolSource: 'rpc' as const,
+          decimals: 18,
+          deploymentTimestamp: UnixTime(1),
+          warnings: [],
+        }),
+        generateAbstractTokenId: () => 'ABC123',
+      })
+
+      const result = await processor.fetch({
+        id: 'ing_test',
+        address,
+        existingDeployedToken: undefined,
+        steps: [],
+        outcome: {
+          kind: 'pending',
+          operation: 'insert',
+          existing: undefined,
+          abstract: {
+            kind: 'new-coingecko',
+            coingeckoId: 'virtu-coin',
+            symbol: 'virtu',
+          },
+          symbolFallback: 'VIRTU',
+          neighborsToEnqueue: [],
+          proof: { kind: 'coingecko' },
+        },
+      })
+
+      expect(result.outcome.kind).toEqual('write')
+      if (result.outcome.kind !== 'write') return
+      expect(result.outcome.newAbstractToken?.symbol).toEqual('VIRTU')
+      expect(
+        result.steps.find(
+          (step) => step.kind === 'adopted-deployed-token-symbol',
+        ),
+      ).toEqual({
+        kind: 'adopted-deployed-token-symbol',
+        from: 'VIRTU',
+        to: 'VIRTU',
+      })
+      // the deployed token record itself keeps the RPC symbol verbatim
+      expect(
+        result.outcome.deployedToken.type === 'insert' &&
+          result.outcome.deployedToken.record.symbol,
+      ).toEqual('VIRTU ')
+    })
+
     it('does not treat two all-punctuation symbols as matching', async () => {
       const address = token('ethereum', '0xaaa')
 

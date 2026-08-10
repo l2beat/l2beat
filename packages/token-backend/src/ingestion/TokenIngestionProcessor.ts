@@ -1031,16 +1031,23 @@ function finalizeNewAbstractTokenSymbol(
     normalized.length > 0 &&
     normalized === normalizeSymbolForComparison(deployedTokenSymbol)
   ) {
+    // Edge whitespace is stripped from the adopted symbol (`VIRTU ` → `VIRTU`):
+    // it is invisible in every UI, and an abstract symbol with a stray edge
+    // space would spuriously conflict with clean deployments of the same
+    // asset on other chains (the transfer-abstract check below is
+    // case-insensitive but not punctuation-normalized). Inner punctuation is
+    // visible content and stays.
+    const adoptedSymbol = deployedTokenSymbol.trim()
     steps.push({
       kind: 'adopted-deployed-token-symbol',
       from: coingeckoSymbol,
-      to: deployedTokenSymbol,
+      to: adoptedSymbol,
     })
     return {
       type: 'ok',
       abstract: {
         ...newAbstractToken,
-        symbol: deployedTokenSymbol,
+        symbol: adoptedSymbol,
         comment: `CoinGecko symbol "${coingeckoSymbol}" differs only in punctuation from the deployed token symbol "${deployedTokenSymbol}"; automatic ingestion used the deployed token symbol.`,
       },
     }
