@@ -3,7 +3,10 @@ import { ActivityCompareChart } from './activity/ActivityCompareChart'
 import { ActivityCompareControls } from './activity/ActivityCompareControls'
 import { CostsCompareChart } from './costs/CostsCompareChart'
 import { CostsCompareControls } from './costs/CostsCompareControls'
+import { hasCostsData } from './costs/getCostsCompareChartParams'
 import { DataPostedCompareChart } from './data-posted/DataPostedCompareChart'
+import { hasDataPostedData } from './data-posted/getDataPostedCompareChartParams'
+import { hasTvsData } from './tvs/getTvsCompareChartParams'
 import { TvsCompareChart } from './tvs/TvsCompareChart'
 import { TvsCompareControls } from './tvs/TvsCompareControls'
 import type { CompareMetric } from './types'
@@ -14,7 +17,7 @@ export const COMPARE_METRICS: Record<CompareMetricId, CompareMetric> = {
     label: 'Value Secured',
     Chart: TvsCompareChart,
     Controls: TvsCompareControls,
-    hasData: (project) => project.tvsSinceTimestamp !== undefined,
+    hasData: hasTvsData,
     noDataLabel: 'No TVS data',
   },
   activity: {
@@ -28,14 +31,14 @@ export const COMPARE_METRICS: Record<CompareMetricId, CompareMetric> = {
     label: 'Costs',
     Chart: CostsCompareChart,
     Controls: CostsCompareControls,
-    hasData: (project) => project.costsSinceTimestamp !== undefined,
+    hasData: hasCostsData,
     noDataLabel: 'No costs data',
   },
   'data-posted': {
     id: 'data-posted',
     label: 'Data posted',
     Chart: DataPostedCompareChart,
-    hasData: (project) => project.hasDaTracking,
+    hasData: hasDataPostedData,
     noDataLabel: 'No data posted tracking',
   },
 }

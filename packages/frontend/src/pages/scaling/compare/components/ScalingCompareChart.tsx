@@ -1,14 +1,13 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo, useState } from 'react'
 import type { ChartScale } from '~/components/chart/types'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useCopyToClipboard } from '~/hooks/useCopyToClipboard'
-import { useDebouncedValue } from '~/hooks/useDebouncedValue'
-import { useEventListener } from '~/hooks/useEventListener'
 import { useIsClient } from '~/hooks/useIsClient'
 import { useTimeout } from '~/hooks/useTimeout'
+import { useUrlStateSync } from '~/hooks/useUrlStateSync'
 import { CheckIcon } from '~/icons/Check'
 import { CopyIcon } from '~/icons/Copy'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
@@ -22,7 +21,6 @@ import {
   type CompareClientState,
   type CompareMetricId,
   type CompareViewMode,
-  isSameCompareState,
   toCompareClientState,
   toCompareUrlState,
 } from '../utils/compareChartState'
@@ -112,49 +110,21 @@ export function ScalingCompareChart({
 
 /**
  * Keeps the URL in sync with the chart state (defaults omitted) and applies
- * URL state on browser back/forward, mirroring the interop pages.
+ * URL state on browser back/forward.
  */
 function useCompareUrlSync(
   state: CompareClientState,
   validSlugs: string[],
   onPopState: (parsed: CompareChartState) => void,
 ) {
-  const debouncedState = useDebouncedValue(state, 300)
-  const skipNextUrlUpdate = useRef(false)
-
-  useEffect(() => {
-    if (skipNextUrlUpdate.current) {
-      skipNextUrlUpdate.current = false
-      return
-    }
-
-    const currentState = parseCompareStateFromSearchParams({
-      searchParams: new URLSearchParams(window.location.search),
-      validSlugs,
-    })
-    const urlState = toCompareUrlState(debouncedState)
-    if (isSameCompareState(currentState, urlState)) {
-      return
-    }
-
-    const nextUrl = buildCompareUrl(window.location.pathname, urlState)
-    const currentUrl = window.location.pathname + window.location.search
-    if (nextUrl === currentUrl) {
-      return
-    }
-
-    window.history.pushState({}, '', nextUrl)
-  }, [debouncedState, validSlugs])
-
-  useEventListener('popstate', () => {
-    skipNextUrlUpdate.current = true
-
-    onPopState(
-      parseCompareStateFromSearchParams({
-        searchParams: new URLSearchParams(window.location.search),
-        validSlugs,
-      }),
-    )
+  const urlState = useMemo(() => toCompareUrlState(state), [state])
+  useUrlStateSync({
+    state: urlState,
+    debounceMs: 300,
+    parse: (searchParams) =>
+      parseCompareStateFromSearchParams({ searchParams, validSlugs }),
+    build: buildCompareUrl,
+    onPopState,
   })
 }
 

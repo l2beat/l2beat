@@ -2,6 +2,17 @@ import type { CompareProjectEntry } from '~/server/features/scaling/compare/getC
 import type { ChartRange } from '~/utils/range/range'
 
 /**
+ * Whether the project has onchain costs tracking. The single source for the
+ * picker's no-data marking and the query params, so a project marked
+ * "no data" can never be queried anyway (or vice versa).
+ */
+export function hasCostsData(
+  project: CompareProjectEntry,
+): project is CompareProjectEntry & { costsSinceTimestamp: number } {
+  return project.costsSinceTimestamp !== undefined
+}
+
+/**
  * Builds the `costs.detailedChartWithProjectsRanges` input for the compare
  * chart. Shared between the SSR prefetch and the client query so the
  * hydrated cache always matches and the first paint needs no refetch.
@@ -14,15 +25,9 @@ export function getCostsCompareChartParams(
 ) {
   return {
     range: chartRange,
-    projects: projects.flatMap((project) =>
-      project.costsSinceTimestamp !== undefined
-        ? [
-            {
-              projectId: project.id,
-              sinceTimestamp: project.costsSinceTimestamp,
-            },
-          ]
-        : [],
-    ),
+    projects: projects.filter(hasCostsData).map((project) => ({
+      projectId: project.id,
+      sinceTimestamp: project.costsSinceTimestamp,
+    })),
   }
 }
