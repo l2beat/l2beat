@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x87122799d80658a4617507ca2e825b141e0e89ba
+Generated with discovered.json: 0xb6b6e724050569d7c0745dc3f090209c99346c40
 
-# Diff at Mon, 10 Aug 2026 10:37:20 GMT:
+# Diff at Mon, 10 Aug 2026 13:10:42 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@352ff1eba99519e3c6090fccec5796e0475edcfa block: 1785168665
@@ -10,6 +10,8 @@ Generated with discovered.json: 0x87122799d80658a4617507ca2e825b141e0e89ba
 
 - Updated chain creation params and chain type manager version via this emergency proposal: https://tools.l2beat.com/decoder-new/?hash=0xc88fb3399a6edf512e2d5e87c2169ba474c2135e406822936656fac4d979949f&data=AwA. The diff is the boojum verifier (dual verifier `0xc47d355402e78b886b628914b3b129f236fee3cc`), which is already deployed for zksync era and 3 more chains. Two other emergency upgrades are standard pre- and post-upgrade actions.
 - Added a member to zk foundation ms.
+
+Config-related: fixed incorrect permissions and descriptions.
 
 ## Watched changes
 
@@ -57,6 +59,45 @@ Generated with discovered.json: 0x87122799d80658a4617507ca2e825b141e0e89ba
 +++ severity: HIGH
       values.emergencyUpgradesExecuted.16:
 +        "0xff0383a64e8bd76bcdffc84a15f2c5061c423ef9d74cde6c0bc9ffca57428cdf"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785168665 (main branch discovery), not current.
+
+```diff
+    contract EraChainAdminProxy (eth:0x2cf3bD6a9056b39999F3883955E183F655345063) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
+      directlyReceivedPermissions.2.description:
+-        "revert batches for any connected chain (ZK cluster Admin role)."
++        "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role)."
+    }
+```
+
+```diff
+    contract Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1.description:
+-        "revert batches for any connected chain (ZK cluster Admin role)."
++        "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role)."
+    }
+```
+
+```diff
+    contract L1AssetRouter (eth:0x8829AD80E425C646DAB305381ff105169FeEcE56) [shared-zk-stack/L1AssetRouter] {
+    +++ description: Canonical central asset router for all ZK stack chains. Routes deposits and withdrawals to the respective asset handlers (like the L1NativeTokenVault); does not escrow funds itself.
+      description:
+-        "Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds)."
++        "Canonical central asset router for all ZK stack chains. Routes deposits and withdrawals to the respective asset handlers (like the L1NativeTokenVault); does not escrow funds itself."
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
     }
 ```
 

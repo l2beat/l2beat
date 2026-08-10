@@ -219,7 +219,7 @@
         {
           "permission": "interact",
           "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "revert batches for any connected chain (ZK cluster Admin role).",
+          "description": "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role).",
           "role": ".admin"
         }
       ],
@@ -648,7 +648,7 @@
         {
           "permission": "interact",
           "from": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "description": "revert batches for any connected chain (ZK cluster Admin role).",
+          "description": "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role).",
           "role": ".admin",
           "via": [
             { "address": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063" }
@@ -1244,7 +1244,7 @@
         "0xd5d5ac5ccddafa92ad87b70d56d017cfe98cc3d3e4f25d24cd2a7b5f8c9ab803"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).",
+      "description": "Canonical central asset router for all ZK stack chains. Routes deposits and withdrawals to the respective asset handlers (like the L1NativeTokenVault); does not escrow funds itself.",
       "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739109071,
       "sinceBlock": 21809370,
@@ -1290,7 +1290,7 @@
         "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56": "TransparentUpgradeableProxy",
         "eth:0x2386Bc2E26f39b72f0D4FDE0c07D68e4eEFfC725": "L1AssetRouter"
       },
-      "category": { "name": "Spam", "priority": -1 }
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "eth:0x8b0c64CcaB94d4618Ef834F396F622f61F2b013D",
@@ -4526,5 +4526,5 @@
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
   "usedBlockNumbers": { "ethereum": 25724037, "zksync2": 71507447 },
-  "permissionsConfigHash": "0x23230ba2ca2a4ebd4f3a94d57cb6737f18b91425c44bcbb6a653f4dc46800ec0"
+  "permissionsConfigHash": "0x04c8279c2e1c3fe96135c79b47cf1d490d4cfd9dd9cd1271c2c143a8371f942c"
 }

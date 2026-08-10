@@ -43,13 +43,37 @@
         {
           "permission": "interact",
           "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "execute predefined protocol upgrades (diamond cuts registered in the ChainTypeManager) for the chain through this contract.",
+          "role": ".upgraders"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
           "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
           "role": ".executor"
         },
         {
           "permission": "interact",
           "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-          "description": "submit batches on L1 if approved by enough Validator Multisig members.",
+          "description": "revert unexecuted batches through this contract.",
+          "role": ".reverters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "submit batch precommitments on L1 through this contract.",
+          "role": ".precommitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "submit batch proofs on L1 through this contract.",
+          "role": ".provers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "submit batches on L1 through this contract (no Validator Multisig approvals required).",
           "role": ".committers"
         }
       ]
@@ -904,13 +928,37 @@
         {
           "permission": "interact",
           "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "execute predefined protocol upgrades (diamond cuts registered in the ChainTypeManager) for the chain through this contract.",
+          "role": ".upgraders"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
           "description": "initiate batch execution on L1 if approved by enough Validator Multisig members.",
           "role": ".executor"
         },
         {
           "permission": "interact",
           "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
-          "description": "submit batches on L1 if approved by enough Validator Multisig members.",
+          "description": "revert unexecuted batches through this contract.",
+          "role": ".reverters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "submit batch precommitments on L1 through this contract.",
+          "role": ".precommitters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "submit batch proofs on L1 through this contract.",
+          "role": ".provers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "submit batches on L1 through this contract (no Validator Multisig approvals required).",
           "role": ".committers"
         }
       ]
@@ -1077,11 +1125,35 @@
         "owner": "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "PRECOMMITTER_ROLE": "0x3353dfbbf9a3ed2a5be49cd3bd3a51ee03c3751d409cccac7723c4907332afee",
+        "precommitters": {
+          "eth:0x32400084C286CF3E17e7B677ea9583e60a000324": [
+            "eth:0xa90c7CDB553332948E2943431436117eCFb1e781",
+            "eth:0x28942E6870612893B96F77De0F485fcE3497AAA8"
+          ]
+        },
         "PROVER_ROLE": "0x60044782a422109ac08a415e44260ad5d3bad63d96ebe1fac0363399642ee3f2",
+        "provers": {
+          "eth:0x32400084C286CF3E17e7B677ea9583e60a000324": [
+            "eth:0xa90c7CDB553332948E2943431436117eCFb1e781",
+            "eth:0x28942E6870612893B96F77De0F485fcE3497AAA8"
+          ]
+        },
         "revertedBlocks": [],
         "REVERTER_ROLE": "0x30085792330f3f9ee2ee216aea0321c55a0909b87c51ee9ab49d05ca4a4c2ecb",
+        "reverters": {
+          "eth:0x32400084C286CF3E17e7B677ea9583e60a000324": [
+            "eth:0xa90c7CDB553332948E2943431436117eCFb1e781",
+            "eth:0x28942E6870612893B96F77De0F485fcE3497AAA8"
+          ]
+        },
         "threshold": 3,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
+        "upgraders": {
+          "eth:0x32400084C286CF3E17e7B677ea9583e60a000324": [
+            "eth:0xa90c7CDB553332948E2943431436117eCFb1e781",
+            "eth:0x28942E6870612893B96F77De0F485fcE3497AAA8"
+          ]
+        },
         "validatorTimelock": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776"
       },
       "fieldMeta": {
@@ -1678,9 +1750,9 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable": "0x1c1894c389e5cbc9aa30194cb9f9294354eeb0a28968fd00e4282b861dc61d9d",
+    "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable": "0x87da0dde38a66bb86eec4b765e7816e862a68f2f0f5ce66e638909d2462a3247",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 25723686 },
-  "permissionsConfigHash": "0x3c5cebaa90a3d85aabff5d6b4933b4824566c227f9af7112418c385f03930018"
+  "permissionsConfigHash": "0x57b9848a5f62fe4a407f3131be010b6dbe3f52162852c6f901922f1ba2907780"
 }

@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf6e982351c12e7c32c96dc9d1e1fea28aef7e1d4
+Generated with discovered.json: 0xf965231d461dd3113be0ac6cb2a19f2a8306660f
 
-# Diff at Mon, 10 Aug 2026 10:25:50 GMT:
+# Diff at Mon, 10 Aug 2026 13:13:14 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@352ff1eba99519e3c6090fccec5796e0475edcfa block: 1782810164
@@ -9,6 +9,8 @@ Generated with discovered.json: 0xf6e982351c12e7c32c96dc9d1e1fea28aef7e1d4
 ## Description
 
 Abstract multisig upgraded boojum verifiers to the latest version (the same as zksync Era, not yet reproduced). Also added one validator to the validator MS and removed one ms member of a gnosis safe.
+
+Config-related: added full batch lifecycle permissions to era multisig template, fixed incorrect permissions and descriptions.
 
 ## Watched changes
 
@@ -103,6 +105,68 @@ Abstract multisig upgraded boojum verifiers to the latest version (the same as z
 .../abstract/{.flat@1782810164 => .flat}/L1VerifierFflonk.sol  |  6 +++---
  .../abstract/{.flat@1782810164 => .flat}/L1VerifierPlonk.sol   | 10 +++++-----
  2 files changed, 8 insertions(+), 8 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782810164 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x6be789605b13Edb78749824633b9933D44B582ba) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"execute predefined protocol upgrades (diamond cuts registered in the ChainTypeManager) for the chain through this contract.","role":".upgraders"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"revert unexecuted batches through this contract.","role":".reverters"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"submit batch precommitments on L1 through this contract.","role":".precommitters"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"submit batch proofs on L1 through this contract.","role":".provers"}
+      receivedPermissions.1.description:
+-        "submit batches on L1 if approved by enough Validator Multisig members."
++        "submit batches on L1 through this contract (no Validator Multisig approvals required)."
+    }
+```
+
+```diff
+    contract Abstract Multisig (eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"change the members and threshold of the Validator Multisig and set the delay between batch commitment and execution.","role":".owner"}
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      values.precommitters:
++        {"eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9":["eth:0x6be789605b13Edb78749824633b9933D44B582ba","eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"]}
+      values.provers:
++        {"eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9":["eth:0x6be789605b13Edb78749824633b9933D44B582ba","eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"]}
+      values.reverters:
++        {"eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9":["eth:0x6be789605b13Edb78749824633b9933D44B582ba","eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"]}
+      values.upgraders:
++        {"eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9":["eth:0x6be789605b13Edb78749824633b9933D44B582ba","eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"]}
+    }
+```
+
+```diff
+    EOA  (eth:0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"execute predefined protocol upgrades (diamond cuts registered in the ChainTypeManager) for the chain through this contract.","role":".upgraders"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"revert unexecuted batches through this contract.","role":".reverters"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"submit batch precommitments on L1 through this contract.","role":".precommitters"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83","description":"submit batch proofs on L1 through this contract.","role":".provers"}
+      receivedPermissions.1.description:
+-        "submit batches on L1 if approved by enough Validator Multisig members."
++        "submit batches on L1 through this contract (no Validator Multisig approvals required)."
+    }
 ```
 
 Generated with discovered.json: 0xafcdf28d1d9d327ba0fe5378271ce747cc037205

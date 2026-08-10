@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x464a7ec84abde6b173a2d118617bef22826ca1f3
+Generated with discovered.json: 0x7df0090ba8c36fef1e51b7311627f92d381e44b9
 
-# Diff at Mon, 10 Aug 2026 09:27:05 GMT:
+# Diff at Mon, 10 Aug 2026 13:06:46 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
 - comparing to: main@352ff1eba99519e3c6090fccec5796e0475edcfa block: 1785170172
@@ -9,6 +9,8 @@ Generated with discovered.json: 0x464a7ec84abde6b173a2d118617bef22826ca1f3
 ## Description
 
 Matter Labs 4/7 multisig upgraded boojum verifier to v29.5 (was registered on chain type manager before). Verifier is not yet reproduced.
+
+Config-related: added full batch lifecycle permissions to era multisig template, fixed incorrect permissions and descriptions.
 
 ## Watched changes
 
@@ -79,6 +81,60 @@ Matter Labs 4/7 multisig upgraded boojum verifier to v29.5 (was registered on ch
 .../zksync2/{.flat@1785170172 => .flat}/L1VerifierFflonk.sol   |  6 +++---
  .../zksync2/{.flat@1785170172 => .flat}/L1VerifierPlonk.sol    | 10 +++++-----
  2 files changed, 8 insertions(+), 8 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785170172 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x28942E6870612893B96F77De0F485fcE3497AAA8) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","description":"execute predefined protocol upgrades (diamond cuts registered in the ChainTypeManager) for the chain through this contract.","role":".upgraders"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","description":"revert unexecuted batches through this contract.","role":".reverters"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","description":"submit batch precommitments on L1 through this contract.","role":".precommitters"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","description":"submit batch proofs on L1 through this contract.","role":".provers"}
+      receivedPermissions.1.description:
+-        "submit batches on L1 if approved by enough Validator Multisig members."
++        "submit batches on L1 through this contract (no Validator Multisig approvals required)."
+    }
+```
+
+```diff
+    EOA  (eth:0xa90c7CDB553332948E2943431436117eCFb1e781) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","description":"execute predefined protocol upgrades (diamond cuts registered in the ChainTypeManager) for the chain through this contract.","role":".upgraders"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","description":"revert unexecuted batches through this contract.","role":".reverters"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","description":"submit batch precommitments on L1 through this contract.","role":".precommitters"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","description":"submit batch proofs on L1 through this contract.","role":".provers"}
+      receivedPermissions.1.description:
+-        "submit batches on L1 if approved by enough Validator Multisig members."
++        "submit batches on L1 through this contract (no Validator Multisig approvals required)."
+    }
+```
+
+```diff
+    contract EraMultisigValidator (eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
+    +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      values.precommitters:
++        {"eth:0x32400084C286CF3E17e7B677ea9583e60a000324":["eth:0xa90c7CDB553332948E2943431436117eCFb1e781","eth:0x28942E6870612893B96F77De0F485fcE3497AAA8"]}
+      values.provers:
++        {"eth:0x32400084C286CF3E17e7B677ea9583e60a000324":["eth:0xa90c7CDB553332948E2943431436117eCFb1e781","eth:0x28942E6870612893B96F77De0F485fcE3497AAA8"]}
+      values.reverters:
++        {"eth:0x32400084C286CF3E17e7B677ea9583e60a000324":["eth:0xa90c7CDB553332948E2943431436117eCFb1e781","eth:0x28942E6870612893B96F77De0F485fcE3497AAA8"]}
+      values.upgraders:
++        {"eth:0x32400084C286CF3E17e7B677ea9583e60a000324":["eth:0xa90c7CDB553332948E2943431436117eCFb1e781","eth:0x28942E6870612893B96F77De0F485fcE3497AAA8"]}
+    }
 ```
 
 Generated with discovered.json: 0xbf857739583eb3a6a00036e9ebf59d6db984d374
