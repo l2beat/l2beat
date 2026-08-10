@@ -10,14 +10,17 @@ describe(createMissingTokensRouter.name, () => {
     const missingAddress = EthereumAddress.random()
     const incompleteAddress = EthereumAddress.random()
     const readyAddress = EthereumAddress.random()
+    const denylistedAddress = EthereumAddress.random()
     const normalizedMissingAddress = missingAddress.toLowerCase()
     const normalizedIncompleteAddress = incompleteAddress.toLowerCase()
     const normalizedReadyAddress = readyAddress.toLowerCase()
+    const normalizedDenylistedAddress = denylistedAddress.toLowerCase()
 
     const getMissingTokensInfo = mockFn().resolvesTo([
       missingTokenInfo('ethereum', Address32.from(missingAddress), 5),
       missingTokenInfo('base', Address32.from(incompleteAddress), 3),
       missingTokenInfo('arbitrum', Address32.from(readyAddress), 2),
+      missingTokenInfo('arbitrum', Address32.from(denylistedAddress), 7),
       missingTokenInfo('ethereum', Address32.ZERO, 1),
     ])
     const query = mockFn().resolvesTo([
@@ -50,6 +53,7 @@ describe(createMissingTokensRouter.name, () => {
         }),
       },
       query,
+      [{ chain: 'arbitrum', address: normalizedDenylistedAddress }],
     )
 
     const result = await caller.list({ range: 'all' })
@@ -59,6 +63,7 @@ describe(createMissingTokensRouter.name, () => {
       { chain: 'ethereum', address: normalizedMissingAddress },
       { chain: 'base', address: normalizedIncompleteAddress },
       { chain: 'arbitrum', address: normalizedReadyAddress },
+      { chain: 'arbitrum', address: normalizedDenylistedAddress },
     ])
     expect(result).toEqual([
       {
@@ -81,6 +86,15 @@ describe(createMissingTokensRouter.name, () => {
         count: 2,
         plugins: ['plugin'],
         tokenDbStatus: 'ready',
+      },
+      {
+        chain: 'arbitrum',
+        tokenAddress: Address32.from(denylistedAddress),
+        count: 7,
+        plugins: ['plugin'],
+        // Deliberately absent from TokenDB and banned — not "missing", so
+        // nobody is invited to re-add it.
+        tokenDbStatus: 'denylisted',
       },
       {
         chain: 'ethereum',
@@ -177,7 +191,11 @@ describe(createMissingTokensRouter.name, () => {
   })
 })
 
-function createCaller(db: Partial<Database>, query: ReturnType<typeof mockFn>) {
+function createCaller(
+  db: Partial<Database>,
+  query: ReturnType<typeof mockFn>,
+  denylist: { chain: string; address: string }[] = [],
+) {
   const callerFactory = createCallerFactory(
     createMissingTokensRouter({
       chains: [
@@ -187,6 +205,7 @@ function createCaller(db: Partial<Database>, query: ReturnType<typeof mockFn>) {
       ],
       tokenDbClient: mockObject<TokenDbClient>({
         deployedTokens: { getByChainAndAddress: { query } },
+        tokenDenylist: { getAll: { query: mockFn().resolvesTo(denylist) } },
       } as any),
     }),
   )

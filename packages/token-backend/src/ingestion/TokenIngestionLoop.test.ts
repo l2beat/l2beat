@@ -47,6 +47,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
@@ -95,6 +96,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
@@ -136,6 +138,7 @@ describe(TokenIngestionLoop.name, () => {
 
       const loop = createLoop({
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get,
             set,
@@ -175,6 +178,7 @@ describe(TokenIngestionLoop.name, () => {
       const loop = createLoop({
         newQueueState: 'staged',
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
             set: mockFn().resolvesTo(undefined),
@@ -211,6 +215,7 @@ describe(TokenIngestionLoop.name, () => {
       })
       const loop = createLoop({
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
@@ -238,6 +243,7 @@ describe(TokenIngestionLoop.name, () => {
       const enqueue = mockFn().resolvesTo(undefined)
       const loop = createLoop({
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo({
               key: 'interop-transfers:lastSerialId',
@@ -296,6 +302,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
@@ -361,6 +368,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           transaction: async (callback) => await callback(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
@@ -439,6 +447,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
@@ -480,6 +489,7 @@ describe(TokenIngestionLoop.name, () => {
 
       const loop = createLoop({
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
@@ -555,6 +565,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
@@ -625,6 +636,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
@@ -709,6 +721,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
@@ -757,6 +770,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           transaction: async (callback) => await callback(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
@@ -858,6 +872,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           transaction: async (callback) => await callback(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
@@ -967,6 +982,7 @@ describe(TokenIngestionLoop.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
             get: mockFn().resolvesTo(undefined),
           }),
@@ -1075,6 +1091,7 @@ function createLoop(deps: {
     ...deps.db,
   })
   const tokenDb = mockObject<TokenDatabase>({
+    tokenDenylist: emptyDenylist(),
     tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
       get: mockFn().resolvesTo(undefined),
     }),
@@ -1230,4 +1247,11 @@ function transfer(
     isProcessed: true,
     ...overrides,
   }
+}
+
+function emptyDenylist() {
+  return mockObject<TokenDatabase['tokenDenylist']>({
+    findByChainAndAddress: mockFn().resolvesTo(undefined),
+    getAll: mockFn().resolvesTo([]),
+  })
 }

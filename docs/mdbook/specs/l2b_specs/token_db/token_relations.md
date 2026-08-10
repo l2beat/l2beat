@@ -49,6 +49,13 @@ It follows that observation recording must never be gated on the
 interpretation being consistent. Any design where a token-level conflict
 can suppress a relation destroys the primary use of relations.
 
+The one exception is the [token denylist](./token_denylist.md): transfers
+touching a denylisted address are not turned into relations. That is not an
+interpretation-consistency gate — it is an explicit human ban declaring the
+address's observations noise, in the same category as the address
+normalization that already drops `0x0`. See the denylist doc for why the
+trade-off is accepted.
+
 ## A transfer has a direction; a relation has roles
 
 This is the second load-bearing distinction, and getting it wrong has

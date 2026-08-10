@@ -1,4 +1,5 @@
 import {
+  BanIcon,
   CirclePlusIcon,
   HistoryIcon,
   LightbulbIcon,
@@ -55,6 +56,11 @@ const items = [
         title: 'Graph',
         url: '/tokens/relations-graph',
         icon: NetworkIcon,
+      },
+      {
+        title: 'Denylist',
+        url: '/tokens/denylist',
+        icon: BanIcon,
       },
     ],
   },

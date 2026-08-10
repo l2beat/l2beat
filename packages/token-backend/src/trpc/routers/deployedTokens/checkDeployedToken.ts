@@ -34,6 +34,21 @@ export async function checkDeployedToken(
       }),
   } = deps
 
+  const denylisted = await tokenDb.tokenDenylist.findByChainAndAddress({
+    chain: input.chain,
+    address: input.address,
+  })
+  if (denylisted !== undefined) {
+    return {
+      error: {
+        type: 'denylisted' as const,
+        message: `This address is denylisted (${denylisted.reason}). Remove the denylist entry before adding it.`,
+      },
+      data: undefined,
+      warnings: [],
+    }
+  }
+
   const result = await tokenDb.deployedToken.findByChainAndAddress({
     chain: input.chain,
     address: input.address,

@@ -146,6 +146,21 @@ export function PlanConfirmationDialog({
             invalidateDeployedTokenQueries()
             navigate('/')
             break
+          case 'DenylistDeployedTokenIntent':
+            toast.success('Address denylisted successfully')
+            invalidateDeployedTokenQueries()
+            queryClient.invalidateQueries(
+              trpc.tokenDenylist.getAll.queryFilter(),
+            )
+            navigate('/tokens/denylist')
+            break
+          case 'RemoveTokenDenylistEntryIntent':
+            toast.success('Denylist entry removed successfully')
+            invalidateDeployedTokenQueries()
+            queryClient.invalidateQueries(
+              trpc.tokenDenylist.getAll.queryFilter(),
+            )
+            break
           case 'UpdateAbstractTokenIntent':
             toast.success('Abstract token updated successfully')
             invalidateAbstractTokenQueries()
@@ -373,6 +388,34 @@ function CommandItem({ command }: { command: Command }) {
             </TooltipContent>
           </Tooltip>{' '}
           will be deleted
+        </li>
+      )
+    case 'AddTokenDenylistEntryCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Denylist entry
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.record, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be added — ingestion will refuse to observe this address
+        </li>
+      )
+    case 'DeleteTokenDenylistEntryCommand':
+      return (
+        <li>
+          <Tooltip>
+            <TooltipTrigger className="underline">
+              Denylist entry
+            </TooltipTrigger>
+            <TooltipContent className="whitespace-pre">
+              {JSON.stringify(command.existing, null, 2)}
+            </TooltipContent>
+          </Tooltip>{' '}
+          will be deleted — the address can be catalogued again
         </li>
       )
     default:

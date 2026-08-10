@@ -53,6 +53,7 @@ export function MissingTokensPage() {
       incomplete: 0,
       ready: 0,
       unsupported: 0,
+      denylisted: 0,
     },
   )
 
@@ -127,6 +128,9 @@ export function MissingTokensPage() {
           </MissingTokenStatusBadge>
           <MissingTokenStatusBadge status="unsupported">
             {statusCounts.unsupported} unsupported
+          </MissingTokenStatusBadge>
+          <MissingTokenStatusBadge status="denylisted">
+            {statusCounts.denylisted} denylisted
           </MissingTokenStatusBadge>
           <div className="ml-auto">
             <MissingTokenStatusGuide />

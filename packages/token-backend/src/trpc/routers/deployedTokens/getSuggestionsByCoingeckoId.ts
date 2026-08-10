@@ -27,12 +27,26 @@ export async function getSuggestionsByCoingeckoId(
   const deployedTokens =
     await tokenDb.deployedToken.getByChainsAndAddresses(chainAddressPairs)
 
+  // Denylisted addresses must not resurface as suggestions — the add form
+  // would refuse them anyway.
+  const denylist = await tokenDb.tokenDenylist.getAll()
+  const denylisted = new Set(
+    denylist.map((entry) => `${entry.chain}:${entry.address.toLowerCase()}`),
+  )
+
   return findUnregisteredPlatformTokens(
     coin.platforms,
     deployedTokens,
     aliasToChain,
-  ).map((suggestion) => ({
-    ...suggestion,
-    isInterop: INTEROP_CHAIN_IDS.has(suggestion.chain),
-  }))
+  )
+    .filter(
+      (suggestion) =>
+        !denylisted.has(
+          `${suggestion.chain}:${suggestion.address.toLowerCase()}`,
+        ),
+    )
+    .map((suggestion) => ({
+      ...suggestion,
+      isInterop: INTEROP_CHAIN_IDS.has(suggestion.chain),
+    }))
 }

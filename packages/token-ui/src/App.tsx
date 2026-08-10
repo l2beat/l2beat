@@ -13,6 +13,7 @@ import { SearchPage } from './pages/search/SearchPage'
 import { AbstractTokenPage } from './pages/tokens/AbstractTokenPage'
 import { AddTokensPage } from './pages/tokens/add-tokens/AddTokensPage'
 import { DeployedTokenPage } from './pages/tokens/DeployedTokenPage'
+import { TokenDenylistPage } from './pages/tokens/TokenDenylistPage'
 import { TokenHistoryPage } from './pages/tokens/TokenHistoryPage'
 import { TokenIngestionQueuePage } from './pages/tokens/TokenIngestionQueuePage'
 import { TokenSuggestionsPage } from './pages/tokens/TokenSuggestionsPage'
@@ -45,6 +46,7 @@ export function App() {
               element={<TokenIngestionQueuePage />}
             />
             <Route path="/tokens/history" element={<TokenHistoryPage />} />
+            <Route path="/tokens/denylist" element={<TokenDenylistPage />} />
             <Route
               path="/tokens/relations-graph"
               element={

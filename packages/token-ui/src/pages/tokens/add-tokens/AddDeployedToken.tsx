@@ -124,7 +124,8 @@ export function AddDeployedToken() {
     if (
       checks.error?.type === 'already-exists' ||
       checks.error?.type === 'not-found-on-coingecko' ||
-      checks.error?.type === 'not-a-token'
+      checks.error?.type === 'not-a-token' ||
+      checks.error?.type === 'denylisted'
     ) {
       form.setError('address', {
         type: checks.error.type,
@@ -185,7 +186,10 @@ export function AddDeployedToken() {
       setDeployedTokenExistsError(form)
       return
     }
-    if (checks?.error?.type === 'not-a-token') {
+    if (
+      checks?.error?.type === 'not-a-token' ||
+      checks?.error?.type === 'denylisted'
+    ) {
       form.setError('address', {
         type: checks.error.type,
         message: checks.error.message,

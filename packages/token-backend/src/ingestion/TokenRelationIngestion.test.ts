@@ -124,6 +124,36 @@ describe(TokenRelationIngestion.name, () => {
     expect(insert).toHaveBeenCalledTimes(1)
   })
 
+  it('skips transfers touching a denylisted address', async () => {
+    // The denylist is not the catalogue: an entry is an explicit human ban,
+    // so this is the one gate relation recording honors. Without it the
+    // denylisted test token's edge would reappear with the next transfer.
+    const insert = mockFn().resolvesTo(undefined)
+
+    const ingestion = createIngestion({
+      getAfterSerialId: mockFn()
+        .resolvesToOnce({
+          latestSerialId: '2',
+          transfers: [
+            transfer({
+              transferId: 'to-denylisted',
+              dstTokenAddress: token('0xccc'),
+            }),
+            transfer({ transferId: 'regular' }),
+          ],
+        })
+        .resolvesToOnce(emptyBatch()),
+      insert,
+      denylisted: [{ chain: 'base', address: token('0xccc') }],
+    })
+
+    await ingestion.runOnce()
+
+    expect(insert).toHaveBeenCalledTimes(1)
+    const inserted = insert.calls[0]?.args[0] as TokenRelationRecord
+    expect(evidenceTransferId(inserted)).toEqual('regular')
+  })
+
   it('records one relation for both observed directions of a lock-and-mint route', async () => {
     // The deposit locks on ethereum and mints on base; the withdrawal burns on
     // base and unlocks on ethereum. Same pair, same locked endpoint, one row.
@@ -550,6 +580,7 @@ function createIngestion(opts: {
   historyInsert?: ReturnType<typeof mockFn>
   set?: ReturnType<typeof mockFn>
   transaction?: ReturnType<typeof mockFn>
+  denylisted?: { chain: string; address: string }[]
 }) {
   const db = mockObject<Database>({
     interopTransfer: mockObject<Database['interopTransfer']>({
@@ -558,6 +589,15 @@ function createIngestion(opts: {
     }),
   })
   const tokenDb = mockObject<TokenDatabase>({
+    tokenDenylist: mockObject<TokenDatabase['tokenDenylist']>({
+      getAll: mockFn().resolvesTo(
+        (opts.denylisted ?? []).map((entry) => ({
+          ...entry,
+          reason: 'test token',
+          createdAt: UnixTime(1),
+        })),
+      ),
+    }),
     transaction: (opts.transaction ??
       (async (callback) => await callback())) as TokenDatabase['transaction'],
     tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({

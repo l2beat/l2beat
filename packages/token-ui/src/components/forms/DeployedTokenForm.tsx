@@ -175,7 +175,8 @@ export function DeployedTokenForm({
   const addressFieldSuccess =
     tokenDetails.data &&
     tokenDetails.data?.error?.type !== 'already-exists' &&
-    tokenDetails.data?.error?.type !== 'not-a-token'
+    tokenDetails.data?.error?.type !== 'not-a-token' &&
+    tokenDetails.data?.error?.type !== 'denylisted'
   const fetchedSymbol = tokenDetails.data?.data?.symbol
   const symbolSource = tokenDetails.data?.data?.symbolSource as
     | keyof typeof symbolSourceToLabel

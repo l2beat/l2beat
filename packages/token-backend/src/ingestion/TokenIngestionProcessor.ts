@@ -145,6 +145,26 @@ export class TokenIngestionProcessor {
       }
     }
 
+    // A denylisted address must never (re-)enter TokenDB: a human explicitly
+    // banned it (e.g. a test token simulating a bridge into a real asset).
+    // Skipping here — before any resolution — is what makes the ban durable
+    // against the enqueue → resolve → write loop.
+    const denylisted =
+      await this.deps.tokenDb.tokenDenylist.findByChainAndAddress(address)
+    if (denylisted) {
+      steps.push({ kind: 'token-denylisted', reason: denylisted.reason })
+      return {
+        id,
+        address,
+        existingDeployedToken: undefined,
+        steps,
+        outcome: {
+          kind: 'skip',
+          reason: `Address is denylisted: ${denylisted.reason}`,
+        },
+      }
+    }
+
     const existing =
       await this.deps.tokenDb.deployedToken.findByChainAndAddress(address)
     steps.push(

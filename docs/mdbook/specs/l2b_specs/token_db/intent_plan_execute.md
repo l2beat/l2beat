@@ -83,7 +83,9 @@ Most planners today are 1:1 — one intent produces one command. Multi-command
 plans are used when the user action has a larger blast radius. For example,
 merging one abstract token into another updates the target token's additional
 CoinGecko entries, reassigns deployed tokens, and then deletes the source
-abstract token. The dialog already knows how to render the full command list.
+abstract token; denylisting an address adds the denylist entry and deletes
+the deployed token and all relations touching it. The dialog already knows
+how to render the full command list.
 
 ### 2. Make concurrent edits safe without manual locking
 

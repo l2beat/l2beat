@@ -1,13 +1,14 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import type { Plan, RouterOutputs } from '@l2beat/token-backend'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { TrashIcon } from 'lucide-react'
+import { BanIcon, TrashIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Badge } from '~/components/core/Badge'
+import { Button } from '~/components/core/Button'
 import {
   Card,
   CardContent,
@@ -15,6 +16,15 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/core/Card'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '~/components/core/Dialog'
+import { Label } from '~/components/core/Label'
 import {
   Table,
   TableBody,
@@ -29,6 +39,12 @@ import {
   TabsList,
   TabsTrigger,
 } from '~/components/core/Tabs'
+import { Textarea } from '~/components/core/TextArea'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/Tooltip'
 import {
   DeployedTokenForm,
   DeployedTokenSchema,
@@ -260,23 +276,37 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
                 </DeployedTokenForm>
               </CardContent>
             </Card>
-            <ButtonWithSpinner
-              variant="destructive"
-              className="mt-2"
-              size="icon"
-              onClick={() => {
-                planMutate({
-                  type: 'DeleteDeployedTokenIntent',
-                  pk: {
-                    address: token.address,
-                    chain: token.chain,
-                  },
-                })
-              }}
-              isLoading={isPending}
-            >
-              <TrashIcon />
-            </ButtonWithSpinner>
+            <div className="mt-2 flex flex-col gap-2">
+              <ButtonWithSpinner
+                variant="destructive"
+                size="icon"
+                onClick={() => {
+                  planMutate({
+                    type: 'DeleteDeployedTokenIntent',
+                    pk: {
+                      address: token.address,
+                      chain: token.chain,
+                    },
+                  })
+                }}
+                isLoading={isPending}
+              >
+                <TrashIcon />
+              </ButtonWithSpinner>
+              <DenylistTokenButton
+                isPending={isPending}
+                onConfirm={(reason) => {
+                  planMutate({
+                    type: 'DenylistDeployedTokenIntent',
+                    pk: {
+                      address: token.address,
+                      chain: token.chain,
+                    },
+                    reason,
+                  })
+                }}
+              />
+            </div>
           </div>
         </TabsContent>
         <TabsContent value="relations">
@@ -292,6 +322,80 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
           </div>
         </TabsContent>
       </Tabs>
+    </>
+  )
+}
+
+/**
+ * Bans the token's address from TokenDB via `DenylistDeployedTokenIntent` —
+ * one plan that adds the denylist entry and deletes the token and all its
+ * relations, so the blast radius shows in the confirmation dialog.
+ */
+function DenylistTokenButton({
+  isPending,
+  onConfirm,
+}: {
+  isPending: boolean
+  onConfirm: (reason: string) => void
+}) {
+  const [open, setOpen] = useState(false)
+  const [reason, setReason] = useState('')
+
+  return (
+    <>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant="destructive"
+            size="icon"
+            onClick={() => setOpen(true)}
+          >
+            <BanIcon />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          Denylist — delete the token and its relations, and ban the address
+          from ever being re-ingested
+        </TooltipContent>
+      </Tooltip>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Denylist this token?</DialogTitle>
+            <DialogDescription>
+              The deployed token and every relation touching its address will be
+              deleted, and ingestion will refuse to observe the address again.
+              Deleted records stay recoverable from history. The ban can be
+              lifted on the Denylist page.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-1">
+            <Label htmlFor="denylist-reason">Reason</Label>
+            <Textarea
+              id="denylist-reason"
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+              placeholder="Test token used by team X"
+            />
+          </div>
+          <DialogFooter>
+            <ButtonWithSpinner
+              variant="destructive"
+              isLoading={isPending}
+              disabled={!reason.trim()}
+              onClick={() => {
+                setOpen(false)
+                onConfirm(reason)
+              }}
+            >
+              Denylist
+            </ButtonWithSpinner>
+            <Button variant="outline" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }

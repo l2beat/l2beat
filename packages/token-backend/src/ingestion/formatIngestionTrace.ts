@@ -37,6 +37,8 @@ export function describeIngestionStep(step: IngestionStep): string {
   switch (step.kind) {
     case 'invalid-address':
       return `Address ${step.rawAddress} could not be normalized.`
+    case 'token-denylisted':
+      return `Address is denylisted (${step.reason}) — ingestion refuses to touch it.`
     case 'existing-token':
       return `Found existing deployed token (abstract: ${step.record.abstractTokenId ?? 'none'}).`
     case 'no-existing-token':

@@ -2,6 +2,7 @@ import type {
   AbstractTokenRecord,
   DeployedTokenRecord,
   TokenDatabase,
+  TokenDenylistEntryRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -356,6 +357,207 @@ describe('planning proof stamping', () => {
   })
 })
 
+describe('DenylistDeployedTokenIntent', () => {
+  it('adds the entry and deletes the token and its relations in one plan', async () => {
+    const existing = deployedRecord('ethereum', '0xaaa', 'USDC01')
+    const relationOne = tokenRelation(existing, {
+      chain: 'arbitrum',
+      address: '0xbbb',
+    })
+    const relationTwo = {
+      ...tokenRelation(existing, { chain: 'base', address: '0xccc' }),
+      plugin: 'otherbridge',
+    }
+    const db = mockDb({
+      existingDeployed: existing,
+      relations: [relationTwo, relationOne],
+    })
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'DenylistDeployedTokenIntent',
+        pk: { chain: existing.chain, address: existing.address },
+        reason: 'test token',
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    assertSuccess(result)
+    expect(result.plan.commands).toEqual([
+      {
+        type: 'AddTokenDenylistEntryCommand',
+        record: {
+          chain: existing.chain,
+          address: existing.address,
+          reason: 'test token',
+        },
+      },
+      {
+        type: 'DeleteDeployedTokenCommand',
+        pk: { chain: existing.chain, address: existing.address },
+        existing,
+      },
+      // Relations sorted deterministically (plugin first): otherbridge before
+      // superbridge.
+      {
+        type: 'DeleteTokenRelationCommand',
+        pk: relationPk(relationTwo),
+        existing: relationTwo,
+      },
+      {
+        type: 'DeleteTokenRelationCommand',
+        pk: relationPk(relationOne),
+        existing: relationOne,
+      },
+    ])
+  })
+
+  it('denylists an uncatalogued address with no relations', async () => {
+    const db = mockDb({})
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'DenylistDeployedTokenIntent',
+        pk: { chain: 'arbitrum', address: '0xAAA' },
+        reason: 'test token',
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    assertSuccess(result)
+    expect(result.plan.commands).toEqual([
+      {
+        type: 'AddTokenDenylistEntryCommand',
+        record: { chain: 'arbitrum', address: '0xaaa', reason: 'test token' },
+      },
+    ])
+  })
+
+  it('fails when the address is already denylisted', async () => {
+    const db = mockDb({
+      denylisted: [
+        {
+          chain: 'arbitrum',
+          address: '0xaaa',
+          reason: 'test token',
+          createdAt: 1,
+        },
+      ],
+    })
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'DenylistDeployedTokenIntent',
+        pk: { chain: 'arbitrum', address: '0xAAA' },
+        reason: 'again',
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    expect(result).toEqual({
+      outcome: 'error',
+      error: 'arbitrum+0xaaa is already denylisted (test token)',
+    })
+  })
+
+  it('fails without a reason', async () => {
+    const db = mockDb({})
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'DenylistDeployedTokenIntent',
+        pk: { chain: 'arbitrum', address: '0xaaa' },
+        reason: '  ',
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    expect(result).toEqual({
+      outcome: 'error',
+      error: 'A denylist entry requires a reason',
+    })
+  })
+})
+
+describe('RemoveTokenDenylistEntryIntent', () => {
+  it('deletes an existing entry', async () => {
+    const entry = {
+      chain: 'arbitrum',
+      address: '0xaaa',
+      reason: 'test token',
+      createdAt: 1,
+    }
+    const db = mockDb({ denylisted: [entry] })
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'RemoveTokenDenylistEntryIntent',
+        pk: { chain: 'arbitrum', address: '0xaaa' },
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    assertSuccess(result)
+    expect(result.plan.commands).toEqual([
+      {
+        type: 'DeleteTokenDenylistEntryCommand',
+        pk: { chain: 'arbitrum', address: '0xaaa' },
+        existing: entry,
+      },
+    ])
+  })
+
+  it('fails when the entry does not exist', async () => {
+    const db = mockDb({})
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'RemoveTokenDenylistEntryIntent',
+        pk: { chain: 'arbitrum', address: '0xaaa' },
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    expect(result).toEqual({
+      outcome: 'error',
+      error: 'arbitrum+0xaaa is not denylisted',
+    })
+  })
+})
+
+describe('AddDeployedTokenIntent denylist gate', () => {
+  it('refuses to add a denylisted address', async () => {
+    const record = deployedRecord('ethereum', '0xaaa', 'USDC01')
+    const db = mockDb({
+      denylisted: [
+        {
+          chain: record.chain,
+          address: record.address,
+          reason: 'test token',
+          createdAt: 1,
+        },
+      ],
+    })
+
+    const result = await generatePlan(
+      db,
+      { type: 'AddDeployedTokenIntent', record },
+      { user: USER, skipLogs: true },
+    )
+
+    expect(result).toEqual({
+      outcome: 'error',
+      error: `DeployedToken ${record.chain}+${record.address} is denylisted (test token) — remove the denylist entry first`,
+    })
+  })
+})
+
 describe('MergeAbstractTokenIntent', () => {
   it('copies source CoinGecko entries, reassigns deployed tokens, and deletes source', async () => {
     const source = abstractRecord('SOURCE', 'USDC', {
@@ -538,6 +740,8 @@ function mockDb(opts: {
   deployedTokens?: DeployedTokenRecord[]
   deployedByPk?: Record<string, DeployedTokenRecord>
   existingRelation?: ReturnType<typeof tokenRelation>
+  relations?: ReturnType<typeof tokenRelation>[]
+  denylisted?: TokenDenylistEntryRecord[]
 }): TokenDatabase {
   const findDeployed = mockFn().executes(
     async (pk: { chain: string; address: string }) => {
@@ -568,6 +772,17 @@ function mockDb(opts: {
     }),
     tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
       findByPrimaryKey: mockFn().resolvesTo(opts.existingRelation),
+      getRelationsFor: mockFn().resolvesTo(opts.relations ?? []),
+    }),
+    tokenDenylist: mockObject<TokenDatabase['tokenDenylist']>({
+      findByChainAndAddress: mockFn().executes(
+        async (pk: { chain: string; address: string }) =>
+          opts.denylisted?.find(
+            (entry) =>
+              entry.chain === pk.chain &&
+              entry.address === pk.address.toLowerCase(),
+          ),
+      ),
     }),
   })
 }

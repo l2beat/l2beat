@@ -520,6 +520,15 @@ model DeployedToken {
   @@index([abstractTokenId])
 }
 
+model TokenDenylist {
+  chain     String   @db.VarChar(32)
+  address   String   @db.VarChar(255)
+  reason    String   @db.Text
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+
+  @@id([chain, address])
+}
+
 model TokenIngestionQueue {
   chain     String   @db.VarChar(32)
   address   String   @db.VarChar(255)

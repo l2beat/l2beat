@@ -120,6 +120,10 @@ export type {
   TokenDbHistorySource,
 } from './repositories/TokenDbHistoryRepository'
 export type { TokenDbSettingRecord } from './repositories/TokenDbSettingRepository'
+export type {
+  TokenDenylistEntryInsert,
+  TokenDenylistEntryRecord,
+} from './repositories/TokenDenylistRepository'
 export type { TokenFactInputRecord } from './repositories/TokenFactInputRepository'
 export type {
   TokenIngestionQueueAddress,

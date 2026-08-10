@@ -14,6 +14,7 @@ export type MissingTokenDbStatus =
   | 'incomplete'
   | 'ready'
   | 'unsupported'
+  | 'denylisted'
 
 export interface MissingTokenRecord extends InteropMissingTokenInfo {
   tokenDbStatus: MissingTokenDbStatus
@@ -138,11 +139,21 @@ export async function getMissingTokenStatuses(
     ]),
   )
 
+  // A denylisted token is deliberately absent from TokenDB — reporting it as
+  // "missing" would invite someone to re-add it.
+  const denylist = await deps.tokenDbClient.tokenDenylist.getAll.query()
+  const denylisted = new Set(
+    denylist.map((entry) => DeployedTokenId.from(entry.chain, entry.address)),
+  )
+
   for (const [key, deployedTokenId] of deployedTokenIdsByKey) {
     const tokenInfo = tokenInfoById.get(deployedTokenId)
 
     if (!tokenInfo) {
-      statuses.set(key, 'missing')
+      statuses.set(
+        key,
+        denylisted.has(deployedTokenId) ? 'denylisted' : 'missing',
+      )
       continue
     }
 

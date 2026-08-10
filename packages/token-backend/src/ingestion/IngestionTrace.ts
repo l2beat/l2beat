@@ -22,6 +22,7 @@ export type AbstractTokenRef = { id: string; symbol: string }
 
 export type IngestionStep =
   | { kind: 'invalid-address'; rawAddress: string }
+  | { kind: 'token-denylisted'; reason: string }
   | { kind: 'existing-token'; record: DeployedTokenRecord }
   | { kind: 'no-existing-token' }
   | {

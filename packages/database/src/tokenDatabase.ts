@@ -6,6 +6,7 @@ import { ChainRepository } from './repositories/ChainRepository'
 import { DeployedTokenRepository } from './repositories/DeployedTokenRepository'
 import { TokenDbHistoryRepository } from './repositories/TokenDbHistoryRepository'
 import { TokenDbSettingRepository } from './repositories/TokenDbSettingRepository'
+import { TokenDenylistRepository } from './repositories/TokenDenylistRepository'
 import { TokenIngestionQueueRepository } from './repositories/TokenIngestionQueueRepository'
 import { TokenRelationRepository } from './repositories/TokenRelationRepository'
 import { getDatabaseStats } from './utils/getDatabaseStats'
@@ -22,6 +23,7 @@ export function createTokenDatabase(config?: PoolConfig & { log?: LogConfig }) {
     abstractToken: new AbstractTokenRepository(db),
     deployedToken: new DeployedTokenRepository(db),
     tokenRelation: new TokenRelationRepository(db),
+    tokenDenylist: new TokenDenylistRepository(db),
     tokenDbHistory: new TokenDbHistoryRepository(db),
     tokenDbSettings: new TokenDbSettingRepository(db),
     tokenIngestionQueue: new TokenIngestionQueueRepository(db),

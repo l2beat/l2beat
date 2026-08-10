@@ -14,8 +14,10 @@ import {
   type DeleteAbstractTokenIntent,
   type DeleteDeployedTokenIntent,
   type DeleteTokenRelationIntent,
+  type DenylistDeployedTokenIntent,
   Intent,
   type MergeAbstractTokenIntent,
+  type RemoveTokenDenylistEntryIntent,
   type UpdateAbstractTokenIntent,
   type UpdateDeployedTokenIntent,
   type UpdateTokenRelationIntent,
@@ -96,6 +98,12 @@ export async function generatePlan(
 
       case 'DeleteDeployedTokenIntent':
         commands = await planDeleteDeployedToken(db, intent)
+        break
+      case 'DenylistDeployedTokenIntent':
+        commands = await planDenylistDeployedToken(db, intent)
+        break
+      case 'RemoveTokenDenylistEntryIntent':
+        commands = await planRemoveTokenDenylistEntry(db, intent)
         break
       case 'AddTokenRelationIntent':
         commands = await planAddTokenRelation(db, intent)
@@ -279,6 +287,12 @@ async function planAddDeployedToken(
   opts: PlanOptions,
 ): Promise<Command[]> {
   const record = intent.record
+  const denylisted = await db.tokenDenylist.findByChainAndAddress(record)
+  if (denylisted !== undefined) {
+    throw new PlanningError(
+      `DeployedToken ${record.chain}+${record.address} is denylisted (${denylisted.reason}) — remove the denylist entry first`,
+    )
+  }
   const existing = await db.deployedToken.findByChainAndAddress(record)
   if (existing !== undefined) {
     throw new PlanningError(
@@ -335,6 +349,96 @@ async function planDeleteDeployedToken(
       existing,
     },
   ]
+}
+
+/**
+ * One confirmable ban: add the denylist entry and clean up everything TokenDB
+ * currently holds about the address. The deployed token (when catalogued) and
+ * all relations touching the address are deleted in the same plan, so the
+ * user sees the full blast radius before confirming and no half-state is
+ * reachable. All deleted records land in `TokenDbHistory` via the executed
+ * commands, from which they can be reconstructed if the ban was a mistake.
+ *
+ * The token does not have to exist — an uncatalogued address observed only in
+ * relations can be denylisted too.
+ */
+async function planDenylistDeployedToken(
+  db: TokenDatabase,
+  intent: DenylistDeployedTokenIntent,
+): Promise<Command[]> {
+  if (intent.reason.trim() === '') {
+    throw new PlanningError('A denylist entry requires a reason')
+  }
+  const pk = {
+    chain: intent.pk.chain,
+    address: intent.pk.address.toLowerCase(),
+  }
+
+  const [alreadyDenylisted, existingToken, relations] = await Promise.all([
+    db.tokenDenylist.findByChainAndAddress(pk),
+    db.deployedToken.findByChainAndAddress(pk),
+    db.tokenRelation.getRelationsFor(pk),
+  ])
+  if (alreadyDenylisted !== undefined) {
+    throw new PlanningError(
+      `${pk.chain}+${pk.address} is already denylisted (${alreadyDenylisted.reason})`,
+    )
+  }
+
+  const commands: Command[] = [
+    {
+      type: 'AddTokenDenylistEntryCommand',
+      record: { ...pk, reason: intent.reason },
+    },
+  ]
+  if (existingToken !== undefined) {
+    commands.push({
+      type: 'DeleteDeployedTokenCommand',
+      pk,
+      existing: existingToken,
+    })
+  }
+  for (const relation of [...relations].sort(compareTokenRelations)) {
+    commands.push({
+      type: 'DeleteTokenRelationCommand',
+      pk: toTokenRelationPrimaryKey(relation),
+      existing: relation,
+    })
+  }
+  return commands
+}
+
+async function planRemoveTokenDenylistEntry(
+  db: TokenDatabase,
+  intent: RemoveTokenDenylistEntryIntent,
+): Promise<Command[]> {
+  const existing = await db.tokenDenylist.findByChainAndAddress(intent.pk)
+  if (existing === undefined) {
+    throw new PlanningError(
+      `${intent.pk.chain}+${intent.pk.address} is not denylisted`,
+    )
+  }
+  // Removal only lifts the ban. The deleted token and relations are not
+  // restored automatically — ingestion re-creates them from live transfers,
+  // or a human re-adds them from history.
+  return [
+    {
+      type: 'DeleteTokenDenylistEntryCommand',
+      pk: { chain: existing.chain, address: existing.address },
+      existing,
+    },
+  ]
+}
+
+function compareTokenRelations(a: TokenRelationRecord, b: TokenRelationRecord) {
+  return (
+    a.plugin.localeCompare(b.plugin) ||
+    a.bridgeType.localeCompare(b.bridgeType) ||
+    a.tokenAChain.localeCompare(b.tokenAChain) ||
+    a.tokenAAddress.localeCompare(b.tokenAAddress) ||
+    a.tokenBChain.localeCompare(b.tokenBChain) ||
+    a.tokenBAddress.localeCompare(b.tokenBAddress)
+  )
 }
 
 function mergeAdditionalCoingeckoEntries(

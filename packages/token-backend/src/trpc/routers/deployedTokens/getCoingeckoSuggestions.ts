@@ -20,15 +20,21 @@ export async function getCoingeckoSuggestions(
   coingeckoClient: CoingeckoClient,
   tokenDb: TokenDatabase,
 ): Promise<CoingeckoSuggestion[]> {
-  const [abstractTokens, deployedTokens, chains, coins] = await Promise.all([
-    tokenDb.abstractToken.getAll(),
-    tokenDb.deployedToken.getAll(),
-    tokenDb.chain.getAll(),
-    coingeckoClient.getCoinList({ includePlatform: true }),
-  ])
+  const [abstractTokens, deployedTokens, denylist, chains, coins] =
+    await Promise.all([
+      tokenDb.abstractToken.getAll(),
+      tokenDb.deployedToken.getAll(),
+      tokenDb.tokenDenylist.getAll(),
+      tokenDb.chain.getAll(),
+      coingeckoClient.getCoinList({ includePlatform: true }),
+    ])
 
+  // Denylisted addresses count as known: suggesting one would just funnel the
+  // user into the add form's refusal.
   const deployedTokenSet = new Set(
-    deployedTokens.map((t) => `${t.chain}:${t.address.toLowerCase()}`),
+    [...deployedTokens, ...denylist].map(
+      (t) => `${t.chain}:${t.address.toLowerCase()}`,
+    ),
   )
   const aliasToChain = buildAliasToChainMap(chains)
   const coinsById = new Map(coins.map((coin) => [coin.id, coin]))

@@ -22,6 +22,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),
             getByPrimaryKeys,
@@ -75,6 +76,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(existing),
             getByPrimaryKeys: mockFn().resolvesTo([]),
@@ -97,6 +99,53 @@ describe(TokenIngestionProcessor.name, () => {
 
       expect(trace.existingDeployedToken).toEqual(existing)
       expect(trace.outcome).toEqual({ kind: 'noop', deployedToken: existing })
+    })
+
+    it('short-circuits to skip for a denylisted address', async () => {
+      const address = token('ethereum', '0xaaa')
+      const findByChainAndAddress = mockFn().resolvesTo(undefined)
+      const getByPrimaryKeys = mockFn().resolvesTo([])
+
+      const processor = createProcessor({
+        tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: mockObject<TokenDatabase['tokenDenylist']>({
+            findByChainAndAddress: mockFn().resolvesTo({
+              ...address,
+              reason: 'test token',
+              createdAt: UnixTime(1),
+            }),
+          }),
+          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+            findByChainAndAddress,
+            getByPrimaryKeys,
+          }),
+        }),
+      })
+
+      const trace = await processor.plan(
+        queueEntry(address),
+        buildInteropTransferIndex([
+          route({
+            srcChain: address.chain,
+            srcTokenAddress: `0x${address.address.slice(2).padStart(64, '0')}`,
+            dstChain: 'base',
+            dstTokenAddress: Address32.ZERO,
+            bridgeType: 'lockAndMint',
+          }),
+        ]),
+      )
+
+      expect(trace.steps).toEqual([
+        { kind: 'token-denylisted', reason: 'test token' },
+      ])
+      expect(trace.outcome).toEqual({
+        kind: 'skip',
+        reason: 'Address is denylisted: test token',
+      })
+      // The gate fires before any resolution work: no catalogue lookup, no
+      // transfer-evidence lookup.
+      expect(findByChainAndAddress).not.toHaveBeenCalled()
+      expect(getByPrimaryKeys).not.toHaveBeenCalled()
     })
 
     it('returns pending-insert without fetching deployed-token facts for a new address', async () => {
@@ -129,6 +178,7 @@ describe(TokenIngestionProcessor.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),
             getByPrimaryKeys: mockFn().resolvesTo([
@@ -202,6 +252,7 @@ describe(TokenIngestionProcessor.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),
             getByPrimaryKeys: mockFn().resolvesTo([
@@ -281,6 +332,7 @@ describe(TokenIngestionProcessor.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo({
               ...address,
@@ -355,6 +407,7 @@ describe(TokenIngestionProcessor.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(existing),
             getByPrimaryKeys: mockFn().resolvesTo([
@@ -407,6 +460,7 @@ describe(TokenIngestionProcessor.name, () => {
           }),
         }),
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo({
               ...address,
@@ -466,6 +520,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
             findByChainAndAddress: mockFn().resolvesTo(undefined),
             getByPrimaryKeys: mockFn().resolvesTo([]),
@@ -549,6 +604,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           chain: mockObject<TokenDatabase['chain']>({
             findByName: mockFn().resolvesTo({
               name: 'ethereum',
@@ -616,6 +672,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           chain: mockObject<TokenDatabase['chain']>({
             findByName: mockFn().resolvesTo({
               name: 'ethereum',
@@ -675,6 +732,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           chain: mockObject<TokenDatabase['chain']>({
             findByName: mockFn().resolvesTo({
               name: 'ethereum',
@@ -753,6 +811,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           chain: mockObject<TokenDatabase['chain']>({
             findByName: mockFn().resolvesTo({
               name: 'ethereum',
@@ -827,6 +886,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           chain: mockObject<TokenDatabase['chain']>({
             findByName: mockFn().resolvesTo({
               name: 'ethereum',
@@ -881,6 +941,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           chain: mockObject<TokenDatabase['chain']>({
             findByName: mockFn().resolvesTo({
               name: 'ethereum',
@@ -939,6 +1000,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           chain: mockObject<TokenDatabase['chain']>({
             findByName: mockFn().resolvesTo({
               name: 'ethereum',
@@ -1006,6 +1068,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           abstractToken: mockObject<TokenDatabase['abstractToken']>({
             findById: mockFn().resolvesTo(undefined),
           }),
@@ -1066,6 +1129,7 @@ describe(TokenIngestionProcessor.name, () => {
       const address = token('ethereum', '0xaaa')
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           chain: mockObject<TokenDatabase['chain']>({
             findByName: mockFn().resolvesTo({
               name: 'ethereum',
@@ -1119,6 +1183,7 @@ describe(TokenIngestionProcessor.name, () => {
 
       const processor = createProcessor({
         tokenDb: mockObject<TokenDatabase>({
+          tokenDenylist: emptyDenylist(),
           transaction: async (callback) => await callback(),
           deployedToken: mockObject<TokenDatabase['deployedToken']>({
             insert,
@@ -1267,7 +1332,9 @@ function createProcessor(deps: {
 }) {
   return new TokenIngestionProcessor({
     db: deps.db ?? mockObject<Database>({}),
-    tokenDb: deps.tokenDb ?? mockObject<TokenDatabase>({}),
+    tokenDb:
+      deps.tokenDb ??
+      mockObject<TokenDatabase>({ tokenDenylist: emptyDenylist() }),
     coingeckoClient: deps.coingeckoClient ?? mockObject<CoingeckoClient>({}),
     etherscanApiKey: undefined,
     fetchDeployedTokenFacts: deps.fetchDeployedTokenFacts,
@@ -1376,4 +1443,11 @@ function transfer(
     isProcessed: true,
     ...overrides,
   }
+}
+
+function emptyDenylist() {
+  return mockObject<TokenDatabase['tokenDenylist']>({
+    findByChainAndAddress: mockFn().resolvesTo(undefined),
+    getAll: mockFn().resolvesTo([]),
+  })
 }

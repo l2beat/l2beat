@@ -39,9 +39,10 @@ export async function getSuggestionsByPartialTransfers(
     return []
   }
 
-  const [abstractTokens, deployedTokens, chains] = await Promise.all([
+  const [abstractTokens, deployedTokens, denylist, chains] = await Promise.all([
     tokenDb.abstractToken.getAll(),
     tokenDb.deployedToken.getAll(),
+    tokenDb.tokenDenylist.getAll(),
     tokenDb.chain.getAll(),
   ])
 
@@ -50,6 +51,9 @@ export async function getSuggestionsByPartialTransfers(
     abstractTokens,
     deployedTokens,
     chains,
+    // Denylisted addresses must not resurface as suggestions — the add form
+    // would refuse them anyway.
+    new Set(denylist.map((e) => `${e.chain}:${e.address.toLowerCase()}`)),
   )
 }
 
@@ -68,11 +72,14 @@ export async function getSuggestionsByPartialTransfersForToken(
 
   const abstractTokens = await tokenDb.abstractToken.getAll()
 
+  // No denylist filter: `checkDeployedToken` refuses denylisted addresses
+  // before ever asking for suggestions for one.
   return buildTransferSuggestionMap(
     transfersForSuggestions,
     abstractTokens,
     [],
     [],
+    new Set(),
   )
 }
 
@@ -89,6 +96,7 @@ function buildTransferSuggestionMap(
   abstractTokens: AbstractTokenRecord[],
   deployedTokens: DeployedTokenRecord[],
   chains: ChainRecord[],
+  denylisted: Set<string>,
 ): TransferSuggestion[] {
   const map = new Map<string, TransferSuggestion>()
   const abstractTokenMap = Object.fromEntries(
@@ -124,7 +132,7 @@ function buildTransferSuggestionMap(
       : tokenAddress
     const deployedToken = deployedTokenMap[`${chain}:${address.toLowerCase()}`]
 
-    if (deployedToken) {
+    if (deployedToken || denylisted.has(`${chain}:${address.toLowerCase()}`)) {
       return
     }
 

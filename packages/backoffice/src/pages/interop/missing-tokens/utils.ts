@@ -6,6 +6,7 @@ export const MISSING_TOKEN_STATUSES: MissingTokenStatus[] = [
   'incomplete',
   'ready',
   'unsupported',
+  'denylisted',
 ]
 
 export function getMissingTokenAddressDisplay(address: string) {
@@ -90,6 +91,7 @@ export function getMissingTokenAction(options: {
       return href ? { href, label: 'Open token' } : undefined
     }
     case 'unsupported':
+    case 'denylisted':
       return undefined
   }
 }
@@ -127,6 +129,14 @@ export function getMissingTokenStatusMeta(status: MissingTokenStatus) {
         label: 'Unsupported',
         description:
           'This chain and address cannot be resolved to a supported TokenDB deployed token, so there is no action or requeue path here.',
+        badgeVariant: 'secondary' as const,
+        badgeClassName: 'bg-muted text-muted-foreground hover:bg-muted',
+      }
+    case 'denylisted':
+      return {
+        label: 'Denylisted',
+        description:
+          'A human banned this address from TokenDB (e.g. a test token). Ingestion refuses to observe it — do not re-add it. Manage entries on the token-UI denylist page.',
         badgeVariant: 'secondary' as const,
         badgeClassName: 'bg-muted text-muted-foreground hover:bg-muted',
       }

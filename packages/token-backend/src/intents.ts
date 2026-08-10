@@ -67,6 +67,31 @@ export const DeleteDeployedTokenIntent = v.object({
   pk: DeployedTokenPrimaryKey,
 })
 
+/**
+ * Ban an address from TokenDB in one confirmable step: add the denylist
+ * entry and, when present, delete the catalogued deployed token and every
+ * relation touching the address. One intent rather than separate delete +
+ * denylist actions, so no half-state is reachable (deleted but not
+ * denylisted → recreated by ingestion; denylisted but not deleted → stale
+ * catalogue entry).
+ */
+export type DenylistDeployedTokenIntent = v.infer<
+  typeof DenylistDeployedTokenIntent
+>
+export const DenylistDeployedTokenIntent = v.object({
+  type: v.literal('DenylistDeployedTokenIntent'),
+  pk: DeployedTokenPrimaryKey,
+  reason: v.string(),
+})
+
+export type RemoveTokenDenylistEntryIntent = v.infer<
+  typeof RemoveTokenDenylistEntryIntent
+>
+export const RemoveTokenDenylistEntryIntent = v.object({
+  type: v.literal('RemoveTokenDenylistEntryIntent'),
+  pk: DeployedTokenPrimaryKey,
+})
+
 export type AddTokenRelationIntent = v.infer<typeof AddTokenRelationIntent>
 export const AddTokenRelationIntent = v.object({
   type: v.literal('AddTokenRelationIntent'),
@@ -99,6 +124,8 @@ export const Intent = v.union([
   AddDeployedTokenIntent,
   UpdateDeployedTokenIntent,
   DeleteDeployedTokenIntent,
+  DenylistDeployedTokenIntent,
+  RemoveTokenDenylistEntryIntent,
   AddTokenRelationIntent,
   UpdateTokenRelationIntent,
   DeleteTokenRelationIntent,

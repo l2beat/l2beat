@@ -118,6 +118,12 @@ async function executeCommand(tokenDb: TokenDatabase, command: Command) {
     case 'DeleteTokenRelationCommand':
       await tokenDb.tokenRelation.deleteByPrimaryKey(command.pk)
       break
+    case 'AddTokenDenylistEntryCommand':
+      await tokenDb.tokenDenylist.insert(command.record)
+      break
+    case 'DeleteTokenDenylistEntryCommand':
+      await tokenDb.tokenDenylist.deleteByPrimaryKey(command.pk)
+      break
     default:
       assertUnreachable(command)
   }

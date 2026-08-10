@@ -55,6 +55,14 @@ export class TokenRelationIngestion {
     )
     let lastSerialId = setting?.value ?? '0'
 
+    // Relations are recorded without consulting the token *catalogue* — but
+    // the denylist is not the catalogue. An entry is an explicit human ban
+    // ("this address is not a real asset; refuse to observe it"), the same
+    // category as the address normalization that already drops 0x0. Without
+    // this, a denylisted test token's edge would reappear on the graph with
+    // the next test transfer.
+    const denylisted = tokenKeySet(await this.tokenDb.tokenDenylist.getAll())
+
     for (let page = 0; page < MAX_PAGES_PER_RUN; page++) {
       const batch = await this.db.interopTransfer.getAfterSerialId(
         lastSerialId,
@@ -64,7 +72,7 @@ export class TokenRelationIngestion {
         break
       }
 
-      const outcome = await this.ingestBatch(batch.transfers)
+      const outcome = await this.ingestBatch(batch.transfers, denylisted)
       inserted += outcome.inserted
       resolved += outcome.resolved
       scanned += batch.transfers.length
@@ -91,6 +99,7 @@ export class TokenRelationIngestion {
 
   private async ingestBatch(
     transfers: InteropTransferRecord[],
+    denylisted: Set<string>,
   ): Promise<{ inserted: number; resolved: number }> {
     const candidates = new Map<
       string,
@@ -98,6 +107,9 @@ export class TokenRelationIngestion {
     >()
     for (const transfer of transfers) {
       const route = tokenRouteFromTransfer(transfer)
+      if (route && hasDenylistedEndpoint(route, denylisted)) {
+        continue
+      }
       if (route && !candidates.has(relationKey(route))) {
         candidates.set(relationKey(route), { route, transfer })
       }
@@ -242,6 +254,26 @@ function relationKey(relation: TokenRelationRoute): string {
     relation.plugin,
     relation.bridgeType,
   ].join(':')
+}
+
+function tokenKeySet(
+  entries: { chain: string; address: string }[],
+): Set<string> {
+  return new Set(
+    entries.map((entry) => `${entry.chain}:${entry.address.toLowerCase()}`),
+  )
+}
+
+function hasDenylistedEndpoint(
+  route: TokenRelationRoute,
+  denylisted: Set<string>,
+): boolean {
+  // Route endpoints are already normalized (lowercase) by
+  // `normalizeTransferSide` / `normalizeTokenRelation`.
+  return (
+    denylisted.has(`${route.tokenAChain}:${route.tokenAAddress}`) ||
+    denylisted.has(`${route.tokenBChain}:${route.tokenBAddress}`)
+  )
 }
 
 function formatRelationLog(relation: TokenRelationRoute): string {

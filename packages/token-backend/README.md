@@ -52,3 +52,7 @@ These documents MUST be kept up to date when their subjects change:
   why duplicate abstract tokens arise, why an abstract token keeps
   multiple CoinGecko entries, and how merging resolves relation
   conflicts.
+- [Token denylist](../../docs/mdbook/specs/l2b_specs/token_db/token_denylist.md) —
+  banning bogus/test token addresses from TokenDB: why a denylist at the
+  ingestion boundary beats a flag filtered on every read, and which entry
+  points consult it.

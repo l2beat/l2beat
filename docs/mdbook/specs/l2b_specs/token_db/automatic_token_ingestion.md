@@ -80,6 +80,12 @@ The address might be brand new, already in TokenDB, or already have an
 abstract token. The queue does not pre-judge — it lets the processing
 logic figure out what, if anything, needs to change.
 
+One check runs before any of that: an address on the
+[token denylist](./token_denylist.md) short-circuits to a terminal `skip`
+with a `token-denylisted` trace step — no resolution, no write, no
+propagation. This is what keeps a human ban durable against the
+enqueue → resolve → write loop.
+
 This framing is load-bearing: every external trigger collapses into the
 same act (enqueue). Conflicts in already-resolved tokens, propagation
 between linked tokens, manual retries — all of them work because the

@@ -6,6 +6,7 @@ import { deployedTokensRouter } from './routers/deployedTokens'
 import { planRouter } from './routers/plan'
 import { searchRouter } from './routers/search'
 import { tokenDbHistoryRouter } from './routers/tokenDbHistory'
+import { tokenDenylistRouter } from './routers/tokenDenylist'
 import { tokenIngestionQueueRouter } from './routers/tokenIngestionQueue'
 import { router } from './trpc'
 
@@ -25,6 +26,7 @@ export function createAppRouter({
     deployedTokens: deployedTokensRouter({ coingeckoClient, etherscanApiKey }),
     search: searchRouter,
     tokenDbHistory: tokenDbHistoryRouter,
+    tokenDenylist: tokenDenylistRouter,
     tokenIngestionQueue: tokenIngestionQueueRouter,
   })
 }

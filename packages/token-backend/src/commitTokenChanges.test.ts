@@ -27,10 +27,15 @@ describe(commitTokenChanges.name, () => {
       updateByPrimaryKey: mockFn().resolvesTo(undefined),
       deleteByPrimaryKey: mockFn().resolvesTo(undefined),
     })
+    const tokenDenylist = mockObject<TokenDatabase['tokenDenylist']>({
+      insert: mockFn().resolvesTo(undefined),
+      deleteByPrimaryKey: mockFn().resolvesTo(undefined),
+    })
     const tokenDb = mockObject<TokenDatabase>({
       abstractToken,
       deployedToken,
       tokenRelation,
+      tokenDenylist,
       tokenDbHistory: mockHistory(),
     })
 
@@ -78,6 +83,24 @@ describe(commitTokenChanges.name, () => {
         pk: relationPk(relation),
         existing: relation,
       },
+      {
+        type: 'AddTokenDenylistEntryCommand',
+        record: {
+          chain: deployed.chain,
+          address: deployed.address,
+          reason: 'test token',
+        },
+      },
+      {
+        type: 'DeleteTokenDenylistEntryCommand',
+        pk: { chain: deployed.chain, address: deployed.address },
+        existing: {
+          chain: deployed.chain,
+          address: deployed.address,
+          reason: 'test token',
+          createdAt: 1,
+        },
+      },
     ]
 
     await commitTokenChanges(tokenDb, commands, {
@@ -108,6 +131,15 @@ describe(commitTokenChanges.name, () => {
     expect(tokenRelation.deleteByPrimaryKey).toHaveBeenOnlyCalledWith(
       relationPk(relation),
     )
+    expect(tokenDenylist.insert).toHaveBeenOnlyCalledWith({
+      chain: deployed.chain,
+      address: deployed.address,
+      reason: 'test token',
+    })
+    expect(tokenDenylist.deleteByPrimaryKey).toHaveBeenOnlyCalledWith({
+      chain: deployed.chain,
+      address: deployed.address,
+    })
   })
 
   it('passes deployed-token commands through verbatim, including any proof field', async () => {

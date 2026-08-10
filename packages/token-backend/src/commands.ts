@@ -9,6 +9,10 @@ import {
   DeployedTokenUpdateable,
 } from './schemas/DeployedToken'
 import {
+  TokenDenylistEntryInsert,
+  TokenDenylistEntryRecord,
+} from './schemas/TokenDenylist'
+import {
   TokenRelationPrimaryKey,
   TokenRelationRecord,
   TokenRelationUpdateable,
@@ -89,6 +93,23 @@ export const DeleteTokenRelationCommand = v.object({
   existing: TokenRelationRecord,
 })
 
+export type AddTokenDenylistEntryCommand = v.infer<
+  typeof AddTokenDenylistEntryCommand
+>
+export const AddTokenDenylistEntryCommand = v.object({
+  type: v.literal('AddTokenDenylistEntryCommand'),
+  record: TokenDenylistEntryInsert,
+})
+
+export type DeleteTokenDenylistEntryCommand = v.infer<
+  typeof DeleteTokenDenylistEntryCommand
+>
+export const DeleteTokenDenylistEntryCommand = v.object({
+  type: v.literal('DeleteTokenDenylistEntryCommand'),
+  pk: DeployedTokenPrimaryKey,
+  existing: TokenDenylistEntryRecord,
+})
+
 export type Command = v.infer<typeof Command>
 export const Command = v.union([
   AddAbstractTokenCommand,
@@ -100,4 +121,6 @@ export const Command = v.union([
   AddTokenRelationCommand,
   UpdateTokenRelationCommand,
   DeleteTokenRelationCommand,
+  AddTokenDenylistEntryCommand,
+  DeleteTokenDenylistEntryCommand,
 ])
