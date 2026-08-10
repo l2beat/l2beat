@@ -56,7 +56,7 @@ export function HomeTopChainsCard({ entries, tvsData }: Props) {
   return (
     <HomeCard className="flex h-full min-w-0 flex-col">
       <HomeCardHeader
-        title="Chains"
+        title="Layer 2s"
         badge={<TopNBadge n={5} />}
         href="/scaling/summary"
         linkLabel="View all"
