@@ -111,7 +111,7 @@ function ResolveSymbolConflictDialogContent({
         : (customSymbol ?? symbolConflict?.coingeckoSymbol)
 
   async function resolve() {
-    if (!symbolConflict || !chosenSymbol) return
+    if (isResolving || !symbolConflict || !chosenSymbol) return
     const symbol = chosenSymbol.trim()
     if (symbol.length === 0) return
 
@@ -264,6 +264,7 @@ function ResolveSymbolConflictDialogContent({
             <ButtonWithSpinner
               isLoading={isResolving}
               disabled={
+                isResolving ||
                 !chosenSymbol ||
                 chosenSymbol.trim().length === 0 ||
                 checks.isLoading
