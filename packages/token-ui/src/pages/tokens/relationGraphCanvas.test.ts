@@ -35,6 +35,30 @@ describe(drawRelationGraph.name, () => {
       { text: 'unichain', x: 50, y: 38 },
     ])
   })
+
+  it('keeps the cluster heading above a focused symbol when zoomed out', () => {
+    const node = sceneNode('unichain', '0xaaa')
+    node.x = 50
+    node.y = 50
+    const scene = sceneWith(node)
+    scene.clusterLabels = [{ text: 'cluster', nodes: [node] }]
+    const view = viewState()
+    view.camera.k = 0.5
+    view.focus = {
+      nodeIds: new Set([node.data.id]),
+      relationIds: new Set(),
+    }
+    const drawnText: { text: string; x: number; y: number }[] = []
+
+    drawRelationGraph(recordingContext(drawnText), scene, view)
+
+    const symbol = drawnText.find((entry) => entry.text === 'TOKEN')
+    const cluster = drawnText.find((entry) => entry.text === 'cluster')
+    if (symbol === undefined || cluster === undefined) {
+      throw new Error('Expected both symbol and cluster labels to be drawn')
+    }
+    expect(cluster.y <= symbol.y - 8).toEqual(true)
+  })
 })
 
 describe(getLinkStyle.name, () => {

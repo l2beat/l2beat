@@ -86,12 +86,6 @@ const CLUSTER_LABEL_FONT_SIZE = 16
  */
 const CLUSTER_LABEL_GROWTH_START_SCALE = 0.7
 const CLUSTER_LABEL_MAX_GROWTH = 3
-/**
- * Screen distance from the topmost node's center up to the cluster label.
- * Scaled like node geometry, it clears the node disc and its label (which
- * both scale the same way) at every zoom level.
- */
-const CLUSTER_LABEL_CLEARANCE = 34
 /** Where along a directional link its arrow sits. */
 const ARROW_POSITION = 0.65
 const ARROW_LENGTH = 6
@@ -260,30 +254,15 @@ function drawNodeLabels(
   view: RelationGraphViewState,
 ) {
   const { camera, focus, hovered, theme } = view
-  const visualScale = nodeVisualScreenScale(camera.k)
-  const fontSize = NODE_LABEL_FONT_SIZE * visualScale
+  const layout = getNodeLabelLayout(camera.k)
   // Zoomed out, labels are only kept for the hovered and focused nodes — a
   // handful — clamped up to stay legible; cluster labels carry that view.
-  const showAll = fontSize >= NODE_LABEL_MIN_FONT_SIZE
-  if (!showAll && hovered === undefined && focus === undefined) return
-
-  // Focused labels remain legible even when the graph is zoomed far out. Use
-  // the same minimum scale for their offsets so the two lines do not overlap.
-  const labelScale = Math.max(
-    visualScale,
-    NODE_LABEL_MIN_FONT_SIZE / NODE_LABEL_FONT_SIZE,
-  )
-  const chainFontSize = Math.max(
-    NODE_CHAIN_LABEL_FONT_SIZE * visualScale,
-    NODE_LABEL_MIN_FONT_SIZE,
-  )
-  const chainLabelOffsetY = NODE_CHAIN_LABEL_OFFSET_Y * labelScale
-  const symbolLabelOffsetY = chainLabelOffsetY - chainFontSize - labelScale
+  if (!layout.showAll && hovered === undefined && focus === undefined) return
 
   ctx.textAlign = 'center'
   ctx.textBaseline = 'alphabetic'
   ctx.lineJoin = 'round'
-  ctx.lineWidth = Math.max(3 * labelScale, 2)
+  ctx.lineWidth = Math.max(3 * layout.labelScale, 2)
   ctx.strokeStyle = theme.background
   ctx.fillStyle = theme.foreground
 
@@ -291,9 +270,9 @@ function drawNodeLabels(
     ctx,
     scene,
     view,
-    showAll,
-    `600 ${Math.max(fontSize, NODE_LABEL_MIN_FONT_SIZE)}px ${theme.fontFamily}`,
-    symbolLabelOffsetY,
+    layout.showAll,
+    `600 ${layout.symbolFontSize}px ${theme.fontFamily}`,
+    layout.symbolLabelOffsetY,
     (node) => node.label,
     1,
   )
@@ -301,9 +280,9 @@ function drawNodeLabels(
     ctx,
     scene,
     view,
-    showAll,
-    `500 ${chainFontSize}px ${theme.fontFamily}`,
-    chainLabelOffsetY,
+    layout.showAll,
+    `500 ${layout.chainFontSize}px ${theme.fontFamily}`,
+    layout.chainLabelOffsetY,
     (node) => node.data.chain,
     0.8,
   )
@@ -341,6 +320,39 @@ function drawNodeLabelLine(
   }
 }
 
+function getNodeLabelLayout(scale: number) {
+  const visualScale = nodeVisualScreenScale(scale)
+  const naturalSymbolFontSize = NODE_LABEL_FONT_SIZE * visualScale
+  // Focused labels remain legible even when the graph is zoomed far out. Use
+  // the same minimum scale for their offsets so the two lines do not overlap.
+  const labelScale = Math.max(
+    visualScale,
+    NODE_LABEL_MIN_FONT_SIZE / NODE_LABEL_FONT_SIZE,
+  )
+  const symbolFontSize = Math.max(
+    naturalSymbolFontSize,
+    NODE_LABEL_MIN_FONT_SIZE,
+  )
+  const chainFontSize = Math.max(
+    NODE_CHAIN_LABEL_FONT_SIZE * visualScale,
+    NODE_LABEL_MIN_FONT_SIZE,
+  )
+  const chainLabelOffsetY = NODE_CHAIN_LABEL_OFFSET_Y * labelScale
+  const symbolLabelOffsetY = chainLabelOffsetY - chainFontSize - labelScale
+
+  return {
+    showAll: naturalSymbolFontSize >= NODE_LABEL_MIN_FONT_SIZE,
+    labelScale,
+    symbolFontSize,
+    chainFontSize,
+    chainLabelOffsetY,
+    symbolLabelOffsetY,
+    // The cluster heading uses a bottom baseline. Keep it above the symbol's
+    // approximate em box plus the same gap used between the two node lines.
+    clusterClearance: -symbolLabelOffsetY + symbolFontSize + labelScale,
+  }
+}
+
 function drawClusterLabels(
   ctx: CanvasRenderingContext2D,
   scene: RelationGraphScene,
@@ -350,7 +362,7 @@ function drawClusterLabels(
   const opacity = getClusterLabelOpacity(camera.k)
   if (opacity === 0) return
 
-  const clearance = CLUSTER_LABEL_CLEARANCE * nodeVisualScreenScale(camera.k)
+  const clearance = getNodeLabelLayout(camera.k).clusterClearance
   const fontSize =
     CLUSTER_LABEL_FONT_SIZE *
     Math.min(
