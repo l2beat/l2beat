@@ -4,12 +4,39 @@
       "type": "ethereum",
       "daLayer": "ethereum",
       "inbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
+      "sequencers": ["0xa4b1E63Cb4901E327597bc35d36FE8a23e4C253f"],
+      "sinceBlock": 15447728,
+      "untilBlock": 16335422,
+      "closed": {
+        "reason": "batch poster handover to 0xC1b6/0x0C59 (granted @ 16327016); last old-poster batch @ 16335422, revoked @ 16342010",
+        "precision": "exact"
+      }
+    },
+    {
+      "type": "ethereum",
+      "daLayer": "ethereum",
+      "inbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
+      "sequencers": [
+        "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
+        "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"
+      ],
+      "sinceBlock": 16335392,
+      "untilBlock": 22618103,
+      "closed": {
+        "reason": "standby batch poster 0x0237e0EA added via setIsBatchPoster @ 22618104; ranges kept disjoint because the new sequencer set is a superset",
+        "precision": "exact"
+      }
+    },
+    {
+      "type": "ethereum",
+      "daLayer": "ethereum",
+      "inbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
       "sequencers": [
         "0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
         "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
         "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"
       ],
-      "sinceBlock": 15411056
+      "sinceBlock": 22618104
     }
   ]
 }

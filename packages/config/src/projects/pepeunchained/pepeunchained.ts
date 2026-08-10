@@ -12,7 +12,7 @@ export const pepeunchained: ScalingProject = opStackL2({
   archivedAt: UnixTime(1752134764), //2025-07-10
   daProvider: CELESTIA_DA_PROVIDER(DA_LAYERS.ETH_CALLDATA),
   celestiaDa: {
-    sinceBlock: 21314461,
+    sinceBlock: 2920309, // first blob in this celestia block https://celenium.io/block/2920309 (the previous value 21314461 was an ethereum block number - beyond celestia's chain height, so nothing was ever fetched)
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADzZzvipmzP4=',
   },
   additionalBadges: [BADGES.RaaS.Conduit],

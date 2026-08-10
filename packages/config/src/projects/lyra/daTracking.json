@@ -1,6 +1,18 @@
 {
   "eras": [
     {
+      "type": "ethereum",
+      "daLayer": "ethereum",
+      "inbox": "0x5f7f7f6DB967F0ef10BdA0678964DBA185d16c50",
+      "sequencers": ["0x14e4E97bDc195d399Ad8E7FC14451C279FE04c8e"],
+      "sinceBlock": 18574910,
+      "untilBlock": 19020830,
+      "closed": {
+        "reason": "migration to Celestia DA; last full-calldata batch @ 19020830, celestia pointer frames from 19020920 (2024-01-16)",
+        "precision": "exact"
+      }
+    },
+    {
       "type": "celestia",
       "daLayer": "celestia",
       "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAACLkdk+ILapw=",

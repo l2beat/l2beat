@@ -4,8 +4,20 @@
       "type": "ethereum",
       "daLayer": "ethereum",
       "inbox": "0xFF00000000000000000000000000000000193939",
+      "sequencers": ["0x2986bF308d0684Ad77cD32Ee1C60429e6573B5AF"],
+      "sinceBlock": 20912449,
+      "untilBlock": 21308934,
+      "closed": {
+        "reason": "batcher rotation via SystemConfig ConfigUpdate @ 21371879; last old-batcher batch @ 21308934",
+        "precision": "exact"
+      }
+    },
+    {
+      "type": "ethereum",
+      "daLayer": "ethereum",
+      "inbox": "0xFF00000000000000000000000000000000193939",
       "sequencers": ["0xF263a0AA8aFEaA7d516B596d49d7BA6C0FeB102c"],
-      "sinceBlock": 20912148
+      "sinceBlock": 21372120
     }
   ]
 }
