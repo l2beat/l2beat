@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x57206896665807dd00bc80e08456f034f48eecd2
+
+# Diff at Mon, 10 Aug 2026 09:02:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@be83079eed365197a392b6bfd65fa6506007093c block: 1784623944
+- current timestamp: 1786352475
+
+## Description
+
+Two new permissioned resolvers.
+
+## Watched changes
+
+```diff
+    contract ResolverAccessToken (eth:0xACCe550000159e70908C0499a1119D04e7039C28) [fusionplus/KycNFT] {
+    +++ description: Resolver Access Token (RES) used by this Fusion+ deployment. A balance of one marks an address as an authorized resolver: after an order's configured allowed time the holder can fill it outside its time-dependent whitelist (paying a fee when enabled), and after the relevant escrow timelocks the holder can execute public withdrawals or source-chain cancellations to the predetermined recipient in exchange for the safety deposit.
++++ description: Latest owner of every token ID, reconstructed from Transfer events. Burned token IDs map to the zero address.
+      values.tokenOwners.44:
++        "eth:0x00000000000Ba9Cd9F5175108141A82B6c24d727"
++++ description: Latest owner of every token ID, reconstructed from Transfer events. Burned token IDs map to the zero address.
+      values.tokenOwners.1157:
++        "eth:0x1cC561F5AE7e867C64129FFC942439707912F704"
+    }
+```
+
 Generated with discovered.json: 0x873a3ff6636d5c6fc3723967a99b3c08750961ec
 
 # Diff at Tue, 21 Jul 2026 08:55:09 GMT:

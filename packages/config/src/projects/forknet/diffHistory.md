@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x749d6d1aa45d1abdb5156389a47e90a60dc572b6
+
+# Diff at Mon, 10 Aug 2026 08:38:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@be83079eed365197a392b6bfd65fa6506007093c block: 1784563592
+- current timestamp: 1786351029
+
+## Description
+
+SuperchainConfig downgrade to a known and feature-identical version.
+
+https://disco.l2beat.com/diff/eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550/eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957
+
+## Watched changes
+
+```diff
+    contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: Since this contract is deployed in the context of a neutered op stack system, the guardian role has no significance.
+      sourceHashes.1:
+-        "0x2cd597b7305a446a1df355e6909cbd75fe38aa045faf4876a8e5496eebc1734f"
++        "0x5fb525d1572fb90d060d122143b915059cbff39e0298b345857fd4267d7f6b28"
+      values.$implementation:
+-        "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"
++        "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"
+      values.$pastUpgrades.5:
++        ["2026-08-04T13:59:35.000Z","0xfb6124f237aaaccedd1f8d1298ae5f3b19871f7af18bd4c791a818487cc199de",["eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]]
+      values.$pastUpgrades.6:
++        ["2026-08-04T14:11:35.000Z","0xf7dd2207111f0f269b7cdfa8a7fa703b664585513bc113e0d2c8bc7ce9eb355f",["eth:0xCe28685EB204186b557133766eCA00334EB441E4"]]
+      values.$pastUpgrades.7:
++        ["2026-08-04T14:16:11.000Z","0xeb6b35d861c5b232c47bc0e604f0834975876f80181776e46cb486f7a398cf03",["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]]
+      values.$upgradeCount:
+-        5
++        8
+      values.version:
+-        "2.4.2"
++        "2.4.0"
+      implementationNames.eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550:
+-        "SuperchainConfig"
+      implementationNames.eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957:
++        "SuperchainConfig"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SuperchainConfig/SuperchainConfig.sol          | 34 ++++------------------
+ 1 file changed, 6 insertions(+), 28 deletions(-)
+```
+
 Generated with discovered.json: 0x5c85e517a540d2a9e7eda7031441d80195eab90b
 
 # Diff at Mon, 20 Jul 2026 16:07:54 GMT:

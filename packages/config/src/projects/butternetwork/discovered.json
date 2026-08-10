@@ -1,6 +1,6 @@
 {
   "name": "butternetwork",
-  "timestamp": 1785915246,
+  "timestamp": 1786352166,
   "configHash": "0x2969824de38e03386498803e0085e6eee0ced93e12fbd813d1d0899f0eda765a",
   "entries": [
     {
@@ -109,6 +109,11 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Upgradeable MAP relay-chain light client used by Butter bridges. It verifies relay-chain headers with the stored BLS validator set and verifies receipt Merkle proofs against accepted headers. It is the destination-chain validation boundary for bridged messages.",
+      "ignoreInWatchMode": [
+        "headerHeight",
+        "epochSummary",
+        "verifiableHeaderRange"
+      ],
       "deployerAddress": "base:0x7F4cBa3D7f20bF5146e4e5F8929b676CA05a5545",
       "sinceTimestamp": 1712739617,
       "sinceBlock": 12975135,
@@ -139,16 +144,16 @@
         ],
         "$upgradeCount": 4,
         "epochSize": 50000,
-        "epochSummary": { "epoch": 509, "length": 24 },
+        "epochSummary": { "epoch": 511, "length": 24 },
         "getAdmin": "base:0x7F4cBa3D7f20bF5146e4e5F8929b676CA05a5545",
         "getImplementation": "base:0xF6366aD2361Df88E8815258948093C33d93d5374",
-        "headerHeight": 25400000,
+        "headerHeight": 25500000,
         "maxEpochs": 30,
         "nodeType": 1,
         "pendingAdmin": "base:0x0000000000000000000000000000000000000000",
         "quorum": 16,
         "startHeight": 10950000,
-        "verifiableHeaderRange": [23900000, 25450000],
+        "verifiableHeaderRange": [24000000, 25550000],
         "verifyTool": "base:0xc3393567DC2F1d071254E880c9f501641491471f"
       },
       "fieldMeta": {
@@ -158,7 +163,6 @@
           "type": "CODE_CHANGE"
         },
         "headerHeight": {
-          "severity": "HIGH",
           "description": "Highest MAP relay-chain header accepted by this LightNode. Receipt proofs outside the rolling verifiable range cannot be used by the Bridge.",
           "type": "RISK_PARAMETER"
         },
@@ -168,7 +172,6 @@
           "type": "RISK_PARAMETER"
         },
         "epochSummary": {
-          "severity": "HIGH",
           "description": "Latest epoch stats (vali set size). Complicated handler because of the ring buffer.",
           "type": "RISK_PARAMETER"
         },
@@ -178,7 +181,6 @@
           "type": "RISK_PARAMETER"
         },
         "verifiableHeaderRange": {
-          "severity": "HIGH",
           "description": "Current range of MAP relay-chain block heights accepted by the LightNode. The range is derived from the last accepted header and the configured epoch retention window.",
           "type": "RISK_PARAMETER"
         },
@@ -779,10 +781,10 @@
     "butternetwork/AuthorityManager": "0xa4c470ba2f3262d908355b674e1d56033f18be227db78211a73ad371610ed19b",
     "butternetwork/Bridge": "0xdfb450db687c8f1827054517610bd8bb34a0db0253fa5dfca93958a284734778",
     "butternetwork/FeeService": "0x59bc080e41feb8a5a9cb198f05d18a1246b160883c5a7b58f8978eaa6577ba7e",
-    "butternetwork/LightNode": "0xe94bd1007f296edbbe577ee32f623a3644536ecc06a5e921a8ba7ad4ce8e981d",
+    "butternetwork/LightNode": "0x8f2fba5c52289c86a092846b83d32f44210c5b83e5c21562243c45d9f4b58db8",
     "butternetwork/VerifyTool": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "base": 49562949 },
+  "usedBlockNumbers": { "base": 49781409 },
   "permissionsConfigHash": "0xa504b4d5d6aa34229e70df987237ac1f644b4af890d46bd83e7384abed74cb16"
 }

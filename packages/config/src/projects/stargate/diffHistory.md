@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xda01d7d635fb11fca2173351362f1ed2d976d568
+
+# Diff at Mon, 10 Aug 2026 09:10:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@be83079eed365197a392b6bfd65fa6506007093c block: 1785325405
+- current timestamp: 1786352916
+
+## Description
+
+Multisig member change.
+
+## Watched changes
+
+```diff
+    contract LayerZero Multisig (eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478) [layerzero/OneSigMultisig] {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      values.$members.5:
++        "eth:0xdFE4027209C795B84d39FfBfF86bf73572571BAd"
+      values.$members.6:
++        "eth:0x2be094F1C9AaF76aD3A789EA4f047BBE7D1DB552"
+      values.$threshold:
+-        3
++        5
+      values.totalSigners:
+-        5
++        7
+    }
+```
+
 Generated with discovered.json: 0x832fbad18e5f419f7aadcd3e777778ea3cca7f2b
 
 # Diff at Wed, 29 Jul 2026 11:45:00 GMT:
