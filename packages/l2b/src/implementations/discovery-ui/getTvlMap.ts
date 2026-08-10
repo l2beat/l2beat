@@ -1,5 +1,9 @@
 import type { ConfigReader, TemplateService } from '@l2beat/discovery'
-import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import {
   calculateValue,
   getBalances,
@@ -26,6 +30,15 @@ const TOKENS_PER_CHAIN = 500
 
 // How many tokens a single tile names.
 const TOKENS_PER_ENTRY = 3
+
+// What is sent to these is gone, so their balance is not value a project holds.
+// They also have to leave for the map to be readable at all: tokens are burned
+// in amounts their price was never meant to be multiplied by, which puts one
+// tile several orders of magnitude above every real holder.
+const BURNED = [
+  EthereumAddress.ZERO,
+  EthereumAddress('0x000000000000000000000000000000000000dEaD'),
+]
 
 // Asking for every holder at once reports no progress at all: the provider
 // coalesces one tick's calls into a single set and resolves the whole set
@@ -169,19 +182,24 @@ function topByMarketCap(
 }
 
 function collectHolders(project: ApiProjectResponse): Holder[] {
-  return project.entries.flatMap((chain) =>
-    [
+  return project.entries
+    .flatMap((chain) => [
       ...chain.initialContracts,
       ...chain.discoveredContracts,
       ...chain.eoas,
-    ].map(
+    ])
+    .filter((entry) => !isBurned(entry.address))
+    .map(
       (entry): Holder => ({
         address: entry.address,
         name: entry.name,
         type: entry.type,
       }),
-    ),
-  )
+    )
+}
+
+function isBurned(address: ChainSpecificAddress): boolean {
+  return BURNED.includes(ChainSpecificAddress.address(address))
 }
 
 function groupByChain(holders: Holder[]): Map<string, Holder[]> {
