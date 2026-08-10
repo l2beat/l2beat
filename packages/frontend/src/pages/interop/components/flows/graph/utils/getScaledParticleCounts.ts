@@ -12,8 +12,8 @@ interface ScaledParticleResult {
 
 /**
  * Given base particle counts (computed at baseDollarsPerParticle), finds the
- * lowest dollars-per-particle value (in DOLLARS_PER_PARTICLE_STEP increments)
- * where both constraints are satisfied:
+ * lowest dollars-per-particle value (a multiple of DOLLARS_PER_PARTICLE_STEP,
+ * or the base itself) where both constraints are satisfied:
  *   - no single flow exceeds MAX_PARTICLES_PER_FLOW
  *   - total across all flows does not exceed MAX_TOTAL_PARTICLES
  */
@@ -31,20 +31,15 @@ export function getScaledParticleCounts(
     (maxBaseCount * baseDollarsPerParticle) / MAX_PARTICLES_PER_FLOW
   const minDppForTotalCap =
     (totalBaseCount * baseDollarsPerParticle) / MAX_TOTAL_PARTICLES
-  const minRequiredDpp = Math.max(
-    baseDollarsPerParticle,
-    minDppForPerFlowCap,
-    minDppForTotalCap,
-  )
+  const minRequiredDpp = Math.max(minDppForPerFlowCap, minDppForTotalCap)
 
-  const stepsNeeded = Math.max(
-    0,
-    Math.ceil(
-      (minRequiredDpp - baseDollarsPerParticle) / DOLLARS_PER_PARTICLE_STEP,
-    ),
+  // Round up to a step multiple so the legend shows clean values even when
+  // the base itself is not a multiple of the step
+  let dollarsPerParticle = Math.max(
+    baseDollarsPerParticle,
+    Math.ceil(minRequiredDpp / DOLLARS_PER_PARTICLE_STEP) *
+      DOLLARS_PER_PARTICLE_STEP,
   )
-  let dollarsPerParticle =
-    baseDollarsPerParticle + stepsNeeded * DOLLARS_PER_PARTICLE_STEP
 
   let scale = baseDollarsPerParticle / dollarsPerParticle
   let counts = baseExactCounts.map((c) => c * scale)
