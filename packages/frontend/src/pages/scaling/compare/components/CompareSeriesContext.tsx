@@ -1,10 +1,19 @@
-import { createContext, type ReactNode, useContext, useMemo } from 'react'
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useMemo,
+  useState,
+} from 'react'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
 import { getCompareSeriesColors } from '../utils/getCompareSeriesColors'
 
 interface CompareSeriesContextType {
   /** Series color per project id, assigned by selection order. */
   colors: Record<string, string>
+  /** Project id of the chip being hovered or focused, if any. */
+  hoveredProjectId: string | undefined
+  setHoveredProjectId: (projectId: string | undefined) => void
 }
 
 const CompareSeriesContext = createContext<
@@ -24,11 +33,23 @@ export function CompareSeriesProvider({
   projects: CompareProjectEntry[]
   children: ReactNode
 }) {
+  const [hoveredProjectId, setHoveredProjectId] = useState<string>()
+
   const colors = useMemo(
     () => getCompareSeriesColors(projects.map((project) => project.id)),
     [projects],
   )
-  const value = useMemo(() => ({ colors }), [colors])
+  // A hover can outlive its project (chip removed mid-hover, so no
+  // mouseleave fires) - ignore it instead of dimming every series with
+  // nothing highlighted.
+  const hovered =
+    hoveredProjectId !== undefined && colors[hoveredProjectId] !== undefined
+      ? hoveredProjectId
+      : undefined
+  const value = useMemo(
+    () => ({ colors, hoveredProjectId: hovered, setHoveredProjectId }),
+    [colors, hovered],
+  )
 
   return (
     <CompareSeriesContext.Provider value={value}>
