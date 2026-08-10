@@ -52,10 +52,10 @@ function RecentProjectCard({ project }: { project: HomeRecentProject }) {
         className="size-7 shrink-0 rounded-full"
       />
       <div className="flex min-w-0 flex-1 flex-col">
-        <span className="truncate font-bold text-label-value-14">
+        <span className="truncate font-bold text-label-value-14 leading-tight">
           {project.name}
         </span>
-        <span className="flex items-center gap-1 truncate font-medium text-label-value-12 text-secondary">
+        <span className="flex items-center gap-1 truncate font-medium text-label-value-12 text-secondary leading-tight">
           {subtitle}
         </span>
       </div>

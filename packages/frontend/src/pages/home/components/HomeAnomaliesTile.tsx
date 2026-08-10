@@ -33,7 +33,7 @@ export function HomeAnomaliesTile({
             <span className="lg:hidden">Ongoing major anomalies</span>
             <span className="max-lg:hidden">Ongoing anomalies</span>
           </span>
-          <span className="mt-0.5 flex min-w-0 items-center gap-1.5 font-medium text-label-value-12 text-secondary lg:hidden">
+          <span className="mt-0.5 flex min-w-0 items-center gap-1.5 font-medium text-label-value-12 text-secondary leading-tight lg:hidden">
             {isOngoing && first ? (
               <>
                 <img
