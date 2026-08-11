@@ -1,3 +1,62 @@
+Generated with discovered.json: 0x01d6789264883c080c266d5dc7f7639e62814c1f
+
+# Diff at Tue, 11 Aug 2026 08:23:09 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@60659f4cf98ab1080503bb12774568c0299c049e block: 1782210335
+- current timestamp: 1786436525
+
+## Description
+
+SystemConfig implementation upgraded (upgradeCount 1 -> 2). Adds eip1559Denominator, eip1559Elasticity, operatorFeeScalar, operatorFeeConstant, minBaseFee, daFootprintGasScalar, l2ChainId, superchainConfig fields. minBaseFee set to 500 gwei floor; other new fields are 0 / zero address. Owner unchanged (NXV Safe, 3-of-5).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x43F8DeFe3E9286D152E91BB16a248808E7247198) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x5d5d38c092a6c8e1ec90659e0b12a8a490cfe629934e11c688e5e55c948a134d"
++        "0xf27c4a47f5f30ee0ed7d69662eb98874c98bc6957423153a1383eb983a2bbf5f"
+      values.$implementation:
+-        "eth:0xbc10fE919504D53953d27989CD5B48B9A7c08Be0"
++        "eth:0xE4577dCF1C44F04cf489AA995E01e988f461cc4A"
+      values.$pastUpgrades.1:
++        ["2026-08-04T08:28:23.000Z","0x6dab15d826dc253e57c4cd55634e061e01df3d1045528e3dde13840bbddde1fd",["eth:0xE4577dCF1C44F04cf489AA995E01e988f461cc4A"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.daFootprintGasScalar:
++        0
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
++        0
+      values.eip1559Elasticity:
++        0
+      values.l2ChainId:
++        0
+      values.minBaseFee:
++        500000000000
+      values.operatorFeeConstant:
++        0
+      values.operatorFeeScalar:
++        0
+      values.superchainConfig:
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.eth:0xbc10fE919504D53953d27989CD5B48B9A7c08Be0:
+-        "SystemConfig"
+      implementationNames.eth:0xE4577dCF1C44F04cf489AA995E01e988f461cc4A:
++        "SystemConfig"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SystemConfig/SystemConfig.sol                  | 158 ++++++++++++++++++---
+ 1 file changed, 136 insertions(+), 22 deletions(-)
+```
+
 Generated with discovered.json: 0x03cb3253f69346eb1390c645d13660e668d6a774
 
 # Diff at Tue, 30 Jun 2026 12:25:49 GMT:
