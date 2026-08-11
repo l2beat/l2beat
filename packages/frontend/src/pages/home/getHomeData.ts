@@ -261,7 +261,7 @@ export interface HomeRecentProject {
   name: string
   href: string
   iconUrl: string
-  category: 'l2' | 'da' | 'zkCatalog' | 'ecosystems'
+  category: 'l2' | 'da' | 'zkCatalog' | 'ecosystems' | 'privacy'
   l2Category: string | undefined
 }
 
@@ -269,7 +269,13 @@ async function getRecentProjectsForHome(
   manifest: Manifest,
 ): Promise<HomeRecentProject[]> {
   const projects = await ps.getProjects({
-    optional: ['scalingInfo', 'daLayer', 'ecosystemConfig', 'zkCatalogInfo'],
+    optional: [
+      'scalingInfo',
+      'daLayer',
+      'ecosystemConfig',
+      'zkCatalogInfo',
+      'privacyInfo',
+    ],
     whereNot: ['archivedAt'],
   })
 
@@ -279,7 +285,8 @@ async function getRecentProjectsForHome(
         project.scalingInfo ||
         project.daLayer ||
         project.ecosystemConfig ||
-        project.zkCatalogInfo,
+        project.zkCatalogInfo ||
+        project.privacyInfo,
     )
     .sort((a, b) => b.addedAt - a.addedAt)
     .slice(0, RECENT_PROJECTS_COUNT)
@@ -314,6 +321,16 @@ async function getRecentProjectsForHome(
           href: `/zk-catalog/${project.slug}`,
           iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
           category: 'zkCatalog' as const,
+          l2Category: undefined,
+        }
+      }
+      if (project.privacyInfo) {
+        return {
+          id: project.id.toString(),
+          name: project.name,
+          href: `/privacy/projects/${project.slug}`,
+          iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+          category: 'privacy' as const,
           l2Category: undefined,
         }
       }

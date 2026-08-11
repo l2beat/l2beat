@@ -62,7 +62,7 @@ export const privacyPools: BaseProject = {
   slug: 'privacy-pools',
   name: 'Privacy Pools',
   shortName: undefined,
-  addedAt: UnixTime(0),
+  addedAt: UnixTime.fromDate(new Date('2026-05-12')),
   discoveryInfo: getDiscoveryInfo([discovery]),
   statuses: {
     yellowWarning: undefined,
