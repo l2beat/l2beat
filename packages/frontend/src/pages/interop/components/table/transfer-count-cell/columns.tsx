@@ -49,12 +49,10 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
           srcAmount,
           srcSymbol,
           srcAbstractTokenId,
-          srcTokenIssuer,
           srcTokenIconUrl,
           dstAmount,
           dstSymbol,
           dstAbstractTokenId,
-          dstTokenIssuer,
           dstTokenIconUrl,
         } = ctx.row.original
         return (
@@ -64,7 +62,6 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
               iconUrl={srcTokenIconUrl}
               symbol={srcSymbol}
               abstractTokenId={srcAbstractTokenId}
-              issuer={srcTokenIssuer}
               selectedChains={selectedChains}
             />
             <ArrowRightIcon className="size-3.5 shrink-0 fill-brand" />
@@ -73,7 +70,6 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
               iconUrl={dstTokenIconUrl}
               symbol={dstSymbol}
               abstractTokenId={dstAbstractTokenId}
-              issuer={dstTokenIssuer}
               selectedChains={selectedChains}
             />
           </div>
@@ -185,14 +181,12 @@ function TokenAmount({
   amount,
   symbol,
   abstractTokenId,
-  issuer,
   iconUrl,
   selectedChains,
 }: {
   amount: number | undefined
   symbol: string
   abstractTokenId: string | undefined
-  issuer: string | null
   iconUrl: string
   selectedChains: InteropSelection | undefined
 }) {
@@ -230,7 +224,7 @@ function TokenAmount({
 
   const tokenUrl =
     abstractTokenId && selectedChains
-      ? getInteropTokenUrl({ id: abstractTokenId, symbol, issuer })
+      ? getInteropTokenUrl({ id: abstractTokenId, symbol })
       : undefined
 
   if (!tokenUrl) {

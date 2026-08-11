@@ -6,7 +6,6 @@ describe(getInteropTokenUrl.name, () => {
   it('returns undefined for unknown tokens', () => {
     const result = getInteropTokenUrl({
       id: UNKNOWN_ABSTRACT_TOKEN_ID,
-      issuer: null,
       symbol: 'Unknown',
     })
 
@@ -16,7 +15,6 @@ describe(getInteropTokenUrl.name, () => {
   it('returns undefined for synthetic unknown tokens', () => {
     const result = getInteropTokenUrl({
       id: 'unknown-cctp',
-      issuer: null,
       symbol: 'Unknown',
       isUnknown: true,
     })
@@ -24,13 +22,12 @@ describe(getInteropTokenUrl.name, () => {
     expect(result).toEqual(undefined)
   })
 
-  it('builds token URL without chain selection', () => {
+  it('builds token URL from the token id and symbol', () => {
     const result = getInteropTokenUrl({
-      id: 'usdc',
-      issuer: 'circle',
+      id: 'usdc01',
       symbol: 'USDC',
     })
 
-    expect(result).toEqual('/interop/tokens/circle-usdc')
+    expect(result).toEqual('/interop/tokens/usdc01/usdc')
   })
 })
