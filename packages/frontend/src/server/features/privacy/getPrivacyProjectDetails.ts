@@ -57,6 +57,7 @@ export interface PrivacyProjectDetails {
       last7d: number
       last30d: number
     }
+    activeRelayers30d?: number
   }
 }
 
@@ -86,12 +87,11 @@ export async function getPrivacyProjectDetails(
   const last7dCutoff = currentDay - 7 * UnixTime.DAY
   const last30dCutoff = currentDay - 30 * UnixTime.DAY
 
-  const { totals, daily30d, tokenValues } = await getPrivacyProjectFlowData(
-    project,
-    last30dCutoff,
-    currentDay,
-    now,
-  )
+  const [{ totals, daily30d, tokenValues }, activeRelayers30d] =
+    await Promise.all([
+      getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
+      getActiveRelayerCount(project, UnixTime(now - 30 * UnixTime.DAY), now),
+    ])
 
   const tvlBySymbol = new Map<string, number>()
   for (const tv of tokenValues) {
@@ -273,8 +273,29 @@ export async function getPrivacyProjectDetails(
         last7d: summaryValue7d,
         last30d: summaryValue30d,
       },
+      activeRelayers30d,
     },
   }
+}
+
+async function getActiveRelayerCount(
+  project: PrivacyProject,
+  from: UnixTime,
+  to: UnixTime,
+): Promise<number | undefined> {
+  if (!project.privacyInfo.relayerTracking?.length) {
+    return undefined
+  }
+
+  if (env.MOCK) {
+    return Math.round(Math.random() * 20)
+  }
+
+  return await getDb().privacyRelayerActivity.getActiveRelayerCount(
+    project.id,
+    from,
+    to,
+  )
 }
 
 async function getPrivacyProjectFlowData(
