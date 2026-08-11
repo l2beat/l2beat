@@ -2,11 +2,9 @@ import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getInteropTokenData } from '~/server/features/scaling/interop/getInteropTokenData'
-import { getAbstractTokenSlug } from '~/server/features/scaling/interop/token/getAbstractTokenSlug'
 import { getInteropAbstractTokens } from '~/server/features/scaling/interop/token/getInteropAbstractTokens'
 import { getInteropTokenEntry } from '~/server/features/scaling/interop/token/getInteropTokenEntry'
 import { getInteropTokenOnchainDeployments } from '~/server/features/scaling/interop/token/getInteropTokenOnchainDeployments'
-import { resolveInteropTokenBySlug } from '~/server/features/scaling/interop/token/resolveInteropTokenBySlug'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -102,7 +100,7 @@ async function getCachedData({
   interopChainsWithIcons: InteropChainWithIcon[]
 }) {
   const abstractTokens = await getInteropAbstractTokens(activeInteropChainIds)
-  const token = resolveInteropTokenBySlug(abstractTokens, slug)
+  const token = abstractTokens.find((token) => token.id === slug)
   if (!token) return undefined
 
   const apiSelection = initialSelection
@@ -128,7 +126,7 @@ async function getCachedData({
   return {
     token: {
       ...token,
-      slug: getAbstractTokenSlug(token),
+      slug: token.id,
     },
     tokenEntry,
     tokenData,
