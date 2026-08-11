@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "PermissionedRamp",
-  "description": "Wrap/unwrap entrypoint for the collateral token that additionally requires an EIP-712 signature from a witness-role holder. Admins can pause either direction per asset with no delay.",
+  "description": "Wrap/unwrap entrypoint for the collateral token that additionally requires an EIP-712 signature from a witness-role holder. Admins can pause or unpause both directions for an asset with no delay.",
   "fields": {
     "roleHolders": {
       "handler": {

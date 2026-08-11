@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "DepositWallet",
-  "description": "Per-user smart wallet implementation shared through a beacon: every call batch needs the owner's (or a time-limited session signer's) EIP-712 signature, and direct withdrawals are owner-only and unlock only while the wallet is paused. The beacon owner can replace every wallet's code at once; owners can opt out by pinning the current implementation.",
+  "description": "Smart-wallet implementation for factory-deployed proxies. Only the configured factory can submit call batches, which require an EIP-712 signature from the owner or an unexpired session signer. The owner can pause the wallet and, after the factory-configured delay, withdraw assets and revoke token approvals.",
   "ignoreMethods": ["factory", "id"]
 }

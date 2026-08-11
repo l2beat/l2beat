@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "NegRiskModule",
-  "description": "Upgradeable outcome module for multi-outcome (negative-risk) markets: split, merge, redeem and event-level conversions are permissionless. Bridge-role holders can mint positions without collateral backing, and resolver-role holders can report results directly, bypassing the oracle path.",
+  "description": "Upgradeable outcome module for multi-outcome (negative-risk) markets. Split, merge, redemption and event-level conversion functions have no caller restriction. Bridge-role holders can mint positions without collateral backing, while resolver-role holders can report results directly, bypassing the oracle path; admins can pause reporting by a resolver or for a condition.",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
     "roleHolders": {
@@ -18,7 +18,7 @@
       "permissions": [
         {
           "type": "upgrade",
-          "description": "can upgrade the module implementation, and grant or revoke the admin role."
+          "description": "can upgrade the module implementation and manage all roles."
         }
       ],
       "severity": "HIGH"

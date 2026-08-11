@@ -36,7 +36,7 @@
         "0xea2891010928691dab14eb51443ee7f3beb0c59344048daa886baae374975a52"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable CREATE2 factory deploying per-user smart wallets at deterministic addresses and relaying owner-signed call batches to them; both paths are restricted to operator-role holders. Admins set the 1h delay that wallet owners must wait after pausing before withdrawals unlock.",
+      "description": "Upgradeable CREATE2 wallet factory. Operator-role holders deploy deterministic beacon-proxy wallets and relay signed call batches; legacy-deployer-role holders can separately deploy deterministic legacy UUPS wallets. Admins manage both roles and set the 1h delay that wallet owners must wait after pausing before withdrawals unlock.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1774925731,
       "sinceBlock": 84902847,
@@ -585,7 +585,13 @@
         },
         "BEACON": {
           "severity": "HIGH",
-          "description": "The beacon that resolves the implementation for all wallets deployed by this factory."
+          "description": "Immutable beacon used by deploy() for beacon-proxy wallets. The separate deployLegacy() path does not use it."
+        },
+        "LEGACY_IMPL": {
+          "description": "Immutable implementation embedded by deployLegacy() in legacy UUPS wallets. The deploy() path uses BEACON instead."
+        },
+        "implementation": {
+          "description": "Deprecated implementation pointer retained for storage and ABI compatibility. Neither wallet deployment path reads it."
         }
       },
       "implementationNames": {
@@ -608,7 +614,7 @@
         "0x5fe0342de8952b4767f5c3594edec87533a6032c8afceb4bae8d4b63f62ca530"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable ERC1155 ledger of combination-outcome positions, mintable and burnable only by the outcome module registered for each position or a cross-authorised module. Admins register modules, which grants those modules mint and burn power over the ledger.",
+      "description": "Upgradeable ERC1155 ledger of combination-outcome positions, mintable and burnable only by the outcome module registered for each position or a cross-authorised module. Admins can register or remove modules and grant registered modules cross-module mint and burn power.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1779828687,
       "sinceBlock": 87479409,
@@ -639,12 +645,12 @@
       "fieldMeta": {
         "roleHolders": {
           "severity": "HIGH",
-          "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (1) admin, bit 1 (2) operator, bit 2 (4) creator, bit 3 (8) bridge, bit 4 (16) resolver."
+          "description": "Role bitmask per address, reconstructed from role-update events. Only bit 0 (1), the admin role, is checked to restrict calls. Granting any other role bit gives no additional access in this contract."
         },
         "owner": { "severity": "HIGH" },
         "moduleById": { "description": "Registered outcome modules by id." },
         "COLLATERAL_TOKEN": {
-          "description": "The collateral token that backs positions minted through the registered outcome modules."
+          "description": "Immutable collateral-token address associated with this position ledger."
         }
       },
       "implementationNames": {
@@ -666,7 +672,7 @@
         "0xa87e7461021d077d640bc312623caf5c914572ac90f111bf5ceba3ca4b04b554"
       ],
       "proxyType": "immutable",
-      "description": "A simple address whitelist for tokens that can be used as bonds and/or fees. This whitelist is checked and enforced by various smart contracts in the UMA ecosystem.",
+      "description": "Owner-managed address whitelist. Other contracts can query whether an address is listed; the whitelist itself does not assign a meaning to the listed addresses.",
       "deployerAddress": "matic:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "sinceTimestamp": 1754072366,
       "sinceBlock": 74677192,
@@ -694,7 +700,7 @@
         "0x87d8ca7db4069bf703d321769a5522bc150c32d5c6669f13aa3c0857c1e0986c"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable outcome module for two-sided markets: anyone can split collateral into outcome positions, merge them back, or redeem resolved ones. Bridge-role holders can mint positions without collateral backing, and resolver-role holders can report results directly, bypassing the oracle path.",
+      "description": "Upgradeable outcome module for two-sided markets. Split, merge and redemption functions have no caller restriction. Bridge-role holders can mint positions without collateral backing, while resolver-role holders can report results directly, bypassing the oracle path; admins can pause reporting by a resolver or for a condition.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1779828850,
       "sinceBlock": 87479502,
@@ -790,7 +796,7 @@
         "0x2ecab083c9b8b0c244f336f39380667032458294da12748992c494be88a82db5"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable outcome module for multi-outcome (negative-risk) markets: split, merge, redeem and event-level conversions are permissionless. Bridge-role holders can mint positions without collateral backing, and resolver-role holders can report results directly, bypassing the oracle path.",
+      "description": "Upgradeable outcome module for multi-outcome (negative-risk) markets. Split, merge, redemption and event-level conversion functions have no caller restriction. Bridge-role holders can mint positions without collateral backing, while resolver-role holders can report results directly, bypassing the oracle path; admins can pause reporting by a resolver or for a condition.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1779828904,
       "sinceBlock": 87479533,
@@ -905,7 +911,7 @@
         "0xd2563979785b4499707693b2dcbd444b7104ba7a73c3ce0777413ca03735082b"
       ],
       "proxyType": "immutable",
-      "description": "Permissionless unwrap entrypoint: anyone can burn collateral tokens and have the underlying stablecoin released from the vault. Admins can pause unwrapping per asset with no delay.",
+      "description": "Lets anyone burn collateral tokens and release an equal amount of a supported asset from the configured collateral token's vault while that asset is not paused. Admins can pause or unpause unwrapping per asset with no delay.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1774924699,
       "sinceBlock": 84902331,
@@ -945,7 +951,7 @@
         "0xb85b3a43e26285e2b4675d4e12f73cf54658e25e2dea62e511612465a056bf10"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Managed (permissioned) variant of the UMA Optimistic Oracle V2 that acts as an escalation layer before UMA's DVM. Price requests are restricted to a requester whitelist and proposals to a proposer whitelist. A proposal can be disputed during its liveness window (default 2h, with a minimum dispute window of 5m), and settlement is restricted to the resolver role. Because settlement is permissioned, a proposal that outlives its liveness window does not become final on its own and can still be disputed until a resolver settles it. Roles (OpenZeppelin AccessControl): the default admin can upgrade the contract and manage the config admin role; the config admin sets the requester and proposer whitelists, the default liveness, the minimum dispute window and the allowed bond ranges, and manages request managers; request managers set per-request proposer whitelists, bonds and liveness; the self-governing resolver admin manages resolvers.",
+      "description": "Managed variant of the UMA Optimistic Oracle V2 that acts as an escalation layer before UMA's DVM. Only whitelisted requesters can create price requests. Both the proposal submitter and credited proposer must pass the effective proposer whitelist, which can be overridden per request. Anyone can dispute an active proposal by posting the required bond, but only a resolver-role holder can settle the request. The proposal liveness defaults to 2h, with a minimum dispute window of 5m. Because settlement is permissioned, a proposal that outlives its liveness window does not become final on its own and can still be disputed until a resolver settles it. Roles (OpenZeppelin AccessControl): the default admin can upgrade the contract and manage the config admin role; the config admin sets the requester and default proposer whitelists, the default liveness, the minimum dispute window and the allowed bond ranges, and manages request managers; request managers set per-request proposer whitelists, bonds and liveness; the self-governing resolver admin manages resolvers.",
       "deployerAddress": "matic:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "sinceTimestamp": 1754072848,
       "sinceBlock": 74677419,
@@ -1033,11 +1039,11 @@
         "defaultAdmin": { "severity": "HIGH" },
         "requesterWhitelist": {
           "severity": "HIGH",
-          "description": "Whitelist of addresses allowed to make price requests."
+          "description": "Contract consulted to decide whether a caller may make a price request."
         },
         "defaultProposerWhitelist": {
           "severity": "HIGH",
-          "description": "Default whitelist of addresses allowed to propose answers to price requests."
+          "description": "Default contract consulted for proposal submitters and credited proposers when no per-request override is configured."
         }
       },
       "implementationNames": {
@@ -1056,7 +1062,7 @@
         "0x541803ac19e309d7cd3a30c5dc382a0f02e3377c34bc0d6655b67ba6e674ef63"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable outcome module for combinatorial positions built from legs of other modules; payouts derive from the legs' resolved payouts. All operations are permissionless, and bridge-role holders can mint positions without collateral backing.",
+      "description": "Upgradeable outcome module for combinatorial positions built from legs of other modules; payouts derive from the legs' resolved payouts. Position preparation, transformation and redemption functions have no caller restriction. Bridge-role holders can mint positions without collateral backing.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1779828740,
       "sinceBlock": 87479439,
@@ -1093,7 +1099,7 @@
       "fieldMeta": {
         "roleHolders": {
           "severity": "HIGH",
-          "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (1) admin, bit 1 (2) operator, bit 2 (4) creator, bit 3 (8) bridge, bit 4 (16) resolver."
+          "description": "Role bitmask per address, reconstructed from role-update events. Only bit 0 (1), the admin role, and bit 3 (8), the bridge role, are checked to restrict calls. Granting any other role bit gives no additional access in this contract."
         },
         "owner": { "severity": "HIGH" },
         "POSITION_MANAGER": {
@@ -1140,7 +1146,7 @@
         "0xb70e5d60bdd166efd0e1f16ddaa4d4620f77b958874a1b44abf107dc67c4a677"
       ],
       "proxyType": "immutable",
-      "description": "ERC20 wrapper around an underlying token, owned by the single adapter that deployed it. Anyone can unwrap; only the owner can wrap, mint without backing, and release the underlying held here to any recipient.",
+      "description": "ERC20 wrapper around an immutable underlying token. Its immutable owner is the deployer. Anyone can burn their wrapper units to send an equal amount of underlying to any recipient; only the owner can wrap, mint without depositing underlying, burn its own units, and release underlying held by the contract.",
       "deployerAddress": "matic:0xe9Ac97D2BE532C0de63Ec26270EA3F217E207326",
       "sinceTimestamp": 1701203266,
       "sinceBlock": 50505403,
@@ -1157,14 +1163,12 @@
       "fieldMeta": {
         "owner": {
           "severity": "HIGH",
-          "description": "Adapter contract fixed at deployment."
+          "description": "Immutable owner set to the deployer."
         },
         "underlying": {
-          "description": "Underlying token backing the circulating wrapper supply."
+          "description": "Immutable token transferred into the contract on wrapping and out on unwrapping or owner release."
         },
-        "totalSupply": {
-          "description": "Circulating supply of the wrapper token."
-        }
+        "totalSupply": { "description": "Total supply of the wrapper token." }
       },
       "implementationNames": {
         "matic:0x3A3BD7bb9528E159577F7C2e685CC81A765002E2": "WrappedCollateral"
@@ -1285,7 +1289,7 @@
         {
           "permission": "interact",
           "from": "matic:0x3A3BD7bb9528E159577F7C2e685CC81A765002E2",
-          "description": "can mint wrapper units without underlying backing and release arbitrary amounts of the underlying held by this contract to any recipient. This owner is immutable and cannot be changed.",
+          "description": "can deposit underlying and mint wrapper units to any recipient, mint units to itself without depositing underlying, burn its own units, and release underlying held by the contract to any recipient. This owner is immutable and cannot be changed.",
           "role": ".owner",
           "via": [
             { "address": "matic:0xd91E80cF2E7be2e162c6513ceD06f1dD0dA35296" }
@@ -1294,25 +1298,25 @@
         {
           "permission": "interact",
           "from": "matic:0x65070BE91477460D8A7AeEb94ef92fe056C2f2A7",
-          "description": "pause, unpause, reset and flag questions, and resolve a flagged question manually with either outcome or an even split after the 1h safety period.",
+          "description": "pause, unpause, reset and flag initialized questions, unflag them until the safety period has passed, and resolve a flagged question manually with either outcome or an even split after the 1h safety period.",
           "role": ".admins"
         },
         {
           "permission": "interact",
           "from": "matic:0x661992aebf6BecF7BA5abB66f6b0Bf62Aa7a2E93",
-          "description": "prepare markets and questions, flag questions to block their permissionless resolution, and force an outcome of their choosing on a flagged question after the 0s delay period.",
+          "description": "prepare markets and questions, flag or unflag questions to control public resolution, and force an outcome of their choosing on a flagged question after the 0s delay period.",
           "role": ".admins"
         },
         {
           "permission": "interact",
           "from": "matic:0x69c47De9D4D3Dad79590d61b9e05918E03775f24",
-          "description": "pause, unpause, reset and flag questions, and resolve a flagged question manually with either outcome or an even split after the 1h safety period.",
+          "description": "pause, unpause, reset and flag initialized questions, unflag them until the safety period has passed, and resolve a flagged question manually with either outcome or an even split after the 1h safety period.",
           "role": ".admins"
         },
         {
           "permission": "interact",
           "from": "matic:0x6A9D222616C90FcA5754cd1333cFD9b7fb6a4F74",
-          "description": "pause, unpause, reset and flag questions, and emergency-resolve a flagged question with an arbitrary payout array after the 2d emergency safety period.",
+          "description": "pause, unpause, reset and flag initialized questions, and emergency-resolve a flagged question with any two-value payout array that is not all zeroes after the 2d emergency safety period.",
           "role": ".admins"
         },
         {
@@ -1338,7 +1342,7 @@
         {
           "permission": "act",
           "from": "matic:0xd91E80cF2E7be2e162c6513ceD06f1dD0dA35296",
-          "description": "can transfer outcome tokens on behalf of a user through this adapter, but only if the user has independently approved the admin as an operator on the token ledger, and can add or remove admins.",
+          "description": "can transfer outcome tokens on behalf of a user through this adapter, but only if the user has independently approved both the admin and this adapter as operators on the token ledger, and can add or remove admins.",
           "role": ".admins"
         }
       ],
@@ -1384,7 +1388,7 @@
         "0xfb5283054cd91680d584576a6dbd3236d704b86faae27e2e6b3baf172cd56b7b"
       ],
       "proxyType": "immutable",
-      "description": "Per-user proxy wallet implementation cloned by its factory; only the owner set at initialization can execute batches of arbitrary calls through it.",
+      "description": "Initializable wallet whose initialize() function assigns its caller as owner while the owner slot is still empty. The stored owner can execute batches of arbitrary calls or delegatecalls; delegatecalls run in the wallet's context and can modify its storage, including the owner slot.",
       "deployerAddress": "matic:0xb342a81d57BB9ba8b81111523CD10Ea550DF67f8",
       "sinceTimestamp": 1599154669,
       "sinceBlock": 4022827,
@@ -1408,7 +1412,7 @@
         {
           "permission": "interact",
           "from": "matic:0x2957922Eb93258b93368531d39fAcCA3B4dC5854",
-          "description": "can grant and revoke the admin role that can pause withdrawals of the underlying stablecoin through this contract with no delay.",
+          "description": "can grant and revoke the admin role that can pause unwrapping of supported assets through this contract with no delay.",
           "role": ".owner"
         },
         {
@@ -1450,43 +1454,43 @@
         {
           "permission": "upgrade",
           "from": "matic:0x00000000000Fb5C9ADea0298D729A0CB3823Cc07",
-          "description": "can upgrade the factory implementation, grant or revoke the admin role, and authorise implementations for legacy wallet upgrades.",
+          "description": "can upgrade the factory implementation, manage all roles, and authorise or unauthorise implementations for legacy wallet upgrades.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
           "from": "matic:0x006F54F7f9A22e0000CC2AB60031000000ae9fEF",
-          "description": "can upgrade the implementation of the outcome-token ledger, and grant or revoke the admin role.",
+          "description": "can upgrade the implementation of the outcome-token ledger and manage all roles.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
           "from": "matic:0x1000008dD9001B968442c1000017eaE6E0dA00Ba",
-          "description": "can upgrade the module implementation, and grant or revoke the admin role.",
+          "description": "can upgrade the module implementation and manage all roles.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
           "from": "matic:0x200000900045e3B6259600682756002200028933",
-          "description": "can upgrade the module implementation, and grant or revoke the admin role.",
+          "description": "can upgrade the module implementation and manage all roles.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
           "from": "matic:0x30000034706C7d8e12009DAB006Be20000c031A8",
-          "description": "can upgrade the module implementation, and grant or revoke the admin role.",
+          "description": "can upgrade the module implementation and manage all roles.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
           "from": "matic:0x7A18EDfe055488A3128f01F563e5B479D92ffc3a",
-          "description": "can replace the implementation of every smart wallet proxy pointing at this beacon in a single transaction, except wallets that have pinned their implementation.",
+          "description": "can replace the default implementation used by every caller without a pinned implementation.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
           "from": "matic:0xa1200000d0002264C9a1698e001292D00E1b00af",
-          "description": "can upgrade the redemption helper implementation, and grant or revoke the admin role. An upgrade could redirect the redemption proceeds of all opted-in users.",
+          "description": "can upgrade the redemption helper implementation and manage all roles. An upgrade could transfer positions belonging to users who approved this contract or redirect their redemption proceeds.",
           "role": ".owner"
         },
         {
@@ -1498,13 +1502,13 @@
         {
           "permission": "upgrade",
           "from": "matic:0xC417fD8E9661c0d2120B64a04Bb3278C17E99DB1",
-          "description": "can execute arbitrary calls from the vault, install or uninstall plugins, and upgrade the account implementation, giving it full control over the underlying collateral held here.",
+          "description": "can execute arbitrary calls from the account, install or uninstall plugins, and upgrade the implementation, giving it full control over any assets held by the account.",
           "role": ".getNativeOwner"
         },
         {
           "permission": "upgrade",
           "from": "matic:0xe3333700cA9d93003F00f0F71f8515005F6c00Aa",
-          "description": "can upgrade the exchange implementation, and grant or revoke the admin role.",
+          "description": "can upgrade the exchange implementation and manage all roles.",
           "role": ".owner"
         }
       ],
@@ -1567,7 +1571,7 @@
         "0x90d5e83a39a86df5c94e2a4b1e2080a1a280a29043db40270e2021c4d367ff8d"
       ],
       "proxyType": "immutable",
-      "description": "Per-user smart wallet implementation shared through a beacon: every call batch needs the owner's (or a time-limited session signer's) EIP-712 signature, and direct withdrawals are owner-only and unlock only while the wallet is paused. The beacon owner can replace every wallet's code at once; owners can opt out by pinning the current implementation.",
+      "description": "Smart-wallet implementation for factory-deployed proxies. Only the configured factory can submit call batches, which require an EIP-712 signature from the owner or an unexpired session signer. The owner can pause the wallet and, after the factory-configured delay, withdraw assets and revoke token approvals.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1774925329,
       "sinceBlock": 84902646,
@@ -1601,7 +1605,7 @@
         "0x14741f557c65402c8746f0581f2893c2d2a971c58c16a123abf7d79e4e605566"
       ],
       "proxyType": "immutable",
-      "description": "Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger; initializing and resolving are permissionless. Admins can pause or reset any question, and can flag one and resolve it manually - either outcome or an even split - after 1h.",
+      "description": "Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger. Anyone can call initialize, but the adapter is the requester seen by the oracle, and the oracle's own access controls determine who may propose and settle the answer. After the oracle has settled an answer, anyone can call resolve to copy it into the outcome-token ledger unless an admin has paused the question. Admins can pause, unpause, reset or flag initialized questions, unflag them until the safety period has passed, and after 1h manually resolve a flagged question with either outcome or an even split.",
       "deployerAddress": "matic:0x243cbcEA58d4b770C12146474AdDD4F82EfF99Bf",
       "sinceTimestamp": 1754329625,
       "sinceBlock": 74797879,
@@ -1622,13 +1626,13 @@
       "fieldMeta": {
         "admins": {
           "severity": "HIGH",
-          "description": "Can pause, unpause, reset and flag any question, and manually resolve a flagged question with either outcome or an even split after the safety period."
+          "description": "Can pause, unpause, reset and flag initialized questions, unflag them until the safety period has passed, and manually resolve a flagged question with either outcome or an even split after the safety period."
         },
         "ctf": {
           "description": "Outcome-token ledger that this adapter reports payouts to."
         },
         "optimisticOracle": {
-          "description": "UMA optimistic oracle that price requests for questions are sent to."
+          "description": "UMA optimistic oracle that receives requests from this adapter. Its own access controls determine who may propose and settle answers; the adapter's public entrypoints do not bypass them."
         },
         "adminsEverObserved": {
           "severity": "HIGH",
@@ -1648,7 +1652,7 @@
         "0x2037a707a6675504e045d340622a1e5cc100b76f9c34fd215f3987847e5a2888"
       ],
       "proxyType": "immutable",
-      "description": "Permissioned operator between the resolution adapter and the multi-outcome adapter. Anyone can finalize a reported question after 0s; admins can flag a question and force an outcome of their choosing after the same delay - currently zero, so both can happen in one transaction.",
+      "description": "Permissioned operator between the resolution adapter and the multi-outcome adapter. Anyone can finalize an unflagged reported question after 0s; admins can flag or unflag a question and force an outcome of their choosing after the same delay. This implementation hardcodes the delay to zero, so it enforces no waiting time after reporting or flagging.",
       "deployerAddress": "matic:0xe9Ac97D2BE532C0de63Ec26270EA3F217E207326",
       "sinceTimestamp": 1768250801,
       "sinceBlock": 81565425,
@@ -1671,7 +1675,7 @@
       "fieldMeta": {
         "admins": {
           "severity": "HIGH",
-          "description": "Can prepare markets and questions, flag questions to block their permissionless resolution, and force an arbitrary outcome on a flagged question after the delay period (currently zero, i.e. with no notice)."
+          "description": "Can prepare markets and questions, flag or unflag questions to control public resolution, and force an arbitrary outcome on a flagged question after the delay period, which this implementation hardcodes to zero."
         },
         "oracle": {
           "severity": "HIGH",
@@ -1703,7 +1707,7 @@
         "0x14741f557c65402c8746f0581f2893c2d2a971c58c16a123abf7d79e4e605566"
       ],
       "proxyType": "immutable",
-      "description": "Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger; initializing and resolving are permissionless. Admins can pause or reset any question, and can flag one and resolve it manually - either outcome or an even split - after 1h.",
+      "description": "Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger. Anyone can call initialize, but the adapter is the requester seen by the oracle, and the oracle's own access controls determine who may propose and settle the answer. After the oracle has settled an answer, anyone can call resolve to copy it into the outcome-token ledger unless an admin has paused the question. Admins can pause, unpause, reset or flag initialized questions, unflag them until the safety period has passed, and after 1h manually resolve a flagged question with either outcome or an even split.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1732,13 +1736,13 @@
       "fieldMeta": {
         "admins": {
           "severity": "HIGH",
-          "description": "Can pause, unpause, reset and flag any question, and manually resolve a flagged question with either outcome or an even split after the safety period."
+          "description": "Can pause, unpause, reset and flag initialized questions, unflag them until the safety period has passed, and manually resolve a flagged question with either outcome or an even split after the safety period."
         },
         "ctf": {
           "description": "Outcome-token ledger that this adapter reports payouts to."
         },
         "optimisticOracle": {
-          "description": "UMA optimistic oracle that price requests for questions are sent to."
+          "description": "UMA optimistic oracle that receives requests from this adapter. Its own access controls determine who may propose and settle answers; the adapter's public entrypoints do not bypass them."
         },
         "adminsEverObserved": {
           "severity": "HIGH",
@@ -1758,7 +1762,7 @@
         "0x541331994e2298b4dffaff0724876b418eefc07fe024efda90a6dba87fd7a513"
       ],
       "proxyType": "immutable",
-      "description": "Earlier generation of the resolution adapter, still holding legacy markets. Admins can flag a question - with no way to unflag - and after 2d resolve it with an arbitrary payout array.",
+      "description": "Resolution adapter registering binary questions with an UMA optimistic oracle and reporting settled answers to an outcome-token ledger. Anyone can initialize a question and resolve it when an oracle price is available unless an admin has paused it. Admins can pause, unpause, reset or flag initialized questions. A flagged question cannot be unflagged and, after 2d, can be resolved by an admin with any two-value payout array that is not all zeroes.",
       "deployerAddress": "matic:0x4fFCFD5007270b6e0f348FDcA85f9565BB6bae4e",
       "sinceTimestamp": 1666901703,
       "sinceBlock": 34876144,
@@ -1783,7 +1787,7 @@
       "fieldMeta": {
         "admins": {
           "severity": "HIGH",
-          "description": "Can pause, unpause, reset and flag any question, and emergency-resolve a flagged question with an arbitrary payout array after the emergency safety period."
+          "description": "Can pause, unpause, reset and flag initialized questions, and emergency-resolve a flagged question with any two-value payout array that is not all zeroes after the emergency safety period."
         },
         "ctf": {
           "description": "Outcome-token ledger that this adapter reports payouts to."
@@ -1868,7 +1872,7 @@
         {
           "permission": "interact",
           "from": "matic:0x6A9D222616C90FcA5754cd1333cFD9b7fb6a4F74",
-          "description": "pause, unpause, reset and flag questions, and emergency-resolve a flagged question with an arbitrary payout array after the 2d emergency safety period.",
+          "description": "pause, unpause, reset and flag initialized questions, and emergency-resolve a flagged question with any two-value payout array that is not all zeroes after the 2d emergency safety period.",
           "role": ".admins"
         }
       ]
@@ -1895,7 +1899,7 @@
         "0xe662818aa0e3e07036af6594274458467cde9e52276c8faf3f61a85632119899"
       ],
       "proxyType": "immutable",
-      "description": "Beacon holding the implementation pointer for every wallet deployed by the wallet factory. Its owner can replace the implementation of all of them in one transaction; individual wallets can opt out by pinning the current implementation.",
+      "description": "Beacon with an owner-controlled default wallet implementation and per-caller implementation pins. Its owner can replace the default implementation in one transaction; callers can pin themselves to the current default and later rejoin default upgrades.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1782418388,
       "sinceBlock": 89142262,
@@ -1910,7 +1914,7 @@
         "owner": { "severity": "HIGH" },
         "defaultImplementation": {
           "severity": "HIGH",
-          "description": "The implementation all non-opted-out wallet proxies delegate to."
+          "description": "Default implementation returned to callers without a pinned implementation."
         }
       },
       "implementationNames": {
@@ -1926,7 +1930,7 @@
         "0xf6926d7b3e293452e20926d79e208bbefb27b2ac7c84bca57c8552d86ffbfaf0"
       ],
       "proxyType": "immutable",
-      "description": "Vault holding accrued protocol fees. Admins can transfer out any ERC20 or ERC1155 balance to any recipient at any time, with no delay.",
+      "description": "Vault that can hold arbitrary ERC20 and ERC1155 tokens. Admins can transfer any balance to any recipient at any time, with no delay.",
       "deployerAddress": "matic:0xe9Ac97D2BE532C0de63Ec26270EA3F217E207326",
       "sinceTimestamp": 1701203182,
       "sinceBlock": 50505364,
@@ -2010,7 +2014,7 @@
         "0xacce8504f3aa00ace54823d187c93307d070b7638f86f59f3e1f7f5f14b40552"
       ],
       "proxyType": "immutable",
-      "description": "Permissionless wrap entrypoint: anyone can deposit the underlying stablecoin and mint an equal amount of the collateral token. Admins can pause wrapping per asset with no delay.",
+      "description": "Lets anyone deposit an asset supported by the configured collateral token and mint an equal amount of collateral tokens while that asset is not paused. Admins can pause or unpause wrapping per asset with no delay.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1774924687,
       "sinceBlock": 84902325,
@@ -2074,7 +2078,7 @@
         "0xa87e7461021d077d640bc312623caf5c914572ac90f111bf5ceba3ca4b04b554"
       ],
       "proxyType": "immutable",
-      "description": "A simple address whitelist for tokens that can be used as bonds and/or fees. This whitelist is checked and enforced by various smart contracts in the UMA ecosystem.",
+      "description": "Owner-managed address whitelist. Other contracts can query whether an address is listed; the whitelist itself does not assign a meaning to the listed addresses.",
       "deployerAddress": "matic:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "sinceTimestamp": 1754071044,
       "sinceBlock": 74676570,
@@ -2498,7 +2502,7 @@
         "0x2ab3853a5f7ca038bdce31cdf6a274cd45e81c9ef2422f9b0a17c37d1d49713d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable helper that batch-redeems resolved positions for users who opted in by granting it an ERC1155 approval. Operator-role holders only choose when redemption happens; proceeds always go to the position owner and the contract cannot redirect funds.",
+      "description": "Upgradeable helper that batch-redeems resolved positions for users who approved it on the relevant ERC1155 ledger. Operator-role holders choose which approved positions to redeem and when, but the current implementation always sends proceeds to the position owner.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1779829016,
       "sinceBlock": 87479597,
@@ -2537,11 +2541,11 @@
       "fieldMeta": {
         "roleHolders": {
           "severity": "HIGH",
-          "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (1) admin, bit 1 (2) operator, bit 2 (4) creator, bit 3 (8) bridge, bit 4 (16) resolver."
+          "description": "Role bitmask per address, reconstructed from role-update events. Only bit 0 (1), the admin role, and bit 1 (2), the operator role, are checked to restrict calls. Granting any other role bit gives no additional access in this contract."
         },
         "owner": { "severity": "HIGH" },
         "POSITION_MANAGER": {
-          "description": "The outcome-token ledger whose positions this contract redeems on behalf of opted-in users."
+          "description": "The outcome-token ledger whose positions this contract redeems for users who approved it as an operator."
         },
         "COLLATERAL_TOKEN": {
           "description": "The collateral token paid out to position owners on redemption."
@@ -2595,7 +2599,7 @@
         "0x8b864829d6f20f028f7d08e36530cd234b5da9f58e632213562d0c57986962a6"
       ],
       "proxyType": "immutable",
-      "description": "Deterministic factory for single-owner smart-contract wallets: anyone can deploy a wallet for a signer from an EIP-712 signature, at an address derived from the signer's address. The settlement exchanges use the same derivation to validate wallet-owner signatures.",
+      "description": "Deterministic factory for single-owner Safe proxies. Anyone can submit an EIP-712 creation signature to deploy a wallet owned by the recovered signer at an address derived from that signer.",
       "deployerAddress": "matic:0x7bf50e5A8Ca3443f9c15FD2747Ba2a85078d557A",
       "sinceTimestamp": 1632414637,
       "sinceBlock": 19426226,
@@ -2632,7 +2636,7 @@
         "0xad93efe85422a298afbf8524d6f7673af59710cf56843344c5543cac431d798f"
       ],
       "proxyType": "immutable",
-      "description": "Deterministic factory deploying a minimal-proxy wallet per user and forwarding batched calls to it; the settlement exchanges use the same address derivation to validate wallet-owner signatures. Its owner can only replace the gas-relay module.",
+      "description": "Deterministic factory that associates each effective caller with one minimal-proxy wallet and forwards batched calls to it. The constructor deploys and stores the wallet implementation, with no direct setter. The owner can replace the gas-relay module, whose code executes by delegatecall and can modify factory storage.",
       "deployerAddress": "matic:0xb342a81d57BB9ba8b81111523CD10Ea550DF67f8",
       "sinceTimestamp": 1599154669,
       "sinceBlock": 4022827,
@@ -2648,7 +2652,7 @@
       "fieldMeta": {
         "owner": { "severity": "HIGH" },
         "getImplementation": {
-          "description": "Proxy-wallet implementation cloned for every user. It is deployed by the constructor and cannot be changed."
+          "description": "Implementation cloned when a caller's deterministic wallet is first needed. It is deployed by the factory constructor and has no direct setter; the replaceable gas-relay module executes by delegatecall and can modify factory storage."
         }
       },
       "implementationNames": {
@@ -2666,7 +2670,7 @@
         {
           "permission": "interact",
           "from": "matic:0x661992aebf6BecF7BA5abB66f6b0Bf62Aa7a2E93",
-          "description": "prepare markets and questions, flag questions to block their permissionless resolution, and force an outcome of their choosing on a flagged question after the 0s delay period.",
+          "description": "prepare markets and questions, flag or unflag questions to control public resolution, and force an outcome of their choosing on a flagged question after the 0s delay period.",
           "role": ".admins"
         }
       ],
@@ -2693,7 +2697,7 @@
         "0x50374cb0e7b71c78ef59b0ff8e78e47c5e73d7f532d5da16229e51e8c82f5285"
       ],
       "proxyType": "immutable",
-      "description": "Adapter letting anyone split wrapped collateral into outcome positions, merge, or redeem on the conditional-token ledger, unwrapping and re-wrapping in the same call; it cannot redirect funds to third parties. Admins can pause all operations, including redemptions, with no delay.",
+      "description": "Adapter letting anyone split wrapped collateral into outcome positions, merge, or redeem on the conditional-token ledger while the underlying asset is not paused. It unwraps and re-wraps in the same call and cannot redirect funds to third parties. Admins can pause or unpause all operations, including redemptions, per asset with no delay.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1774924719,
       "sinceBlock": 84902341,
@@ -2730,7 +2734,7 @@
         "0x7b4f9c2a2ee857caf659d607fa024b31e5a2b192d4f3534bf02779c6e9de371b"
       ],
       "proxyType": "immutable",
-      "description": "Adapter letting anyone split wrapped collateral into outcome positions, merge, or redeem on the conditional-token ledger, unwrapping and re-wrapping in the same call; it cannot redirect funds to third parties. Admins can pause all operations, including redemptions, with no delay.",
+      "description": "Adapter letting anyone split wrapped collateral into outcome positions, merge, or redeem on the conditional-token ledger while the underlying asset is not paused. It unwraps and re-wraps in the same call and cannot redirect funds to third parties. Admins can pause or unpause all operations, including redemptions, per asset with no delay.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1777479696,
       "sinceBlock": 86179826,
@@ -2767,7 +2771,7 @@
         "0x38791e2835904a7d90fda2ec16c86939d6ad626ae1d8823e525ab678cff436b3"
       ],
       "proxyType": "immutable",
-      "description": "Adapter letting anyone split, merge, redeem or convert wrapped collateral into multi-outcome positions, unwrapping and re-wrapping in the same call; it cannot redirect funds to third parties. Admins can pause all operations, including redemptions, with no delay.",
+      "description": "Adapter letting anyone split, merge, redeem or convert wrapped collateral into multi-outcome positions while the underlying asset is not paused. It unwraps and re-wraps in the same call and cannot redirect funds to third parties. Admins can pause or unpause all operations, including redemptions, per asset with no delay.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1774924731,
       "sinceBlock": 84902347,
@@ -2806,7 +2810,7 @@
         "0x5bef72c678ec8248b705e336481e1df932ba5ed5106a0409a12bb7bc47374144"
       ],
       "proxyType": "immutable",
-      "description": "Adapter letting anyone split, merge, redeem or convert wrapped collateral into multi-outcome positions, unwrapping and re-wrapping in the same call; it cannot redirect funds to third parties. Admins can pause all operations, including redemptions, with no delay.",
+      "description": "Adapter letting anyone split, merge, redeem or convert wrapped collateral into multi-outcome positions while the underlying asset is not paused. It unwraps and re-wraps in the same call and cannot redirect funds to third parties. Admins can pause or unpause all operations, including redemptions, per asset with no delay.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1777479828,
       "sinceBlock": 86179892,
@@ -2846,7 +2850,7 @@
         "0xfb5283054cd91680d584576a6dbd3236d704b86faae27e2e6b3baf172cd56b7b"
       ],
       "proxyType": "EIP1167 proxy",
-      "description": "Per-user proxy wallet implementation cloned by its factory; only the owner set at initialization can execute batches of arbitrary calls through it.",
+      "description": "Initializable wallet whose initialize() function assigns its caller as owner while the owner slot is still empty. The stored owner can execute batches of arbitrary calls or delegatecalls; delegatecalls run in the wallet's context and can modify its storage, including the owner slot.",
       "deployerAddress": "matic:0x02A86f51aA7B8b1c17c30364748d5Ae4a0727E23",
       "sinceTimestamp": 1766891753,
       "sinceBlock": 80886255,
@@ -2869,7 +2873,7 @@
         "0x640f1329601b6af0916559ab082aa7cfef1805c5f6fdd6bd25c2a8999f93f32d"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable ERC20 (pUSD) wrapping a stablecoin one-for-one, with the underlying held in a separate vault. Wrapping and unwrapping are restricted to wrapper-role holders (the ramps and adapters), and minter-role holders can mint without any backing.",
+      "description": "Upgradeable ERC20 (pUSD) that wraps either of two immutable supported assets one-for-one, transferring deposits to an immutable vault. Wrapper-role holders can wrap and unwrap; minter-role holders can mint without depositing an asset and burn their own balance.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1774924677,
       "sinceBlock": 84902320,
@@ -2938,10 +2942,10 @@
         "owner": { "severity": "HIGH" },
         "VAULT": {
           "severity": "HIGH",
-          "description": "Contract holding the underlying collateral that backs the circulating supply. It grants this token an allowance so that unwrapping can pull the underlying out."
+          "description": "Immutable address that receives supported assets during wrapping and from which they are pulled via allowance during unwrapping."
         },
         "totalSupply": {
-          "description": "Circulating supply of the wrapped collateral token."
+          "description": "Total supply of the collateral token."
         },
         "symbol": { "description": "Ticker of the wrapped collateral token." }
       },
@@ -2991,7 +2995,7 @@
         "0xc45d2221a158a1a7ce795045632955b64ca4cfd60da26290fd53bca002903e5e"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "ERC-4337 smart account holding the stablecoin that backs the collateral token. Its owner can execute arbitrary calls from the account, giving it full control over the held funds.",
+      "description": "Upgradeable ERC-4337 single-owner smart account. Its owner can execute arbitrary calls, install or uninstall plugins, and upgrade the implementation, giving it full control over any assets held by the account.",
       "deployerAddress": "matic:0x17A9aA3f7945fB00C2EB16857BAa4AdB63DA59Db",
       "sinceTimestamp": 1771462560,
       "sinceBlock": 83171268,
@@ -3062,12 +3066,12 @@
         "0x822e7f68866a6e730e01e3a986bee22af4b92c592f65b6128132ba59314b26b4"
       ],
       "proxyType": "immutable",
-      "description": "Immutable adapter composing binary conditions into multi-outcome (negative-risk) markets and acting as the on-ledger oracle for them. Splitting, merging, redeeming and converting are permissionless; converting can charge a per-market fee that accrues to a fixed vault.",
+      "description": "Immutable adapter composing binary conditions into multi-outcome (negative-risk) markets and acting as the on-ledger oracle for them. Split, merge, redeem and conversion functions have no caller restriction; conversions can charge a per-market fee that accrues to a fixed vault.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "matic:0x3A3BD7bb9528E159577F7C2e685CC81A765002E2",
-          "description": "can mint wrapper units without underlying backing and release arbitrary amounts of the underlying held by this contract to any recipient. This owner is immutable and cannot be changed.",
+          "description": "can deposit underlying and mint wrapper units to any recipient, mint units to itself without depositing underlying, burn its own units, and release underlying held by the contract to any recipient. This owner is immutable and cannot be changed.",
           "role": ".owner"
         }
       ],
@@ -3120,7 +3124,7 @@
         {
           "permission": "interact",
           "from": "matic:0x661992aebf6BecF7BA5abB66f6b0Bf62Aa7a2E93",
-          "description": "prepare markets and questions, flag questions to block their permissionless resolution, and force an outcome of their choosing on a flagged question after the 0s delay period.",
+          "description": "prepare markets and questions, flag or unflag questions to control public resolution, and force an outcome of their choosing on a flagged question after the 0s delay period.",
           "role": ".admins"
         }
       ]
@@ -3144,7 +3148,7 @@
         "0xa83f4c76e0b99f2f95ceeaba1cb3660b8e46f41cd413d4ce71b80a1d4ddcbd56"
       ],
       "proxyType": "immutable",
-      "description": "Immutable exchange settling EIP-712 signed limit orders that are matched off-chain by operator-role holders, who also choose the fee on each fill. The fee is not part of the signed order and is bounded only by an admin-set maximum, currently 0 bps; a maximum of zero disables the check, so no on-chain ceiling applies. Users can pause their own orders, effective after 100 blocks, an interval the admins can change.",
+      "description": "Exchange settling EIP-712 signed limit orders that are matched off-chain by operator-role holders, who also choose the fee on each fill. The fee is not part of the signed order and is checked against an admin-configurable rate limit, currently 0 bps. A zero rate means fees have no percentage cap, not that fees are zero: an operator can charge up to all proceeds on a sell or collect an additional amount from a buyer, subject to the buyer's balance and allowance. Users can pause settlement of all their orders, effective after 100 blocks, an interval the admins can change.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1774924743,
       "sinceBlock": 84902353,
@@ -5388,11 +5392,15 @@
       "fieldMeta": {
         "admins": {
           "severity": "HIGH",
-          "description": "Admins added after deployment, reconstructed from authorization events. The admin granted in the constructor emits no event and is therefore not listed here; the live admin is modeled on the CTFExchange `admin` field and listed for both exchanges in adminsEverObserved."
+          "description": "Admins reconstructed from post-deployment authorization events. The constructor grant emits no event, so the initial admin is not included solely by virtue of that grant."
+        },
+        "admin": {
+          "severity": "HIGH",
+          "description": "Admin granted in the constructor without an authorization event."
         },
         "operators": { "severity": "HIGH" },
         "getMaxFeeRate": {
-          "description": "Maximum fee rate in basis points that operators may charge on the proceeds of a fill."
+          "description": "Maximum rate, in basis points, enforced for operator-supplied fill fees. Zero means fees have no percentage cap, not that fees are zero: an operator can charge up to all proceeds on a sell or collect an additional amount from a buyer, subject to the buyer's balance and allowance."
         },
         "getFeeReceiver": {
           "severity": "HIGH",
@@ -5407,11 +5415,7 @@
         },
         "adminsEverObserved": {
           "severity": "HIGH",
-          "description": "Every address ever observed exercising an admin power, taken from the granter recorded in each authorization event. This is how the constructor-granted admin becomes visible at all: the constructor emits no event, so such an admin never appears in the added/removed sets above. The list is historical and not a live permission set - an entry may since have been removed, so current status has to be confirmed with isAdmin()."
-        },
-        "admin": {
-          "severity": "HIGH",
-          "description": "The admin granted in the constructor, recovered from the deployment arguments because the grant emits no event. The same AdminSafe holds admin on the neg-risk exchange too (confirmed on-chain via isAdmin), but that deployment is CREATE2 and its args were not retained, so there it is hardcoded to the same AdminSafe, confirmed on-chain via isAdmin."
+          "description": "Addresses recorded as the admin in tracked role-change events. This list is historical, not a live permission set. A constructor-granted admin appears here only if it later performs one of these role changes; confirm current status with isAdmin()."
         }
       },
       "implementationNames": {
@@ -5448,7 +5452,7 @@
         "0xa83f4c76e0b99f2f95ceeaba1cb3660b8e46f41cd413d4ce71b80a1d4ddcbd56"
       ],
       "proxyType": "immutable",
-      "description": "Immutable exchange settling EIP-712 signed limit orders that are matched off-chain by operator-role holders, who also choose the fee on each fill. The fee is not part of the signed order and is bounded only by an admin-set maximum, currently 0 bps; a maximum of zero disables the check, so no on-chain ceiling applies. Users can pause their own orders, effective after 100 blocks, an interval the admins can change.",
+      "description": "Exchange settling EIP-712 signed limit orders that are matched off-chain by operator-role holders, who also choose the fee on each fill. The fee is not part of the signed order and is checked against an admin-configurable rate limit, currently 0 bps. A zero rate means fees have no percentage cap, not that fees are zero: an operator can charge up to all proceeds on a sell or collect an additional amount from a buyer, subject to the buyer's balance and allowance. Users can pause settlement of all their orders, effective after 100 blocks, an interval the admins can change.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1775236389,
       "sinceBlock": 85058176,
@@ -7680,11 +7684,15 @@
       "fieldMeta": {
         "admins": {
           "severity": "HIGH",
-          "description": "Admins added after deployment, reconstructed from authorization events. The admin granted in the constructor emits no event and is therefore not listed here; the live admin is modeled on the CTFExchange `admin` field and listed for both exchanges in adminsEverObserved."
+          "description": "Admins reconstructed from post-deployment authorization events. The constructor grant emits no event, so the initial admin is not included solely by virtue of that grant."
+        },
+        "admin": {
+          "severity": "HIGH",
+          "description": "Admin granted in the constructor without an authorization event."
         },
         "operators": { "severity": "HIGH" },
         "getMaxFeeRate": {
-          "description": "Maximum fee rate in basis points that operators may charge on the proceeds of a fill."
+          "description": "Maximum rate, in basis points, enforced for operator-supplied fill fees. Zero means fees have no percentage cap, not that fees are zero: an operator can charge up to all proceeds on a sell or collect an additional amount from a buyer, subject to the buyer's balance and allowance."
         },
         "getFeeReceiver": {
           "severity": "HIGH",
@@ -7699,11 +7707,7 @@
         },
         "adminsEverObserved": {
           "severity": "HIGH",
-          "description": "Every address ever observed exercising an admin power, taken from the granter recorded in each authorization event. This is how the constructor-granted admin becomes visible at all: the constructor emits no event, so such an admin never appears in the added/removed sets above. The list is historical and not a live permission set - an entry may since have been removed, so current status has to be confirmed with isAdmin()."
-        },
-        "admin": {
-          "severity": "HIGH",
-          "description": "The admin granted in the constructor. This deployment is CREATE2 with unretained constructor args and the grant emits no event, so the admin cannot be discovered; it is hardcoded to the AdminSafe, confirmed live on-chain via isAdmin()."
+          "description": "Addresses recorded as the admin in tracked role-change events. This list is historical, not a live permission set. A constructor-granted admin appears here only if it later performs one of these role changes; confirm current status with isAdmin()."
         }
       },
       "implementationNames": {
@@ -7721,7 +7725,7 @@
         "0x1e5ccf5a4b9e5b8de8e01e19ebba561c71751c34e69d9db0d398f5d14ebc8b03"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable request-for-quote exchange where operator-role holders settle EIP-712 signed orders for combination positions. The fee on each fill is bounded by the order's signed rate and a global maximum of 1000 bps fixed at deployment.",
+      "description": "Upgradeable request-for-quote exchange where operator-role holders settle EIP-712 signed orders for combination positions. Operators supply the fee on each fill; it is not part of the signed order and is checked only against a global limit of 1000 bps fixed at deployment. A zero limit means fees have no percentage cap, not that fees are zero: an operator can charge up to all proceeds on a sell or collect an additional amount from a buyer, subject to the buyer's balance and allowance.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1779828796,
       "sinceBlock": 87479471,
@@ -15814,7 +15818,7 @@
         },
         "owner": { "severity": "HIGH" },
         "MAX_FEE_RATE": {
-          "description": "Global upper bound on the fee rate charged at settlement, in basis points. Fixed at deployment."
+          "description": "Global fee-rate limit for operator-supplied settlement fees, in basis points. It is fixed at deployment. Zero means fees have no percentage cap, not that fees are zero: an operator can charge up to all proceeds on a sell or collect an additional amount from a buyer, subject to the buyer's balance and allowance."
         },
         "FEE_RECEIVER": {
           "description": "Address receiving all trading fees collected at settlement."
@@ -15863,7 +15867,7 @@
         "0x7a4ba76027dfa4191ee81f06317338e43ccb7d320f074ab4b38b0c018e9f9671"
       ],
       "proxyType": "immutable",
-      "description": "Wrap/unwrap entrypoint for the collateral token that additionally requires an EIP-712 signature from a witness-role holder. Admins can pause either direction per asset with no delay.",
+      "description": "Wrap/unwrap entrypoint for the collateral token that additionally requires an EIP-712 signature from a witness-role holder. Admins can pause or unpause both directions for an asset with no delay.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1774924709,
       "sinceBlock": 84902336,
@@ -15915,7 +15919,7 @@
         "0x7c748840fd6ee12eae68e4cb0dbdb61d9821d395707a0e7ff380ff583d7ec7d8"
       ],
       "proxyType": "immutable",
-      "description": "Standard permissionless UMA Optimistic Oracle V2. Anyone can request a price for a registered identifier, anyone can propose an answer by posting a bond, and anyone can dispute a proposal within its liveness window (2h by default, customizable per request). Undisputed proposals become final and settleable once the liveness window has passed, while disputes are escalated to UMA's DVM, where UMA token holders vote on the outcome and the loser's bond is partly awarded to the winner.",
+      "description": "Standard UMA Optimistic Oracle V2 with no caller allowlist. Anyone can request a price using a supported identifier and collateral, propose an answer by posting a bond, or dispute a proposal within its liveness window (2h by default, customizable per request). Undisputed proposals become final and settleable once the liveness window has passed, while disputes are escalated to UMA's DVM, where UMA token holders vote on the outcome and the loser's bond is partly awarded to the winner.",
       "deployerAddress": "matic:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "sinceTimestamp": 1655716228,
       "sinceBlock": 29786052,
@@ -15956,7 +15960,7 @@
         "0xd17740ea91f58601702aa6964b5561b94b4f6bc0817694db5ec2b35d2843a07e"
       ],
       "proxyType": "immutable",
-      "description": "Per-user smart wallet implementation shared through a beacon: every call batch needs the owner's (or a time-limited session signer's) EIP-712 signature, and direct withdrawals are owner-only and unlock only while the wallet is paused. The beacon owner can replace every wallet's code at once; owners can opt out by pinning the current implementation.",
+      "description": "Smart-wallet implementation for factory-deployed proxies. Only the configured factory can submit call batches, which require an EIP-712 signature from the owner or an unexpired session signer. The owner can pause the wallet and, after the factory-configured delay, withdraw assets and revoke token approvals.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1783529957,
       "sinceBlock": 89883308,
@@ -19216,10 +19220,10 @@
     "polymarket/CombosExchange": "0x391f009e37d5b5dd71eb385d2a558771831e4ed570ec6b7f86bc6a67578b6e7e",
     "polymarket/ConditionalTokens": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polymarket/CtfCollateralAdapter": "0xe53fa537ac54be6758294973222ff39271d3d8bf6b69adb78bf90b3d00726fbb",
-    "polymarket/CTFExchange": "0x2fffa9cfddfeda911959cf5ddc7aa3e9fddf5012ad1174dc26c6703a46bc38ab",
+    "polymarket/CTFExchange": "0x80845f0a43efe3a7b81c8c44f8663684431b2a8d1f86466236a27eeeaffd5d78",
     "polymarket/DepositWallet": "0xf6dad4abe9bff20ea7e205610d8264f9da91c60beaf7bd8abc67d03bb9e5f2b5",
     "polymarket/DepositWalletBeacon": "0x3e80cb335e7982808ddb323f370ecedcf1f5a58a98cad90905bb28823cab35c0",
-    "polymarket/DepositWalletFactory": "0x4c921af1813c18f2efab1decca53a50e5b90eea23005a0106c405154542ef3a2",
+    "polymarket/DepositWalletFactory": "0x64aa977248dcaac6723ed9208b1d82e47b3c8da68bcbeba82a61d8e3bf02cb64",
     "polymarket/NegRiskAdapter": "0x5b00f68990dcc69e8d13ec5f278ecdf6c4d08bc4c26529131138547c939857ab",
     "polymarket/NegRiskCtfCollateralAdapter": "0xe53fa537ac54be6758294973222ff39271d3d8bf6b69adb78bf90b3d00726fbb",
     "polymarket/NegRiskFeeVault": "0xc2a3deaad8b40e03ca329ae31b37c2c16978c8ef34bdb7f7640c39fc2398c9d9",
@@ -19240,5 +19244,5 @@
     "uma/OptimisticOracleV2": "0xdb25a0cd206ef5646439b0ddbabcb9a6834c1c3c0f395b01803b7e38944859dc"
   },
   "usedBlockNumbers": { "polygonpos": 91186243 },
-  "permissionsConfigHash": "0x0e63f910524972a7fc5cfdf6964bc791cc3f4fbe68fd5b192609b97033e64d27"
+  "permissionsConfigHash": "0x1f0c917a9114945a54a7716bde08d6cd4219399c985c6b2369159bc324c595d0"
 }

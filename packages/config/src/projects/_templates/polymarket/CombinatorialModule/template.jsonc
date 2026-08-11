@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CombinatorialModule",
-  "description": "Upgradeable outcome module for combinatorial positions built from legs of other modules; payouts derive from the legs' resolved payouts. All operations are permissionless, and bridge-role holders can mint positions without collateral backing.",
+  "description": "Upgradeable outcome module for combinatorial positions built from legs of other modules; payouts derive from the legs' resolved payouts. Position preparation, transformation and redemption functions have no caller restriction. Bridge-role holders can mint positions without collateral backing.",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
     "roleHolders": {
@@ -12,13 +12,13 @@
         "dedupBy": "user"
       },
       "severity": "HIGH",
-      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (1) admin, bit 1 (2) operator, bit 2 (4) creator, bit 3 (8) bridge, bit 4 (16) resolver."
+      "description": "Role bitmask per address, reconstructed from role-update events. Only bit 0 (1), the admin role, and bit 3 (8), the bridge role, are checked to restrict calls. Granting any other role bit gives no additional access in this contract."
     },
     "owner": {
       "permissions": [
         {
           "type": "upgrade",
-          "description": "can upgrade the module implementation, and grant or revoke the admin role."
+          "description": "can upgrade the module implementation and manage all roles."
         }
       ],
       "severity": "HIGH"

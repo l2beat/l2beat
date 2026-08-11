@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "ManagedOptimisticOracleV2",
   "category": "shared",
-  "description": "Managed (permissioned) variant of the UMA Optimistic Oracle V2 that acts as an escalation layer before UMA's DVM. Price requests are restricted to a requester whitelist and proposals to a proposer whitelist. A proposal can be disputed during its liveness window (default {{ defaultLivenessFormatted }}, with a minimum dispute window of {{ minimumDisputeWindowFormatted }}), and settlement is restricted to the resolver role. Because settlement is permissioned, a proposal that outlives its liveness window does not become final on its own and can still be disputed until a resolver settles it. Roles (OpenZeppelin AccessControl): the default admin can upgrade the contract and manage the config admin role; the config admin sets the requester and proposer whitelists, the default liveness, the minimum dispute window and the allowed bond ranges, and manages request managers; request managers set per-request proposer whitelists, bonds and liveness; the self-governing resolver admin manages resolvers.",
+  "description": "Managed variant of the UMA Optimistic Oracle V2 that acts as an escalation layer before UMA's DVM. Only whitelisted requesters can create price requests. Both the proposal submitter and credited proposer must pass the effective proposer whitelist, which can be overridden per request. Anyone can dispute an active proposal by posting the required bond, but only a resolver-role holder can settle the request. The proposal liveness defaults to {{ defaultLivenessFormatted }}, with a minimum dispute window of {{ minimumDisputeWindowFormatted }}. Because settlement is permissioned, a proposal that outlives its liveness window does not become final on its own and can still be disputed until a resolver settles it. Roles (OpenZeppelin AccessControl): the default admin can upgrade the contract and manage the config admin role; the config admin sets the requester and default proposer whitelists, the default liveness, the minimum dispute window and the allowed bond ranges, and manages request managers; request managers set per-request proposer whitelists, bonds and liveness; the self-governing resolver admin manages resolvers.",
   "ignoreMethods": ["proxiableUUID", "getCurrentTime"],
   "ignoreRelatives": ["finder"],
   "fields": {
@@ -89,11 +89,11 @@
       ]
     },
     "requesterWhitelist": {
-      "description": "Whitelist of addresses allowed to make price requests.",
+      "description": "Contract consulted to decide whether a caller may make a price request.",
       "severity": "HIGH"
     },
     "defaultProposerWhitelist": {
-      "description": "Default whitelist of addresses allowed to propose answers to price requests.",
+      "description": "Default contract consulted for proposal submitters and credited proposers when no per-request override is configured.",
       "severity": "HIGH"
     }
   }

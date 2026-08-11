@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "NegRiskCtfCollateralAdapter",
-  "description": "Adapter letting anyone split, merge, redeem or convert wrapped collateral into multi-outcome positions, unwrapping and re-wrapping in the same call; it cannot redirect funds to third parties. Admins can pause all operations, including redemptions, with no delay.",
+  "description": "Adapter letting anyone split, merge, redeem or convert wrapped collateral into multi-outcome positions while the underlying asset is not paused. It unwraps and re-wraps in the same call and cannot redirect funds to third parties. Admins can pause or unpause all operations, including redemptions, per asset with no delay.",
   "fields": {
     "roleHolders": {
       "handler": {

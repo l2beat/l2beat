@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CollateralToken",
-  "description": "Upgradeable ERC20 ({{ symbol }}) wrapping a stablecoin one-for-one, with the underlying held in a separate vault. Wrapping and unwrapping are restricted to wrapper-role holders (the ramps and adapters), and minter-role holders can mint without any backing.",
+  "description": "Upgradeable ERC20 ({{ symbol }}) that wraps either of two immutable supported assets one-for-one, transferring deposits to an immutable vault. Wrapper-role holders can wrap and unwrap; minter-role holders can mint without depositing an asset and burn their own balance.",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
     "roleHolders": {
@@ -24,11 +24,11 @@
       "severity": "HIGH"
     },
     "VAULT": {
-      "description": "Contract holding the underlying collateral that backs the circulating supply. It grants this token an allowance so that unwrapping can pull the underlying out.",
+      "description": "Immutable address that receives supported assets during wrapping and from which they are pulled via allowance during unwrapping.",
       "severity": "HIGH"
     },
     "totalSupply": {
-      "description": "Circulating supply of the wrapped collateral token.",
+      "description": "Total supply of the collateral token.",
       "ignoreInWatchMode": true
     },
     "symbol": { "description": "Ticker of the wrapped collateral token." }

@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "DepositWalletFactory",
-  "description": "Upgradeable CREATE2 factory deploying per-user smart wallets at deterministic addresses and relaying owner-signed call batches to them; both paths are restricted to operator-role holders. Admins set the {{ timelockDelay }} delay that wallet owners must wait after pausing before withdrawals unlock.",
+  "description": "Upgradeable CREATE2 wallet factory. Operator-role holders deploy deterministic beacon-proxy wallets and relay signed call batches; legacy-deployer-role holders can separately deploy deterministic legacy UUPS wallets. Admins manage both roles and set the {{ timelockDelay }} delay that wallet owners must wait after pausing before withdrawals unlock.",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
     "roleHolders": {
@@ -21,7 +21,7 @@
       "permissions": [
         {
           "type": "upgrade",
-          "description": "can upgrade the factory implementation, grant or revoke the admin role, and authorise implementations for legacy wallet upgrades."
+          "description": "can upgrade the factory implementation, manage all roles, and authorise or unauthorise implementations for legacy wallet upgrades."
         }
       ],
       "severity": "HIGH"
@@ -36,8 +36,14 @@
       "description": "Delay that must elapse after a wallet owner pauses their wallet before paused-only operations such as withdrawals can be executed."
     },
     "BEACON": {
-      "description": "The beacon that resolves the implementation for all wallets deployed by this factory.",
+      "description": "Immutable beacon used by deploy() for beacon-proxy wallets. The separate deployLegacy() path does not use it.",
       "severity": "HIGH"
+    },
+    "LEGACY_IMPL": {
+      "description": "Immutable implementation embedded by deployLegacy() in legacy UUPS wallets. The deploy() path uses BEACON instead."
+    },
+    "implementation": {
+      "description": "Deprecated implementation pointer retained for storage and ABI compatibility. Neither wallet deployment path reads it."
     },
     "maxTimelockDelayFormatted": {
       "handler": {

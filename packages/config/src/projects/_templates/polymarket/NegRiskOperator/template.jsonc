@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "NegRiskOperator",
-  "description": "Permissioned operator between the resolution adapter and the multi-outcome adapter. Anyone can finalize a reported question after {{ delayPeriodFormatted }}; admins can flag a question and force an outcome of their choosing after the same delay - currently zero, so both can happen in one transaction.",
+  "description": "Permissioned operator between the resolution adapter and the multi-outcome adapter. Anyone can finalize an unflagged reported question after {{ delayPeriodFormatted }}; admins can flag or unflag a question and force an outcome of their choosing after the same delay. This implementation hardcodes the delay to zero, so it enforces no waiting time after reporting or flagging.",
   "fields": {
     "delayPeriodFormatted": {
       "handler": {
@@ -23,11 +23,11 @@
         }
       },
       "severity": "HIGH",
-      "description": "Can prepare markets and questions, flag questions to block their permissionless resolution, and force an arbitrary outcome on a flagged question after the delay period (currently zero, i.e. with no notice).",
+      "description": "Can prepare markets and questions, flag or unflag questions to control public resolution, and force an arbitrary outcome on a flagged question after the delay period, which this implementation hardcodes to zero.",
       "permissions": [
         {
           "type": "interact",
-          "description": "prepare markets and questions, flag questions to block their permissionless resolution, and force an outcome of their choosing on a flagged question after the {{ delayPeriodFormatted }} delay period."
+          "description": "prepare markets and questions, flag or unflag questions to control public resolution, and force an outcome of their choosing on a flagged question after the {{ delayPeriodFormatted }} delay period."
         }
       ]
     },

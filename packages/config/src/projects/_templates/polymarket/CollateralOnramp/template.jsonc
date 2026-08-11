@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CollateralOnramp",
-  "description": "Permissionless wrap entrypoint: anyone can deposit the underlying stablecoin and mint an equal amount of the collateral token. Admins can pause wrapping per asset with no delay.",
+  "description": "Lets anyone deposit an asset supported by the configured collateral token and mint an equal amount of collateral tokens while that asset is not paused. Admins can pause or unpause wrapping per asset with no delay.",
   "fields": {
     "roleHolders": {
       "handler": {

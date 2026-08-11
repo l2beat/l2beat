@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "NegRiskAdapter",
-  "description": "Immutable adapter composing binary conditions into multi-outcome (negative-risk) markets and acting as the on-ledger oracle for them. Splitting, merging, redeeming and converting are permissionless; converting can charge a per-market fee that accrues to a fixed vault.",
+  "description": "Immutable adapter composing binary conditions into multi-outcome (negative-risk) markets and acting as the on-ledger oracle for them. Split, merge, redeem and conversion functions have no caller restriction; conversions can charge a per-market fee that accrues to a fixed vault.",
   "category": "core",
   "fields": {
     "admins": {
@@ -19,7 +19,7 @@
       "permissions": [
         {
           "type": "act",
-          "description": "can transfer outcome tokens on behalf of a user through this adapter, but only if the user has independently approved the admin as an operator on the token ledger, and can add or remove admins."
+          "description": "can transfer outcome tokens on behalf of a user through this adapter, but only if the user has independently approved both the admin and this adapter as operators on the token ledger, and can add or remove admins."
         }
       ],
       "severity": "HIGH"

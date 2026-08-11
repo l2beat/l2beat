@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "UmaCtfAdapter",
-  "description": "Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger; initializing and resolving are permissionless. Admins can pause or reset any question, and can flag one and resolve it manually - either outcome or an even split - after {{ safetyPeriodFormatted }}.",
+  "description": "Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger. Anyone can call initialize, but the adapter is the requester seen by the oracle, and the oracle's own access controls determine who may propose and settle the answer. After the oracle has settled an answer, anyone can call resolve to copy it into the outcome-token ledger unless an admin has paused the question. Admins can pause, unpause, reset or flag initialized questions, unflag them until the safety period has passed, and after {{ safetyPeriodFormatted }} manually resolve a flagged question with either outcome or an even split.",
   "ignoreRelatives": ["collateralWhitelist"],
   "fields": {
     "safetyPeriodFormatted": {
@@ -24,11 +24,11 @@
         }
       },
       "severity": "HIGH",
-      "description": "Can pause, unpause, reset and flag any question, and manually resolve a flagged question with either outcome or an even split after the safety period.",
+      "description": "Can pause, unpause, reset and flag initialized questions, unflag them until the safety period has passed, and manually resolve a flagged question with either outcome or an even split after the safety period.",
       "permissions": [
         {
           "type": "interact",
-          "description": "pause, unpause, reset and flag questions, and resolve a flagged question manually with either outcome or an even split after the {{ safetyPeriodFormatted }} safety period."
+          "description": "pause, unpause, reset and flag initialized questions, unflag them until the safety period has passed, and resolve a flagged question manually with either outcome or an even split after the {{ safetyPeriodFormatted }} safety period."
         }
       ]
     },
@@ -36,7 +36,7 @@
       "description": "Outcome-token ledger that this adapter reports payouts to."
     },
     "optimisticOracle": {
-      "description": "UMA optimistic oracle that price requests for questions are sent to."
+      "description": "UMA optimistic oracle that receives requests from this adapter. Its own access controls determine who may propose and settle answers; the adapter's public entrypoints do not bypass them."
     },
     "adminsEverObserved": {
       "handler": {

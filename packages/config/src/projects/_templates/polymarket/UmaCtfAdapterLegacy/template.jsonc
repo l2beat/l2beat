@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "UmaCtfAdapterLegacy",
-  "description": "Earlier generation of the resolution adapter, still holding legacy markets. Admins can flag a question - with no way to unflag - and after {{ emergencySafetyPeriodFormatted }} resolve it with an arbitrary payout array.",
+  "description": "Resolution adapter registering binary questions with an UMA optimistic oracle and reporting settled answers to an outcome-token ledger. Anyone can initialize a question and resolve it when an oracle price is available unless an admin has paused it. Admins can pause, unpause, reset or flag initialized questions. A flagged question cannot be unflagged and, after {{ emergencySafetyPeriodFormatted }}, can be resolved by an admin with any two-value payout array that is not all zeroes.",
   "ignoreRelatives": ["collateralWhitelist"],
   "fields": {
     "emergencySafetyPeriodFormatted": {
@@ -24,11 +24,11 @@
         }
       },
       "severity": "HIGH",
-      "description": "Can pause, unpause, reset and flag any question, and emergency-resolve a flagged question with an arbitrary payout array after the emergency safety period.",
+      "description": "Can pause, unpause, reset and flag initialized questions, and emergency-resolve a flagged question with any two-value payout array that is not all zeroes after the emergency safety period.",
       "permissions": [
         {
           "type": "interact",
-          "description": "pause, unpause, reset and flag questions, and emergency-resolve a flagged question with an arbitrary payout array after the {{ emergencySafetyPeriodFormatted }} emergency safety period."
+          "description": "pause, unpause, reset and flag initialized questions, and emergency-resolve a flagged question with any two-value payout array that is not all zeroes after the {{ emergencySafetyPeriodFormatted }} emergency safety period."
         }
       ]
     },

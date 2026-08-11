@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CollateralVault",
-  "description": "ERC-4337 smart account holding the stablecoin that backs the collateral token. Its owner can execute arbitrary calls from the account, giving it full control over the held funds.",
+  "description": "Upgradeable ERC-4337 single-owner smart account. Its owner can execute arbitrary calls, install or uninstall plugins, and upgrade the implementation, giving it full control over any assets held by the account.",
   "ignoreRelatives": ["ENTRY_POINT", "getEntryPoint", "PLUGIN_MANAGER"],
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
@@ -9,7 +9,7 @@
       "permissions": [
         {
           "type": "upgrade",
-          "description": "can execute arbitrary calls from the vault, install or uninstall plugins, and upgrade the account implementation, giving it full control over the underlying collateral held here."
+          "description": "can execute arbitrary calls from the account, install or uninstall plugins, and upgrade the implementation, giving it full control over any assets held by the account."
         }
       ],
       "severity": "HIGH"

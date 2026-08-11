@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CTFExchange",
-  "description": "Immutable exchange settling EIP-712 signed limit orders that are matched off-chain by operator-role holders, who also choose the fee on each fill. The fee is not part of the signed order and is bounded only by an admin-set maximum, currently {{ getMaxFeeRate }} bps; a maximum of zero disables the check, so no on-chain ceiling applies. Users can pause their own orders, effective after {{ userPauseBlockInterval }} blocks, an interval the admins can change.",
+  "description": "Exchange settling EIP-712 signed limit orders that are matched off-chain by operator-role holders, who also choose the fee on each fill. The fee is not part of the signed order and is checked against an admin-configurable rate limit, currently {{ getMaxFeeRate }} bps. A zero rate means fees have no percentage cap, not that fees are zero: an operator can charge up to all proceeds on a sell or collect an additional amount from a buyer, subject to the buyer's balance and allowance. Users can pause settlement of all their orders, effective after {{ userPauseBlockInterval }} blocks, an interval the admins can change.",
   "category": "core",
   "fields": {
     "admins": {
@@ -15,8 +15,18 @@
           "event": "event RemovedAdmin(address indexed member, address indexed admin)"
         }
       },
-      "description": "Admins added after deployment, reconstructed from authorization events. The admin granted in the constructor emits no event and is therefore not listed here; the live admin is modeled on the CTFExchange `admin` field and listed for both exchanges in adminsEverObserved.",
+      "description": "Admins reconstructed from post-deployment authorization events. The constructor grant emits no event, so the initial admin is not included solely by virtue of that grant.",
       "severity": "HIGH"
+    },
+    "admin": {
+      "description": "Admin granted in the constructor without an authorization event.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage admins and operators, pause and unpause all trading, and set the fee receiver, the maximum fee rate and the user-pause interval."
+        }
+      ]
     },
     "operators": {
       "handler": {
@@ -33,13 +43,13 @@
       "permissions": [
         {
           "type": "act",
-          "description": "can match and settle signed orders, choose the fee charged on each fill up to the maximum fee rate, and preapprove or invalidate orders on behalf of makers. Preapproval itself requires a valid maker signature; it only lets later fills of that order omit the signature bytes, so no order can settle that the maker never signed."
+          "description": "can match and settle signed orders, choose the fee charged on each fill subject to the configured fee-rate check, and store or remove order preapprovals. If the configured rate is zero, fees have no percentage cap: an operator can charge up to all proceeds on a sell or collect an additional amount from a buyer, subject to the buyer's balance and allowance. Storing a preapproval requires a valid maker signature and only lets later fills omit the signature bytes; removing it does not invalidate an otherwise valid signed order."
         }
       ],
       "severity": "HIGH"
     },
     "getMaxFeeRate": {
-      "description": "Maximum fee rate in basis points that operators may charge on the proceeds of a fill.",
+      "description": "Maximum rate, in basis points, enforced for operator-supplied fill fees. Zero means fees have no percentage cap, not that fees are zero: an operator can charge up to all proceeds on a sell or collect an additional amount from a buyer, subject to the buyer's balance and allowance.",
       "handler": {
         "type": "call",
         "method": "getMaxFeeRate",
@@ -91,7 +101,7 @@
           }
         ]
       },
-      "description": "Every address ever observed exercising an admin power, taken from the granter recorded in each authorization event. This is how the constructor-granted admin becomes visible at all: the constructor emits no event, so such an admin never appears in the added/removed sets above. The list is historical and not a live permission set - an entry may since have been removed, so current status has to be confirmed with isAdmin().",
+      "description": "Addresses recorded as the admin in tracked role-change events. This list is historical, not a live permission set. A constructor-granted admin appears here only if it later performs one of these role changes; confirm current status with isAdmin().",
       "severity": "HIGH"
     }
   }

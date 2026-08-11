@@ -94,50 +94,29 @@
     "matic:0xe16bA5bF81E5BB113e4752E4fdC20351d796fB24": {
       "ignoreMethods": ["getModules"]
     },
-    // The authorization mixin grants admin+operator in the constructor without
-    // an event, so the initial admin is only visible in the deployment args.
-    // They are archived for this deployment but not for the neg-risk exchange
-    // (CREATE2, args not retained by the explorer); for that one the same
-    // AdminSafe was confirmed directly on-chain with isAdmin() == true.
     "matic:0xE111180000d2663C0091e4f400237545B87B996B": {
+      // Same code shape as NegRiskCtfExchange. The explorer archived this
+      // deployment's constructor arguments, so admin can be extracted from them.
       "fields": {
         "constructorArgs": {
           "handler": { "type": "constructorArgs", "nameArgs": true }
         },
         "admin": {
           "copy": "constructorArgs",
-          "edit": ["get", "params", "admin"],
-          "severity": "HIGH",
-          "description": "The admin granted in the constructor, recovered from the deployment arguments because the grant emits no event. The same AdminSafe holds admin on the neg-risk exchange too (confirmed on-chain via isAdmin), but that deployment is CREATE2 and its args were not retained, so there it is hardcoded to the same AdminSafe, confirmed on-chain via isAdmin.",
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "manage admins and operators, pause and unpause all trading, and set the fee receiver, the maximum fee rate and the user-pause interval."
-            }
-          ]
+          "edit": ["get", "params", "admin"]
         }
       }
     },
-    // NegRisk exchange is CREATE2 and the explorer did not retain its
-    // constructor args, and the constructor grant emits no event, so its admin
-    // cannot be discovered. It is hardcoded to the AdminSafe, confirmed live
-    // on-chain via isAdmin(), so its admin power is modeled symmetrically with
-    // CTFExchange.
     "matic:0xe2222d279d744050d28e00520010520000310F59": {
+      // Same code shape as CTFExchange. The explorer did not archive constructor
+      // arguments for this CREATE2 deployment, so admin is hardcoded from an
+      // on-chain isAdmin() check.
       "fields": {
         "admin": {
           "handler": {
             "type": "hardcoded",
             "value": "matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952"
-          },
-          "severity": "HIGH",
-          "description": "The admin granted in the constructor. This deployment is CREATE2 with unretained constructor args and the grant emits no event, so the admin cannot be discovered; it is hardcoded to the AdminSafe, confirmed live on-chain via isAdmin().",
-          "permissions": [
-            {
-              "type": "interact",
-              "description": "manage admins and operators, pause and unpause all trading, and set the fee receiver, the maximum fee rate and the user-pause interval."
-            }
-          ]
+          }
         }
       }
     },

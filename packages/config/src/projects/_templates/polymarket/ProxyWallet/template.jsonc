@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "ProxyWallet",
-  "description": "Per-user proxy wallet implementation cloned by its factory; only the owner set at initialization can execute batches of arbitrary calls through it.",
+  "description": "Initializable wallet whose initialize() function assigns its caller as owner while the owner slot is still empty. The stored owner can execute batches of arbitrary calls or delegatecalls; delegatecalls run in the wallet's context and can modify its storage, including the owner slot.",
   "category": "core"
 }

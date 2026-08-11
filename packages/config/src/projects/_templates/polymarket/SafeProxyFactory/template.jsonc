@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SafeProxyFactory",
   "proxyType": "immutable",
-  "description": "Deterministic factory for single-owner smart-contract wallets: anyone can deploy a wallet for a signer from an EIP-712 signature, at an address derived from the signer's address. The settlement exchanges use the same derivation to validate wallet-owner signatures.",
+  "description": "Deterministic factory for single-owner Safe proxies. Anyone can submit an EIP-712 creation signature to deploy a wallet owned by the recovered signer at an address derived from that signer.",
   "category": "core",
   "fields": {
     "masterCopy": {

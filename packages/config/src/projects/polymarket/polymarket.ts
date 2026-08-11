@@ -15,6 +15,9 @@ const discovery = new ProjectDiscovery('polymarket')
 const formatDelay = (seconds: number): string =>
   seconds === 0 ? 'no delay' : formatSeconds(seconds, { fullUnit: true })
 
+const formatBasisPoints = (basisPoints: number): string =>
+  `${basisPoints / 100}%`
+
 // "3 of 6 (50%)" -> "3/6", so the prose stays readable if the Safe is resized.
 const multisigRatio = (contract: string): string => {
   const threshold = discovery.getContractValue<string>(
@@ -38,31 +41,79 @@ const timelockDelay = formatDelay(
   discovery.getContractValue<number>('Timelock', 'minDelay'),
 )
 
-// Emergency-resolution windows. The binary and neg-risk adapters share a
-// constant; the operator that fronts multi-outcome markets has its own.
-// The fee is passed in at settlement and is not a field of the signed Order,
-// so it is bounded only by this rate. A rate of zero disables the check rather
-// than forbidding fees: `if (maxFeeRate == 0) return;` in
-// Fees._validateFeeWithMaxFeeRate, commented "No limit enforced if rate is 0".
-const maxFeeRateBps = Math.max(
-  discovery.getContractValue<number>('CTFExchange', 'getMaxFeeRate'),
-  discovery.getContractValue<number>('NegRiskCtfExchange', 'getMaxFeeRate'),
+const ctfExchangeMaxFeeRate = discovery.getContractValue<number>(
+  'CTFExchange',
+  'getMaxFeeRate',
 )
-const feeCeiling =
-  maxFeeRateBps === 0
-    ? 'the on-chain cap is disabled'
-    : `the on-chain cap is ${maxFeeRateBps / 100}%`
-const feeCeilingClause =
-  maxFeeRateBps === 0
-    ? 'currently zero, a setting that disables the check rather than forbidding fees, so the all-in price can be worse than the signed limit'
-    : `currently ${maxFeeRateBps / 100}%`
+const negRiskCtfExchangeMaxFeeRate = discovery.getContractValue<number>(
+  'NegRiskCtfExchange',
+  'getMaxFeeRate',
+)
+if (ctfExchangeMaxFeeRate !== negRiskCtfExchangeMaxFeeRate) {
+  throw new Error('The two CTF exchanges have different maximum fee rates')
+}
 
+// Fees are supplied at settlement and are not fields of the signed Order. In
+// these exchange implementations, a zero maximum skips the percentage check;
+// it does not require the supplied fee to be zero.
+const ctfFeeRule =
+  ctfExchangeMaxFeeRate === 0
+    ? 'The current maximum fee-rate setting on both CTF exchanges is zero, which disables the percentage limit rather than fees themselves.'
+    : `Both CTF exchanges currently cap the fee at ${formatBasisPoints(ctfExchangeMaxFeeRate)}.`
+const ctfFeeRisk =
+  ctfExchangeMaxFeeRate === 0
+    ? 'their current zero setting disables the percentage check'
+    : `their current percentage cap is ${formatBasisPoints(ctfExchangeMaxFeeRate)}`
+
+const combosMaxFeeRateBps = discovery.getContractValue<number>(
+  'CombosExchange',
+  'MAX_FEE_RATE',
+)
+const combosFeeRule =
+  combosMaxFeeRateBps === 0
+    ? 'The combination-position venue also has a zero setting, which disables its percentage limit rather than fees themselves.'
+    : `The combination-position venue currently caps this fee at ${formatBasisPoints(combosMaxFeeRateBps)}.`
+const combosFeeRisk =
+  combosMaxFeeRateBps === 0
+    ? 'the combination-position venue also disables its percentage check'
+    : `the combination-position venue currently permits up to ${formatBasisPoints(combosMaxFeeRateBps)}`
+
+const ctfExchangeUserPauseBlocks = discovery.getContractValue<number>(
+  'CTFExchange',
+  'userPauseBlockInterval',
+)
+const negRiskCtfExchangeUserPauseBlocks = discovery.getContractValue<number>(
+  'NegRiskCtfExchange',
+  'userPauseBlockInterval',
+)
+const combosExchangeUserPauseBlocks = discovery.getContractValue<number>(
+  'CombosExchange',
+  'userPauseBlockInterval',
+)
+if (
+  ctfExchangeUserPauseBlocks !== negRiskCtfExchangeUserPauseBlocks ||
+  ctfExchangeUserPauseBlocks !== combosExchangeUserPauseBlocks
+) {
+  throw new Error('The exchanges have different user-pause intervals')
+}
+
+// Internal constant in all three current exchange implementations. It has no
+// getter, so discovery cannot interpolate it directly.
+const maxUserPauseBlocks = 302_400
+
+// Emergency-resolution windows. The binary adapter and the operator that
+// fronts CTF neg-risk markets use separate constants.
 const adapterSafetyPeriod = formatDelay(
   discovery.getContractValue<number>('UmaCtfAdapterBinary', 'SAFETY_PERIOD'),
 )
-const negRiskOperatorDelay = formatDelay(
-  discovery.getContractValue<number>('NegRiskOperator', 'DELAY_PERIOD'),
+const negRiskOperatorDelaySeconds = discovery.getContractValue<number>(
+  'NegRiskOperator',
+  'DELAY_PERIOD',
 )
+const negRiskOverrideTiming =
+  negRiskOperatorDelaySeconds === 0
+    ? 'immediately after flagging the question, including in the same transaction'
+    : `after waiting ${formatDelay(negRiskOperatorDelaySeconds)} from flagging the question`
 
 export const polymarket: BaseProject = {
   id: ProjectId('polymarket'),
@@ -84,7 +135,8 @@ export const polymarket: BaseProject = {
     ],
   },
   display: {
-    description: `Polymarket is a prediction market where users trade outcome shares backed one-for-one by collateral: a complete set of a market's outcomes always redeems for one unit, and resolution decides how that unit is split between them. Orders are matched off-chain by a permissioned operator and settled on-chain by exchange contracts that check every order's signature. Collateral is a wrapped stablecoin held in a protocol-controlled vault, and outcomes are reported by an UMA optimistic oracle.`,
+    description:
+      'Polymarket is a prediction market where users trade collateral-backed outcome shares through offchain order books. Market listing, order execution, resolution, and parts of the collateral and wallet systems depend on permissioned actors.',
     detailedDescription: readProjectMarkdown(
       'polymarket',
       'detailedDescription',
@@ -99,7 +151,6 @@ export const polymarket: BaseProject = {
             'emergencySafetyPeriod',
           ),
         ),
-        negRiskOperatorDelay,
         oracleLiveness: formatDelay(
           discovery.getContractValue<number>(
             'ManagedOptimisticOracleV2',
@@ -116,15 +167,19 @@ export const polymarket: BaseProject = {
           'CollateralToken',
           'symbol',
         ),
-        feeCeilingClause,
-        userPauseBlocks: discovery.getContractValue<number>(
-          'CTFExchange',
-          'userPauseBlockInterval',
+        ctfFeeRule,
+        combosFeeRule,
+        userPauseBlocks: ctfExchangeUserPauseBlocks,
+        maxUserPauseBlocks: maxUserPauseBlocks.toLocaleString('en-US'),
+        negRiskOverrideTiming,
+        walletPauseDelay: discovery.getContractValue<string>(
+          'DepositWalletFactory',
+          'timelockDelay',
         ),
-        walletPauseDelay: formatDelay(
+        walletMaxPauseDelay: formatDelay(
           discovery.getContractValue<number>(
             'DepositWalletFactory',
-            'timelockDelay',
+            'MAX_TIMELOCK_DELAY',
           ),
         ),
       },
@@ -144,36 +199,38 @@ export const polymarket: BaseProject = {
         title: 'Market resolution - Polymarket documentation',
         url: 'https://docs.polymarket.com/concepts/resolution',
       },
+      {
+        title: 'How markets are created - Polymarket Help Center',
+        url: 'https://help.polymarket.com/en/articles/13364541-how-are-markets-created',
+      },
     ],
     badges: [],
   },
   // Both the bridged and the native stablecoin are registered under the
   // symbol USDC on this chain, so one entry covers both; empty balances are
   // dropped when the value config is generated.
-  // The three pools that hold user collateral are disjoint, so summing them
-  // does not double count: wrapping parks the underlying in the vault, and
-  // splitting into outcome shares moves it back out of the vault into either
-  // the outcome-token ledger (binary markets) or the wrapper that backs
-  // multi-outcome positions. The circulating collateral token is therefore
-  // exactly the vault balance and is deliberately not counted on top.
+  // The three pools that hold stablecoins are disjoint. Wrapping moves the
+  // underlying into the vault. CTF adapters unwrap pUSD before moving the
+  // underlying into ConditionalTokens or WrappedCollateral. PositionManager
+  // splits burn pUSD without moving the underlying, so their backing remains
+  // in the vault. Counting these pools, but not pUSD itself, avoids double
+  // counting while retaining the backing of both outcome-token systems.
   escrows: [
     discovery.getEscrowDetails({
       address: discovery.getContract('CollateralVault').address,
       tokens: ['USDC'],
       description:
-        'Holds the stablecoin backing every unit of the collateral token that has not been converted into outcome shares.',
+        'Holds the stablecoins backing circulating pUSD and PositionManager outcome shares created by burning pUSD.',
     }),
     discovery.getEscrowDetails({
       address: discovery.getContract('ConditionalTokens').address,
       tokens: ['USDC'],
-      description:
-        'Holds the collateral locked behind outcome shares of binary markets.',
+      description: 'Holds USDC.e locked directly behind CTF outcome shares.',
     }),
     discovery.getEscrowDetails({
       address: discovery.getContract('WrappedCollateral').address,
       tokens: ['USDC'],
-      description:
-        'Holds the collateral locked behind outcome shares of multi-outcome markets.',
+      description: 'Holds USDC.e locked behind CTF neg-risk outcome shares.',
     }),
   ],
   tvsInfo: {
@@ -195,7 +252,7 @@ export const polymarket: BaseProject = {
       name: 'UMA',
       icon: 'uma',
       description:
-        'Supplies the optimistic oracle that answers each market question. Proposals and disputes are bonded and settlement is performed by permissioned resolvers, so a stalled or captured oracle leaves markets unresolved or resolves them wrongly.',
+        'Supplies the optimistic oracle used by CTF-based market questions. Proposals and disputes are bonded and settlement is performed by permissioned resolvers, so a stalled or captured oracle leaves those markets unresolved or resolves them wrongly.',
     },
     {
       type: 'tracked',
@@ -222,7 +279,7 @@ export const polymarket: BaseProject = {
       },
       {
         category: 'Funds can be stolen if',
-        text: `the timelock grants the minter role after the ${timelockDelay} delay, since a minter can create collateral that no deposit backs and redeem it against the vault.`,
+        text: 'a PositionManager bridge-role holder mints outcome shares without burning pUSD, or an upgraded outcome module mints unbacked pUSD, and the resulting claims are redeemed against the vault.',
       },
       {
         category: 'Funds can be frozen if',
@@ -230,16 +287,16 @@ export const polymarket: BaseProject = {
       },
       {
         category: 'Funds can lose value if',
-        text: `the admins impose an outcome instead of the oracle: after ${adapterSafetyPeriod} on binary markets, and with ${negRiskOperatorDelay} on multi-outcome ones.`,
+        text: `a resolution admin overrides the UMA result after ${adapterSafetyPeriod} on a CTF binary question, a CTF neg-risk admin forces a result ${negRiskOverrideTiming}, or a PositionManager resolver reports a false result.`,
         isCritical: true,
       },
       {
         category: 'Funds can lose value if',
-        text: 'the permissioned oracle stalls, since settlement needs a resolver role and positions stay unredeemable until it acts.',
+        text: 'a permissioned UMA or PositionManager resolver stalls, leaving the affected outcome shares unredeemable.',
       },
       {
         category: 'Funds can lose value if',
-        text: `the operator charges a fee that pushes the all-in price past the signed limit, since the fee is not part of the signed order and ${feeCeiling}.`,
+        text: `the operator charges an unsigned fee that pushes the all-in price past the signed limit: on the CTF exchanges ${ctfFeeRisk}, while ${combosFeeRisk}.`,
       },
     ],
   },

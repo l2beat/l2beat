@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CtfCollateralAdapter",
-  "description": "Adapter letting anyone split wrapped collateral into outcome positions, merge, or redeem on the conditional-token ledger, unwrapping and re-wrapping in the same call; it cannot redirect funds to third parties. Admins can pause all operations, including redemptions, with no delay.",
+  "description": "Adapter letting anyone split wrapped collateral into outcome positions, merge, or redeem on the conditional-token ledger while the underlying asset is not paused. It unwraps and re-wraps in the same call and cannot redirect funds to third parties. Admins can pause or unpause all operations, including redemptions, per asset with no delay.",
   "fields": {
     "roleHolders": {
       "handler": {

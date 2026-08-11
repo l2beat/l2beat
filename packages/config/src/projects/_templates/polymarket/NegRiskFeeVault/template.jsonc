@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "NegRiskFeeVault",
-  "description": "Vault holding accrued protocol fees. Admins can transfer out any ERC20 or ERC1155 balance to any recipient at any time, with no delay.",
+  "description": "Vault that can hold arbitrary ERC20 and ERC1155 tokens. Admins can transfer any balance to any recipient at any time, with no delay.",
   "category": "core",
   "fields": {
     "admins": {

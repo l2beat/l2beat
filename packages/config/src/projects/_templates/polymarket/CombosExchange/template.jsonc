@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CombosExchange",
-  "description": "Upgradeable request-for-quote exchange where operator-role holders settle EIP-712 signed orders for combination positions. The fee on each fill is bounded by the order's signed rate and a global maximum of {{ MAX_FEE_RATE }} bps fixed at deployment.",
+  "description": "Upgradeable request-for-quote exchange where operator-role holders settle EIP-712 signed orders for combination positions. Operators supply the fee on each fill; it is not part of the signed order and is checked only against a global limit of {{ MAX_FEE_RATE }} bps fixed at deployment. A zero limit means fees have no percentage cap, not that fees are zero: an operator can charge up to all proceeds on a sell or collect an additional amount from a buyer, subject to the buyer's balance and allowance.",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
     "roleHolders": {
@@ -19,7 +19,7 @@
       "permissions": [
         {
           "type": "upgrade",
-          "description": "can upgrade the exchange implementation, and grant or revoke the admin role."
+          "description": "can upgrade the exchange implementation and manage all roles."
         }
       ],
       "severity": "HIGH"
@@ -30,7 +30,7 @@
         "method": "function MAX_FEE_RATE() view returns (uint256)",
         "args": []
       },
-      "description": "Global upper bound on the fee rate charged at settlement, in basis points. Fixed at deployment."
+      "description": "Global fee-rate limit for operator-supplied settlement fees, in basis points. It is fixed at deployment. Zero means fees have no percentage cap, not that fees are zero: an operator can charge up to all proceeds on a sell or collect an additional amount from a buyer, subject to the buyer's balance and allowance."
     },
     "FEE_RECEIVER": {
       "description": "Address receiving all trading fees collected at settlement."
