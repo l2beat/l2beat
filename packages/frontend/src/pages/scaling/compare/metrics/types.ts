@@ -1,18 +1,19 @@
 import type { ComponentType, Dispatch, SetStateAction } from 'react'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
 import type {
-  CompareClientState,
+  CompareChartClientConfig,
+  CompareChartConfig,
   CompareMetricId,
 } from '../utils/compareChartState'
 
 export interface CompareMetricChartProps {
   projects: CompareProjectEntry[]
-  state: CompareClientState
+  state: CompareChartClientConfig
 }
 
 export interface CompareMetricControlsProps {
-  state: CompareClientState
-  setState: Dispatch<SetStateAction<CompareClientState>>
+  state: CompareChartConfig
+  setState: Dispatch<SetStateAction<CompareChartConfig>>
 }
 
 /**

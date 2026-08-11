@@ -1,7 +1,7 @@
 import {
   type ChartRangeOptionValue,
   rangeToOption,
-} from '~/components/core/chart/ChartRangeControls'
+} from '~/components/core/chart/utils/rangeToOption'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 
 export const COMPARE_METRIC_IDS = [
@@ -66,11 +66,14 @@ export type CompareRangeOption = (typeof COMPARE_RANGE_OPTIONS)[number]
 /** A predefined range option or a custom calendar range in unix seconds. */
 export type CompareRange = CompareRangeOption | { from: number; to: number }
 
-export interface CompareChartState {
+/**
+ * The configuration of a single chart card: its metric plus every per-metric
+ * control. Controls of inactive metrics are kept so switching a card's
+ * metric back and forth preserves its settings; only the active metric's
+ * controls are encoded in the URL.
+ */
+export interface CompareChartConfig {
   metric: CompareMetricId
-  /** Project slugs in selection order. */
-  projects: string[]
-  range: CompareRange
   /** Per-metric control of the activity metric; ignored elsewhere. */
   activityUnit: CompareActivityUnit
   /** Per-metric controls of the TVS metric; ignored elsewhere. */
@@ -80,6 +83,23 @@ export interface CompareChartState {
   costsUnit: CompareCostsUnit
   excludeAssociatedTokens: boolean
   excludeRwaRestrictedTokens: boolean
+}
+
+/**
+ * A chart config with the page-level range resolved to concrete timestamps -
+ * everything a single chart needs to query and render.
+ */
+export type CompareChartClientConfig = CompareChartConfig & {
+  chartRange: ChartRange
+}
+
+export interface CompareChartState {
+  /** Project slugs in selection order, shared by every chart. */
+  projects: string[]
+  /** Time range shared by every chart, so synced hovers line up. */
+  range: CompareRange
+  /** One entry per chart card, in display order. Never empty. */
+  charts: CompareChartConfig[]
 }
 
 /**
@@ -106,6 +126,7 @@ export function toCompareClientState(
 }
 
 export const DEFAULT_COMPARE_METRIC: CompareMetricId = 'tvs'
+export const MAX_COMPARE_CHARTS = 4
 export const DEFAULT_COMPARE_RANGE: CompareRangeOption = '1y'
 export const DEFAULT_COMPARE_ACTIVITY_UNIT: CompareActivityUnit = 'uops'
 export const DEFAULT_COMPARE_TVS_UNIT: CompareTvsUnit = 'usd'
@@ -116,6 +137,32 @@ export const DEFAULT_COMPARE_COSTS_UNIT: CompareCostsUnit = 'usd'
 export const DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS = false
 export const DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS = true
 export const DEFAULT_COMPARE_PROJECTS_COUNT = 5
+
+export function createDefaultChartConfig(
+  metric: CompareMetricId = DEFAULT_COMPARE_METRIC,
+): CompareChartConfig {
+  return {
+    metric,
+    activityUnit: DEFAULT_COMPARE_ACTIVITY_UNIT,
+    tvsUnit: DEFAULT_COMPARE_TVS_UNIT,
+    tvsFilter: DEFAULT_COMPARE_TVS_FILTER,
+    costsUnit: DEFAULT_COMPARE_COSTS_UNIT,
+    excludeAssociatedTokens: DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS,
+    excludeRwaRestrictedTokens: DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS,
+  }
+}
+
+/**
+ * The metric of a newly added chart: the first one not shown yet, so adding
+ * a chart to the default TVS view gives TVS + activity without any clicks.
+ */
+export function nextChartMetric(charts: CompareChartConfig[]): CompareMetricId {
+  const used = new Set(charts.map((chart) => chart.metric))
+  return (
+    COMPARE_METRIC_IDS.find((metric) => !used.has(metric)) ??
+    DEFAULT_COMPARE_METRIC
+  )
+}
 
 /**
  * The exclude-restricted-RWA toggle conflicts with the Restricted RWAs

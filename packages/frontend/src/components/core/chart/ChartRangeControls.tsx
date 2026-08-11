@@ -16,24 +16,16 @@ import { useTracking } from '~/hooks/useTracking'
 import { CalendarIcon } from '~/icons/Calendar'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
-import {
-  type ChartRange,
-  optionToDays,
-  optionToRange,
-} from '~/utils/range/range'
-import { rangeToDays } from '~/utils/range/rangeToDays'
+import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
 import { Skeleton } from '../Skeleton'
 import { VerticalSeparator } from '../VerticalSeparator'
+import {
+  type ChartRangeOptionValue,
+  rangeToOption,
+} from './utils/rangeToOption'
 
-export type ChartRangeOptionValue =
-  | '1d'
-  | '7d'
-  | '30d'
-  | '90d'
-  | '180d'
-  | '1y'
-  | 'max'
+export { rangeToOption, type ChartRangeOptionValue }
 
 interface ChartRangeOption {
   value: ChartRangeOptionValue
@@ -262,23 +254,4 @@ function CalendarComponent({
       className={cn('rounded-lg pb-3', className)}
     />
   )
-}
-
-/**
- * Detects whether a resolved chart range matches one of the predefined
- * options. Shared with URL serializers so a serialized range always agrees
- * with the highlighted control.
- */
-export function rangeToOption<T extends ChartRangeOptionValue>(
-  [from, to]: ChartRange,
-  values: readonly T[],
-): T | 'max' | 'custom' {
-  if (
-    UnixTime.toStartOf(to, 'day') !== UnixTime.toStartOf(UnixTime.now(), 'day')
-  ) {
-    return 'custom'
-  }
-  if (from === null) return 'max'
-  const days = rangeToDays([from, to])
-  return values.find((value) => optionToDays(value) === days) ?? 'custom'
 }

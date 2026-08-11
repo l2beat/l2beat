@@ -1,4 +1,5 @@
 import {
+  type CompareChartConfig,
   type CompareChartState,
   DEFAULT_COMPARE_ACTIVITY_UNIT,
   DEFAULT_COMPARE_COSTS_UNIT,
@@ -13,15 +14,17 @@ import {
 /**
  * Serializes compare page state into a URL, omitting defaults so clean
  * links stay short. The inverse of `parseCompareStateFromSearchParams`.
+ *
+ * Chart cards are packed into a single `charts` param: chart tokens joined
+ * by `,`, each token a metric id followed by `:`-separated `key=value`
+ * fields for its non-default controls, e.g.
+ * `charts=tvs:unit=eth:filter=stablecoin,activity:unit=tps`.
  */
 export function buildCompareUrl(
   path: string,
   state: CompareChartState,
 ): string {
   const params = new URLSearchParams()
-  if (state.metric !== DEFAULT_COMPARE_METRIC) {
-    params.set('metric', state.metric)
-  }
   if (state.projects.length > 0) {
     params.set('projects', state.projects.join(','))
   }
@@ -30,43 +33,59 @@ export function buildCompareUrl(
   } else if (state.range !== DEFAULT_COMPARE_RANGE) {
     params.set('range', state.range)
   }
+  const chartTokens = state.charts.map(buildChartToken)
+  const isDefaultCharts =
+    chartTokens.length === 1 && chartTokens[0] === DEFAULT_COMPARE_METRIC
+  if (chartTokens.length > 0 && !isDefaultCharts) {
+    params.set('charts', chartTokens.join(','))
+  }
+  // Keep the separators literal so shared links stay readable. All three are
+  // legal unencoded in a query string and never appear in slugs or values.
+  const query = params
+    .toString()
+    .replaceAll('%2C', ',')
+    .replaceAll('%3A', ':')
+    .replaceAll('%3D', '=')
+  return query ? `${path}?${query}` : path
+}
+
+function buildChartToken(config: CompareChartConfig): string {
+  const fields: string[] = [config.metric]
   // Per-metric controls are only encoded for the metric they belong to.
   if (
-    state.metric === 'activity' &&
-    state.activityUnit !== DEFAULT_COMPARE_ACTIVITY_UNIT
+    config.metric === 'activity' &&
+    config.activityUnit !== DEFAULT_COMPARE_ACTIVITY_UNIT
   ) {
-    params.set('unit', state.activityUnit)
+    fields.push(`unit=${config.activityUnit}`)
   }
   if (
-    state.metric === 'costs' &&
-    state.costsUnit !== DEFAULT_COMPARE_COSTS_UNIT
+    config.metric === 'costs' &&
+    config.costsUnit !== DEFAULT_COMPARE_COSTS_UNIT
   ) {
-    params.set('unit', state.costsUnit)
+    fields.push(`unit=${config.costsUnit}`)
   }
-  if (state.metric === 'tvs') {
-    if (state.tvsUnit !== DEFAULT_COMPARE_TVS_UNIT) {
-      params.set('unit', state.tvsUnit)
+  if (config.metric === 'tvs') {
+    if (config.tvsUnit !== DEFAULT_COMPARE_TVS_UNIT) {
+      fields.push(`unit=${config.tvsUnit}`)
     }
-    if (state.tvsFilter !== DEFAULT_COMPARE_TVS_FILTER) {
-      params.set('filter', state.tvsFilter)
+    if (config.tvsFilter !== DEFAULT_COMPARE_TVS_FILTER) {
+      fields.push(`filter=${config.tvsFilter}`)
     }
     if (
-      state.excludeAssociatedTokens !==
+      config.excludeAssociatedTokens !==
       DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS
     ) {
-      params.set('excludeAssociated', String(state.excludeAssociatedTokens))
+      fields.push(`excludeAssociated=${config.excludeAssociatedTokens}`)
     }
     // The exclude-restricted-RWA toggle is disabled and overridden while
     // the Restricted RWAs filter is active, so its value is not encoded.
     if (
-      state.tvsFilter !== 'rwaRestricted' &&
-      state.excludeRwaRestrictedTokens !==
+      config.tvsFilter !== 'rwaRestricted' &&
+      config.excludeRwaRestrictedTokens !==
         DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS
     ) {
-      params.set('excludeRwa', String(state.excludeRwaRestrictedTokens))
+      fields.push(`excludeRwa=${config.excludeRwaRestrictedTokens}`)
     }
   }
-  // Keep commas literal so shared links stay readable.
-  const query = params.toString().replaceAll('%2C', ',')
-  return query ? `${path}?${query}` : path
+  return fields.join(':')
 }

@@ -16,6 +16,10 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
+import {
+  useCompareChartHover,
+  useCompareChartId,
+} from './CompareChartHoverContext'
 import { useCompareSeries } from './CompareSeriesContext'
 
 /**
@@ -82,7 +86,15 @@ export function CompareMetricLineChart({
       </div>
       <ChartContainer data={data} meta={chartMeta} isLoading={isLoading}>
         {/* Without right:1 the chart last point is not hoverable for some reason */}
-        <LineChart responsive data={data} margin={{ top: 20, right: 1 }}>
+        {/* syncMethod "value" matches by timestamp, so charts whose data
+            starts at different times still line up under a synced hover. */}
+        <LineChart
+          responsive
+          data={data}
+          margin={{ top: 20, right: 1 }}
+          syncId="compare"
+          syncMethod="value"
+        >
           {projects.map((project) => (
             <Line
               key={project.id}
@@ -133,6 +145,18 @@ function CustomTooltip({
   renderTimestamp: (label: number) => ReactNode
 }) {
   const { meta } = useChart()
+  const { hoveredChartId } = useCompareChartHover()
+  const chartId = useCompareChartId()
+  // On a synced hover the follower charts show only the crosshair cursor -
+  // one full tooltip per hover is plenty, and with many projects selected
+  // several tall tooltips at once would cover the very charts being compared.
+  if (
+    hoveredChartId !== undefined &&
+    chartId !== undefined &&
+    hoveredChartId !== chartId
+  ) {
+    return null
+  }
   if (!payload || typeof label !== 'number') return null
 
   const visible = payload.filter(

@@ -33,7 +33,7 @@ export async function getScalingCompareData(
       metadata: getMetadata(manifest, {
         title: 'Compare Projects - L2BEAT',
         description:
-          'Compare Ethereum scaling projects on a single chart across metrics like value secured.',
+          'Compare Ethereum scaling projects across metrics like value secured and activity, on one or more charts.',
         url: req.originalUrl,
         openGraph: {
           image: '/meta-images/scaling/summary/opengraph-image.png',
@@ -64,66 +64,62 @@ async function getCompareData(originalUrl: string, cache: InMemoryCache) {
     searchParams,
     validSlugs: allProjects.map((project) => project.slug),
   })
+  // Always ranked by TVS regardless of chart metrics - the universe is
+  // already ordered by TVS descending.
+  const defaultProjects = allProjects.slice(0, DEFAULT_COMPARE_PROJECTS_COUNT)
+  const defaultProjectSlugs = defaultProjects.map((project) => project.slug)
 
-  // Key by the canonical URL of the parsed state so garbage params collapse
-  // into the same cache entry instead of growing the cache per unique URL.
-  const canonicalUrl = buildCompareUrl('/scaling/compare', initialState)
+  // Chart data is only prefetched for the pristine default view; every
+  // customized URL renders with client-side loading states instead. The
+  // canonical-URL check collapses garbage params into the default view.
+  const isDefaultView =
+    buildCompareUrl('/scaling/compare', initialState) === '/scaling/compare'
+  if (!isDefaultView) {
+    return {
+      allProjects,
+      initialState,
+      defaultProjectSlugs,
+      initialChartRange: compareRangeToChartRange(initialState.range),
+      queryState: undefined,
+    }
+  }
+
+  // The resolved range is cached together with the dehydrated queries so
+  // the client's seeded query input always matches the prefetched one.
   const chartData = await cache.get(
     {
-      key: ['scaling', 'compare', 'data', canonicalUrl],
+      key: ['scaling', 'compare', 'data', 'default'],
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    () => getPrefetchedChartData(initialState, allProjects),
+    () => getPrefetchedChartData(initialState, defaultProjects),
   )
 
   return {
     allProjects,
     initialState,
+    defaultProjectSlugs,
     ...chartData,
   }
 }
 
 async function getPrefetchedChartData(
   initialState: CompareChartState,
-  allProjects: CompareProjectEntry[],
+  defaultProjects: CompareProjectEntry[],
 ) {
-  const serverMetric = COMPARE_SERVER_METRICS[initialState.metric]
-  const defaultProjects = await serverMetric.getDefaultProjects(
-    allProjects,
-    DEFAULT_COMPARE_PROJECTS_COUNT,
-  )
-  const selectedProjects = getSelectedProjects(
-    initialState.projects,
-    defaultProjects,
-    allProjects,
-  )
-
   const initialChartRange = compareRangeToChartRange(initialState.range)
+  const clientState = toCompareClientState(initialState, initialChartRange)
   const helpers = getSsrHelpers()
-  await serverMetric.prefetch(
-    helpers,
-    selectedProjects,
-    toCompareClientState(initialState, initialChartRange),
-  )
+  for (const chart of clientState.charts) {
+    await COMPARE_SERVER_METRICS[chart.metric].prefetch(
+      helpers,
+      defaultProjects,
+      { ...chart, chartRange: clientState.chartRange },
+    )
+  }
 
   return {
-    defaultProjectSlugs: defaultProjects.map((project) => project.slug),
     initialChartRange,
     queryState: helpers.dehydrate(),
   }
-}
-
-function getSelectedProjects(
-  slugs: string[],
-  defaultProjects: CompareProjectEntry[],
-  allProjects: CompareProjectEntry[],
-): CompareProjectEntry[] {
-  if (slugs.length === 0) {
-    return defaultProjects
-  }
-  const bySlug = new Map(allProjects.map((project) => [project.slug, project]))
-  return slugs
-    .map((slug) => bySlug.get(slug))
-    .filter((project) => project !== undefined)
 }
