@@ -66,6 +66,7 @@ export interface ProjectPrivacyEntry {
       last7d: number
       last30d: number
     }
+    activeRelayers30d?: number
   }
   isUnderReview: boolean
   recentUpdatesCount: number
@@ -327,6 +328,7 @@ export async function getPrivacyProjectEntry(
     summary: {
       totalValueLockedUsd,
       deposits: details.summary.deposits,
+      activeRelayers30d: details.summary.activeRelayers30d,
     },
     isUnderReview: !!details.statuses.reviewStatus,
     recentUpdatesCount: countRecentDiscoveryUpdates(discoveryUpdates),

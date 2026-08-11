@@ -102,6 +102,7 @@ export type {
   PrivacyFlowEventRecord,
 } from './repositories/PrivacyFlowEventRepository'
 export type { PrivacyPriceRecord } from './repositories/PrivacyPriceRepository'
+export type { PrivacyRelayerActivityRecord } from './repositories/PrivacyRelayerActivityRepository'
 export type {
   RealTimeAnomalyRecord,
   RealTimeAnomalyStatus,
