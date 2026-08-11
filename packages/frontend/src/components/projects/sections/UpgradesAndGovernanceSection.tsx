@@ -72,6 +72,7 @@ const GOVERNANCE_INFO_SECTIONS: {
   title: string
 }[] = [
   { key: 'securityCouncil', title: 'Security Council' },
+  { key: 'guardians', title: 'Guardians' },
   { key: 'upgrades', title: 'Upgrades' },
   { key: 'tokenGovernance', title: 'Token governance' },
 ]

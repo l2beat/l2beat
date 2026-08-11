@@ -42,6 +42,7 @@ import type {
   ProjectDaTrackingConfig,
   ProjectEcosystemInfo,
   ProjectEscrow,
+  ProjectGovernanceInfo,
   ProjectPermissions,
   ProjectScalingCapability,
   ProjectScalingProofSystem,
@@ -80,6 +81,8 @@ export interface ZkStackConfigCommon {
   l1StandardBridgeTokens?: string[]
   l1StandardBridgePremintedTokens?: string[]
   activityConfig?: ProjectActivityConfig
+  /** governance profile table, rendered under Upgrades & Governance */
+  governanceInfo?: ProjectGovernanceInfo
   nonTemplateProofSystem?: ProjectScalingProofSystem
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   l2OutputOracle?: EntryParameters
@@ -580,6 +583,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         hardFreezeS: formatSeconds(hardFreezeS),
       }),
       image: 'zkstack',
+      governanceInfo: templateVars.governanceInfo,
     },
     permissions: mergePermissions(
       templateVars.discovery.getDiscoveredPermissions(),

@@ -662,6 +662,7 @@ export interface ProjectScalingDa {
 
 export interface ProjectGovernanceInfo {
   securityCouncil?: Record<string, string>
+  guardians?: Record<string, string>
   upgrades?: Record<string, string>
   tokenGovernance?: Record<string, string>
 }
