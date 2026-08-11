@@ -63,7 +63,7 @@ export async function getHomeData(
       metadata: getMetadata(manifest, {
         title: 'L2BEAT',
         description:
-          'Bird-eye view of the Ethereum scaling ecosystem: total value secured, activity, interoperability, recent additions and what L2BEAT is currently tracking.',
+          'Track the Ethereum ecosystem in one view: L2s and Ethereum metrics, interoperability flows, privacy protocols and ZK provers, ongoing anomalies, new projects, and the latest additions to L2BEAT.',
         url: req.originalUrl,
         openGraph: {
           image: '/meta-images/home/opengraph-image.png',
@@ -263,7 +263,7 @@ export interface HomeRecentProject {
   name: string
   href: string
   iconUrl: string
-  category: 'scaling' | 'da' | 'zkCatalog' | 'ecosystems'
+  category: 'scaling' | 'da' | 'zkCatalog' | 'ecosystems' | 'privacy'
   scalingCategory: string | undefined
 }
 
@@ -271,7 +271,13 @@ async function getRecentProjectsForHome(
   manifest: Manifest,
 ): Promise<HomeRecentProject[]> {
   const projects = await ps.getProjects({
-    optional: ['scalingInfo', 'daLayer', 'ecosystemConfig', 'zkCatalogInfo'],
+    optional: [
+      'scalingInfo',
+      'daLayer',
+      'ecosystemConfig',
+      'zkCatalogInfo',
+      'privacyInfo',
+    ],
     whereNot: ['archivedAt'],
   })
 
@@ -281,7 +287,8 @@ async function getRecentProjectsForHome(
         project.scalingInfo ||
         project.daLayer ||
         project.ecosystemConfig ||
-        project.zkCatalogInfo,
+        project.zkCatalogInfo ||
+        project.privacyInfo,
     )
     .sort((a, b) => b.addedAt - a.addedAt)
     .slice(0, RECENT_PROJECTS_COUNT)
@@ -316,6 +323,16 @@ async function getRecentProjectsForHome(
           href: `/zk-catalog/${project.slug}`,
           iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
           category: 'zkCatalog' as const,
+          scalingCategory: undefined,
+        }
+      }
+      if (project.privacyInfo) {
+        return {
+          id: project.id.toString(),
+          name: project.name,
+          href: `/privacy/projects/${project.slug}`,
+          iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+          category: 'privacy' as const,
           scalingCategory: undefined,
         }
       }
