@@ -366,10 +366,81 @@ describe('deployedTokensRouter', () => {
         { plugin: 'd-plugin', role: 'minted', otherToken: null },
       ])
     })
+
+    it('marks relations whose other endpoint is denylisted instead of hiding them', async () => {
+      // The tab displays observations, so the relation stays visible — the
+      // banned counterparty is flagged so nobody mistakes it for a real
+      // asset. Only the graph drops such relations entirely.
+      const token = { chain: 'base', address: '0xbbb' }
+      const clean = {
+        ...tokenRelationRoute({
+          tokenAChain: 'base',
+          tokenAAddress: '0xbbb',
+          tokenBChain: 'ethereum',
+          tokenBAddress: '0xaaa',
+          plugin: 'a-plugin',
+          lockedToken: 'A',
+        }),
+        transfer: {},
+      } satisfies TokenRelationRecord
+      const banned = {
+        ...tokenRelationRoute({
+          tokenAChain: 'arbitrum',
+          tokenAAddress: '0xbad',
+          tokenBChain: 'base',
+          tokenBAddress: '0xbbb',
+          plugin: 'b-plugin',
+          lockedToken: 'A',
+        }),
+        transfer: {},
+      } satisfies TokenRelationRecord
+      const getByPrimaryKeys = mockFn().resolvesTo([])
+      const mockTokenDb = mockObject<TokenDatabase>({
+        tokenDenylist: mockObject<TokenDatabase['tokenDenylist']>({
+          getAll: mockFn().resolvesTo([
+            {
+              chain: 'arbitrum',
+              address: '0xbad',
+              reason: 'test token',
+              createdAt: UnixTime(1),
+            },
+          ]),
+        }),
+        tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+          getRelationsFor: mockFn().resolvesTo([clean, banned]),
+        }),
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+          getByPrimaryKeys,
+        }),
+      })
+
+      const caller = createRouter(
+        mockTokenDb,
+        mockObject<Database>({}),
+        mockObject<CoingeckoClient>({}),
+      )
+      const result = await caller.getRelations(token)
+
+      expect(
+        result.map((entry) => ({
+          plugin: entry.relation.plugin,
+          denylisted: entry.otherEndpointDenylisted,
+        })),
+      ).toEqual([
+        { plugin: 'a-plugin', denylisted: false },
+        { plugin: 'b-plugin', denylisted: true },
+      ])
+      expect(getByPrimaryKeys).toHaveBeenCalledWith([
+        { chain: 'ethereum', address: '0xaaa' },
+        { chain: 'arbitrum', address: '0xbad' },
+      ])
+    })
   })
 
   describe('getMintingPlugins', () => {
     it('returns the plugin names straight from the repository', async () => {
+      // Deliberately not denylist-aware: a plugin observed minting this
+      // token minted it, whatever the counterparty was.
       const getMintingPluginsFor = mockFn().resolvesTo([
         'canonicalbridge',
         'superbridge',

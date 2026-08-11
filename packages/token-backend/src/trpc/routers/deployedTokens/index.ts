@@ -1,4 +1,4 @@
-import type { TokenRelationRoute } from '@l2beat/database'
+import type { TokenDatabase, TokenRelationRoute } from '@l2beat/database'
 import { v } from '@l2beat/validate'
 import { TokenRelationPrimaryKey } from '../../../schemas/TokenRelation'
 import { readOnlyProcedure } from '../../procedures'
@@ -39,9 +39,11 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
         // One list, not an inbound/outbound split: endpoint order is not a
         // direction. What differs between relations is this token's role, which
         // `lockedToken` answers.
-        const relations = sortRelations(
-          await ctx.tokenDb.tokenRelation.getRelationsFor(input),
-        )
+        const [allRelations, denylisted] = await Promise.all([
+          ctx.tokenDb.tokenRelation.getRelationsFor(input),
+          denylistedKeySet(ctx.tokenDb),
+        ])
+        const relations = sortRelations(allRelations)
         const otherTokenKeys = uniqueTokenKeys(
           relations.map((relation) => otherEndpoint(relation, input)),
         )
@@ -51,6 +53,9 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
           otherTokens.map((token) => [tokenKey(token), token]),
         )
 
+        // Relations to a denylisted address are shown, not hidden — the tab
+        // displays observations — but the banned counterparty is marked so
+        // nobody mistakes it for a real asset.
         return relations.map((relation) => {
           const other = otherEndpoint(relation, input)
           return {
@@ -58,12 +63,15 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
             role: tokenRelationRole(relation, input),
             otherEndpoint: other,
             otherToken: otherTokenMap.get(tokenKey(other)) ?? null,
+            otherEndpointDenylisted: denylisted.has(tokenKey(other)),
           }
         })
       }),
 
     // The same answer the Relations tab's role column gives, summarized: the
     // distinct plugins of the relations whose role for this token is `minted`.
+    // Deliberately not denylist-aware: a plugin observed minting this token
+    // minted it, whatever the counterparty was.
     getMintingPlugins: readOnlyProcedure
       .input(v.object({ chain: v.string(), address: v.string() }))
       .query(({ ctx, input }) =>
@@ -106,15 +114,9 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
       }),
 
     getRelationsGraph: readOnlyProcedure.query(async ({ ctx }) => {
-      // Relations touching a denylisted address stay recorded — they are
-      // observations — but the graph is an interpretation of them, and
-      // drawing the banned endpoint would wire it back into a real cluster,
-      // which is exactly what the ban exists to prevent. Filtering here,
-      // where clusters are assembled, is the denylist's one read-side
-      // consult point.
-      const denylisted = new Set(
-        (await ctx.tokenDb.tokenDenylist.getAll()).map(tokenKey),
-      )
+      // Drawing a denylisted endpoint would wire it back into a real
+      // cluster, which is exactly what the ban exists to prevent.
+      const denylisted = await denylistedKeySet(ctx.tokenDb)
       const relations = sortRelations(
         (await ctx.tokenDb.tokenRelation.getAllRoutes()).filter(
           (relation) =>
@@ -224,6 +226,17 @@ function isGraphRelation(relation: { bridgeType: string }): boolean {
     relation.bridgeType === 'burnAndMint' ||
     relation.bridgeType === 'lockAndMint'
   )
+}
+
+/**
+ * Relations touching a denylisted address stay recorded — they are
+ * observations. The relations graph drops them (a banned endpoint drawn
+ * into a cluster is exactly what the ban exists to prevent); the Relations
+ * tab shows them with the banned counterparty marked. These are the
+ * denylist's only read-side consult points.
+ */
+async function denylistedKeySet(db: TokenDatabase): Promise<Set<string>> {
+  return new Set((await db.tokenDenylist.getAll()).map(tokenKey))
 }
 
 function hasDenylistedEndpoint(

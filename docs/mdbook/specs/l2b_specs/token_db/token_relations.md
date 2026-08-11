@@ -54,7 +54,8 @@ touching a denylisted address are still turned into relations, and a ban
 does not delete existing ones. The ban is an interpretation ("this address
 is not a real asset"), and interpretations act at interpretation surfaces —
 the relations graph filters out relations with a denylisted endpoint at
-display time, while the observation record stays complete.
+display time and the Relations tab marks the banned counterparty, while the
+observation record stays complete.
 
 ## A transfer has a direction; a relation has roles
 

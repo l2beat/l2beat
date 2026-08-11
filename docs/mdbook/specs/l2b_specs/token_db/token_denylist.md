@@ -107,9 +107,12 @@ Five entry points, all additive "if banned → skip/refuse/filter" checks:
 4. **The interop missing-tokens dashboard** — a denylisted address gets a
    dedicated `denylisted` status instead of `missing`, so nobody is
    invited to re-add it.
-5. **The relations graph** — `getRelationsGraph` drops relations with a
-   denylisted endpoint when assembling the graph (see below). This is the
-   only read-side consult point.
+5. **Relation displays** — the relations graph drops relations with a
+   denylisted endpoint; the per-token Relations tab shows them but marks
+   the banned counterparty (see below). These are the only read-side
+   consult points. The minting-plugins summary is deliberately *not*
+   denylist-aware: a plugin observed minting this token minted it,
+   whatever the counterparty was.
 
 Everything else — `TokenMap`, financials, the public frontend, search —
 needs no awareness at all: for the catalogue, the data does not exist.
@@ -124,15 +127,15 @@ deletes no relations. Granting the denylist an exception here would invite
 the next exception, and the observation record would stop being the one
 thing it must be — complete.
 
-Instead the ban acts where interpretations belong: the relations graph, the
-one surface that turns relations into a picture of asset clusters, filters
-out relations with a denylisted endpoint when assembling the graph. The
-banned test token's edge therefore disappears from the graph while the
-underlying observation stays queryable, and if the ban was a mistake,
-nothing was lost — lifting it makes the edges reappear on the next load.
-The per-token Relations tab still lists such relations: it displays raw
-observations for a catalogued token, and a denylisted address has no token
-page of its own.
+Instead the ban acts where interpretations belong, proportionally to what
+each display claims. The relations graph filters out relations with a
+denylisted endpoint entirely: drawing the banned node would wire it back
+into a real asset cluster, which is exactly what the ban exists to prevent.
+The per-token Relations tab keeps showing such relations — it lists raw
+observations for one token — but marks the banned counterparty (🚫), so the
+observation stays visible without inviting anyone to treat the address as a
+real asset. If the ban was a mistake, nothing was lost: lifting it makes
+the graph edges reappear on the next load.
 
 ## Lifting a ban
 
@@ -148,9 +151,9 @@ were never deleted, so the graph shows the address again immediately.
 - No banner on a token page — a denylisted address has no token page. The
   denylist page in token-UI lists all entries with their reasons and is
   where bans are added (for uncatalogued addresses) and lifted.
-- No filtering in the catalogue's query layer. The relations graph filter
-  is the single sanctioned read-side check, because relations are
-  observations that must outlive any ban. If you find yourself adding a
-  denylist check to any *catalogue* read path, stop — the address should
-  not have data there in the first place; find the write path that let it
-  in.
+- No filtering in the catalogue's query layer. Read-side denylist checks
+  are sanctioned only where relations are displayed (the graph filters,
+  the Relations tab marks), because relations are observations that must
+  outlive any ban. If you find yourself adding a denylist check to any
+  *catalogue* read path, stop — the address should not have data there in
+  the first place; find the write path that let it in.

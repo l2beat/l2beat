@@ -32,10 +32,10 @@ const MAX_PAGES_PER_RUN = 50
  * addresses via this plugin". It is recorded unconditionally — without
  * consulting the token catalogue or the denylist — so no interpretation
  * (token-level conflict, human ban) can ever suppress relation evidence.
- * Interpretation surfaces filter instead: the relations graph drops
- * relations touching denylisted addresses. This is deliberately NOT part of
- * the token ingestion queue. See
- * docs/mdbook/specs/l2b_specs/token_db/token_relations.md.
+ * Interpretation surfaces act instead: the relations graph drops relations
+ * touching denylisted addresses, and the Relations tab marks the banned
+ * endpoint. This is deliberately NOT part of the token ingestion queue.
+ * See docs/mdbook/specs/l2b_specs/token_db/token_relations.md.
  */
 export class TokenRelationIngestion {
   constructor(

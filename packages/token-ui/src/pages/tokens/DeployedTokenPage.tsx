@@ -488,56 +488,78 @@ function TokenRelationsSection({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {entries.map(({ relation, role, otherEndpoint, otherToken }) => (
-                <TableRow
-                  key={[
-                    relation.tokenAChain,
-                    relation.tokenAAddress,
-                    relation.tokenBChain,
-                    relation.tokenBAddress,
-                    relation.plugin,
-                    relation.bridgeType,
-                  ].join(':')}
-                >
-                  <TableCell className="min-w-56 whitespace-normal align-top">
-                    {otherToken ? (
-                      <Link
-                        to={`/tokens/${otherToken.chain}/${otherToken.address}`}
-                        className="font-medium underline"
-                      >
-                        {otherToken.symbol} on {otherToken.chain}
-                      </Link>
-                    ) : (
-                      <span className="font-medium">Missing token</span>
-                    )}
-                    <div className="break-all text-muted-foreground text-xs">
-                      {otherToken
-                        ? otherToken.address
-                        : `${otherEndpoint.chain}:${otherEndpoint.address}`}
-                    </div>
-                  </TableCell>
-                  <TableCell className="align-top">
-                    <div className="font-medium">{role}</div>
-                    <div className="text-muted-foreground text-xs">
-                      {RELATION_ROLE_DESCRIPTIONS[role]}
-                    </div>
-                  </TableCell>
-                  <TableCell className="align-top">{relation.plugin}</TableCell>
-                  <TableCell className="align-top">
-                    {relation.bridgeType}
-                  </TableCell>
-                  <TableCell className="whitespace-normal align-top">
-                    <details>
-                      <summary className="cursor-pointer text-muted-foreground text-xs">
-                        JSON
-                      </summary>
-                      <pre className="mt-2 max-h-64 overflow-auto rounded-md bg-muted p-2 text-xs">
-                        {JSON.stringify(relation.transfer, null, 2)}
-                      </pre>
-                    </details>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {entries.map(
+                ({
+                  relation,
+                  role,
+                  otherEndpoint,
+                  otherToken,
+                  otherEndpointDenylisted,
+                }) => (
+                  <TableRow
+                    key={[
+                      relation.tokenAChain,
+                      relation.tokenAAddress,
+                      relation.tokenBChain,
+                      relation.tokenBAddress,
+                      relation.plugin,
+                      relation.bridgeType,
+                    ].join(':')}
+                  >
+                    <TableCell className="min-w-56 whitespace-normal align-top">
+                      {otherToken ? (
+                        <Link
+                          to={`/tokens/${otherToken.chain}/${otherToken.address}`}
+                          className="font-medium underline"
+                        >
+                          {otherToken.symbol} on {otherToken.chain}
+                        </Link>
+                      ) : (
+                        <span className="font-medium">
+                          {otherEndpointDenylisted
+                            ? 'Denylisted address'
+                            : 'Missing token'}
+                        </span>
+                      )}
+                      {otherEndpointDenylisted && (
+                        <span
+                          className="ml-1"
+                          title="This address is denylisted — the observed relation is shown, but the address is banned from TokenDB"
+                        >
+                          🚫
+                        </span>
+                      )}
+                      <div className="break-all text-muted-foreground text-xs">
+                        {otherToken
+                          ? otherToken.address
+                          : `${otherEndpoint.chain}:${otherEndpoint.address}`}
+                      </div>
+                    </TableCell>
+                    <TableCell className="align-top">
+                      <div className="font-medium">{role}</div>
+                      <div className="text-muted-foreground text-xs">
+                        {RELATION_ROLE_DESCRIPTIONS[role]}
+                      </div>
+                    </TableCell>
+                    <TableCell className="align-top">
+                      {relation.plugin}
+                    </TableCell>
+                    <TableCell className="align-top">
+                      {relation.bridgeType}
+                    </TableCell>
+                    <TableCell className="whitespace-normal align-top">
+                      <details>
+                        <summary className="cursor-pointer text-muted-foreground text-xs">
+                          JSON
+                        </summary>
+                        <pre className="mt-2 max-h-64 overflow-auto rounded-md bg-muted p-2 text-xs">
+                          {JSON.stringify(relation.transfer, null, 2)}
+                        </pre>
+                      </details>
+                    </TableCell>
+                  </TableRow>
+                ),
+              )}
             </TableBody>
           </Table>
         )}
