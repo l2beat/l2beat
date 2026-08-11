@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Indexer } from '@l2beat/uif'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
@@ -6,9 +6,11 @@ import type { ApplicationModule, ModuleDependencies } from '../types'
 import { PrivacyBlockTimestampIndexer } from './indexers/PrivacyBlockTimestampIndexer'
 import { PrivacyFlowIndexer } from './indexers/PrivacyFlowIndexer'
 import { PrivacyPriceIndexer } from './indexers/PrivacyPriceIndexer'
+import { PrivacyRelayerActivityIndexer } from './indexers/PrivacyRelayerActivityIndexer'
 import { StarknetPrivacyFlowIndexer } from './indexers/StarknetPrivacyFlowIndexer'
 import type {
   PrivacyFlowIndexerConfig,
+  PrivacyRelayerActivityIndexerConfig,
   StarknetPrivacyFlowIndexerConfig,
 } from './types'
 
@@ -29,21 +31,24 @@ export function createPrivacyModule({
   const indexers: Indexer[] = []
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
-  const priceIndexer = new PrivacyPriceIndexer(
-    {
-      parents: [hourlyIndexer],
-      indexerService,
-      configurations: config.privacy.priceConfigs.map((priceConfig) => ({
-        id: priceConfig.id,
-        minHeight: UnixTime.toStartOf(priceConfig.sinceTimestamp, 'hour'),
-        maxHeight: null,
-        properties: priceConfig,
-      })),
-      priceProvider: providers.price,
-      db,
-    },
-    logger,
-  )
+  const priceIndexer =
+    config.privacy.priceConfigs.length > 0
+      ? new PrivacyPriceIndexer(
+          {
+            parents: [hourlyIndexer],
+            indexerService,
+            configurations: config.privacy.priceConfigs.map((priceConfig) => ({
+              id: priceConfig.id,
+              minHeight: UnixTime.toStartOf(priceConfig.sinceTimestamp, 'hour'),
+              maxHeight: null,
+              properties: priceConfig,
+            })),
+            priceProvider: providers.price,
+            db,
+          },
+          logger,
+        )
+      : undefined
 
   const flowConfigsByChain = new Map<string, PrivacyFlowIndexerConfig[]>()
   for (const flowConfig of config.privacy.flowConfigs) {
@@ -64,6 +69,17 @@ export function createPrivacyModule({
     ])
   }
 
+  const relayerConfigsByChain = new Map<
+    string,
+    PrivacyRelayerActivityIndexerConfig[]
+  >()
+  for (const relayerConfig of config.privacy.relayerConfigs) {
+    relayerConfigsByChain.set(relayerConfig.chain, [
+      ...(relayerConfigsByChain.get(relayerConfig.chain) ?? []),
+      relayerConfig,
+    ])
+  }
+
   for (const blockTimestampConfig of config.privacy.blockTimestampConfigs) {
     const sinceTimestamp = UnixTime.toStartOf(
       blockTimestampConfig.sinceTimestamp,
@@ -72,6 +88,14 @@ export function createPrivacyModule({
     const flowConfigs = flowConfigsByChain.get(blockTimestampConfig.chain) ?? []
     const starknetFlowConfigs =
       starknetFlowConfigsByChain.get(blockTimestampConfig.chain) ?? []
+    const relayerConfigs =
+      relayerConfigsByChain.get(blockTimestampConfig.chain) ?? []
+    const blockProvider = providers.block.getBlockProvider(
+      blockTimestampConfig.chain,
+    )
+    const logsProvider = providers.logs.getLogsProvider(
+      blockTimestampConfig.chain,
+    )
 
     const blockTimestampIndexer = new PrivacyBlockTimestampIndexer(
       {
@@ -94,18 +118,15 @@ export function createPrivacyModule({
     indexers.push(blockTimestampIndexer)
 
     if (flowConfigs.length > 0) {
+      assert(priceIndexer, 'Privacy flow configs require a price indexer')
       indexers.push(
         new PrivacyFlowIndexer(
           {
             chain: blockTimestampConfig.chain,
             parents: [priceIndexer, blockTimestampIndexer],
             indexerService,
-            blockProvider: providers.block.getBlockProvider(
-              blockTimestampConfig.chain,
-            ),
-            logsProvider: providers.logs.getLogsProvider(
-              blockTimestampConfig.chain,
-            ),
+            blockProvider,
+            logsProvider,
             configurations: flowConfigs.map((flowConfig) => ({
               id: flowConfig.id,
               minHeight: flowConfig.sinceTimestamp,
@@ -120,15 +141,14 @@ export function createPrivacyModule({
     }
 
     if (starknetFlowConfigs.length > 0) {
+      assert(priceIndexer, 'Starknet privacy flow configs require a price indexer')
       indexers.push(
         new StarknetPrivacyFlowIndexer(
           {
             chain: blockTimestampConfig.chain,
             parents: [priceIndexer, blockTimestampIndexer],
             indexerService,
-            blockProvider: providers.block.getBlockProvider(
-              blockTimestampConfig.chain,
-            ),
+            blockProvider,
             starknetClient: providers.clients.getStarknetClient(
               blockTimestampConfig.chain,
             ),
@@ -144,12 +164,35 @@ export function createPrivacyModule({
         ),
       )
     }
+
+    if (relayerConfigs.length > 0) {
+      indexers.push(
+        new PrivacyRelayerActivityIndexer(
+          {
+            chain: blockTimestampConfig.chain,
+            parents: [blockTimestampIndexer],
+            indexerService,
+            blockProvider,
+            logsProvider,
+            configurations: relayerConfigs.map((relayerConfig) => ({
+              id: relayerConfig.id,
+              minHeight: relayerConfig.sinceTimestamp,
+              maxHeight: null,
+              properties: relayerConfig,
+            })),
+            db,
+          },
+          logger,
+        ),
+      )
+    }
   }
 
   logger.info('Privacy config loaded', {
     projects: config.privacy.projects.length,
     flowConfigs: config.privacy.flowConfigs.length,
     starknetFlowConfigs: config.privacy.starknetFlowConfigs.length,
+    relayerConfigs: config.privacy.relayerConfigs.length,
     priceConfigs: config.privacy.priceConfigs.length,
     chains: config.privacy.chains.length,
   })
@@ -159,7 +202,7 @@ export function createPrivacyModule({
       logger = logger.for('PrivacyModule')
       logger.info('Starting...')
       await hourlyIndexer.start()
-      await priceIndexer.start()
+      await priceIndexer?.start()
       for (const indexer of indexers) {
         await indexer.start()
       }
