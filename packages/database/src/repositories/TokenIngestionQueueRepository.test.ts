@@ -56,6 +56,31 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
     })
   })
 
+  describe(
+    TokenIngestionQueueRepository.prototype.findByChainAndAddress.name,
+    () => {
+      it('finds an entry with case-insensitive address matching', async () => {
+        await repository.enqueue({ chain: 'ethereum', address: '0xabc' })
+
+        const found = await repository.findByChainAndAddress({
+          chain: 'ethereum',
+          address: '0xABC',
+        })
+        expect(found!).toHaveSubset({
+          chain: 'ethereum',
+          address: '0xabc',
+          state: 'pending',
+        })
+
+        const missing = await repository.findByChainAndAddress({
+          chain: 'base',
+          address: '0xabc',
+        })
+        expect(missing).toEqual(undefined)
+      })
+    },
+  )
+
   describe(TokenIngestionQueueRepository.prototype.findNextPending.name, () => {
     it('returns the oldest pending entry', async () => {
       const first = { chain: 'ethereum', address: '0x111' }

@@ -93,19 +93,19 @@ export const DeleteTokenRelationCommand = v.object({
   existing: TokenRelationRecord,
 })
 
-export type AddTokenDenylistEntryCommand = v.infer<
-  typeof AddTokenDenylistEntryCommand
+export type AddTokenToDenylistCommand = v.infer<
+  typeof AddTokenToDenylistCommand
 >
-export const AddTokenDenylistEntryCommand = v.object({
-  type: v.literal('AddTokenDenylistEntryCommand'),
+export const AddTokenToDenylistCommand = v.object({
+  type: v.literal('AddTokenToDenylistCommand'),
   record: TokenDenylistEntryInsert,
 })
 
-export type DeleteTokenDenylistEntryCommand = v.infer<
-  typeof DeleteTokenDenylistEntryCommand
+export type DeleteTokenFromDenylistCommand = v.infer<
+  typeof DeleteTokenFromDenylistCommand
 >
-export const DeleteTokenDenylistEntryCommand = v.object({
-  type: v.literal('DeleteTokenDenylistEntryCommand'),
+export const DeleteTokenFromDenylistCommand = v.object({
+  type: v.literal('DeleteTokenFromDenylistCommand'),
   pk: DeployedTokenPrimaryKey,
   existing: TokenDenylistEntryRecord,
 })
@@ -121,6 +121,6 @@ export const Command = v.union([
   AddTokenRelationCommand,
   UpdateTokenRelationCommand,
   DeleteTokenRelationCommand,
-  AddTokenDenylistEntryCommand,
-  DeleteTokenDenylistEntryCommand,
+  AddTokenToDenylistCommand,
+  DeleteTokenFromDenylistCommand,
 ])

@@ -7,7 +7,7 @@ import type {
   TokenRelationLockedToken,
   TokenRelationRecord,
 } from '@l2beat/database'
-import { Address32 } from '@l2beat/shared-pure'
+import { Address32, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { CoingeckoClient } from '../../../chains/clients/coingecko/CoingeckoClient'
 import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
@@ -646,6 +646,60 @@ describe('deployedTokensRouter', () => {
       expect(getTokens).toHaveBeenCalledWith([
         { chain: 'ethereum', address: '0xaaa' },
         { chain: 'base', address: '0xbbb' },
+      ])
+    })
+
+    it('excludes relations touching a denylisted address', async () => {
+      // The relation stays recorded (it is an observation), but the graph is
+      // an interpretation — drawing the banned endpoint would wire it back
+      // into a real cluster. This is the denylist's one read-side filter.
+      const clean = tokenRelationRoute({
+        tokenAChain: 'ethereum',
+        tokenAAddress: '0xaaa',
+        tokenBChain: 'base',
+        tokenBAddress: '0xbbb',
+        plugin: 'test-plugin',
+      })
+      const banned = tokenRelationRoute({
+        tokenAChain: 'arbitrum',
+        tokenAAddress: '0xbad',
+        tokenBChain: 'optimism',
+        tokenBAddress: '0xccc',
+        plugin: 'test-plugin',
+      })
+      const mockTokenDb = mockObject<TokenDatabase>({
+        tokenDenylist: mockObject<TokenDatabase['tokenDenylist']>({
+          getAll: mockFn().resolvesTo([
+            {
+              chain: 'arbitrum',
+              address: '0xbad',
+              reason: 'test token',
+              createdAt: UnixTime(1),
+            },
+          ]),
+        }),
+        tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+          getAllRoutes: mockFn().resolvesTo([clean, banned]),
+        }),
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+          getByPrimaryKeys: mockFn().resolvesTo([]),
+        }),
+      })
+
+      const caller = createRouter(
+        mockTokenDb,
+        mockObject<Database>({}),
+        mockObject<CoingeckoClient>({}),
+      )
+
+      const result = await caller.getRelationsGraph()
+
+      expect(result.relations).toEqual([{ ...clean, isConflict: false }])
+      // The denylisted endpoint's counterparty vanishes with the relation —
+      // no orphan node is drawn.
+      expect(result.nodes.map((node) => node.id)).toEqual([
+        'ethereum:0xaaa',
+        'base:0xbbb',
       ])
     })
   })

@@ -7,17 +7,18 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { Command } from './commands'
 import { manualProof } from './commitTokenChanges'
+import { normalizeInteropTokenAddress } from './ingestion/tokenIngestionUtils'
 import {
   type AddAbstractTokenIntent,
   type AddDeployedTokenIntent,
   type AddTokenRelationIntent,
+  type AddTokenToDenylistIntent,
   type DeleteAbstractTokenIntent,
   type DeleteDeployedTokenIntent,
+  type DeleteTokenFromDenylistIntent,
   type DeleteTokenRelationIntent,
-  type DenylistDeployedTokenIntent,
   Intent,
   type MergeAbstractTokenIntent,
-  type RemoveTokenDenylistEntryIntent,
   type UpdateAbstractTokenIntent,
   type UpdateDeployedTokenIntent,
   type UpdateTokenRelationIntent,
@@ -99,11 +100,11 @@ export async function generatePlan(
       case 'DeleteDeployedTokenIntent':
         commands = await planDeleteDeployedToken(db, intent)
         break
-      case 'DenylistDeployedTokenIntent':
-        commands = await planDenylistDeployedToken(db, intent)
+      case 'AddTokenToDenylistIntent':
+        commands = await planAddTokenToDenylist(db, intent)
         break
-      case 'RemoveTokenDenylistEntryIntent':
-        commands = await planRemoveTokenDenylistEntry(db, intent)
+      case 'DeleteTokenFromDenylistIntent':
+        commands = await planDeleteTokenFromDenylist(db, intent)
         break
       case 'AddTokenRelationIntent':
         commands = await planAddTokenRelation(db, intent)
@@ -352,42 +353,71 @@ async function planDeleteDeployedToken(
 }
 
 /**
- * One confirmable ban: add the denylist entry and clean up everything TokenDB
- * currently holds about the address. The deployed token (when catalogued) and
- * all relations touching the address are deleted in the same plan, so the
- * user sees the full blast radius before confirming and no half-state is
- * reachable. All deleted records land in `TokenDbHistory` via the executed
- * commands, from which they can be reconstructed if the ban was a mistake.
+ * One confirmable ban: add the denylist entry and delete the catalogued
+ * deployed token in the same plan, so no half-state is reachable (deleted
+ * but not denylisted → recreated by ingestion; denylisted but not deleted →
+ * stale catalogue entry). The deleted record lands in `TokenDbHistory` via
+ * the executed command, from which it can be reconstructed if the ban was a
+ * mistake.
  *
- * The token does not have to exist — an uncatalogued address observed only in
- * relations can be denylisted too.
+ * Relations touching the address are deliberately NOT deleted: they are
+ * observations of on-chain transfers and stay recorded regardless of any
+ * interpretation — including this ban. Interpretation surfaces (the
+ * relations graph) filter denylisted endpoints out instead.
+ *
+ * The token does not have to exist — an uncatalogued address observed only
+ * in relations can be denylisted too.
  */
-async function planDenylistDeployedToken(
+async function planAddTokenToDenylist(
   db: TokenDatabase,
-  intent: DenylistDeployedTokenIntent,
+  intent: AddTokenToDenylistIntent,
 ): Promise<Command[]> {
   if (intent.reason.trim() === '') {
     throw new PlanningError('A denylist entry requires a reason')
   }
-  const pk = {
-    chain: intent.pk.chain,
-    address: intent.pk.address.toLowerCase(),
+  // Ingestion consults the denylist with canonical addresses (Address32
+  // forms cropped to 20 bytes, lowercase). An entry stored under any other
+  // form — e.g. an Address32 pasted from the missing-tokens dashboard —
+  // would never match a lookup and the ban would silently do nothing.
+  const address = normalizeDenylistAddress(intent.pk.address)
+  if (address === undefined) {
+    throw new PlanningError(`${intent.pk.address} is not a valid token address`)
   }
+  const pk = { chain: intent.pk.chain, address }
 
-  const [alreadyDenylisted, existingToken, relations] = await Promise.all([
-    db.tokenDenylist.findByChainAndAddress(pk),
-    db.deployedToken.findByChainAndAddress(pk),
-    db.tokenRelation.getRelationsFor(pk),
-  ])
+  const [alreadyDenylisted, existingToken, relations, chainRecord, queued] =
+    await Promise.all([
+      db.tokenDenylist.findByChainAndAddress(pk),
+      db.deployedToken.findByChainAndAddress(pk),
+      db.tokenRelation.getRelationsFor(pk),
+      db.chain.findByName(pk.chain),
+      db.tokenIngestionQueue.findByChainAndAddress(pk),
+    ])
   if (alreadyDenylisted !== undefined) {
     throw new PlanningError(
       `${pk.chain}+${pk.address} is already denylisted (${alreadyDenylisted.reason})`,
     )
   }
+  // The chain is free-form text on the denylist page — a typo'd chain would
+  // record an entry that bans nothing while the UI reports success. A chain
+  // missing from the chain table is still accepted when TokenDB references
+  // the address under it (production has queued tokens on chains that were
+  // never added to the table): then the string provably matches what
+  // ingestion uses.
+  if (
+    chainRecord === undefined &&
+    existingToken === undefined &&
+    relations.length === 0 &&
+    queued === undefined
+  ) {
+    throw new PlanningError(
+      `Chain ${pk.chain} is not known to TokenDB and nothing references ${pk.chain}+${pk.address} — check the chain for a typo`,
+    )
+  }
 
   const commands: Command[] = [
     {
-      type: 'AddTokenDenylistEntryCommand',
+      type: 'AddTokenToDenylistCommand',
       record: { ...pk, reason: intent.reason },
     },
   ]
@@ -398,47 +428,46 @@ async function planDenylistDeployedToken(
       existing: existingToken,
     })
   }
-  for (const relation of [...relations].sort(compareTokenRelations)) {
-    commands.push({
-      type: 'DeleteTokenRelationCommand',
-      pk: toTokenRelationPrimaryKey(relation),
-      existing: relation,
-    })
-  }
   return commands
 }
 
-async function planRemoveTokenDenylistEntry(
+async function planDeleteTokenFromDenylist(
   db: TokenDatabase,
-  intent: RemoveTokenDenylistEntryIntent,
+  intent: DeleteTokenFromDenylistIntent,
 ): Promise<Command[]> {
-  const existing = await db.tokenDenylist.findByChainAndAddress(intent.pk)
-  if (existing === undefined) {
-    throw new PlanningError(
-      `${intent.pk.chain}+${intent.pk.address} is not denylisted`,
-    )
+  // Entries are stored canonical (see planAddTokenToDenylist), so a
+  // pasted Address32 form must be normalized to find its entry.
+  const address = normalizeDenylistAddress(intent.pk.address)
+  if (address === undefined) {
+    throw new PlanningError(`${intent.pk.address} is not a valid token address`)
   }
-  // Removal only lifts the ban. The deleted token and relations are not
-  // restored automatically — ingestion re-creates them from live transfers,
-  // or a human re-adds them from history.
+  const pk = { chain: intent.pk.chain, address }
+  const existing = await db.tokenDenylist.findByChainAndAddress(pk)
+  if (existing === undefined) {
+    throw new PlanningError(`${pk.chain}+${pk.address} is not denylisted`)
+  }
+  // Removal only lifts the ban. The deleted token is not restored
+  // automatically — ingestion re-creates it from live transfers, or a human
+  // re-adds it from history. Relations were never deleted.
   return [
     {
-      type: 'DeleteTokenDenylistEntryCommand',
+      type: 'DeleteTokenFromDenylistCommand',
       pk: { chain: existing.chain, address: existing.address },
       existing,
     },
   ]
 }
 
-function compareTokenRelations(a: TokenRelationRecord, b: TokenRelationRecord) {
-  return (
-    a.plugin.localeCompare(b.plugin) ||
-    a.bridgeType.localeCompare(b.bridgeType) ||
-    a.tokenAChain.localeCompare(b.tokenAChain) ||
-    a.tokenAAddress.localeCompare(b.tokenAAddress) ||
-    a.tokenBChain.localeCompare(b.tokenBChain) ||
-    a.tokenBAddress.localeCompare(b.tokenBAddress)
-  )
+/**
+ * `normalizeInteropTokenAddress` throws on values that are not addresses at
+ * all (non-hex `0x…` strings); planning wants a clean error instead.
+ */
+function normalizeDenylistAddress(address: string): string | undefined {
+  try {
+    return normalizeInteropTokenAddress(address)
+  } catch {
+    return undefined
+  }
 }
 
 function mergeAdditionalCoingeckoEntries(

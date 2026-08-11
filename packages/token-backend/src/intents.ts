@@ -75,20 +75,18 @@ export const DeleteDeployedTokenIntent = v.object({
  * denylisted → recreated by ingestion; denylisted but not deleted → stale
  * catalogue entry).
  */
-export type DenylistDeployedTokenIntent = v.infer<
-  typeof DenylistDeployedTokenIntent
->
-export const DenylistDeployedTokenIntent = v.object({
-  type: v.literal('DenylistDeployedTokenIntent'),
+export type AddTokenToDenylistIntent = v.infer<typeof AddTokenToDenylistIntent>
+export const AddTokenToDenylistIntent = v.object({
+  type: v.literal('AddTokenToDenylistIntent'),
   pk: DeployedTokenPrimaryKey,
   reason: v.string(),
 })
 
-export type RemoveTokenDenylistEntryIntent = v.infer<
-  typeof RemoveTokenDenylistEntryIntent
+export type DeleteTokenFromDenylistIntent = v.infer<
+  typeof DeleteTokenFromDenylistIntent
 >
-export const RemoveTokenDenylistEntryIntent = v.object({
-  type: v.literal('RemoveTokenDenylistEntryIntent'),
+export const DeleteTokenFromDenylistIntent = v.object({
+  type: v.literal('DeleteTokenFromDenylistIntent'),
   pk: DeployedTokenPrimaryKey,
 })
 
@@ -124,8 +122,8 @@ export const Intent = v.union([
   AddDeployedTokenIntent,
   UpdateDeployedTokenIntent,
   DeleteDeployedTokenIntent,
-  DenylistDeployedTokenIntent,
-  RemoveTokenDenylistEntryIntent,
+  AddTokenToDenylistIntent,
+  DeleteTokenFromDenylistIntent,
   AddTokenRelationIntent,
   UpdateTokenRelationIntent,
   DeleteTokenRelationIntent,

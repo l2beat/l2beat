@@ -30,9 +30,11 @@ const MAX_PAGES_PER_RUN = 50
  * Materializes `TokenRelation` rows from interop transfers. A relation is an
  * observation: "we witnessed a non-swapping transfer between these two token
  * addresses via this plugin". It is recorded unconditionally — without
- * consulting the token catalogue — so a token-level conflict can never
- * suppress relation evidence. This is deliberately NOT part of the token
- * ingestion queue. See
+ * consulting the token catalogue or the denylist — so no interpretation
+ * (token-level conflict, human ban) can ever suppress relation evidence.
+ * Interpretation surfaces filter instead: the relations graph drops
+ * relations touching denylisted addresses. This is deliberately NOT part of
+ * the token ingestion queue. See
  * docs/mdbook/specs/l2b_specs/token_db/token_relations.md.
  */
 export class TokenRelationIngestion {
@@ -141,34 +143,15 @@ export class TokenRelationIngestion {
         ),
       }),
     )
-    // Relations are recorded without consulting the token *catalogue* — but
-    // the denylist is not the catalogue. An entry is an explicit human ban
-    // ("this address is not a real asset; refuse to observe it"), the same
-    // category as the address normalization that already drops 0x0. Without
-    // this, a denylisted test token's edge would reappear on the graph with
-    // the next test transfer. The denylist is read inside the serializable
-    // write transaction — a run processes up to 50 pages, so a run-level
-    // snapshot could go stale mid-run and insert a relation right after a
-    // denylist plan deleted it. Reading here means this transaction either
-    // sees the entry, or serializes before the denylist execution, whose
-    // in-transaction plan regeneration then sees the new relation and makes
-    // the operator re-plan the deletion.
-    return await this.tokenDb.transaction(async () => {
-      const denylisted = tokenKeySet(await this.tokenDb.tokenDenylist.getAll())
-      const inserts = newRelations.filter(
-        (relation) => !hasDenylistedEndpoint(relation, denylisted),
-      )
-      const updates = resolutions.filter(
-        (relation) => !hasDenylistedEndpoint(relation, denylisted),
-      )
-      for (const relation of inserts) {
+    await this.tokenDb.transaction(async () => {
+      for (const relation of newRelations) {
         await commitTokenChanges(
           this.tokenDb,
           [{ type: 'AddTokenRelationCommand', record: relation }],
           { kind: 'ingestion', log: formatRelationLog(relation) },
         )
       }
-      for (const relation of updates) {
+      for (const relation of resolutions) {
         await commitTokenChanges(
           this.tokenDb,
           [
@@ -182,8 +165,8 @@ export class TokenRelationIngestion {
           { kind: 'ingestion', log: formatResolutionLog(relation) },
         )
       }
-      return { inserted: inserts.length, resolved: updates.length }
-    }, 'serializable')
+    })
+    return { inserted: newRelations.length, resolved: resolutions.length }
   }
 }
 
@@ -261,26 +244,6 @@ function relationKey(relation: TokenRelationRoute): string {
     relation.plugin,
     relation.bridgeType,
   ].join(':')
-}
-
-function tokenKeySet(
-  entries: { chain: string; address: string }[],
-): Set<string> {
-  return new Set(
-    entries.map((entry) => `${entry.chain}:${entry.address.toLowerCase()}`),
-  )
-}
-
-function hasDenylistedEndpoint(
-  route: TokenRelationRoute,
-  denylisted: Set<string>,
-): boolean {
-  // Route endpoints are already normalized (lowercase) by
-  // `normalizeTransferSide` / `normalizeTokenRelation`.
-  return (
-    denylisted.has(`${route.tokenAChain}:${route.tokenAAddress}`) ||
-    denylisted.has(`${route.tokenBChain}:${route.tokenBAddress}`)
-  )
 }
 
 function formatRelationLog(relation: TokenRelationRoute): string {

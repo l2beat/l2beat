@@ -84,7 +84,7 @@ describe(commitTokenChanges.name, () => {
         existing: relation,
       },
       {
-        type: 'AddTokenDenylistEntryCommand',
+        type: 'AddTokenToDenylistCommand',
         record: {
           chain: deployed.chain,
           address: deployed.address,
@@ -92,7 +92,7 @@ describe(commitTokenChanges.name, () => {
         },
       },
       {
-        type: 'DeleteTokenDenylistEntryCommand',
+        type: 'DeleteTokenFromDenylistCommand',
         pk: { chain: deployed.chain, address: deployed.address },
         existing: {
           chain: deployed.chain,

@@ -106,9 +106,20 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
       }),
 
     getRelationsGraph: readOnlyProcedure.query(async ({ ctx }) => {
+      // Relations touching a denylisted address stay recorded — they are
+      // observations — but the graph is an interpretation of them, and
+      // drawing the banned endpoint would wire it back into a real cluster,
+      // which is exactly what the ban exists to prevent. Filtering here,
+      // where clusters are assembled, is the denylist's one read-side
+      // consult point.
+      const denylisted = new Set(
+        (await ctx.tokenDb.tokenDenylist.getAll()).map(tokenKey),
+      )
       const relations = sortRelations(
         (await ctx.tokenDb.tokenRelation.getAllRoutes()).filter(
-          isGraphRelation,
+          (relation) =>
+            isGraphRelation(relation) &&
+            !hasDenylistedEndpoint(relation, denylisted),
         ),
       )
       const tokenKeys = uniqueTokenKeys(
@@ -212,6 +223,31 @@ function isGraphRelation(relation: { bridgeType: string }): boolean {
   return (
     relation.bridgeType === 'burnAndMint' ||
     relation.bridgeType === 'lockAndMint'
+  )
+}
+
+function hasDenylistedEndpoint(
+  relation: {
+    tokenAChain: string
+    tokenAAddress: string
+    tokenBChain: string
+    tokenBAddress: string
+  },
+  denylisted: Set<string>,
+): boolean {
+  return (
+    denylisted.has(
+      tokenKey({
+        chain: relation.tokenAChain,
+        address: relation.tokenAAddress,
+      }),
+    ) ||
+    denylisted.has(
+      tokenKey({
+        chain: relation.tokenBChain,
+        address: relation.tokenBAddress,
+      }),
+    )
   )
 }
 

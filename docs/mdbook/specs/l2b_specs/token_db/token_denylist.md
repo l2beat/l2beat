@@ -7,7 +7,7 @@
   - [The table](#the-table)
   - [One intent, one plan](#one-intent-one-plan)
   - [Where the denylist is consulted](#where-the-denylist-is-consulted)
-  - [Why relation ingestion honors the denylist](#why-relation-ingestion-honors-the-denylist)
+  - [Relations are not deleted — the graph filters](#relations-are-not-deleted--the-graph-filters)
   - [Lifting a ban](#lifting-a-ban)
   - [What this deliberately does not do](#what-this-deliberately-does-not-do)
 
@@ -26,11 +26,10 @@ graph and visible to every downstream consumer.
 
 ## Why prevention, not filtration
 
-Deleting such a token is not durable on its own: relations survive token
-deletion (by design), and the next test transfer re-runs the whole loop —
-relation ingestion re-inserts the edge, the queue pre-step re-enqueues the
-address, and the processor re-resolves the abstract token from the
-non-swapping transfer evidence and recreates the deployed token.
+Deleting such a token is not durable on its own: the queue pre-step
+re-enqueues the address with the next test transfer, and the processor
+re-resolves the abstract token from the non-swapping transfer evidence and
+recreates the deployed token.
 
 The alternative considered was a `DeployedToken.ignored` flag with
 filtering on every read path. It was rejected: a flag turns the catalogue
@@ -38,10 +37,14 @@ into a two-state store, and every read — present and future — must then
 decide whether it wants ignored rows. That decision genuinely differs per
 call site (existence checks yes, graph no, suggestion suppression yes...),
 which makes every future endpoint a chance to leak. The denylist instead
-stops the data at the **write and observation boundaries**: what was never
-stored cannot leak, and read paths need zero awareness. Only a handful of
-entry points consult the list, and they all ask the same one-directional
-question — "is this address banned? then skip/refuse".
+stops the data at the **catalogue write boundary**: a banned address is
+never a `DeployedToken`, so the catalogue's read paths need zero awareness.
+Only a handful of entry points consult the list, and they all ask the same
+one-directional question — "is this address banned? then skip/refuse".
+
+Relation *observations* are the deliberate exception to prevention: they
+keep being recorded (see below), and the one interpretation surface that
+draws them — the relations graph — filters denylisted endpoints out.
 
 ## The table
 
@@ -51,30 +54,41 @@ lowercase, same as everywhere else) and carries a mandatory human-written
 command payload — `executePlan` regenerates plans and compares them
 byte-for-byte, so plan-time data must not contain "now".
 
+Planning canonicalizes the pasted address with the same helper ingestion
+uses for its lookups (Address32 forms cropped to 20 bytes, lowercase) — an
+entry stored under any other form would never match a lookup and the ban
+would silently do nothing. The free-form `chain` gets the same protection
+against silent no-ops: a chain that is missing from the chain table *and*
+referenced by nothing in TokenDB (no token, no relations, no queue entry)
+is rejected as a probable typo. A chain missing from the table is still
+accepted when something references the address under it — production has
+queued tokens on chains that were never added to the table.
+
 ## One intent, one plan
 
-`DenylistDeployedTokenIntent { pk, reason }` produces a single plan that:
+`AddTokenToDenylistIntent { pk, reason }` produces a single plan that:
 
-1. adds the denylist entry,
-2. deletes the `DeployedToken` row, when the address is catalogued, and
-3. deletes every `TokenRelation` touching the address.
+1. adds the denylist entry, and
+2. deletes the `DeployedToken` row, when the address is catalogued.
+
+Relations touching the address are **not** deleted — see below.
 
 One intent rather than separate "delete" and "denylist" actions, so no
 half-state is reachable: deleted-but-not-denylisted is recreated by
 ingestion within a minute, and denylisted-but-not-deleted leaves a stale
 catalogue entry. The confirmation dialog shows the full command list (the
 same visible-blast-radius rationale as
-[abstract token merging](./abstract_token_merging.md)), and every deleted
+[abstract token merging](./abstract_token_merging.md)), and the deleted
 record is preserved verbatim inside its command in `TokenDbHistory`, from
 which it can be reconstructed if the ban was a mistake.
 
 The address does **not** have to be catalogued — an uncatalogued endpoint
 seen only in relations (an orange node on the graph) can be denylisted too;
-the plan then consists of the entry plus whatever relations exist.
+the plan then consists of the entry alone.
 
 ## Where the denylist is consulted
 
-Five entry points, all additive "if banned → skip/refuse" checks:
+Five entry points, all additive "if banned → skip/refuse/filter" checks:
 
 1. **Token ingestion** — `plan()` checks the denylist first and
    short-circuits to a terminal `skip` with a `token-denylisted` trace
@@ -84,52 +98,59 @@ Five entry points, all additive "if banned → skip/refuse" checks:
    denylist inside the same serializable transaction as the write — an
    address denylisted between planning and applying is skipped, not
    written next to its own ban.
-2. **Relation ingestion** — transfers with a denylisted endpoint are not
-   turned into relations (see below). The denylist is read inside each
-   batch's serializable write transaction, never cached for a whole run,
-   so an address denylisted mid-run cannot slip back in with a later
-   batch.
-3. **The add path** — `planAddDeployedToken` refuses denylisted addresses,
+2. **The add path** — `planAddDeployedToken` refuses denylisted addresses,
    and the `deployedTokens.checks` route returns a `denylisted` error so
    the add form blocks before a plan is even attempted.
-4. **Suggestion surfaces** — CoinGecko and partial-transfer suggestions
+3. **Suggestion surfaces** — CoinGecko and partial-transfer suggestions
    treat denylisted addresses as known, so a banned address never
    resurfaces as "add this token".
-5. **The interop missing-tokens dashboard** — a denylisted address gets a
+4. **The interop missing-tokens dashboard** — a denylisted address gets a
    dedicated `denylisted` status instead of `missing`, so nobody is
    invited to re-add it.
+5. **The relations graph** — `getRelationsGraph` drops relations with a
+   denylisted endpoint when assembling the graph (see below). This is the
+   only read-side consult point.
 
-Everything else — the relations graph, `TokenMap`, financials, the public
-frontend, search — needs no awareness at all: the data does not exist.
+Everything else — `TokenMap`, financials, the public frontend, search —
+needs no awareness at all: for the catalogue, the data does not exist.
 
-## Why relation ingestion honors the denylist
+## Relations are not deleted — the graph filters
 
 [Token relations](./token_relations.md) says observation recording must
-never be gated on the interpretation being consistent. The denylist is not
-that kind of gate. That rule exists so *systematic* interpretation failures
-(token-level conflicts) cannot suppress exactly the evidence needed to
-diagnose them. A denylist entry is the opposite: a rare, explicit,
-human-confirmed statement that observations involving this address are
-noise, not signal — the same category as the address normalization that
-already drops `0x0` and `Address32.ZERO` before they enter the system. The
-price, paid knowingly: if an address is denylisted by mistake, transfers
-observed during the ban age out of the ~7-day retention and those
-observations are unrecoverable.
+never be gated on interpretation. A human ban is an interpretation ("this
+address is not a real asset"), so it gets no carve-out: relation ingestion
+keeps recording transfers touching a denylisted address, and the ban plan
+deletes no relations. Granting the denylist an exception here would invite
+the next exception, and the observation record would stop being the one
+thing it must be — complete.
+
+Instead the ban acts where interpretations belong: the relations graph, the
+one surface that turns relations into a picture of asset clusters, filters
+out relations with a denylisted endpoint when assembling the graph. The
+banned test token's edge therefore disappears from the graph while the
+underlying observation stays queryable, and if the ban was a mistake,
+nothing was lost — lifting it makes the edges reappear on the next load.
+The per-token Relations tab still lists such relations: it displays raw
+observations for a catalogued token, and a denylisted address has no token
+page of its own.
 
 ## Lifting a ban
 
-`RemoveTokenDenylistEntryIntent` deletes the entry (through the same
+`DeleteTokenFromDenylistIntent` deletes the entry (through the same
 plan/confirm flow, recorded in history). Removal only lifts the ban: the
-deleted token and relations are not restored automatically. If the route is
-still active, ingestion re-creates them from live transfers within a
-minute; otherwise a human re-adds them manually, using the records
-preserved in history.
+deleted token is not restored automatically. If the route is still active,
+ingestion re-creates it from live transfers within a minute; otherwise a
+human re-adds it manually, using the record preserved in history. Relations
+were never deleted, so the graph shows the address again immediately.
 
 ## What this deliberately does not do
 
 - No banner on a token page — a denylisted address has no token page. The
   denylist page in token-UI lists all entries with their reasons and is
   where bans are added (for uncatalogued addresses) and lifted.
-- No filtering anywhere in the query layer. If you find yourself adding a
-  denylist check to a read path, stop — the address should not have data
-  there in the first place; find the write path that let it in.
+- No filtering in the catalogue's query layer. The relations graph filter
+  is the single sanctioned read-side check, because relations are
+  observations that must outlive any ban. If you find yourself adding a
+  denylist check to any *catalogue* read path, stop — the address should
+  not have data there in the first place; find the write path that let it
+  in.

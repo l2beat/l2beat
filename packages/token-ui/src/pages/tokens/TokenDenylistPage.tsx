@@ -67,9 +67,10 @@ export function TokenDenylistPage() {
             <CardTitle>Denylist an address</CardTitle>
             <CardDescription>
               Bans the address from TokenDB: the deployed token (if catalogued)
-              and every relation touching the address are deleted, and ingestion
-              refuses to observe it again. The address does not have to be
-              catalogued. Everything deleted stays recoverable from history.
+              is deleted, ingestion refuses to catalogue it again, and the
+              relations graph hides its edges. Relations stay recorded — they
+              are observations. The address does not have to be catalogued. The
+              deleted token stays recoverable from history.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -106,7 +107,7 @@ export function TokenDenylistPage() {
                 disabled={!chain || !address || !reason.trim()}
                 onClick={() =>
                   planMutate({
-                    type: 'DenylistDeployedTokenIntent',
+                    type: 'AddTokenToDenylistIntent',
                     pk: { chain, address },
                     reason,
                   })
@@ -121,9 +122,10 @@ export function TokenDenylistPage() {
           <CardHeader>
             <CardTitle>Denylisted addresses</CardTitle>
             <CardDescription>
-              Removing an entry only lifts the ban — deleted tokens and
-              relations are re-created by ingestion from live transfers, or
-              manually from history.
+              Removing an entry only lifts the ban — a deleted token is
+              re-created by ingestion from live transfers, or manually from
+              history. Relations were never deleted, so the graph shows the
+              address again immediately.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -164,7 +166,7 @@ export function TokenDenylistPage() {
                           isLoading={isPending}
                           onClick={() =>
                             planMutate({
-                              type: 'RemoveTokenDenylistEntryIntent',
+                              type: 'DeleteTokenFromDenylistIntent',
                               pk: {
                                 chain: entry.chain,
                                 address: entry.address,

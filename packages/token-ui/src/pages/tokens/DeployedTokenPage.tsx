@@ -297,7 +297,7 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
                 isPending={isPending}
                 onConfirm={(reason) => {
                   planMutate({
-                    type: 'DenylistDeployedTokenIntent',
+                    type: 'AddTokenToDenylistIntent',
                     pk: {
                       address: token.address,
                       chain: token.chain,
@@ -327,9 +327,10 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
 }
 
 /**
- * Bans the token's address from TokenDB via `DenylistDeployedTokenIntent` —
- * one plan that adds the denylist entry and deletes the token and all its
- * relations, so the blast radius shows in the confirmation dialog.
+ * Bans the token's address from TokenDB via `AddTokenToDenylistIntent` —
+ * one plan that adds the denylist entry and deletes the token, so the blast
+ * radius shows in the confirmation dialog. Relations stay recorded (they
+ * are observations); the relations graph filters them out.
  */
 function DenylistTokenButton({
   isPending,
@@ -354,8 +355,8 @@ function DenylistTokenButton({
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          Denylist — delete the token and its relations, and ban the address
-          from ever being re-ingested
+          Denylist — delete the token and ban the address from ever being
+          re-catalogued
         </TooltipContent>
       </Tooltip>
       <Dialog open={open} onOpenChange={setOpen}>
@@ -363,10 +364,10 @@ function DenylistTokenButton({
           <DialogHeader>
             <DialogTitle>Denylist this token?</DialogTitle>
             <DialogDescription>
-              The deployed token and every relation touching its address will be
-              deleted, and ingestion will refuse to observe the address again.
-              Deleted records stay recoverable from history. The ban can be
-              lifted on the Denylist page.
+              The deployed token will be deleted, ingestion will refuse to
+              catalogue the address again, and the relations graph will hide its
+              edges. The deleted record stays recoverable from history. The ban
+              can be lifted on the Denylist page.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-1">

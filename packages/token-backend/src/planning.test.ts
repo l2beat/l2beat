@@ -357,26 +357,22 @@ describe('planning proof stamping', () => {
   })
 })
 
-describe('DenylistDeployedTokenIntent', () => {
-  it('adds the entry and deletes the token and its relations in one plan', async () => {
+describe('AddTokenToDenylistIntent', () => {
+  it('adds the entry and deletes the token, leaving relations untouched', async () => {
     const existing = deployedRecord('ethereum', '0xaaa', 'USDC01')
-    const relationOne = tokenRelation(existing, {
+    const relation = tokenRelation(existing, {
       chain: 'arbitrum',
       address: '0xbbb',
     })
-    const relationTwo = {
-      ...tokenRelation(existing, { chain: 'base', address: '0xccc' }),
-      plugin: 'otherbridge',
-    }
     const db = mockDb({
       existingDeployed: existing,
-      relations: [relationTwo, relationOne],
+      relations: [relation],
     })
 
     const result = await generatePlan(
       db,
       {
-        type: 'DenylistDeployedTokenIntent',
+        type: 'AddTokenToDenylistIntent',
         pk: { chain: existing.chain, address: existing.address },
         reason: 'test token',
       },
@@ -384,9 +380,12 @@ describe('DenylistDeployedTokenIntent', () => {
     )
 
     assertSuccess(result)
+    // No DeleteTokenRelationCommand even though a relation exists: relations
+    // are observations and no interpretation (including a ban) deletes them.
+    // The relations graph filters denylisted endpoints at display time.
     expect(result.plan.commands).toEqual([
       {
-        type: 'AddTokenDenylistEntryCommand',
+        type: 'AddTokenToDenylistCommand',
         record: {
           chain: existing.chain,
           address: existing.address,
@@ -398,18 +397,6 @@ describe('DenylistDeployedTokenIntent', () => {
         pk: { chain: existing.chain, address: existing.address },
         existing,
       },
-      // Relations sorted deterministically (plugin first): otherbridge before
-      // superbridge.
-      {
-        type: 'DeleteTokenRelationCommand',
-        pk: relationPk(relationTwo),
-        existing: relationTwo,
-      },
-      {
-        type: 'DeleteTokenRelationCommand',
-        pk: relationPk(relationOne),
-        existing: relationOne,
-      },
     ])
   })
 
@@ -419,8 +406,8 @@ describe('DenylistDeployedTokenIntent', () => {
     const result = await generatePlan(
       db,
       {
-        type: 'DenylistDeployedTokenIntent',
-        pk: { chain: 'arbitrum', address: '0xAAA' },
+        type: 'AddTokenToDenylistIntent',
+        pk: { chain: 'arbitrum', address: paddedAddress('0xAAA') },
         reason: 'test token',
       },
       { user: USER, skipLogs: true },
@@ -429,8 +416,121 @@ describe('DenylistDeployedTokenIntent', () => {
     assertSuccess(result)
     expect(result.plan.commands).toEqual([
       {
-        type: 'AddTokenDenylistEntryCommand',
-        record: { chain: 'arbitrum', address: '0xaaa', reason: 'test token' },
+        type: 'AddTokenToDenylistCommand',
+        record: {
+          chain: 'arbitrum',
+          address: paddedAddress('0xaaa'),
+          reason: 'test token',
+        },
+      },
+    ])
+  })
+
+  it('crops an Address32-form address to the form the catalogue uses', async () => {
+    // The missing-tokens dashboard displays Address32 forms; a ban recorded
+    // under that form would never match an ingestion lookup.
+    const existing = deployedRecord('ethereum', '0xaaa', 'USDC01')
+    const address32 = `0x${'0'.repeat(24)}${existing.address.slice(2)}`
+    const db = mockDb({
+      deployedByPk: { [`ethereum:${existing.address}`]: existing },
+    })
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'AddTokenToDenylistIntent',
+        pk: { chain: 'ethereum', address: address32 },
+        reason: 'test token',
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    assertSuccess(result)
+    expect(result.plan.commands).toEqual([
+      {
+        type: 'AddTokenToDenylistCommand',
+        record: {
+          chain: 'ethereum',
+          address: existing.address,
+          reason: 'test token',
+        },
+      },
+      {
+        type: 'DeleteDeployedTokenCommand',
+        pk: { chain: 'ethereum', address: existing.address },
+        existing,
+      },
+    ])
+  })
+
+  it('fails for a value that is not a token address', async () => {
+    const db = mockDb({})
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'AddTokenToDenylistIntent',
+        pk: { chain: 'arbitrum', address: '0xnothex' },
+        reason: 'test token',
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    expect(result).toEqual({
+      outcome: 'error',
+      error: '0xnothex is not a valid token address',
+    })
+  })
+
+  it('fails when the chain is unknown and nothing references the address', async () => {
+    // The chain field is free-form text — a typo'd chain would record an
+    // entry that bans nothing while the UI reports success.
+    const db = mockDb({ knownChains: ['arbitrum'] })
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'AddTokenToDenylistIntent',
+        pk: { chain: 'arbtirum', address: paddedAddress('0xaaa') },
+        reason: 'test token',
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    expect(result).toEqual({
+      outcome: 'error',
+      error: `Chain arbtirum is not known to TokenDB and nothing references arbtirum+${paddedAddress('0xaaa')} — check the chain for a typo`,
+    })
+  })
+
+  it('denylists an address on an unknown chain when it is queued for ingestion', async () => {
+    // Production has queued tokens on chains that were never added to the
+    // chain table — the queue entry proves the chain string is what
+    // ingestion uses, so the ban is meaningful.
+    const db = mockDb({
+      knownChains: [],
+      queued: [{ chain: 'solana', address: paddedAddress('0xaaa') }],
+    })
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'AddTokenToDenylistIntent',
+        pk: { chain: 'solana', address: paddedAddress('0xAAA') },
+        reason: 'test token',
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    assertSuccess(result)
+    expect(result.plan.commands).toEqual([
+      {
+        type: 'AddTokenToDenylistCommand',
+        record: {
+          chain: 'solana',
+          address: paddedAddress('0xaaa'),
+          reason: 'test token',
+        },
       },
     ])
   })
@@ -440,7 +540,7 @@ describe('DenylistDeployedTokenIntent', () => {
       denylisted: [
         {
           chain: 'arbitrum',
-          address: '0xaaa',
+          address: paddedAddress('0xaaa'),
           reason: 'test token',
           createdAt: 1,
         },
@@ -450,8 +550,8 @@ describe('DenylistDeployedTokenIntent', () => {
     const result = await generatePlan(
       db,
       {
-        type: 'DenylistDeployedTokenIntent',
-        pk: { chain: 'arbitrum', address: '0xAAA' },
+        type: 'AddTokenToDenylistIntent',
+        pk: { chain: 'arbitrum', address: paddedAddress('0xAAA') },
         reason: 'again',
       },
       { user: USER, skipLogs: true },
@@ -459,7 +559,7 @@ describe('DenylistDeployedTokenIntent', () => {
 
     expect(result).toEqual({
       outcome: 'error',
-      error: 'arbitrum+0xaaa is already denylisted (test token)',
+      error: `arbitrum+${paddedAddress('0xaaa')} is already denylisted (test token)`,
     })
   })
 
@@ -469,8 +569,8 @@ describe('DenylistDeployedTokenIntent', () => {
     const result = await generatePlan(
       db,
       {
-        type: 'DenylistDeployedTokenIntent',
-        pk: { chain: 'arbitrum', address: '0xaaa' },
+        type: 'AddTokenToDenylistIntent',
+        pk: { chain: 'arbitrum', address: paddedAddress('0xaaa') },
         reason: '  ',
       },
       { user: USER, skipLogs: true },
@@ -483,11 +583,11 @@ describe('DenylistDeployedTokenIntent', () => {
   })
 })
 
-describe('RemoveTokenDenylistEntryIntent', () => {
+describe('DeleteTokenFromDenylistIntent', () => {
   it('deletes an existing entry', async () => {
     const entry = {
       chain: 'arbitrum',
-      address: '0xaaa',
+      address: paddedAddress('0xaaa'),
       reason: 'test token',
       createdAt: 1,
     }
@@ -496,8 +596,8 @@ describe('RemoveTokenDenylistEntryIntent', () => {
     const result = await generatePlan(
       db,
       {
-        type: 'RemoveTokenDenylistEntryIntent',
-        pk: { chain: 'arbitrum', address: '0xaaa' },
+        type: 'DeleteTokenFromDenylistIntent',
+        pk: { chain: 'arbitrum', address: paddedAddress('0xaaa') },
       },
       { user: USER, skipLogs: true },
     )
@@ -505,8 +605,39 @@ describe('RemoveTokenDenylistEntryIntent', () => {
     assertSuccess(result)
     expect(result.plan.commands).toEqual([
       {
-        type: 'DeleteTokenDenylistEntryCommand',
-        pk: { chain: 'arbitrum', address: '0xaaa' },
+        type: 'DeleteTokenFromDenylistCommand',
+        pk: { chain: 'arbitrum', address: paddedAddress('0xaaa') },
+        existing: entry,
+      },
+    ])
+  })
+
+  it('finds the entry through an Address32-form address', async () => {
+    const entry = {
+      chain: 'arbitrum',
+      address: paddedAddress('0xaaa'),
+      reason: 'test token',
+      createdAt: 1,
+    }
+    const db = mockDb({ denylisted: [entry] })
+
+    const result = await generatePlan(
+      db,
+      {
+        type: 'DeleteTokenFromDenylistIntent',
+        pk: {
+          chain: 'arbitrum',
+          address: `0x${'0'.repeat(24)}${paddedAddress('0xaaa').slice(2)}`,
+        },
+      },
+      { user: USER, skipLogs: true },
+    )
+
+    assertSuccess(result)
+    expect(result.plan.commands).toEqual([
+      {
+        type: 'DeleteTokenFromDenylistCommand',
+        pk: { chain: 'arbitrum', address: paddedAddress('0xaaa') },
         existing: entry,
       },
     ])
@@ -518,15 +649,15 @@ describe('RemoveTokenDenylistEntryIntent', () => {
     const result = await generatePlan(
       db,
       {
-        type: 'RemoveTokenDenylistEntryIntent',
-        pk: { chain: 'arbitrum', address: '0xaaa' },
+        type: 'DeleteTokenFromDenylistIntent',
+        pk: { chain: 'arbitrum', address: paddedAddress('0xaaa') },
       },
       { user: USER, skipLogs: true },
     )
 
     expect(result).toEqual({
       outcome: 'error',
-      error: 'arbitrum+0xaaa is not denylisted',
+      error: `arbitrum+${paddedAddress('0xaaa')} is not denylisted`,
     })
   })
 })
@@ -742,6 +873,9 @@ function mockDb(opts: {
   existingRelation?: ReturnType<typeof tokenRelation>
   relations?: ReturnType<typeof tokenRelation>[]
   denylisted?: TokenDenylistEntryRecord[]
+  /** Chains known to the chain table. Undefined means every chain exists. */
+  knownChains?: string[]
+  queued?: { chain: string; address: string }[]
 }): TokenDatabase {
   const findDeployed = mockFn().executes(
     async (pk: { chain: string; address: string }) => {
@@ -753,6 +887,38 @@ function mockDb(opts: {
   )
 
   return mockObject<TokenDatabase>({
+    chain: mockObject<TokenDatabase['chain']>({
+      findByName: mockFn().executes(async (name: string) =>
+        opts.knownChains === undefined || opts.knownChains.includes(name)
+          ? {
+              name,
+              chainId: 1,
+              explorerUrl: null,
+              aliases: null,
+              apis: null,
+            }
+          : undefined,
+      ),
+    }),
+    tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>({
+      findByChainAndAddress: mockFn().executes(
+        async (pk: { chain: string; address: string }) => {
+          const entry = opts.queued?.find(
+            (queued) =>
+              queued.chain === pk.chain &&
+              queued.address === pk.address.toLowerCase(),
+          )
+          if (!entry) return undefined
+          return {
+            ...entry,
+            state: 'pending' as const,
+            message: null,
+            createdAt: UnixTime(1),
+            updatedAt: UnixTime(1),
+          }
+        },
+      ),
+    }),
     deployedToken: mockObject<TokenDatabase['deployedToken']>({
       findByChainAndAddress: findDeployed,
       getByAbstractTokenId: mockFn((id: string) =>
@@ -808,6 +974,10 @@ function abstractRecord(
   }
 }
 
+function paddedAddress(shortAddress: string): string {
+  return `0x${shortAddress.slice(2).toLowerCase().padStart(40, '0')}`
+}
+
 function deployedRecord(
   chain: string,
   shortAddress: string,
@@ -815,7 +985,7 @@ function deployedRecord(
 ): DeployedTokenRecord {
   return {
     chain,
-    address: `0x${shortAddress.slice(2).padStart(40, '0')}`,
+    address: paddedAddress(shortAddress),
     abstractTokenId,
     symbol: 'USDC',
     decimals: 6,

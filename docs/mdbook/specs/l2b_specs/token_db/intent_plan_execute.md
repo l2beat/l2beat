@@ -84,8 +84,8 @@ plans are used when the user action has a larger blast radius. For example,
 merging one abstract token into another updates the target token's additional
 CoinGecko entries, reassigns deployed tokens, and then deletes the source
 abstract token; denylisting an address adds the denylist entry and deletes
-the deployed token and all relations touching it. The dialog already knows
-how to render the full command list.
+the catalogued deployed token. The dialog already knows how to render the
+full command list.
 
 ### 2. Make concurrent edits safe without manual locking
 

@@ -146,7 +146,7 @@ export function PlanConfirmationDialog({
             invalidateDeployedTokenQueries()
             navigate('/')
             break
-          case 'DenylistDeployedTokenIntent':
+          case 'AddTokenToDenylistIntent':
             toast.success('Address denylisted successfully')
             invalidateDeployedTokenQueries()
             queryClient.invalidateQueries(
@@ -154,7 +154,7 @@ export function PlanConfirmationDialog({
             )
             navigate('/tokens/denylist')
             break
-          case 'RemoveTokenDenylistEntryIntent':
+          case 'DeleteTokenFromDenylistIntent':
             toast.success('Denylist entry removed successfully')
             invalidateDeployedTokenQueries()
             queryClient.invalidateQueries(
@@ -390,7 +390,7 @@ function CommandItem({ command }: { command: Command }) {
           will be deleted
         </li>
       )
-    case 'AddTokenDenylistEntryCommand':
+    case 'AddTokenToDenylistCommand':
       return (
         <li>
           <Tooltip>
@@ -401,10 +401,10 @@ function CommandItem({ command }: { command: Command }) {
               {JSON.stringify(command.record, null, 2)}
             </TooltipContent>
           </Tooltip>{' '}
-          will be added — ingestion will refuse to observe this address
+          will be added — ingestion will refuse to catalogue this address
         </li>
       )
-    case 'DeleteTokenDenylistEntryCommand':
+    case 'DeleteTokenFromDenylistCommand':
       return (
         <li>
           <Tooltip>
