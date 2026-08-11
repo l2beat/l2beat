@@ -1,8 +1,6 @@
-import { formatNumber } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { useMemo } from 'react'
 import { Line, LineChart } from 'recharts'
-import type { ChartScale } from '~/components/chart/types'
 import type {
   ChartMeta,
   CustomChartTooltipProps,
@@ -18,21 +16,22 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
-import type { CompareViewMode } from '../utils/compareChartState'
-import {
-  type CompareChartPoint,
-  toIndexedChartData,
-} from '../utils/toIndexedChartData'
 import { useCompareSeries } from './CompareSeriesContext'
+
+/**
+ * A single compare chart point: a timestamp plus one value per project id.
+ * The shape every compare metric chart feeds into recharts.
+ */
+export interface CompareChartPoint {
+  timestamp: number
+  [projectId: string]: number | null
+}
 
 interface Props {
   projects: CompareProjectEntry[]
   data: CompareChartPoint[] | undefined
   isLoading: boolean
   syncedUntil: number | undefined
-  scale: ChartScale
-  mode: CompareViewMode
-  /** Absolute-mode formatters; indexed mode shows unitless index values. */
   formatYAxisLabel: (value: number) => string
   formatTooltipValue: (value: number) => string
   renderTooltipTimestamp: (label: number) => ReactNode
@@ -40,17 +39,13 @@ interface Props {
 
 /**
  * The shared compare chart renderer: lines, axes and tooltip for any
- * registry metric. Also the single place implementing the indexed view mode -
- * every series is rebased to 100 client-side, so metrics only supply data and
- * absolute-value formatting.
+ * registry metric, so metrics only supply data and value formatting.
  */
 export function CompareMetricLineChart({
   projects,
   data,
   isLoading,
   syncedUntil,
-  scale,
-  mode,
   formatYAxisLabel,
   formatTooltipValue,
   renderTooltipTimestamp,
@@ -78,31 +73,16 @@ export function CompareMetricLineChart({
     }, {})
   }, [projects, colors])
 
-  const indexed = mode === 'indexed'
-  const { chartData, rebasedMidRange } = useMemo(() => {
-    if (!data || !indexed) {
-      return { chartData: data, rebasedMidRange: {} }
-    }
-    const result = toIndexedChartData(
-      data,
-      projects.map((project) => project.id),
-    )
-    return { chartData: result.data, rebasedMidRange: result.rebasedMidRange }
-  }, [data, indexed, projects])
-
-  const timeRange = useMemo(
-    () => getChartTimeRangeFromData(chartData),
-    [chartData],
-  )
+  const timeRange = useMemo(() => getChartTimeRangeFromData(data), [data])
 
   return (
     <div className="flex flex-col">
       <div className="mt-3 mb-2">
         <ChartTimeRange timeRange={timeRange} />
       </div>
-      <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
+      <ChartContainer data={data} meta={chartMeta} isLoading={isLoading}>
         {/* Without right:1 the chart last point is not hoverable for some reason */}
-        <LineChart responsive data={chartData} margin={{ top: 20, right: 1 }}>
+        <LineChart responsive data={data} margin={{ top: 20, right: 1 }}>
           {projects.map((project) => (
             <Line
               key={project.id}
@@ -121,24 +101,19 @@ export function CompareMetricLineChart({
             />
           ))}
           <ChartCommonComponents
-            data={chartData}
+            data={data}
             isLoading={isLoading}
             yAxis={{
-              scale: !indexed && scale === 'symlog' ? 'symlog' : 'auto',
               tickCount: 4,
-              tickFormatter: (value) =>
-                indexed
-                  ? formatIndexValue(Number(value))
-                  : formatYAxisLabel(Number(value)),
+              tickFormatter: (value) => formatYAxisLabel(Number(value)),
             }}
             syncedUntil={syncedUntil}
           />
           <ChartTooltip
             content={
               <CustomTooltip
-                formatValue={indexed ? formatIndexValue : formatTooltipValue}
+                formatValue={formatTooltipValue}
                 renderTimestamp={renderTooltipTimestamp}
-                rebasedMidRange={rebasedMidRange}
               />
             }
           />
@@ -148,20 +123,14 @@ export function CompareMetricLineChart({
   )
 }
 
-function formatIndexValue(value: number) {
-  return formatNumber(value, value < 10 ? 1 : 0)
-}
-
 function CustomTooltip({
   payload,
   label,
   formatValue,
   renderTimestamp,
-  rebasedMidRange,
 }: CustomChartTooltipProps & {
   formatValue: (value: number) => string
   renderTimestamp: (label: number) => ReactNode
-  rebasedMidRange: Record<string, number>
 }) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
@@ -175,10 +144,6 @@ function CustomTooltip({
   )
   if (visible.length === 0) return null
 
-  const hasRebasedNote = visible.some(
-    (entry) => entry.name && rebasedMidRange[entry.name] !== undefined,
-  )
-
   return (
     <ChartTooltipWrapper>
       <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
@@ -191,9 +156,6 @@ function CustomTooltip({
             .map((entry) => {
               const config = entry.name ? meta[entry.name] : undefined
               if (!config) return null
-              const isRebased =
-                entry.name !== undefined &&
-                rebasedMidRange[entry.name] !== undefined
               return (
                 <div
                   key={entry.name}
@@ -210,19 +172,13 @@ function CustomTooltip({
                   </div>
                   <span className="whitespace-nowrap font-medium text-label-value-15 text-primary tabular-nums">
                     {entry.value !== null && entry.value !== undefined
-                      ? `${formatValue(entry.value)}${isRebased ? '*' : ''}`
+                      ? formatValue(entry.value)
                       : 'No data'}
                   </span>
                 </div>
               )
             })}
         </div>
-        {hasRebasedNote && (
-          <div className="mt-2 font-medium text-2xs text-secondary">
-            * Data starts mid-range; indexed to 100 at the first available data
-            point.
-          </div>
-        )}
       </div>
     </ChartTooltipWrapper>
   )

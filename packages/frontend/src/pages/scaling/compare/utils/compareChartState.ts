@@ -1,4 +1,3 @@
-import type { ChartScale } from '~/components/chart/types'
 import {
   type ChartRangeOptionValue,
   rangeToOption,
@@ -54,9 +53,6 @@ export type CompareTvsFilter = (typeof COMPARE_TVS_FILTERS)[number]
 export const COMPARE_COSTS_UNITS = ['usd', 'eth', 'gas'] as const
 export type CompareCostsUnit = (typeof COMPARE_COSTS_UNITS)[number]
 
-export const COMPARE_VIEW_MODES = ['absolute', 'indexed'] as const
-export type CompareViewMode = (typeof COMPARE_VIEW_MODES)[number]
-
 export const COMPARE_RANGE_OPTIONS = [
   '7d',
   '30d',
@@ -75,9 +71,6 @@ export interface CompareChartState {
   /** Project slugs in selection order. */
   projects: string[]
   range: CompareRange
-  scale: ChartScale
-  /** Absolute values or every series rebased to 100 at range start. */
-  mode: CompareViewMode
   /** Per-metric control of the activity metric; ignored elsewhere. */
   activityUnit: CompareActivityUnit
   /** Per-metric controls of the TVS metric; ignored elsewhere. */
@@ -114,8 +107,6 @@ export function toCompareClientState(
 
 export const DEFAULT_COMPARE_METRIC: CompareMetricId = 'tvs'
 export const DEFAULT_COMPARE_RANGE: CompareRangeOption = '1y'
-export const DEFAULT_COMPARE_SCALE: ChartScale = 'linear'
-export const DEFAULT_COMPARE_VIEW_MODE: CompareViewMode = 'absolute'
 export const DEFAULT_COMPARE_ACTIVITY_UNIT: CompareActivityUnit = 'uops'
 export const DEFAULT_COMPARE_TVS_UNIT: CompareTvsUnit = 'usd'
 export const DEFAULT_COMPARE_TVS_FILTER: CompareTvsFilter = 'all'
@@ -124,7 +115,6 @@ export const DEFAULT_COMPARE_COSTS_UNIT: CompareCostsUnit = 'usd'
 // comparison reproduces the numbers shown there.
 export const DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS = false
 export const DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS = true
-export const MAX_COMPARE_PROJECTS = 10
 export const DEFAULT_COMPARE_PROJECTS_COUNT = 5
 
 /**

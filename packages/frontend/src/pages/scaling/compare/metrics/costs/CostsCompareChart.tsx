@@ -5,8 +5,10 @@ import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
 import { useTRPC } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
 import { rangeToResolution } from '~/utils/range/range'
-import { CompareMetricLineChart } from '../../components/CompareMetricLineChart'
-import type { CompareChartPoint } from '../../utils/toIndexedChartData'
+import {
+  type CompareChartPoint,
+  CompareMetricLineChart,
+} from '../../components/CompareMetricLineChart'
 import type { CompareMetricChartProps } from '../types'
 import { getCostsCompareChartParams } from './getCostsCompareChartParams'
 
@@ -45,8 +47,6 @@ export function CostsCompareChart({
       data={chartData}
       isLoading={isLoading}
       syncedUntil={data?.syncedUntil}
-      scale={state.scale}
-      mode={state.mode}
       formatYAxisLabel={(value) => formatCostValue(value, unit)}
       formatTooltipValue={(value) => formatCostValue(value, unit)}
       renderTooltipTimestamp={(label) =>

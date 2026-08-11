@@ -14,16 +14,13 @@ import {
   DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS,
   DEFAULT_COMPARE_METRIC,
   DEFAULT_COMPARE_RANGE,
-  DEFAULT_COMPARE_SCALE,
   DEFAULT_COMPARE_TVS_FILTER,
   DEFAULT_COMPARE_TVS_UNIT,
-  DEFAULT_COMPARE_VIEW_MODE,
-  MAX_COMPARE_PROJECTS,
 } from './compareChartState'
 
 /**
  * Parses compare page state from URL search params. Tolerates garbage:
- * unknown slugs, invalid metrics, ranges and scales fall back to defaults.
+ * unknown slugs, invalid metrics and ranges fall back to defaults.
  */
 export function parseCompareStateFromSearchParams({
   searchParams,
@@ -42,12 +39,6 @@ export function parseCompareStateFromSearchParams({
     metric,
     projects: parseProjects(searchParams.get('projects'), validSlugs),
     range: parseRange(searchParams.get('range')),
-    scale:
-      searchParams.get('scale') === 'log' ? 'symlog' : DEFAULT_COMPARE_SCALE,
-    mode:
-      searchParams.get('mode') === 'indexed'
-        ? 'indexed'
-        : DEFAULT_COMPARE_VIEW_MODE,
     // The `unit` param is shared between metrics and only encoded for the
     // active one, so it is only applied to the active metric here - the
     // value sets overlap (usd/eth), and without the gate a costs URL would
@@ -105,9 +96,7 @@ function parseProjects(value: string | null, validSlugs: string[]): string[] {
   if (!value) return []
   const slugSet = new Set(validSlugs)
   const unique = [...new Set(value.split(','))]
-  return unique
-    .filter((slug) => slugSet.has(slug))
-    .slice(0, MAX_COMPARE_PROJECTS)
+  return unique.filter((slug) => slugSet.has(slug))
 }
 
 function parseRange(value: string | null): CompareRange {
