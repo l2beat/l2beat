@@ -43,8 +43,9 @@ Only a handful of entry points consult the list, and they all ask the same
 one-directional question — "is this address banned? then skip/refuse".
 
 Relation *observations* are the deliberate exception to prevention: they
-keep being recorded (see below), and the one interpretation surface that
-draws them — the relations graph — filters denylisted endpoints out.
+keep being recorded (see below), and the displays that draw them act
+instead — the relations graph filters denylisted endpoints out, the
+Relations tab marks them.
 
 ## The table
 

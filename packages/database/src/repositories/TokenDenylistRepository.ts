@@ -7,8 +7,8 @@ import type { DeployedTokenPrimaryKey } from './DeployedTokenRepository'
 /**
  * Addresses that must never (re-)enter TokenDB. An entry means a human
  * decided the address is not a real asset deployment (e.g. a test token
- * simulating a bridge into a real token) — ingestion refuses to observe it
- * and planning refuses to catalogue it. See
+ * simulating a bridge into a real token) — ingestion refuses to catalogue it
+ * and planning refuses to add it. See
  * docs/mdbook/specs/l2b_specs/token_db/token_denylist.md.
  */
 export type TokenDenylistEntryRecord = {

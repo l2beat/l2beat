@@ -330,7 +330,8 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
  * Bans the token's address from TokenDB via `AddTokenToDenylistIntent` —
  * one plan that adds the denylist entry and deletes the token, so the blast
  * radius shows in the confirmation dialog. Relations stay recorded (they
- * are observations); the relations graph filters them out.
+ * are observations); the graph filters them out and the Relations tab
+ * marks the banned endpoint.
  */
 function DenylistTokenButton({
   isPending,

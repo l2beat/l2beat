@@ -20,7 +20,6 @@ describe('deployedTokensRouter', () => {
       const mockFindByChainAndAddress = mockFn().resolvesTo(undefined)
       const mockDb = mockObject<Database>({})
       const mockTokenDb = mockObject<TokenDatabase>({
-        tokenDenylist: emptyDenylist(),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFindByChainAndAddress,
         }),
@@ -64,7 +63,6 @@ describe('deployedTokensRouter', () => {
         },
       } satisfies DeployedTokenRecord
       const mockTokenDb = mockObject<TokenDatabase>({
-        tokenDenylist: emptyDenylist(),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(token),
         }),
@@ -85,7 +83,6 @@ describe('deployedTokensRouter', () => {
   describe('checkIfExists', () => {
     it('returns false when token does not exist', async () => {
       const mockTokenDb = mockObject<TokenDatabase>({
-        tokenDenylist: emptyDenylist(),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
@@ -109,7 +106,6 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       }
       const mockTokenDb = mockObject<TokenDatabase>({
-        tokenDenylist: emptyDenylist(),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(token),
         }),
@@ -178,7 +174,6 @@ describe('deployedTokensRouter', () => {
       }[]
       const mockGetByChainAndAddress = mockFn().resolvesTo(tokens)
       const mockTokenDb = mockObject<TokenDatabase>({
-        tokenDenylist: emptyDenylist(),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByChainAndAddress: mockGetByChainAndAddress,
         }),
@@ -224,7 +219,6 @@ describe('deployedTokensRouter', () => {
       const findDeployedToken = mockFn().resolvesTo(token)
       const findAbstractToken = mockFn().resolvesTo(abstractToken)
       const mockTokenDb = mockObject<TokenDatabase>({
-        tokenDenylist: emptyDenylist(),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: findDeployedToken,
         }),
@@ -250,7 +244,6 @@ describe('deployedTokensRouter', () => {
 
     it('returns null details for an uncatalogued endpoint', async () => {
       const mockTokenDb = mockObject<TokenDatabase>({
-        tokenDenylist: emptyDenylist(),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           findByChainAndAddress: mockFn().resolvesTo(undefined),
         }),
@@ -440,13 +433,14 @@ describe('deployedTokensRouter', () => {
   describe('getMintingPlugins', () => {
     it('returns the plugin names straight from the repository', async () => {
       // Deliberately not denylist-aware: a plugin observed minting this
-      // token minted it, whatever the counterparty was.
+      // token minted it, whatever the counterparty was. No tokenDenylist
+      // mock exists on the database object — consulting it would make this
+      // test throw.
       const getMintingPluginsFor = mockFn().resolvesTo([
         'canonicalbridge',
         'superbridge',
       ])
       const mockTokenDb = mockObject<TokenDatabase>({
-        tokenDenylist: emptyDenylist(),
         tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
           getMintingPluginsFor,
         }),
@@ -488,7 +482,6 @@ describe('deployedTokensRouter', () => {
       } satisfies TokenRelationRecord
       const findRelation = mockFn().resolvesTo(relation)
       const mockTokenDb = mockObject<TokenDatabase>({
-        tokenDenylist: emptyDenylist(),
         tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
           findByPrimaryKey: findRelation,
         }),
@@ -1964,9 +1957,7 @@ describe('deployedTokensRouter', () => {
 
   describe('getSuggestionsByCoingeckoId', () => {
     it('returns empty array when coin is not found', async () => {
-      const mockTokenDb = mockObject<TokenDatabase>({
-        tokenDenylist: emptyDenylist(),
-      })
+      const mockTokenDb = mockObject<TokenDatabase>({})
       const mockCoingeckoClient = mockObject<CoingeckoClient>({
         getCoinDataById: mockFn().resolvesTo(null),
       })

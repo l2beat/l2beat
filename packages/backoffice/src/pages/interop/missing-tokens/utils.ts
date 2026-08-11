@@ -136,7 +136,7 @@ export function getMissingTokenStatusMeta(status: MissingTokenStatus) {
       return {
         label: 'Denylisted',
         description:
-          'A human banned this address from TokenDB (e.g. a test token). Ingestion refuses to observe it — do not re-add it. Manage entries on the token-UI denylist page.',
+          'A human banned this address from TokenDB (e.g. a test token). Ingestion refuses to catalogue it — do not re-add it. Manage entries on the token-UI denylist page.',
         badgeVariant: 'secondary' as const,
         badgeClassName: 'bg-muted text-muted-foreground hover:bg-muted',
       }

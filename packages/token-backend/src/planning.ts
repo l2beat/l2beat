@@ -362,8 +362,9 @@ async function planDeleteDeployedToken(
  *
  * Relations touching the address are deliberately NOT deleted: they are
  * observations of on-chain transfers and stay recorded regardless of any
- * interpretation — including this ban. Interpretation surfaces (the
- * relations graph) filter denylisted endpoints out instead.
+ * interpretation — including this ban. Interpretation surfaces act instead:
+ * the relations graph filters denylisted endpoints out, the Relations tab
+ * marks them.
  *
  * The token does not have to exist — an uncatalogued address observed only
  * in relations can be denylisted too.

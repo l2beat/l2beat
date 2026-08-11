@@ -1249,9 +1249,10 @@ function transfer(
   }
 }
 
+// Only the single-address lookup is stubbed: ingestion asks "is this
+// address banned?" and never reads the whole list.
 function emptyDenylist() {
   return mockObject<TokenDatabase['tokenDenylist']>({
     findByChainAndAddress: mockFn().resolvesTo(undefined),
-    getAll: mockFn().resolvesTo([]),
   })
 }
