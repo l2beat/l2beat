@@ -365,7 +365,7 @@ export const starknet: ScalingProject = {
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
         noRedTrustedSetups: true,
-        programHashesReproducible: false,
+        programHashesReproducible: true,
         proverSourcePublished: true,
         verifierContractsReproducible: true,
       },

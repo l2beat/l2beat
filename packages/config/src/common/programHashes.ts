@@ -1653,7 +1653,12 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   '2549868507195840500193135872505150687001846773665388230794631345999578394351':
     {
       ...SUPPORTED_CAIRO_VERIFIERS('StarkWare_GpsStatementVerifier_2026_13_4'),
-      verificationStatus: 'notVerified',
+      programUrl:
+        'https://github.com/starkware-libs/cairo-lang/blob/cf9bf972bede402a125e8638bb258e77563ae933/src/starkware/cairo/bootloaders/bootloader/supported_program_hashes.json',
+      verificationStatus: 'successful',
+      verificationSteps: readMarkdown(
+        'common/programHashes/2549868507195840500193135872505150687001846773665388230794631345999578394351.md',
+      ),
     },
   '2344514586684536563385559840360704301482767436870016911498865422916991654732':
     {
