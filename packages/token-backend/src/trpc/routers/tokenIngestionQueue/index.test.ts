@@ -162,7 +162,11 @@ describe('tokenIngestionQueueRouter', () => {
       })
       expect(getInteropTransferIndex).toHaveBeenCalledWith()
       expect(plan).toHaveBeenCalledTimes(3)
-      expect(plan).toHaveBeenNthCalledWith(1, symbolConflictEntry, transferIndex)
+      expect(plan).toHaveBeenNthCalledWith(
+        1,
+        symbolConflictEntry,
+        transferIndex,
+      )
       expect(plan).toHaveBeenNthCalledWith(2, newEntry, transferIndex)
       expect(plan).toHaveBeenNthCalledWith(
         3,
