@@ -18,6 +18,7 @@ export const INDEXER_NAMES = {
   PRIVACY_BLOCK_TIMESTAMP: 'privacy_block_timestamp_indexer',
   PRIVACY_FLOW: 'privacy_flow_indexer',
   PRIVACY_PRICE: 'privacy_price_indexer',
+  PRIVACY_RELAYER_ACTIVITY: 'privacy_relayer_activity_indexer',
   PRIVACY_BUCKET_VALUE: 'privacy_bucket_value_indexer',
   ETHEREUM_BLOB_NOTIFIER: 'ethereum_blob_notifier',
   DAILY_CHECKS_NOTIFIER: 'daily_checks_notifier',
