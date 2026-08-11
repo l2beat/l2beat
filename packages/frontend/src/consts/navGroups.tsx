@@ -6,8 +6,8 @@ import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { HomeIcon } from '~/icons/pages/Home'
+import { L2Icon } from '~/icons/pages/L2'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
-import { ScalingIcon } from '~/icons/pages/Scaling'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { createOrderedSort } from '~/utils/sort'
 
@@ -24,62 +24,62 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
   {
     type: 'multiple',
     title: env.CLIENT_SIDE_HOME_PAGE ? 'Layer 2s' : 'Scaling',
-    match: 'scaling',
+    match: 'layer2s',
     icon: (
-      <ScalingIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+      <L2Icon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
     links: [
       {
         title: 'Summary',
-        href: '/scaling/summary',
+        href: '/layer2s/summary',
       },
       {
         title: 'Risk Analysis',
         shortTitle: 'Risks',
-        href: '/scaling/risk',
+        href: '/layer2s/risk',
         subLinks: [
           {
             title: 'Overview',
-            href: '/scaling/risk',
+            href: '/layer2s/risk',
             exactMatch: true,
           },
           {
             title: 'State Validation',
-            href: '/scaling/risk/state-validation',
+            href: '/layer2s/risk/state-validation',
           },
           {
             title: 'Data Availability',
             shortTitle: 'DA',
-            href: '/scaling/risk/data-availability',
+            href: '/layer2s/risk/data-availability',
           },
           {
             title: 'Sequencing',
-            href: '/scaling/risk/sequencing',
+            href: '/layer2s/risk/sequencing',
           },
         ],
       },
       {
         title: 'Value Secured',
         shortTitle: 'Value',
-        href: '/scaling/tvs',
+        href: '/layer2s/tvs',
       },
       {
         title: 'Activity',
-        href: '/scaling/activity',
+        href: '/layer2s/activity',
       },
       {
         title: 'Liveness',
-        href: '/scaling/liveness',
+        href: '/layer2s/liveness',
       },
       {
         title: 'Costs',
-        href: '/scaling/costs',
+        href: '/layer2s/costs',
       },
     ],
     secondaryLinks: [
       {
         title: 'Archived',
-        href: '/scaling/archived',
+        href: '/layer2s/archived',
       },
     ],
   },

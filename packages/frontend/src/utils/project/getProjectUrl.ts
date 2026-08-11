@@ -30,5 +30,5 @@ export function getProjectUrl(
   if (project.privacyInfo) {
     return `/privacy/projects/${project.slug}`
   }
-  return `/scaling/projects/${project.slug}`
+  return `/layer2s/projects/${project.slug}`
 }

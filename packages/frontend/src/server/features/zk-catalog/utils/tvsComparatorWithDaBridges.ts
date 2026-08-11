@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
-import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
+import type { SevenDayTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
 
 export function tvsComparatorWithDaBridges(
   allProjects: Project<never, 'daBridge'>[],

@@ -3,7 +3,7 @@ import {
   formatInteger,
   formatSeconds,
 } from '@l2beat/shared-pure'
-import type { IntentBridgesData } from '~/server/features/scaling/interop/getIntentBridgesData'
+import type { IntentBridgesData } from '~/server/features/layer2s/interop/getIntentBridgesData'
 import { InteropCompareContent } from '../../../components/comparison/InteropCompareContent'
 import type { EntitySelectOption } from '../../../components/comparison/InteropEntitySelect'
 import type { ComparisonSide } from '../../../components/comparison/types'

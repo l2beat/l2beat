@@ -33,7 +33,7 @@ import type { StateValidationSectionProps } from './state-validation/StateValida
 import type { TechnologyChoicesSectionProps } from './TechnologyChoicesSection'
 import type { TrustedSetupSectionProps } from './TrustedSetupsSection'
 import type { ThroughputSectionProps } from './throughput/ThroughputSection'
-import type { ScalingTvsSectionProps } from './tvs/ScalingTvsSection'
+import type { L2TvsSectionProps } from './tvs/L2TvsSection'
 import type { ZkCatalogTvsSectionProps } from './tvs/ZkCatalogTvsSection'
 import type { UpdatesSectionProps } from './UpdatesSection'
 import type { UpgradesAndGovernanceSectionProps } from './UpgradesAndGovernanceSection'
@@ -102,9 +102,9 @@ interface ProjectDetailsThroughputSection {
   props: ProjectDetailsProps<ThroughputSectionProps>
 }
 
-interface ProjectDetailsScalingTvsSection {
-  type: 'ScalingTvsSection'
-  props: ProjectDetailsProps<ScalingTvsSectionProps>
+interface ProjectDetailsL2TvsSection {
+  type: 'L2TvsSection'
+  props: ProjectDetailsProps<L2TvsSectionProps>
 }
 
 interface ProjectDetailsActivitySection {
@@ -306,7 +306,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsGroup
   | ProjectDetailsGrissiniRiskAnalysisSection
   | ProjectDetailsThroughputSection
-  | ProjectDetailsScalingTvsSection
+  | ProjectDetailsL2TvsSection
   | ProjectDetailsActivitySection
   | ProjectDetailsTrustedSetupSection
   | ProjectDetailsVerifiersSection

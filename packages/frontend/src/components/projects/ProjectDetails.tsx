@@ -33,7 +33,7 @@ import { StateValidationSection } from './sections/state-validation/StateValidat
 import { TechnologyChoicesSection } from './sections/TechnologyChoicesSection'
 import { TrustedSetupSection } from './sections/TrustedSetupsSection'
 import { ThroughputSection } from './sections/throughput/ThroughputSection'
-import { ScalingTvsSection } from './sections/tvs/ScalingTvsSection'
+import { L2TvsSection } from './sections/tvs/L2TvsSection'
 import { ZkCatalogTvsSection } from './sections/tvs/ZkCatalogTvsSection'
 import type { ProjectDetailsSection } from './sections/types'
 import { UpdatesSection } from './sections/UpdatesSection'
@@ -57,9 +57,9 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           : `${index + 1}`
 
         switch (item.type) {
-          case 'ScalingTvsSection':
+          case 'L2TvsSection':
             return (
-              <ScalingTvsSection
+              <L2TvsSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

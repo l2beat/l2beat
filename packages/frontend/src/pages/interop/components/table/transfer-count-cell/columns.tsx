@@ -17,7 +17,7 @@ import { CustomLinkIcon } from '~/icons/Outlink'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
 import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import type { InteropSelection } from '~/pages/interop/utils/types'
-import type { InteropProtocolTransferDetailsItem } from '~/server/features/scaling/interop/types'
+import type { InteropProtocolTransferDetailsItem } from '~/server/features/layer2s/interop/types'
 import { formatTimestamp } from '~/utils/dates'
 
 export type TransferRow = InteropProtocolTransferDetailsItem & BasicTableRow

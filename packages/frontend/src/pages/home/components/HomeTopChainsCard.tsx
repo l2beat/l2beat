@@ -19,14 +19,14 @@ import { getCommonProjectColumns } from '~/components/table/common-project-colum
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import { TopNBadge } from '~/pages/interop/summary/components/TopNBadge'
-import { toTableRows } from '~/pages/scaling/summary/utils/toTableRows'
-import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
-import type { TvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
+import { toTableRows } from '~/pages/layer2s/summary/utils/toTableRows'
+import type { L2SummaryEntry } from '~/server/features/layer2s/summary/getL2SummaryEntries'
+import type { TvsTableData } from '~/server/features/layer2s/tvs/getTvsTableData'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 
 interface Props {
-  entries: ScalingSummaryEntry[]
+  entries: L2SummaryEntry[]
   tvsData: TvsTableData
 }
 
@@ -58,7 +58,7 @@ export function HomeTopChainsCard({ entries, tvsData }: Props) {
       <HomeCardHeader
         title="Layer 2s"
         badge={<TopNBadge n={5} />}
-        href="/scaling/summary"
+        href="/layer2s/summary"
         linkLabel="View all"
       />
       <div className="mt-3 flex-1">
@@ -75,7 +75,7 @@ const columnHelper = createColumnHelper<HomeTopChainRow>()
 function getHomeTopChainsColumns() {
   const [_index, ...rest] = getCommonProjectColumns(
     columnHelper,
-    (row) => `/scaling/projects/${row.slug}`,
+    (row) => `/layer2s/projects/${row.slug}`,
   )
 
   return [
@@ -85,7 +85,7 @@ function getHomeTopChainsColumns() {
       cell: (ctx) => (
         <div className="flex h-full items-center">
           <ProjectNameInfoTooltip project={ctx.row.original}>
-            <TableLink href={`/scaling/projects/${ctx.row.original.slug}`}>
+            <TableLink href={`/layer2s/projects/${ctx.row.original.slug}`}>
               <ProjectNameCell project={ctx.row.original} withInfoTooltip />
             </TableLink>
           </ProjectNameInfoTooltip>
@@ -101,7 +101,7 @@ function getHomeTopChainsColumns() {
       header: 'Stage',
       cell: (ctx) => (
         <StageCell
-          href={`/scaling/projects/${ctx.row.original.slug}#stage`}
+          href={`/layer2s/projects/${ctx.row.original.slug}#stage`}
           stageConfig={ctx.row.original.stage}
           isAppchain={ctx.row.original.capability === 'appchain'}
           emergencyWarning={ctx.row.original.statuses?.emergencyWarning}
@@ -119,7 +119,7 @@ function getHomeTopChainsColumns() {
         <PizzaRosetteCell
           values={ctx.row.original.risks}
           isUnderReview={!!ctx.row.original.statuses?.underReview}
-          href={`/scaling/projects/${ctx.row.original.slug}#risk-analysis`}
+          href={`/layer2s/projects/${ctx.row.original.slug}#risk-analysis`}
         />
       ),
       meta: {
@@ -136,7 +136,7 @@ function getHomeTopChainsColumns() {
           return <NoDataBadge />
         }
         return (
-          <TableLink href={`/scaling/tvs?highlight=${ctx.row.original.slug}`}>
+          <TableLink href={`/layer2s/tvs?highlight=${ctx.row.original.slug}`}>
             <SyncStatusWrapper isSynced={!value.syncWarning}>
               <div className="flex justify-end">
                 <ValueWithPercentageChange change={value.change?.total}>

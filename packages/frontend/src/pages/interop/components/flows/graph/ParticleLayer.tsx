@@ -1,8 +1,8 @@
-import { INTEROP_PAIR_SEPARATOR } from '~/server/features/scaling/interop/consts'
+import { INTEROP_PAIR_SEPARATOR } from '~/server/features/layer2s/interop/consts'
 import type {
   ChainData,
   Flow,
-} from '~/server/features/scaling/interop/getInteropFlows'
+} from '~/server/features/layer2s/interop/getInteropFlows'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import type { FlowsGraphLayout } from './utils/computeGraphLayout'

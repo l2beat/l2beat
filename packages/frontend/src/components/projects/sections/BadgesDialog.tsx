@@ -196,7 +196,7 @@ function BadgesDialogBody({
           {data.projects.map((project) => (
             <CustomLink
               key={project.slug}
-              href={`/scaling/projects/${project.slug}`}
+              href={`/layer2s/projects/${project.slug}`}
               underline={false}
               className="flex h-32 flex-col items-center justify-center rounded-lg border-1 border-divider p-2 text-center text-primary transition-colors hover:bg-surface-secondary hover:text-primary"
             >

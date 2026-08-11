@@ -1,5 +1,5 @@
 import { formatCurrency } from '@l2beat/shared-pure'
-import type { ChainData } from '~/server/features/scaling/interop/getInteropFlows'
+import type { ChainData } from '~/server/features/layer2s/interop/getInteropFlows'
 import { cn } from '~/utils/cn'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { useInteropFlows } from '../utils/InteropFlowsContext'

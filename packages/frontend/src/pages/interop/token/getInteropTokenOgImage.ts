@@ -3,8 +3,8 @@ import path from 'node:path'
 import { Resvg } from '@resvg/resvg-js'
 import satori from 'satori'
 import { TokenOpengraphImage } from '~/components/opengraph-image/Token'
-import { getActiveInteropAbstractTokens } from '~/server/features/scaling/interop/token/getInteropAbstractTokens'
-import { resolveInteropTokenBySlug } from '~/server/features/scaling/interop/token/resolveInteropTokenBySlug'
+import { getActiveInteropAbstractTokens } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
+import { resolveInteropTokenBySlug } from '~/server/features/layer2s/interop/token/resolveInteropTokenBySlug'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 
 const OG_IMAGE_SIZE = { width: 1200, height: 630 }

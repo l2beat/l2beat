@@ -28,7 +28,7 @@ export type ProjectDaThroughputChartPoint = [
 
 export const ProjectDaThroughputChartParams = v.object({
   range: ChartRange,
-  includeScalingOnly: v.boolean(),
+  includeL2Only: v.boolean(),
   projectId: v.string(),
 })
 export type ProjectDaThroughputChartParams = v.infer<
@@ -50,8 +50,7 @@ export async function getProjectDaThroughputChart(
   const { grouped, from, to, maxTimestamp, syncedUntil } = data
 
   const timestamps = generateTimestamps([from, to], resolution)
-  const hasEigendaGap =
-    params.projectId === 'eigenda' && !params.includeScalingOnly
+  const hasEigendaGap = params.projectId === 'eigenda' && !params.includeL2Only
 
   return {
     chart: timestamps.map((timestamp) => {
@@ -70,7 +69,7 @@ export async function getProjectDaThroughputChart(
 export async function getProjectDaThroughputChartData({
   range,
   projectId,
-  includeScalingOnly,
+  includeL2Only,
 }: ProjectDaThroughputChartParams) {
   const db = getDb()
   const resolution = rangeToResolution(range)
@@ -83,14 +82,14 @@ export async function getProjectDaThroughputChartData({
     daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((c) => c.projectId)
 
   const [throughput, firstTimestamp] = await Promise.all([
-    includeScalingOnly
+    includeL2Only
       ? db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
           [projectId],
           range,
           sovereignProjectsIds,
         )
       : db.dataAvailability.getByProjectIdsAndTimeRange([projectId], range),
-    includeScalingOnly
+    includeL2Only
       ? db.dataAvailability.getFirstTimestampOfSummedProjectsByDaLayers(
           [projectId],
           sovereignProjectsIds,
