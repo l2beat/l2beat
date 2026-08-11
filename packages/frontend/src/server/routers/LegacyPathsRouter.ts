@@ -48,7 +48,14 @@ export function createLegacyPathsRouter() {
   })
 
   router.get('/scaling/*splat', (req, res) => {
-    res.redirect(301, req.originalUrl.replace(/^\/scaling/, '/layer2s'))
+    const target = req.originalUrl.replace(/^\/scaling\//, '/layer2s/')
+    // The literal prefix guarantees a same-origin path (cannot start with "//"
+    // or a scheme), so the user-provided remainder cannot redirect off-site.
+    if (!target.startsWith('/layer2s/')) {
+      res.redirect(301, '/layer2s/summary')
+      return
+    }
+    res.redirect(301, target)
   })
 
   router.get('/bridges/*splat', (_req, res) => {
