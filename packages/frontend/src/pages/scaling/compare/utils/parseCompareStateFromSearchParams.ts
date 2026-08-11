@@ -5,22 +5,19 @@ import {
   COMPARE_RANGE_OPTIONS,
   COMPARE_TVS_FILTERS,
   COMPARE_TVS_UNITS,
+  type CompareChartConfig,
   type CompareChartState,
   type CompareRange,
   type CompareRangeOption,
-  DEFAULT_COMPARE_ACTIVITY_UNIT,
-  DEFAULT_COMPARE_COSTS_UNIT,
-  DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS,
-  DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS,
-  DEFAULT_COMPARE_METRIC,
+  createDefaultChartConfig,
   DEFAULT_COMPARE_RANGE,
-  DEFAULT_COMPARE_TVS_FILTER,
-  DEFAULT_COMPARE_TVS_UNIT,
+  MAX_COMPARE_CHARTS,
 } from './compareChartState'
 
 /**
  * Parses compare page state from URL search params. Tolerates garbage:
- * unknown slugs, invalid metrics and ranges fall back to defaults.
+ * unknown slugs, invalid metrics, chart fields and ranges fall back to
+ * defaults; chart tokens with an unknown metric are dropped entirely.
  */
 export function parseCompareStateFromSearchParams({
   searchParams,
@@ -29,53 +26,72 @@ export function parseCompareStateFromSearchParams({
   searchParams: URLSearchParams
   validSlugs: string[]
 }): CompareChartState {
-  const metric = parseOneOf(
-    searchParams.get('metric'),
-    COMPARE_METRIC_IDS,
-    DEFAULT_COMPARE_METRIC,
-  )
-  const unit = searchParams.get('unit')
   return {
-    metric,
     projects: parseProjects(searchParams.get('projects'), validSlugs),
     range: parseRange(searchParams.get('range')),
-    // The `unit` param is shared between metrics and only encoded for the
-    // active one, so it is only applied to the active metric here - the
-    // value sets overlap (usd/eth), and without the gate a costs URL would
-    // leak its unit into the TVS control.
-    activityUnit:
-      metric === 'activity'
-        ? parseOneOf(
-            unit,
-            COMPARE_ACTIVITY_UNITS,
-            DEFAULT_COMPARE_ACTIVITY_UNIT,
-          )
-        : DEFAULT_COMPARE_ACTIVITY_UNIT,
-    tvsUnit:
-      metric === 'tvs'
-        ? parseOneOf(unit, COMPARE_TVS_UNITS, DEFAULT_COMPARE_TVS_UNIT)
-        : DEFAULT_COMPARE_TVS_UNIT,
-    tvsFilter:
-      metric === 'tvs'
-        ? parseOneOf(
-            searchParams.get('filter'),
-            COMPARE_TVS_FILTERS,
-            DEFAULT_COMPARE_TVS_FILTER,
-          )
-        : DEFAULT_COMPARE_TVS_FILTER,
-    costsUnit:
-      metric === 'costs'
-        ? parseOneOf(unit, COMPARE_COSTS_UNITS, DEFAULT_COMPARE_COSTS_UNIT)
-        : DEFAULT_COMPARE_COSTS_UNIT,
-    excludeAssociatedTokens: parseBoolean(
-      searchParams.get('excludeAssociated'),
-      DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS,
-    ),
-    excludeRwaRestrictedTokens: parseBoolean(
-      searchParams.get('excludeRwa'),
-      DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS,
-    ),
+    charts: parseCharts(searchParams.get('charts')),
   }
+}
+
+function parseCharts(value: string | null): CompareChartConfig[] {
+  if (!value) return [createDefaultChartConfig()]
+  const charts = value
+    .split(',')
+    .flatMap((token) => parseChartToken(token) ?? [])
+    .slice(0, MAX_COMPARE_CHARTS)
+  return charts.length > 0 ? charts : [createDefaultChartConfig()]
+}
+
+function parseChartToken(token: string): CompareChartConfig | undefined {
+  const [metricField, ...fields] = token.split(':')
+  const metric = COMPARE_METRIC_IDS.find((id) => id === metricField)
+  if (!metric) return undefined
+  const config = createDefaultChartConfig(metric)
+  for (const field of fields) {
+    const [key, value = null] = field.split('=')
+    switch (key) {
+      // The `unit` key is shared between metrics, so it is only applied to
+      // the token's own metric - the value sets overlap (usd/eth), and
+      // without the gate a costs unit would leak into the TVS control.
+      case 'unit':
+        if (metric === 'activity') {
+          config.activityUnit = parseOneOf(
+            value,
+            COMPARE_ACTIVITY_UNITS,
+            config.activityUnit,
+          )
+        } else if (metric === 'tvs') {
+          config.tvsUnit = parseOneOf(value, COMPARE_TVS_UNITS, config.tvsUnit)
+        } else if (metric === 'costs') {
+          config.costsUnit = parseOneOf(
+            value,
+            COMPARE_COSTS_UNITS,
+            config.costsUnit,
+          )
+        }
+        break
+      case 'filter':
+        config.tvsFilter = parseOneOf(
+          value,
+          COMPARE_TVS_FILTERS,
+          config.tvsFilter,
+        )
+        break
+      case 'excludeAssociated':
+        config.excludeAssociatedTokens = parseBoolean(
+          value,
+          config.excludeAssociatedTokens,
+        )
+        break
+      case 'excludeRwa':
+        config.excludeRwaRestrictedTokens = parseBoolean(
+          value,
+          config.excludeRwaRestrictedTokens,
+        )
+        break
+    }
+  }
+  return config
 }
 
 function parseOneOf<T extends string>(

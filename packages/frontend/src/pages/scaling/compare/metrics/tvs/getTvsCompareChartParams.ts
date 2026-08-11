@@ -1,6 +1,6 @@
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
 import {
-  type CompareClientState,
+  type CompareChartClientConfig,
   effectiveExcludeRwaRestrictedTokens,
 } from '../../utils/compareChartState'
 
@@ -23,7 +23,7 @@ export function hasTvsData(
 export function getTvsCompareChartParams(
   projects: CompareProjectEntry[],
   state: Pick<
-    CompareClientState,
+    CompareChartClientConfig,
     | 'chartRange'
     | 'tvsFilter'
     | 'excludeAssociatedTokens'

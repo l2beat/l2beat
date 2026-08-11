@@ -1,6 +1,10 @@
 import { expect } from 'earl'
 import { buildCompareUrl } from './buildCompareUrl'
-import type { CompareChartState } from './compareChartState'
+import {
+  type CompareChartConfig,
+  type CompareChartState,
+  createDefaultChartConfig,
+} from './compareChartState'
 import { parseCompareStateFromSearchParams } from './parseCompareStateFromSearchParams'
 
 const SLUGS = ['arbitrum', 'base', 'optimism']
@@ -12,22 +16,22 @@ function parse(search: string) {
   })
 }
 
+function chart(
+  overrides: Partial<CompareChartConfig> = {},
+): CompareChartConfig {
+  return { ...createDefaultChartConfig(), ...overrides }
+}
+
 describe(parseCompareStateFromSearchParams.name, () => {
   it('parses a full state', () => {
     const result = parse(
-      'metric=activity&projects=arbitrum,base&range=30d&unit=tps',
+      'projects=arbitrum,base&range=30d&charts=activity:unit=tps',
     )
 
     expect(result).toEqual({
-      metric: 'activity',
       projects: ['arbitrum', 'base'],
       range: '30d',
-      activityUnit: 'tps',
-      tvsUnit: 'usd',
-      tvsFilter: 'all',
-      costsUnit: 'usd',
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
+      charts: [chart({ metric: 'activity', activityUnit: 'tps' })],
     })
   })
 
@@ -35,89 +39,77 @@ describe(parseCompareStateFromSearchParams.name, () => {
     const result = parse('')
 
     expect(result).toEqual({
-      metric: 'tvs',
       projects: [],
       range: '1y',
-      activityUnit: 'uops',
-      tvsUnit: 'usd',
-      tvsFilter: 'all',
-      costsUnit: 'usd',
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
+      charts: [chart()],
     })
   })
 
-  it('parses the data-posted metric', () => {
-    const result = parse('metric=data-posted')
+  it('parses multiple charts', () => {
+    const result = parse('charts=tvs:filter=stablecoin,activity,costs:unit=gas')
 
-    expect(result.metric).toEqual('data-posted')
+    expect(result.charts).toEqual([
+      chart({ tvsFilter: 'stablecoin' }),
+      chart({ metric: 'activity' }),
+      chart({ metric: 'costs', costsUnit: 'gas' }),
+    ])
   })
 
-  it('round-trips the data-posted metric through buildCompareUrl', () => {
-    const state: CompareChartState = {
-      metric: 'data-posted',
-      projects: ['arbitrum', 'base'],
-      range: '30d',
-      activityUnit: 'uops',
-      tvsUnit: 'usd',
-      tvsFilter: 'all',
-      costsUnit: 'usd',
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
-    }
+  it('parses duplicate metrics with independent controls', () => {
+    const result = parse('charts=tvs,tvs:unit=eth:filter=ether')
 
-    const url = buildCompareUrl('/scaling/compare', state)
-    const search = url.split('?')[1] ?? ''
-
-    expect(parse(search)).toEqual(state)
+    expect(result.charts).toEqual([
+      chart(),
+      chart({ tvsUnit: 'eth', tvsFilter: 'ether' }),
+    ])
   })
 
-  it('parses the tvs unit from the shared unit param', () => {
-    const result = parse('unit=eth')
+  it('caps the number of charts at four', () => {
+    const result = parse('charts=tvs,activity,costs,data-posted,tvs,activity')
 
-    expect(result.tvsUnit).toEqual('eth')
-    expect(result.activityUnit).toEqual('uops')
+    expect(result.charts.map((c) => c.metric)).toEqual([
+      'tvs',
+      'activity',
+      'costs',
+      'data-posted',
+    ])
   })
 
-  it('parses the tvs filter', () => {
-    const result = parse('filter=canonical')
+  it('drops chart tokens with an unknown metric', () => {
+    const result = parse('charts=bogus,activity')
 
-    expect(result.tvsFilter).toEqual('canonical')
+    expect(result.charts).toEqual([chart({ metric: 'activity' })])
   })
 
-  it('parses an asset category tvs filter', () => {
-    const result = parse('filter=stablecoin')
+  it('falls back to the default chart when every token is invalid', () => {
+    const result = parse('charts=bogus,nonsense')
 
-    expect(result.tvsFilter).toEqual('stablecoin')
+    expect(result.charts).toEqual([chart()])
   })
 
-  it('keeps bridge type and asset category mutually exclusive by holding a single filter value', () => {
-    const result = parse('filter=canonical&filter=stablecoin')
+  it('ignores unknown chart fields and invalid values', () => {
+    const result = parse('charts=tvs:unit=beans:flavor=mint:filter=everything')
 
-    expect(result.tvsFilter).toEqual('canonical')
+    expect(result.charts).toEqual([chart()])
   })
 
-  it('applies the shared unit param only to the active metric', () => {
-    const result = parse('metric=costs&unit=eth')
+  it('applies the unit only to the token metric', () => {
+    const result = parse('charts=costs:unit=eth')
 
-    expect(result.costsUnit).toEqual('eth')
-    expect(result.tvsUnit).toEqual('usd')
-    expect(result.activityUnit).toEqual('uops')
-  })
-
-  it('parses the costs unit from the shared unit param', () => {
-    const result = parse('metric=costs&unit=gas')
-
-    expect(result.costsUnit).toEqual('gas')
-    expect(result.tvsUnit).toEqual('usd')
-    expect(result.activityUnit).toEqual('uops')
+    expect(result.charts).toEqual([
+      chart({ metric: 'costs', costsUnit: 'eth' }),
+    ])
   })
 
   it('parses the tvs token exclusion toggles', () => {
-    const result = parse('excludeAssociated=true&excludeRwa=false')
+    const result = parse('charts=tvs:excludeAssociated=true:excludeRwa=false')
 
-    expect(result.excludeAssociatedTokens).toEqual(true)
-    expect(result.excludeRwaRestrictedTokens).toEqual(false)
+    expect(result.charts).toEqual([
+      chart({
+        excludeAssociatedTokens: true,
+        excludeRwaRestrictedTokens: false,
+      }),
+    ])
   })
 
   it('drops unknown slugs and deduplicates', () => {
@@ -143,20 +135,12 @@ describe(parseCompareStateFromSearchParams.name, () => {
   })
 
   it('falls back to defaults on garbage values', () => {
-    const result = parse(
-      'metric=bogus&range=yesterday&unit=beans&filter=everything&excludeAssociated=maybe&excludeRwa=nonsense',
-    )
+    const result = parse('metric=bogus&range=yesterday&unit=beans&charts=')
 
     expect(result).toEqual({
-      metric: 'tvs',
       projects: [],
       range: '1y',
-      activityUnit: 'uops',
-      tvsUnit: 'usd',
-      tvsFilter: 'all',
-      costsUnit: 'usd',
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
+      charts: [chart()],
     })
   })
 
@@ -168,15 +152,9 @@ describe(parseCompareStateFromSearchParams.name, () => {
 
   it('round-trips through buildCompareUrl', () => {
     const state: CompareChartState = {
-      metric: 'tvs',
       projects: ['base', 'arbitrum'],
       range: '90d',
-      activityUnit: 'uops',
-      tvsUnit: 'usd',
-      tvsFilter: 'all',
-      costsUnit: 'usd',
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
+      charts: [chart()],
     }
 
     const url = buildCompareUrl('/scaling/compare', state)
@@ -187,15 +165,9 @@ describe(parseCompareStateFromSearchParams.name, () => {
 
   it('round-trips a custom range through buildCompareUrl', () => {
     const state: CompareChartState = {
-      metric: 'tvs',
       projects: [],
       range: { from: 1700000000, to: 1710000000 },
-      activityUnit: 'uops',
-      tvsUnit: 'usd',
-      tvsFilter: 'all',
-      costsUnit: 'usd',
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
+      charts: [chart()],
     }
 
     const url = buildCompareUrl('/scaling/compare', state)
@@ -204,55 +176,21 @@ describe(parseCompareStateFromSearchParams.name, () => {
     expect(parse(search)).toEqual(state)
   })
 
-  it('round-trips the activity metric with its unit through buildCompareUrl', () => {
+  it('round-trips multiple charts with all their controls through buildCompareUrl', () => {
     const state: CompareChartState = {
-      metric: 'activity',
-      projects: ['optimism'],
-      range: '7d',
-      activityUnit: 'tps',
-      tvsUnit: 'usd',
-      tvsFilter: 'all',
-      costsUnit: 'usd',
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
-    }
-
-    const url = buildCompareUrl('/scaling/compare', state)
-    const search = url.split('?')[1] ?? ''
-
-    expect(parse(search)).toEqual(state)
-  })
-
-  it('round-trips the costs metric with its unit through buildCompareUrl', () => {
-    const state: CompareChartState = {
-      metric: 'costs',
-      projects: ['arbitrum', 'base'],
-      range: '30d',
-      activityUnit: 'uops',
-      tvsUnit: 'usd',
-      tvsFilter: 'all',
-      costsUnit: 'gas',
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
-    }
-
-    const url = buildCompareUrl('/scaling/compare', state)
-    const search = url.split('?')[1] ?? ''
-
-    expect(parse(search)).toEqual(state)
-  })
-
-  it('round-trips the tvs metric with all its controls through buildCompareUrl', () => {
-    const state: CompareChartState = {
-      metric: 'tvs',
       projects: ['arbitrum'],
       range: '30d',
-      activityUnit: 'uops',
-      tvsUnit: 'eth',
-      tvsFilter: 'external',
-      costsUnit: 'usd',
-      excludeAssociatedTokens: true,
-      excludeRwaRestrictedTokens: false,
+      charts: [
+        chart({
+          tvsUnit: 'eth',
+          tvsFilter: 'external',
+          excludeAssociatedTokens: true,
+          excludeRwaRestrictedTokens: false,
+        }),
+        chart({ metric: 'activity', activityUnit: 'tps' }),
+        chart({ metric: 'costs', costsUnit: 'gas' }),
+        chart({ metric: 'data-posted' }),
+      ],
     }
 
     const url = buildCompareUrl('/scaling/compare', state)
@@ -261,17 +199,14 @@ describe(parseCompareStateFromSearchParams.name, () => {
     expect(parse(search)).toEqual(state)
   })
 
-  it('round-trips an asset category filter through buildCompareUrl', () => {
+  it('round-trips duplicate tvs charts with different filters through buildCompareUrl', () => {
     const state: CompareChartState = {
-      metric: 'tvs',
       projects: ['base'],
       range: '90d',
-      activityUnit: 'uops',
-      tvsUnit: 'usd',
-      tvsFilter: 'stablecoin',
-      costsUnit: 'usd',
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
+      charts: [
+        chart({ tvsFilter: 'stablecoin' }),
+        chart({ tvsFilter: 'ether' }),
+      ],
     }
 
     const url = buildCompareUrl('/scaling/compare', state)
@@ -282,23 +217,22 @@ describe(parseCompareStateFromSearchParams.name, () => {
 
   it('round-trips the restricted rwa filter through buildCompareUrl', () => {
     const state: CompareChartState = {
-      metric: 'tvs',
       projects: [],
       range: '1y',
-      activityUnit: 'uops',
-      tvsUnit: 'usd',
-      tvsFilter: 'rwaRestricted',
-      costsUnit: 'usd',
-      // The stored toggle value stays at the default; while this filter is
-      // active it is overridden to false everywhere it is applied.
-      excludeRwaRestrictedTokens: true,
-      excludeAssociatedTokens: false,
+      charts: [
+        chart({
+          tvsFilter: 'rwaRestricted',
+          // The stored toggle value stays at the default; while this filter
+          // is active it is overridden to false everywhere it is applied.
+          excludeRwaRestrictedTokens: true,
+        }),
+      ],
     }
 
     const url = buildCompareUrl('/scaling/compare', state)
     const search = url.split('?')[1] ?? ''
 
-    expect(url).toEqual('/scaling/compare?filter=rwaRestricted')
+    expect(url).toEqual('/scaling/compare?charts=tvs:filter=rwaRestricted')
     expect(parse(search)).toEqual(state)
   })
 })
