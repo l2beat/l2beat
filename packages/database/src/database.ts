@@ -36,6 +36,7 @@ import { PrivacyBlockTimestampRepository } from './repositories/PrivacyBlockTime
 import { PrivacyFlowEventRepository } from './repositories/PrivacyFlowEventRepository'
 import { PrivacyPriceRepository } from './repositories/PrivacyPriceRepository'
 import { PrivacyRelayerActivityRepository } from './repositories/PrivacyRelayerActivityRepository'
+import { PrivacyRelayerSampleRepository } from './repositories/PrivacyRelayerSampleRepository'
 import { RealTimeAnomaliesRepository } from './repositories/RealTimeAnomaliesRepository'
 import { RealTimeLivenessRepository } from './repositories/RealTimeLivenessRepository'
 import { SyncMetadataRepository } from './repositories/SyncMetadataRepository'
@@ -127,6 +128,7 @@ export function createDatabase(
     privacyFlowEvent: new PrivacyFlowEventRepository(db),
     privacyPrice: new PrivacyPriceRepository(db),
     privacyRelayerActivity: new PrivacyRelayerActivityRepository(db),
+    privacyRelayerSample: new PrivacyRelayerSampleRepository(db),
     // #endregion
 
     // #region Token Knowledge
