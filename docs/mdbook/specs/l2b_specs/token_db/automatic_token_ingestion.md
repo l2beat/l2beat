@@ -467,11 +467,16 @@ The moving parts:
 
 - The conflict outcome produced by `fetch` carries a structured
   `symbolConflict` field (CoinGecko id + both symbols) next to the
-  human-readable message, so the UI never parses message strings from a
-  live trace. For *stored* queue entries, the `getPage` route flags rows
-  whose persisted message identifies this conflict kind
-  (`resolvableSymbolConflict`), keeping the message format knowledge in
-  the backend.
+  human-readable message, so the UI never parses message strings. For
+  *stored* queue entries, the `getPage` route flags rows with
+  `resolvableSymbolConflict`, derived from the fresh plan it already
+  computes per row: the CoinGecko-symbol conflict is the only conflict
+  kind that can fire while the plan wants to create a new abstract token
+  from CoinGecko, so `state = conflict` plus a `new-coingecko` pending
+  plan identifies it — no message-format knowledge anywhere. Because the
+  flag is derived from current evidence rather than the stored message,
+  it also disappears on its own once the conflict stops applying (e.g. a
+  sibling chain's resolution already created the abstract token).
 - The queue page shows a **Resolve** button on flagged rows. The dialog
   re-runs `plan` + `fetch` (the `preview` route) to get a fresh
   structured conflict and offers three choices: the CoinGecko symbol

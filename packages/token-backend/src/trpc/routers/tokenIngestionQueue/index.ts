@@ -7,7 +7,6 @@ import {
   toIngestionTraceView,
 } from '../../../ingestion/formatIngestionTrace'
 import type { IngestionOutcomeView } from '../../../ingestion/IngestionTrace'
-import { COINGECKO_SYMBOL_CONFLICT_MESSAGE_PREFIX } from '../../../ingestion/TokenIngestionProcessor'
 import { readOnlyProcedure, readWriteProcedure } from '../../procedures'
 import { router } from '../../trpc'
 
@@ -26,10 +25,12 @@ export interface QueuePageRow {
   entry: TokenIngestionQueueRecord
   predictedOutcome: IngestionOutcomeView
   deployedTokenExists: boolean
-  /** True when this entry is a CoinGecko-symbol conflict that the UI can
-   * offer to resolve (by creating the abstract token manually and retrying
-   * the entry). Computed here so the UI does not need to know the conflict
-   * message format. */
+  /** True when this conflict entry can be offered the resolve dialog
+   * (create the abstract token manually, then retry). Derived from the
+   * fresh plan: the CoinGecko-symbol conflict is the only conflict that can
+   * fire while the plan wants to create a new abstract token from CoinGecko,
+   * so `state = conflict` + a `new-coingecko` pending plan identifies it
+   * without inspecting the stored message text. */
   resolvableSymbolConflict: boolean
 }
 
@@ -63,10 +64,8 @@ export const tokenIngestionQueueRouter = router({
           deployedTokenExists: trace.existingDeployedToken !== undefined,
           resolvableSymbolConflict:
             entry.state === 'conflict' &&
-            (entry.message?.startsWith(
-              COINGECKO_SYMBOL_CONFLICT_MESSAGE_PREFIX,
-            ) ??
-              false),
+            trace.outcome.kind === 'pending' &&
+            trace.outcome.abstract.kind === 'new-coingecko',
         })
       }
 

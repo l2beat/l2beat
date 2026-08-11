@@ -943,14 +943,6 @@ function formatRef(ref: AbstractTokenRef) {
 }
 
 /**
- * Queue-entry messages of the resolvable CoinGecko-symbol conflict start with
- * this prefix. Token-UI matches stored `message` values against it to decide
- * whether to offer the "Resolve" action on a conflict row.
- */
-export const COINGECKO_SYMBOL_CONFLICT_MESSAGE_PREFIX =
-  'CoinGecko would create abstract token'
-
-/**
  * Decides what symbol a newly materialized CoinGecko abstract token gets,
  * given the deployed-token symbol (the RPC symbol for inserts, the stored one
  * for updates). Two amicable cases and one conflict:
@@ -1016,7 +1008,7 @@ function finalizeNewAbstractTokenSymbol(
     type: 'conflict',
     outcome: {
       kind: 'conflict',
-      message: `${COINGECKO_SYMBOL_CONFLICT_MESSAGE_PREFIX} ${newAbstractToken.id}:${coingeckoSymbol}, but the deployed token symbol is ${deployedTokenSymbol}.`,
+      message: `CoinGecko would create abstract token ${newAbstractToken.id}:${coingeckoSymbol}, but the deployed token symbol is ${deployedTokenSymbol}.`,
       symbolConflict: {
         coingeckoId: newAbstractToken.coingeckoId,
         coingeckoSymbol,

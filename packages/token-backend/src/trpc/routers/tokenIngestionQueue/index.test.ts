@@ -39,7 +39,7 @@ describe('tokenIngestionQueueRouter', () => {
 
   describe('getPage', () => {
     it('returns one page of queue entries with predicted outcomes', async () => {
-      const existingEntry = queueEntry({
+      const symbolConflictEntry = queueEntry({
         chain: 'ethereum',
         address: '0x111',
         state: 'conflict',
@@ -51,26 +51,60 @@ describe('tokenIngestionQueueRouter', () => {
         address: '0x222',
         state: 'staged',
       })
-      const page = { entries: [existingEntry, newEntry], totalCount: 12 }
+      const transferConflictEntry = queueEntry({
+        chain: 'ethereum',
+        address: '0x333',
+        state: 'conflict',
+        message:
+          'Non-swapping transfers point to abstract token USDC01:USDC, but the deployed token symbol is WETH.',
+      })
+      const page = {
+        entries: [symbolConflictEntry, newEntry, transferConflictEntry],
+        totalCount: 12,
+      }
       const getPage = mockFn().resolvesTo(page)
       const deployedToken = mockObject<DeployedTokenRecord>({})
       const transferIndex = { findInvolving: mockFn().returns([]) }
       const getInteropTransferIndex = mockFn().resolvesTo(transferIndex)
+      // A CoinGecko-symbol conflict only fires while the plan wants to build
+      // a new abstract token from CoinGecko — the flag is derived from that.
+      const symbolConflictPlanOutcome = {
+        kind: 'pending' as const,
+        operation: 'update' as const,
+        existing: deployedToken,
+        abstract: {
+          kind: 'new-coingecko' as const,
+          coingeckoId: 'wrapped-kaspa',
+          symbol: 'wkas',
+        },
+        symbolFallback: 'WKAS',
+        neighborsToEnqueue: [],
+        proof: { kind: 'coingecko' as const },
+      }
       const plan = mockFn()
         .resolvesToOnce({
           address: {
-            chain: existingEntry.chain,
-            address: existingEntry.address,
+            chain: symbolConflictEntry.chain,
+            address: symbolConflictEntry.address,
           },
           existingDeployedToken: deployedToken,
           steps: [],
-          outcome: { kind: 'conflict', message: 'test conflict' },
+          outcome: symbolConflictPlanOutcome,
         })
         .resolvesToOnce({
           address: { chain: newEntry.chain, address: newEntry.address },
           existingDeployedToken: undefined,
           steps: [],
           outcome: { kind: 'noop', deployedToken },
+        })
+        .resolvesToOnce({
+          address: {
+            chain: transferConflictEntry.chain,
+            address: transferConflictEntry.address,
+          },
+          existingDeployedToken: deployedToken,
+          steps: [],
+          outcome: { kind: 'conflict', message: 'test conflict' },
         })
 
       const caller = createRouter({
@@ -92,10 +126,9 @@ describe('tokenIngestionQueueRouter', () => {
       expect(result.totalCount).toEqual(12)
       expect(result.rows).toEqual([
         {
-          entry: existingEntry,
+          entry: symbolConflictEntry,
           predictedOutcome: {
-            kind: 'conflict',
-            message: 'test conflict',
+            ...symbolConflictPlanOutcome,
             description: expect.a(String),
           },
           deployedTokenExists: true,
@@ -111,6 +144,16 @@ describe('tokenIngestionQueueRouter', () => {
           deployedTokenExists: false,
           resolvableSymbolConflict: false,
         },
+        {
+          entry: transferConflictEntry,
+          predictedOutcome: {
+            kind: 'conflict',
+            message: 'test conflict',
+            description: expect.a(String),
+          },
+          deployedTokenExists: true,
+          resolvableSymbolConflict: false,
+        },
       ])
       expect(getPage).toHaveBeenCalledWith({
         offset: 5,
@@ -118,9 +161,14 @@ describe('tokenIngestionQueueRouter', () => {
         chains: undefined,
       })
       expect(getInteropTransferIndex).toHaveBeenCalledWith()
-      expect(plan).toHaveBeenCalledTimes(2)
-      expect(plan).toHaveBeenNthCalledWith(1, existingEntry, transferIndex)
+      expect(plan).toHaveBeenCalledTimes(3)
+      expect(plan).toHaveBeenNthCalledWith(1, symbolConflictEntry, transferIndex)
       expect(plan).toHaveBeenNthCalledWith(2, newEntry, transferIndex)
+      expect(plan).toHaveBeenNthCalledWith(
+        3,
+        transferConflictEntry,
+        transferIndex,
+      )
     })
   })
 
