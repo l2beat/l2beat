@@ -5,7 +5,12 @@ import { useTimeout } from '~/hooks/useTimeout'
 import { CopyIcon } from '~/icons/Copy'
 import { SatisfiedIcon } from '~/icons/Satisfied'
 import { cn } from '~/utils/cn'
-import { Tooltip, TooltipContent, TooltipTrigger } from './core/tooltip/Tooltip'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipTrigger,
+} from './core/tooltip/Tooltip'
 
 interface CopyButtonProps {
   toCopy: string | (() => string)
@@ -49,12 +54,14 @@ export function CopyButton({
           <CopyIcon className={cn('fill-current', iconClassName)} />
         )}
       </TooltipTrigger>
-      <TooltipContent
-        hideWhenDetached
-        onPointerDownOutside={(event) => event.preventDefault()}
-      >
-        {copied ? 'Copied!' : copyText}
-      </TooltipContent>
+      <TooltipPortal>
+        <TooltipContent
+          hideWhenDetached
+          onPointerDownOutside={(event) => event.preventDefault()}
+        >
+          {copied ? 'Copied!' : copyText}
+        </TooltipContent>
+      </TooltipPortal>
     </Tooltip>
   )
 }
