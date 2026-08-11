@@ -11,6 +11,7 @@ import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMint
 import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData'
 import { getInteropProtocolPageData } from './protocol/getInteropProtocolPageData'
 import { getInteropSummaryData } from './summary/getInteropSummaryData'
+import { getInteropTokenOgImage } from './token/getInteropTokenOgImage'
 import { getInteropTokenPageData } from './token/getInteropTokenPageData'
 import { getInteropTokenFrameworksData } from './token-frameworks/getInteropTokenFrameworksData'
 
@@ -125,6 +126,26 @@ export function createInteropRouter(
       }
       const html = await render(data, req.originalUrl)
       res.status(200).send(html)
+    },
+  )
+
+  router.get(
+    '/interop/tokens/:slug/opengraph-image.png',
+    validateRoute({
+      params: v.object({ slug: v.string() }),
+    }),
+    async (req, res) => {
+      const image = await getInteropTokenOgImage(req.params.slug)
+      if (!image) {
+        res.status(404).send('Not found')
+        return
+      }
+      res.setHeader('Content-Type', 'image/png')
+      res.setHeader(
+        'Cache-Control',
+        'public, max-age=86400, stale-while-revalidate=604800',
+      )
+      res.send(image)
     },
   )
 

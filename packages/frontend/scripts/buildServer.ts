@@ -9,6 +9,10 @@ const tsxBoundaryPlugin: esbuild.Plugin = {
   setup(build) {
     build.onLoad({ filter: /\.tsx$/ }, (args) => {
       const relative = path.relative(process.cwd(), args.path)
+      // Satori OG image templates are rendered by the server, not Vite
+      if (relative.startsWith('src/components/opengraph-image/')) {
+        return undefined
+      }
       return {
         errors: [
           {
