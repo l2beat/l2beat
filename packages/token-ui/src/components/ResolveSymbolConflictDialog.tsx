@@ -1,9 +1,7 @@
-import type { IngestionTraceView } from '@l2beat/token-backend'
+import type { IngestionTraceView, Plan } from '@l2beat/token-backend'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
-import { useInvalidateAbstractTokenQueries } from '~/hooks/useInvalidateAbstractTokenQueries'
 import { useTRPC } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
 import { generateRandomString } from '~/utils/generateRandomString'
@@ -20,6 +18,7 @@ import {
 import { Input } from './core/Input'
 import { IngestionLog } from './IngestionLog'
 import { LoadingState } from './LoadingState'
+import { PlanConfirmationDialog } from './PlanConfirmationDialog'
 
 export interface ResolveSymbolConflictTarget {
   chain: string
@@ -32,11 +31,12 @@ type SymbolChoice = 'coingecko' | 'deployed' | 'custom'
  * Lets a researcher resolve a CoinGecko-symbol conflict from the ingestion
  * queue. The dialog re-plans the entry (via `preview`) to get the fresh,
  * structured conflict and offers the CoinGecko symbol, the deployed-token
- * symbol, or a custom value. Confirming creates the abstract token through
- * the ordinary manual write path (`plan.generate` + `plan.execute`) with the
- * chosen symbol and the coin's CoinGecko data, then retries the queue entry —
- * the next ingestion run finds the abstract by its CoinGecko id and links the
- * deployed token to it, so the conflict never fires again.
+ * symbol, or a custom value. Confirming goes through the ordinary manual
+ * write path — `plan.generate` plus the standard plan-confirmation dialog
+ * that every other TokenDB write uses — to create the abstract token with
+ * the chosen symbol and the coin's CoinGecko data, then retries the queue
+ * entry: the next ingestion run finds the abstract by its CoinGecko id and
+ * links the deployed token to it, so the conflict never fires again.
  */
 export function ResolveSymbolConflictDialog({
   target,
@@ -64,12 +64,12 @@ function ResolveSymbolConflictDialogContent({
 }) {
   const trpc = useTRPC()
   const queryClient = useQueryClient()
-  const invalidateAbstractTokenQueries = useInvalidateAbstractTokenQueries()
   const [trace, setTrace] = useState<IngestionTraceView | undefined>()
   const [previewError, setPreviewError] = useState<string | undefined>()
   const [choice, setChoice] = useState<SymbolChoice>('coingecko')
   const [customSymbol, setCustomSymbol] = useState<string | undefined>()
-  const [isResolving, setIsResolving] = useState(false)
+  const [plan, setPlan] = useState<Plan | undefined>()
+  const [isRetrying, setIsRetrying] = useState(false)
 
   const preview = useMutation(
     trpc.tokenIngestionQueue.preview.mutationOptions({
@@ -98,7 +98,6 @@ function ResolveSymbolConflictDialogContent({
   )
 
   const generatePlan = useMutation(trpc.plan.generate.mutationOptions())
-  const executePlan = useMutation(trpc.plan.execute.mutationOptions())
   const retryEntry = useMutation(
     trpc.tokenIngestionQueue.retry.mutationOptions(),
   )
@@ -110,29 +109,41 @@ function ResolveSymbolConflictDialogContent({
         ? symbolConflict?.deployedTokenSymbol
         : (customSymbol ?? symbolConflict?.coingeckoSymbol)
 
-  async function resolve() {
-    if (isResolving || !symbolConflict || !chosenSymbol) return
+  // Builds the AddAbstractTokenIntent plan and opens the standard plan
+  // confirmation dialog — the same review step every other TokenDB write
+  // goes through. Executing the plan is PlanConfirmationDialog's job.
+  async function generateResolutionPlan() {
+    // The isPending/isRetrying check also guards re-entry: ButtonWithSpinner
+    // debounces its disabled state by 150ms, so a double-click would
+    // generate two plans for two different token ids.
+    if (
+      generatePlan.isPending ||
+      isRetrying ||
+      !symbolConflict ||
+      !chosenSymbol
+    ) {
+      return
+    }
     const symbol = chosenSymbol.trim()
     if (symbol.length === 0) return
 
-    setIsResolving(true)
-    try {
-      const record = {
-        id: generateRandomString(6),
-        issuer: null,
-        symbol,
-        category: null,
-        iconUrl: checks.data?.data?.iconUrl ?? null,
-        coingeckoId: symbolConflict.coingeckoId,
-        coingeckoListingTimestamp: checks.data?.data?.listingTimestamp ?? null,
-        additionalCoingeckoEntries: null,
-        comment: `Symbol conflict resolution: CoinGecko symbol is "${symbolConflict.coingeckoSymbol}", the ${target.chain} deployed token symbol is "${symbolConflict.deployedTokenSymbol}"; chose "${symbol}".`,
-        // Created from CoinGecko data plus a single human decision (the
-        // symbol) — still needs the same review as other ingested tokens.
-        reviewed: false,
-        isPriceUnreliable: false,
-      }
+    const record = {
+      id: generateRandomString(6),
+      issuer: null,
+      symbol,
+      category: null,
+      iconUrl: checks.data?.data?.iconUrl ?? null,
+      coingeckoId: symbolConflict.coingeckoId,
+      coingeckoListingTimestamp: checks.data?.data?.listingTimestamp ?? null,
+      additionalCoingeckoEntries: null,
+      comment: `Symbol conflict resolution: CoinGecko symbol is "${symbolConflict.coingeckoSymbol}", the ${target.chain} deployed token symbol is "${symbolConflict.deployedTokenSymbol}"; chose "${symbol}".`,
+      // Created from CoinGecko data plus a single human decision (the
+      // symbol) — still needs the same review as other ingested tokens.
+      reviewed: false,
+      isPriceUnreliable: false,
+    }
 
+    try {
       const generated = await generatePlan.mutateAsync({
         type: 'AddAbstractTokenIntent',
         record,
@@ -141,39 +152,31 @@ function ResolveSymbolConflictDialogContent({
         toast.error(`Could not create the abstract token: ${generated.error}`)
         return
       }
-      const executed = await executePlan.mutateAsync(generated.plan)
-      if (executed.outcome === 'error') {
-        toast.error(`Could not create the abstract token: ${executed.error}`)
-        return
-      }
-
-      invalidateAbstractTokenQueries()
-      queryClient.invalidateQueries(trpc.tokenDbHistory.getPage.queryFilter())
-
-      try {
-        await retryEntry.mutateAsync(target)
-        toast.success(
-          <span>
-            Abstract token created and entry queued for retry.{' '}
-            <Link to={`/tokens/${record.id}`} className="underline">
-              View token
-            </Link>
-          </span>,
-        )
-      } catch (error) {
-        toast.warning(
-          `Abstract token ${record.id} was created, but the queue entry could not be retried: ${error instanceof Error ? error.message : String(error)}`,
-        )
-      }
-      onClose()
+      setPlan(generated.plan)
     } catch (error) {
       toast.error(error instanceof Error ? error.message : String(error))
+    }
+  }
+
+  // Runs after PlanConfirmationDialog successfully executed the plan (it
+  // also shows the standard success toast and invalidates the abstract-token
+  // queries). All that is left is retrying the queue entry and refreshing
+  // the queue page.
+  async function onPlanExecuted() {
+    setIsRetrying(true)
+    try {
+      await retryEntry.mutateAsync(target)
+    } catch (error) {
+      toast.warning(
+        `The abstract token was created, but the queue entry could not be retried: ${error instanceof Error ? error.message : String(error)}`,
+      )
     } finally {
-      setIsResolving(false)
-      queryClient.invalidateQueries(
+      setIsRetrying(false)
+      await queryClient.invalidateQueries(
         trpc.tokenIngestionQueue.getPage.queryFilter(),
       )
     }
+    onClose()
   }
 
   return (
@@ -262,20 +265,33 @@ function ResolveSymbolConflictDialogContent({
           </Button>
           {symbolConflict && (
             <ButtonWithSpinner
-              isLoading={isResolving}
+              isLoading={generatePlan.isPending || isRetrying}
               disabled={
-                isResolving ||
+                generatePlan.isPending ||
+                isRetrying ||
                 !chosenSymbol ||
                 chosenSymbol.trim().length === 0 ||
                 checks.isLoading
               }
-              onClick={resolve}
+              onClick={generateResolutionPlan}
             >
               Resolve with &quot;{chosenSymbol?.trim()}&quot;
             </ButtonWithSpinner>
           )}
         </DialogFooter>
       </DialogContent>
+      <PlanConfirmationDialog
+        plan={plan}
+        setPlan={setPlan}
+        onSuccess={onPlanExecuted}
+        note={
+          <>
+            Afterwards the queue entry {target.chain}:{target.address} is
+            retried automatically so ingestion links the deployed token to the
+            new abstract token.
+          </>
+        }
+      />
     </Dialog>
   )
 }

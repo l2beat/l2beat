@@ -71,7 +71,14 @@ export function TokenIngestionQueuePage() {
   >()
   const [page, setPage] = useState(1)
   const [selectedChains, setSelectedChains] = useState<string[]>([])
-  const { data: queuePage, isLoading } = useQuery(
+  const {
+    data: queuePage,
+    isLoading,
+    isError,
+    error,
+    refetch,
+    isRefetching,
+  } = useQuery(
     trpc.tokenIngestionQueue.getPage.queryOptions(
       {
         page,
@@ -288,8 +295,39 @@ export function TokenIngestionQueuePage() {
           </CardAction>
         </CardHeader>
         <CardContent className="min-h-0 flex-1 overflow-y-auto">
+          {isError && queuePage && (
+            <div className="mb-3 flex items-center justify-between gap-3 rounded border border-amber-500/50 bg-amber-500/10 p-3 text-sm">
+              <span>
+                The last refresh failed ({error.message}) — showing previously
+                loaded entries.
+              </span>
+              <ButtonWithSpinner
+                variant="outline"
+                size="sm"
+                isLoading={isRefetching}
+                onClick={() => refetch()}
+              >
+                Retry
+              </ButtonWithSpinner>
+            </div>
+          )}
           {isLoading ? (
             <LoadingState className="h-full" />
+          ) : isError && !queuePage ? (
+            <div className="space-y-3 rounded border border-destructive bg-destructive/10 p-4 text-sm">
+              <div className="font-medium text-destructive">
+                Could not load the ingestion queue
+              </div>
+              <div className="text-muted-foreground">{error.message}</div>
+              <ButtonWithSpinner
+                variant="outline"
+                size="sm"
+                isLoading={isRefetching}
+                onClick={() => refetch()}
+              >
+                Retry
+              </ButtonWithSpinner>
+            </div>
           ) : rows.length === 0 ? (
             <Empty className="h-full">
               <EmptyHeader>
