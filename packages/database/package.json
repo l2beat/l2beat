@@ -34,7 +34,7 @@
     "@types/lodash": "^4.17.13",
     "@types/pg": "8.6.5",
     "dotenv": "^16.3.1",
-    "prisma": "^5.15.0",
+    "prisma": "5.15.0",
     "prisma-kysely": "^1.8.0",
     "tsx": "^4.9.3",
     "type-fest": "^4.20.0"
