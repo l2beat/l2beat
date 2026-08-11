@@ -16,7 +16,7 @@ describe(getSearchBarTokenEntries.name, () => {
         category: 'tokens',
         id: 'usdc01',
         name: 'USDC',
-        href: '/interop/tokens/usdc01/usdc',
+        href: '/interop/tokens/usdc01',
         iconUrl: 'https://example.com/icon.png',
         issuer: 'circle',
       },
@@ -28,7 +28,7 @@ describe(getSearchBarTokenEntries.name, () => {
       token({ id: 'eth001', symbol: 'ETH', issuer: null, iconUrl: null }),
     ])
 
-    expect(entries[0]?.href).toEqual('/interop/tokens/eth001/eth')
+    expect(entries[0]?.href).toEqual('/interop/tokens/eth001')
     expect(entries[0]?.iconUrl).toEqual(TOKEN_PLACEHOLDER_ICON_URL)
   })
 
