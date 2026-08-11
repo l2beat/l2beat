@@ -56,6 +56,7 @@ export function CopyButton({
       </TooltipTrigger>
       <TooltipPortal>
         <TooltipContent
+          className="z-1000"
           hideWhenDetached
           onPointerDownOutside={(event) => event.preventDefault()}
         >
