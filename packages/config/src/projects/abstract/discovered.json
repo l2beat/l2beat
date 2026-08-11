@@ -1,6 +1,6 @@
 {
   "name": "abstract",
-  "timestamp": 1786357487,
+  "timestamp": 1786434343,
   "configHash": "0x0d413093225db7d84e677f805c484621f3776cef96b7c732cd167e182c8979ab",
   "entries": [
     {
@@ -447,7 +447,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 26903,
+        "getFirstUnprocessedPriorityTx": 26906,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -455,8 +455,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x00933c66f37602decced6b35d85fe8da6fbf97a3565b18dcf482d2745424435d",
+        "getPriorityQueueSize": 1,
+        "getPriorityTreeRoot": "0xc777a5317a8ef804e8bf0482436cc86046aaf224af1b6e7d92cdab689965c149",
         "getPriorityTreeStartIndex": 17183,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018880,
@@ -464,13 +464,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 0],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 89437,
-        "getTotalBatchesExecuted": 89431,
-        "getTotalBatchesVerified": 89436,
-        "getTotalBlocksCommitted": 89437,
-        "getTotalBlocksExecuted": 89431,
-        "getTotalBlocksVerified": 89436,
-        "getTotalPriorityTxs": 26903,
+        "getTotalBatchesCommitted": 89483,
+        "getTotalBatchesExecuted": 89477,
+        "getTotalBatchesVerified": 89480,
+        "getTotalBlocksCommitted": 89483,
+        "getTotalBlocksExecuted": 89477,
+        "getTotalBlocksVerified": 89480,
+        "getTotalPriorityTxs": 26907,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xC47D355402E78b886B628914B3b129F236fEe3cc",
         "getVerifierParams": {
@@ -1855,6 +1855,6 @@
     "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable": "0x87da0dde38a66bb86eec4b765e7816e862a68f2f0f5ce66e638909d2462a3247",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 25723980 },
+  "usedBlockNumbers": { "ethereum": 25730352 },
   "permissionsConfigHash": "0x45d3525c8ee6eb8eda23edb4f8c3d14e3681ab80a8b6af4e9c3e0c4bd5478d3b"
 }

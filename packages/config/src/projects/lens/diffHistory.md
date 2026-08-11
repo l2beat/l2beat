@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x67b62925f84865166ab1e37100f8bb14fbc8cc71
+Generated with discovered.json: 0x5534aba81e877012e066683e22af10e1bdbe8394
 
-# Diff at Mon, 10 Aug 2026 10:33:14 GMT:
+# Diff at Tue, 11 Aug 2026 07:46:55 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@352ff1eba99519e3c6090fccec5796e0475edcfa block: 1781602943
-- current timestamp: 1786357931
+- comparing to: main@57ed70b2c9af46718994f3c208ff3317bed687bf block: 1785755292
+- current timestamp: 1786434353
 
 ## Description
 
@@ -103,10 +103,22 @@ Removed 7 members of Lens ms (2/10 -> 2/3).
 ## Source code changes
 
 ```diff
-.../lens/{.flat@1781602943 => .flat}/L1VerifierFflonk.sol      |  6 +++---
- .../lens/{.flat@1781602943 => .flat}/L1VerifierPlonk.sol       | 10 +++++-----
+.../lens/{.flat@1785755292 => .flat}/L1VerifierFflonk.sol      |  6 +++---
+ .../lens/{.flat@1785755292 => .flat}/L1VerifierPlonk.sol       | 10 +++++-----
  2 files changed, 8 insertions(+), 8 deletions(-)
 ```
+
+Generated with discovered.json: 0x7a53e001e361197e6b2ffdef37e2bef5fc7885d6
+
+# Diff at Mon, 03 Aug 2026 11:09:18 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@44e2212a46e585fd2ddb21d6755695cf74e1f876 block: 1781602943
+- current timestamp: 1785755292
+
+## Description
+
+One member of Lens ms 7702 delegation.
 
 ## Config/verification related changes
 
