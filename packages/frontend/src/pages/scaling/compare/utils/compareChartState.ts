@@ -1,12 +1,9 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import type { ChartScale } from '~/components/chart/types'
-import type { ChartRangeOptionValue } from '~/components/core/chart/ChartRangeControls'
 import {
-  type ChartRange,
-  optionToDays,
-  optionToRange,
-} from '~/utils/range/range'
-import { rangeToDays } from '~/utils/range/rangeToDays'
+  type ChartRangeOptionValue,
+  rangeToOption,
+} from '~/components/core/chart/ChartRangeControls'
+import { type ChartRange, optionToRange } from '~/utils/range/range'
 
 export const COMPARE_METRIC_IDS = [
   'tvs',
@@ -97,55 +94,22 @@ export interface CompareChartState {
  * range is always resolved to concrete timestamps, so there is a single
  * source of truth for what the chart queries.
  */
-export interface CompareClientState {
-  metric: CompareMetricId
-  projects: string[]
-  scale: ChartScale
-  mode: CompareViewMode
-  activityUnit: CompareActivityUnit
-  tvsUnit: CompareTvsUnit
-  tvsFilter: CompareTvsFilter
-  costsUnit: CompareCostsUnit
-  excludeAssociatedTokens: boolean
-  excludeRwaRestrictedTokens: boolean
+export type CompareClientState = Omit<CompareChartState, 'range'> & {
   chartRange: ChartRange
 }
 
-export function toCompareUrlState(
-  state: CompareClientState,
-): CompareChartState {
-  return {
-    metric: state.metric,
-    projects: state.projects,
-    scale: state.scale,
-    mode: state.mode,
-    activityUnit: state.activityUnit,
-    tvsUnit: state.tvsUnit,
-    tvsFilter: state.tvsFilter,
-    costsUnit: state.costsUnit,
-    excludeAssociatedTokens: state.excludeAssociatedTokens,
-    excludeRwaRestrictedTokens: state.excludeRwaRestrictedTokens,
-    range: chartRangeToCompareRange(state.chartRange),
-  }
+export function toCompareUrlState({
+  chartRange,
+  ...state
+}: CompareClientState): CompareChartState {
+  return { ...state, range: chartRangeToCompareRange(chartRange) }
 }
 
 export function toCompareClientState(
-  state: CompareChartState,
-  chartRange: ChartRange = compareRangeToChartRange(state.range),
+  { range, ...state }: CompareChartState,
+  chartRange: ChartRange = compareRangeToChartRange(range),
 ): CompareClientState {
-  return {
-    metric: state.metric,
-    projects: state.projects,
-    scale: state.scale,
-    mode: state.mode,
-    activityUnit: state.activityUnit,
-    tvsUnit: state.tvsUnit,
-    tvsFilter: state.tvsFilter,
-    costsUnit: state.costsUnit,
-    excludeAssociatedTokens: state.excludeAssociatedTokens,
-    excludeRwaRestrictedTokens: state.excludeRwaRestrictedTokens,
-    chartRange,
-  }
+  return { ...state, chartRange }
 }
 
 export const DEFAULT_COMPARE_METRIC: CompareMetricId = 'tvs'
@@ -186,58 +150,12 @@ export function compareRangeToChartRange(range: CompareRange): ChartRange {
 }
 
 /**
- * Maps a resolved chart range back to its URL representation. Mirrors the
- * predefined-option detection of `ChartRangeControls` so the URL matches the
- * highlighted control.
+ * Maps a resolved chart range back to its URL representation, reusing the
+ * predefined-option detection of `ChartRangeControls` so the URL always
+ * matches the highlighted control.
  */
 export function chartRangeToCompareRange([from, to]: ChartRange): CompareRange {
   if (from === null) return 'max'
-  if (
-    UnixTime.toStartOf(to, 'day') === UnixTime.toStartOf(UnixTime.now(), 'day')
-  ) {
-    const days = rangeToDays([from, to])
-    const option = COMPARE_RANGE_OPTIONS.find(
-      (option) => optionToDays(option) === days,
-    )
-    if (option) return option
-  }
-  return { from, to }
-}
-
-export function isSameCompareState(
-  left: CompareChartState,
-  right: CompareChartState,
-): boolean {
-  return (
-    left.metric === right.metric &&
-    left.mode === right.mode &&
-    // The scale toggle is hidden in indexed mode, so two states that differ
-    // solely by a hidden scale map to the same URL.
-    (left.mode === 'indexed' || left.scale === right.scale) &&
-    // Per-metric controls are only encoded for the metric they belong to,
-    // so two states that differ solely by a hidden control map to the same
-    // URL.
-    (left.metric !== 'activity' || left.activityUnit === right.activityUnit) &&
-    (left.metric !== 'costs' || left.costsUnit === right.costsUnit) &&
-    (left.metric !== 'tvs' ||
-      (left.tvsUnit === right.tvsUnit &&
-        left.tvsFilter === right.tvsFilter &&
-        left.excludeAssociatedTokens === right.excludeAssociatedTokens &&
-        // The exclude-restricted-RWA toggle is disabled and overridden while
-        // the Restricted RWAs filter is active, so its stored value is
-        // hidden and not encoded.
-        (left.tvsFilter === 'rwaRestricted' ||
-          left.excludeRwaRestrictedTokens ===
-            right.excludeRwaRestrictedTokens))) &&
-    isSameRange(left.range, right.range) &&
-    left.projects.length === right.projects.length &&
-    left.projects.every((slug, index) => slug === right.projects[index])
-  )
-}
-
-function isSameRange(left: CompareRange, right: CompareRange): boolean {
-  if (typeof left === 'string' || typeof right === 'string') {
-    return left === right
-  }
-  return left.from === right.from && left.to === right.to
+  const option = rangeToOption([from, to], COMPARE_RANGE_OPTIONS)
+  return option === 'custom' ? { from, to } : option
 }

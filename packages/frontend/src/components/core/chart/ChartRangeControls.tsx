@@ -63,7 +63,10 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
   if (!isClient) {
     return <Skeleton className={cn('h-8 w-14 md:w-[320px]')} />
   }
-  const selectedOption = rangeToOption(value, options)
+  const selectedOption = rangeToOption(
+    value,
+    options.map((option) => option.value),
+  )
 
   function onDateRangeChange(dateRange: DateRange | undefined) {
     setInternalValue(dateRange)
@@ -261,10 +264,15 @@ function CalendarComponent({
   )
 }
 
-function rangeToOption(
+/**
+ * Detects whether a resolved chart range matches one of the predefined
+ * options. Shared with URL serializers so a serialized range always agrees
+ * with the highlighted control.
+ */
+export function rangeToOption<T extends ChartRangeOptionValue>(
   [from, to]: ChartRange,
-  options: { value: ChartRangeOptionValue }[],
-): ChartRangeOptionValue | 'custom' {
+  values: readonly T[],
+): T | 'max' | 'custom' {
   if (
     UnixTime.toStartOf(to, 'day') !== UnixTime.toStartOf(UnixTime.now(), 'day')
   ) {
@@ -272,8 +280,5 @@ function rangeToOption(
   }
   if (from === null) return 'max'
   const days = rangeToDays([from, to])
-  const option = options.find((option) => optionToDays(option.value) === days)
-  if (option) return option.value
-
-  return 'custom'
+  return values.find((value) => optionToDays(value) === days) ?? 'custom'
 }

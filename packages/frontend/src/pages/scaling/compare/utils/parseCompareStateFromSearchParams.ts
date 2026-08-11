@@ -5,14 +5,9 @@ import {
   COMPARE_RANGE_OPTIONS,
   COMPARE_TVS_FILTERS,
   COMPARE_TVS_UNITS,
-  type CompareActivityUnit,
   type CompareChartState,
-  type CompareCostsUnit,
-  type CompareMetricId,
   type CompareRange,
   type CompareRangeOption,
-  type CompareTvsFilter,
-  type CompareTvsUnit,
   DEFAULT_COMPARE_ACTIVITY_UNIT,
   DEFAULT_COMPARE_COSTS_UNIT,
   DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS,
@@ -37,7 +32,11 @@ export function parseCompareStateFromSearchParams({
   searchParams: URLSearchParams
   validSlugs: string[]
 }): CompareChartState {
-  const metric = parseMetric(searchParams.get('metric'))
+  const metric = parseOneOf(
+    searchParams.get('metric'),
+    COMPARE_METRIC_IDS,
+    DEFAULT_COMPARE_METRIC,
+  )
   const unit = searchParams.get('unit')
   return {
     metric,
@@ -55,15 +54,28 @@ export function parseCompareStateFromSearchParams({
     // leak its unit into the TVS control.
     activityUnit:
       metric === 'activity'
-        ? parseActivityUnit(unit)
+        ? parseOneOf(
+            unit,
+            COMPARE_ACTIVITY_UNITS,
+            DEFAULT_COMPARE_ACTIVITY_UNIT,
+          )
         : DEFAULT_COMPARE_ACTIVITY_UNIT,
-    tvsUnit: metric === 'tvs' ? parseTvsUnit(unit) : DEFAULT_COMPARE_TVS_UNIT,
+    tvsUnit:
+      metric === 'tvs'
+        ? parseOneOf(unit, COMPARE_TVS_UNITS, DEFAULT_COMPARE_TVS_UNIT)
+        : DEFAULT_COMPARE_TVS_UNIT,
     tvsFilter:
       metric === 'tvs'
-        ? parseTvsFilter(searchParams.get('filter'))
+        ? parseOneOf(
+            searchParams.get('filter'),
+            COMPARE_TVS_FILTERS,
+            DEFAULT_COMPARE_TVS_FILTER,
+          )
         : DEFAULT_COMPARE_TVS_FILTER,
     costsUnit:
-      metric === 'costs' ? parseCostsUnit(unit) : DEFAULT_COMPARE_COSTS_UNIT,
+      metric === 'costs'
+        ? parseOneOf(unit, COMPARE_COSTS_UNITS, DEFAULT_COMPARE_COSTS_UNIT)
+        : DEFAULT_COMPARE_COSTS_UNIT,
     excludeAssociatedTokens: parseBoolean(
       searchParams.get('excludeAssociated'),
       DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS,
@@ -75,29 +87,12 @@ export function parseCompareStateFromSearchParams({
   }
 }
 
-function parseMetric(value: string | null): CompareMetricId {
-  const metric = COMPARE_METRIC_IDS.find((id) => id === value)
-  return metric ?? DEFAULT_COMPARE_METRIC
-}
-
-function parseActivityUnit(value: string | null): CompareActivityUnit {
-  const unit = COMPARE_ACTIVITY_UNITS.find((unit) => unit === value)
-  return unit ?? DEFAULT_COMPARE_ACTIVITY_UNIT
-}
-
-function parseTvsUnit(value: string | null): CompareTvsUnit {
-  const unit = COMPARE_TVS_UNITS.find((unit) => unit === value)
-  return unit ?? DEFAULT_COMPARE_TVS_UNIT
-}
-
-function parseTvsFilter(value: string | null): CompareTvsFilter {
-  const filter = COMPARE_TVS_FILTERS.find((filter) => filter === value)
-  return filter ?? DEFAULT_COMPARE_TVS_FILTER
-}
-
-function parseCostsUnit(value: string | null): CompareCostsUnit {
-  const unit = COMPARE_COSTS_UNITS.find((unit) => unit === value)
-  return unit ?? DEFAULT_COMPARE_COSTS_UNIT
+function parseOneOf<T extends string>(
+  value: string | null,
+  options: readonly T[],
+  fallback: T,
+): T {
+  return options.find((option) => option === value) ?? fallback
 }
 
 function parseBoolean(value: string | null, defaultValue: boolean): boolean {

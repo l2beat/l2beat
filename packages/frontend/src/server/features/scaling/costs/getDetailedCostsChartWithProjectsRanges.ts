@@ -5,6 +5,13 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
+import {
+  buildProjectSeriesChart,
+  type ChartProjectRange,
+  getMockProjectSeriesChartData,
+  minSinceTimestamp,
+  sinceTimestampGate,
+} from '~/server/features/utils/projectSeriesChart'
 import { ChartRange, rangeToResolution } from '~/utils/range/range'
 import { getCostsExpectedTimestamp } from './utils/getCostsExpectedTimestamp'
 import { isCostsSynced } from './utils/isCostsSynced'
@@ -30,15 +37,9 @@ export type DetailedCostsChartWithProjectsRangesDataPoint = [
   projects: Record<string, ProjectCostsChartDataPoint | null>,
 ]
 
-export type CostsChartProjectRange = {
-  projectId: ProjectId
-  /** First timestamp with tracked costs, floored to the active resolution. */
-  sinceTimestamp: number
-}
-
 export type DetailedCostsChartWithProjectsRangesData = {
   chart: DetailedCostsChartWithProjectsRangesDataPoint[]
-  projects: CostsChartProjectRange[]
+  projects: ChartProjectRange[]
   syncedUntil: number
 }
 
@@ -79,7 +80,7 @@ export async function getCostsChartData(
   // the `>= sinceTimestamp` gate aligns with the generated buckets. The
   // rounded values are returned to the client so its tooltip gate can't
   // drift from the data gate computed here.
-  const projectRanges: CostsChartProjectRange[] = projects.map((project) => ({
+  const projectRanges: ChartProjectRange[] = projects.map((project) => ({
     projectId: project.projectId,
     sinceTimestamp: UnixTime.toStartOf(project.sinceTimestamp, resolution),
   }))
@@ -127,19 +128,12 @@ export async function getCostsChartData(
     ])
   }
 
-  const sinceByProjectId = new Map(
-    projectRanges.map((p) => [p.projectId, p.sinceTimestamp]),
-  )
-  const firstProjectTimestamp = Math.min(
-    ...projectRanges.map((p) => p.sinceTimestamp),
-  )
-
   const adjustedTo = isCostsSynced({ to: range[1], syncedUntil })
     ? maxBucket
     : getCostsExpectedTimestamp(range[1], resolution)
   const startTimestamp = getChartStartTimestamp({
     rangeStart: range[0],
-    firstProjectTimestamp,
+    firstProjectTimestamp: minSinceTimestamp(projectRanges),
     dataStart,
     resolution,
   })
@@ -148,36 +142,19 @@ export async function getCostsChartData(
     resolution,
   )
 
-  const chart: DetailedCostsChartWithProjectsRangesDataPoint[] = timestamps.map(
-    (timestamp) => {
-      const projectsForTimestamp: Record<
-        string,
-        ProjectCostsChartDataPoint | null
-      > = {}
-
-      for (const projectId of projectIds) {
-        const values = summedByProjectId.get(projectId)?.get(timestamp)
-        if (values) {
-          projectsForTimestamp[projectId] = values
-          continue
-        }
-
-        // Zero only inside the synced window and after the project's costs
-        // tracking start; null marks buckets before tracking (or past the
-        // synced window) so the client can distinguish "no costs" from
-        // "no data".
-        const sinceTimestamp = sinceByProjectId.get(projectId)
-        projectsForTimestamp[projectId] =
-          timestamp <= maxBucket &&
-          sinceTimestamp !== undefined &&
-          timestamp >= sinceTimestamp
-            ? [0, 0, 0]
-            : null
-      }
-
-      return [timestamp, projectsForTimestamp]
-    },
-  )
+  // Zero only inside the synced window and after the project's costs
+  // tracking start; null marks buckets before tracking (or past the synced
+  // window) so the client can distinguish "no costs" from "no data".
+  const sinceGate = sinceTimestampGate(projectRanges)
+  const chart = buildProjectSeriesChart<ProjectCostsChartDataPoint>({
+    timestamps,
+    projectIds,
+    getValue: (projectId, timestamp) =>
+      summedByProjectId.get(projectId)?.get(timestamp),
+    fillZero: (projectId, timestamp) =>
+      timestamp <= maxBucket && sinceGate(projectId, timestamp),
+    zero: [0, 0, 0],
+  })
 
   return { chart, projects: projectRanges, syncedUntil }
 }
@@ -186,26 +163,15 @@ function getMockDetailedCostsChartWithProjectsRangesData({
   range,
   projects,
 }: CostsChartWithProjectsRangesDataParams): DetailedCostsChartWithProjectsRangesData {
-  const resolution = rangeToResolution(range)
-  const timestamps = generateTimestamps(
-    [range[0] ?? 1573776000, range[1]],
-    resolution,
-  )
-
-  return {
-    chart: timestamps.map((timestamp) => [
-      timestamp,
-      Object.fromEntries(
-        projects.map(({ projectId }, index) => [
-          projectId,
-          [1_000_000 * (index + 1), 10 * (index + 1), 30_000 * (index + 1)],
-        ]),
-      ),
-    ]),
-    projects: projects.map(({ projectId }) => ({
-      projectId,
-      sinceTimestamp: timestamps[0] ?? 0,
-    })),
-    syncedUntil: timestamps[timestamps.length - 1] ?? 0,
-  }
+  return getMockProjectSeriesChartData<ProjectCostsChartDataPoint>({
+    projectIds: projects.map(({ projectId }) => projectId),
+    range,
+    resolution: rangeToResolution(range),
+    defaultStart: 1573776000,
+    value: (index) => [
+      1_000_000 * (index + 1),
+      10 * (index + 1),
+      30_000 * (index + 1),
+    ],
+  })
 }
