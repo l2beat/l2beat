@@ -20,7 +20,7 @@ describe(PrivacyProjectStats.name, () => {
     const html = render(
       createElement(PrivacyProjectStats, {
         ...BASE_PROPS,
-        activeRelayers30d: 12,
+        relayerStat: { kind: 'activeRelayers', value: 12 },
       }),
     )
 
@@ -32,11 +32,24 @@ describe(PrivacyProjectStats.name, () => {
     const html = render(
       createElement(PrivacyProjectStats, {
         ...BASE_PROPS,
-        activeRelayers30d: 0,
+        relayerStat: { kind: 'activeRelayers', value: 0 },
       }),
     )
 
     expect(html).toInclude('Active Relayers 30D')
+  })
+
+  it('shows the average daily relayer count for sampled tracking', () => {
+    const html = render(
+      createElement(PrivacyProjectStats, {
+        ...BASE_PROPS,
+        relayerStat: { kind: 'avgDailyRelayers', value: 46 },
+      }),
+    )
+
+    expect(html).toInclude('Avg. Relayers 30D')
+    expect(html).toInclude('>46</span>')
+    expect(html).not.toInclude('Active Relayers 30D')
   })
 
   it('hides the metric when relayer tracking is not configured', () => {
@@ -51,7 +64,7 @@ describe(PrivacyProjectStats.name, () => {
         ...BASE_PROPS,
         assetsCount: 1,
         bucketsCount: 0,
-        activeRelayers30d: 3,
+        relayerStat: { kind: 'activeRelayers' as const, value: 3 },
       }),
     )
 

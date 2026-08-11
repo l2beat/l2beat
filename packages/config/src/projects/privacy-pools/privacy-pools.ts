@@ -148,13 +148,16 @@ export const privacyPools: BaseProject = {
   },
   privacyInfo: {
     tokens: getPrivacyTokens(),
-    relayerTracking: [
-      {
-        address: ENTRYPOINT.address,
-        sinceTimestamp: UnixTime(ENTRYPOINT.sinceTimestamp),
-        extractor: 'privacyPoolsWithdrawalRelayed',
-      },
-    ],
+    relayerTracking: {
+      type: 'onchainEvents',
+      sources: [
+        {
+          address: ENTRYPOINT.address,
+          sinceTimestamp: UnixTime(ENTRYPOINT.sinceTimestamp),
+          extractor: 'privacyPoolsWithdrawalRelayed',
+        },
+      ],
+    },
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',
