@@ -1,16 +1,22 @@
 import type { Database } from '@l2beat/database'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { v } from '@l2beat/validate'
+import type { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
-import { ChartRange } from '~/utils/range/range'
+import {
+  buildProjectSeriesChart,
+  type ChartProjectRange,
+  getMockProjectSeriesChartData,
+  minSinceTimestamp,
+  ProjectsChartParams,
+  sinceTimestampGate,
+  toProjectRanges,
+} from '~/server/features/utils/projectSeriesChart'
+import type { ChartRange } from '~/utils/range/range'
 
-export const DataPostedChartWithProjectsRangesDataParams = v.object({
-  range: ChartRange,
-  projects: v.array(v.string().transform((value) => value as ProjectId)),
-})
+export const DataPostedChartWithProjectsRangesDataParams = ProjectsChartParams
 
 export type DataPostedChartWithProjectsRangesDataParams = v.infer<
   typeof DataPostedChartWithProjectsRangesDataParams
@@ -22,15 +28,9 @@ export type DetailedDataPostedChartWithProjectsRangesDataPoint = [
   projects: Record<string, number | null>,
 ]
 
-export type DataPostedChartProjectRange = {
-  projectId: ProjectId
-  /** First day with data-posted data, floored to the day resolution. */
-  sinceTimestamp: number
-}
-
 export type DetailedDataPostedChartWithProjectsRangesData = {
   chart: DetailedDataPostedChartWithProjectsRangesDataPoint[]
-  projects: DataPostedChartProjectRange[]
+  projects: ChartProjectRange[]
   syncedUntil: number
 }
 
@@ -84,18 +84,10 @@ export async function getDataPostedChartData(
     repository.getFirstTimestampsByProjectIds(projectIds),
   ])
 
-  const projectRanges: DataPostedChartProjectRange[] = projectIds.flatMap(
-    (projectId) => {
-      const sinceTimestamp = firstTimestamps[projectId]
-      return sinceTimestamp !== undefined
-        ? [
-            {
-              projectId,
-              sinceTimestamp: UnixTime.toStartOf(sinceTimestamp, 'day'),
-            },
-          ]
-        : []
-    },
+  const projectRanges = toProjectRanges(
+    projectIds,
+    (projectId) => firstTimestamps[projectId],
+    'day',
   )
 
   if (records.length === 0) {
@@ -135,44 +127,38 @@ export async function getDataPostedChartData(
     }
   }
 
-  const sinceByProjectId = new Map(
-    projectRanges.map((p) => [p.projectId, p.sinceTimestamp]),
-  )
-  const firstProjectTimestamp =
-    projectRanges.length > 0
-      ? Math.min(...projectRanges.map((p) => p.sinceTimestamp))
-      : undefined
-
   const startTimestamp = getChartStartTimestamp({
     rangeStart: range[0],
-    firstProjectTimestamp,
+    firstProjectTimestamp: minSinceTimestamp(projectRanges),
     dataStart,
     resolution: 'day',
   })
   const timestamps = generateTimestamps([startTimestamp, dataEnd], 'day')
 
-  const chart: DetailedDataPostedChartWithProjectsRangesDataPoint[] =
-    timestamps.map((timestamp) => {
-      const projectsForTimestamp: Record<string, number | null> = {}
-
-      for (const projectId of projectIds) {
-        // Zero only between the project's first record and its last non-zero
-        // day; null everywhere else so the client can distinguish "posted
-        // nothing" from "no data" (pre-launch, stopped, or untracked).
-        const sinceTimestamp = sinceByProjectId.get(projectId)
-        const lastNonzero = lastNonzeroByProjectId.get(projectId)
-        const isActive =
-          sinceTimestamp !== undefined &&
-          timestamp >= sinceTimestamp &&
-          lastNonzero !== undefined &&
-          timestamp <= lastNonzero
-        projectsForTimestamp[projectId] = isActive
-          ? (bytesByProjectId.get(projectId)?.get(timestamp) ?? 0)
-          : null
-      }
-
-      return [timestamp, projectsForTimestamp]
-    })
+  // Zero only between the project's first record and its last non-zero day;
+  // null everywhere else so the client can distinguish "posted nothing"
+  // from "no data" (pre-launch, stopped, or untracked).
+  const sinceGate = sinceTimestampGate(projectRanges)
+  const isActive = (projectId: ProjectId, timestamp: number) => {
+    const lastNonzero = lastNonzeroByProjectId.get(projectId)
+    return (
+      sinceGate(projectId, timestamp) &&
+      lastNonzero !== undefined &&
+      timestamp <= lastNonzero
+    )
+  }
+  const chart = buildProjectSeriesChart<number>({
+    timestamps,
+    projectIds,
+    // Values outside the active window are dropped too, so a trailing zero
+    // bucket can't extend a series past its last non-zero day.
+    getValue: (projectId, timestamp) =>
+      isActive(projectId, timestamp)
+        ? bytesByProjectId.get(projectId)?.get(timestamp)
+        : undefined,
+    fillZero: isActive,
+    zero: 0,
+  })
 
   return { chart, projects: projectRanges, syncedUntil: dataEnd }
 }
@@ -181,25 +167,11 @@ function getMockDetailedDataPostedChartWithProjectsRangesData({
   range,
   projects,
 }: DataPostedChartWithProjectsRangesDataParams): DetailedDataPostedChartWithProjectsRangesData {
-  const timestamps = generateTimestamps(
-    [range[0] ?? 1590883200, range[1]],
-    'day',
-  )
-
-  return {
-    chart: timestamps.map((timestamp) => [
-      timestamp,
-      Object.fromEntries(
-        projects.map((projectId, index) => [
-          projectId,
-          100_000_000 * (index + 1),
-        ]),
-      ),
-    ]),
-    projects: projects.map((projectId) => ({
-      projectId,
-      sinceTimestamp: timestamps[0] ?? 0,
-    })),
-    syncedUntil: timestamps[timestamps.length - 1] ?? 0,
-  }
+  return getMockProjectSeriesChartData<number>({
+    projectIds: projects,
+    range,
+    resolution: 'day',
+    defaultStart: 1590883200,
+    value: (index) => 100_000_000 * (index + 1),
+  })
 }
