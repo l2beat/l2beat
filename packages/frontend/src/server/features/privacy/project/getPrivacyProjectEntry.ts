@@ -22,6 +22,7 @@ import type { ProjectsChangeReport } from '../../projects-change-report/getProje
 import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
+import type { PrivacyRelayerStat } from '../types'
 import {
   getPrivacyTrustedSetup,
   getPrivacyTrustedSetupsSection,
@@ -59,7 +60,7 @@ export interface ProjectPrivacyEntry {
       last7d: number
       last30d: number
     }
-    activeRelayers30d?: number
+    relayerStat?: PrivacyRelayerStat
   }
   isUnderReview: boolean
   warnings: {
@@ -316,7 +317,7 @@ export async function getPrivacyProjectEntry(
     summary: {
       totalValueLockedUsd,
       deposits: details.summary.deposits,
-      activeRelayers30d: details.summary.activeRelayers30d,
+      relayerStat: details.summary.relayerStat,
     },
     isUnderReview: !!details.statuses.reviewStatus,
     warnings: {

@@ -7,6 +7,8 @@ import { PrivacyBlockTimestampIndexer } from './indexers/PrivacyBlockTimestampIn
 import { PrivacyFlowIndexer } from './indexers/PrivacyFlowIndexer'
 import { PrivacyPriceIndexer } from './indexers/PrivacyPriceIndexer'
 import { PrivacyRelayerActivityIndexer } from './indexers/PrivacyRelayerActivityIndexer'
+import { PrivacyRelayerSampleIndexer } from './indexers/PrivacyRelayerSampleIndexer'
+import { RailgunBroadcasterProvider } from './railgun/RailgunBroadcasterProvider'
 import type {
   PrivacyFlowIndexerConfig,
   PrivacyRelayerActivityIndexerConfig,
@@ -146,10 +148,32 @@ export function createPrivacyModule({
     }
   }
 
+  if (config.privacy.relayerSampleConfigs.length > 0) {
+    const relayerSampleIndexer = new PrivacyRelayerSampleIndexer(
+      {
+        parents: [hourlyIndexer],
+        indexerService,
+        configurations: config.privacy.relayerSampleConfigs.map(
+          (sampleConfig) => ({
+            id: sampleConfig.id,
+            minHeight: sampleConfig.sinceTimestamp,
+            maxHeight: null,
+            properties: sampleConfig,
+          }),
+        ),
+        provider: new RailgunBroadcasterProvider(logger),
+        db,
+      },
+      logger,
+    )
+    indexers.push(relayerSampleIndexer)
+  }
+
   logger.info('Privacy config loaded', {
     projects: config.privacy.projects.length,
     flowConfigs: config.privacy.flowConfigs.length,
     relayerConfigs: config.privacy.relayerConfigs.length,
+    relayerSampleConfigs: config.privacy.relayerSampleConfigs.length,
     priceConfigs: config.privacy.priceConfigs.length,
     chains: config.privacy.chains.length,
   })

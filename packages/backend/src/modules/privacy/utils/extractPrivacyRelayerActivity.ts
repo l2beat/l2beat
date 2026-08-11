@@ -1,4 +1,4 @@
-import type { ProjectPrivacyRelayerSource } from '@l2beat/config'
+import type { ProjectPrivacyOnchainRelayerSource } from '@l2beat/config'
 import { assertUnreachable, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type {
@@ -15,7 +15,7 @@ const tornadoCashInterface = new utils.Interface([
   'event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee)',
 ])
 
-type RelayerExtractor = ProjectPrivacyRelayerSource['extractor']
+type RelayerExtractor = ProjectPrivacyOnchainRelayerSource['extractor']
 
 interface RelayerExtractorDefinition {
   event: string

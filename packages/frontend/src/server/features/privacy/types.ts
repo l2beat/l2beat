@@ -12,6 +12,17 @@ export interface PrivacyDepositedValueUsd {
   last30d: number
 }
 
+export interface PrivacyRelayerStat {
+  /**
+   * activeRelayers - unique relayer addresses seen in onchain withdrawals
+   * over the last 30 days.
+   * avgDailyRelayers - average count of unique relayers seen in daily
+   * network observations over the last 30 days.
+   */
+  kind: 'activeRelayers' | 'avgDailyRelayers'
+  value: number
+}
+
 export interface PrivacyBucket {
   id: string
   label: string

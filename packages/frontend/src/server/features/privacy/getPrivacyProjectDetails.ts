@@ -5,6 +5,7 @@ import type {
   ProjectContracts,
   ProjectDisplay,
   ProjectPermissions,
+  ProjectPrivacyRelayerTracking,
   ProjectStatuses,
   ProjectUpgradesAndGovernance,
   ProjectZkCatalogInfo,
@@ -15,12 +16,17 @@ import type {
   TokenValueRecord,
 } from '@l2beat/database'
 import type { ProjectId } from '@l2beat/shared-pure'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
-import type { PrivacyAsset, PrivacyBucket, PrivacyProject } from './types'
+import type {
+  PrivacyAsset,
+  PrivacyBucket,
+  PrivacyProject,
+  PrivacyRelayerStat,
+} from './types'
 
 interface PrivacyProjectFlowData {
   totals: PrivacyFlowBucketTotalRecord[]
@@ -57,7 +63,7 @@ export interface PrivacyProjectDetails {
       last7d: number
       last30d: number
     }
-    activeRelayers30d?: number
+    relayerStat?: PrivacyRelayerStat
   }
 }
 
@@ -87,11 +93,10 @@ export async function getPrivacyProjectDetails(
   const last7dCutoff = currentDay - 7 * UnixTime.DAY
   const last30dCutoff = currentDay - 30 * UnixTime.DAY
 
-  const [{ totals, daily30d, tokenValues }, activeRelayers30d] =
-    await Promise.all([
-      getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
-      getActiveRelayerCount(project, UnixTime(now - 30 * UnixTime.DAY), now),
-    ])
+  const [{ totals, daily30d, tokenValues }, relayerStat] = await Promise.all([
+    getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
+    getRelayerStat(project, UnixTime(now - 30 * UnixTime.DAY), now),
+  ])
 
   const tvlBySymbol = new Map<string, number>()
   for (const tv of tokenValues) {
@@ -273,29 +278,58 @@ export async function getPrivacyProjectDetails(
         last7d: summaryValue7d,
         last30d: summaryValue30d,
       },
-      activeRelayers30d,
+      relayerStat,
     },
   }
 }
 
-async function getActiveRelayerCount(
+async function getRelayerStat(
   project: PrivacyProject,
   from: UnixTime,
   to: UnixTime,
-): Promise<number | undefined> {
-  if (!project.privacyInfo.relayerTracking?.length) {
+): Promise<PrivacyRelayerStat | undefined> {
+  const tracking = project.privacyInfo.relayerTracking
+  if (!tracking) {
     return undefined
   }
 
+  const kind = relayerStatKind(tracking)
   if (env.MOCK) {
-    return Math.round(Math.random() * 20)
+    return { kind, value: Math.round(Math.random() * 20) }
   }
 
-  return await getDb().privacyRelayerActivity.getActiveRelayerCount(
+  if (kind === 'avgDailyRelayers') {
+    const average = await getDb().privacyRelayerSample.getAverageRelayerCount(
+      project.id,
+      from,
+      to,
+    )
+    // Hide the stat until the first sample exists instead of showing 0.
+    if (average === undefined) {
+      return undefined
+    }
+    return { kind, value: Math.round(average) }
+  }
+
+  const count = await getDb().privacyRelayerActivity.getActiveRelayerCount(
     project.id,
     from,
     to,
   )
+  return { kind, value: count }
+}
+
+function relayerStatKind(
+  tracking: ProjectPrivacyRelayerTracking,
+): PrivacyRelayerStat['kind'] {
+  switch (tracking.type) {
+    case 'onchainEvents':
+      return 'activeRelayers'
+    case 'railgunWaku':
+      return 'avgDailyRelayers'
+    default:
+      assertUnreachable(tracking)
+  }
 }
 
 async function getPrivacyProjectFlowData(

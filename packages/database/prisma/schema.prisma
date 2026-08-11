@@ -332,6 +332,17 @@ model PrivacyRelayerActivity {
   @@index([configurationId, timestamp])
 }
 
+model PrivacyRelayerSample {
+  configurationId String   @db.Char(12)
+  projectId       String   @db.VarChar(255)
+  chain           String   @db.VarChar(32)
+  timestamp       DateTime @db.Timestamp(6)
+  relayerCount    Int
+
+  @@id([configurationId, timestamp])
+  @@index([projectId, timestamp])
+}
+
 model UpdateDiff {
   projectId         String   @db.VarChar(255)
   address           String   @db.VarChar(255)
