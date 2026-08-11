@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x327620d4e98dafcc318938601cd69278b001954b
+
+# Diff at Mon, 10 Aug 2026 11:04:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b69b5b6595d9041cb4e6d7872e95451210cc7bd7 block: 1785996153
+- current timestamp: 1786359806
+
+## Description
+
+RollupProxy: `stakerCount` rose from 2 to 3 as an additional validator staked.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.stakerCount:
+-        2
++        3
+    }
+```
+
 Generated with discovered.json: 0xf99265f6322c3c25c47a37d1c0c06fe9e4a749fb
 
 # Diff at Thu, 06 Aug 2026 06:04:01 GMT:

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xd311da0b3fc7e7220d4605b7f20cb8a900628548
+
+# Diff at Mon, 10 Aug 2026 11:04:52 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b69b5b6595d9041cb4e6d7872e95451210cc7bd7 block: 1763483689
+- current timestamp: 1786359830
+
+## Description
+
+Vector: `vectorXProgramVkey` rotated to the sp1-vector v2.0.1 program. The new key is reproducible from source and recorded in `programHashes.ts`.
+
+## Watched changes
+
+```diff
+    contract Vector (eth:0x02993cdC11213985b9B13224f3aF289F03bf298d) [succinct/SP1Vector] {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      values.vectorXProgramVkey:
+-        "0x0057b7de6dcd8ff25e7b41089f4b5fa586067fbb107756d1f66d92fe71dd6ad1"
++        "0x005f3914526e9f0d261b56a3613985801d3060584f95874548c70fda5f81efdb"
+    }
+```
+
 Generated with discovered.json: 0xce9cb951ee30bddcadee56470df819815f81997b
 
 # Diff at Thu, 30 Jul 2026 11:25:02 GMT:
