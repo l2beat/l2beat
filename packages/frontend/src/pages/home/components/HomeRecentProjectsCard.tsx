@@ -8,6 +8,7 @@ const CATEGORY_LABEL: Record<HomeRecentProject['category'], string> = {
   da: 'Data Availability',
   zkCatalog: 'ZK Catalog',
   ecosystems: 'Ecosystem',
+  privacy: 'Privacy',
 }
 
 interface Props {
