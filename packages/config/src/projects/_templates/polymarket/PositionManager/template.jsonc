@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "PositionManager",
-  "description": "Upgradeable ERC1155 ledger of combination-outcome positions, mintable and burnable only by the outcome module registered for each position or a cross-authorised module. Admins register modules, which grants them mint and burn power over the ledger.",
+  "description": "Upgradeable ERC1155 ledger of combination-outcome positions, mintable and burnable only by the outcome module registered for each position or a cross-authorised module. Admins register modules, which grants those modules mint and burn power over the ledger.",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
     "roleHolders": {

@@ -1,7 +1,7 @@
 {
   "name": "polymarket",
   "timestamp": 1785484385,
-  "configHash": "0xbbb7fada87d83f8b0dc79e20e3bbad65a4da75e824776da0f2e17fff4df9da2f",
+  "configHash": "0x4d017d20ce9eac2f3a212f33ba522e109550ae0ff9e1ff666b5918a093004580",
   "entries": [
     {
       "address": "matic:0x0000000000000000000000000000000000000000",
@@ -608,7 +608,7 @@
         "0x5fe0342de8952b4767f5c3594edec87533a6032c8afceb4bae8d4b63f62ca530"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable ERC1155 ledger of combination-outcome positions, mintable and burnable only by the outcome module registered for each position or a cross-authorised module. Admins register modules, which grants them mint and burn power over the ledger.",
+      "description": "Upgradeable ERC1155 ledger of combination-outcome positions, mintable and burnable only by the outcome module registered for each position or a cross-authorised module. Admins register modules, which grants those modules mint and burn power over the ledger.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1779828687,
       "sinceBlock": 87479409,
@@ -1294,7 +1294,7 @@
         {
           "permission": "interact",
           "from": "matic:0x65070BE91477460D8A7AeEb94ef92fe056C2f2A7",
-          "description": "pause, unpause, reset and flag questions, and resolve a flagged question manually with an outcome of their choosing after the 1h safety period.",
+          "description": "pause, unpause, reset and flag questions, and resolve a flagged question manually with either outcome or an even split after the 1h safety period.",
           "role": ".admins"
         },
         {
@@ -1306,7 +1306,7 @@
         {
           "permission": "interact",
           "from": "matic:0x69c47De9D4D3Dad79590d61b9e05918E03775f24",
-          "description": "pause, unpause, reset and flag questions, and resolve a flagged question manually with an outcome of their choosing after the 1h safety period.",
+          "description": "pause, unpause, reset and flag questions, and resolve a flagged question manually with either outcome or an even split after the 1h safety period.",
           "role": ".admins"
         },
         {
@@ -1320,6 +1320,18 @@
           "from": "matic:0x7f67327E88c258932D7d8f72950bE0d46975E11D",
           "description": "can transfer any ERC20 or ERC1155 balance out of the vault to any recipient with no delay, and add or remove admins.",
           "role": ".admins"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xE111180000d2663C0091e4f400237545B87B996B",
+          "description": "manage admins and operators, pause and unpause all trading, and set the fee receiver, the maximum fee rate and the user-pause interval.",
+          "role": ".admin"
+        },
+        {
+          "permission": "interact",
+          "from": "matic:0xe2222d279d744050d28e00520010520000310F59",
+          "description": "manage admins and operators, pause and unpause all trading, and set the fee receiver, the maximum fee rate and the user-pause interval.",
+          "role": ".admin"
         }
       ],
       "directlyReceivedPermissions": [
@@ -1589,7 +1601,7 @@
         "0x14741f557c65402c8746f0581f2893c2d2a971c58c16a123abf7d79e4e605566"
       ],
       "proxyType": "immutable",
-      "description": "Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger; initializing and resolving are permissionless. Admins can pause or reset any question, and can flag one and resolve it manually with an outcome of their choosing after 1h.",
+      "description": "Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger; initializing and resolving are permissionless. Admins can pause or reset any question, and can flag one and resolve it manually - either outcome or an even split - after 1h.",
       "deployerAddress": "matic:0x243cbcEA58d4b770C12146474AdDD4F82EfF99Bf",
       "sinceTimestamp": 1754329625,
       "sinceBlock": 74797879,
@@ -1610,7 +1622,7 @@
       "fieldMeta": {
         "admins": {
           "severity": "HIGH",
-          "description": "Can pause, unpause, reset and flag any question, and manually resolve a flagged question with an arbitrary outcome after the safety period."
+          "description": "Can pause, unpause, reset and flag any question, and manually resolve a flagged question with either outcome or an even split after the safety period."
         },
         "ctf": {
           "description": "Outcome-token ledger that this adapter reports payouts to."
@@ -1691,7 +1703,7 @@
         "0x14741f557c65402c8746f0581f2893c2d2a971c58c16a123abf7d79e4e605566"
       ],
       "proxyType": "immutable",
-      "description": "Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger; initializing and resolving are permissionless. Admins can pause or reset any question, and can flag one and resolve it manually with an outcome of their choosing after 1h.",
+      "description": "Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger; initializing and resolving are permissionless. Admins can pause or reset any question, and can flag one and resolve it manually - either outcome or an even split - after 1h.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1720,7 +1732,7 @@
       "fieldMeta": {
         "admins": {
           "severity": "HIGH",
-          "description": "Can pause, unpause, reset and flag any question, and manually resolve a flagged question with an arbitrary outcome after the safety period."
+          "description": "Can pause, unpause, reset and flag any question, and manually resolve a flagged question with either outcome or an even split after the safety period."
         },
         "ctf": {
           "description": "Outcome-token ledger that this adapter reports payouts to."
@@ -3132,29 +3144,30 @@
         "0xa83f4c76e0b99f2f95ceeaba1cb3660b8e46f41cd413d4ce71b80a1d4ddcbd56"
       ],
       "proxyType": "immutable",
-      "description": "Immutable exchange settling EIP-712 signed limit orders that are matched off-chain by operator-role holders, who also choose the fee on each fill. The fee is not part of the signed order and is bounded only by an admin-set maximum, currently 0 bps; a maximum of zero disables the check, so no on-chain ceiling applies. Users can pause their own orders, effective after 100 blocks.",
+      "description": "Immutable exchange settling EIP-712 signed limit orders that are matched off-chain by operator-role holders, who also choose the fee on each fill. The fee is not part of the signed order and is bounded only by an admin-set maximum, currently 0 bps; a maximum of zero disables the check, so no on-chain ceiling applies. Users can pause their own orders, effective after 100 blocks, an interval the admins can change.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1774924743,
       "sinceBlock": 84902353,
       "values": {
         "$immutable": true,
+        "admin": "matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952",
         "admins": [],
         "adminsEverObserved": [
           "matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952",
           "matic:0x3b389b960e58c705c83e9333853a4fBB6d05c4A6"
         ],
-        "constructorArgs": [
-          [
-            "matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952",
-            "matic:0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
-            "matic:0x4D97DCd97eC945f40cF65F87097ACe5EA0476045",
-            "matic:0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-            "matic:0xADa100874d00e3331D00F2007a9c336a65009718",
-            "matic:0xaB45c5A4B0c941a2F231C04C3f49182e1A254052",
-            "matic:0xaacFeEa03eb1561C4e67d661e40682Bd20E3541b",
-            "matic:0x115F48DC2A731aA16251c6d6e1BEfC42f92Accc9"
-          ]
-        ],
+        "constructorArgs": {
+          "params": {
+            "admin": "matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952",
+            "collateral": "matic:0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+            "ctf": "matic:0x4D97DCd97eC945f40cF65F87097ACe5EA0476045",
+            "ctfCollateral": "matic:0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+            "outcomeTokenFactory": "matic:0xADa100874d00e3331D00F2007a9c336a65009718",
+            "proxyFactory": "matic:0xaB45c5A4B0c941a2F231C04C3f49182e1A254052",
+            "safeFactory": "matic:0xaacFeEa03eb1561C4e67d661e40682Bd20E3541b",
+            "feeReceiver": "matic:0x115F48DC2A731aA16251c6d6e1BEfC42f92Accc9"
+          }
+        },
         "eip712Domain": {
           "fields": "0x0f",
           "name": "Polymarket CTF Exchange",
@@ -5375,7 +5388,7 @@
       "fieldMeta": {
         "admins": {
           "severity": "HIGH",
-          "description": "Admins added after deployment, reconstructed from authorization events. The admin granted in the constructor emits no event and is therefore not listed here; see adminsObservedActing."
+          "description": "Admins added after deployment, reconstructed from authorization events. The admin granted in the constructor emits no event and is therefore not listed here; the live admin is modeled on the CTFExchange `admin` field and listed for both exchanges in adminsEverObserved."
         },
         "operators": { "severity": "HIGH" },
         "getMaxFeeRate": {
@@ -5395,6 +5408,10 @@
         "adminsEverObserved": {
           "severity": "HIGH",
           "description": "Every address ever observed exercising an admin power, taken from the granter recorded in each authorization event. This is how the constructor-granted admin becomes visible at all: the constructor emits no event, so such an admin never appears in the added/removed sets above. The list is historical and not a live permission set - an entry may since have been removed, so current status has to be confirmed with isAdmin()."
+        },
+        "admin": {
+          "severity": "HIGH",
+          "description": "The admin granted in the constructor, recovered from the deployment arguments because the grant emits no event. The same AdminSafe holds admin on the neg-risk exchange too (confirmed on-chain via isAdmin), but that deployment is CREATE2 and its args were not retained, so there it is hardcoded to the same AdminSafe, confirmed on-chain via isAdmin."
         }
       },
       "implementationNames": {
@@ -5431,12 +5448,13 @@
         "0xa83f4c76e0b99f2f95ceeaba1cb3660b8e46f41cd413d4ce71b80a1d4ddcbd56"
       ],
       "proxyType": "immutable",
-      "description": "Immutable exchange settling EIP-712 signed limit orders that are matched off-chain by operator-role holders, who also choose the fee on each fill. The fee is not part of the signed order and is bounded only by an admin-set maximum, currently 0 bps; a maximum of zero disables the check, so no on-chain ceiling applies. Users can pause their own orders, effective after 100 blocks.",
+      "description": "Immutable exchange settling EIP-712 signed limit orders that are matched off-chain by operator-role holders, who also choose the fee on each fill. The fee is not part of the signed order and is bounded only by an admin-set maximum, currently 0 bps; a maximum of zero disables the check, so no on-chain ceiling applies. Users can pause their own orders, effective after 100 blocks, an interval the admins can change.",
       "deployerAddress": "matic:0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1",
       "sinceTimestamp": 1775236389,
       "sinceBlock": 85058176,
       "values": {
         "$immutable": true,
+        "admin": "matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952",
         "admins": [],
         "adminsEverObserved": [
           "matic:0x3dcE0a29139A851Da1dFCa56Af8e8a6440b4D952",
@@ -7662,7 +7680,7 @@
       "fieldMeta": {
         "admins": {
           "severity": "HIGH",
-          "description": "Admins added after deployment, reconstructed from authorization events. The admin granted in the constructor emits no event and is therefore not listed here; see adminsObservedActing."
+          "description": "Admins added after deployment, reconstructed from authorization events. The admin granted in the constructor emits no event and is therefore not listed here; the live admin is modeled on the CTFExchange `admin` field and listed for both exchanges in adminsEverObserved."
         },
         "operators": { "severity": "HIGH" },
         "getMaxFeeRate": {
@@ -7682,6 +7700,10 @@
         "adminsEverObserved": {
           "severity": "HIGH",
           "description": "Every address ever observed exercising an admin power, taken from the granter recorded in each authorization event. This is how the constructor-granted admin becomes visible at all: the constructor emits no event, so such an admin never appears in the added/removed sets above. The list is historical and not a live permission set - an entry may since have been removed, so current status has to be confirmed with isAdmin()."
+        },
+        "admin": {
+          "severity": "HIGH",
+          "description": "The admin granted in the constructor. This deployment is CREATE2 with unretained constructor args and the grant emits no event, so the admin cannot be discovered; it is hardcoded to the AdminSafe, confirmed live on-chain via isAdmin()."
         }
       },
       "implementationNames": {
@@ -19218,5 +19240,5 @@
     "uma/OptimisticOracleV2": "0xdb25a0cd206ef5646439b0ddbabcb9a6834c1c3c0f395b01803b7e38944859dc"
   },
   "usedBlockNumbers": { "polygonpos": 91186243 },
-  "permissionsConfigHash": "0x9873c3f39fc80097679e2502e81006ca084fe4d91e67eefe02045df82fa2c59a"
+  "permissionsConfigHash": "0x0e63f910524972a7fc5cfdf6964bc791cc3f4fbe68fd5b192609b97033e64d27"
 }

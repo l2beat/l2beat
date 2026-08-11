@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CTFExchange",
-  "description": "Immutable exchange settling EIP-712 signed limit orders that are matched off-chain by operator-role holders, who also choose the fee on each fill. The fee is not part of the signed order and is bounded only by an admin-set maximum, currently {{ getMaxFeeRate }} bps; a maximum of zero disables the check, so no on-chain ceiling applies. Users can pause their own orders, effective after {{ userPauseBlockInterval }} blocks.",
+  "description": "Immutable exchange settling EIP-712 signed limit orders that are matched off-chain by operator-role holders, who also choose the fee on each fill. The fee is not part of the signed order and is bounded only by an admin-set maximum, currently {{ getMaxFeeRate }} bps; a maximum of zero disables the check, so no on-chain ceiling applies. Users can pause their own orders, effective after {{ userPauseBlockInterval }} blocks, an interval the admins can change.",
   "category": "core",
   "fields": {
     "admins": {
@@ -15,7 +15,7 @@
           "event": "event RemovedAdmin(address indexed member, address indexed admin)"
         }
       },
-      "description": "Admins added after deployment, reconstructed from authorization events. The admin granted in the constructor emits no event and is therefore not listed here; see adminsObservedActing.",
+      "description": "Admins added after deployment, reconstructed from authorization events. The admin granted in the constructor emits no event and is therefore not listed here; the live admin is modeled on the CTFExchange `admin` field and listed for both exchanges in adminsEverObserved.",
       "severity": "HIGH"
     },
     "operators": {

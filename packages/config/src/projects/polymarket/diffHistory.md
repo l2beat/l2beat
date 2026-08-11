@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x2311d9e486dcf881d39230429b396e4108d1a772
+Generated with discovered.json: 0xf2a7576c1990bcb72ffb89114ab3c5513d0f1370
 
-# Diff at Tue, 11 Aug 2026 08:16:13 GMT:
+# Diff at Tue, 11 Aug 2026 10:19:38 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - current timestamp: 1785484385
@@ -20,7 +20,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract PositionManager (matic:0x006F54F7f9A22e0000CC2AB60031000000ae9fEF) [polymarket/PositionManager]
-    +++ description: Upgradeable ERC1155 ledger of combination-outcome positions, mintable and burnable only by the outcome module registered for each position or a cross-authorised module. Admins register modules, which grants them mint and burn power over the ledger.
+    +++ description: Upgradeable ERC1155 ledger of combination-outcome positions, mintable and burnable only by the outcome module registered for each position or a cross-authorised module. Admins register modules, which grants those modules mint and burn power over the ledger.
 ```
 
 ```diff
@@ -116,7 +116,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract UmaCtfAdapterBinary (matic:0x65070BE91477460D8A7AeEb94ef92fe056C2f2A7) [polymarket/UmaCtfAdapter]
-    +++ description: Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger; initializing and resolving are permissionless. Admins can pause or reset any question, and can flag one and resolve it manually with an outcome of their choosing after 1h.
+    +++ description: Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger; initializing and resolving are permissionless. Admins can pause or reset any question, and can flag one and resolve it manually - either outcome or an even split - after 1h.
 ```
 
 ```diff
@@ -128,7 +128,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract UmaCtfAdapterNegRisk (matic:0x69c47De9D4D3Dad79590d61b9e05918E03775f24) [polymarket/UmaCtfAdapter]
-    +++ description: Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger; initializing and resolving are permissionless. Admins can pause or reset any question, and can flag one and resolve it manually with an outcome of their choosing after 1h.
+    +++ description: Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger; initializing and resolving are permissionless. Admins can pause or reset any question, and can flag one and resolve it manually - either outcome or an even split - after 1h.
 ```
 
 ```diff
@@ -260,7 +260,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract CTFExchange (matic:0xE111180000d2663C0091e4f400237545B87B996B) [polymarket/CTFExchange]
-    +++ description: Immutable exchange settling EIP-712 signed limit orders that are matched off-chain by operator-role holders, who also choose the fee on each fill. The fee is not part of the signed order and is bounded only by an admin-set maximum, currently 0 bps; a maximum of zero disables the check, so no on-chain ceiling applies. Users can pause their own orders, effective after 100 blocks.
+    +++ description: Immutable exchange settling EIP-712 signed limit orders that are matched off-chain by operator-role holders, who also choose the fee on each fill. The fee is not part of the signed order and is bounded only by an admin-set maximum, currently 0 bps; a maximum of zero disables the check, so no on-chain ceiling applies. Users can pause their own orders, effective after 100 blocks, an interval the admins can change.
 ```
 
 ```diff
@@ -272,7 +272,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract NegRiskCtfExchange (matic:0xe2222d279d744050d28e00520010520000310F59) [polymarket/CTFExchange]
-    +++ description: Immutable exchange settling EIP-712 signed limit orders that are matched off-chain by operator-role holders, who also choose the fee on each fill. The fee is not part of the signed order and is bounded only by an admin-set maximum, currently 0 bps; a maximum of zero disables the check, so no on-chain ceiling applies. Users can pause their own orders, effective after 100 blocks.
+    +++ description: Immutable exchange settling EIP-712 signed limit orders that are matched off-chain by operator-role holders, who also choose the fee on each fill. The fee is not part of the signed order and is bounded only by an admin-set maximum, currently 0 bps; a maximum of zero disables the check, so no on-chain ceiling applies. Users can pause their own orders, effective after 100 blocks, an interval the admins can change.
 ```
 
 ```diff

@@ -30,6 +30,10 @@ const multisigRatio = (contract: string): string => {
 
 const adminSafe = multisigRatio('AdminSafe')
 
+// The Safe that owns and can upgrade the managed oracle; its two owners are
+// the AdminSafe and the oracle operators' Safe, so both must sign.
+const oracleUpgradeSafe = multisigRatio('SafeL2')
+
 const timelockDelay = formatDelay(
   discovery.getContractValue<number>('Timelock', 'minDelay'),
 )
@@ -86,6 +90,7 @@ export const polymarket: BaseProject = {
       'detailedDescription',
       {
         adminSafe,
+        oracleUpgradeSafe,
         timelockDelay,
         adapterSafetyPeriod,
         legacyAdapterSafetyPeriod: formatDelay(

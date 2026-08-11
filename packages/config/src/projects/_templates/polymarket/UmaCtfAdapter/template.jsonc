@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "UmaCtfAdapter",
-  "description": "Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger; initializing and resolving are permissionless. Admins can pause or reset any question, and can flag one and resolve it manually with an outcome of their choosing after {{ safetyPeriodFormatted }}.",
+  "description": "Resolution adapter registering market questions with an UMA optimistic oracle and reporting settled answers to the outcome-token ledger; initializing and resolving are permissionless. Admins can pause or reset any question, and can flag one and resolve it manually - either outcome or an even split - after {{ safetyPeriodFormatted }}.",
   "ignoreRelatives": ["collateralWhitelist"],
   "fields": {
     "safetyPeriodFormatted": {
@@ -24,11 +24,11 @@
         }
       },
       "severity": "HIGH",
-      "description": "Can pause, unpause, reset and flag any question, and manually resolve a flagged question with an arbitrary outcome after the safety period.",
+      "description": "Can pause, unpause, reset and flag any question, and manually resolve a flagged question with either outcome or an even split after the safety period.",
       "permissions": [
         {
           "type": "interact",
-          "description": "pause, unpause, reset and flag questions, and resolve a flagged question manually with an outcome of their choosing after the {{ safetyPeriodFormatted }} safety period."
+          "description": "pause, unpause, reset and flag questions, and resolve a flagged question manually with either outcome or an even split after the {{ safetyPeriodFormatted }} safety period."
         }
       ]
     },
