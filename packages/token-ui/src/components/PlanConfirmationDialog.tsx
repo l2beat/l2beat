@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
+import { useInvalidateAbstractTokenQueries } from '~/hooks/useInvalidateAbstractTokenQueries'
 import { useTRPC } from '~/react-query/trpc'
 import { diff } from '~/utils/getDiff'
 import { extractAbstractTokenId } from '~/utils/getDisplayId'
@@ -34,16 +35,7 @@ export function PlanConfirmationDialog({
   const trpc = useTRPC()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-
-  function invalidateAbstractTokenQueries() {
-    queryClient.invalidateQueries(trpc.abstractTokens.getAll.queryFilter())
-    queryClient.invalidateQueries(
-      trpc.abstractTokens.getAllWithDeployedTokens.queryFilter(),
-    )
-    queryClient.invalidateQueries(trpc.abstractTokens.getById.queryFilter())
-    queryClient.invalidateQueries(trpc.abstractTokens.checks.queryFilter())
-    queryClient.invalidateQueries(trpc.search.all.queryFilter())
-  }
+  const invalidateAbstractTokenQueries = useInvalidateAbstractTokenQueries()
 
   function invalidateDeployedTokenQueries() {
     invalidateAbstractTokenQueries()
