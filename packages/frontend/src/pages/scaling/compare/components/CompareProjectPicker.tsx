@@ -19,7 +19,6 @@ import { PlusIcon } from '~/icons/Plus'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
 import { cn } from '~/utils/cn'
 import type { CompareMetric } from '../metrics/types'
-import { MAX_COMPARE_PROJECTS } from '../utils/compareChartState'
 import { useCompareSeries } from './CompareSeriesContext'
 
 interface Props {
@@ -60,7 +59,6 @@ export function CompareProjectPicker({
   const [pinnedSlugs, setPinnedSlugs] = useState<string[]>([])
 
   const selectedSlugs = selectedProjects.map((project) => project.slug)
-  const atCap = selectedSlugs.length >= MAX_COMPARE_PROJECTS
   const hasMetricData = metric.hasData ?? (() => true)
   const noDataLabel = metric.noDataLabel ?? 'No data'
 
@@ -83,7 +81,6 @@ export function CompareProjectPicker({
       onChange(selectedSlugs.filter((selected) => selected !== slug))
       return
     }
-    if (atCap) return
     onChange([...selectedSlugs, slug])
   }
 
@@ -169,9 +166,6 @@ export function CompareProjectPicker({
         <PlusIcon className="size-4" />
         Add project
       </button>
-      <span className="ml-auto whitespace-nowrap font-medium text-2xs text-secondary tabular-nums">
-        {selectedSlugs.length}/{MAX_COMPARE_PROJECTS}
-      </span>
       {isDefaultSelection && (
         <p className="w-full font-medium text-2xs text-secondary">
           Showing top projects by default. Add or remove projects to build your
@@ -196,12 +190,6 @@ export function CompareProjectPicker({
               {search !== '' ? 'Clear' : 'Close'}
             </CommandInputActionButton>
           </CommandInput>
-          {atCap && (
-            <p className="border-divider border-b px-3 py-2 text-secondary text-xs">
-              You&apos;ve selected the maximum of {MAX_COMPARE_PROJECTS}{' '}
-              projects. Remove one to add another.
-            </p>
-          )}
           <CommandList className="max-h-screen p-1.5 supports-[height:100dvh]:max-h-dvh md:h-[330px] md:max-h-[330px]">
             <CommandEmpty>No projects found.</CommandEmpty>
             {filteredProjects.map((project) => {
@@ -210,7 +198,6 @@ export function CompareProjectPicker({
                 <CommandItem
                   key={project.slug}
                   value={project.slug}
-                  disabled={atCap && !isSelected}
                   onSelect={() => toggleProject(project.slug)}
                   className="cursor-pointer gap-2 rounded-lg"
                 >

@@ -3,8 +3,10 @@ import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useTRPC } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
-import { CompareMetricLineChart } from '../../components/CompareMetricLineChart'
-import type { CompareChartPoint } from '../../utils/toIndexedChartData'
+import {
+  type CompareChartPoint,
+  CompareMetricLineChart,
+} from '../../components/CompareMetricLineChart'
 import type { CompareMetricChartProps } from '../types'
 import { getDataPostedCompareChartParams } from './getDataPostedCompareChartParams'
 
@@ -39,8 +41,6 @@ export function DataPostedCompareChart({
       data={chartData}
       isLoading={isLoading}
       syncedUntil={data?.syncedUntil}
-      scale={state.scale}
-      mode={state.mode}
       formatYAxisLabel={(value) => formatBytes(value)}
       formatTooltipValue={(value) => formatBytes(value)}
       renderTooltipTimestamp={(label) =>

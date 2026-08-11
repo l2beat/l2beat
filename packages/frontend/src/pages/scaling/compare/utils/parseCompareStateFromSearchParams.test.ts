@@ -15,15 +15,13 @@ function parse(search: string) {
 describe(parseCompareStateFromSearchParams.name, () => {
   it('parses a full state', () => {
     const result = parse(
-      'metric=activity&projects=arbitrum,base&range=30d&scale=log&unit=tps',
+      'metric=activity&projects=arbitrum,base&range=30d&unit=tps',
     )
 
     expect(result).toEqual({
       metric: 'activity',
       projects: ['arbitrum', 'base'],
       range: '30d',
-      scale: 'symlog',
-      mode: 'absolute',
       activityUnit: 'tps',
       tvsUnit: 'usd',
       tvsFilter: 'all',
@@ -40,8 +38,6 @@ describe(parseCompareStateFromSearchParams.name, () => {
       metric: 'tvs',
       projects: [],
       range: '1y',
-      scale: 'linear',
-      mode: 'absolute',
       activityUnit: 'uops',
       tvsUnit: 'usd',
       tvsFilter: 'all',
@@ -49,12 +45,6 @@ describe(parseCompareStateFromSearchParams.name, () => {
       excludeAssociatedTokens: false,
       excludeRwaRestrictedTokens: true,
     })
-  })
-
-  it('parses the indexed view mode', () => {
-    const result = parse('mode=indexed')
-
-    expect(result.mode).toEqual('indexed')
   })
 
   it('parses the data-posted metric', () => {
@@ -68,8 +58,6 @@ describe(parseCompareStateFromSearchParams.name, () => {
       metric: 'data-posted',
       projects: ['arbitrum', 'base'],
       range: '30d',
-      scale: 'symlog',
-      mode: 'absolute',
       activityUnit: 'uops',
       tvsUnit: 'usd',
       tvsFilter: 'all',
@@ -138,14 +126,14 @@ describe(parseCompareStateFromSearchParams.name, () => {
     expect(result.projects).toEqual(['arbitrum', 'base'])
   })
 
-  it('caps the selection at ten projects', () => {
+  it('does not cap the number of selected projects', () => {
     const slugs = Array.from({ length: 12 }, (_, i) => `project-${i}`)
     const result = parseCompareStateFromSearchParams({
       searchParams: new URLSearchParams(`projects=${slugs.join(',')}`),
       validSlugs: slugs,
     })
 
-    expect(result.projects).toEqual(slugs.slice(0, 10))
+    expect(result.projects).toEqual(slugs)
   })
 
   it('parses a custom range', () => {
@@ -156,15 +144,13 @@ describe(parseCompareStateFromSearchParams.name, () => {
 
   it('falls back to defaults on garbage values', () => {
     const result = parse(
-      'metric=bogus&range=yesterday&scale=cubic&unit=beans&mode=sideways&filter=everything&excludeAssociated=maybe&excludeRwa=nonsense',
+      'metric=bogus&range=yesterday&unit=beans&filter=everything&excludeAssociated=maybe&excludeRwa=nonsense',
     )
 
     expect(result).toEqual({
       metric: 'tvs',
       projects: [],
       range: '1y',
-      scale: 'linear',
-      mode: 'absolute',
       activityUnit: 'uops',
       tvsUnit: 'usd',
       tvsFilter: 'all',
@@ -185,8 +171,6 @@ describe(parseCompareStateFromSearchParams.name, () => {
       metric: 'tvs',
       projects: ['base', 'arbitrum'],
       range: '90d',
-      scale: 'symlog',
-      mode: 'absolute',
       activityUnit: 'uops',
       tvsUnit: 'usd',
       tvsFilter: 'all',
@@ -206,8 +190,6 @@ describe(parseCompareStateFromSearchParams.name, () => {
       metric: 'tvs',
       projects: [],
       range: { from: 1700000000, to: 1710000000 },
-      scale: 'linear',
-      mode: 'absolute',
       activityUnit: 'uops',
       tvsUnit: 'usd',
       tvsFilter: 'all',
@@ -227,8 +209,6 @@ describe(parseCompareStateFromSearchParams.name, () => {
       metric: 'activity',
       projects: ['optimism'],
       range: '7d',
-      scale: 'linear',
-      mode: 'absolute',
       activityUnit: 'tps',
       tvsUnit: 'usd',
       tvsFilter: 'all',
@@ -248,8 +228,6 @@ describe(parseCompareStateFromSearchParams.name, () => {
       metric: 'costs',
       projects: ['arbitrum', 'base'],
       range: '30d',
-      scale: 'linear',
-      mode: 'absolute',
       activityUnit: 'uops',
       tvsUnit: 'usd',
       tvsFilter: 'all',
@@ -269,8 +247,6 @@ describe(parseCompareStateFromSearchParams.name, () => {
       metric: 'tvs',
       projects: ['arbitrum'],
       range: '30d',
-      scale: 'linear',
-      mode: 'absolute',
       activityUnit: 'uops',
       tvsUnit: 'eth',
       tvsFilter: 'external',
@@ -290,8 +266,6 @@ describe(parseCompareStateFromSearchParams.name, () => {
       metric: 'tvs',
       projects: ['base'],
       range: '90d',
-      scale: 'linear',
-      mode: 'absolute',
       activityUnit: 'uops',
       tvsUnit: 'usd',
       tvsFilter: 'stablecoin',
@@ -311,8 +285,6 @@ describe(parseCompareStateFromSearchParams.name, () => {
       metric: 'tvs',
       projects: [],
       range: '1y',
-      scale: 'linear',
-      mode: 'absolute',
       activityUnit: 'uops',
       tvsUnit: 'usd',
       tvsFilter: 'rwaRestricted',
@@ -327,27 +299,6 @@ describe(parseCompareStateFromSearchParams.name, () => {
     const search = url.split('?')[1] ?? ''
 
     expect(url).toEqual('/scaling/compare?filter=rwaRestricted')
-    expect(parse(search)).toEqual(state)
-  })
-
-  it('round-trips the indexed mode through buildCompareUrl', () => {
-    const state: CompareChartState = {
-      metric: 'tvs',
-      projects: ['arbitrum'],
-      range: '30d',
-      scale: 'linear',
-      mode: 'indexed',
-      activityUnit: 'uops',
-      tvsUnit: 'usd',
-      tvsFilter: 'all',
-      costsUnit: 'usd',
-      excludeAssociatedTokens: false,
-      excludeRwaRestrictedTokens: true,
-    }
-
-    const url = buildCompareUrl('/scaling/compare', state)
-    const search = url.split('?')[1] ?? ''
-
     expect(parse(search)).toEqual(state)
   })
 })

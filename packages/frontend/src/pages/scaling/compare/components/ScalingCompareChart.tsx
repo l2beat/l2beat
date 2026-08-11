@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react'
-import type { ChartScale } from '~/components/chart/types'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
@@ -20,7 +19,6 @@ import {
   type CompareChartState,
   type CompareClientState,
   type CompareMetricId,
-  type CompareViewMode,
   toCompareClientState,
   toCompareUrlState,
 } from '../utils/compareChartState'
@@ -91,10 +89,6 @@ export function ScalingCompareChart({
         <metric.Chart projects={selectedProjects} state={state} />
       </CompareSeriesProvider>
       <Controls
-        mode={state.mode}
-        setMode={(mode) => setState((prev) => ({ ...prev, mode }))}
-        scale={state.scale}
-        setScale={(scale) => setState((prev) => ({ ...prev, scale }))}
         range={state.chartRange}
         setRange={(chartRange) => setState((prev) => ({ ...prev, chartRange }))}
         // Serialized on click from the live state, because the address bar
@@ -130,7 +124,7 @@ function useCompareUrlSync(
 
 /**
  * The metric switcher, driven entirely by the registry so new metrics show
- * up without page changes. Switching keeps projects, range and view mode.
+ * up without page changes. Switching keeps projects and range.
  */
 function MetricSwitcher({
   value,
@@ -166,56 +160,17 @@ function MetricSwitcher({
 }
 
 function Controls({
-  mode,
-  setMode,
-  scale,
-  setScale,
   range,
   setRange,
   getShareUrl,
 }: {
-  mode: CompareViewMode
-  setMode: (mode: CompareViewMode) => void
-  scale: ChartScale
-  setScale: (scale: ChartScale) => void
   range: ChartRange
   setRange: (range: ChartRange) => void
   getShareUrl: () => string
 }) {
-  const isClient = useIsClient()
   return (
     <ChartControlsWrapper className="mt-2">
-      <div className="flex flex-wrap gap-1">
-        {isClient ? (
-          <>
-            <RadioGroup
-              name="compareViewMode"
-              aria-label="View mode"
-              value={mode}
-              onValueChange={(value) => setMode(value as CompareViewMode)}
-            >
-              <RadioGroupItem value="absolute">ABSOLUTE</RadioGroupItem>
-              <RadioGroupItem value="indexed">INDEXED</RadioGroupItem>
-            </RadioGroup>
-            {/* Log scale of an index is meaningless, so the toggle is hidden
-                in indexed mode. */}
-            {mode === 'absolute' && (
-              <RadioGroup
-                name="compareChartScale"
-                aria-label="Chart scale"
-                value={scale}
-                onValueChange={(value) => setScale(value as ChartScale)}
-              >
-                <RadioGroupItem value="symlog">LOG</RadioGroupItem>
-                <RadioGroupItem value="linear">LIN</RadioGroupItem>
-              </RadioGroup>
-            )}
-          </>
-        ) : (
-          <Skeleton className="h-8 w-[91px] md:w-[95px]" />
-        )}
-        <CopyLinkButton getShareUrl={getShareUrl} />
-      </div>
+      <CopyLinkButton getShareUrl={getShareUrl} />
       <ChartRangeControls
         name="compareChart"
         value={range}

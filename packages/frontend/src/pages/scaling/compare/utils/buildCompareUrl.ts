@@ -6,10 +6,8 @@ import {
   DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS,
   DEFAULT_COMPARE_METRIC,
   DEFAULT_COMPARE_RANGE,
-  DEFAULT_COMPARE_SCALE,
   DEFAULT_COMPARE_TVS_FILTER,
   DEFAULT_COMPARE_TVS_UNIT,
-  DEFAULT_COMPARE_VIEW_MODE,
 } from './compareChartState'
 
 /**
@@ -31,13 +29,6 @@ export function buildCompareUrl(
     params.set('range', `${state.range.from}-${state.range.to}`)
   } else if (state.range !== DEFAULT_COMPARE_RANGE) {
     params.set('range', state.range)
-  }
-  if (state.mode !== DEFAULT_COMPARE_VIEW_MODE) {
-    params.set('mode', state.mode)
-  }
-  // The scale toggle is hidden in indexed mode, so its value is not encoded.
-  if (state.mode === 'absolute' && state.scale !== DEFAULT_COMPARE_SCALE) {
-    params.set('scale', 'log')
   }
   // Per-metric controls are only encoded for the metric they belong to.
   if (
