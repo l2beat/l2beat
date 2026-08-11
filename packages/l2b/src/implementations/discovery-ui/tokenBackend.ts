@@ -25,7 +25,7 @@ const DeployedToken = v.object({
 const AbstractToken = v.object({
   symbol: v.string(),
   iconUrl: v.union([v.string(), v.null()]),
-  coingeckoId: v.string(),
+  coingeckoId: v.union([v.string(), v.null()]),
   deployedTokens: v.array(DeployedToken),
 })
 
@@ -56,17 +56,25 @@ export async function fetchTokens(): Promise<BackendToken[]> {
     `Token backend responded with ${response.status}`,
   )
 
-  const [tokens] = TokensResponse.parse(await response.json())
-  return tokens.result.data.abstractTokens.flatMap((abstractToken) =>
-    abstractToken.deployedTokens.map(
+  return parseTokens(await response.json())
+}
+
+export function parseTokens(body: unknown): BackendToken[] {
+  const [tokens] = TokensResponse.parse(body)
+  return tokens.result.data.abstractTokens.flatMap((abstractToken) => {
+    const coingeckoId = abstractToken.coingeckoId
+    if (coingeckoId === null) {
+      return []
+    }
+    return abstractToken.deployedTokens.map(
       (deployed): BackendToken => ({
         chain: deployed.chain,
         address: deployed.address,
         symbol: deployed.symbol,
         decimals: deployed.decimals,
-        coingeckoId: abstractToken.coingeckoId,
+        coingeckoId,
         iconUrl: abstractToken.iconUrl ?? undefined,
       }),
-    ),
-  )
+    )
+  })
 }
