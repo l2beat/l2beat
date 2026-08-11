@@ -4,8 +4,10 @@ import { useMemo } from 'react'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/countPerSecond'
 import { useTRPC } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
-import { CompareMetricLineChart } from '../../components/CompareMetricLineChart'
-import type { CompareChartPoint } from '../../utils/toIndexedChartData'
+import {
+  type CompareChartPoint,
+  CompareMetricLineChart,
+} from '../../components/CompareMetricLineChart'
 import type { CompareMetricChartProps } from '../types'
 import { getActivityCompareChartParams } from './getActivityCompareChartParams'
 
@@ -42,8 +44,6 @@ export function ActivityCompareChart({
       data={chartData}
       isLoading={isLoading}
       syncedUntil={data?.syncedUntil}
-      scale={state.scale}
-      mode={state.mode}
       formatYAxisLabel={(value) => formatActivityCount(value)}
       formatTooltipValue={(value) =>
         `${formatActivityCount(value)} ${unit.toUpperCase()}`

@@ -3,9 +3,11 @@ import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
-import { CompareMetricLineChart } from '../../components/CompareMetricLineChart'
+import {
+  type CompareChartPoint,
+  CompareMetricLineChart,
+} from '../../components/CompareMetricLineChart'
 import type { CompareTvsFilter } from '../../utils/compareChartState'
-import type { CompareChartPoint } from '../../utils/toIndexedChartData'
 import type { CompareMetricChartProps } from '../types'
 import { getTvsCompareChartParams } from './getTvsCompareChartParams'
 
@@ -56,8 +58,6 @@ export function TvsCompareChart({ projects, state }: CompareMetricChartProps) {
       data={chartData}
       isLoading={isLoading}
       syncedUntil={data?.syncedUntil}
-      scale={state.scale}
-      mode={state.mode}
       formatYAxisLabel={(value) => formatCurrency(value, unit)}
       formatTooltipValue={(value) => formatCurrency(value, unit)}
       renderTooltipTimestamp={(label) =>
