@@ -110,6 +110,13 @@ export function TvlMapPanel() {
   const holdings = toHoldings(holders, results, chainColors)
 
   if (swept === holders.length && holdings.length === 0) {
+    if (failed > 0) {
+      return (
+        <ActionNeededState
+          message={`Failed to value ${failed} of ${holders.length} addresses`}
+        />
+      )
+    }
     return <ActionNeededState message="No value held by this project" />
   }
 
