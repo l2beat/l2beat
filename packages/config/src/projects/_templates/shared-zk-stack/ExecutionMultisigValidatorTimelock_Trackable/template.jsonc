@@ -4,6 +4,14 @@
   "description": "A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.",
   "ignoreRelatives": ["accessControl"],
   "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the members and threshold of the Validator Multisig and set the delay between batch commitment and execution."
+        }
+      ]
+    },
     "executionDelay_fmt": {
       "handler": { "type": "call", "method": "executionDelay", "args": [] },
       "edit": ["format", "FormatSeconds"]
@@ -63,7 +71,67 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "submit batches on L1 if approved by enough Validator Multisig members."
+          "description": "submit batches on L1 through this contract (no Validator Multisig approvals required)."
+        }
+      ]
+    },
+    "precommitters": {
+      "handler": {
+        "type": "crossChainAccessControl",
+        "roleNames": {
+          "0x3353dfbbf9a3ed2a5be49cd3bd3a51ee03c3751d409cccac7723c4907332afee": "PRECOMMITTER_ROLE"
+        },
+        "pickRoleMembers": "PRECOMMITTER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit batch precommitments on L1 through this contract."
+        }
+      ]
+    },
+    "provers": {
+      "handler": {
+        "type": "crossChainAccessControl",
+        "roleNames": {
+          "0x60044782a422109ac08a415e44260ad5d3bad63d96ebe1fac0363399642ee3f2": "PROVER_ROLE"
+        },
+        "pickRoleMembers": "PROVER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit batch proofs on L1 through this contract."
+        }
+      ]
+    },
+    "reverters": {
+      "handler": {
+        "type": "crossChainAccessControl",
+        "roleNames": {
+          "0x30085792330f3f9ee2ee216aea0321c55a0909b87c51ee9ab49d05ca4a4c2ecb": "REVERTER_ROLE"
+        },
+        "pickRoleMembers": "REVERTER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "revert unexecuted batches through this contract."
+        }
+      ]
+    },
+    "upgraders": {
+      "handler": {
+        "type": "crossChainAccessControl",
+        "roleNames": {
+          "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3": "UPGRADER_ROLE"
+        },
+        "pickRoleMembers": "UPGRADER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "execute predefined protocol upgrades (diamond cuts registered in the ChainTypeManager) for the chain through this contract."
         }
       ]
     },

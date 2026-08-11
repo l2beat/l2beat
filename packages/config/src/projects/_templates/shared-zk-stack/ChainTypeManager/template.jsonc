@@ -29,7 +29,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "revert batches for any connected chain (ZK cluster Admin role)."
+          "description": "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role)."
         }
       ]
     }
