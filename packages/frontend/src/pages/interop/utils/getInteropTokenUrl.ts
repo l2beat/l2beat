@@ -1,5 +1,4 @@
 import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/scaling/interop/consts'
-import { getInteropTokenPath } from '~/server/features/scaling/interop/token/getInteropTokenPath'
 
 export function getInteropTokenUrl(token: {
   id: string
@@ -10,5 +9,5 @@ export function getInteropTokenUrl(token: {
     return undefined
   }
 
-  return getInteropTokenPath(token)
+  return `/interop/tokens/${token.id}`
 }

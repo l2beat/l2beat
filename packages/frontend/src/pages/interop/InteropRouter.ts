@@ -150,11 +150,9 @@ export function createInteropRouter(
   )
 
   router.get(
-    // The token is resolved by :slug (the abstract token id) alone; the
-    // optional trailing segment is a human-readable symbol and is ignored.
-    '/interop/tokens/:slug{/:symbol}',
+    '/interop/tokens/:slug',
     validateRoute({
-      params: v.object({ slug: v.string(), symbol: v.string().optional() }),
+      params: v.object({ slug: v.string() }),
       query: InteropQuery,
     }),
     async (req, res) => {
