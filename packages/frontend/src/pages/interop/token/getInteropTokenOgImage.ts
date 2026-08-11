@@ -43,9 +43,7 @@ async function renderInteropTokenOgImage(
       backgroundSrc: assets.backgroundSrc,
       iconSrc,
       symbol: token.symbol,
-      caption: token.issuer
-        ? `${token.issuer.toUpperCase()} • TOKEN PAGE`
-        : 'TOKEN PAGE',
+      caption: token.issuer?.toUpperCase(),
       size: OG_IMAGE_SIZE,
     }),
     {
