@@ -6,6 +6,7 @@ import {
 import { createColumnHelper } from '@tanstack/react-table'
 import { CopyButton } from '~/components/CopyButton'
 import { CustomLink } from '~/components/link/CustomLink'
+import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { IndexCell } from '~/components/table/cells/IndexCell'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
@@ -15,6 +16,8 @@ const UNSUPPORTED_CHAIN_TOOLTIP =
   "The information is not available as this deployment is on a chain we don't fully support."
 const NO_TRANSFER_TIME_TOOLTIP =
   'There is no transfer time data for this deployment from the past 24 hours.'
+const NO_MINTERS_TOOLTIP =
+  'No bridge has been observed minting this deployment — it is likely the locked or natively issued side.'
 
 export type DeploymentRow = InteropTokenOnchainDeploymentsRow & BasicTableRow
 const columnHelper = createColumnHelper<DeploymentRow>()
@@ -80,6 +83,28 @@ export const interopTokenOnchainDeploymentsColumns = [
         {ctx.row.original.symbol}
       </span>
     ),
+  }),
+  columnHelper.display({
+    id: 'minters',
+    header: 'Minters',
+    cell: (ctx) => {
+      const { minters } = ctx.row.original
+      if (minters.length === 0) {
+        return <InteropNoDataBadge tooltip={NO_MINTERS_TOOLTIP} />
+      }
+      return (
+        <ProjectsUsedIn
+          usedIn={minters}
+          dialogTitle="Minting bridges"
+          dialogDescription="Search for a bridge minting this deployment"
+          dialogEmptyText="No bridges found."
+        />
+      )
+    },
+    meta: {
+      tooltip:
+        'The bridging projects observed minting this deployment. A deployment with no minter is the locked or natively issued side.',
+    },
   }),
   columnHelper.accessor('volume', {
     header: 'Last 24h\nVolume',

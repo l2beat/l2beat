@@ -48,6 +48,19 @@ export type TokenRelationRecord = {
 
 export type TokenRelationRoute = Omit<TokenRelationRecord, 'transfer'>
 
+/**
+ * One (deployed token, plugin) minting observation: the plugin was seen minting
+ * the token at `chain`/`address`. `bridgeType` is carried along because a
+ * plugin name alone does not identify the bridging project — interop project
+ * configs key their plugin list on the pair.
+ */
+export type MintingPluginRow = {
+  chain: string
+  address: string
+  plugin: string
+  bridgeType: InteropBridgeType
+}
+
 // The identity and role columns come back re-derived, so their literal types
 // widen; anything else the caller passed in (e.g. `transfer`) is preserved.
 type NormalizedTokenRelation<T> = Omit<T, keyof TokenRelationRoute> &
@@ -141,6 +154,26 @@ function toRow(record: TokenRelationRecord): Insertable<TokenRelation> {
     tokenAAddress: record.tokenAAddress.toLowerCase(),
     tokenBAddress: record.tokenBAddress.toLowerCase(),
   }
+}
+
+function endpointKey(chain: string, address: string): string {
+  return `${chain}|${address}`
+}
+
+/**
+ * The JS twin of `mintedAtEndpoint`: is the token in the given slot the minted
+ * one? Kept next to it so the two never drift.
+ */
+function isMintedAt(
+  row: { bridgeType: string; lockedToken: string | null },
+  slot: 'A' | 'B',
+): boolean {
+  if (row.bridgeType === ('burnAndMint' satisfies InteropBridgeType))
+    return true
+  return (
+    row.bridgeType === ('lockAndMint' satisfies InteropBridgeType) &&
+    row.lockedToken === (slot === 'A' ? 'B' : 'A')
+  )
 }
 
 // Keeps each query's composite-key tuple list small enough to avoid
@@ -327,6 +360,85 @@ export class TokenRelationRepository extends BaseRepository {
       .execute()
 
     return rows.map((row) => row.plugin)
+  }
+
+  /**
+   * `getMintingPluginsFor` for many tokens at once, so a page listing every
+   * deployment of an abstract token does not issue one query per deployment.
+   * The minted-side rule is the same one, reused verbatim.
+   */
+  async getMintingPluginsForMany(
+    tokens: DeployedTokenPrimaryKey[],
+  ): Promise<MintingPluginRow[]> {
+    const normalized = tokens.map((token) => ({
+      chain: token.chain,
+      address: token.address.toLowerCase(),
+    }))
+    const requested = new Set(
+      normalized.map((token) => endpointKey(token.chain, token.address)),
+    )
+
+    const result: MintingPluginRow[] = []
+    const seen = new Set<string>()
+
+    await this.batch(normalized, BATCH_SIZE, async (batch) => {
+      const rows = await this.db
+        .selectFrom('TokenRelation')
+        .select([
+          'tokenAChain',
+          'tokenAAddress',
+          'tokenBChain',
+          'tokenBAddress',
+          'plugin',
+          'bridgeType',
+          'lockedToken',
+        ])
+        .distinct()
+        .where((eb) =>
+          eb.or(
+            batch.flatMap((token) => [
+              this.mintedAtEndpoint(eb, token, 'A'),
+              this.mintedAtEndpoint(eb, token, 'B'),
+            ]),
+          ),
+        )
+        .orderBy('plugin')
+        .execute()
+
+      // A row matched because *some* requested token is minted on it; the other
+      // endpoint may be a requested token too and merely locked there, so each
+      // endpoint is re-checked here rather than assumed minted.
+      for (const row of rows) {
+        const endpoints = [
+          {
+            slot: 'A' as const,
+            chain: row.tokenAChain,
+            address: row.tokenAAddress,
+          },
+          {
+            slot: 'B' as const,
+            chain: row.tokenBChain,
+            address: row.tokenBAddress,
+          },
+        ]
+        for (const endpoint of endpoints) {
+          const key = endpointKey(endpoint.chain, endpoint.address)
+          if (!requested.has(key)) continue
+          if (!isMintedAt(row, endpoint.slot)) continue
+          const dedupeKey = `${key}|${row.plugin}|${row.bridgeType}`
+          if (seen.has(dedupeKey)) continue
+          seen.add(dedupeKey)
+          result.push({
+            chain: endpoint.chain,
+            address: endpoint.address,
+            plugin: row.plugin,
+            bridgeType: row.bridgeType as InteropBridgeType,
+          })
+        }
+      }
+    })
+
+    return result
   }
 
   // The token occupies the given endpoint slot and is minted there.

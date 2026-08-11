@@ -1,4 +1,5 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import { ProjectSection } from '../../ProjectSection'
@@ -16,6 +17,8 @@ export interface InteropTokenOnchainDeploymentsRow {
   address: string
   explorerUrl: string | undefined
   symbol: string
+  /** Bridging projects observed minting this deployment. */
+  minters: UsedInProjectWithIcon[]
   isSupported: boolean
   volume: number | null
   transferCount: number | null

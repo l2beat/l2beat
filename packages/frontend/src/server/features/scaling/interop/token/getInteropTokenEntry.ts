@@ -1,8 +1,13 @@
 import type { Project } from '@l2beat/config'
+import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { InteropTokenOnchainDeploymentsRow } from '~/components/projects/sections/interop/onchain-deployments/InteropTokenOnchainDeploymentsSection'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { manifest } from '~/utils/Manifest'
+import {
+  createMintingBridgeResolver,
+  interopDisplayName,
+} from '../utils/createMintingBridgeResolver'
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
 
 export interface InteropTokenEntry {
@@ -14,6 +19,7 @@ export function getInteropTokenEntry(
   tokenId: string,
   interopChains: InteropChainWithIcon[],
   projectsWithChains: Project<'chainConfig'>[],
+  interopProjects: Project<'interopConfig'>[],
   deployments: InteropTokenOnchainDeployment[],
 ): InteropTokenEntry {
   const sections: ProjectDetailsSection[] = [
@@ -41,13 +47,18 @@ export function getInteropTokenEntry(
       interopChains,
       projectsWithChains,
     )
+    const resolveMintingBridges = createMintingBridgeResolver(interopProjects)
     sections.push({
       type: 'InteropTokenOnchainDeploymentsSection',
       props: {
         id: 'onchain-deployments',
         title: 'Onchain deployments',
         deployments: deployments.map((deployment) =>
-          toDeploymentRow(deployment, chainInfoMap),
+          toDeploymentRow(
+            deployment,
+            chainInfoMap,
+            toMinters(deployment, tokenId, resolveMintingBridges),
+          ),
         ),
       },
     })
@@ -66,9 +77,42 @@ export function getInteropTokenEntry(
   return { sections, deploymentsCount: deployments.length }
 }
 
+/**
+ * The bridging projects behind the plugins observed minting this deployment.
+ * Several plugins can belong to the same project (a canonical bridge exposes
+ * one per gateway), so the projects are deduplicated.
+ */
+function toMinters(
+  deployment: InteropTokenOnchainDeployment,
+  tokenId: string,
+  resolveMintingBridges: ReturnType<typeof createMintingBridgeResolver>,
+): UsedInProjectWithIcon[] {
+  const byId = new Map<string, UsedInProjectWithIcon>()
+  for (const { plugin, bridgeType } of deployment.mintingPlugins) {
+    const projects = resolveMintingBridges({
+      plugin,
+      bridgeType,
+      chain: deployment.chain,
+      abstractTokenId: tokenId,
+    })
+    for (const project of projects) {
+      if (byId.has(project.id)) continue
+      byId.set(project.id, {
+        id: project.id,
+        name: interopDisplayName(project),
+        slug: project.slug,
+        icon: manifest.getUrl(`/icons/${project.slug}.png`),
+        url: `/interop/protocols/${project.slug}`,
+      })
+    }
+  }
+  return [...byId.values()]
+}
+
 function toDeploymentRow(
   deployment: InteropTokenOnchainDeployment,
   chainInfoMap: ChainInfoMap,
+  minters: UsedInProjectWithIcon[],
 ): InteropTokenOnchainDeploymentsRow {
   const chain = chainInfoMap.get(deployment.chain)
   return {
@@ -82,6 +126,7 @@ function toDeploymentRow(
         ? `${chain.explorerUrl}/address/${deployment.address}`
         : undefined,
     symbol: deployment.symbol,
+    minters,
     isSupported: deployment.isSupported,
     volume: deployment.volume,
     transferCount: deployment.transferCount,
