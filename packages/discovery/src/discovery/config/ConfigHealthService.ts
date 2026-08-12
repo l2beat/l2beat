@@ -1,5 +1,9 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { DiscoveryOutput, EntryParameters } from '../output/types'
+import type {
+  ContractValue,
+  DiscoveryOutput,
+  EntryParameters,
+} from '../output/types'
 import { get$Implementations } from '../utils/extractors'
 import type { ConfigRegistry } from './ConfigRegistry'
 import type { StructureContract } from './StructureConfig'
@@ -40,12 +44,16 @@ export class ConfigHealthService {
     const hints: HealthHint[] = []
 
     for (const entry of discovery.entries) {
-      const possibleValues = this.getPossibleValuesForEntry(entry, discovery)
       const override = config.structure.overrides?.[entry.address]
 
       const configuredWatchMode = entry?.ignoreInWatchMode ?? []
       const configuredMethods = override?.ignoreMethods ?? []
       const configuredRelatives = override?.ignoreRelatives ?? []
+      const possibleValues = this.getPossibleValuesForEntry(
+        entry,
+        discovery,
+        configuredWatchMode,
+      )
 
       const excessWatchMode = this.filterOverspecified(
         configuredWatchMode,
@@ -88,21 +96,21 @@ export class ConfigHealthService {
   ): HealthHint[] {
     const hints: HealthHint[] = []
     const allPossibleValues = new Set<string>()
+    const configuredWatchMode = templateConfig.ignoreInWatchMode ?? []
+    const configuredMethods = templateConfig.ignoreMethods ?? []
+    const configuredRelatives = templateConfig.ignoreRelatives ?? []
 
     for (const discovery of discoveries) {
       const possibleValuesForTemplate = this.getPossibleValuesForTemplate(
         discovery,
         templateId,
+        configuredWatchMode,
       )
 
       for (const value of possibleValuesForTemplate) {
         allPossibleValues.add(value)
       }
     }
-
-    const configuredWatchMode = templateConfig.ignoreInWatchMode ?? []
-    const configuredMethods = templateConfig.ignoreMethods ?? []
-    const configuredRelatives = templateConfig.ignoreRelatives ?? []
 
     const excessWatchMode = this.filterOverspecified(
       configuredWatchMode,
@@ -137,6 +145,7 @@ export class ConfigHealthService {
   private getPossibleValuesForEntry(
     entry: EntryParameters,
     discovery: DiscoveryOutput,
+    configuredWatchMode: string[],
   ): Set<string> {
     const implementations = get$Implementations(entry.values)
     const abis = implementations
@@ -144,7 +153,10 @@ export class ConfigHealthService {
       .concat(discovery.abis[entry.address] ?? [])
 
     const functionNamesFromAbi = this.extractFunctionNamesFromAbi(abis.flat())
-    const maybeCustomValues = Object.keys(entry.values ?? {})
+    const maybeCustomValues = getPossibleValuePaths(
+      entry.values,
+      configuredWatchMode,
+    )
 
     return new Set([...functionNamesFromAbi, ...maybeCustomValues])
   }
@@ -152,6 +164,7 @@ export class ConfigHealthService {
   private getPossibleValuesForTemplate(
     discovery: DiscoveryOutput,
     templateId: string,
+    configuredWatchMode: string[],
   ): Set<string> {
     const possibleValues = new Set<string>()
 
@@ -168,7 +181,10 @@ export class ConfigHealthService {
           possibleValues.add(functionName)
         }
 
-        for (const value of Object.keys(entry.values ?? {})) {
+        for (const value of getPossibleValuePaths(
+          entry.values,
+          configuredWatchMode,
+        )) {
           possibleValues.add(value)
         }
       }
@@ -189,6 +205,43 @@ export class ConfigHealthService {
   ): string[] {
     return methods.filter((method) => !possibleValues.has(method))
   }
+}
+
+function getPossibleValuePaths(
+  values: Record<string, ContractValue | undefined> | undefined,
+  configuredWatchMode: string[],
+): string[] {
+  const paths = Object.keys(values ?? {})
+
+  for (const path of configuredWatchMode) {
+    if (hasValuePath(values, path)) {
+      paths.push(path)
+    }
+  }
+
+  return paths
+}
+
+function hasValuePath(
+  values: Record<string, ContractValue | undefined> | undefined,
+  path: string,
+): boolean {
+  let current: ContractValue | undefined = values
+
+  for (const key of path.split('.')) {
+    if (
+      current === undefined ||
+      current === null ||
+      typeof current !== 'object' ||
+      !Object.hasOwn(current, key)
+    ) {
+      return false
+    }
+
+    current = (current as Record<string, ContractValue | undefined>)[key]
+  }
+
+  return true
 }
 
 function anyNonEmpty<T>(...arrays: T[][]): boolean {
