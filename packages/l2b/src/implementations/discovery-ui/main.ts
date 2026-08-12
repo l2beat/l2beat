@@ -66,6 +66,10 @@ const projectAddressParamsSchema = z.object({
   address: ethereumAddressSchema,
 })
 
+const addressParamsSchema = z.object({
+  address: ethereumAddressSchema,
+})
+
 const projectSearchTermParamsSchema = z.object({
   project: safeStringSchema,
   searchTerm: z.string(),
@@ -81,10 +85,6 @@ const matchFlatQuerySchema = z.object({
   project: safeStringSchema,
   address: ethereumAddressSchema,
   against: z.enum(['templates', 'projects']),
-})
-
-const findMintersSchema = z.object({
-  address: ethereumAddressSchema,
 })
 
 const nonNegativeIntFromString = z
@@ -172,8 +172,8 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.json(response)
   })
 
-  app.get('/api/projects/:project/tvl/:address', async (req, res) => {
-    const paramsValidation = projectAddressParamsSchema.safeParse(req.params)
+  app.get('/api/projects/tvl/:address', async (req, res) => {
+    const paramsValidation = addressParamsSchema.safeParse(req.params)
     if (!paramsValidation.success) {
       res.status(400).json({ errors: paramsValidation.message })
       return
@@ -400,7 +400,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     })
 
     app.get('/api/terminal/find-minters', (req, res) => {
-      const queryValidation = findMintersSchema.safeParse(req.query)
+      const queryValidation = addressParamsSchema.safeParse(req.query)
       if (!queryValidation.success) {
         res.status(400).json({ errors: queryValidation.message })
         return

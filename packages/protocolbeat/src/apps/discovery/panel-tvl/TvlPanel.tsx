@@ -21,7 +21,7 @@ export function TvlPanel() {
 
   const tvlResponse = useQuery({
     queryKey: ['projects', project, 'tvl', selectedAddress],
-    queryFn: () => getTvl(project, selectedAddress as string),
+    queryFn: () => getTvl(selectedAddress as string),
     enabled: selectedAddress !== undefined,
   })
 

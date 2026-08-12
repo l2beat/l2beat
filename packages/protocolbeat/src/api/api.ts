@@ -95,7 +95,6 @@ export async function getPreview(project: string): Promise<ApiPreviewResponse> {
 // `top` bounds the sweep to that many tokens by market cap, so valuing many
 // addresses at once stays affordable.
 export async function getTvl(
-  project: string,
   address: string,
   top?: number,
 ): Promise<ApiTvlResponse> {
@@ -104,9 +103,7 @@ export async function getTvl(
     params.set('top', String(top))
   }
   const qs = params.toString()
-  const res = await fetch(
-    `/api/projects/${project}/tvl/${address}${qs ? `?${qs}` : ''}`,
-  )
+  const res = await fetch(`/api/projects/tvl/${address}${qs ? `?${qs}` : ''}`)
   if (!res.ok) {
     throw new Error(res.statusText)
   }
