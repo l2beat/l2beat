@@ -8,7 +8,7 @@ Orders are signed offchain and settled onchain by approved operators. The contra
 
 Trading uses {{collateralSymbol}}, an upgradeable token backed one-for-one by native USDC or USDC.e held in an upgradeable vault. Anyone can convert between {{collateralSymbol}} and a supported backing asset while that direction is unpaused. Admins can pause either conversion per asset immediately; upgrades to the token or vault must wait {{timelockDelay}} in the Timelock.
 
-Polymarket maintains two separate position systems. One uses the Conditional Token Framework (CTF), whose share ledger and exchange code cannot be upgraded. The other uses an upgradeable PositionManager and supports binary, neg-risk and combination positions. Shares from one system are not interchangeable with shares for the same question in the other.
+Polymarket uses two connected position systems. Many binary and neg-risk markets are created first in the Conditional Token Framework (CTF), whose share ledger and exchange code cannot be upgraded. Polymarket registers many of the same markets in an upgradeable PositionManager, where they use separate share IDs. Holders can surrender registered CTF shares for the corresponding PositionManager shares, and combination positions are built from PositionManager shares.
 
 Ordinary splitting, merging and redemption preserve the one-for-one backing. In the upgradeable system, however, authorised actors can create outcome shares outside the ordinary split flow, and its outcome logic can mint {{collateralSymbol}} when positions are merged or redeemed. A malicious authorised actor or upgrade could therefore create claims against the vault without a matching deposit.
 
@@ -30,7 +30,7 @@ An answer normally has {{oracleLiveness}} to be challenged, and a custom window 
 
 In this integration, the first dispute also restarts the market's resolution. UMA's first vote settles the original bond contest, but the restarted answer must complete its own challenge process before it can decide the market. If that answer is disputed too, it also goes to UMA voting.
 
-Polymarket admins retain direct resolution powers. For the main binary path, they can pause or restart a question and, after {{adapterSafetyPeriod}}, choose YES, NO or an even split. A separate binary path permits any nonzero split after {{legacyAdapterSafetyPeriod}}. For CTF neg-risk questions, admins can block the oracle path and force either outcome {{negRiskOverrideTiming}}. Markets in the upgradeable position system instead rely on permissioned reporters, which admins can replace, pause or block per market.
+Polymarket admins retain direct resolution powers. For the main binary path, they can pause or restart a question and, after {{adapterSafetyPeriod}}, choose YES, NO or an even split. A separate binary path permits any nonzero split after {{legacyAdapterSafetyPeriod}}. For CTF neg-risk questions, admins can block the oracle path and force either outcome {{negRiskOverrideTiming}}. When a CTF market is registered in PositionManager, anyone can copy its settled CTF result into the corresponding PositionManager market unless an admin has paused it. Other PositionManager markets rely on permissioned reporters, which admins can replace, pause or block per market.
 
 ### Hosted wallets
 
