@@ -23,6 +23,7 @@ import { createPublicationsRouter } from './publications/PublicationsRouter'
 import { createScalingRouter } from './scaling/ScalingRouter'
 import { createStagesRouter } from './stages/StagesRouter'
 import { createTermsOfServiceRouter } from './terms-of-service/TermsOfServiceRouter'
+import { createTokensRouter } from './tokens/TokensRouter'
 import { createZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
 
 const cache = new FrontendInMemoryCache('createServerPageRouter')
@@ -58,6 +59,7 @@ export function createServerPageRouter(
     createScalingRouter,
     createInteropRouter,
     createDataAvailabilityRouter,
+    createTokensRouter,
     createZkCatalogRouter,
     createEcosystemsRouter,
     createGovernanceRouter,

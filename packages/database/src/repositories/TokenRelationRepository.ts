@@ -330,6 +330,87 @@ export class TokenRelationRepository extends BaseRepository {
   }
 
   /**
+   * Relations whose *both* endpoints are in the given set — the relations
+   * internal to a group of tokens, e.g. every deployment of one abstract
+   * token. Relations reaching outside the set are left out: they say
+   * something about a token the caller did not ask about.
+   *
+   * Returns routes rather than full records: the `transfer` evidence is large
+   * and this is a whole-set query.
+   */
+  async getRoutesBetween(
+    tokens: DeployedTokenPrimaryKey[],
+  ): Promise<TokenRelationRoute[]> {
+    const normalized = tokens.map((token) => ({
+      chain: token.chain,
+      address: token.address.toLowerCase(),
+    }))
+    const inSet = new Set(
+      normalized.map((token) => endpointKey(token.chain, token.address)),
+    )
+
+    const result: TokenRelationRoute[] = []
+    const seen = new Set<string>()
+
+    await this.batch(normalized, BATCH_SIZE, async (batch) => {
+      const rows = await this.db
+        .selectFrom('TokenRelation')
+        .select([
+          'tokenAChain',
+          'tokenAAddress',
+          'tokenBChain',
+          'tokenBAddress',
+          'plugin',
+          'bridgeType',
+          'lockedToken',
+        ])
+        .distinct()
+        .where((eb) =>
+          eb.or(
+            batch.flatMap((token) => [
+              eb.and([
+                eb('tokenAChain', '=', token.chain),
+                eb('tokenAAddress', '=', token.address),
+              ]),
+              eb.and([
+                eb('tokenBChain', '=', token.chain),
+                eb('tokenBAddress', '=', token.address),
+              ]),
+            ]),
+          ),
+        )
+        .execute()
+
+      // The query matches a row when *either* endpoint is in the batch; both
+      // endpoints being in the full set is the actual condition, and a row can
+      // also come back from two different batches.
+      for (const row of rows) {
+        if (!inSet.has(endpointKey(row.tokenAChain, row.tokenAAddress)))
+          continue
+        if (!inSet.has(endpointKey(row.tokenBChain, row.tokenBAddress)))
+          continue
+        const key = [
+          row.tokenAChain,
+          row.tokenAAddress,
+          row.tokenBChain,
+          row.tokenBAddress,
+          row.plugin,
+          row.bridgeType,
+        ].join('|')
+        if (seen.has(key)) continue
+        seen.add(key)
+        result.push({
+          ...row,
+          bridgeType: row.bridgeType as InteropBridgeType,
+          lockedToken: row.lockedToken as TokenRelationLockedToken,
+        })
+      }
+    })
+
+    return result
+  }
+
+  /**
    * Distinct names of the plugins observed minting this token — the plugins
    * of every relation in which this token is minted:
    *

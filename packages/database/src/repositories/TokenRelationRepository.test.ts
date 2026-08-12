@@ -12,6 +12,7 @@ import {
   type TokenRelationLockedToken,
   type TokenRelationRecord,
   TokenRelationRepository,
+  type TokenRelationRoute,
 } from './TokenRelationRepository'
 
 describeTokenDatabase(TokenRelationRepository.name, (db) => {
@@ -448,6 +449,101 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
     })
   })
 
+  describe(TokenRelationRepository.prototype.getRoutesBetween.name, () => {
+    const foreignToken: DeployedTokenPrimaryKey = {
+      chain: 'ethereum',
+      address: '0x' + '9'.repeat(40),
+    }
+
+    it('returns only relations with both endpoints in the set', async () => {
+      const inside = tokenRelation({
+        endpoints: [ethereumToken, arbitrumToken],
+        plugin: 'superbridge',
+        bridgeType: 'burnAndMint',
+      })
+      const alsoInside = tokenRelation({
+        endpoints: [arbitrumToken, optimismToken],
+        plugin: 'canonicalbridge',
+        bridgeType: 'lockAndMint',
+        lockedToken: 'A',
+      })
+      const halfOutside = tokenRelation({
+        endpoints: [arbitrumToken, foreignToken],
+        plugin: 'otherbridge',
+        bridgeType: 'burnAndMint',
+      })
+      for (const relation of [inside, alsoInside, halfOutside]) {
+        await repository.insert(relation)
+      }
+
+      const routes = await repository.getRoutesBetween([
+        ethereumToken,
+        arbitrumToken,
+        optimismToken,
+      ])
+
+      expect(routes).toEqualUnsorted([
+        withoutTransfer(inside),
+        withoutTransfer(alsoInside),
+      ])
+    })
+
+    it('does not return the transfer evidence', async () => {
+      await repository.insert(
+        tokenRelation({
+          endpoints: [ethereumToken, arbitrumToken],
+          plugin: 'superbridge',
+          bridgeType: 'burnAndMint',
+        }),
+      )
+
+      const [route] = await repository.getRoutesBetween([
+        ethereumToken,
+        arbitrumToken,
+      ])
+
+      expect(route).not.toBeNullish()
+      expect(Object.keys(route as object)).not.toInclude('transfer')
+    })
+
+    it('normalizes the queried addresses', async () => {
+      const relation = tokenRelation({
+        endpoints: [ethereumToken, arbitrumToken],
+        plugin: 'superbridge',
+        bridgeType: 'burnAndMint',
+      })
+      await repository.insert(relation)
+
+      expect(
+        await repository.getRoutesBetween([
+          {
+            chain: ethereumToken.chain,
+            address: ethereumToken.address.toUpperCase(),
+          },
+          {
+            chain: arbitrumToken.chain,
+            address: arbitrumToken.address.toUpperCase(),
+          },
+        ]),
+      ).toEqual([withoutTransfer(relation)])
+    })
+
+    it('returns nothing for no tokens or a set with no internal relations', async () => {
+      await repository.insert(
+        tokenRelation({
+          endpoints: [ethereumToken, arbitrumToken],
+          plugin: 'superbridge',
+          bridgeType: 'burnAndMint',
+        }),
+      )
+
+      expect(await repository.getRoutesBetween([])).toEqual([])
+      expect(
+        await repository.getRoutesBetween([ethereumToken, optimismToken]),
+      ).toEqual([])
+    })
+  })
+
   describe(
     TokenRelationRepository.prototype.getMintingPluginsForMany.name,
     () => {
@@ -664,6 +760,11 @@ function tokenRelation(input: TokenRelationInput): TokenRelationRecord {
         plugin: input.plugin,
       } satisfies Record<string, unknown>),
   })
+}
+
+function withoutTransfer(record: TokenRelationRecord): TokenRelationRoute {
+  const { transfer: _transfer, ...route } = record
+  return route
 }
 
 function deployedToken(pk: DeployedTokenPrimaryKey): DeployedTokenRecord {

@@ -30,6 +30,7 @@ export const STATIC_PAGE_PATHS = [
   '/data-availability/liveness',
   '/data-availability/archived',
   '/privacy/summary',
+  '/tokens',
   '/zk-catalog',
   '/governance',
   '/governance/ethereum-connect',

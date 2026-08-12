@@ -3,9 +3,11 @@ import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getInteropTokenData } from '~/server/features/scaling/interop/getInteropTokenData'
 import { getAbstractTokenSlug } from '~/server/features/scaling/interop/token/getAbstractTokenSlug'
+import { getChainDisplayInfo } from '~/server/features/scaling/interop/token/getChainDisplayInfo'
 import { getInteropAbstractTokens } from '~/server/features/scaling/interop/token/getInteropAbstractTokens'
 import { getInteropTokenEntry } from '~/server/features/scaling/interop/token/getInteropTokenEntry'
 import { getInteropTokenOnchainDeployments } from '~/server/features/scaling/interop/token/getInteropTokenOnchainDeployments'
+import { getInteropTokenRelationsGraph } from '~/server/features/scaling/interop/token/getInteropTokenRelationsGraph'
 import { resolveInteropTokenBySlug } from '~/server/features/scaling/interop/token/resolveInteropTokenBySlug'
 import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
@@ -124,12 +126,26 @@ async function getCachedData({
       }),
     ])
 
+  // Needs the deployments and the chain presentation, so it cannot join the
+  // batch above.
+  const relationsGraph = await getInteropTokenRelationsGraph(
+    token.id,
+    deployments,
+    getChainDisplayInfo(
+      deployments.map((deployment) => deployment.chain),
+      interopChainsWithIcons,
+      projectsWithChains,
+    ),
+    interopProjects,
+  )
+
   const tokenEntry = getInteropTokenEntry(
     token.id,
     interopChainsWithIcons,
     projectsWithChains,
     interopProjects,
     deployments,
+    relationsGraph,
   )
 
   return {

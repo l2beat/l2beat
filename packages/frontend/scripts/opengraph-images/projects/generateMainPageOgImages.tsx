@@ -10,6 +10,9 @@ const mainPages: MainPage[] = [
     title: 'Home',
   },
   {
+    title: 'Tokens',
+  },
+  {
     type: 'scaling',
     title: 'Summary',
   },

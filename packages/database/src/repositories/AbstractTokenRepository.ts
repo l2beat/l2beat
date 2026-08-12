@@ -182,6 +182,20 @@ export class AbstractTokenRepository extends BaseRepository {
     return result.map(toRecord)
   }
 
+  /**
+   * Identity only, for listings over the whole catalogue. `getAll` carries
+   * coingecko entries, comments and review flags — several megabytes of JSON a
+   * listing never reads.
+   */
+  async getAllSummaries(): Promise<
+    Pick<AbstractTokenRecord, 'id' | 'symbol' | 'issuer' | 'iconUrl'>[]
+  > {
+    return await this.db
+      .selectFrom('AbstractToken')
+      .select(['id', 'symbol', 'issuer', 'iconUrl'])
+      .execute()
+  }
+
   async deleteById(id: string): Promise<number> {
     const result = await this.db
       .deleteFrom('AbstractToken')

@@ -8,7 +8,12 @@ import {
   createMintingBridgeResolver,
   interopDisplayName,
 } from '../utils/createMintingBridgeResolver'
+import {
+  type ChainDisplayInfoMap,
+  getChainDisplayInfo,
+} from './getChainDisplayInfo'
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
+import type { InteropTokenRelationsGraph } from './getInteropTokenRelationsGraph'
 
 export interface InteropTokenEntry {
   sections: ProjectDetailsSection[]
@@ -21,6 +26,7 @@ export function getInteropTokenEntry(
   projectsWithChains: Project<'chainConfig'>[],
   interopProjects: Project<'interopConfig'>[],
   deployments: InteropTokenOnchainDeployment[],
+  relationsGraph: InteropTokenRelationsGraph,
 ): InteropTokenEntry {
   const sections: ProjectDetailsSection[] = [
     {
@@ -42,8 +48,8 @@ export function getInteropTokenEntry(
   ]
 
   if (deployments.length > 0) {
-    const chainInfoMap = deploymentsToChainInfo(
-      deployments,
+    const chainInfoMap = getChainDisplayInfo(
+      deployments.map((deployment) => deployment.chain),
       interopChains,
       projectsWithChains,
     )
@@ -60,6 +66,10 @@ export function getInteropTokenEntry(
             toMinters(deployment, tokenId, resolveMintingBridges),
           ),
         ),
+        // Only drawn once there is something to draw: 83% of tokens have no
+        // observed relations at all.
+        relationsGraph:
+          relationsGraph.edges.length > 0 ? relationsGraph : undefined,
       },
     })
   }
@@ -111,7 +121,7 @@ function toMinters(
 
 function toDeploymentRow(
   deployment: InteropTokenOnchainDeployment,
-  chainInfoMap: ChainInfoMap,
+  chainInfoMap: ChainDisplayInfoMap,
   minters: UsedInProjectWithIcon[],
 ): InteropTokenOnchainDeploymentsRow {
   const chain = chainInfoMap.get(deployment.chain)
@@ -132,39 +142,4 @@ function toDeploymentRow(
     transferCount: deployment.transferCount,
     avgDuration: deployment.avgDuration,
   }
-}
-
-type ChainInfoMap = ReturnType<typeof deploymentsToChainInfo>
-function deploymentsToChainInfo(
-  deployments: InteropTokenOnchainDeployment[],
-  interopChains: InteropChainWithIcon[],
-  projectsWithChain: Project<'chainConfig'>[],
-) {
-  const map = new Map<
-    string,
-    { name: string; iconUrl?: string; explorerUrl?: string }
-  >()
-  for (const deployment of deployments) {
-    const chain = interopChains.find((c) => c.id === deployment.chain)
-    if (chain) {
-      map.set(deployment.chain, {
-        name: chain.name,
-        iconUrl: chain.iconUrl,
-        explorerUrl: chain.explorerUrl,
-      })
-      continue
-    }
-
-    const scalingProject = projectsWithChain.find(
-      (c) => c.chainConfig.name === deployment.chain,
-    )
-    if (scalingProject) {
-      map.set(deployment.chain, {
-        name: scalingProject.name,
-        iconUrl: manifest.getUrl(`/icons/${scalingProject.slug}.png`),
-        explorerUrl: scalingProject.chainConfig.explorerUrl,
-      })
-    }
-  }
-  return map
 }

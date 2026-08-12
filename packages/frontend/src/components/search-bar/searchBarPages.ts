@@ -13,6 +13,12 @@ export const searchBarPages = withIndex([
       ]
     : []),
   {
+    category: 'other',
+    name: 'Tokens',
+    tags: ['pages', 'tokens', 'interop'],
+    href: '/tokens',
+  },
+  {
     category: 'scaling',
     name: 'Summary',
     tags: ['pages', 'scaling'],

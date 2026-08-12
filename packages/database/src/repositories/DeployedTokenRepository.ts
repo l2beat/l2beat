@@ -227,6 +227,23 @@ export class DeployedTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  /**
+   * Which abstract token each deployment belongs to, and nothing else. `getAll`
+   * carries the metadata and assignment-proof JSON, which is the bulk of the
+   * table and of no use to a listing.
+   */
+  async getAllAssignments(): Promise<
+    Pick<
+      DeployedTokenRecord,
+      'chain' | 'address' | 'symbol' | 'abstractTokenId'
+    >[]
+  > {
+    return await this.db
+      .selectFrom('DeployedToken')
+      .select(['chain', 'address', 'symbol', 'abstractTokenId'])
+      .execute()
+  }
+
   async getByPrimaryKeys(
     keys: DeployedTokenPrimaryKey[],
   ): Promise<DeployedTokenRecord[]> {
