@@ -950,6 +950,227 @@
     "messages": [{ "type": "ccip.Message", "app": "unknown" }],
     "transfers": []
   },
+  "ccip-v2": {
+    "description": "CCIP 2.0 bidirectional token transfers and data-only messaging",
+    "loadConfigs": ["ccip"],
+    "txs": [
+      // Mantle -> Ethereum: uniBTC burn & mint, messageId 0x027d...aada.
+      {
+        "chain": "mantle",
+        "tx": "0xb52acdfa014583fb54c6e80fd7f680086ad725c0d5d69210bda539a3fb099e51"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x2642b0d962650660cbf4183ec8660ddd76ed3166c7f01d0d350b87843400677f"
+      },
+      // Ethereum -> Mantle: syrupUSDT lock & mint, messageId 0xef4c...4bc1.
+      {
+        "chain": "ethereum",
+        "tx": "0xbdd0f5feb08c4a5797a859b1ff2b7d179c52b26e2a58bcbebad7196348620b60"
+      },
+      {
+        "chain": "mantle",
+        "tx": "0x13e21c43b31a6d0607aaec8a6af906dcf8958b7025af8f61eeea7e5986ced609"
+      },
+      // Ethereum -> Ink: GHO lock & mint, messageId 0x2429...ca1e.
+      {
+        "chain": "ethereum",
+        "tx": "0xd991ba4b20d6b83ac31f689971acf98edb24c29220ad60a448868c829ba98497"
+      },
+      {
+        "chain": "ink",
+        "tx": "0x5c803efcbf7fc80da720fec88c3f61504069c02755d0f8ce0eb416739dba0958"
+      },
+      // Ink -> Ethereum: data-only QQQx message, messageId 0x749f...10cc.
+      // QQQx moves through application events, not a CCIP TokenPool transfer.
+      {
+        "chain": "ink",
+        "tx": "0x4f575e5ef1cf61c068db11325c72620f26ff00b1ea6e4d6923cfbdfec9597ce2"
+      },
+      {
+        "chain": "ethereum",
+        "tx": "0x6c7156eb3f857ac61ba71d345baa0b112495031ab4bc38aa18bc87d06e0a433a"
+      }
+    ],
+    "expects": {
+      "events": [
+        {
+          "type": "ccip.CCIPSendRequested",
+          "ctx": { "chain": "mantle" },
+          "args": {
+            "messageId": "0x027d1c6763f9273028ed829e387a9af79776dc4a869c344b92b3239a7aedaada",
+            "$dstChain": "ethereum",
+            "token": "0x00000000000000000000000093919784c523f39cacaa98ee0a9d96c3f32b593e",
+            "amount": "11585",
+            "index": 0,
+            "wasBurned": true
+          }
+        },
+        {
+          "type": "ccip.ExecutionStateChanged",
+          "ctx": { "chain": "ethereum" },
+          "args": {
+            "messageId": "0x027d1c6763f9273028ed829e387a9af79776dc4a869c344b92b3239a7aedaada",
+            "state": 2,
+            "$srcChain": "mantle",
+            "dstTokens": [
+              {
+                "address": "0x000000000000000000000000004e9c3ef86bc1ca1f0bb5c7662861ee93350568",
+                "amount": "11585",
+                "wasMinted": true
+              }
+            ]
+          }
+        },
+        {
+          "type": "ccip.CCIPSendRequested",
+          "ctx": { "chain": "ethereum" },
+          "args": {
+            "messageId": "0xef4cab444207bc452b16313cf05ae1917a76b155d424ac41e2b4c4d1c3424bc1",
+            "$dstChain": "mantle",
+            "token": "0x000000000000000000000000356b8d89c1e1239cbbb9de4815c39a1474d5ba7d",
+            "amount": "810928650491",
+            "index": 0,
+            "wasBurned": false
+          }
+        },
+        {
+          "type": "ccip.ExecutionStateChanged",
+          "ctx": { "chain": "mantle" },
+          "args": {
+            "messageId": "0xef4cab444207bc452b16313cf05ae1917a76b155d424ac41e2b4c4d1c3424bc1",
+            "state": 2,
+            "$srcChain": "ethereum",
+            "dstTokens": [
+              {
+                "address": "0x000000000000000000000000051665f2455116e929b9972c36d23070f5054ce0",
+                "amount": "810928650491",
+                "wasMinted": true
+              }
+            ]
+          }
+        },
+        {
+          "type": "ccip.CCIPSendRequested",
+          "ctx": { "chain": "ethereum" },
+          "args": {
+            "messageId": "0x242984f5229665a775a0debdd4d526853d698529bbad123b519588ef7bdeca1e",
+            "$dstChain": "ink",
+            "token": "0x00000000000000000000000040d16fc0246ad3160ccc09b8d0d3a2cd28ae6c2f",
+            "amount": "35505274364558037507349",
+            "index": 0,
+            "wasBurned": false
+          }
+        },
+        {
+          "type": "ccip.ExecutionStateChanged",
+          "ctx": { "chain": "ink" },
+          "args": {
+            "messageId": "0x242984f5229665a775a0debdd4d526853d698529bbad123b519588ef7bdeca1e",
+            "state": 2,
+            "$srcChain": "ethereum",
+            "dstTokens": [
+              {
+                "address": "0x000000000000000000000000fc421ad3c883bf9e7c4f42de845c4e4405799e73",
+                "amount": "35505274364558037507349",
+                "wasMinted": true
+              }
+            ]
+          }
+        },
+        {
+          "type": "ccip.CCIPSendRequested",
+          "ctx": { "chain": "ink" },
+          "args": {
+            "messageId": "0x749ffcd7170163cf24ae29be94c967314eef2b019eed17c9ede30cea824210cc",
+            "$dstChain": "ethereum"
+          }
+        },
+        {
+          "type": "ccip.ExecutionStateChanged",
+          "ctx": { "chain": "ethereum" },
+          "args": {
+            "messageId": "0x749ffcd7170163cf24ae29be94c967314eef2b019eed17c9ede30cea824210cc",
+            "state": 2,
+            "$srcChain": "ink"
+          }
+        }
+      ],
+      "messages": [
+        {
+          "type": "ccip.Message",
+          "app": "CCIP Token Transfer",
+          "src": { "ctx": { "chain": "mantle" } },
+          "dst": { "ctx": { "chain": "ethereum" } }
+        },
+        {
+          "type": "ccip.Message",
+          "app": "CCIP Token Transfer",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "mantle" } }
+        },
+        {
+          "type": "ccip.Message",
+          "app": "CCIP Token Transfer",
+          "src": { "ctx": { "chain": "ethereum" } },
+          "dst": { "ctx": { "chain": "ink" } }
+        },
+        {
+          "type": "ccip.Message",
+          "app": "unknown",
+          "src": { "ctx": { "chain": "ink" } },
+          "dst": { "ctx": { "chain": "ethereum" } }
+        }
+      ],
+      "transfers": [
+        {
+          "type": "ccip.Transfer",
+          "src": {
+            "tokenAddress": "0x00000000000000000000000093919784c523f39cacaa98ee0a9d96c3f32b593e",
+            "tokenAmount": "11585",
+            "wasBurned": true,
+            "event": { "ctx": { "chain": "mantle" } }
+          },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000004e9c3ef86bc1ca1f0bb5c7662861ee93350568",
+            "tokenAmount": "11585",
+            "wasMinted": true,
+            "event": { "ctx": { "chain": "ethereum" } }
+          }
+        },
+        {
+          "type": "ccip.Transfer",
+          "src": {
+            "tokenAddress": "0x000000000000000000000000356b8d89c1e1239cbbb9de4815c39a1474d5ba7d",
+            "tokenAmount": "810928650491",
+            "wasBurned": false,
+            "event": { "ctx": { "chain": "ethereum" } }
+          },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000051665f2455116e929b9972c36d23070f5054ce0",
+            "tokenAmount": "810928650491",
+            "wasMinted": true,
+            "event": { "ctx": { "chain": "mantle" } }
+          }
+        },
+        {
+          "type": "ccip.Transfer",
+          "src": {
+            "tokenAddress": "0x00000000000000000000000040d16fc0246ad3160ccc09b8d0d3a2cd28ae6c2f",
+            "tokenAmount": "35505274364558037507349",
+            "wasBurned": false,
+            "event": { "ctx": { "chain": "ethereum" } }
+          },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000fc421ad3c883bf9e7c4f42de845c4e4405799e73",
+            "tokenAmount": "35505274364558037507349",
+            "wasMinted": true,
+            "event": { "ctx": { "chain": "ink" } }
+          }
+        }
+      ]
+    }
+  },
   "ccip-unsupported-chain": {
     "loadConfigs": ["ccip"],
     "txs": [
