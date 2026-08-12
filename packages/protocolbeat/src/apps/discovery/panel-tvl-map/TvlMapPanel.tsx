@@ -64,7 +64,7 @@ export function TvlMapPanel() {
   const results = useQueries({
     queries: holders.map((holder) => ({
       queryKey: ['projects', project, 'tvl', holder.address, TOP_TOKENS],
-      queryFn: () => getTvl(holder.address, TOP_TOKENS),
+      queryFn: ({ signal }) => getTvl(holder.address, TOP_TOKENS, signal),
       staleTime: STALE_MS,
       gcTime: STALE_MS,
       refetchOnWindowFocus: false,

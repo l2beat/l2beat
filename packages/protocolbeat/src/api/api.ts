@@ -97,13 +97,16 @@ export async function getPreview(project: string): Promise<ApiPreviewResponse> {
 export async function getTvl(
   address: string,
   top?: number,
+  signal?: AbortSignal,
 ): Promise<ApiTvlResponse> {
   const params = new URLSearchParams()
   if (top !== undefined) {
     params.set('top', String(top))
   }
   const qs = params.toString()
-  const res = await fetch(`/api/projects/tvl/${address}${qs ? `?${qs}` : ''}`)
+  const res = await fetch(`/api/projects/tvl/${address}${qs ? `?${qs}` : ''}`, {
+    signal,
+  })
   if (!res.ok) {
     throw new Error(res.statusText)
   }
