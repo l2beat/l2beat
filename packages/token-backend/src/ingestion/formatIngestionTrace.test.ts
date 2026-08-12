@@ -35,6 +35,7 @@ describe(formatIngestionTrace.name, () => {
             decimals: 6,
             deploymentTimestamp: UnixTime(1),
             comment: null,
+            ignored: false,
             metadata: null,
           },
         },

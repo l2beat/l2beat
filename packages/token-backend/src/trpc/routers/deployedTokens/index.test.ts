@@ -45,6 +45,7 @@ describe('deployedTokensRouter', () => {
         symbol: 'USDC',
         decimals: 6,
         comment: null,
+        ignored: false,
         abstractTokenId: null,
         deploymentTimestamp: 0,
         metadata: {
@@ -133,6 +134,7 @@ describe('deployedTokensRouter', () => {
             symbol: 'USDC',
             decimals: 6,
             comment: null,
+            ignored: false,
             abstractTokenId: null,
             deploymentTimestamp: 0,
             metadata: {
@@ -154,6 +156,7 @@ describe('deployedTokensRouter', () => {
             symbol: 'USDT',
             decimals: 6,
             comment: null,
+            ignored: false,
             abstractTokenId: null,
             deploymentTimestamp: 0,
             metadata: {
@@ -192,6 +195,30 @@ describe('deployedTokensRouter', () => {
         { chain: 'ethereum', address: '0x123' },
         { chain: 'arbitrum', address: '0x456' },
       ])
+    })
+  })
+
+  describe('getIgnored', () => {
+    it('returns ignored token primary keys from the repository', async () => {
+      const ignored = [
+        { chain: 'ethereum', address: '0x123' },
+        { chain: 'base', address: '0x456' },
+      ]
+      const getIgnored = mockFn().resolvesTo(ignored)
+      const mockTokenDb = mockObject<TokenDatabase>({
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+          getIgnored,
+        }),
+      })
+
+      const caller = createRouter(
+        mockTokenDb,
+        mockObject<Database>({}),
+        mockObject<CoingeckoClient>({}),
+      )
+
+      expect(await caller.getIgnored()).toEqual(ignored)
+      expect(getIgnored).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -574,6 +601,47 @@ describe('deployedTokensRouter', () => {
           { ...conflict, isConflict: true },
           { ...unresolved, isConflict: false },
         ],
+      })
+    })
+
+    it('excludes ignored tokens and their relations', async () => {
+      const relation = tokenRelationRoute({
+        tokenAChain: 'ethereum',
+        tokenAAddress: '0xaaa',
+        tokenBChain: 'base',
+        tokenBAddress: '0xbbb',
+        plugin: 'test-plugin',
+      })
+      const mockTokenDb = mockObject<TokenDatabase>({
+        tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+          getAllRoutes: mockFn().resolvesTo([relation]),
+        }),
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+          getByPrimaryKeys: mockFn().resolvesTo([
+            deployedToken({
+              chain: 'ethereum',
+              address: '0xaaa',
+              symbol: 'TEST',
+              ignored: true,
+            }),
+            deployedToken({
+              chain: 'base',
+              address: '0xbbb',
+              symbol: 'OP',
+            }),
+          ]),
+        }),
+      })
+
+      const caller = createRouter(
+        mockTokenDb,
+        mockObject<Database>({}),
+        mockObject<CoingeckoClient>({}),
+      )
+
+      expect(await caller.getRelationsGraph()).toEqual({
+        nodes: [],
+        relations: [],
       })
     })
 
@@ -1663,6 +1731,7 @@ describe('deployedTokensRouter', () => {
               symbol: 'USDC',
               decimals: 6,
               comment: null,
+              ignored: false,
               abstractTokenId: null,
               deploymentTimestamp: 0,
             }),
@@ -1819,6 +1888,7 @@ describe('deployedTokensRouter', () => {
           symbol: 'USDC',
           decimals: 6,
           comment: null,
+          ignored: false,
           abstractTokenId: null,
           deploymentTimestamp: 0,
         },
@@ -1885,6 +1955,7 @@ describe('deployedTokensRouter', () => {
           symbol: 'USDC',
           decimals: 6,
           comment: null,
+          ignored: false,
           abstractTokenId: null,
           deploymentTimestamp: 0,
         },
@@ -1894,6 +1965,7 @@ describe('deployedTokensRouter', () => {
           symbol: 'USDC',
           decimals: 6,
           comment: null,
+          ignored: false,
           abstractTokenId: null,
           deploymentTimestamp: 0,
         },
@@ -2073,6 +2145,7 @@ describe('deployedTokensRouter', () => {
           symbol: 'USDC',
           decimals: 6,
           comment: null,
+          ignored: false,
           abstractTokenId: null,
           deploymentTimestamp: 0,
         },
@@ -2628,11 +2701,13 @@ function deployedToken(input: {
   address: string
   symbol: string
   abstractTokenId?: string | null
+  ignored?: boolean
 }): DeployedTokenRecord {
   return {
     chain: input.chain,
     address: input.address,
     symbol: input.symbol,
+    ignored: input.ignored ?? false,
     decimals: 18,
     comment: null,
     abstractTokenId: input.abstractTokenId ?? null,

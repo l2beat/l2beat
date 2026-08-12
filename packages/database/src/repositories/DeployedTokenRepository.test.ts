@@ -96,6 +96,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
             decimals: 8,
             deploymentTimestamp: 20,
             comment: 'updated comment',
+            ignored: true,
           },
         )
 
@@ -110,6 +111,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
           decimals: 8,
           deploymentTimestamp: 20,
           comment: 'updated comment',
+          ignored: true,
         })
       })
     },
@@ -610,6 +612,42 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
     })
   })
 
+  describe(DeployedTokenRepository.prototype.getIgnored.name, () => {
+    it('returns primary keys of ignored tokens only', async () => {
+      await chains.insert(mockChain({ name: 'ethereum', chainId: 1 }))
+      await chains.insert(mockChain({ name: 'arbitrum', chainId: 42161 }))
+
+      const ignoredEthereum = deployedToken({
+        chain: 'ethereum',
+        address: '0x1111111111111111111111111111111111111111',
+        ignored: true,
+      })
+      const ignoredArbitrum = deployedToken({
+        chain: 'arbitrum',
+        address: '0x2222222222222222222222222222222222222222',
+        ignored: true,
+      })
+      const included = deployedToken({
+        chain: 'ethereum',
+        address: '0x3333333333333333333333333333333333333333',
+      })
+      await repository.insert(ignoredEthereum)
+      await repository.insert(ignoredArbitrum)
+      await repository.insert(included)
+
+      expect(await repository.getIgnored()).toEqualUnsorted([
+        {
+          chain: ignoredArbitrum.chain,
+          address: ignoredArbitrum.address,
+        },
+        {
+          chain: ignoredEthereum.chain,
+          address: ignoredEthereum.address,
+        },
+      ])
+    })
+  })
+
   describe(DeployedTokenRepository.prototype.deleteByPrimaryKeys.name, () => {
     it('removes selected records', async () => {
       const chainRecord1 = mockChain({ name: 'ethereum', chainId: 1 })
@@ -679,6 +717,7 @@ function deployedToken(
     decimals: overrides.decimals ?? 18,
     deploymentTimestamp: overrides.deploymentTimestamp ?? 0,
     comment: overrides.comment ?? null,
+    ignored: overrides.ignored ?? false,
     metadata: overrides.metadata ?? {
       tvs: {
         includeInCalculations: true,

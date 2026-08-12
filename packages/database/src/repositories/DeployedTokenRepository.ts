@@ -17,6 +17,7 @@ export type DeployedTokenRecord = {
   abstractTokenId: string | null
   decimals: number
   deploymentTimestamp: UnixTime
+  ignored: boolean
   metadata: DeployedTokenMetadata | null
   abstractTokenAssignmentProof?: unknown
 }
@@ -146,6 +147,7 @@ export class DeployedTokenRepository extends BaseRepository {
             abstractTokenId: row.abstractTokenId,
             decimals: row.decimals,
             deploymentTimestamp: row.deploymentTimestamp,
+            ignored: row.ignored,
             metadata: row.metadata as DeployedTokenMetadata,
             abstractTokenAssignmentProof: row.abstractTokenAssignmentProof,
           }),
@@ -220,6 +222,14 @@ export class DeployedTokenRepository extends BaseRepository {
       .where('abstractTokenId', '=', id)
       .execute()
     return rows.map(toRecord)
+  }
+
+  async getIgnored(): Promise<DeployedTokenPrimaryKey[]> {
+    return await this.db
+      .selectFrom('DeployedToken')
+      .select(['chain', 'address'])
+      .where('ignored', '=', true)
+      .execute()
   }
 
   async getAll(): Promise<DeployedTokenRecord[]> {

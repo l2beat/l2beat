@@ -232,6 +232,9 @@ update, possibly with a newly built CoinGecko abstract), `conflict`
   needed, inserts a new abstract token in the same transaction. It then
   re-enqueues every neighbor token from the address's transfers
   (propagation) and removes the queue entry.
+  Automatically inserted deployed tokens start with `ignored = false`.
+  Ingestion updates only the fields it resolved, so it never clears an
+  `ignored` value set manually later.
 
 ## Shared write boundary
 
