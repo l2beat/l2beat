@@ -24,6 +24,7 @@ export async function getTvl(
     .map((balance) => ({
       tvl: toUsdValue(balance, market),
       ticker: balance.symbol,
+      address: balance.address?.toString() ?? 'native',
       iconURL: balance.iconUrl,
       balance: toTokenAmount(balance.balance, balance.decimals),
       price: market[balance.coingeckoId.toString()]?.priceUsd,

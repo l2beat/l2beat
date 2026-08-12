@@ -61,7 +61,7 @@ export function TvlPanel() {
 
       {response.map((entry) => (
         <TvlRow
-          key={entry.ticker}
+          key={`${entry.ticker}-${entry.address}`}
           entry={entry}
           share={total > 0 ? entry.tvl / total : 0}
         />

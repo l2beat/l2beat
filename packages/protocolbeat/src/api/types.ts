@@ -25,6 +25,7 @@ export type ApiTvlResponse = ApiTvlEntry[]
 export interface ApiTvlEntry {
   tvl: number
   ticker: string
+  address: string
   iconURL: string | undefined
   balance: number
   price: number | undefined
