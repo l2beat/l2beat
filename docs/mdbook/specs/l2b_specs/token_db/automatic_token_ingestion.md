@@ -550,11 +550,7 @@ EVM addresses. Normalization:
 
 ## What this replaces
 
-The two cards on the legacy Token UI suggestions page. Manual entry via
-the form and the BackOffice missing-tokens action column remain
-untouched, mostly to limit the amount of work necessary to implement
-automatic ingestion. In the future they will be slimmed down where
-they overlap with automatic ingestion process.
+The two cards on the legacy Token UI suggestions page.
 
 ## Future: persistent trace audit
 
