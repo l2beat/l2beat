@@ -675,13 +675,11 @@ export function DeployedTokenForm({
                       }
                     />
                   </FormControl>
-                  <FormLabel className="font-normal text-sm">
-                    Ignored (explain why in the comment)
-                  </FormLabel>
+                  <FormLabel className="font-normal text-sm">Ignored</FormLabel>
                 </div>
                 <FormDescription>
-                  Ignored tokens stay in TokenDB but are excluded from
-                  graphs and calculations.
+                  When ignoring, put reason in the comment. Ignored tokens stay
+                  in TokenDB but are excluded from graphs and calculations.
                 </FormDescription>
               </FormItem>
             )}
