@@ -341,7 +341,7 @@ function getNodeLabelLayout(scale: number) {
   const symbolLabelOffsetY = chainLabelOffsetY - chainFontSize - labelScale
 
   return {
-    showAll: naturalSymbolFontSize >= NODE_LABEL_MIN_FONT_SIZE,
+    showAll: nodeLabelsAreVisible(scale),
     labelScale,
     symbolFontSize,
     chainFontSize,
@@ -351,6 +351,14 @@ function getNodeLabelLayout(scale: number) {
     // approximate em box plus the same gap used between the two node lines.
     clusterClearance: -symbolLabelOffsetY + symbolFontSize + labelScale,
   }
+}
+
+/** Whether every node's token and chain labels are visible at this zoom. */
+export function nodeLabelsAreVisible(scale: number) {
+  return (
+    NODE_LABEL_FONT_SIZE * nodeVisualScreenScale(scale) >=
+    NODE_LABEL_MIN_FONT_SIZE
+  )
 }
 
 function drawClusterLabels(
