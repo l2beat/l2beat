@@ -8,6 +8,7 @@ export interface InteropTokenOnchainDeployment {
   chain: string
   address: string
   symbol: string
+  mintingPlugins: string[]
   isSupported: boolean
   volume: number | null
   transferCount: number | null
@@ -36,18 +37,28 @@ export async function getInteropTokenOnchainDeployments(
   })
 
   const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
-  const stats = snapshotTimestamp
-    ? await db.aggregatedInteropDeployedToken.getSummedStatsByTimestampAndTokens(
-        snapshotTimestamp,
-        statsKeys,
-      )
-    : []
+  const [stats, mintingPlugins] = await Promise.all([
+    snapshotTimestamp
+      ? db.aggregatedInteropDeployedToken.getSummedStatsByTimestampAndTokens(
+          snapshotTimestamp,
+          statsKeys,
+        )
+      : [],
+    Promise.all(
+      deployedTokens.map((token) =>
+        tokenDb.tokenRelation.getMintingPluginsFor({
+          chain: token.chain,
+          address: token.address,
+        }),
+      ),
+    ),
+  ])
   const statsMap = new Map(
     stats.map((stat) => [`${stat.tokenChain}|${stat.tokenAddress}`, stat]),
   )
   const supportedChains = new Set(supportedChainIds)
 
-  const deployments = deployedTokens.map((token) => {
+  const deployments = deployedTokens.map((token, index) => {
     const tokenAddress = Address32.fromOrUndefined(token.address)
     const stat = tokenAddress
       ? statsMap.get(`${token.chain}|${tokenAddress}`)
@@ -57,6 +68,7 @@ export async function getInteropTokenOnchainDeployments(
       chain: token.chain,
       address: token.address,
       symbol: token.symbol,
+      mintingPlugins: mintingPlugins[index] ?? [],
       isSupported,
       volume: stat?.volume ?? (isSupported ? 0 : null),
       transferCount: stat?.transferCount ?? (isSupported ? 0 : null),
@@ -78,6 +90,7 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
     chain: 'ethereum',
     address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
     symbol: 'USDC',
+    mintingPlugins: [],
     isSupported: true,
     volume: 2_170_000,
     transferCount: 403,
@@ -87,6 +100,7 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
     chain: 'arbitrum',
     address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
     symbol: 'USDC',
+    mintingPlugins: ['cctp-v2', 'orbitstack'],
     isSupported: true,
     volume: 392_430,
     transferCount: 125,
@@ -96,6 +110,7 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
     chain: 'base',
     address: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
     symbol: 'USDbC',
+    mintingPlugins: ['opstack'],
     isSupported: false,
     volume: null,
     transferCount: null,

@@ -16,6 +16,12 @@ export interface InteropTokenOnchainDeploymentsRow {
   address: string
   explorerUrl: string | undefined
   symbol: string
+  minters: {
+    id: string
+    name: string
+    iconUrl: string
+    href: string
+  }[]
   isSupported: boolean
   volume: number | null
   transferCount: number | null

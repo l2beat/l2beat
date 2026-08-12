@@ -2,8 +2,12 @@ import type { Project } from '@l2beat/config'
 import type { InteropTokenOnchainDeploymentsRow } from '~/components/projects/sections/interop/onchain-deployments/InteropTokenOnchainDeploymentsSection'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
+import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
+import { createMintingProjectResolver } from '../utils/createMintingProjectResolver'
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
+
+const logger = getLogger().for('getInteropTokenEntry')
 
 export interface InteropTokenEntry {
   sections: ProjectDetailsSection[]
@@ -14,6 +18,7 @@ export function getInteropTokenEntry(
   tokenId: string,
   interopChains: InteropChainWithIcon[],
   projectsWithChains: Project<'chainConfig'>[],
+  interopProjects: Project<'interopConfig'>[],
   deployments: InteropTokenOnchainDeployment[],
 ): InteropTokenEntry {
   const sections: ProjectDetailsSection[] = [
@@ -41,14 +46,20 @@ export function getInteropTokenEntry(
       interopChains,
       projectsWithChains,
     )
+    const resolveMintingProjects = createMintingProjectResolver(interopProjects)
     sections.push({
       type: 'InteropTokenOnchainDeploymentsSection',
       props: {
         id: 'onchain-deployments',
         title: 'Onchain deployments',
-        deployments: deployments.map((deployment) =>
-          toDeploymentRow(deployment, chainInfoMap),
-        ),
+        deployments: deployments.map((deployment) => {
+          const minters = resolveMinters(
+            deployment,
+            tokenId,
+            resolveMintingProjects,
+          )
+          return toDeploymentRow(deployment, chainInfoMap, minters)
+        }),
       },
     })
   }
@@ -66,9 +77,49 @@ export function getInteropTokenEntry(
   return { sections, deploymentsCount: deployments.length }
 }
 
+function resolveMinters(
+  deployment: InteropTokenOnchainDeployment,
+  abstractTokenId: string,
+  resolveMintingProjects: ReturnType<typeof createMintingProjectResolver>,
+): InteropTokenOnchainDeploymentsRow['minters'] {
+  const minters = new Map<
+    string,
+    InteropTokenOnchainDeploymentsRow['minters'][number]
+  >()
+
+  for (const plugin of deployment.mintingPlugins) {
+    const projects = resolveMintingProjects({
+      plugin,
+      chain: deployment.chain,
+      abstractTokenId,
+    })
+
+    if (projects.length === 0) {
+      logger.warn('Could not resolve minting plugin to an interop project', {
+        plugin,
+        chain: deployment.chain,
+        address: deployment.address,
+        abstractTokenId,
+      })
+    }
+
+    for (const project of projects) {
+      minters.set(project.id, {
+        id: project.id,
+        name: project.interopConfig.name ?? project.name,
+        iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+        href: `/interop/protocols/${project.slug}`,
+      })
+    }
+  }
+
+  return [...minters.values()].sort((a, b) => a.name.localeCompare(b.name))
+}
+
 function toDeploymentRow(
   deployment: InteropTokenOnchainDeployment,
   chainInfoMap: ChainInfoMap,
+  minters: InteropTokenOnchainDeploymentsRow['minters'],
 ): InteropTokenOnchainDeploymentsRow {
   const chain = chainInfoMap.get(deployment.chain)
   return {
@@ -82,6 +133,7 @@ function toDeploymentRow(
         ? `${chain.explorerUrl}/address/${deployment.address}`
         : undefined,
     symbol: deployment.symbol,
+    minters,
     isSupported: deployment.isSupported,
     volume: deployment.volume,
     transferCount: deployment.transferCount,
