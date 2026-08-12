@@ -6,6 +6,8 @@ describe(getInteropTokenUrl.name, () => {
   it('returns undefined for unknown tokens', () => {
     const result = getInteropTokenUrl({
       id: UNKNOWN_ABSTRACT_TOKEN_ID,
+      issuer: null,
+      symbol: 'UNKNOWN',
     })
 
     expect(result).toEqual(undefined)
@@ -14,6 +16,8 @@ describe(getInteropTokenUrl.name, () => {
   it('returns undefined for synthetic unknown tokens', () => {
     const result = getInteropTokenUrl({
       id: 'unknown-cctp',
+      issuer: null,
+      symbol: 'USDC',
       isUnknown: true,
     })
 
@@ -40,14 +44,6 @@ describe(getInteropTokenUrl.name, () => {
     expect(result).toEqual('/interop/tokens/eth001/eth')
   })
 
-  it('builds token URL from the id alone when nothing else is known', () => {
-    const result = getInteropTokenUrl({
-      id: 'usdc01',
-    })
-
-    expect(result).toEqual('/interop/tokens/usdc01')
-  })
-
   it('slugifies segments that are not URL friendly', () => {
     const result = getInteropTokenUrl({
       id: 'usdce1',
@@ -56,5 +52,25 @@ describe(getInteropTokenUrl.name, () => {
     })
 
     expect(result).toEqual('/interop/tokens/usdce1/circle-co/usdc-e')
+  })
+
+  it('folds accented characters down to ASCII', () => {
+    const result = getInteropTokenUrl({
+      id: 'usdt01',
+      issuer: 'Tether.to',
+      symbol: 'USD₮ 0',
+    })
+
+    expect(result).toEqual('/interop/tokens/usdt01/tether-to/usd-0')
+  })
+
+  it('falls back to the id alone when no segment survives slugification', () => {
+    const result = getInteropTokenUrl({
+      id: 'bBIepa',
+      issuer: null,
+      symbol: '屎壳郎',
+    })
+
+    expect(result).toEqual('/interop/tokens/bBIepa')
   })
 })

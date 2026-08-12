@@ -224,7 +224,9 @@ function TokenAmount({
 
   const tokenUrl =
     abstractTokenId && selectedChains
-      ? getInteropTokenUrl({ id: abstractTokenId, symbol })
+      ? // The transfer row carries no issuer, so the URL omits that segment.
+        // It still resolves - the page matches on the id.
+        getInteropTokenUrl({ id: abstractTokenId, symbol, issuer: null })
       : undefined
 
   if (!tokenUrl) {
