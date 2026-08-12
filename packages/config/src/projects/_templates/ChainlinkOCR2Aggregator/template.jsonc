@@ -15,6 +15,7 @@
     "latestTimestamp",
     "latestTransmissionDetails"
   ],
+  "ignoreInWatchMode": ["latestConfigDigestAndEpoch.epoch"],
   "fields": {
     "owner": {
       "permissions": [
