@@ -962,5 +962,4 @@ export class InteropTransferRepository extends BaseRepository {
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
-
 }
