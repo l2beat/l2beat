@@ -24,7 +24,12 @@ import {
   processIdLog,
   processLog,
 } from './hyperlane'
-import { findHyperlaneChain, HyperlaneConfig } from './hyperlane.config'
+import {
+  findHyperlaneChain,
+  HyperlaneConfig,
+  HyperlaneWarpRoutesConfig,
+  hyperlaneWarpRouteKey,
+} from './hyperlane.config'
 import {
   findBestTransferLog as findBestTransferLogWithParser,
   findParsedAround,
@@ -116,6 +121,10 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
 
   capture(input: LogToCapture) {
     const networks = this.configs.get(HyperlaneConfig) ?? []
+    const warpRoutes = this.configs.get(HyperlaneWarpRoutesConfig) ?? {}
+    const warpRouteStandard =
+      warpRoutes[hyperlaneWarpRouteKey(input.chain, input.log.address)]
+    const isNativeWarpRoute = warpRouteStandard === 'EvmHypNative'
 
     if (input.tx.kind !== 'canonical') {
       return
@@ -156,13 +165,17 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
         input.log.logIndex!,
         (log, _index) => parseCctpDepositForBurn(log),
       )
-      const transferMatch = findBestTransferLog(
-        input.txLogs,
-        depositForBurn?.amount ?? sentTransferRemote.amount,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
-      )
-      const amountWhenNoTransfer = input.tx.value ?? 0n
+      const transferMatch = isNativeWarpRoute
+        ? { hasTransfer: false }
+        : findBestTransferLog(
+            input.txLogs,
+            depositForBurn?.amount ?? sentTransferRemote.amount,
+            // biome-ignore lint/style/noNonNullAssertion: It's there
+            input.log.logIndex!,
+          )
+      const amountWhenNoTransfer = isNativeWarpRoute
+        ? sentTransferRemote.amount
+        : (input.tx.value ?? 0n)
       if (depositForBurn) {
         return [
           HwrTransferSent.create(input, {
@@ -227,13 +240,17 @@ export class HyperlaneHwrPlugin implements InteropPluginResyncable {
         Number(receivedTransferRemote.origin),
       )
 
-      const transferMatch = findBestTransferLog(
-        input.txLogs,
-        receivedTransferRemote.amount,
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        input.log.logIndex!,
-      )
-      const amountWhenNoTransfer = input.tx.value ?? 0n
+      const transferMatch = isNativeWarpRoute
+        ? { hasTransfer: false }
+        : findBestTransferLog(
+            input.txLogs,
+            receivedTransferRemote.amount,
+            // biome-ignore lint/style/noNonNullAssertion: It's there
+            input.log.logIndex!,
+          )
+      const amountWhenNoTransfer = isNativeWarpRoute
+        ? receivedTransferRemote.amount
+        : (input.tx.value ?? 0n)
       const dstTokenData = transferMatch.transfer
         ? {
             address: transferMatch.transfer.logAddress,

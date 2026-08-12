@@ -5432,6 +5432,33 @@
       ]
     }
   },
+  "hwr-native-eth-utb": {
+    // UTB unwraps Arbitrum WETH, bridges native ETH through HypNative,
+    // then wraps the released native ETH into Base WETH. The Hyperlane leg is
+    // native ETH on both sides and does not mint or burn either bridged token.
+    "loadConfigs": ["hyperlane"],
+    "txs": [
+      {
+        "chain": "arbitrum",
+        "tx": "0x2fac187f0481ffe3b6d798beffe5390f09f4cb100ca5537be1bfaddb7fd43f13"
+      },
+      {
+        "chain": "base",
+        "tx": "0x4a206ec224022a6768e34c4aa324a7eb48aeeb2020eb70cedf0a64f7eb0c6952"
+      }
+    ],
+    "expects": {
+      "messages": [{ "type": "hyperlane.Message", "app": "hwr" }],
+      "transfers": [
+        {
+          "type": "hyperlaneHwr.Transfer",
+          "bridgeType": "nonMinting",
+          "src": { "tokenAddress": "native", "wasBurned": false },
+          "dst": { "tokenAddress": "native", "wasMinted": false }
+        }
+      ]
+    }
+  },
   "hwr-xerc20-lockbox": {
     // oUSDT Base → Ethereum: the Ethereum warp route (HypXERC20Lockbox) mints
     // oUSDT to itself and immediately unwraps it via the xERC20 lockbox, so the
