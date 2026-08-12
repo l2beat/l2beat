@@ -492,10 +492,26 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
             optimismToken,
           ]),
         ).toEqual([
-          { ...arbitrumToken, plugin: 'canonicalbridge' },
-          { ...arbitrumToken, plugin: 'superbridge' },
-          { ...optimismToken, plugin: 'escrowbridge' },
-          { ...optimismToken, plugin: 'superbridge' },
+          {
+            ...arbitrumToken,
+            plugin: 'canonicalbridge',
+            relationChains: ['arbitrum', 'ethereum'],
+          },
+          {
+            ...arbitrumToken,
+            plugin: 'superbridge',
+            relationChains: ['arbitrum', 'ethereum', 'optimism'],
+          },
+          {
+            ...optimismToken,
+            plugin: 'escrowbridge',
+            relationChains: ['arbitrum', 'optimism'],
+          },
+          {
+            ...optimismToken,
+            plugin: 'superbridge',
+            relationChains: ['arbitrum', 'optimism'],
+          },
         ])
       })
 

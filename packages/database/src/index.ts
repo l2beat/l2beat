@@ -129,6 +129,7 @@ export type {
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
 export type {
   JsonValue,
+  MintingPluginRecord,
   TokenRelationLockedToken,
   TokenRelationPrimaryKey,
   TokenRelationRecord,

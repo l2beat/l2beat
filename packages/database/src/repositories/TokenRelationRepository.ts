@@ -50,6 +50,7 @@ export type TokenRelationRoute = Omit<TokenRelationRecord, 'transfer'>
 
 export interface MintingPluginRecord extends DeployedTokenPrimaryKey {
   plugin: string
+  relationChains: string[]
 }
 
 // The identity and role columns come back re-derived, so their literal types
@@ -155,7 +156,9 @@ function tokenKey(token: DeployedTokenPrimaryKey): string {
   return `${token.chain}|${token.address.toLowerCase()}`
 }
 
-function mintingPluginKey(record: MintingPluginRecord): string {
+function mintingPluginKey(
+  record: DeployedTokenPrimaryKey & Pick<MintingPluginRecord, 'plugin'>,
+): string {
   return `${tokenKey(record)}|${record.plugin}`
 }
 
@@ -332,6 +335,8 @@ export class TokenRelationRepository extends BaseRepository {
   /**
    * Batch variant of {@link getMintingPluginsFor}: one distinct
    * (token, plugin) record per plugin observed minting each requested token.
+   * `relationChains` contains every endpoint chain from the qualifying
+   * relations so callers can apply route-level chain qualifiers.
    *
    * Input addresses are matched case-insensitively; returned addresses are
    * as stored, lowercase — group results by lowercased address, not by
@@ -349,7 +354,12 @@ export class TokenRelationRepository extends BaseRepository {
       }))
       const mintedAtA = this.db
         .selectFrom('TokenRelation')
-        .select(['tokenAChain as chain', 'tokenAAddress as address', 'plugin'])
+        .select([
+          'tokenAChain as chain',
+          'tokenAAddress as address',
+          'tokenBChain as relatedChain',
+          'plugin',
+        ])
         .where((eb) =>
           eb(
             eb.refTuple('tokenAChain', 'tokenAAddress'),
@@ -362,7 +372,12 @@ export class TokenRelationRepository extends BaseRepository {
         .where((eb) => this.mintedAtEndpoint(eb, 'A'))
       const mintedAtB = this.db
         .selectFrom('TokenRelation')
-        .select(['tokenBChain as chain', 'tokenBAddress as address', 'plugin'])
+        .select([
+          'tokenBChain as chain',
+          'tokenBAddress as address',
+          'tokenAChain as relatedChain',
+          'plugin',
+        ])
         .where((eb) =>
           eb(
             eb.refTuple('tokenBChain', 'tokenBAddress'),
@@ -376,16 +391,30 @@ export class TokenRelationRepository extends BaseRepository {
 
       const rows = await mintedAtA.union(mintedAtB).execute()
       for (const row of rows) {
-        result.set(mintingPluginKey(row), row)
+        const key = mintingPluginKey(row)
+        const relationChains = new Set(result.get(key)?.relationChains)
+        relationChains.add(row.chain)
+        relationChains.add(row.relatedChain)
+        result.set(key, {
+          chain: row.chain,
+          address: row.address,
+          plugin: row.plugin,
+          relationChains: [...relationChains],
+        })
       }
     })
 
-    return [...result.values()].sort(
-      (a, b) =>
-        a.chain.localeCompare(b.chain) ||
-        a.address.localeCompare(b.address) ||
-        a.plugin.localeCompare(b.plugin),
-    )
+    return [...result.values()]
+      .map((record) => ({
+        ...record,
+        relationChains: [...record.relationChains].sort(),
+      }))
+      .sort(
+        (a, b) =>
+          a.chain.localeCompare(b.chain) ||
+          a.address.localeCompare(b.address) ||
+          a.plugin.localeCompare(b.plugin),
+      )
   }
 
   private mintedAtEndpoint(

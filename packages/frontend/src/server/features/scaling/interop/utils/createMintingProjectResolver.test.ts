@@ -24,7 +24,7 @@ describe(createMintingProjectResolver.name, () => {
     ])
   })
 
-  it('uses the deployment chain to disambiguate shared plugins', () => {
+  it('uses relation endpoint chains to disambiguate shared plugins', () => {
     const resolve = createMintingProjectResolver([
       project({
         id: 'base',
@@ -45,6 +45,30 @@ describe(createMintingProjectResolver.name, () => {
     ])
 
     expect(resolve(minting()).map((p) => p.id)).toEqual([ProjectId('base')])
+  })
+
+  it('matches a chain qualifier against the other relation endpoint', () => {
+    const resolve = createMintingProjectResolver([
+      project({
+        id: 'optimism',
+        plugins: [
+          {
+            plugin: 'synthetix-bridge',
+            bridgeType: 'burnAndMint',
+            chain: 'optimism',
+          },
+        ],
+      }),
+    ])
+
+    expect(
+      resolve(
+        minting({
+          plugin: 'synthetix-bridge',
+          relationChains: ['ethereum', 'optimism'],
+        }),
+      ).map((p) => p.id),
+    ).toEqual([ProjectId('optimism')])
   })
 
   it('honors abstract token qualifiers', () => {
@@ -147,7 +171,7 @@ function minting(
 ): MintingProjectInput {
   return {
     plugin: 'opstack',
-    chain: 'base',
+    relationChains: ['ethereum', 'base'],
     abstractTokenId: 'circle-usdc',
     ...override,
   }

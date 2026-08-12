@@ -1,3 +1,4 @@
+import type { MintingPluginRecord } from '@l2beat/database'
 import { Address32 } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -8,7 +9,7 @@ export interface InteropTokenOnchainDeployment {
   chain: string
   address: string
   symbol: string
-  mintingPlugins: string[]
+  mintingPlugins: Pick<MintingPluginRecord, 'plugin' | 'relationChains'>[]
   isSupported: boolean
   volume: number | null
   transferCount: number | null
@@ -56,11 +57,17 @@ export async function getInteropTokenOnchainDeployments(
   const statsMap = new Map(
     stats.map((stat) => [`${stat.tokenChain}|${stat.tokenAddress}`, stat]),
   )
-  const mintingPluginsMap = new Map<string, string[]>()
+  const mintingPluginsMap = new Map<
+    string,
+    InteropTokenOnchainDeployment['mintingPlugins']
+  >()
   for (const record of mintingPlugins) {
     const key = deploymentKey(record.chain, record.address)
     const plugins = mintingPluginsMap.get(key) ?? []
-    plugins.push(record.plugin)
+    plugins.push({
+      plugin: record.plugin,
+      relationChains: record.relationChains,
+    })
     mintingPluginsMap.set(key, plugins)
   }
   const supportedChains = new Set(supportedChainIds)
@@ -112,7 +119,16 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
     chain: 'arbitrum',
     address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
     symbol: 'USDC',
-    mintingPlugins: ['cctp-v2', 'orbitstack'],
+    mintingPlugins: [
+      {
+        plugin: 'cctp-v2',
+        relationChains: ['arbitrum', 'ethereum'],
+      },
+      {
+        plugin: 'orbitstack',
+        relationChains: ['arbitrum', 'ethereum'],
+      },
+    ],
     isSupported: true,
     volume: 392_430,
     transferCount: 125,
@@ -122,7 +138,9 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
     chain: 'base',
     address: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
     symbol: 'USDbC',
-    mintingPlugins: ['opstack'],
+    mintingPlugins: [
+      { plugin: 'opstack', relationChains: ['base', 'ethereum'] },
+    ],
     isSupported: false,
     volume: null,
     transferCount: null,

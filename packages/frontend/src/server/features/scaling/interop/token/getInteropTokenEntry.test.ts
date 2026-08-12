@@ -25,7 +25,14 @@ describe(getInteropTokenEntry.name, () => {
           ],
         }),
       ],
-      [deployment({ mintingPlugins: ['ccip', 'cctp-v2'] })],
+      [
+        deployment({
+          mintingPlugins: [
+            { plugin: 'ccip', relationChains: ['ethereum', 'base'] },
+            { plugin: 'cctp-v2', relationChains: ['ethereum', 'base'] },
+          ],
+        }),
+      ],
     )
 
     const section = entry.sections.find(

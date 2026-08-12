@@ -2,7 +2,7 @@ import type { InteropPlugin, Project } from '@l2beat/config'
 
 export interface MintingProjectInput {
   plugin: string
-  chain: string
+  relationChains: string[]
   abstractTokenId: string
 }
 
@@ -36,7 +36,12 @@ function matchesMintingPlugin(
 ): boolean {
   if (plugin.plugin !== input.plugin) return false
   if (plugin.bridgeType === 'nonMinting') return false
-  if (plugin.chain !== undefined && plugin.chain !== input.chain) return false
+  if (
+    plugin.chain !== undefined &&
+    !input.relationChains.includes(plugin.chain)
+  ) {
+    return false
+  }
   if (
     plugin.abstractTokenId !== undefined &&
     plugin.abstractTokenId !== input.abstractTokenId

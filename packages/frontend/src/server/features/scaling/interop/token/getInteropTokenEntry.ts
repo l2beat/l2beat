@@ -87,17 +87,18 @@ function resolveMinters(
     InteropTokenOnchainDeploymentsRow['minters'][number]
   >()
 
-  for (const plugin of deployment.mintingPlugins) {
+  for (const { plugin, relationChains } of deployment.mintingPlugins) {
     const projects = resolveMintingProjects({
       plugin,
-      chain: deployment.chain,
+      relationChains,
       abstractTokenId,
     })
 
     if (projects.length === 0) {
       logger.warn('Could not resolve minting plugin to an interop project', {
         plugin,
-        chain: deployment.chain,
+        relationChains,
+        deploymentChain: deployment.chain,
         address: deployment.address,
         abstractTokenId,
       })
