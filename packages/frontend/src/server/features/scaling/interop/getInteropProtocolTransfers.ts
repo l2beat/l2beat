@@ -119,22 +119,14 @@ export function toInteropProtocolTransferDetailsItem(
     timestamp: transfer.timestamp,
     srcAmount: transfer.srcAmount,
     srcSymbol,
-    srcTokenHref: getTokenHref(
-      transfer.srcAbstractTokenId,
-      srcSymbol,
-      tokensDetailsMap,
-    ),
+    srcTokenHref: getTokenHref(transfer.srcAbstractTokenId, tokensDetailsMap),
     srcTokenIconUrl: getTokenIconUrl(
       transfer.srcAbstractTokenId,
       tokensDetailsMap,
     ),
     dstAmount: transfer.dstAmount,
     dstSymbol,
-    dstTokenHref: getTokenHref(
-      transfer.dstAbstractTokenId,
-      dstSymbol,
-      tokensDetailsMap,
-    ),
+    dstTokenHref: getTokenHref(transfer.dstAbstractTokenId, tokensDetailsMap),
     dstTokenIconUrl: getTokenIconUrl(
       transfer.dstAbstractTokenId,
       tokensDetailsMap,
@@ -155,16 +147,20 @@ export function toInteropProtocolTransferDetailsItem(
 
 function getTokenHref(
   abstractTokenId: string | undefined,
-  symbol: string,
   tokensDetailsMap: TokensDetailsMap,
 ): string | undefined {
   if (!abstractTokenId) return undefined
 
+  // A transfer can carry an abstract token id we have no record for. There is
+  // no token page to link to in that case, so it stays unlinked - as does the
+  // shared "unknown" token, which getInteropTokenUrl rejects.
   const details = tokensDetailsMap.get(abstractTokenId)
+  if (!details) return undefined
+
   return getInteropTokenUrl({
     id: abstractTokenId,
-    symbol: details?.symbol ?? symbol,
-    issuer: details?.issuer ?? null,
+    symbol: details.symbol,
+    issuer: details.issuer,
   })
 }
 
