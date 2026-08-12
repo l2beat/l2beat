@@ -5,6 +5,7 @@ import type {
   BlockTimestampProvider,
   CirculatingSupplyProvider,
   PriceProvider,
+  StarknetBalanceProvider,
   StarknetTotalSupplyProvider,
   TotalSupplyProvider,
 } from '@l2beat/shared'
@@ -29,6 +30,7 @@ export class DataFormulaExecutor {
     private blockTimestampProvider: BlockTimestampProvider,
     private totalSupplyProvider: TotalSupplyProvider,
     private starknetTotalSupplyProvider: StarknetTotalSupplyProvider,
+    private starknetBalanceProvider: StarknetBalanceProvider,
     private balanceProvider: BalanceProvider,
     private logger: Logger,
   ) {}
@@ -285,6 +287,25 @@ export class DataFormulaExecutor {
                     block,
                     chain,
                   )
+                await this.localStorage.writeAmounts(
+                  timestamp,
+                  Array.from(values.values()).map((value, i) => ({
+                    id: configs[i].id,
+                    amount: value,
+                  })),
+                )
+                break
+              }
+              case 'starknetBalanceOf': {
+                assert(configs.every((c) => c.type === 'starknetBalanceOf'))
+                const values = await this.starknetBalanceProvider.getBalances(
+                  configs.map((c) => ({
+                    token: c.address,
+                    holder: c.escrowAddress,
+                  })),
+                  block,
+                  chain,
+                )
                 await this.localStorage.writeAmounts(
                   timestamp,
                   Array.from(values.values()).map((value, i) => ({

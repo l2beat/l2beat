@@ -150,7 +150,7 @@ function getEntries(
 
 // Ik its ugly but it works and is type safe
 type FormulaWithMeta =
-  | (Extract<Formula, { type: 'balanceOfEscrow' }> & {
+  | (Extract<Formula, { type: 'balanceOfEscrow' | 'starknetBalanceOf' }> & {
       addressMeta: AddressData
       escrowAddressMeta: AddressData
     })
@@ -174,7 +174,8 @@ function withExplorerUrl(
   projectContracts: Record<string, ProjectContract[]> | undefined,
 ): FormulaWithMeta {
   switch (formula.type) {
-    case 'balanceOfEscrow': {
+    case 'balanceOfEscrow':
+    case 'starknetBalanceOf': {
       return {
         ...formula,
         escrowAddressMeta: processAddress(

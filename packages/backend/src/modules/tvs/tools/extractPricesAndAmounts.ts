@@ -4,6 +4,7 @@ import type {
   CalculationFormula,
   CirculatingSupplyAmountFormula,
   ConstAmountFormula,
+  StarknetBalanceOfAmountFormula,
   StarknetTotalSupplyAmountFormula,
   TotalSupplyAmountFormula,
   TvsToken,
@@ -249,6 +250,7 @@ export function createAmountConfig(
     | BalanceOfEscrowAmountFormula
     | TotalSupplyAmountFormula
     | StarknetTotalSupplyAmountFormula
+    | StarknetBalanceOfAmountFormula
     | CirculatingSupplyAmountFormula
     | ConstAmountFormula,
 ): AmountConfig {
@@ -265,6 +267,7 @@ export function createAmountConfig(
         ...formula,
       }
     case 'starknetTotalSupply':
+    case 'starknetBalanceOf':
     case 'totalSupply':
       return {
         id: generateConfigurationId([
@@ -272,6 +275,9 @@ export function createAmountConfig(
           formula.address,
           formula.chain,
           formula.decimals.toString(),
+          ...(formula.type === 'starknetBalanceOf'
+            ? [formula.escrowAddress]
+            : []),
         ]),
         ...formula,
       }
