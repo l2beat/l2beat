@@ -36,29 +36,36 @@ export async function getInteropTokenOnchainDeployments(
     return tokenAddress ? [{ tokenChain: token.chain, tokenAddress }] : []
   })
 
-  const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
   const [stats, mintingPlugins] = await Promise.all([
-    snapshotTimestamp
-      ? db.aggregatedInteropDeployedToken.getSummedStatsByTimestampAndTokens(
-          snapshotTimestamp,
-          statsKeys,
-        )
-      : [],
-    Promise.all(
-      deployedTokens.map((token) =>
-        tokenDb.tokenRelation.getMintingPluginsFor({
-          chain: token.chain,
-          address: token.address,
-        }),
-      ),
+    (async () => {
+      const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
+      return snapshotTimestamp
+        ? db.aggregatedInteropDeployedToken.getSummedStatsByTimestampAndTokens(
+            snapshotTimestamp,
+            statsKeys,
+          )
+        : []
+    })(),
+    tokenDb.tokenRelation.getMintingPluginsForMany(
+      deployedTokens.map((token) => ({
+        chain: token.chain,
+        address: token.address,
+      })),
     ),
   ])
   const statsMap = new Map(
     stats.map((stat) => [`${stat.tokenChain}|${stat.tokenAddress}`, stat]),
   )
+  const mintingPluginsMap = new Map<string, string[]>()
+  for (const record of mintingPlugins) {
+    const key = deploymentKey(record.chain, record.address)
+    const plugins = mintingPluginsMap.get(key) ?? []
+    plugins.push(record.plugin)
+    mintingPluginsMap.set(key, plugins)
+  }
   const supportedChains = new Set(supportedChainIds)
 
-  const deployments = deployedTokens.map((token, index) => {
+  const deployments = deployedTokens.map((token) => {
     const tokenAddress = Address32.fromOrUndefined(token.address)
     const stat = tokenAddress
       ? statsMap.get(`${token.chain}|${tokenAddress}`)
@@ -68,7 +75,8 @@ export async function getInteropTokenOnchainDeployments(
       chain: token.chain,
       address: token.address,
       symbol: token.symbol,
-      mintingPlugins: mintingPlugins[index] ?? [],
+      mintingPlugins:
+        mintingPluginsMap.get(deploymentKey(token.chain, token.address)) ?? [],
       isSupported,
       volume: stat?.volume ?? (isSupported ? 0 : null),
       transferCount: stat?.transferCount ?? (isSupported ? 0 : null),
@@ -83,6 +91,10 @@ export async function getInteropTokenOnchainDeployments(
     (a, b) =>
       (b.volume ?? -1) - (a.volume ?? -1) || a.chain.localeCompare(b.chain),
   )
+}
+
+function deploymentKey(chain: string, address: string): string {
+  return `${chain}|${address.toLowerCase()}`
 }
 
 const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
