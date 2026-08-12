@@ -17,7 +17,7 @@ const UNSUPPORTED_CHAIN_TOOLTIP =
 const NO_TRANSFER_TIME_TOOLTIP =
   'There is no transfer time data for this deployment from the past 24 hours.'
 const NO_MINTERS_TOOLTIP =
-  'No bridge has been observed minting this deployment. It is likely the locked or natively issued side.'
+  'No known bridge has been observed minting this deployment. It is likely the locked or natively issued side.'
 
 export type DeploymentRow = InteropTokenOnchainDeploymentsRow & BasicTableRow
 const columnHelper = createColumnHelper<DeploymentRow>()
@@ -107,7 +107,7 @@ export const interopTokenOnchainDeploymentsColumns = [
     },
     meta: {
       tooltip:
-        'The bridging projects observed minting this deployment. A deployment with no minter is the locked or natively issued side.',
+        'The known bridging projects observed minting this deployment. A deployment with no known minter is likely the locked or natively issued side.',
     },
   }),
   columnHelper.accessor('volume', {
