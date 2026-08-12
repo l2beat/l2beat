@@ -74,8 +74,15 @@ const PANELS: Record<PanelId, Panel> = {
   tvlMap: { icon: IconTreemap, body: TvlMapPanel },
 }
 
+const unallowedInReadOnly = new Set([
+  'terminal',
+  'analyze',
+  'tvl',
+  'tvlMap',
+] as PanelId[])
+
 export function isAllowedPanel(id: PanelId): boolean {
-  return !(IS_READONLY && (id === 'terminal' || id === 'analyze'))
+  return !(IS_READONLY && unallowedInReadOnly.has(id))
 }
 
 function isPanelId(key: string): key is PanelId {

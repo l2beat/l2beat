@@ -172,29 +172,6 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.json(response)
   })
 
-  app.get('/api/projects/tvl/:address', async (req, res) => {
-    const paramsValidation = addressParamsSchema.safeParse(req.params)
-    if (!paramsValidation.success) {
-      res.status(400).json({ errors: paramsValidation.message })
-      return
-    }
-    const queryValidation = tvlQuerySchema.safeParse(req.query)
-    if (!queryValidation.success) {
-      res.status(400).json({ errors: queryValidation.message })
-      return
-    }
-    const { address } = paramsValidation.data
-    const { top } = queryValidation.data
-
-    try {
-      const response = await getTvl(providerCache, tvlCache, address, top)
-      res.json(response)
-    } catch (e) {
-      console.error(e)
-      res.status(500).json({ error: 'Failed to estimate TVL' })
-    }
-  })
-
   app.get('/api/projects/:project/code/:address', async (req, res) => {
     const paramsValidation = projectAddressParamsSchema.safeParse(req.params)
     if (!paramsValidation.success) {
@@ -411,6 +388,29 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
         `cd ${path.dirname(paths.discovery)}/../../backend && l2b minters ${address}`,
         res,
       )
+    })
+
+    app.get('/api/projects/tvl/:address', async (req, res) => {
+      const paramsValidation = addressParamsSchema.safeParse(req.params)
+      if (!paramsValidation.success) {
+        res.status(400).json({ errors: paramsValidation.message })
+        return
+      }
+      const queryValidation = tvlQuerySchema.safeParse(req.query)
+      if (!queryValidation.success) {
+        res.status(400).json({ errors: queryValidation.message })
+        return
+      }
+      const { address } = paramsValidation.data
+      const { top } = queryValidation.data
+
+      try {
+        const response = await getTvl(providerCache, tvlCache, address, top)
+        res.json(response)
+      } catch (e) {
+        console.error(e)
+        res.status(500).json({ error: 'Failed to estimate TVL' })
+      }
     })
   }
 
