@@ -10,6 +10,8 @@ Generated with discovered.json: 0x01d6789264883c080c266d5dc7f7639e62814c1f
 
 SystemConfig implementation upgraded (upgradeCount 1 -> 2), adding owner-gated eip1559Denominator/Elasticity, operatorFeeScalar/Constant, daFootprintGasScalar (all 0, unconfigured) and minBaseFee (set to 500 gwei floor). l2ChainId and superchainConfig are new storage slots the source comments mark as reserved placeholders for a future OP v5 upgrade, intentionally left unset here. Owner unchanged (NXV Safe, 3-of-5).
 
+Diff: https://disco.l2beat.com/diff/eth:0xbc10fE919504D53953d27989CD5B48B9A7c08Be0/eth:0xE4577dCF1C44F04cf489AA995E01e988f461cc4A
+
 ## Watched changes
 
 ```diff
