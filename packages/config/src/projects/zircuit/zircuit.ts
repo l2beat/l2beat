@@ -126,13 +126,11 @@ export const zircuit: ScalingProject = {
       },
       explanation: `Zircuit is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-      )} or until it gets published. A dispute game can be proposed after a challenge period of ${formatSeconds(
+      )} or until it gets published. Once a batch is posted, a dispute game is created for it and must go unchallenged for a challenge period of ${formatSeconds(
         ZIRCUIT_CHALLENGE_PERIOD_SECONDS,
-      )}, and the state root only settles after a further proof maturity delay of ${formatSeconds(
-        ZIRCUIT_PROOF_MATURITY_DELAY_SECONDS,
-      )} plus a dispute game finality delay of ${formatSeconds(
+      )} to resolve. After it resolves, a further dispute game finality delay of ${formatSeconds(
         ZIRCUIT_EXECUTION_DELAY_SECONDS,
-      )}.`,
+      )} applies before the state root is considered settled.`,
     },
   },
   stage: getRollupStage(
@@ -165,7 +163,10 @@ export const zircuit: ScalingProject = {
       rollupNodeLink: 'https://github.com/zircuit-labs/l2-geth-public',
     },
   ),
-  proofSystem: undefined,
+  proofSystem: {
+    type: 'Optimistic',
+    challengeProtocol: 'Interactive',
+  },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT(
