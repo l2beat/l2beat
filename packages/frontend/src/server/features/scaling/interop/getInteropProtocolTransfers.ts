@@ -2,6 +2,7 @@ import type { InteropTransferRecord } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
+import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type {
@@ -110,27 +111,30 @@ export function toInteropProtocolTransferDetailsItem(
     transfer.dstTxHash,
   )
 
+  const srcSymbol = transfer.srcSymbol ?? UNKNOWN_TOKEN_SYMBOL
+  const dstSymbol = transfer.dstSymbol ?? UNKNOWN_TOKEN_SYMBOL
+
   return {
     transferId: transfer.transferId,
     timestamp: transfer.timestamp,
     srcAmount: transfer.srcAmount,
-    srcSymbol: transfer.srcSymbol ?? UNKNOWN_TOKEN_SYMBOL,
-    srcAbstractTokenId: transfer.srcAbstractTokenId,
-    srcTokenIssuer:
-      transfer.srcAbstractTokenId !== undefined
-        ? (tokensDetailsMap.get(transfer.srcAbstractTokenId)?.issuer ?? null)
-        : null,
+    srcSymbol,
+    srcTokenHref: getTokenHref(
+      transfer.srcAbstractTokenId,
+      srcSymbol,
+      tokensDetailsMap,
+    ),
     srcTokenIconUrl: getTokenIconUrl(
       transfer.srcAbstractTokenId,
       tokensDetailsMap,
     ),
     dstAmount: transfer.dstAmount,
-    dstSymbol: transfer.dstSymbol ?? UNKNOWN_TOKEN_SYMBOL,
-    dstAbstractTokenId: transfer.dstAbstractTokenId,
-    dstTokenIssuer:
-      transfer.dstAbstractTokenId !== undefined
-        ? (tokensDetailsMap.get(transfer.dstAbstractTokenId)?.issuer ?? null)
-        : null,
+    dstSymbol,
+    dstTokenHref: getTokenHref(
+      transfer.dstAbstractTokenId,
+      dstSymbol,
+      tokensDetailsMap,
+    ),
     dstTokenIconUrl: getTokenIconUrl(
       transfer.dstAbstractTokenId,
       tokensDetailsMap,
@@ -147,6 +151,21 @@ export function toInteropProtocolTransferDetailsItem(
     dstTxHash: transfer.dstTxHash,
     dstTxHashHref,
   }
+}
+
+function getTokenHref(
+  abstractTokenId: string | undefined,
+  symbol: string,
+  tokensDetailsMap: TokensDetailsMap,
+): string | undefined {
+  if (!abstractTokenId) return undefined
+
+  const details = tokensDetailsMap.get(abstractTokenId)
+  return getInteropTokenUrl({
+    id: abstractTokenId,
+    symbol: details?.symbol ?? symbol,
+    issuer: details?.issuer ?? null,
+  })
 }
 
 function getTokenIconUrl(

@@ -42,13 +42,11 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       timestamp: 123,
       srcAmount: undefined,
       srcSymbol: 'Unknown',
-      srcAbstractTokenId: 'eth',
-      srcTokenIssuer: null,
+      srcTokenHref: '/interop/tokens/eth/unknown',
       srcTokenIconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       dstAmount: 12.34,
       dstSymbol: 'USDC',
-      dstAbstractTokenId: 'eth',
-      dstTokenIssuer: null,
+      dstTokenHref: '/interop/tokens/eth/usdc',
       dstTokenIconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       valueUsd: 12.34,
       bridge: { name: 'Across', href: '/interop/protocols/across' },
@@ -98,6 +96,27 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
     expect(result.dstTxHashHref).toEqual('https://arbiscan.io/tx/0xdst')
     expect(result.srcTokenIconUrl).toEqual('https://token/eth.png')
     expect(result.dstTokenIconUrl).toEqual('https://token/eth.png')
+  })
+
+  it('builds token hrefs from the abstract token issuer and symbol', () => {
+    const result = toInteropProtocolTransferDetailsItem(
+      transfer(),
+      new Map(),
+      new Map([
+        [
+          'eth',
+          {
+            symbol: 'USDC',
+            iconUrl: 'https://token/usdc.png',
+            issuer: 'Circle',
+          },
+        ],
+      ]),
+      { name: 'Across', href: '/interop/protocols/across' },
+    )
+
+    expect(result.srcTokenHref).toEqual('/interop/tokens/eth/circle/usdc')
+    expect(result.dstTokenHref).toEqual('/interop/tokens/eth/circle/usdc')
   })
 
   it('keeps transfer item valid when tx hashes are missing', () => {
