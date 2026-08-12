@@ -38,6 +38,12 @@ interface Props {
  * for the remainder of the cycle. This way the visible density is
  * exactly 2.5 on average and the emission rate is exactly R/s —
  * two flows with slightly different volumes are always visually distinct.
+ *
+ * Motion is CSS (offset-path + offset-distance), not SMIL <animateMotion>.
+ * SMIL drives SVG geometry, so every animated particle forces a full layout
+ * on every frame: at ~270 particles that was ~15k layouts/s, 80%+ of the main
+ * thread, and it halved the framerate of the whole page. The CSS equivalent
+ * animates a transform instead and leaves layout untouched.
  */
 export function ParticleLayer({
   flows,
@@ -99,33 +105,40 @@ export function ParticleLayer({
 
         // fraction of each cycle spent traveling (rest is idle / hidden)
         const t = exactCount / count
+        const travelPercent = +(t * 100).toFixed(4)
+
+        // Travel over the first `t` of the cycle, then hold at the path end —
+        // the linear() equivalent of SMIL keyPoints="0;1;1" keyTimes="0;t;1".
+        const moveEasing = `linear(0 0%, 1 ${travelPercent}%, 1 100%)`
+        // Fully opaque while traveling, then a discrete jump to hidden for the
+        // rest of the cycle — the equivalent of calcMode="discrete".
+        const fadeEasing = `linear(0 0%, 0 ${travelPercent}%, 1 ${travelPercent}%, 1 100%)`
 
         return (
           <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
             {Array.from({ length: count }, (_, i) => {
-              const begin = `${initialOffset + i * particleInterval}s`
+              // Positive delay, so a particle stays at its base opacity of 0
+              // until its turn comes up in the first cycle.
+              const delay = `${initialOffset + i * particleInterval}s`
 
               return (
-                <circle key={i} r={particleRadius} fill={color} opacity={0}>
-                  <animateMotion
-                    path={path}
-                    dur={`${cycleDuration}s`}
-                    keyPoints="0;1;1"
-                    keyTimes={`0;${t};1`}
-                    calcMode="linear"
-                    begin={begin}
-                    repeatCount="indefinite"
-                  />
-                  <animate
-                    attributeName="opacity"
-                    dur={`${cycleDuration}s`}
-                    begin={begin}
-                    calcMode="discrete"
-                    values={'0.8;0'}
-                    keyTimes={`0;${t}`}
-                    repeatCount="indefinite"
-                  />
-                </circle>
+                <circle
+                  key={i}
+                  className="interop-particle"
+                  r={particleRadius}
+                  fill={color}
+                  opacity={0}
+                  style={{
+                    offsetPath: `path("${path}")`,
+                    offsetRotate: '0deg',
+                    animationName:
+                      'interop-particle-move, interop-particle-fade',
+                    animationDuration: `${cycleDuration}s, ${cycleDuration}s`,
+                    animationDelay: `${delay}, ${delay}`,
+                    animationIterationCount: 'infinite, infinite',
+                    animationTimingFunction: `${moveEasing}, ${fadeEasing}`,
+                  }}
+                />
               )
             })}
           </g>
