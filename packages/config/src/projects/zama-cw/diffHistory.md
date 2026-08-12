@@ -1,3 +1,372 @@
+Generated with discovered.json: 0x9ecef8b282ce981b4ef25461d47062acf4b6428b
+
+# Diff at Wed, 12 Aug 2026 12:27:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe520bd4ade03975f1066b4ec47ec40ba7f6e27f block: 1786107356
+- current timestamp: 1786537592
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract HCULimit (eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2) [N/A] {
+    +++ description: None
+      template:
+-        "zama/ZamaHCULimit_v0_2_0"
+      sourceHashes.1:
+-        "0xc52e1b93c97602e6da1f1925e14fc5454426a778875655ec17910be5e217b98e"
++        "0x7ca7880da7a551111a41d9a1673890e2a6c1dd27c3cdf51a82f893b410b2d038"
+      description:
+-        "Tracks and enforces per-transaction and per-block homomorphic computation unit limits for FHEVM operation requests."
+      values.$implementation:
+-        "eth:0x0F2B7e8F19ADc874F21e27ADAA4B22FC00a0B442"
++        "eth:0x69A91389006443448d8E90Fd84B6bDF5ae253837"
+      values.$pastUpgrades.3:
++        ["2026-08-10T11:50:47.000Z","0x3a73cbfe82d45d522aafa83acbc4a44dd89a2b409530e3a52d0076009a036c78",["eth:0x69A91389006443448d8E90Fd84B6bDF5ae253837"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.aclAddress:
+-        "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6"
+      values.aclOwner:
+-        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+      values.blockHCUWhitelist:
+-        []
+      values.getBlockMeter.blockNumber:
+-        25703226
++        25738907
+      values.getBlockMeter.usedHCU:
+-        0
++        162032
+      values.getVersion:
+-        "HCULimit v0.2.0"
++        "HCULimit v0.3.0"
+      fieldMeta:
+-        {"aclOwner":{"severity":"HIGH","description":"Owner of the Zama ACL contract. This account is authorized by onlyACLOwner for HCULimit administration.","type":"PERMISSION"},"getFHEVMExecutorAddress":{"description":"FHEVMExecutor contract allowed to report operation HCU usage to this contract.","type":"EXTERNAL"},"aclAddress":{"description":"ACL contract resolved through FHEVMExecutor and used by onlyACLOwner checks.","type":"EXTERNAL"},"getGlobalHCUCapPerBlock":{"severity":"HIGH","description":"Maximum HCU consumed by non-whitelisted callers in one block.","type":"RISK_PARAMETER"},"getMaxHCUDepthPerTx":{"severity":"HIGH","description":"Maximum sequential HCU depth allowed in one transaction.","type":"RISK_PARAMETER"},"getMaxHCUPerTx":{"severity":"HIGH","description":"Maximum total HCU allowed in one transaction.","type":"RISK_PARAMETER"},"blockHCUWhitelist":{"severity":"HIGH","description":"Callers that bypass the global per-block HCU cap, reconstructed from whitelist events.","type":"PERMISSION"},"getBlockMeter":{"description":"HCU consumed by non-whitelisted callers in the current block."}}
+      implementationNames.eth:0x0F2B7e8F19ADc874F21e27ADAA4B22FC00a0B442:
+-        "HCULimit"
+      implementationNames.eth:0x69A91389006443448d8E90Fd84B6bDF5ae253837:
++        "HCULimit"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"proxiableUUID":"Processing error occurred."}
+    }
+```
+
+```diff
+    EOA  (eth:0x41b19EB4585450db79ac03ba9503106EC7895905) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"sign public decryption results accepted by the KMSVerifier.","role":".getKmsSigners"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"sign public decryption results accepted by the KMSVerifier.","role":".getKmsSigners"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"sign public decryption results accepted by the KMSVerifier.","role":".getKmsSigners"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"sign public decryption results accepted by the KMSVerifier.","role":".getKmsSigners"}]
+    }
+```
+
+```diff
+    contract KMSVerifier (eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03) [N/A] {
+    +++ description: None
+      template:
+-        "zama/ZamaKMSVerifier_v0_2_0"
+      sourceHashes.1:
+-        "0xa40292fe461810a065f80e305f6b85ab3ca2cfd416dc965d4791a111554cf638"
++        "0x83222b4971c6b79adbd52cb7d500d84b7d2d59886f828b6a1cdc128dcd2bb9d1"
+      description:
+-        "Ethereum host-chain verifier for public decryption results produced through the Zama Gateway Decryption contract. Confidential token wrappers accept a decrypted value when it is signed by the threshold of the current or any retained non-destroyed KMS context."
+      values.$implementation:
+-        "eth:0xd0d0C7E1bc1E2F6Cd00E3b4B1083DdD9969155FD"
++        "eth:0x390683dEa46a61786f4F0807bf3559038Cf43Fa4"
+      values.$pastUpgrades.3:
++        ["2026-08-10T11:50:47.000Z","0x3a73cbfe82d45d522aafa83acbc4a44dd89a2b409530e3a52d0076009a036c78",["eth:0x390683dEa46a61786f4F0807bf3559038Cf43Fa4"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.aclOwner:
+-        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+      values.createdKmsContexts:
+-        []
+      values.eip712Domain.verifyingContract:
+-        "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24"
++        "eth:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24"
+      values.gatewayDecryption:
+-        "zama:0x0f6024a97684f7d90ddb0fAAD79cB15F2C888D24"
+      values.getVersion:
+-        "KMSVerifier v0.2.0"
++        "KMSVerifier v0.3.0"
+      values.initialKmsContextId:
+-        "3166189940082864718613269121331309980362851143201109172953918312716374638593"
+      values.initialKmsContextSigners:
+-        ["eth:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f","eth:0xdC472efa1642D5afB684aAaa546E22FB24AAB965","eth:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3","eth:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f","eth:0x41b19EB4585450db79ac03ba9503106EC7895905","eth:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921","eth:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D","eth:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8","eth:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f","eth:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58","eth:0x7C17BE232e5968BDa9516478B798b9E90D013fCC","eth:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385","eth:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb"]
+      values.getSignersForKmsContext:
++        []
+      fieldMeta.aclOwner:
+-        {"severity":"HIGH","description":"Owner of the Zama ACL contract. This account can create a new KMS signer context that immediately becomes the default verifier authority, and can destroy any non-current context.","type":"PERMISSION"}
+      fieldMeta.getKmsSigners:
+-        {"severity":"HIGH","description":"KMS signers in the current context. Permission coverage is also indexed through initialKmsContextSigners and createdKmsContexts so superseded contexts remain visible.","type":"PERMISSION"}
+      fieldMeta.initialKmsContextId:
+-        {"severity":"HIGH","description":"Identifier of the first v0.2 KMS context created from the source-defined context counter during initialization or migration.","type":"RISK_PARAMETER"}
+      fieldMeta.initialKmsContextSigners:
+-        {"severity":"HIGH","description":"Signers in the first v0.2 KMS context. This code-defined context remains authorized for public decryption proofs after later rotations unless the ACL owner explicitly destroys it.","type":"PERMISSION"}
+      fieldMeta.createdKmsContexts:
+-        {"severity":"HIGH","description":"Non-destroyed KMS contexts created after the v0.2 migration, reconstructed from context creation and destruction events. Each context is an immutable signer and threshold snapshot that can attest results for any ciphertext handle; it is not scoped to ciphertext age or key ID.","type":"PERMISSION"}
+      fieldMeta.getThreshold:
+-        {"severity":"HIGH","description":"Minimum number of KMS signatures from the current context required to accept a public decryption result. Retained contexts keep their own immutable thresholds.","type":"RISK_PARAMETER"}
+      fieldMeta.getCurrentKmsContextId:
+-        {"severity":"HIGH","description":"Identifier of the context used when proof extraData is empty or starts with version 0. Version 1 extraData can explicitly select any non-destroyed historical context, including for ciphertexts created after that context was superseded.","type":"RISK_PARAMETER"}
+      fieldMeta.gatewayDecryption:
+-        {"severity":"HIGH","description":"Gateway Decryption contract whose EIP-712 source domain is verified by this Ethereum KMSVerifier.","type":"L2"}
+      fieldMeta.eip712Domain:
+-        {"severity":"HIGH","description":"Cross-chain EIP-712 source domain used when verifying KMS signatures over public decryption results. The verifying contract is on the Zama Gateway chain, not on Ethereum.","type":"L2"}
+      implementationNames.eth:0xd0d0C7E1bc1E2F6Cd00E3b4B1083DdD9969155FD:
+-        "KMSVerifier"
+      implementationNames.eth:0x390683dEa46a61786f4F0807bf3559038Cf43Fa4:
++        "KMSVerifier"
+      usedTypes:
+-        [{"typeCaster":"ChainPrefix","arg":{"prefix":"zama"}}]
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"proxiableUUID":"Processing error occurred."}
+    }
+```
+
+```diff
+    EOA  (eth:0x7C17BE232e5968BDa9516478B798b9E90D013fCC) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"sign public decryption results accepted by the KMSVerifier.","role":".getKmsSigners"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"sign public decryption results accepted by the KMSVerifier.","role":".getKmsSigners"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"sign public decryption results accepted by the KMSVerifier.","role":".getKmsSigners"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"sign public decryption results accepted by the KMSVerifier.","role":".getKmsSigners"}]
+    }
+```
+
+```diff
+    contract DAO (eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3) [zama/ZamaDAO] {
+    +++ description: Aragon DAO that stores governance state and executes proposal action batches.
+      directlyReceivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2","description":"change the per-block and per-transaction HCU limits and manage callers that bypass the per-block limit.","role":".aclOwner"}
+      directlyReceivedPermissions.5:
+-        {"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"create KMS signer contexts with arbitrary signer sets and thresholds, and destroy non-current contexts. A malicious context can attest an inflated unwrap amount and drain pooled wrapper backing.","role":".aclOwner"}
+      directlyReceivedPermissions.15:
+-        {"permission":"interact","from":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","description":"transfer ACL ownership, unpause the ACL, block or unblock accounts, manage PauserSet membership, and create or destroy KMSVerifier signer contexts.","role":".owner"}
+      directlyReceivedPermissions.22:
+-        {"permission":"upgrade","from":"eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2","description":"upgrade the HCULimit implementation.","role":".aclOwner"}
+      directlyReceivedPermissions.26:
+-        {"permission":"upgrade","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"upgrade the KMSVerifier implementation.","role":".aclOwner"}
+      directlyReceivedPermissions.35:
+-        {"permission":"upgrade","from":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","description":"upgrade the FHEVMExecutor implementation.","role":".aclOwner"}
+    }
+```
+
+```diff
+    EOA  (eth:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"sign public decryption results accepted by the KMSVerifier.","role":".getKmsSigners"}]
+    }
+```
+
+```diff
+    contract ZamaGovMultisigB (eth:0xBc860b6a4C860C5424B84A056E53ACFb2C99a38F) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2","description":"change the per-block and per-transaction HCU limits and manage callers that bypass the per-block limit.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.5:
+-        {"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"create KMS signer contexts with arbitrary signer sets and thresholds, and destroy non-current contexts. A malicious context can attest an inflated unwrap amount and drain pooled wrapper backing.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.17:
+-        {"permission":"interact","from":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","description":"transfer ACL ownership, unpause the ACL, block or unblock accounts, manage PauserSet membership, and create or destroy KMSVerifier signer contexts.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.24:
+-        {"permission":"upgrade","from":"eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2","description":"upgrade the HCULimit implementation.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.28:
+-        {"permission":"upgrade","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"upgrade the KMSVerifier implementation.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.37:
+-        {"permission":"upgrade","from":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","description":"upgrade the FHEVMExecutor implementation.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+    }
+```
+
+```diff
+    EOA  (eth:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"sign public decryption results accepted by the KMSVerifier.","role":".getKmsSigners"}]
+    }
+```
+
+```diff
+    contract ACL (eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6) [N/A] {
+    +++ description: None
+      template:
+-        "zama/ZamaACL_v0_3_0"
+      sourceHashes.1:
+-        "0x47f47986a3024b31fa3caee357720f4fba4ea3fae419ff53eebe1a66e87d69ef"
++        "0xa69c606dd333427d22d0b664b3c7b39118934dd95a2b7b37c737e37b39bba7e5"
+      description:
+-        "Ethereum host-chain access-control registry for encrypted handles, storing handle allowances and delegation state for ciphertext references. Its public-decryption and user-delegation events are mirrored into the Gateway MultichainACL by coprocessor consensus."
+      values.$implementation:
+-        "eth:0x3F6D970d30E1FFE9657aa8072C82dA10eef1c3D6"
++        "eth:0x9A017e0ba4c19A325D5a89f5dd2112e605E85418"
+      values.$pastUpgrades.4:
++        ["2026-08-10T11:50:47.000Z","0x3a73cbfe82d45d522aafa83acbc4a44dd89a2b409530e3a52d0076009a036c78",["eth:0x9A017e0ba4c19A325D5a89f5dd2112e605E85418"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.blockedAccounts:
+-        []
+      values.getVersion:
+-        "ACL v0.3.0"
++        "ACL v0.4.0"
+      values.WILDCARD_DELEGATION_ADDRESS:
++        "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
+      fieldMeta:
+-        {"owner":{"severity":"HIGH","description":"Owner of the ACL and host-contract owner checked by onlyACLOwner in the Zama verifier and helper contracts.","type":"PERMISSION"},"pendingOwner":{"severity":"HIGH","description":"Pending owner for a two-step ACL ownership transfer.","type":"PERMISSION"},"paused":{"severity":"HIGH","description":"Whether ACL operations that require whenNotPaused are currently paused.","type":"RISK_PARAMETER"},"blockedAccounts":{"severity":"HIGH","description":"Accounts denied from using ACL operations, reconstructed from BlockedAccount and UnblockedAccount events.","type":"PERMISSION"},"getFHEVMExecutorAddress":{"description":"FHEVMExecutor contract that may grant transient handle allowances without first being allowed by the caller.","type":"EXTERNAL"},"getPauserSetAddress":{"description":"PauserSet contract whose members may pause the ACL.","type":"EXTERNAL"}}
+      implementationNames.eth:0x3F6D970d30E1FFE9657aa8072C82dA10eef1c3D6:
+-        "ACL"
+      implementationNames.eth:0x9A017e0ba4c19A325D5a89f5dd2112e605E85418:
++        "ACL"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"proxiableUUID":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract FHEVMExecutor (eth:0xD82385dADa1ae3E969447f20A3164F6213100e75) [N/A] {
+    +++ description: None
+      template:
+-        "zama/ZamaFHEVMExecutor_v0_3_0"
+      sourceHashes.1:
+-        "0xf475718e9125acfc2f69d3c9cca8cedb9a15c644da7490f7f5fe0ae2690a77cc"
++        "0x8521799e0a57218bcbd587c2f46222a266bbcbe2f27780cc0bf6ed66eb9cda1f"
+      description:
+-        "FHEVM executor that accepts encrypted operation requests, accounts for computation usage, and stores ciphertext handles for operation results."
+      values.$implementation:
+-        "eth:0xC38aAfCBB73Fd4bd6f995275079C4Add9C1687E5"
++        "eth:0xf444B2B5e45cD07F1E735122F53A2d70A8c81dB5"
+      values.$pastUpgrades.4:
++        ["2026-08-10T11:50:47.000Z","0x3a73cbfe82d45d522aafa83acbc4a44dd89a2b409530e3a52d0076009a036c78",["eth:0xf444B2B5e45cD07F1E735122F53A2d70A8c81dB5"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.aclOwner:
+-        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
+      values.getVersion:
+-        "FHEVMExecutor v0.3.0"
++        "FHEVMExecutor v0.4.0"
+      fieldMeta:
+-        {"aclOwner":{"severity":"HIGH","description":"Owner of the Zama ACL contract. This account is authorized by onlyACLOwner for FHEVMExecutor administration.","type":"PERMISSION"},"getACLAddress":{"description":"ACL contract used to check and grant access to encrypted handles.","type":"EXTERNAL"},"getHCULimitAddress":{"description":"HCULimit contract used to account for homomorphic computation units consumed by encrypted operations for the original external caller.","type":"EXTERNAL"},"getInputVerifierAddress":{"description":"InputVerifier contract used to verify coprocessor signatures over encrypted input bundles against the Zama Gateway InputVerification EIP-712 domain.","type":"EXTERNAL"},"getHandleVersion":{"description":"Current ciphertext handle version emitted by the executor. Version 1 result handles include operation-specific domain separation and block context in their derivation."}}
+      implementationNames.eth:0xC38aAfCBB73Fd4bd6f995275079C4Add9C1687E5:
+-        "FHEVMExecutor"
+      implementationNames.eth:0xf444B2B5e45cD07F1E735122F53A2d70A8c81dB5:
++        "FHEVMExecutor"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"proxiableUUID":"Processing error occurred."}
+    }
+```
+
+```diff
+    EOA  (eth:0xdC472efa1642D5afB684aAaa546E22FB24AAB965) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"sign public decryption results accepted by the KMSVerifier.","role":".getKmsSigners"}]
+    }
+```
+
+```diff
+    EOA  (eth:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"sign public decryption results accepted by the KMSVerifier.","role":".getKmsSigners"}]
+    }
+```
+
+```diff
+    contract ZamaGovMultisigA (eth:0xE43c73aAb2b6aBBad6d0461997ce1cfea5ABe66f) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2","description":"change the per-block and per-transaction HCU limits and manage callers that bypass the per-block limit.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.5:
+-        {"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"create KMS signer contexts with arbitrary signer sets and thresholds, and destroy non-current contexts. A malicious context can attest an inflated unwrap amount and drain pooled wrapper backing.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.17:
+-        {"permission":"interact","from":"eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6","description":"transfer ACL ownership, unpause the ACL, block or unblock accounts, manage PauserSet membership, and create or destroy KMSVerifier signer contexts.","role":".owner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.24:
+-        {"permission":"upgrade","from":"eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2","description":"upgrade the HCULimit implementation.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.28:
+-        {"permission":"upgrade","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"upgrade the KMSVerifier implementation.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.37:
+-        {"permission":"upgrade","from":"eth:0xD82385dADa1ae3E969447f20A3164F6213100e75","description":"upgrade the FHEVMExecutor implementation.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+    }
+```
+
+```diff
+    EOA  (eth:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"sign public decryption results accepted by the KMSVerifier.","role":".getKmsSigners"}]
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1786107356 => .flat}/ACL/ACL.sol        |  93 ++-
+ .../FHEVMExecutor/FHEVMExecutor.sol                | 657 ++++++++++++++++-----
+ .../HCULimit/HCULimit.sol                          | 237 ++++++--
+ .../KMSVerifier/KMSVerifier.sol                    | 569 +++++++++++-------
+ 4 files changed, 1127 insertions(+), 429 deletions(-)
+```
+
 Generated with discovered.json: 0x55d44c4022a34a2b451603062a4b613f2b96a88c
 
 # Diff at Fri, 07 Aug 2026 12:57:23 GMT:
