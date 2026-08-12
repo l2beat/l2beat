@@ -20,11 +20,41 @@ describe(getInteropTokenUrl.name, () => {
     expect(result).toEqual(undefined)
   })
 
-  it('builds token URL from the token id and symbol', () => {
+  it('builds token URL from the token id, issuer and symbol', () => {
+    const result = getInteropTokenUrl({
+      id: 'usdc01',
+      issuer: 'circle',
+      symbol: 'USDC',
+    })
+
+    expect(result).toEqual('/interop/tokens/usdc01/circle/usdc')
+  })
+
+  it('skips the issuer segment when the issuer is unknown', () => {
+    const result = getInteropTokenUrl({
+      id: 'eth001',
+      issuer: null,
+      symbol: 'ETH',
+    })
+
+    expect(result).toEqual('/interop/tokens/eth001/eth')
+  })
+
+  it('builds token URL from the id alone when nothing else is known', () => {
     const result = getInteropTokenUrl({
       id: 'usdc01',
     })
 
     expect(result).toEqual('/interop/tokens/usdc01')
+  })
+
+  it('slugifies segments that are not URL friendly', () => {
+    const result = getInteropTokenUrl({
+      id: 'usdce1',
+      issuer: 'Circle & Co.',
+      symbol: 'USDC.e',
+    })
+
+    expect(result).toEqual('/interop/tokens/usdce1/circle-co/usdc-e')
   })
 })

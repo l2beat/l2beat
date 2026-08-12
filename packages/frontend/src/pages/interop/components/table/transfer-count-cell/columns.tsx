@@ -224,7 +224,7 @@ function TokenAmount({
 
   const tokenUrl =
     abstractTokenId && selectedChains
-      ? getInteropTokenUrl({ id: abstractTokenId })
+      ? getInteropTokenUrl({ id: abstractTokenId, symbol })
       : undefined
 
   if (!tokenUrl) {
