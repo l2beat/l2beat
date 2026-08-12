@@ -59,10 +59,8 @@
     // auto-redeemer. Named so it is not rendered blank; see unverifiedContracts.
     "matic:0xAC9930b2AE455a671b62dE86876A7e8587825294": "OperationsAccount"
   },
-  // Everything project-specific lives in ../_templates/polymarket/*. What is
-  // left here is the boundary against external systems (the collateral tokens
-  // and Safe infrastructure), whose templates are shared with other projects
-  // and must not be narrowed for this one.
+  // Overrides are limited to discovery-engine exceptions and boundaries around
+  // external systems; each project-specific exception is justified below.
   "overrides": {
     // Proxy detection runs before shape matching, so this cannot be templated:
     // the automatic detector misreads this factory as a Safe (slot0 holds the
@@ -86,6 +84,66 @@
         "rescuer",
         "$admin"
       ]
+    },
+    // Shared UMA oracle templates do not crawl Finder because its registry
+    // spans unrelated applications. Expose it only for Polymarket; the Finder
+    // override below limits traversal to dependencies its oracle flow reads.
+    "matic:0x2C0367a9DB231dDeBd88a94b4f6461a6e47C58B1": {
+      "fields": {
+        "umaFinder": {
+          "handler": { "type": "call", "method": "finder", "args": [] }
+        }
+      }
+    },
+    "matic:0xeE3Afe347D5C74317041E2618C49534dAf887c24": {
+      "fields": {
+        "umaFinder": {
+          "handler": { "type": "call", "method": "finder", "args": [] }
+        }
+      }
+    },
+    // Finder also indexes unrelated UMA applications. Keep the full registry
+    // visible, but crawl only the entries read by Polymarket's oracle contracts.
+    "matic:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64": {
+      "ignoreRelatives": ["namedAddresses"],
+      "fields": {
+        "oracle": {
+          "handler": {
+            "type": "call",
+            "method": "getImplementationAddress",
+            "args": [
+              "0x4f7261636c650000000000000000000000000000000000000000000000000000"
+            ]
+          }
+        },
+        "store": {
+          "handler": {
+            "type": "call",
+            "method": "getImplementationAddress",
+            "args": [
+              "0x53746f7265000000000000000000000000000000000000000000000000000000"
+            ]
+          }
+        },
+        "identifierWhitelist": {
+          "handler": {
+            "type": "call",
+            "method": "getImplementationAddress",
+            "args": [
+              "0x4964656e74696669657257686974656c69737400000000000000000000000000"
+            ]
+          }
+        },
+        "collateralWhitelist": {
+          "handler": {
+            "type": "call",
+            "method": "getImplementationAddress",
+            "args": [
+              "0x436f6c6c61746572616c57686974656c69737400000000000000000000000000"
+            ]
+          }
+        }
+      }
     },
     // Safe singleton and fallback handler: uninitialized when called directly.
     "matic:0xE51abdf814f8854941b9Fe8e3A4F65CAB4e7A4a8": {

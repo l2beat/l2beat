@@ -3,11 +3,5 @@
     "hash": "0x44a9fb7aba5f366c5709b1ea452c40bd919a9bede21b2d9f0a1fe75ad8d2eb21",
     "address": "eth:0xdBF90434dF0B98219f87d112F37d74B1D90758c7",
     "blockNumber": 22648158
-  },
-  "AddressWhitelist-matic:0x0f79d0039956D58a7d5d006a6Dd64a35616Aa2c6": {
-    "hash": "0xa87e7461021d077d640bc312623caf5c914572ac90f111bf5ceba3ca4b04b554",
-    "address": "matic:0x0f79d0039956D58a7d5d006a6Dd64a35616Aa2c6",
-    "chain": "polygonpos",
-    "blockNumber": 91023912
   }
 }

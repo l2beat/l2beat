@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xa4c6ab84ced3370a955d42e32c2e328f189e57cb
+Generated with discovered.json: 0xcf54579e04dd7c7b4ecd70d78a2046cb91afe199
 
-# Diff at Tue, 11 Aug 2026 13:48:09 GMT:
+# Diff at Wed, 12 Aug 2026 09:20:27 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current timestamp: 1785484385
@@ -25,7 +25,13 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract AddressWhitelist (matic:0x0f79d0039956D58a7d5d006a6Dd64a35616Aa2c6) [uma/AddressWhitelist]
+    contract Finder (matic:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64) [polymarket/UmaFinder]
+    +++ description: Maps interface names to contract addresses (UMA protocol contracts).
+```
+
+```diff
++   Status: CREATED
+    contract AddressWhitelist (matic:0x0f79d0039956D58a7d5d006a6Dd64a35616Aa2c6) [polymarket/UmaAddressWhitelist]
     +++ description: Owner-managed address whitelist. Other contracts can query whether an address is listed; the whitelist itself does not assign a meaning to the listed addresses.
 ```
 
@@ -33,6 +39,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract BinaryModule (matic:0x1000008dD9001B968442c1000017eaE6E0dA00Ba) [polymarket/BinaryModule]
     +++ description: Upgradeable outcome module for two-sided markets. Split, merge and redemption functions have no caller restriction. Bridge-role holders can mint positions without collateral backing, while resolver-role holders can report results directly, bypassing the oracle path; admins can pause reporting by a resolver or for a condition.
+```
+
+```diff
++   Status: CREATED
+    contract AddressWhitelist (matic:0x1020Ae36548ab28Bc0c41Fd2a08D24132C82cc55) [polymarket/UmaAddressWhitelist]
+    +++ description: Owner-managed address whitelist. Other contracts can query whether an address is listed; the whitelist itself does not assign a meaning to the listed addresses.
 ```
 
 ```diff
@@ -45,6 +57,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract NegRiskModule (matic:0x200000900045e3B6259600682756002200028933) [polymarket/NegRiskModule]
     +++ description: Upgradeable outcome module for multi-outcome (negative-risk) markets. Split, merge, redemption and event-level conversion functions have no caller restriction. Bridge-role holders can mint positions without collateral backing, while resolver-role holders can report results directly, bypassing the oracle path; admins can pause reporting by a resolver or for a condition.
+```
+
+```diff
++   Status: CREATED
+    contract IdentifierWhitelist (matic:0x2271a5E74eA8A29764ab10523575b41AA52455f0) [polymarket/UmaIdentifierWhitelist]
+    +++ description: Keeps the list of identifiers that UMA oracle contracts accept for price requests.
 ```
 
 ```diff
@@ -163,13 +181,19 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract FxChild (matic:0x8397259c983751DAf40400790063935a11afa28a) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract CollateralOnramp (matic:0x93070a847efEf7F70739046A929D47a521F5B8ee) [polymarket/CollateralOnramp]
     +++ description: Lets anyone deposit an asset supported by the configured collateral token and mint an equal amount of collateral tokens while that asset is not paused. Admins can pause or unpause wrapping per asset with no delay.
 ```
 
 ```diff
 +   Status: CREATED
-    contract AddressWhitelist (matic:0x9F35885CE8f67a942D7B2f4Fbf937987DA08c463) [uma/AddressWhitelist]
+    contract AddressWhitelist (matic:0x9F35885CE8f67a942D7B2f4Fbf937987DA08c463) [polymarket/UmaAddressWhitelist]
     +++ description: Owner-managed address whitelist. Other contracts can query whether an address is listed; the whitelist itself does not assign a meaning to the listed addresses.
 ```
 
@@ -195,6 +219,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract ProxyWalletFactory (matic:0xaB45c5A4B0c941a2F231C04C3f49182e1A254052) [polymarket/ProxyWalletFactory]
     +++ description: Deterministic factory that associates each effective caller with one minimal-proxy wallet and forwards batched calls to it. The constructor deploys and stores the wallet implementation, with no direct setter. The owner can replace the gas-relay module, whose code executes by delegatecall and can modify factory storage.
+```
+
+```diff
++   Status: CREATED
+    contract OracleChildTunnel (matic:0xac60353a54873c446101216829a6A98cDbbC3f3D) [N/A]
+    +++ description: None
 ```
 
 ```diff
@@ -225,6 +255,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract NegRiskCtfCollateralAdapter2 (matic:0xadA2005600Dec949baf300f4C6120000bDB6eAab) [polymarket/NegRiskCtfCollateralAdapter]
     +++ description: Adapter letting anyone split, merge, redeem or convert wrapped collateral into multi-outcome positions while the underlying asset is not paused. It unwraps and re-wraps in the same call and cannot redirect funds to third parties. Admins can pause or unpause all operations, including redemptions, per asset with no delay.
+```
+
+```diff
++   Status: CREATED
+    contract GovernorChildTunnel (matic:0xb4AeaD497FCbEAA3C37919032d42C29682f46376) [N/A]
+    +++ description: None
 ```
 
 ```diff
@@ -285,6 +321,12 @@ Discovery rerun on the same block number with only config-related changes.
 +   Status: CREATED
     contract GnosisSafeL2 (matic:0xE51abdf814f8854941b9Fe8e3A4F65CAB4e7A4a8) [N/A]
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Store (matic:0xE58480CA74f1A819faFd777BEDED4E2D5629943d) [polymarket/UmaStore]
+    +++ description: UMA protocol contract responsible for calculating and collecting regular and final fees for using the DVM.
 ```
 
 ```diff

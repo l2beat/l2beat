@@ -2,7 +2,6 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "UmaCtfAdapterLegacy",
   "description": "Resolution adapter registering binary questions with an UMA optimistic oracle and reporting settled answers to an outcome-token ledger. Anyone can initialize a question and resolve it when an oracle price is available unless an admin has paused it. Admins can pause, unpause, reset or flag initialized questions. A flagged question cannot be unflagged and, after {{ emergencySafetyPeriodFormatted }}, can be resolved by an admin with any two-value payout array that is not all zeroes.",
-  "ignoreRelatives": ["collateralWhitelist"],
   "fields": {
     "emergencySafetyPeriodFormatted": {
       "handler": {

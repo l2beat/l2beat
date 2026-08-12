@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "shared",
-  "description": "A simple address whitelist for tokens that can be used as bonds and/or fees. This whitelist is checked and enforced by various smart contracts in the UMA ecosystem.",
+  "description": "Owner-managed address whitelist. Other contracts can query whether an address is listed; the whitelist itself does not assign a meaning to the listed addresses.",
   "ignoreMethods": ["whitelistIndices"],
   "ignoreRelatives": ["getWhitelist"],
   "fields": {
