@@ -128,7 +128,11 @@ export const strk20: BaseProject = {
       orderHint: 0,
       description:
         'The pool implementation is immediately upgradeable, so users have no delay to withdraw before a malicious upgrade can take effect.',
-      walkawayTest: { passed: true },
+      walkawayTest: {
+        passed: false,
+        reason:
+          'Although the full software stack needed to generate proofs and exit is published and self-hostable, STRK-20 heavily relies on the permissioned Starknet sequencer: it alone verifies client proofs and must include pool transactions, so users cannot exit without its cooperation.',
+      },
     },
     reproducibility: {
       value: 'Reproducible',
