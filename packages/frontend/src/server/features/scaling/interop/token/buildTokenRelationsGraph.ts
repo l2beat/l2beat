@@ -37,6 +37,8 @@ export interface TokenRelationsRoute {
 export interface TokenRelationsEdgeSource {
   plugin: string
   bridgeType: InteropBridgeType
+  /** Exact route chains, retained when deployments collapse into one node. */
+  chains: string[]
 }
 
 export interface TokenRelationsGraphNode {
@@ -49,17 +51,17 @@ export interface TokenRelationsGraphNode {
 }
 
 export interface TokenRelationsGraphEdge {
-  /** With `kind: 'backs'`, `from` is the backing side. */
+  /** `from` is the backing side. */
   from: string
   to: string
-  kind: 'backs' | 'related'
+  kind: 'backs'
   sources: TokenRelationsEdgeSource[]
 }
 
 export interface TokenRelationsGraphModel {
   nodes: TokenRelationsGraphNode[]
   edges: TokenRelationsGraphEdge[]
-  /** Single deployments no relation has ever touched. */
+  /** Nodes with no relation suitable for the public graph. */
   unconnectedNodeIds: string[]
 }
 
@@ -83,18 +85,17 @@ export function buildTokenRelationsGraph(
   const groups = groupBurnMint([...byKey.keys()], relevant)
   const nodes = buildNodes(groups, byKey, relevant)
   const edges = buildEdges(relevant, groups)
-
-  const touched = new Set<string>()
-  for (const route of relevant) {
-    touched.add(deploymentKey(route.tokenAChain, route.tokenAAddress))
-    touched.add(deploymentKey(route.tokenBChain, route.tokenBAddress))
-  }
+  const connectedNodeIds = new Set(
+    edges.flatMap((edge) => [edge.from, edge.to]),
+  )
 
   return {
     nodes,
     edges,
     unconnectedNodeIds: nodes
-      .filter((node) => node.members.every((m) => !touched.has(key(m))))
+      .filter(
+        (node) => node.sources.length === 0 && !connectedNodeIds.has(node.id),
+      )
       .map((node) => node.id),
   }
 }
@@ -158,17 +159,8 @@ function buildNodes(
     )
     if (groupId === undefined) continue
     const existing = sources.get(groupId) ?? []
-    if (
-      existing.some(
-        (s) => s.plugin === route.plugin && s.bridgeType === route.bridgeType,
-      )
-    ) {
-      continue
-    }
-    sources.set(groupId, [
-      ...existing,
-      { plugin: route.plugin, bridgeType: route.bridgeType },
-    ])
+    addUniqueSource(existing, sourceFromRoute(route))
+    sources.set(groupId, existing)
   }
 
   return [...members]
@@ -189,27 +181,18 @@ function buildEdges(
   groups: Map<string, string>,
 ): TokenRelationsGraphEdge[] {
   const directed = new Map<string, TokenRelationsGraphEdge>()
-  const undirected = new Map<string, TokenRelationsGraphEdge>()
 
   for (const route of routes) {
     if (route.bridgeType !== 'lockAndMint') continue
     const a = groups.get(deploymentKey(route.tokenAChain, route.tokenAAddress))
     const b = groups.get(deploymentKey(route.tokenBChain, route.tokenBAddress))
     if (a === undefined || b === undefined || a === b) continue
-    const source = { plugin: route.plugin, bridgeType: route.bridgeType }
+    const source = sourceFromRoute(route)
 
-    if (route.lockedToken === null) {
-      // One side is minted, but no observation says which. Recorded as a plain
-      // connection rather than guessing a direction.
-      addSource(undirected, unorderedKey(a, b), {
-        from: a < b ? a : b,
-        to: a < b ? b : a,
-        kind: 'related',
-        sources: [],
-      })
-      addSourceTo(undirected, unorderedKey(a, b), source)
-      continue
-    }
+    // A public risk graph can only make a useful lock-and-mint claim when the
+    // evidence identifies the backing endpoint. Keep incomplete or conflicting
+    // observations in TokenDB for investigation, but omit them from this view.
+    if (route.lockedToken === null) continue
 
     const from = route.lockedToken === 'A' ? a : b
     const to = route.lockedToken === 'A' ? b : a
@@ -223,38 +206,17 @@ function buildEdges(
   }
 
   // Contradictory evidence: each side looks like it backs the other. Nothing
-  // here can rank them, and a two-cycle would break any layered drawing, so
-  // the pair is demoted to a plain connection. Not observed in the data today.
+  // here can rank them, so neither claim belongs in the public risk graph.
   for (const edge of [...directed.values()]) {
     const opposite = `${edge.to}->${edge.from}`
     if (!directed.has(opposite)) continue
-    const other = directed.get(opposite) as TokenRelationsGraphEdge
     directed.delete(`${edge.from}->${edge.to}`)
     directed.delete(opposite)
-    const pairKey = unorderedKey(edge.from, edge.to)
-    addSource(undirected, pairKey, {
-      from: edge.from < edge.to ? edge.from : edge.to,
-      to: edge.from < edge.to ? edge.to : edge.from,
-      kind: 'related',
-      sources: [],
-    })
-    for (const source of [...edge.sources, ...other.sources]) {
-      addSourceTo(undirected, pairKey, source)
-    }
   }
 
-  // A known direction beats an unidentified one for the same pair.
-  for (const edge of directed.values()) {
-    undirected.delete(unorderedKey(edge.from, edge.to))
-  }
-
-  return [...directed.values(), ...undirected.values()].toSorted(
+  return [...directed.values()].toSorted(
     (a, b) => a.from.localeCompare(b.from) || a.to.localeCompare(b.to),
   )
-}
-
-function unorderedKey(a: string, b: string): string {
-  return a < b ? `${a}--${b}` : `${b}--${a}`
 }
 
 function addSource(
@@ -272,8 +234,31 @@ function addSourceTo(
 ): void {
   const edge = map.get(mapKey)
   if (!edge) return
-  const exists = edge.sources.some(
-    (s) => s.plugin === source.plugin && s.bridgeType === source.bridgeType,
+  addUniqueSource(edge.sources, source)
+}
+
+function sourceFromRoute(route: TokenRelationsRoute): TokenRelationsEdgeSource {
+  return {
+    plugin: route.plugin,
+    bridgeType: route.bridgeType,
+    chains: [...new Set([route.tokenAChain, route.tokenBChain])].toSorted(),
+  }
+}
+
+function addUniqueSource(
+  sources: TokenRelationsEdgeSource[],
+  source: TokenRelationsEdgeSource,
+): void {
+  const existing = sources.find(
+    (candidate) =>
+      candidate.plugin === source.plugin &&
+      candidate.bridgeType === source.bridgeType,
   )
-  if (!exists) edge.sources.push(source)
+  if (!existing) {
+    sources.push(source)
+    return
+  }
+  existing.chains = [
+    ...new Set([...existing.chains, ...source.chains]),
+  ].toSorted()
 }

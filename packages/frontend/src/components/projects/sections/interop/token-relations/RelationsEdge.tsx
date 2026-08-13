@@ -1,6 +1,6 @@
 import type { InteropTokenRelationsEdge } from '~/server/features/scaling/interop/token/getInteropTokenRelationsGraph'
 import { cn } from '~/utils/cn'
-import type { NodeBox } from './layout'
+import type { NodeBox, RelationsLayoutOrientation } from './layout'
 
 export const ARROW_MARKER_ID = 'token-relations-arrow'
 export const ARROW_MARKER_ACTIVE_ID = 'token-relations-arrow-active'
@@ -8,26 +8,19 @@ export const ARROW_MARKER_ACTIVE_ID = 'token-relations-arrow-active'
 const BRIDGE_ICON_SIZE = 16
 const MAX_BRIDGE_ICONS = 3
 
+export interface RelationsEdgeGeometry {
+  path: string
+  midX: number
+  midY: number
+}
+
 interface Props {
-  edge: InteropTokenRelationsEdge
-  from: NodeBox
-  to: NodeBox
-  /** How many columns the connection reaches across; >1 has to route around. */
-  columnSpan: number
+  geometry: RelationsEdgeGeometry
   isDimmed: boolean
   isHighlighted: boolean
 }
 
-export function RelationsEdge({
-  edge,
-  from,
-  to,
-  columnSpan,
-  isDimmed,
-  isHighlighted,
-}: Props) {
-  const geometry = edgeGeometry(from, to, columnSpan)
-
+export function RelationsEdge({ geometry, isDimmed, isHighlighted }: Props) {
   // Not interactive: what a connection means is already spelled out in the
   // panel of either deployment it touches.
   return (
@@ -40,22 +33,34 @@ export function RelationsEdge({
         d={geometry.path}
         fill="none"
         className={isHighlighted ? 'stroke-brand' : 'stroke-primary'}
-        strokeOpacity={isHighlighted ? 1 : 0.45}
+        strokeOpacity={isHighlighted ? 1 : 0.32}
         strokeWidth={isHighlighted ? 2.5 : 1.75}
-        strokeDasharray={edge.kind === 'related' ? '5 4' : undefined}
-        markerEnd={
-          edge.kind === 'backs'
-            ? `url(#${isHighlighted ? ARROW_MARKER_ACTIVE_ID : ARROW_MARKER_ID})`
-            : undefined
-        }
+        markerEnd={`url(#${isHighlighted ? ARROW_MARKER_ACTIVE_ID : ARROW_MARKER_ID})`}
       />
-      {edge.bridges.length > 0 && (
-        <BridgeIcons
-          bridges={edge.bridges}
-          x={geometry.midX}
-          y={geometry.midY}
-        />
-      )}
+    </g>
+  )
+}
+
+interface BridgeProps {
+  edge: InteropTokenRelationsEdge
+  geometry: RelationsEdgeGeometry
+  isDimmed: boolean
+}
+
+export function RelationsEdgeBridges({
+  edge,
+  geometry,
+  isDimmed,
+}: BridgeProps) {
+  if (edge.bridges.length === 0) return null
+
+  return (
+    <g
+      className={cn(isDimmed && 'opacity-10')}
+      aria-hidden
+      pointerEvents="none"
+    >
+      <BridgeIcons bridges={edge.bridges} x={geometry.midX} y={geometry.midY} />
     </g>
   )
 }
@@ -110,14 +115,24 @@ function BridgeIcons({
 }
 
 /**
- * Backing connections leave the right edge of the backer and arrive at the left
- * edge of the backed node, so the arrow always reads rightwards.
+ * Backing connections follow the layout: rightwards in compact graphs and
+ * downwards when a busy graph fans out across a wide canvas.
  *
  * Two shapes need to dodge the nodes in between rather than cut through them:
  * a connection between two nodes in the same column arcs to the left of it, and
  * one that skips a column bows above or below.
  */
-export function edgeGeometry(from: NodeBox, to: NodeBox, columnSpan: number) {
+export function edgeGeometry(
+  from: NodeBox,
+  to: NodeBox,
+  columnSpan: number,
+  orientation: RelationsLayoutOrientation = 'left-to-right',
+  targetPort = 0.5,
+) {
+  if (orientation === 'top-to-bottom') {
+    return verticalEdgeGeometry(from, to, columnSpan, targetPort)
+  }
+
   if (columnSpan === 0) {
     const topFirst = from.y <= to.y
     const start = {
@@ -135,7 +150,7 @@ export function edgeGeometry(from: NodeBox, to: NodeBox, columnSpan: number) {
   }
 
   const start = { x: from.x + from.width, y: from.y + from.height / 2 }
-  const end = { x: to.x, y: to.y + to.height / 2 }
+  const end = { x: to.x, y: to.y + to.height * targetPort }
 
   if (columnSpan > 1) {
     // Swings clear of the column it passes, so it never runs through a node.
@@ -153,6 +168,53 @@ export function edgeGeometry(from: NodeBox, to: NodeBox, columnSpan: number) {
     path: `M ${start.x} ${start.y} C ${controlX} ${start.y} ${controlX} ${end.y} ${end.x} ${end.y}`,
     midX: controlX,
     midY: (start.y + end.y) / 2,
+  }
+}
+
+function verticalEdgeGeometry(
+  from: NodeBox,
+  to: NodeBox,
+  columnSpan: number,
+  targetPort: number,
+) {
+  if (columnSpan === 0) {
+    const leftFirst = from.x <= to.x
+    const start = {
+      x: leftFirst ? from.x + from.width : from.x,
+      y: from.y + from.height / 2,
+    }
+    const end = {
+      x: leftFirst ? to.x : to.x + to.width,
+      y: to.y + to.height / 2,
+    }
+    // Bows above the row, clearing anything between the two nodes.
+    const bow = Math.min(72, 24 + Math.abs(end.x - start.x) / 8)
+    return {
+      path: `M ${start.x} ${start.y} C ${start.x} ${start.y - bow} ${end.x} ${end.y - bow} ${end.x} ${end.y}`,
+      midX: (start.x + end.x) / 2,
+      midY: (start.y + end.y) / 2 - bow * 0.75,
+    }
+  }
+
+  const start = { x: from.x + from.width / 2, y: from.y + from.height }
+  const end = { x: to.x + to.width * targetPort, y: to.y }
+
+  if (columnSpan > 1) {
+    // Swings clear of the row it passes, so it never runs through a node.
+    const side = end.x >= start.x ? 1 : -1
+    const bow = side * (SKIP_BOW + Math.abs(end.x - start.x) / 6)
+    return {
+      path: `M ${start.x} ${start.y} C ${start.x + bow} ${start.y + 40} ${end.x + bow} ${end.y - 40} ${end.x} ${end.y}`,
+      midX: end.x,
+      midY: end.y - 28,
+    }
+  }
+
+  const branchY = (start.y + end.y) / 2
+  return {
+    path: `M ${start.x} ${start.y} V ${branchY} H ${end.x} V ${end.y}`,
+    midX: end.x,
+    midY: branchY,
   }
 }
 

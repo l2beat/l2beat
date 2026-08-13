@@ -55,19 +55,29 @@ describe(buildTokenRelationsGraph.name, () => {
         from: 'optimism|0xccc',
         to: 'ethereum|0xaaa',
         kind: 'backs',
-        sources: [{ plugin: 'bridge', bridgeType: 'lockAndMint' }],
+        sources: [
+          {
+            plugin: 'bridge',
+            bridgeType: 'lockAndMint',
+            chains: ['ethereum', 'optimism'],
+          },
+        ],
       },
     ])
     expect(graph.unconnectedNodeIds).toEqual([])
   })
 
-  it('records an unidentified locked side as a plain connection', () => {
+  it('omits a lock-mint relation with no identified locked side', () => {
     const graph = buildTokenRelationsGraph(
       [eth, op],
       [route(eth, op, { bridgeType: 'lockAndMint', lockedToken: null })],
     )
 
-    expect(graph.edges.map((e) => e.kind)).toEqual(['related'])
+    expect(graph.edges).toEqual([])
+    expect(graph.unconnectedNodeIds).toEqual([
+      'ethereum|0xaaa',
+      'optimism|0xccc',
+    ])
   })
 
   it('prefers a known direction over an unidentified one for the same pair', () => {
@@ -88,7 +98,7 @@ describe(buildTokenRelationsGraph.name, () => {
     ])
   })
 
-  it('demotes contradictory directions to a plain connection', () => {
+  it('omits contradictory backing directions', () => {
     const graph = buildTokenRelationsGraph(
       [eth, op],
       [
@@ -101,11 +111,11 @@ describe(buildTokenRelationsGraph.name, () => {
       ],
     )
 
-    expect(graph.edges.length).toEqual(1)
-    expect(graph.edges[0]?.kind).toEqual('related')
-    expect(
-      (graph.edges[0]?.sources ?? []).map((s) => s.plugin),
-    ).toEqualUnsorted(['bridge', 'other'])
+    expect(graph.edges).toEqual([])
+    expect(graph.unconnectedNodeIds).toEqual([
+      'ethereum|0xaaa',
+      'optimism|0xccc',
+    ])
   })
 
   it('drops relations that stay inside one burn-mint node', () => {

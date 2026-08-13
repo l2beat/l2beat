@@ -1,8 +1,13 @@
 import { env } from '~/env'
+import { mapInteropChainsToWithIcons } from '~/pages/interop/utils/mapInteropChainsToWithIcons'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { getTokenDb } from '~/server/tokenDb'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
+import { manifest } from '~/utils/Manifest'
+import { getChainDisplayInfo } from '../scaling/interop/token/getChainDisplayInfo'
 import { getAggregatedInteropSnapshotTimestamp } from '../scaling/interop/utils/getAggregatedInteropTimestamp'
+import { getInteropChains } from '../scaling/interop/utils/getInteropChains'
 import {
   buildTokenGraphTiles,
   type TokenGraphTile,
@@ -39,19 +44,43 @@ async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
   // Roughly 1s in parallel against a warm pool, versus 2.6s sequentially.
   // Assembling the tiles from the result costs ~100ms, so the reads are the
   // whole cost of this function.
-  const [abstractTokens, deployedTokens, routes, volumeByTokenId] =
-    await Promise.all([
-      tokenDb.abstractToken.getAllSummaries(),
-      tokenDb.deployedToken.getAllAssignments(),
-      tokenDb.tokenRelation.getAllRoutes(),
-      getVolumeByTokenId(),
-    ])
+  const [
+    abstractTokens,
+    deployedTokens,
+    routes,
+    volumeByTokenId,
+    projectsWithChains,
+    interopProjects,
+  ] = await Promise.all([
+    tokenDb.abstractToken.getAllSummaries(),
+    tokenDb.deployedToken.getAllAssignments(),
+    tokenDb.tokenRelation.getAllRoutes(),
+    getVolumeByTokenId(),
+    ps.getProjects({ select: ['chainConfig'] }),
+    ps.getProjects({ select: ['interopConfig'] }),
+  ])
+
+  const activeInteropChains = getInteropChains().filter(
+    (chain) => !chain.isUpcoming,
+  )
+  const chainInfo = getChainDisplayInfo(
+    deployedTokens.map((deployment) => deployment.chain),
+    mapInteropChainsToWithIcons(manifest, activeInteropChains),
+    projectsWithChains,
+  )
+  const chainIconUrlById = new Map(
+    [...chainInfo].flatMap(([chain, info]) =>
+      info.iconUrl ? [[chain, info.iconUrl] as const] : [],
+    ),
+  )
 
   return buildTokenGraphTiles({
     abstractTokens,
     deployedTokens,
     routes,
     volumeByTokenId,
+    chainIconUrlById,
+    interopProjects,
   })
 }
 

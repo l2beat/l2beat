@@ -61,6 +61,12 @@ export function TokenGraphTile({
         {tile.deployments === 1 ? 'deployment' : 'deployments'}
         {' · '}
         {tile.chains} {tile.chains === 1 ? 'chain' : 'chains'}
+        {tile.minterCount !== undefined && (
+          <>
+            {' · '}
+            {tile.minterCount} {tile.minterCount === 1 ? 'minter' : 'minters'}
+          </>
+        )}
       </p>
     </button>
   )

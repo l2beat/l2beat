@@ -1,9 +1,11 @@
+import type { Project } from '@l2beat/config'
 import type { AbstractTokenRecord, DeployedTokenRecord } from '@l2beat/database'
 import {
   buildTokenRelationsGraph,
   type TokenRelationsRoute,
 } from '../scaling/interop/token/buildTokenRelationsGraph'
 import { getAbstractTokenSlug } from '../scaling/interop/token/getAbstractTokenSlug'
+import { createMintingBridgeResolver } from '../scaling/interop/utils/createMintingBridgeResolver'
 
 /**
  * One card on /tokens: enough to draw a small picture of how a token exists
@@ -18,11 +20,13 @@ export interface TokenGraphTileNode {
   id: string
   /** Chain ids of the node's deployments; more than one is a burn-mint group. */
   chains: string[]
+  /** Same order as `chains`; omitted when presentation data was not requested. */
+  chainIconUrls?: (string | null)[]
 }
 
 export interface TokenGraphTileGraph {
   nodes: TokenGraphTileNode[]
-  edges: { from: string; to: string; kind: 'backs' | 'related' }[]
+  edges: { from: string; to: string; kind: 'backs' }[]
   unconnectedNodeIds: string[]
 }
 
@@ -36,6 +40,8 @@ export interface TokenGraphTile {
   chains: number
   /** Last 24h volume across the snapshot; null when the token was not active. */
   volume: number | null
+  /** Distinct configured projects observed minting this token. */
+  minterCount?: number
   /**
    * Whether the token has any observed relation at all. Not the same as having
    * edges: a token whose only relations are burn-and-mint collapses into a
@@ -58,6 +64,10 @@ export interface BuildTokenGraphTilesInput {
   routes: TokenRelationsRoute[]
   /** Summed 24h volume per abstract token id. */
   volumeByTokenId: Map<string, number>
+  /** Optional because the pure builder's tests do not need presentation data. */
+  chainIconUrlById?: ReadonlyMap<string, string>
+  /** Resolves raw plugin observations to the public minter projects. */
+  interopProjects?: Project<'interopConfig'>[]
 }
 
 export function buildTokenGraphTiles({
@@ -65,7 +75,12 @@ export function buildTokenGraphTiles({
   deployedTokens,
   routes,
   volumeByTokenId,
+  chainIconUrlById,
+  interopProjects,
 }: BuildTokenGraphTilesInput): TokenGraphTile[] {
+  const resolveMintingBridges = interopProjects
+    ? createMintingBridgeResolver(interopProjects)
+    : undefined
   const deploymentsByToken = new Map<string, typeof deployedTokens>()
   for (const deployment of deployedTokens) {
     if (!deployment.abstractTokenId) continue
@@ -104,6 +119,9 @@ export function buildTokenGraphTiles({
     const model = buildTokenRelationsGraph(deployments, tokenRoutes)
 
     const chainIds = new Set(deployments.map((d) => d.chain))
+    const minterCount = resolveMintingBridges
+      ? getMinterCount(model, token.id, resolveMintingBridges)
+      : undefined
 
     tiles.push({
       id: token.id,
@@ -114,6 +132,7 @@ export function buildTokenGraphTiles({
       deployments: deployments.length,
       chains: chainIds.size,
       volume: volumeByTokenId.get(token.id) ?? null,
+      ...(minterCount !== undefined && { minterCount }),
       hasRelations:
         model.edges.length > 0 ||
         model.nodes.some((node) => node.members.length > 1),
@@ -121,6 +140,11 @@ export function buildTokenGraphTiles({
         nodes: model.nodes.map((node) => ({
           id: node.id,
           chains: node.members.map((member) => member.chain),
+          ...(chainIconUrlById && {
+            chainIconUrls: node.members.map(
+              (member) => chainIconUrlById.get(member.chain) ?? null,
+            ),
+          }),
         })),
         edges: model.edges.map((edge) => ({
           from: edge.from,
@@ -136,6 +160,33 @@ export function buildTokenGraphTiles({
     (a, b) =>
       (b.volume ?? -1) - (a.volume ?? -1) || a.symbol.localeCompare(b.symbol),
   )
+}
+
+function getMinterCount(
+  model: ReturnType<typeof buildTokenRelationsGraph>,
+  tokenId: string,
+  resolveMintingBridges: ReturnType<typeof createMintingBridgeResolver>,
+): number | undefined {
+  const sources = [
+    ...model.nodes.flatMap((node) => node.sources),
+    ...model.edges.flatMap((edge) => edge.sources),
+  ]
+  if (sources.length === 0) return undefined
+
+  const projectIds = new Set<string>()
+  for (const source of sources) {
+    for (const chain of source.chains) {
+      for (const project of resolveMintingBridges({
+        plugin: source.plugin,
+        bridgeType: source.bridgeType,
+        chain,
+        abstractTokenId: tokenId,
+      })) {
+        projectIds.add(project.id)
+      }
+    }
+  }
+  return projectIds.size > 0 ? projectIds.size : undefined
 }
 
 function endpointKey(chain: string, address: string): string {

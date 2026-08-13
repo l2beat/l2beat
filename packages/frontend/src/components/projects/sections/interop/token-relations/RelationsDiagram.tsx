@@ -3,24 +3,29 @@ import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useResizeObserver } from '~/hooks/useResizeObserver'
 import type { InteropTokenRelationsGraph } from '~/server/features/scaling/interop/token/getInteropTokenRelationsGraph'
 import { cn } from '~/utils/cn'
-import { layoutRelationsGraph } from './layout'
 import { RelationsDetails } from './RelationsDetails'
 import {
   ARROW_MARKER_ACTIVE_ID,
   ARROW_MARKER_ID,
   RelationsEdge,
+  RelationsEdgeBridges,
 } from './RelationsEdge'
 import {
-  EXPANDED_HEADER_HEIGHT,
-  EXPANDED_ROW_HEIGHT,
+  getRelationsNodeHeight,
+  getRelationsNodeWidth,
   RelationsNode,
 } from './RelationsNode'
 import { useRelationsCamera } from './useRelationsCamera'
+import {
+  getWrappedEdgeGeometry,
+  getWrappedSourceLanes,
+  getWrappedTargetPorts,
+  layoutWrappedRelationsGraph,
+  wrappedEdgeKey,
+} from './wrappedLayout'
 
 const DESKTOP_HEIGHT = 520
 const MOBILE_HEIGHT = 380
-// Distance from a column's top node up to its caption, in screen pixels.
-const CAPTION_GAP = 14
 // Below this a pointer press counts as a click, not a drag. Without the slack,
 // the hand-jitter in any real click cancels the selection.
 const CLICK_SLOP = 4
@@ -71,35 +76,32 @@ export function RelationsDiagram({
     }
   }, [fullGraph, hideUnconnected, hasUnconnected, isEverythingUnconnected])
 
-  const [expandedIds, setExpandedIds] = useState<ReadonlySet<string>>(
-    () => new Set(),
-  )
   const [hoveredId, setHoveredId] = useState<string | undefined>(undefined)
   const [dragged, setDragged] = useState<
     ReadonlyMap<string, { x: number; y: number }>
   >(() => new Map())
 
-  const heightOverrides = useMemo(() => {
-    const overrides = new Map<string, number>()
+  const sizeOverrides = useMemo(() => {
+    const heights = new Map<string, number>()
+    const widths = new Map<string, number>()
     for (const node of graph.nodes) {
-      if (!expandedIds.has(node.id)) continue
-      overrides.set(
-        node.id,
-        EXPANDED_HEADER_HEIGHT + node.deployments.length * EXPANDED_ROW_HEIGHT,
-      )
+      if (node.deployments.length <= 1) continue
+      heights.set(node.id, getRelationsNodeHeight(node))
+      widths.set(node.id, getRelationsNodeWidth(node))
     }
-    return overrides
-  }, [graph.nodes, expandedIds])
+    return { heights, widths }
+  }, [graph.nodes])
 
   const layout = useMemo(
     () =>
-      layoutRelationsGraph(
+      layoutWrappedRelationsGraph(
         graph.nodes,
         graph.edges,
         graph.unconnectedNodeIds,
-        heightOverrides,
+        sizeOverrides.heights,
+        sizeOverrides.widths,
       ),
-    [graph, heightOverrides],
+    [graph, sizeOverrides],
   )
 
   const boxes = useMemo(() => {
@@ -115,7 +117,19 @@ export function RelationsDiagram({
     () => ({ width: layout.width, height: layout.height }),
     [layout.width, layout.height],
   )
-  const camera = useRelationsCamera(content, viewport)
+  const initialFocus = useMemo(() => {
+    const primarySource = graph.nodes
+      .filter((node) => layout.layerOf.get(node.id) === 0)
+      .toSorted(
+        (a, b) =>
+          (b.volume ?? -1) - (a.volume ?? -1) || a.id.localeCompare(b.id),
+      )[0]
+    if (!primarySource) return undefined
+    const box = layout.boxes.get(primarySource.id)
+    if (!box) return undefined
+    return { x: box.x + box.width / 2, y: box.y }
+  }, [graph.nodes, layout])
+  const camera = useRelationsCamera(content, viewport, 'width', initialFocus)
 
   const activeId = hoveredId ?? selectedNodeId
   const neighbours = useMemo(() => {
@@ -127,6 +141,36 @@ export function RelationsDiagram({
     }
     return ids
   }, [activeId, graph.edges])
+
+  const targetPorts = useMemo(
+    () => getWrappedTargetPorts(graph.edges, boxes),
+    [boxes, graph.edges],
+  )
+  const sourceLanes = useMemo(
+    () => getWrappedSourceLanes(graph.edges),
+    [graph.edges],
+  )
+  const edgeGeometries = useMemo(() => {
+    const result = new Map<string, ReturnType<typeof getWrappedEdgeGeometry>>()
+    for (const edge of graph.edges) {
+      const from = boxes.get(edge.from)
+      const to = boxes.get(edge.to)
+      if (!from || !to) continue
+      result.set(
+        wrappedEdgeKey(edge),
+        getWrappedEdgeGeometry({
+          from,
+          to,
+          sourceRow: layout.rowOf.get(edge.from) ?? 0,
+          targetRow: layout.rowOf.get(edge.to) ?? 0,
+          targetPort: targetPorts.get(wrappedEdgeKey(edge)) ?? 0.5,
+          sourceLane: sourceLanes.get(edge.from) ?? 0,
+          worldWidth: layout.width,
+        }),
+      )
+    }
+    return result
+  }, [boxes, graph.edges, layout, sourceLanes, targetPorts])
 
   const svgRef = useRef<SVGSVGElement>(null)
   /**
@@ -207,15 +251,6 @@ export function RelationsDiagram({
     [camera, localPoint],
   )
 
-  const toggleExpanded = useCallback((nodeId: string) => {
-    setExpandedIds((previous) => {
-      const next = new Set(previous)
-      if (next.has(nodeId)) next.delete(nodeId)
-      else next.add(nodeId)
-      return next
-    })
-  }, [])
-
   const onPointerUp = useCallback(
     (event: React.PointerEvent<SVGSVGElement>) => {
       const active = gesture.current
@@ -229,11 +264,9 @@ export function RelationsDiagram({
         onSelectNode(undefined)
         return
       }
-      const node = graph.nodes.find((n) => n.id === active.id)
-      if (node && node.deployments.length > 1) toggleExpanded(node.id)
       onSelectNode(active.id)
     },
-    [camera, graph.nodes, onSelectNode, toggleExpanded],
+    [camera, onSelectNode],
   )
 
   // Only a pinch (which arrives as ctrl+wheel) or a held modifier zooms. A
@@ -312,67 +345,44 @@ export function RelationsDiagram({
         <g
           transform={`translate(${camera.camera.x}, ${camera.camera.y}) scale(${camera.camera.k})`}
         >
-          {layout.unconnectedDividerX !== undefined && (
+          {layout.unconnectedDividerY !== undefined && (
             <line
-              x1={layout.unconnectedDividerX}
-              x2={layout.unconnectedDividerX}
-              y1={0}
-              y2={layout.height}
+              x1={0}
+              x2={layout.width}
+              y1={layout.unconnectedDividerY}
+              y2={layout.unconnectedDividerY}
               className="stroke-divider"
               strokeDasharray="2 6"
             />
           )}
 
-          {/* Two captions, one per region — naming every column repeated the
-              same phrase across the diagram. They only earn their space when
-              both regions are drawn: with the loose block hidden there is
-              nothing to tell the structure apart from. Drawn at a fixed screen
-              size so they stay legible when zoomed out. */}
-          <g
-            transform={`translate(0, ${-CAPTION_GAP / camera.camera.k}) scale(${1 / camera.camera.k})`}
-          >
-            {layout.unconnectedDividerX !== undefined &&
-              layout.columnXs.length > 0 && (
-                <text
-                  x={(layout.unconnectedDividerX / 2) * camera.camera.k}
-                  textAnchor="middle"
-                  className="fill-secondary font-medium text-label-value-12 uppercase tracking-wide"
-                >
-                  Tokens with relations
-                </text>
-              )}
-            {layout.unconnectedDividerX !== undefined && (
-              <text
-                x={
-                  (layout.unconnectedDividerX +
-                    (layout.width - layout.unconnectedDividerX) / 2) *
-                  camera.camera.k
-                }
-                textAnchor="middle"
-                className="fill-secondary font-medium text-label-value-12 uppercase tracking-wide"
-              >
-                No observed relations
-              </text>
-            )}
-          </g>
-
           {graph.edges.map((edge) => {
-            const from = boxes.get(edge.from)
-            const to = boxes.get(edge.to)
-            if (!from || !to) return null
+            const geometry = edgeGeometries.get(wrappedEdgeKey(edge))
+            if (!geometry) return null
             const touchesActive = activeId === edge.from || activeId === edge.to
             return (
               <RelationsEdge
-                key={`${edge.from}->${edge.to}-${edge.kind}`}
-                edge={edge}
-                from={from}
-                to={to}
-                columnSpan={
-                  (layout.columnOf.get(edge.to) ?? 0) -
-                  (layout.columnOf.get(edge.from) ?? 0)
-                }
+                key={wrappedEdgeKey(edge)}
+                geometry={geometry}
                 isDimmed={activeId !== undefined && !touchesActive}
                 isHighlighted={touchesActive}
+              />
+            )
+          })}
+
+          {/* Badges are a separate foreground layer. If each edge paints its
+              badge immediately after its path, a later edge can cross a badge
+              that was already drawn. */}
+          {graph.edges.map((edge) => {
+            const geometry = edgeGeometries.get(wrappedEdgeKey(edge))
+            if (!geometry) return null
+            const touchesActive = activeId === edge.from || activeId === edge.to
+            return (
+              <RelationsEdgeBridges
+                key={`bridges-${wrappedEdgeKey(edge)}`}
+                edge={edge}
+                geometry={geometry}
+                isDimmed={activeId !== undefined && !touchesActive}
               />
             )
           })}
@@ -385,7 +395,6 @@ export function RelationsDiagram({
                 key={node.id}
                 node={node}
                 box={box}
-                isExpanded={expandedIds.has(node.id)}
                 isSelected={selectedNodeId === node.id}
                 isDimmed={neighbours !== undefined && !neighbours.has(node.id)}
                 isUnconnected={unconnected.has(node.id)}

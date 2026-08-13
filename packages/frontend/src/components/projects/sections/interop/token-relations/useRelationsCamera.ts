@@ -28,13 +28,15 @@ export interface CameraBounds {
 export function fitCamera(
   content: CameraBounds,
   viewport: CameraBounds,
+  fitAxis: 'width' | 'height' = 'width',
+  focus?: { x: number; y: number },
 ): Camera {
   if (content.width <= 0 || content.height <= 0) return { x: 0, y: 0, k: 1 }
-  const k = clamp(
-    Math.min((viewport.width - FIT_PADDING * 2) / content.width, 1),
-    READABLE_SCALE,
-    MAX_SCALE,
-  )
+  const available =
+    fitAxis === 'width'
+      ? (viewport.width - FIT_PADDING * 2) / content.width
+      : (viewport.height - FIT_PADDING * 2) / content.height
+  const k = clamp(Math.min(available, 1), READABLE_SCALE, MAX_SCALE)
   // Anchored to the top left when it overflows: backing reads left to right, so
   // the first thing on screen has to be the start of the structure, not its
   // middle. Centred only when the whole thing fits.
@@ -44,7 +46,9 @@ export function fitCamera(
     x:
       scaled.width <= viewport.width - FIT_PADDING * 2
         ? (viewport.width - scaled.width) / 2
-        : FIT_PADDING,
+        : focus
+          ? viewport.width / 2 - focus.x * k
+          : FIT_PADDING,
     y:
       scaled.height <= viewport.height - FIT_PADDING * 2
         ? (viewport.height - scaled.height) / 2
@@ -60,10 +64,12 @@ export function fitCamera(
 export function useRelationsCamera(
   content: CameraBounds,
   viewport: CameraBounds,
+  fitAxis: 'width' | 'height' = 'width',
+  focus?: { x: number; y: number },
 ) {
   const initial = useMemo(
-    () => fitCamera(content, viewport),
-    [content, viewport],
+    () => fitCamera(content, viewport, fitAxis, focus),
+    [content, viewport, fitAxis, focus],
   )
   const [camera, setCamera] = useState<Camera | undefined>(undefined)
   const panOrigin = useRef<

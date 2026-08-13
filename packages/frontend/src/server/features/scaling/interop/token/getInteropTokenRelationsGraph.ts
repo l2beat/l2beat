@@ -39,10 +39,10 @@ export interface InteropTokenRelationsNode {
 }
 
 export interface InteropTokenRelationsEdge {
-  /** With `kind: 'backs'`, `from` is the backing side. */
+  /** `from` is the backing side. */
   from: string
   to: string
-  kind: 'backs' | 'related'
+  kind: 'backs'
   bridges: UsedInProjectWithIcon[]
 }
 
@@ -80,13 +80,10 @@ export async function getInteropTokenRelationsGraph(
   const nodes = model.nodes.map((node) =>
     toNode(node, chainInfo, tokenId, resolveBridges, volumeByDeployment),
   )
-  const nodesById = new Map(nodes.map((node) => [node.id, node]))
 
   return {
     nodes,
-    edges: model.edges.map((edge) =>
-      toEdge(edge, nodesById, tokenId, resolveBridges),
-    ),
+    edges: model.edges.map((edge) => toEdge(edge, tokenId, resolveBridges)),
     unconnectedNodeIds: model.unconnectedNodeIds,
   }
 }
@@ -108,16 +105,8 @@ function toNode(
       (volume): volume is number => volume !== null && volume !== undefined,
     )
 
-  return {
-    id: node.id,
-    volume: volumes.length > 0 ? volumes.reduce((a, b) => a + b, 0) : null,
-    bridges: resolveSources(
-      node.sources,
-      node.members.map((member) => member.chain),
-      tokenId,
-      resolveBridges,
-    ),
-    deployments: node.members.map((member) => {
+  const deployments = node.members
+    .map((member) => {
       const chain = chainInfo.get(member.chain)
       return {
         chain: member.chain,
@@ -134,43 +123,48 @@ function toNode(
             `${member.chain}|${member.address.toLowerCase()}`,
           ) ?? null,
       }
-    }),
+    })
+    .toSorted(
+      (a, b) =>
+        (b.volume ?? -1) - (a.volume ?? -1) ||
+        a.chainName.localeCompare(b.chainName) ||
+        a.address.localeCompare(b.address),
+    )
+
+  return {
+    id: node.id,
+    volume: volumes.length > 0 ? volumes.reduce((a, b) => a + b, 0) : null,
+    bridges: resolveSources(node.sources, tokenId, resolveBridges),
+    deployments,
   }
 }
 
 function toEdge(
   edge: TokenRelationsGraphEdge,
-  nodesById: Map<string, InteropTokenRelationsNode>,
   tokenId: string,
   resolveBridges: ReturnType<typeof createMintingBridgeResolver>,
 ): InteropTokenRelationsEdge {
-  const chains = [
-    ...(nodesById.get(edge.from)?.deployments ?? []),
-    ...(nodesById.get(edge.to)?.deployments ?? []),
-  ].map((deployment) => deployment.chain)
-
   return {
     from: edge.from,
     to: edge.to,
     kind: edge.kind,
-    bridges: resolveSources(edge.sources, chains, tokenId, resolveBridges),
+    bridges: resolveSources(edge.sources, tokenId, resolveBridges),
   }
 }
 
 /**
  * The bridging projects behind a set of plugin observations. A project can
- * qualify its plugin by chain, so every chain involved is a candidate and the
- * union across them is what the connection was made by.
+ * qualify its plugin by chain, so only the exact chains retained from each raw
+ * route are candidates after several deployments collapse into one node.
  */
 function resolveSources(
   sources: TokenRelationsEdgeSource[],
-  chains: string[],
   tokenId: string,
   resolveBridges: ReturnType<typeof createMintingBridgeResolver>,
 ): UsedInProjectWithIcon[] {
   const byId = new Map<string, UsedInProjectWithIcon>()
   for (const source of sources) {
-    for (const chain of chains) {
+    for (const chain of source.chains) {
       for (const project of resolveBridges({
         plugin: source.plugin,
         bridgeType: source.bridgeType,
@@ -207,15 +201,6 @@ const MOCK_INTEROP_TOKEN_RELATIONS_GRAPH: InteropTokenRelationsGraph = {
       ],
       deployments: [
         {
-          chain: 'arbitrum',
-          chainName: 'Arbitrum One',
-          iconUrl: '/icons/arbitrum.png',
-          address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
-          symbol: 'USDC',
-          explorerUrl: undefined,
-          volume: 2_170_000,
-        },
-        {
           chain: 'ethereum',
           chainName: 'Ethereum',
           iconUrl: '/icons/ethereum.png',
@@ -223,6 +208,15 @@ const MOCK_INTEROP_TOKEN_RELATIONS_GRAPH: InteropTokenRelationsGraph = {
           symbol: 'USDC',
           explorerUrl: undefined,
           volume: 4_820_000,
+        },
+        {
+          chain: 'arbitrum',
+          chainName: 'Arbitrum One',
+          iconUrl: '/icons/arbitrum.png',
+          address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
+          symbol: 'USDC',
+          explorerUrl: undefined,
+          volume: 2_170_000,
         },
       ],
     },
@@ -304,12 +298,6 @@ const MOCK_INTEROP_TOKEN_RELATIONS_GRAPH: InteropTokenRelationsGraph = {
         },
       ],
     },
-    {
-      from: 'arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831',
-      to: 'zksync2|0x1d17cbcf0d6d143135ae902365d2e5e2a16538d4',
-      kind: 'related',
-      bridges: [],
-    },
   ],
-  unconnectedNodeIds: [],
+  unconnectedNodeIds: ['zksync2|0x1d17cbcf0d6d143135ae902365d2e5e2a16538d4'],
 }

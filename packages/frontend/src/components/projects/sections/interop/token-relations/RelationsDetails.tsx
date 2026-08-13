@@ -22,10 +22,6 @@ export function RelationsDetails({ graph, nodeId, onClose }: Props) {
   const backs = graph.edges.filter(
     (edge) => edge.kind === 'backs' && edge.from === node.id,
   )
-  const related = graph.edges.filter(
-    (edge) =>
-      edge.kind === 'related' && (edge.from === node.id || edge.to === node.id),
-  )
   const first = node.deployments[0]
   const isGroup = node.deployments.length > 1
 
@@ -109,9 +105,13 @@ export function RelationsDetails({ graph, nodeId, onClose }: Props) {
               </li>
             ))}
           </ul>
-          {/* Deliberately no total: each transfer between two of these
-              deployments is credited to both, so the sum would exceed the
-              token's actual volume. */}
+          <VolumeRow value={node.volume} label="Observed 24h activity" />
+          {node.volume !== null && (
+            <p className="mt-1 text-label-value-12 text-secondary">
+              Activity is summed across deployments; a transfer within this set
+              can be observed on both sides.
+            </p>
+          )}
         </>
       ) : (
         first && (
@@ -152,12 +152,6 @@ export function RelationsDetails({ graph, nodeId, onClose }: Props) {
         title="Backs"
         edges={backs}
         otherId={(edge) => edge.to}
-        graph={graph}
-      />
-      <EdgeList
-        title="Related, direction not observed"
-        edges={related}
-        otherId={(edge) => (edge.from === node.id ? edge.to : edge.from)}
         graph={graph}
       />
     </aside>

@@ -173,16 +173,6 @@ describe(layoutRelationsGraph.name, () => {
     expect(layout.columnOf.get('b')).toEqual(1)
   })
 
-  it('ignores connections with no identified direction when placing columns', () => {
-    const layout = layoutRelationsGraph(
-      [node('a'), node('b')],
-      [{ from: 'a', to: 'b', kind: 'related', bridges: [] }],
-      [],
-    )
-
-    expect(layout.boxes.get('a')?.x).toEqual(layout.boxes.get('b')?.x)
-  })
-
   it('is deterministic regardless of input order', () => {
     const nodes = [node('a'), node('b'), node('c')]
     const edges = [edge('a', 'b'), edge('a', 'c')]

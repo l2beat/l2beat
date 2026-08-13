@@ -92,22 +92,6 @@ function Legend() {
         Backs
       </span>
       <span className="flex items-center gap-2">
-        <svg width="26" height="8" aria-hidden className="shrink-0">
-          <title>Dashed connection</title>
-          <line
-            x1="0"
-            y1="4"
-            x2="26"
-            y2="4"
-            className="stroke-primary"
-            strokeOpacity="0.45"
-            strokeWidth="1.75"
-            strokeDasharray="5 4"
-          />
-        </svg>
-        Related, direction not observed
-      </span>
-      <span className="flex items-center gap-2">
         <span className="-space-x-1.5 flex shrink-0">
           <span className="size-4 rounded-full border border-divider bg-surface-primary" />
           <span className="size-4 rounded-full border border-divider bg-surface-primary" />

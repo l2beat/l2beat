@@ -4,9 +4,9 @@ import type {
 } from '~/server/features/scaling/interop/token/getInteropTokenRelationsGraph'
 
 /**
- * Places the nodes of a token relations graph. Backing runs left to right: a
- * node sits one column right of everything that backs it, so reading rightwards
- * is reading "…is backed by the column to its left".
+ * Places the nodes of a token relations graph. Backing runs along one primary
+ * axis: either left to right in compact views or top to bottom when a wide
+ * canvas can give a busy graph room to fan out.
  *
  * Within a column, nodes are arranged as a tidy tree — every node's children
  * are contiguous and the node is centred against them. Almost every token graph
@@ -21,11 +21,15 @@ import type {
 export const NODE_WIDTH = 168
 export const NODE_HEIGHT = 64
 export const GROUP_NODE_HEIGHT = 76
-/** Between stacked nodes inside one column. */
+/** Between neighbouring nodes inside one layer. */
 const STACK_GAP = 24
 /** Between one column and the next, leaving room for the connections. */
 const COLUMN_GAP = 148
+/** Between one row and the next in the wide, top-to-bottom layout. */
+const ROW_GAP = 112
 const UNCONNECTED_GAP = 96
+
+export type RelationsLayoutOrientation = 'left-to-right' | 'top-to-bottom'
 
 export interface NodeBox {
   x: number
@@ -36,10 +40,11 @@ export interface NodeBox {
 
 export interface RelationsLayout {
   boxes: Map<string, NodeBox>
-  /** Which column each node landed in, so edges know how far they reach. */
+  /** Which logical layer each node landed in, so edges know how far they reach. */
   columnOf: Map<string, number>
-  /** Left edge of each column, so captions can sit above them. */
+  /** Start of each layer on the primary axis. */
   columnXs: number[]
+  orientation: RelationsLayoutOrientation
   width: number
   height: number
   /** X of the divider left of the unconnected block, if there is one. */
@@ -52,10 +57,15 @@ export function layoutRelationsGraph(
   unconnectedNodeIds: string[],
   /** Overrides for nodes drawn taller than usual, e.g. an expanded group. */
   heightOverrides?: ReadonlyMap<string, number>,
+  orientation: RelationsLayoutOrientation = 'left-to-right',
+  /** Overrides for nodes drawn wider than usual, e.g. an expanded group. */
+  widthOverrides?: ReadonlyMap<string, number>,
 ): RelationsLayout {
   const nodeHeight = (node: InteropTokenRelationsNode) =>
     heightOverrides?.get(node.id) ??
     (node.deployments.length > 1 ? GROUP_NODE_HEIGHT : NODE_HEIGHT)
+  const nodeWidth = (node: InteropTokenRelationsNode) =>
+    widthOverrides?.get(node.id) ?? NODE_WIDTH
 
   const unconnected = new Set(unconnectedNodeIds)
   const connected = nodes.filter((node) => !unconnected.has(node.id))
@@ -68,27 +78,53 @@ export function layoutRelationsGraph(
   })
 
   const boxes = new Map<string, NodeBox>()
-  const ys = stackWithinColumns(columns, edges, nodeHeight)
-
-  let x = 0
   const columnXs: number[] = []
-  for (const column of columns) {
-    columnXs.push(x)
-    for (const node of column) {
-      boxes.set(node.id, {
-        x,
-        y: ys.get(node.id) ?? 0,
-        width: NODE_WIDTH,
-        height: nodeHeight(node),
-      })
+  let dagWidth = 0
+  let dagHeight = 0
+
+  if (orientation === 'top-to-bottom') {
+    const xs = stackWithinLayers(columns, edges, nodeWidth, 'center')
+    let y = 0
+    for (const column of columns) {
+      columnXs.push(y)
+      const layerHeight = Math.max(0, ...column.map(nodeHeight))
+      for (const node of column) {
+        boxes.set(node.id, {
+          x: xs.get(node.id) ?? 0,
+          y,
+          width: nodeWidth(node),
+          height: nodeHeight(node),
+        })
+      }
+      y += layerHeight + ROW_GAP
     }
-    x += NODE_WIDTH + COLUMN_GAP
+    dagWidth = Math.max(
+      0,
+      ...[...boxes.values()].map((box) => box.x + box.width),
+    )
+    dagHeight = columns.length > 0 ? y - ROW_GAP : 0
+  } else {
+    const ys = stackWithinLayers(columns, edges, nodeHeight, 'start')
+    let x = 0
+    for (const column of columns) {
+      columnXs.push(x)
+      const columnWidth = Math.max(NODE_WIDTH, ...column.map(nodeWidth))
+      for (const node of column) {
+        boxes.set(node.id, {
+          x,
+          y: ys.get(node.id) ?? 0,
+          width: nodeWidth(node),
+          height: nodeHeight(node),
+        })
+      }
+      x += columnWidth + COLUMN_GAP
+    }
+    dagWidth = columns.length > 0 ? x - COLUMN_GAP : 0
+    dagHeight = Math.max(
+      0,
+      ...[...boxes.values()].map((box) => box.y + box.height),
+    )
   }
-  const dagWidth = columns.length > 0 ? x - COLUMN_GAP : 0
-  const dagHeight = Math.max(
-    0,
-    ...[...boxes.values()].map((box) => box.y + box.height),
-  )
 
   let unconnectedDividerX: number | undefined
   let width = dagWidth
@@ -104,25 +140,37 @@ export function layoutRelationsGraph(
       Math.round(dagHeight / (NODE_HEIGHT + STACK_GAP)) || 1,
     )
     const rowsNeeded = Math.min(perColumn, loose.length)
-    loose.forEach((node, index) => {
-      const column = Math.floor(index / rowsNeeded)
-      const row = index % rowsNeeded
-      boxes.set(node.id, {
-        x: startX + column * (NODE_WIDTH + STACK_GAP),
-        y: row * (NODE_HEIGHT + STACK_GAP),
-        width: NODE_WIDTH,
-        height: NODE_HEIGHT,
-      })
-    })
-    const looseColumns = Math.ceil(loose.length / rowsNeeded)
-    width = startX + looseColumns * NODE_WIDTH + (looseColumns - 1) * STACK_GAP
-    height = Math.max(
-      dagHeight,
-      rowsNeeded * NODE_HEIGHT + (rowsNeeded - 1) * STACK_GAP,
-    )
+    let looseX = startX
+    let looseHeight = 0
+    for (let start = 0; start < loose.length; start += rowsNeeded) {
+      const column = loose.slice(start, start + rowsNeeded)
+      const columnWidth = Math.max(NODE_WIDTH, ...column.map(nodeWidth))
+      let looseY = 0
+      for (const node of column) {
+        boxes.set(node.id, {
+          x: looseX,
+          y: looseY,
+          width: nodeWidth(node),
+          height: nodeHeight(node),
+        })
+        looseY += nodeHeight(node) + STACK_GAP
+      }
+      looseHeight = Math.max(looseHeight, looseY - STACK_GAP)
+      looseX += columnWidth + STACK_GAP
+    }
+    width = looseX - STACK_GAP
+    height = Math.max(dagHeight, looseHeight)
   }
 
-  return { boxes, columnOf, columnXs, width, height, unconnectedDividerX }
+  return {
+    boxes,
+    columnOf,
+    columnXs,
+    orientation,
+    width,
+    height,
+    unconnectedDividerX,
+  }
 }
 
 /**
@@ -143,6 +191,8 @@ function assignColumnGroups(
   nodes: InteropTokenRelationsNode[],
   edges: InteropTokenRelationsEdge[],
 ): InteropTokenRelationsNode[][] {
+  if (nodes.length === 0) return []
+
   const ids = new Set(nodes.map((node) => node.id))
   const backing = edges.filter(
     (edge) => edge.kind === 'backs' && ids.has(edge.from) && ids.has(edge.to),
@@ -193,22 +243,22 @@ function assignColumnGroups(
 }
 
 /**
- * Tidy-tree y positions. Leaves are stacked top to bottom in the order their
- * backers appear, and every backer sits level with the top of its own block of
- * children, so its connections fan out to a contiguous block to its right and
- * never pass over an unrelated node.
+ * Tidy-tree positions on the axis perpendicular to the direction of backing.
+ * Leaves are stacked in the order their backers appear, and every backer's
+ * children stay contiguous so connections do not cut across unrelated nodes.
  */
-function stackWithinColumns(
+function stackWithinLayers(
   columns: InteropTokenRelationsNode[][],
   edges: InteropTokenRelationsEdge[],
-  nodeHeight: (node: InteropTokenRelationsNode) => number,
+  nodeSize: (node: InteropTokenRelationsNode) => number,
+  parentAlignment: 'start' | 'center',
 ): Map<string, number> {
   const columnOf = new Map<string, number>()
-  const heightOf = new Map<string, number>()
+  const sizeOf = new Map<string, number>()
   columns.forEach((column, index) => {
     for (const node of column) {
       columnOf.set(node.id, index)
-      heightOf.set(node.id, nodeHeight(node))
+      sizeOf.set(node.id, nodeSize(node))
     }
   })
 
@@ -244,20 +294,33 @@ function stackWithinColumns(
     )
   }
 
-  const y = new Map<string, number>()
+  const position = new Map<string, number>()
   let cursor = 0
   const place = (id: string): void => {
     const kids = children.get(id) ?? []
     if (kids.length === 0) {
-      y.set(id, cursor)
-      cursor += (heightOf.get(id) ?? NODE_HEIGHT) + STACK_GAP
+      position.set(id, cursor)
+      cursor += (sizeOf.get(id) ?? NODE_HEIGHT) + STACK_GAP
       return
     }
     for (const kid of kids) place(kid)
-    // Top-aligned with its first child rather than centred against the block:
-    // a backer of twenty nodes would otherwise sit ten rows down, so the
-    // busiest thing in a column would never be the first thing you see.
-    y.set(id, y.get(kids[0] as string) ?? 0)
+    const first = kids[0] as string
+    if (parentAlignment === 'start') {
+      // Top-aligned with its first child rather than centred against the block:
+      // a backer of twenty nodes would otherwise sit ten rows down, so the
+      // busiest thing in a vertical column would never be the first thing seen.
+      position.set(id, position.get(first) ?? 0)
+    } else {
+      const last = kids.at(-1) as string
+      const firstCenter =
+        (position.get(first) ?? 0) + (sizeOf.get(first) ?? NODE_WIDTH) / 2
+      const lastCenter =
+        (position.get(last) ?? 0) + (sizeOf.get(last) ?? NODE_WIDTH) / 2
+      position.set(
+        id,
+        (firstCenter + lastCenter) / 2 - (sizeOf.get(id) ?? NODE_WIDTH) / 2,
+      )
+    }
   }
 
   // Roots first, then anything a spanning-forest edge never reached (a node
@@ -265,26 +328,87 @@ function stackWithinColumns(
   for (const node of columns[0] ?? []) place(node.id)
   for (const column of columns) {
     for (const node of column) {
-      if (!y.has(node.id)) place(node.id)
+      if (!position.has(node.id)) place(node.id)
     }
   }
 
-  // Centring a backer can pull it above its upper neighbour; a single
-  // top-to-bottom sweep per column restores the gap without reordering.
+  // Centring a backer can pull it before its neighbour; a single sweep per
+  // layer restores the gap without reordering.
   for (const column of columns) {
     const ordered = column.toSorted(
       (a, b) =>
-        (y.get(a.id) ?? 0) - (y.get(b.id) ?? 0) || a.id.localeCompare(b.id),
+        (position.get(a.id) ?? 0) - (position.get(b.id) ?? 0) ||
+        a.id.localeCompare(b.id),
     )
-    let minY = Number.NEGATIVE_INFINITY
+    let minimum = Number.NEGATIVE_INFINITY
     for (const node of ordered) {
-      const next = Math.max(y.get(node.id) ?? 0, minY)
-      y.set(node.id, next)
-      minY = next + (heightOf.get(node.id) ?? NODE_HEIGHT) + STACK_GAP
+      const next = Math.max(position.get(node.id) ?? 0, minimum)
+      position.set(node.id, next)
+      minimum = next + (sizeOf.get(node.id) ?? NODE_HEIGHT) + STACK_GAP
     }
   }
 
-  const smallest = Math.min(0, ...y.values())
-  for (const [id, value] of y) y.set(id, value - smallest)
-  return y
+  if (parentAlignment === 'center') {
+    alignParentsWithAllChildren(columns, edges, columnOf, sizeOf, position)
+  }
+
+  const smallest = Math.min(0, ...position.values())
+  for (const [id, value] of position) position.set(id, value - smallest)
+  return position
+}
+
+/**
+ * The spanning forest above gives every child one primary parent, which keeps
+ * subtrees contiguous. A shared child can still leave another parent stranded
+ * at the far end of its layer, though, producing an edge across the whole
+ * diagram. In the wide layout, move each parent toward the centre of all its
+ * immediate children, including the non-primary ones, then repack the layer.
+ */
+function alignParentsWithAllChildren(
+  columns: InteropTokenRelationsNode[][],
+  edges: InteropTokenRelationsEdge[],
+  columnOf: ReadonlyMap<string, number>,
+  sizeOf: ReadonlyMap<string, number>,
+  position: Map<string, number>,
+): void {
+  const children = new Map<string, string[]>()
+  for (const edge of edges) {
+    const parentColumn = columnOf.get(edge.from)
+    if (parentColumn === undefined) continue
+    if (columnOf.get(edge.to) !== parentColumn + 1) continue
+    children.set(edge.from, [...(children.get(edge.from) ?? []), edge.to])
+  }
+
+  for (let columnIndex = columns.length - 2; columnIndex >= 0; columnIndex--) {
+    const desired = new Map<string, number>()
+    for (const node of columns[columnIndex] ?? []) {
+      const kids = children.get(node.id) ?? []
+      if (kids.length === 0) {
+        desired.set(node.id, position.get(node.id) ?? 0)
+        continue
+      }
+      const childrenCenter =
+        kids.reduce(
+          (sum, id) =>
+            sum + (position.get(id) ?? 0) + (sizeOf.get(id) ?? NODE_WIDTH) / 2,
+          0,
+        ) / kids.length
+      desired.set(
+        node.id,
+        childrenCenter - (sizeOf.get(node.id) ?? NODE_WIDTH) / 2,
+      )
+    }
+
+    const ordered = (columns[columnIndex] ?? []).toSorted(
+      (a, b) =>
+        (desired.get(a.id) ?? 0) - (desired.get(b.id) ?? 0) ||
+        a.id.localeCompare(b.id),
+    )
+    let minimum = Number.NEGATIVE_INFINITY
+    for (const node of ordered) {
+      const next = Math.max(desired.get(node.id) ?? 0, minimum)
+      position.set(node.id, next)
+      minimum = next + (sizeOf.get(node.id) ?? NODE_WIDTH) + STACK_GAP
+    }
+  }
 }
