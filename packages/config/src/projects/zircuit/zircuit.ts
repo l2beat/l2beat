@@ -60,7 +60,8 @@ const ZIRCUIT_PERMISSIONED_GAME_BOND: number =
   discovery.getContractValueOrUndefined<number>(
     'DisputeGameFactory',
     'initBondGame1',
-  ) ?? discovery.getContractValue<number[]>('DisputeGameFactory', 'initBonds')[1]
+  ) ??
+  discovery.getContractValue<number[]>('DisputeGameFactory', 'initBonds')[1]
 
 const sequencerAddress = ChainSpecificAddress(
   discovery.getContractValue('SystemConfig', 'batcherHash'),
