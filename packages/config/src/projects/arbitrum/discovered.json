@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
-  "timestamp": 1786612644,
-  "configHash": "0xf65f7cb5e27064d51eceab69eb8038092a980068b2ac5735fb7cc5723d5e3b34",
+  "timestamp": 1786613262,
+  "configHash": "0x5d38c90a76662956779a25f684514610f0a13995fa42ac9eb7d3ac691109b66b",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000001",
@@ -977,7 +977,7 @@
         "$upgradeCount": 2,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x81e28e6f37e32d4756bbeaf3c057b82178ac53398af819adfc680fad31b2ecd5",
-        "getTotalDelegation": "5337361396415254214470962887",
+        "getTotalDelegation": "5337361366184985820129300215",
         "l1Address": "arb1:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
         "MIN_MINT_INTERVAL": 31536000,
         "MINT_CAP_DENOMINATOR": 10000,
@@ -2990,7 +2990,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 1313925,
+        "batchCount": 1313929,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
@@ -3003,9 +3003,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 25745009,
+          "prevBlockNumber": 25745101,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 25745079
+          "prevSequencedBlockNumber": 25745176
         },
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -3031,7 +3031,7 @@
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 2533754,
+        "totalDelayedMessagesRead": 2533763,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -3870,7 +3870,7 @@
           "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 2533764,
+        "delayedMessageCount": 2533768,
         "inboxHistory": [
           "eth:0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -3884,8 +3884,8 @@
         ],
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 1313925,
-        "sequencerReportedSubMessageCount": 471854829
+        "sequencerMessageCount": 1313929,
+        "sequencerReportedSubMessageCount": 471857449
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -4172,11 +4172,12 @@
       "proxyType": "EOA"
     },
     {
-      "name": "",
+      "name": "UnknownTreasuryAddressProxy",
       "address": "eth:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "description": "Unverified upgradeable proxy deployed at the Arbitrum One TreasuryTimelock's address on Ethereum by an unknown EOA on 2026-08-05. The same EOA owns its ProxyAdmin. Its purpose is unknown.",
       "deployerAddress": "eth:0x91b4161dB1177372c9c8bd49ece12013c2e2181b",
       "sinceTimestamp": 1786280807,
       "sinceBlock": 25717614,
@@ -10835,6 +10836,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 494063122, "ethereum": 25745145 },
-  "permissionsConfigHash": "0x6ed3c7eedb99672d6f4749bfa14e0d84d3b8dcb43ba66446a16e55d9f8479813"
+  "usedBlockNumbers": { "arbitrum": 494065594, "ethereum": 25745196 },
+  "permissionsConfigHash": "0x03680cdceaf280b130cfeae8c6c32425d5f9f010ad6099e0e7c8137192907ab2"
 }

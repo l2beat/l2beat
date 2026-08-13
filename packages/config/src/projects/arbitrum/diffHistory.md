@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xa1bbaa352d13c37685aa6fc1a8584d552c22e30e
+Generated with discovered.json: 0x9a0e5f39e4220de8410d5ddb01af72af650b6fe8
 
-# Diff at Thu, 13 Aug 2026 09:18:34 GMT:
+# Diff at Thu, 13 Aug 2026 09:28:50 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@4a0cce7a33eee94f7395bc3adf267ebe20e3f4bc block: 1785995988
-- current timestamp: 1786612644
+- current timestamp: 1786613262
 
 ## Description
 
@@ -13,16 +13,14 @@ Track the ArbOS 61 transaction-filtering precompile (`0x..74`) via the new share
 ## Watched changes
 
 ```diff
-    contract  (eth:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58) [N/A] {
-    +++ description: None
+    contract UnknownTreasuryAddressProxy (eth:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58) [N/A] {
+    +++ description: Unverified upgradeable proxy deployed at the Arbitrum One TreasuryTimelock's address on Ethereum by an unknown EOA on 2026-08-05. The same EOA owns its ProxyAdmin. Its purpose is unknown.
       type:
 -        "EOA"
 +        "Contract"
       proxyType:
 -        "EOA"
 +        "EIP1967 proxy"
-      name:
-+        ""
       unverified:
 +        true
       deployerAddress:
@@ -56,7 +54,7 @@ Track the ArbOS 61 transaction-filtering precompile (`0x..74`) via the new share
 
 ```diff
 .../src/projects/arbitrum/.flat/ProxyAdmin.sol     | 188 +++++
- .../.flat/TransparentUpgradeableProxy.p.sol        | 865 +++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              | 865 +++++++++++++++++++++
  2 files changed, 1053 insertions(+)
 ```
 
@@ -71,6 +69,16 @@ discovery. Values are for block 1785995988 (main branch discovery), not current.
     +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
       values.transactionFilteringPrecompile:
 +        "arb1:0x0000000000000000000000000000000000000074"
+    }
+```
+
+```diff
+    EOA UnknownTreasuryAddressProxy (eth:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58) {
+    +++ description: Unverified upgradeable proxy deployed at the Arbitrum One TreasuryTimelock's address on Ethereum by an unknown EOA on 2026-08-05. The same EOA owns its ProxyAdmin. Its purpose is unknown.
+      name:
++        "UnknownTreasuryAddressProxy"
+      description:
++        "Unverified upgradeable proxy deployed at the Arbitrum One TreasuryTimelock's address on Ethereum by an unknown EOA on 2026-08-05. The same EOA owns its ProxyAdmin. Its purpose is unknown."
     }
 ```
 
