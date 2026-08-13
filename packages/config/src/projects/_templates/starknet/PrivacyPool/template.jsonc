@@ -1,0 +1,100 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PrivacyPool",
+  "description": "STRK-20 privacy pool on Starknet. Users deposit tokens into private notes and transact them privately. Client-side proofs are verified by the sequencer, not on L1.",
+  "category": "core",
+  "fields": {
+    "$classHash": {
+      "description": "Sierra class hash of the pool. A change means the contract was upgraded via the StarkWare replaceability component.",
+      "severity": "HIGH"
+    },
+    "$roles": {
+      "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events. GOVERNANCE_ADMIN administers roles, UPGRADE_GOVERNOR can queue and activate implementations, SECURITY_ADMIN/SECURITY_AGENT manage pausing, APP_GOVERNOR configures the pool.",
+      "severity": "HIGH"
+    },
+    "upgradeGovernors": {
+      "copy": "$roles",
+      "edit": ["get", "UPGRADE_GOVERNOR"],
+      "severity": "HIGH",
+      "description": "Holders of the UPGRADE_GOVERNOR role.",
+      "permissions": [
+        {
+          "type": "upgrade",
+          "delay": "{{get_upgrade_delay}}"
+        }
+      ]
+    },
+    "governanceAdmins": {
+      "copy": "$roles",
+      "edit": ["get", "GOVERNANCE_ADMIN"],
+      "severity": "HIGH",
+      "description": "Holders of the GOVERNANCE_ADMIN role.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke all StarkWare roles of the privacy pool, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself."
+        }
+      ]
+    },
+    "securityAdmins": {
+      "copy": "$roles",
+      "edit": ["get", "SECURITY_ADMIN"],
+      "severity": "HIGH",
+      "description": "Holders of the SECURITY_ADMIN role.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "unpause the privacy pool and manage the SECURITY_ADMIN and SECURITY_AGENT roles."
+        }
+      ]
+    },
+    "securityAgents": {
+      "copy": "$roles",
+      "edit": ["get", "SECURITY_AGENT"],
+      "description": "Holders of the SECURITY_AGENT role.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the privacy pool."
+        }
+      ]
+    },
+    "appGovernors": {
+      "copy": "$roles",
+      "edit": ["get", "APP_GOVERNOR"],
+      "severity": "HIGH",
+      "description": "Holders of the APP_GOVERNOR role.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configure the privacy pool: set fees, the fee collector, the auditor and screener public keys, the proof validity window, and block open-note depositors."
+        }
+      ]
+    },
+    "get_upgrade_delay": {
+      "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to.",
+      "severity": "HIGH"
+    },
+    "get_auditor_public_key": {
+      "description": "Public key of the auditor that can decrypt user viewing data - a core privacy trust assumption.",
+      "severity": "HIGH"
+    },
+    "get_screener_public_key": {
+      "description": "Public key of the screener whose deposit attestations the pool accepts.",
+      "severity": "HIGH"
+    },
+    "get_fee_collector": {
+      "description": "Account receiving pool fees."
+    },
+    "get_fee_amount": {
+      "description": "Fee charged by the pool per action, in the fee token's smallest unit."
+    },
+    "get_proof_validity_blocks": {
+      "description": "Number of blocks a client-side proof stays valid after being produced."
+    },
+    "is_paused": {
+      "description": "Whether the pool is currently paused.",
+      "severity": "LOW"
+    }
+  }
+}

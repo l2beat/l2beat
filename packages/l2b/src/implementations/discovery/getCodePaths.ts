@@ -1,6 +1,6 @@
 import { type ConfigReader, get$Implementations } from '@l2beat/discovery'
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { readdirSync } from 'fs'
+import { existsSync, readdirSync } from 'fs'
 import { join } from 'path'
 import { getProjectDiscoveries } from './getProjectDiscoveries'
 
@@ -33,6 +33,14 @@ export function getCodePaths(
     const root = join(configReader.getProjectPath(discovery.name), '.flat')
 
     if (!hasImplementations) {
+      // Starknet discovery writes Cairo sources
+      const cairoPath = join(root, name + '.cairo')
+      if (existsSync(cairoPath)) {
+        return {
+          entryName: entry.name,
+          codePaths: [{ name: `${entry.name}.cairo`, path: cairoPath }],
+        }
+      }
       return {
         entryName: entry.name,
         codePaths: [

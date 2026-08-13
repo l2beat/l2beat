@@ -46,6 +46,15 @@ export const Discover = command({
     logProjectsToDiscover(matchingProjects, logger)
 
     for (const project of matchingProjects) {
+      if (isStarknetOnlyProject(project)) {
+        logger.info(
+          chalk.yellow(
+            `${project} lives on Starknet - run "l2b discover-starknet ${project}" instead`,
+          ),
+        )
+        continue
+      }
+
       const config: DiscoveryModuleConfig = { ...args, project }
 
       await discoverAndUpdateDiffHistory(config, {
@@ -102,6 +111,15 @@ function resolveProjects(projectQuery: string): string[] {
   }
 
   return matchingProjects
+}
+
+function isStarknetOnlyProject(project: string): boolean {
+  const config = configReader.readConfig(project)
+  const addresses = config.structure.initialAddresses
+  return (
+    addresses.length > 0 &&
+    addresses.every((a) => ChainSpecificAddress.chain(a) === 'strk')
+  )
 }
 
 type Predicate = (needle: string, haystackProject: string) => boolean

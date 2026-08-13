@@ -17,7 +17,10 @@ export function parseFieldValue(
     if (/^[\w-]*:0x[a-f\d]*$/i.test(value)) {
       const [prefix, rawAddress] = value.split(':')
 
-      if (isChainShortName(prefix) && rawAddress.length === 42) {
+      if (
+        (isChainShortName(prefix) && rawAddress.length === 42) ||
+        ChainSpecificAddress.check(value)
+      ) {
         const address = ChainSpecificAddress.from(prefix, rawAddress)
         return {
           type: 'address',

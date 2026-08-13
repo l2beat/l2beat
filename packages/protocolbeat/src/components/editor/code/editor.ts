@@ -6,7 +6,7 @@ import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 import { EditorPluginStore } from '../pluginStore'
 import type { EditorFile } from '../store'
 
-export type EditorSupportedLanguage = 'solidity' | 'json'
+export type EditorSupportedLanguage = 'solidity' | 'cairo' | 'json'
 
 export type EditorContentCallback = (content: string) => void
 export type EditorSaveCallback = (content: string) => boolean

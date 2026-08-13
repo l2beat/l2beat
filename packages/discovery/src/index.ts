@@ -138,6 +138,14 @@ export {
   type DiscoveryConfigSchema,
   type FieldConfigSchema,
 } from './schemas/schemas'
+export {
+  discoverStarknet,
+  type StarknetDiscoveryResult,
+} from './starknet/discoverStarknet'
+export {
+  StarknetDiscoveryProvider,
+  type StarknetDiscoveryProviderOptions,
+} from './starknet/StarknetDiscoveryProvider'
 export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export {

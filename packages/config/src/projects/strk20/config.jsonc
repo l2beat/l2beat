@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "strk20",
+  "import": ["../globalConfig.jsonc"],
+  // The update monitor cannot run discovery on Starknet yet,
+  // use `l2b discover-starknet strk20` to refresh.
+  "archived": true,
+  "initialAddresses": [
+    // Privacy pool
+    "strk:0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a"
+  ],
+  "overrides": {
+    "strk:0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a": {
+      "fields": {
+        "feeCollectorChannelCount": {
+          "handler": {
+            "type": "call",
+            "method": "get_num_of_channels",
+            "args": [
+              "strk:0x00d79041634625e5288296fbc648088788710ba44903a3a49468a66567749e77"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

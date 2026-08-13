@@ -311,15 +311,20 @@ function abiEntry(entry: string): ApiAbiEntry {
     return { value: entry }
   }
 
-  const iface = new utils.Interface([entry])
-  return {
-    value: entry,
-    topic: entry.startsWith('event')
-      ? iface.getEventTopic(entry.slice(6))
-      : undefined,
-    signature: entry.startsWith('function')
-      ? iface.getSighash(entry.slice(9))
-      : undefined,
+  try {
+    const iface = new utils.Interface([entry])
+    return {
+      value: entry,
+      topic: entry.startsWith('event')
+        ? iface.getEventTopic(entry.slice(6))
+        : undefined,
+      signature: entry.startsWith('function')
+        ? iface.getSighash(entry.slice(9))
+        : undefined,
+    }
+  } catch {
+    // Non-EVM ABIs (e.g. Cairo signatures) are shown verbatim
+    return { value: entry }
   }
 }
 

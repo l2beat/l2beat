@@ -448,13 +448,15 @@ export class ProjectDiscovery {
 
       const raw = ChainSpecificAddress.address(address)
       const chain = ChainSpecificAddress.longChain(address)
-      const name = `${raw.slice(0, 6)}…${raw.slice(38, 42)}`
+      const name = `${raw.slice(0, 6)}…${raw.slice(-4)}`
       const explorerUrl = EXPLORER_URLS[chain]
       assert(
         isNonNullable(explorerUrl),
         `Failed to find explorer url for chain [${chain}]`,
       )
-      const url = `${explorerUrl}/address/${raw}`
+      // Starkscan addresses contracts under /contract, not /address
+      const addressPath = chain === 'starknet' ? 'contract' : 'address'
+      const url = `${explorerUrl}/${addressPath}/${raw}`
 
       result.push({ address, type, isVerified, name, url })
     }
