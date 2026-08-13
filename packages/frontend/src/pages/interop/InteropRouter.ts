@@ -149,8 +149,10 @@ export function createInteropRouter(
     },
   )
 
+  // The optional issuer and symbol segments only make the URL readable - the
+  // token is resolved by the slug (its id), so they are validated away here.
   router.get(
-    '/interop/tokens/:slug',
+    '/interop/tokens/:slug{/:issuer}{/:symbol}',
     validateRoute({
       params: v.object({ slug: v.string() }),
       query: InteropQuery,

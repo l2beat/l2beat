@@ -11,7 +11,7 @@ export function getSearchBarTokenEntries(
   return tokens
     .filter((token) => token.id !== UNKNOWN_ABSTRACT_TOKEN_ID)
     .map((token) => {
-      const href = getInteropTokenUrl({ id: token.id })
+      const href = getInteropTokenUrl(token)
       assert(href, `Token ${token.id} has no href`)
       return {
         type: 'token',
