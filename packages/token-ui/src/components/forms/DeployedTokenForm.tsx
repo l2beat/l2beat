@@ -679,7 +679,8 @@ export function DeployedTokenForm({
                 </div>
                 <FormDescription>
                   When ignoring, put reason in the comment. Ignored tokens stay
-                  in TokenDB but are excluded from graphs and calculations.
+                  in TokenDB but are excluded from graphs and calculations. You
+                  may need to refresh financials after ignoring a token.
                 </FormDescription>
               </FormItem>
             )}

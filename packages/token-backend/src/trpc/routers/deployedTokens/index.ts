@@ -33,10 +33,6 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
         ctx.tokenDb.deployedToken.getByChainAndAddress(input),
       ),
 
-    getIgnored: readOnlyProcedure.query(({ ctx }) =>
-      ctx.tokenDb.deployedToken.getIgnored(),
-    ),
-
     getRelations: readOnlyProcedure
       .input(v.object({ chain: v.string(), address: v.string() }))
       .query(async ({ ctx, input }) => {

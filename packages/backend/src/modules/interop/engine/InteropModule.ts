@@ -246,8 +246,6 @@ export function createInteropModule({
         db,
         configs: config.interop.aggregation.configs,
         aggregationService,
-        chains: config.interop.capture.chains,
-        tokenDbClient,
         promotionService,
         indexerService,
         notifier: notificationClient,

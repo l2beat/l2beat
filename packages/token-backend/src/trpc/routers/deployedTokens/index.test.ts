@@ -198,30 +198,6 @@ describe('deployedTokensRouter', () => {
     })
   })
 
-  describe('getIgnored', () => {
-    it('returns ignored token primary keys from the repository', async () => {
-      const ignored = [
-        { chain: 'ethereum', address: '0x123' },
-        { chain: 'base', address: '0x456' },
-      ]
-      const getIgnored = mockFn().resolvesTo(ignored)
-      const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<TokenDatabase['deployedToken']>({
-          getIgnored,
-        }),
-      })
-
-      const caller = createRouter(
-        mockTokenDb,
-        mockObject<Database>({}),
-        mockObject<CoingeckoClient>({}),
-      )
-
-      expect(await caller.getIgnored()).toEqual(ignored)
-      expect(getIgnored).toHaveBeenCalledTimes(1)
-    })
-  })
-
   describe('getRelationsGraphNodeDetails', () => {
     it('returns one deployed token and its abstract token', async () => {
       const token = deployedToken({

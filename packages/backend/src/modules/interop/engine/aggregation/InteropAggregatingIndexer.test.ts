@@ -7,8 +7,7 @@ import type {
   Database,
   InteropTransferRecord,
 } from '@l2beat/database'
-import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import type { TokenDbClient } from '@l2beat/token-backend'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
 import { mockDatabase } from '../../../../test/database'
@@ -20,59 +19,8 @@ import type {
   ReconcileResult,
 } from '../promotion/InteropPromotionService'
 import type { InteropSyncersManager } from '../sync/InteropSyncersManager'
-import {
-  filterIgnoredTokenTransfers,
-  InteropAggregatingIndexer,
-} from './InteropAggregatingIndexer'
+import { InteropAggregatingIndexer } from './InteropAggregatingIndexer'
 import type { InteropAggregationService } from './InteropAggregationService'
-
-describe(filterIgnoredTokenTransfers.name, () => {
-  it('excludes transfers touching ignored deployed tokens', async () => {
-    const ignoredAddress = EthereumAddress.random()
-    const ignoredTransfer = createTransfer(
-      'layerzero',
-      'ignored',
-      'transfer',
-      UnixTime(1),
-      {
-        srcChain: 'ethereum',
-        dstChain: 'base',
-        srcAbstractTokenId: 'op',
-        dstAbstractTokenId: 'op',
-        duration: 1,
-      },
-    )
-    ignoredTransfer.srcTokenAddress = Address32.from(ignoredAddress)
-    const includedTransfer = createTransfer(
-      'layerzero',
-      'included',
-      'transfer',
-      UnixTime(1),
-      {
-        srcChain: 'ethereum',
-        dstChain: 'base',
-        srcAbstractTokenId: 'op',
-        dstAbstractTokenId: 'op',
-        duration: 1,
-      },
-    )
-    const query = mockFn().resolvesTo([
-      { chain: 'ethereum', address: ignoredAddress.toLowerCase() },
-    ])
-    const tokenDbClient = mockObject<TokenDbClient>({
-      deployedTokens: { getIgnored: { query } },
-    } as any)
-
-    const result = await filterIgnoredTokenTransfers(
-      [ignoredTransfer, includedTransfer],
-      [{ id: 'ethereum', type: 'evm' }],
-      tokenDbClient,
-    )
-
-    expect(result).toEqual([includedTransfer])
-    expect(query).toHaveBeenCalledWith()
-  })
-})
 
 describe(InteropAggregatingIndexer.name, () => {
   const to = 1768484645
@@ -259,8 +207,6 @@ describe(InteropAggregatingIndexer.name, () => {
           db,
           configs,
           aggregationService,
-          chains: [],
-          tokenDbClient: mockTokenDbClient(),
           syncersManager,
           parents: [],
           promotionService: mockPromotionService(),
@@ -396,8 +342,6 @@ describe(InteropAggregatingIndexer.name, () => {
           db,
           configs: [],
           aggregationService,
-          chains: [],
-          tokenDbClient: mockTokenDbClient(),
           promotionService,
           notifier,
           syncersManager,
@@ -497,8 +441,6 @@ describe(InteropAggregatingIndexer.name, () => {
           db,
           configs,
           aggregationService,
-          chains: [],
-          tokenDbClient: mockTokenDbClient(),
           syncersManager,
           parents: [],
           promotionService: mockPromotionService(),
@@ -574,8 +516,6 @@ describe(InteropAggregatingIndexer.name, () => {
           db,
           configs: [],
           aggregationService,
-          chains: [],
-          tokenDbClient: mockTokenDbClient(),
           syncersManager,
           parents: [],
           promotionService: mockPromotionService(),
@@ -665,8 +605,6 @@ describe(InteropAggregatingIndexer.name, () => {
           db,
           configs: [],
           aggregationService,
-          chains: [],
-          tokenDbClient: mockTokenDbClient(),
           syncersManager,
           parents: [],
           promotionService: mockPromotionService(),
@@ -754,14 +692,6 @@ function createTransfer(
     srcValueUsd: overrides.srcValueUsd,
     dstValueUsd: overrides.dstValueUsd,
   }
-}
-
-function mockTokenDbClient() {
-  return mockObject<TokenDbClient>({
-    deployedTokens: {
-      getIgnored: { query: mockFn().resolvesTo([]) },
-    },
-  } as any)
 }
 
 function mockPromotionService(result?: ReconcileResult) {

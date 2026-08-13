@@ -224,14 +224,6 @@ export class DeployedTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getIgnored(): Promise<DeployedTokenPrimaryKey[]> {
-    return await this.db
-      .selectFrom('DeployedToken')
-      .select(['chain', 'address'])
-      .where('ignored', '=', true)
-      .execute()
-  }
-
   async getAll(): Promise<DeployedTokenRecord[]> {
     const rows = await this.db.selectFrom('DeployedToken').selectAll().execute()
     return rows.map(toRecord)

@@ -1,14 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database, InteropTransferRecord } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { TokenDbClient } from '@l2beat/token-backend'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../tools/uif/ManagedChildIndexer'
-import { DeployedTokenId } from '../financials/DeployedTokenId'
-import { toDeployedId } from '../financials/InteropFinancialsLoop'
 import type { InteropNotifier } from '../notifications/InteropNotifier'
 import type {
   InteropPromotionService,
@@ -25,47 +22,11 @@ import type { InteropAggregationService } from './InteropAggregationService'
  */
 export const SYNCER_FRESHNESS_TOLERANCE = 30 * UnixTime.MINUTE
 
-export async function filterIgnoredTokenTransfers(
-  transfers: InteropTransferRecord[],
-  chains: readonly { id: string; type: 'evm' }[],
-  tokenDbClient: TokenDbClient,
-): Promise<InteropTransferRecord[]> {
-  if (transfers.length === 0) return transfers
-
-  const ignoredTokens = await tokenDbClient.deployedTokens.getIgnored.query()
-  const ignoredTokenIds = new Set(
-    ignoredTokens.map((token) =>
-      DeployedTokenId.from(token.chain, token.address),
-    ),
-  )
-
-  if (ignoredTokenIds.size === 0) return transfers
-
-  return transfers.filter((transfer) => {
-    const srcTokenId = toDeployedId(
-      chains,
-      transfer.srcChain,
-      transfer.srcTokenAddress,
-    )
-    const dstTokenId = toDeployedId(
-      chains,
-      transfer.dstChain,
-      transfer.dstTokenAddress,
-    )
-    return (
-      (srcTokenId === undefined || !ignoredTokenIds.has(srcTokenId)) &&
-      (dstTokenId === undefined || !ignoredTokenIds.has(dstTokenId))
-    )
-  })
-}
-
 export interface InteropAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
   configs: InteropAggregationConfig[]
   aggregationService: InteropAggregationService
-  chains: readonly { id: string; type: 'evm' }[]
-  tokenDbClient: TokenDbClient
   promotionService: InteropPromotionService
   notifier?: Pick<InteropNotifier, 'notifyBlockedSnapshot'>
   syncersManager: InteropSyncersManager
@@ -97,22 +58,13 @@ export class InteropAggregatingIndexer extends ManagedChildIndexer {
     const retentionCutoff = to - 14 * UnixTime.DAY
 
     const transfers = await this.$.db.interopTransfer.getByRange(from, to)
-    const includedTransfers = await filterIgnoredTokenTransfers(
-      transfers,
-      this.$.chains,
-      this.$.tokenDbClient,
-    )
 
     const {
       aggregatedTransfers,
       aggregatedTokens,
       aggregatedDeployedTokens,
       aggregatedTokensPairs,
-    } = this.$.aggregationService.aggregate(
-      includedTransfers,
-      this.$.configs,
-      to,
-    )
+    } = this.$.aggregationService.aggregate(transfers, this.$.configs, to)
 
     let promotion: ReconcileResult | undefined
     await this.$.db.transaction(async () => {
