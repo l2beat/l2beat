@@ -1,6 +1,7 @@
-import type {
-  AggregatedInteropTokensPairRecord,
-  AggregatedInteropTransferRecord,
+import {
+  type AggregatedInteropTokensPairRecord,
+  type AggregatedInteropTransferRecord,
+  mergeTransferTypeStats,
 } from '@l2beat/database'
 import { manifest } from '~/utils/Manifest'
 import { INTEROP_PAIR_SEPARATOR } from '../consts'
@@ -8,7 +9,6 @@ import type { CommonInteropData, InteropTransferWithTokens } from '../types'
 import type { TokenInteropData } from './buildTokensDataMap'
 import { getInteropChains } from './getInteropChains'
 import { getInteropTransferRecordValue } from './getInteropTransferRecordValue'
-import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 
 export const INITIAL_COMMON_INTEROP_DATA: CommonInteropData = {
   volume: 0,
