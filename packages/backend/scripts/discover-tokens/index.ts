@@ -1,6 +1,5 @@
 import { getEnv, Logger, RateLimiter } from '@l2beat/backend-tools'
 import { type ChainConfig, ProjectService } from '@l2beat/config'
-import { RateLimitedProvider } from '@l2beat/discovery'
 import { BlockIndexerClient, CoingeckoClient, HttpClient } from '@l2beat/shared'
 import { assert, ChainConverter } from '@l2beat/shared-pure'
 import chalk from 'chalk'
@@ -9,6 +8,7 @@ import { writeFileSync } from 'fs'
 import chunk from 'lodash/chunk'
 import groupBy from 'lodash/groupBy'
 import { getLegacyConfig } from '../../src/modules/tvs/tools/legacyConfig/getLegacyConfig'
+import { RateLimitedProvider } from './RateLimitedProvider'
 import {
   formatNumberWithCommas,
   getEscrowKey,
