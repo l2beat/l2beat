@@ -30,7 +30,7 @@ export function createDefiRouter(
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
-      () => getDefiSummaryData(manifest, req.originalUrl),
+      () => getDefiSummaryData(manifest, req.originalUrl, cache),
     )
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)

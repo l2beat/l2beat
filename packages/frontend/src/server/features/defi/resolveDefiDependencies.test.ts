@@ -80,7 +80,7 @@ describe(resolveDefiDependencies.name, () => {
     expect(resolveDefiDependencies(dependencies, projectsById)).toEqual([
       {
         name: 'unknown-oracle',
-        icon: '/icons/unknown-oracle.png',
+        icon: '/images/token-placeholder.png',
         description: 'Missing from config',
         reviewed: true,
       },

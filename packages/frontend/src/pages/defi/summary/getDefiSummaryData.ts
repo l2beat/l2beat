@@ -1,3 +1,4 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getDefiSummaryEntries } from '~/server/features/defi/getDefiSummaryEntries'
 import { ps } from '~/server/projects'
@@ -8,17 +9,16 @@ import type { Manifest } from '~/utils/Manifest'
 export async function getDefiSummaryData(
   manifest: Manifest,
   url: string,
+  cache: InMemoryCache,
 ): Promise<RenderData> {
-  const [appLayoutProps, projects] = await Promise.all([
-    getAppLayoutProps(),
-    ps.getProjects({
-      where: ['defiInfo'],
-      select: ['display', 'defiInfo', 'statuses'],
-      optional: ['externalDependencies', 'tvsConfig'],
-    }),
-  ])
-
-  const entries = await getDefiSummaryEntries(projects)
+  const { appLayoutProps, entries } = await cache.get(
+    {
+      key: ['defi', 'summary', 'data'],
+      ttl: 5 * 60,
+      staleWhileRevalidate: 25 * 60,
+    },
+    getCachedData,
+  )
 
   return {
     head: {
@@ -40,4 +40,19 @@ export async function getDefiSummaryData(
       },
     },
   }
+}
+
+async function getCachedData() {
+  const [appLayoutProps, entries] = await Promise.all([
+    getAppLayoutProps(),
+    ps
+      .getProjects({
+        where: ['defiInfo'],
+        select: ['display', 'defiInfo', 'statuses'],
+        optional: ['externalDependencies', 'tvsConfig'],
+      })
+      .then(getDefiSummaryEntries),
+  ])
+
+  return { appLayoutProps, entries }
 }

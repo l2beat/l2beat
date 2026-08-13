@@ -42,12 +42,7 @@ export async function getDefiSummaryEntries(
 export function buildDefiSummaryEntries(
   projects: DefiProject[],
   tvlByProject: ReadonlyMap<string, number>,
-  dependencyProjectsById: ReadonlyMap<string, DefiDependencyProject> = new Map(
-    projects.map((project) => [
-      project.id,
-      { name: project.name, slug: project.slug, isDefi: true },
-    ]),
-  ),
+  dependencyProjectsById: ReadonlyMap<string, DefiDependencyProject>,
 ): DefiSummaryEntry[] {
   return projects
     .map((project): DefiSummaryEntry => {

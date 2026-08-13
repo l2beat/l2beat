@@ -1,5 +1,6 @@
 import type { ProjectExternalDependency } from '@l2beat/config'
 import { manifest } from '~/utils/Manifest'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 
 export interface DefiDependencyProject {
   name: string
@@ -33,7 +34,7 @@ export function resolveDefiDependencies(
     if (!project) {
       return {
         name: dependency.projectId,
-        icon: manifest.getUrl(`/icons/${dependency.projectId}.png`),
+        icon: TOKEN_PLACEHOLDER_ICON_URL,
         description: dependency.description,
         reviewed: true,
       }

@@ -9,26 +9,28 @@ import {
 
 describe(buildDefiSummaryEntries.name, () => {
   it('keeps missing TVL undefined instead of zero', () => {
+    const projects = [
+      defiProject({
+        id: 'liquityv2',
+        name: 'Liquity V2 (BOLD)',
+        category: 'Stablecoin',
+        tvsConfig: [],
+      }),
+      defiProject({
+        id: 'chainlink',
+        name: 'Chainlink',
+        category: 'Oracle',
+      }),
+      defiProject({
+        id: 'uniswapv3',
+        name: 'Uniswap V3',
+        category: 'DEX',
+      }),
+    ]
     const entries = buildDefiSummaryEntries(
-      [
-        defiProject({
-          id: 'liquityv2',
-          name: 'Liquity V2 (BOLD)',
-          category: 'Stablecoin',
-          tvsConfig: [],
-        }),
-        defiProject({
-          id: 'chainlink',
-          name: 'Chainlink',
-          category: 'Oracle',
-        }),
-        defiProject({
-          id: 'uniswapv3',
-          name: 'Uniswap V3',
-          category: 'DEX',
-        }),
-      ],
+      projects,
       new Map([['liquityv2', 1_000]]),
+      defiDependencyProjectsById(projects),
     )
 
     expect(entries.map((entry) => entry.id)).toEqual([
@@ -42,35 +44,37 @@ describe(buildDefiSummaryEntries.name, () => {
   })
 
   it('sorts by TVL descending and puts missing values last', () => {
+    const projects = [
+      defiProject({
+        id: 'uniswapv3',
+        name: 'Uniswap V3',
+        category: 'DEX',
+      }),
+      defiProject({
+        id: 'small',
+        name: 'Small',
+        category: 'DEX',
+        tvsConfig: [],
+      }),
+      defiProject({
+        id: 'chainlink',
+        name: 'Chainlink',
+        category: 'Oracle',
+      }),
+      defiProject({
+        id: 'large',
+        name: 'Large',
+        category: 'Stablecoin',
+        tvsConfig: [],
+      }),
+    ]
     const entries = buildDefiSummaryEntries(
-      [
-        defiProject({
-          id: 'uniswapv3',
-          name: 'Uniswap V3',
-          category: 'DEX',
-        }),
-        defiProject({
-          id: 'small',
-          name: 'Small',
-          category: 'DEX',
-          tvsConfig: [],
-        }),
-        defiProject({
-          id: 'chainlink',
-          name: 'Chainlink',
-          category: 'Oracle',
-        }),
-        defiProject({
-          id: 'large',
-          name: 'Large',
-          category: 'Stablecoin',
-          tvsConfig: [],
-        }),
-      ],
+      projects,
       new Map([
         ['small', 10],
         ['large', 50],
       ]),
+      defiDependencyProjectsById(projects),
     )
 
     expect(entries.map((entry) => entry.id)).toEqual([
@@ -82,25 +86,27 @@ describe(buildDefiSummaryEntries.name, () => {
   })
 
   it('breaks equal TVLs by name', () => {
+    const projects = [
+      defiProject({
+        id: 'beta',
+        name: 'Beta',
+        category: 'DEX',
+        tvsConfig: [],
+      }),
+      defiProject({
+        id: 'alpha',
+        name: 'Alpha',
+        category: 'DEX',
+        tvsConfig: [],
+      }),
+    ]
     const entries = buildDefiSummaryEntries(
-      [
-        defiProject({
-          id: 'beta',
-          name: 'Beta',
-          category: 'DEX',
-          tvsConfig: [],
-        }),
-        defiProject({
-          id: 'alpha',
-          name: 'Alpha',
-          category: 'DEX',
-          tvsConfig: [],
-        }),
-      ],
+      projects,
       new Map([
         ['beta', 10],
         ['alpha', 10],
       ]),
+      defiDependencyProjectsById(projects),
     )
 
     expect(entries.map((entry) => entry.id)).toEqual(['alpha', 'beta'])
@@ -147,6 +153,7 @@ describe(buildDefiSummaryEntries.name, () => {
     const entries = buildDefiSummaryEntries(
       [chainlink, liquity, uniswap],
       new Map(),
+      defiDependencyProjectsById([chainlink, liquity, uniswap]),
     )
     const bold = entries.find((entry) => entry.id === 'liquityv2')
     const uni = entries.find((entry) => entry.id === 'uniswapv3')
@@ -249,4 +256,13 @@ function defiProject({
     tvsConfig,
     externalDependencies,
   }
+}
+
+function defiDependencyProjectsById(projects: DefiProject[]) {
+  return new Map(
+    projects.map((project) => [
+      project.id,
+      { name: project.name, slug: project.slug, isDefi: true },
+    ]),
+  )
 }
