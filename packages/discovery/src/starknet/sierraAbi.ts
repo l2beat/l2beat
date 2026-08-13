@@ -110,12 +110,14 @@ export function parseSierraAbi(rawAbi: string | unknown[]): SierraAbi {
 
 // biome-ignore lint/suspicious/noExplicitAny: dynamic JSON traversal
 function parseFunction(e: any, interfaceName?: string): SierraFunction {
+  // Cairo 0 (legacy) ABIs use camelCase stateMutability
+  const mutability = e.state_mutability ?? e.stateMutability
   return {
     name: e.name,
     interfaceName,
     inputs: parseParams(e.inputs),
     outputs: (e.outputs ?? []).map((o: { type: string }) => ({ type: o.type })),
-    stateMutability: e.state_mutability === 'view' ? 'view' : 'external',
+    stateMutability: mutability === 'view' ? 'view' : 'external',
   }
 }
 

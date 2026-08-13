@@ -62,6 +62,7 @@ export function decodeCairoType(
   switch (bare) {
     case 'core::felt252':
     case 'core::bytes_31::bytes31':
+    case 'felt': // Cairo 0 (legacy) ABIs
       return feltToDisplay(reader.read())
     case 'core::starknet::contract_address::ContractAddress':
       return ChainSpecificAddress.from('strk', toHex(reader.read())).toString()

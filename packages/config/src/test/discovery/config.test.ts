@@ -81,6 +81,28 @@ describe('discovery config.jsonc', () => {
     }
   })
 
+  it('starknet projects are archived (the update monitor cannot discover them)', () => {
+    const notArchived = configs
+      .filter(
+        (c) =>
+          c.structure.initialAddresses.length > 0 &&
+          c.structure.initialAddresses.every(
+            (a) => ChainSpecificAddress.chain(a) === 'strk',
+          ),
+      )
+      .filter((c) => !c.archived)
+      .map((c) => c.name)
+
+    expect(notArchived).toBeEmpty()
+    if (notArchived.length > 0) {
+      console.log(
+        'Starknet projects must set "archived": true until the update ' +
+          'monitor supports Starknet discovery. Offending projects: ' +
+          notArchived.join(', '),
+      )
+    }
+  })
+
   it('every config name is equal to the name in discovery.json', () => {
     const notEqual = []
 

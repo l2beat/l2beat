@@ -19,5 +19,5 @@ export function useCurrentlySelectedEntry() {
 }
 
 export function getFields(entry: ApiProjectContract | ApiAddressEntry) {
-  return 'fields' in entry ? entry.fields : []
+  return entry.fields ?? []
 }

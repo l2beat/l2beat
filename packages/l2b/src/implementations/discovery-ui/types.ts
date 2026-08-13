@@ -79,6 +79,8 @@ export interface ApiAddressEntry {
   address: ChainSpecificAddress
   chain: string
   isReachable: boolean
+  /** Set for Starknet account entries ($signers, $threshold, $publicKey) */
+  fields?: Field[]
 }
 
 export interface ApiAddressReference extends AddressFieldValue {

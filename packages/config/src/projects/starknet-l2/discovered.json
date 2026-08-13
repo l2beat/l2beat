@@ -1,6 +1,6 @@
 {
   "name": "starknet-l2",
-  "timestamp": 1786627586,
+  "timestamp": 1786632511,
   "configHash": "0x49ae822ef3cb74e5b8d7377b76500a4a72af812811fece954675695b7e7894cf",
   "entries": [
     {
@@ -318,8 +318,14 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "name": "Multisig 1",
       "address": "strk:0x00eaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0",
       "type": "EOA",
+      "template": "starknet/MultisigAccount",
+      "sourceHashes": [
+        "0x5d8fc4c35f6b9d11d5effabbc557b9a7e4ccb999c60021069f7a1b751fedf9b1"
+      ],
+      "description": "Multisig account contract on Starknet. Transactions must be approved by the configured threshold of signer keys before the account executes them.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -335,8 +341,39 @@
         }
       ],
       "values": {
-        "$accountClassHash": "0x6e150953b26271a740bf2b6e9bca17cc52c68d765f761295de51ceb8526ee72"
-      }
+        "$accountClassHash": "0x6e150953b26271a740bf2b6e9bca17cc52c68d765f761295de51ceb8526ee72",
+        "$signers": [
+          "0x68f027f51f69b0577980b7ec0ccdf2407ff47e1a02ce8b8ab119e4b342346db",
+          "0x42ec840a035b6e3ce897844629ba756297f08deb74ab5cde22b5cc9441d8936",
+          "0x33c9a1d62f296644861e5f3114cb6e7e1629ab22dcaefa11c262e3fc8bdbe6a",
+          "0x29a5d3fee7156f714c165ee06ffd92d211e0c77719c40cd53ae66547bdc1802",
+          "0x722844ea9af37480bb1c01217bcba48c22e7444a7acf6729a57477310bf94f3",
+          "0x2ad52b194312e9734ac655684f9c2213f496a3072e51df1922f105eaa1f635c",
+          "0x15a237905066bcf0ccb8a4b53c8a23006af554a96459cb129564055d42a56da",
+          "0x4e299cd72f74eaff0f6e871de2efedb62b256d75277a449ab034fd7492aa360",
+          "0x20f21ca402f6e323ea913f555df1abed95d49edb46ddb5f441d2b100c8c7e9d",
+          "0x5d471f9d83dfcbb057d4c1c3d52c41441ebf654bf9e42cfe4625c882da8a04e",
+          "0x1d6c9f6d2330076570a4d41c4b689e4e7b2ad03c1a0b58bd10581f339609870",
+          "0x222bbfe5fdcd2ec61319342b78e7e3885cafc34a0e486ffcb7969eac1e09cde",
+          "0x48ba4c87a2996a310684fd1c9543383cdfffb51ad688964ced12fdb5359a162",
+          "0x25fd8c7b8e20fbfedd782262f08f729c453b8e6879ec59ee9967fcd3a3eaced"
+        ],
+        "$threshold": 9
+      },
+      "fieldMeta": {
+        "$signers": {
+          "severity": "HIGH",
+          "description": "Public keys of the signers controlling this account."
+        },
+        "$threshold": {
+          "severity": "HIGH",
+          "description": "Number of signer approvals required to execute a transaction."
+        },
+        "$accountClassHash": {
+          "description": "Sierra class hash of the account contract."
+        }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "RealmsLORDSToken",
@@ -466,6 +503,9 @@
     {
       "address": "strk:0x03103066e6c7037ba947ea9a7b5b8d110ae7f3d631fa5849435d0dc1fc5ef785",
       "type": "EOA",
+      "sourceHashes": [
+        "0xc71a5f620db5731945ec261f0a43193980255cae147321f7a21a50faa29a0c59"
+      ],
       "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
@@ -492,7 +532,8 @@
         }
       ],
       "values": {
-        "$accountClassHash": "0xe2eb8f5672af4e6a4e8a8f1b44989685e668489b0a25437733756c5a34a1d6"
+        "$accountClassHash": "0xe2eb8f5672af4e6a4e8a8f1b44989685e668489b0a25437733756c5a34a1d6",
+        "$publicKey": "0x6a3f9f758532997e723cf6d5f82886d5fa9cf883e18e493e51c7bb466c7aeb2"
       }
     },
     {
@@ -603,8 +644,13 @@
     {
       "address": "strk:0x0399eb3460eb885b5e1f5f2aebf63dadb7493f4cbf34868434366bbb55422c4e",
       "type": "EOA",
+      "sourceHashes": [
+        "0x99f7cfa73a66b7546c1a4ebee601c29ca31065209ddfe7d387f9e60440bcc3ce"
+      ],
       "values": {
-        "$accountClassHash": "0x36078334509b514626504edc9fb252328d1a240e4e948bef8d0c08dff45927f"
+        "$accountClassHash": "0x36078334509b514626504edc9fb252328d1a240e4e948bef8d0c08dff45927f",
+        "$guardian": "0x0",
+        "$owner": "0x26f603a97e18b41e383400c6bb000a319174cc058ef3eb3bed92f1ffb749de8"
       }
     },
     {
@@ -645,6 +691,9 @@
     {
       "address": "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
       "type": "EOA",
+      "sourceHashes": [
+        "0xf6d9d2eae12ec0ea20d4f5f982de11ec81aa320911da4347fb8a1993544b65b2"
+      ],
       "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
@@ -820,12 +869,16 @@
         }
       ],
       "values": {
-        "$accountClassHash": "0x7ab95e820d92b974797c8f139ad72f8550adaa068febe4e38da9a4a9539a81d"
+        "$accountClassHash": "0x7ab95e820d92b974797c8f139ad72f8550adaa068febe4e38da9a4a9539a81d",
+        "$publicKey": "0x29803aca16da1f6e70320fcd6902b4a3538ea36fa573f58301a4701802914fc"
       }
     },
     {
       "address": "strk:0x04758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
       "type": "EOA",
+      "sourceHashes": [
+        "0x621134b7dff2696fa9defde44d68b9884ff220b4ab81b4637d12dd69f3099cd3"
+      ],
       "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
@@ -854,7 +907,8 @@
         }
       ],
       "values": {
-        "$accountClassHash": "0x6f500f527355dfdb8093c7fe46e6f73c96a867392b49fa4157a757538928539"
+        "$accountClassHash": "0x6f500f527355dfdb8093c7fe46e6f73c96a867392b49fa4157a757538928539",
+        "$publicKey": "0x253d0e6960f2750a8e6be109d6e1f6a7408486cbebd32a14cee80a80e6b540b"
       }
     },
     {
@@ -951,6 +1005,9 @@
     {
       "address": "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29",
       "type": "EOA",
+      "sourceHashes": [
+        "0x4f58eeff9b15bfb9246be1bb4049828e8a23481874f1c5e98a6a5f9f8cad1a1f"
+      ],
       "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
@@ -1013,7 +1070,8 @@
         }
       ],
       "values": {
-        "$accountClassHash": "0x5b4b537eaa2399e3aa99c4e2e0208ebd6c71bc1467938cd52c798c601e43564"
+        "$accountClassHash": "0x5b4b537eaa2399e3aa99c4e2e0208ebd6c71bc1467938cd52c798c601e43564",
+        "$publicKey": "0x55e2a0f3df1fefc6a0d6edf93aea12e5551db8033086e12109aee0ee13fe0b6"
       }
     },
     {
@@ -1677,8 +1735,14 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "name": "Multisig 2",
       "address": "strk:0x073b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3",
       "type": "EOA",
+      "template": "starknet/MultisigAccount",
+      "sourceHashes": [
+        "0x5d8fc4c35f6b9d11d5effabbc557b9a7e4ccb999c60021069f7a1b751fedf9b1"
+      ],
+      "description": "Multisig account contract on Starknet. Transactions must be approved by the configured threshold of signer keys before the account executes them.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1694,8 +1758,37 @@
         }
       ],
       "values": {
-        "$accountClassHash": "0x6e150953b26271a740bf2b6e9bca17cc52c68d765f761295de51ceb8526ee72"
-      }
+        "$accountClassHash": "0x6e150953b26271a740bf2b6e9bca17cc52c68d765f761295de51ceb8526ee72",
+        "$signers": [
+          "0x6c8c3f508a1263b41a41926cb86e4a94303a50b226c4a96d3b8980f6385c68",
+          "0x1724fffb72ff0d63577496642753e5cf964b19228eeb9ec23a7d1376038970a",
+          "0x1ece546c371c5afd5b9860732936367431fa8a71435d0d30f56384baff7f3aa",
+          "0x2f5d0607c205c36e65b626c9101467bd4e4ca57964eaa85bf46d90fd12f37da",
+          "0x2cc819eb30e61ed2ecfd0e92cceaa039202445060192e49cfb4cf554325ac6",
+          "0x652ac7c8ae26be00f5edcb8dc8ddff4183e75a1e39482f330bb4c563e851f2f",
+          "0x1bbec87969619b26394803a420d104df33ccc0e57edc87b45566065132e3879",
+          "0x36799e91b4f1b77dc30b9eb6a2abbdcd7633171d3f8e0866379c1007220948d",
+          "0x30f97ecfefa01d22741c69247b60ca1770e5c9241af6703abc7ee64003a9ec2",
+          "0x62b55ae2c8ef379589d8923ff9acf532856dd7fc34a24dd57d355e295e00305",
+          "0x187bea00c6b61c80b80d9601b44f44d894250d06e39bab3a38a81d08ee94215",
+          "0x273715b6e720fd1950fda8ccd83a4a1c3dfb2cb91bfc5841305a0d14e7dec04"
+        ],
+        "$threshold": 3
+      },
+      "fieldMeta": {
+        "$signers": {
+          "severity": "HIGH",
+          "description": "Public keys of the signers controlling this account."
+        },
+        "$threshold": {
+          "severity": "HIGH",
+          "description": "Number of signer approvals required to execute a transaction."
+        },
+        "$accountClassHash": {
+          "description": "Sierra class hash of the account contract."
+        }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "USDTBridge",
@@ -1946,6 +2039,9 @@
     {
       "address": "strk:0x07cb6648d32504bc4d6073f1e5fd9021a15f6963776a8dbe0d9e2f744743fb40",
       "type": "EOA",
+      "sourceHashes": [
+        "0xc71a5f620db5731945ec261f0a43193980255cae147321f7a21a50faa29a0c59"
+      ],
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1961,7 +2057,8 @@
         }
       ],
       "values": {
-        "$accountClassHash": "0xe2eb8f5672af4e6a4e8a8f1b44989685e668489b0a25437733756c5a34a1d6"
+        "$accountClassHash": "0xe2eb8f5672af4e6a4e8a8f1b44989685e668489b0a25437733756c5a34a1d6",
+        "$publicKey": "0x1f507fa835de39f55ab17666f4712cc5de7aeef93b6c40d4f04174fe18a27c3"
       }
     }
   ],
@@ -3386,8 +3483,9 @@
     ]
   },
   "usedTemplates": {
+    "starknet/MultisigAccount": "0x7776abcb1616bab1f6626860771d46ffdd322663cf61eca88de4b981de39b7fd",
     "starknet/StarkgateTokenBridge": "0x6671279238d7fb1ed1fe60b59445ae267888f89cc67aa1ad17b86da697aeca79"
   },
-  "usedBlockNumbers": { "starknet": 13230919 },
-  "permissionsConfigHash": "0x0a358f8ce5a28a52589b88de95181967c698f79b047bd264f7402265b5e7a3c1"
+  "usedBlockNumbers": { "starknet": 13233771 },
+  "permissionsConfigHash": "0xd42391b8f163affd8041d931efe490d96f0732c0225757645fb21bfd67937ef2"
 }

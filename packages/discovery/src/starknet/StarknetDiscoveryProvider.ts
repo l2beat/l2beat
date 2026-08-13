@@ -40,16 +40,25 @@ export type StarknetCallOutcome =
   | { success: false; error: string }
 
 export class StarknetDiscoveryProvider {
-  private readonly client: StarknetClient
-
-  constructor(
+  private constructor(
+    private readonly client: StarknetClient,
     private readonly http: HttpClient,
     private readonly cache: DiscoveryCache,
     private readonly logger: Logger,
     private readonly options: StarknetDiscoveryProviderOptions,
+    /** All state reads are pinned to this block for a consistent snapshot */
     readonly blockNumber: number,
-  ) {
-    this.client = new StarknetClient({
+  ) {}
+
+  static async create(
+    http: HttpClient,
+    cache: DiscoveryCache,
+    logger: Logger,
+    options: StarknetDiscoveryProviderOptions,
+    /** Pin to a specific block instead of the chain head (--dev reruns) */
+    pinnedBlockNumber?: number,
+  ): Promise<StarknetDiscoveryProvider> {
+    const client = new StarknetClient({
       http,
       logger,
       sourceName: 'starknet',
@@ -57,6 +66,8 @@ export class StarknetDiscoveryProvider {
       retryStrategy: 'SCRIPT',
       url: options.rpcUrl,
       headers: options.rpcHeaders,
+      // Semantic answers, not failures - see StarknetClient.tryCall and
+      // isContractNotFound. Everything else still retries and throws.
       allowedErrorCodes: [
         STARKNET_ERROR_CODES.CONTRACT_NOT_FOUND,
         STARKNET_ERROR_CODES.ENTRYPOINT_NOT_FOUND,
@@ -64,23 +75,10 @@ export class StarknetDiscoveryProvider {
         STARKNET_ERROR_CODES.CONTRACT_ERROR,
       ],
     })
-  }
-
-  static async create(
-    http: HttpClient,
-    cache: DiscoveryCache,
-    logger: Logger,
-    options: StarknetDiscoveryProviderOptions,
-  ): Promise<StarknetDiscoveryProvider> {
-    const pinned = new StarknetDiscoveryProvider(
-      http,
-      cache,
-      logger,
-      options,
-      0,
-    )
-    const blockNumber = await pinned.client.getLatestBlockNumber()
+    const blockNumber =
+      pinnedBlockNumber ?? (await client.getLatestBlockNumber())
     return new StarknetDiscoveryProvider(
+      client,
       http,
       cache,
       logger,
@@ -230,25 +228,42 @@ export class StarknetDiscoveryProvider {
     }
   }
 
+  /**
+   * @returns the parsed response, or undefined when Voyager confirms the
+   * resource does not exist (e.g. unverified class). Only confirmed absences
+   * may be cached - transient failures throw (after retries) so they never
+   * poison the cache with a false "unverified"/"unknown deployment" answer.
+   */
   private async fetchVoyager(
     path: string,
     // biome-ignore lint/suspicious/noExplicitAny: dynamic JSON traversal
   ): Promise<Record<string, any> | undefined> {
-    try {
-      const response = await this.http.fetch(`${VOYAGER_API_URL}${path}`, {
-        headers: {
-          'x-api-key': this.options.voyagerApiKey ?? '',
-          accept: 'application/json',
-        },
-        timeout: 30_000,
-      })
-      if (typeof response !== 'object' || response === null) {
-        return undefined
+    const ATTEMPTS = 3
+    for (let attempt = 1; ; attempt++) {
+      try {
+        const response = await this.http.fetch(`${VOYAGER_API_URL}${path}`, {
+          headers: {
+            'x-api-key': this.options.voyagerApiKey ?? '',
+            accept: 'application/json',
+          },
+          timeout: 30_000,
+        })
+        if (typeof response !== 'object' || response === null) {
+          return undefined
+        }
+        return response as Record<string, unknown>
+      } catch (error) {
+        if (error instanceof Error && /HTTP error: 404/.test(error.message)) {
+          return undefined
+        }
+        if (attempt >= ATTEMPTS) {
+          throw new Error(`Voyager request failed: ${path}`, { cause: error })
+        }
+        this.logger.warn(`Voyager request failed, retrying: ${path}`, {
+          error,
+        })
+        await new Promise((resolve) => setTimeout(resolve, 1000 * attempt))
       }
-      return response as Record<string, unknown>
-    } catch (error) {
-      this.logger.warn(`Voyager request failed: ${path}`, { error })
-      return undefined
     }
   }
 

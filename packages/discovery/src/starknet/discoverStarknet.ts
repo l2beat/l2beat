@@ -27,12 +27,19 @@ export interface StarknetDiscoveryResult {
   projectPath: string
 }
 
+export interface StarknetDiscoveryPin {
+  blockNumber: number
+  timestamp: UnixTime
+}
+
 export async function discoverStarknet(
   config: ConfigRegistry,
   paths: DiscoveryPaths,
   http: HttpClient,
   logger: Logger,
   options: StarknetDiscoveryProviderOptions,
+  /** Reuse a previous run's block and timestamp for byte-stable reruns */
+  pin?: StarknetDiscoveryPin,
 ): Promise<StarknetDiscoveryResult> {
   const cache = new SQLiteCache(paths.cache)
   const provider = await StarknetDiscoveryProvider.create(
@@ -40,6 +47,7 @@ export async function discoverStarknet(
     cache,
     logger,
     options,
+    pin?.blockNumber,
   )
   logger.info(
     `Starknet discovery of ${config.name} at block ${provider.blockNumber}`,
@@ -109,10 +117,12 @@ export async function discoverStarknet(
     depth += 1
   }
 
+  nameMultisigs(analyses)
+
   const output = toDiscoveryOutput(
     templateService,
     config,
-    UnixTime.now(),
+    pin?.timestamp ?? UnixTime.now(),
     { starknet: provider.blockNumber },
     analyses,
   )
@@ -125,6 +135,24 @@ export async function discoverStarknet(
   )
 
   return { output, projectPath }
+}
+
+/**
+ * Multisig accounts get stable EVM-style names ('Multisig 1', 'Multisig 2',
+ * ...) so every UI surface shows the same identity. Numbered in address
+ * order for determinism; config `names` and templates take precedence
+ * during colorize.
+ */
+function nameMultisigs(analyses: Analysis[]): void {
+  const multisigs = analyses
+    .filter(
+      (a): a is Analysis & { type: 'EOA' } =>
+        a.type === 'EOA' && Array.isArray(a.values?.$signers),
+    )
+    .sort((a, b) => a.address.localeCompare(b.address))
+  multisigs.forEach((analysis, i) => {
+    analysis.name ??= `Multisig ${i + 1}`
+  })
 }
 
 /**

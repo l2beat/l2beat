@@ -15,7 +15,11 @@ export function getMeta(entries: EntryParameters[]): ContractsMeta {
     const address = entry.address
     chains.add(ChainSpecificAddress.longChain(entry.address))
     if (entry.type === 'EOA') {
-      meta[address] = { name: entry.name || undefined, type: 'EOA' }
+      meta[address] = {
+        name: entry.name || undefined,
+        // Starknet multisig accounts are EOA entries carrying $signers
+        type: Array.isArray(entry.values?.$signers) ? 'Multisig' : 'EOA',
+      }
     } else {
       meta[address] = {
         name: entry.name || undefined,

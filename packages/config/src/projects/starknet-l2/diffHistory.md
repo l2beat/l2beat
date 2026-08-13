@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x45969300aa7bcfbe868e7fd7f6aa9ebff943162e
+Generated with discovered.json: 0x085cf1ae13842f6991e2565e996db10800c79b5a
 
-# Diff at Thu, 13 Aug 2026 13:26:26 GMT:
+# Diff at Thu, 13 Aug 2026 14:48:31 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current timestamp: 1786627586
+- current timestamp: 1786632511
 
 ## Description
 
@@ -37,8 +37,8 @@ Initial Starknet L2 discovery of the Starkgate bridges
 
 ```diff
 +   Status: CREATED
-    EOA  (strk:0x00eaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0)
-    +++ description: None
+    EOA Multisig 1 (strk:0x00eaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0)
+    +++ description: Multisig account contract on Starknet. Transactions must be approved by the configured threshold of signer keys before the account executes them.
 ```
 
 ```diff
@@ -145,8 +145,8 @@ Initial Starknet L2 discovery of the Starkgate bridges
 
 ```diff
 +   Status: CREATED
-    EOA  (strk:0x073b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3)
-    +++ description: None
+    EOA Multisig 2 (strk:0x073b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3)
+    +++ description: Multisig account contract on Starknet. Transactions must be approved by the configured threshold of signer keys before the account executes them.
 ```
 
 ```diff

@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Multisig account contract on Starknet. Transactions must be approved by the configured threshold of signer keys before the account executes them.",
+  "category": "gov",
+  "fields": {
+    "$signers": {
+      "description": "Public keys of the signers controlling this account.",
+      "severity": "HIGH"
+    },
+    "$threshold": {
+      "description": "Number of signer approvals required to execute a transaction.",
+      "severity": "HIGH"
+    },
+    "$accountClassHash": {
+      "description": "Sierra class hash of the account contract."
+    }
+  }
+}

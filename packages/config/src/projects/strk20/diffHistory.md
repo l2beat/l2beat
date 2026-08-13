@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xd0c520d025a6c8441f07f02654d121e8467d598f
+Generated with discovered.json: 0x2674a26547988621f03ba2baf5414714aa360057
 
-# Diff at Thu, 13 Aug 2026 12:15:24 GMT:
+# Diff at Thu, 13 Aug 2026 14:48:37 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current timestamp: 1786623324
+- current timestamp: 1786632517
 
 ## Description
 
@@ -13,14 +13,14 @@ Initial Starknet discovery of the strk20 privacy pool
 
 ```diff
 +   Status: CREATED
-    EOA  (strk:0x00d79041634625e5288296fbc648088788710ba44903a3a49468a66567749e77)
-    +++ description: None
+    EOA Multisig 1 (strk:0x00d79041634625e5288296fbc648088788710ba44903a3a49468a66567749e77)
+    +++ description: Multisig account contract on Starknet. Transactions must be approved by the configured threshold of signer keys before the account executes them.
 ```
 
 ```diff
 +   Status: CREATED
-    EOA  (strk:0x02796da10aba2e1f445c38eba07e5a4393d6dab30d203d3432deb824e891619a)
-    +++ description: None
+    EOA Multisig 2 (strk:0x02796da10aba2e1f445c38eba07e5a4393d6dab30d203d3432deb824e891619a)
+    +++ description: Multisig account contract on Starknet. Transactions must be approved by the configured threshold of signer keys before the account executes them.
 ```
 
 ```diff
@@ -31,6 +31,6 @@ Initial Starknet discovery of the strk20 privacy pool
 
 ```diff
 +   Status: CREATED
-    EOA  (strk:0x0663cc699d9c51b7d4d434e06f5982692167546ce525d9155edb476ac9a117d6)
-    +++ description: None
+    EOA Multisig 3 (strk:0x0663cc699d9c51b7d4d434e06f5982692167546ce525d9155edb476ac9a117d6)
+    +++ description: Multisig account contract on Starknet. Transactions must be approved by the configured threshold of signer keys before the account executes them.
 ```

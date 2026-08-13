@@ -75,7 +75,8 @@ export interface HistorySnapshot {
 export interface Field {
   readonly name: string
   readonly label?: string
-  readonly target: string
+  /** Absent for display-only rows (e.g. multisig signer keys) */
+  readonly target?: string
   readonly box: Box
   readonly connection: Connection
 }

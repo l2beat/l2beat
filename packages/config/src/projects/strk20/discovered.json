@@ -1,18 +1,49 @@
 {
   "name": "strk20",
-  "timestamp": 1786623324,
-  "configHash": "0x3757a18320f022f346d96a9adf03e8dc6232f911e2af98acf0c04ae40fba3ab7",
+  "timestamp": 1786632517,
+  "configHash": "0x0a5463bcac0c499af4dce69bca425bbf16804770605658a0d0e31413baacd339",
   "entries": [
     {
+      "name": "Multisig 1",
       "address": "strk:0x00d79041634625e5288296fbc648088788710ba44903a3a49468a66567749e77",
       "type": "EOA",
+      "template": "starknet/MultisigAccount",
+      "sourceHashes": [
+        "0x5d8fc4c35f6b9d11d5effabbc557b9a7e4ccb999c60021069f7a1b751fedf9b1"
+      ],
+      "description": "Multisig account contract on Starknet. Transactions must be approved by the configured threshold of signer keys before the account executes them.",
       "values": {
-        "$accountClassHash": "0x6e150953b26271a740bf2b6e9bca17cc52c68d765f761295de51ceb8526ee72"
-      }
+        "$accountClassHash": "0x6e150953b26271a740bf2b6e9bca17cc52c68d765f761295de51ceb8526ee72",
+        "$signers": [
+          "0x1d6532694c05f58cf53844683641cbd29358a66a9259d933acb31340ec93e93",
+          "0x680481fe7c279af9fd1d544e569ccd1dc1d519e178c5acebe09ebdf5db8def9"
+        ],
+        "$threshold": 2
+      },
+      "fieldMeta": {
+        "$signers": {
+          "severity": "HIGH",
+          "description": "Public keys of the signers controlling this account."
+        },
+        "$threshold": {
+          "severity": "HIGH",
+          "description": "Number of signer approvals required to execute a transaction."
+        },
+        "$accountClassHash": {
+          "description": "Sierra class hash of the account contract."
+        }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "name": "Multisig 2",
       "address": "strk:0x02796da10aba2e1f445c38eba07e5a4393d6dab30d203d3432deb824e891619a",
       "type": "EOA",
+      "template": "starknet/MultisigAccount",
+      "sourceHashes": [
+        "0x5d8fc4c35f6b9d11d5effabbc557b9a7e4ccb999c60021069f7a1b751fedf9b1"
+      ],
+      "description": "Multisig account contract on Starknet. Transactions must be approved by the configured threshold of signer keys before the account executes them.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -22,8 +53,29 @@
         }
       ],
       "values": {
-        "$accountClassHash": "0x6e150953b26271a740bf2b6e9bca17cc52c68d765f761295de51ceb8526ee72"
-      }
+        "$accountClassHash": "0x6e150953b26271a740bf2b6e9bca17cc52c68d765f761295de51ceb8526ee72",
+        "$signers": [
+          "0x7762c57be14e4355217ef44d5f92d93c07891aa4fe65fe02cddf261fbe89ecc",
+          "0x1de18f0024011e569c50943d36fa7d38069b10d1ebe300d84cd72adc56e5bee",
+          "0x5a8d1d2a65f13b9ad709837a1e8c4184ea04663170546d6bcffbdda323e889f",
+          "0x46e3bc2a540e9a98e3bd06724a693c91e1db0ed13bbc2fdafc944a51379cd2c"
+        ],
+        "$threshold": 2
+      },
+      "fieldMeta": {
+        "$signers": {
+          "severity": "HIGH",
+          "description": "Public keys of the signers controlling this account."
+        },
+        "$threshold": {
+          "severity": "HIGH",
+          "description": "Number of signer approvals required to execute a transaction."
+        },
+        "$accountClassHash": {
+          "description": "Sierra class hash of the account contract."
+        }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "PrivacyPool",
@@ -59,7 +111,6 @@
         "appGovernors": [
           "strk:0x02796da10aba2e1f445c38eba07e5a4393d6dab30d203d3432deb824e891619a"
         ],
-        "feeCollectorChannelCount": 0,
         "get_auditor_public_key": "0x1eed60b8d483b3bede62d1cc0f32874aea30747e6943437c858359b41801bf7",
         "get_fee_amount": "6000000000000000000",
         "get_fee_collector": "strk:0x00d79041634625e5288296fbc648088788710ba44903a3a49468a66567749e77",
@@ -136,8 +187,14 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "name": "Multisig 3",
       "address": "strk:0x0663cc699d9c51b7d4d434e06f5982692167546ce525d9155edb476ac9a117d6",
       "type": "EOA",
+      "template": "starknet/MultisigAccount",
+      "sourceHashes": [
+        "0x5d8fc4c35f6b9d11d5effabbc557b9a7e4ccb999c60021069f7a1b751fedf9b1"
+      ],
+      "description": "Multisig account contract on Starknet. Transactions must be approved by the configured threshold of signer keys before the account executes them.",
       "eoaWithUpgradePermissions": true,
       "receivedPermissions": [
         {
@@ -159,8 +216,37 @@
         }
       ],
       "values": {
-        "$accountClassHash": "0x6e150953b26271a740bf2b6e9bca17cc52c68d765f761295de51ceb8526ee72"
-      }
+        "$accountClassHash": "0x6e150953b26271a740bf2b6e9bca17cc52c68d765f761295de51ceb8526ee72",
+        "$signers": [
+          "0x2173ec8ef9711bef454b0dea155cfed4115516c646503aed8041b3d6acb636",
+          "0x84b113c2ebf3898d7d732d79117e0a007b8b2e3029e8209d0a7d59bdb12e03",
+          "0x65a10aac58bac433bfa974fc543ecffe0263f10fcc5d20b4381c6f3c914ff0d",
+          "0x15b6970d7b5548034b1361e515a5b3a90c79401f431b6bf4f04bec10a3671ea",
+          "0x38aad1cd0059083b7e71ab9d433b9b46d42a140aa9277140e7a2b6cc0c0719b",
+          "0x27ffddbb2f2afe7f37eb515fc835954c4c4cd81e20b943b84d8c236b7033e4a",
+          "0x3edac362fc0f4f4b734a7c91bb7a7a64dad3d58407beba31f43bec131f0583b",
+          "0x13d393461321727d077139d121d2ee574dd5efb4d27ce473ee36f42a200bda1",
+          "0xc1946dc87b63cc7158f76cef2b2bf0d59e30c07cb182f4eb1fef18056bd779",
+          "0x1812403b646df40654181b889cb42f96c8271feb656ec55d62b2de9bdf4c392",
+          "0x76457df468d82ee981a9cc8de801174cc80675f29577fc77db7ae842c99640c",
+          "0x18c9a2e520cba2de4b7b1b85244464a247a08f4848eda79998116c17b32063f"
+        ],
+        "$threshold": 7
+      },
+      "fieldMeta": {
+        "$signers": {
+          "severity": "HIGH",
+          "description": "Public keys of the signers controlling this account."
+        },
+        "$threshold": {
+          "severity": "HIGH",
+          "description": "Number of signer approvals required to execute a transaction."
+        },
+        "$accountClassHash": {
+          "description": "Sierra class hash of the account contract."
+        }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     }
   ],
   "abis": {
@@ -237,8 +323,9 @@
     ]
   },
   "usedTemplates": {
+    "starknet/MultisigAccount": "0x7776abcb1616bab1f6626860771d46ffdd322663cf61eca88de4b981de39b7fd",
     "starknet/PrivacyPool": "0x8924ed0b23595c2f86deb2eac966f189a22e524f87f19380e0a9c911ed9582fe"
   },
-  "usedBlockNumbers": { "starknet": 13228428 },
-  "permissionsConfigHash": "0xd36ea291c315424c83625ae94df9affc9330be20a7d575e852cfd29fb9ec8c3c"
+  "usedBlockNumbers": { "starknet": 13233798 },
+  "permissionsConfigHash": "0xb3c2da91e53a6749e117273d42cdba49e0575a26cb927d1d7ef2d860869a3153"
 }

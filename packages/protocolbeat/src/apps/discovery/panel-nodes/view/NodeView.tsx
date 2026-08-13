@@ -172,7 +172,7 @@ function NodeFieldImpl(props: NodeFieldProps) {
       >
         {props.field.label ?? props.field.name}
       </div>
-      {!props.targetHidden && (
+      {!props.targetHidden && props.field.target !== undefined && (
         <div
           className={clsx(
             'absolute h-[10px] w-[10px] rounded-full',

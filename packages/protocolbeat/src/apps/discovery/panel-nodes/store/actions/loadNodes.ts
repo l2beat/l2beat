@@ -59,7 +59,9 @@ export function loadNodes(
   const knownIds = new Set([...toAddRaw, ...existingRaw].map((node) => node.id))
   const dropDanglingFields = (node: Node): Node => ({
     ...node,
-    fields: node.fields.filter((field) => knownIds.has(field.target)),
+    fields: node.fields.filter(
+      (field) => field.target === undefined || knownIds.has(field.target),
+    ),
   })
   const toAdd = toAddRaw.map(dropDanglingFields)
   const existing = existingRaw.map(dropDanglingFields)

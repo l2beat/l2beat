@@ -1,5 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  getErrorMessage,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
 import { BlipRuntime } from '../blip/BlipRuntime'
 import type {
@@ -31,7 +35,7 @@ import { getStarknetRoles, hasRolesEvents } from './starknetRoles'
 
 export interface StarknetAnalysisResult {
   analysis: Analysis
-  /** Deterministic single-file source, written to .flat/<Name>.sol */
+  /** Deterministic single-file source, written to .flat/<Name>.cairo */
   flatSource?: string
 }
 
@@ -40,6 +44,45 @@ const REPLACEABLE_FUNCTIONS = ['replace_to', 'get_upgrade_delay']
 // misclassifying protocol contracts that merely expose an execute entrypoint
 // (e.g. the strk20 privacy pool's IClient).
 const ACCOUNT_FUNCTIONS = ['__execute__', '__validate__', 'is_valid_signature']
+
+// Signer sets of the account standards seen in the wild - the Starknet
+// counterpart of Safe owners and threshold. Per field, the first getter the
+// class exposes wins:
+// - get_signers/get_threshold: StarkWare/Braavos-style multisigs
+// - get_signer_guids: Argent multisig
+// - get_public_key: OpenZeppelin single-key accounts (Cairo 0 and 1)
+// - get_owner/get_guardian: Argent user accounts (guardian = 0 means none)
+const ACCOUNT_KEY_GETTERS: [field: string, methods: string[]][] = [
+  ['$signers', ['get_signers', 'get_signer_guids']],
+  ['$threshold', ['get_threshold']],
+  ['$publicKey', ['get_public_key']],
+  ['$owner', ['get_owner']],
+  ['$guardian', ['get_guardian']],
+]
+
+async function readAccountKeys(
+  provider: StarknetDiscoveryProvider,
+  rawAddress: string,
+  abi: SierraAbi,
+  values: Record<string, ContractValue | undefined>,
+): Promise<void> {
+  for (const [field, methods] of ACCOUNT_KEY_GETTERS) {
+    const fn = abi.functions.find(
+      (f) =>
+        methods.includes(f.name) &&
+        f.stateMutability === 'view' &&
+        f.inputs.length === 0 &&
+        f.outputs.length > 0,
+    )
+    if (fn === undefined) {
+      continue
+    }
+    const outcome = await provider.call(rawAddress, starknetSelector(fn.name))
+    if (outcome.success) {
+      values[field] = decodeFunctionResult(outcome.result, fn.outputs, abi)
+    }
+  }
+}
 
 export async function analyzeStarknetContract(
   provider: StarknetDiscoveryProvider,
@@ -62,6 +105,40 @@ export async function analyzeStarknetContract(
   if (ACCOUNT_FUNCTIONS.every((fn) => hasFunction(abi, fn))) {
     const account = emptyEoa(address)
     account.values = { $accountClassHash: classHash }
+    await readAccountKeys(provider, rawAddress, abi, account.values)
+    // Account classes can shape-match templates (e.g. a known multisig
+    // class gets its description), just like EVM Safes do. The hash covers
+    // the ABI-generated interface, so it is deterministic per class.
+    const interfaceName = deriveContractName(abi, 'Account')
+    const accountSourceHash = sha2_256bit(
+      generateCairoInterface(interfaceName, classHash, abi),
+    )
+    account.sourceBundles = [
+      {
+        name: interfaceName,
+        address,
+        hash: accountSourceHash,
+        source: {
+          name: interfaceName,
+          rootFile: undefined,
+          isVerified: false,
+          abi: [],
+          solidityVersion: '',
+          constructorArguments: '',
+          files: {},
+          remappings: [],
+          libraries: {},
+        },
+      },
+    ]
+    account.extendedTemplate = applyTemplate(
+      templateService,
+      config,
+      address,
+      accountSourceHash,
+      suggestedTemplates,
+      logger,
+    )
     return { analysis: account }
   }
 
@@ -147,7 +224,7 @@ export async function analyzeStarknetContract(
     try {
       calldata = handler.args.map(toCalldataFelt)
     } catch (error) {
-      logger.warn(`Field ${field} on ${address}: ${getMessage(error)}`)
+      logger.warn(`Field ${field} on ${address}: ${getErrorMessage(error)}`)
       continue
     }
     const outcome = await provider.call(
@@ -265,7 +342,7 @@ function applyCopyAndEdit(
       values[fieldName] = runtime.executeBlip(values[fieldName], edit)
     } catch (error) {
       logger.warn(
-        `Field ${fieldName} on ${address}: edit failed - ${getMessage(error)}`,
+        `Field ${fieldName} on ${address}: edit failed - ${getErrorMessage(error)}`,
       )
       delete values[fieldName]
     }
@@ -292,10 +369,6 @@ function toCalldataFelt(arg: string | number): string {
     return `0x${BigInt(arg).toString(16)}`
   }
   throw new Error(`Cannot encode calldata argument: ${arg}`)
-}
-
-function getMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error)
 }
 
 function applyTemplate(

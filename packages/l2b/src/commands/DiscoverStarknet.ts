@@ -4,11 +4,13 @@ import {
   discoverStarknet,
   getDiscoveryPaths,
   modelPermissionsCommand,
+  type StarknetDiscoveryPin,
   type StarknetDiscoveryProviderOptions,
 } from '@l2beat/discovery'
 import { generateEntrypointsCommand } from '@l2beat/discovery/dist/discovery/shared-modules/generateEntrypoints'
 import { HttpClient } from '@l2beat/shared'
-import { command, option, optional, positional, string } from 'cmd-ts'
+import { UnixTime } from '@l2beat/shared-pure'
+import { command, flag, option, optional, positional, string } from 'cmd-ts'
 import { getPlainLogger } from '../implementations/common/getPlainLogger'
 import { updateDiffHistory } from '../implementations/discovery/updateDiffHistory'
 
@@ -31,19 +33,47 @@ export const DiscoverStarknet = command({
       description:
         'Message that will be written in the description section of diffHistory.md',
     }),
+    dev: flag({
+      long: 'dev',
+      description:
+        'Rerun on the block and timestamp of the existing discovered.json, for byte-stable config/template iteration',
+    }),
   },
   handler: async (args) => {
     const logger = getPlainLogger()
     const paths = getDiscoveryPaths()
     const configReader = new ConfigReader(paths.discovery)
     const config = configReader.readConfig(args.project)
+    const options = resolveStarknetOptions()
+
+    if (options.voyagerApiKey === undefined) {
+      logger.warn(
+        'VOYAGER_API_KEY is not set - sources fall back to ABI-generated ' +
+          'interfaces and role scans start from block 0 (deployment blocks ' +
+          'come from Voyager)',
+      )
+    }
+
+    let pin: StarknetDiscoveryPin | undefined
+    if (args.dev) {
+      const previous = configReader.readDiscovery(args.project)
+      const blockNumber = previous.usedBlockNumbers?.starknet
+      if (blockNumber === undefined) {
+        throw new Error(
+          '--dev requires an existing discovered.json with a starknet block number',
+        )
+      }
+      pin = { blockNumber, timestamp: UnixTime(previous.timestamp) }
+      logger.info(`Rerunning on block ${blockNumber} (--dev)`)
+    }
 
     await discoverStarknet(
       config,
       paths,
       new HttpClient(),
       logger,
-      resolveStarknetOptions(),
+      options,
+      pin,
     )
     await modelPermissionsCommand(
       args.project,

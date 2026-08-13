@@ -1,0 +1,10 @@
+{
+  "MultisigAccount": {
+    "hash": "0x5d8fc4c35f6b9d11d5effabbc557b9a7e4ccb999c60021069f7a1b751fedf9b1",
+    "address": [
+      "strk:0x00eaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0",
+      "strk:0x073b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3"
+    ],
+    "blockNumber": 8978970
+  }
+}
