@@ -25,7 +25,7 @@ export interface DefiSummaryEntry {
   description: string
   category: ProjectDefiCategory
   totalValueLockedUsd?: number
-  dependencies: DefiDependency[]
+  dependencies?: DefiDependency[]
   isUnderReview: boolean
 }
 
@@ -56,10 +56,13 @@ export function buildDefiSummaryEntries(
         description: project.display.description,
         category: project.defiInfo.category,
         totalValueLockedUsd: tvlByProject.get(project.id),
-        dependencies: resolveDefiDependencies(
-          project.externalDependencies ?? [],
-          dependencyProjectsById,
-        ),
+        dependencies:
+          project.externalDependencies !== undefined
+            ? resolveDefiDependencies(
+                project.externalDependencies,
+                dependencyProjectsById,
+              )
+            : undefined,
         isUnderReview: !!project.statuses.reviewStatus,
       }
     })

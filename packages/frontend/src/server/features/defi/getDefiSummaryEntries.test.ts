@@ -112,7 +112,7 @@ describe(buildDefiSummaryEntries.name, () => {
     expect(entries.map((entry) => entry.id)).toEqual(['alpha', 'beta'])
   })
 
-  it('resolves BOLD dependencies and leaves Uniswap with an explicit empty list', () => {
+  it('resolves BOLD dependencies, Uniswap as none, and Chainlink as unknown', () => {
     const chainlink = defiProject({
       id: 'chainlink',
       name: 'Chainlink',
@@ -181,7 +181,7 @@ describe(buildDefiSummaryEntries.name, () => {
       },
     ])
     expect(uni?.dependencies).toEqual([])
-    expect(link?.dependencies).toEqual([])
+    expect(link?.dependencies).toEqual(undefined)
   })
 })
 

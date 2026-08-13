@@ -1,10 +1,15 @@
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import type { DefiDependency } from '~/server/features/defi/resolveDefiDependencies'
 
 export function DefiDependenciesCell({
   dependencies,
 }: {
-  dependencies: DefiDependency[]
+  dependencies: DefiDependency[] | undefined
 }) {
+  if (dependencies === undefined) {
+    return <NoDataBadge />
+  }
+
   if (dependencies.length === 0) {
     return <span className="font-medium text-sm">None</span>
   }
