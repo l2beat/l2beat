@@ -49,15 +49,16 @@ export class ConfigHealthService {
       const configuredWatchMode = entry?.ignoreInWatchMode ?? []
       const configuredMethods = override?.ignoreMethods ?? []
       const configuredRelatives = override?.ignoreRelatives ?? []
-      const possibleValues = this.getPossibleValuesForEntry(
-        entry,
-        discovery,
+      const possibleValues = this.getPossibleValuesForEntry(entry, discovery)
+      const possibleWatchModeValues = getPossibleWatchModeValues(
+        possibleValues,
+        [entry],
         configuredWatchMode,
       )
 
       const excessWatchMode = this.filterOverspecified(
         configuredWatchMode,
-        possibleValues,
+        possibleWatchModeValues,
       )
       const excessMethods = this.filterOverspecified(
         configuredMethods,
@@ -104,7 +105,6 @@ export class ConfigHealthService {
       const possibleValuesForTemplate = this.getPossibleValuesForTemplate(
         discovery,
         templateId,
-        configuredWatchMode,
       )
 
       for (const value of possibleValuesForTemplate) {
@@ -112,9 +112,18 @@ export class ConfigHealthService {
       }
     }
 
+    const templateEntries = discoveries.flatMap((discovery) =>
+      discovery.entries.filter((entry) => entry.template === templateId),
+    )
+    const allPossibleWatchModeValues = getPossibleWatchModeValues(
+      allPossibleValues,
+      templateEntries,
+      configuredWatchMode,
+    )
+
     const excessWatchMode = this.filterOverspecified(
       configuredWatchMode,
-      allPossibleValues,
+      allPossibleWatchModeValues,
     )
     const excessMethods = this.filterOverspecified(
       configuredMethods,
@@ -145,7 +154,6 @@ export class ConfigHealthService {
   private getPossibleValuesForEntry(
     entry: EntryParameters,
     discovery: DiscoveryOutput,
-    configuredWatchMode: string[],
   ): Set<string> {
     const implementations = get$Implementations(entry.values)
     const abis = implementations
@@ -153,10 +161,7 @@ export class ConfigHealthService {
       .concat(discovery.abis[entry.address] ?? [])
 
     const functionNamesFromAbi = this.extractFunctionNamesFromAbi(abis.flat())
-    const maybeCustomValues = getPossibleValuePaths(
-      entry.values,
-      configuredWatchMode,
-    )
+    const maybeCustomValues = Object.keys(entry.values ?? {})
 
     return new Set([...functionNamesFromAbi, ...maybeCustomValues])
   }
@@ -164,7 +169,6 @@ export class ConfigHealthService {
   private getPossibleValuesForTemplate(
     discovery: DiscoveryOutput,
     templateId: string,
-    configuredWatchMode: string[],
   ): Set<string> {
     const possibleValues = new Set<string>()
 
@@ -181,10 +185,7 @@ export class ConfigHealthService {
           possibleValues.add(functionName)
         }
 
-        for (const value of getPossibleValuePaths(
-          entry.values,
-          configuredWatchMode,
-        )) {
+        for (const value of Object.keys(entry.values ?? {})) {
           possibleValues.add(value)
         }
       }
@@ -207,19 +208,22 @@ export class ConfigHealthService {
   }
 }
 
-function getPossibleValuePaths(
-  values: Record<string, ContractValue | undefined> | undefined,
+function getPossibleWatchModeValues(
+  possibleValues: Set<string>,
+  entries: EntryParameters[],
   configuredWatchMode: string[],
-): string[] {
-  const paths = Object.keys(values ?? {})
+): Set<string> {
+  const result = new Set(possibleValues)
 
-  for (const path of configuredWatchMode) {
-    if (hasValuePath(values, path)) {
-      paths.push(path)
+  for (const entry of entries) {
+    for (const path of configuredWatchMode) {
+      if (hasValuePath(entry.values, path)) {
+        result.add(path)
+      }
     }
   }
 
-  return paths
+  return result
 }
 
 function hasValuePath(

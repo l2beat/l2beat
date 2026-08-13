@@ -14,6 +14,17 @@ const CONFIG = new ConfigRegistry({
   chain: 'ethereum',
   initialAddresses: [ADDRESS],
 })
+const MISCONFIGURED_CONFIG = new ConfigRegistry({
+  name: 'nested-health',
+  chain: 'ethereum',
+  initialAddresses: [ADDRESS],
+  overrides: {
+    [ADDRESS]: {
+      ignoreMethods: ['stats.epoch'],
+      ignoreRelatives: ['stats.epoch'],
+    },
+  },
+})
 
 describe(ConfigHealthService.name, () => {
   it('accepts nested value paths in config health', () => {
@@ -38,6 +49,8 @@ describe(ConfigHealthService.name, () => {
     })
     const template = StructureContract.parse({
       ignoreInWatchMode: ['stats.epoch', 'stats.missing'],
+      ignoreMethods: ['stats.epoch'],
+      ignoreRelatives: ['stats.epoch'],
     })
 
     expect(
@@ -52,8 +65,37 @@ describe(ConfigHealthService.name, () => {
         target: { templateId: TEMPLATE_ID },
         excess: {
           ignoreInWatchMode: ['stats.missing'],
-          ignoreMethods: [],
-          ignoreRelatives: [],
+          ignoreMethods: ['stats.epoch'],
+          ignoreRelatives: ['stats.epoch'],
+        },
+      },
+    ])
+  })
+
+  it('does not accept nested watch paths for other config settings', () => {
+    const discovery = makeDiscovery({
+      name: 'Nested',
+      ignoreInWatchMode: ['stats.epoch'],
+      values: { stats: { epoch: 1 } },
+    })
+
+    expect(
+      new ConfigHealthService().checkConfigHealth(
+        MISCONFIGURED_CONFIG,
+        discovery,
+      ),
+    ).toEqual([
+      {
+        source: 'config',
+        target: {
+          project: MISCONFIGURED_CONFIG.name,
+          address: ADDRESS,
+          name: 'Nested',
+        },
+        excess: {
+          ignoreInWatchMode: [],
+          ignoreMethods: ['stats.epoch'],
+          ignoreRelatives: ['stats.epoch'],
         },
       },
     ])
