@@ -78,6 +78,7 @@ export {
 } from './discovery/output/diffToMarkdown'
 export { neuterErrors } from './discovery/output/errors'
 export { flattenDiscoveredSources } from './discovery/output/flattenDiscoveredSource'
+export { remapDiscoverySourceNames } from './discovery/output/remapDiscoverySourceNames'
 export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
 export { generateStructureHash } from './discovery/output/structureOutput'
 export {
