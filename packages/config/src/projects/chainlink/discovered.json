@@ -1,6 +1,6 @@
 {
   "name": "chainlink",
-  "timestamp": 1785754257,
+  "timestamp": 1786539236,
   "configHash": "0x02cf74604fca179f45be09bf25e0c818200e496cfdd7863e7b8745736ab0c6ff",
   "entries": [
     {
@@ -432,6 +432,7 @@
       ],
       "proxyType": "immutable",
       "description": "A Chainlink OCR2 aggregator producing a price feed. Each update is the median of a report signed by a quorum (f+1) of its signers and relayed onchain by one of its transmitters, accepted only within a fixed min/max band. A colluding signer quorum can move the reported price anywhere within that band, while a transmitter only relays an already-signed report. Its owner sets the signer and transmitter sets and the quorum size, so it controls who can report the price.",
+      "ignoreInWatchMode": ["latestConfigDigestAndEpoch.epoch"],
       "deployerAddress": "eth:0xD436f206292591a5f823AccBa76DE2e9C14C8e8f",
       "sinceTimestamp": 1720564379,
       "sinceBlock": 20271940,
@@ -484,7 +485,7 @@
         "latestConfigDigestAndEpoch": {
           "scanLogs": false,
           "configDigest": "0x00015fb1bf262779af44a451aaa926c8e0f02c1f012c0cd445ef41c0b50b818e",
-          "epoch": 7805
+          "epoch": 12181
         },
         "linkAvailableForPayment": 0,
         "maxAnswer": "95780971304118053647396689196894323976171195136475135",
@@ -1433,6 +1434,7 @@
       ],
       "proxyType": "immutable",
       "description": "A Chainlink OCR2 aggregator producing a price feed. Each update is the median of a report signed by a quorum (f+1) of its signers and relayed onchain by one of its transmitters, accepted only within a fixed min/max band. A colluding signer quorum can move the reported price anywhere within that band, while a transmitter only relays an already-signed report. Its owner sets the signer and transmitter sets and the quorum size, so it controls who can report the price.",
+      "ignoreInWatchMode": ["latestConfigDigestAndEpoch.epoch"],
       "deployerAddress": "eth:0xD436f206292591a5f823AccBa76DE2e9C14C8e8f",
       "sinceTimestamp": 1726613267,
       "sinceBlock": 20773402,
@@ -1497,7 +1499,7 @@
         "latestConfigDigestAndEpoch": {
           "scanLogs": false,
           "configDigest": "0x0001e754045b2e3624f54e63b92d76f6f94eda08059db3ae9ed57b8b245f1750",
-          "epoch": 7826
+          "epoch": 12189
         },
         "linkAvailableForPayment": 0,
         "maxAnswer": "95780971304118053647396689196894323976171195136475135",
@@ -2039,6 +2041,7 @@
       ],
       "proxyType": "immutable",
       "description": "A Chainlink OCR2 aggregator producing a price feed. Each update is the median of a report signed by a quorum (f+1) of its signers and relayed onchain by one of its transmitters, accepted only within a fixed min/max band. A colluding signer quorum can move the reported price anywhere within that band, while a transmitter only relays an already-signed report. Its owner sets the signer and transmitter sets and the quorum size, so it controls who can report the price.",
+      "ignoreInWatchMode": ["latestConfigDigestAndEpoch.epoch"],
       "deployerAddress": "eth:0xD436f206292591a5f823AccBa76DE2e9C14C8e8f",
       "sinceTimestamp": 1720487843,
       "sinceBlock": 20265601,
@@ -2088,7 +2091,7 @@
         "latestConfigDigestAndEpoch": {
           "scanLogs": false,
           "configDigest": "0x00019e55be9064246f399af0a3d969ce600228fc619c23c923eb8c0468d1834c",
-          "epoch": 244560
+          "epoch": 248883
         },
         "linkAvailableForPayment": 0,
         "maxAnswer": "95780971304118053647396689196894323976171195136475135",
@@ -3891,9 +3894,9 @@
   "usedTemplates": {
     "ChainlinkAggregatorProxy": "0x207973a461bebf07ad950cbd3aec0199f0a795fb2a4934c233c182ae717f7858",
     "ChainlinkAuthorizedForwarder": "0x377fe7f8b6f44b5a1f23058bd836e2f89cb1f103e392319492612cabc9931d74",
-    "ChainlinkOCR2Aggregator": "0x466b4e23ea14db0b076a3713268b79f35f65746ceb9ff64850b2bc7b93af3def",
+    "ChainlinkOCR2Aggregator": "0x0ceda58eb8c7016c3e902557f785bc5e4145b201e64548d164ee996a7cf9e701",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25673882 },
+  "usedBlockNumbers": { "ethereum": 25739044 },
   "permissionsConfigHash": "0x8d59d6b7f788efdf0510042a533c5d3899b589064c5e7c5fcc219d497cd9110c"
 }

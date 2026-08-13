@@ -9,6 +9,7 @@
     "removeManagerReceiverOf"
   ],
   "ignoreRelatives": ["WETH", "collToken"],
+  "ignoreInWatchMode": ["getEntireBranchColl", "getEntireBranchDebt"],
   "fields": {
     "constructorArgs": {
       "handler": { "type": "constructorArgs", "nameArgs": true }
