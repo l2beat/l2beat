@@ -32,7 +32,12 @@ export const Minters = command({
     const logger = getPlainLogger()
     const chain = getChainConfig(chainName)
 
-    const provider = await getProvider(chain.rpcUrl, chain.explorer)
+    const provider = await getProvider(
+      chain.rpcUrl,
+      chain.explorer,
+      undefined,
+      chain.multicall,
+    )
     Object.assign(provider, { chain: chainName })
 
     logger.info('Getting mint transactions...')
