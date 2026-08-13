@@ -81,6 +81,31 @@ describe(buildDefiSummaryEntries.name, () => {
     ])
   })
 
+  it('breaks equal TVLs by name', () => {
+    const entries = buildDefiSummaryEntries(
+      [
+        defiProject({
+          id: 'beta',
+          name: 'Beta',
+          category: 'DEX',
+          tvsConfig: [],
+        }),
+        defiProject({
+          id: 'alpha',
+          name: 'Alpha',
+          category: 'DEX',
+          tvsConfig: [],
+        }),
+      ],
+      new Map([
+        ['beta', 10],
+        ['alpha', 10],
+      ]),
+    )
+
+    expect(entries.map((entry) => entry.id)).toEqual(['alpha', 'beta'])
+  })
+
   it('resolves BOLD dependencies and leaves Uniswap with an explicit empty list', () => {
     const chainlink = defiProject({
       id: 'chainlink',
@@ -133,16 +158,19 @@ describe(buildDefiSummaryEntries.name, () => {
         icon: '/icons/chainlink.png',
         description: 'Price feeds',
         href: '/defi/projects/chainlink',
+        reviewed: true,
       },
       {
         name: 'Rocket Pool rETH',
         icon: '/icons/reth.png',
         description: 'rETH rate',
+        reviewed: false,
       },
       {
         name: 'Lido wstETH',
         icon: '/icons/wsteth.png',
         description: 'wstETH rate',
+        reviewed: false,
       },
     ])
     expect(uni?.dependencies).toEqual([])
@@ -196,7 +224,7 @@ function defiProject({
   id: string
   name: string
   category: DefiProject['defiInfo']['category']
-  tvsConfig?: []
+  tvsConfig?: DefiProject['tvsConfig']
   externalDependencies?: DefiProject['externalDependencies']
 }): DefiProject {
   return {

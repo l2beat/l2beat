@@ -4,6 +4,8 @@ import type { CostsSectionProps } from './costs/CostsSection'
 import type { DaRiskSummarySectionProps } from './DaRiskSummarySection'
 import type { DetailedDescriptionSectionProps } from './DetailedDescriptionSection'
 import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
+import type { DefiTvlSectionProps } from './defi/DefiTvlSection'
+import type { ExternalDependenciesSectionProps } from './ExternalDependenciesSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
 import type { InteropFlowsSectionProps } from './interop/InteropFlowsSection'
@@ -76,6 +78,7 @@ type SectionId =
   | 'privacy-tvl'
   | 'privacy-flows'
   | 'privacy-assets-breakdown'
+  | 'external-dependencies'
 type GroupId = 'da-layer' | 'da-bridge'
 
 export type ProjectSectionId = SectionId | GroupId | `${GroupId}-${SectionId}`
@@ -282,6 +285,16 @@ interface ProjectDetailsPrivacyAssetsBreakdownSection {
   props: ProjectDetailsProps<PrivacyAssetsBreakdownSectionProps>
 }
 
+interface ProjectDetailsDefiTvlSection {
+  type: 'DefiTvlSection'
+  props: ProjectDetailsProps<DefiTvlSectionProps>
+}
+
+interface ProjectDetailsExternalDependenciesSection {
+  type: 'ExternalDependenciesSection'
+  props: ProjectDetailsProps<ExternalDependenciesSectionProps>
+}
+
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
   sideNavTitle?: string
@@ -325,4 +338,6 @@ export type ProjectDetailsSection = {
   | ProjectDetailsPrivacyTvlSection
   | ProjectDetailsPrivacyFlowsSection
   | ProjectDetailsPrivacyAssetsBreakdownSection
+  | ProjectDetailsDefiTvlSection
+  | ProjectDetailsExternalDependenciesSection
 )

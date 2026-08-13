@@ -2,9 +2,11 @@ import type { Project, ProjectDefiCategory } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import {
   type DefiDependency,
+  type DefiDependencyProject,
   resolveDefiDependencies,
 } from './resolveDefiDependencies'
 
@@ -30,18 +32,23 @@ export interface DefiSummaryEntry {
 export async function getDefiSummaryEntries(
   projects: DefiProject[],
 ): Promise<DefiSummaryEntry[]> {
-  const tvlByProject = await getTotalValueLockedByProject(projects)
-  return buildDefiSummaryEntries(projects, tvlByProject)
+  const [tvlByProject, dependencyProjectsById] = await Promise.all([
+    getTotalValueLockedByProject(projects),
+    getDependencyProjectsById(projects),
+  ])
+  return buildDefiSummaryEntries(projects, tvlByProject, dependencyProjectsById)
 }
 
 export function buildDefiSummaryEntries(
   projects: DefiProject[],
   tvlByProject: ReadonlyMap<string, number>,
+  dependencyProjectsById: ReadonlyMap<string, DefiDependencyProject> = new Map(
+    projects.map((project) => [
+      project.id,
+      { name: project.name, slug: project.slug, isDefi: true },
+    ]),
+  ),
 ): DefiSummaryEntry[] {
-  const defiProjectsById = new Map(
-    projects.map((project) => [project.id, project]),
-  )
-
   return projects
     .map((project): DefiSummaryEntry => {
       return {
@@ -56,12 +63,52 @@ export function buildDefiSummaryEntries(
         totalValueLockedUsd: tvlByProject.get(project.id),
         dependencies: resolveDefiDependencies(
           project.externalDependencies ?? [],
-          defiProjectsById,
+          dependencyProjectsById,
         ),
         isUnderReview: !!project.statuses.reviewStatus,
       }
     })
     .sort(compareDefiSummaryEntries)
+}
+
+async function getDependencyProjectsById(
+  projects: DefiProject[],
+): Promise<Map<string, DefiDependencyProject>> {
+  const dependencyProjectsById = new Map(
+    projects.map((project) => [
+      project.id,
+      { name: project.name, slug: project.slug, isDefi: true },
+    ]),
+  )
+
+  const missingIds = [
+    ...new Set(
+      projects
+        .flatMap((project) => project.externalDependencies ?? [])
+        .filter((dependency) => dependency.type === 'tracked')
+        .map((dependency) => dependency.projectId)
+        .filter((projectId) => !dependencyProjectsById.has(projectId)),
+    ),
+  ]
+
+  if (missingIds.length === 0) {
+    return dependencyProjectsById
+  }
+
+  const extraProjects = await ps.getProjects({
+    ids: missingIds,
+    optional: ['defiInfo'],
+  })
+
+  for (const project of extraProjects) {
+    dependencyProjectsById.set(project.id, {
+      name: project.name,
+      slug: project.slug,
+      isDefi: project.defiInfo !== undefined,
+    })
+  }
+
+  return dependencyProjectsById
 }
 
 async function getTotalValueLockedByProject(
@@ -112,5 +159,9 @@ function compareDefiSummaryEntries(
   if (b.totalValueLockedUsd === undefined) {
     return -1
   }
-  return b.totalValueLockedUsd - a.totalValueLockedUsd
+  const difference = b.totalValueLockedUsd - a.totalValueLockedUsd
+  if (difference !== 0) {
+    return difference
+  }
+  return a.name.localeCompare(b.name)
 }

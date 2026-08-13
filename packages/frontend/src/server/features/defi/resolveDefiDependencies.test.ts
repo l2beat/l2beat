@@ -4,11 +4,10 @@ import { expect } from 'earl'
 import { resolveDefiDependencies } from './resolveDefiDependencies'
 
 describe(resolveDefiDependencies.name, () => {
-  const chainlink = {
-    name: 'Chainlink',
-    slug: 'chainlink',
-  }
-  const defiProjectsById = new Map([['chainlink', chainlink]])
+  const projectsById = new Map([
+    ['chainlink', { name: 'Chainlink', slug: 'chainlink', isDefi: true }],
+    ['acrossv3', { name: 'Across v3', slug: 'acrossv3', isDefi: false }],
+  ])
 
   it('links tracked dependencies that exist as DeFi projects', () => {
     const dependencies: ProjectExternalDependency[] = [
@@ -19,12 +18,13 @@ describe(resolveDefiDependencies.name, () => {
       },
     ]
 
-    expect(resolveDefiDependencies(dependencies, defiProjectsById)).toEqual([
+    expect(resolveDefiDependencies(dependencies, projectsById)).toEqual([
       {
         name: 'Chainlink',
         icon: '/icons/chainlink.png',
         description: 'Price feeds',
         href: '/defi/projects/chainlink',
+        reviewed: true,
       },
     ])
   })
@@ -39,34 +39,55 @@ describe(resolveDefiDependencies.name, () => {
       },
     ]
 
-    expect(resolveDefiDependencies(dependencies, defiProjectsById)).toEqual([
+    expect(resolveDefiDependencies(dependencies, projectsById)).toEqual([
       {
         name: 'Rocket Pool rETH',
         icon: '/icons/reth.png',
         description: 'rETH rate',
+        reviewed: false,
       },
     ])
   })
 
-  it('does not link tracked dependencies that are not DeFi projects', () => {
+  it('shows tracked non-DeFi projects without a DeFi link', () => {
+    const dependencies: ProjectExternalDependency[] = [
+      {
+        type: 'tracked',
+        projectId: ProjectId('acrossv3'),
+        description: 'Bridge',
+      },
+    ]
+
+    expect(resolveDefiDependencies(dependencies, projectsById)).toEqual([
+      {
+        name: 'Across v3',
+        icon: '/icons/acrossv3.png',
+        description: 'Bridge',
+        reviewed: true,
+      },
+    ])
+  })
+
+  it('keeps tracked dependencies reviewed even if the project is missing', () => {
     const dependencies: ProjectExternalDependency[] = [
       {
         type: 'tracked',
         projectId: ProjectId('unknown-oracle'),
-        description: 'Missing from DeFi',
+        description: 'Missing from config',
       },
     ]
 
-    expect(resolveDefiDependencies(dependencies, defiProjectsById)).toEqual([
+    expect(resolveDefiDependencies(dependencies, projectsById)).toEqual([
       {
         name: 'unknown-oracle',
         icon: '/icons/unknown-oracle.png',
-        description: 'Missing from DeFi',
+        description: 'Missing from config',
+        reviewed: true,
       },
     ])
   })
 
   it('returns an empty list when there are no dependencies', () => {
-    expect(resolveDefiDependencies([], defiProjectsById)).toEqual([])
+    expect(resolveDefiDependencies([], projectsById)).toEqual([])
   })
 })

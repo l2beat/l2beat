@@ -5,6 +5,8 @@ import { CostsSection } from './sections/costs/CostsSection'
 import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
 import { DetailedDescriptionSection } from './sections/DetailedDescriptionSection'
 import { DataPostedSection } from './sections/data-posted/DataPostedSection'
+import { DefiTvlSection } from './sections/defi/DefiTvlSection'
+import { ExternalDependenciesSection } from './sections/ExternalDependenciesSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
 import { GroupSection } from './sections/GroupSection'
 import { InteropFlowsSection } from './sections/interop/InteropFlowsSection'
@@ -365,6 +367,22 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'PrivacyAssetsBreakdownSection':
             return (
               <PrivacyAssetsBreakdownSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'DefiTvlSection':
+            return (
+              <DefiTvlSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'ExternalDependenciesSection':
+            return (
+              <ExternalDependenciesSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
