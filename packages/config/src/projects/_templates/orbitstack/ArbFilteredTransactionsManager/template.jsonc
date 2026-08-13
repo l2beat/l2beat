@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ArbFilteredTransactionsManager",
+  "description": "ArbOS 61 transaction-filtering precompile (0x..74). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. Available from ArbOS 61 onwards. On chains where the feature is not enabled (e.g. Arbitrum One and Nova) it has no filterers and no filtered transactions, but is tracked so any future activation is caught immediately. Compare Robinhood, where this precompile is active.",
+  "fields": {
+    // Number of transactions ever added to the censored list
+    // (FilteredTransactionAdded(bytes32)). A non-zero, growing value means the
+    // operator is actively censoring transactions. Event-based, so it is 0 (not
+    // a revert) on chains where the feature is unused.
+    "filteredTransactionsAdded": {
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0xde91070c821fde128c9ad6c14fac600aa5d701f4f74997eb997cd5591414426f"
+        ]
+      }
+    },
+    // Number of transactions removed from the censored list
+    // (FilteredTransactionDeleted(bytes32)).
+    "filteredTransactionsDeleted": {
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0xdb54a829e2a086557fb16aeb8950816c19960c430bf7d36c791c0f8382b66d22"
+        ]
+      }
+    },
+    // The authorized transaction filterers, read cross-address off the
+    // ArbOwnerPublic precompile (bare 0x..6b resolves to this contract's chain).
+    // getAllTransactionFilterers is an ArbOS-61-only method: it reverts on chains
+    // still below ArbOS 61 (expectRevert -> "EXPECT_REVERT", no actor), and
+    // returns the real (possibly empty) filterer set on ArbOS 61+.
+    "transactionFilterers": {
+      "handler": {
+        "type": "call",
+        "method": "function getAllTransactionFilterers() view returns (address[])",
+        "args": [],
+        "address": "0x000000000000000000000000000000000000006b",
+        "expectRevert": true
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "Can register/remove transaction hashes in the ArbFilteredTransactionsManager precompile, causing the state transition function to forcibly fail those transactions, including force-included ones, without delay."
+        }
+      ]
+    }
+  }
+}
