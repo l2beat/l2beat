@@ -24,7 +24,7 @@ export interface InteropTokenRelationsDeployment {
   address: string
   symbol: string
   explorerUrl: string | undefined
-  /** Last 24h volume; null on a chain the snapshot does not cover. */
+  /** Past 24h crosschain volume; null when the snapshot has no data. */
   volume: number | null
 }
 
@@ -34,7 +34,7 @@ export interface InteropTokenRelationsNode {
   deployments: InteropTokenRelationsDeployment[]
   /** The bridges putting those deployments in a burn-mint relation. */
   bridges: UsedInProjectWithIcon[]
-  /** Last 24h volume summed over the node's deployments; orders the drawing. */
+  /** Past 24h crosschain volume summed over the node's deployments. */
   volume: number | null
 }
 

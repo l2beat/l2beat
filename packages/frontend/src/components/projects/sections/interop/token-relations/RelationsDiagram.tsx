@@ -454,6 +454,10 @@ export function RelationsDiagram({
         </div>
       )}
 
+      <p className="absolute bottom-3 left-3 rounded-md border border-divider bg-surface-primary px-2 py-1 text-label-value-12 text-secondary">
+        Past 24h crosschain volume
+      </p>
+
       <div
         className={cn(
           'absolute bottom-3 flex flex-col gap-1',

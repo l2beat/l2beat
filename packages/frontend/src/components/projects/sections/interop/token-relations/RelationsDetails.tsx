@@ -105,10 +105,10 @@ export function RelationsDetails({ graph, nodeId, onClose }: Props) {
               </li>
             ))}
           </ul>
-          <VolumeRow value={node.volume} label="Observed 24h activity" />
+          <VolumeRow value={node.volume} />
           {node.volume !== null && (
             <p className="mt-1 text-label-value-12 text-secondary">
-              Activity is summed across deployments; a transfer within this set
+              Volume is summed across deployments; a transfer within this set
               can be observed on both sides.
             </p>
           )}
@@ -127,7 +127,7 @@ export function RelationsDetails({ graph, nodeId, onClose }: Props) {
                 </span>
               )}
             </p>
-            <VolumeRow value={first.volume} label="Last 24h volume" />
+            <VolumeRow value={first.volume} />
           </>
         )
       )}
@@ -159,11 +159,11 @@ export function RelationsDetails({ graph, nodeId, onClose }: Props) {
 }
 
 /** Omitted rather than shown as zero when the chain is not covered. */
-function VolumeRow({ value, label }: { value: number | null; label: string }) {
+function VolumeRow({ value }: { value: number | null }) {
   if (value === null) return null
   return (
     <div className="mt-3 flex items-baseline justify-between gap-2 text-label-value-13">
-      <span className="text-secondary">{label}</span>
+      <span className="text-secondary">Volume</span>
       <span className="font-medium">{formatCurrency(value, 'usd')}</span>
     </div>
   )

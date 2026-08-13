@@ -87,9 +87,6 @@ export function RelationsNode({
               textAnchor="end"
               className="fill-secondary font-medium text-label-value-12"
             >
-              <title>
-                Observed 24h activity across the deployments in this set
-              </title>
               {formatCurrency(node.volume, 'usd')}
             </text>
           )}

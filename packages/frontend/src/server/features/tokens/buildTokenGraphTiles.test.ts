@@ -119,6 +119,30 @@ describe(buildTokenGraphTiles.name, () => {
     expect(grouped?.chains ?? []).toEqualUnsorted(['arbitrum', 'ethereum'])
   })
 
+  it('counts only the deployments shown by default', () => {
+    const tiles = buildTokenGraphTiles(
+      input({
+        abstractTokens: [token('aaa', 'USDC')],
+        deployedTokens: [
+          deployment('ethereum', '0x1', 'aaa'),
+          deployment('arbitrum', '0x2', 'aaa'),
+          deployment('base', '0x3', 'aaa'),
+        ],
+        routes: [
+          route('ethereum', '0x1', 'arbitrum', '0x2', {
+            bridgeType: 'lockAndMint',
+            lockedToken: 'A',
+          }),
+        ],
+      }),
+    )
+
+    const tile = tiles[0]
+    expect(tile?.graph.nodes.length).toEqual(3)
+    expect(tile?.graph.unconnectedNodeIds.length).toEqual(1)
+    expect([tile?.deployments, tile?.chains]).toEqual([2, 2])
+  })
+
   it('ignores a relation reaching into a different token', () => {
     const tiles = buildTokenGraphTiles(
       input({

@@ -36,11 +36,13 @@ export interface TokenGraphTile {
   slug: string
   issuer: string | null
   iconUrl: string | null
+  /** Deployments shown when the graph opens with unrelated nodes hidden. */
   deployments: number
+  /** Distinct chains shown when the graph opens with unrelated nodes hidden. */
   chains: number
-  /** Last 24h volume across the snapshot; null when the token was not active. */
+  /** Past 24h crosschain volume; null when the token was not active. */
   volume: number | null
-  /** Distinct configured projects observed minting this token. */
+  /** Distinct configured projects minting the nodes shown by default. */
   minterCount?: number
   /**
    * Whether the token has any observed relation at all. Not the same as having
@@ -62,7 +64,7 @@ export interface BuildTokenGraphTilesInput {
     'chain' | 'address' | 'symbol' | 'abstractTokenId'
   >[]
   routes: TokenRelationsRoute[]
-  /** Summed 24h volume per abstract token id. */
+  /** Summed past 24h crosschain volume per abstract token id. */
   volumeByTokenId: Map<string, number>
   /** Optional because the pure builder's tests do not need presentation data. */
   chainIconUrlById?: ReadonlyMap<string, string>
@@ -118,9 +120,29 @@ export function buildTokenGraphTiles({
     const tokenRoutes = routesByToken.get(token.id) ?? []
     const model = buildTokenRelationsGraph(deployments, tokenRoutes)
 
-    const chainIds = new Set(deployments.map((d) => d.chain))
+    // Mirror the modal's default filter so the card summarizes what opening it
+    // actually shows. When everything is unrelated, the modal keeps everything
+    // visible rather than presenting an empty canvas.
+    const hiddenNodeIds =
+      model.unconnectedNodeIds.length === model.nodes.length
+        ? new Set<string>()
+        : new Set(model.unconnectedNodeIds)
+    const visibleNodes = model.nodes.filter(
+      (node) => !hiddenNodeIds.has(node.id),
+    )
+    const visibleNodeIds = new Set(visibleNodes.map((node) => node.id))
+    const visibleEdges = model.edges.filter(
+      (edge) => visibleNodeIds.has(edge.from) && visibleNodeIds.has(edge.to),
+    )
+    const visibleDeployments = visibleNodes.flatMap((node) => node.members)
+    const chainIds = new Set(visibleDeployments.map((d) => d.chain))
     const minterCount = resolveMintingBridges
-      ? getMinterCount(model, token.id, resolveMintingBridges)
+      ? getMinterCount(
+          visibleNodes,
+          visibleEdges,
+          token.id,
+          resolveMintingBridges,
+        )
       : undefined
 
     tiles.push({
@@ -129,7 +151,7 @@ export function buildTokenGraphTiles({
       slug: getAbstractTokenSlug(token),
       issuer: token.issuer,
       iconUrl: token.iconUrl,
-      deployments: deployments.length,
+      deployments: visibleDeployments.length,
       chains: chainIds.size,
       volume: volumeByTokenId.get(token.id) ?? null,
       ...(minterCount !== undefined && { minterCount }),
@@ -163,13 +185,14 @@ export function buildTokenGraphTiles({
 }
 
 function getMinterCount(
-  model: ReturnType<typeof buildTokenRelationsGraph>,
+  nodes: ReturnType<typeof buildTokenRelationsGraph>['nodes'],
+  edges: ReturnType<typeof buildTokenRelationsGraph>['edges'],
   tokenId: string,
   resolveMintingBridges: ReturnType<typeof createMintingBridgeResolver>,
 ): number | undefined {
   const sources = [
-    ...model.nodes.flatMap((node) => node.sources),
-    ...model.edges.flatMap((edge) => edge.sources),
+    ...nodes.flatMap((node) => node.sources),
+    ...edges.flatMap((edge) => edge.sources),
   ]
   if (sources.length === 0) return undefined
 

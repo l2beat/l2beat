@@ -31,7 +31,7 @@ export function TokensPage({ firstPage, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout variant="wide">
-        <MainPageHeader description="How each token exists across chains: which deployments are backed by another, and which are in a burn-mint relation.">
+        <MainPageHeader description="How each token exists across chains: which deployments are backed by another, and which are in a burn-mint relation. Volume values show past 24h crosschain volume.">
           Tokens
         </MainPageHeader>
         <div className="max-md:px-4">
