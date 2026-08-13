@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "archived": true,
   "name": "zeronetwork",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"],
