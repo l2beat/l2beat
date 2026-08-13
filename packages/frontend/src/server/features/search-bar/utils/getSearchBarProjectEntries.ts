@@ -4,6 +4,7 @@ import type {
   ProjectPermissions,
 } from '@l2beat/config'
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
+import { env } from '~/env'
 import { manifest } from '~/utils/Manifest'
 import type { SearchBarProjectEntry } from '../types'
 
@@ -38,6 +39,7 @@ export function getSearchBarProjectEntries<
     | 'ecosystemConfig'
     | 'zkCatalogInfo'
     | 'privacyInfo'
+    | 'defiInfo'
     | 'contracts'
     | 'permissions'
     | 'aliases'
@@ -51,7 +53,8 @@ export function getSearchBarProjectEntries<
     !project.ecosystemConfig &&
     !project.interopConfig &&
     !project.zkCatalogInfo &&
-    !project.privacyInfo
+    !project.privacyInfo &&
+    !(env.CLIENT_SIDE_DEFI_ENABLED && project.defiInfo)
   ) {
     return []
   }
@@ -161,6 +164,15 @@ export function getSearchBarProjectEntries<
       href: `/privacy/projects/${project.slug}`,
       category: 'privacy',
       kind: 'privacy',
+    })
+  }
+
+  if (env.CLIENT_SIDE_DEFI_ENABLED && project.defiInfo) {
+    results.push({
+      ...common,
+      href: `/defi/projects/${project.slug}`,
+      category: 'defi',
+      kind: 'defi',
     })
   }
 

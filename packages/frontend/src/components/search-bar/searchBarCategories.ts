@@ -23,6 +23,9 @@ export const searchBarCategories = {
   privacy: {
     name: 'Privacy',
   },
+  defi: {
+    name: 'DeFi',
+  },
   tokens: {
     name: 'Tokens',
     pinToBottom: true,

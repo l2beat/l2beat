@@ -290,6 +290,8 @@ function entryToLabel(entry: AnySearchBarEntry) {
       return 'Ecosystem'
     case 'privacy':
       return 'Privacy'
+    case 'defi':
+      return 'DeFi'
     default:
       assertUnreachable(entry.kind)
   }
