@@ -519,7 +519,6 @@ model DeployedToken {
 
   @@id([chain, address])
   @@index([abstractTokenId])
-  @@index([ignored])
 }
 
 model TokenIngestionQueue {
