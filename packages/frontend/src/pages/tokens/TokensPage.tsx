@@ -86,7 +86,7 @@ function TokenDialog({
       }}
     >
       <DialogContent
-        className="max-w-none"
+        className="max-w-none bg-surface-primary"
         style={{
           maxWidth: `calc(100vw - ${TOKEN_DIALOG_INSET * 2}px)`,
         }}
