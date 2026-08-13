@@ -98,9 +98,8 @@ export async function makeConfig(
       },
     },
     health: {
-      releasedAt: env.optionalString('HEROKU_RELEASE_CREATED_AT'),
       startedAt: new Date().toISOString(),
-      commitSha: env.string('HEROKU_SLUG_COMMIT', getGitCommitHash()),
+      commitSha: env.string('DEPLOYMENT_COMMIT_SHA', getGitCommitHash()),
     },
     metricsAuth: isLocal
       ? false

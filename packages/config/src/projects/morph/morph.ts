@@ -66,7 +66,7 @@ export const morph: ScalingProject = {
   proofSystem: {
     type: 'Optimistic',
     name: 'SP1 Hypercube',
-    zkCatalogId: ProjectId('sp1hypercube'),
+    zkCatalogIds: [ProjectId('sp1hypercube')],
     challengeProtocol: 'Single-step',
   },
   display: {
@@ -164,7 +164,23 @@ export const morph: ScalingProject = {
       {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
-        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        sinceBlock: 21013218, // first batch
+        untilBlock: 22744283, // last batch of the original staker set, before it shrank
+        inbox: EthereumAddress('0x759894Ced0e6af42c26668076Ffa84d02E3CeF60'),
+        sequencers: [
+          EthereumAddress('0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796'),
+          EthereumAddress('0x61F2945d4bc9E40B66a6376d1094a50438f613e2'),
+          EthereumAddress('0x6aB0E960911b50f6d14f249782ac12EC3E7584A0'),
+          EthereumAddress('0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65'),
+          EthereumAddress('0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7'),
+          EthereumAddress('0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80'),
+          EthereumAddress('0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23'),
+        ],
+      },
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 22744284, // first block after the original staker set shrank
         inbox: EthereumAddress('0x759894Ced0e6af42c26668076Ffa84d02E3CeF60'),
         sequencers: sequencers.map((s) => ChainSpecificAddress.address(s)),
       },

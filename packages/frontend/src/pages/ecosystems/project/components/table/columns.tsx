@@ -1,4 +1,5 @@
 import type { ProjectId } from '@l2beat/shared-pure'
+import { formatActivityCount } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
@@ -15,7 +16,6 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { TotalCellWithTvsBreakdown } from '~/pages/scaling/summary/components/table/TotalCellWithTvsBreakdown'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import type { EcosystemProjectsTableRow } from '../utils/toTableRows'
 
 const columnHelper = createColumnHelper<EcosystemProjectsTableRow>()

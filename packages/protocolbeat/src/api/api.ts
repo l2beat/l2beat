@@ -20,6 +20,7 @@ import type {
   ApiProjectResponse,
   ApiProjectsResponse,
   ApiTemplateFileResponse,
+  ApiTvlResponse,
 } from './types'
 
 export async function getProjects(): Promise<ApiProjectsResponse> {
@@ -89,6 +90,28 @@ export async function getPreview(project: string): Promise<ApiPreviewResponse> {
   }
   const data = await res.json()
   return data as ApiPreviewResponse
+}
+
+// `top` bounds the sweep to that many tokens by market cap, so valuing many
+// addresses at once stays affordable.
+export async function getTvl(
+  address: string,
+  top?: number,
+  signal?: AbortSignal,
+): Promise<ApiTvlResponse> {
+  const params = new URLSearchParams()
+  if (top !== undefined) {
+    params.set('top', String(top))
+  }
+  const qs = params.toString()
+  const res = await fetch(`/api/projects/tvl/${address}${qs ? `?${qs}` : ''}`, {
+    signal,
+  })
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as ApiTvlResponse
 }
 
 export function executeDiscover(

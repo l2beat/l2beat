@@ -3,13 +3,12 @@ import { cn } from '~/utils/cn'
 import type { HomeRecentProject } from '../getHomeData'
 import { HomeCard } from './HomeCard'
 
-const VISIBLE_RECENT_PROJECTS_COUNT = 5
-
 const CATEGORY_LABEL: Record<HomeRecentProject['category'], string> = {
   scaling: 'Scaling project',
   da: 'Data Availability',
   zkCatalog: 'ZK Catalog',
   ecosystems: 'Ecosystem',
+  privacy: 'Privacy',
 }
 
 interface Props {
@@ -18,17 +17,15 @@ interface Props {
 }
 
 export function HomeRecentProjectsCard({ projects, className }: Props) {
-  const visibleProjects = projects.slice(0, VISIBLE_RECENT_PROJECTS_COUNT)
-
-  if (visibleProjects.length === 0) {
+  if (projects.length === 0) {
     return null
   }
   return (
     <HomeCard className={cn('flex h-full flex-col', className)}>
       <h2 className="font-bold text-xl">Recently added projects</h2>
-      <ul className="mt-2 grid grid-cols-1 gap-1.5 md:grid-cols-3 xl:grid-cols-1">
-        {visibleProjects.map((project) => (
-          <li key={project.id}>
+      <ul className="mt-2 grid grid-cols-1 gap-1.5 md:grid-cols-3 lg:grid-cols-1">
+        {projects.map((project) => (
+          <li key={project.id} className="lg:max-xl:nth-[n+4]:hidden">
             <RecentProjectCard project={project} />
           </li>
         ))}
@@ -56,10 +53,10 @@ function RecentProjectCard({ project }: { project: HomeRecentProject }) {
         className="size-7 shrink-0 rounded-full"
       />
       <div className="flex min-w-0 flex-1 flex-col">
-        <span className="truncate font-bold text-label-value-14">
+        <span className="truncate font-bold text-label-value-14 leading-tight">
           {project.name}
         </span>
-        <span className="flex items-center gap-1 truncate font-medium text-label-value-12 text-secondary">
+        <span className="flex items-center gap-1 truncate font-medium text-label-value-12 text-secondary leading-tight">
           {subtitle}
         </span>
       </div>

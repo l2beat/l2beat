@@ -1,7 +1,9 @@
-import { formatSeconds } from '@l2beat/shared-pure'
+import {
+  formatCurrency,
+  formatInteger,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import type { IntentBridgesData } from '~/server/features/scaling/interop/getIntentBridgesData'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { InteropCompareContent } from '../../../components/comparison/InteropCompareContent'
 import type { EntitySelectOption } from '../../../components/comparison/InteropEntitySelect'
 import type { ComparisonSide } from '../../../components/comparison/types'

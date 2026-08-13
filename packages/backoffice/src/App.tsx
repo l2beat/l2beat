@@ -20,7 +20,6 @@ import { KnownAppsPage } from './pages/interop/known-apps/KnownAppsPage'
 import { MemoryPage } from './pages/interop/memory/MemoryPage'
 import { MessageDetailsPage } from './pages/interop/messages/MessageDetailsPage'
 import { MessagesPage } from './pages/interop/messages/MessagesPage'
-import { MissingTokensPage } from './pages/interop/missing-tokens/MissingTokensPage'
 import { ProcessorStatusesPage } from './pages/interop/processor-statuses/ProcessorStatusesPage'
 import { PromotionPage } from './pages/interop/promotion/PromotionPage'
 import { StatusPage } from './pages/interop/status/StatusPage'
@@ -80,10 +79,6 @@ function EnvironmentScopedApp() {
             <Route
               path="/interop/transfers/:type"
               element={<TransferDetailsPage />}
-            />
-            <Route
-              path="/interop/missing-tokens"
-              element={<MissingTokensPage />}
             />
             <Route
               path="/interop/indexing/plugin-statuses"

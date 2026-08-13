@@ -133,7 +133,7 @@ export const dydx: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stone'),
+    zkCatalogIds: [ProjectId('stone')],
   },
   chainConfig: {
     name: 'dydx',

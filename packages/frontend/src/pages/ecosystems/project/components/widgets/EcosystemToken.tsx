@@ -1,9 +1,8 @@
+import { formatCurrency, formatNumber } from '@l2beat/shared-pure'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PercentChange } from '~/components/PercentChange'
 import type { EcosystemToken } from '~/server/features/ecosystems/getEcosystemToken'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatNumber } from '~/utils/number-format/formatNumber'
 import { EcosystemWidget, EcosystemWidgetTitle } from './EcosystemWidget'
 
 interface Props {

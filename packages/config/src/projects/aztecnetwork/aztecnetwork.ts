@@ -318,7 +318,7 @@ export const aztecnetwork: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('barretenberg'),
+    zkCatalogIds: [ProjectId('barretenberg')],
   },
   scopeOfAssessment: {
     inScope: [

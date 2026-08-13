@@ -112,7 +112,7 @@ function RecentChangesBody({
                 alt={group.name}
                 className="size-5 shrink-0 rounded-full"
               />
-              <h3 className="truncate font-bold text-base text-primary leading-none">
+              <h3 className="truncate font-bold text-base text-primary leading-tight">
                 {group.name}
               </h3>
             </span>

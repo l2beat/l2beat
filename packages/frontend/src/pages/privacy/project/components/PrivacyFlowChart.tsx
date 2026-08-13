@@ -1,3 +1,4 @@
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { AreaChart } from 'recharts'
 import type { ChartScale } from '~/components/chart/types'
@@ -22,8 +23,6 @@ import { ChartStrokeOverFillAreaComponents } from '~/components/core/chart/utils
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { PrivacyFlowsChartPoint } from '~/server/features/privacy/getPrivacyFlowsChart'
 import { formatRange } from '~/utils/dates'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 
 interface Props {
   data: PrivacyFlowsChartPoint[] | undefined

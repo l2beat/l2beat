@@ -1,41 +1,28 @@
-import {
-  createContext,
-  type ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
+import { createContext, type ReactNode, useContext, useMemo } from 'react'
+import { useQueryParam } from '~/hooks/useQueryParam'
+import { parseHighlightedIds } from './utils/parseHighlightedIds'
 
 interface HighlightedTableRowContextType {
-  highlightedId: string | undefined
+  highlightedIds: string[]
 }
 
 const HighlightedTableRowContext = createContext<
   HighlightedTableRowContextType | undefined
 >(undefined)
 
-interface HighlightedTableRowProviderProps {
-  children: ReactNode
-  defaultValue?: string
-}
-
 export function HighlightedTableRowProvider({
   children,
-  defaultValue,
-}: HighlightedTableRowProviderProps) {
-  const [highlightedId, setHighlightedId] = useState(defaultValue)
-
-  const handleHighlightChange = useCallback(() => {
-    const params = new URLSearchParams(window.location.search)
-    const highlight = params.get('highlight')
-    setHighlightedId(highlight ?? undefined)
-  }, [])
-
-  useEffect(handleHighlightChange, [])
+}: {
+  children: ReactNode
+}) {
+  const [highlight] = useQueryParam('highlight', '')
+  const value = useMemo(
+    () => ({ highlightedIds: parseHighlightedIds(highlight) }),
+    [highlight],
+  )
 
   return (
-    <HighlightedTableRowContext.Provider value={{ highlightedId }}>
+    <HighlightedTableRowContext.Provider value={value}>
       {children}
     </HighlightedTableRowContext.Provider>
   )

@@ -1,7 +1,7 @@
+import { formatNumberWithCommas } from '@l2beat/shared-pure'
 import { PercentChange } from '~/components/PercentChange'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
-import { formatNumberWithCommas } from '~/utils/number-format/formatNumber'
 
 interface Props {
   valueForProject: {

@@ -1,0 +1,24 @@
+diff --git a/stwo_cairo_verifier/crates/cairo_air/Scarb.toml b/stwo_cairo_verifier/crates/cairo_air/Scarb.toml
+index 6c4e5ee1..a3f65897 100644
+--- a/stwo_cairo_verifier/crates/cairo_air/Scarb.toml
++++ b/stwo_cairo_verifier/crates/cairo_air/Scarb.toml
+@@ -8,7 +8,7 @@ casm = true
+ 
+ [features]
+ poseidon252_verifier = ["stwo_verifier_core/poseidon252_verifier"]
+-qm31_opcode = ["stwo_verifier_core/qm31_opcode"]
++qm31_opcode = ["stwo_verifier_core/qm31_opcode", "stwo_constraint_framework/qm31_opcode"]
+ blake_outputs_packing = ["stwo_verifier_core/blake_outputs_packing"]
+ poseidon_outputs_packing = ["stwo_verifier_core/poseidon_outputs_packing"]
+ 
+diff --git a/stwo_cairo_verifier/crates/constraint_framework/Scarb.toml b/stwo_cairo_verifier/crates/constraint_framework/Scarb.toml
+index 85ff5f7a..60b1f136 100644
+--- a/stwo_cairo_verifier/crates/constraint_framework/Scarb.toml
++++ b/stwo_cairo_verifier/crates/constraint_framework/Scarb.toml
+@@ -17,3 +17,6 @@ stwo_verifier_core = { path = "../verifier_core" }
+ 
+ [dev-dependencies]
+ cairo_test = "2.12.2"
++
++[features]
++qm31_opcode = []

@@ -1,3 +1,76 @@
+Generated with discovered.json: 0x0563f885f57ca188c982df8ceec161d429852f09
+
+# Diff at Mon, 10 Aug 2026 11:03:32 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b69b5b6595d9041cb4e6d7872e95451210cc7bd7 block: 1784283289
+- current timestamp: 1786359739
+
+## Description
+
+Swellchain is being sunset. The registered pause deputy (`0x2fA1…a87c`) triggered the DeputyPauseModule on 2026-08-05, pausing this chain through the shared SuperchainConfig with the OptimismPortal2 as the pause identifier, so withdrawals, deposits and messaging are halted here. The shared config's global pause remains false. The pause is set to expire on 2026-11-04. The batch submitter key was rotated two hours before the pause.
+
+## Watched changes
+
+```diff
+    contract AnchorStateRegistry (eth:0x511fB9E172f8A180735ACF9c2beeb208cD0061Ac) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x758E0EE66102816F5C3Ec9ECc1188860fbb87812) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
++++ description: Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused.
++++ severity: HIGH
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x7aA4960908B13D104bf056B23E2C76B43c5AACc8) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.batcherHash:
+-        "eth:0x37804a4f63Ab1dCf96A48B1DCE8c03492f539fE9"
++        "eth:0xa008a7b0f7b7f40f11001c55acd3B9e9E0C053b7"
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xe6a99Ef12995DeFC5ff47EC0e13252f0E6903759) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.paused:
+-        false
++        true
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0xfd7618330E63B493070DC8C491Ad4aD26144Bc1e) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.paused:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x50f1853703671f3ca041ca2e33ccaaddf30f7810
 
 # Diff at Fri, 17 Jul 2026 10:16:40 GMT:

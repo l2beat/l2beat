@@ -96,7 +96,7 @@ export const zksync: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('zksyncprover'),
+    zkCatalogIds: [ProjectId('zksyncprover')],
   },
   chainConfig: {
     name: 'zksync',

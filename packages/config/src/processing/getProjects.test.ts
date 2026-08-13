@@ -317,6 +317,26 @@ describe('getProjects', () => {
     }
   })
 
+  describe('every proofSystem zkCatalogIds entry references a zk catalog project', () => {
+    for (const project of projects) {
+      const zkCatalogIds = project.scalingInfo?.proofSystem?.zkCatalogIds
+      if (!zkCatalogIds || zkCatalogIds.length === 0) continue
+
+      it(project.id, () => {
+        assert(
+          new Set(zkCatalogIds).size === zkCatalogIds.length,
+          `${project.id} proofSystem.zkCatalogIds has duplicates`,
+        )
+        for (const zkCatalogId of zkCatalogIds) {
+          assert(
+            projectsById.get(zkCatalogId)?.zkCatalogInfo !== undefined,
+            `${project.id} proofSystem references unknown zk catalog project: ${zkCatalogId}`,
+          )
+        }
+      })
+    }
+  })
+
   describe('scaling project zkVerifiers are configured in zk catalog', () => {
     const zkCatalogAddresses = new Set<ChainSpecificAddress>()
     for (const project of projects) {
@@ -556,23 +576,6 @@ describe('getProjects', () => {
   })
 
   describe('Tracked transactions', () => {
-    it('groups only Aztec liveness state updates', () => {
-      const aztec = projects.find((project) => project.id === 'aztecnetwork')
-      const stateUpdates = aztec?.trackedTxsConfig?.filter(
-        (config) => config.subtype === 'stateUpdates',
-      )
-
-      const liveness = stateUpdates?.find(
-        (config) => config.type === 'liveness',
-      )
-
-      assert(liveness !== undefined)
-      expect(liveness.groupBy).toEqual({
-        type: 'functionCallParameter',
-        path: [0, 0],
-      })
-    })
-
     it('every TrackedTxId is unique', () => {
       const ids = new Set<string>()
       for (const project of projects) {

@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { formatActivityCount, UnixTime } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { AreaChart } from 'recharts'
@@ -33,7 +33,6 @@ import type {
 } from '~/server/features/ecosystems/getEcosystemEntry'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import type { ChartRange } from '~/utils/range/range'
 import { optionToRange } from '~/utils/range/range'
 import { EcosystemWidget } from '../widgets/EcosystemWidget'

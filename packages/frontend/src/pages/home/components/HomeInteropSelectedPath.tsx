@@ -1,4 +1,4 @@
-import { pluralize } from '@l2beat/shared-pure'
+import { formatCurrency, formatInteger, pluralize } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { Button } from '~/components/core/Button'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
@@ -16,8 +16,6 @@ import type {
   InteropFlowsData,
 } from '~/server/features/scaling/interop/getInteropFlows'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 
 interface StatRow {
   label: string
@@ -87,7 +85,7 @@ export function HomeInteropSelectedPath({
         <span className="shrink-0 font-bold text-label-value-15">
           Selected path
         </span>
-        <span className="min-w-0 truncate font-medium text-label-value-12 text-secondary">
+        <span className="min-w-0 truncate font-medium text-label-value-12 text-secondary leading-tight">
           {chainA.name} ↔ {subtitle}
         </span>
       </div>
@@ -159,7 +157,7 @@ export function HomeInteropSelectedPath({
 
 function Row({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="flex items-center justify-between gap-2 text-label-value-12">
+    <div className="flex items-center justify-between gap-2 text-label-value-12 leading-tight">
       <span className="shrink-0 font-medium text-secondary">{label}</span>
       <span className="min-w-0 truncate text-right">{children}</span>
     </div>

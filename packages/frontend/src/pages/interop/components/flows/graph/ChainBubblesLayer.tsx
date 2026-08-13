@@ -1,6 +1,6 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import type { ChainData } from '~/server/features/scaling/interop/getInteropFlows'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import type {

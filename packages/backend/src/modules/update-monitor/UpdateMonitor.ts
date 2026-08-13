@@ -87,13 +87,16 @@ export class UpdateMonitor {
         id: project,
         name: `Update project ${project}`,
       },
-      job: async () => {
-        await this.updateProject(this.runner, project, timestamp)
-        await this.updateDiffer?.runForProject(project, timestamp)
-      },
+      job: () => this.updateProject(this.runner, project, timestamp),
     }))
 
     const results = await this.workerPool.runInPool(tasks)
+    const failedProjects = results.errors.map((error) => error.identity.id)
+
+    await this.updateDiffer?.run(
+      enabledProjects.filter((project) => !failedProjects.includes(project)),
+      timestamp,
+    )
 
     const updateEnd = UnixTime.now()
     const updateDuration = updateEnd - updateStart
@@ -109,7 +112,6 @@ export class UpdateMonitor {
       failedCount: results.errors.length,
       totalCount: tasks.length,
     })
-    const failedProjects = results.errors.map((error) => error.identity.id)
 
     const reminders = this.generateDailyReminder()
     await this.updateNotifier.sendDailyReminder(

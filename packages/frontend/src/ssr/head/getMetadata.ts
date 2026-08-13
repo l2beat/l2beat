@@ -23,6 +23,8 @@ type PartialMetadata = {
   openGraph: {
     image: string
     type?: 'article' | 'website'
+    /** For images rendered at runtime that are not in the static asset manifest */
+    dynamic?: boolean
   }
   excludeFromSearchEngines?: boolean
 }
@@ -50,10 +52,10 @@ export function getMetadata(
 function getOpenGraph(
   manifest: Manifest,
   baseUrl: string,
-  { image, type }: PartialMetadata['openGraph'],
+  { image, type, dynamic }: PartialMetadata['openGraph'],
 ): OpenGraph {
   return {
-    image: baseUrl + manifest.getUrl(image),
+    image: baseUrl + (dynamic ? image : manifest.getUrl(image)),
     type: type ?? 'website',
   }
 }

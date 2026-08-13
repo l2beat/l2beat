@@ -1,3 +1,4 @@
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import times from 'lodash/times'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
@@ -14,8 +15,6 @@ import type {
   InteropDashboardFlowChain,
 } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 
 export function TopRoutesWidget({
   isLoading,

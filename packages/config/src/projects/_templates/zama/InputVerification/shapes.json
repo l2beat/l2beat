@@ -4,5 +4,11 @@
     "address": "zama:0xA08c4367eB984945da2dad5BF7d94D1B2863197A",
     "chain": "zama",
     "blockNumber": 1858160
+  },
+  "InputVerification_v0_4_0.sol": {
+    "hash": "0x58bb055397e294a46ebccbc53c94bb2494bf05acd7ad77f2fb7cc46b3ef1eb92",
+    "address": "zama:0xf9f0F5ef8301CF1573EBe0F45E13A4CabB621821",
+    "chain": "zama",
+    "blockNumber": 2121017
   }
 }

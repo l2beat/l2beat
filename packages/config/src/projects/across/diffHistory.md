@@ -1,3 +1,76 @@
+Generated with discovered.json: 0x7fa8d630dfa3a740fbe0f7d813dfb4c51ad5cc38
+
+# Diff at Wed, 12 Aug 2026 12:22:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe520bd4ade03975f1066b4ec47ec40ba7f6e27f block: 1786351959
+- current timestamp: 1786537235
+
+## Description
+
+More pool rebalance routes were disabled (see below for explanation).
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) [acrossv3/HubPool] {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.poolRebalanceRoutes.Ethereum.4.destinationToken:
+-        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Lens.0.destinationToken:
+-        "eth:0xE5ecd226b3032910CEaa43ba92EE8232f8237553"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Lens.2.destinationToken:
+-        "eth:0x88F08E304EC4f90D644Cec3Fb69b8aD414acf884"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.ZKsync Era.0.destinationToken:
+-        "eth:0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.ZKsync Era.1.destinationToken:
+-        "eth:0x493257fD37EDB34451f62EDf8D2a0C418852bA4C"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.ZKsync Era.2.destinationToken:
+-        "eth:0xBBeB516fb02a01611cBBE0453Fe3c580D7281011"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.ZKsync Era.3.destinationToken:
+-        "eth:0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x667d9988680dd58fa473f077e9d227a0a613edf8
+
+# Diff at Mon, 10 Aug 2026 08:54:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@be83079eed365197a392b6bfd65fa6506007093c block: 1785325146
+- current timestamp: 1786351959
+
+## Description
+
+More pool rebalance routes across ten destination chains were disabled (see below for explanation).
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) [acrossv3/HubPool] {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.poolRebalanceRoutes.Ink.1.destinationToken:
+-        "eth:0x2D270e6886d130D724215A266106e6832161EAEd"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Blast.0.destinationToken:
+-        "eth:0x4300000000000000000000000000000000000004"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Blast.1.destinationToken:
+-        "eth:0xF7bc58b8D8f97ADC129cfC4c9f45Ce3C0E1D2692"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Blast.2.destinationToken:
+-        "eth:0x4300000000000000000000000000000000000003"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x025743b917d01bd18822470b43f52901094ef074
 
 # Diff at Wed, 29 Jul 2026 11:40:27 GMT:

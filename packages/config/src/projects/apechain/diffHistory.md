@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x2a0ff3a86c2e79bf3a324d79832b3835a57c14c6
+
+# Diff at Mon, 10 Aug 2026 11:03:54 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b69b5b6595d9041cb4e6d7872e95451210cc7bd7 block: 1783073499
+- current timestamp: 1786359767
+
+## Description
+
+SequencerInbox: the latest batch was posted as an AnyTrust DAC certificate rather than as data on the host chain.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C) [orbitstack/SequencerInbox_Espresso] {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.sequencerVersion:
+-        "0x00"
++        "0x88"
+    }
+```
+
 Generated with discovered.json: 0x76869a79df2f4f45c7004f654c3ebdfb8f4c5d06
 
 # Diff at Fri, 03 Jul 2026 10:13:14 GMT:

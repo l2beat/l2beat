@@ -1,0 +1,57 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "butternetwork",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56",
+    "base:0xfeE31a1FD7FcA0E05428ff751242e46F6D5769a6"
+  ],
+  "overrides": {
+    "base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56": {
+      "description": "Butter's Base bridge endpoint. Outbound transfers lock or burn assets and emit messages for the MAP relay chain; inbound transfers execute only after a LightNode-validated receipt proof for the configured MAP relay contract. The bridge can mint configured mintable tokens, release escrowed assets, and invoke receiver callbacks, so compromise of validation, relay configuration, or management authority can lead to loss of bridged funds.",
+      "ignoreMethods": ["getServiceContract", "proxiableUUID"],
+      "ignoreRelatives": ["getRelay"]
+    },
+    "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA": {
+      "fields": {
+        "adminRole": {
+          "description": "Current ADMIN_ROLE members of the AuthorityManager. They control the role and target-function configuration used to authorize Butter Bridge and FeeService management calls.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "getRoleMembers",
+            "args": [0]
+          },
+          "type": "PERMISSION",
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations."
+            }
+          ]
+        }
+      }
+    },
+    "base:0xfeE31a1FD7FcA0E05428ff751242e46F6D5769a6": {
+      "ignoreMethods": ["baseGas", "chainGasPrice"],
+      "fields": {
+        "baseGasBase": {
+          "description": "Base gas component used by FeeService when pricing messages to Base. Authority members can change this value.",
+          "severity": "HIGH",
+          "type": "RISK_PARAMETER",
+          "handler": { "type": "call", "method": "baseGas", "args": [8453] }
+        },
+        "baseFeeInfo": {
+          "description": "FeeService's current Base/WETH pricing tuple: base gas, gas price, and fee receiver. Authority members can change the pricing inputs and receiver.",
+          "severity": "HIGH",
+          "type": "RISK_PARAMETER",
+          "handler": {
+            "type": "call",
+            "method": "getFeeInfo",
+            "args": [8453, "0x4200000000000000000000000000000000000006"]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xe4b7dd83295286c36a0d2f0c2b2510dc805eccaf
+
+# Diff at Tue, 04 Aug 2026 13:19:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@36c0588f2e6fd433fcb60f558353b75cea40247d block: 1785325193
+- current timestamp: 1785844346
+
+## Description
+
+Lido created 27 operator groups. These are operational metadata, removed.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785325193 (main branch discovery), not current.
+
+```diff
+    contract MetaRegistry (eth:0xA64b339eebD3dC3De848298B6a140955932901d8) [lido/MetaRegistry] {
+    +++ description: Stores metadata that groups permissionless staking-module node operators, describes their operators, and assigns bond-curve weights.
+      values.getOperatorGroup:
+-        [["",[],[]]]
+      values.getOperatorGroupsCount:
+-        0
+    }
+```
+
 Generated with discovered.json: 0x46975b380e1b6bc8d8baa4e7dc4d2cfe6a5c6de5
 
 # Diff at Wed, 29 Jul 2026 11:42:27 GMT:

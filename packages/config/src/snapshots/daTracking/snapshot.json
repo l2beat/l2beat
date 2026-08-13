@@ -96,7 +96,11 @@
   "arenaz": [
     {
       "id": "5f18f8f53116",
-      "label": "ethereum inbox 0x00f9BCEe08DCe4F0e7906c1f6cFb10c77802EEd0 sequencers[1] since 21167590"
+      "label": "ethereum inbox 0x00f9BCEe08DCe4F0e7906c1f6cFb10c77802EEd0 sequencers[1] since 24776391"
+    },
+    {
+      "id": "f21be91c0dea",
+      "label": "ethereum inbox 0x00f9BCEe08DCe4F0e7906c1f6cFb10c77802EEd0 sequencers[1] since 21169100"
     }
   ],
   "art-peace": [
@@ -620,7 +624,11 @@
   "mint": [
     {
       "id": "3476c2371021",
-      "label": "ethereum inbox 0x4e31448a098393727b786e25B54E59DcA1b77FE1 sequencers[1] since 19861572"
+      "label": "ethereum inbox 0x4e31448a098393727b786e25B54E59DcA1b77FE1 sequencers[1] since 23979599"
+    },
+    {
+      "id": "641172c76c99",
+      "label": "ethereum inbox 0x4e31448a098393727b786e25B54E59DcA1b77FE1 sequencers[1] since 19862462"
     }
   ],
   "mode": [
@@ -638,7 +646,11 @@
   "morph": [
     {
       "id": "0ec705a4c807",
-      "label": "ethereum inbox 0x759894Ced0e6af42c26668076Ffa84d02E3CeF60 sequencers[5] since 0"
+      "label": "ethereum inbox 0x759894Ced0e6af42c26668076Ffa84d02E3CeF60 sequencers[5] since 22744284"
+    },
+    {
+      "id": "f634e6308d3b",
+      "label": "ethereum inbox 0x759894Ced0e6af42c26668076Ffa84d02E3CeF60 sequencers[7] since 21013218"
     }
   ],
   "nillion": [
@@ -915,12 +927,12 @@
       "label": "eigen-da customer 0x52ebeea8a7dcaaa17ee398b9f9b01dfa64db63ae since 1735822800"
     },
     {
-      "id": "aded832161bb",
-      "label": "eigen-da customer 0x420ad2641f22bf6f180c52d0b0566e7ec701c45a since 1753412400"
+      "id": "3d7624c4d4f5",
+      "label": "ethereum inbox 0xfF000000000000000000000000000000000000FF sequencers[2] since 21541468"
     },
     {
-      "id": "f3f2e47f846c",
-      "label": "ethereum inbox 0xfF000000000000000000000000000000000000FF sequencers[1] since 21541468"
+      "id": "aded832161bb",
+      "label": "eigen-da customer 0x420ad2641f22bf6f180c52d0b0566e7ec701c45a since 1753412400"
     }
   ],
   "soon-base": [
@@ -993,17 +1005,33 @@
   ],
   "taiko": [
     {
+      "id": "54bc2e52b67f",
+      "label": "ethereum inbox 0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a sequencers[0] since 19945276"
+    },
+    {
       "id": "a250938b2846",
-      "label": "ethereum inbox 0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f sequencers[0] since 0"
+      "label": "ethereum inbox 0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f sequencers[0] since 24792175"
     }
   ],
   "thebinaryholdings": [
     {
       "id": "d0276630c6a1",
-      "label": "ethereum inbox 0xFF00000000000000000000000000000000000624 sequencers[1] since 20175362"
+      "label": "ethereum inbox 0xFF00000000000000000000000000000000000624 sequencers[1] since 21394748"
+    },
+    {
+      "id": "ef8681c6492f",
+      "label": "ethereum inbox 0xFF00000000000000000000000000000000000624 sequencers[1] since 20175709"
     }
   ],
   "treasure": [
+    {
+      "id": "5ccf265ea913",
+      "label": "ethereum inbox 0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E sequencers[2] since 21272191"
+    },
+    {
+      "id": "60f76c4af34f",
+      "label": "ethereum inbox 0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[2] since 22126211"
+    },
     {
       "id": "cfd04b0ba930",
       "label": "eigen-da customer 0x96561d11f55f99f7cda780b77e524195bde1dcde since 0"

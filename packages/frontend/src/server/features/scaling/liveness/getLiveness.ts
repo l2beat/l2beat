@@ -156,7 +156,7 @@ async function getLivenessData(projectId?: ProjectId) {
       anomalies: getAnomalies(
         anomalies,
         realTimeAnomalies,
-        project30Days,
+        projectMax,
         riskView,
       ),
     }
@@ -262,15 +262,15 @@ function formatData(
   }
 }
 
-function getAnomalies(
+export function getAnomalies(
   anomalies: AnomalyRecord[],
   realTimeAnomalies: RealTimeAnomalyRecord[],
-  project30Days:
+  projectMax:
     | Omit<AggregatedLivenessRecord, 'timestamp' | 'numberOfRecords'>[]
     | undefined,
   riskView: ProjectRiskView | undefined,
 ): LivenessAnomaly[] {
-  if (!project30Days) {
+  if (!projectMax) {
     return []
   }
 
@@ -287,9 +287,7 @@ function getAnomalies(
 
   return [
     ...filteredAnomalies.map((a): LivenessAnomaly => {
-      const avgInterval = project30Days.find(
-        (r) => r.subtype === a.subtype,
-      )?.avg
+      const avgInterval = projectMax.find((r) => r.subtype === a.subtype)?.avg
       assert(avgInterval, 'Avg interval must exist')
       const computedEnd = a.timestamp + a.duration
       const isOngoing =
@@ -310,9 +308,7 @@ function getAnomalies(
       }
     }),
     ...realTimeAnomalies.map((a): LivenessAnomaly => {
-      const avgInterval = project30Days.find(
-        (r) => r.subtype === a.subtype,
-      )?.avg
+      const avgInterval = projectMax.find((r) => r.subtype === a.subtype)?.avg
       assert(avgInterval, 'Avg interval must exist')
 
       return {

@@ -152,7 +152,7 @@ export const railgun: BaseProject = {
   slug: 'railgun',
   name: 'Railgun',
   shortName: undefined,
-  addedAt: UnixTime(0),
+  addedAt: UnixTime.fromDate(new Date('2026-05-12')),
   discoveryInfo: getDiscoveryInfo([discovery]),
   statuses: {
     yellowWarning: undefined,

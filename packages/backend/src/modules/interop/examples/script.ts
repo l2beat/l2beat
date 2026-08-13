@@ -3,8 +3,14 @@ import {
   CoingeckoClient,
   CoingeckoQueryService,
   HttpClient,
+  InteropTransferClassifier,
 } from '@l2beat/shared'
-import { assert, CoingeckoId, unique } from '@l2beat/shared-pure'
+import {
+  assert,
+  CoingeckoId,
+  type KnownInteropBridgeType,
+  unique,
+} from '@l2beat/shared-pure'
 import { getTokenDbClient, type TokenDbClient } from '@l2beat/token-backend'
 import {
   boolean,
@@ -221,6 +227,16 @@ async function runExampleCore(
   return coreResult
 }
 
+function inferBridgeType(
+  transfer: RunResult['transfers'][number],
+): KnownInteropBridgeType | undefined {
+  const inferred = InteropTransferClassifier.inferBridgeType({
+    srcWasBurned: transfer.transfer.src.wasBurned,
+    dstWasMinted: transfer.transfer.dst.wasMinted,
+  })
+  return inferred === 'unknown' ? undefined : inferred
+}
+
 function applyFinancials(
   coreResult: RunResult,
   tokenInfos: TokenInfos,
@@ -228,6 +244,9 @@ function applyFinancials(
 ): CoreResult {
   const transfersWithFinancials = coreResult.transfers.map((transfer) => ({
     ...transfer.transfer,
+    // Read paths fall back to the inferred bridge type, mirror that here so
+    // bridgeType expects match what the dashboard shows.
+    bridgeType: transfer.transfer.bridgeType ?? inferBridgeType(transfer),
     src: {
       ...transfer.transfer.src,
       financials: calculateFinancials(

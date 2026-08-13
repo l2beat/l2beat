@@ -1,7 +1,6 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { formatCurrency, UnixTime } from '@l2beat/shared-pure'
 import { Skeleton } from '~/components/core/Skeleton'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 interface FlowsParticleLegendProps {
   totalVolume: number
@@ -33,7 +32,10 @@ export function FlowsParticleLegend({
     <>
       <span className="size-1.5 rounded-full bg-brand" />1 particle ≈{' '}
       <span className="font-bold text-brand">
-        {formatCurrency(dollarsPerParticle, 'usd', { decimals: 0 })}
+        {formatCurrency(dollarsPerParticle, 'usd', {
+          // sub-dollar values ($0.1, $0.5) need a decimal to not render as "<$1"
+          decimals: dollarsPerParticle < 1 ? 1 : 0,
+        })}
       </span>
     </>
   ) : null

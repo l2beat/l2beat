@@ -1,0 +1,40 @@
+import type { ProjectScalingCategory } from '@l2beat/config'
+import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { SearchBarEntry } from '~/components/search-bar/types'
+import type { SEARCH_BAR_PROJECT_KEYS } from './utils/toSearchBarProject'
+import type { SEARCH_BAR_TOKEN_KEYS } from './utils/toSearchBarToken'
+
+export type SearchBarProjectEntry = SearchBarEntry & {
+  type: 'project'
+  id: string
+  iconUrl: string
+  kind:
+    | 'layer2'
+    | 'layer3'
+    | 'da'
+    | 'interop'
+    | 'zkCatalog'
+    | 'ecosystem'
+    | 'privacy'
+  scalingCategory?: ProjectScalingCategory
+  filePrepared?: Fuzzysort.Prepared
+  projectAddresses?: EthereumAddress[]
+}
+
+export type SearchBarTokenEntry = SearchBarEntry & {
+  type: 'token'
+  id: string
+  iconUrl: string
+  issuer: string | null
+}
+
+/** Return type sent to frontend - excludes not needed properties to reduce payload size */
+export type SearchBarProject = Pick<
+  SearchBarProjectEntry,
+  (typeof SEARCH_BAR_PROJECT_KEYS)[number]
+>
+
+export type SearchBarToken = Pick<
+  SearchBarTokenEntry,
+  (typeof SEARCH_BAR_TOKEN_KEYS)[number]
+>

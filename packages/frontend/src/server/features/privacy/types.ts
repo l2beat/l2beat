@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import type { EthereumAddress } from '@l2beat/shared-pure'
 
 export type PrivacyProject = Project<
   'display' | 'privacyInfo' | 'statuses',
@@ -30,7 +29,7 @@ export interface PrivacyBucket {
 export interface PrivacyAsset {
   symbol: string
   iconUrl: string
-  address?: EthereumAddress
+  address?: string
   decimals: number
   bucketCount: number
   totalAmount: number

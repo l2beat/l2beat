@@ -1,3 +1,4 @@
+import { formatActivityCount } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { Badge } from '~/components/badge/Badge'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
@@ -20,7 +21,6 @@ import {
   WALK_AWAY_NOT_PASSED_PROJECTS,
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import type { ScalingSummaryTableRow } from '../../utils/toTableRows'
 import { TotalCellWithTvsBreakdown } from './TotalCellWithTvsBreakdown'
 

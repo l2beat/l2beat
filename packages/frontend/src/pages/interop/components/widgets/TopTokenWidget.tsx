@@ -1,3 +1,4 @@
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { type ReactNode, useContext } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
@@ -10,8 +11,6 @@ import { EM_DASH } from '~/consts/characters'
 import { InfoIcon } from '~/icons/Info'
 import type { InteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import { InteropSelectedChainsContext } from '../../utils/InteropSelectedChainsContext'
 import type { InteropSelection } from '../../utils/types'

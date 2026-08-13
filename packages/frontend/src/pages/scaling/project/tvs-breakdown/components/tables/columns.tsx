@@ -1,3 +1,4 @@
+import { formatCurrency, formatNumberWithCommas } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { useSelectedTokenContext } from '~/components/chart/tvs/token/SelectedTokenContext'
 import {
@@ -14,8 +15,6 @@ import { ChevronIcon } from '~/icons/Chevron'
 import { LineChartIcon } from '~/icons/LineChart'
 import { sourceToLabel } from '~/server/features/scaling/tvs/utils/sourceToLabel'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatNumberWithCommas } from '~/utils/number-format/formatNumber'
 import { categoryToLabel } from './categoryToLabel'
 import { BridgedUsingCell } from './cells/BridgedUsingCell'
 import { TokenAddressCell } from './cells/TokenAddressCell'

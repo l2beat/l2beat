@@ -98,6 +98,12 @@ export interface InteropTransferFinancialsFilter {
   to?: UnixTime
 }
 
+/** Transfer timestamp interval with an exclusive lower and inclusive upper bound. */
+export interface InteropTransferTimeRange {
+  from: UnixTime
+  to: UnixTime
+}
+
 export interface InteropTransferFinancialsStats {
   totalCount: number
   unprocessedCount: number
@@ -111,18 +117,6 @@ export function hasAnyInteropTransferFinancialsFilter(
   filter: InteropTransferFinancialsFilter,
 ): boolean {
   return Object.values(filter).some((value) => value !== undefined)
-}
-
-export interface InteropMissingTokenInfo {
-  chain: string
-  tokenAddress: string
-  count: number
-  plugins: string[]
-}
-
-export interface InteropTransferTokenInfo {
-  chain: string
-  tokenAddress: string
 }
 
 export interface InteropTransferTokenAddress {
@@ -438,6 +432,7 @@ export class InteropTransferRepository extends BaseRepository {
       plugin?: string
       srcChain?: string
       dstChain?: string
+      timeRange?: InteropTransferTimeRange
     } = {},
   ): Promise<InteropTransferRecord[]> {
     let query = this.db.selectFrom('InteropTransfer').where('type', '=', type)
@@ -454,6 +449,12 @@ export class InteropTransferRepository extends BaseRepository {
       query = query.where('dstChain', '=', options.dstChain)
     }
 
+    if (options.timeRange !== undefined) {
+      query = query
+        .where('timestamp', '>', UnixTime.toDate(options.timeRange.from))
+        .where('timestamp', '<=', UnixTime.toDate(options.timeRange.to))
+    }
+
     const rows = await query.orderBy('timestamp', 'desc').selectAll().execute()
 
     return rows.map(toRecord)
@@ -461,8 +462,13 @@ export class InteropTransferRepository extends BaseRepository {
 
   async getValueMismatchTransfers(
     valueDifferencePercentThreshold: number,
-    minimumSideValueUsdThreshold = 0,
+    options: {
+      minimumSideValueUsdThreshold?: number
+      timeRange?: InteropTransferTimeRange
+    } = {},
   ): Promise<InteropSuspiciousTransferRecord[]> {
+    const minimumSideValueUsdThreshold =
+      options.minimumSideValueUsdThreshold ?? 0
     assert(
       valueDifferencePercentThreshold > 0,
       'valueDifferencePercentThreshold must be a positive number',
@@ -485,7 +491,7 @@ export class InteropTransferRepository extends BaseRepository {
       END
     `
 
-    const rows = await this.db
+    let query = this.db
       .selectFrom('InteropTransfer')
       .selectAll()
       .select(valueDifferencePercent.as('valueDifferencePercent'))
@@ -499,6 +505,14 @@ export class InteropTransferRepository extends BaseRepository {
           AND (${absoluteValueDifferenceUsd} * 100) > (${valueDifferencePercentThreshold} * ${maxSideValueUsd})
         `,
       )
+
+    if (options.timeRange !== undefined) {
+      query = query
+        .where('timestamp', '>', UnixTime.toDate(options.timeRange.from))
+        .where('timestamp', '<=', UnixTime.toDate(options.timeRange.to))
+    }
+
+    const rows = await query
       .orderBy(valueDifferencePercent, 'desc')
       .orderBy('timestamp', 'desc')
       .orderBy('transferId', 'desc')
@@ -829,46 +843,10 @@ export class InteropTransferRepository extends BaseRepository {
     return eb.and(conditions)
   }
 
-  async markAsUnprocessedByTokens(
-    tokens: InteropTransferTokenInfo[],
-  ): Promise<number> {
-    if (tokens.length === 0) {
-      return 0
-    }
-
-    const uniqueTokens = Array.from(
-      new Map(
-        tokens.map((token) => [`${token.chain}:${token.tokenAddress}`, token]),
-      ).values(),
-    )
-
-    const result = await this.db
-      .updateTable('InteropTransfer')
-      .set({ isProcessed: false })
-      .where('isProcessed', '=', true)
-      .where((eb) =>
-        eb.or(
-          uniqueTokens.map((token) =>
-            eb.or([
-              eb.and([
-                eb('srcChain', '=', token.chain),
-                eb('srcTokenAddress', '=', token.tokenAddress),
-              ]),
-              eb.and([
-                eb('dstChain', '=', token.chain),
-                eb('dstTokenAddress', '=', token.tokenAddress),
-              ]),
-            ]),
-          ),
-        ),
-      )
-      .executeTakeFirst()
-
-    return Number(result.numUpdatedRows)
-  }
-
-  async getStats(): Promise<InteropTransfersStatsRecord[]> {
-    const overallStats = await this.db
+  async getStats(
+    timeRange?: InteropTransferTimeRange,
+  ): Promise<InteropTransfersStatsRecord[]> {
+    let query = this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
         'plugin',
@@ -878,8 +856,14 @@ export class InteropTransferRepository extends BaseRepository {
         eb.fn.sum('srcValueUsd').as('srcValueSum'),
         eb.fn.sum('dstValueUsd').as('dstValueSum'),
       ])
-      .groupBy(['plugin', 'type'])
-      .execute()
+
+    if (timeRange !== undefined) {
+      query = query
+        .where('timestamp', '>', UnixTime.toDate(timeRange.from))
+        .where('timestamp', '<=', UnixTime.toDate(timeRange.to))
+    }
+
+    const overallStats = await query.groupBy(['plugin', 'type']).execute()
 
     return overallStats.map((overall) => ({
       plugin: overall.plugin,
@@ -891,8 +875,10 @@ export class InteropTransferRepository extends BaseRepository {
     }))
   }
 
-  async getDetailedStats(): Promise<InteropTransfersDetailedStatsRecord[]> {
-    const chainStats = await this.db
+  async getDetailedStats(
+    timeRange?: InteropTransferTimeRange,
+  ): Promise<InteropTransfersDetailedStatsRecord[]> {
+    let query = this.db
       .selectFrom('InteropTransfer')
       .select((eb) => [
         'plugin',
@@ -906,6 +892,14 @@ export class InteropTransferRepository extends BaseRepository {
       ])
       .where('srcChain', 'is not', null)
       .where('dstChain', 'is not', null)
+
+    if (timeRange !== undefined) {
+      query = query
+        .where('timestamp', '>', UnixTime.toDate(timeRange.from))
+        .where('timestamp', '<=', UnixTime.toDate(timeRange.to))
+    }
+
+    const chainStats = await query
       .groupBy(['plugin', 'type', 'srcChain', 'dstChain'])
       .execute()
 
@@ -967,66 +961,5 @@ export class InteropTransferRepository extends BaseRepository {
       .deleteFrom('InteropTransfer')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
-  }
-
-  async getMissingTokensInfo(): Promise<InteropMissingTokenInfo[]> {
-    const rows = await this.db
-      .selectFrom('InteropTransfer')
-      .select([
-        'plugin',
-        'srcValueUsd',
-        'dstValueUsd',
-        'srcChain',
-        'srcTokenAddress',
-        'dstChain',
-        'dstTokenAddress',
-      ])
-      .where('isProcessed', '=', true)
-      .where((eb) =>
-        eb.or([eb('srcValueUsd', 'is', null), eb('dstValueUsd', 'is', null)]),
-      )
-      .execute()
-
-    const chainAddressCounts = new Map<string, number>()
-    const chainAddressPlugins = new Map<string, Set<string>>()
-
-    for (const row of rows) {
-      if (row.srcValueUsd === null && row.srcChain && row.srcTokenAddress) {
-        const key = `${row.srcChain}:${row.srcTokenAddress}`
-        chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
-        const plugins = chainAddressPlugins.get(key)
-        if (!plugins) {
-          chainAddressPlugins.set(key, new Set([row.plugin]))
-        } else {
-          plugins.add(row.plugin)
-        }
-      }
-      if (row.dstValueUsd === null && row.dstChain && row.dstTokenAddress) {
-        const key = `${row.dstChain}:${row.dstTokenAddress}`
-        chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
-        const plugins = chainAddressPlugins.get(key)
-        if (!plugins) {
-          chainAddressPlugins.set(key, new Set([row.plugin]))
-        } else {
-          plugins.add(row.plugin)
-        }
-      }
-    }
-
-    const result: InteropMissingTokenInfo[] = []
-    for (const [key, count] of chainAddressCounts) {
-      const [chain, tokenAddress] = key.split(':')
-      const plugins = Array.from(
-        chainAddressPlugins.get(key) || new Set<string>(),
-      ).sort()
-      result.push({
-        chain: chain as string,
-        tokenAddress: tokenAddress as string,
-        count,
-        plugins,
-      })
-    }
-
-    return result
   }
 }
