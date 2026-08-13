@@ -1,4 +1,4 @@
-import { formatAddress } from '@l2beat/shared-pure'
+import { formatAddress, formatCurrency } from '@l2beat/shared-pure'
 import type { InteropTokenRelationsNode } from '~/server/features/scaling/interop/token/getInteropTokenRelationsGraph'
 import { cn } from '~/utils/cn'
 import type { NodeBox } from './layout'
@@ -90,6 +90,9 @@ export function RelationsNode({
           <text x={12} y={66} className="fill-secondary text-label-value-12">
             Burn-mint · {node.deployments.length} chains
           </text>
+          {/* No figure for the group as a whole: a transfer between two of its
+              own deployments is credited to both, so summing them would double
+              count. Per-deployment volume shows when the group is expanded. */}
           {/* Which bridge puts them in a burn-mint relation — the relations
               that pulled this group together. */}
           {node.bridges.length > 0 && (
@@ -119,6 +122,18 @@ export function RelationsNode({
           >
             {first.symbol}
           </text>
+          {/* Volume rides the symbol's line: the node is only 64px tall, and a
+              line of its own would crowd out the address. */}
+          {first.volume !== null && (
+            <text
+              x={box.width - 12}
+              y={24}
+              textAnchor="end"
+              className="fill-secondary font-medium text-label-value-12"
+            >
+              {formatCurrency(first.volume, 'usd')}
+            </text>
+          )}
           {/* The chain reads as a sentence — "On Avalanche" — rather than as a
               second title competing with the symbol. */}
           <text x={12} y={43} className="fill-secondary text-label-value-12">
@@ -150,6 +165,15 @@ export function RelationsNode({
             <text x={18} className="fill-secondary text-label-value-12">
               {deployment.chainName}
             </text>
+            {deployment.volume !== null && (
+              <text
+                x={box.width - 24}
+                textAnchor="end"
+                className="fill-secondary text-label-value-12"
+              >
+                {formatCurrency(deployment.volume, 'usd')}
+              </text>
+            )}
           </g>
         ))}
     </g>

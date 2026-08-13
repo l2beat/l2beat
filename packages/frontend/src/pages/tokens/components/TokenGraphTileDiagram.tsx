@@ -41,6 +41,7 @@ export function TokenGraphTileDiagram({
         address: '',
         symbol: '',
         explorerUrl: undefined,
+        volume: null,
       })),
     }))
     const edges = graph.edges.map((edge) => ({ ...edge, bridges: [] }))

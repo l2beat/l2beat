@@ -43,10 +43,6 @@ export interface TokenGraphTile {
    * relation worth showing.
    */
   hasRelations: boolean
-  mechanisms: ('lockAndMint' | 'burnAndMint')[]
-  /** Interop plugin names behind the relations, for the bridge filter. */
-  plugins: string[]
-  chainIds: string[]
   graph: TokenGraphTileGraph
 }
 
@@ -107,24 +103,7 @@ export function buildTokenGraphTiles({
     const tokenRoutes = routesByToken.get(token.id) ?? []
     const model = buildTokenRelationsGraph(deployments, tokenRoutes)
 
-    // Only the relations the graph actually kept describe the token, so the
-    // filters read them off the model rather than off the raw routes.
-    const mechanisms = new Set<'lockAndMint' | 'burnAndMint'>()
-    const plugins = new Set<string>()
-    for (const node of model.nodes) {
-      for (const source of node.sources) {
-        plugins.add(source.plugin)
-        if (source.bridgeType === 'burnAndMint') mechanisms.add('burnAndMint')
-      }
-    }
-    for (const edge of model.edges) {
-      for (const source of edge.sources) {
-        plugins.add(source.plugin)
-        if (source.bridgeType === 'lockAndMint') mechanisms.add('lockAndMint')
-      }
-    }
-
-    const chainIds = [...new Set(deployments.map((d) => d.chain))].toSorted()
+    const chainIds = new Set(deployments.map((d) => d.chain))
 
     tiles.push({
       id: token.id,
@@ -133,14 +112,11 @@ export function buildTokenGraphTiles({
       issuer: token.issuer,
       iconUrl: token.iconUrl,
       deployments: deployments.length,
-      chains: chainIds.length,
+      chains: chainIds.size,
       volume: volumeByTokenId.get(token.id) ?? null,
       hasRelations:
         model.edges.length > 0 ||
         model.nodes.some((node) => node.members.length > 1),
-      mechanisms: [...mechanisms].toSorted(),
-      plugins: [...plugins].toSorted(),
-      chainIds,
       graph: {
         nodes: model.nodes.map((node) => ({
           id: node.id,

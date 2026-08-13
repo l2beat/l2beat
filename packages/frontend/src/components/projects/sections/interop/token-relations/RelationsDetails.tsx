@@ -1,4 +1,4 @@
-import { formatAddress } from '@l2beat/shared-pure'
+import { formatAddress, formatCurrency } from '@l2beat/shared-pure'
 import { CustomLink } from '~/components/link/CustomLink'
 import type {
   InteropTokenRelationsEdge,
@@ -70,52 +70,65 @@ export function RelationsDetails({ graph, nodeId, onClose }: Props) {
       {/* A single deployment's chain is already in the heading, so only the
           address is left to show. A group has to list its members. */}
       {isGroup ? (
-        <ul className="mt-3 space-y-1">
-          {node.deployments.map((deployment) => (
-            <li
-              key={`${deployment.chain}-${deployment.address}`}
-              className="flex items-center gap-2 text-label-value-13"
-            >
-              {deployment.iconUrl && (
-                <img
-                  src={deployment.iconUrl}
-                  alt=""
-                  width={16}
-                  height={16}
-                  className="size-4 shrink-0 rounded-full"
-                />
-              )}
-              <span className="min-w-0 flex-1 truncate font-medium">
-                {deployment.chainName}
-              </span>
-              {deployment.explorerUrl ? (
-                <CustomLink
-                  href={deployment.explorerUrl}
-                  className="shrink-0 whitespace-nowrap"
-                >
-                  {formatAddress(deployment.address)}
-                </CustomLink>
-              ) : (
-                <span className="shrink-0 whitespace-nowrap text-secondary">
-                  {formatAddress(deployment.address)}
-                </span>
-              )}
-            </li>
-          ))}
-        </ul>
+        <>
+          {/* Chain and volume on one line, address beneath: at this width the
+              three of them inline leave nothing but truncation. */}
+          <ul className="mt-3 space-y-2">
+            {node.deployments.map((deployment) => (
+              <li key={`${deployment.chain}-${deployment.address}`}>
+                <div className="flex items-center gap-2 text-label-value-13">
+                  {deployment.iconUrl && (
+                    <img
+                      src={deployment.iconUrl}
+                      alt=""
+                      width={16}
+                      height={16}
+                      className="size-4 shrink-0 rounded-full"
+                    />
+                  )}
+                  <span className="min-w-0 flex-1 truncate font-medium">
+                    {deployment.chainName}
+                  </span>
+                  {deployment.volume !== null && (
+                    <span className="shrink-0 whitespace-nowrap font-medium text-secondary">
+                      {formatCurrency(deployment.volume, 'usd')}
+                    </span>
+                  )}
+                </div>
+                <p className="pl-6 text-label-value-12">
+                  {deployment.explorerUrl ? (
+                    <CustomLink href={deployment.explorerUrl}>
+                      {formatAddress(deployment.address)}
+                    </CustomLink>
+                  ) : (
+                    <span className="text-secondary">
+                      {formatAddress(deployment.address)}
+                    </span>
+                  )}
+                </p>
+              </li>
+            ))}
+          </ul>
+          {/* Deliberately no total: each transfer between two of these
+              deployments is credited to both, so the sum would exceed the
+              token's actual volume. */}
+        </>
       ) : (
         first && (
-          <p className="mt-2 text-label-value-13">
-            {first.explorerUrl ? (
-              <CustomLink href={first.explorerUrl}>
-                {formatAddress(first.address)}
-              </CustomLink>
-            ) : (
-              <span className="text-secondary">
-                {formatAddress(first.address)}
-              </span>
-            )}
-          </p>
+          <>
+            <p className="mt-2 text-label-value-13">
+              {first.explorerUrl ? (
+                <CustomLink href={first.explorerUrl}>
+                  {formatAddress(first.address)}
+                </CustomLink>
+              ) : (
+                <span className="text-secondary">
+                  {formatAddress(first.address)}
+                </span>
+              )}
+            </p>
+            <VolumeRow value={first.volume} label="Last 24h volume" />
+          </>
         )
       )}
 
@@ -148,6 +161,17 @@ export function RelationsDetails({ graph, nodeId, onClose }: Props) {
         graph={graph}
       />
     </aside>
+  )
+}
+
+/** Omitted rather than shown as zero when the chain is not covered. */
+function VolumeRow({ value, label }: { value: number | null; label: string }) {
+  if (value === null) return null
+  return (
+    <div className="mt-3 flex items-baseline justify-between gap-2 text-label-value-13">
+      <span className="text-secondary">{label}</span>
+      <span className="font-medium">{formatCurrency(value, 'usd')}</span>
+    </div>
   )
 }
 

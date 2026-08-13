@@ -35,7 +35,7 @@ interface Props {
 }
 
 export function RelationsDiagram({
-  graph,
+  graph: fullGraph,
   selectedNodeId,
   onSelectNode,
   onExpand,
@@ -51,6 +51,25 @@ export function RelationsDiagram({
     () => ({ width: width ?? 960, height }),
     [width, height],
   )
+
+  // On by default: the relations are the picture, and a token can drag a whole
+  // sidebar of untouched deployments along behind them.
+  const [hideUnconnected, setHideUnconnected] = useState(true)
+  const hasUnconnected = fullGraph.unconnectedNodeIds.length > 0
+  const isEverythingUnconnected =
+    fullGraph.unconnectedNodeIds.length === fullGraph.nodes.length
+  const graph = useMemo(() => {
+    // Nothing to hide, or hiding would leave an empty diagram.
+    if (!hideUnconnected || !hasUnconnected || isEverythingUnconnected) {
+      return fullGraph
+    }
+    const hidden = new Set(fullGraph.unconnectedNodeIds)
+    return {
+      ...fullGraph,
+      nodes: fullGraph.nodes.filter((node) => !hidden.has(node.id)),
+      unconnectedNodeIds: [],
+    }
+  }, [fullGraph, hideUnconnected, hasUnconnected, isEverythingUnconnected])
 
   const [expandedIds, setExpandedIds] = useState<ReadonlySet<string>>(
     () => new Set(),
@@ -305,23 +324,23 @@ export function RelationsDiagram({
           )}
 
           {/* Two captions, one per region — naming every column repeated the
-              same phrase across the diagram. Drawn at a fixed screen size so
-              they stay legible when zoomed out. */}
+              same phrase across the diagram. They only earn their space when
+              both regions are drawn: with the loose block hidden there is
+              nothing to tell the structure apart from. Drawn at a fixed screen
+              size so they stay legible when zoomed out. */}
           <g
             transform={`translate(0, ${-CAPTION_GAP / camera.camera.k}) scale(${1 / camera.camera.k})`}
           >
-            {layout.columnXs.length > 0 && (
-              <text
-                x={
-                  ((layout.unconnectedDividerX ?? layout.width) / 2) *
-                  camera.camera.k
-                }
-                textAnchor="middle"
-                className="fill-secondary font-medium text-label-value-12 uppercase tracking-wide"
-              >
-                Tokens with relations
-              </text>
-            )}
+            {layout.unconnectedDividerX !== undefined &&
+              layout.columnXs.length > 0 && (
+                <text
+                  x={(layout.unconnectedDividerX / 2) * camera.camera.k}
+                  textAnchor="middle"
+                  className="fill-secondary font-medium text-label-value-12 uppercase tracking-wide"
+                >
+                  Tokens with relations
+                </text>
+              )}
             {layout.unconnectedDividerX !== undefined && (
               <text
                 x={
@@ -379,6 +398,34 @@ export function RelationsDiagram({
           })}
         </g>
       </svg>
+
+      {hasUnconnected && !isEverythingUnconnected && (
+        <label
+          className={cn(
+            'absolute top-3 left-3 flex cursor-pointer items-center gap-2 rounded-md',
+            'border border-divider bg-surface-primary px-2 py-1',
+            'font-medium text-label-value-12 text-secondary hover:text-primary',
+          )}
+        >
+          <input
+            type="checkbox"
+            className="cursor-pointer accent-brand"
+            checked={hideUnconnected}
+            onChange={(event) => {
+              setHideUnconnected(event.target.checked)
+              // The panel must not outlive the node it describes.
+              if (
+                event.target.checked &&
+                selectedNodeId !== undefined &&
+                fullGraph.unconnectedNodeIds.includes(selectedNodeId)
+              ) {
+                onSelectNode(undefined)
+              }
+            }}
+          />
+          Hide deployments with no relations
+        </label>
+      )}
 
       {selectedNodeId && (
         <div className="absolute top-3 right-3 bottom-3 w-[min(88%,320px)]">

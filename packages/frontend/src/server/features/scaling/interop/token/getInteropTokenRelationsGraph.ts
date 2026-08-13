@@ -24,6 +24,8 @@ export interface InteropTokenRelationsDeployment {
   address: string
   symbol: string
   explorerUrl: string | undefined
+  /** Last 24h volume; null on a chain the snapshot does not cover. */
+  volume: number | null
 }
 
 export interface InteropTokenRelationsNode {
@@ -127,6 +129,10 @@ function toNode(
           chain?.explorerUrl && member.address.startsWith('0x')
             ? `${chain.explorerUrl}/address/${member.address}`
             : undefined,
+        volume:
+          volumeByDeployment.get(
+            `${member.chain}|${member.address.toLowerCase()}`,
+          ) ?? null,
       }
     }),
   }
@@ -189,7 +195,7 @@ const MOCK_INTEROP_TOKEN_RELATIONS_GRAPH: InteropTokenRelationsGraph = {
   nodes: [
     {
       id: 'arbitrum|0xaf88d065e77c8cc2239327c5edb3a432268e5831',
-      volume: null,
+      volume: 6_990_000,
       bridges: [
         {
           id: ProjectId('cctpv2'),
@@ -207,6 +213,7 @@ const MOCK_INTEROP_TOKEN_RELATIONS_GRAPH: InteropTokenRelationsGraph = {
           address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
           symbol: 'USDC',
           explorerUrl: undefined,
+          volume: 2_170_000,
         },
         {
           chain: 'ethereum',
@@ -215,12 +222,13 @@ const MOCK_INTEROP_TOKEN_RELATIONS_GRAPH: InteropTokenRelationsGraph = {
           address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
           symbol: 'USDC',
           explorerUrl: undefined,
+          volume: 4_820_000,
         },
       ],
     },
     {
       id: 'base|0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
-      volume: null,
+      volume: 392_430,
       bridges: [],
       deployments: [
         {
@@ -230,6 +238,7 @@ const MOCK_INTEROP_TOKEN_RELATIONS_GRAPH: InteropTokenRelationsGraph = {
           address: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
           symbol: 'USDbC',
           explorerUrl: undefined,
+          volume: 392_430,
         },
       ],
     },
@@ -245,12 +254,13 @@ const MOCK_INTEROP_TOKEN_RELATIONS_GRAPH: InteropTokenRelationsGraph = {
           address: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
           symbol: 'USDC.e',
           explorerUrl: undefined,
+          volume: null,
         },
       ],
     },
     {
       id: 'zksync2|0x1d17cbcf0d6d143135ae902365d2e5e2a16538d4',
-      volume: null,
+      volume: 51_800,
       bridges: [],
       deployments: [
         {
@@ -260,6 +270,7 @@ const MOCK_INTEROP_TOKEN_RELATIONS_GRAPH: InteropTokenRelationsGraph = {
           address: '0x1d17cbcf0d6d143135ae902365d2e5e2a16538d4',
           symbol: 'USDC.e',
           explorerUrl: undefined,
+          volume: 51_800,
         },
       ],
     },

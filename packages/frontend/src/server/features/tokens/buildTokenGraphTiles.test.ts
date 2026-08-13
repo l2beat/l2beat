@@ -51,7 +51,6 @@ describe(buildTokenGraphTiles.name, () => {
     const tile = tiles[0]
     expect(tile?.graph.edges).toEqual([])
     expect(tile?.graph.unconnectedNodeIds.length).toEqual(2)
-    expect(tile?.mechanisms ?? []).toEqual([])
   })
 
   it('counts a burn-mint-only token as having relations, despite no edges', () => {
@@ -89,36 +88,6 @@ describe(buildTokenGraphTiles.name, () => {
     )
 
     expect(tiles[0]?.hasRelations).toEqual(false)
-  })
-
-  it('derives mechanisms and plugins from the relations that survived', () => {
-    const tiles = buildTokenGraphTiles(
-      input({
-        abstractTokens: [token('aaa', 'USDC')],
-        deployedTokens: [
-          deployment('ethereum', '0x1', 'aaa'),
-          deployment('arbitrum', '0x2', 'aaa'),
-          deployment('base', '0x3', 'aaa'),
-        ],
-        routes: [
-          route('arbitrum', '0x2', 'ethereum', '0x1', {
-            bridgeType: 'burnAndMint',
-            plugin: 'cctp-v2',
-          }),
-          route('arbitrum', '0x2', 'base', '0x3', {
-            bridgeType: 'lockAndMint',
-            lockedToken: 'A',
-            plugin: 'opstack',
-          }),
-        ],
-      }),
-    )
-
-    expect(tiles[0]?.mechanisms ?? []).toEqualUnsorted([
-      'burnAndMint',
-      'lockAndMint',
-    ])
-    expect(tiles[0]?.plugins ?? []).toEqualUnsorted(['cctp-v2', 'opstack'])
   })
 
   it('draws the same node and edge counts as the full graph builder', () => {

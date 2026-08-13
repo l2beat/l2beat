@@ -223,6 +223,7 @@ function node(
       address: `0x${id}${i}`,
       symbol: 'TOKEN',
       explorerUrl: undefined,
+      volume: null,
     })),
   }
 }

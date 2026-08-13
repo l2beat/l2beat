@@ -87,9 +87,6 @@ const MOCK_TOKEN_GRAPH_TILES: TokenGraphTile[] = [
     chains: 4,
     volume: 2_170_000,
     hasRelations: true,
-    mechanisms: ['burnAndMint', 'lockAndMint'],
-    plugins: ['cctp-v2', 'opstack'],
-    chainIds: ['arbitrum', 'base', 'ethereum', 'polygonpos'],
     graph: {
       nodes: [
         { id: 'arbitrum|0xaf88', chains: ['arbitrum', 'ethereum'] },
@@ -113,9 +110,6 @@ const MOCK_TOKEN_GRAPH_TILES: TokenGraphTile[] = [
     chains: 2,
     volume: 890_000,
     hasRelations: true,
-    mechanisms: ['lockAndMint'],
-    plugins: ['opstack'],
-    chainIds: ['ethereum', 'optimism'],
     graph: {
       nodes: [
         { id: 'ethereum|0xdac1', chains: ['ethereum'] },
