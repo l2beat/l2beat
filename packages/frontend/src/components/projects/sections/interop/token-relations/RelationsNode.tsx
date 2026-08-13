@@ -15,6 +15,7 @@ const GROUP_PADDING = 12
 interface Props {
   node: InteropTokenRelationsNode
   box: NodeBox
+  isSource: boolean
   isSelected: boolean
   isDimmed: boolean
   isUnconnected: boolean
@@ -25,6 +26,7 @@ interface Props {
 export function RelationsNode({
   node,
   box,
+  isSource,
   isSelected,
   isDimmed,
   isUnconnected,
@@ -44,6 +46,19 @@ export function RelationsNode({
       onMouseEnter={() => onHoverChange(true)}
       onMouseLeave={() => onHoverChange(false)}
     >
+      {isSource && (
+        <rect
+          x={-5}
+          y={-5}
+          width={box.width + 10}
+          height={box.height + 10}
+          rx={15}
+          fill="none"
+          className="stroke-brand"
+          strokeOpacity={0.3}
+          strokeWidth={1.5}
+        />
+      )}
       <rect
         width={box.width}
         height={box.height}

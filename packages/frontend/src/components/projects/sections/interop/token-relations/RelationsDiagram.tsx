@@ -142,6 +142,13 @@ export function RelationsDiagram({
     return ids
   }, [activeId, graph.edges])
 
+  const sourceIds = useMemo(() => {
+    const incomingIds = new Set(graph.edges.map((edge) => edge.to))
+    return new Set(
+      graph.edges.map((edge) => edge.from).filter((id) => !incomingIds.has(id)),
+    )
+  }, [graph.edges])
+
   const targetPorts = useMemo(
     () => getWrappedTargetPorts(graph.edges, boxes),
     [boxes, graph.edges],
@@ -395,6 +402,7 @@ export function RelationsDiagram({
                 key={node.id}
                 node={node}
                 box={box}
+                isSource={sourceIds.has(node.id)}
                 isSelected={selectedNodeId === node.id}
                 isDimmed={neighbours !== undefined && !neighbours.has(node.id)}
                 isUnconnected={unconnected.has(node.id)}
