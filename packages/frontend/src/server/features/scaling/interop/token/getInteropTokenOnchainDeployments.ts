@@ -25,14 +25,18 @@ export async function getInteropTokenOnchainDeployments(
   tokenId: string,
   supportedChainIds: string[],
 ): Promise<InteropTokenOnchainDeployment[]> {
+  const supportedChains = new Set(supportedChainIds)
   if (env.MOCK) {
-    return MOCK_INTEROP_TOKEN_DEPLOYMENTS
+    return MOCK_INTEROP_TOKEN_DEPLOYMENTS.filter((deployment) =>
+      supportedChains.has(deployment.chain),
+    )
   }
   const db = getDb()
   const tokenDb = getTokenDb()
 
-  const deployedTokens =
+  const deployedTokens = (
     await tokenDb.deployedToken.getByAbstractTokenId(tokenId)
+  ).filter((token) => supportedChains.has(token.chain))
   if (deployedTokens.length === 0) return []
 
   // Aggregates store token addresses in Address32 format,
@@ -68,8 +72,6 @@ export async function getInteropTokenOnchainDeployments(
     plugins.push({ plugin: row.plugin, bridgeType: row.bridgeType })
     mintingPluginsMap.set(key, plugins)
   }
-  const supportedChains = new Set(supportedChainIds)
-
   const deployments = deployedTokens.map((token) => {
     const tokenAddress = Address32.fromOrUndefined(token.address)
     const stat = tokenAddress
