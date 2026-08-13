@@ -3,7 +3,7 @@
 // cannot faithfully interpret raises CairoDecodeError and the caller falls
 // back to exposing the raw felts.
 
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import type { ContractValue } from '../discovery/output/types'
 import type { SierraAbi } from './sierraAbi'
 
@@ -68,7 +68,12 @@ export function decodeCairoType(
     case 'core::starknet::class_hash::ClassHash':
       return toPaddedHex(reader.read(), 64)
     case 'core::starknet::eth_address::EthAddress':
-      return toPaddedHex(reader.read(), 40)
+      // A checksummed eth: address, so the UI links it to Etherscan. The
+      // starknet engine never crawls non-strk relatives.
+      return ChainSpecificAddress.from(
+        'eth',
+        EthereumAddress(toPaddedHex(reader.read(), 40)),
+      ).toString()
     case 'core::integer::u8':
     case 'core::integer::u16':
     case 'core::integer::u32':

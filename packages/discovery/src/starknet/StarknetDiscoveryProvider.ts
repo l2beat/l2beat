@@ -8,7 +8,9 @@ import {
 } from '@l2beat/shared'
 import type { DiscoveryCache } from '../discovery/provider/DiscoveryCache'
 
-const EVENT_BLOCK_SPAN = 10_000
+// Starkscan caps starknet_getEvents at 10k blocks; other providers
+// (e.g. Alchemy) allow much larger spans - configurable via options
+const DEFAULT_EVENT_BLOCK_SPAN = 10_000
 const VOYAGER_API_URL = 'https://api.voyager.online/beta'
 
 export interface StarknetDiscoveryProviderOptions {
@@ -17,6 +19,8 @@ export interface StarknetDiscoveryProviderOptions {
   rpcHeaders?: Record<string, string>
   voyagerApiKey?: string
   callsPerMinute?: number
+  /** Max block range per starknet_getEvents request (provider-dependent) */
+  eventBlockSpan?: number
 }
 
 export interface VoyagerSource {
@@ -136,13 +140,10 @@ export class StarknetDiscoveryProvider {
     fromBlock: number,
     keyFilter?: string[],
   ): Promise<StarknetEvent[]> {
+    const span = this.options.eventBlockSpan ?? DEFAULT_EVENT_BLOCK_SPAN
     const events: StarknetEvent[] = []
-    for (
-      let start = fromBlock;
-      start <= this.blockNumber;
-      start += EVENT_BLOCK_SPAN
-    ) {
-      const end = Math.min(start + EVENT_BLOCK_SPAN - 1, this.blockNumber)
+    for (let start = fromBlock; start <= this.blockNumber; start += span) {
+      const end = Math.min(start + span - 1, this.blockNumber)
       const key = `starknet.getEvents.${address}.${start}.${end}.${keyFilter?.join(',') ?? ''}`
       const segment = await this.cached(key, () =>
         this.client.getEvents(start, end, address, keyFilter ?? []),

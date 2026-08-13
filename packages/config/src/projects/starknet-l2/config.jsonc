@@ -1,0 +1,65 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "starknet-l2",
+  "import": ["../globalConfig.jsonc"],
+  // The update monitor cannot run discovery on Starknet yet,
+  // use `l2b discover-starknet starknet-l2` to refresh.
+  "archived": true,
+  // Starkgate token bridges on Starknet (L2 side). Each address was read
+  // on-chain from its L1 counterpart in the `starknet` project discovery:
+  // getL2Bridge() for Starkgate 2.0 bridges, the LogSetL2TokenBridge event
+  // for legacy ones. The deprecated DAI bridge (L1Escrow pattern) is omitted.
+  "initialAddresses": [
+    // ETHBridge (L1: eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419)
+    "strk:0x073314940630fd6dcda0d772d4c972c4e0a9946bef9dabf4ef84eda8ef542b82",
+    // STRKBridge (L1: eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4)
+    "strk:0x0594c1582459ea03f77deaf9eb7e3917d6994a03c13405ba42867f83d85f085d",
+    // MultiBridge / StarkgateManager-managed multi-token bridge
+    // (L1: eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb)
+    "strk:0x0616757a151c21f9be8775098d591c2807316d992bbc3bb1a5c1821630589256",
+    // USDCBridge (L1: eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816)
+    "strk:0x05cd48fccbfd8aa2773fe22c217e808319ffcc1c5a6a463f7d8fa2da48218196",
+    // USDTBridge (L1: eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605)
+    "strk:0x074761a8d48ce002963002becc6d9c3dd8a2a05b1075d55e5967f42296f16bd0",
+    // WBTCBridge (L1: eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4)
+    "strk:0x07aeec4870975311a7396069033796b61cd66ed49d22a786cba12a8d76717302",
+    // FRAXBridge (L1: eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb)
+    "strk:0x006646a87b8e9e51a893c52facd89f99539a152b96e72daee6a7a3734aa5299a",
+    // FXSBridge (L1: eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C)
+    "strk:0x06bf25c0911c6c63abfe3600428144d0d0dbf8b7bfbc44306a3386aa95a24296",
+    // LUSDBridge (L1: eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5)
+    "strk:0x05841ed9b790719b61dc98826246a7a3012dd35b0ed728e3c455af2647385c80",
+    // UNIBridge (L1: eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B)
+    "strk:0x04fe90c0c4594b4a5ce3031a4bbdfbc7c046b4b9d7cf31b79647540c85b8ec79",
+    // rETHBridge (L1: eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2)
+    "strk:0x0078da8023b3c08e5a41540a34f7c385fd4f4540d5668f1be3ede0d3bb1b9d4d",
+    // sfrxETHBridge (L1: eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8)
+    "strk:0x06dcc61c4cf056ff42a8f4b8635c207e3da73332282aa2132058022520fa0179",
+    // wstETHBridge (L1: eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B)
+    "strk:0x0088eedbe2fe3918b69ccb411713b7fa72079d4eddf291103ccbe41e78a9615c",
+    // LBTCBridge (L1: eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e)
+    "strk:0x0239eee60e6d0bed42315ac74a1fc43db8074646d4d2a0a9e6fa5272685a0eb5",
+    // SolvBTCBridge (L1: eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10)
+    "strk:0x032c68653622292bedf0ed6d941888a01d3923c7f4eb633a0c08c5497a1f5f58",
+    // LORDSBridge (L1: eth:0x023A2aAc5d0fa69E3243994672822BA43E34E5C9)
+    "strk:0x07c76a71952ce3acd1f953fd2a3fda8564408b821ff367041c89f44526076633"
+  ],
+  "names": {
+    "strk:0x073314940630fd6dcda0d772d4c972c4e0a9946bef9dabf4ef84eda8ef542b82": "ETHBridge",
+    "strk:0x0594c1582459ea03f77deaf9eb7e3917d6994a03c13405ba42867f83d85f085d": "STRKBridge",
+    "strk:0x0616757a151c21f9be8775098d591c2807316d992bbc3bb1a5c1821630589256": "MultiBridge",
+    "strk:0x05cd48fccbfd8aa2773fe22c217e808319ffcc1c5a6a463f7d8fa2da48218196": "USDCBridge",
+    "strk:0x074761a8d48ce002963002becc6d9c3dd8a2a05b1075d55e5967f42296f16bd0": "USDTBridge",
+    "strk:0x07aeec4870975311a7396069033796b61cd66ed49d22a786cba12a8d76717302": "WBTCBridge",
+    "strk:0x006646a87b8e9e51a893c52facd89f99539a152b96e72daee6a7a3734aa5299a": "FRAXBridge",
+    "strk:0x06bf25c0911c6c63abfe3600428144d0d0dbf8b7bfbc44306a3386aa95a24296": "FXSBridge",
+    "strk:0x05841ed9b790719b61dc98826246a7a3012dd35b0ed728e3c455af2647385c80": "LUSDBridge",
+    "strk:0x04fe90c0c4594b4a5ce3031a4bbdfbc7c046b4b9d7cf31b79647540c85b8ec79": "UNIBridge",
+    "strk:0x0078da8023b3c08e5a41540a34f7c385fd4f4540d5668f1be3ede0d3bb1b9d4d": "rETHBridge",
+    "strk:0x06dcc61c4cf056ff42a8f4b8635c207e3da73332282aa2132058022520fa0179": "sfrxETHBridge",
+    "strk:0x0088eedbe2fe3918b69ccb411713b7fa72079d4eddf291103ccbe41e78a9615c": "wstETHBridge",
+    "strk:0x0239eee60e6d0bed42315ac74a1fc43db8074646d4d2a0a9e6fa5272685a0eb5": "LBTCBridge",
+    "strk:0x032c68653622292bedf0ed6d941888a01d3923c7f4eb633a0c08c5497a1f5f58": "SolvBTCBridge",
+    "strk:0x07c76a71952ce3acd1f953fd2a3fda8564408b821ff367041c89f44526076633": "LORDSBridge"
+  }
+}

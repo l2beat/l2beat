@@ -1,5 +1,5 @@
 import { isChainShortName } from '@l2beat/discovery'
-import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { ApiAddressType, FieldValue } from './types'
 
 export function parseFieldValue(
@@ -8,10 +8,9 @@ export function parseFieldValue(
 ): FieldValue {
   if (typeof value === 'string') {
     if (/^0x[a-f\d]*$/i.test(value)) {
-      assert(
-        value.length !== 42,
-        'Addresses need to already have the chain prefix',
-      )
+      // EVM discovery chain-prefixes every address, so a bare 42-char hex is
+      // either intentionally non-address data or comes from a non-EVM chain
+      // (e.g. a 20-byte Starknet felt). Render as hex instead of crashing.
       return { type: 'hex', value }
     }
     if (/^[\w-]*:0x[a-f\d]*$/i.test(value)) {

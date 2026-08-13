@@ -74,11 +74,18 @@ export async function analyzeStarknetContract(
 
   const voyagerSource = await provider.getVoyagerSource(classHash)
   const isVerified = voyagerSource !== undefined
+  // The fallback interface must not depend on the per-contract explorer
+  // alias, so contracts sharing a class share a source hash (shape matching)
+  const interfaceName = deriveContractName(abi, 'Contract')
   const files =
     voyagerSource !== undefined
       ? pruneScarbWorkspace(voyagerSource.files, abi)
       : ({
-          [`${name}.cairo`]: generateCairoInterface(name, classHash, abi),
+          [`${interfaceName}.cairo`]: generateCairoInterface(
+            interfaceName,
+            classHash,
+            abi,
+          ),
         } as Record<string, string>)
   const flatSource = flattenCairoSource(files)
   // Not flatteningHash: that runs the Solidity parser, this is Cairo

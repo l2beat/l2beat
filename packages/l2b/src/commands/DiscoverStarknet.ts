@@ -83,5 +83,9 @@ export function resolveStarknetOptions(): StarknetDiscoveryProviderOptions {
         ? { 'X-Starkscan-Api-Key': starkscanApiKey }
         : undefined,
     voyagerApiKey: env.optionalString('VOYAGER_API_KEY'),
+    // e.g. 1_000_000 for Alchemy; the default 10_000 is the Starkscan cap
+    eventBlockSpan: env.optionalInteger(
+      'STARKNET_EVENT_BLOCK_SPAN_FOR_DISCOVERY',
+    ),
   }
 }

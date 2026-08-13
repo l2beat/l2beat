@@ -27,6 +27,7 @@ const configReader = new ConfigReader(paths.discovery)
 export const onChainProjects: string[] = [
   'blobstream',
   'eigenda',
+  'starknet-l2',
   'shared-eigenlayer',
   'swell',
   'worldcoin',
