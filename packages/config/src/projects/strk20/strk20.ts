@@ -94,8 +94,7 @@ export const strk20: BaseProject = {
   shortName: undefined,
   addedAt: STRK20_SINCE,
   statuses: {
-    yellowWarning:
-      'The proven program is not made available so it is unknown what logic is verified by the smart contract. Furthermore, real-time monitoring for this project is not supported.',
+    yellowWarning: 'Real-time monitoring for this project is not supported.',
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
@@ -113,6 +112,10 @@ export const strk20: BaseProject = {
       explorers: [
         'https://voyager.online/contract/0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a',
       ],
+      repositories: [
+        'https://github.com/starkware-libs/starknet-privacy',
+        'https://github.com/starkware-libs/sequencer/tree/main/crates/starknet_transaction_prover',
+      ],
       other: ['https://eprint.iacr.org/2026/474'],
     },
     badges: [],
@@ -125,17 +128,13 @@ export const strk20: BaseProject = {
       orderHint: 0,
       description:
         'The pool implementation is immediately upgradeable, so users have no delay to withdraw before a malicious upgrade can take effect.',
-      walkawayTest: {
-        passed: false,
-        reason:
-          'Currently, only centrally operated provers can generate ZK proofs for interacting with STRK-20.',
-      },
+      walkawayTest: { passed: true },
     },
     reproducibility: {
-      value: 'Not published',
-      sentiment: 'bad',
+      value: 'Reproducible',
+      sentiment: 'good',
       description:
-        'The STRK-20 protocol program and the sources for proving stack are not published. Users cannot independently verify the correctness of STRK-20 ZK program. They also cannot generate required ZK proofs locally and are forced to reveal private data to third party - the prover.',
+        'The pool contract, TypeScript SDK, discovery service, and proving stack are publicly available and can be run locally, so users can audit what is actually proven and generate the required ZK proofs without revealing private data to a third-party prover.',
     },
     privacy: {
       value: 'Admin view key',
