@@ -18,9 +18,11 @@ import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
-import type { ProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
-import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
+import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
+import {
+  EMPTY_TVS_BREAKDOWN,
+  get7dTvsBreakdown,
+} from '../../scaling/tvs/get7dTvsBreakdown'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
 import {
   getPrivacyTrustedSetup,
@@ -67,23 +69,6 @@ export interface ProjectPrivacyEntry {
     emergency?: string
   }
   sections: ProjectDetailsSection[]
-}
-
-const EMPTY_PROJECTS_CHANGE_REPORT: ProjectsChangeReport = {
-  projects: {},
-  getChanges: () => ({
-    impactfulChange: false,
-    becameVerifiedContracts: {},
-  }),
-  hasImplementationChanged: () => false,
-  hasHighSeverityFieldChanged: () => false,
-  hasUltimateUpgraderChanged: () => false,
-  getBecameVerifiedContracts: () => ({}),
-}
-
-const EMPTY_TVS_BREAKDOWN: SevenDayTvsBreakdown = {
-  total: 0,
-  projects: {},
 }
 
 export async function getPrivacyProjectEntry(
