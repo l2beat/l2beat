@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
-  "timestamp": 1786613262,
-  "configHash": "0x5d38c90a76662956779a25f684514610f0a13995fa42ac9eb7d3ac691109b66b",
+  "timestamp": 1786617413,
+  "configHash": "0x4b67b416ec7ef8446f8f49e4a109106ea6c0aa5fcb151963b78f1a6c4ae5b32f",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000001",
@@ -977,7 +977,7 @@
         "$upgradeCount": 2,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x81e28e6f37e32d4756bbeaf3c057b82178ac53398af819adfc680fad31b2ecd5",
-        "getTotalDelegation": "5337361366184985820129300215",
+        "getTotalDelegation": "5337361327944334427032388134",
         "l1Address": "arb1:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
         "MIN_MINT_INTERVAL": 31536000,
         "MINT_CAP_DENOMINATOR": 10000,
@@ -1697,7 +1697,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "arb1:0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2371,
+        "exitNum": 2372,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -2990,7 +2990,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 1313929,
+        "batchCount": 1313954,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
@@ -3003,9 +3003,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 25745101,
+          "prevBlockNumber": 25745386,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 25745176
+          "prevSequencedBlockNumber": 25745465
         },
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -3031,7 +3031,7 @@
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 2533763,
+        "totalDelayedMessagesRead": 2533793,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -3399,7 +3399,7 @@
         "getValidators": [],
         "inbox": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isPostBoLD": true,
-        "latestConfirmed": "0x898b2402a7644fbdf77d289e48b8e9f850e8836d8d124a4193bcf419997e8e10",
+        "latestConfirmed": "0x4d748b9c69e2ca68f66d351cf112d8e0891d7e2c371b96190418cf9da3aa25d8",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -3870,7 +3870,7 @@
           "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 2533768,
+        "delayedMessageCount": 2533802,
         "inboxHistory": [
           "eth:0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -3884,8 +3884,8 @@
         ],
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 1313929,
-        "sequencerReportedSubMessageCount": 471857449
+        "sequencerMessageCount": 1313954,
+        "sequencerReportedSubMessageCount": 471873850
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -3928,29 +3928,6 @@
       "address": "eth:0x913Af9a61d1a59aA5D21CE9Bbf7Fd44Ed61dB4ce",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x91b4161dB1177372c9c8bd49ece12013c2e2181b",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xD0F9c6B48Dc9F793ca9C017847921194bE0A4d00" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xD0F9c6B48Dc9F793ca9C017847921194bE0A4d00",
-          "role": ".owner"
-        }
-      ]
     },
     {
       "name": "GatewaysAdmin",
@@ -4172,33 +4149,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "UnknownTreasuryAddressProxy",
-      "address": "eth:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "EIP1967 proxy",
-      "description": "Unverified upgradeable proxy deployed at the Arbitrum One TreasuryTimelock's address on Ethereum by an unknown EOA on 2026-08-05. The same EOA owns its ProxyAdmin. Its purpose is unknown.",
-      "deployerAddress": "eth:0x91b4161dB1177372c9c8bd49ece12013c2e2181b",
-      "sinceTimestamp": 1786280807,
-      "sinceBlock": 25717614,
-      "values": {
-        "$admin": "eth:0xD0F9c6B48Dc9F793ca9C017847921194bE0A4d00",
-        "$implementation": "eth:0xD6F1d778b833B0C037d4b13815EDEdcC8E248765",
-        "$pastUpgrades": [
-          [
-            "2026-08-09T13:06:47.000Z",
-            "0x4ba5d82bc97544ca169265f4bc1f4b872aca9a9f275263cb4caaef0645ef6fa2",
-            ["eth:0xD6F1d778b833B0C037d4b13815EDEdcC8E248765"]
-          ]
-        ],
-        "$upgradeCount": 1
-      },
-      "implementationNames": {
-        "eth:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58": "TransparentUpgradeableProxy",
-        "eth:0xD6F1d778b833B0C037d4b13815EDEdcC8E248765": ""
-      }
-    },
-    {
       "address": "eth:0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc",
       "type": "EOA",
       "proxyType": "EOA",
@@ -4303,34 +4253,6 @@
         "eth:0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45": "L1CustomGateway"
       },
       "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "name": "ProxyAdmin",
-      "address": "eth:0xD0F9c6B48Dc9F793ca9C017847921194bE0A4d00",
-      "type": "Contract",
-      "template": "global/ProxyAdmin",
-      "sourceHashes": [
-        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
-      ],
-      "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
-          "role": "admin"
-        }
-      ],
-      "deployerAddress": "eth:0x91b4161dB1177372c9c8bd49ece12013c2e2181b",
-      "sinceTimestamp": 1786280807,
-      "sinceBlock": 25717614,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0x91b4161dB1177372c9c8bd49ece12013c2e2181b",
-        "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "implementationNames": {
-        "eth:0xD0F9c6B48Dc9F793ca9C017847921194bE0A4d00": "ProxyAdmin"
-      }
     },
     {
       "name": "Arbitrum Multisig 1",
@@ -10527,17 +10449,6 @@
       "function transferExitAndCall(uint256 _exitNum, address _initialDestination, address _newDestination, bytes _newData, bytes _data)",
       "function whitelist() view returns (address)"
     ],
-    "eth:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58": [
-      "constructor(address _logic, address initialOwner, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidAdmin(address admin)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "error ProxyDeniedAdminAccess()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)"
-    ],
     "eth:0xc4940069140142236D4065b866018f7b2BeC77fD": [
       "function destroy()",
       "function initialize(bytes32 _root, uint256 _numInBatch)",
@@ -10640,17 +10551,6 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "eth:0xD0F9c6B48Dc9F793ca9C017847921194bE0A4d00": [
-      "constructor(address initialOwner)",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B": [
       "constructor(address _singleton)"
@@ -10836,6 +10736,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 494065594, "ethereum": 25745196 },
-  "permissionsConfigHash": "0x03680cdceaf280b130cfeae8c6c32425d5f9f010ad6099e0e7c8137192907ab2"
+  "usedBlockNumbers": { "arbitrum": 494082155, "ethereum": 25745541 },
+  "permissionsConfigHash": "0x999ad08277b30eae00ab284ad0dce56d7257a6407bf49e171d8f105d90f2a788"
 }

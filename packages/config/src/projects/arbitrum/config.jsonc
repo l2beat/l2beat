@@ -69,8 +69,7 @@
     "eth:0x14797f5432f699Cb4d4dB04DF599B74952d78d7b": "UpgradeableBeacon",
     "eth:0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0": "EdgeChallengeManager",
     "eth:0xA10c7CE4b876998858b1a9E12b10092229539400": "L1Escrow",
-    "eth:0xc4940069140142236D4065b866018f7b2BeC77fD": "OutboxEntry",
-    "eth:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58": "UnknownTreasuryAddressProxy"
+    "eth:0xc4940069140142236D4065b866018f7b2BeC77fD": "OutboxEntry"
   },
   "overrides": {
     "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": {
@@ -104,13 +103,10 @@
     "arb1:0xF06E95eF589D9c38af242a8AAee8375f14023F85": {
       "ignoreDiscovery": true
     },
-    "eth:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58": {
-      // This address is the TreasuryTimelock on Arbitrum One and is referenced
-      // as the fee routers' destination. On Ethereum it was an EOA until
-      // 2026-08-05, when an unknown EOA (eth:0x91b4161dB1177372c9c8bd49ece12013
-      // c2e2181b) deployed an unverified TransparentUpgradeableProxy at it (and
-      // remains its ProxyAdmin owner). Intent unknown - kept visible on purpose.
-      "description": "Unverified upgradeable proxy deployed at the Arbitrum One TreasuryTimelock's address on Ethereum by an unknown EOA on 2026-08-05. The same EOA owns its ProxyAdmin. Its purpose is unknown."
+    "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999": {
+      // ParentToChildRewardRouter.destination is an L2 treasury address. Keep
+      // the value recorded, but do not follow it as an Ethereum relative.
+      "ignoreRelatives": ["destination"]
     },
     "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840": {
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions."
