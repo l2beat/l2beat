@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Optional periphery router that can swap input tokens via whitelisted DEX routers and forward the proceeds into the DLN contracts in a single transaction. It does not custody funds across transactions and is not part of the DLN critical path.",
+  "fields": {
+    "swapVariableFeeBps": {
+      "description": "Service fee in basis points charged by the router on same-chain swaps (in addition to deBridge protocol fees)."
+    },
+    "feeTreasury": {
+      "description": "Address receiving the router's service fees."
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the whitelist of swap routers and forwarding targets this contract may call with arbitrary calldata (and grant infinite token approvals to), set the service fee and fee treasury, and sweep any funds held by the router."
+        }
+      ]
+    }
+  }
+}

@@ -1,3 +1,505 @@
+Generated with discovered.json: 0x7afcf14042868e28950376055745c27d87c409a4
+
+# Diff at Fri, 14 Aug 2026 11:20:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3df3e1e3d350c8e7f96d14fe99deec9c2fcf3771 block: 1753092647
+- current timestamp: 1786706330
+
+## Description
+
+Full rediscovery of deBridge on Ethereum for the interop research: extended the discovery from the DeBridgeGate messaging/token bridge to the complete deployed stack including DLN (DlnSource/DlnDestination), the external call contracts (ExternalCallAdapter, unverified ExternalCallExecutor), the periphery DeBridgeRouter, and the new intent-manager stack (DeBridgeIntentManager, DeBridgeAllowanceHolder, IntentManagerValidator). Added debridge/* templates with descriptions and dynamic permissions (validator set, admin roles, fee collector, governance cancel role, allowance holder spender role). Notable: the intent-manager stack is administered and upgradeable by a single EOA (0x844e5b...) via unverified ProxyAdmins, unlike the multisig-governed core.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x391276932b5105C2DB8eE928dfd8872564d6d246) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","description":"withdraw accumulated DLN protocol fees (not user principal) to itself.","role":".feeCollectorAC"}
+    }
+```
+
+```diff
+    contract Admin Multisig (eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.9:
++        {"permission":"interact","from":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","description":"set the trusted DlnSource address (message receiver) for each supported chain, replace the external call adapter that custodies funds of orders with attached calldata, unpause the contract, and grant/revoke all roles.","role":".defaultAdminAC"}
+      receivedPermissions.10:
++        {"permission":"interact","from":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","description":"set the trusted DlnDestination address for each supported chain (a malicious address there can drain all escrowed order funds via forged unlock messages), change DLN fees without upper bound, unpause the contract, and grant/revoke all roles.","role":".defaultAdminAC"}
+    }
+```
+
+```diff
+    contract DlnDestination (eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f) [debridge/DlnDestination] {
+    +++ description: Destination side of the deBridge Liquidity Network (DLN) intent protocol: takers fulfill orders here permissionlessly by paying the 'take' amount, which is forwarded to the order recipient in the same transaction (this contract holds no user funds). The taker then sends an unlock message back to the source chain's DlnSource through the deBridge messaging protocol to claim the escrowed maker funds.
+      sourceHashes.1:
+-        "0x5ed9ca82d8103a5414cd152cef8ee9140f15a2e0e8dc0a36b7074ccb95098566"
++        "0x925d0cfe1e1388a72765060d6905fa5bfd29e5a50bf4dcd11c2747a9d3097825"
+      values.$implementation:
+-        "eth:0x33B72F60F2CEB7BDb64873Ac10015a35bed81717"
++        "eth:0xE540eb6BfEE129d28d47E26Ad33a138d66FD78f5"
+      values.$pastUpgrades.4:
++        ["2026-02-13T12:08:35.000Z","0xf187915dcb7b435138135f96d4a9bf6f606255d5247b00f0282afd2516bc02d2",["eth:0xE540eb6BfEE129d28d47E26Ad33a138d66FD78f5"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.chainEngines:
+-        [0,0,0,0,0]
+      values.dlnSourceAddresses:
+-        ["0x","0x","0x","0x","0x"]
++++ description: Maximum number of orders that can be unlocked in a single batch message to an EVM source chain.
+      values.maxOrderCountPerBatchEvmUnlock:
+-        10
++        50
+      values.version:
+-        "1.3.0"
++        "1.7.0"
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]},"GOVERNANCE_DELEGATED_ORDER_CANCEL_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x0746e7e4d15F30885616B4ac3D274393354E80c0"]}}
+      values.defaultAdminAC:
++        ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
++++ description: The admin-configured DlnSource address per source chain ID, used as the receiver of outbound unlock/cancel messages.
+      values.dlnSourceAddressesMap:
++        {"10":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","56":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","137":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","250":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","4663":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","8453":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","42161":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","43114":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","59144":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","7565164":"0x0d0720fe448de59d8811e24d6df917dc8d0d98b392ddf4dd2b622a747a60fded","100000001":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000002":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000003":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000004":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000005":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000006":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000008":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000009":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000010":"eth:0xA13771CAbd2e44dcA8DeA846cc954D1FbAc0623b","100000012":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000013":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000014":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000015":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000017":"eth:0xA13771CAbd2e44dcA8DeA846cc954D1FbAc0623b","100000019":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000020":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000021":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000022":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000023":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000024":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000025":"eth:0xA13771CAbd2e44dcA8DeA846cc954D1FbAc0623b","100000026":"eth:0xE6f924E3C42350684aF70F798c3cA2533A4c5Bd0","100000027":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000028":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000029":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000030":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","100000031":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66"}
+      values.govCancelAC:
++        ["eth:0x0746e7e4d15F30885616B4ac3D274393354E80c0"]
+      values.GOVERNANCE_DELEGATED_ORDER_CANCEL_ROLE:
++        "0x01bd451848033b83db2d5c21b44e19dc2cf0e3067ae17fafefe1ac665572eeb3"
+      values.subscriptionId:
++        0
+      errors:
+-        {"chainEngines":"Processing error occurred.","dlnSourceAddresses":"Processing error occurred."}
+      implementationNames.eth:0x33B72F60F2CEB7BDb64873Ac10015a35bed81717:
+-        "DlnDestination"
+      implementationNames.eth:0xE540eb6BfEE129d28d47E26Ad33a138d66FD78f5:
++        "DlnDestination"
+      template:
++        "debridge/DlnDestination"
+      description:
++        "Destination side of the deBridge Liquidity Network (DLN) intent protocol: takers fulfill orders here permissionlessly by paying the 'take' amount, which is forwarded to the order recipient in the same transaction (this contract holds no user funds). The taker then sends an unlock message back to the source chain's DlnSource through the deBridge messaging protocol to claim the escrowed maker funds."
+      fieldMeta:
++        {"dlnSourceAddressesMap":{"description":"The admin-configured DlnSource address per source chain ID, used as the receiver of outbound unlock/cancel messages."},"externalCallAdapter":{"description":"Admin-settable contract that receives the taker's funds of orders carrying attached calldata before executing it (a malicious adapter could steal the funds of every such order)."},"maxOrderCountPerBatchEvmUnlock":{"description":"Maximum number of orders that can be unlocked in a single batch message to an EVM source chain."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract DlnSource (eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66) [debridge/DlnSource] {
+    +++ description: Source-side escrow of the deBridge Liquidity Network (DLN) intent protocol: users lock the 'give' funds of a cross-chain order directly in this contract. Funds are released to the taker (claimUnlock) or refunded to the maker (claimCancel) only on a message from the DlnDestination configured for the order's destination chain, authenticated via the CallProxy of the deBridge messaging protocol (i.e. ultimately by deBridge validator signatures).
+      sourceHashes.1:
+-        "0x9523aef2a126e91098e5c19a00872b86dc7fee8ba257f2015672763d85b2b683"
++        "0x1ee6b36758f7c1cb71e4ed6d4e731d42a09413cdfeaf71a16c0554633c6047c9"
+      values.$implementation:
+-        "eth:0xbF20cB9614a0059bBe4b599d1D04358aFe31eDfb"
++        "eth:0x322B481088143d9Ff74e4169Fb7f12F7808690DF"
+      values.$pastUpgrades.3:
++        ["2025-09-15T11:47:11.000Z","0xf1d50e3b14cf974394d925c71087896c185c14c9e79506744a9fd57d5f2aa738",["eth:0xe13a85137f8752AbE4c5A614Dc3BaF396b00308D"]]
+      values.$pastUpgrades.4:
++        ["2025-12-08T14:40:11.000Z","0x25b20353a5814918c4c569e1f9e8fede74138c9b7ab2043428a60f1c632d0ce6",["eth:0x322B481088143d9Ff74e4169Fb7f12F7808690DF"]]
+      values.$upgradeCount:
+-        3
++        5
+      values.chainEngines:
+-        [0,0,0,0,0]
+      values.dlnDestinationAddresses:
+-        ["0x","0x","0x","0x","0x"]
+      values.version:
+-        "1.5.0"
++        "1.7.1"
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]},"FEE_COLLECTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x391276932b5105C2DB8eE928dfd8872564d6d246"]}}
+      values.defaultAdminAC:
++        ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
++++ description: The admin-configured DlnDestination address per destination chain ID. Messages authenticated as coming from these addresses can unlock or refund all escrowed order funds.
+      values.dlnDestinationAddressesMap:
++        {"10":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","56":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","137":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","250":"0x","4663":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","8453":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","42161":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","43114":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","59144":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","7565164":"0xa192b7f8b3eddc1e930a8e141564bb0ddc9d23f607cf13fd3a9fc15a638ed033","100000001":"0x","100000002":"0x","100000003":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","100000004":"0x","100000005":"0x","100000006":"0x","100000008":"0x","100000009":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","100000010":"0x","100000012":"0x","100000013":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","100000014":"0x","100000015":"0x","100000017":"0x","100000019":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","100000020":"0x","100000021":"0x","100000022":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","100000023":"0x","100000024":"0x","100000025":"0x","100000026":"eth:0xe8E2948B1E24E05C017aca0dCe44630595c464eb","100000027":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","100000028":"0x","100000029":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","100000030":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","100000031":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f"}
+      values.feeCollectorAC:
++        ["eth:0x391276932b5105C2DB8eE928dfd8872564d6d246"]
+      values.intentManager:
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Immutable allowlist contract: addresses it validates can create orders with custom or zero protocol fees (createSaltedOrderForIntent).
+      values.intentManagerRights:
++        "eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b"
+      errors:
+-        {"chainEngines":"Processing error occurred.","dlnDestinationAddresses":"Processing error occurred."}
+      implementationNames.eth:0xbF20cB9614a0059bBe4b599d1D04358aFe31eDfb:
+-        "DlnSource"
+      implementationNames.eth:0x322B481088143d9Ff74e4169Fb7f12F7808690DF:
++        "DlnSource"
+      template:
++        "debridge/DlnSource"
+      description:
++        "Source-side escrow of the deBridge Liquidity Network (DLN) intent protocol: users lock the 'give' funds of a cross-chain order directly in this contract. Funds are released to the taker (claimUnlock) or refunded to the maker (claimCancel) only on a message from the DlnDestination configured for the order's destination chain, authenticated via the CallProxy of the deBridge messaging protocol (i.e. ultimately by deBridge validator signatures)."
+      fieldMeta:
++        {"dlnDestinationAddressesMap":{"description":"The admin-configured DlnDestination address per destination chain ID. Messages authenticated as coming from these addresses can unlock or refund all escrowed order funds."},"globalFixedNativeFee":{"description":"Flat protocol fee in native tokens charged per order (refunded if the order is cancelled)."},"globalTransferFeeBps":{"description":"Variable protocol fee in basis points deducted from the order's give amount (no upper bound check; admin changes apply to new orders immediately)."},"intentManagerRights":{"description":"Immutable allowlist contract: addresses it validates can create orders with custom or zero protocol fees (createSaltedOrderForIntent)."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
++   Status: CREATED
+    EOA  (eth:0x0746e7e4d15F30885616B4ac3D274393354E80c0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract IntentManagerValidator (eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b) [debridge/IntentManagerValidator]
+    +++ description: Immutable allowlist contract referenced by DlnSource: addresses holding the INTENT_MANAGER_ROLE can create DLN orders with custom or zero protocol fees. It grants no access to existing funds.
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc) [N/A]
+    +++ description: Unverified proxy referenced as the feeTreasury of the DeBridgeIntentManager.
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xb54CD1e74f232C6de444464C81f81D13E6978816) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07) [N/A]
+    +++ description: Unverified proxy holding the INTENT_MANAGER_ROLE on the IntentManagerValidator, allowing it to create DLN orders with custom or zero protocol fees.
+```
+
+```diff
++   Status: CREATED
+    contract DeBridgeAllowanceHolder (eth:0xddddddddd4B6472c5002F95610b194D1161223d0) [debridge/DeBridgeAllowanceHolder]
+    +++ description: Immutable allowance sink of the deBridge intent system: users approve this contract (directly or as Permit2 spender) so that the upgradeable executor contracts never hold approvals themselves. Its transfer functions carry no intent-level checks: any ALLOWED_SPENDER_ROLE holder can move any approved token from any approver to any recipient.
+```
+
+```diff
++   Status: CREATED
+    contract DeBridgeIntentManager (eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708) [debridge/DeBridgeIntentManager]
+    +++ description: Fills user-signed intents by creating DLN orders on their behalf: it pulls input tokens from users through the DeBridgeAllowanceHolder (Permit2 or direct approvals) and forwards them into DlnSource in the same transaction, charging a variable fee that is NOT part of the user-signed intent. It is non-custodial in steady state. Note that the EIP-712 signature users sign covers only an opaque intent hash, and fills are permissionless unless the intent restricts senders.
+```
+
+## Source code changes
+
+```diff
+.../TransparentUpgradeableProxy.p.sol              |  876 ++
+ .../TransparentUpgradeableProxy.p.sol              |  876 ++
+ .../debridge/.flat/DeBridgeAllowanceHolder.sol     | 1122 +++
+ .../DeBridgeIntentManager.sol                      | 8556 ++++++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  876 ++
+ .../DlnDestination/DlnDestination.sol              | 3243 ++++----
+ .../DlnSource/DlnSource.sol                        |  909 ++-
+ .../debridge/.flat/IntentManagerValidator.sol      |  502 ++
+ 8 files changed, 15044 insertions(+), 1916 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753092647 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x1c0720B124e7251e881a0fbCfe259d085C59f205) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","description":"sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.","role":".oracleAddresses"}]
+    }
+```
+
+```diff
+    contract DeBridgeGate (eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA) [debridge/DeBridgeGate] {
+    +++ description: Central hub of the deBridge messaging protocol on this chain: it emits cross-chain submissions (asset transfers and/or arbitrary messages), locks and releases native assets, mints and burns deBridge-wrapped assets (deTokens), and executes claimed submissions after their validator signatures are checked by the SignatureVerifier. Claiming is permissionless: anyone can execute a submission that carries enough validator signatures.
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]},"GOVMONITORING_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]}}
+      values.defaultAdminAC:
++        ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
+      values.govMonitoringAC:
++        ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
+      template:
++        "debridge/DeBridgeGate"
+      description:
++        "Central hub of the deBridge messaging protocol on this chain: it emits cross-chain submissions (asset transfers and/or arbitrary messages), locks and releases native assets, mints and burns deBridge-wrapped assets (deTokens), and executes claimed submissions after their validator signatures are checked by the SignatureVerifier. Claiming is permissionless: anyone can execute a submission that carries enough validator signatures."
+      fieldMeta:
++        {"signatureVerifier":{"description":"Contract that verifies deBridge validator signatures for all submissions claimed on this chain."},"callProxy":{"description":"Contract that executes arbitrary calldata attached to claimed submissions."},"feeProxy":{"description":"The only address allowed to withdraw protocol fees accrued in the gate."},"deBridgeTokenDeployer":{"description":"Factory (and beacon) for deBridge-wrapped tokens (deTokens) on this chain."},"globalFixedNativeFee":{"description":"Default flat protocol fee in native tokens charged per submission."},"globalTransferFeeBps":{"description":"Default variable protocol fee in basis points charged on transferred amounts."},"excessConfirmations":{"description":"Elevated number of validator signatures required for claims above the per-asset amount threshold and for new deToken deployments (effective only if higher than the SignatureVerifier's minConfirmations)."},"paused":{"description":"Whether all sends, claims and deToken deployments through the gate are currently paused."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    EOA  (eth:0x4bC16662A2cE381E7bb54Dc577c05619C5E67526) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","description":"sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.","role":".oracleAddresses"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x4CA2191cDE585d65EB6AFC09D23D60b8A0AB677D) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","description":"sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.","role":".oracleAddresses"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x573F5E2940789B378BA09cf7d3fD010C422a9ff5) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","description":"sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.","role":".oracleAddresses"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x59CE95b8955F0E7Be128d5Af77161B36f6084214) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","description":"sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.","role":".oracleAddresses"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","description":"sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.","role":".oracleAddresses"}]
+    }
+```
+
+```diff
+    contract Admin Multisig (eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA","description":"pause the DeBridgeGate, stopping all sends, claims and deToken deployments on this chain (only the admin can unpause).","role":".govMonitoringAC"}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA","description":"replace the SignatureVerifier (and with it the entire validation layer of the deBridge messaging protocol), the CallProxy and the deToken deployer, censor individual submissions (blockSubmission), toggle supported chains, set all fees and per-address fee discounts, designate the fee withdrawal contract, unpause the gate, and grant/revoke all roles. Most of these setters emit no events.","role":".defaultAdminAC"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9","description":"replace the executor contract that handles external calldata of DLN orders and pause the adapter.","role":".defaultAdminAC"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251","description":"manage the whitelist of swap routers and forwarding targets this contract may call with arbitrary calldata (and grant infinite token approvals to), set the service fee and fee treasury, and sweep any funds held by the router.","role":".defaultAdminAC"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464","description":"administer all deployed deTokens: pause their transfers and grant/revoke minter rights, including the ability to grant itself the right to mint unbacked deTokens.","role":".deBridgeTokenAdmin"}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464","description":"replace the implementation of all deTokens at once (this contract acts as their beacon), change the admin assigned to newly deployed deTokens, and override deToken names/symbols. None of these setters emit events.","role":".defaultAdminAC"}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824","description":"grant and revoke the DEBRIDGE_GATE_ROLE that authorizes contracts to execute arbitrary external calls through the CallProxy.","role":".defaultAdminAC"}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","description":"add and remove deBridge validators (oracles), change all signature thresholds (quorum must remain a majority of the oracle set), and re-point the gate contract allowed to request verification. Threshold changes emit no events.","role":".defaultAdminAC"}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636","description":"grant/revoke the FEE_COLLECTOR_ROLE that receives all deBridge protocol fees, pause fee withdrawals, and change the referenced gate contract.","role":".defaultAdminAC"}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9","role":"admin","via":[{"address":"eth:0xA7b88A746FA457578D5abd6234471f07D895F46b"}]}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251","role":"admin","via":[{"address":"eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130"}]}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f","role":"admin","via":[{"address":"eth:0xA7b88A746FA457578D5abd6234471f07D895F46b"}]}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66","role":"admin","via":[{"address":"eth:0xA7b88A746FA457578D5abd6234471f07D895F46b"}]}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"eth:0xA7b88A746FA457578D5abd6234471f07D895F46b","role":".owner"}
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130","role":".owner"}
+    }
+```
+
+```diff
+    contract DeBridgeTokenDeployer (eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464) [debridge/DeBridgeTokenDeployer] {
+    +++ description: Deploys deBridge-wrapped token (deToken) contracts when an asset is bridged to this chain for the first time (callable only by the DeBridgeGate). All deTokens are beacon proxies whose beacon is this contract itself, so its tokenImplementation applies to every deToken on this chain at once.
+      values.implementation:
+-        "eth:0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B"
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]}}
+      values.defaultAdminAC:
++        ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
+      template:
++        "debridge/DeBridgeTokenDeployer"
+      description:
++        "Deploys deBridge-wrapped token (deToken) contracts when an asset is bridged to this chain for the first time (callable only by the DeBridgeGate). All deTokens are beacon proxies whose beacon is this contract itself, so its tokenImplementation applies to every deToken on this chain at once."
+      fieldMeta:
++        {"tokenImplementation":{"description":"The shared implementation contract behind all deToken beacon proxies on this chain. Changing it (setTokenImplementation, which emits no event) upgrades all deTokens at once."},"deBridgeTokenAdmin":{"description":"The admin assigned to every deployed deToken (receives DEFAULT_ADMIN_ROLE and PAUSER_ROLE on each deToken)."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    EOA  (eth:0x83f81E7f9E284AAFFEDED797008663595f7342bF) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","description":"sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.","role":".oracleAddresses"}]
+    }
+```
+
+```diff
+    EOA  (eth:0x874f46124C1DAaD4749B94f82eD142754826240E) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","description":"sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.","role":".oracleAddresses"}]
+    }
+```
+
+```diff
+    contract CallProxy (eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824) [debridge/CallProxy] {
+    +++ description: Sandbox that executes arbitrary calldata attached to claimed cross-chain submissions on behalf of the DeBridgeGate. Calls are performed from this contract's address with attacker-choosable target and data, so external contracts must never trust it as a caller; it isolates such calls from the gate's balances.
+      values.submissionChainIdFrom:
+-        0
+      values.submissionNativeSender:
+-        "0x"
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]},"DEBRIDGE_GATE_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA"]}}
+      values.defaultAdminAC:
++        ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
+      template:
++        "debridge/CallProxy"
+      description:
++        "Sandbox that executes arbitrary calldata attached to claimed cross-chain submissions on behalf of the DeBridgeGate. Calls are performed from this contract's address with attacker-choosable target and data, so external contracts must never trust it as a caller; it isolates such calls from the gate's balances."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract SignatureVerifier (eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c) [debridge/SignatureVerifier] {
+    +++ description: Validation layer of the deBridge messaging protocol on this chain: it accepts a cross-chain submission if at least minConfirmations of the registered validators (oracles) have signed its submission ID with a plain ECDSA signature, and every validator flagged as 'required' has signed. There is no other proof system.
+      values.oracles:
+-        ["eth:0x4bC16662A2cE381E7bb54Dc577c05619C5E67526","eth:0x1c0720B124e7251e881a0fbCfe259d085C59f205","eth:0x573F5E2940789B378BA09cf7d3fD010C422a9ff5","eth:0x59CE95b8955F0E7Be128d5Af77161B36f6084214","eth:0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC","eth:0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8","eth:0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426","eth:0x874f46124C1DAaD4749B94f82eD142754826240E","eth:0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0","eth:0x83f81E7f9E284AAFFEDED797008663595f7342bF","eth:0x4CA2191cDE585d65EB6AFC09D23D60b8A0AB677D","eth:0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54"]
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]}}
+      values.defaultAdminAC:
++        ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
++++ description: The registered deBridge validators (oracles) whose signatures authenticate cross-chain submissions.
+      values.oracleAddresses:
++        ["eth:0x4bC16662A2cE381E7bb54Dc577c05619C5E67526","eth:0x1c0720B124e7251e881a0fbCfe259d085C59f205","eth:0x573F5E2940789B378BA09cf7d3fD010C422a9ff5","eth:0x59CE95b8955F0E7Be128d5Af77161B36f6084214","eth:0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC","eth:0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8","eth:0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426","eth:0x874f46124C1DAaD4749B94f82eD142754826240E","eth:0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0","eth:0x83f81E7f9E284AAFFEDED797008663595f7342bF","eth:0x4CA2191cDE585d65EB6AFC09D23D60b8A0AB677D","eth:0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54"]
+      template:
++        "debridge/SignatureVerifier"
+      description:
++        "Validation layer of the deBridge messaging protocol on this chain: it accepts a cross-chain submission if at least minConfirmations of the registered validators (oracles) have signed its submission ID with a plain ECDSA signature, and every validator flagged as 'required' has signed. There is no other proof system."
+      fieldMeta:
++        {"oracleAddresses":{"description":"The registered deBridge validators (oracles) whose signatures authenticate cross-chain submissions."},"minConfirmations":{"description":"Baseline number of validator signatures required to accept a cross-chain submission."},"confirmationThreshold":{"description":"Per-block circuit breaker: once more than this many submissions are approved within a single block, further submissions in that block require excessConfirmations signatures."},"excessConfirmations":{"description":"Elevated number of validator signatures required for submissions beyond the per-block confirmationThreshold."},"requiredOraclesCount":{"description":"Number of validators flagged as 'required': each of them must sign every submission in addition to the normal quorum (each is individually a liveness single point of failure and, collectively, a veto)."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    EOA  (eth:0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","description":"sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.","role":".oracleAddresses"}]
+    }
+```
+
+```diff
+    contract SimpleFeeProxy (eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636) [debridge/SimpleFeeProxy] {
+    +++ description: The only contract allowed to withdraw protocol fees accrued in the DeBridgeGate. Fees are paid out directly to the caller of withdrawFees(), so the effective fee destination is whoever holds the FEE_COLLECTOR_ROLE.
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]},"FEE_COLLECTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x391276932b5105C2DB8eE928dfd8872564d6d246"]}}
+      values.defaultAdminAC:
++        ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
+      values.feeCollectorAC:
++        ["eth:0x391276932b5105C2DB8eE928dfd8872564d6d246"]
+      template:
++        "debridge/SimpleFeeProxy"
+      description:
++        "The only contract allowed to withdraw protocol fees accrued in the DeBridgeGate. Fees are paid out directly to the caller of withdrawFees(), so the effective fee destination is whoever holds the FEE_COLLECTOR_ROLE."
+    }
+```
+
+```diff
+    contract DeBridgeToken (eth:0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B) [debridge/DeBridgeToken] {
+    +++ description: Implementation contract for deBridge-wrapped tokens (deTokens). Minting and burning of deTokens is restricted to the MINTER_ROLE, which is held by the DeBridgeGate.
+      values.DOMAIN_SEPARATOR:
+-        "0x71bd255e7e19bf7288abced32839ac7a63f38747292d2e97b6813c403f8024fc"
+      values.totalSupply:
+-        0
+      template:
++        "debridge/DeBridgeToken"
+      description:
++        "Implementation contract for deBridge-wrapped tokens (deTokens). Minting and burning of deTokens is restricted to the MINTER_ROLE, which is held by the DeBridgeGate."
+    }
+```
+
+```diff
+    EOA  (eth:0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","description":"sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.","role":".oracleAddresses"}]
+    }
+```
+
+```diff
+    EOA  (eth:0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","description":"sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.","role":".oracleAddresses"}]
+    }
+```
+
+```diff
+    EOA  (eth:0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c","description":"sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.","role":".oracleAddresses"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ExternalCallAdapter (eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9) [debridge/ExternalCallAdapter]
+    +++ description: Escrow and dispatcher for external calls attached to DLN orders: it receives the taker's funds of orders that carry calldata and releases them when the calldata is executed by the registered executor, or refunds the order authority on cancellation.
+```
+
+```diff
++   Status: CREATED
+    contract DeBridgeRouter (eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251) [debridge/DeBridgeRouter]
+    +++ description: Optional periphery router that can swap input tokens via whitelisted DEX routers and forward the proceeds into the DLN contracts in a single transaction. It does not custody funds across transactions and is not part of the DLN critical path.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xA7b88A746FA457578D5abd6234471f07D895F46b) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExternalCallExecutor (eth:0xAE0361b1C3454b297129e01046057F1D294c7974) [N/A]
+    +++ description: Unverified contract registered as the default executor in the ExternalCallAdapter: it executes external calldata attached to DLN orders.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DlnDestination (eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DlnSource (eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66) [N/A]
+    +++ description: None
+```
+
 Generated with discovered.json: 0xa9bef6b2520c2a2f5589eb2badd18eece47b299c
 
 # Diff at Fri, 08 May 2026 07:51:14 GMT:
