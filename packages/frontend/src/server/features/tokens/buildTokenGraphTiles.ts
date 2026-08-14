@@ -18,6 +18,8 @@ import { createMintingBridgeResolver } from '../scaling/interop/utils/createMint
  */
 export interface TokenGraphTileNode {
   id: string
+  /** Past 24h crosschain volume summed over this node's deployments. */
+  volume: number | null
   /** Chain ids of the node's deployments; more than one is a burn-mint group. */
   chains: string[]
   /** Same order as `chains`; omitted when presentation data was not requested. */
@@ -65,7 +67,11 @@ export interface BuildTokenGraphTilesInput {
   >[]
   routes: TokenRelationsRoute[]
   /** Summed past 24h crosschain volume per abstract token id. */
-  volumeByTokenId: Map<string, number>
+  volumeByTokenId: ReadonlyMap<string, number>
+  /** Past 24h crosschain volume per deployment; null means not measured. */
+  volumeByDeployment: ReadonlyMap<string, number | null>
+  /** Public display names used by the modal's ordering tie-breaker. */
+  chainNameById: ReadonlyMap<string, string>
   /** Optional because the pure builder's tests do not need presentation data. */
   chainIconUrlById?: ReadonlyMap<string, string>
   /** Resolves raw plugin observations to the public minter projects. */
@@ -77,6 +83,8 @@ export function buildTokenGraphTiles({
   deployedTokens,
   routes,
   volumeByTokenId,
+  volumeByDeployment,
+  chainNameById,
   chainIconUrlById,
   interopProjects,
 }: BuildTokenGraphTilesInput): TokenGraphTile[] {
@@ -159,15 +167,40 @@ export function buildTokenGraphTiles({
         model.edges.length > 0 ||
         model.nodes.some((node) => node.members.length > 1),
       graph: {
-        nodes: model.nodes.map((node) => ({
-          id: node.id,
-          chains: node.members.map((member) => member.chain),
-          ...(chainIconUrlById && {
-            chainIconUrls: node.members.map(
-              (member) => chainIconUrlById.get(member.chain) ?? null,
-            ),
-          }),
-        })),
+        nodes: model.nodes.map((node) => {
+          const orderedMembers = node.members.toSorted(
+            (a, b) =>
+              (volumeByDeployment.get(endpointKey(b.chain, b.address)) ?? -1) -
+                (volumeByDeployment.get(endpointKey(a.chain, a.address)) ??
+                  -1) ||
+              (chainNameById.get(a.chain) ?? a.chain).localeCompare(
+                chainNameById.get(b.chain) ?? b.chain,
+              ) ||
+              a.address.localeCompare(b.address),
+          )
+          const measuredVolumes = orderedMembers
+            .map((member) =>
+              volumeByDeployment.get(endpointKey(member.chain, member.address)),
+            )
+            .filter(
+              (volume): volume is number =>
+                volume !== null && volume !== undefined,
+            )
+
+          return {
+            id: node.id,
+            volume:
+              measuredVolumes.length > 0
+                ? measuredVolumes.reduce((sum, volume) => sum + volume, 0)
+                : null,
+            chains: orderedMembers.map((member) => member.chain),
+            ...(chainIconUrlById && {
+              chainIconUrls: orderedMembers.map(
+                (member) => chainIconUrlById.get(member.chain) ?? null,
+              ),
+            }),
+          }
+        }),
         edges: model.edges.map((edge) => ({
           from: edge.from,
           to: edge.to,

@@ -239,7 +239,7 @@ function buildPreviewTopology(graph: TokenGraphTileGraph): PreviewTopology {
   const layoutNodes = nodes.map((node) => ({
     id: node.id,
     bridges: [],
-    volume: null,
+    volume: node.volume,
     deployments: node.chains.map((chain, index) => ({
       chain,
       chainName: chain,

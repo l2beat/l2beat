@@ -93,6 +93,8 @@ export const pageLoaders = {
   PrivacyProjectPage: async () =>
     (await import('./privacy/project/PrivacyProjectPage')).PrivacyProjectPage,
   TokensPage: async () => (await import('./tokens/TokensPage')).TokensPage,
+  TokenLayoutLabPage: async () =>
+    (await import('./tokens/lab/TokenLayoutLabPage')).TokenLayoutLabPage,
   ZkCatalogPage: async () =>
     (await import('./zk-catalog/v2/ZkCatalogPage')).ZkCatalogPage,
   ZkCatalogProjectPage: async () =>

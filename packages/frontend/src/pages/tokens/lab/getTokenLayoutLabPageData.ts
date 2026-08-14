@@ -1,0 +1,78 @@
+import type { InMemoryCache } from '@l2beat/shared-pure'
+import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import type { InteropTokenRelationsGraph } from '~/server/features/scaling/interop/token/getInteropTokenRelationsGraph'
+import { getTokenRelationsGraphById } from '~/server/features/tokens/getTokenRelationsGraphById'
+import { getTokenDb } from '~/server/tokenDb'
+import { getMetadata } from '~/ssr/head/getMetadata'
+import type { RenderData } from '~/ssr/types'
+import type { Manifest } from '~/utils/Manifest'
+
+const TOKENS = [
+  { id: '9HN5PN', symbol: 'USDC' },
+  { id: 'xxeNQv', symbol: 'USDT' },
+  { id: 'C0Hmkq', symbol: 'ETH' },
+] as const
+
+export interface TokenLayoutLabToken {
+  id: string
+  symbol: string
+  issuer: string | null
+  iconUrl: string | null
+  graph: InteropTokenRelationsGraph
+}
+
+export async function getTokenLayoutLabPageData(
+  manifest: Manifest,
+  url: string,
+  cache: InMemoryCache,
+): Promise<RenderData> {
+  const [appLayoutProps, tokens] = await Promise.all([
+    getAppLayoutProps(),
+    cache.get(
+      {
+        key: ['token-layout-lab'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      getLabTokens,
+    ),
+  ])
+
+  return {
+    head: {
+      manifest,
+      metadata: getMetadata(manifest, {
+        title: 'Token card preview lab - L2BEAT',
+        description:
+          'Side-by-side card previews for complex token relationships.',
+        url,
+        openGraph: { image: '/meta-images/tokens/opengraph-image.png' },
+        excludeFromSearchEngines: true,
+      }),
+    },
+    ssr: {
+      page: 'TokenLayoutLabPage',
+      props: { ...appLayoutProps, tokens },
+    },
+  }
+}
+
+async function getLabTokens(): Promise<TokenLayoutLabToken[]> {
+  const ids = TOKENS.map((token) => token.id)
+  const [summaries, ...graphs] = await Promise.all([
+    getTokenDb().abstractToken.getByIds(ids),
+    ...ids.map(getTokenRelationsGraphById),
+  ])
+  const summariesById = new Map(summaries.map((token) => [token.id, token]))
+
+  return TOKENS.map((token, index) => {
+    const summary = summariesById.get(token.id)
+    return {
+      id: token.id,
+      symbol: summary?.symbol ?? token.symbol,
+      issuer: summary?.issuer ?? null,
+      iconUrl: summary?.iconUrl ?? null,
+      graph: graphs[index] as InteropTokenRelationsGraph,
+    }
+  })
+}

@@ -22,6 +22,8 @@ interface Props extends AppLayoutProps {
 }
 
 const TOKEN_DIALOG_INSET = 24
+const TOKEN_DIALOG_MAX_WIDTH = 1600
+const TOKEN_DIALOG_MAX_HEIGHT = 960
 // Dialog padding, gaps, title, and footer link outside the graph.
 const TOKEN_DIALOG_CHROME_HEIGHT = 120
 
@@ -68,11 +70,14 @@ function TokenDialog({
   const graphHeight =
     typeof window === 'undefined'
       ? 640
-      : Math.max(
-          320,
-          window.innerHeight -
-            TOKEN_DIALOG_INSET * 2 -
-            TOKEN_DIALOG_CHROME_HEIGHT,
+      : Math.min(
+          TOKEN_DIALOG_MAX_HEIGHT - TOKEN_DIALOG_CHROME_HEIGHT,
+          Math.max(
+            320,
+            window.innerHeight -
+              TOKEN_DIALOG_INSET * 2 -
+              TOKEN_DIALOG_CHROME_HEIGHT,
+          ),
         )
 
   return (
@@ -88,7 +93,7 @@ function TokenDialog({
       <DialogContent
         className="max-w-none bg-surface-primary"
         style={{
-          maxWidth: `calc(100vw - ${TOKEN_DIALOG_INSET * 2}px)`,
+          maxWidth: `min(${TOKEN_DIALOG_MAX_WIDTH}px, calc(100vw - ${TOKEN_DIALOG_INSET * 2}px))`,
         }}
       >
         <DialogClose />

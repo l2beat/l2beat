@@ -185,6 +185,37 @@ describe(buildTokenGraphTiles.name, () => {
     expect(tiles[1]?.volume).toEqual(null)
   })
 
+  it('orders chains inside burn-mint clusters like the modal', () => {
+    const tiles = buildTokenGraphTiles(
+      input({
+        abstractTokens: [token('aaa', 'USDC')],
+        deployedTokens: [
+          deployment('ethereum', '0x1', 'aaa'),
+          deployment('arbitrum', '0x2', 'aaa'),
+          deployment('base', '0x3', 'aaa'),
+        ],
+        routes: [
+          route('ethereum', '0x1', 'arbitrum', '0x2'),
+          route('arbitrum', '0x2', 'base', '0x3'),
+        ],
+        volumeByDeployment: new Map([
+          ['ethereum|0x1', 10],
+          ['arbitrum|0x2', 10],
+          ['base|0x3', 100],
+        ]),
+        chainNameById: new Map([
+          ['ethereum', 'Ethereum'],
+          ['arbitrum', 'Arbitrum One'],
+          ['base', 'Base Chain'],
+        ]),
+      }),
+    )
+
+    const cluster = tiles[0]?.graph.nodes[0]
+    expect(cluster?.chains).toEqual(['base', 'arbitrum', 'ethereum'])
+    expect(cluster?.volume).toEqual(120)
+  })
+
   it('builds the token page slug from issuer and symbol', () => {
     const tiles = buildTokenGraphTiles(
       input({
@@ -207,6 +238,8 @@ function input(
     deployedTokens: [],
     routes: [],
     volumeByTokenId: new Map(),
+    volumeByDeployment: new Map(),
+    chainNameById: new Map(),
     ...overrides,
   }
 }

@@ -1,3 +1,4 @@
+import { Address32 } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { mapInteropChainsToWithIcons } from '~/pages/interop/utils/mapInteropChainsToWithIcons'
 import { getDb } from '~/server/database'
@@ -48,14 +49,14 @@ async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
     abstractTokens,
     deployedTokens,
     routes,
-    volumeByTokenId,
+    volumeMaps,
     projectsWithChains,
     interopProjects,
   ] = await Promise.all([
     tokenDb.abstractToken.getAllSummaries(),
     tokenDb.deployedToken.getAllAssignments(),
     tokenDb.tokenRelation.getAllRoutes(),
-    getVolumeByTokenId(),
+    getVolumeMaps(),
     ps.getProjects({ select: ['chainConfig'] }),
     ps.getProjects({ select: ['interopConfig'] }),
   ])
@@ -73,36 +74,82 @@ async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
       info.iconUrl ? [[chain, info.iconUrl] as const] : [],
     ),
   )
+  const chainNameById = new Map(
+    [...chainInfo].map(([chain, info]) => [chain, info.name]),
+  )
+  const supportedChainIds = new Set(
+    activeInteropChains.map((chain) => chain.id),
+  )
+  const volumeByDeployment = new Map(
+    deployedTokens.map((deployment) => [
+      endpointKey(deployment.chain, deployment.address),
+      volumeMaps.volumeByAggregatedDeployment.get(
+        aggregatedDeploymentKey(deployment.chain, deployment.address),
+      ) ?? (supportedChainIds.has(deployment.chain) ? 0 : null),
+    ]),
+  )
 
   return buildTokenGraphTiles({
     abstractTokens,
     deployedTokens,
     routes,
-    volumeByTokenId,
+    volumeByTokenId: volumeMaps.volumeByTokenId,
+    volumeByDeployment,
+    chainNameById,
     chainIconUrlById,
     interopProjects,
   })
 }
 
 /**
- * One read of the promoted snapshot, summed per token. Deliberately not
+ * Two reads of the promoted snapshot, summed per token and deployment.
+ * Deliberately not
  * `getSummedStatsByTimestampAndTokens`, which builds a single unbatched OR of
  * tuple equalities — fine for one token's deployments, not for the catalogue.
  */
-async function getVolumeByTokenId(): Promise<Map<string, number>> {
+async function getVolumeMaps(): Promise<{
+  volumeByTokenId: Map<string, number>
+  volumeByAggregatedDeployment: Map<string, number>
+}> {
   const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
-  if (!snapshotTimestamp) return new Map()
+  if (!snapshotTimestamp) {
+    return {
+      volumeByTokenId: new Map(),
+      volumeByAggregatedDeployment: new Map(),
+    }
+  }
 
-  const records =
-    await getDb().aggregatedInteropToken.getByTimestamp(snapshotTimestamp)
+  const db = getDb()
+  const [tokenRecords, deploymentRecords] = await Promise.all([
+    db.aggregatedInteropToken.getByTimestamp(snapshotTimestamp),
+    db.aggregatedInteropDeployedToken.getByTimestamp(snapshotTimestamp),
+  ])
   const volumeByTokenId = new Map<string, number>()
-  for (const record of records) {
+  for (const record of tokenRecords) {
     volumeByTokenId.set(
       record.abstractTokenId,
       (volumeByTokenId.get(record.abstractTokenId) ?? 0) + record.volume,
     )
   }
-  return volumeByTokenId
+
+  const volumeByAggregatedDeployment = new Map<string, number>()
+  for (const record of deploymentRecords) {
+    const key = aggregatedDeploymentKey(record.tokenChain, record.tokenAddress)
+    volumeByAggregatedDeployment.set(
+      key,
+      (volumeByAggregatedDeployment.get(key) ?? 0) + record.volume,
+    )
+  }
+
+  return { volumeByTokenId, volumeByAggregatedDeployment }
+}
+
+function endpointKey(chain: string, address: string): string {
+  return `${chain}|${address.toLowerCase()}`
+}
+
+function aggregatedDeploymentKey(chain: string, address: string): string {
+  return `${chain}|${Address32.fromOrUndefined(address) ?? address.toLowerCase()}`
 }
 
 const MOCK_TOKEN_GRAPH_TILES: TokenGraphTile[] = [
@@ -118,9 +165,17 @@ const MOCK_TOKEN_GRAPH_TILES: TokenGraphTile[] = [
     hasRelations: true,
     graph: {
       nodes: [
-        { id: 'arbitrum|0xaf88', chains: ['arbitrum', 'ethereum'] },
-        { id: 'base|0x8335', chains: ['base'] },
-        { id: 'polygonpos|0x2791', chains: ['polygonpos'] },
+        {
+          id: 'arbitrum|0xaf88',
+          volume: 1_650_000,
+          chains: ['arbitrum', 'ethereum'],
+        },
+        { id: 'base|0x8335', volume: 340_000, chains: ['base'] },
+        {
+          id: 'polygonpos|0x2791',
+          volume: 180_000,
+          chains: ['polygonpos'],
+        },
       ],
       edges: [
         { from: 'arbitrum|0xaf88', to: 'base|0x8335', kind: 'backs' },
@@ -141,8 +196,8 @@ const MOCK_TOKEN_GRAPH_TILES: TokenGraphTile[] = [
     hasRelations: true,
     graph: {
       nodes: [
-        { id: 'ethereum|0xdac1', chains: ['ethereum'] },
-        { id: 'optimism|0x94b0', chains: ['optimism'] },
+        { id: 'ethereum|0xdac1', volume: 700_000, chains: ['ethereum'] },
+        { id: 'optimism|0x94b0', volume: 190_000, chains: ['optimism'] },
       ],
       edges: [
         { from: 'ethereum|0xdac1', to: 'optimism|0x94b0', kind: 'backs' },
