@@ -49,6 +49,16 @@ export const stargate: BaseProject = {
       },
     ],
     durationSplit: {
+      burnAndMint: [
+        {
+          label: 'Bus',
+          transferTypes: ['stargate-v2-bus.Transfer'],
+        },
+        {
+          label: 'Taxi',
+          transferTypes: ['stargate-v2-taxi.Transfer'],
+        },
+      ],
       lockAndMint: [
         {
           label: 'Bus',
