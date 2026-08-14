@@ -14,6 +14,8 @@ const GROUP_LEDGER_START_Y = 54
 const GROUP_LEDGER_ROW_HEIGHT = 27
 const GROUP_LEDGER_SINGLE_COLUMN_WIDTH = 280
 const GROUP_LEDGER_DOUBLE_COLUMN_WIDTH = 400
+const SINGLE_NODE_CHAIN_ICON_X = 34
+const SINGLE_NODE_CHAIN_NAME_X = SINGLE_NODE_CHAIN_ICON_X + CHAIN_ICON + 5
 
 interface Props {
   node: InteropTokenRelationsNode
@@ -177,12 +179,16 @@ export function RelationsNode({
           </text>
           <image
             href={first.iconUrl}
-            x={30}
+            x={SINGLE_NODE_CHAIN_ICON_X}
             y={29}
             width={CHAIN_ICON}
             height={CHAIN_ICON}
           />
-          <text x={48} y={39} className="fill-secondary text-label-value-12">
+          <text
+            x={SINGLE_NODE_CHAIN_NAME_X}
+            y={39}
+            className="fill-secondary text-label-value-12"
+          >
             {first.chainName}
           </text>
           <text x={12} y={54} className="fill-secondary text-label-value-12">

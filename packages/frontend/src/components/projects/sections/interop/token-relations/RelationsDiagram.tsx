@@ -77,9 +77,6 @@ export function RelationsDiagram({
   }, [fullGraph, hideUnconnected, hasUnconnected, isEverythingUnconnected])
 
   const [hoveredId, setHoveredId] = useState<string | undefined>(undefined)
-  const [dragged, setDragged] = useState<
-    ReadonlyMap<string, { x: number; y: number }>
-  >(() => new Map())
 
   const sizeOverrides = useMemo(() => {
     const heights = new Map<string, number>()
@@ -104,14 +101,7 @@ export function RelationsDiagram({
     [graph, sizeOverrides],
   )
 
-  const boxes = useMemo(() => {
-    const moved = new Map(layout.boxes)
-    for (const [id, position] of dragged) {
-      const box = moved.get(id)
-      if (box) moved.set(id, { ...box, ...position })
-    }
-    return moved
-  }, [layout.boxes, dragged])
+  const boxes = layout.boxes
 
   const content = useMemo(
     () => ({ width: layout.width, height: layout.height }),
@@ -191,7 +181,7 @@ export function RelationsDiagram({
   const gesture = useRef<
     | ({ start: { x: number; y: number }; moved: boolean } & (
         | { type: 'pan' }
-        | { type: 'node'; id: string; offset: { x: number; y: number } }
+        | { type: 'node'; id: string }
       ))
     | undefined
   >(undefined)
@@ -216,21 +206,20 @@ export function RelationsDiagram({
 
   const onNodePointerDown = useCallback(
     (nodeId: string) => (event: React.PointerEvent<SVGGElement>) => {
-      // Claim the gesture so the background handler leaves panning alone.
+      // Keep the node id for click selection, but pan the fixed diagram when
+      // the pointer moves instead of moving an individual node.
       event.stopPropagation()
-      const box = boxes.get(nodeId)
-      if (!box) return
-      const world = camera.toWorld(localPoint(event))
+      const point = localPoint(event)
       gesture.current = {
         type: 'node',
         id: nodeId,
-        offset: { x: world.x - box.x, y: world.y - box.y },
-        start: localPoint(event),
+        start: point,
         moved: false,
       }
       svgRef.current?.setPointerCapture(event.pointerId)
+      camera.startPan(point)
     },
-    [boxes, camera, localPoint],
+    [camera, localPoint],
   )
 
   const onPointerMove = useCallback(
@@ -245,18 +234,7 @@ export function RelationsDiagram({
         active.moved = true
       }
       if (!active.moved) return
-      if (active.type === 'pan') {
-        camera.pan(point)
-        return
-      }
-      if (active.type !== 'node') return
-      const world = camera.toWorld(point)
-      setDragged((previous) =>
-        new Map(previous).set(active.id, {
-          x: world.x - active.offset.x,
-          y: world.y - active.offset.y,
-        }),
-      )
+      camera.pan(point)
     },
     [camera, localPoint],
   )
@@ -474,13 +452,7 @@ export function RelationsDiagram({
         <ZoomButton label="Zoom out" onClick={() => camera.zoomBy(1 / 1.25)}>
           −
         </ZoomButton>
-        <ZoomButton
-          label="Reset view"
-          onClick={() => {
-            camera.reset()
-            setDragged(new Map())
-          }}
-        >
+        <ZoomButton label="Reset view" onClick={camera.reset}>
           ⟲
         </ZoomButton>
         {onExpand && (
