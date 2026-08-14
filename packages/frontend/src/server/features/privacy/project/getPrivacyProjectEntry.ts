@@ -170,6 +170,21 @@ export async function getPrivacyProjectEntry(
     })
   }
 
+  if (details.noteDiscovery) {
+    sections.push({
+      type: 'MarkdownSection',
+      props: {
+        id: 'note-discovery',
+        title: 'Note discovery',
+        content: details.noteDiscovery.description,
+        risks: details.noteDiscovery.risks?.map((text) => ({
+          text,
+          isCritical: false,
+        })),
+      },
+    })
+  }
+
   if (hasTrackedAssets) {
     const chartProject = {
       id: details.id,
