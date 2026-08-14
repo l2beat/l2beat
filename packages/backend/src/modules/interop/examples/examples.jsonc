@@ -6700,8 +6700,9 @@
             "event": { "type": "gnosisbridge.XdaiWithdrawalInitiated" }
           },
           "dst": {
+            "tokenAddress": "0x000000000000000000000000dc035d45d973e3ec169d2276ddab16f1e407384f",
             "tokenAmount": "120000000000000000000",
-            "wasMinted": true,
+            "wasMinted": false,
             "event": { "type": "gnosisbridge.XdaiWithdrawalFinalized" }
           }
         }
