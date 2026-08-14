@@ -6,6 +6,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { formatBasisPoints } from '../../common/formatBasisPoints'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
@@ -101,10 +102,6 @@ const railStaked = Number(
     .replaceAll(',', ''),
 )
 const RAILGUN_SINCE_TIMESTAMP = UnixTime(railgunCore.sinceTimestamp ?? 0)
-
-function formatBasisPoints(value: number): string {
-  return `${Number((value / 100).toFixed(4))}%`
-}
 
 const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((token) => {
   const resolved = getTokenByAddress(token.address)
