@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Escrow entry point of the Relay settlement protocol: user deposits for crosschain intents are parked here, tagged only by an event that attributes them to an order id. The contract keeps no balance accounting and does not verify orders or fills - all accounting happens offchain and on the Hub contract on the Relay Chain. Funds leave the contract exclusively through execute(), which performs arbitrary external calls authorized by a single signature of the current allocator (replay-protected by nonce and expiration).",
+  "fields": {
+    "allocator": {
+      "description": "The address whose signature (ECDSA or ERC-1271) authorizes arbitrary calls from this contract via execute(). According to Relay, this key is managed via the NEAR MPC ('chain signatures') network and only signs withdrawals up to a solver's balance on the Relay Chain Hub, but none of this is verifiable or enforced onchain here.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign arbitrary CallRequests that the RelayDepository executes, which moves any funds escrowed in it."
+        }
+      ]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the allocator of the RelayDepository at any time and without delay, taking control of all funds escrowed in it."
+        }
+      ]
+    }
+  },
+  "ignoreInWatchMode": ["callRequests"]
+}
