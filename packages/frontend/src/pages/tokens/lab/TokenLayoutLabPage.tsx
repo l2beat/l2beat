@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { InteropTokenRelationsGraph } from '~/server/features/scaling/interop/token/getInteropTokenRelationsGraph'
 import { cn } from '~/utils/cn'
 import { CardPreviewLab } from './CardPreviewLab'
 import type { TokenLayoutLabToken } from './getTokenLayoutLabPageData'
@@ -19,8 +18,8 @@ export function TokenLayoutLabPage({ tokens, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout variant="wide">
-        <MainPageHeader description="Compare catalogue-card previews for complex tokens using production relationship data.">
-          Token card preview lab
+        <MainPageHeader description="Compare ways to make burn-mint membership and minter risk legible inside the production modal.">
+          Burn-mint cluster lab
         </MainPageHeader>
 
         <div className="sticky top-0 z-30 border-divider border-y bg-surface-primary/95 px-4 py-3 backdrop-blur md:rounded-lg md:border">
@@ -50,7 +49,6 @@ export function TokenLayoutLabPage({ tokens, ...props }: Props) {
                 {candidate.symbol}
               </button>
             ))}
-            {token && <GraphStats graph={token.graph} />}
           </div>
         </div>
 
@@ -61,23 +59,5 @@ export function TokenLayoutLabPage({ tokens, ...props }: Props) {
         )}
       </SideNavLayout>
     </AppLayout>
-  )
-}
-
-function GraphStats({ graph }: { graph: InteropTokenRelationsGraph }) {
-  const deployments = graph.nodes.reduce(
-    (sum, node) => sum + node.deployments.length,
-    0,
-  )
-  const unconnected = new Set(graph.unconnectedNodeIds)
-  const connectedDeployments = graph.nodes
-    .filter((node) => !unconnected.has(node.id))
-    .reduce((sum, node) => sum + node.deployments.length, 0)
-
-  return (
-    <span className="ml-auto text-label-value-12 text-secondary">
-      {deployments} deployments · {connectedDeployments} connected ·{' '}
-      {graph.edges.length} directed links
-    </span>
   )
 }

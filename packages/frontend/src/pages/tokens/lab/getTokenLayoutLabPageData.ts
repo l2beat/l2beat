@@ -42,9 +42,9 @@ export async function getTokenLayoutLabPageData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Token card preview lab - L2BEAT',
+        title: 'Burn-mint cluster lab - L2BEAT',
         description:
-          'Side-by-side card previews for complex token relationships.',
+          'Side-by-side modal treatments for token burn-mint clusters.',
         url,
         openGraph: { image: '/meta-images/tokens/opengraph-image.png' },
         excludeFromSearchEngines: true,

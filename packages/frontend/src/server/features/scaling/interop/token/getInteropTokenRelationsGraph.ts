@@ -61,17 +61,23 @@ export async function getInteropTokenRelationsGraph(
   if (env.MOCK) {
     return MOCK_INTEROP_TOKEN_RELATIONS_GRAPH
   }
-  if (deployments.length === 0) {
+  const supportedDeployments = deployments.filter(
+    (deployment) => deployment.isSupported,
+  )
+  if (supportedDeployments.length === 0) {
     return { nodes: [], edges: [], unconnectedNodeIds: [] }
   }
 
   const routes = await getTokenDb().tokenRelation.getRoutesBetween(
-    deployments.map((d) => ({ chain: d.chain, address: d.address })),
+    supportedDeployments.map((d) => ({
+      chain: d.chain,
+      address: d.address,
+    })),
   )
-  const model = buildTokenRelationsGraph(deployments, routes)
+  const model = buildTokenRelationsGraph(supportedDeployments, routes)
 
   const volumeByDeployment = new Map(
-    deployments.map((deployment) => [
+    supportedDeployments.map((deployment) => [
       `${deployment.chain}|${deployment.address.toLowerCase()}`,
       deployment.volume,
     ]),

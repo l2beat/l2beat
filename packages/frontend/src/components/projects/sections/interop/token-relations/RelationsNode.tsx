@@ -5,12 +5,15 @@ import type { NodeBox } from './layout'
 
 const CHAIN_ICON = 13
 const BRIDGE_ICON = 14
-const MAX_BRIDGE_ICONS = 3
-const GROUP_CELL_WIDTH = 148
-const GROUP_CELL_HEIGHT = 38
-const GROUP_CELL_GAP = 6
-const GROUP_HEADER_HEIGHT = 56
+const BRIDGE_ICON_GAP = 4
+const BRIDGE_LABEL_CHARACTER_WIDTH = 5.1
+const BRIDGE_NAME_CHARACTER_WIDTH = 5.8
 const GROUP_PADDING = 12
+const GROUP_LEDGER_COLUMN_GAP = 16
+const GROUP_LEDGER_START_Y = 54
+const GROUP_LEDGER_ROW_HEIGHT = 27
+const GROUP_LEDGER_SINGLE_COLUMN_WIDTH = 280
+const GROUP_LEDGER_DOUBLE_COLUMN_WIDTH = 400
 
 interface Props {
   node: InteropTokenRelationsNode
@@ -37,6 +40,11 @@ export function RelationsNode({
   const first = node.deployments[0]
   if (!first) return null
   const groupColumns = getGroupColumns(node)
+  const groupCellWidth =
+    (box.width -
+      GROUP_PADDING * 2 -
+      GROUP_LEDGER_COLUMN_GAP * (groupColumns - 1)) /
+    groupColumns
 
   return (
     <g
@@ -90,69 +98,51 @@ export function RelationsNode({
               {formatCurrency(node.volume, 'usd')}
             </text>
           )}
-          <text x={12} y={42} className="fill-secondary text-label-value-12">
-            Burn-mint · {node.deployments.length} chains
-          </text>
-          {node.bridges.length > 0 && (
-            <g transform={`translate(${box.width - 12}, 30)`}>
-              {node.bridges
-                .slice(0, MAX_BRIDGE_ICONS)
-                .map((bridge, index, shown) => (
-                  <image
-                    key={bridge.id}
-                    href={bridge.icon}
-                    x={-(shown.length - index) * (BRIDGE_ICON - 5)}
-                    width={BRIDGE_ICON}
-                    height={BRIDGE_ICON}
-                  >
-                    <title>{bridge.name}</title>
-                  </image>
-                ))}
-            </g>
-          )}
+          <BurnMintBridgeLine node={node} maxX={box.width - GROUP_PADDING} />
 
           {node.deployments.map((deployment, index) => {
             const column = index % groupColumns
             const row = Math.floor(index / groupColumns)
             const x =
-              GROUP_PADDING + column * (GROUP_CELL_WIDTH + GROUP_CELL_GAP)
-            const y =
-              GROUP_HEADER_HEIGHT + row * (GROUP_CELL_HEIGHT + GROUP_CELL_GAP)
+              GROUP_PADDING +
+              column * (groupCellWidth + GROUP_LEDGER_COLUMN_GAP)
+            const y = GROUP_LEDGER_START_Y + row * GROUP_LEDGER_ROW_HEIGHT
             return (
               <g
                 key={`${deployment.chain}-${deployment.address}`}
                 transform={`translate(${x}, ${y})`}
               >
-                <rect
-                  width={GROUP_CELL_WIDTH}
-                  height={GROUP_CELL_HEIGHT}
-                  rx={6}
-                  className="fill-surface-secondary stroke-divider"
+                <line
+                  x1={0}
+                  x2={groupCellWidth}
+                  y1={GROUP_LEDGER_ROW_HEIGHT}
+                  y2={GROUP_LEDGER_ROW_HEIGHT}
+                  className="stroke-divider"
                   strokeWidth={0.75}
                 />
                 <image
                   href={deployment.iconUrl}
-                  x={8}
-                  y={7}
+                  x={0}
+                  y={(GROUP_LEDGER_ROW_HEIGHT - CHAIN_ICON) / 2}
                   width={CHAIN_ICON}
                   height={CHAIN_ICON}
                 />
                 <text
-                  x={27}
-                  y={17}
+                  x={CHAIN_ICON + 6}
+                  y={GROUP_LEDGER_ROW_HEIGHT / 2 + 4}
                   className="fill-primary font-medium text-label-value-12"
                 >
                   <title>{deployment.chainName}</title>
-                  {shorten(deployment.chainName, 17)}
+                  {shorten(deployment.chainName, 15)}
                 </text>
                 <text
-                  x={GROUP_CELL_WIDTH - 8}
-                  y={32}
+                  x={groupCellWidth}
+                  y={GROUP_LEDGER_ROW_HEIGHT / 2 + 4}
                   textAnchor="end"
                   className="fill-secondary text-label-value-12"
                 >
                   {deployment.volume === null
-                    ? 'No volume data'
+                    ? '—'
                     : formatCurrency(deployment.volume, 'usd')}
                 </text>
               </g>
@@ -204,14 +194,76 @@ export function RelationsNode({
   )
 }
 
+function BurnMintBridgeLine({
+  node,
+  maxX,
+}: {
+  node: InteropTokenRelationsNode
+  maxX: number
+}) {
+  const label = 'Burn & mint cluster via'
+  const labelX = GROUP_PADDING
+  const labelWidth = label.length * BRIDGE_LABEL_CHARACTER_WIDTH
+  const iconX = labelX + labelWidth + 7
+  const firstBridge = node.bridges[0]
+  const namesX = iconX + (firstBridge?.icon ? BRIDGE_ICON + BRIDGE_ICON_GAP : 0)
+  const maxCharacters = Math.max(
+    4,
+    Math.floor((maxX - namesX) / BRIDGE_NAME_CHARACTER_WIDTH),
+  )
+  const bridgeNames = formatBridgeNames(
+    node.bridges.map((bridge) => bridge.name),
+    maxCharacters,
+  )
+
+  return (
+    <g>
+      <title>
+        {node.bridges.length > 0
+          ? node.bridges.map((bridge) => bridge.name).join(', ')
+          : 'Minter not identified'}
+      </title>
+      <text x={labelX} y={42} className="fill-secondary text-label-value-12">
+        {label}
+      </text>
+      {firstBridge?.icon && (
+        <image
+          href={firstBridge.icon}
+          x={iconX}
+          y={31}
+          width={BRIDGE_ICON}
+          height={BRIDGE_ICON}
+        />
+      )}
+      <text
+        x={namesX}
+        y={42}
+        className="fill-primary font-medium text-label-value-12"
+      >
+        {bridgeNames}
+      </text>
+    </g>
+  )
+}
+
+function formatBridgeNames(names: string[], maxCharacters: number): string {
+  if (names.length === 0) return 'Not identified'
+  const full = names.join(', ')
+  if (full.length <= maxCharacters) return full
+
+  for (let visible = names.length - 1; visible >= 1; visible--) {
+    const summary = `${names.slice(0, visible).join(', ')} +${names.length - visible}`
+    if (summary.length <= maxCharacters) return summary
+  }
+
+  return shorten(names[0] ?? 'Not identified', maxCharacters)
+}
+
 export function getRelationsNodeWidth(node: InteropTokenRelationsNode): number {
   if (node.deployments.length <= 1) return 168
-  const columns = getGroupColumns(node)
-  return (
-    GROUP_PADDING * 2 +
-    columns * GROUP_CELL_WIDTH +
-    (columns - 1) * GROUP_CELL_GAP
-  )
+  return getGroupColumns(node) === 1
+    ? GROUP_LEDGER_SINGLE_COLUMN_WIDTH
+    : GROUP_LEDGER_DOUBLE_COLUMN_WIDTH
 }
 
 export function getRelationsNodeHeight(
@@ -219,17 +271,11 @@ export function getRelationsNodeHeight(
 ): number {
   if (node.deployments.length <= 1) return 64
   const rows = Math.ceil(node.deployments.length / getGroupColumns(node))
-  return (
-    GROUP_HEADER_HEIGHT +
-    rows * GROUP_CELL_HEIGHT +
-    Math.max(0, rows - 1) * GROUP_CELL_GAP +
-    GROUP_PADDING
-  )
+  return GROUP_LEDGER_START_Y + rows * GROUP_LEDGER_ROW_HEIGHT + GROUP_PADDING
 }
 
 function getGroupColumns(node: InteropTokenRelationsNode): number {
-  if (node.deployments.length <= 4) return 2
-  return 3
+  return node.deployments.length <= 3 ? 1 : 2
 }
 
 function shorten(value: string, length: number): string {

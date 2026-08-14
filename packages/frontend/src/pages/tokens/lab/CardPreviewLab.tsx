@@ -1,1154 +1,1212 @@
 import { formatCurrency } from '@l2beat/shared-pure'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import {
   getRelationsNodeHeight,
   getRelationsNodeWidth,
 } from '~/components/projects/sections/interop/token-relations/RelationsNode'
-import {
-  layoutWrappedRelationsGraph,
-  wrappedEdgeKey,
-} from '~/components/projects/sections/interop/token-relations/wrappedLayout'
 import type {
-  InteropTokenRelationsEdge,
-  InteropTokenRelationsGraph,
+  InteropTokenRelationsDeployment,
   InteropTokenRelationsNode,
 } from '~/server/features/scaling/interop/token/getInteropTokenRelationsGraph'
+import { cn } from '~/utils/cn'
 import type { TokenLayoutLabToken } from './getTokenLayoutLabPageData'
 
-const PREVIEW_HEIGHT = 132
-const CANVAS_WIDTH = 320
-const CANVAS_HEIGHT = 132
-const CANVAS_X_PADDING = 12
-const CANVAS_Y_PADDING = 14
-const NODE_RADIUS = 6
-const LINE_NODE_GAP = 0.5
+const PADDING = 12
 
-type TopologyVariant =
-  | 'clean'
-  | 'direction-cues'
-  | 'top-route-badges'
-  | 'cluster-authorities'
-  | 'source-anchors'
-  | 'risk-spotlight'
-  | 'minter-counts'
+type ClusterVariant =
+  | 'named-grid'
+  | 'open-ledger'
+  | 'minter-rail'
+  | 'minter-masthead'
+  | 'leaders'
+  | 'chain-chips'
+  | 'volume-bars'
   | 'balanced'
 
-interface PreviewOptionDefinition {
+interface ClusterOptionDefinition {
   number: string
   title: string
-  persona: string
+  goal: string
   strength: string
   tradeoff: string
-  payload: string
-  variant: TopologyVariant
+  variant: ClusterVariant
 }
 
-const OPTIONS: PreviewOptionDefinition[] = [
+const OPTIONS: ClusterOptionDefinition[] = [
   {
     number: '1',
-    title: 'Clean topology',
-    persona: 'Holder scanning chains and overall structure',
-    strength: 'Chain logos and cluster pills stay legible and calm.',
-    tradeoff: 'Popularity and minter identity remain hidden.',
-    payload: 'Needs chain icons and cluster membership',
-    variant: 'clean',
+    title: 'Named baseline',
+    goal: 'Make the smallest useful change to the current node',
+    strength: 'Keeps the familiar grid while naming one minter.',
+    tradeoff: 'Retains the gray deployment tiles.',
+    variant: 'named-grid',
   },
   {
     number: '2',
-    title: 'Direction cues',
-    persona: 'Holder trying to understand backing direction',
-    strength: 'Colored arrowheads clarify flow without implying route weight.',
-    tradeoff:
-      'The accent can attract more attention than the topology warrants.',
-    payload: 'No additional graph payload',
-    variant: 'direction-cues',
+    title: 'Open ledger',
+    goal: 'Scan full chain names without a field of boxes',
+    strength: 'Two wide columns give names and volumes more room.',
+    tradeoff: 'The cluster becomes taller in visual rhythm.',
+    variant: 'open-ledger',
   },
   {
     number: '3',
-    title: 'Top-route minters',
-    persona: 'Bridge user checking the busiest destination paths',
-    strength: 'Names minters on only the three most active routes.',
-    tradeoff: 'Less active routes still require opening the graph.',
-    payload: 'Adds bridge identities and volume',
-    variant: 'top-route-badges',
+    title: 'Minter rail',
+    goal: 'Keep the risk-bearing system visible while scanning',
+    strength: 'A persistent left rail separates minter and member roles.',
+    tradeoff: 'Leaves less horizontal room for each chain.',
+    variant: 'minter-rail',
   },
   {
     number: '4',
-    title: 'Cluster authorities',
-    persona: 'User asking who controls the native burn-mint set',
-    strength: 'Attaches authority badges only to burn-mint clusters.',
-    tradeoff: 'Lock-mint bridge risk is not surfaced in the card.',
-    payload: 'Adds burn-mint bridge identities',
-    variant: 'cluster-authorities',
+    title: 'Minter masthead',
+    goal: 'Lead with who manages minting, then show destinations',
+    strength: 'The named minter is the clearest element after the symbol.',
+    tradeoff: 'Chain volumes become more compact.',
+    variant: 'minter-masthead',
   },
   {
     number: '5',
-    title: 'Source anchors',
-    persona: 'Newcomer learning where the backing paths begin',
-    strength: 'A quiet halo makes origins easier to locate and trace.',
-    tradeoff: 'Source prominence says nothing about source safety.',
-    payload: 'No additional graph payload',
-    variant: 'source-anchors',
+    title: 'Leaders and rest',
+    goal: 'Distinguish the most active destinations from the long tail',
+    strength: 'The three busiest chains are easy to compare.',
+    tradeoff: 'Introduces two visual classes of cluster member.',
+    variant: 'leaders',
   },
   {
     number: '6',
-    title: 'Risk spotlight',
-    persona: 'Crosschain user tracing the most consequential paths',
-    strength: 'Highlights three routes and dims the surrounding context.',
-    tradeoff: 'The selected routes can look more canonical than they are.',
-    payload: 'Adds bridge identities and volume',
-    variant: 'risk-spotlight',
+    title: 'Chain chips',
+    goal: 'Optimize for fast logo and chain-name recognition',
+    strength: 'Very little chrome surrounds each member.',
+    tradeoff: 'Per-chain volume is intentionally omitted.',
+    variant: 'chain-chips',
   },
   {
     number: '7',
-    title: 'Multiple-minter cues',
-    persona: 'Security reviewer looking for compounded authority risk',
-    strength: 'Small counts flag nodes exposed to multiple minter systems.',
-    tradeoff: 'Counts reveal complexity but not who the minters are.',
-    payload: 'Adds bridge attribution',
-    variant: 'minter-counts',
+    title: 'Volume bars',
+    goal: 'Make deployment activity comparable at a glance',
+    strength: 'Popularity is readable without inspecting every number.',
+    tradeoff: 'The extra encoding may compete with minter risk.',
+    variant: 'volume-bars',
   },
   {
     number: '8',
-    title: 'Balanced candidate',
-    persona: 'Crosschain user balancing popularity and bridge risk',
-    strength: 'Combines source cues with restrained authority badges.',
-    tradeoff: 'Still carries more visual grammar than the clean version.',
-    payload: 'Needs full preview metadata',
+    title: 'Balanced open grid',
+    goal: 'Combine set meaning, a named minter, and compact scanning',
+    strength: 'Retains three-column density without gray tiles.',
+    tradeoff: 'Long chain names still need shortening.',
     variant: 'balanced',
   },
 ]
 
 export function CardPreviewLab({ token }: { token: TokenLayoutLabToken }) {
+  const clusters = useMemo(
+    () =>
+      token.graph.nodes
+        .filter((node) => node.deployments.length > 1)
+        .toSorted(
+          (a, b) =>
+            b.deployments.length - a.deployments.length ||
+            (b.volume ?? -1) - (a.volume ?? -1) ||
+            a.id.localeCompare(b.id),
+        ),
+    [token.graph.nodes],
+  )
+  const [selectedNodeId, setSelectedNodeId] = useState(clusters[0]?.id)
+  const node =
+    clusters.find((candidate) => candidate.id === selectedNodeId) ?? clusters[0]
+  const incomingIds = useMemo(
+    () => new Set(token.graph.edges.map((edge) => edge.to)),
+    [token.graph.edges],
+  )
+
+  if (!node) {
+    return (
+      <p className="text-label-value-14 text-secondary">
+        This token has no observed burn-mint clusters.
+      </p>
+    )
+  }
+
   return (
     <section>
-      <header className="mb-3">
+      <header className="mb-4">
         <h2 className="font-bold text-heading-20">
-          Topology preview experiments
+          Burn-mint cluster experiments
         </h2>
         <p className="max-w-4xl text-label-value-13 text-secondary">
-          Eight controlled variants of chain-logo nodes, explicit burn-mint
-          cluster pills, and lighter buses. Each option changes one emphasis so
-          the useful additions can be separated from the clutter.
+          Eight structurally different treatments of the same production cluster
+          at its real modal dimensions. Values are past 24h crosschain volume.
         </p>
       </header>
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {clusters.length > 1 && (
+        <div className="mb-5 flex flex-wrap items-center gap-2">
+          <span className="mr-1 font-medium text-label-value-13 text-secondary">
+            Cluster
+          </span>
+          {clusters.map((candidate) => {
+            const symbol = candidate.deployments[0]?.symbol ?? token.symbol
+            return (
+              <button
+                key={candidate.id}
+                type="button"
+                onClick={() => setSelectedNodeId(candidate.id)}
+                className={cn(
+                  'rounded-full border px-3 py-1.5 font-bold text-label-value-13 transition-colors',
+                  candidate.id === node.id
+                    ? 'border-brand bg-brand text-white'
+                    : 'border-divider bg-surface-secondary hover:border-brand',
+                )}
+              >
+                {symbol} · {candidate.deployments.length} chains
+              </button>
+            )
+          })}
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 gap-x-5 gap-y-7 xl:grid-cols-2">
         {OPTIONS.map((option) => (
-          <PreviewOption key={option.number} {...option}>
-            <TokenPreviewFrame token={token}>
-              <TopologyPreview graph={token.graph} variant={option.variant} />
-            </TokenPreviewFrame>
-          </PreviewOption>
+          <ClusterOption key={option.number} option={option}>
+            <ClusterPreview
+              node={node}
+              variant={option.variant}
+              isSource={!incomingIds.has(node.id)}
+            />
+          </ClusterOption>
         ))}
       </div>
     </section>
   )
 }
 
-function PreviewOption({
-  number,
-  title,
-  persona,
-  strength,
-  tradeoff,
-  payload,
+function ClusterOption({
+  option,
   children,
-}: Omit<PreviewOptionDefinition, 'variant'> & { children: React.ReactNode }) {
+}: {
+  option: ClusterOptionDefinition
+  children: React.ReactNode
+}) {
   return (
     <article className="min-w-0">
-      <div className="mb-3 min-h-[140px]">
+      <div className="mb-3 min-h-[104px]">
         <div className="flex items-center gap-2">
           <span className="flex size-6 items-center justify-center rounded-full bg-brand font-bold text-label-value-12 text-white">
-            {number}
+            {option.number}
           </span>
-          <h3 className="font-bold text-label-value-15">{title}</h3>
+          <h3 className="font-bold text-label-value-15">{option.title}</h3>
         </div>
         <p className="mt-1.5 text-label-value-12 text-secondary">
-          <span className="font-medium text-primary">For:</span> {persona}
+          <span className="font-medium text-primary">Goal:</span> {option.goal}
         </p>
         <p className="text-label-value-12">
-          <span className="font-medium">Strength:</span> {strength}
+          <span className="font-medium">Strength:</span> {option.strength}
         </p>
         <p className="text-label-value-12 text-secondary">
-          <span className="font-medium">Tradeoff:</span> {tradeoff}
+          <span className="font-medium">Tradeoff:</span> {option.tradeoff}
         </p>
-        <p className="text-label-value-12 text-secondary">{payload}</p>
       </div>
       {children}
     </article>
   )
 }
 
-function TokenPreviewFrame({
-  token,
-  children,
+function ClusterPreview({
+  node,
+  variant,
+  isSource,
 }: {
-  token: TokenLayoutLabToken
-  children: React.ReactNode
+  node: InteropTokenRelationsNode
+  variant: ClusterVariant
+  isSource: boolean
 }) {
-  const deploymentCount = token.graph.nodes.reduce(
-    (sum, node) => sum + node.deployments.length,
-    0,
-  )
-  const chainCount = new Set(
-    token.graph.nodes.flatMap((node) =>
-      node.deployments.map((deployment) => deployment.chain),
-    ),
-  ).size
-  const volumes = token.graph.nodes.flatMap((node) =>
-    node.volume === null ? [] : [node.volume],
-  )
-  const volume =
-    volumes.length === 0 ? null : volumes.reduce((sum, value) => sum + value, 0)
-  const minterCount = new Set([
-    ...token.graph.nodes.flatMap((node) =>
-      node.bridges.map((bridge) => bridge.id),
-    ),
-    ...token.graph.edges.flatMap((edge) =>
-      edge.bridges.map((bridge) => bridge.id),
-    ),
-  ]).size
+  const width = getRelationsNodeWidth(node)
+  const height = getRelationsNodeHeight(node)
 
   return (
-    <div className="flex flex-col rounded-lg border border-divider bg-surface-primary p-4 text-left transition-colors hover:border-brand">
-      <div className="flex items-center gap-2">
-        {token.iconUrl && (
-          <img
-            src={token.iconUrl}
-            alt=""
-            width={24}
-            height={24}
-            className="size-6 shrink-0 rounded-full"
-          />
-        )}
-        <div className="min-w-0">
-          <p className="truncate font-bold text-label-value-15">
-            {token.symbol}
-          </p>
-          {token.issuer && (
-            <p className="truncate text-label-value-12 text-secondary">
-              Issued by <span className="capitalize">{token.issuer}</span>
-            </p>
-          )}
-        </div>
-        {volume !== null && (
-          <span className="ml-auto shrink-0 font-medium text-label-value-13 text-secondary">
-            {formatCurrency(volume, 'usd')}
-          </span>
-        )}
-      </div>
-
-      <div
-        className="my-3 grow overflow-hidden"
-        style={{ height: PREVIEW_HEIGHT }}
+    <div className="flex min-h-[270px] items-center justify-center overflow-hidden rounded-lg border border-divider bg-surface-secondary p-4">
+      <svg
+        viewBox={`-6 -6 ${width + 12} ${height + 12}`}
+        width={width + 12}
+        height={height + 12}
+        className="block h-auto max-w-full"
+        role="img"
+        aria-label={`${variant} design for ${node.deployments[0]?.symbol ?? 'burn-mint'} across ${node.deployments.length} chains`}
       >
-        {children}
-      </div>
-
-      <p className="text-label-value-12 text-secondary">
-        {deploymentCount} {deploymentCount === 1 ? 'deployment' : 'deployments'}{' '}
-        · {chainCount} {chainCount === 1 ? 'chain' : 'chains'}
-        {' · '}
-        {minterCount} {minterCount === 1 ? 'minter' : 'minters'}
-      </p>
+        <VariantNode
+          node={node}
+          width={width}
+          height={height}
+          isSource={isSource}
+          variant={variant}
+        />
+      </svg>
     </div>
   )
 }
 
-interface TopologyConfig {
-  directionCues: boolean
-  edgeBadges: number
-  clusterBadges: boolean
-  rootEmphasis: boolean
-  spotlight: number
-  minterCounts: boolean
-}
-
-const CONFIGS: Record<TopologyVariant, TopologyConfig> = {
-  clean: {
-    directionCues: false,
-    edgeBadges: 0,
-    clusterBadges: false,
-    rootEmphasis: false,
-    spotlight: 0,
-    minterCounts: false,
-  },
-  'direction-cues': {
-    directionCues: true,
-    edgeBadges: 0,
-    clusterBadges: false,
-    rootEmphasis: false,
-    spotlight: 0,
-    minterCounts: false,
-  },
-  'top-route-badges': {
-    directionCues: false,
-    edgeBadges: 3,
-    clusterBadges: false,
-    rootEmphasis: false,
-    spotlight: 0,
-    minterCounts: false,
-  },
-  'cluster-authorities': {
-    directionCues: false,
-    edgeBadges: 0,
-    clusterBadges: true,
-    rootEmphasis: false,
-    spotlight: 0,
-    minterCounts: false,
-  },
-  'source-anchors': {
-    directionCues: false,
-    edgeBadges: 0,
-    clusterBadges: false,
-    rootEmphasis: true,
-    spotlight: 0,
-    minterCounts: false,
-  },
-  'risk-spotlight': {
-    directionCues: false,
-    edgeBadges: 3,
-    clusterBadges: false,
-    rootEmphasis: false,
-    spotlight: 3,
-    minterCounts: false,
-  },
-  'minter-counts': {
-    directionCues: false,
-    edgeBadges: 0,
-    clusterBadges: false,
-    rootEmphasis: false,
-    spotlight: 0,
-    minterCounts: true,
-  },
-  balanced: {
-    directionCues: false,
-    edgeBadges: 2,
-    clusterBadges: true,
-    rootEmphasis: true,
-    spotlight: 0,
-    minterCounts: false,
-  },
-}
-
-interface PreviewPoint {
-  x: number
-  y: number
-  radius: number
-  row: number
-}
-
-interface PreviewEdgeGeometry {
-  routePath: string
-  branchPath: string
-  badgeX: number
-  badgeY: number
-}
-
-interface PreviewPathGeometry {
-  key: string
-  path: string
-}
-
-interface CompactTopology {
-  nodes: InteropTokenRelationsNode[]
-  edges: InteropTokenRelationsEdge[]
-  points: Map<string, PreviewPoint>
-  connectors: PreviewPathGeometry[]
-  buses: PreviewPathGeometry[]
-  geometries: Map<string, PreviewEdgeGeometry>
-  prominentEdgeKeys: Set<string>
-  rootIds: Set<string>
-  minterCountByNode: Map<string, number>
-}
-
-function TopologyPreview({
-  graph,
+function VariantNode({
+  node,
+  width,
+  height,
+  isSource,
   variant,
 }: {
-  graph: InteropTokenRelationsGraph
-  variant: TopologyVariant
-}) {
-  const config = CONFIGS[variant]
-  const topology = useMemo(
-    () => buildCompactTopology(graph, config),
-    [graph, config],
-  )
-  const markerId = `token-preview-arrow-${variant}`
-  const activeMarkerId = `token-preview-active-arrow-${variant}`
-  const hasSpotlight = config.spotlight > 0
-  const structurePath = [...topology.connectors, ...topology.buses]
-    .map((geometry) => geometry.path)
-    .join(' ')
-  const branchesPath = topology.edges
-    .flatMap((edge) => {
-      const geometry = topology.geometries.get(wrappedEdgeKey(edge))
-      return geometry ? [geometry.branchPath] : []
-    })
-    .join(' ')
-
-  return (
-    <svg
-      viewBox={`0 0 ${CANVAS_WIDTH} ${CANVAS_HEIGHT}`}
-      width="100%"
-      height={PREVIEW_HEIGHT}
-      role="img"
-      aria-label={`${variant} topology preview`}
-    >
-      <defs>
-        <marker
-          id={markerId}
-          viewBox="0 0 4 4"
-          refX="3.7"
-          refY="2"
-          markerWidth="3.5"
-          markerHeight="3.5"
-          markerUnits="userSpaceOnUse"
-          orient="auto"
-        >
-          <path
-            d="M 0 0 L 4 2 L 0 4 z"
-            className="fill-primary"
-            fillOpacity={0.4}
-          />
-        </marker>
-        <marker
-          id={activeMarkerId}
-          viewBox="0 0 4 4"
-          refX="3.7"
-          refY="2"
-          markerWidth="3.5"
-          markerHeight="3.5"
-          markerUnits="userSpaceOnUse"
-          orient="auto"
-        >
-          <path d="M 0 0 L 4 2 L 0 4 z" className="fill-brand" />
-        </marker>
-      </defs>
-
-      {structurePath && (
-        <path
-          d={structurePath}
-          fill="none"
-          className="stroke-primary"
-          strokeOpacity={hasSpotlight ? 0.08 : 0.22}
-          strokeWidth={0.8}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      )}
-
-      {branchesPath && (
-        <path
-          d={branchesPath}
-          fill="none"
-          className="stroke-primary"
-          strokeOpacity={hasSpotlight ? 0.08 : 0.24}
-          strokeWidth={0.8}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          markerEnd={
-            config.directionCues ? `url(#${activeMarkerId})` : undefined
-          }
-        />
-      )}
-
-      {hasSpotlight &&
-        topology.edges.map((edge) => {
-          const edgeKey = wrappedEdgeKey(edge)
-          const geometry = topology.geometries.get(edgeKey)
-          if (!geometry || !topology.prominentEdgeKeys.has(edgeKey)) return null
-          return (
-            <path
-              key={`spotlight-${edgeKey}`}
-              d={geometry.routePath}
-              fill="none"
-              className="stroke-brand"
-              strokeOpacity={0.9}
-              strokeWidth={1.1}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              markerEnd={`url(#${activeMarkerId})`}
-            />
-          )
-        })}
-
-      {config.edgeBadges > 0 &&
-        topology.edges.map((edge) => {
-          const edgeKey = wrappedEdgeKey(edge)
-          const geometry = topology.geometries.get(edgeKey)
-          if (
-            !geometry ||
-            edge.bridges.length === 0 ||
-            !topology.prominentEdgeKeys.has(edgeKey)
-          ) {
-            return null
-          }
-          return (
-            <BridgeMark
-              key={`bridge-${edgeKey}`}
-              bridges={edge.bridges}
-              x={geometry.badgeX}
-              y={geometry.badgeY}
-            />
-          )
-        })}
-
-      {config.rootEmphasis &&
-        topology.nodes.map((node) => {
-          if (!topology.rootIds.has(node.id)) return null
-          const point = topology.points.get(node.id)
-          if (!point) return null
-          return <RootHalo key={`root-${node.id}`} node={node} point={point} />
-        })}
-
-      {topology.nodes.map((node) => {
-        const point = topology.points.get(node.id)
-        if (!point) return null
-        return <NodeMark key={node.id} node={node} point={point} />
-      })}
-
-      {config.clusterBadges &&
-        topology.nodes.map((node) => {
-          const point = topology.points.get(node.id)
-          if (
-            !point ||
-            node.deployments.length < 2 ||
-            node.bridges.length === 0
-          ) {
-            return null
-          }
-          const halfWidth =
-            node.deployments.length > 1
-              ? clusterMarkWidth(node) / 2
-              : point.radius
-          return (
-            <BridgeMark
-              key={`node-bridge-${node.id}`}
-              bridges={node.bridges}
-              x={point.x + halfWidth + 3}
-              y={point.y - point.radius - 1}
-            />
-          )
-        })}
-
-      {config.minterCounts &&
-        topology.nodes.map((node) => {
-          const point = topology.points.get(node.id)
-          const count = topology.minterCountByNode.get(node.id) ?? 0
-          if (!point || count < 2) return null
-          return (
-            <MinterCountMark
-              key={`minter-count-${node.id}`}
-              node={node}
-              point={point}
-              count={count}
-            />
-          )
-        })}
-    </svg>
-  )
-}
-
-function NodeMark({
-  node,
-  point,
-}: {
   node: InteropTokenRelationsNode
-  point: PreviewPoint
+  width: number
+  height: number
+  isSource: boolean
+  variant: ClusterVariant
 }) {
-  const isGroup = node.deployments.length > 1
-  const first = node.deployments[0]
-  if (!first) return null
-
-  if (isGroup) {
-    const deployments = node.deployments
-      .toSorted(byDeploymentVolume)
-      .slice(0, 3)
-    const metrics = getClusterMarkMetrics(node)
-    const width = metrics.width
-    const left = point.x - width / 2
-    const contentLeft = point.x - metrics.contentWidth / 2
-    return (
-      <g>
-        <title>{previewNodeTitle(node)}</title>
-        <rect
-          x={left}
-          y={point.y - point.radius}
-          width={width}
-          height={point.radius * 2}
-          rx={point.radius}
-          className="fill-surface-primary stroke-brand"
-          strokeWidth={1.2}
-        />
-        {deployments.map((deployment, index) => (
-          <g key={`${deployment.chain}-${deployment.address}`}>
-            <circle
-              cx={
-                contentLeft +
-                metrics.iconDiameter / 2 +
-                index * metrics.iconStep
-              }
-              cy={point.y}
-              r={metrics.iconDiameter / 2}
-              className="fill-surface-primary stroke-divider"
-              strokeWidth={0.7}
-            />
-            {deployment.iconUrl && (
-              <image
-                href={deployment.iconUrl}
-                x={
-                  contentLeft +
-                  metrics.iconDiameter / 2 +
-                  index * metrics.iconStep -
-                  metrics.logoSize / 2
-                }
-                y={point.y - metrics.logoSize / 2}
-                width={metrics.logoSize}
-                height={metrics.logoSize}
-                preserveAspectRatio="xMidYMid meet"
-              />
-            )}
-          </g>
-        ))}
-        <text
-          x={
-            contentLeft +
-            metrics.iconStackWidth +
-            metrics.contentGap +
-            metrics.countSlotWidth / 2
-          }
-          y={point.y + 2.5}
-          textAnchor="middle"
-          className="fill-secondary font-bold"
-          style={{ fontSize: 7 }}
-        >
-          {node.deployments.length}
-        </text>
-      </g>
-    )
-  }
-
-  if (first.iconUrl) {
-    const iconSize = point.radius * 1.35
-    return (
-      <g>
-        <title>{previewNodeTitle(node)}</title>
-        <circle
-          cx={point.x}
-          cy={point.y}
-          r={point.radius}
-          className="fill-surface-primary stroke-divider"
-          strokeWidth={1}
-        />
-        <image
-          href={first.iconUrl}
-          x={point.x - iconSize / 2}
-          y={point.y - iconSize / 2}
-          width={iconSize}
-          height={iconSize}
-          preserveAspectRatio="xMidYMid meet"
-        />
-      </g>
-    )
-  }
-
   return (
     <g>
-      <title>{previewNodeTitle(node)}</title>
-      <circle
-        cx={point.x}
-        cy={point.y}
-        r={point.radius}
-        className="fill-brand stroke-brand"
-        fillOpacity={isGroup ? 0.9 : 0.6}
-        strokeWidth={1}
-      />
-      {isGroup && (
-        <text
-          x={point.x}
-          y={point.y + 2.5}
-          textAnchor="middle"
-          className="fill-white font-bold"
-          style={{ fontSize: 7 }}
-        >
-          {node.deployments.length}
-        </text>
+      <ClusterFrame width={width} height={height} isSource={isSource} />
+      {variant === 'named-grid' && (
+        <NamedGrid node={node} width={width} height={height} />
+      )}
+      {variant === 'open-ledger' && (
+        <OpenLedger node={node} width={width} height={height} />
+      )}
+      {variant === 'minter-rail' && (
+        <MinterRail node={node} width={width} height={height} />
+      )}
+      {variant === 'minter-masthead' && (
+        <MinterMasthead node={node} width={width} height={height} />
+      )}
+      {variant === 'leaders' && (
+        <LeadersAndRest node={node} width={width} height={height} />
+      )}
+      {variant === 'chain-chips' && (
+        <ChainChips node={node} width={width} height={height} />
+      )}
+      {variant === 'volume-bars' && (
+        <VolumeBars node={node} width={width} height={height} />
+      )}
+      {variant === 'balanced' && (
+        <BalancedOpenGrid node={node} width={width} height={height} />
       )}
     </g>
   )
 }
 
-function RootHalo({
-  node,
-  point,
+function ClusterFrame({
+  width,
+  height,
+  isSource,
 }: {
-  node: InteropTokenRelationsNode
-  point: PreviewPoint
+  width: number
+  height: number
+  isSource: boolean
 }) {
-  const isGroup = node.deployments.length > 1
-  if (isGroup) {
-    const width = clusterMarkWidth(node) + 6
-    return (
-      <g>
-        <title>Backing source: {previewNodeTitle(node)}</title>
+  return (
+    <>
+      {isSource && (
         <rect
-          x={point.x - width / 2}
-          y={point.y - point.radius - 3}
-          width={width}
-          height={point.radius * 2 + 6}
-          rx={point.radius + 3}
+          x={-5}
+          y={-5}
+          width={width + 10}
+          height={height + 10}
+          rx={15}
           fill="none"
           className="stroke-brand"
           strokeOpacity={0.3}
-          strokeWidth={0.9}
+          strokeWidth={1.5}
         />
-      </g>
-    )
-  }
-
-  return (
-    <g>
-      <title>Backing source: {previewNodeTitle(node)}</title>
-      <circle
-        cx={point.x}
-        cy={point.y}
-        r={point.radius + 3}
-        fill="none"
-        className="stroke-brand"
-        strokeOpacity={0.3}
-        strokeWidth={0.9}
+      )}
+      <rect
+        width={width}
+        height={height}
+        rx={10}
+        className="fill-surface-primary stroke-divider"
+        strokeWidth={1}
       />
-    </g>
+    </>
   )
 }
 
-function MinterCountMark({
+function NamedGrid({
   node,
-  point,
-  count,
+  width,
+  height,
 }: {
   node: InteropTokenRelationsNode
-  point: PreviewPoint
-  count: number
+  width: number
+  height: number
 }) {
-  const halfWidth =
-    node.deployments.length > 1 ? clusterMarkWidth(node) / 2 : point.radius
-  const x = point.x + halfWidth - 1
-  const y = point.y - point.radius + 1
-  const width = count > 9 ? 15 : 11
+  return (
+    <>
+      <TitleLine node={node} width={width} />
+      <MinterLine node={node} x={PADDING} y={42} maxX={width - PADDING} />
+      <CardGrid node={node} width={width} height={height} startY={56} />
+    </>
+  )
+}
+
+function OpenLedger({
+  node,
+  width,
+  height,
+}: {
+  node: InteropTokenRelationsNode
+  width: number
+  height: number
+}) {
+  return (
+    <>
+      <TitleLine node={node} width={width} />
+      <MinterLine node={node} x={PADDING} y={42} maxX={width - PADDING} />
+      <TwoColumnRows
+        node={node}
+        x={PADDING}
+        y={54}
+        width={width - PADDING * 2}
+        height={height - 66}
+      />
+    </>
+  )
+}
+
+function MinterRail({
+  node,
+  width,
+  height,
+}: {
+  node: InteropTokenRelationsNode
+  width: number
+  height: number
+}) {
+  const railWidth = width > 400 ? 130 : 108
+  const symbol = node.deployments[0]?.symbol ?? 'Token'
+  const bridge = node.bridges[0]
+  const extra = Math.max(0, node.bridges.length - 1)
+
+  return (
+    <>
+      <rect
+        x={0}
+        y={0}
+        width={railWidth}
+        height={height}
+        rx={10}
+        className="fill-brand"
+        fillOpacity={0.055}
+      />
+      <line
+        x1={railWidth}
+        x2={railWidth}
+        y1={0}
+        y2={height}
+        className="stroke-brand"
+        strokeOpacity={0.35}
+      />
+      <text
+        x={PADDING}
+        y={24}
+        className="fill-primary font-bold text-label-value-13"
+      >
+        {symbol}
+      </text>
+      {node.volume !== null && (
+        <text x={PADDING} y={44} className="fill-secondary text-label-value-12">
+          {formatCurrency(node.volume, 'usd')}
+        </text>
+      )}
+      <text x={PADDING} y={72} className="fill-secondary text-label-value-12">
+        Burn &amp; mint
+      </text>
+      <text x={PADDING} y={87} className="fill-secondary text-label-value-12">
+        cluster via
+      </text>
+      {bridge?.icon && (
+        <image href={bridge.icon} x={PADDING} y={94} width={16} height={16} />
+      )}
+      <text
+        x={bridge?.icon ? 34 : PADDING}
+        y={107}
+        className="fill-primary font-medium text-label-value-12"
+      >
+        {shorten(bridge?.name ?? 'Not identified', railWidth > 120 ? 13 : 9)}
+      </text>
+      {extra > 0 && (
+        <text
+          x={PADDING}
+          y={126}
+          className="fill-secondary text-label-value-12"
+        >
+          +{extra} more
+        </text>
+      )}
+      <text
+        x={PADDING}
+        y={height - PADDING}
+        className="fill-secondary text-label-value-12"
+      >
+        {node.deployments.length} chains
+      </text>
+      <TwoColumnRows
+        node={node}
+        x={railWidth + 12}
+        y={10}
+        width={width - railWidth - 24}
+        height={height - 20}
+        compact
+      />
+    </>
+  )
+}
+
+function MinterMasthead({
+  node,
+  width,
+  height,
+}: {
+  node: InteropTokenRelationsNode
+  width: number
+  height: number
+}) {
+  return (
+    <>
+      <TitleLine node={node} width={width} />
+      <rect
+        x={PADDING}
+        y={28}
+        width={width - PADDING * 2}
+        height={27}
+        rx={7}
+        className="fill-brand stroke-brand"
+        fillOpacity={0.07}
+        strokeOpacity={0.45}
+        strokeWidth={0.8}
+      />
+      <MinterLine
+        node={node}
+        x={PADDING + 8}
+        y={46}
+        maxX={width - PADDING - 8}
+      />
+      <LogoMatrix node={node} width={width} height={height} startY={64} />
+    </>
+  )
+}
+
+function LeadersAndRest({
+  node,
+  width,
+  height,
+}: {
+  node: InteropTokenRelationsNode
+  width: number
+  height: number
+}) {
+  const deployments = sortedDeployments(node)
+  const leaders = deployments.slice(0, 3)
+  const rest = deployments.slice(3)
+  const topY = 56
+  const topHeight = Math.min(52, Math.max(38, (height - topY - 12) * 0.36))
+  const gap = 6
+  const leaderWidth = (width - PADDING * 2 - gap * 2) / 3
+
+  return (
+    <>
+      <TitleLine node={node} width={width} />
+      <MinterLine node={node} x={PADDING} y={42} maxX={width - PADDING} />
+      {leaders.map((deployment, index) => (
+        <LeaderCard
+          key={`${deployment.chain}-${deployment.address}`}
+          deployment={deployment}
+          x={PADDING + index * (leaderWidth + gap)}
+          y={topY}
+          width={leaderWidth}
+          height={topHeight}
+        />
+      ))}
+      <RestMatrix
+        deployments={rest}
+        x={PADDING}
+        y={topY + topHeight + 6}
+        width={width - PADDING * 2}
+        height={height - topY - topHeight - 18}
+      />
+    </>
+  )
+}
+
+function ChainChips({
+  node,
+  width,
+  height,
+}: {
+  node: InteropTokenRelationsNode
+  width: number
+  height: number
+}) {
+  const deployments = sortedDeployments(node)
+  const columns = width > 400 ? 3 : 2
+  const rows = Math.ceil(deployments.length / columns)
+  const gapX = 8
+  const gapY = 8
+  const cellWidth = (width - PADDING * 2 - gapX * (columns - 1)) / columns
+  const rowHeight = (height - 68 - gapY * (rows - 1)) / rows
+
+  return (
+    <>
+      <TitleLine node={node} width={width} />
+      <MinterLine node={node} x={PADDING} y={42} maxX={width - PADDING} />
+      <text x={PADDING} y={59} className="fill-secondary text-label-value-12">
+        {node.deployments.length} interchangeable deployments
+      </text>
+      {deployments.map((deployment, index) => {
+        const column = index % columns
+        const row = Math.floor(index / columns)
+        const chipHeight = Math.min(25, rowHeight)
+        const y = 68 + row * (rowHeight + gapY) + (rowHeight - chipHeight) / 2
+        return (
+          <ChainChip
+            key={`${deployment.chain}-${deployment.address}`}
+            deployment={deployment}
+            x={PADDING + column * (cellWidth + gapX)}
+            y={y}
+            width={cellWidth}
+            height={chipHeight}
+          />
+        )
+      })}
+    </>
+  )
+}
+
+function VolumeBars({
+  node,
+  width,
+  height,
+}: {
+  node: InteropTokenRelationsNode
+  width: number
+  height: number
+}) {
+  return (
+    <>
+      <TitleLine node={node} width={width} />
+      <MinterLine node={node} x={PADDING} y={42} maxX={width - PADDING} />
+      <TwoColumnRows
+        node={node}
+        x={PADDING}
+        y={54}
+        width={width - PADDING * 2}
+        height={height - 66}
+        bars
+      />
+    </>
+  )
+}
+
+function BalancedOpenGrid({
+  node,
+  width,
+  height,
+}: {
+  node: InteropTokenRelationsNode
+  width: number
+  height: number
+}) {
+  return (
+    <>
+      <TitleLine node={node} width={width} />
+      <text x={PADDING} y={40} className="fill-secondary text-label-value-12">
+        One burn-mint set across {node.deployments.length} chains
+      </text>
+      <MinterLine node={node} x={PADDING} y={58} maxX={width - PADDING} />
+      <OpenGrid node={node} width={width} height={height} startY={66} />
+    </>
+  )
+}
+
+function TitleLine({
+  node,
+  width,
+}: {
+  node: InteropTokenRelationsNode
+  width: number
+}) {
+  return (
+    <>
+      <text
+        x={PADDING}
+        y={20}
+        className="fill-primary font-bold text-label-value-13"
+      >
+        {node.deployments[0]?.symbol ?? 'Token'}
+      </text>
+      {node.volume !== null && (
+        <text
+          x={width - PADDING}
+          y={20}
+          textAnchor="end"
+          className="fill-secondary font-medium text-label-value-12"
+        >
+          {formatCurrency(node.volume, 'usd')}
+        </text>
+      )}
+    </>
+  )
+}
+
+function MinterLine({
+  node,
+  x,
+  y,
+  maxX,
+  label = 'Burn & mint cluster via',
+}: {
+  node: InteropTokenRelationsNode
+  x: number
+  y: number
+  maxX: number
+  label?: string
+}) {
+  const bridge = node.bridges[0]
+  const labelWidth = label.length * 5.1
+  const iconX = x + labelWidth + 6
+  const nameX = iconX + (bridge?.icon ? 18 : 0)
+  const maxCharacters = Math.max(4, Math.floor((maxX - nameX) / 5.8))
+  const summary = formatBridgeNames(
+    node.bridges.map((candidate) => candidate.name),
+    maxCharacters,
+  )
 
   return (
     <g>
-      <title>{count} minter systems</title>
-      <rect
-        x={x - width / 2}
-        y={y - 5.5}
-        width={width}
-        height={11}
-        rx={5.5}
-        className="fill-surface-primary stroke-brand"
-        strokeWidth={1}
-      />
+      <title>
+        {node.bridges.map((candidate) => candidate.name).join(', ')}
+      </title>
+      <text x={x} y={y} className="fill-secondary text-label-value-12">
+        {label}
+      </text>
+      {bridge?.icon && (
+        <image href={bridge.icon} x={iconX} y={y - 11} width={14} height={14} />
+      )}
       <text
-        x={x}
-        y={y + 2.5}
-        textAnchor="middle"
-        className="fill-brand font-bold"
-        style={{ fontSize: 7 }}
+        x={nameX}
+        y={y}
+        className="fill-primary font-medium text-label-value-12"
       >
-        {count}
+        {shorten(summary, maxCharacters)}
       </text>
     </g>
   )
 }
 
-interface ClusterMarkMetrics {
-  width: number
-  contentWidth: number
-  iconStackWidth: number
-  iconDiameter: number
-  iconStep: number
-  logoSize: number
-  contentGap: number
-  countSlotWidth: number
-}
-
-function getClusterMarkMetrics(
-  node: InteropTokenRelationsNode,
-): ClusterMarkMetrics {
-  const shown = Math.min(3, node.deployments.length)
-  const iconDiameter = 8.5
-  const iconStep = 6.5
-  const logoSize = 6.25
-  const iconStackWidth = iconDiameter + Math.max(0, shown - 1) * iconStep
-  const contentGap = 3
-  const countSlotWidth = String(node.deployments.length).length === 1 ? 5 : 9
-  const contentWidth = iconStackWidth + contentGap + countSlotWidth
-  return {
-    width: contentWidth + 10,
-    contentWidth,
-    iconStackWidth,
-    iconDiameter,
-    iconStep,
-    logoSize,
-    contentGap,
-    countSlotWidth,
-  }
-}
-
-function clusterMarkWidth(node: InteropTokenRelationsNode): number {
-  return getClusterMarkMetrics(node).width
-}
-
-function BridgeMark({
-  bridges,
-  x,
-  y,
+function CardGrid({
+  node,
+  width,
+  height,
+  startY,
 }: {
-  bridges: InteropTokenRelationsEdge['bridges']
-  x: number
-  y: number
+  node: InteropTokenRelationsNode
+  width: number
+  height: number
+  startY: number
 }) {
-  const shown = bridges.slice(0, 2)
-  const width = 10 + Math.max(0, shown.length - 1) * 6
+  const deployments = sortedDeployments(node)
+  const columns = deployments.length <= 4 ? 2 : 3
+  const rows = Math.ceil(deployments.length / columns)
+  const gap = 6
+  const cellWidth = (width - PADDING * 2 - gap * (columns - 1)) / columns
+  const cellHeight = (height - startY - PADDING - gap * (rows - 1)) / rows
+
   return (
-    <g transform={`translate(${x - width / 2}, ${y - 5})`}>
-      <title>{bridges.map((bridge) => bridge.name).join(', ')}</title>
-      <rect
-        x={-2}
-        y={-2}
-        width={width + 4}
-        height={14}
-        rx={7}
-        className="fill-surface-primary stroke-divider"
-        strokeWidth={0.7}
-      />
-      {shown.map((bridge, index) => (
-        <image
-          key={bridge.id}
-          href={bridge.icon}
-          x={index * 6}
-          width={10}
-          height={10}
-          preserveAspectRatio="xMidYMid meet"
-        />
-      ))}
+    <g>
+      {deployments.map((deployment, index) => {
+        const column = index % columns
+        const row = Math.floor(index / columns)
+        return (
+          <MemberCard
+            key={`${deployment.chain}-${deployment.address}`}
+            deployment={deployment}
+            x={PADDING + column * (cellWidth + gap)}
+            y={startY + row * (cellHeight + gap)}
+            width={cellWidth}
+            height={cellHeight}
+          />
+        )
+      })}
     </g>
   )
 }
 
-function buildCompactTopology(
-  graph: InteropTokenRelationsGraph,
-  config: TopologyConfig,
-): CompactTopology {
-  const unconnected = new Set(graph.unconnectedNodeIds)
-  const nodes = graph.nodes.filter((node) => !unconnected.has(node.id))
-  const ids = new Set(nodes.map((node) => node.id))
-  const edges = graph.edges.filter(
-    (edge) => ids.has(edge.from) && ids.has(edge.to),
+function MemberCard({
+  deployment,
+  x,
+  y,
+  width,
+  height,
+}: {
+  deployment: InteropTokenRelationsDeployment
+  x: number
+  y: number
+  width: number
+  height: number
+}) {
+  return (
+    <g transform={`translate(${x}, ${y})`}>
+      <rect
+        width={width}
+        height={height}
+        rx={6}
+        className="fill-surface-secondary stroke-divider"
+        strokeWidth={0.75}
+      />
+      <ChainIcon
+        deployment={deployment}
+        x={8}
+        y={(height - 13) / 2 - 5}
+        size={13}
+      />
+      <text
+        x={27}
+        y={Math.min(17, height / 2)}
+        className="fill-primary font-medium text-label-value-12"
+      >
+        {shorten(deployment.chainName, 17)}
+      </text>
+      <text
+        x={width - 8}
+        y={height - 6}
+        textAnchor="end"
+        className="fill-secondary text-label-value-12"
+      >
+        {formatDeploymentVolume(deployment)}
+      </text>
+    </g>
   )
-  const heights = new Map(
-    nodes.map((node) => [node.id, getRelationsNodeHeight(node)]),
-  )
-  const widths = new Map(
-    nodes.map((node) => [node.id, getRelationsNodeWidth(node)]),
-  )
-  const full = layoutWrappedRelationsGraph(nodes, edges, [], heights, widths)
-
-  const rows = new Map<number, InteropTokenRelationsNode[]>()
-  for (const node of nodes) {
-    const row = full.rowOf.get(node.id) ?? 0
-    rows.set(row, [...(rows.get(row) ?? []), node])
-  }
-  const rowNumbers = [...rows.keys()].toSorted((a, b) => a - b)
-  const compactRowOf = new Map(rowNumbers.map((row, index) => [row, index]))
-  const lastRow = Math.max(0, rowNumbers.length - 1)
-  const points = new Map<string, PreviewPoint>()
-
-  for (const rowNumber of rowNumbers) {
-    const row = (rows.get(rowNumber) ?? []).toSorted(
-      (a, b) =>
-        (full.boxes.get(a.id)?.x ?? 0) - (full.boxes.get(b.id)?.x ?? 0) ||
-        a.id.localeCompare(b.id),
-    )
-    const desired = row.map((node) => {
-      const box = full.boxes.get(node.id)
-      const centre = box ? box.x + box.width / 2 : full.width / 2
-      return (
-        CANVAS_X_PADDING +
-        (centre / Math.max(1, full.width)) *
-          (CANVAS_WIDTH - CANVAS_X_PADDING * 2)
-      )
-    })
-    const xs = spreadRow(desired)
-    const rowIndex = compactRowOf.get(rowNumber) ?? 0
-    const y =
-      lastRow === 0
-        ? CANVAS_HEIGHT / 2
-        : CANVAS_Y_PADDING +
-          (rowIndex / lastRow) * (CANVAS_HEIGHT - CANVAS_Y_PADDING * 2)
-    row.forEach((node, index) => {
-      points.set(node.id, {
-        x: xs[index] ?? CANVAS_WIDTH / 2,
-        y,
-        radius: NODE_RADIUS,
-        row: rowIndex,
-      })
-    })
-  }
-
-  const routing = buildCompactRouting(edges, points)
-
-  const nodesById = new Map(nodes.map((node) => [node.id, node]))
-  const prominentCount = Math.max(config.edgeBadges, config.spotlight)
-  const prominentEdgeKeys = new Set(
-    edges
-      .filter((edge) => edge.bridges.length > 0)
-      .toSorted(
-        (a, b) =>
-          (nodesById.get(b.to)?.volume ?? -1) -
-            (nodesById.get(a.to)?.volume ?? -1) ||
-          wrappedEdgeKey(a).localeCompare(wrappedEdgeKey(b)),
-      )
-      .slice(0, prominentCount)
-      .map(wrappedEdgeKey),
-  )
-  const incomingNodeIds = new Set(edges.map((edge) => edge.to))
-  const rootIds = new Set(
-    nodes
-      .filter((node) => !incomingNodeIds.has(node.id))
-      .map((node) => node.id),
-  )
-  const minterIdsByNode = new Map(
-    nodes.map((node) => [
-      node.id,
-      new Set(node.bridges.map((bridge) => bridge.id)),
-    ]),
-  )
-  for (const edge of edges) {
-    const minterIds = minterIdsByNode.get(edge.to)
-    for (const bridge of edge.bridges) minterIds?.add(bridge.id)
-  }
-  const minterCountByNode = new Map(
-    [...minterIdsByNode].map(([nodeId, minterIds]) => [nodeId, minterIds.size]),
-  )
-
-  return {
-    nodes,
-    edges,
-    points,
-    connectors: routing.connectors,
-    buses: routing.buses,
-    geometries: routing.geometries,
-    prominentEdgeKeys,
-    rootIds,
-    minterCountByNode,
-  }
 }
 
-function spreadRow(desired: number[]): number[] {
-  if (desired.length <= 1) return desired
-  const available = CANVAS_WIDTH - CANVAS_X_PADDING * 2
-  const gap = Math.min(28, available / (desired.length - 1))
-  const result = [...desired]
-  for (let index = 1; index < result.length; index++) {
-    result[index] = Math.max(result[index] ?? 0, (result[index - 1] ?? 0) + gap)
-  }
-  const overflow = (result.at(-1) ?? 0) - (CANVAS_WIDTH - CANVAS_X_PADDING)
-  if (overflow > 0) {
-    for (let index = 0; index < result.length; index++) {
-      result[index] = (result[index] ?? 0) - overflow
-    }
-  }
-  for (let index = result.length - 2; index >= 0; index--) {
-    result[index] = Math.min(result[index] ?? 0, (result[index + 1] ?? 0) - gap)
-  }
-  const underflow = CANVAS_X_PADDING - (result[0] ?? 0)
-  if (underflow > 0) {
-    for (let index = 0; index < result.length; index++) {
-      result[index] = (result[index] ?? 0) + underflow
-    }
-  }
-  return result
-}
+function TwoColumnRows({
+  node,
+  x,
+  y,
+  width,
+  height,
+  compact = false,
+  bars = false,
+}: {
+  node: InteropTokenRelationsNode
+  x: number
+  y: number
+  width: number
+  height: number
+  compact?: boolean
+  bars?: boolean
+}) {
+  const deployments = sortedDeployments(node)
+  const columns = node.deployments.length <= 3 ? 1 : 2
+  const rows = Math.ceil(deployments.length / columns)
+  const columnGap = columns === 1 ? 0 : compact ? 8 : 16
+  const cellWidth = (width - columnGap * (columns - 1)) / columns
+  const rowHeight = height / rows
+  const measuredVolumes = deployments.flatMap((deployment) =>
+    deployment.volume === null ? [] : [deployment.volume],
+  )
+  const maxVolume = Math.max(0, ...measuredVolumes)
 
-interface CompactRouting {
-  connectors: PreviewPathGeometry[]
-  buses: PreviewPathGeometry[]
-  geometries: Map<string, PreviewEdgeGeometry>
-}
-
-interface TargetRowGroup {
-  row: number
-  busY: number
-  edges: InteropTokenRelationsEdge[]
-}
-
-function buildCompactRouting(
-  edges: InteropTokenRelationsEdge[],
-  points: ReadonlyMap<string, PreviewPoint>,
-): CompactRouting {
-  const outgoing = new Map<string, InteropTokenRelationsEdge[]>()
-  for (const edge of edges) {
-    outgoing.set(edge.from, [...(outgoing.get(edge.from) ?? []), edge])
-  }
-
-  const connectors: PreviewPathGeometry[] = []
-  const buses: PreviewPathGeometry[] = []
-  const geometries = new Map<string, PreviewEdgeGeometry>()
-  const sourceIds = [...outgoing.keys()].toSorted()
-
-  sourceIds.forEach((sourceId, sourceLane) => {
-    const from = points.get(sourceId)
-    if (!from) return
-    const sourceEdges = outgoing.get(sourceId) ?? []
-    const startY = from.y + from.radius + LINE_NODE_GAP
-    const edgesByRow = new Map<number, InteropTokenRelationsEdge[]>()
-    for (const edge of sourceEdges) {
-      const target = points.get(edge.to)
-      if (!target) continue
-      edgesByRow.set(target.row, [...(edgesByRow.get(target.row) ?? []), edge])
-    }
-
-    const groups: TargetRowGroup[] = [...edgesByRow]
-      .toSorted(([a], [b]) => a - b)
-      .map(([row, rowEdges]) => {
-        const nearestTargetY = Math.min(
-          ...rowEdges.map((edge) => {
-            const target = points.get(edge.to)
-            return target
-              ? target.y - target.radius - LINE_NODE_GAP
-              : CANVAS_HEIGHT
-          }),
+  return (
+    <g>
+      {deployments.map((deployment, index) => {
+        const column = index % columns
+        const row = Math.floor(index / columns)
+        return (
+          <OpenRow
+            key={`${deployment.chain}-${deployment.address}`}
+            deployment={deployment}
+            x={x + column * (cellWidth + columnGap)}
+            y={y + row * rowHeight}
+            width={cellWidth}
+            height={rowHeight}
+            compact={compact}
+            barRatio={
+              bars && deployment.volume !== null && maxVolume > 0
+                ? deployment.volume / maxVolume
+                : undefined
+            }
+          />
         )
-        const available = Math.max(0, nearestTargetY - startY)
-        const clearance = Math.max(3, Math.min(6, available * 0.3))
-        return {
-          row,
-          busY:
-            available > 5 ? nearestTargetY - clearance : startY + available / 2,
-          edges: rowEdges,
-        }
-      })
-
-    const adjacent = groups.find((group) => group.row === from.row + 1)
-    const deep = groups.filter((group) => group !== adjacent)
-    const connectorParts: string[] = []
-    if (adjacent) {
-      connectorParts.push(`M ${from.x} ${startY} V ${adjacent.busY}`)
-    }
-
-    let laneX: number | undefined
-    let departureY: number | undefined
-    if (deep.length > 0) {
-      laneX = getCompactSideLane(from, deep, points, sourceLane)
-      const firstBusY = Math.min(...deep.map((group) => group.busY))
-      const deepestBusY = Math.max(...deep.map((group) => group.busY))
-      const connectorLimit = adjacent
-        ? Math.min(adjacent.busY, firstBusY)
-        : firstBusY
-      departureY =
-        startY +
-        Math.max(1.5, Math.min(4, Math.max(0, connectorLimit - startY) / 2))
-      connectorParts.push(
-        adjacent
-          ? `M ${from.x} ${departureY} H ${laneX} V ${deepestBusY}`
-          : `M ${from.x} ${startY} V ${departureY} H ${laneX} V ${deepestBusY}`,
-      )
-    }
-
-    if (connectorParts.length > 0) {
-      connectors.push({
-        key: `connector-${sourceId}`,
-        path: connectorParts.join(' '),
-      })
-    }
-
-    for (const group of groups) {
-      const isAdjacent = group === adjacent
-      const anchorX = isAdjacent ? from.x : laneX
-      if (anchorX === undefined) continue
-      const targetXs = group.edges.flatMap((edge) => {
-        const target = points.get(edge.to)
-        return target ? [target.x] : []
-      })
-      const minX = Math.min(anchorX, ...targetXs)
-      const maxX = Math.max(anchorX, ...targetXs)
-      if (maxX - minX > 0.5) {
-        buses.push({
-          key: `bus-${sourceId}-${group.row}`,
-          path: `M ${minX} ${group.busY} H ${maxX}`,
-        })
-      }
-
-      for (const edge of group.edges) {
-        const target = points.get(edge.to)
-        if (!target) continue
-        const endY = target.y - target.radius - LINE_NODE_GAP
-        const routePath = isAdjacent
-          ? `M ${from.x} ${startY} V ${group.busY} H ${target.x} V ${endY}`
-          : `M ${from.x} ${startY} V ${departureY} H ${laneX} V ${group.busY} H ${target.x} V ${endY}`
-        geometries.set(wrappedEdgeKey(edge), {
-          routePath,
-          branchPath: `M ${target.x} ${group.busY} V ${endY}`,
-          badgeX: target.x,
-          badgeY: group.busY,
-        })
-      }
-    }
-  })
-
-  return { connectors, buses, geometries }
+      })}
+    </g>
+  )
 }
 
-function getCompactSideLane(
-  from: PreviewPoint,
-  groups: TargetRowGroup[],
-  points: ReadonlyMap<string, PreviewPoint>,
-  sourceLane: number,
-): number {
-  const deepestRow = Math.max(...groups.map((group) => group.row))
-  const traversed = [...points.values()].filter(
-    (point) => point.row > from.row && point.row <= deepestRow,
+function OpenRow({
+  deployment,
+  x,
+  y,
+  width,
+  height,
+  compact,
+  barRatio,
+}: {
+  deployment: InteropTokenRelationsDeployment
+  x: number
+  y: number
+  width: number
+  height: number
+  compact: boolean
+  barRatio?: number
+}) {
+  const iconSize = compact ? 11 : 13
+  const volume =
+    deployment.volume === null ? '—' : formatDeploymentVolume(deployment)
+
+  return (
+    <g transform={`translate(${x}, ${y})`}>
+      {barRatio !== undefined && (
+        <rect
+          x={0}
+          y={3}
+          width={Math.max(2, width * barRatio)}
+          height={Math.max(1, height - 6)}
+          rx={4}
+          className="fill-brand"
+          fillOpacity={0.09}
+        />
+      )}
+      <line
+        x1={0}
+        x2={width}
+        y1={height}
+        y2={height}
+        className="stroke-divider"
+        strokeWidth={0.75}
+      />
+      <ChainIcon
+        deployment={deployment}
+        x={0}
+        y={(height - iconSize) / 2}
+        size={iconSize}
+      />
+      <text
+        x={iconSize + 6}
+        y={height / 2 + 4}
+        className="fill-primary font-medium text-label-value-12"
+      >
+        {shorten(deployment.chainName, compact ? 7 : 15)}
+      </text>
+      <text
+        x={width}
+        y={height / 2 + 4}
+        textAnchor="end"
+        className="fill-secondary text-label-value-12"
+      >
+        {volume}
+      </text>
+    </g>
   )
-  const leftBoundary = Math.min(
-    from.x - from.radius,
-    ...traversed.map((point) => point.x - point.radius),
+}
+
+function LogoMatrix({
+  node,
+  width,
+  height,
+  startY,
+}: {
+  node: InteropTokenRelationsNode
+  width: number
+  height: number
+  startY: number
+}) {
+  const deployments = sortedDeployments(node)
+  const columns = deployments.length <= 4 ? deployments.length : 4
+  const rows = Math.ceil(deployments.length / columns)
+  const cellWidth = (width - PADDING * 2) / columns
+  const cellHeight = (height - startY - 8) / rows
+
+  return (
+    <g>
+      {deployments.map((deployment, index) => {
+        const column = index % columns
+        const row = Math.floor(index / columns)
+        const centerX = PADDING + column * cellWidth + cellWidth / 2
+        const top = startY + row * cellHeight
+        const iconSize = Math.min(18, Math.max(13, cellHeight * 0.34))
+        return (
+          <g key={`${deployment.chain}-${deployment.address}`}>
+            <ChainIcon
+              deployment={deployment}
+              x={centerX - iconSize / 2}
+              y={top + 3}
+              size={iconSize}
+            />
+            <text
+              x={centerX}
+              y={top + iconSize + 15}
+              textAnchor="middle"
+              className="fill-primary font-medium text-label-value-12"
+            >
+              {shorten(deployment.chainName, 10)}
+            </text>
+            <text
+              x={centerX}
+              y={Math.min(top + cellHeight - 3, top + iconSize + 28)}
+              textAnchor="middle"
+              className="fill-secondary text-label-value-12"
+            >
+              {deployment.volume === null
+                ? '—'
+                : formatDeploymentVolume(deployment)}
+            </text>
+          </g>
+        )
+      })}
+    </g>
   )
-  const rightBoundary = Math.max(
-    from.x + from.radius,
-    ...traversed.map((point) => point.x + point.radius),
+}
+
+function LeaderCard({
+  deployment,
+  x,
+  y,
+  width,
+  height,
+}: {
+  deployment: InteropTokenRelationsDeployment
+  x: number
+  y: number
+  width: number
+  height: number
+}) {
+  return (
+    <g transform={`translate(${x}, ${y})`}>
+      <rect
+        width={width}
+        height={height}
+        rx={7}
+        className="fill-brand stroke-brand"
+        fillOpacity={0.055}
+        strokeOpacity={0.4}
+      />
+      <ChainIcon deployment={deployment} x={8} y={8} size={15} />
+      <text
+        x={29}
+        y={20}
+        className="fill-primary font-medium text-label-value-12"
+      >
+        {shorten(deployment.chainName, 13)}
+      </text>
+      <text
+        x={width - 8}
+        y={height - 8}
+        textAnchor="end"
+        className="fill-brand font-medium text-label-value-12"
+      >
+        {formatDeploymentVolume(deployment)}
+      </text>
+    </g>
   )
-  const laneGap = 7 + sourceLane * 1.5
-  const left = Math.max(3, leftBoundary - laneGap)
-  const right = Math.min(CANVAS_WIDTH - 3, rightBoundary + laneGap)
-  const targetXs = groups.flatMap((group) =>
-    group.edges.flatMap((edge) => {
-      const target = points.get(edge.to)
-      return target ? [target.x] : []
-    }),
+}
+
+function RestMatrix({
+  deployments,
+  x,
+  y,
+  width,
+  height,
+}: {
+  deployments: InteropTokenRelationsDeployment[]
+  x: number
+  y: number
+  width: number
+  height: number
+}) {
+  if (deployments.length === 0) return null
+  const columns = Math.min(4, deployments.length)
+  const rows = Math.ceil(deployments.length / columns)
+  const cellWidth = width / columns
+  const cellHeight = height / rows
+  return (
+    <g>
+      {deployments.map((deployment, index) => {
+        const column = index % columns
+        const row = Math.floor(index / columns)
+        const cellX = x + column * cellWidth
+        const cellY = y + row * cellHeight
+        return (
+          <g key={`${deployment.chain}-${deployment.address}`}>
+            <ChainIcon
+              deployment={deployment}
+              x={cellX}
+              y={cellY + (cellHeight - 12) / 2}
+              size={12}
+            />
+            <text
+              x={cellX + 17}
+              y={cellY + cellHeight / 2 + 4}
+              className="fill-primary text-label-value-12"
+            >
+              {shorten(deployment.chainName, 8)}
+            </text>
+          </g>
+        )
+      })}
+    </g>
   )
-  const targetCentre =
-    targetXs.reduce((sum, targetX) => sum + targetX, 0) /
-    Math.max(1, targetXs.length)
-  const leftDistance = Math.abs(from.x - left) + Math.abs(targetCentre - left)
-  const rightDistance =
-    Math.abs(from.x - right) + Math.abs(targetCentre - right)
-  return leftDistance <= rightDistance ? left : right
+}
+
+function ChainChip({
+  deployment,
+  x,
+  y,
+  width,
+  height,
+}: {
+  deployment: InteropTokenRelationsDeployment
+  x: number
+  y: number
+  width: number
+  height: number
+}) {
+  const iconSize = Math.min(14, height - 6)
+  return (
+    <g transform={`translate(${x}, ${y})`}>
+      <rect
+        width={width}
+        height={height}
+        rx={height / 2}
+        className="fill-surface-primary stroke-divider"
+        strokeWidth={0.9}
+      />
+      <ChainIcon
+        deployment={deployment}
+        x={7}
+        y={(height - iconSize) / 2}
+        size={iconSize}
+      />
+      <text
+        x={iconSize + 12}
+        y={height / 2 + 4}
+        className="fill-primary font-medium text-label-value-12"
+      >
+        {shorten(deployment.chainName, 14)}
+      </text>
+    </g>
+  )
+}
+
+function OpenGrid({
+  node,
+  width,
+  height,
+  startY,
+}: {
+  node: InteropTokenRelationsNode
+  width: number
+  height: number
+  startY: number
+}) {
+  const deployments = sortedDeployments(node)
+  const columns = deployments.length <= 4 ? 2 : 3
+  const rows = Math.ceil(deployments.length / columns)
+  const columnGap = 10
+  const cellWidth = (width - PADDING * 2 - columnGap * (columns - 1)) / columns
+  const cellHeight = (height - startY - PADDING) / rows
+
+  return (
+    <g>
+      {deployments.map((deployment, index) => {
+        const column = index % columns
+        const row = Math.floor(index / columns)
+        const x = PADDING + column * (cellWidth + columnGap)
+        const y = startY + row * cellHeight
+        return (
+          <g key={`${deployment.chain}-${deployment.address}`}>
+            <line
+              x1={x}
+              x2={x + cellWidth}
+              y1={y + cellHeight}
+              y2={y + cellHeight}
+              className="stroke-divider"
+              strokeWidth={0.75}
+            />
+            <ChainIcon
+              deployment={deployment}
+              x={x}
+              y={y + Math.max(3, cellHeight / 2 - 11)}
+              size={13}
+            />
+            <text
+              x={x + 19}
+              y={y + Math.max(14, cellHeight / 2 - 1)}
+              className="fill-primary font-medium text-label-value-12"
+            >
+              {shorten(deployment.chainName, 11)}
+            </text>
+            <text
+              x={x + cellWidth}
+              y={y + cellHeight - 5}
+              textAnchor="end"
+              className="fill-secondary text-label-value-12"
+            >
+              {deployment.volume === null
+                ? '—'
+                : formatDeploymentVolume(deployment)}
+            </text>
+          </g>
+        )
+      })}
+    </g>
+  )
+}
+
+function ChainIcon({
+  deployment,
+  x,
+  y,
+  size,
+}: {
+  deployment: InteropTokenRelationsDeployment
+  x: number
+  y: number
+  size: number
+}) {
+  if (!deployment.iconUrl) return null
+  return (
+    <image href={deployment.iconUrl} x={x} y={y} width={size} height={size} />
+  )
+}
+
+function sortedDeployments(
+  node: InteropTokenRelationsNode,
+): InteropTokenRelationsDeployment[] {
+  return node.deployments.toSorted(byDeploymentVolume)
 }
 
 function byDeploymentVolume(
-  a: InteropTokenRelationsNode['deployments'][number],
-  b: InteropTokenRelationsNode['deployments'][number],
-) {
+  a: InteropTokenRelationsDeployment,
+  b: InteropTokenRelationsDeployment,
+): number {
   return (b.volume ?? -1) - (a.volume ?? -1) || a.chain.localeCompare(b.chain)
 }
 
-function previewNodeTitle(node: InteropTokenRelationsNode): string {
-  if (node.deployments.length > 1) {
-    return `Burn-mint set: ${node.deployments.map((deployment) => deployment.chainName).join(', ')}`
+function formatDeploymentVolume(
+  deployment: InteropTokenRelationsDeployment,
+): string {
+  return deployment.volume === null
+    ? 'No volume data'
+    : formatCurrency(deployment.volume, 'usd')
+}
+
+function shorten(value: string, length: number): string {
+  return value.length > length ? `${value.slice(0, length - 1)}…` : value
+}
+
+function formatBridgeNames(names: string[], maxCharacters: number): string {
+  if (names.length === 0) return 'Not identified'
+  const full = names.join(', ')
+  if (full.length <= maxCharacters) return full
+
+  for (let visible = names.length - 1; visible >= 1; visible--) {
+    const summary = `${names.slice(0, visible).join(', ')} +${names.length - visible}`
+    if (summary.length <= maxCharacters) return summary
   }
-  return node.deployments[0]?.chainName ?? 'Unknown deployment'
+
+  return shorten(names[0] ?? 'Not identified', maxCharacters)
 }

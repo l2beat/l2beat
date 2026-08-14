@@ -42,6 +42,12 @@ export async function getTokenGraphTiles(): Promise<TokenGraphTile[]> {
 
 async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
   const tokenDb = getTokenDb()
+  const activeInteropChains = getInteropChains().filter(
+    (chain) => !chain.isUpcoming,
+  )
+  const supportedChainIds = new Set(
+    activeInteropChains.map((chain) => chain.id),
+  )
   // Roughly 1s in parallel against a warm pool, versus 2.6s sequentially.
   // Assembling the tiles from the result costs ~100ms, so the reads are the
   // whole cost of this function.
@@ -61,11 +67,11 @@ async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
     ps.getProjects({ select: ['interopConfig'] }),
   ])
 
-  const activeInteropChains = getInteropChains().filter(
-    (chain) => !chain.isUpcoming,
+  const supportedDeployments = deployedTokens.filter((deployment) =>
+    supportedChainIds.has(deployment.chain),
   )
   const chainInfo = getChainDisplayInfo(
-    deployedTokens.map((deployment) => deployment.chain),
+    supportedDeployments.map((deployment) => deployment.chain),
     mapInteropChainsToWithIcons(manifest, activeInteropChains),
     projectsWithChains,
   )
@@ -77,21 +83,18 @@ async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
   const chainNameById = new Map(
     [...chainInfo].map(([chain, info]) => [chain, info.name]),
   )
-  const supportedChainIds = new Set(
-    activeInteropChains.map((chain) => chain.id),
-  )
   const volumeByDeployment = new Map(
-    deployedTokens.map((deployment) => [
+    supportedDeployments.map((deployment) => [
       endpointKey(deployment.chain, deployment.address),
       volumeMaps.volumeByAggregatedDeployment.get(
         aggregatedDeploymentKey(deployment.chain, deployment.address),
-      ) ?? (supportedChainIds.has(deployment.chain) ? 0 : null),
+      ) ?? 0,
     ]),
   )
 
   return buildTokenGraphTiles({
     abstractTokens,
-    deployedTokens,
+    deployedTokens: supportedDeployments,
     routes,
     volumeByTokenId: volumeMaps.volumeByTokenId,
     volumeByDeployment,
