@@ -43,6 +43,10 @@ export const stargate: BaseProject = {
         plugin: 'stargate',
         bridgeType: 'lockAndMint',
       },
+      {
+        plugin: 'stargate',
+        bridgeType: 'burnAndMint',
+      },
     ],
     durationSplit: {
       lockAndMint: [
