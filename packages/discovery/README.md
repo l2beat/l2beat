@@ -1534,7 +1534,12 @@ manually with `l2b discover-starknet`.
    (the Starknet counterpart of Safe owners): `$signers`/`$threshold` for
    StarkWare/Braavos-style and Argent multisigs, `$publicKey` for
    OpenZeppelin single-key accounts (Cairo 0 and 1), `$owner`/`$guardian`
-   for Argent user accounts.
+   for Argent user accounts. Accounts carrying `$signers` present like EVM
+   Safes: they are typed `Multisig`, named `Multisig 1`, `Multisig 2`, ...
+   (in address order; config `names` take precedence), and their classes
+   shape-match templates like any contract (see
+   `_templates/starknet/MultisigAccount`), so a known multisig class gets
+   its description automatically.
 3. Applies a template — explicitly suggested via `fields[].template` on a
    referrer, or shape-matched by the sha256 of the flattened source against
    `_templates/**/shapes.json` (multiple shape entries per template cover
