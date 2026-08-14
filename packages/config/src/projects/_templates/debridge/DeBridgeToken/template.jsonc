@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Implementation contract for deBridge-wrapped tokens (deTokens). Minting and burning of deTokens is restricted to the MINTER_ROLE, which is held by the DeBridgeGate.",
+  "ignoreMethods": ["DOMAIN_SEPARATOR", "totalSupply"],
+  "ignoreInWatchMode": ["nonce"]
+}

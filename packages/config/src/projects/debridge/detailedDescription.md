@@ -1,0 +1,31 @@
+# Architecture
+
+deBridge deploys a central `DeBridgeGate` contract on each supported chain. It combines an arbitrary message bridge and a lock-and-mint token bridge: on an asset's native chain, tokens are locked in the gate; on all other chains, the gate mints and burns deBridge-wrapped tokens (*deTokens*). Optional calldata attached to a transfer is executed by a dedicated `CallProxy` contract, which performs the call from its own address to isolate it from the gate's balances. Asset listing on the native side is permissionless: sending any local ERC20 through the gate auto-registers it (with unlimited transfer caps and no elevated-confirmation threshold until the admin configures them). Transferred amounts are normalized to 8 significant decimals. On Ethereum, a `WethGate` helper (for WETH unwrapping) and the `SimpleFeeProxy` (protocol fee withdrawal) complete the picture.
+
+# Message lifecycle
+
+A `send()` or `sendMessage()` call locks or burns the asset and emits a *submission* whose ID commits to the bridged asset, source and destination chain IDs, amount, receiver, a gate-wide nonce and — if calldata is attached — the execution fee, flags, fallback address, calldata hash and original sender. The protocol charges a flat native-token fee (currently 0.001 ETH on Ethereum) plus a variable fee (currently 10 bps); the admin can grant per-address discounts up to 100%. Fees accrue inside the gate and can only be withdrawn through the `SimpleFeeProxy`, which pays them out to the holder of its `FEE_COLLECTOR_ROLE` (an EOA); the fee path cannot reach bridge collateral.
+
+On the destination chain, claiming is permissionless: anyone can submit the validator signatures for a submission ID to `claim()`, earning the optional execution fee as a relayer reward. Replay is prevented by marking each submission ID as used. Attached calldata is forwarded to the `CallProxy` together with the bridged funds. Depending on submission flags, the call reverts the whole claim on failure (`REVERT_IF_EXTERNAL_FAIL`) or falls back to sending funds to a fallback address, and the authenticated origin (source chain ID and original sender) is exposed to the callee for the duration of the call (`PROXY_WITH_SENDER`). Since anyone can route arbitrary calls through the `CallProxy`, integrating contracts must treat it as an untrusted caller and rely only on this authenticated-origin channel.
+
+# Crosschain validation
+
+deBridge validators observe source chains offchain and sign submission IDs with plain ECDSA keys (an Ethereum signed-message over the 32-byte ID; no EIP-712 domain). The `SignatureVerifier` on the destination chain — callable only by the gate — accepts a submission if at least `minConfirmations` of the registered validator addresses have signed (currently 8 of 12 on Ethereum) and every validator flagged as *required* has signed (currently none is flagged). There is no fraud proof, light client, or any other check: a quorum of validator keys can authorize arbitrary mints of deTokens and unlocks of locked collateral on every connected chain.
+
+Two additional rate limits exist in the code: transfers above a per-asset amount threshold require an elevated signature count, and a per-block circuit breaker raises the requirement once more than `confirmationThreshold` submissions are approved within one block. As currently configured on Ethereum, both elevated thresholds are set to 3 signatures — below the baseline quorum of 8 — and the per-asset amount thresholds are unset (max), so neither mechanism has any effect. Deploying a deToken for a new asset (`deployNewAsset`) is likewise permissionless but requires the same validator quorum over the asset's metadata.
+
+# Wrapped tokens (deTokens)
+
+deTokens are deployed on first use by the `DeBridgeTokenDeployer` (callable only by the gate) as beacon proxies at deterministic addresses. The beacon is the deployer contract itself: its admin can re-point the shared implementation of **all** deTokens on the chain in a single transaction that emits no event. Each deToken grants `MINTER_ROLE` to the gate and both `DEFAULT_ADMIN_ROLE` and `PAUSER_ROLE` to the configured `deBridgeTokenAdmin` (the deBridge multisig on Ethereum), which can therefore pause transfers of any deToken or grant additional minters — i.e. mint unbacked deTokens — without touching the bridge itself.
+
+# Censorship and pausing
+
+The gate admin can block (and unblock) individual submission IDs, permanently preventing specific already-signed transfers from being claimed, and can toggle entire chains as supported senders or receivers. Pausing is asymmetric: the `GOVMONITORING_ROLE` can pause all sends, claims and deToken deployments unilaterally, while only the `DEFAULT_ADMIN_ROLE` can unpause (on Ethereum, both roles are held by the same multisig). A pause freezes in-flight submissions, but they remain claimable after unpausing; fee withdrawal and all admin setters keep working while paused.
+
+# Upgradeability and governance
+
+All core contracts (`DeBridgeGate`, `SignatureVerifier`, `CallProxy`, `DeBridgeTokenDeployer`, `SimpleFeeProxy`) are transparent upgradeable proxies whose `ProxyAdmin` is owned by a 5/8 deBridge multisig, with no timelock or exit window. The same multisig holds the `DEFAULT_ADMIN_ROLE` on all of them, so without an upgrade it can already replace the `SignatureVerifier` (i.e. swap out the entire validation layer), change the validator set and signature thresholds (the quorum is only enforced to remain a majority of the registered set), replace the `CallProxy` and token deployer, redirect fee withdrawal rights, and censor submissions. The gate also has a `feeContractUpdater` slot that can adjust the flat protocol fee automatically (unset on Ethereum).
+
+# Monitoring
+
+deBridge provides an [explorer](https://app.debridge.finance/explorer) for tracking crosschain transfers, and the gate emits dedicated `MonitoringSendEvent`/`MonitoringClaimEvent` events carrying the locked/minted totals as an offchain solvency-tracking aid. However, many security-relevant admin functions (replacing the signature verifier, changing signature thresholds or amount thresholds, re-pointing the deToken beacon implementation, setting the fee proxy or fee discounts) emit no events at all, so they can only be caught by storage diffing, as done by L2BEAT's internal monitoring.
