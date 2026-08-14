@@ -74,6 +74,25 @@ describe(formatSeconds.name, () => {
     })
   })
 
+  describe('negative and bigint input', () => {
+    it('formats negative values with a minus sign', () => {
+      expect(formatSeconds(-1)).toEqual('-1s')
+      expect(formatSeconds(-61)).toEqual('-1m 1s')
+      expect(formatSeconds(-61, { fullUnit: true })).toEqual(
+        '-1 minute 1 second',
+      )
+    })
+
+    it('accepts bigint values', () => {
+      expect(formatSeconds(61n)).toEqual('1m 1s')
+      expect(formatSeconds(0n)).toEqual('0s')
+      expect(formatSeconds(-61n)).toEqual('-1m 1s')
+      expect(formatSeconds(-61n, { fullUnit: true })).toEqual(
+        '-1 minute 1 second',
+      )
+    })
+  })
+
   describe('full units names', () => {
     it('rounds up seconds to lower unit and pluralize unit', () => {
       expect(formatSeconds(1, { fullUnit: true })).toEqual('1 second')

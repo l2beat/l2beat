@@ -6,10 +6,15 @@ const units = ['y', 'mo', 'd', 'h', 'm', 's']
 const fullUnits = ['year', 'month', 'day', 'hour', 'minute', 'second']
 
 export function formatSeconds(
-  seconds: number,
+  seconds: number | bigint,
   opts?: { preventRoundingUp?: boolean; fullUnit?: boolean },
 ): string {
   assert(seconds !== undefined, 'seconds is required')
+
+  const value = Number(seconds)
+  if (value < 0) {
+    return `-${formatSeconds(-value, opts)}`
+  }
 
   const SECONDS_IN_YEAR = 365 * 24 * 60 * 60
   const SECONDS_IN_MONTH = 30 * 24 * 60 * 60
@@ -17,22 +22,22 @@ export function formatSeconds(
   const SECONDS_IN_HOUR = 60 * 60
   const SECONDS_IN_MINUTE = 60
 
-  const years = Math.floor(seconds / SECONDS_IN_YEAR)
-  const months = Math.floor((seconds % SECONDS_IN_YEAR) / SECONDS_IN_MONTH)
+  const years = Math.floor(value / SECONDS_IN_YEAR)
+  const months = Math.floor((value % SECONDS_IN_YEAR) / SECONDS_IN_MONTH)
   const days = Math.floor(
-    ((seconds % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) / SECONDS_IN_DAY,
+    ((value % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) / SECONDS_IN_DAY,
   )
   const hours = Math.floor(
-    (((seconds % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) % SECONDS_IN_DAY) /
+    (((value % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) % SECONDS_IN_DAY) /
       SECONDS_IN_HOUR,
   )
   const minutes = Math.floor(
-    ((((seconds % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) % SECONDS_IN_DAY) %
+    ((((value % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) % SECONDS_IN_DAY) %
       SECONDS_IN_HOUR) /
       SECONDS_IN_MINUTE,
   )
   const secs = Math.floor(
-    ((((seconds % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) % SECONDS_IN_DAY) %
+    ((((value % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) % SECONDS_IN_DAY) %
       SECONDS_IN_HOUR) %
       SECONDS_IN_MINUTE,
   )
