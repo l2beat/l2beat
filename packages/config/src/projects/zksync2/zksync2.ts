@@ -1,7 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
-  formatLargeNumber,
+  formatNumber,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -110,10 +110,10 @@ const proposalThresholdM =
 const quorumM =
   discovery.getContractValueBigInt('ZkProtocolGovernor', 'currentQuorum') /
   1000000000000000000000000n // result: M of tokens
-const zkMaxSupply = formatLargeNumber(
+const zkMaxSupply = formatNumber(
   Number(discovery.getContractValueBigInt('ZkToken', 'maxSupply') / 10n ** 18n),
 )
-const zkTotalSupply = formatLargeNumber(
+const zkTotalSupply = formatNumber(
   Number(
     discovery.getContractValueBigInt('ZkToken', 'totalSupply') / 10n ** 18n,
   ),
