@@ -301,7 +301,32 @@
     },
     {
       "mode": "auto",
-      "id": "xlayer-USDC",
+      "id": "xlayer-USDC-1",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB6CEceAB302E2E4948951eE7843FC24E92933061",
+        "chain": "xlayer",
+        "decimals": 6,
+        "sinceTimestamp": 1785169210
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "xlayer-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
