@@ -4,15 +4,15 @@ deBridge deploys a central `DeBridgeGate` contract on each supported chain. It c
 
 # Message lifecycle
 
-A `send()` or `sendMessage()` call locks or burns the asset and emits a *submission* whose ID commits to the bridged asset, source and destination chain IDs, amount, receiver, a gate-wide nonce and — if calldata is attached — the execution fee, flags, fallback address, calldata hash and original sender. The protocol charges a flat native-token fee (currently 0.001 ETH on Ethereum) plus a variable fee (currently 10 bps).
+A `send()` or `sendMessage()` call locks or burns the asset and emits a *submission* whose ID commits to the bridged asset, source and destination chain IDs, amount, receiver, a gate-wide nonce and — if calldata is attached — the execution fee, flags, fallback address, calldata hash and original sender. The protocol charges a flat native-token fee (currently {{fixedNativeFee}} ETH on Ethereum) plus a variable fee (currently {{transferFeeBps}} bps).
 
 On the destination chain, claiming is permissionless, but depends on validator signatures: anyone can submit them for a submission ID to `claim()`, earning the optional execution fee as a relayer reward. Attached calldata is forwarded to the `CallProxy` together with the bridged funds.
 
 # Crosschain validation
 
-deBridge validators observe source chains offchain and sign submission IDs with plain ECDSA keys. The `SignatureVerifier` on the destination chain — callable only by the gate — accepts a submission if at least `minConfirmations` of the registered validator addresses have signed (currently 8 of 12 on Ethereum) and every validator flagged as *required* has signed (currently none is flagged).
+deBridge validators observe source chains offchain and sign submission IDs with plain ECDSA keys. The `SignatureVerifier` on the destination chain — callable only by the gate — accepts a submission if at least `minConfirmations` of the registered validator addresses have signed (currently {{quorum}} on Ethereum) and every validator flagged as *required* has signed (currently none is flagged).
 
-Two additional rate limits exist in the code: transfers above a per-asset amount threshold require an elevated signature count, and a per-block circuit breaker raises the requirement once more than `confirmationThreshold` submissions are approved within one block. As currently configured on Ethereum, both elevated thresholds are set to 3 signatures — below the baseline quorum of 8 — and the per-asset amount thresholds are unset (max), so neither mechanism has any effect. Deploying a deToken for a new asset (`deployNewAsset`) is likewise permissionless but requires the same validator quorum over the asset's metadata.
+Two additional rate limits exist in the code: transfers above a per-asset amount threshold require an elevated signature count, and a per-block circuit breaker raises the requirement once more than `confirmationThreshold` submissions are approved within one block. As currently configured on Ethereum, both elevated thresholds are set to {{excessConfirmations}} signatures — below the baseline quorum of {{minConfirmations}} — so neither mechanism has any effect. Deploying a deToken for a new asset (`deployNewAsset`) is likewise permissionless but requires the same validator quorum over the asset's metadata.
 
 # Wrapped tokens (deTokens)
 
@@ -24,7 +24,7 @@ The gate admin can block (and unblock) individual submission IDs, permanently pr
 
 # Upgradeability and governance
 
-All core contracts are upgradeable by a 5/8 deBridge multisig, with no timelock or exit window. The same multisig holds the `DEFAULT_ADMIN_ROLE` on all of them, so without an upgrade it can already replace the `SignatureVerifier` (i.e. swap out the entire validation layer), change the validator set and signature thresholds, replace the `CallProxy` and token deployer, redirect fee withdrawal rights, and censor submissions. The gate also has a `feeContractUpdater` slot that can adjust the flat protocol fee automatically (unset on Ethereum).
+All core contracts are upgradeable by a {{multisigStats}} deBridge multisig, with no timelock or exit window. The same multisig holds the `DEFAULT_ADMIN_ROLE` on all of them, so without an upgrade it can already replace the `SignatureVerifier` (i.e. swap out the entire validation layer), change the validator set and signature thresholds, replace the `CallProxy` and token deployer, redirect fee withdrawal rights, and censor submissions. The gate also has a `feeContractUpdater` slot that can adjust the flat protocol fee automatically (unset on Ethereum).
 
 # Monitoring
 

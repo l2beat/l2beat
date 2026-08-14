@@ -1,6 +1,6 @@
 {
   "name": "debridge",
-  "timestamp": 1786695460,
+  "timestamp": 1786706330,
   "configHash": "0xa478bf69a017360a017d482f72632c1f1779d733899c361fc0c3820a041206ec",
   "entries": [
     {
@@ -221,7 +221,7 @@
         "GOVMONITORING_ROLE": "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1",
         "govMonitoringAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
         "lockedClaim": 1,
-        "nonce": 177767,
+        "nonce": 177776,
         "paused": false,
         "signatureVerifier": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
         "SUBMISSION_PREFIX": 1,
@@ -950,7 +950,7 @@
           }
         },
         "confirmationThreshold": 3,
-        "currentBlock": 25751997,
+        "currentBlock": 25752912,
         "debridgeAddress": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
@@ -2868,6 +2868,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25752023 },
+  "usedBlockNumbers": { "ethereum": 25752929 },
   "permissionsConfigHash": "0x53a3ea0230c305e9076e5a2370269af9364675175d6321bf69963a4ecdd87a34"
 }

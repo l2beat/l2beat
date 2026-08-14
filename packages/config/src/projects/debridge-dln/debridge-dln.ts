@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -12,6 +12,57 @@ import { readProjectMarkdown } from '../../utils/readMarkdown'
 // DLN is built on top of it and governed by the same actors
 const discovery = new ProjectDiscovery('debridge')
 
+const minConfirmations = discovery.getContractValue<number>(
+  'SignatureVerifier',
+  'minConfirmations',
+)
+const validatorCount = discovery.getContractValue<string[]>(
+  'SignatureVerifier',
+  'oracleAddresses',
+).length
+const fixedNativeFee =
+  Number(
+    discovery.getContractValue<number>('DlnSource', 'globalFixedNativeFee'),
+  ) / 1e18
+const transferFeeBps = discovery.getContractValue<number>(
+  'DlnSource',
+  'globalTransferFeeBps',
+)
+// chains with a currently configured (non-empty) DlnDestination routing entry
+const activeDestinationChains = Object.values(
+  discovery.getContractValue<Record<string, string>>(
+    'DlnSource',
+    'dlnDestinationAddressesMap',
+  ),
+).filter((address) => address !== '0x').length
+
+// "a single EOA is simultaneously the admin of `DeBridgeIntentManager` and
+// `DeBridgeAllowanceHolder` and the owner of the ProxyAdmin that can upgrade
+// the intent manager"
+const intentManagerAdmin = discovery.getContractValue<string[]>(
+  'DeBridgeIntentManager',
+  'defaultAdminAC',
+)[0]
+const allowanceHolderAdmin = discovery.getContractValue<string[]>(
+  'DeBridgeAllowanceHolder',
+  'defaultAdminAC',
+)[0]
+const intentManagerProxyAdminOwner = discovery.getContractValue<string>(
+  discovery.getContractValue<string>('DeBridgeIntentManager', '$admin'),
+  'owner',
+)
+assert(
+  intentManagerAdmin === allowanceHolderAdmin &&
+    intentManagerAdmin === intentManagerProxyAdminOwner,
+  'The intent-manager admin setup changed: update detailedDescription.md',
+)
+// "Several satellite contracts (including the `ExternalCallExecutor`) have
+// unverified source code"
+assert(
+  discovery.getContract('ExternalCallExecutor').unverified === true,
+  'The ExternalCallExecutor is now verified: update detailedDescription.md',
+)
+
 export const debridgeDln: BaseProject = {
   id: ProjectId('debridge-dln'),
   slug: 'debridge-dln',
@@ -24,6 +75,13 @@ export const debridgeDln: BaseProject = {
     detailedDescription: readProjectMarkdown(
       'debridge-dln',
       'detailedDescription',
+      {
+        fixedNativeFee,
+        transferFeeBps,
+        activeDestinationChains,
+        quorum: `${minConfirmations} of ${validatorCount}`,
+        multisigStats: discovery.getMultisigStats('Admin Multisig'),
+      },
     ),
     intent: {
       color: '#F97316',
