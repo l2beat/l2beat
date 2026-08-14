@@ -154,8 +154,8 @@ export function RelationsDiagram({
     [boxes, graph.edges],
   )
   const sourceLanes = useMemo(
-    () => getWrappedSourceLanes(graph.edges),
-    [graph.edges],
+    () => getWrappedSourceLanes(graph.edges, boxes, layout.width),
+    [boxes, graph.edges, layout],
   )
   const edgeGeometries = useMemo(() => {
     const result = new Map<string, ReturnType<typeof getWrappedEdgeGeometry>>()
@@ -171,7 +171,10 @@ export function RelationsDiagram({
           sourceRow: layout.rowOf.get(edge.from) ?? 0,
           targetRow: layout.rowOf.get(edge.to) ?? 0,
           targetPort: targetPorts.get(wrappedEdgeKey(edge)) ?? 0.5,
-          sourceLane: sourceLanes.get(edge.from) ?? 0,
+          sourceLane: sourceLanes.get(edge.from) ?? {
+            side: 'left',
+            index: 0,
+          },
           worldWidth: layout.width,
         }),
       )

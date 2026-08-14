@@ -15,6 +15,7 @@ const X_PADDING = 12
 const Y_PADDING = 14
 const BASE_NODE_RADIUS = 6
 const LINE_NODE_GAP = 0.5
+const SOURCE_RING_GAP = 3
 
 interface PreviewPoint {
   x: number
@@ -200,14 +201,15 @@ function SourceRing({
 }) {
   if (node.chains.length > 1) {
     const scale = point.radius / BASE_NODE_RADIUS
-    const width = getClusterMetrics(node, point.radius).width + 6 * scale
+    const ringGap = SOURCE_RING_GAP * scale
+    const width = getClusterMetrics(node, point.radius).width + ringGap * 2
     return (
       <rect
         x={point.x - width / 2}
-        y={point.y - point.radius - 3 * scale}
+        y={point.y - point.radius - ringGap}
         width={width}
-        height={point.radius * 2 + 6 * scale}
-        rx={point.radius + 3 * scale}
+        height={point.radius * 2 + ringGap * 2}
+        rx={point.radius + ringGap}
         fill="none"
         className="stroke-brand"
         strokeOpacity={0.3}
@@ -220,7 +222,7 @@ function SourceRing({
     <circle
       cx={point.x}
       cy={point.y}
-      r={point.radius + 3 * (point.radius / BASE_NODE_RADIUS)}
+      r={point.radius + SOURCE_RING_GAP * (point.radius / BASE_NODE_RADIUS)}
       fill="none"
       className="stroke-brand"
       strokeOpacity={0.3}
@@ -235,6 +237,10 @@ function buildPreviewTopology(graph: TokenGraphTileGraph): PreviewTopology {
   const nodeIds = new Set(nodes.map((node) => node.id))
   const edges = graph.edges.filter(
     (edge) => nodeIds.has(edge.from) && nodeIds.has(edge.to),
+  )
+  const incomingIds = new Set(edges.map((edge) => edge.to))
+  const rootIds = new Set(
+    nodes.filter((node) => !incomingIds.has(node.id)).map((node) => node.id),
   )
   const layoutNodes = nodes.map((node) => ({
     id: node.id,
@@ -276,6 +282,14 @@ function buildPreviewTopology(graph: TokenGraphTileGraph): PreviewTopology {
   const horizontalSpread = getHorizontalSpread(nodes.length)
   const compactRowOf = new Map(rowNumbers.map((row, index) => [row, index]))
   const lastRow = Math.max(0, rowNumbers.length - 1)
+  const verticalSpan = getVerticalSpan(nodes.length, lastRow)
+  const rowHalfHeights = rowNumbers.map((rowNumber) => {
+    const hasSource = (rows.get(rowNumber) ?? []).some((node) =>
+      rootIds.has(node.id),
+    )
+    return radius + (hasSource ? SOURCE_RING_GAP * scale : 0)
+  })
+  const rowYs = getRowCenters(rowHalfHeights, verticalSpan)
   const points = new Map<string, PreviewPoint>()
 
   for (const rowNumber of rowNumbers) {
@@ -298,11 +312,7 @@ function buildPreviewTopology(graph: TokenGraphTileGraph): PreviewTopology {
     const spreadXs = spreadRow(desired, halfWidths)
     const xs = nodes.length <= 5 ? centerRow(spreadXs, halfWidths) : spreadXs
     const rowIndex = compactRowOf.get(rowNumber) ?? 0
-    const verticalSpan = getVerticalSpan(nodes.length, lastRow)
-    const y =
-      lastRow === 0
-        ? VIEW_HEIGHT / 2
-        : (VIEW_HEIGHT - verticalSpan) / 2 + (rowIndex / lastRow) * verticalSpan
+    const y = rowYs[rowIndex] ?? VIEW_HEIGHT / 2
     row.forEach((node, index) => {
       points.set(node.id, {
         x: xs[index] ?? VIEW_WIDTH / 2,
@@ -315,10 +325,6 @@ function buildPreviewTopology(graph: TokenGraphTileGraph): PreviewTopology {
   }
 
   const path = buildCompactPaths(edges, points).join(' ')
-  const incomingIds = new Set(edges.map((edge) => edge.to))
-  const rootIds = new Set(
-    nodes.filter((node) => !incomingIds.has(node.id)).map((node) => node.id),
-  )
   return {
     nodes,
     points,
@@ -373,6 +379,31 @@ function getVerticalSpan(nodeCount: number, lastRow: number): number {
   if (nodeCount <= 8) return 90
   if (nodeCount <= 12) return 96
   return VIEW_HEIGHT - Y_PADDING * 2
+}
+
+/** Equal gaps between visible node edges, including the source halo. */
+function getRowCenters(halfHeights: number[], desiredSpan: number): number[] {
+  if (halfHeights.length === 0) return []
+  if (halfHeights.length === 1) return [VIEW_HEIGHT / 2]
+
+  const occupied = halfHeights
+    .slice(1)
+    .reduce(
+      (sum, halfHeight, index) => sum + (halfHeights[index] ?? 0) + halfHeight,
+      0,
+    )
+  const gap = Math.max(0, (desiredSpan - occupied) / (halfHeights.length - 1))
+  const actualSpan = occupied + gap * (halfHeights.length - 1)
+  const centers = [(VIEW_HEIGHT - actualSpan) / 2]
+  for (let index = 1; index < halfHeights.length; index++) {
+    centers.push(
+      (centers[index - 1] ?? 0) +
+        (halfHeights[index - 1] ?? 0) +
+        gap +
+        (halfHeights[index] ?? 0),
+    )
+  }
+  return centers
 }
 
 interface TargetRowGroup {

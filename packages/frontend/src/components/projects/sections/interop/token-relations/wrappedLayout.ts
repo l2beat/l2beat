@@ -29,6 +29,11 @@ export interface WrappedEdgeGeometry {
   midY: number
 }
 
+export interface WrappedSourceLane {
+  side: 'left' | 'right'
+  index: number
+}
+
 /**
  * Starts with the same tidy-tree order as the regular top-to-bottom layout,
  * but wraps wide layers into multiple rows. This keeps cards readable without
@@ -76,6 +81,7 @@ export function layoutWrappedRelationsGraph(
   const boxes = new Map<string, NodeBox>()
   const rowOf = new Map<string, number>()
   const layerOf = new Map(baseline.columnOf)
+  const primaryParentOf = getPrimaryParentOf(connectedEdges, layerOf)
   let y = 0
   let visualRow = 0
 
@@ -111,7 +117,14 @@ export function layoutWrappedRelationsGraph(
         (baseline.boxes.get(a.id)?.x ?? 0) -
           (baseline.boxes.get(b.id)?.x ?? 0) || a.id.localeCompare(b.id),
     )
-    placeRows(packRows(ordered, usableWidth, nodeWidth))
+    placeRows(
+      packRows(
+        ordered,
+        usableWidth,
+        nodeWidth,
+        (node) => primaryParentOf.get(node.id) ?? node.id,
+      ),
+    )
   }
 
   let unconnectedDividerY: number | undefined
@@ -135,23 +148,80 @@ function packRows(
   nodes: InteropTokenRelationsNode[],
   available: number,
   nodeWidth: (node: InteropTokenRelationsNode) => number,
+  groupOf?: (node: InteropTokenRelationsNode) => string,
 ): InteropTokenRelationsNode[][] {
+  const groups: InteropTokenRelationsNode[][] = []
+  for (const node of nodes) {
+    const previous = groups.at(-1)
+    if (
+      previous &&
+      groupOf &&
+      groupOf(previous[0] as InteropTokenRelationsNode) === groupOf(node)
+    ) {
+      previous.push(node)
+    } else {
+      groups.push([node])
+    }
+  }
+
   const rows: InteropTokenRelationsNode[][] = []
   let row: InteropTokenRelationsNode[] = []
   let used = 0
-  for (const node of nodes) {
-    const width = nodeWidth(node)
-    const next = used + (row.length > 0 ? NODE_GAP : 0) + width
-    if (row.length > 0 && next > available) {
-      rows.push(row)
-      row = []
-      used = 0
-    }
-    used += (row.length > 0 ? NODE_GAP : 0) + width
+
+  const flush = () => {
+    if (row.length > 0) rows.push(row)
+    row = []
+    used = 0
+  }
+  const append = (node: InteropTokenRelationsNode) => {
+    used += (row.length > 0 ? NODE_GAP : 0) + nodeWidth(node)
     row.push(node)
   }
-  if (row.length > 0) rows.push(row)
+
+  for (const group of groups) {
+    const groupWidth = group.reduce(
+      (sum, node, index) => sum + nodeWidth(node) + (index > 0 ? NODE_GAP : 0),
+      0,
+    )
+    const next = used + (row.length > 0 ? NODE_GAP : 0) + groupWidth
+
+    // Siblings form one visual bus. When the whole block fits on a row, never
+    // split it at the wrap boundary: doing so makes the parent's route cross
+    // unrelated destinations left behind on the previous row.
+    if (groupWidth <= available) {
+      if (row.length > 0 && next > available) flush()
+      for (const node of group) append(node)
+      continue
+    }
+
+    // An exceptionally large sibling block has to wrap, but starts on a fresh
+    // row so no unrelated block is mixed into its continuation.
+    flush()
+    for (const node of group) {
+      const width = nodeWidth(node)
+      const nextNode = used + (row.length > 0 ? NODE_GAP : 0) + width
+      if (row.length > 0 && nextNode > available) flush()
+      append(node)
+    }
+    flush()
+  }
+  flush()
   return rows
+}
+
+function getPrimaryParentOf(
+  edges: InteropTokenRelationsEdge[],
+  layerOf: ReadonlyMap<string, number>,
+): Map<string, string> {
+  const result = new Map<string, string>()
+  for (const edge of edges.toSorted(
+    (a, b) => a.from.localeCompare(b.from) || a.to.localeCompare(b.to),
+  )) {
+    if (result.has(edge.to)) continue
+    if (layerOf.get(edge.to) !== (layerOf.get(edge.from) ?? 0) + 1) continue
+    result.set(edge.to, edge.from)
+  }
+  return result
 }
 
 function byVolumeThenId(
@@ -185,11 +255,21 @@ export function getWrappedTargetPorts(
 
 export function getWrappedSourceLanes(
   edges: InteropTokenRelationsEdge[],
-): Map<string, number> {
+  boxes: ReadonlyMap<string, NodeBox>,
+  worldWidth: number,
+): Map<string, WrappedSourceLane> {
+  const sourceIds = [...new Set(edges.map((edge) => edge.from))].toSorted()
+  const countBySide = { left: 0, right: 0 }
   return new Map(
-    [...new Set(edges.map((edge) => edge.from))]
-      .toSorted()
-      .map((id, index) => [id, index]),
+    sourceIds.map((sourceId) => {
+      const source = boxes.get(sourceId)
+      const sourceX = source ? source.x + source.width / 2 : 0
+      const side: WrappedSourceLane['side'] =
+        sourceX <= worldWidth / 2 ? 'left' : 'right'
+      const lane = { side, index: countBySide[side] }
+      countBySide[side]++
+      return [sourceId, lane] as const
+    }),
   )
 }
 
@@ -207,7 +287,7 @@ export function getWrappedEdgeGeometry({
   sourceRow: number
   targetRow: number
   targetPort: number
-  sourceLane: number
+  sourceLane: WrappedSourceLane
   worldWidth: number
 }): WrappedEdgeGeometry {
   const startX = from.x + from.width / 2
@@ -226,13 +306,9 @@ export function getWrappedEdgeGeometry({
 
   // A wrapped row may have other cards between it and its parent. Reach its
   // bus through a narrow side lane so the trunk never cuts through those cards.
-  const laneOffset = sourceLane * 6
-  const leftLaneX = 22 + laneOffset
-  const rightLaneX = worldWidth - 22 - laneOffset
-  const leftDistance = Math.abs(startX - leftLaneX) + Math.abs(endX - leftLaneX)
-  const rightDistance =
-    Math.abs(startX - rightLaneX) + Math.abs(endX - rightLaneX)
-  const laneX = leftDistance <= rightDistance ? leftLaneX : rightLaneX
+  const laneOffset = sourceLane.index * 6
+  const laneX =
+    sourceLane.side === 'left' ? 22 + laneOffset : worldWidth - 22 - laneOffset
   const departureY = startY + Math.min(28, (busY - startY) / 2)
   return {
     path: `M ${startX} ${startY} V ${departureY} H ${laneX} V ${busY} H ${endX} V ${endY}`,
