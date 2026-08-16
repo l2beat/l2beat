@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Firepit",
   "description": "Burn-and-release contract: anyone can transfer the configured threshold (currently {{ threshold }} UNI) to a fixed burn address and release selected balances from its token jar to a chosen recipient. The threshold setter can change the threshold, including to zero, and the owner can replace the threshold setter.",
+  "ignoreInWatchMode": ["nonce"],
   "fields": {
     "owner": {
       "permissions": [
@@ -26,6 +27,6 @@
       ],
       "severity": "HIGH"
     },
-    "nonce": { "ignoreInWatchMode": true }
+    "nonce": {}
   }
 }
