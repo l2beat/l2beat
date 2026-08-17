@@ -8,7 +8,7 @@ Generated with discovered.json: 0xcd3394deff2b2ceff9e0c2b683f4816bd0f202b5
 
 ## Description
 
-Upgrade 19b "Karst" (op-contracts/v7.0.0): core L1 contracts upgraded to their v7 implementations (OptimismPortal2, SystemConfig, DisputeGameFactory, AnchorStateRegistry, bridges, etc.), executed via a Conduit-deployed OPContractsManagerV2 (v7.1.17). The chain remains on permissioned fault proofs (respected game type 1); it did not move to CANNON_KONA. The legacy OPSuccinct contracts (OPSuccinctL2OutputOracle, OPSuccinctDisputeGame, SP1VerifierGateway), unused since 2026-03, are no longer referenced by the system.
+Upgrade 19b "Karst" (op-contracts/v7.0.0): core L1 contracts upgraded to their v7 implementations (OptimismPortal2, SystemConfig, DisputeGameFactory, AnchorStateRegistry, bridges, etc.), executed via a Conduit-deployed OPContractsManagerV2 (v7.1.17). The chain remains on permissioned fault proofs (respected game type 1); it did not move to CANNON_KONA. The v7 DisputeGameFactory drops the legacy gameImpls array that still enumerated the retired OPSuccinct game, so OPSuccinctDisputeGame, OPSuccinctL2OutputOracle and SP1VerifierGateway (unused since 2026-03, when Phala switched back to the PermissionedDisputeGame) are no longer referenced.
 
 ## Watched changes
 
