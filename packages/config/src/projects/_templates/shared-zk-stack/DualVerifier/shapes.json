@@ -3,5 +3,11 @@
     "hash": "0x3053378d5ee24f71669b27b5b3cd0d74206379e6b43a9af084c2eb886712773e",
     "address": "eth:0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0",
     "blockNumber": 22423895
+  },
+  "EraDualVerifier_v30_1": {
+    "hash": "0xbb8575fb12fa4609384db9354c242fae948985da88123613ea39d0e55af330ec",
+    "address": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
+    "chain": "ethereum",
+    "blockNumber": 25753518
   }
 }
