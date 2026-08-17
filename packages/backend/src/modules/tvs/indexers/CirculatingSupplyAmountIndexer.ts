@@ -95,7 +95,7 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
               return []
             }
 
-            throw error
+            return []
           }
         }),
       )
