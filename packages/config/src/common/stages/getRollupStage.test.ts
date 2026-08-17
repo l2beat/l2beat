@@ -111,24 +111,20 @@ describe(getRollupStage.name, () => {
               description:
                 'The proof system meets the minimum trusted setup requirements defined in the L2BEAT [trusted setup assessment framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381).',
               satisfied: true,
-              upcoming: true,
             },
             {
               description: 'Prover source code is published.',
               satisfied: true,
-              upcoming: true,
             },
             {
               description:
                 "Onchain verifiers' smart contracts can be independently regenerated from the verifier source code.",
               satisfied: true,
-              upcoming: true,
             },
             {
               description:
                 'The sources of all programs used are public and program hashes can be independently regenerated.',
               satisfied: true,
-              upcoming: true,
             },
           ],
           stage: 'Stage 1',

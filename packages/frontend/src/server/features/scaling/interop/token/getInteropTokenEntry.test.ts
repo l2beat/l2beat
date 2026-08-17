@@ -52,7 +52,9 @@ describe(getInteropTokenEntry.name, () => {
     )
     assert(section?.type === 'InteropTokenOnchainDeploymentsSection')
 
-    expect(section.props.deployments[0]?.minters).toEqualUnsorted([
+    const minters = section.props.deployments[0]?.minters
+    assert(minters)
+    expect(minters).toEqualUnsorted([
       {
         id: ProjectId('alpha'),
         name: 'Alpha bridge',
