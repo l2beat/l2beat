@@ -1,4 +1,4 @@
-import { Address32 } from '@l2beat/shared-pure'
+import { Address32, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { mapInteropChainsToWithIcons } from '~/pages/interop/utils/mapInteropChainsToWithIcons'
 import { getDb } from '~/server/database'
@@ -11,7 +11,10 @@ import { getAggregatedInteropSnapshotTimestamp } from '../scaling/interop/utils/
 import { getInteropChains } from '../scaling/interop/utils/getInteropChains'
 import {
   buildTokenGraphTiles,
+  buildTokenRelationsModelsByToken,
   type TokenGraphTile,
+  type TokenGraphTileRelationsModel,
+  tokenNodeKey,
 } from './buildTokenGraphTiles'
 
 export type { TokenGraphTile } from './buildTokenGraphTiles'
@@ -70,6 +73,14 @@ async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
   const supportedDeployments = deployedTokens.filter((deployment) =>
     supportedChainIds.has(deployment.chain),
   )
+  const relationsModelsByToken = buildTokenRelationsModelsByToken(
+    supportedDeployments,
+    routes,
+  )
+  const volumeByNode = await getUniqueClusterVolumes(
+    relationsModelsByToken,
+    volumeMaps.snapshotTimestamp,
+  )
   const chainInfo = getChainDisplayInfo(
     supportedDeployments.map((deployment) => deployment.chain),
     mapInteropChainsToWithIcons(manifest, activeInteropChains),
@@ -101,6 +112,8 @@ async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
     chainNameById,
     chainIconUrlById,
     interopProjects,
+    relationsModelsByToken,
+    volumeByNode,
   })
 }
 
@@ -111,12 +124,14 @@ async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
  * tuple equalities — fine for one token's deployments, not for the catalogue.
  */
 async function getVolumeMaps(): Promise<{
+  snapshotTimestamp: UnixTime | undefined
   volumeByTokenId: Map<string, number>
   volumeByAggregatedDeployment: Map<string, number>
 }> {
   const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
   if (!snapshotTimestamp) {
     return {
+      snapshotTimestamp: undefined,
       volumeByTokenId: new Map(),
       volumeByAggregatedDeployment: new Map(),
     }
@@ -144,7 +159,41 @@ async function getVolumeMaps(): Promise<{
     )
   }
 
-  return { volumeByTokenId, volumeByAggregatedDeployment }
+  return {
+    snapshotTimestamp,
+    volumeByTokenId,
+    volumeByAggregatedDeployment,
+  }
+}
+
+async function getUniqueClusterVolumes(
+  relationsModelsByToken: ReadonlyMap<string, TokenGraphTileRelationsModel>,
+  snapshotTimestamp: UnixTime | undefined,
+): Promise<Map<string, number> | undefined> {
+  if (!snapshotTimestamp) return undefined
+
+  const groups = [...relationsModelsByToken].flatMap(([tokenId, model]) =>
+    model.nodes.flatMap((node) => {
+      if (node.members.length < 2) return []
+      return [
+        {
+          id: tokenNodeKey(tokenId, node.id),
+          abstractTokenId: tokenId,
+          tokens: node.members.flatMap((member) => {
+            const tokenAddress = Address32.fromOrUndefined(member.address)
+            return tokenAddress ? [{ chain: member.chain, tokenAddress }] : []
+          }),
+        },
+      ]
+    }),
+  )
+
+  const stats = await getDb().interopTransfer.getUniqueTokenGroupStats(groups, {
+    from: snapshotTimestamp - UnixTime.DAY,
+    to: snapshotTimestamp,
+  })
+
+  return new Map(stats.map((stat) => [stat.id, stat.volume]))
 }
 
 function endpointKey(chain: string, address: string): string {

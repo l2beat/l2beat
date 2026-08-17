@@ -246,6 +246,8 @@ function buildPreviewTopology(graph: TokenGraphTileGraph): PreviewTopology {
     id: node.id,
     bridges: [],
     volume: node.volume,
+    transferCount: null,
+    avgDuration: null,
     deployments: node.chains.map((chain, index) => ({
       chain,
       chainName: chain,
@@ -254,6 +256,8 @@ function buildPreviewTopology(graph: TokenGraphTileGraph): PreviewTopology {
       symbol: '',
       explorerUrl: undefined,
       volume: null,
+      transferCount: null,
+      avgDuration: null,
     })),
   }))
   const layoutEdges = edges.map((edge) => ({ ...edge, bridges: [] }))

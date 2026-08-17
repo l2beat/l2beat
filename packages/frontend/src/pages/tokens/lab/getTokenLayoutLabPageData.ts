@@ -1,6 +1,11 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import {
+  getInteropTokenOnchainDeployments,
+  type InteropTokenOnchainDeployment,
+} from '~/server/features/scaling/interop/token/getInteropTokenOnchainDeployments'
 import type { InteropTokenRelationsGraph } from '~/server/features/scaling/interop/token/getInteropTokenRelationsGraph'
+import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
 import { getTokenRelationsGraphById } from '~/server/features/tokens/getTokenRelationsGraphById'
 import { getTokenDb } from '~/server/tokenDb'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -11,6 +16,7 @@ const TOKENS = [
   { id: '9HN5PN', symbol: 'USDC' },
   { id: 'xxeNQv', symbol: 'USDT' },
   { id: 'C0Hmkq', symbol: 'ETH' },
+  { id: 'tmyD4t', symbol: 'USDe' },
 ] as const
 
 export interface TokenLayoutLabToken {
@@ -19,6 +25,7 @@ export interface TokenLayoutLabToken {
   issuer: string | null
   iconUrl: string | null
   graph: InteropTokenRelationsGraph
+  deployments: InteropTokenOnchainDeployment[]
 }
 
 export async function getTokenLayoutLabPageData(
@@ -30,7 +37,7 @@ export async function getTokenLayoutLabPageData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['token-layout-lab'],
+        key: ['selected-token-panel-lab'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
@@ -42,9 +49,9 @@ export async function getTokenLayoutLabPageData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Burn-mint cluster lab - L2BEAT',
+        title: 'Selected token panel lab - L2BEAT',
         description:
-          'Side-by-side modal treatments for token burn-mint clusters.',
+          'Side-by-side treatments for the selected-token details panel.',
         url,
         openGraph: { image: '/meta-images/tokens/opengraph-image.png' },
         excludeFromSearchEngines: true,
@@ -59,9 +66,20 @@ export async function getTokenLayoutLabPageData(
 
 async function getLabTokens(): Promise<TokenLayoutLabToken[]> {
   const ids = TOKENS.map((token) => token.id)
-  const [summaries, ...graphs] = await Promise.all([
+  const activeChainIds = getInteropChains()
+    .filter((chain) => !chain.isUpcoming)
+    .map((chain) => chain.id)
+  const [summaries, tokenData] = await Promise.all([
     getTokenDb().abstractToken.getByIds(ids),
-    ...ids.map(getTokenRelationsGraphById),
+    Promise.all(
+      ids.map(async (id) => {
+        const [graph, deployments] = await Promise.all([
+          getTokenRelationsGraphById(id),
+          getInteropTokenOnchainDeployments(id, activeChainIds),
+        ])
+        return { graph, deployments }
+      }),
+    ),
   ])
   const summariesById = new Map(summaries.map((token) => [token.id, token]))
 
@@ -72,7 +90,8 @@ async function getLabTokens(): Promise<TokenLayoutLabToken[]> {
       symbol: summary?.symbol ?? token.symbol,
       issuer: summary?.issuer ?? null,
       iconUrl: summary?.iconUrl ?? null,
-      graph: graphs[index] as InteropTokenRelationsGraph,
+      graph: tokenData[index]?.graph as InteropTokenRelationsGraph,
+      deployments: tokenData[index]?.deployments ?? [],
     }
   })
 }

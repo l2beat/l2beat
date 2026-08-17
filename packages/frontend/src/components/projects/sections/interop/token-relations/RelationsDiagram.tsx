@@ -122,14 +122,36 @@ export function RelationsDiagram({
   const camera = useRelationsCamera(content, viewport, 'width', initialFocus)
 
   const activeId = hoveredId ?? selectedNodeId
-  const neighbours = useMemo(() => {
+  const activeBacking = useMemo(() => {
     if (!activeId) return undefined
-    const ids = new Set([activeId])
-    for (const edge of graph.edges) {
-      if (edge.from === activeId) ids.add(edge.to)
-      if (edge.to === activeId) ids.add(edge.from)
+    const nodeIds = new Set([activeId])
+    const edgeKeys = new Set<string>()
+    const queue = [activeId]
+
+    // Topology belongs in the graph, not the details panel. Follow every
+    // incoming relation to its observed source so selecting a representation
+    // keeps the complete backing chain visible.
+    while (queue.length > 0) {
+      const current = queue.shift()
+      if (!current) continue
+      for (const edge of graph.edges) {
+        if (edge.to !== current) continue
+        edgeKeys.add(wrappedEdgeKey(edge))
+        if (nodeIds.has(edge.from)) continue
+        nodeIds.add(edge.from)
+        queue.push(edge.from)
+      }
     }
-    return ids
+
+    // Keep immediate downstream relations visible as local context without
+    // expanding the whole connected component from a popular source.
+    for (const edge of graph.edges) {
+      if (edge.from !== activeId) continue
+      edgeKeys.add(wrappedEdgeKey(edge))
+      nodeIds.add(edge.to)
+    }
+
+    return { nodeIds, edgeKeys }
   }, [activeId, graph.edges])
 
   const sourceIds = useMemo(() => {
@@ -347,13 +369,13 @@ export function RelationsDiagram({
           {graph.edges.map((edge) => {
             const geometry = edgeGeometries.get(wrappedEdgeKey(edge))
             if (!geometry) return null
-            const touchesActive = activeId === edge.from || activeId === edge.to
+            const isActive = activeBacking?.edgeKeys.has(wrappedEdgeKey(edge))
             return (
               <RelationsEdge
                 key={wrappedEdgeKey(edge)}
                 geometry={geometry}
-                isDimmed={activeId !== undefined && !touchesActive}
-                isHighlighted={touchesActive}
+                isDimmed={activeBacking !== undefined && !isActive}
+                isHighlighted={isActive ?? false}
               />
             )
           })}
@@ -364,13 +386,13 @@ export function RelationsDiagram({
           {graph.edges.map((edge) => {
             const geometry = edgeGeometries.get(wrappedEdgeKey(edge))
             if (!geometry) return null
-            const touchesActive = activeId === edge.from || activeId === edge.to
+            const isActive = activeBacking?.edgeKeys.has(wrappedEdgeKey(edge))
             return (
               <RelationsEdgeBridges
                 key={`bridges-${wrappedEdgeKey(edge)}`}
                 edge={edge}
                 geometry={geometry}
-                isDimmed={activeId !== undefined && !touchesActive}
+                isDimmed={activeBacking !== undefined && !isActive}
               />
             )
           })}
@@ -385,7 +407,10 @@ export function RelationsDiagram({
                 box={box}
                 isSource={sourceIds.has(node.id)}
                 isSelected={selectedNodeId === node.id}
-                isDimmed={neighbours !== undefined && !neighbours.has(node.id)}
+                isDimmed={
+                  activeBacking !== undefined &&
+                  !activeBacking.nodeIds.has(node.id)
+                }
                 isUnconnected={unconnected.has(node.id)}
                 onPointerDown={onNodePointerDown(node.id)}
                 onHoverChange={(hovered) =>
@@ -430,6 +455,7 @@ export function RelationsDiagram({
           <RelationsDetails
             graph={graph}
             nodeId={selectedNodeId}
+            onSelectNode={onSelectNode}
             onClose={() => onSelectNode(undefined)}
           />
         </div>

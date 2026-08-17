@@ -43,7 +43,7 @@ export function TokenRelationsGraphView({
       )}
 
       <Dialog open={isExpanded} onOpenChange={setIsExpanded}>
-        <DialogContent className="max-w-[min(1400px,95vw)]">
+        <DialogContent className="max-w-[min(1400px,95vw)] bg-surface-primary">
           <DialogTitle>Onchain deployments</DialogTitle>
           <DialogDescription className="sr-only">
             A larger view of the diagram showing which deployments of this token

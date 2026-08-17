@@ -18,7 +18,7 @@ import { createMintingBridgeResolver } from '../scaling/interop/utils/createMint
  */
 export interface TokenGraphTileNode {
   id: string
-  /** Past 24h crosschain volume summed over this node's deployments. */
+  /** Past 24h crosschain volume, counting each transfer touching the node once. */
   volume: number | null
   /** Chain ids of the node's deployments; more than one is a burn-mint group. */
   chains: string[]
@@ -76,7 +76,15 @@ export interface BuildTokenGraphTilesInput {
   chainIconUrlById?: ReadonlyMap<string, string>
   /** Resolves raw plugin observations to the public minter projects. */
   interopProjects?: Project<'interopConfig'>[]
+  /** Prebuilt models let the server reuse group membership for activity reads. */
+  relationsModelsByToken?: ReadonlyMap<string, TokenGraphTileRelationsModel>
+  /** Unique past-24h volume keyed by abstract token id and relation node id. */
+  volumeByNode?: ReadonlyMap<string, number>
 }
+
+export type TokenGraphTileRelationsModel = ReturnType<
+  typeof buildTokenRelationsGraph
+>
 
 export function buildTokenGraphTiles({
   abstractTokens,
@@ -87,46 +95,20 @@ export function buildTokenGraphTiles({
   chainNameById,
   chainIconUrlById,
   interopProjects,
+  relationsModelsByToken,
+  volumeByNode,
 }: BuildTokenGraphTilesInput): TokenGraphTile[] {
   const resolveMintingBridges = interopProjects
     ? createMintingBridgeResolver(interopProjects)
     : undefined
-  const deploymentsByToken = new Map<string, typeof deployedTokens>()
-  for (const deployment of deployedTokens) {
-    if (!deployment.abstractTokenId) continue
-    const existing = deploymentsByToken.get(deployment.abstractTokenId)
-    if (existing) existing.push(deployment)
-    else deploymentsByToken.set(deployment.abstractTokenId, [deployment])
-  }
-
-  // Relations are keyed by endpoint, so bucket them by the token owning the
-  // endpoint once rather than scanning all 3,000 for each of 6,000 tokens.
-  const tokenOfDeployment = new Map<string, string>()
-  for (const deployment of deployedTokens) {
-    if (!deployment.abstractTokenId) continue
-    tokenOfDeployment.set(
-      endpointKey(deployment.chain, deployment.address),
-      deployment.abstractTokenId,
-    )
-  }
-  const routesByToken = new Map<string, TokenRelationsRoute[]>()
-  for (const route of routes) {
-    const tokenId = tokenOfDeployment.get(
-      endpointKey(route.tokenAChain, route.tokenAAddress),
-    )
-    if (tokenId === undefined) continue
-    const existing = routesByToken.get(tokenId)
-    if (existing) existing.push(route)
-    else routesByToken.set(tokenId, [route])
-  }
+  const modelsByToken =
+    relationsModelsByToken ??
+    buildTokenRelationsModelsByToken(deployedTokens, routes)
 
   const tiles: TokenGraphTile[] = []
   for (const token of abstractTokens) {
-    const deployments = deploymentsByToken.get(token.id)
-    if (!deployments || deployments.length === 0) continue
-
-    const tokenRoutes = routesByToken.get(token.id) ?? []
-    const model = buildTokenRelationsGraph(deployments, tokenRoutes)
+    const model = modelsByToken.get(token.id)
+    if (!model) continue
 
     // Mirror the modal's default filter so the card summarizes what opening it
     // actually shows. When everything is unrelated, the modal keeps everything
@@ -186,13 +168,20 @@ export function buildTokenGraphTiles({
               (volume): volume is number =>
                 volume !== null && volume !== undefined,
             )
+          const measuredNodeVolume =
+            measuredVolumes.length > 0
+              ? measuredVolumes.reduce((sum, volume) => sum + volume, 0)
+              : null
+          const uniqueClusterVolume = volumeByNode?.get(
+            tokenNodeKey(token.id, node.id),
+          )
 
           return {
             id: node.id,
             volume:
-              measuredVolumes.length > 0
-                ? measuredVolumes.reduce((sum, volume) => sum + volume, 0)
-                : null,
+              node.members.length > 1 && volumeByNode
+                ? (uniqueClusterVolume ?? 0)
+                : measuredNodeVolume,
             chains: orderedMembers.map((member) => member.chain),
             ...(chainIconUrlById && {
               chainIconUrls: orderedMembers.map(
@@ -214,6 +203,47 @@ export function buildTokenGraphTiles({
   return tiles.toSorted(
     (a, b) =>
       (b.volume ?? -1) - (a.volume ?? -1) || a.symbol.localeCompare(b.symbol),
+  )
+}
+
+export function buildTokenRelationsModelsByToken(
+  deployedTokens: BuildTokenGraphTilesInput['deployedTokens'],
+  routes: TokenRelationsRoute[],
+): Map<string, TokenGraphTileRelationsModel> {
+  const deploymentsByToken = new Map<string, typeof deployedTokens>()
+  for (const deployment of deployedTokens) {
+    if (!deployment.abstractTokenId) continue
+    const existing = deploymentsByToken.get(deployment.abstractTokenId)
+    if (existing) existing.push(deployment)
+    else deploymentsByToken.set(deployment.abstractTokenId, [deployment])
+  }
+
+  // Relations are keyed by endpoint, so bucket them by the token owning the
+  // endpoint once rather than scanning all routes for every token.
+  const tokenOfDeployment = new Map<string, string>()
+  for (const deployment of deployedTokens) {
+    if (!deployment.abstractTokenId) continue
+    tokenOfDeployment.set(
+      endpointKey(deployment.chain, deployment.address),
+      deployment.abstractTokenId,
+    )
+  }
+  const routesByToken = new Map<string, TokenRelationsRoute[]>()
+  for (const route of routes) {
+    const tokenId = tokenOfDeployment.get(
+      endpointKey(route.tokenAChain, route.tokenAAddress),
+    )
+    if (tokenId === undefined) continue
+    const existing = routesByToken.get(tokenId)
+    if (existing) existing.push(route)
+    else routesByToken.set(tokenId, [route])
+  }
+
+  return new Map(
+    [...deploymentsByToken].map(([tokenId, deployments]) => [
+      tokenId,
+      buildTokenRelationsGraph(deployments, routesByToken.get(tokenId) ?? []),
+    ]),
   )
 }
 
@@ -247,4 +277,8 @@ function getMinterCount(
 
 function endpointKey(chain: string, address: string): string {
   return `${chain}|${address.toLowerCase()}`
+}
+
+export function tokenNodeKey(tokenId: string, nodeId: string): string {
+  return `${tokenId}|${nodeId}`
 }

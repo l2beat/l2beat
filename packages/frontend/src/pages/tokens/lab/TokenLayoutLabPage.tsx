@@ -18,8 +18,8 @@ export function TokenLayoutLabPage({ tokens, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout variant="wide">
-        <MainPageHeader description="Compare ways to make burn-mint membership and minter risk legible inside the production modal.">
-          Burn-mint cluster lab
+        <MainPageHeader description="Compare layouts for transfer volume, count, time, full upstream and downstream backing paths, and same-chain activity.">
+          Selected token panel lab
         </MainPageHeader>
 
         <div className="sticky top-0 z-30 border-divider border-y bg-surface-primary/95 px-4 py-3 backdrop-blur md:rounded-lg md:border">

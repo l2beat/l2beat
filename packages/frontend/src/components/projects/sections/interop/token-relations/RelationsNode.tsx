@@ -86,7 +86,7 @@ export function RelationsNode({
           <text
             x={12}
             y={20}
-            className="fill-primary font-bold text-label-value-13"
+            className="fill-primary font-bold text-label-value-13 leading-[normal]!"
           >
             {first.symbol}
           </text>
@@ -95,7 +95,7 @@ export function RelationsNode({
               x={box.width - GROUP_PADDING}
               y={20}
               textAnchor="end"
-              className="fill-secondary font-medium text-label-value-12"
+              className="fill-secondary font-medium text-label-value-12 leading-[normal]!"
             >
               {formatCurrency(node.volume, 'usd')}
             </text>
@@ -132,7 +132,7 @@ export function RelationsNode({
                 <text
                   x={CHAIN_ICON + 6}
                   y={GROUP_LEDGER_ROW_HEIGHT / 2 + 4}
-                  className="fill-primary font-medium text-label-value-12"
+                  className="fill-primary font-medium text-label-value-12 leading-[normal]!"
                 >
                   <title>{deployment.chainName}</title>
                   {shorten(deployment.chainName, 15)}
@@ -141,7 +141,7 @@ export function RelationsNode({
                   x={groupCellWidth}
                   y={GROUP_LEDGER_ROW_HEIGHT / 2 + 4}
                   textAnchor="end"
-                  className="fill-secondary text-label-value-12"
+                  className="fill-secondary text-label-value-12 leading-[normal]!"
                 >
                   {deployment.volume === null
                     ? '—'
@@ -156,7 +156,7 @@ export function RelationsNode({
           <text
             x={12}
             y={20}
-            className="fill-primary font-bold text-label-value-13"
+            className="fill-primary font-bold text-label-value-13 leading-[normal]!"
           >
             {first.symbol}
           </text>
@@ -167,14 +167,18 @@ export function RelationsNode({
               x={box.width - 12}
               y={20}
               textAnchor="end"
-              className="fill-secondary font-medium text-label-value-12"
+              className="fill-secondary font-medium text-label-value-12 leading-[normal]!"
             >
               {formatCurrency(first.volume, 'usd')}
             </text>
           )}
           {/* The chain reads as a sentence — "On Avalanche" — rather than as a
               second title competing with the symbol. */}
-          <text x={12} y={39} className="fill-secondary text-label-value-12">
+          <text
+            x={12}
+            y={39}
+            className="fill-secondary text-label-value-12 leading-[normal]!"
+          >
             On
           </text>
           <image
@@ -187,11 +191,15 @@ export function RelationsNode({
           <text
             x={SINGLE_NODE_CHAIN_NAME_X}
             y={39}
-            className="fill-secondary text-label-value-12"
+            className="fill-secondary text-label-value-12 leading-[normal]!"
           >
             {first.chainName}
           </text>
-          <text x={12} y={54} className="fill-secondary text-label-value-12">
+          <text
+            x={12}
+            y={54}
+            className="fill-secondary text-label-value-12 leading-[normal]!"
+          >
             {formatAddress(first.address)}
           </text>
         </>
@@ -229,7 +237,11 @@ function BurnMintBridgeLine({
           ? node.bridges.map((bridge) => bridge.name).join(', ')
           : 'Minter not identified'}
       </title>
-      <text x={labelX} y={42} className="fill-secondary text-label-value-12">
+      <text
+        x={labelX}
+        y={42}
+        className="fill-secondary text-label-value-12 leading-[normal]!"
+      >
         {label}
       </text>
       {firstBridge?.icon && (
@@ -244,7 +256,7 @@ function BurnMintBridgeLine({
       <text
         x={namesX}
         y={42}
-        className="fill-primary font-medium text-label-value-12"
+        className="fill-primary font-medium text-label-value-12 leading-[normal]!"
       >
         {bridgeNames}
       </text>

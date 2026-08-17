@@ -131,6 +131,20 @@ export interface InteropTransferTokenInfo {
   tokenAddress: string
 }
 
+export interface InteropTransferTokenGroup {
+  id: string
+  abstractTokenId: string
+  tokens: InteropTransferTokenInfo[]
+}
+
+export interface InteropTransferTokenGroupStats {
+  id: string
+  transferCount: number
+  transfersWithDurationCount: number
+  totalDurationSum: number
+  volume: number
+}
+
 export interface InteropTransferTokenAddress {
   chain: string
   address: string
@@ -410,6 +424,121 @@ export class InteropTransferRepository extends BaseRepository {
         sampleTransferId: row.sampleTransferId,
       }
     })
+  }
+
+  /**
+   * Aggregates transfers touching each token group. A transfer whose source and
+   * destination both belong to the same group is retained only once by the
+   * UNION, so burn-mint cluster activity is not double counted.
+   */
+  async getUniqueTokenGroupStats(
+    groups: InteropTransferTokenGroup[],
+    timeRange: InteropTransferTimeRange,
+  ): Promise<InteropTransferTokenGroupStats[]> {
+    const entries = groups.flatMap((group) =>
+      group.tokens.map((token) => ({
+        groupId: group.id,
+        abstractTokenId: group.abstractTokenId,
+        chain: token.chain,
+        tokenAddress: token.tokenAddress,
+      })),
+    )
+    if (entries.length === 0) return []
+
+    const values = sql.join(
+      entries.map(
+        (entry) =>
+          sql`(${entry.groupId}::varchar, ${entry.abstractTokenId}::varchar, ${entry.chain}::varchar, ${entry.tokenAddress}::varchar)`,
+      ),
+    )
+
+    const rows = await sql<{
+      groupId: string
+      transferCount: string
+      transfersWithDurationCount: string
+      totalDurationSum: string
+      volume: number
+    }>`
+      WITH "TokenGroups" ("groupId", "abstractTokenId", "chain", "tokenAddress") AS (
+        VALUES ${values}
+      ),
+      "TokenIds" AS MATERIALIZED (
+        SELECT DISTINCT "abstractTokenId"
+        FROM "TokenGroups"
+      ),
+      "CandidateTransfers" AS MATERIALIZED (
+        SELECT
+          "transferId",
+          "duration",
+          "srcChain",
+          "srcTokenAddress",
+          "srcAbstractTokenId",
+          "srcValueUsd",
+          "dstChain",
+          "dstTokenAddress",
+          "dstAbstractTokenId",
+          "dstValueUsd"
+        FROM "InteropTransfer"
+        WHERE "timestamp" > ${UnixTime.toDate(timeRange.from)}
+          AND "timestamp" <= ${UnixTime.toDate(timeRange.to)}
+          AND (
+            "srcAbstractTokenId" IN (SELECT "abstractTokenId" FROM "TokenIds")
+            OR "dstAbstractTokenId" IN (SELECT "abstractTokenId" FROM "TokenIds")
+          )
+      ),
+      "GroupTransfers" AS (
+        SELECT
+          "TokenGroups"."groupId",
+          "Transfer"."transferId",
+          "Transfer"."duration",
+          "Transfer"."srcValueUsd",
+          "Transfer"."dstValueUsd"
+        FROM "CandidateTransfers" AS "Transfer"
+        INNER JOIN "TokenGroups"
+          ON "TokenGroups"."abstractTokenId" = "Transfer"."srcAbstractTokenId"
+          AND "TokenGroups"."chain" = "Transfer"."srcChain"
+          AND "TokenGroups"."tokenAddress" = "Transfer"."srcTokenAddress"
+
+        UNION
+
+        SELECT
+          "TokenGroups"."groupId",
+          "Transfer"."transferId",
+          "Transfer"."duration",
+          "Transfer"."srcValueUsd",
+          "Transfer"."dstValueUsd"
+        FROM "CandidateTransfers" AS "Transfer"
+        INNER JOIN "TokenGroups"
+          ON "TokenGroups"."abstractTokenId" = "Transfer"."dstAbstractTokenId"
+          AND "TokenGroups"."chain" = "Transfer"."dstChain"
+          AND "TokenGroups"."tokenAddress" = "Transfer"."dstTokenAddress"
+      )
+      SELECT
+        "groupId",
+        COUNT(*) AS "transferCount",
+        COUNT("duration") AS "transfersWithDurationCount",
+        COALESCE(SUM("duration"), 0) AS "totalDurationSum",
+        COALESCE(
+          SUM(
+            CASE
+              WHEN "srcValueUsd" IS NOT NULL AND "dstValueUsd" IS NOT NULL
+                THEN GREATEST("srcValueUsd", "dstValueUsd")
+              ELSE COALESCE("srcValueUsd", "dstValueUsd", 0)
+            END
+          ),
+          0
+        ) AS "volume"
+      FROM "GroupTransfers"
+      GROUP BY "groupId"
+    `.execute(this.db)
+
+    return rows.rows.map((row) => ({
+      id: row.groupId,
+      transferCount: Number(row.transferCount),
+      transfersWithDurationCount: Number(row.transfersWithDurationCount),
+      totalDurationSum: Number(row.totalDurationSum),
+      volume: Number(row.volume),
+    }))
   }
 
   async findByTransferId(

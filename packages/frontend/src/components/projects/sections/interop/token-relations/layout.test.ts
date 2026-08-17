@@ -206,6 +206,8 @@ function node(
     id,
     bridges: [],
     volume,
+    transferCount: null,
+    avgDuration: null,
     deployments: Array.from({ length: members }, (_, i) => ({
       chain: `chain${i}`,
       chainName: `Chain ${i}`,
@@ -214,6 +216,8 @@ function node(
       symbol: 'TOKEN',
       explorerUrl: undefined,
       volume: null,
+      transferCount: null,
+      avgDuration: null,
     })),
   }
 }
