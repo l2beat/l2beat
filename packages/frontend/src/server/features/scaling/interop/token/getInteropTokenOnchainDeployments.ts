@@ -9,7 +9,10 @@ export interface InteropTokenOnchainDeployment {
   chain: string
   address: string
   symbol: string
-  mintingPlugins: Pick<MintingPluginRecord, 'plugin' | 'relationChains'>[]
+  mintingPlugins: Pick<
+    MintingPluginRecord,
+    'plugin' | 'bridgeType' | 'relatedChain'
+  >[]
   isSupported: boolean
   volume: number | null
   transferCount: number | null
@@ -66,7 +69,8 @@ export async function getInteropTokenOnchainDeployments(
     const plugins = mintingPluginsMap.get(key) ?? []
     plugins.push({
       plugin: record.plugin,
-      relationChains: record.relationChains,
+      bridgeType: record.bridgeType,
+      relatedChain: record.relatedChain,
     })
     mintingPluginsMap.set(key, plugins)
   }
@@ -122,11 +126,13 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
     mintingPlugins: [
       {
         plugin: 'cctp-v2',
-        relationChains: ['arbitrum', 'ethereum'],
+        bridgeType: 'burnAndMint',
+        relatedChain: 'ethereum',
       },
       {
         plugin: 'orbitstack',
-        relationChains: ['arbitrum', 'ethereum'],
+        bridgeType: 'lockAndMint',
+        relatedChain: 'ethereum',
       },
     ],
     isSupported: true,
@@ -139,7 +145,11 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
     address: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
     symbol: 'USDbC',
     mintingPlugins: [
-      { plugin: 'opstack', relationChains: ['base', 'ethereum'] },
+      {
+        plugin: 'opstack',
+        bridgeType: 'lockAndMint',
+        relatedChain: 'ethereum',
+      },
     ],
     isSupported: false,
     volume: null,

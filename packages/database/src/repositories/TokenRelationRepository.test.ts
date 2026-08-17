@@ -495,22 +495,32 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
           {
             ...arbitrumToken,
             plugin: 'canonicalbridge',
-            relationChains: ['arbitrum', 'ethereum'],
+            bridgeType: 'lockAndMint',
+            relatedChain: 'ethereum',
           },
           {
             ...arbitrumToken,
             plugin: 'superbridge',
-            relationChains: ['arbitrum', 'ethereum', 'optimism'],
+            bridgeType: 'burnAndMint',
+            relatedChain: 'ethereum',
+          },
+          {
+            ...arbitrumToken,
+            plugin: 'superbridge',
+            bridgeType: 'burnAndMint',
+            relatedChain: 'optimism',
           },
           {
             ...optimismToken,
             plugin: 'escrowbridge',
-            relationChains: ['arbitrum', 'optimism'],
+            bridgeType: 'lockAndMint',
+            relatedChain: 'arbitrum',
           },
           {
             ...optimismToken,
             plugin: 'superbridge',
-            relationChains: ['arbitrum', 'optimism'],
+            bridgeType: 'burnAndMint',
+            relatedChain: 'arbitrum',
           },
         ])
       })

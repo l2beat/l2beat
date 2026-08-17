@@ -1,4 +1,7 @@
-import type { InteropBridgeType } from '@l2beat/shared-pure'
+import type {
+  InteropBridgeType,
+  KnownInteropBridgeType,
+} from '@l2beat/shared-pure'
 import type {
   Expression,
   ExpressionBuilder,
@@ -50,7 +53,8 @@ export type TokenRelationRoute = Omit<TokenRelationRecord, 'transfer'>
 
 export interface MintingPluginRecord extends DeployedTokenPrimaryKey {
   plugin: string
-  relationChains: string[]
+  bridgeType: KnownInteropBridgeType
+  relatedChain: string
 }
 
 // The identity and role columns come back re-derived, so their literal types
@@ -157,9 +161,10 @@ function tokenKey(token: DeployedTokenPrimaryKey): string {
 }
 
 function mintingPluginKey(
-  record: DeployedTokenPrimaryKey & Pick<MintingPluginRecord, 'plugin'>,
+  record: DeployedTokenPrimaryKey &
+    Pick<MintingPluginRecord, 'plugin' | 'bridgeType' | 'relatedChain'>,
 ): string {
-  return `${tokenKey(record)}|${record.plugin}`
+  return `${tokenKey(record)}|${record.plugin}|${record.bridgeType}|${record.relatedChain}`
 }
 
 export class TokenRelationRepository extends BaseRepository {
@@ -327,16 +332,20 @@ export class TokenRelationRepository extends BaseRepository {
   async getMintingPluginsFor(
     token: DeployedTokenPrimaryKey,
   ): Promise<string[]> {
-    return (await this.getMintingPluginsForMany([token])).map(
-      (record) => record.plugin,
-    )
+    return [
+      ...new Set(
+        (await this.getMintingPluginsForMany([token])).map(
+          (record) => record.plugin,
+        ),
+      ),
+    ].sort((a, b) => a.localeCompare(b))
   }
 
   /**
    * Batch variant of {@link getMintingPluginsFor}: one distinct
-   * (token, plugin) record per plugin observed minting each requested token.
-   * `relationChains` contains every endpoint chain from the qualifying
-   * relations so callers can apply route-level chain qualifiers.
+   * (token, plugin, bridgeType, relatedChain) record per qualifying relation
+   * in which this token is minted. `relatedChain` is the other endpoint of
+   * that relation, used with this token's chain as plugin chain qualifiers.
    *
    * Input addresses are matched case-insensitively; returned addresses are
    * as stored, lowercase — group results by lowercased address, not by
@@ -359,6 +368,7 @@ export class TokenRelationRepository extends BaseRepository {
           'tokenAAddress as address',
           'tokenBChain as relatedChain',
           'plugin',
+          'bridgeType',
         ])
         .where((eb) =>
           eb(
@@ -377,6 +387,7 @@ export class TokenRelationRepository extends BaseRepository {
           'tokenBAddress as address',
           'tokenAChain as relatedChain',
           'plugin',
+          'bridgeType',
         ])
         .where((eb) =>
           eb(
@@ -391,30 +402,25 @@ export class TokenRelationRepository extends BaseRepository {
 
       const rows = await mintedAtA.union(mintedAtB).execute()
       for (const row of rows) {
-        const key = mintingPluginKey(row)
-        const relationChains = new Set(result.get(key)?.relationChains)
-        relationChains.add(row.chain)
-        relationChains.add(row.relatedChain)
-        result.set(key, {
+        const record: MintingPluginRecord = {
           chain: row.chain,
           address: row.address,
           plugin: row.plugin,
-          relationChains: [...relationChains],
-        })
+          bridgeType: row.bridgeType as KnownInteropBridgeType,
+          relatedChain: row.relatedChain,
+        }
+        result.set(mintingPluginKey(record), record)
       }
     })
 
-    return [...result.values()]
-      .map((record) => ({
-        ...record,
-        relationChains: [...record.relationChains].sort(),
-      }))
-      .sort(
-        (a, b) =>
-          a.chain.localeCompare(b.chain) ||
-          a.address.localeCompare(b.address) ||
-          a.plugin.localeCompare(b.plugin),
-      )
+    return [...result.values()].sort(
+      (a, b) =>
+        a.chain.localeCompare(b.chain) ||
+        a.address.localeCompare(b.address) ||
+        a.plugin.localeCompare(b.plugin) ||
+        a.bridgeType.localeCompare(b.bridgeType) ||
+        a.relatedChain.localeCompare(b.relatedChain),
+    )
   }
 
   private mintedAtEndpoint(

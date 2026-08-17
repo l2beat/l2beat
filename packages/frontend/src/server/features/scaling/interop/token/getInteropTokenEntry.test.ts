@@ -20,7 +20,11 @@ describe(getInteropTokenEntry.name, () => {
           id: 'alpha',
           interopName: 'Alpha bridge',
           plugins: [
-            { plugin: 'ccip', bridgeType: 'burnAndMint' },
+            {
+              plugin: 'ccip',
+              bridgeType: 'burnAndMint',
+              transferType: 'ccip.Transfer',
+            },
             { plugin: 'cctp-v2', bridgeType: 'burnAndMint' },
           ],
         }),
@@ -28,8 +32,16 @@ describe(getInteropTokenEntry.name, () => {
       [
         deployment({
           mintingPlugins: [
-            { plugin: 'ccip', relationChains: ['ethereum', 'base'] },
-            { plugin: 'cctp-v2', relationChains: ['ethereum', 'base'] },
+            {
+              plugin: 'ccip',
+              bridgeType: 'burnAndMint',
+              relatedChain: 'ethereum',
+            },
+            {
+              plugin: 'cctp-v2',
+              bridgeType: 'burnAndMint',
+              relatedChain: 'ethereum',
+            },
           ],
         }),
       ],

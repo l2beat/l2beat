@@ -4,7 +4,7 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import { getLogger } from '~/server/utils/logger'
 import { manifest } from '~/utils/Manifest'
-import { createMintingProjectResolver } from '../utils/createMintingProjectResolver'
+import { createInteropProjectResolver } from '../utils/createInteropProjectResolver'
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
 
 const logger = getLogger().for('getInteropTokenEntry')
@@ -46,18 +46,14 @@ export function getInteropTokenEntry(
       interopChains,
       projectsWithChains,
     )
-    const resolveMintingProjects = createMintingProjectResolver(interopProjects)
+    const resolveProjects = createInteropProjectResolver(interopProjects)
     sections.push({
       type: 'InteropTokenOnchainDeploymentsSection',
       props: {
         id: 'onchain-deployments',
         title: 'Onchain deployments',
         deployments: deployments.map((deployment) => {
-          const minters = resolveMinters(
-            deployment,
-            tokenId,
-            resolveMintingProjects,
-          )
+          const minters = resolveMinters(deployment, tokenId, resolveProjects)
           return toDeploymentRow(deployment, chainInfoMap, minters)
         }),
       },
@@ -80,25 +76,33 @@ export function getInteropTokenEntry(
 function resolveMinters(
   deployment: InteropTokenOnchainDeployment,
   abstractTokenId: string,
-  resolveMintingProjects: ReturnType<typeof createMintingProjectResolver>,
+  resolveProjects: ReturnType<typeof createInteropProjectResolver>,
 ): InteropTokenOnchainDeploymentsRow['minters'] {
   const minters = new Map<
     string,
     InteropTokenOnchainDeploymentsRow['minters'][number]
   >()
 
-  for (const { plugin, relationChains } of deployment.mintingPlugins) {
-    const projects = resolveMintingProjects({
+  for (const {
+    plugin,
+    bridgeType,
+    relatedChain,
+  } of deployment.mintingPlugins) {
+    const projects = resolveProjects({
       plugin,
-      relationChains,
-      abstractTokenId,
+      bridgeType,
+      srcChain: deployment.chain,
+      dstChain: relatedChain,
+      srcAbstractTokenId: abstractTokenId,
+      dstAbstractTokenId: abstractTokenId,
     })
 
     if (projects.length === 0) {
       logger.warn('Could not resolve minting plugin to an interop project', {
         plugin,
-        relationChains,
-        deploymentChain: deployment.chain,
+        bridgeType,
+        srcChain: deployment.chain,
+        dstChain: relatedChain,
         address: deployment.address,
         abstractTokenId,
       })
