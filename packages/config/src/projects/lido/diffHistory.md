@@ -8,12 +8,11 @@ Generated with discovered.json: 0x8418fc8ac7758d095c0e38237e7f995168550564
 
 ## Description
 
-Wiring for the Lido DAO buyback program's revenue accounting (executed via DAO vote on 2026-08-14):
+Wiring for the Lido DAO buyback program's revenue accounting:
 
-- The `LidoLocator` implementation was upgraded only to swap the immutable `postTokenRebaseReceiver` to a redeployed `TokenRateNotifier`. The new notifier version supports a second observer flavor that receives the full rebase report payload in addition to the plain "push token rate" callback.
-- The new `TokenRateNotifier` has two observers: the pre-existing `OpStackTokenRatePusher` (pushes the wstETH rate to Optimism; previously hidden by an `ignoreMethods` on the observer list, now surfaced) and the new `StakingRevenueSource`, which accrues the DAO treasury's fee share of each stETH rebase and converts it into a cumulative USD figure for the buyback program.
-- `StakingRevenueSource` values stETH via the new `OracleRouter`, which reads prices from Chainlink's canonical Feed Registry (with an ETH/USD bridge feed for ETH-quoted tokens). The router's admin is the Aragon `Voting` app and its manager is the DAO's `TreasuryManagementCommittee` 4/7 multisig; both can configure feed routes, staleness limits, and activation flags.
-- The Chainlink contracts are kept: they are the price source that determines the USD revenue accounting for buybacks. The `FeedRegistry` was added to the shared `chainlink` discovery (where the ETH/USD aggregator and the Chainlink admin multisig were already tracked), so all three appear here as cross-project references.
+- The `LidoLocator` implementation was upgraded only to swap the immutable `postTokenRebaseReceiver` to a redeployed `TokenRateNotifier`.
+- The new `TokenRateNotifier` has two targets: the pre-existing `OpStackTokenRatePusher` and the new `StakingRevenueSource`, which accrues the DAO treasury's fee share of each stETH rebase and converts it into a cumulative USD figure for the buyback program.
+- `StakingRevenueSource` values stETH via the new `OracleRouter`, which reads prices from Chainlink's canonical Feed Registry. The router's admin is the Aragon `Voting` app and its manager is the DAO's `TreasuryManagementCommittee` 4/7 multisig; both can configure feed routes, staleness limits, and activation flags.
 
 ## Watched changes
 
