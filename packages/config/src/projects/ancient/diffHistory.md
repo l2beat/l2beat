@@ -8,7 +8,7 @@ Generated with discovered.json: 0xd37f11823fc36d7eef5e968632d8d5e74857ca64
 
 ## Description
 
-SuperchainConfig implementation upgraded v2.4.0 → v2.4.2 via a StorageSetter step in one transaction; guardian re-initialised unchanged.
+SuperchainConfig implementation upgraded v2.4.0 → v2.4.2 ([diff](https://disco.l2beat.com/diff/eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957/eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550)) via a StorageSetter step in one transaction; guardian re-initialised unchanged.
 
 ## Watched changes
 
