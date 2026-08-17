@@ -13,7 +13,6 @@ import { createFinancialsRouter } from './routers/financials'
 import { createHighlightsRouter } from './routers/highlights'
 import { createKnownAppsRouter } from './routers/knownApps'
 import { createMessagesRouter } from './routers/messages'
-import { createMissingTokensRouter } from './routers/missingTokens'
 import { createPromotionRouter } from './routers/promotion'
 import { createStatusRouter } from './routers/status'
 import { createSummaryRouter } from './routers/summary'
@@ -54,7 +53,6 @@ export function createInteropTrpcRouter(deps: InteropTrpcRouterDeps) {
     highlights: createHighlightsRouter(deps),
     messages: createMessagesRouter(),
     knownApps: createKnownAppsRouter(),
-    missingTokens: createMissingTokensRouter(deps),
     promotion: createPromotionRouter(),
     summary: createSummaryRouter(deps),
     status: createStatusRouter(deps),

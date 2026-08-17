@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "ERC20 entry point of the Relay v3 flow: it pulls user tokens (via direct approvals or EIP-2612 / ERC-3009 / Permit2 signatures) and forwards them to the RelayRouterV3, where the calls of the Relay quote are executed atomically. Token pulls are only possible from msg.sender or with the token owner's signature, so user approvals to this contract cannot be spent by its owner.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw funds stuck in the RelayApprovalProxyV3 (not user approvals)."
+        }
+      ]
+    }
+  }
+}

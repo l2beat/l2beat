@@ -242,6 +242,13 @@ starknetProgramHashes.push(
 starknetProgramHashes.push(
   discovery.getContractValue<string>('Starknet', 'aggregatorProgramHash'),
 )
+// Virtual Starknet OS for client-side proving (e.g. STRK-20). Not stored in
+// the L1 core contract: it is pinned as ALLOWED_VIRTUAL_OS_PROGRAM_HASHES
+// inside the L1-registered Starknet OS program above. See
+// https://github.com/starkware-libs/sequencer/blob/5114457/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os/constants.cairo#L66-L71
+starknetProgramHashes.push(
+  '2373625305120835200243020426311988160128377108314438505880592663683179928225',
+)
 starknetProgramHashes.push(...acceptedSHARPVerifierChain.programPins)
 
 const starkwareMultisig2Stats = discovery.getMultisigStats(
@@ -378,7 +385,7 @@ export const starknet: ScalingProject = {
     {
       rollupNodeLink: 'https://github.com/eqlabs/pathfinder',
       securityCouncilReference:
-        'https://governance.starknet.io/learn/security_council',
+        'https://docs.starknet.io/learn/protocol/security-council',
       stage1PrincipleDescription:
         'While Starknet is considered Stage 1, the Security Council minority is employed to enforce censorship resistance in case the permissioned operator fails to include transactions. The process through which a censored user can contact the Security Council is not defined and currently unclear.',
     },
@@ -442,7 +449,7 @@ export const starknet: ScalingProject = {
     // exposed by the shared SHARP discovery.
     zkVerifiers: acceptedSHARPVerifierChain.factRegistries,
     programHashesDescription:
-      'The Starknet OS, aggregator, outer bootloader, supported-simple-bootloader commitment, and applicative bootloader are reproducible. Every SHARP verifier in the currently accepted fact-registry chain also pins a commitment to an ordered allowlist of recursive Cairo verifier programs. The active allowlist preimages and the programs behind them have not been reproduced, so an invalid nested-proof verifier cannot be ruled out independently.',
+      'The Starknet OS, virtual Starknet OS, aggregator, outer bootloader, supported-simple-bootloader commitment, and applicative bootloader are reproducible. Every SHARP verifier in the currently accepted fact-registry chain also pins a commitment to an ordered allowlist of recursive Cairo verifier programs. The active allowlist preimages and the programs behind them have not been reproduced, so an invalid nested-proof verifier cannot be ruled out independently.',
   },
   upgradesAndGovernance: {
     content: readProjectMarkdown('starknet', 'upgradesAndGovernance', {

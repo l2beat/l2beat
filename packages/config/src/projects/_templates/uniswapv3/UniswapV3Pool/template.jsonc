@@ -9,24 +9,26 @@
     "feeGrowthGlobal0X128",
     "feeGrowthGlobal1X128"
   ],
+  "ignoreInWatchMode": [
+    "slot0",
+    "liquidity",
+    "feeGrowthGlobal0X128",
+    "feeGrowthGlobal1X128",
+    "protocolFees"
+  ],
   "fields": {
     "slot0": {
-      "ignoreInWatchMode": true,
       "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
     },
-    "liquidity": { "ignoreInWatchMode": true },
     // Q128.128 accumulators; large uints in the 160-bit range get misread as
     // addresses by the relative detector.
     "feeGrowthGlobal0X128": {
-      "ignoreInWatchMode": true,
       "ignoreRelative": true
     },
     "feeGrowthGlobal1X128": {
-      "ignoreInWatchMode": true,
       "ignoreRelative": true
     },
     "protocolFees": {
-      "ignoreInWatchMode": true,
       "description": "Protocol fees accrued and not yet collected by the factory owner."
     }
   }

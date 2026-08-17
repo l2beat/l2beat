@@ -121,18 +121,6 @@ export const chainsSummaryColumns: TableOptions<ChainsSummaryRow>['columns'] = [
       },
     },
   ),
-  columnHelper.accessor('missingTokensCount', {
-    header: 'Missing tokens',
-    cell: ({ getValue }) => (
-      <CountLink to="/interop/missing-tokens" value={getValue()} />
-    ),
-    sortingFn: numericSort('missingTokensCount'),
-    meta: {
-      csvHeader: 'Missing tokens',
-      getCsvValue: ({ row }) =>
-        formatCountForCsv(row.original.missingTokensCount),
-    },
-  }),
   columnHelper.accessor('suspiciousTransfersCount', {
     header: 'Suspicious transfers',
     cell: ({ getValue }) => (

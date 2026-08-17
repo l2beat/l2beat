@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x244084aa7b02df39dd85a48cef88ed6e68800b5a
+
+# Diff at Thu, 13 Aug 2026 21:23:07 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8be200f5fe2231607b3283aa3e1ba9da3c89bcd5 block: 1739873519
+- current timestamp: 1786656108
+
+## Description
+
+RiverMultisig: two signers added, one removed; threshold 4 of 6 → 4 of 7.
+
+## Watched changes
+
+```diff
+    contract RiverMultisig (eth:0x2876c43B17A5750CBea5E2A3C42718374E21D5a2) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xbCDb12b7a5bDe037e342a6BE7fd5582b9D93C232"
+      values.$members.1:
++        "eth:0x62ea938a30826c8794C8B8BbA775B91cAE3B849A"
+      values.$members.5:
+-        "eth:0xFeCd10Bf45192D319B13F1C04Dc4175AFbE2a1B8"
+      values.multisigThreshold:
+-        "4 of 6 (67%)"
++        "4 of 7 (57%)"
+    }
+```
+
 Generated with discovered.json: 0xcabf0dc182593bcf2a68fd195fcd7a9005a468c0
 
 # Diff at Tue, 09 Jun 2026 12:43:38 GMT:

@@ -1,3 +1,86 @@
+Generated with discovered.json: 0xe45b030a16cf63283edb9caee2f0703c6e8a9234
+
+# Diff at Wed, 12 Aug 2026 09:57:36 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@fcd1e391c3f4bb947d4d1cd82a80d26e44f435a9 block: 1785925747
+- current timestamp: 1786528589
+
+## Description
+
+Upgraded boojum verifier to v30.0, the same as the current zksync era verifier. It is not reproduced yet.
+
+## Watched changes
+
+```diff
+    contract Diamond (eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.11:
++        ["2026-08-11T13:00:11.000Z","0xeb2beafc685e0ee4854da37ea0f13053576e4a266f020562743c9b3060f9858b",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
+      values.$upgradeCount:
+-        11
++        12
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        124554051589
++        128849018880
+      values.getSemverProtocolVersion.1:
+-        29
++        30
+      values.getSemverProtocolVersion.2:
+-        5
++        0
+      values.getVerifier:
+-        "eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e"
++        "eth:0xC47D355402E78b886B628914B3b129F236fEe3cc"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x9f5C39a2790f38542065E7854b90407371923375 or eth:0xd22cA89e8991FCE568456914c616d303e3142395 depending on the supplied proof type.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (eth:0x9f5C39a2790f38542065E7854b90407371923375) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (eth:0xd22cA89e8991FCE568456914c616d303e3142395) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (eth:0x35CD3865199F2D9c574f34DD72520B19842d440c) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (eth:0xC47D355402E78b886B628914B3b129F236fEe3cc) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66 or eth:0x35CD3865199F2D9c574f34DD72520B19842d440c depending on the supplied proof type.
+```
+
+## Source code changes
+
+```diff
+.../sophon/{.flat@1785925747 => .flat}/L1VerifierFflonk.sol    |  6 +++---
+ .../sophon/{.flat@1785925747 => .flat}/L1VerifierPlonk.sol     | 10 +++++-----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+```
+
 Generated with discovered.json: 0x0710a5c22548e35bbb70e92bd24dcaafa8219ef0
 
 # Diff at Wed, 05 Aug 2026 10:30:10 GMT:

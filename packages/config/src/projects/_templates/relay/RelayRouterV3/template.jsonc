@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Stateless multicall router used to atomically execute the calls of a Relay quote (swaps, bridge deposits, transfers to the solver). It has no owner and no privileged roles, and it is not supposed to hold funds between transactions: anyone can sweep balances left in it via the public cleanup functions.",
+  "ignoreInWatchMode": ["getBlockNumber", "getCurrentBlockTimestamp"]
+}

@@ -15,7 +15,6 @@ import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { InteropNoDataBadge } from '~/pages/interop/components/InteropNoDataBadge'
-import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { InteropProtocolTransferDetailsItem } from '~/server/features/scaling/interop/types'
 import { formatTimestamp } from '~/utils/dates'
@@ -48,11 +47,11 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
         const {
           srcAmount,
           srcSymbol,
-          srcAbstractTokenId,
+          srcTokenHref,
           srcTokenIconUrl,
           dstAmount,
           dstSymbol,
-          dstAbstractTokenId,
+          dstTokenHref,
           dstTokenIconUrl,
         } = ctx.row.original
         return (
@@ -61,7 +60,7 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
               amount={srcAmount}
               iconUrl={srcTokenIconUrl}
               symbol={srcSymbol}
-              abstractTokenId={srcAbstractTokenId}
+              href={srcTokenHref}
               selectedChains={selectedChains}
             />
             <ArrowRightIcon className="size-3.5 shrink-0 fill-brand" />
@@ -69,7 +68,7 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
               amount={dstAmount}
               iconUrl={dstTokenIconUrl}
               symbol={dstSymbol}
-              abstractTokenId={dstAbstractTokenId}
+              href={dstTokenHref}
               selectedChains={selectedChains}
             />
           </div>
@@ -180,13 +179,13 @@ export function getTransferColumns(selectedChains?: InteropSelection) {
 function TokenAmount({
   amount,
   symbol,
-  abstractTokenId,
+  href,
   iconUrl,
   selectedChains,
 }: {
   amount: number | undefined
   symbol: string
-  abstractTokenId: string | undefined
+  href: string | undefined
   iconUrl: string
   selectedChains: InteropSelection | undefined
 }) {
@@ -222,17 +221,12 @@ function TokenAmount({
   const className =
     'inline-flex shrink-0 items-center gap-1 font-medium text-label-value-14 text-primary'
 
-  const tokenUrl =
-    abstractTokenId && selectedChains
-      ? getInteropTokenUrl({ id: abstractTokenId })
-      : undefined
-
-  if (!tokenUrl) {
+  if (!href || !selectedChains) {
     return <span className={className}>{content}</span>
   }
 
   return (
-    <a href={tokenUrl} className={`${className} hover:underline`}>
+    <a href={href} className={`${className} hover:underline`}>
       {content}
     </a>
   )
