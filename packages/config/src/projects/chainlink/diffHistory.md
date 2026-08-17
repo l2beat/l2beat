@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x3340afb493d635e7ef58e903f2e181f7244508b8
+
+# Diff at Mon, 17 Aug 2026 09:59:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e15ee9ab50a72bce8c9055a32fc94661b3b947e2 block: 1786539236
+- current timestamp: 1786960649
+
+## Description
+
+Added Chainlink's canonical `FeedRegistry` to this shared discovery: the new Lido `OracleRouter` (buyback revenue accounting) sources all token prices through it. Its owner is the same `ChainlinkOracleMultisig` that already administers the feeds tracked here, now modeled with an explicit permission over the registry.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786539236 (main branch discovery), not current.
+
+```diff
+    contract ChainlinkOracleMultisig (eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA) [GnosisSafe] {
+    +++ description: The Gnosis Safe that Chainlink uses to administer these price feeds and the Feed Registry. It owns the feed proxies, their aggregators, and the registry, so it can swap the aggregator behind any feed or registry pair and replace the set of oracle signers and how many of them must sign a price. In effect it can set the ETH, stETH, and rETH prices these feeds report, or push a feed into a stale, zero, or reverting state, which makes it their single point of control, held by Chainlink.
+      description:
+-        "The Gnosis Safe that Chainlink uses to administer these three price feeds. It owns both the feed proxies and their aggregators, so it can swap the aggregator behind any feed and replace the set of oracle signers and how many of them must sign a price. In effect it can set the ETH, stETH, and rETH prices these feeds report, or push a feed into a stale, zero, or reverting state, which makes it their single point of control, held by Chainlink."
++        "The Gnosis Safe that Chainlink uses to administer these price feeds and the Feed Registry. It owns the feed proxies, their aggregators, and the registry, so it can swap the aggregator behind any feed or registry pair and replace the set of oracle signers and how many of them must sign a price. In effect it can set the ETH, stETH, and rETH prices these feeds report, or push a feed into a stale, zero, or reverting state, which makes it their single point of control, held by Chainlink."
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf","description":"replace the aggregator behind any base/quote pair in the Feed Registry, controlling all prices it reports to consumers.","role":".owner"}]
+    }
+```
+
+```diff
+    contract ConfirmedTransactionModule (eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b) [N/A] {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf","description":"replace the aggregator behind any base/quote pair in the Feed Registry, controlling all prices it reports to consumers.","role":".owner","via":[{"address":"eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA"}]}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract FeedRegistry (eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf) [N/A]
+    +++ description: Chainlink's canonical feed registry that maps base/quote asset pairs to their current price feed aggregators. Consumers like the Lido OracleRouter source token prices through it.
+```
+
 Generated with discovered.json: 0x3aa64ee8da4ff16b8476dbe3786f9bff63850cd1
 
 # Diff at Mon, 03 Aug 2026 10:52:07 GMT:
