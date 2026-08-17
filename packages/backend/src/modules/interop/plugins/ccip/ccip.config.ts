@@ -17,10 +17,14 @@ export interface CCIPNetwork {
   outboundLanes: Record<string, EthereumAddress>
   // Inbound lanes: chain -> offRamp address (v1.0-v1.5 per-lane)
   inboundLanes: Record<string, EthereumAddress>
-  // v1.6+ per-chain OnRamp
+  // v1.6 per-chain OnRamp
   onRamp?: EthereumAddress
-  // v1.6+ per-chain OffRamp
+  // v1.6 per-chain OffRamp
   offRamp?: EthereumAddress
+  // v2.0 per-chain OnRamp (deployed alongside v1.6)
+  onRampV2?: EthereumAddress
+  // v2.0 per-chain OffRamp (deployed alongside v1.6)
+  offRampV2?: EthereumAddress
 }
 
 export interface CCIPConfigData {
@@ -185,6 +189,8 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
       const inboundLanes: Record<string, EthereumAddress> = {}
       let onRamp: EthereumAddress | undefined
       let offRamp: EthereumAddress | undefined
+      let onRampV2: EthereumAddress | undefined
+      let offRampV2: EthereumAddress | undefined
 
       // lanes[chainA][chainB] contains:
       // - onRamp: contract on chainA for sending TO chainB
@@ -201,8 +207,11 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
             try {
               const addr = EthereumAddress(laneConfig.onRamp.address)
               if (laneConfig.onRamp.version?.startsWith('1.6')) {
-                // v1.6+ uses a single per-chain OnRamp contract
+                // v1.6 uses a single per-chain OnRamp contract
                 onRamp = addr
+              } else if (laneConfig.onRamp.version?.startsWith('2.0')) {
+                // v2.0 is deployed alongside v1.6 on the same chain.
+                onRampV2 = addr
               } else {
                 outboundLanes[chainName] = addr
               }
@@ -216,8 +225,11 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
             try {
               const addr = EthereumAddress(laneConfig.offRamp.address)
               if (laneConfig.offRamp.version?.startsWith('1.6')) {
-                // v1.6+ uses a single per-chain OffRamp contract
+                // v1.6 uses a single per-chain OffRamp contract
                 offRamp = addr
+              } else if (laneConfig.offRamp.version?.startsWith('2.0')) {
+                // v2.0 is deployed alongside v1.6 on the same chain.
+                offRampV2 = addr
               } else {
                 inboundLanes[chainName] = addr
               }
@@ -228,12 +240,14 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
         }
       }
 
-      // Only add if we have at least one lane or v1.6 contract
+      // Only add if we have at least one lane or per-chain contract
       if (
         Object.keys(outboundLanes).length > 0 ||
         Object.keys(inboundLanes).length > 0 ||
         onRamp ||
-        offRamp
+        offRamp ||
+        onRampV2 ||
+        offRampV2
       ) {
         networks.push({
           chain: l2beatChain,
@@ -245,6 +259,8 @@ export class CCIPConfigPlugin extends TimeLoop implements InteropConfigPlugin {
           inboundLanes,
           onRamp,
           offRamp,
+          onRampV2,
+          offRampV2,
         })
       }
     }

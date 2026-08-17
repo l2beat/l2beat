@@ -1,6 +1,6 @@
 ## Funds can be stolen if
 1. a malicious upgrade compromises the confidential token contracts or FHEVM contracts with their escrowed underlying tokens.
-2. the threshold of the current or any non-destroyed historical Ethereum KMS context attests an inflated unwrap amount, allowing pooled underlying deposited before or after that context existed to be released. Governance can also install a malicious context; {{kmsThreshold}}/{{kmsSignerCount}} describes only the current context.
+2. the threshold of the current or any non-destroyed historical Ethereum KMS context attests an inflated unwrap amount, allowing pooled underlying deposited before or after that context existed to be released. Governance can also install a malicious context or lower the threshold of any live context in place; {{kmsThreshold}}/{{kmsSignerCount}} describes only the current context.
 3. the {{coprocessorThreshold}}/{{coprocessorSignerCount}} coprocessor input verification path accepts invalid encrypted inputs that bypass confidential balance checks.
 <br>
 ## Funds can be lost if

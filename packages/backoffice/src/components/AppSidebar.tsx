@@ -95,10 +95,6 @@ const navGroups: NavigationGroup[] = [
             url: '/interop/transfers',
           },
           {
-            title: 'Missing tokens',
-            url: '/interop/missing-tokens',
-          },
-          {
             title: 'Known apps',
             url: '/interop/known-apps',
           },

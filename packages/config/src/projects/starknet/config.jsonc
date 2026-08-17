@@ -109,8 +109,8 @@
     "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": {
       "references": [
         {
-          "text": "Security Council members - Starkware Governance Hub",
-          "href": "https://governance.starknet.io/learn/security_council"
+          "text": "Security Council - Starknet Docs",
+          "href": "https://docs.starknet.io/learn/protocol/security-council"
         }
       ]
     },

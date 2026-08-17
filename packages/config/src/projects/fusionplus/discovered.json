@@ -1,6 +1,6 @@
 {
   "name": "fusionplus",
-  "timestamp": 1786352475,
+  "timestamp": 1786959128,
   "configHash": "0xd0b4a01b6416967027881465e684df472d78ca0ac1cb0d032a684443025980a8",
   "entries": [
     {
@@ -275,7 +275,8 @@
           "1084": "eth:0xA80ccA4Eaa9b3C4Bd5C35d9fa74ca2BDc8F5D873",
           "1085": "eth:0xeBB15e51dC5fF266155B74783dF833325b22Cdd2",
           "1101": "eth:0x9b1303EBf09BC51b7fac376c9E421E8daAe63B82",
-          "1157": "eth:0x1cC561F5AE7e867C64129FFC942439707912F704"
+          "1157": "eth:0x1cC561F5AE7e867C64129FFC942439707912F704",
+          "1170": "eth:0xF6Ce0aa2FF888CFf754080B5384400B774fa72C8"
         }
       },
       "fieldMeta": {
@@ -547,6 +548,6 @@
     "fusionplus/KycNFT": "0x3ffac0146050a0a02e1a770c27a5bf956d40de2c8a407346666ec1d95eba8ddb",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25723563 },
+  "usedBlockNumbers": { "ethereum": 25773923 },
   "permissionsConfigHash": "0x80813850a7ac2bff36cca150f5f21eb9625f8dfe6516239de3b2a49a4a17b8e4"
 }

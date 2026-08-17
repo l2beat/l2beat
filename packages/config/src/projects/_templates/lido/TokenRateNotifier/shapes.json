@@ -1,7 +1,8 @@
 {
   "TokenRateNotifier": {
-    "hash": "0xae1475dea458c2985b5c3ebd503e52cbcdbc0e654a3aa89bd46cfdc4e613a3ad",
-    "address": "eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9",
-    "blockNumber": 25624347
+    "hash": "0x94322ccb64804376a5237f97772f23b959b53cc3f48dfab4e37d4c384b3f9aed",
+    "address": "eth:0xbe05d12Fd10919F1881125006523452F6aFF791b",
+    "chain": "ethereum",
+    "blockNumber": 25774016
   }
 }

@@ -1,5 +1,9 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { DiscoveryOutput, EntryParameters } from '../output/types'
+import type {
+  ContractValue,
+  DiscoveryOutput,
+  EntryParameters,
+} from '../output/types'
 import { get$Implementations } from '../utils/extractors'
 import type { ConfigRegistry } from './ConfigRegistry'
 import type { StructureContract } from './StructureConfig'
@@ -40,16 +44,21 @@ export class ConfigHealthService {
     const hints: HealthHint[] = []
 
     for (const entry of discovery.entries) {
-      const possibleValues = this.getPossibleValuesForEntry(entry, discovery)
       const override = config.structure.overrides?.[entry.address]
 
       const configuredWatchMode = entry?.ignoreInWatchMode ?? []
       const configuredMethods = override?.ignoreMethods ?? []
       const configuredRelatives = override?.ignoreRelatives ?? []
+      const possibleValues = this.getPossibleValuesForEntry(entry, discovery)
+      const possibleWatchModeValues = getPossibleWatchModeValues(
+        possibleValues,
+        [entry],
+        configuredWatchMode,
+      )
 
       const excessWatchMode = this.filterOverspecified(
         configuredWatchMode,
-        possibleValues,
+        possibleWatchModeValues,
       )
       const excessMethods = this.filterOverspecified(
         configuredMethods,
@@ -88,6 +97,9 @@ export class ConfigHealthService {
   ): HealthHint[] {
     const hints: HealthHint[] = []
     const allPossibleValues = new Set<string>()
+    const configuredWatchMode = templateConfig.ignoreInWatchMode ?? []
+    const configuredMethods = templateConfig.ignoreMethods ?? []
+    const configuredRelatives = templateConfig.ignoreRelatives ?? []
 
     for (const discovery of discoveries) {
       const possibleValuesForTemplate = this.getPossibleValuesForTemplate(
@@ -100,13 +112,18 @@ export class ConfigHealthService {
       }
     }
 
-    const configuredWatchMode = templateConfig.ignoreInWatchMode ?? []
-    const configuredMethods = templateConfig.ignoreMethods ?? []
-    const configuredRelatives = templateConfig.ignoreRelatives ?? []
+    const templateEntries = discoveries.flatMap((discovery) =>
+      discovery.entries.filter((entry) => entry.template === templateId),
+    )
+    const allPossibleWatchModeValues = getPossibleWatchModeValues(
+      allPossibleValues,
+      templateEntries,
+      configuredWatchMode,
+    )
 
     const excessWatchMode = this.filterOverspecified(
       configuredWatchMode,
-      allPossibleValues,
+      allPossibleWatchModeValues,
     )
     const excessMethods = this.filterOverspecified(
       configuredMethods,
@@ -189,6 +206,46 @@ export class ConfigHealthService {
   ): string[] {
     return methods.filter((method) => !possibleValues.has(method))
   }
+}
+
+function getPossibleWatchModeValues(
+  possibleValues: Set<string>,
+  entries: EntryParameters[],
+  configuredWatchMode: string[],
+): Set<string> {
+  const result = new Set(possibleValues)
+
+  for (const entry of entries) {
+    for (const path of configuredWatchMode) {
+      if (hasValuePath(entry.values, path)) {
+        result.add(path)
+      }
+    }
+  }
+
+  return result
+}
+
+function hasValuePath(
+  values: Record<string, ContractValue | undefined> | undefined,
+  path: string,
+): boolean {
+  let current: ContractValue | undefined = values
+
+  for (const key of path.split('.')) {
+    if (
+      current === undefined ||
+      current === null ||
+      typeof current !== 'object' ||
+      !Object.hasOwn(current, key)
+    ) {
+      return false
+    }
+
+    current = (current as Record<string, ContractValue | undefined>)[key]
+  }
+
+  return true
 }
 
 function anyNonEmpty<T>(...arrays: T[][]): boolean {

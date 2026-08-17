@@ -1,0 +1,149 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ProtocolConfig",
+  "description": "Ethereum host-chain registry of KMS node sets, per-context thresholds, and context lifecycle, introduced in the v0.3.0 KMSVerifier upgrade. A KMS context snapshots node transaction senders and signers; the four per-context thresholds (public decryption, user decryption, key generation, MPC) can be retuned by the ACL owner for any live context, including the current one. A newly created context becomes current immediately; older contexts remain selectable for public decryption proofs until destroyed.",
+  "category": "core",
+  "ignoreMethods": [
+    "proxiableUUID",
+    "getKmsSignersForContext",
+    "getKmsNodesForContext",
+    "isValidKmsContext",
+    "getPublicDecryptionThresholdForContext",
+    "getUserDecryptionThresholdForContext",
+    "getKmsGenThresholdForContext",
+    "getMpcThresholdForContext"
+  ],
+  "fields": {
+    "aclOwner": {
+      "description": "Owner of the Zama ACL contract. This account is authorized by onlyACLOwner for all ProtocolConfig administration.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the ProtocolConfig implementation."
+        },
+        {
+          "type": "interact",
+          "description": "create KMS contexts with arbitrary node sets and thresholds that immediately become the default verifier authority, destroy non-current contexts, and retune the per-context thresholds (public decryption, user decryption, key generation, MPC) of any live context including the current one. A malicious context or lowered threshold can attest an inflated unwrap amount and drain pooled wrapper backing."
+        }
+      ]
+    },
+    "getKmsSigners": {
+      "description": "KMS signer addresses in the current context. Their signatures are accepted by the Ethereum KMSVerifier for public decryption results and by KMSGeneration for key- and CRS-generation responses. Signers from other live contexts remain authorized for proofs that select their context until that context is destroyed.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration."
+        }
+      ]
+    },
+    "currentKmsTxSenders": {
+      "description": "KMS node transaction-sender addresses in the current context. These accounts submit key- and CRS-generation responses to the Ethereum KMSGeneration contract.",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function getKmsNodesForContext(uint256 kmsContextId) view returns ((address txSenderAddress, address signerAddress, string ipAddress, string storageUrl)[])",
+        "args": ["{{ getCurrentKmsContextId }}"]
+      },
+      "edit": ["map", ["get", "txSenderAddress"]],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit KMS key- and CRS-generation responses to KMSGeneration."
+        }
+      ]
+    },
+    "getPublicDecryptionThreshold": {
+      "description": "Minimum number of KMS signatures from the current context required to accept a public decryption result. Retunable in place by the ACL owner without rotating the context.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getUserDecryptionThreshold": {
+      "description": "Minimum number of KMS signatures from the current context required for user decryption verification. Retunable in place by the ACL owner without rotating the context.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getKmsGenThreshold": {
+      "description": "Minimum number of KMS responses from the current context required to reach consensus on key- and CRS-generation results in KMSGeneration.",
+      "type": "RISK_PARAMETER"
+    },
+    "getMpcThreshold": {
+      "description": "MPC threshold recorded for the current context. The KMS SDK derives its effective MPC threshold from the nodes it knows about instead of reading this value.",
+      "type": "RISK_PARAMETER"
+    },
+    "getCurrentKmsContextId": {
+      "description": "Identifier of the current KMS context, used by verifiers when a proof does not explicitly select a historical context.",
+      "type": "RISK_PARAMETER"
+    },
+    "createdKmsContexts": {
+      "description": "KMS contexts created after the ProtocolConfig migration, reconstructed from NewKmsContext and KmsContextDestroyed events with their node sets and creation thresholds. The context created by initializeFromMigration does not emit this event and is indexed through the live getters and project overrides. Thresholds can be retuned per context after creation.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "select": ["kmsContextId", "kmsNodes", "thresholds"],
+        "dedupBy": "kmsContextId",
+        "add": { "event": "NewKmsContext" },
+        "remove": { "event": "KmsContextDestroyed" }
+      }
+    },
+    "createdKmsContextSigners": {
+      "description": "KMS signers from contexts created after the ProtocolConfig migration. They remain authorized for public decryption proofs that select their context until the ACL owner destroys that context.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "kmsNodes",
+        "flatten": true,
+        "dedupBy": "kmsNodes.signerAddress",
+        "add": { "event": "NewKmsContext" }
+      },
+      "edit": ["map", ["get", "signerAddress"]],
+      "permissions": [
+        {
+          "type": "interact",
+          "role": ".getKmsSigners",
+          "description": "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration."
+        }
+      ]
+    },
+    "createdKmsContextTxSenders": {
+      "description": "KMS transaction senders from contexts created after the ProtocolConfig migration. They remain authorized to submit key- and CRS-generation responses for their context until the ACL owner destroys that context.",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "kmsNodes",
+        "flatten": true,
+        "dedupBy": "kmsNodes.txSenderAddress",
+        "add": { "event": "NewKmsContext" }
+      },
+      "edit": ["map", ["get", "txSenderAddress"]],
+      "permissions": [
+        {
+          "type": "interact",
+          "role": ".currentKmsTxSenders",
+          "description": "submit KMS key- and CRS-generation responses to KMSGeneration."
+        }
+      ]
+    },
+    "destroyedKmsContexts": {
+      "description": "KMS contexts destroyed by the ACL owner. Destroyed contexts are invalid: their per-context getters revert and public decryption proofs can no longer select them.",
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "select": "kmsContextId",
+        "add": { "event": "KmsContextDestroyed" }
+      }
+    }
+  }
+}

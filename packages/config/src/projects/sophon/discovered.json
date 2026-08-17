@@ -1,6 +1,6 @@
 {
   "name": "sophon",
-  "timestamp": 1785925747,
+  "timestamp": 1786528589,
   "configHash": "0xf2e4e55652de287f26914a9ad50e3b40fd8622e2413d313194bfe5fc53495873",
   "entries": [
     {
@@ -223,9 +223,19 @@
               "eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45",
               "eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"
             ]
+          ],
+          [
+            "2026-08-11T13:00:11.000Z",
+            "0xeb2beafc685e0ee4854da37ea0f13053576e4a266f020562743c9b3060f9858b",
+            [
+              "eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253",
+              "eth:0x1666124221622eb6154306Ea9BA87043e8be88B2",
+              "eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45",
+              "eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"
+            ]
           ]
         ],
-        "$upgradeCount": 11,
+        "$upgradeCount": 12,
         "baseTokenGasPriceMultiplierDenominator": 21,
         "baseTokenGasPriceMultiplierNominator": 10000000,
         "facetAddresses": [
@@ -355,20 +365,20 @@
         "getPriorityTreeRoot": "0xbea1cafb7b4d041977c4b41d3b0061c691192beef9c3eab32e79007b59af0a6b",
         "getPriorityTreeStartIndex": 4136,
         "getPriorityTxMaxGasLimit": 72000000,
-        "getProtocolVersion": 124554051589,
+        "getProtocolVersion": 128849018880,
         "getPubdataPricingMode": 1,
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
-        "getSemverProtocolVersion": [0, 29, 5],
+        "getSemverProtocolVersion": [0, 30, 0],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 39147,
-        "getTotalBatchesExecuted": 39146,
-        "getTotalBatchesVerified": 39147,
-        "getTotalBlocksCommitted": 39147,
-        "getTotalBlocksExecuted": 39146,
-        "getTotalBlocksVerified": 39147,
+        "getTotalBatchesCommitted": 39203,
+        "getTotalBatchesExecuted": 39202,
+        "getTotalBatchesVerified": 39203,
+        "getTotalBlocksCommitted": 39203,
+        "getTotalBlocksExecuted": 39202,
+        "getTotalBlocksVerified": 39203,
         "getTotalPriorityTxs": 10212,
         "getTransactionFilterer": "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41",
-        "getVerifier": "eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e",
+        "getVerifier": "eth:0xC47D355402E78b886B628914B3b129F236fEe3cc",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
           "recursionLeafLevelVkHash": "0xf9664f4324c1400fa5c3822d667f30e873f53f1b8033180cd15fe41c1e2355c6",
@@ -547,36 +557,46 @@
       "targetProject": "shared-zk-stack"
     },
     {
+      "name": "L1VerifierPlonk",
+      "address": "eth:0x35CD3865199F2D9c574f34DD72520B19842d440c",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x583dc7da886d67e3dccd8e65e4db1d4d6aad3dd47fd9cc2f75cdce2d42cb7b76"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0xD742604A657A114ca6d59b4B0eA541ced7Bd9413",
+      "sinceTimestamp": 1786128023,
+      "sinceBlock": 25704941,
+      "values": {
+        "$immutable": true,
+        "verificationKeyHash": "0xcde2e1dc7800da93384e5b2e0bb1f195ed3eb4aed0ad01a877588a890f8bd970"
+      },
+      "implementationNames": {
+        "eth:0x35CD3865199F2D9c574f34DD72520B19842d440c": "L1VerifierPlonk"
+      }
+    },
+    {
       "address": "eth:0x3b6036d410cA018661324766680674921a8b2d89",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "DualVerifier",
-      "address": "eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e",
+      "name": "L1VerifierFflonk",
+      "address": "eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66",
       "type": "Contract",
-      "template": "shared-zk-stack/DualVerifier",
       "sourceHashes": [
-        "0x3053378d5ee24f71669b27b5b3cd0d74206379e6b43a9af084c2eb886712773e"
+        "0x76903ca2142e2ecb41c2c6841519fa473d84c0bf219342d90a39b57b1a374b09"
       ],
       "proxyType": "immutable",
-      "description": "A router contract for verifiers. Routes verification requests to eth:0x9f5C39a2790f38542065E7854b90407371923375 or eth:0xd22cA89e8991FCE568456914c616d303e3142395 depending on the supplied proof type.",
-      "deployerAddress": "eth:0x0ECbc04414B2890695BcD5864e3b23303D9f85ec",
-      "sinceTimestamp": 1784751431,
-      "sinceBlock": 25590598,
+      "deployerAddress": "eth:0xD742604A657A114ca6d59b4B0eA541ced7Bd9413",
+      "sinceTimestamp": 1786128011,
+      "sinceBlock": 25704940,
       "values": {
         "$immutable": true,
-        "FFLONK_VERIFIER": "eth:0x9f5C39a2790f38542065E7854b90407371923375",
-        "PLONK_VERIFIER": "eth:0xd22cA89e8991FCE568456914c616d303e3142395",
-        "verificationKeyHash": "0x18bdc7272350532ca7c3d4d613f0f22aa4100bcddd06722b2f8c6896ca5f5ad3"
-      },
-      "fieldMeta": {
-        "verificationKeyHash": {
-          "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
-        }
+        "verificationKeyHash": "0x95d735ed04680e0f7777f1d2016f3b6e2f507726b32e2d8b47a37fd8355fd47a"
       },
       "implementationNames": {
-        "eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e": "DualVerifier"
+        "eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66": "L1VerifierFflonk"
       }
     },
     {
@@ -656,33 +676,6 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "L1VerifierFflonk",
-      "address": "eth:0x9f5C39a2790f38542065E7854b90407371923375",
-      "type": "Contract",
-      "template": "shared-zk-stack/L1VerifierFflonk",
-      "sourceHashes": [
-        "0x5bfaff4e5dd264277b42d20a688c4f4f211abc9d707e3658a1ec3e23ef95a808"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
-      "deployerAddress": "eth:0x0ECbc04414B2890695BcD5864e3b23303D9f85ec",
-      "sinceTimestamp": 1784751431,
-      "sinceBlock": 25590598,
-      "values": {
-        "$immutable": true,
-        "verificationKeyHash": "0x34e7f769253b128e4ac6fbf71b3f8471d507c4f93bc50dcf26509ed1bae25122"
-      },
-      "fieldMeta": {
-        "verificationKeyHash": {
-          "severity": "HIGH",
-          "description": "keccak256 hash of the verification keys."
-        }
-      },
-      "implementationNames": {
-        "eth:0x9f5C39a2790f38542065E7854b90407371923375": "L1VerifierFflonk"
-      }
-    },
-    {
       "address": "eth:0xa7Fc7e6CF378523aF8C159Cb55073D258e32A13B",
       "type": "EOA",
       "proxyType": "EOA",
@@ -741,30 +734,31 @@
       "targetProject": "shared-zk-stack"
     },
     {
-      "name": "L1VerifierPlonk",
-      "address": "eth:0xd22cA89e8991FCE568456914c616d303e3142395",
+      "name": "DualVerifier",
+      "address": "eth:0xC47D355402E78b886B628914B3b129F236fEe3cc",
       "type": "Contract",
-      "template": "shared-zk-stack/L1VerifierPlonk",
+      "template": "shared-zk-stack/DualVerifier",
       "sourceHashes": [
-        "0x354ed18832eff6fedf48d1200929d8d1c523b199f1e7ad95aa11856b4aa26cf3"
+        "0x3053378d5ee24f71669b27b5b3cd0d74206379e6b43a9af084c2eb886712773e"
       ],
       "proxyType": "immutable",
-      "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
-      "deployerAddress": "eth:0x0ECbc04414B2890695BcD5864e3b23303D9f85ec",
-      "sinceTimestamp": 1784751431,
-      "sinceBlock": 25590598,
+      "description": "A router contract for verifiers. Routes verification requests to eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66 or eth:0x35CD3865199F2D9c574f34DD72520B19842d440c depending on the supplied proof type.",
+      "deployerAddress": "eth:0xD742604A657A114ca6d59b4B0eA541ced7Bd9413",
+      "sinceTimestamp": 1786128035,
+      "sinceBlock": 25704942,
       "values": {
         "$immutable": true,
-        "verificationKeyHash": "0x18bdc7272350532ca7c3d4d613f0f22aa4100bcddd06722b2f8c6896ca5f5ad3"
+        "FFLONK_VERIFIER": "eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66",
+        "PLONK_VERIFIER": "eth:0x35CD3865199F2D9c574f34DD72520B19842d440c",
+        "verificationKeyHash": "0xcde2e1dc7800da93384e5b2e0bb1f195ed3eb4aed0ad01a877588a890f8bd970"
       },
       "fieldMeta": {
         "verificationKeyHash": {
-          "severity": "HIGH",
-          "description": "keccak256 hash of the verification keys."
+          "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
         }
       },
       "implementationNames": {
-        "eth:0xd22cA89e8991FCE568456914c616d303e3142395": "L1VerifierPlonk"
+        "eth:0xC47D355402E78b886B628914B3b129F236fEe3cc": "DualVerifier"
       }
     },
     {
@@ -897,7 +891,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 45,
+        "nonce": 47,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1197,6 +1191,10 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0x35CD3865199F2D9c574f34DD72520B19842d440c": [
+      "function verificationKeyHash() pure returns (bytes32 vkHash)",
+      "function verify(uint256[], uint256[]) view returns (bool)"
+    ],
     "eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253": [
       "constructor(uint256 _l1ChainId, address _rollupDAManager)",
       "error AddressHasNoCode(address)",
@@ -1332,15 +1330,9 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e": [
-      "constructor(address _fflonkVerifier, address _plonkVerifier)",
-      "error EmptyProofLength()",
-      "error UnknownVerifierType()",
-      "function FFLONK_VERIFIER() view returns (address)",
-      "function PLONK_VERIFIER() view returns (address)",
-      "function verificationKeyHash() view returns (bytes32)",
-      "function verificationKeyHash(uint256 _verifierType) view returns (bytes32)",
-      "function verify(uint256[] _publicInputs, uint256[] _proof) view returns (bool)"
+    "eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66": [
+      "function verificationKeyHash() pure returns (bytes32)",
+      "function verify(uint256[], uint256[]) view returns (bool)"
     ],
     "eth:0x6086051f93412F550C0820e76f0fbE85F64C7ef8": [
       "constructor(address _bridgehubAddr)",
@@ -1412,13 +1404,15 @@
       "function checkDA(uint256, uint256, bytes32 l2DAValidatorOutputHash, bytes operatorDAInput, uint256 maxBlobsSupported) returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)",
       "function vectorx() view returns (address)"
     ],
-    "eth:0x9f5C39a2790f38542065E7854b90407371923375": [
-      "function verificationKeyHash() pure returns (bytes32)",
-      "function verify(uint256[], uint256[]) view returns (bool)"
-    ],
-    "eth:0xd22cA89e8991FCE568456914c616d303e3142395": [
-      "function verificationKeyHash() pure returns (bytes32 vkHash)",
-      "function verify(uint256[], uint256[]) view returns (bool)"
+    "eth:0xC47D355402E78b886B628914B3b129F236fEe3cc": [
+      "constructor(address _fflonkVerifier, address _plonkVerifier)",
+      "error EmptyProofLength()",
+      "error UnknownVerifierType()",
+      "function FFLONK_VERIFIER() view returns (address)",
+      "function PLONK_VERIFIER() view returns (address)",
+      "function verificationKeyHash() view returns (bytes32)",
+      "function verificationKeyHash(uint256 _verifierType) view returns (bytes32)",
+      "function verify(uint256[] _publicInputs, uint256[] _proof) view returns (bool)"
     ],
     "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3": [
       "constructor(address _initialOwner, address _initialTokenMultiplierSetter)",
@@ -1459,11 +1453,9 @@
     "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1USDCBridge": "0x061dba0e24ed75235f2eb19caf0c4adfa7896c607bd4b2400c7af30c3bc614ae",
-    "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6",
     "sophon/SophonTransactionFilterer": "0x5af79cc105e47429633fc735f1601adf54bbd92b355c622bdab306600a542b7c"
   },
-  "usedBlockNumbers": { "ethereum": 25688132 },
-  "permissionsConfigHash": "0x75e6bf94264af9427936bfbbc4bf6709266c5552bf8e5ee7a8fe70095af94b36"
+  "usedBlockNumbers": { "ethereum": 25738159 },
+  "permissionsConfigHash": "0x38a638dfc68b1c30edd0f555849418b58583e3942777c43018d078fee4ea44b4"
 }

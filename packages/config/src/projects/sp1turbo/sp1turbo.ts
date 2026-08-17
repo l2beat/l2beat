@@ -182,6 +182,9 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('zircuit'),
         sinceTimestamp: UnixTime(1756072800),
+        // Migrated to a standard OP Stack PermissionedDisputeGame deployment
+        // (Conduit RaaS), no longer uses SP1.
+        untilTimestamp: UnixTime(1785852695),
       },
       {
         projectId: ProjectId('morph'),

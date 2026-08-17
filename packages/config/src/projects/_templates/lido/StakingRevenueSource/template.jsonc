@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Tracks Lido DAO staking revenue for the buyback program: as a TokenRateNotifier observer it accrues the treasury fee share of each stETH rebase and converts it into a monotonic cumulative USD figure at the OracleRouter spot price.",
+  "category": "core",
+  "ignoreInWatchMode": [
+    "getCumulativeRevenueUSD",
+    "lastReportTimestamp",
+    "pendingRevenueStEth"
+  ]
+}

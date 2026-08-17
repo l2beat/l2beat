@@ -1111,6 +1111,10 @@
   ],
   "zircuit": [
     {
+      "id": "198b3eb48085",
+      "label": "ethereum inbox 0xFF00000000000000000000000000000000048900 sequencers[1] since 25682284"
+    },
+    {
       "id": "55ae2c32bf4d",
       "label": "ethereum inbox 0xFF00000000000000000000000000000000048900 sequencers[1] since 20219939"
     }

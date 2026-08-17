@@ -1,0 +1,52 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Validation layer of the deBridge messaging protocol on this chain: it accepts a cross-chain submission if at least minConfirmations of the registered validators (oracles) have signed its submission ID with a plain ECDSA signature, and every validator flagged as 'required' has signed. There is no other proof system.",
+  "ignoreInWatchMode": ["currentBlock", "submissionsInBlock"],
+  "ignoreMethods": ["oracleAddresses"],
+  "fields": {
+    "oracleAddresses": {
+      "description": "The registered deBridge validators (oracles) whose signatures authenticate cross-chain submissions.",
+      "handler": {
+        "type": "array",
+        "method": "oracleAddresses",
+        "maxLength": 200
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain."
+        }
+      ]
+    },
+    "minConfirmations": {
+      "description": "Baseline number of validator signatures required to accept a cross-chain submission."
+    },
+    "confirmationThreshold": {
+      "description": "Per-block circuit breaker: once more than this many submissions are approved within a single block, further submissions in that block require excessConfirmations signatures."
+    },
+    "excessConfirmations": {
+      "description": "Elevated number of validator signatures required for submissions beyond the per-block confirmationThreshold."
+    },
+    "requiredOraclesCount": {
+      "description": "Number of validators flagged as 'required': each of them must sign every submission in addition to the normal quorum (each is individually a liveness single point of failure and, collectively, a veto)."
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add and remove deBridge validators (oracles), change all signature thresholds (quorum must remain a majority of the oracle set), and re-point the gate contract allowed to request verification. Threshold changes emit no events."
+        }
+      ]
+    }
+  }
+}

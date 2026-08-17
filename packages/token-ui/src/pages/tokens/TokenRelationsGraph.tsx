@@ -8,6 +8,10 @@ import {
   type RelationGraphTheme,
 } from './relationGraphCanvas'
 import {
+  findDraggableNodeAt,
+  nodeDraggingIsEnabled,
+} from './relationGraphInteraction'
+import {
   getRelationGraphFocus,
   type RelationGraph,
   type RelationGraphSelection,
@@ -168,6 +172,16 @@ export function TokenRelationsGraph({
       return findNodeAt(scene, x, y, radius / scale)
     }
 
+    function pickDraggableNode(pointer: [number, number]) {
+      const [x, y] = toWorld(pointer)
+      const scale = cameraTransform.k
+      const radius = Math.max(
+        NODE_RING_RADIUS * nodeVisualScreenScale(scale),
+        MIN_NODE_HIT_RADIUS,
+      )
+      return findDraggableNodeAt(scene, x, y, radius / scale, scale)
+    }
+
     function pickLink(pointer: [number, number]) {
       const [x, y] = toWorld(pointer)
       const scale = cameraTransform.k
@@ -239,10 +253,17 @@ export function TokenRelationsGraph({
         }
         // No pan while a node drag is active (a later touch joining it) or
         // when the gesture itself grabs a node (the primary pointer).
-        return allowed && !drag && pickNode(eventPoint(event)) === undefined
+        return (
+          allowed && !drag && pickDraggableNode(eventPoint(event)) === undefined
+        )
       })
       .on('start', (event: d3.D3ZoomEvent<HTMLCanvasElement, unknown>) => {
-        if (event.sourceEvent && !hovered) canvas.style.cursor = 'grabbing'
+        if (
+          event.sourceEvent &&
+          (!hovered || !nodeDraggingIsEnabled(cameraTransform.k))
+        ) {
+          canvas.style.cursor = 'grabbing'
+        }
       })
       .on('zoom', (event: d3.D3ZoomEvent<HTMLCanvasElement, unknown>) => {
         cameraTransform = event.transform
@@ -261,7 +282,7 @@ export function TokenRelationsGraph({
       .on('pointerdown.graph', (event: PointerEvent) => {
         suppressNextClick = false
         if (!event.isPrimary || event.button !== 0) return
-        const node = pickNode(eventPoint(event))
+        const node = pickDraggableNode(eventPoint(event))
         if (node === undefined) return
         const [x, y] = toWorld(eventPoint(event))
         drag = { node, offsetX: node.x - x, offsetY: node.y - y, moved: false }

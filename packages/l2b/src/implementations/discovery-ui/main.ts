@@ -30,8 +30,11 @@ import { getConfigHealth } from './getConfigHealth'
 import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
+import { getTvl } from './getTvl'
 import { attachLayoutRouter } from './layouts/router'
+import { ProviderCache } from './ProviderCache'
 import { searchCode } from './searchCode'
+import { TvlCache } from './TvlCache'
 import {
   attachTemplateRouter,
   listTemplateFilesSchema,
@@ -63,6 +66,10 @@ const projectAddressParamsSchema = z.object({
   address: ethereumAddressSchema,
 })
 
+const addressParamsSchema = z.object({
+  address: ethereumAddressSchema,
+})
+
 const projectSearchTermParamsSchema = z.object({
   project: safeStringSchema,
   searchTerm: z.string(),
@@ -80,10 +87,6 @@ const matchFlatQuerySchema = z.object({
   against: z.enum(['templates', 'projects']),
 })
 
-const findMintersSchema = z.object({
-  address: ethereumAddressSchema,
-})
-
 const nonNegativeIntFromString = z
   .string()
   .check((v) => /^\d+$/.test(v), 'must be a non-negative integer')
@@ -93,6 +96,10 @@ const positiveIntFromString = z
   .string()
   .check((v) => /^\d+$/.test(v) && Number(v) > 0, 'must be a positive integer')
   .transform((v) => Number(v))
+
+const tvlQuerySchema = z.object({
+  top: positiveIntFromString.optional(),
+})
 
 const diffHistoryQuerySchema = z.object({
   offset: nonNegativeIntFromString.optional(),
@@ -111,6 +118,9 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const configWriter = new ConfigWriter(configReader, paths.discovery)
   const templateService = new TemplateService(paths.discovery)
   const configHealthService = new ConfigHealthService()
+
+  const providerCache = new ProviderCache()
+  const tvlCache = new TvlCache()
 
   const diffHistoryParser = new DiffHistoryParser()
   const flatSourceClient = new FlatSourceClient()
@@ -367,7 +377,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     })
 
     app.get('/api/terminal/find-minters', (req, res) => {
-      const queryValidation = findMintersSchema.safeParse(req.query)
+      const queryValidation = addressParamsSchema.safeParse(req.query)
       if (!queryValidation.success) {
         res.status(400).json({ errors: queryValidation.message })
         return
@@ -378,6 +388,29 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
         `cd ${path.dirname(paths.discovery)}/../../backend && l2b minters ${address}`,
         res,
       )
+    })
+
+    app.get('/api/projects/tvl/:address', async (req, res) => {
+      const paramsValidation = addressParamsSchema.safeParse(req.params)
+      if (!paramsValidation.success) {
+        res.status(400).json({ errors: paramsValidation.message })
+        return
+      }
+      const queryValidation = tvlQuerySchema.safeParse(req.query)
+      if (!queryValidation.success) {
+        res.status(400).json({ errors: queryValidation.message })
+        return
+      }
+      const { address } = paramsValidation.data
+      const { top } = queryValidation.data
+
+      try {
+        const response = await getTvl(providerCache, tvlCache, address, top)
+        res.json(response)
+      } catch (e) {
+        console.error(e)
+        res.status(500).json({ error: 'Failed to estimate TVL' })
+      }
     })
   }
 

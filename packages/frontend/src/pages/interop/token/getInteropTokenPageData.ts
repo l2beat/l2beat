@@ -13,6 +13,7 @@ import type { Manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import type { InteropQuery } from '../InteropRouter'
+import { getInteropTokenUrl } from '../utils/getInteropTokenUrl'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 import type { InteropSelection } from '../utils/types'
 
@@ -63,7 +64,9 @@ export async function getInteropTokenPageData(
       metadata: getMetadata(manifest, {
         title: `${data.token.symbol} - L2BEAT`,
         description: `Interoperability activity for ${data.token.symbol} across the Ethereum ecosystem.`,
-        url: req.originalUrl,
+        // The page is reachable by id alone, so point metadata at the full
+        // issuer/symbol URL to keep a single canonical address per token.
+        url: getInteropTokenUrl(data.token) ?? req.originalUrl,
         openGraph: {
           image: `/interop/tokens/${data.token.slug}/opengraph-image.png`,
           dynamic: true,

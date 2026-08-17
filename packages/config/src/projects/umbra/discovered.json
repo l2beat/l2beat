@@ -1,6 +1,6 @@
 {
   "name": "umbra",
-  "timestamp": 1785499067,
+  "timestamp": 1786959877,
   "configHash": "0x41eeddb311eed2d8282a3a5107e4283df7ca538cd19a7bb84dfbe3e541758a81",
   "entries": [
     {
@@ -24,7 +24,7 @@
       "values": {
         "$immutable": true,
         "DOMAIN_SEPARATOR": "0xbffc56f4d2a2d2f02a0a5fd845c389cb145f77af539d336fc9ec350637642194",
-        "registeredAddresses": 11562,
+        "registeredAddresses": 11573,
         "STEALTHKEYS_TYPEHASH": "0xab73c83a21fb894c20095a8f28177984b02f6284c760e4c1ac2f82c3d34b79c1"
       },
       "fieldMeta": {
@@ -52,7 +52,31 @@
     {
       "address": "eth:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
       "type": "EOA",
-      "proxyType": "EOA"
+      "sourceHashes": [
+        "0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B",
+        "delegationManager": "eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3",
+        "DOMAIN_VERSION": "1",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "EIP7702StatelessDeleGator",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "entryPoint": "eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "getDeposit": 0,
+        "getDomainHash": "0x9962d46a78b1e6906da83f5bd75621a608112e6b851709d6504888d73d532e1c",
+        "getNonce": 0,
+        "NAME": "EIP7702StatelessDeleGator",
+        "PACKED_USER_OP_TYPEHASH": "0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18",
+        "VERSION": "1.3.0"
+      }
     },
     {
       "name": "Umbra",
@@ -77,9 +101,9 @@
         "toll": 0,
         "tollCollector": "eth:0x12aE679061C58e9f7660A2f7e6f06573014d2615",
         "tollReceiver": "eth:0xb4435399AB53D6136C9AEEBb77a0120620b117F9",
-        "totalERC20Deposits": 1642,
-        "totalERC20Withdrawals": 1614,
-        "totalTransfers": 24977
+        "totalERC20Deposits": 1651,
+        "totalERC20Withdrawals": 1623,
+        "totalTransfers": 24989
       },
       "fieldMeta": {
         "owner": { "description": "Owner of the Umbra contract." },
@@ -108,6 +132,58 @@
       "function setStealthKeysOnBehalf(address _registrant, uint256 _spendingPubKeyPrefix, uint256 _spendingPubKey, uint256 _viewingPubKeyPrefix, uint256 _viewingPubKey, uint8 _v, bytes32 _r, bytes32 _s)",
       "function stealthKeys(address _registrant) view returns (uint256 spendingPubKeyPrefix, uint256 spendingPubKey, uint256 viewingPubKeyPrefix, uint256 viewingPubKey)"
     ],
+    "eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B": [
+      "constructor(address _delegationManager, address _entryPoint)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ExecutionFailed()",
+      "error InvalidEIP712NameLength()",
+      "error InvalidEIP712VersionLength()",
+      "error InvalidShortString()",
+      "error NotDelegationManager()",
+      "error NotEntryPoint()",
+      "error NotEntryPointOrSelf()",
+      "error NotSelf()",
+      "error StringTooLong(string str)",
+      "error UnauthorizedCallContext()",
+      "error UnsupportedCallType(bytes1 callType)",
+      "error UnsupportedExecType(bytes1 execType)",
+      "event EIP712DomainChanged()",
+      "event SentPrefund(address indexed sender, uint256 amount, bool success)",
+      "event SetDelegationManager(address indexed newDelegationManager)",
+      "event SetEntryPoint(address indexed entryPoint)",
+      "event TryExecuteUnsuccessful(uint256 batchExecutionindex, bytes result)",
+      "function DOMAIN_VERSION() view returns (string)",
+      "function NAME() view returns (string)",
+      "function PACKED_USER_OP_TYPEHASH() view returns (bytes32)",
+      "function VERSION() view returns (string)",
+      "function addDeposit() payable",
+      "function delegationManager() view returns (address)",
+      "function disableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function enableDelegation(tuple(address delegate, address delegator, bytes32 authority, tuple(address enforcer, bytes terms, bytes args)[] caveats, uint256 salt, bytes signature) _delegation)",
+      "function entryPoint() view returns (address)",
+      "function execute(tuple(address target, uint256 value, bytes callData) _execution) payable",
+      "function execute(bytes32 _mode, bytes _executionCalldata) payable",
+      "function executeFromExecutor(bytes32 _mode, bytes _executionCalldata) payable returns (bytes[] returnData_)",
+      "function getDeposit() view returns (uint256)",
+      "function getDomainHash() view returns (bytes32)",
+      "function getNonce(uint192 _key) view returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function getPackedUserOperationHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function getPackedUserOperationTypedDataHash(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp) view returns (bytes32)",
+      "function isDelegationDisabled(bytes32 _delegationHash) view returns (bool)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) view returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) view returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) view returns (bytes4)",
+      "function redeemDelegations(bytes[] _permissionContexts, bytes32[] _modes, bytes[] _executionCallDatas)",
+      "function supportsExecutionMode(bytes32 _mode) view returns (bool)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) _userOp, bytes32, uint256 _missingAccountFunds) returns (uint256 validationData_)",
+      "function withdrawDeposit(address _withdrawAddress, uint256 _withdrawAmount)"
+    ],
     "eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401": [
       "constructor(uint256 _toll, address _tollCollector, address _tollReceiver)",
       "event Announcement(address indexed receiver, uint256 amount, address indexed token, bytes32 pkx, bytes32 ciphertext)",
@@ -133,6 +209,6 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 25652689 },
+  "usedBlockNumbers": { "ethereum": 25773986 },
   "permissionsConfigHash": "0x6caeabcd1fdcdf101f57b39e82f1d9997b6f6bc2fac8ee263e44c9affe08dfe8"
 }
