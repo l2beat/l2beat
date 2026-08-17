@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x44ca11cadd9e2811c8ccda196d548c0ccb74c232
+
+# Diff at Mon, 17 Aug 2026 09:44:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e15ee9ab50a72bce8c9055a32fc94661b3b947e2 block: 1786352698
+- current timestamp: 1786959810
+
+## Description
+
+Owner change.
+
+## Watched changes
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1) [morph/MultipleVersionRollupVerifier] {
+    +++ description: Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.
+      values.owner:
+-        "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377"
++        "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
+    }
+```
+
+```diff
+    contract L1GatewayRouter (eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a) [morph/L1GatewayRouter] {
+    +++ description: Main entrypoint for depositing ETH and ERC20 tokens, which are then forwarded to the correct escrow.
+      values.owner:
+-        "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377"
++        "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
+    }
+```
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) [morph/Rollup] {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the Sequencers are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`.
+      values.owner:
+-        "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377"
++        "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
+    }
+```
+
+```diff
+    contract Morph Multisig 2 (eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377) [GnosisSafe] {
+    +++ description: None
+      values.$members.4:
+-        "eth:0xcE7257224441385345CE6eEdd9D8667AD9Bab9f0"
++        "eth:0xA52Bb0BEBfadEDA9DfFFa3Ba5eBFE86d9f6dB321"
+      receivedPermissions.3:
+-        {"permission":"interact","from":"eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1","description":"register new verifiers to be used starting from a given L2 batch index.","role":".owner"}
+      receivedPermissions.4:
+-        {"permission":"interact","from":"eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a","description":"manage token to escrow mapping and (un-)register escrows.","role":".owner"}
+      receivedPermissions.6:
+-        {"permission":"interact","from":"eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60","description":"can pause and unpause, revert unfinalized batches, update proof window and finalization period, manage challengers, modify the verifier address.","role":".owner"}
+    }
+```
+
+```diff
+    contract Morph Multisig 1 (eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1","description":"register new verifiers to be used starting from a given L2 batch index.","role":".owner"}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a","description":"manage token to escrow mapping and (un-)register escrows.","role":".owner"}
+      receivedPermissions.5:
++        {"permission":"interact","from":"eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60","description":"can pause and unpause, revert unfinalized batches, update proof window and finalization period, manage challengers, modify the verifier address.","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0x0075c98aa0fb54edbdad8ef48191db99285160d2
 
 # Diff at Mon, 10 Aug 2026 09:06:34 GMT:

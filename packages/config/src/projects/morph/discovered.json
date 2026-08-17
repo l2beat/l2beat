@@ -1,6 +1,6 @@
 {
   "name": "morph",
-  "timestamp": 1786352698,
+  "timestamp": 1786959810,
   "configHash": "0x68c9309767a4d70ce3346eb2f0bfb48056005aea12f0cf73cf8fb00a257eb166",
   "entries": [
     {
@@ -326,13 +326,13 @@
         ],
         "$upgradeCount": 4,
         "ENFORCED_TX_GATEWAAY": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
-        "getFirstUnfinalizedMessageEnqueueTime": 1786221971,
+        "getFirstUnfinalizedMessageEnqueueTime": 1786959803,
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 25972,
+        "nextCrossDomainMessageIndex": 25998,
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 25970,
+        "pendingQueueIndex": 25998,
         "ROLLUP_CONTRACT": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -560,7 +560,7 @@
             "verifier": "eth:0xD9F24400816c4CC1a3cBb9B851C9B0bAB63Ad692"
           }
         ],
-        "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+        "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
         "rollup": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "verifierVersions": [1, 2]
       },
@@ -680,7 +680,7 @@
         "ethGateway": "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
         "gatewayInContext": "eth:0x0000000000000000000000000000000000000000",
         "gateways": ["eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68"],
-        "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377"
+        "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
       },
       "implementationNames": {
         "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a": "TransparentUpgradeableProxy",
@@ -813,11 +813,11 @@
         "getMinDelayFormatted": "7d",
         "inChallenge": false,
         "l1StakingContract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 57058,
-        "lastFinalizedBatchIndex": 56994,
+        "lastCommittedBatchIndex": 57510,
+        "lastFinalizedBatchIndex": 57362,
         "LAYER_2_CHAIN_ID": 2818,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
-        "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
+        "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
         "paused": false,
         "proofRewardPercent": 70,
         "proofWindow": 259200,
@@ -991,6 +991,11 @@
       ]
     },
     {
+      "address": "eth:0xA52Bb0BEBfadEDA9DfFFa3Ba5eBFE86d9f6dB321",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xa609285fF6F2a0Dfdeb03cc33d78d8a47A691497",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1073,27 +1078,9 @@
         },
         {
           "permission": "interact",
-          "from": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
-          "description": "register new verifiers to be used starting from a given L2 batch index.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
-          "description": "manage token to escrow mapping and (un-)register escrows.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
           "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
           "role": ".challengers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "can pause and unpause, revert unfinalized batches, update proof window and finalization period, manage challengers, modify the verifier address.",
-          "role": ".owner"
         },
         {
           "permission": "interact",
@@ -1120,14 +1107,14 @@
           "eth:0xbA430e784fe11ADbc20fa1a99193eeD87ACD68C7",
           "eth:0x59C09F33d7D901b8B57644D68a45b123e9Bbd0E5",
           "eth:0x05e1d4694041aF987Af6F8402D902686018E2136",
-          "eth:0xcE7257224441385345CE6eEdd9D8667AD9Bab9f0"
+          "eth:0xA52Bb0BEBfadEDA9DfFFa3Ba5eBFE86d9f6dB321"
         ],
         "$threshold": 3,
         "domainSeparator": "0x96bedd2f3987229f29b9d5992f03ada90a90d1d7f3b7808bb3de22d3fa6c5330",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 68,
+        "nonce": 79,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1287,11 +1274,6 @@
       ]
     },
     {
-      "address": "eth:0xcE7257224441385345CE6eEdd9D8667AD9Bab9f0",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xd11f9c4F5d9b1feC2d14581d3674066442B68772",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1365,7 +1347,7 @@
         "counterpart": "eth:0x5300000000000000000000000000000000000007",
         "feeVault": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 25972,
+        "messageNonce": 25998,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
         "paused": false,
@@ -1452,6 +1434,24 @@
           "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
           "description": "manage all access control roles.",
           "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+          "description": "register new verifiers to be used starting from a given L2 batch index.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+          "description": "manage token to escrow mapping and (un-)register escrows.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "can pause and unpause, revert unfinalized batches, update proof window and finalization period, manage challengers, modify the verifier address.",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",
@@ -2223,6 +2223,6 @@
     "morph/Rollup": "0xebf506a5dc75ed310a1a6d083343337d766e473d2fff9c4647dfea249d5d206b",
     "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d"
   },
-  "usedBlockNumbers": { "ethereum": 25723581 },
-  "permissionsConfigHash": "0x4ba2813753b07407e48a2a18e4a6baeae3b7c5c9e799af528c179cf22286a336"
+  "usedBlockNumbers": { "ethereum": 25773980 },
+  "permissionsConfigHash": "0x3a0164d1a1a67ed67e2926da0984cd1a6ddc0562e77e5c7fca50279ac22ce46e"
 }
