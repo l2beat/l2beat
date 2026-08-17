@@ -20,7 +20,6 @@
     "slot0": {
       "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
     },
-    "liquidity": {},
     // Q128.128 accumulators; large uints in the 160-bit range get misread as
     // addresses by the relative detector.
     "feeGrowthGlobal0X128": {
