@@ -233,8 +233,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       expect(safeHeight).toEqual(adjustedTo)
     })
 
-    // TODO: rethink
-    xit('rethrows other errors', async () => {
+    it('rethrows other errors', async () => {
       const from = 100
       const to = 300
       const adjustedTo = 250
