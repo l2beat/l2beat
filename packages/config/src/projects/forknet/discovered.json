@@ -1,6 +1,6 @@
 {
   "name": "forknet",
-  "timestamp": 1786955206,
+  "timestamp": 1786696815,
   "configHash": "0x794819848e510d2b0445cdcda2aac92fe6008eb253c393aa8029d410f5c21e3c",
   "entries": [
     {
@@ -2357,6 +2357,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
-  "usedBlockNumbers": { "ethereum": 25773597 },
+  "usedBlockNumbers": { "ethereum": 25752136 },
   "permissionsConfigHash": "0xfbfa71030bd634666d7e6b9e640f9c9629f23dec65274fa15311dd77cd3fe559"
 }

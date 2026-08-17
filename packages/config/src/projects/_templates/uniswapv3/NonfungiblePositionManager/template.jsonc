@@ -10,9 +10,9 @@
     "tokenOfOwnerByIndex",
     "tokenURI"
   ],
+  "ignoreInWatchMode": ["totalSupply"],
   "fields": {
     "totalSupply": {
-      "ignoreInWatchMode": true,
       "description": "Number of position NFTs minted so far."
     }
   }

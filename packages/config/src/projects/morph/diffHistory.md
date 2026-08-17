@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x44ca11cadd9e2811c8ccda196d548c0ccb74c232
+Generated with discovered.json: 0x93ef9f0e7033d21d580cae7ce89518ccdfdc15b2
 
-# Diff at Mon, 17 Aug 2026 09:44:41 GMT:
+# Diff at Fri, 14 Aug 2026 15:04:21 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@e15ee9ab50a72bce8c9055a32fc94661b3b947e2 block: 1786352698
-- current timestamp: 1786959810
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8be200f5fe2231607b3283aa3e1ba9da3c89bcd5 block: 1786352698
+- current timestamp: 1786719775
 
 ## Description
 
-Owner change.
+Ownership of MultipleVersionRollupVerifier, L1GatewayRouter and Rollup moved from Morph Multisig 2 (3 of 5) to Morph Multisig 1 (4 of 6), taking the verifier-registration, escrow-mapping and pause/revert permissions with it. Morph Multisig 2: member rotated.
 
 ## Watched changes
 

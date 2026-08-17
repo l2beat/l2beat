@@ -1,16 +1,14 @@
-Generated with discovered.json: 0xd2fc4c58faec7e81a7360ece3f3a5dcaaa98d082
+Generated with discovered.json: 0xf747a674ee091e5d5deb7fabf5f9656ff6f6cbd5
 
-# Diff at Mon, 17 Aug 2026 08:28:00 GMT:
+# Diff at Fri, 14 Aug 2026 08:41:33 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@804390f890116983904f8ba051435cd62c5cb578 block: 1786351029
-- current timestamp: 1786955206
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@8be200f5fe2231607b3283aa3e1ba9da3c89bcd5 block: 1786351029
+- current timestamp: 1786696815
 
 ## Description
 
-Revert prev. update.
-
-https://disco.l2beat.com/diff/eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957/eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550
+SuperchainConfig implementation upgraded v2.4.0 → v2.4.2 ([diff](https://disco.l2beat.com/diff/eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957/eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550)) via a StorageSetter step in one transaction; guardian re-initialised unchanged.
 
 ## Watched changes
 

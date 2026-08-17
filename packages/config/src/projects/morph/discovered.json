@@ -1,6 +1,6 @@
 {
   "name": "morph",
-  "timestamp": 1786959810,
+  "timestamp": 1786719775,
   "configHash": "0x68c9309767a4d70ce3346eb2f0bfb48056005aea12f0cf73cf8fb00a257eb166",
   "entries": [
     {
@@ -326,13 +326,13 @@
         ],
         "$upgradeCount": 4,
         "ENFORCED_TX_GATEWAAY": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
-        "getFirstUnfinalizedMessageEnqueueTime": 1786959803,
+        "getFirstUnfinalizedMessageEnqueueTime": 1786585091,
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
         "nextCrossDomainMessageIndex": 25998,
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 25998,
+        "pendingQueueIndex": 25996,
         "ROLLUP_CONTRACT": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -813,8 +813,8 @@
         "getMinDelayFormatted": "7d",
         "inChallenge": false,
         "l1StakingContract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 57510,
-        "lastFinalizedBatchIndex": 57362,
+        "lastCommittedBatchIndex": 57304,
+        "lastFinalizedBatchIndex": 57151,
         "LAYER_2_CHAIN_ID": 2818,
         "messageQueue": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
@@ -2223,6 +2223,6 @@
     "morph/Rollup": "0xebf506a5dc75ed310a1a6d083343337d766e473d2fff9c4647dfea249d5d206b",
     "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d"
   },
-  "usedBlockNumbers": { "ethereum": 25773980 },
+  "usedBlockNumbers": { "ethereum": 25754044 },
   "permissionsConfigHash": "0x3a0164d1a1a67ed67e2926da0984cd1a6ddc0562e77e5c7fca50279ac22ce46e"
 }
