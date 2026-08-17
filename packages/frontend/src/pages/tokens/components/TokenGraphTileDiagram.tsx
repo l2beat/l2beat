@@ -377,7 +377,7 @@ function getHorizontalSpread(nodeCount: number): number {
 
 function getVerticalSpan(nodeCount: number, lastRow: number): number {
   if (lastRow === 0) return 0
-  if (lastRow === 1 && nodeCount <= 5) return 58
+  if (lastRow === 1 && nodeCount <= 8) return 58
   if (nodeCount <= 3) return lastRow === 1 ? 58 : 82
   if (nodeCount <= 5) return 84
   if (nodeCount <= 8) return 90
