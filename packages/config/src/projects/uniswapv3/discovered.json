@@ -1200,7 +1200,7 @@
     ]
   },
   "usedTemplates": {
-    "uniswapv3/Firepit": "0x2ff14202130a4e4c45c68027d7a21d2da954f23f75523220465e455aff86d6d2",
+    "uniswapv3/Firepit": "0x703007707cf394ab3f48090fd6cd3adedcb5be8fcbef542951bb894deb4bb6bb",
     "uniswapv3/GovernorBravoDelegate": "0x9ca92383f49c288964c4b86cb695c9713fcf6aa7601b2848c7477a196622544f",
     "uniswapv3/NonfungiblePositionManager": "0x622be50d7a2722d99993e34ef932a16ff8317c5c2d4f7bcc73f2b233a174330b",
     "uniswapv3/Permit2": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -1208,9 +1208,9 @@
     "uniswapv3/SwapRouter02": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "uniswapv3/Timelock": "0x652fc9e6608bc27d2068eecbf83b1f8bbcd89efeb5c71c1388cff293b918cf91",
     "uniswapv3/TokenJar": "0x4e5cdb5291d4fadb56003b4d078f44feb9eccfad71889bf91f3a931e6a042c03",
-    "uniswapv3/Uni": "0xeadef1b3ff09895b4c36ce16ef994f2add958197b65e05e8d11bccce40258b5e",
+    "uniswapv3/Uni": "0x0552485ac57ab489375e7de7a08024b2601c9d94bf2db3e2f65878c444c1545f",
     "uniswapv3/UniswapV3Factory": "0x5e0c14e07a63feedadd8c50b27af35d0dbdaf5a8fa83bcdac52444324d2f8636",
-    "uniswapv3/UniswapV3Pool": "0x1fc32ff0fbecf5d77745ececeea093bf89dc50189da3b73a20f6a8f327796f1e",
+    "uniswapv3/UniswapV3Pool": "0x20ec8823a2b1327c58cb7619ab4d308f7c8d4e2c65ead2d85358dbfe141f4031",
     "uniswapv3/UniversalRouter": "0xb38b0e27c2dad3559972735c0287a36cc053ec43cfdb7e72f84c76c7fc6cbc1d",
     "uniswapv3/V3OpenFeeAdapter": "0x663a4d61a27c76fffa2178a403a1d500998b8922f9ad258ad0b509adecd838c3"
   },
