@@ -118,7 +118,7 @@ function resolveMinters(
     }
   }
 
-  return [...minters.values()].sort((a, b) => a.name.localeCompare(b.name))
+  return [...minters.values()]
 }
 
 function toDeploymentRow(

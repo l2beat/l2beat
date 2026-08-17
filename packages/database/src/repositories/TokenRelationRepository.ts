@@ -338,7 +338,7 @@ export class TokenRelationRepository extends BaseRepository {
           (record) => record.plugin,
         ),
       ),
-    ].sort((a, b) => a.localeCompare(b))
+    ]
   }
 
   /**
@@ -413,14 +413,7 @@ export class TokenRelationRepository extends BaseRepository {
       }
     })
 
-    return [...result.values()].sort(
-      (a, b) =>
-        a.chain.localeCompare(b.chain) ||
-        a.address.localeCompare(b.address) ||
-        a.plugin.localeCompare(b.plugin) ||
-        a.bridgeType.localeCompare(b.bridgeType) ||
-        a.relatedChain.localeCompare(b.relatedChain),
-    )
+    return [...result.values()]
   }
 
   private mintedAtEndpoint(

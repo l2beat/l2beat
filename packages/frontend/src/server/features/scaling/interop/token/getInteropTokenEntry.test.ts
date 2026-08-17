@@ -5,7 +5,7 @@ import { getInteropTokenEntry } from './getInteropTokenEntry'
 import type { InteropTokenOnchainDeployment } from './getInteropTokenOnchainDeployments'
 
 describe(getInteropTokenEntry.name, () => {
-  it('maps minting plugins to sorted and deduplicated project summaries', () => {
+  it('maps minting plugins to deduplicated project summaries', () => {
     const entry = getInteropTokenEntry(
       'circle-usdc',
       [],
@@ -52,7 +52,7 @@ describe(getInteropTokenEntry.name, () => {
     )
     assert(section?.type === 'InteropTokenOnchainDeploymentsSection')
 
-    expect(section.props.deployments[0]?.minters).toEqual([
+    expect(section.props.deployments[0]?.minters).toEqualUnsorted([
       {
         id: ProjectId('alpha'),
         name: 'Alpha bridge',
