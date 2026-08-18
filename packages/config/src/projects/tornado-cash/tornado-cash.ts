@@ -222,24 +222,51 @@ export const tornadoCash: BaseProject = {
   crops: {
     censorshipResistance: {
       sentiment: 'good',
-      description:
-        'The protocol is permissionless: the immutable core has no admin, pause, or upgrade path and the exit window is infinite, so selective censorship, blanket censorship, and walkaway resistance are all solid. The relayer set (26 active relayers over the last month) is the weakest link, but users can always self-relay withdrawals.',
+      points: [
+        'Immutable core with no admin, no pause and no upgrade path, so the exit window is infinite.',
+        'Passes the walkaway test: with the team, the frontend and every relayer gone, users can still withdraw by self-relaying.',
+        'No power exists that could single out one user - selective and blanket censorship are both covered.',
+        '26 active relayers over the last month, and the set can be bypassed entirely.',
+      ],
+      missing: [
+        'Relayers are a single pool, with no independent alternative to switch to - the fallback is self-relaying, which costs the user their privacy.',
+        'Frontends and RPCs are where access is actually cut off, and they sit outside the contracts we reviewed.',
+      ],
     },
     openSource: {
       sentiment: 'good',
-      description:
-        'The core is GPL-3.0 licensed and reproducible: anyone can audit the published source code and run it locally to participate.',
+      points: [
+        'GPL-3.0 licensed, so the right to run, modify and fork is granted outright under an OSI-approved license.',
+        'The published source is reproducible and can be built and run locally to participate.',
+      ],
+      missing: [
+        'Relayer software and the surrounding tooling are outside the reproducibility check.',
+      ],
     },
     privacy: {
       sentiment: 'good',
-      description:
-        'Unstoppable user privacy with no protocol-level compliance mechanism or backdoor, and strong, clearly defined anonymity set numbers per fixed-denomination pool.',
+      points: [
+        'Unlinkability enforced by cryptography, with no protocol-level compliance mechanism and no backdoor.',
+        'Nothing retroactive: no privileged view key, and past withdrawals cannot be deanonymized.',
+        'Clearly defined anonymity set numbers per fixed-denomination pool.',
+      ],
+      missing: [
+        'Anonymity sets thin out in the less used denominations, and are only as strong as pool activity.',
+        'Deposit and withdrawal timing stays public, so avoiding recognizable patterns is still on the user.',
+      ],
     },
     security: {
       sentiment: 'good',
       status: 'partiallyReviewed',
-      description:
-        'A simple, well-ossified design that has been audited extensively - plausibly including by malicious actors. It is not quantum-resistant, which may expose user privacy to harvest-now-decrypt-later attacks, and immutability means bugs cannot be patched.',
+      points: [
+        'A simple, well-ossified design: immutable, with no upgrade path anyone could turn against a user.',
+        'Audited extensively - plausibly including by malicious actors, given how long it has held funds.',
+      ],
+      missing: [
+        'Not quantum-resistant, which may expose user privacy to harvest-now-decrypt-later attacks.',
+        'Immutability means bugs cannot be patched.',
+        'No circuit breaker or rate limit bounding what a single failure could drain.',
+      ],
     },
   },
   permissions: discovery.getDiscoveredPermissions(),

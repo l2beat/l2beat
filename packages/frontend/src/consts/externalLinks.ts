@@ -11,6 +11,9 @@ export const externalLinks = {
   multisigReport:
     'https://drive.google.com/file/d/182ycEW8C2wk5tGd3X1tG8oQfUy9WmSJk/view',
   tokenRequest: 'https://forms.gle/fQFsC5g1LgG5z12T7',
+  // The submission form for The Infinite Garden.
+  // TODO: replace with the real Google Form link once it is published.
+  gardenRequest: 'https://forms.gle/l2beat-garden-placeholder',
   articles: {
     recategorisation:
       'https://medium.com/l2beat/framework-update-l2-projects-recategorisation-5d43b0d1fe50',

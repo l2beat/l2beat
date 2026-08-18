@@ -138,6 +138,9 @@ const mainPages: MainPage[] = [
   {
     title: 'The Infinite Garden',
   },
+  {
+    title: 'Submit your protocol',
+  },
 ]
 
 export async function generateMainPageOgImages(

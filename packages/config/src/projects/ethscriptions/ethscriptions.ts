@@ -321,24 +321,46 @@ export const ethscriptions: ScalingProject = {
   crops: {
     censorshipResistance: {
       sentiment: 'good',
-      description:
-        'Ethscriptions is a based rollup with no sequencer: L2 state is derived deterministically from ethscription activity on Ethereum, so ordering is decided by L1 and any user can force a transaction there. The Rollup contract is not upgradeable and cannot be paused, so the exit window is infinite, and state proposing falls back to permissionless after a timeout.',
+      points: [
+        'A based rollup with no sequencer: L2 state is derived deterministically from ethscription activity on Ethereum.',
+        'Ordering is decided by L1, so any user can force a transaction there.',
+        'The Rollup contract is not upgradeable and cannot be paused, so the exit window is infinite.',
+        'State proposing falls back to permissionless after a timeout.',
+      ],
+      missing: [
+        'The node client is the only route to L2 state, and its build is not checked for transaction filters.',
+        'No canonical bridge, so leaving the chain depends on third-party bridges.',
+      ],
     },
     openSource: {
       sentiment: 'good',
-      description:
-        'The node, the modified geth, the zk fault proof stack, and the onchain verifier are all published, and both the verifier contracts and the program hashes can be independently regenerated from source.',
+      points: [
+        'The node, the modified geth, the zk fault proof stack and the onchain verifier are all published.',
+        'Both the verifier contracts and the program hashes can be independently regenerated from source.',
+      ],
+      missing: [
+        'License permissiveness across the stack is not established, so fork rights are unconfirmed.',
+        'Node builds are not verified reproducible end to end, only the program hashes.',
+      ],
     },
     privacy: {
-      sentiment: 'bad',
-      description:
-        'The chain derives its entire state from public Ethereum calldata, so every inscription and transfer is public by construction. There are no protocol-level privacy features.',
+      status: 'notReviewed',
+      missing: [
+        'Not reviewed. Ethscription activity and the L2 state derived from it are public on Ethereum.',
+      ],
     },
     security: {
       sentiment: 'good',
       status: 'partiallyReviewed',
-      description:
-        'State is validated on L1 with SP1 validity proofs and the Rollup contract is immutable, putting it at Stage 2. It is an application-specific chain with no general-purpose contract deployment and no canonical bridge, which keeps the surface small but also means asset movement depends on third-party bridges assessed separately.',
+      points: [
+        'State is validated on L1 with SP1 validity proofs and the Rollup contract is immutable, putting it at Stage 2.',
+        'Application-specific, with no general-purpose contract deployment, which keeps the surface small.',
+      ],
+      missing: [
+        'No canonical bridge - asset movement depends on third-party bridges assessed separately.',
+        'A single proof system, with trusted setup requirements and prover concentration unassessed.',
+        'No audit overview, circuit breaker or rate limit reviewed yet.',
+      ],
     },
   },
   milestones: [

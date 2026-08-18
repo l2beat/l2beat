@@ -1131,7 +1131,10 @@ export interface ProjectCropEvaluation {
   sentiment?: Sentiment
   /** Review state. Defaults to `reviewed`. Only affects the dashed styling. */
   status?: ProjectCropStatus
-  description?: string
+  /** What the evaluation rests on - one finding per bullet. */
+  points?: string[]
+  /** Gaps against the crop criteria: what is absent, unbounded, or unconfirmed. */
+  missing?: string[]
 }
 
 export interface ProjectCrops {

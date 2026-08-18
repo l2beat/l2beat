@@ -94,15 +94,46 @@ export function CropBadge({ letter, label, evaluation, delay }: Props) {
           </span>
         </span>
       </TooltipTrigger>
-      <TooltipContent className="max-w-[320px]">
+      <TooltipContent className="max-w-[360px]">
         <SentimentText sentiment={sentiment} className="font-medium text-base">
           {`${label}: ${getStatusText(status, sentiment)}`}
         </SentimentText>
-        {evaluation.description && (
-          <p className="mt-1 text-primary">{evaluation.description}</p>
+        <CropBullets items={evaluation.points} className="mt-1.5" />
+        {evaluation.missing !== undefined && evaluation.missing.length > 0 && (
+          <>
+            <p className="mt-2.5 font-semibold text-[10px] text-secondary uppercase tracking-wider">
+              What is missing
+            </p>
+            <CropBullets items={evaluation.missing} className="mt-1" />
+          </>
         )}
       </TooltipContent>
     </Tooltip>
+  )
+}
+
+function CropBullets({
+  items,
+  className,
+}: {
+  items: string[] | undefined
+  className?: string
+}) {
+  if (items === undefined || items.length === 0) {
+    return null
+  }
+  return (
+    <ul className={cn('flex flex-col gap-1', className)}>
+      {items.map((item) => (
+        <li key={item} className="flex gap-2 text-primary">
+          <span
+            aria-hidden
+            className="mt-[7px] size-1 shrink-0 rounded-full bg-current opacity-50"
+          />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
   )
 }
 
@@ -117,6 +148,26 @@ function getStatusText(
     return `${CROP_SENTIMENT_LABELS[sentiment]} · ${CROP_STATUS_LABELS.partiallyReviewed}`
   }
   return CROP_SENTIMENT_LABELS[sentiment]
+}
+
+/**
+ * The plant on its own, without the letter chip - used by the legend on the
+ * plant legend, which explains the shapes rather than a single crop.
+ */
+export function CropPlantSample({
+  status,
+  sentiment,
+  delay,
+}: {
+  status: ProjectCropStatus
+  sentiment: Sentiment
+  delay: number
+}) {
+  return (
+    <span className={cn('flex h-10 items-end', PLANT_COLOR[sentiment])}>
+      <CropPlant status={status} sentiment={sentiment} delay={delay} />
+    </span>
+  )
 }
 
 function CropPlant({
