@@ -4,5 +4,11 @@
     "address": "eth:0x7EA200f06c17cB9f64A3c8973a76DD8359fd68FA",
     "chain": "ethereum",
     "blockNumber": 25751894
+  },
+  "DlnExternalCallAdapter_v1.2.0.sol": {
+    "hash": "0x18bbebb819a937958472cbe9848d10adb1983dbffea723e7ba5e79e2ac6a50f2",
+    "address": "eth:0xE143DbAEC892cEf2Af836dB49870A0Bcf9d5E6A1",
+    "chain": "ethereum",
+    "blockNumber": 25780210
   }
 }
