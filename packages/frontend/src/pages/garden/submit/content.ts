@@ -106,9 +106,9 @@ export const CROP_CRITERIA: CropCriteria[] = [
 
 /** What a project needs before a review is even possible. */
 export const GROUND_RULES = [
-  'It is live, with real users and real funds.',
+  'The protocol is live, with real users.',
   'It can be reviewed from public sources: verified contracts, published source, docs.',
-  'Someone can answer our questions. Unanswered ones become caveats in the write-up.',
+  'There is someone who can answer our questions.',
 ]
 
 /** The submission process, start to finish. */
@@ -116,26 +116,21 @@ export const PROCESS_STEPS = [
   {
     title: 'Send us the details',
     description:
-      'A few minutes of form: source, docs, deployed addresses, audits, and anything you already know is imperfect. The last one saves the most time.',
+      'A few minutes of to fill in the template and create a forum post.',
   },
   {
     title: 'We check that it fits',
     description:
-      'We confirm it is live, user-facing and reviewable from public sources, and tell you either way. A no is usually about scope, not quality.',
+      'We confirm it is live and reviewable from public sources.',
   },
   {
-    title: 'We review it in the open',
+    title: 'We review it',
     description:
-      'Contracts, license, circuits, audits, upgrade paths. Everything we conclude has to be checkable by someone who is not us.',
+      'We review based on onchain data and the provided sources, and come up with a conclusion. If it is CROPS-y enough, it will be added to the garden. If not, you will get the feedback in the forum.',
   },
   {
-    title: 'You see it before the garden does',
+    title: 'We monitor and stay open for feedback',
     description:
-      'A draft evaluation per crop, with the reasoning. Factual corrections are welcome; the judgement stays ours.',
-  },
-  {
-    title: 'It gets planted',
-    description:
-      'Your row joins the garden, and the review re-opens whenever the protocol changes.',
+      'Any changes might affect the assessment, and opinions are welcome in the forum.',
   },
 ]
