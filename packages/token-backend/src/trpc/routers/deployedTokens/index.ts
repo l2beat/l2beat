@@ -111,7 +111,7 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
           isGraphRelation,
         ),
       )
-      const tokenKeys = uniqueTokenKeys(
+      const allTokenKeys = uniqueTokenKeys(
         relations.flatMap((relation) => [
           {
             chain: relation.tokenAChain,
@@ -123,9 +123,34 @@ export const deployedTokensRouter = (deps: DeployedTokensRouterDeps) =>
           },
         ]),
       )
-      const tokens = await ctx.tokenDb.deployedToken.getByPrimaryKeys(tokenKeys)
+      const tokens =
+        await ctx.tokenDb.deployedToken.getByPrimaryKeys(allTokenKeys)
+      const ignoredTokenKeys = new Set(
+        tokens.filter((token) => token.ignored).map(tokenKey),
+      )
+      const visibleRelations = relations.filter(
+        (relation) =>
+          !ignoredTokenKeys.has(
+            tokenKey({
+              chain: relation.tokenAChain,
+              address: relation.tokenAAddress,
+            }),
+          ) &&
+          !ignoredTokenKeys.has(
+            tokenKey({
+              chain: relation.tokenBChain,
+              address: relation.tokenBAddress,
+            }),
+          ),
+      )
+      const tokenKeys = uniqueTokenKeys(
+        visibleRelations.flatMap((relation) => [
+          { chain: relation.tokenAChain, address: relation.tokenAAddress },
+          { chain: relation.tokenBChain, address: relation.tokenBAddress },
+        ]),
+      )
       const tokenMap = new Map(tokens.map((token) => [tokenKey(token), token]))
-      const graphRelations = relations.map((relation) => {
+      const graphRelations = visibleRelations.map((relation) => {
         const tokenA = tokenMap.get(
           tokenKey({
             chain: relation.tokenAChain,
