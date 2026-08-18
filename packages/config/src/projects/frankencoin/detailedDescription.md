@@ -51,6 +51,6 @@ Losses are absorbed by the equity reserve and then the minter reserve before ZCH
 
 Two savings modules pay interest on deposited ZCHF, minted against the equity reserve (a loss to FPS holders, offset by the interest positions pay). The original module also serves as the *leadrate* ({{leadrate}}%) that all positions pay on top of their risk premium; the current Savings module pays a separately set rate ({{savingsRate}}%). Rates change only via a qualified proposal and a 7-day delay. The SavingsVault (svZCHF) is an ERC4626 wrapper over the Savings module with renounced ownership: interest auto-compounds into the share price. Savers' main risks are a governance rate cut to zero and, ultimately, the solvency of the ZCHF system itself.
 
-### Multichain
+### Interop
 
 ZCHF bridges to other chains via Chainlink CCIP: a token pool (a registered minter) burns on Ethereum and mints on the destination and vice versa, with governance-set per-chain rate limits. Pool configuration is controlled by qualified FPS holders through timelocked proposals that anyone can execute and any qualified holder can veto. A CCIP compromise could mint unbacked ZCHF on Ethereum, bounded by those rate limits.
