@@ -8,14 +8,14 @@ Generated with discovered.json: 0x4d2048d2fc0580042dc05e7115a2f727431a23ee
 
 ## Description
 
-Coordinated upgrade (2026-08-17, single tx) of the four DLN implementations. Common theme: support for fee-on-transfer/rebasing tokens on the fulfillment path by measuring actual received amounts instead of requiring exact transfers.
+Common theme: support for fee-on-transfer/rebasing tokens on the fulfillment path by measuring actual received amounts instead of requiring exact transfers.
 
-- DlnSource 1.7.1 -> 1.8.0 ([impl diff](https://disco.l2beat.com/diff/eth:0x322B481088143d9Ff74e4169Fb7f12F7808690DF/eth:0x2b426a0Ac391490e88d15B304436e7a84Df78611)): new createSaltedOrderForIntent overload that lets the intent manager designate an arbitrary address as the order maker (previously always tx.origin). Pulling give-funds still enforces exact-amount transfers (strict mode of the refactored _safeTransferFrom).
-- DlnDestination 1.7.0 -> 1.7.1 ([impl diff](https://disco.l2beat.com/diff/eth:0xE540eb6BfEE129d28d47E26Ad33a138d66FD78f5/eth:0xD9b4f9CacFFB59F2B982ad3c45096e3AA4B4020e)): fulfillment now accepts taxable/rebasing take tokens: it measures the amount actually credited to the receiver and reverts only if that is below the order's takeAmount (new InsufficientActualFulfillAmount error); events and the external call adapter now receive the actual amount.
-- ExternalCallAdapter 1.1.0 -> 1.2.0 ([impl diff](https://disco.l2beat.com/diff/eth:0x7EA200f06c17cB9f64A3c8973a76DD8359fd68FA/eth:0xE143DbAEC892cEf2Af836dB49870A0Bcf9d5E6A1)): removes the internal tokenBalanceHistory accounting (slot now reserved) and instead trusts the amount reported by the calling DlnDestination; when forwarding tokens to the executor it passes the actually received amount. Cosmetic renames (InvalidState, ExternalCallRegistered) and OZ _grantRole migration.
-- DeBridgeRouter 3.1.0 -> 3.2.0 ([impl diff](https://disco.l2beat.com/diff/eth:0x3c857eD51c8a2747EE8c6F30EdDA5ea0D487CC64/eth:0xCe56012E880851baa234cD092aF516A0fcA9CFe3)): new immutable dlnDestination (the DlnDestination proxy, now discovered as a value) and a new fillCrossChain() entrypoint that swaps an input token and fulfills a DLN order in one tx, patching the fulfill amount in the calldata up to a caller-set cap and refunding the excess; calls to the hardcoded dlnDestination bypass the router whitelist. The post-call balance check is relaxed from exact to a minimum (>= order takeAmount) for rebasing rounding, and a raw-transfer special case for USDT-on-Tron is added (shared codebase, irrelevant on Ethereum).
+- DlnSource 1.7.1 -> 1.8.0 ([impl diff](https://disco.l2beat.com/diff/eth:0x322B481088143d9Ff74e4169Fb7f12F7808690DF/eth:0x2b426a0Ac391490e88d15B304436e7a84Df78611))
+- DlnDestination 1.7.0 -> 1.7.1 ([impl diff](https://disco.l2beat.com/diff/eth:0xE540eb6BfEE129d28d47E26Ad33a138d66FD78f5/eth:0xD9b4f9CacFFB59F2B982ad3c45096e3AA4B4020e))
+- ExternalCallAdapter 1.1.0 -> 1.2.0 ([impl diff](https://disco.l2beat.com/diff/eth:0x7EA200f06c17cB9f64A3c8973a76DD8359fd68FA/eth:0xE143DbAEC892cEf2Af836dB49870A0Bcf9d5E6A1))
+- DeBridgeRouter 3.1.0 -> 3.2.0 ([impl diff](https://disco.l2beat.com/diff/eth:0x3c857eD51c8a2747EE8c6F30EdDA5ea0D487CC64/eth:0xCe56012E880851baa234cD092aF516A0fcA9CFe3))
 
-No permission or governance changes; no interface breaks for existing flows. Re-added shapes for the new implementations and updated the DeBridgeRouter/DlnSource template texts accordingly.
+No significant permission or governance changes
 
 ## Watched changes
 
