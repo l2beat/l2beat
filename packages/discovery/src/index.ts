@@ -22,6 +22,7 @@ export {
   TemplateService,
 } from './discovery/analysis/TemplateService'
 export { colorize } from './discovery/colorize/colorize'
+export type { ColorContract } from './discovery/config/ColorConfig'
 export {
   ConfigHealthService,
   type HealthHint,
@@ -40,6 +41,7 @@ export {
   BasePermissionEntries,
   Permission,
 } from './discovery/config/PermissionConfig'
+export { ShapeSchema } from './discovery/config/ShapeSchema'
 export {
   makeEntryStructureConfig,
   type StructureContractConfig as ContractConfig,
@@ -93,6 +95,10 @@ export type {
   ResolvedPermissionPath,
 } from './discovery/output/types'
 export { AllProviders } from './discovery/provider/AllProviders'
+export type {
+  DebugTransactionCall,
+  DebugTransactionCallResponse,
+} from './discovery/provider/DebugTransactionTrace'
 export { type DiscoveryCache } from './discovery/provider/DiscoveryCache'
 export { InMemoryCache } from './discovery/provider/InMemoryCache'
 export type { IProvider } from './discovery/provider/IProvider'
@@ -109,7 +115,10 @@ export {
   ProviderStats,
 } from './discovery/provider/Stats'
 export { ProxyDetector } from './discovery/proxies/ProxyDetector'
-export { generateEntrypoints } from './discovery/shared-modules/generateEntrypoints'
+export {
+  generateEntrypoints,
+  generateEntrypointsCommand,
+} from './discovery/shared-modules/generateEntrypoints'
 export { deduplicateAbi } from './discovery/source/deduplicateAbi'
 export { SourceCodeService } from './discovery/source/SourceCodeService'
 export { asStructured } from './discovery/type-casters/asStructured'
@@ -129,6 +138,7 @@ export type { HashedChunks, HashedFileContent } from './flatten/utils'
 export {
   buildSimilarityHashmap,
   combineImplementationHashes,
+  contractFlatteningHash,
   estimateSimilarity,
   flatteningHash,
   getHashToBeMatched,
@@ -141,6 +151,7 @@ export {
 export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export {
+  type ContractSource,
   type ExplorerConfig,
   getExplorerClient,
   type IEtherscanClient,
