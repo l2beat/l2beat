@@ -1,6 +1,16 @@
 packages:
   - 'packages/*'
 
+# Before running any script (pnpm run/exec/<bin>, including turbo tasks) check
+# that node_modules matches pnpm-lock.yaml. In a terminal this offers to run
+# `pnpm install`; in non-interactive contexts (CI, turbo children, IDE tasks) it
+# fails with a clear "run pnpm install" error instead of obscure module errors.
+verifyDepsBeforeRun: prompt
+# pnpm 11 defaults this differently with and without CI=true; pin it so the
+# check above does not fail when installs and script runs happen in different
+# environments (e.g. `pnpm install` locally, then `CI=true pnpm test`).
+enableGlobalVirtualStore: false
+
 overrides:
   'form-data@^2': 2.5.4
   'form-data@^4': 4.0.4
