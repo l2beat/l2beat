@@ -1,6 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -14,6 +15,34 @@ import { getSP1Verifiers, opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('base')
 const genesisTimestamp = UnixTime(1686074603)
 const chainId = 8453
+
+const securityCouncilStats = discovery.getMultisigStats('Base Security Council')
+const coordinatorStats = discovery.getMultisigStats('Base Coordinator Multisig')
+const governanceStats = discovery.getMultisigStats('Base Governance Multisig')
+const incidentResponderStats = discovery.getMultisigStats('Base Multisig 1')
+
+const securityCouncilThreshold = discovery.getContractValue<number>(
+  'Base Security Council',
+  '$threshold',
+)
+const securityCouncilSize = discovery.getContractValue<string[]>(
+  'Base Security Council',
+  '$members',
+).length
+// the Security Council sits in a 2/2 alongside the Coinbase-controlled
+// Coordinator Multisig, so an upgrade needs the Council threshold + Coinbase
+const upgradeApprovingEntities = securityCouncilSize + 1
+const upgradeRequiredApprovals = securityCouncilThreshold + 1
+const upgradeQuorumPercent = Math.round(
+  (upgradeRequiredApprovals / upgradeApprovingEntities) * 100,
+)
+const councilOnlyPercent = (
+  (securityCouncilThreshold / securityCouncilSize) *
+  100
+).toFixed(1)
+const pauseExpiry = formatSeconds(
+  discovery.getContractValue<number>('SuperchainConfig', 'pauseExpiry'),
+)
 
 export const base: ScalingProject = opStackL2({
   addedAt: UnixTime(1689206400), // 2023-07-13T00:00:00Z
@@ -344,6 +373,31 @@ export const base: ScalingProject = opStackL2({
   upgradesAndGovernance: {
     content:
       'All contracts are upgradable by a `ProxyAdmin` contract controlled by a nested 2/2 `Base Governance Multisig` composed of the `Base Coordinator Multisig` and the `Base Security Council`. Upgrades require approval from both parties. There is no delay on upgrades. The Guardian role for the SuperchainConfig is assigned to the Base Governance Multisig, which can pause and unpause withdrawals. `Base Multisig 1` serves as Incident Responder and can pause withdrawals but cannot unpause or extend pauses. Each pause automatically expires after 3 months if not extended by the Guardian. The single Sequencer actor can be modified by `Base Multisig 1` via the SystemConfig contract. The Base Governance multisig can also recover dispute bonds in case of bugs that would distribute them incorrectly.\n\nState validation runs through the `AggregateVerifier` game type (621), which accepts either an AWS Nitro TEE attestation or an SP1 ZK proof. The TEE prover allowlist in the `TEEProverRegistry` is managed solely by the `Base Coordinator Multisig` (without Base Security Council approval), and a separate Manager EOA can register or deregister enclave signers. The ZK arm routes through a Base-owned SP1 verifier gateway; the Base Governance Multisig can add or freeze verifier routes. The Base Governance Multisig can swap the AggregateVerifier implementation, change the respected game type, blacklist individual games, or retire all in-flight games via the AnchorStateRegistry.',
+    governanceInfo: {
+      securityCouncil: {
+        Composition: `**${securityCouncilStats}**, nested as one of two signers in the ${governanceStats} \`Base Governance Multisig\` alongside Coinbase's ${coordinatorStats} \`Base Coordinator Multisig\`. Base counts this as ${upgradeRequiredApprovals} of ${upgradeApprovingEntities} entities, or ${upgradeQuorumPercent}%; the Council Safe on its own is ${councilOnlyPercent}%. Members serve staggered cohort terms and are appointed against published criteria, not elected.`,
+        'Members public': `**Mapped (${securityCouncilSize - 1} of ${securityCouncilSize})** — [Base publishes](https://docs.base.org/base-chain/security/security-council) Aerodrome (JP), Moonwell (BR), Blackbird (US), ChainSafe (CA), Talent Protocol (PT) and Moshicam (US) as entities, plus Seneca (US), Juan Suarez (US), Toady Hawk (CA), Roberto Bayardo (US) and Yele Bademosi (UK) as individuals. One address is unpublished, as are the people who sign for each entity. Five of the six entities are Base-ecosystem projects and two of the individuals are former Coinbase or Base contributors.`,
+        Charter: `**None** — the [docs page](https://docs.base.org/base-chain/security/security-council) sets out selection criteria, cohort terms and member duties, but no removal procedure, quorum-loss fallback or conflict-of-interest enforcement. Coinbase's [Neutrality Principles](https://www.coinbase.com/blog/coinbases-neutrality-principles-for-base) cover transaction ordering, user assets and exit rights, and do not bind the Council.`,
+        'Can Coinbase bypass the Council?': `**Not for upgrades** — every \`ProxyAdmin\` action needs the ${governanceStats}. Elsewhere Coinbase acts alone: the ${incidentResponderStats} \`Base Multisig 1\` owns \`SystemConfig\` (sequencer, gas configuration) and is Incident Responder, and the Coordinator Multisig owns \`TEEProverRegistry\` and \`NitroEnclaveVerifier\`, so it can change the TEE prover allowlist, one of the two proof arms, without the Council.`,
+        'Who can override the Council?': `**Nobody — it administers itself.** Seats are changed by the Council Safe calling itself, so ${securityCouncilThreshold} of the ${securityCouncilSize} sitting members decide who joins or leaves. There is no token, DAO or veto body. The ${governanceStats} blocks both ways: neither side can upgrade alone. Below ${securityCouncilThreshold} available signers upgrades stall, and there is no liveness module handing control to a fallback.`,
+      },
+      upgrades: {
+        'Normal upgrade path': `Task published in [base/contract-deployments](https://github.com/base/contract-deployments) → **${securityCouncilStats} Security Council approval** → **${coordinatorStats} Coordinator Multisig approval** → execution through the ${governanceStats} \`Base Governance Multisig\`. No timelock, and no Safe carries a delay module. Beryl verifier-hash update, June 2026: Council approved 22 Jun, Coinbase 23 Jun, executed 43 minutes later.`,
+        'Emergency upgrade path': `**None** — the normal path executes as soon as both Safes sign, so there is no lower emergency threshold. The fastest lever is a pause: the ${incidentResponderStats} \`Base Multisig 1\` can pause withdrawals alone as Incident Responder, but only once per identifier, since the pause expires after ${pauseExpiry} and it cannot pause again until the Guardian unpauses. The Guardian is the ${governanceStats} \`Base Governance Multisig\` itself, which can also blacklist dispute games, set the respected game type and retire all in-flight games.`,
+        'Exit window':
+          '**None** — nothing separates the second signature from the upgrade taking effect, so users cannot withdraw ahead of an unwanted change. Tasks are published before signing and Base targets six hard forks a year, but neither is enforced onchain.',
+      },
+      tokenGovernance: {
+        'Governance token':
+          '**None** — Base has no token, so no token-weighted vote enters the upgrade path. Coinbase has said it is exploring one.',
+        'Voting venue':
+          '**None** — no DAO, governor contract, Snapshot space or forum vote gates an upgrade. Coordination happens in [base/contract-deployments](https://github.com/base/contract-deployments).',
+        'Proposal rights':
+          '**Coinbase only** — upgrade tasks are Coinbase-authored, and no route exists for a third party to put an upgrade to the Council.',
+        'Execution model':
+          '**Two Safes sign, a facilitator executes.** No permissionless `execute()`, and no delay for the public to act inside.',
+      },
+    },
   },
   nonTemplateContractRisks: {
     category: 'Funds can be stolen if',

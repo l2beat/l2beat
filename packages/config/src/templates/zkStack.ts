@@ -776,16 +776,20 @@ export function getZKStackVerifiers(
     // don't want to bother setting up archived projects
     return result
   }
-  if (discovery.hasContract('DualVerifier')) {
+  // since v30.1 the dual verifier of era-based chains is called EraDualVerifier
+  const dualVerifierName = ['DualVerifier', 'EraDualVerifier'].find((name) =>
+    discovery.hasContract(name),
+  )
+  if (dualVerifierName !== undefined) {
     result.push(
       discovery.getContractValue<ChainSpecificAddress>(
-        'DualVerifier',
+        dualVerifierName,
         'FFLONK_VERIFIER',
       ),
     )
     result.push(
       discovery.getContractValue<ChainSpecificAddress>(
-        'DualVerifier',
+        dualVerifierName,
         'PLONK_VERIFIER',
       ),
     )
