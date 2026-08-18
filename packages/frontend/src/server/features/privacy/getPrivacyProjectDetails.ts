@@ -3,6 +3,7 @@ import type {
   PrivacyExitWindow,
   PrivacySummaryValue,
   ProjectContracts,
+  ProjectCrops,
   ProjectDisplay,
   ProjectPermissions,
   ProjectStatuses,
@@ -38,6 +39,7 @@ export interface PrivacyProjectDetails {
   permissions?: Record<string, ProjectPermissions>
   statuses: ProjectStatuses
   zkCatalogInfo?: ProjectZkCatalogInfo
+  crops?: ProjectCrops
   exitWindow: PrivacyExitWindow
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
@@ -73,6 +75,7 @@ export async function getPrivacyProjectDetails(
       'permissions',
       'discoveryInfo',
       'zkCatalogInfo',
+      'crops',
     ],
   })
   if (!project) {
@@ -254,6 +257,7 @@ export async function getPrivacyProjectDetails(
     permissions: project.permissions,
     statuses: project.statuses,
     zkCatalogInfo: project.zkCatalogInfo,
+    crops: project.crops,
     exitWindow: project.privacyInfo.exitWindow,
     privacy: project.privacyInfo.privacy,
     reproducibility: project.privacyInfo.reproducibility,

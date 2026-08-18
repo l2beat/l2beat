@@ -1,3 +1,4 @@
+import type { ProjectCrops } from '@l2beat/config'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { CssVariables } from '~/components/CssVariables'
@@ -5,6 +6,7 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { WhyAmIHereNotice } from '~/components/countdowns/other-migration/WhyAmIHereNotice'
 import { StageOneRequirementsChangeNotice } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeNotice'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
+import { GardenCropsNotice } from '~/components/projects/GardenCropsNotice'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
@@ -23,12 +25,14 @@ import { ProjectScalingSummary } from './components/ScalingProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectScalingEntry
+  crops?: ProjectCrops
   queryState: DehydratedState
   selectedUpdateId?: string
 }
 
 export function ScalingProjectPage({
   projectEntry,
+  crops,
   queryState,
   selectedUpdateId,
   ...props
@@ -105,6 +109,7 @@ export function ScalingProjectPage({
                 </div>
                 <div className="row-start-2">
                   <ProjectScalingSummary project={projectEntry} />
+                  {crops && <GardenCropsNotice crops={crops} />}
 
                   {projectEntry.header.category === 'Other' &&
                     projectEntry.reasonsForBeingOther &&

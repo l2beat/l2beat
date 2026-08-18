@@ -120,8 +120,7 @@ export const PROCESS_STEPS = [
   },
   {
     title: 'We check that it fits',
-    description:
-      'We confirm it is live and reviewable from public sources.',
+    description: 'We confirm it is live and reviewable from public sources.',
   },
   {
     title: 'We review it',

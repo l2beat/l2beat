@@ -42,6 +42,40 @@ const TYPE_TAG: Record<
   },
 }
 
+/** Links to the project page when it has one, otherwise renders plain. */
+function ProjectCell({ entry }: { entry: GardenEntry }) {
+  const content = (
+    <>
+      <img
+        src={entry.iconUrl}
+        alt=""
+        width={34}
+        height={34}
+        className="size-[34px] rounded-lg"
+      />
+      <div className="flex flex-col leading-tight">
+        <span
+          className={cn(
+            'font-semibold text-primary text-sm',
+            entry.href && 'group-hover/project:underline',
+          )}
+        >
+          {entry.name}
+        </span>
+        <span className="text-secondary text-xs">{entry.subtitle}</span>
+      </div>
+    </>
+  )
+  if (!entry.href) {
+    return <div className="flex items-center gap-3">{content}</div>
+  }
+  return (
+    <a href={entry.href} className="group/project flex items-center gap-3">
+      {content}
+    </a>
+  )
+}
+
 export function GardenTable({ entries }: { entries: GardenEntry[] }) {
   return (
     <Table className="min-w-[680px]">
@@ -66,23 +100,7 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
               <IndexCell>{rowIndex + 1}</IndexCell>
             </TableCell>
             <TableCell className="whitespace-nowrap">
-              <div className="flex items-center gap-3">
-                <img
-                  src={entry.iconUrl}
-                  alt=""
-                  width={34}
-                  height={34}
-                  className="size-[34px] rounded-lg"
-                />
-                <div className="flex flex-col leading-tight">
-                  <span className="font-semibold text-primary text-sm">
-                    {entry.name}
-                  </span>
-                  <span className="text-secondary text-xs">
-                    {entry.subtitle}
-                  </span>
-                </div>
-              </div>
+              <ProjectCell entry={entry} />
             </TableCell>
             <TableCell>
               <div className="flex flex-wrap gap-1.5">

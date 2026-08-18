@@ -73,6 +73,8 @@ const DEPOSIT_COUNT_PROJECTS = ['umbra']
 export interface GardenEntry {
   name: string
   slug: string
+  /** Detail page, when the project has one. Undefined projects stay unlinked. */
+  href: string | undefined
   subtitle: string
   iconUrl: string
   types: GardenProjectType[]
@@ -104,6 +106,7 @@ export async function getGardenData(
     .map((project) => ({
       name: project.name,
       slug: project.slug,
+      href: getHref(project),
       subtitle: getSubtitle(project),
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       types: getTypes(project),
@@ -200,6 +203,19 @@ function getMetric(
     value: tvs.breakdown.total,
     change: tvs.change.total,
   }
+}
+
+// Only privacy and scaling projects have a detail page we can link to. A
+// defi-only project like Uniswap v3 has none, and the shared getProjectUrl
+// helper would resolve it to a /scaling/projects/ URL that 404s.
+function getHref(project: GardenProject): string | undefined {
+  if (project.privacyInfo) {
+    return `/privacy/projects/${project.slug}`
+  }
+  if (project.scalingInfo) {
+    return `/scaling/projects/${project.slug}`
+  }
+  return undefined
 }
 
 function getSubtitle(project: GardenProject): string {
