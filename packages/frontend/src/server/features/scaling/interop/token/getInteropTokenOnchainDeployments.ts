@@ -1,3 +1,4 @@
+import type { MintingPluginRecord } from '@l2beat/database'
 import { Address32 } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -8,6 +9,10 @@ export interface InteropTokenOnchainDeployment {
   chain: string
   address: string
   symbol: string
+  mintingPlugins: Pick<
+    MintingPluginRecord,
+    'plugin' | 'bridgeType' | 'relatedChain'
+  >[]
   isSupported: boolean
   volume: number | null
   transferCount: number | null
@@ -35,16 +40,40 @@ export async function getInteropTokenOnchainDeployments(
     return tokenAddress ? [{ tokenChain: token.chain, tokenAddress }] : []
   })
 
-  const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
-  const stats = snapshotTimestamp
-    ? await db.aggregatedInteropDeployedToken.getSummedStatsByTimestampAndTokens(
-        snapshotTimestamp,
-        statsKeys,
-      )
-    : []
+  const [stats, mintingPlugins] = await Promise.all([
+    (async () => {
+      const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
+      return snapshotTimestamp
+        ? db.aggregatedInteropDeployedToken.getSummedStatsByTimestampAndTokens(
+            snapshotTimestamp,
+            statsKeys,
+          )
+        : []
+    })(),
+    tokenDb.tokenRelation.getMintingPluginsForMany(
+      deployedTokens.map((token) => ({
+        chain: token.chain,
+        address: token.address,
+      })),
+    ),
+  ])
   const statsMap = new Map(
     stats.map((stat) => [`${stat.tokenChain}|${stat.tokenAddress}`, stat]),
   )
+  const mintingPluginsMap = new Map<
+    string,
+    InteropTokenOnchainDeployment['mintingPlugins']
+  >()
+  for (const record of mintingPlugins) {
+    const key = deploymentKey(record.chain, record.address)
+    const plugins = mintingPluginsMap.get(key) ?? []
+    plugins.push({
+      plugin: record.plugin,
+      bridgeType: record.bridgeType,
+      relatedChain: record.relatedChain,
+    })
+    mintingPluginsMap.set(key, plugins)
+  }
   const supportedChains = new Set(supportedChainIds)
 
   const deployments = deployedTokens.map((token) => {
@@ -57,6 +86,8 @@ export async function getInteropTokenOnchainDeployments(
       chain: token.chain,
       address: token.address,
       symbol: token.symbol,
+      mintingPlugins:
+        mintingPluginsMap.get(deploymentKey(token.chain, token.address)) ?? [],
       isSupported,
       volume: stat?.volume ?? (isSupported ? 0 : null),
       transferCount: stat?.transferCount ?? (isSupported ? 0 : null),
@@ -73,11 +104,16 @@ export async function getInteropTokenOnchainDeployments(
   )
 }
 
+function deploymentKey(chain: string, address: string): string {
+  return `${chain}|${address.toLowerCase()}`
+}
+
 const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
   {
     chain: 'ethereum',
     address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
     symbol: 'USDC',
+    mintingPlugins: [],
     isSupported: true,
     volume: 2_170_000,
     transferCount: 403,
@@ -87,6 +123,18 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
     chain: 'arbitrum',
     address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
     symbol: 'USDC',
+    mintingPlugins: [
+      {
+        plugin: 'cctp-v2',
+        bridgeType: 'burnAndMint',
+        relatedChain: 'ethereum',
+      },
+      {
+        plugin: 'orbitstack',
+        bridgeType: 'lockAndMint',
+        relatedChain: 'ethereum',
+      },
+    ],
     isSupported: true,
     volume: 392_430,
     transferCount: 125,
@@ -96,6 +144,13 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
     chain: 'base',
     address: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
     symbol: 'USDbC',
+    mintingPlugins: [
+      {
+        plugin: 'opstack',
+        bridgeType: 'lockAndMint',
+        relatedChain: 'ethereum',
+      },
+    ],
     isSupported: false,
     volume: null,
     transferCount: null,

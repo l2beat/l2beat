@@ -45,6 +45,12 @@ describe(InteropTransferClassifier.name, () => {
         bridgeType: 'nonMinting',
         type: 'deposit',
       }),
+      transfer({
+        id: 't4',
+        plugin: 'plugin-b',
+        bridgeType: 'nonMinting',
+        type: 'withdraw',
+      }),
     ]
 
     const matched = classifier.filterTransfers(transfers, [
@@ -101,6 +107,25 @@ describe(InteropTransferClassifier.name, () => {
     expect(result.burnAndMint.map((x) => x.id)).toEqual(['burn-and-mint'])
     expect(result.nonMinting).toEqual([])
     expect(result.unknown).toEqual([])
+  })
+
+  it('matches plugin identity without requiring transferType', () => {
+    const matches = classifier.createPluginMatcher([
+      {
+        plugin: 'axelar',
+        bridgeType: 'burnAndMint',
+        transferType: 'axelar.Transfer',
+      },
+    ])
+
+    expect(
+      matches({
+        plugin: 'axelar',
+        bridgeType: 'burnAndMint',
+        srcChain: 'ethereum',
+        dstChain: 'arbitrum',
+      }),
+    ).toEqual(true)
   })
 
   it('only bypasses plugin bridge type matching for one-sided transfers with unknown bridge type', () => {

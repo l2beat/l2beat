@@ -3,6 +3,15 @@ import type {
   KnownInteropBridgeType,
 } from '@l2beat/shared-pure'
 
+export interface InteropPluginObservation {
+  plugin: string
+  bridgeType: KnownInteropBridgeType | undefined
+  srcChain: string
+  dstChain: string
+  srcAbstractTokenId?: string
+  dstAbstractTokenId?: string
+}
+
 export interface InteropTransferForClassification {
   plugin: string
   bridgeType: KnownInteropBridgeType | undefined
@@ -49,6 +58,43 @@ export class InteropTransferClassifier {
   ): TTransfer[] {
     const matcher = this.createMatcher(plugins)
     return transfers.filter(matcher)
+  }
+
+  createPluginMatcher<TObservation extends InteropPluginObservation>(
+    plugins: InteropTransferPluginMatcher[],
+  ): (observation: TObservation) => boolean {
+    const conditions: ((observation: TObservation) => boolean)[][] = []
+
+    for (const plugin of plugins) {
+      const pluginConditions: ((observation: TObservation) => boolean)[] = [
+        (observation) =>
+          plugin.plugin === observation.plugin &&
+          plugin.bridgeType === observation.bridgeType,
+      ]
+
+      if (plugin.chain) {
+        pluginConditions.push(
+          (observation) =>
+            plugin.chain === observation.srcChain ||
+            plugin.chain === observation.dstChain,
+        )
+      }
+
+      if (plugin.abstractTokenId) {
+        pluginConditions.push(
+          (observation) =>
+            plugin.abstractTokenId === observation.srcAbstractTokenId ||
+            plugin.abstractTokenId === observation.dstAbstractTokenId,
+        )
+      }
+
+      conditions.push(pluginConditions)
+    }
+
+    return (observation) =>
+      conditions.some((pluginConditions) =>
+        pluginConditions.every((condition) => condition(observation)),
+      )
   }
 
   createMatcher<TTransfer extends InteropTransferForClassification>(

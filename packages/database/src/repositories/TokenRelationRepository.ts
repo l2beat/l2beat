@@ -1,4 +1,7 @@
-import type { InteropBridgeType } from '@l2beat/shared-pure'
+import type {
+  InteropBridgeType,
+  KnownInteropBridgeType,
+} from '@l2beat/shared-pure'
 import type {
   Expression,
   ExpressionBuilder,
@@ -47,6 +50,12 @@ export type TokenRelationRecord = {
 }
 
 export type TokenRelationRoute = Omit<TokenRelationRecord, 'transfer'>
+
+export interface MintingPluginRecord extends DeployedTokenPrimaryKey {
+  plugin: string
+  bridgeType: KnownInteropBridgeType
+  relatedChain: string
+}
 
 // The identity and role columns come back re-derived, so their literal types
 // widen; anything else the caller passed in (e.g. `transfer`) is preserved.
@@ -146,6 +155,17 @@ function toRow(record: TokenRelationRecord): Insertable<TokenRelation> {
 // Keeps each query's composite-key tuple list small enough to avoid
 // overflowing both the Kysely query compiler and the Postgres parser stack.
 const BATCH_SIZE = 1000
+
+function tokenKey(token: DeployedTokenPrimaryKey): string {
+  return `${token.chain}|${token.address.toLowerCase()}`
+}
+
+function mintingPluginKey(
+  record: DeployedTokenPrimaryKey &
+    Pick<MintingPluginRecord, 'plugin' | 'bridgeType' | 'relatedChain'>,
+): string {
+  return `${tokenKey(record)}|${record.plugin}|${record.bridgeType}|${record.relatedChain}`
+}
 
 export class TokenRelationRepository extends BaseRepository {
   async insert(record: TokenRelationRecord): Promise<void> {
@@ -312,39 +332,100 @@ export class TokenRelationRepository extends BaseRepository {
   async getMintingPluginsFor(
     token: DeployedTokenPrimaryKey,
   ): Promise<string[]> {
-    const address = token.address.toLowerCase()
-    const rows = await this.db
-      .selectFrom('TokenRelation')
-      .select('plugin')
-      .distinct()
-      .where((eb) =>
-        eb.or([
-          this.mintedAtEndpoint(eb, { chain: token.chain, address }, 'A'),
-          this.mintedAtEndpoint(eb, { chain: token.chain, address }, 'B'),
-        ]),
-      )
-      .orderBy('plugin')
-      .execute()
-
-    return rows.map((row) => row.plugin)
+    return [
+      ...new Set(
+        (await this.getMintingPluginsForMany([token])).map(
+          (record) => record.plugin,
+        ),
+      ),
+    ]
   }
 
-  // The token occupies the given endpoint slot and is minted there.
+  /**
+   * Batch variant of {@link getMintingPluginsFor}: one distinct
+   * (token, plugin, bridgeType, relatedChain) record per qualifying relation
+   * in which this token is minted. `relatedChain` is the other endpoint of
+   * that relation, used with this token's chain as plugin chain qualifiers.
+   *
+   * Input addresses are matched case-insensitively; returned addresses are
+   * as stored, lowercase — group results by lowercased address, not by
+   * comparing against the input.
+   */
+  async getMintingPluginsForMany(
+    tokens: DeployedTokenPrimaryKey[],
+  ): Promise<MintingPluginRecord[]> {
+    const result = new Map<string, MintingPluginRecord>()
+
+    await this.batch(tokens, BATCH_SIZE, async (batch) => {
+      const normalizedTokens = batch.map((token) => ({
+        chain: token.chain,
+        address: token.address.toLowerCase(),
+      }))
+      const mintedAtA = this.db
+        .selectFrom('TokenRelation')
+        .select([
+          'tokenAChain as chain',
+          'tokenAAddress as address',
+          'tokenBChain as relatedChain',
+          'plugin',
+          'bridgeType',
+        ])
+        .where((eb) =>
+          eb(
+            eb.refTuple('tokenAChain', 'tokenAAddress'),
+            'in',
+            normalizedTokens.map((token) =>
+              eb.tuple(token.chain, token.address),
+            ),
+          ),
+        )
+        .where((eb) => this.mintedAtEndpoint(eb, 'A'))
+      const mintedAtB = this.db
+        .selectFrom('TokenRelation')
+        .select([
+          'tokenBChain as chain',
+          'tokenBAddress as address',
+          'tokenAChain as relatedChain',
+          'plugin',
+          'bridgeType',
+        ])
+        .where((eb) =>
+          eb(
+            eb.refTuple('tokenBChain', 'tokenBAddress'),
+            'in',
+            normalizedTokens.map((token) =>
+              eb.tuple(token.chain, token.address),
+            ),
+          ),
+        )
+        .where((eb) => this.mintedAtEndpoint(eb, 'B'))
+
+      const rows = await mintedAtA.union(mintedAtB).execute()
+      for (const row of rows) {
+        const record: MintingPluginRecord = {
+          chain: row.chain,
+          address: row.address,
+          plugin: row.plugin,
+          bridgeType: row.bridgeType as KnownInteropBridgeType,
+          relatedChain: row.relatedChain,
+        }
+        result.set(mintingPluginKey(record), record)
+      }
+    })
+
+    return [...result.values()]
+  }
+
   private mintedAtEndpoint(
     eb: ExpressionBuilder<DB, 'TokenRelation'>,
-    token: DeployedTokenPrimaryKey,
     slot: 'A' | 'B',
   ): Expression<SqlBool> {
     const otherSlot = slot === 'A' ? 'B' : 'A'
-    return eb.and([
-      eb(`token${slot}Chain`, '=', token.chain),
-      eb(`token${slot}Address`, '=', token.address),
-      eb.or([
-        eb('bridgeType', '=', 'burnAndMint' satisfies InteropBridgeType),
-        eb.and([
-          eb('bridgeType', '=', 'lockAndMint' satisfies InteropBridgeType),
-          eb('lockedToken', '=', otherSlot),
-        ]),
+    return eb.or([
+      eb('bridgeType', '=', 'burnAndMint' satisfies InteropBridgeType),
+      eb.and([
+        eb('bridgeType', '=', 'lockAndMint' satisfies InteropBridgeType),
+        eb('lockedToken', '=', otherSlot),
       ]),
     ])
   }

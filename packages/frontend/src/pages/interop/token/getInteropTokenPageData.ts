@@ -1,7 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getInteropTokenData } from '~/server/features/scaling/interop/getInteropTokenData'
+import { getInteropTokenDataWithProjects } from '~/server/features/scaling/interop/getInteropTokenData'
 import { getInteropAbstractTokens } from '~/server/features/scaling/interop/token/getInteropAbstractTokens'
 import { getInteropTokenEntry } from '~/server/features/scaling/interop/token/getInteropTokenEntry'
 import { getInteropTokenOnchainDeployments } from '~/server/features/scaling/interop/token/getInteropTokenOnchainDeployments'
@@ -108,21 +108,33 @@ async function getCachedData({
 
   const apiSelection = initialSelection
 
-  const [tokenData, deployments, projectsWithChains] = await Promise.all([
-    getInteropTokenData({
-      tokenId: token.id,
-      ...apiSelection,
-    }),
-    getInteropTokenOnchainDeployments(token.id, activeInteropChainIds),
-    ps.getProjects({
-      select: ['chainConfig'],
-    }),
-  ])
+  const interopProjectsPromise = ps.getProjects({
+    select: ['interopConfig'],
+  })
+  const tokenDataPromise = interopProjectsPromise.then((interopProjects) =>
+    getInteropTokenDataWithProjects(
+      {
+        tokenId: token.id,
+        ...apiSelection,
+      },
+      interopProjects,
+    ),
+  )
+  const [tokenData, deployments, projectsWithChains, interopProjects] =
+    await Promise.all([
+      tokenDataPromise,
+      getInteropTokenOnchainDeployments(token.id, activeInteropChainIds),
+      ps.getProjects({
+        select: ['chainConfig'],
+      }),
+      interopProjectsPromise,
+    ])
 
   const tokenEntry = getInteropTokenEntry(
     token.id,
     interopChainsWithIcons,
     projectsWithChains,
+    interopProjects,
     deployments,
   )
 
