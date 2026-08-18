@@ -810,23 +810,22 @@ export const aztecnetwork: ScalingProject = {
     censorshipResistance: {
       sentiment: 'warning',
       points: [
-        'Sequencing is permissionless, with no single privileged actor.',
+        'Sequencing is permissionless with no single privileged actor.',
         'The protocol cannot be paused and the exit window is infinite.',
       ],
       missing: [
-        'No L1 forced-transaction queue and no deterministic maximum inclusion delay, so inclusion is only probabilistic.',
-        'With sequencing open but inclusion unbounded, there is no worst case a user can rely on.',
+        'It lacks determinism: there is no L1 forced-transaction queue and no deterministic maximum inclusion delay, so inclusion is only probabilistic.',
       ],
     },
     openSource: {
       sentiment: 'good',
       points: [
-        'Apache 2.0 licensed - OSI-approved, with fork rights granted outright.',
-        'The onchain verifier has been reproduced from source.',
-        'The rollup is forkable onchain by design.',
+        'Apache 2.0 licensed.',
+        'The onchain verifier has been reproduced.',
+        'The rollup is even forkable onchain by design.',
       ],
-      missing: [
-        'Node builds are not verified reproducible, only the verifier.',
+      notReviewed: [
+        'Node build reproducibility, as distinct from the verifier.',
       ],
     },
     privacy: {
@@ -834,24 +833,26 @@ export const aztecnetwork: ScalingProject = {
       points: [
         'Privacy is protocol-native: the AztecVM supports private and public smart contracts.',
         'Balances and identities in private state are encrypted.',
-        'Each private transaction is proven client-side, so nothing has to be revealed to a prover.',
+        'Each private transaction is proven client-side.',
       ],
-      missing: [
-        'No quantified anonymity set.',
-        'What leaks when a transaction touches public state is not spelled out.',
+      notReviewed: [
+        'Anonymity set size.',
+        'What becomes visible when a transaction touches public state.',
       ],
     },
     security: {
       sentiment: 'warning',
       status: 'partiallyReviewed',
       points: [
-        'State is validated with validity proofs.',
-        'The v5 rollup is immutable.',
+        'State is validated with validity proofs and the v5 rollup is immutable.',
       ],
       missing: [
-        'Quantum safety is unclear.',
         'The bridge was insecure until the very recent v5 upgrade (July 2026), leaving a migration risk and burden.',
-        'A single proof system, with no circuit breaker or rate limit reviewed.',
+      ],
+      notReviewed: [
+        'Quantum safety, which is currently unclear.',
+        'Multiproof.',
+        'Circuit breakers and rate limits.',
       ],
     },
   },

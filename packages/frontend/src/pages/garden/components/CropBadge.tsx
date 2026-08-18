@@ -99,16 +99,30 @@ export function CropBadge({ letter, label, evaluation, delay }: Props) {
           {`${label}: ${getStatusText(status, sentiment)}`}
         </SentimentText>
         <CropBullets items={evaluation.points} className="mt-1.5" />
-        {evaluation.missing !== undefined && evaluation.missing.length > 0 && (
-          <>
-            <p className="mt-2.5 font-semibold text-[10px] text-secondary uppercase tracking-wider">
-              What is missing
-            </p>
-            <CropBullets items={evaluation.missing} className="mt-1" />
-          </>
-        )}
+        <CropSection title="What is missing" items={evaluation.missing} />
+        <CropSection title="Not reviewed yet" items={evaluation.notReviewed} />
       </TooltipContent>
     </Tooltip>
+  )
+}
+
+function CropSection({
+  title,
+  items,
+}: {
+  title: string
+  items: string[] | undefined
+}) {
+  if (items === undefined || items.length === 0) {
+    return null
+  }
+  return (
+    <>
+      <p className="mt-2.5 font-semibold text-[10px] text-secondary uppercase tracking-wider">
+        {title}
+      </p>
+      <CropBullets items={items} className="mt-1" />
+    </>
   )
 }
 

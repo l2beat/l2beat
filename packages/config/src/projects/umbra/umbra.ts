@@ -139,49 +139,40 @@ export const umbra: BaseProject = {
       sentiment: 'good',
       points: [
         'The core contracts are immutable, cannot be paused, and have no upgrade path, so the exit window is infinite.',
-        'Passes the walkaway test: nobody can stop a recipient from claiming a payment already sent to them.',
-        'Withdrawals can always be self-relayed instead of going through a relayer.',
-        'The owner can only raise the ETH toll on contract-routed payments, which applies to everyone equally and cannot touch payment or withdrawal logic.',
+        'Passes the walkaway test: nobody can stop a recipient from claiming a payment already sent to them, and withdrawals can always be self-relayed.',
+        'Nobody can censor an individual user - the owner can only raise the ETH toll on contract-routed payments, which applies to everyone equally and cannot touch payment or withdrawal logic.',
       ],
-      missing: [
-        'No independent relayer pool - the fallback is self-relaying, which pays gas from a linkable address.',
-        'No delay or cap stated on toll changes, though they cannot reach user funds.',
-      ],
+      notReviewed: ['Relayer set size and independence.'],
     },
     openSource: {
       sentiment: 'good',
       points: [
-        'The immutable core contracts, the cryptographic library and the frontend are all published.',
-        'Everything needed to participate can be built and run locally.',
+        'The immutable core contracts, the cryptographic library and the frontend are published and can be built and run locally.',
       ],
-      missing: [
-        'License permissiveness is not established, so fork rights and OSI approval are unconfirmed.',
-        'The announcement scanning infrastructure a recipient relies on is outside the build check.',
-      ],
+      notReviewed: ['License permissiveness, so fork rights are unconfirmed.'],
     },
     privacy: {
       sentiment: 'good',
       points: [
-        'Recipient privacy with no protocol-level compliance mechanism and no privileged view key.',
-        'No way for anyone to retroactively deanonymize a payment.',
+        'Recipient privacy with no protocol-level compliance mechanism, no privileged view key, and no way for anyone to retroactively deanonymize a payment.',
       ],
       missing: [
-        'Only control of the receiving address is hidden - the sender, the amount and the stealth address stay public.',
-        'No formal anonymity set: privacy depends on the recipient practising good withdrawal hygiene and avoiding recognizable timing or amount patterns.',
+        'Only who controls the receiving address is hidden - the sender, the amount and the stealth address stay public.',
+        'Privacy still depends on the recipient practising good withdrawal hygiene and avoiding recognizable timing or amount patterns.',
       ],
+      notReviewed: ['Anonymity set size.'],
     },
     security: {
       sentiment: 'good',
       status: 'partiallyReviewed',
       points: [
-        'A small, immutable, externally audited contract set.',
-        'No proof system and no trusted setup to depend on.',
+        'A small, immutable, externally audited contract set with no proof system and no trusted setup.',
       ],
       missing: [
         'Stealth addresses rely on elliptic-curve key agreement, so they are not quantum-resistant.',
         'Immutability means the unsupported-token accounting caveat cannot be patched.',
-        'No monitoring, circuit breaker or rate limit in scope.',
       ],
+      notReviewed: ['Monitoring, circuit breakers and rate limits.'],
     },
   },
   permissions: discovery.getDiscoveredPermissions(),

@@ -164,31 +164,26 @@ export const uniswapv3: BaseProject = {
     censorshipResistance: {
       sentiment: 'good',
       points: [
-        'Pools are immutable and adminless - nothing can be paused or upgraded.',
+        'Pools are immutable and adminless: nothing can be paused or upgraded.',
         'Anyone can deploy a pool for any token pair at an enabled fee tier, and swapping or withdrawing liquidity needs no permission and passes through no operator.',
-        'UNI tokenholder governance, acting through a 2d timelock, holds only two bounded powers: enabling new fee tiers, and a protocol fee capped at 1/4 of LP fees per side.',
+        'UNI tokenholder governance, acting through a 2d timelock, holds only two bounded powers over v3 pools: enabling new fee tiers, and setting a protocol fee capped at 1/4 of LP fees per side.',
         'Governance cannot block a swap, freeze a position, or reach LP funds.',
       ],
-      missing: [
-        'The 2d timelock is short for an exit window, though the powers behind it cannot touch user funds.',
-        'Interfaces and routers are where access is actually filtered, and they sit outside the pools.',
+      notReviewed: [
+        'The routers and interfaces users actually reach the pools through, which sit outside them.',
       ],
     },
     openSource: {
       sentiment: 'good',
       points: [
-        'Core and periphery are GPL licensed - the business-source grant on the core expired in 2023.',
-        'Contracts are verified onchain against the published source.',
-        'Can be built and run locally alongside a self-hosted interface.',
-      ],
-      missing: [
-        'No program hashes or node builds in scope, so reproducibility beyond the contracts does not apply here.',
+        'The v3 core and periphery contracts are GPL licensed - the business-source grant on the core expired in 2023.',
+        'They are verified onchain, and can be built and run locally alongside a self-hosted interface.',
       ],
     },
     privacy: {
       status: 'notReviewed',
-      missing: [
-        'Not reviewed. Swaps, positions and LP addresses are fully public onchain, and the protocol makes no privacy claim.',
+      notReviewed: [
+        'Not reviewed. Swaps and positions are public onchain, and the protocol makes no privacy claim.',
       ],
     },
     security: {
@@ -196,13 +191,15 @@ export const uniswapv3: BaseProject = {
       points: [
         'Every contract that holds or routes user funds is immutable, with no upgrade path.',
         'No external dependency - no oracle, no bridge.',
-        'Battle-tested at very high volume since 2021.',
+        'The core has been battle-tested at very high volume since 2021.',
       ],
       missing: [
-        'A governance-set protocol fee remains: currently 1/4 of LP fees per side, 1/6 on the 0.3% tier, burned as UNI through the Firepit.',
-        'Per-pool token and liquidity risk stays with the user, not the protocol.',
-        'The router and approval contracts sit outside the pools and are assessed separately.',
-        'No circuit breaker or rate limit, and immutability means nothing can be patched.',
+        'A governance-set protocol fee remains: currently 1/4 of LP fees per side, 1/6 on the 0.3% tier, with proceeds burned as UNI through the Firepit.',
+        'Per-pool token and liquidity risk stays with the user.',
+      ],
+      notReviewed: [
+        'The router and approval contracts that sit outside the pools, which are assessed separately.',
+        'Circuit breakers and rate limits.',
       ],
     },
   },

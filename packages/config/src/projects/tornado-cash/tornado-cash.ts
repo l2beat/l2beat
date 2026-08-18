@@ -223,49 +223,47 @@ export const tornadoCash: BaseProject = {
     censorshipResistance: {
       sentiment: 'good',
       points: [
-        'Immutable core with no admin, no pause and no upgrade path, so the exit window is infinite.',
-        'Passes the walkaway test: with the team, the frontend and every relayer gone, users can still withdraw by self-relaying.',
-        'No power exists that could single out one user - selective and blanket censorship are both covered.',
-        '26 active relayers over the last month, and the set can be bypassed entirely.',
+        'The immutable core has no admin, no pause and no upgrade path, so the exit window is infinite.',
+        'Selective censorship, blanket censorship and walkaway resistance are all solid.',
+        '26 active relayers over the last month, and users can always self-relay withdrawals.',
       ],
       missing: [
-        'Relayers are a single pool, with no independent alternative to switch to - the fallback is self-relaying, which costs the user their privacy.',
-        'Frontends and RPCs are where access is actually cut off, and they sit outside the contracts we reviewed.',
+        'The relayer set is the weakest link in an otherwise permissionless design.',
+      ],
+      notReviewed: [
+        'Whether the relayers form independent pools or one set with shared infrastructure.',
       ],
     },
     openSource: {
       sentiment: 'good',
       points: [
-        'GPL-3.0 licensed, so the right to run, modify and fork is granted outright under an OSI-approved license.',
-        'The published source is reproducible and can be built and run locally to participate.',
+        'The core is GPL-3.0 licensed, so the right to run, modify and fork is granted outright.',
+        'The published source is reproducible: anyone can audit it and run it locally to participate.',
       ],
-      missing: [
-        'Relayer software and the surrounding tooling are outside the reproducibility check.',
+      notReviewed: [
+        'Reproducibility of the relayer software, which sits outside the core.',
       ],
     },
     privacy: {
       sentiment: 'good',
       points: [
-        'Unlinkability enforced by cryptography, with no protocol-level compliance mechanism and no backdoor.',
-        'Nothing retroactive: no privileged view key, and past withdrawals cannot be deanonymized.',
-        'Clearly defined anonymity set numbers per fixed-denomination pool.',
-      ],
-      missing: [
-        'Anonymity sets thin out in the less used denominations, and are only as strong as pool activity.',
-        'Deposit and withdrawal timing stays public, so avoiding recognizable patterns is still on the user.',
+        'Unstoppable user privacy, with no protocol-level compliance mechanism and no backdoor.',
+        'Strong, clearly defined anonymity set numbers per fixed-denomination pool.',
       ],
     },
     security: {
       sentiment: 'good',
       status: 'partiallyReviewed',
       points: [
-        'A simple, well-ossified design: immutable, with no upgrade path anyone could turn against a user.',
-        'Audited extensively - plausibly including by malicious actors, given how long it has held funds.',
+        'A simple, well-ossified design, audited extensively - plausibly including by malicious actors.',
       ],
       missing: [
-        'Not quantum-resistant, which may expose user privacy to harvest-now-decrypt-later attacks.',
+        'It is not quantum-resistant, which may expose user privacy to harvest-now-decrypt-later attacks.',
         'Immutability means bugs cannot be patched.',
-        'No circuit breaker or rate limit bounding what a single failure could drain.',
+      ],
+      notReviewed: [
+        'Circuit breakers and rate limits.',
+        'Formal verification.',
       ],
     },
   },

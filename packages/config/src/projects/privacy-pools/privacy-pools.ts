@@ -180,23 +180,23 @@ export const privacyPools: BaseProject = {
     censorshipResistance: {
       sentiment: 'warning',
       points: [
-        'Ragequit lives in the immutable pool contracts, so a depositor can always withdraw to their original address.',
-        'The assets are never custodial - neither the Entrypoint nor the ASP can hold them.',
+        'Ragequit lives in the immutable pool contracts, so a depositor can always withdraw to their original address no matter what the Entrypoint or the ASP does.',
+        'The assets are never custodial.',
       ],
       missing: [
-        'The ASP postman can remove any deposit from the whitelist at any time, forcing a public exit.',
-        'Private withdrawal is permissioned even though the funds are not, and there is no delay on that removal.',
+        'The ASP postman can remove any deposit from the whitelist at any time, which forces the user to exit publicly and lose their privacy.',
       ],
+      notReviewed: ['Relayer set size and independence.'],
     },
     openSource: {
       sentiment: 'good',
       points: [
         'The contracts, circuits and supporting software needed to participate are publicly available.',
-        'Everything a user needs can be built and run locally.',
+        'Everything a user needs can be run locally.',
       ],
-      missing: [
-        'License permissiveness is not established, so fork rights and OSI approval are unconfirmed.',
-        'The ASP software and the association-set data it serves sit outside the reproducible build.',
+      notReviewed: [
+        'License permissiveness, so fork rights are unconfirmed.',
+        'Reproducibility of the ASP software and the association-set data it serves.',
       ],
     },
     privacy: {
@@ -208,8 +208,8 @@ export const privacyPools: BaseProject = {
       missing: [
         'Compliance is gated by centralized association set providers that decide which deposits may ever be withdrawn privately.',
         'Privacy depends on relayer availability - with no relayer, the withdrawal has to come from a linkable address.',
-        'No stated anonymity set, so users cannot tell how much cover a withdrawal actually has.',
       ],
+      notReviewed: ['Anonymity set size.'],
     },
     security: {
       sentiment: 'warning',
@@ -221,8 +221,8 @@ export const privacyPools: BaseProject = {
       missing: [
         'The multisig can instantly swap the Entrypoint implementation and the ASP root with no delay, so a malicious upgrade could steal new deposits.',
         'The proof system depends on a trusted setup.',
-        'No circuit breaker or rate limit bounding what a bad upgrade could take.',
       ],
+      notReviewed: ['Audit coverage.', 'Circuit breakers and rate limits.'],
     },
   },
   permissions: discovery.getDiscoveredPermissions(),

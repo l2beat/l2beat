@@ -1,3 +1,4 @@
+import { formatDollarValueNumber, formatInteger } from '@l2beat/shared-pure'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { PercentChange } from '~/components/PercentChange'
 import { IndexCell } from '~/components/table/cells/IndexCell'
@@ -11,8 +12,6 @@ import {
   TableRow,
 } from '~/components/table/Table'
 import { cn } from '~/utils/cn'
-import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { CROP_COLUMNS } from '../crops'
 import type { GardenEntry, GardenProjectType } from '../getGardenData'
 import { CropBadge } from './CropBadge'

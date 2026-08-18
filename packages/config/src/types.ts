@@ -1133,8 +1133,10 @@ export interface ProjectCropEvaluation {
   status?: ProjectCropStatus
   /** What the evaluation rests on - one finding per bullet. */
   points?: string[]
-  /** Gaps against the crop criteria: what is absent, unbounded, or unconfirmed. */
+  /** Checked, and the criterion is not met. */
   missing?: string[]
+  /** Criteria we have not assessed yet. Never a claim about the protocol. */
+  notReviewed?: string[]
 }
 
 export interface ProjectCrops {
