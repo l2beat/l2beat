@@ -93,6 +93,7 @@ const columns = [
     },
     meta: {
       cellClassName: 'lg:pl-2.5',
+      headClassName: 'lg:pl-2.5',
     },
   }),
   columnHelper.display({

@@ -96,7 +96,7 @@ const homeCommonColumns = [
   logoColumn,
   makeNameColumn({
     nameMaxWidthClass: 'max-w-[112px]',
-    headClassName: 'min-w-[7.5rem]',
+    headClassName: 'min-w-[7.5rem] lg:pl-2.5',
     cellClassName: 'lg:pl-2.5',
   }),
 ]

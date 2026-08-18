@@ -93,6 +93,7 @@ function getHomeTopChainsColumns() {
       ),
       meta: {
         cellClassName: 'lg:pl-2.5',
+        headClassName: 'lg:pl-2.5',
       },
       enableHiding: false,
     }),
