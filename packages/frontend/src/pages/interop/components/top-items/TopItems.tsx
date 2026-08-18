@@ -9,7 +9,6 @@ import {
 import { EM_DASH } from '~/consts/characters'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
 import { cn } from '~/utils/cn'
-import { formatIssuer } from '~/utils/formatIssuer'
 
 export type TopItem = {
   id?: string
@@ -162,7 +161,7 @@ function ItemIconWithTooltip({
           <p className="font-bold text-label-value-15">{item.displayName}</p>
           {item.issuer && (
             <p className="text-label-value-13 text-secondary">
-              Issued by <span>{formatIssuer(item.issuer)}</span>
+              Issued by <span className="capitalize">{item.issuer}</span>
             </p>
           )}
           <p className="text-label-value-13 text-secondary">

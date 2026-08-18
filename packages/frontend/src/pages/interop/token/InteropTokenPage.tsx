@@ -9,7 +9,6 @@ import { AppLayout } from '~/layouts/AppLayout'
 import type { InteropTokenDashboardData } from '~/server/features/scaling/interop/getInteropTokenData'
 import type { InteropTokenEntry } from '~/server/features/scaling/interop/token/getInteropTokenEntry'
 import { useTRPC } from '~/trpc/React'
-import { formatIssuer } from '~/utils/formatIssuer'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import { InteropEntityPageLayout } from '../components/InteropEntityPageLayout'
 import { InteropEmptyState } from '../summary/components/InteropEmptyState'
@@ -114,7 +113,11 @@ function Content({
           icon: token.iconUrl,
         }}
         secondLine={
-          token.issuer ? `Issued by ${formatIssuer(token.issuer)}` : undefined
+          token.issuer ? (
+            <>
+              Issued by <span className="capitalize">{token.issuer}</span>
+            </>
+          ) : undefined
         }
       />
       <HorizontalSeparator className="my-4 md:hidden" />

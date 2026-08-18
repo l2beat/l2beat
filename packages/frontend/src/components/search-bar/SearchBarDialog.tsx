@@ -19,7 +19,6 @@ import { useRouter } from '~/hooks/useRouter'
 import { useTracking } from '~/hooks/useTracking'
 import type { SearchBarProject } from '~/server/features/search-bar/types'
 import { useTRPC } from '~/trpc/React'
-import { formatIssuer } from '~/utils/formatIssuer'
 import { Skeleton } from '../core/Skeleton'
 import { useSearchBarContext } from './SearchBarContext'
 import type { SearchBarCategory } from './searchBarCategories'
@@ -205,8 +204,8 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                           </div>
                         )}
                         {item.type === 'token' && item.issuer && (
-                          <div className="font-medium text-2xs text-secondary leading-none tracking-[-1%]">
-                            {formatIssuer(item.issuer)}
+                          <div className="font-medium text-2xs text-secondary capitalize leading-none tracking-[-1%]">
+                            {item.issuer}
                           </div>
                         )}
                       </div>

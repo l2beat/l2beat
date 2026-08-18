@@ -19,7 +19,6 @@ import type {
   TokenFlowData,
   TokensPairData,
 } from '~/server/features/scaling/interop/types'
-import { formatIssuer } from '~/utils/formatIssuer'
 import { getInteropTokenUrl } from '../../utils/getInteropTokenUrl'
 import type { InteropSelection } from '../../utils/types'
 import { InteropNoDataBadge } from '../InteropNoDataBadge'
@@ -261,7 +260,8 @@ export const getTopTokensColumns = ({
             </TwoRowCell.First>
             {ctx.row.original.issuer && (
               <TwoRowCell.Second>
-                Issued by <span>{formatIssuer(ctx.row.original.issuer)}</span>
+                Issued by{' '}
+                <span className="capitalize">{ctx.row.original.issuer}</span>
               </TwoRowCell.Second>
             )}
           </>
