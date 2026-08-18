@@ -8,9 +8,19 @@ The ZCHF token has one central permission: registered *minter* modules can mint 
 
 Not all registered minters are still in active use. Actively minting are MintingHubV2 (with the PositionRoller), the Savings module, the CHFAU stablecoin bridge, and the CCIP token pool with its BridgeAccounting. The XCHF and VCHF bridges have passed their minting horizon and can only redeem, MintingHubV1 is deprecated with no open positions remaining, and the original SavingsV2 module has been superseded for savers but still sets the leadrate positions pay.
 
-### Peg without oracles
+The same optimistic proposal pattern — apply onchain, pay a fee, go live unless vetoed by FPS holders — repeats throughout the system, with stakes scaled to the risk: minters (arbitrary code, at least 14 days and 1,000 ZCHF), individual minting positions (only parameters of already-approved code like different collaterals, at least 3 days and 1,000 ZCHF), and position clones (same collateral and limit, instant and free).
 
-Position owners declare their own liquidation price, and anyone can challenge it in an onchain collateral auction: if the market does not pay the declared price, the position is liquidated and the challenger earns 2%. The CHF peg itself is held by arbitrage: the stablecoin bridges give a hard 1:1 anchor within their caps, and position owners expand or repay ZCHF debt as the price deviates. Losses are absorbed first by the equity reserve owned by FPS holders, keeping ZCHF whole as long as equity lasts.
+### Opening a minting position
+
+Anyone can open a position on the MintingHub by depositing an arbitrary ERC20 collateral, declaring their own liquidation price (there is no oracle), and paying the 1,000 ZCHF fee. Nothing is minted yet: the position first sits through a public review period of at least 3 days in which qualified FPS holders can veto it. Only afterwards can the owner mint ZCHF up to the collateral value at the declared price, receiving it minus a reserve contribution (20%, reclaimable on repayment) and minus interest (~1% per year), which is prepaid to the position's expiration at the leadrate plus a fixed risk premium — so rate changes only affect future minting. Live positions can be cloned by anyone, instantly and for free: clones inherit all parameters, draw from the original's approved minting limit, and expire no later than it.
+
+### Liquidations (challenges)
+
+There are no oracle-triggered liquidations: a liquidation is a successful challenge. Anyone who considers a position's **declared price** too high can post the same collateral to start an auction, freezing the position's minting. If a buyer pays the **declared price** for the challenger's collateral, the challenge is averted (the challenger has sold at or below market, which makes frivolous challenges costly). If nobody does, the position's collateral is sold at the true market price (discovered via dutch auction), the challenger earns 2%, and any shortfall is covered by the owner's reserve contribution and then the equity reserve. Expired positions are wound down by a permissionless forced sale.
+
+### Peg
+
+The CHF peg is held by arbitrage: the stablecoin 'bridges' (or rather stability modules) give a hard 1:1 anchor within their caps, and position owners expand or repay ZCHF debt as the market price deviates. Losses are absorbed first by the equity reserve owned by FPS holders, keeping ZCHF whole as long as equity lasts.
 
 ### Governance
 
