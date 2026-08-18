@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers.",
+  "description": "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it.",
   "ignoreMethods": ["rootBundles", "proxiableUUID"],
   "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"],
   "ignoreRelatives": [
@@ -29,6 +29,14 @@
         {
           "type": "interact",
           "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target)."
+        }
+      ]
+    },
+    "gateway": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "authenticate fills of V5-tagged deposits: only calls from this contract's live execution context can fill them, and executor-mode fills pull the output tokens from the standing token approvals that the current submitter (relayer) granted to the SpokePool."
         }
       ]
     }

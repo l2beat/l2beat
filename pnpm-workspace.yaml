@@ -1,2 +1,18 @@
 packages:
   - 'packages/*'
+
+overrides:
+  'form-data@^2': 2.5.4
+  'form-data@^4': 4.0.4
+
+# pnpm >=10 blocks dependency lifecycle scripts unless explicitly allowed.
+allowBuilds:
+  '@prisma/engines': true
+  '@scarf/scarf': false
+  '@swc/core': true
+  '@tailwindcss/oxide': true
+  cbor-extract: true
+  esbuild: true
+  prisma: true
+  sharp: true
+  sqlite3: true

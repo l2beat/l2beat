@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Immutable allowlist contract referenced by DlnSource: addresses holding the INTENT_MANAGER_ROLE can create DLN orders with custom or zero protocol fees. It grants no access to existing funds.",
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke the INTENT_MANAGER_ROLE that allows creating DLN orders with custom or zero protocol fees."
+        }
+      ]
+    }
+  }
+}

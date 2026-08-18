@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Deploys deBridge-wrapped token (deToken) contracts when an asset is bridged to this chain for the first time (callable only by the DeBridgeGate). All deTokens are beacon proxies whose beacon is this contract itself, so its tokenImplementation applies to every deToken on this chain at once.",
+  "fields": {
+    "tokenImplementation": {
+      "description": "The shared implementation contract behind all deToken beacon proxies on this chain. Changing it (setTokenImplementation, which emits no event) upgrades all deTokens at once."
+    },
+    "deBridgeTokenAdmin": {
+      "description": "The admin assigned to every deployed deToken (receives DEFAULT_ADMIN_ROLE and PAUSER_ROLE on each deToken).",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "administer all deployed deTokens: pause their transfers and grant/revoke minter rights, including the ability to grant itself the right to mint unbacked deTokens."
+        }
+      ]
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the implementation of all deTokens at once (this contract acts as their beacon), change the admin assigned to newly deployed deTokens, and override deToken names/symbols. None of these setters emit events."
+        }
+      ]
+    }
+  },
+  "ignoreMethods": ["implementation"]
+}

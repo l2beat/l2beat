@@ -1,12 +1,62 @@
 {
   "name": "debridge",
-  "timestamp": 1753092647,
-  "configHash": "0xb038d013c7e857515431ece8b01e825737bc185963604d1d1c9bf3bc78415ffa",
+  "timestamp": 1786706330,
+  "configHash": "0xa478bf69a017360a017d482f72632c1f1779d733899c361fc0c3820a041206ec",
   "entries": [
+    {
+      "address": "eth:0x0746e7e4d15F30885616B4ac3D274393354E80c0",
+      "type": "EOA",
+      "sourceHashes": [
+        "0xdddaab1d0ccad17e0578e5dad9eab7bf81a90144cf89b5f4d5714c407dd2c9c5"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "description": "force-cancel any not-yet-fulfilled order that has a cancel beneficiary set by its maker (refunds can only go to that maker-designated address).",
+          "role": ".govCancelAC"
+        }
+      ],
+      "ignoreInWatchMode": [
+        "keyCount",
+        "keyHashes",
+        "domainBytes",
+        "domainSeparator",
+        "CUSTOM_STORAGE_ROOT"
+      ],
+      "values": {
+        "$implementation": "eth:0x000000009B1D0aF20D8C6d0A44e162d11F9b8f00",
+        "CUSTOM_STORAGE_ROOT": "0x3b86514c5c56b21f08d8e56ab090292e07c2483b3e667a2a45849dcb71368600",
+        "domainBytes": "0xc7e4f5b2d381bdfacf8506a24542052ab4e951573cab4ce34bb1c9509c84cbbf06c015bd22b4c69690933c1058878ebdfef31f9aaae40bbe86d8a09fe1b2972c00000000000000000000000000000000000000000000000000000000000000010000000000000000000000000746e7e4d15f30885616b4ac3d274393354e80c0000000000000000000000000000000009b1d0af20d8c6d0a44e162d11f9b8f00",
+        "domainSeparator": "0x3239ac176ad680383ed4cceef44b234f08dbec299b06d7091c28ef4b48a09df6",
+        "eip712Domain": {
+          "fields": "0x1f",
+          "name": "Calibur",
+          "version": "1.0.0",
+          "chainId": 1,
+          "verifyingContract": "eth:0x0746e7e4d15F30885616B4ac3D274393354E80c0",
+          "salt": "0x000000000000000000000000000000009b1d0af20d8c6d0a44e162d11f9b8f00",
+          "extensions": []
+        },
+        "ENTRY_POINT": "eth:0x4337084D9E255Ff0702461CF8895CE9E3b5Ff108",
+        "keyCount": 0,
+        "keyHashes": 0,
+        "namespaceAndVersion": "Uniswap.Calibur.1.0.0"
+      }
+    },
     {
       "address": "eth:0x1c0720B124e7251e881a0fbCfe259d085C59f205",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
     },
     {
       "address": "eth:0x24C0E1C19c8eC997b781dF4B4A0f812aE9667c96",
@@ -14,14 +64,96 @@
       "proxyType": "EOA"
     },
     {
+      "name": "",
+      "address": "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc",
+          "role": "admin"
+        }
+      ],
+      "deployerAddress": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
+      "sinceTimestamp": 1765183175,
+      "sinceBlock": 23966953,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444"
+      },
+      "implementationNames": {
+        "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3": ""
+      }
+    },
+    {
+      "address": "eth:0x391276932b5105C2DB8eE928dfd8872564d6d246",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
+          "description": "withdraw all protocol fees accrued in the DeBridgeGate to itself.",
+          "role": ".feeCollectorAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "description": "withdraw accumulated DLN protocol fees (not user principal) to itself.",
+          "role": ".feeCollectorAC"
+        }
+      ]
+    },
+    {
+      "name": "IntentManagerValidator",
+      "address": "eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b",
+      "type": "Contract",
+      "template": "debridge/IntentManagerValidator",
+      "sourceHashes": [
+        "0xf8b99302b3c21bd261a2b5bd21c99a2c8dae59b815916b29b3d1eb8d344fd821"
+      ],
+      "proxyType": "immutable",
+      "description": "Immutable allowlist contract referenced by DlnSource: addresses holding the INTENT_MANAGER_ROLE can create DLN orders with custom or zero protocol fees. It grants no access to existing funds.",
+      "deployerAddress": "eth:0x4D0682bB7094F121dA0A468aD3b1C0824Ba0643c",
+      "sinceTimestamp": 1757693687,
+      "sinceBlock": 23348109,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5"]
+          },
+          "INTENT_MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07",
+              "eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b",
+              "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708"
+            ]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5"],
+        "INTENT_MANAGER_ROLE": "0xa9b1eae7c8b7c72093bc47a90b3ed7fc095a355afd9f411e17e6cb1325a3d571"
+      },
+      "implementationNames": {
+        "eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b": "IntentManagerValidator"
+      }
+    },
+    {
       "name": "DeBridgeGate",
       "address": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
       "type": "Contract",
+      "template": "debridge/DeBridgeGate",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0x3d57a786d8c79ccc942d2a3375eaf1689a6851ee180123f59f8acea2f8887998"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Central hub of the deBridge messaging protocol on this chain: it emits cross-chain submissions (asset transfers and/or arbitrary messages), locks and releases native assets, mints and burns deBridge-wrapped assets (deTokens), and executes claimed submissions after their validator signatures are checked by the SignatureVerifier. Claiming is permissionless: anyone can execute a submission that carries enough validator signatures.",
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844",
       "sinceTimestamp": 1637595390,
@@ -62,10 +194,21 @@
           ]
         ],
         "$upgradeCount": 6,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
+          },
+          "GOVMONITORING_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
+          }
+        },
         "BPS_DENOMINATOR": 10000,
         "callProxy": "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
         "deBridgeTokenDeployer": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
         "DEPLOY_PREFIX": 2,
         "excessConfirmations": 3,
         "feeContractUpdater": "eth:0x0000000000000000000000000000000000000000",
@@ -76,8 +219,9 @@
         "globalFixedNativeFee": 1000000000000000,
         "globalTransferFeeBps": 10,
         "GOVMONITORING_ROLE": "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1",
+        "govMonitoringAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
         "lockedClaim": 1,
-        "nonce": 100105,
+        "nonce": 177776,
         "paused": false,
         "signatureVerifier": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
         "SUBMISSION_PREFIX": 1,
@@ -85,35 +229,257 @@
         "weth": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "wethGate": "eth:0xFCf83648b8cDeF62e5d03319a6f1FCE16e4D6A59"
       },
+      "fieldMeta": {
+        "signatureVerifier": {
+          "description": "Contract that verifies deBridge validator signatures for all submissions claimed on this chain."
+        },
+        "callProxy": {
+          "description": "Contract that executes arbitrary calldata attached to claimed submissions."
+        },
+        "feeProxy": {
+          "description": "The only address allowed to withdraw protocol fees accrued in the gate."
+        },
+        "deBridgeTokenDeployer": {
+          "description": "Factory (and beacon) for deBridge-wrapped tokens (deTokens) on this chain."
+        },
+        "globalFixedNativeFee": {
+          "description": "Default flat protocol fee in native tokens charged per submission."
+        },
+        "globalTransferFeeBps": {
+          "description": "Default variable protocol fee in basis points charged on transferred amounts."
+        },
+        "excessConfirmations": {
+          "description": "Elevated number of validator signatures required for claims above the per-asset amount threshold and for new deToken deployments (effective only if higher than the SignatureVerifier's minConfirmations)."
+        },
+        "paused": {
+          "description": "Whether all sends, claims and deToken deployments through the gate are currently paused."
+        }
+      },
       "implementationNames": {
         "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA": "TransparentUpgradeableProxy",
         "eth:0x797161BCC625155D2302251404ccB93c2632658e": "DeBridgeGate"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x4bC16662A2cE381E7bb54Dc577c05619C5E67526",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
     },
     {
       "address": "eth:0x4CA2191cDE585d65EB6AFC09D23D60b8A0AB677D",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
     },
     {
       "address": "eth:0x573F5E2940789B378BA09cf7d3fD010C422a9ff5",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
     },
     {
       "address": "eth:0x59CE95b8955F0E7Be128d5Af77161B36f6084214",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    {
+      "name": "ExternalCallAdapter",
+      "address": "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9",
+      "type": "Contract",
+      "template": "debridge/ExternalCallAdapter",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0x9e1d6978ce2fd4ad04aa5969d3bcef97fd54b2ded7c0d62599131196aec314dc"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Escrow and dispatcher for external calls attached to DLN orders: it receives the taker's funds of orders that carry calldata and releases them when the calldata is executed by the registered executor, or refunds the order authority on cancellation.",
+      "deployerAddress": "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5",
+      "sinceTimestamp": 1694079551,
+      "sinceBlock": 18083710,
+      "values": {
+        "$admin": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b",
+        "$implementation": "eth:0x7EA200f06c17cB9f64A3c8973a76DD8359fd68FA",
+        "$pastUpgrades": [
+          [
+            "2023-09-07T09:39:11.000Z",
+            "0x39c864edd3630cf628c32b5d52f5a6f17348a27f6a906698bf0a4f4f6cfa0701",
+            ["eth:0x5706875cef89AB69E818D4921a47D0d2663D2728"]
+          ],
+          [
+            "2023-10-16T15:35:59.000Z",
+            "0x609ef19a09385ad022a973b6dd98868a56d3354c0cff07eddefb4599327adf44",
+            ["eth:0xA85437470f38F004C2F4b0D75d282E47bF555a3a"]
+          ],
+          [
+            "2025-07-16T10:55:35.000Z",
+            "0x2891ca2643f9cb857b006952744b633088f22b57a8a04495abec7b79a500f1e3",
+            ["eth:0x7EA200f06c17cB9f64A3c8973a76DD8359fd68FA"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
+          }
+        },
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
+        "defaultExecutor": "eth:0xAE0361b1C3454b297129e01046057F1D294c7974",
+        "dlnDestination": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+        "paused": false,
+        "version": "1.1.0"
+      },
+      "fieldMeta": {
+        "defaultExecutor": {
+          "description": "The contract that executes external calldata attached to DLN orders."
+        }
+      },
+      "implementationNames": {
+        "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9": "TransparentUpgradeableProxy",
+        "eth:0x7EA200f06c17cB9f64A3c8973a76DD8359fd68FA": "DlnExternalCallAdapter"
+      }
     },
     {
       "address": "eth:0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    {
+      "name": "DeBridgeRouter",
+      "address": "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251",
+      "type": "Contract",
+      "template": "debridge/DeBridgeRouter",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0xfbd0e32e74cd0871ed9aaf242684ccae1423b67493f683b6c31d4282d6813a6a"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Optional periphery router that can swap input tokens via whitelisted DEX routers and forward the proceeds into the DLN contracts in a single transaction. It does not custody funds across transactions and is not part of the DLN critical path.",
+      "deployerAddress": "eth:0xFD830dd9B446c9b880b32A03FB9A750AaE4A68aa",
+      "sinceTimestamp": 1647386234,
+      "sinceBlock": 14394078,
+      "values": {
+        "$admin": "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130",
+        "$implementation": "eth:0x3c857eD51c8a2747EE8c6F30EdDA5ea0D487CC64",
+        "$pastUpgrades": [
+          [
+            "2022-03-15T23:17:14.000Z",
+            "0x8f0d57e6b8090d7fb51e0eb4b05441f33abffa7229e72d86491826572c4ba923",
+            ["eth:0xF7399C83B12edD1a21aAB250D30CCB4474902688"]
+          ],
+          [
+            "2022-03-21T09:42:09.000Z",
+            "0x14a6e854be2f9e8bee48b2c30d5f4a1b0affbf5d0619e6d435bb63c3d9967a25",
+            ["eth:0x4084FDAA5088427496102a994b079C6018B0d55D"]
+          ],
+          [
+            "2022-03-23T11:42:36.000Z",
+            "0x66f5f83371866f46654a42040198c3a53221057eb8b141a4f1793c4ac0adff70",
+            ["eth:0x069820f4828dC7ADE62a549e007A018E4A7c9E41"]
+          ],
+          [
+            "2022-05-06T07:25:43.000Z",
+            "0xb2e03a93ad55ce3d348d54b7754f92b958e881985c64d5085aa9211667c66db0",
+            ["eth:0x8ACA115f66B9E1c5411757fe01a5E9E59bC5B612"]
+          ],
+          [
+            "2022-06-29T23:16:47.000Z",
+            "0x96d253b49e32869f11a0a4c836151f4918963ecd44d795235898e2a741276165",
+            ["eth:0xbeb2b37D6f2DdB463e2154Bd34C5229386960ac0"]
+          ],
+          [
+            "2022-08-28T19:10:28.000Z",
+            "0x3c720600e3f74aec8bf944adc034025d5f074492d24e936160d87c1fcb123318",
+            ["eth:0x777c22F63A83ee27D375865C65AfdaBaf96e213a"]
+          ],
+          [
+            "2022-12-15T19:38:11.000Z",
+            "0xdd3506ddba7b564a441499bd3859c0e0fed34690a2747df7f44e7b069beb9207",
+            ["eth:0xd095A2B84E80532cEF267dEf3561DD66e5414946"]
+          ],
+          [
+            "2023-10-16T15:35:59.000Z",
+            "0x609ef19a09385ad022a973b6dd98868a56d3354c0cff07eddefb4599327adf44",
+            ["eth:0xE67534A9F24cc000f467EAA17f920BF63b87a2Cd"]
+          ],
+          [
+            "2025-06-04T15:01:23.000Z",
+            "0x0c4b7189c746fcafd0e3b3c22b124e2575da35777eef74c4ceeea42a954c81ef",
+            ["eth:0x7C5CC78333960E787B53C4D292320aE64dc68CFA"]
+          ],
+          [
+            "2025-07-16T10:55:35.000Z",
+            "0x2891ca2643f9cb857b006952744b633088f22b57a8a04495abec7b79a500f1e3",
+            ["eth:0x3c857eD51c8a2747EE8c6F30EdDA5ea0D487CC64"]
+          ]
+        ],
+        "$upgradeCount": 10,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
+          }
+        },
+        "BPS_DENOMINATOR": 10000,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
+        "feeTreasury": "eth:0x391276932b5105C2DB8eE928dfd8872564d6d246",
+        "NATIVE_TOKEN": "eth:0x0000000000000000000000000000000000000000",
+        "swapVariableFeeBps": 8,
+        "version": 310
+      },
+      "fieldMeta": {
+        "swapVariableFeeBps": {
+          "description": "Service fee in basis points charged by the router on same-chain swaps (in addition to deBridge protocol fees)."
+        },
+        "feeTreasury": {
+          "description": "Address receiving the router's service fees."
+        }
+      },
+      "implementationNames": {
+        "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251": "TransparentUpgradeableProxy",
+        "eth:0x3c857eD51c8a2747EE8c6F30EdDA5ea0D487CC64": "DeBridgeRouter"
+      }
     },
     {
       "name": "Admin Multisig",
@@ -127,11 +493,93 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "interact",
+          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
+          "description": "pause the DeBridgeGate, stopping all sends, claims and deToken deployments on this chain (only the admin can unpause).",
+          "role": ".govMonitoringAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
+          "description": "replace the SignatureVerifier (and with it the entire validation layer of the deBridge messaging protocol), the CallProxy and the deToken deployer, censor individual submissions (blockSubmission), toggle supported chains, set all fees and per-address fee discounts, designate the fee withdrawal contract, unpause the gate, and grant/revoke all roles. Most of these setters emit no events.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9",
+          "description": "replace the executor contract that handles external calldata of DLN orders and pause the adapter.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251",
+          "description": "manage the whitelist of swap routers and forwarding targets this contract may call with arbitrary calldata (and grant infinite token approvals to), set the service fee and fee treasury, and sweep any funds held by the router.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
+          "description": "administer all deployed deTokens: pause their transfers and grant/revoke minter rights, including the ability to grant itself the right to mint unbacked deTokens.",
+          "role": ".deBridgeTokenAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
+          "description": "replace the implementation of all deTokens at once (this contract acts as their beacon), change the admin assigned to newly deployed deTokens, and override deToken names/symbols. None of these setters emit events.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
+          "description": "grant and revoke the DEBRIDGE_GATE_ROLE that authorizes contracts to execute arbitrary external calls through the CallProxy.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "add and remove deBridge validators (oracles), change all signature thresholds (quorum must remain a majority of the oracle set), and re-point the gate contract allowed to request verification. Threshold changes emit no events.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
+          "description": "grant/revoke the FEE_COLLECTOR_ROLE that receives all deBridge protocol fees, pause fee withdrawals, and change the referenced gate contract.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "description": "set the trusted DlnSource address (message receiver) for each supported chain, replace the external call adapter that custodies funds of orders with attached calldata, unpause the contract, and grant/revoke all roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "description": "set the trusted DlnDestination address for each supported chain (a malicious address there can drain all escrowed order funds via forged unlock messages), change DLN fees without upper bound, unpause the contract, and grant/revoke all roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
           "permission": "upgrade",
           "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
           "role": "admin",
           "via": [
             { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130" }
           ]
         },
         {
@@ -165,9 +613,35 @@
           "via": [
             { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
           ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130",
+          "role": ".owner"
+        },
         {
           "permission": "act",
           "from": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
@@ -196,12 +670,39 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 64,
+        "nonce": 73,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "name": "",
+      "address": "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "description": "Unverified proxy referenced as the feeTreasury of the DeBridgeIntentManager.",
+      "deployerAddress": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
+      "sinceTimestamp": 1765183175,
+      "sinceBlock": 23966953,
+      "values": {
+        "$admin": "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3",
+        "$implementation": "eth:0x4F2f3d3949B37A944A10Bf3C5355d0c827BbaF68",
+        "$pastUpgrades": [
+          [
+            "2025-12-08T08:39:35.000Z",
+            "0x3c2b659c54b706e3a1ca5d39e32bac118205c416692541f56e496759101820fc",
+            ["eth:0x4F2f3d3949B37A944A10Bf3C5355d0c827BbaF68"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc": "TransparentUpgradeableProxy",
+        "eth:0x4F2f3d3949B37A944A10Bf3C5355d0c827BbaF68": ""
       }
     },
     {
@@ -213,11 +714,13 @@
       "name": "DeBridgeTokenDeployer",
       "address": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
       "type": "Contract",
+      "template": "debridge/DeBridgeTokenDeployer",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0xff2a8bb5572e1959e22acdc6818bcb1da107807340ef1416129cae0cf740d02a"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Deploys deBridge-wrapped token (deToken) contracts when an asset is bridged to this chain for the first time (callable only by the DeBridgeGate). All deTokens are beacon proxies whose beacon is this contract itself, so its tokenImplementation applies to every deToken on this chain at once.",
       "deployerAddress": "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844",
       "sinceTimestamp": 1637613802,
       "sinceBlock": 13666681,
@@ -232,22 +735,93 @@
           ]
         ],
         "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
+          }
+        },
         "debridgeAddress": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "deBridgeTokenAdmin": "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "implementation": "eth:0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B",
+        "defaultAdminAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
         "tokenImplementation": "eth:0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B",
         "version": 110
+      },
+      "fieldMeta": {
+        "tokenImplementation": {
+          "description": "The shared implementation contract behind all deToken beacon proxies on this chain. Changing it (setTokenImplementation, which emits no event) upgrades all deTokens at once."
+        },
+        "deBridgeTokenAdmin": {
+          "description": "The admin assigned to every deployed deToken (receives DEFAULT_ADMIN_ROLE and PAUSER_ROLE on each deToken)."
+        }
       },
       "implementationNames": {
         "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464": "TransparentUpgradeableProxy",
         "eth:0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491": "DeBridgeTokenDeployer"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x83f81E7f9E284AAFFEDED797008663595f7342bF",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xddddddddd4B6472c5002F95610b194D1161223d0",
+          "description": "grant and revoke the ALLOWED_SPENDER_ROLE, i.e. authorize any address (including itself) to spend all outstanding user approvals of the deBridge intent system.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708",
+          "description": "set intent fill fees up to 100% with immediate effect (fees are not part of the user-signed intent), manage the trusted solver set, sweep funds held by the contract, and grant/revoke all roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "eth:0x874B1d14bF4FE455C9eCAcDf66b629e10664c6E1",
@@ -257,17 +831,27 @@
     {
       "address": "eth:0x874f46124C1DAaD4749B94f82eD142754826240E",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
     },
     {
       "name": "CallProxy",
       "address": "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
       "type": "Contract",
+      "template": "debridge/CallProxy",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0x9b964fcb858bec965b5b4ed4acaf48a574fb1f40262511974c332b0aeea50b14"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Sandbox that executes arbitrary calldata attached to claimed cross-chain submissions on behalf of the DeBridgeGate. Calls are performed from this contract's address with attacker-choosable target and data, so external contracts must never trust it as a caller; it isolates such calls from the gate's balances.",
       "deployerAddress": "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844",
       "sinceTimestamp": 1637625277,
       "sinceBlock": 13667557,
@@ -307,26 +891,38 @@
           ]
         ],
         "$upgradeCount": 6,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
+          },
+          "DEBRIDGE_GATE_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA"]
+          }
+        },
         "DEBRIDGE_GATE_ROLE": "0xd5a6101e940ba33e226d2395b16238ab3063d7ee83d7b3ff59cb92988b395437",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "submissionChainIdFrom": 0,
-        "submissionNativeSender": "0x",
+        "defaultAdminAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
         "version": 423
       },
       "implementationNames": {
         "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824": "TransparentUpgradeableProxy",
         "eth:0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8": "CallProxy"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "SignatureVerifier",
       "address": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
       "type": "Contract",
+      "template": "debridge/SignatureVerifier",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0x935f17b78605c215122116db0dace0d318ba1f183cb0372d2dcc3f68c4a4ac62"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Validation layer of the deBridge messaging protocol on this chain: it accepts a cross-chain submission if at least minConfirmations of the registered validators (oracles) have signed its submission ID with a plain ECDSA signature, and every validator flagged as 'required' has signed. There is no other proof system.",
       "ignoreInWatchMode": ["currentBlock", "submissionsInBlock"],
       "deployerAddress": "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844",
       "sinceTimestamp": 1637621914,
@@ -347,13 +943,20 @@
           ]
         ],
         "$upgradeCount": 2,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
+          }
+        },
         "confirmationThreshold": 3,
-        "currentBlock": 22966860,
+        "currentBlock": 25752912,
         "debridgeAddress": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
         "excessConfirmations": 3,
         "minConfirmations": 8,
-        "oracles": [
+        "oracleAddresses": [
           "eth:0x4bC16662A2cE381E7bb54Dc577c05619C5E67526",
           "eth:0x1c0720B124e7251e881a0fbCfe259d085C59f205",
           "eth:0x573F5E2940789B378BA09cf7d3fD010C422a9ff5",
@@ -371,9 +974,127 @@
         "submissionsInBlock": 1,
         "version": 201
       },
+      "fieldMeta": {
+        "oracleAddresses": {
+          "description": "The registered deBridge validators (oracles) whose signatures authenticate cross-chain submissions."
+        },
+        "minConfirmations": {
+          "description": "Baseline number of validator signatures required to accept a cross-chain submission."
+        },
+        "confirmationThreshold": {
+          "description": "Per-block circuit breaker: once more than this many submissions are approved within a single block, further submissions in that block require excessConfirmations signatures."
+        },
+        "excessConfirmations": {
+          "description": "Elevated number of validator signatures required for submissions beyond the per-block confirmationThreshold."
+        },
+        "requiredOraclesCount": {
+          "description": "Number of validators flagged as 'required': each of them must sign every submission in addition to the normal quorum (each is individually a liveness single point of failure and, collectively, a veto)."
+        }
+      },
       "implementationNames": {
         "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c": "TransparentUpgradeableProxy",
         "eth:0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4": "SignatureVerifier"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "role": "admin"
+        }
+      ],
+      "deployerAddress": "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5",
+      "sinceTimestamp": 1670855027,
+      "sinceBlock": 16169200,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"
+      },
+      "implementationNames": {
+        "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "",
+      "address": "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708",
+          "role": "admin"
+        }
+      ],
+      "deployerAddress": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
+      "sinceTimestamp": 1765183559,
+      "sinceBlock": 23966985,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444"
+      },
+      "implementationNames": {
+        "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F": ""
+      }
+    },
+    {
+      "name": "ExternalCallExecutor",
+      "address": "eth:0xAE0361b1C3454b297129e01046057F1D294c7974",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "description": "Unverified contract registered as the default executor in the ExternalCallAdapter: it executes external calldata attached to DLN orders.",
+      "deployerAddress": "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5",
+      "sinceTimestamp": 1714248767,
+      "sinceBlock": 19748972,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xAE0361b1C3454b297129e01046057F1D294c7974": ""
+      }
+    },
+    {
+      "name": "",
+      "address": "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07",
+          "role": "admin"
+        }
+      ],
+      "deployerAddress": "eth:0x6681b27BEC88Ba8c6F0E4B42dD6E3e5c1a797021",
+      "sinceTimestamp": 1761039275,
+      "sinceBlock": 23625079,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xd6dF82F60a2FE1e61aEc29679bc4954F33D8C1EC"
+      },
+      "implementationNames": {
+        "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816": ""
       }
     },
     {
@@ -384,17 +1105,40 @@
     {
       "address": "eth:0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    {
+      "address": "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b",
+          "description": "grant and revoke the INTENT_MANAGER_ROLE that allows creating DLN orders with custom or zero protocol fees.",
+          "role": ".defaultAdminAC"
+        }
+      ]
     },
     {
       "name": "SimpleFeeProxy",
       "address": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
       "type": "Contract",
+      "template": "debridge/SimpleFeeProxy",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0x6f2663359a667325f9c0eb5f1347674f6f48403728de36a9f61e0e8cad5f8232"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The only contract allowed to withdraw protocol fees accrued in the DeBridgeGate. Fees are paid out directly to the caller of withdrawFees(), so the effective fee destination is whoever holds the FEE_COLLECTOR_ROLE.",
       "deployerAddress": "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844",
       "sinceTimestamp": 1637651844,
       "sinceBlock": 13669463,
@@ -419,9 +1163,21 @@
           ]
         ],
         "$upgradeCount": 3,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
+          },
+          "FEE_COLLECTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x391276932b5105C2DB8eE928dfd8872564d6d246"]
+          }
+        },
         "debridgeGate": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
         "FEE_COLLECTOR_ROLE": "0x2dca0f5ce7e75a4b43fe2b0d6f5d0b7a2bf92ecf89f8f0aa17b8308b67038821",
+        "feeCollectorAC": ["eth:0x391276932b5105C2DB8eE928dfd8872564d6d246"],
         "paused": false,
         "version": 410
       },
@@ -436,13 +1192,43 @@
       "proxyType": "EOA"
     },
     {
+      "name": "ProxyAdmin",
+      "address": "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251",
+          "role": "admin"
+        }
+      ],
+      "deployerAddress": "eth:0xFD830dd9B446c9b880b32A03FB9A750AaE4A68aa",
+      "sinceTimestamp": 1647386205,
+      "sinceBlock": 14394077,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"
+      },
+      "implementationNames": {
+        "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130": "ProxyAdmin"
+      }
+    },
+    {
       "name": "DeBridgeToken",
       "address": "eth:0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B",
       "type": "Contract",
+      "template": "debridge/DeBridgeToken",
       "sourceHashes": [
         "0xe06ac978b2bdb39e529b3f1100c773c0aafc641c30f76bc1a526daf4d070e8ef"
       ],
       "proxyType": "immutable",
+      "description": "Implementation contract for deBridge-wrapped tokens (deTokens). Minting and burning of deTokens is restricted to the MINTER_ROLE, which is held by the DeBridgeGate.",
+      "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x51256C824B193909F1B1BCD9F4a5Fa200cBCee78",
       "sinceTimestamp": 1693372043,
       "sinceBlock": 18025232,
@@ -450,23 +1236,71 @@
         "$immutable": true,
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "DOMAIN_SEPARATOR": "0x71bd255e7e19bf7288abced32839ac7a63f38747292d2e97b6813c403f8024fc",
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "name",
         "paused": false,
         "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
-        "symbol": "symbol",
-        "totalSupply": 0
+        "symbol": "symbol"
       },
       "implementationNames": {
         "eth:0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B": "DeBridgeToken"
       }
     },
     {
+      "name": "",
+      "address": "eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "EIP1967 proxy",
+      "description": "Unverified proxy holding the INTENT_MANAGER_ROLE on the IntentManagerValidator, allowing it to create DLN orders with custom or zero protocol fees.",
+      "deployerAddress": "eth:0x6681b27BEC88Ba8c6F0E4B42dD6E3e5c1a797021",
+      "sinceTimestamp": 1761039275,
+      "sinceBlock": 23625079,
+      "values": {
+        "$admin": "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816",
+        "$implementation": "eth:0x87Da5Cb5Ab2d98d4f0C0c9df195f33d08f6caD59",
+        "$pastUpgrades": [
+          [
+            "2025-10-21T09:34:35.000Z",
+            "0xd05622c8b766b98e8dcb241b295bd77a831ab2a07bb04a333c94e18e94ea5a4b",
+            ["eth:0x87Da5Cb5Ab2d98d4f0C0c9df195f33d08f6caD59"]
+          ]
+        ],
+        "$upgradeCount": 1
+      },
+      "implementationNames": {
+        "eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07": "TransparentUpgradeableProxy",
+        "eth:0x87Da5Cb5Ab2d98d4f0C0c9df195f33d08f6caD59": ""
+      }
+    },
+    {
       "address": "eth:0xD4Aa80C7a35B2C996Ef3F83baf91D5721c86dA2C",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xd6dF82F60a2FE1e61aEc29679bc4954F33D8C1EC",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "eth:0xd725E456D5beD8275E297C4Dd11135e3C5cDe544",
@@ -476,7 +1310,139 @@
     {
       "address": "eth:0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    {
+      "name": "DeBridgeAllowanceHolder",
+      "address": "eth:0xddddddddd4B6472c5002F95610b194D1161223d0",
+      "type": "Contract",
+      "template": "debridge/DeBridgeAllowanceHolder",
+      "sourceHashes": [
+        "0x37d2956d2fc75d99dfb6fe7173de5aaaa824ea814119b22db9a3a4d58aff9793"
+      ],
+      "proxyType": "immutable",
+      "description": "Immutable allowance sink of the deBridge intent system: users approve this contract (directly or as Permit2 spender) so that the upgradeable executor contracts never hold approvals themselves. Its transfer functions carry no intent-level checks: any ALLOWED_SPENDER_ROLE holder can move any approved token from any approver to any recipient.",
+      "deployerAddress": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
+      "sinceTimestamp": 1765183139,
+      "sinceBlock": 23966950,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444"]
+          },
+          "ALLOWED_SPENDER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708"]
+          }
+        },
+        "ALLOWED_SPENDER_ROLE": "0xf76f3829e1ee5bf9f8c86ace861ac532761a4ea6c5d38320b81c8cd9e014a3fd",
+        "allowedSpenderAC": ["eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708"],
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444"],
+        "getPermit2OrFail": "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3"
+      },
+      "implementationNames": {
+        "eth:0xddddddddd4B6472c5002F95610b194D1161223d0": "DeBridgeAllowanceHolder"
+      }
+    },
+    {
+      "name": "DeBridgeIntentManager",
+      "address": "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708",
+      "type": "Contract",
+      "template": "debridge/DeBridgeIntentManager",
+      "sourceHashes": [
+        "0xf31aeb6e49fa6b302d2dc1ed76c4d201ad9c2accdb0d9a45c30b13ae334fb5e9",
+        "0xab4d827474b8362b953864f2ccb0de7e02c8c7150914446ea11c4c3f64413967"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Fills user-signed intents by creating DLN orders on their behalf: it pulls input tokens from users through the DeBridgeAllowanceHolder (Permit2 or direct approvals) and forwards them into DlnSource in the same transaction, charging a variable fee that is NOT part of the user-signed intent. It is non-custodial in steady state. Note that the EIP-712 signature users sign covers only an opaque intent hash, and fills are permissionless unless the intent restricts senders.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xddddddddd4B6472c5002F95610b194D1161223d0",
+          "description": "unconditionally transfer any amount of any token from any user who approved the DeBridgeAllowanceHolder (directly or via Permit2) to any recipient, and make arbitrary calls from its address.",
+          "role": ".allowedSpenderAC"
+        }
+      ],
+      "deployerAddress": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
+      "sinceTimestamp": 1765183559,
+      "sinceBlock": 23966985,
+      "values": {
+        "$admin": "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F",
+        "$implementation": "eth:0xcfa67cDc75FFaac55bbf92f012cC75f47f479c35",
+        "$pastUpgrades": [
+          [
+            "2025-12-08T08:45:59.000Z",
+            "0x5970a02250cffd6e1e6d517db3537eda341f8192fd64a7046ddeeae33649156e",
+            ["eth:0x8bECD54b2d9fc202Ef18126Af75A52761c792830"]
+          ],
+          [
+            "2026-02-19T13:23:23.000Z",
+            "0xf7dbc20fc35b64d5ad5c2586272236f205b7fef50a1401b35f2bc30850de4de8",
+            ["eth:0xcfa67cDc75FFaac55bbf92f012cC75f47f479c35"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444"]
+          }
+        },
+        "allowanceHolder": "eth:0xddddddddd4B6472c5002F95610b194D1161223d0",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444"],
+        "dlnSource": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "DeBridgeIntentManager",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "feeTreasury": "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc",
+        "getChainId": 1,
+        "getDefaultFeeBps": 8,
+        "getGlobalNullificationTimestamp": 0,
+        "GOVMONITORING_ROLE": "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1",
+        "paused": false,
+        "permit2": "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3",
+        "subscriptionId": 0,
+        "version": "2.1.0"
+      },
+      "fieldMeta": {
+        "getDefaultFeeBps": {
+          "description": "Default variable fee in basis points charged on intent fills (admin-settable up to 100% with immediate effect; the fee is not covered by the user-signed price constraints on all paths)."
+        },
+        "allowanceHolder": {
+          "description": "Immutable allowance sink holding all user token approvals for the intent system."
+        },
+        "feeTreasury": {
+          "description": "Immutable address receiving intent fill fees."
+        },
+        "dlnSource": {
+          "description": "The DLN escrow contract that orders are created in."
+        },
+        "getGlobalNullificationTimestamp": {
+          "description": "Intents signed before this timestamp are invalid. Setting it to the current time (GOVMONITORING_ROLE) invalidates all outstanding intents."
+        }
+      },
+      "implementationNames": {
+        "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708": "TransparentUpgradeableProxy",
+        "eth:0xcfa67cDc75FFaac55bbf92f012cC75f47f479c35": "DeBridgeIntentManager"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -526,6 +1492,136 @@
       }
     },
     {
+      "name": "DlnDestination",
+      "address": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+      "type": "Contract",
+      "template": "debridge/DlnDestination",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0x925d0cfe1e1388a72765060d6905fa5bfd29e5a50bf4dcd11c2747a9d3097825"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Destination side of the deBridge Liquidity Network (DLN) intent protocol: takers fulfill orders here permissionlessly by paying the 'take' amount, which is forwarded to the order recipient in the same transaction (this contract holds no user funds). The taker then sends an unlock message back to the source chain's DlnSource through the deBridge messaging protocol to claim the escrowed maker funds.",
+      "deployerAddress": "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5",
+      "sinceTimestamp": 1670855123,
+      "sinceBlock": 16169208,
+      "values": {
+        "$admin": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b",
+        "$implementation": "eth:0xE540eb6BfEE129d28d47E26Ad33a138d66FD78f5",
+        "$pastUpgrades": [
+          [
+            "2022-12-12T14:25:23.000Z",
+            "0xd606c6f939028171d2b15a50ac3af8f87d21a5623730d4ed45e5771980819393",
+            ["eth:0x60E50145db18e09fF2bB277e88D3C264FF57b91f"]
+          ],
+          [
+            "2023-08-21T11:10:59.000Z",
+            "0xb7d8cfb77cd7ee0be426477583ed4597fe238e699cd690bdaf882371b9f98f0e",
+            ["eth:0x177c8AeDc61EFc47DE70616C89464c5d2A56E4AB"]
+          ],
+          [
+            "2023-08-24T08:29:47.000Z",
+            "0xeada1e2b8eb5ca1dca54b7cd4e41c87dee29b6c9841fd05edd39f126edd8e539",
+            ["eth:0x979791C607a388702690599120c46332f61f592C"]
+          ],
+          [
+            "2023-09-08T16:34:23.000Z",
+            "0xce0ae6434e2eca80d8a4efbfbe15f1fa7f9c8b32f4452fda42dcd9e34b9fef16",
+            ["eth:0x33B72F60F2CEB7BDb64873Ac10015a35bed81717"]
+          ],
+          [
+            "2026-02-13T12:08:35.000Z",
+            "0xf187915dcb7b435138135f96d4a9bf6f606255d5247b00f0282afd2516bc02d2",
+            ["eth:0xE540eb6BfEE129d28d47E26Ad33a138d66FD78f5"]
+          ]
+        ],
+        "$upgradeCount": 5,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
+          },
+          "GOVERNANCE_DELEGATED_ORDER_CANCEL_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x0746e7e4d15F30885616B4ac3D274393354E80c0"]
+          }
+        },
+        "BPS_DENOMINATOR": 10000,
+        "deBridgeGate": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
+        "dlnSourceAddressesMap": {
+          "10": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "56": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "137": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "250": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "4663": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "8453": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "42161": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "43114": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "59144": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "7565164": "0x0d0720fe448de59d8811e24d6df917dc8d0d98b392ddf4dd2b622a747a60fded",
+          "100000001": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000002": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000003": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000004": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000005": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000006": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000008": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000009": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000010": "eth:0xA13771CAbd2e44dcA8DeA846cc954D1FbAc0623b",
+          "100000012": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000013": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000014": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000015": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000017": "eth:0xA13771CAbd2e44dcA8DeA846cc954D1FbAc0623b",
+          "100000019": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000020": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000021": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000022": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000023": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000024": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000025": "eth:0xA13771CAbd2e44dcA8DeA846cc954D1FbAc0623b",
+          "100000026": "eth:0xE6f924E3C42350684aF70F798c3cA2533A4c5Bd0",
+          "100000027": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000028": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000029": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000030": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "100000031": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66"
+        },
+        "EVM_ADDRESS_LENGTH": 20,
+        "externalCallAdapter": "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9",
+        "getChainId": 1,
+        "govCancelAC": ["eth:0x0746e7e4d15F30885616B4ac3D274393354E80c0"],
+        "GOVERNANCE_DELEGATED_ORDER_CANCEL_ROLE": "0x01bd451848033b83db2d5c21b44e19dc2cf0e3067ae17fafefe1ac665572eeb3",
+        "GOVMONITORING_ROLE": "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1",
+        "MAX_ADDRESS_LENGTH": 255,
+        "maxOrderCountPerBatchEvmUnlock": 50,
+        "maxOrderCountPerBatchSolanaUnlock": 7,
+        "NATIVE_AMOUNT_DIVIDER_FOR_TRANSFER_TO_SOLANA": 10000000000,
+        "paused": false,
+        "SOLANA_ADDRESS_LENGTH": 32,
+        "subscriptionId": 0,
+        "version": "1.7.0"
+      },
+      "fieldMeta": {
+        "dlnSourceAddressesMap": {
+          "description": "The admin-configured DlnSource address per source chain ID, used as the receiver of outbound unlock/cancel messages."
+        },
+        "externalCallAdapter": {
+          "description": "Admin-settable contract that receives the taker's funds of orders carrying attached calldata before executing it (a malicious adapter could steal the funds of every such order)."
+        },
+        "maxOrderCountPerBatchEvmUnlock": {
+          "description": "Maximum number of orders that can be unlocked in a single batch message to an EVM source chain."
+        }
+      },
+      "implementationNames": {
+        "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f": "TransparentUpgradeableProxy",
+        "eth:0xE540eb6BfEE129d28d47E26Ad33a138d66FD78f5": "DlnDestination"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
       "address": "eth:0xE9666D80e5617bA1470E2cA09F2D9B0C8CCd56B7",
       "type": "EOA",
       "proxyType": "EOA"
@@ -533,15 +1629,398 @@
     {
       "address": "eth:0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    {
+      "name": "DlnSource",
+      "address": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+      "type": "Contract",
+      "template": "debridge/DlnSource",
+      "sourceHashes": [
+        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
+        "0x1ee6b36758f7c1cb71e4ed6d4e731d42a09413cdfeaf71a16c0554633c6047c9"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Source-side escrow of the deBridge Liquidity Network (DLN) intent protocol: users lock the 'give' funds of a cross-chain order directly in this contract. Funds are released to the taker (claimUnlock) or refunded to the maker (claimCancel) only on a message from the DlnDestination configured for the order's destination chain, authenticated via the CallProxy of the deBridge messaging protocol (i.e. ultimately by deBridge validator signatures).",
+      "deployerAddress": "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5",
+      "sinceTimestamp": 1670855039,
+      "sinceBlock": 16169201,
+      "values": {
+        "$admin": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b",
+        "$implementation": "eth:0x322B481088143d9Ff74e4169Fb7f12F7808690DF",
+        "$pastUpgrades": [
+          [
+            "2022-12-12T14:23:59.000Z",
+            "0x45e08da232b5aea7adc3aaccd8ba54ced78667d11fc356eb46bce459a5289c85",
+            ["eth:0x95c99EA6D7e72e99F18049019a427A4a17C53A30"]
+          ],
+          [
+            "2023-09-08T16:34:23.000Z",
+            "0xce0ae6434e2eca80d8a4efbfbe15f1fa7f9c8b32f4452fda42dcd9e34b9fef16",
+            ["eth:0x7Ec2E51A9c4f088354aD8Ad8703C12D81BF21677"]
+          ],
+          [
+            "2025-07-16T10:55:35.000Z",
+            "0x2891ca2643f9cb857b006952744b633088f22b57a8a04495abec7b79a500f1e3",
+            ["eth:0xbF20cB9614a0059bBe4b599d1D04358aFe31eDfb"]
+          ],
+          [
+            "2025-09-15T11:47:11.000Z",
+            "0xf1d50e3b14cf974394d925c71087896c185c14c9e79506744a9fd57d5f2aa738",
+            ["eth:0xe13a85137f8752AbE4c5A614Dc3BaF396b00308D"]
+          ],
+          [
+            "2025-12-08T14:40:11.000Z",
+            "0x25b20353a5814918c4c569e1f9e8fede74138c9b7ab2043428a60f1c632d0ce6",
+            ["eth:0x322B481088143d9Ff74e4169Fb7f12F7808690DF"]
+          ]
+        ],
+        "$upgradeCount": 5,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"]
+          },
+          "FEE_COLLECTOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["eth:0x391276932b5105C2DB8eE928dfd8872564d6d246"]
+          }
+        },
+        "BPS_DENOMINATOR": 10000,
+        "deBridgeGate": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
+        "dlnDestinationAddressesMap": {
+          "10": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "56": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "137": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "250": "0x",
+          "4663": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "8453": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "42161": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "43114": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "59144": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "7565164": "0xa192b7f8b3eddc1e930a8e141564bb0ddc9d23f607cf13fd3a9fc15a638ed033",
+          "100000001": "0x",
+          "100000002": "0x",
+          "100000003": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "100000004": "0x",
+          "100000005": "0x",
+          "100000006": "0x",
+          "100000008": "0x",
+          "100000009": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "100000010": "0x",
+          "100000012": "0x",
+          "100000013": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "100000014": "0x",
+          "100000015": "0x",
+          "100000017": "0x",
+          "100000019": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "100000020": "0x",
+          "100000021": "0x",
+          "100000022": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "100000023": "0x",
+          "100000024": "0x",
+          "100000025": "0x",
+          "100000026": "eth:0xe8E2948B1E24E05C017aca0dCe44630595c464eb",
+          "100000027": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "100000028": "0x",
+          "100000029": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "100000030": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "100000031": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f"
+        },
+        "EVM_ADDRESS_LENGTH": 20,
+        "FEE_COLLECTOR_ROLE": "0x2dca0f5ce7e75a4b43fe2b0d6f5d0b7a2bf92ecf89f8f0aa17b8308b67038821",
+        "feeCollectorAC": ["eth:0x391276932b5105C2DB8eE928dfd8872564d6d246"],
+        "getChainId": 1,
+        "globalFixedNativeFee": 1000000000000000,
+        "globalTransferFeeBps": 4,
+        "GOVMONITORING_ROLE": "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1",
+        "intentManager": "eth:0x0000000000000000000000000000000000000000",
+        "intentManagerRights": "eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b",
+        "MAX_ADDRESS_LENGTH": 255,
+        "paused": false,
+        "SOLANA_ADDRESS_LENGTH": 32,
+        "subscriptionId": 0,
+        "version": "1.7.1"
+      },
+      "fieldMeta": {
+        "dlnDestinationAddressesMap": {
+          "description": "The admin-configured DlnDestination address per destination chain ID. Messages authenticated as coming from these addresses can unlock or refund all escrowed order funds."
+        },
+        "globalFixedNativeFee": {
+          "description": "Flat protocol fee in native tokens charged per order (refunded if the order is cancelled)."
+        },
+        "globalTransferFeeBps": {
+          "description": "Variable protocol fee in basis points deducted from the order's give amount (no upper bound check; admin changes apply to new orders immediately)."
+        },
+        "intentManagerRights": {
+          "description": "Immutable allowlist contract: addresses it validates can create orders with custom or zero protocol fees (createSaltedOrderForIntent)."
+        }
+      },
+      "implementationNames": {
+        "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66": "TransparentUpgradeableProxy",
+        "eth:0x322B481088143d9Ff74e4169Fb7f12F7808690DF": "DlnSource"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
     }
   ],
   "abis": {
+    "eth:0x000000009B1D0aF20D8C6d0A44e162d11F9b8f00": [
+      "error AllowanceExceeded()",
+      "error CallFailed(bytes reason)",
+      "error CannotRegisterRootKey()",
+      "error CannotUpdateRootKey()",
+      "error ExcessiveInvalidation()",
+      "error FnSelectorNotRecognized()",
+      "error IncorrectSender()",
+      "error IndexOutOfBounds()",
+      "error InvalidHookResponse()",
+      "error InvalidNonce()",
+      "error InvalidSignature()",
+      "error KeyDoesNotExist()",
+      "error KeyExpired(uint40 expiration)",
+      "error NotEntryPoint()",
+      "error OnlyAdminCanSelfCall()",
+      "error SignatureExpired()",
+      "error TransferNativeFailed()",
+      "error Unauthorized()",
+      "error UnsupportedExecutionMode()",
+      "event ApproveNative(address indexed owner, address indexed spender, uint256 value)",
+      "event ApproveNativeTransient(address indexed owner, address indexed spender, uint256 value)",
+      "event EIP712DomainChanged()",
+      "event EntryPointUpdated(address indexed newEntryPoint)",
+      "event KeySettingsUpdated(bytes32 indexed keyHash, uint256 settings)",
+      "event NativeAllowanceUpdated(address indexed spender, uint256 value)",
+      "event NonceInvalidated(uint256 nonce)",
+      "event Registered(bytes32 indexed keyHash, tuple(uint8 keyType, bytes publicKey) key)",
+      "event Revoked(bytes32 indexed keyHash)",
+      "event TransferFromNative(address indexed from, address indexed to, uint256 value)",
+      "event TransferFromNativeTransient(address indexed from, address indexed to, uint256 value)",
+      "function CUSTOM_STORAGE_ROOT() view returns (bytes32)",
+      "function ENTRY_POINT() view returns (address)",
+      "function approveNative(address spender, uint256 amount) returns (bool)",
+      "function approveNativeTransient(address spender, uint256 amount) returns (bool)",
+      "function domainBytes() view returns (bytes)",
+      "function domainSeparator() view returns (bytes32)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function execute(tuple(tuple(address to, uint256 value, bytes data)[] calls, bool revertOnFailure) batchedCall) payable",
+      "function execute(tuple(tuple(tuple(address to, uint256 value, bytes data)[] calls, bool revertOnFailure) batchedCall, uint256 nonce, bytes32 keyHash, address executor, uint256 deadline) signedBatchedCall, bytes wrappedSignature) payable",
+      "function execute(bytes32 mode, bytes executionData) payable",
+      "function executeUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, bytes32)",
+      "function getKey(bytes32 keyHash) view returns (tuple(uint8 keyType, bytes publicKey))",
+      "function getKeySettings(bytes32 keyHash) view returns (uint256)",
+      "function getSeq(uint256 key) view returns (uint256 seq)",
+      "function hashTypedData(bytes32 hash) view returns (bytes32)",
+      "function invalidateNonce(uint256 newNonce)",
+      "function isRegistered(bytes32 keyHash) view returns (bool)",
+      "function isValidSignature(bytes32 digest, bytes wrappedSignature) view returns (bytes4)",
+      "function keyAt(uint256 i) view returns (tuple(uint8 keyType, bytes publicKey))",
+      "function keyCount() view returns (uint256)",
+      "function keyHashes() view returns (uint256 _spacer)",
+      "function multicall(bytes[] data) payable returns (bytes[] results)",
+      "function namespaceAndVersion() pure returns (string)",
+      "function nativeAllowance(address spender) view returns (uint256 allowance)",
+      "function nonceSequenceNumber(uint256 key) view returns (uint256 seq)",
+      "function register(tuple(uint8 keyType, bytes publicKey) key)",
+      "function revoke(bytes32 keyHash)",
+      "function supportsExecutionMode(bytes32 mode) pure returns (bool result)",
+      "function transferFromNative(address from, address recipient, uint256 amount) returns (bool)",
+      "function transferFromNativeTransient(address from, address recipient, uint256 amount) returns (bool)",
+      "function transientNativeAllowance(address spender) view returns (uint256)",
+      "function update(bytes32 keyHash, uint256 settings)",
+      "function updateEntryPoint(address entryPoint)",
+      "function updateSalt(uint96 prefix)",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, bytes32 userOpHash, uint256 missingAccountFunds) returns (uint256 validationData)"
+    ],
+    "eth:0x322B481088143d9Ff74e4169Fb7f12F7808690DF": [
+      "constructor(address _intentManager, address _intentManagerRights, address _deBridgeGate, uint32 _subscriptionId)",
+      "error AdminBadRole()",
+      "error CallProxyBadRole()",
+      "error CriticalMismatchTakeChainId(bytes32 orderId, uint48 takeChainId, uint256 submissionsChainIdFrom)",
+      "error EthTransferFailed()",
+      "error EthTransferFailed()",
+      "error FeeCollectorBadRole()",
+      "error GovMonitoringBadRole()",
+      "error IncorrectOrderStatus()",
+      "error IntentManagerBadRole()",
+      "error MismatchNativeGiveAmount()",
+      "error MismatchedOrderId()",
+      "error MismatchedTransferAmount()",
+      "error NativeSenderBadRole(bytes nativeSender, uint256 chainIdFrom)",
+      "error NotSupportedDstChain()",
+      "error PermitFailure()",
+      "error SignatureInvalidV()",
+      "error Unauthorized()",
+      "error UnknownEngine()",
+      "error WrongAddressLength()",
+      "error WrongAffiliateFeeLength()",
+      "error WrongArgument()",
+      "error WrongArgumentLength()",
+      "error WrongChain()",
+      "error WrongExternalCallHash()",
+      "error WrongFixedFee(uint256 received, uint256 actual)",
+      "error ZeroAddress()",
+      "event AffiliateFeePaid(bytes32 _orderId, address beneficiary, uint256 affiliateFee, address giveTokenAddress)",
+      "event ClaimedOrderCancel(bytes32 orderId, address beneficiary, uint256 paidAmount, address giveTokenAddress)",
+      "event ClaimedUnlock(bytes32 orderId, address beneficiary, uint256 giveAmount, address giveTokenAddress)",
+      "event CreatedOrder(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) order, bytes32 orderId, bytes affiliateFee, uint256 nativeFixFee, uint256 percentFee, uint32 referralCode, bytes metadata)",
+      "event CriticalMismatchChainId(bytes32 orderId, address beneficiary, uint256 takeChainId, uint256 submissionChainIdFrom)",
+      "event GlobalFixedNativeFeeUpdated(uint88 oldGlobalFixedNativeFee, uint88 newGlobalFixedNativeFee)",
+      "event GlobalTransferFeeBpsUpdated(uint16 oldGlobalTransferFeeBps, uint16 newGlobalTransferFeeBps)",
+      "event Initialized(uint8 version)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SetDlnDestinationAddress(uint256 chainIdTo, bytes dlnDestinationAddress, uint8 chainEngine)",
+      "event UnclaimedAffiliateFeePaid(address beneficiary, uint256 amount, address token)",
+      "event UnclaimedAffiliateFees(bytes32 orderId, address token, uint256 amount)",
+      "event UnexpectedOrderStatusForCancel(bytes32 orderId, uint8 status, address beneficiary)",
+      "event UnexpectedOrderStatusForClaim(bytes32 orderId, uint8 status, address beneficiary)",
+      "event Unpaused(address account)",
+      "event WithdrawnFee(address tokenAddress, uint256 amount, address beneficiary)",
+      "function BPS_DENOMINATOR() view returns (uint256)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EVM_ADDRESS_LENGTH() view returns (uint256)",
+      "function FEE_COLLECTOR_ROLE() view returns (bytes32)",
+      "function GOVMONITORING_ROLE() view returns (bytes32)",
+      "function MAX_ADDRESS_LENGTH() view returns (uint256)",
+      "function SOLANA_ADDRESS_LENGTH() view returns (uint256)",
+      "function chainEngines(uint256) view returns (uint8)",
+      "function claimBatchCancel(bytes32[] _orderIds, address _beneficiary)",
+      "function claimBatchUnlock(bytes32[] _orderIds, address _beneficiary)",
+      "function claimCancel(bytes32 _orderId, address _beneficiary)",
+      "function claimUnlock(bytes32 _orderId, address _beneficiary)",
+      "function collectedFee(address) view returns (uint256)",
+      "function createOrder(tuple(address giveTokenAddress, uint256 giveAmount, bytes takeTokenAddress, uint256 takeAmount, uint256 takeChainId, bytes receiverDst, address givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes externalCall, bytes allowedCancelBeneficiarySrc) _orderCreation, bytes _affiliateFee, uint32 _referralCode, bytes _permitEnvelope) payable returns (bytes32)",
+      "function createSaltedOrder(tuple(address giveTokenAddress, uint256 giveAmount, bytes takeTokenAddress, uint256 takeAmount, uint256 takeChainId, bytes receiverDst, address givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes externalCall, bytes allowedCancelBeneficiarySrc) _orderCreation, uint64 _salt, bytes _affiliateFee, uint32 _referralCode, bytes _permitEnvelope, bytes _metadata) payable returns (bytes32)",
+      "function createSaltedOrderForIntent(tuple(address giveTokenAddress, uint256 giveAmount, bytes takeTokenAddress, uint256 takeAmount, uint256 takeChainId, bytes receiverDst, address givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes externalCall, bytes allowedCancelBeneficiarySrc) _orderCreation, uint64 _salt, uint32 _referralCode, uint256 _giveTokenFeeAmount, bytes _metadata) payable returns (bytes32)",
+      "function deBridgeGate() view returns (address)",
+      "function dlnDestinationAddresses(uint256) view returns (bytes)",
+      "function getChainId() view returns (uint256 cid)",
+      "function getOrderId(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order) pure returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function giveOrders(bytes32) view returns (uint8 status, uint160 giveTokenAddress, uint88 nativeFixFee, uint48 takeChainId, uint208 percentFee, uint256 giveAmount, address affiliateBeneficiary, uint256 affiliateAmount)",
+      "function givePatches(bytes32) view returns (uint256)",
+      "function globalFixedNativeFee() view returns (uint88)",
+      "function globalTransferFeeBps() view returns (uint16)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(uint88 _globalFixedNativeFee, uint16 _globalTransferFeeBps)",
+      "function intentManager() view returns (address)",
+      "function intentManagerRights() view returns (address)",
+      "function masterNonce(address) view returns (uint256)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setDlnDestinationAddress(uint256 _chainIdTo, bytes _dlnDestinationAddress, uint8 _chainEngine)",
+      "function subscriptionId() view returns (uint32)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unclaimedAffiliateETHFees(address) view returns (uint256)",
+      "function unclaimedERC20AffiliateFees(address, address) view returns (uint256)",
+      "function unexpectedOrderStatusForCancel(bytes32) view returns (address)",
+      "function unexpectedOrderStatusForClaim(bytes32) view returns (address)",
+      "function unpause()",
+      "function updateGlobalFee(uint88 _globalFixedNativeFee, uint16 _globalTransferFeeBps)",
+      "function validateCreationOrder(tuple(address giveTokenAddress, uint256 giveAmount, bytes takeTokenAddress, uint256 takeAmount, uint256 takeChainId, bytes receiverDst, address givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes externalCall, bytes allowedCancelBeneficiarySrc) _orderCreation, address _signer, uint64 _salt) view returns (tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) order)",
+      "function validateCreationOrder(tuple(address giveTokenAddress, uint256 giveAmount, bytes takeTokenAddress, uint256 takeAmount, uint256 takeChainId, bytes receiverDst, address givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes externalCall, bytes allowedCancelBeneficiarySrc) _orderCreation, address _signer) view returns (tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) order)",
+      "function version() pure returns (string)",
+      "function withdrawCollectedFees(address[] _tokens)",
+      "function withdrawUnclaimedAffiliateFees(address[] _tokens, address _beneficiary)"
+    ],
+    "eth:0x3c857eD51c8a2747EE8c6F30EdDA5ea0D487CC64": [
+      "error AdminBadRole()",
+      "error CallCausedBalanceDiscrepancy(address target, address token, uint256 expectedBalance, uint256 actualBalance)",
+      "error CallFailed(address target, bytes data)",
+      "error EthTransferFailed()",
+      "error ExcessiveMsgValue(uint256 requiredAmount, uint256 providedAmount)",
+      "error InvalidAffiliateFeeData(uint16 bps, address recipient)",
+      "error InvalidAffiliateFeeDataLength(uint256 length)",
+      "error InvalidSwapVariableFeeBps()",
+      "error NotEnoughSrcFundsIn(uint256 amount)",
+      "error NotSupportedRouter()",
+      "error SignatureInvalidV()",
+      "error SwapEmptyResult(address srcTokenOut)",
+      "error SwapFailed(address srcRouter)",
+      "error SwapOutcomeTooLow(address tokenOut, uint256 amountOut, uint256 actualAmountOut, uint256 expectedAmountOut)",
+      "error SwapToSameToken()",
+      "error WrongArgumentLength()",
+      "error ZeroFeeTreasuryAddress()",
+      "event AffiliateFeePaid(address token, uint256 amount, address recipient, uint32 referralCode)",
+      "event AllowanceAggregatorUpdated(address router, address allowanceAggregator)",
+      "event CollectedFee(address token, uint256 amount)",
+      "event FeeTreasuryUpdated(address feeTreasury)",
+      "event Initialized(uint8 version)",
+      "event Refund(address token, uint256 amount, address recipient)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SameChainSwapExecuted(address sender, address recipient, address tokenIn, uint256 amountIn, address tokenOut, uint256 amountOut, uint256 fee, uint256 affiliateFee, uint32 referralCode)",
+      "event SupportedRouter(address srcSwapRouter, bool isSupported)",
+      "event SwapExecuted(address router, address tokenIn, uint256 amountIn, address tokenOut, uint256 amountOut)",
+      "event SwapVariableFeeBpsUpdated(uint16 swapVariableFeeBps)",
+      "function BPS_DENOMINATOR() view returns (uint256)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function NATIVE_TOKEN() view returns (address)",
+      "function feeTreasury() view returns (address)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _feeTreasury, uint16 _swapVariableFeeBps)",
+      "function renounceRole(bytes32 role, address account)",
+      "function rescueFunds(address token, address recipient, uint256 amount)",
+      "function revokeRole(bytes32 role, address account)",
+      "function simulateSwap(address _srcTokenIn, uint256 _srcAmountIn, address _srcSwapRouter, bytes _srcSwapCalldata, address _srcTokenOut) payable returns (uint256 srcAmountOut)",
+      "function strictlySwapAndCall(address _srcTokenIn, uint256 _srcAmountIn, bytes _srcTokenInPermitEnvelope, address _srcSwapRouter, bytes _srcSwapCalldata, address _srcTokenOut, uint256 _srcTokenExpectedAmountOut, address _srcTokenRefundRecipient, address _target, bytes _targetData) payable",
+      "function strictlySwapAndCallDln(address _srcTokenIn, uint256 _srcAmountIn, bytes _srcTokenInPermitEnvelope, tuple(address swapRouter, bytes swapCalldata, address tokenOut, uint256 tokenOutMinAmount, address tokenOutRefundRecipient) _swapDetails, address _target, bytes _targetData, bytes32 _orderId) payable",
+      "function supportedRouters(address) view returns (bool isSupported, address allowanceAggregator)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function swap(address _tokenIn, uint256 _amountIn, bytes _tokenInPermitEnvelope, tuple(address allowanceAggregator, address swapRouter, bytes swapCalldata, address tokenOut, uint256 tokenOutMinAmount, uint16 surplusShareBps, bytes affiliateFeeEnvelope, address recipient) _swapDetails, uint32 _referralCode) payable returns (uint256 actualAmountOut)",
+      "function swapVariableFeeBps() view returns (uint16)",
+      "function updateAllowanceAggregator(address _router, address _allowanceAggregator)",
+      "function updateFeeTreasury(address _feeTreasury)",
+      "function updateSupportedRouter(address _srcSwapRouter, bool _isSupported)",
+      "function updateSwapVariableFeeBps(uint16 _swapVariableFeeBps)",
+      "function version() pure returns (uint256)"
+    ],
+    "eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b": [
+      "constructor(address admin)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function INTENT_MANAGER_ROLE() view returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function validateIntentManager(address caller) view returns (bool isValid)"
+    ],
     "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -583,8 +2062,41 @@
       "function tokenImplementation() view returns (address)",
       "function version() pure returns (uint256)"
     ],
+    "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5": [
       "constructor(address _singleton)"
+    ],
+    "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
     ],
     "eth:0x797161BCC625155D2302251404ccB93c2632658e": [
       "constructor()",
@@ -696,6 +2208,50 @@
       "function wethGate() view returns (address)",
       "function withdrawFee(bytes32 _debridgeId)"
     ],
+    "eth:0x7EA200f06c17cB9f64A3c8973a76DD8359fd68FA": [
+      "constructor()",
+      "error AdminBadRole()",
+      "error BadRole()",
+      "error DisabledDelayedExecution()",
+      "error DlnBadRole()",
+      "error EthTransferFailed()",
+      "error FailedExecuteExternalCall(bytes32 orderId, address target, bytes callResult)",
+      "error IncorrectExecutionFee(uint256 amount, uint256 executionFee)",
+      "error InvalideAmount()",
+      "error InvalideState()",
+      "error UnknownEnvelopeVersion(uint8 version)",
+      "event ExecutorUpdated(address oldExecutor, address newExecutor)",
+      "event ExternalCallCancelled(bytes32 callId, bytes32 orderId, address cancelBeneficiary, address tokenAddress, uint256 amount)",
+      "event ExternalCallExecuted(bytes32 orderId, bool callSucceeded)",
+      "event ExternalCallFailed(bytes32 orderId, bytes callResult)",
+      "event ExternallCallRegistered(bytes32 callId, bytes32 orderId, address callAuthority, address tokenAddress, uint256 amount, bytes externalCall)",
+      "event Initialized(uint8 version)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Unpaused(address account)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function cancelCall(bytes32 _orderId, address _callAuthority, address _tokenAddress, uint256 _tokenAmount, address _recipient, bytes32 _externalCallHash)",
+      "function defaultExecutor() view returns (address)",
+      "function dlnDestination() view returns (address)",
+      "function executeCall(bytes32 _orderId, address _callAuthority, address _tokenAddress, uint256 _tokenAmount, bytes _externalCall, address _rewardBeneficiary)",
+      "function externalCallStatus(bytes32) view returns (uint8)",
+      "function getCallId(bytes32 _orderId, address _callAuthority, address _tokenAddress, uint256 _transferredAmount, bytes32 _externalCallHash) pure returns (bytes32)",
+      "function getCallId(bytes32 _orderId, address _callAuthority, address _tokenAddress, uint256 _transferredAmount, bytes _externalCall) pure returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _dlnDestination, address _executor)",
+      "function paused() view returns (bool)",
+      "function receiveCall(bytes32 _orderId, address _callAuthority, address _tokenAddress, uint256 _transferredAmount, bytes _externalCall, address _externalCallRewardBeneficiary)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function tokenBalanceHistory(address) view returns (uint256)",
+      "function updateExecutor(address _newExecutor)",
+      "function version() pure returns (string)"
+    ],
     "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -758,6 +2314,17 @@
       "function version() pure returns (uint256)",
       "function withdrawFees(address[] _tokens)"
     ],
+    "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "eth:0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8": [
       "error CallFailed()",
       "error CallProxyBadRole()",
@@ -794,6 +2361,17 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "eth:0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B": [
       "error AdminBadRole()",
@@ -838,6 +2416,179 @@
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
       "function unpause()",
       "function updateName(string _newName, string _newSymbol)"
+    ],
+    "eth:0xcfa67cDc75FFaac55bbf92f012cC75f47f479c35": [
+      "constructor(address _permit2, address _allowanceHolder, address _dlnSource, address _feeTreasury, uint32 _subscriptionId)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AdminBadRole()",
+      "error ChainIdTooHigh()",
+      "error DelegationExpiredOrMissing()",
+      "error DuplicatedDelegate(address delegate)",
+      "error DuplicatedInputToken(address inputToken)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error EmptyInputTokenList()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error GovMonitoringBadRole()",
+      "error InputAmountExceedsUint160Limit()",
+      "error InputTokenMaxPartialAmountViolated(address inputToken, uint256 maxPartialAmount, uint256 inputAmount)",
+      "error InputTokenMinPartialAmountViolated(address inputToken, uint256 minPartialAmount, uint256 inputAmount)",
+      "error InsufficientDelegationTokenBudget()",
+      "error InsufficientIntentTokenBudget()",
+      "error IntentChainIdMismatch()",
+      "error IntentExpired()",
+      "error IntentExpiredBeforeCreated()",
+      "error IntentGiveTokenConstraintNotFound()",
+      "error IntentInputTokenConstraintNotFound()",
+      "error IntentInvalidUnrestrictedExternalCall()",
+      "error IntentIsCanceled()",
+      "error IntentNotSubmitted()",
+      "error IntentNullified()",
+      "error IntentNullifiedGlobally()",
+      "error IntentSenderNotAllowed()",
+      "error IntentTakeTokenConstraintNotFound()",
+      "error IntentTimestampInFuture()",
+      "error InvalidAllowanceMode()",
+      "error InvalidDelegationNonce()",
+      "error InvalidInitialization()",
+      "error InvalidInputTokenListSize()",
+      "error InvalidIntentOwnerSig()",
+      "error InvalidInteractionsMode()",
+      "error InvalidPermitEnvelopeSize()",
+      "error InvalidPermitSingleEnvelopeSize()",
+      "error InvalidSigBudgetEnvelopeSize()",
+      "error InvalidSigBudgetMode()",
+      "error InvalidSigConstraintsEnvelopeSize()",
+      "error InvalidSigConstraintsMode()",
+      "error InvalidSigDelegations()",
+      "error InvalidSigDelegationsSize()",
+      "error InvalidVariableFee()",
+      "error NativeTokenTransferFailed()",
+      "error NewGlobalNullificationTimestampIsEarlierThanCurrent()",
+      "error NewGlobalNullificationTimestampIsInFuture()",
+      "error NewNullificationTimestampIsEarlierThanCurrent()",
+      "error NewNullificationTimestampIsInFuture()",
+      "error NonEmptyTokenBudgetListForUnlimitedDelegation()",
+      "error NotInitializing()",
+      "error OrderAllowedTakerDstNotAllowed()",
+      "error OrderAllowedTakerDstRequired()",
+      "error OrderCancelBeneficiaryMismatch()",
+      "error OrderDlnMetadataMismatch()",
+      "error OrderDstAuthorityAddressNotAllowed()",
+      "error OrderExternalCallHashMismatch()",
+      "error OrderGiveAmountMismatch()",
+      "error OrderGiveTokenMismatch()",
+      "error OrderPriceTooHigh()",
+      "error OrderReceiverNotAllowed()",
+      "error OrderTakeChainIdTooHigh()",
+      "error PreSwapOutputAmountMismatch(uint256 exactExpected, uint256 actual)",
+      "error PreSwapOutputAmountTooLow(uint256 minExpected, uint256 actual)",
+      "error PreSwapPriceTooHigh()",
+      "error PreSwapReceiverNotAllowed()",
+      "error PreSwapResultSizeMismatch(uint256 expected, uint256 actual)",
+      "error PreSwapSingleInputTokenOutputAmountTooLow(address inputToken, uint256 minExpected, uint256 actual)",
+      "error RemainedInputTokenBudgetExceedsUint248Limit()",
+      "error SigDelegationsExpired()",
+      "error ZeroInitialAddress()",
+      "error ZeroInputTokenAddress()",
+      "error ZeroInputTokenAmount()",
+      "error ZeroIntentOwnerAddress()",
+      "event CrossChainIntentFilled(bytes32 intentId, address intentOwner, bytes32 tradeId, bytes executionMetadata, bytes32 orderId, tuple(address token, uint256 amount) inputToken, uint256 giveTokenFeeAmount)",
+      "event CrossChainIntentWithPreSwapFilled(bytes32 intentId, address intentOwner, bytes32 tradeId, bytes executionMetadata, bytes32 orderId, tuple(address inputToken, uint256 inputAmount, uint256 outputAmount)[] preSwapResults, uint256 giveTokenFeeAmount)",
+      "event DelegationBudgetSpent(bytes32 intentId, bytes32 tradeId, address delegate, address inputToken, uint256 spentAmount, uint256 remainedBudgetAmount)",
+      "event DelegationSubmitted(address caller, address intentOwner, tuple(address delegate, uint256 nonce, bool isUnlimited, tuple(address token, uint256 budget)[] tokenBudgets, uint256 deadline) delegation)",
+      "event EIP712DomainChanged()",
+      "event GlobalNullificationTimestampUpdated(uint256 globalNullificationTimestamp)",
+      "event Initialized(uint64 version)",
+      "event IntentBudgetSpent(bytes32 intentId, bytes32 tradeId, address inputToken, uint256 spentAmount, uint256 remainedBudgetAmount)",
+      "event IntentCanceled(address caller, bytes32 intentId)",
+      "event IntentSubmitted(address submitter, bytes32 intentId)",
+      "event IntentSubmittedVerbose(address submitter, bytes32 intentId, tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) intent)",
+      "event NullificationTimestampUpdated(address caller, uint256 nullificationTimestamp)",
+      "event OneToOneIntentSubmittedVerbose(address submitter, bytes32 intentId, tuple(uint32 intentChainId, address intentOwner, address receiver, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget) inputToken, tuple(address takeToken, uint256 numerator, uint8 denominator) takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address srcAllowedSender, bytes executionMetadata, bytes combinedInteractions, address intentAuthority) intent)",
+      "event OneToOneSameChainIntentWithPreSwapFilled(bytes32 intentId, address intentOwner, bytes32 tradeId, bytes executionMetadata, tuple(address token, uint256 amount) inputToken, address takeToken, uint256 takeTokenAmountAfterFeeCharge, uint256 takeTokenFeeAmount, address takeTokenRecipient)",
+      "event PairVariableFeeDisabled(address inputToken, uint32 takeChainId, bytes takeToken)",
+      "event PairVariableFeeEnabled(address inputToken, uint32 takeChainId, bytes takeToken, uint16 feeBps)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SameChainIntentWithPreSwapFilled(bytes32 intentId, address intentOwner, bytes32 tradeId, bytes executionMetadata, tuple(address token, uint256 amount)[] inputTokens, address takeToken, uint256 takeTokenAmountAfterFeeCharge, uint256 takeTokenFeeAmount, address takeTokenRecipient)",
+      "event SubmittedIntentRevoked(address intentOwner, bytes32 intentId)",
+      "event TrustedSolversUpdated(address[] solvers, bool isTrusted)",
+      "event Unpaused(address account)",
+      "event VariableFeeUpdated(uint16 feeBps)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function GOVMONITORING_ROLE() view returns (bytes32)",
+      "function allowanceHolder() view returns (address)",
+      "function cancelIntent(bytes32 _intentId)",
+      "function cancelIntentBatch(bytes32[] _intentIds)",
+      "function disablePairVariableFee(address _inputToken, uint32 _takeChainId, bytes _takeToken)",
+      "function dlnSource() view returns (address)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function enablePairVariableFee(address _inputToken, uint32 _takeChainId, bytes _takeToken, uint16 _feeBps)",
+      "function feeTreasury() view returns (address)",
+      "function fillCrossChainIntent(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent, bytes _sigConstraintsEnvelope, bytes _sigBudgetEnvelope, bytes32 _tradeId, tuple(tuple(address giveTokenAddress, uint256 giveAmount, bytes takeTokenAddress, uint256 takeAmount, uint256 takeChainId, bytes receiverDst, address givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes externalCall, bytes allowedCancelBeneficiarySrc) orderCreation, uint64 salt, uint32 referralCode, bytes metadata) _saltedOrder)",
+      "function fillCrossChainIntentWithPreSwap(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent, bytes _sigConstraintsEnvelope, bytes _sigBudgetEnvelope, tuple(address hookTarget, bytes hookPayload) _preSwap, bytes32 _tradeId, tuple(tuple(address giveTokenAddress, uint256 giveAmount, bytes takeTokenAddress, uint256 takeAmount, uint256 takeChainId, bytes receiverDst, address givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes externalCall, bytes allowedCancelBeneficiarySrc) orderCreation, uint64 salt, uint32 referralCode, bytes metadata) _saltedOrder)",
+      "function fillOneToOneSameChainIntentWithPreSwap(tuple(uint32 intentChainId, address intentOwner, address receiver, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget) inputToken, tuple(address takeToken, uint256 numerator, uint8 denominator) takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address srcAllowedSender, bytes executionMetadata, bytes combinedInteractions, address intentAuthority) _intent, bytes _sigConstraintsEnvelope, bytes _sigBudgetEnvelope, tuple(address hookTarget, bytes hookPayload) _preSwap, bytes32 _tradeId, address _takeToken)",
+      "function fillSameChainIntentWithPreSwap(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent, bytes _sigConstraintsEnvelope, bytes _sigBudgetEnvelope, tuple(address hookTarget, bytes hookPayload) _preSwap, bytes32 _tradeId, address _takeToken, address _recipient)",
+      "function getChainId() view returns (uint32)",
+      "function getCustomFee(address _inputToken, uint32 _takeChainId, bytes _takeToken) view returns (tuple(bool enabled, uint16 feeBps))",
+      "function getDefaultFeeBps() view returns (uint16)",
+      "function getDelegation(address _intentOwner, address _delegate) view returns (uint256 nonce, uint256 deadline, bool isUnlimited)",
+      "function getEip712Digest(bytes32 _structHash) view returns (bytes32)",
+      "function getFeeBps(address _inputToken, uint32 _takeChainId, bytes _takeToken) view returns (uint16)",
+      "function getGlobalNullificationTimestamp() view returns (uint256)",
+      "function getIntentId(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent) pure returns (bytes32)",
+      "function getLastDelegationNonce(address _intentOwner, address _delegate) view returns (uint256)",
+      "function getNextDelegationNonce(address _intentOwner, address _delegate) view returns (uint256)",
+      "function getNullificationTimestamp(address _intentOwnerOrAuthority) view returns (uint256)",
+      "function getOneToOneSameChainIntentId(tuple(uint32 intentChainId, address intentOwner, address receiver, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget) inputToken, tuple(address takeToken, uint256 numerator, uint8 denominator) takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address srcAllowedSender, bytes executionMetadata, bytes combinedInteractions, address intentAuthority) _intent) pure returns (bytes32)",
+      "function getRemainedDelegationBudget(address _intentOwner, address _delegate, address _token) view returns (uint256 remainedBudget)",
+      "function getRemainedIntentBudget(bytes32 _intentId, address _token) view returns (tuple(bool isInitialized, uint248 amount))",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _admin)",
+      "function isIntentCanceled(address _intentOwnerOrAuthority, bytes32 _intentId) view returns (bool)",
+      "function isIntentSubmitted(address _intentOwner, bytes32 _intentId) view returns (bool)",
+      "function isTrustedSolver(address _solver) view returns (bool)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function permit2() view returns (address)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function rescueFunds(address _token, address _recipient, uint256 _amount)",
+      "function revokeRole(bytes32 role, address account)",
+      "function revokeSubmittedIntent(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent)",
+      "function revokeSubmittedIntentById(bytes32 _intentId)",
+      "function revokeSubmittedOneToOneSameChainIntent(tuple(uint32 intentChainId, address intentOwner, address receiver, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget) inputToken, tuple(address takeToken, uint256 numerator, uint8 denominator) takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address srcAllowedSender, bytes executionMetadata, bytes combinedInteractions, address intentAuthority) _intent)",
+      "function setNullificationTimestamp(uint256 _nullificationTimestamp)",
+      "function submitDelegations(tuple(address delegate, uint256 nonce, bool isUnlimited, tuple(address token, uint256 budget)[] tokenBudgets, uint256 deadline)[] _delegations)",
+      "function submitDelegationsWithSig(address _intentOwner, tuple(address delegate, uint256 nonce, bool isUnlimited, tuple(address token, uint256 budget)[] tokenBudgets, uint256 deadline)[] _delegations, bytes _sigDelegations, uint256 _sigDeadline)",
+      "function submitIntent(tuple(uint32 intentChainId, address intentOwner, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] receiverDetails, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget)[] inputToken, tuple(address inputToken, address giveToken, uint256 numerator, uint8 denominator)[] giveToken, tuple(address giveToken, uint32 takeTokenChain, bytes takeToken, uint256 numerator, uint8 denominator)[] takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address[] srcAllowedSender, bytes executionMetadata, bool isAnyDlnMetadataAllowed, bytes dlnMetadata, bytes32 externalCallHash, bytes combinedInteractions, address allowedCancelBeneficiary, tuple(bytes allowedAddress, uint32[] chains, bool isAnyChain)[] dstAuthorityAddress, address intentAuthority) _intent)",
+      "function submitIntentById(bytes32 _intentId)",
+      "function submitOneToOneSameChainIntent(tuple(uint32 intentChainId, address intentOwner, address receiver, tuple(address token, uint256 minPartialAmount, uint256 maxPartialAmount, uint256 budget) inputToken, tuple(address takeToken, uint256 numerator, uint8 denominator) takeToken, uint64 expirationTimestamp, uint64 intentTimestamp, address srcAllowedSender, bytes executionMetadata, bytes combinedInteractions, address intentAuthority) _intent)",
+      "function subscriptionId() view returns (uint32)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unpause()",
+      "function updateGlobalNullificationTimestamp(uint256 _globalNullificationTimestamp)",
+      "function updateTrustedSolvers(address[] _solvers, bool _isTrusted)",
+      "function updateVariableFee(uint16 _feeBps)",
+      "function version() pure returns (string)"
+    ],
+    "eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
     ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -888,6 +2639,49 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "eth:0xddddddddd4B6472c5002F95610b194D1161223d0": [
+      "constructor(address _admin, address _permit2)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AddressEmptyCode(address target)",
+      "error AdminBadRole()",
+      "error AllowedSpenderBadRole()",
+      "error FailedCall()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "error NativeTokenTransferFailed()",
+      "error Permit2NotSet()",
+      "error SafeERC20FailedOperation(address token)",
+      "error ZeroInitialAddress()",
+      "event Permit2Updated(address permit2)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function ALLOWED_SPENDER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function execute(address _target, bytes _data) returns (bytes)",
+      "function getPermit2OrFail() view returns (address actualPermit2)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function rescueFunds(address _token, address _recipient, uint256 _amount)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setPermit2Variable(address _permit2Variable)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferFrom(address _from, address _to, uint256 _amount, address _token)",
+      "function transferFromViaPermit2(address _from, address _to, uint160 _amount, address _token)"
+    ],
+    "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -898,6 +2692,113 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0xE540eb6BfEE129d28d47E26Ad33a138d66FD78f5": [
+      "constructor(uint256 divider, address _deBridgeGate, uint32 _subscriptionId)",
+      "error AdminBadRole()",
+      "error AllowOnlyForBeneficiary(bytes expectedBeneficiary)",
+      "error AttemptToCancelWithoutBeneficiary()",
+      "error CallProxyBadRole()",
+      "error EthTransferFailed()",
+      "error EthTransferFailed()",
+      "error GovMonitoringBadRole()",
+      "error IncorrectOrderStatus()",
+      "error InsufficientTakerAmount()",
+      "error MismatchGiveChainId()",
+      "error MismatchNativeFulfillAmount()",
+      "error MismatchedOrderId()",
+      "error MismatchedTransferAmount()",
+      "error NativeSenderBadRole(bytes nativeSender, uint256 chainIdFrom)",
+      "error NotSupportedDstChain()",
+      "error PermitFailure()",
+      "error SignatureInvalidV()",
+      "error TransferAmountNotCoverFees()",
+      "error Unauthorized()",
+      "error UnexpectedBatchSize()",
+      "error UnknownEngine()",
+      "error WrongAddressLength()",
+      "error WrongArgument()",
+      "error WrongArgumentLength()",
+      "error WrongChain()",
+      "error WrongExternalCallHash()",
+      "error WrongToken()",
+      "error ZeroAddress()",
+      "event ExternalCallAdapterUpdated(address oldAdapter, address newAdapter)",
+      "event FulfilledOrder(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) order, bytes32 orderId, uint256 actualFulfillAmount, address sender, address unlockAuthority)",
+      "event Initialized(uint8 version)",
+      "event MaxOrderCountPerBatchEvmUnlockChanged(uint256 oldValue, uint256 newValue)",
+      "event MaxOrderCountPerBatchSolanaUnlockChanged(uint256 oldValue, uint256 newValue)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SentOrderCancel(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) order, bytes32 orderId, bytes cancelBeneficiary, bytes32 submissionId)",
+      "event SentOrderUnlock(bytes32 orderId, bytes beneficiary, bytes32 submissionId)",
+      "event SetDlnSourceAddress(uint256 chainIdFrom, bytes dlnSourceAddress, uint8 chainEngine)",
+      "event Unpaused(address account)",
+      "function BPS_DENOMINATOR() view returns (uint256)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EVM_ADDRESS_LENGTH() view returns (uint256)",
+      "function GOVERNANCE_DELEGATED_ORDER_CANCEL_ROLE() view returns (bytes32)",
+      "function GOVMONITORING_ROLE() view returns (bytes32)",
+      "function MAX_ADDRESS_LENGTH() view returns (uint256)",
+      "function NATIVE_AMOUNT_DIVIDER_FOR_TRANSFER_TO_SOLANA() view returns (uint256)",
+      "function SOLANA_ADDRESS_LENGTH() view returns (uint256)",
+      "function chainEngines(uint256) view returns (uint8)",
+      "function deBridgeGate() view returns (address)",
+      "function dlnSourceAddresses(uint256) view returns (bytes)",
+      "function externalCallAdapter() view returns (address)",
+      "function fulfillOrder(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order, uint256 _fulFillAmount, bytes32 _orderId, bytes _permitEnvelope, address _unlockAuthority, address _externalCallRewardBeneficiary) payable",
+      "function fulfillOrder(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order, uint256 _fulFillAmount, bytes32 _orderId, bytes _permitEnvelope, address _unlockAuthority) payable",
+      "function getChainId() view returns (uint256 cid)",
+      "function getOrderId(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order) pure returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize()",
+      "function maxOrderCountPerBatchEvmUnlock() view returns (uint256)",
+      "function maxOrderCountPerBatchSolanaUnlock() view returns (uint256)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function sendBatchEvmUnlock(bytes32[] _orderIds, address _beneficiary, uint256 _executionFee) payable",
+      "function sendBatchSolanaUnlock(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall)[] _orders, bytes32 _beneficiary, uint256 _executionFee, uint64 _initWalletIfNeededInstructionReward, uint64 _claimUnlockInstructionReward) payable",
+      "function sendEvmOrderCancel(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order, address _cancelBeneficiary, uint256 _executionFee) payable",
+      "function sendEvmUnlock(bytes32 _orderId, address _beneficiary, uint256 _executionFee) payable",
+      "function sendSolanaOrderCancel(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order, bytes32 _cancelBeneficiary, uint256 _executionFee, uint64 _initWalletIfNeededInstructionReward, uint64 _claimCancelInstructionReward) payable",
+      "function sendSolanaUnlock(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order, bytes32 _beneficiary, uint256 _executionFee, uint64 _initWalletIfNeededInstructionReward, uint64 _claimUnlockInstructionReward) payable",
+      "function setDlnSourceAddress(uint256 _chainIdFrom, bytes _dlnSourceAddress, uint8 _chainEngine)",
+      "function setExternalCallAdapter(address _externalCallAdapter)",
+      "function setMaxOrderCountsPerBatch(uint256 _newEvmCount, uint256 _newSolanaCount)",
+      "function subscriptionId() view returns (uint32)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function takeOrders(bytes32) view returns (uint8 status, address takerAddress, uint32 giveChainId, uint256 bigGiveChainId)",
+      "function takePatches(bytes32) view returns (uint256)",
+      "function unpause()",
+      "function version() pure returns (string)"
+    ],
+    "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "eth:0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4": [
       "error AdminBadRole()",
@@ -951,9 +2852,22 @@
     ]
   },
   "usedTemplates": {
+    "debridge/CallProxy": "0x8bdd88b21008001ade7c4a2f27a8551926736985bc27e9aeaaca45ac0b27c167",
+    "debridge/DeBridgeAllowanceHolder": "0x182300b0331efba2e4f413c1dc41bcdf5a3e68f22117ebe8139f1d20841861f6",
+    "debridge/DeBridgeGate": "0x776048b7f441bc9aef5c41add763c7c0a75b88e3cd401926f51143a19a8a7b85",
+    "debridge/DeBridgeIntentManager": "0x5826173c75a1cae97cbffeb4fae2afb35b80b0103ff8b71b6fbbdbf50280933e",
+    "debridge/DeBridgeRouter": "0xdd6cc9de1e2464b0226b8489a12c10334457b4d265e4ff920b0a90f6f48ca324",
+    "debridge/DeBridgeToken": "0x7c56f3970bfa1a9e69e5f67c3fd773dd364593f3ff18553c619813df4380820d",
+    "debridge/DeBridgeTokenDeployer": "0x66340859a544f6a0030ae841af7f635692cde141558bab317530dca2703793a8",
+    "debridge/DlnDestination": "0x97596128d3ce6d45f1d6296fe93c670b280b071d721a21dd5254645a8a1ed06f",
+    "debridge/DlnSource": "0xf4a5c29d683a6f271fa34000d301037ff0d08d8ae7020d0e8559863691d9831a",
+    "debridge/ExternalCallAdapter": "0x85a97b22df841623ba0184c89b50ebfb6f813b86ec07e7f00075d9cf5c7d48fc",
+    "debridge/IntentManagerValidator": "0xf041beaf993cf44b777d84da4360f6df2e8b6689c93751aee22ab830d8c06d3d",
+    "debridge/SignatureVerifier": "0xfd8c11ebd8bdeb3c008261859cbc9f169adb486cad2a1b58a46c996cc4ac35ba",
+    "debridge/SimpleFeeProxy": "0xd5828f448120a389545d315cab8b8aab3da791c84ae28ea30c8c516e185e7414",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22966882 },
-  "permissionsConfigHash": "0xa853bce3cc00e999e6fd9ba36d3308db3081c7a50bdc078da1b64e0885c05a4d"
+  "usedBlockNumbers": { "ethereum": 25752929 },
+  "permissionsConfigHash": "0x53a3ea0230c305e9076e5a2370269af9364675175d6321bf69963a4ecdd87a34"
 }

@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x684ef9c4e26669601d84b8db86cababa1e76c968
+
+# Diff at Mon, 17 Aug 2026 10:15:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9b7337c108d300967ecea6d6606607859d1de669 block: 1785404669
+- current timestamp: 1786961539
+
+## Description
+
+The RailgunSmartWallet implementation upgrade proposed and reviewed in the entry below (2026-07-30) has now been executed by governance. The new implementation (https://disco.l2beat.com/diff/eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b/eth:0xd662c4b1f22aceb0beacdf3a493de6f478686a0c):
+
+- adds an `Action` event (caller + per-transaction nullifier/commitment counts, unshield flag, and boundParamsHash) emitted in `shield()` and `transact()` as an anchoring point for wallets/indexers to decode batched and nested Railgun transactions,
+- changes `Verifier.verify()` and `validateTransaction()` return signatures to also return the boundParamsHash for the new event (validation logic unchanged),
+- moves the token blocklist check from `validateCommitmentPreimage()` (now pure) directly into `shield()` (same effective behavior: blocked tokens still cannot be shielded).
+
+No permission, fee, or escrow logic changes.
+
+## Watched changes
+
+```diff
+    contract RailgunSmartWallet (eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9) [railgun/RailgunSmartWallet] {
+    +++ description: Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.
+      sourceHashes.1:
+-        "0x0ad85e59396caf20dd30307894a735a097dbd0d914bc1851af97c04cc874ad3b"
++        "0xb6d8961a0f486e51d0c52fe1292f627928dba2087f6e643379207033c0966965"
++++ description: Current Railgun smart wallet implementation.
++++ severity: HIGH
+      values.$implementation:
+-        "eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b"
++        "eth:0xD662C4B1F22AcEb0BEaCdf3A493De6f478686A0C"
+      implementationNames.eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b:
+-        "RailgunSmartWallet"
+      implementationNames.eth:0xD662C4B1F22AcEb0BEaCdf3A493De6f478686A0C:
++        "RailgunSmartWallet"
+    }
+```
+
+## Source code changes
+
+```diff
+.../RailgunSmartWallet/RailgunSmartWallet.sol      | 132 +++++++++++++++++----
+ 1 file changed, 109 insertions(+), 23 deletions(-)
+```
+
 Generated with discovered.json: 0xdc5ee3658590f256c693fe0f1a3df0ef79d5592f
 
 # Diff at Thu, 30 Jul 2026 15:18:34 GMT:
