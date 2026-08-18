@@ -3,15 +3,10 @@
   "private": true,
   "license": "MIT",
   "engines": {
-    "node": "^22.0.0"
+    "node": "^22.13.0",
+    "pnpm": ">=11"
   },
-  "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee",
-  "pnpm": {
-    "overrides": {
-      "form-data@^2": "2.5.4",
-      "form-data@^4": "4.0.4"
-    }
-  },
+  "packageManager": "pnpm@11.22.0+sha512.1ff870c4c6133dfd88fb2afc46dd13d47f09c9794b438c6fdb47ca98caf3bc16381ee0be93a091b8e3824cf01f889f46d7d9e20910fb0be1ab0fb5baa80dd621",
   "scripts": {
     "build": "turbo run build",
     "build:backend": "turbo run build --filter=@l2beat/backend",
