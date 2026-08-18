@@ -74,7 +74,7 @@ export function HomeTopInteropProtocolsCard({
         href="/interop/summary"
         linkLabel="View all"
       />
-      <div className="mt-3 min-w-0 flex-1">
+      <div className="mt-2 min-w-0 flex-1">
         {isLoading ? (
           <Skeleton className="h-[220px] w-full rounded-sm" />
         ) : showEmpty ? (

@@ -45,7 +45,7 @@ export function HomeTopZkProversCard({ entries }: Props) {
         href="/zk-catalog"
         linkLabel="View all"
       />
-      <div className="mt-3 flex-1">
+      <div className="mt-2 flex-1">
         <BasicTable table={table} />
       </div>
     </HomeCard>

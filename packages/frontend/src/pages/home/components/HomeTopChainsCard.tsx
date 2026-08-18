@@ -61,7 +61,7 @@ export function HomeTopChainsCard({ entries, tvsData }: Props) {
         href="/scaling/summary"
         linkLabel="View all"
       />
-      <div className="mt-3 flex-1">
+      <div className="mt-2 flex-1">
         <BasicTable table={table} />
       </div>
     </HomeCard>
