@@ -1,6 +1,6 @@
 {
   "name": "frankencoin",
-  "timestamp": 1787044896,
+  "timestamp": 1787047621,
   "configHash": "0xd40829085d971d8fe740f8f621ecf8e7e38766e7425722d1792601f3de999246",
   "entries": [
     {
@@ -67,7 +67,7 @@
         "price": "1316133241561395638099",
         "symbol": "FPS",
         "totalSupply": "8673295955082447425800",
-        "totalVotes": "267655492174230817897242350149142879",
+        "totalVotes": "267680265891814694051478037369162079",
         "VALUATION_FACTOR": 3,
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
@@ -100,9 +100,31 @@
         "$immutable": true,
         "DAY": 86400,
         "GOVERNANCE": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+        "pendingProposals": [],
+        "proposedAdminTransfers": [],
+        "rateLimitUpdates": [
+          "1673871237479749969",
+          "6433500567565415381",
+          "3734403246176062136",
+          "4949039107694359620",
+          "15971525489660198786",
+          "4051577828743386545",
+          "465200170687744372"
+        ],
         "TOKEN_ADMIN_REGISTRY": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
         "tokenPool": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
         "ZCHF": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+      },
+      "fieldMeta": {
+        "pendingProposals": {
+          "description": "Hashes of timelocked CCIPAdmin proposals that are currently pending (proposed but not yet enacted or denied). A new entry starts the 7-day (config) or 21-day (admin transfer) veto window."
+        },
+        "proposedAdminTransfers": {
+          "description": "All addresses ever proposed as new CCIP admin (21-day timelock). A transfer hands over ownership of the ZCHF token pool and its TokenAdminRegistry entry."
+        },
+        "rateLimitUpdates": {
+          "description": "History of per-chain CCIP rate limit changes (chain selectors, from RateLimit events). Rate limits bound how much ZCHF a CCIP compromise could mint and are changeable immediately by qualified FPS holders."
+        }
       },
       "implementationNames": {
         "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8": "CCIPAdmin"
@@ -133,7 +155,7 @@
       "values": {
         "$immutable": true,
         "currentRatePPM": 35000,
-        "currentTicks": 1319372940000,
+        "currentTicks": 1319468280000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
         "nextChange": 1774551239,
@@ -153,7 +175,7 @@
         "0xec1edc8c6321d98d1f401d780844918007dec8f6dde5088cb1c3582fca68ef19"
       ],
       "proxyType": "immutable",
-      "description": "Mints ZCHF against a whitelisted Swiss franc stablecoin held in escrow, at a fixed 1:1 (decimal-adjusted) rate, up to a hard cap and only until its expiration. ZCHF can always be burned here to redeem the escrowed stablecoin. A depeg or freeze of the escrowed stablecoin impairs ZCHF backing up to the cap.",
+      "description": "Mints ZCHF against a whitelisted Swiss franc stablecoin held in escrow, at a fixed 1:1 (decimal-adjusted) rate, up to a hard cap and only until its expiration (see isExpired). An expired bridge is permanently mint-disabled, but ZCHF from it can always be burned to redeem the escrowed stablecoin. A depeg or freeze of the escrowed stablecoin impairs ZCHF backing up to the cap.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -170,6 +192,7 @@
         "$immutable": true,
         "chf": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
         "horizon": 1776276731,
+        "isExpired": true,
         "limit": "2000000000000000000000000",
         "minted": 0,
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
@@ -183,6 +206,9 @@
         },
         "minted": {
           "description": "ZCHF currently outstanding from this bridge."
+        },
+        "isExpired": {
+          "description": "True once the minting horizon has passed: the bridge is deprecated and can only redeem ZCHF for the escrowed stablecoin, never mint again."
         }
       },
       "implementationNames": {
@@ -198,7 +224,7 @@
         "0xa9b8c420c4ec4fbd1a45e9859d5a5d6ffc153513625e0562cce4d398f7bdd99f"
       ],
       "proxyType": "immutable",
-      "description": "Original savings module and the system's leadrate source: MintingHubV2 positions pay this contract's rate plus their risk premium, and depositors earn it on saved ZCHF (interest is minted against the equity reserve and capped by it; 3-day interest delay on deposits). Rate changes are proposed by qualified FPS holders and take effect after 7 days unless replaced by a counter-proposal.",
+      "description": "Original savings module, superseded as a savings product by the current Savings module but still the system's authoritative leadrate source: MintingHubV2 positions pay this contract's rate plus their risk premium (remaining depositors earn it, minted against the equity reserve and capped by it). Rate changes are proposed by qualified FPS holders and take effect after 7 days unless replaced by a counter-proposal.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -214,7 +240,7 @@
       "values": {
         "$immutable": true,
         "currentRatePPM": 10000,
-        "currentTicks": 1289764980000,
+        "currentTicks": 1289792220000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
         "nextChange": 1770717611,
@@ -234,7 +260,7 @@
         "0x9279e115ddca68b2b3076c4523429608113ec5518c7eb70cdd7d5f09a70c0924"
       ],
       "proxyType": "immutable",
-      "description": "Mints ZCHF against a whitelisted Swiss franc stablecoin held in escrow, at a fixed 1:1 (decimal-adjusted) rate, up to a hard cap and only until its expiration. ZCHF can always be burned here to redeem the escrowed stablecoin. A depeg or freeze of the escrowed stablecoin impairs ZCHF backing up to the cap.",
+      "description": "Mints ZCHF against a whitelisted Swiss franc stablecoin held in escrow, at a fixed 1:1 (decimal-adjusted) rate, up to a hard cap and only until its expiration (see isExpired). An expired bridge is permanently mint-disabled, but ZCHF from it can always be burned to redeem the escrowed stablecoin. A depeg or freeze of the escrowed stablecoin impairs ZCHF backing up to the cap.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -252,6 +278,7 @@
         "chf": "eth:0xBD4DfC058eb95b8De5ceAF39966A1a70F5556F78",
         "decimalMultiplier": 1000000000000,
         "horizon": 1807188455,
+        "isExpired": false,
         "limit": "10000000000000000000000000",
         "minted": "660717645577000000000000",
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
@@ -265,6 +292,9 @@
         },
         "minted": {
           "description": "ZCHF currently outstanding from this bridge."
+        },
+        "isExpired": {
+          "description": "True once the minting horizon has passed: the bridge is deprecated and can only redeem ZCHF for the escrowed stablecoin, never mint again."
         }
       },
       "implementationNames": {
@@ -329,7 +359,7 @@
         "0xe9eab3b61b2d768d4c9a720ba560f96827b64d04deadbff194bd7b1df15921af"
       ],
       "proxyType": "immutable",
-      "description": "Deprecated first version of the minting hub with the same oracle-free, auction-policed design (upfront fees instead of continuous interest). It remains a registered minter forever.",
+      "description": "Deprecated first version of the minting hub with the same oracle-free, auction-policed design (upfront fees instead of continuous interest). The official frontend no longer supports it, but it remains a registered minter forever and stays permissionlessly usable.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -344,8 +374,71 @@
       "values": {
         "$immutable": true,
         "CHALLENGER_REWARD": 20000,
+        "openedPositions": [
+          "eth:0xf652C3Ce52933caBF07199887e64301C0705620E",
+          "eth:0xc724701A14f15888205682c5A192B8baD78353eE",
+          "eth:0xed58b9D4f63B3dA63b13078E027C8c3F92D5D597",
+          "eth:0xD0a8652aFa21c58589751A17afb1C6E36edF019F",
+          "eth:0xDa3c5024f32CA5990b994749bcF16942b29c1c87",
+          "eth:0xe394e74a3CC7b6b717F50895cD6eEC0d8330645b",
+          "eth:0xeBfa07d0E785927eCabD45634a4b8EFB4BC37DcD",
+          "eth:0xa5B353f6941a2e497e0D91B401BB3078e4032618",
+          "eth:0xe4255Fe5A5105B4024c462e65339bfd8E4854e97",
+          "eth:0x99FEc93E5caA59F03FcE259A7E26eBF688EdCED7",
+          "eth:0x036E53BF619e4a81e3Db9E247C53863249e8C988",
+          "eth:0x7c245A2d29B88cb7c5fB118518Fc7F03e85f2e99",
+          "eth:0x39D618052651f897367C7816b60636f8fB37Bedb",
+          "eth:0x9FB55888e195F717BCB60B40b2aa2c161EeD29B6",
+          "eth:0x13753eeaE07dEC7C5aC48EcBD916Cc319622E590",
+          "eth:0x220aaf79cE1F2D51766b0927Eb0D9E535f99A47F",
+          "eth:0x7C728E06a8F319bD2C725285589cb9F6Fe1A31a3",
+          "eth:0x5495D1A197Ebb00466Ac68D02F258B695bB5E20b",
+          "eth:0x98725eE62833096C1c9bE26001F3cDA9a6241EF3",
+          "eth:0x7F0306368Ae8Df8718D6F79cffc53A38bF6E981C",
+          "eth:0x4B10912979DBd4268fe1b36EA7db1A38aaaf6f28",
+          "eth:0xb49C88E37AB4BeCBC8aeADbc0610A0D9EE8E2C30",
+          "eth:0x98CE3ea864f2dEb547721de74736c2D73F492f96",
+          "eth:0x60187F1d289721f827AE1EF23cb52ED00d0A0fcA",
+          "eth:0x5eD89591c0B8EBEe26827B8D3ED0A8A3037E66a4",
+          "eth:0x5B2562DD727ecF3b759a34F67f1D4B77b9e62152",
+          "eth:0x030eE6b1032fEb5291E02f8fcE554A1eb02D771d",
+          "eth:0x99EF4d6bF4D8e72CA17C4db6EeAE698D84Fe486e",
+          "eth:0xa290431Cb773B343145b8CcE202227C03a0E6e9c",
+          "eth:0x53b42a3013e9C11C4BadeF3E53D302c50F7bD877",
+          "eth:0x4c400Cf4D3691a5C4e440A616E39A5056be79F67",
+          "eth:0x95eA1b9Bc0d82F2322902E642BBC1775906Ee75E",
+          "eth:0x260740AE473D1FDB70dB9D99646deC6CfD3e2cB4",
+          "eth:0x7FF29064edc935571f89266607eAA0b5a51b795d",
+          "eth:0xA73eA04feF834E41A044f0bDDDd959a9Ff8fC639",
+          "eth:0xd41697B9289908a2a5a120Ead0899e491A078808",
+          "eth:0xc2EF48132D1436c2a8C94791781E66d9F3F17088",
+          "eth:0xF465aDC96B2F4Df9F1b8d650758C733fB39100C3",
+          "eth:0xfC22a33e5746a45517E9725C1D5cd958c37538A7",
+          "eth:0x89B771E0faF064D4d828352B4ee18ab534000674",
+          "eth:0xd5E05c04Aba27893f547D8520a53de3C15B63127",
+          "eth:0x2eBF24977Fc2460dA1bD7047B0b26d455e61c5bE",
+          "eth:0x12D9D905a78fB917Dc9Be9a2Ba78E8dEd4858Ef1",
+          "eth:0x5729A5FEA86F9999cf4c5f80d97264dc19c2DAd6",
+          "eth:0x65E4A2BDeB529704Eae0E1eC04945e5bd390b88c",
+          "eth:0xd6356227b016B2FF919964e60C634dbf93eD9784",
+          "eth:0x14eC23D74ceDeaD34c873772F31586f652319A92",
+          "eth:0x9532A17285bE7aAfd92837C60320e267d5243662",
+          "eth:0x84eDBA377C1cCFA93716790aC0a798243adC758C",
+          "eth:0xdc34bb48F1AbCdF12b8458eb199F7Baf9039b937",
+          "eth:0x3f8146002dc7a4D0C4E3E5D295c5AC3a3b61b0dB",
+          "eth:0xBD5678BAb4adAd591a11941E60FdDD81D6BC54dE",
+          "eth:0xf68Aca3D30672C7b81CEd1215198B2a288E46Afb",
+          "eth:0x1D0d2eeCA118AfDFc474DAb1f759d6D83AE6C840",
+          "eth:0x974DFb4f9FF44Ae0a03D9a1ce3195813B61f1D1e",
+          "eth:0xf35378277191C1F0d90869426f7177AA0393F77D"
+        ],
         "OPENING_FEE": "1000000000000000000000",
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+      },
+      "fieldMeta": {
+        "openedPositions": {
+          "description": "All positions ever opened through this deprecated hub, from PositionOpened events. A new entry is unexpected and warrants review: new originals still pass a 3+ day veto window, but the hub is no longer curated by the Frankencoin frontend."
+        }
       },
       "implementationNames": {
         "eth:0x7546762fdb1a6d9146b33960545C3f6394265219": "MintingHub"
@@ -360,7 +453,7 @@
         "0xec1edc8c6321d98d1f401d780844918007dec8f6dde5088cb1c3582fca68ef19"
       ],
       "proxyType": "immutable",
-      "description": "Mints ZCHF against a whitelisted Swiss franc stablecoin held in escrow, at a fixed 1:1 (decimal-adjusted) rate, up to a hard cap and only until its expiration. ZCHF can always be burned here to redeem the escrowed stablecoin. A depeg or freeze of the escrowed stablecoin impairs ZCHF backing up to the cap.",
+      "description": "Mints ZCHF against a whitelisted Swiss franc stablecoin held in escrow, at a fixed 1:1 (decimal-adjusted) rate, up to a hard cap and only until its expiration (see isExpired). An expired bridge is permanently mint-disabled, but ZCHF from it can always be burned to redeem the escrowed stablecoin. A depeg or freeze of the escrowed stablecoin impairs ZCHF backing up to the cap.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -377,6 +470,7 @@
         "$immutable": true,
         "chf": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
         "horizon": 1729980479,
+        "isExpired": true,
         "limit": "10000000000000000000000000",
         "minted": "17000094858261410",
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
@@ -390,6 +484,9 @@
         },
         "minted": {
           "description": "ZCHF currently outstanding from this bridge."
+        },
+        "isExpired": {
+          "description": "True once the minting horizon has passed: the bridge is deprecated and can only redeem ZCHF for the escrowed stablecoin, never mint again."
         }
       },
       "implementationNames": {
@@ -1252,22 +1349,22 @@
   },
   "usedTemplates": {
     "frankencoin/BridgeAccounting": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "frankencoin/CCIPAdmin": "0x7b3d25750c9ea2e92807657049546ba3b26899152a56e8d2f3c0dcaebafabb85",
+    "frankencoin/CCIPAdmin": "0x27237ae49ee130918997eb7afb06f7c1b950681aa9e493ad005ada8f2c020d2f",
     "frankencoin/Equity": "0xf863ecdb92bf8955d7f6ae1e0e9aadd60c30523eb2ff79b5b94ec9a84ff763c4",
     "frankencoin/FPSWrapper": "0xdea7555cca5453f812b325358e4ced2fb1be1d1ec84f5e8041e6f7674c97f5c0",
     "frankencoin/Frankencoin": "0xfe332b99b095b6de78021eda41548eb9f10372c8386e89b9deef1dbf563d508b",
     "frankencoin/GovernanceSender": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "frankencoin/LeadrateSender": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "frankencoin/MintingHubV1": "0x8760ed03abe46cb507ea6364ccb9aad7e04b5e32c39a48cb81efd7277e495054",
+    "frankencoin/MintingHubV1": "0x9a085a8b4c057308396fc5592ce95d9a0c03fb20ec583d358d7f64bad2c08d49",
     "frankencoin/MintingHubV2": "0x6082d5e2fab5553c272fd17c02362dd886ddc80a0afd83b5349cce4812df2f46",
     "frankencoin/PositionRoller": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "frankencoin/Savings": "0x9f26fdf0e4510441ce68ba4715fb458cac0e7d1f30ee65b9febf07a067cf55b8",
     "frankencoin/SavingsV2": "0x9f26fdf0e4510441ce68ba4715fb458cac0e7d1f30ee65b9febf07a067cf55b8",
     "frankencoin/SavingsVault": "0x8bd9f28462675ae9a17fb327d790d1b63978145d534932b03d99ed0f69b96487",
-    "frankencoin/StablecoinBridge": "0x5e054ca5dcc3559e081a6e43cc6d6b715e0e69cc7d52302b7396a7ecf472387f",
+    "frankencoin/StablecoinBridge": "0xa6068262eb7719f21984a390129b5eb7ebd108545849623453769920772d084a",
     "frankencoin/TransferReference": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "transporter/TokenPool": "0xd3e2593c0a667658845c680a3433d8a2252fb4839d2e1d16674d97e3081d856d"
   },
-  "usedBlockNumbers": { "ethereum": 25781046 },
+  "usedBlockNumbers": { "ethereum": 25781273 },
   "permissionsConfigHash": "0x5260bbcbc303f13a6108c35d4e5855c8cbb3732266bfa1db610410152bf7261d"
 }

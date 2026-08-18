@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SavingsV2",
-  "description": "Original savings module and the system's leadrate source: MintingHubV2 positions pay this contract's rate plus their risk premium, and depositors earn it on saved ZCHF (interest is minted against the equity reserve and capped by it; 3-day interest delay on deposits). Rate changes are proposed by qualified FPS holders and take effect after 7 days unless replaced by a counter-proposal.",
+  "description": "Original savings module, superseded as a savings product by the current Savings module but still the system's authoritative leadrate source: MintingHubV2 positions pay this contract's rate plus their risk premium (remaining depositors earn it, minted against the equity reserve and capped by it). Rate changes are proposed by qualified FPS holders and take effect after 7 days unless replaced by a counter-proposal.",
   "ignoreInWatchMode": ["currentTicks"],
   "ignoreMethods": ["ticks"],
   "fields": {

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x2bc771a55ac5e2ed0be5d4095129251b3f7260dc
+Generated with discovered.json: 0xdfa54c60ce23f1a3369e8bf1f7224d2734e61eab
 
-# Diff at Tue, 18 Aug 2026 09:22:46 GMT:
+# Diff at Tue, 18 Aug 2026 10:08:11 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current timestamp: 1787044896
+- current timestamp: 1787047621
 
 ## Description
 
@@ -32,19 +32,19 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract StablecoinBridgeVCHF (eth:0x3B71ba73299F925a837836160c3E1Fec74340403) [frankencoin/StablecoinBridge]
-    +++ description: Mints ZCHF against a whitelisted Swiss franc stablecoin held in escrow, at a fixed 1:1 (decimal-adjusted) rate, up to a hard cap and only until its expiration. ZCHF can always be burned here to redeem the escrowed stablecoin. A depeg or freeze of the escrowed stablecoin impairs ZCHF backing up to the cap.
+    +++ description: Mints ZCHF against a whitelisted Swiss franc stablecoin held in escrow, at a fixed 1:1 (decimal-adjusted) rate, up to a hard cap and only until its expiration (see isExpired). An expired bridge is permanently mint-disabled, but ZCHF from it can always be burned to redeem the escrowed stablecoin. A depeg or freeze of the escrowed stablecoin impairs ZCHF backing up to the cap.
 ```
 
 ```diff
 +   Status: CREATED
     contract SavingsV2 (eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE) [frankencoin/SavingsV2]
-    +++ description: Original savings module and the system's leadrate source: MintingHubV2 positions pay this contract's rate plus their risk premium, and depositors earn it on saved ZCHF (interest is minted against the equity reserve and capped by it; 3-day interest delay on deposits). Rate changes are proposed by qualified FPS holders and take effect after 7 days unless replaced by a counter-proposal.
+    +++ description: Original savings module, superseded as a savings product by the current Savings module but still the system's authoritative leadrate source: MintingHubV2 positions pay this contract's rate plus their risk premium (remaining depositors earn it, minted against the equity reserve and capped by it). Rate changes are proposed by qualified FPS holders and take effect after 7 days unless replaced by a counter-proposal.
 ```
 
 ```diff
 +   Status: CREATED
     contract StablecoinBridgeCHFAU (eth:0x3e445ff4ddDf0ff8aE7458c9746eD80bD664F6C1) [frankencoin/StablecoinBridge]
-    +++ description: Mints ZCHF against a whitelisted Swiss franc stablecoin held in escrow, at a fixed 1:1 (decimal-adjusted) rate, up to a hard cap and only until its expiration. ZCHF can always be burned here to redeem the escrowed stablecoin. A depeg or freeze of the escrowed stablecoin impairs ZCHF backing up to the cap.
+    +++ description: Mints ZCHF against a whitelisted Swiss franc stablecoin held in escrow, at a fixed 1:1 (decimal-adjusted) rate, up to a hard cap and only until its expiration (see isExpired). An expired bridge is permanently mint-disabled, but ZCHF from it can always be burned to redeem the escrowed stablecoin. A depeg or freeze of the escrowed stablecoin impairs ZCHF backing up to the cap.
 ```
 
 ```diff
@@ -62,13 +62,13 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract MintingHubV1 (eth:0x7546762fdb1a6d9146b33960545C3f6394265219) [frankencoin/MintingHubV1]
-    +++ description: Deprecated first version of the minting hub with the same oracle-free, auction-policed design (upfront fees instead of continuous interest). It remains a registered minter forever.
+    +++ description: Deprecated first version of the minting hub with the same oracle-free, auction-policed design (upfront fees instead of continuous interest). The official frontend no longer supports it, but it remains a registered minter forever and stays permissionlessly usable.
 ```
 
 ```diff
 +   Status: CREATED
     contract StablecoinBridgeXCHF (eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF) [frankencoin/StablecoinBridge]
-    +++ description: Mints ZCHF against a whitelisted Swiss franc stablecoin held in escrow, at a fixed 1:1 (decimal-adjusted) rate, up to a hard cap and only until its expiration. ZCHF can always be burned here to redeem the escrowed stablecoin. A depeg or freeze of the escrowed stablecoin impairs ZCHF backing up to the cap.
+    +++ description: Mints ZCHF against a whitelisted Swiss franc stablecoin held in escrow, at a fixed 1:1 (decimal-adjusted) rate, up to a hard cap and only until its expiration (see isExpired). An expired bridge is permanently mint-disabled, but ZCHF from it can always be burned to redeem the escrowed stablecoin. A depeg or freeze of the escrowed stablecoin impairs ZCHF backing up to the cap.
 ```
 
 ```diff

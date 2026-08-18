@@ -14,6 +14,40 @@
           "description": "immediately set per-chain CCIP rate limits for bridged ZCHF and veto pending CCIPAdmin proposals, with 2% of FPS votes."
         }
       ]
+    },
+    "pendingProposals": {
+      "description": "Hashes of timelocked CCIPAdmin proposals that are currently pending (proposed but not yet enacted or denied). A new entry starts the 7-day (config) or 21-day (admin transfer) veto window.",
+      "handler": {
+        "type": "event",
+        "select": "hash",
+        "add": {
+          "event": "ProposalMade"
+        },
+        "remove": {
+          "event": ["ProposalDenied", "ProposalEnacted"]
+        }
+      }
+    },
+    "proposedAdminTransfers": {
+      "description": "All addresses ever proposed as new CCIP admin (21-day timelock). A transfer hands over ownership of the ZCHF token pool and its TokenAdminRegistry entry.",
+      "handler": {
+        "type": "event",
+        "select": "newAdmin",
+        "add": {
+          "event": "AdminTransferProposed"
+        },
+        "ignoreRelative": true
+      }
+    },
+    "rateLimitUpdates": {
+      "description": "History of per-chain CCIP rate limit changes (chain selectors, from RateLimit events). Rate limits bound how much ZCHF a CCIP compromise could mint and are changeable immediately by qualified FPS holders.",
+      "handler": {
+        "type": "event",
+        "select": "remoteChain",
+        "add": {
+          "event": "RateLimit"
+        }
+      }
     }
   }
 }

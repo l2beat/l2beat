@@ -30,7 +30,7 @@ export const frankencoin: BaseProject = {
   },
   display: {
     description:
-      'Frankencoin is an oracle-free stablecoin protocol issuing ZCHF, a token tracking the Swiss franc. All contracts are immutable and adminless: ZCHF supply is controlled only by minter modules that anyone can propose and that qualified FPS pool share holders (2% of time-weighted votes) can veto during a public application period. Collateralized minting is policed by permissionless auctions instead of price oracles, and savers earn a governance-set rate directly or through the immutable svZCHF vault.',
+      'Frankencoin is an oracle-free stablecoin protocol issuing ZCHF, a token tracking the Swiss franc. All contracts are immutable and configs are dao-governed: ZCHF supply is controlled only by minter modules that anyone can propose and that qualified FPS pool share holders (2% of time-weighted votes) can veto during a public application period. All protocol fees and interest accrue to an equity reserve that anyone can invest in by minting FPS shares, and that absorbs losses before ZCHF holders are affected. Collateralized minting is policed by permissionless auctions instead of price oracles, and savers earn a governance-set rate directly or through the immutable svZCHF vault.',
     detailedDescription: readProjectMarkdown(
       'frankencoin',
       'detailedDescription',
@@ -65,6 +65,13 @@ export const frankencoin: BaseProject = {
       projectId: ProjectId('ccip'),
       description:
         'Chainlink CCIP bridges ZCHF to other chains through a token pool that is a registered minter. A CCIP compromise could mint unbacked ZCHF on Ethereum, bounded by the governance-set per-chain rate limits.',
+    },
+    {
+      type: 'not-tracked',
+      name: 'AllUnity CHF (CHFAU)',
+      icon: 'chfau',
+      description:
+        'ZCHF can be minted 1:1 against the centrally issued CHFAU stablecoin through a bridge capped at 10M ZCHF (expiring April 2027). A depeg or freeze of CHFAU impairs ZCHF backing up to that cap.',
     },
   ],
   permissions: discovery.getDiscoveredPermissions(),
