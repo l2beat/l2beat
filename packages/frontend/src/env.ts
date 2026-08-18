@@ -22,8 +22,13 @@ const CLIENT_CONFIG = {
   CLIENT_SIDE_SHOW_HIRING_BADGE: featureFlag.default(false),
   CLIENT_SIDE_TRACKED_TXS_OUTAGE: featureFlag.default(false),
   CLIENT_SIDE_OPENPANEL_CLIENT_ID: z.string().optional(),
+  // Client-side because the compare entry points (sidebar, chart buttons)
+  // are rendered by client components and must hydrate identically.
+  FEATURE_FLAG_COMPARE_PROJECTS: featureFlag.default(false),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
+/** The env keys safe to embed in the HTML for the browser bundle. */
+export const CLIENT_ENV_KEYS = Object.keys(CLIENT_CONFIG)
 
 const SERVER_CONFIG = {
   ...CLIENT_CONFIG,
@@ -66,7 +71,6 @@ const SERVER_CONFIG = {
     .optional(),
   INTEROP_CHAINS: stringArray.optional(),
   INTEROP_UPCOMING_CHAINS: stringArray.optional(),
-  FEATURE_FLAG_COMPARE_PROJECTS: featureFlag.default(false),
 }
 const ServerEnv = z.object(SERVER_CONFIG)
 
@@ -129,7 +133,6 @@ function getRawEnv(): Record<
     LOG_LEVEL: process.env.LOG_LEVEL,
     INTEROP_CHAINS: process.env.INTEROP_CHAINS,
     INTEROP_UPCOMING_CHAINS: process.env.INTEROP_UPCOMING_CHAINS,
-    FEATURE_FLAG_COMPARE_PROJECTS: process.env.FEATURE_FLAG_COMPARE_PROJECTS,
     // Client
     CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.CLIENT_SIDE_GITCOIN_ROUND_LIVE,
     CLIENT_SIDE_HOME_PAGE: process.env.CLIENT_SIDE_HOME_PAGE,
@@ -137,5 +140,6 @@ function getRawEnv(): Record<
     CLIENT_SIDE_TRACKED_TXS_OUTAGE: process.env.CLIENT_SIDE_TRACKED_TXS_OUTAGE,
     CLIENT_SIDE_OPENPANEL_CLIENT_ID:
       process.env.CLIENT_SIDE_OPENPANEL_CLIENT_ID,
+    FEATURE_FLAG_COMPARE_PROJECTS: process.env.FEATURE_FLAG_COMPARE_PROJECTS,
   }
 }

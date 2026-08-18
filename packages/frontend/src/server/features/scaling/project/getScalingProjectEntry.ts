@@ -19,6 +19,8 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
+import type { CompareMetricId } from '~/pages/scaling/compare/utils/compareChartState'
+import { getCompareEntryUrl } from '~/pages/scaling/compare/utils/getCompareEntryUrl'
 import {
   countRecentDiscoveryUpdates,
   getDiscoveryUpdates,
@@ -399,6 +401,7 @@ export async function getScalingProjectEntry(
         id: 'tvs',
         title: 'Value Secured',
         tvsBreakdownUrl: `/scaling/projects/${project.slug}/tvs-breakdown`,
+        compareUrl: getProjectCompareUrl(project, 'tvs'),
         milestones: sortedMilestones,
         tokens,
         tvsInfo: project.tvsInfo,
@@ -432,6 +435,7 @@ export async function getScalingProjectEntry(
         milestones: sortedMilestones,
         category: project.scalingInfo.type,
         project: projectWithIcon,
+        compareUrl: getProjectCompareUrl(project, 'activity'),
         ...activitySection,
       },
     })
@@ -788,4 +792,18 @@ export async function getScalingProjectEntry(
   }
 
   return { ...common, sections }
+}
+
+/**
+ * The compare page only lists live scaling projects, so archived ones get
+ * no entry link. Undefined while the compare page is behind its flag.
+ */
+function getProjectCompareUrl(
+  project: Project<never, 'archivedAt'>,
+  metric: CompareMetricId,
+): string | undefined {
+  if (!env.FEATURE_FLAG_COMPARE_PROJECTS || project.archivedAt) {
+    return undefined
+  }
+  return getCompareEntryUrl({ metric, projectSlug: project.slug })
 }
