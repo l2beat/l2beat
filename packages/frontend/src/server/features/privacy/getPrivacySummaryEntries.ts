@@ -21,6 +21,7 @@ export interface PrivacySummaryEntry {
   href: string
   description: string
   isTracked: boolean
+  tvlNotApplicable: boolean
   totalValueLockedUsd?: number
   poolsTracked: number
   totalDeposits?: number
@@ -100,7 +101,9 @@ export async function getPrivacySummaryEntries(
       ...getPrivacySummaryBaseEntry(project),
       ...getTrackingMetrics({
         poolsTracked: getPoolsTracked(project),
-        totalValueLockedUsd,
+        totalValueLockedUsd: project.privacyInfo.tvlNotApplicable
+          ? undefined
+          : totalValueLockedUsd,
         totalDeposits,
         totalValueDeposited30dUsd,
       }),
@@ -119,7 +122,9 @@ function getMockPrivacySummaryEntries(
         ...getPrivacySummaryBaseEntry(project),
         ...getTrackingMetrics({
           poolsTracked: getPoolsTracked(project),
-          totalValueLockedUsd: Math.random() * 1_000_000_000,
+          totalValueLockedUsd: project.privacyInfo.tvlNotApplicable
+            ? undefined
+            : Math.random() * 1_000_000_000,
           totalDeposits: Math.round(Math.random() * 10_000),
           totalValueDeposited30dUsd: Math.random() * 100_000_000,
         }),
@@ -139,6 +144,7 @@ function getPrivacySummaryBaseEntry(
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
     href: `/privacy/projects/${project.slug}`,
     description: project.display.description,
+    tvlNotApplicable: project.privacyInfo.tvlNotApplicable ?? false,
     isUnderReview: !!project.statuses.reviewStatus,
     summaryTrackedItemName:
       project.privacyInfo.summaryTrackedItemName ?? 'pool',
@@ -180,6 +186,10 @@ function comparePrivacySummaryEntries(
 ): number {
   if (a.isTracked !== b.isTracked) {
     return a.isTracked ? -1 : 1
+  }
+
+  if (a.tvlNotApplicable !== b.tvlNotApplicable) {
+    return a.tvlNotApplicable ? 1 : -1
   }
 
   return (b.totalValueLockedUsd ?? 0) - (a.totalValueLockedUsd ?? 0)

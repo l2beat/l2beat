@@ -993,6 +993,8 @@ export type ProjectExternalDependency =
 
 export interface ProjectPrivacyInfo {
   tokens: ProjectPrivacyToken[]
+  /** Whether TVL does not apply to this protocol because it does not lock funds. */
+  tvlNotApplicable?: true
   summaryTrackedItemName?: string
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue

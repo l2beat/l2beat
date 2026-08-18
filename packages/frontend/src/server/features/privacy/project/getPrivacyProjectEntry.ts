@@ -47,6 +47,7 @@ export interface ProjectPrivacyEntry {
   }
   bucketCount: number
   assetsCount: number
+  tvlNotApplicable: boolean
   attributes: PrivacyAttribute[]
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacySummaryValue
@@ -193,15 +194,17 @@ export async function getPrivacyProjectEntry(
       iconUrl: icon,
     }
 
-    sections.push({
-      type: 'PrivacyTvlSection',
-      props: {
-        id: 'privacy-tvl',
-        title: 'Value Locked',
-        defaultRange: defaultChartRange,
-        project: chartProject,
-      },
-    })
+    if (!details.tvlNotApplicable) {
+      sections.push({
+        type: 'PrivacyTvlSection',
+        props: {
+          id: 'privacy-tvl',
+          title: 'Value Locked',
+          defaultRange: defaultChartRange,
+          project: chartProject,
+        },
+      })
+    }
 
     sections.push({
       type: 'PrivacyFlowsSection',
@@ -219,6 +222,7 @@ export async function getPrivacyProjectEntry(
         id: 'privacy-assets-breakdown',
         title: 'Assets Breakdown',
         assets: details.assets,
+        showTvl: !details.tvlNotApplicable,
       },
     })
   }
@@ -320,6 +324,7 @@ export async function getPrivacyProjectEntry(
     discoUi,
     bucketCount: details.summary.bucketCount,
     assetsCount: details.assets.length,
+    tvlNotApplicable: details.tvlNotApplicable,
     attributes: details.attributes,
     exitWindow: details.exitWindow,
     trustedSetup: toTrustedSetupSummaryValue(
@@ -350,6 +355,18 @@ async function getTotalValueLockedUsd(
     return 0
   }
 
+  const flowsPrefetch = helpers.queryClient.prefetchQuery(
+    helpers.trpc.privacy.flowsChart.queryOptions({
+      projectIds: [details.id],
+      range,
+    }),
+  )
+
+  if (details.tvlNotApplicable) {
+    await flowsPrefetch
+    return 0
+  }
+
   // The flows chart prefetch rides along so both charts are dehydrated for the client
   const [tvlChart] = await Promise.all([
     helpers.queryClient.fetchQuery(
@@ -358,12 +375,7 @@ async function getTotalValueLockedUsd(
         range,
       }),
     ),
-    helpers.queryClient.prefetchQuery(
-      helpers.trpc.privacy.flowsChart.queryOptions({
-        projectIds: [details.id],
-        range,
-      }),
-    ),
+    flowsPrefetch,
   ])
 
   return tvlChart.chart.at(-1)?.[1][details.id] ?? 0

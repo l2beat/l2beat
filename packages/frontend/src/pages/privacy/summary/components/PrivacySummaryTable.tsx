@@ -7,6 +7,7 @@ import {
 } from '@tanstack/react-table'
 import { useState } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
@@ -122,6 +123,10 @@ const columns = [
     id: 'totalValueLockedUsd',
     header: 'TVL',
     cell: (ctx) => {
+      if (ctx.row.original.tvlNotApplicable) {
+        return <NotApplicableBadge />
+      }
+
       const value = ctx.getValue()
       return (
         <MetricCell>

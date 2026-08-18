@@ -32,8 +32,11 @@ export function PrivacySummaryPage({
             Privacy
           </MainPageHeader>
           <PrivacySummaryChartsSection
-            projects={entries
+            flowProjects={entries
               .filter((e) => e.isTracked)
+              .map((e) => ({ id: e.id, name: e.name }))}
+            tvlProjects={entries
+              .filter((e) => e.isTracked && !e.tvlNotApplicable)
               .map((e) => ({ id: e.id, name: e.name }))}
             defaultRange={defaultChartRange}
           />

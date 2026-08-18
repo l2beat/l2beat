@@ -13,19 +13,34 @@ import type { PrivacyTvlBreakdownProject } from './PrivacyTvlBreakdownChart'
 import { PrivacyTvlBreakdownChart } from './PrivacyTvlBreakdownChart'
 
 interface Props {
-  projects: PrivacyTvlBreakdownProject[]
+  flowProjects: PrivacyTvlBreakdownProject[]
+  tvlProjects: PrivacyTvlBreakdownProject[]
   defaultRange: ChartRange
 }
 
-export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
+export function PrivacySummaryChartsSection({
+  flowProjects,
+  tvlProjects,
+  defaultRange,
+}: Props) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const projectIds = useMemo(() => projects.map((p) => p.id).sort(), [projects])
+  const flowProjectIds = useMemo(
+    () => flowProjects.map((p) => p.id).sort(),
+    [flowProjects],
+  )
+  const tvlProjectIds = useMemo(
+    () => tvlProjects.map((p) => p.id).sort(),
+    [tvlProjects],
+  )
   const { data: flowsData, isLoading: isFlowsLoading } = useQuery(
-    trpc.privacy.flowsChart.queryOptions({ projectIds, range }),
+    trpc.privacy.flowsChart.queryOptions({
+      projectIds: flowProjectIds,
+      range,
+    }),
   )
   const { data: tvlData, isLoading: isTvlLoading } = useQuery(
-    trpc.privacy.tvlChart.queryOptions({ projectIds, range }),
+    trpc.privacy.tvlChart.queryOptions({ projectIds: tvlProjectIds, range }),
   )
 
   const flowChartTimeRange = useMemo(
@@ -69,7 +84,7 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
       </div>
       <PrivacyTvlBreakdownChart
         data={tvlData?.chart}
-        projects={projects}
+        projects={tvlProjects}
         syncedUntil={tvlData?.syncedUntil}
         isLoading={isTvlLoading}
       />

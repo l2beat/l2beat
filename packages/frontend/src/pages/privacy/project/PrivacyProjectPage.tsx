@@ -91,6 +91,7 @@ export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
                     >
                       <PrivacyProjectStats
                         totalValueLockedUsd={entry.summary.totalValueLockedUsd}
+                        tvlNotApplicable={entry.tvlNotApplicable}
                         assetsCount={entry.assetsCount}
                         bucketsCount={entry.bucketCount}
                         deposits={entry.summary.deposits}

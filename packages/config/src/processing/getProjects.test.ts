@@ -379,6 +379,11 @@ describe('getProjects', () => {
   })
 
   describe('privacy projects', () => {
+    it('Umbra marks TVL as not applicable', () => {
+      const umbra = projects.find((project) => project.slug === 'umbra')
+      expect(umbra?.privacyInfo?.tvlNotApplicable).toEqual(true)
+    })
+
     for (const project of projects) {
       if (!project.privacyInfo) continue
 
@@ -387,6 +392,12 @@ describe('getProjects', () => {
           project.zkCatalogInfo?.trustedSetups.length ?? 0,
         ).toBeLessThanOrEqual(1)
       })
+
+      if (project.privacyInfo.tvlNotApplicable) {
+        it(`${project.id} has no TVS config when TVL is not applicable`, () => {
+          expect(project.tvsConfig).toEqual(undefined)
+        })
+      }
     }
   })
 
