@@ -1,5 +1,4 @@
-import { formatInteger } from '@l2beat/shared-pure'
-import { formatDuration } from '~/components/chart/liveness/LivenessChart'
+import { formatInteger, formatSeconds } from '@l2beat/shared-pure'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { ChevronIcon } from '~/icons/Chevron'
 import { anomalySubtypeToLabel } from '~/pages/scaling/liveness/components/AnomalyIndicator'
@@ -46,7 +45,7 @@ export function HomeAnomaliesTile({
                     .map((subtype) =>
                       anomalySubtypeToLabel(subtype).toLowerCase(),
                     )
-                    .join(', ')} · ${formatDuration(first.durationInSeconds)}`}
+                    .join(', ')} · ${formatSeconds(first.durationInSeconds)}`}
                   {count > 1 && ` · +${count - 1} more`}
                 </span>
               </>

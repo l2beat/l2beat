@@ -1,11 +1,12 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
-  formatLargeNumber,
+  formatNumber,
   formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { formatBasisPoints } from '../../common/formatBasisPoints'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
@@ -101,10 +102,6 @@ const railStaked = Number(
     .replaceAll(',', ''),
 )
 const RAILGUN_SINCE_TIMESTAMP = UnixTime(railgunCore.sinceTimestamp ?? 0)
-
-function formatBasisPoints(value: number): string {
-  return `${Number((value / 100).toFixed(4))}%`
-}
 
 const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((token) => {
   const resolved = getTokenByAddress(token.address)
@@ -258,16 +255,16 @@ export const railgun: BaseProject = {
       content: readProjectMarkdown('railgun', 'upgradesAndGovernance'),
       governanceInfo: {
         upgrades: {
-          'Normal upgrade path': `Create a proposal with an IPFS link and onchain calldata in the [Voting contract](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) → collect **${formatLargeNumber(Number(proposalSponsorThreshold / 10n ** 18n))} RAIL** sponsorship within ${formatSeconds(sponsorWindow)} → wait ${formatSeconds(votingStartOffset)} → cast Yay votes within ${formatSeconds(votingYayEndOffset)} and Nay votes within ${formatSeconds(votingNayEndOffset)} → pass with a simple majority and **${formatLargeNumber(Number(quorum / 10n ** 18n))} RAIL** quorum → wait ${formatSeconds(executionStartOffset)} → permissionless execution through the Delegator within ${formatSeconds(executionEndOffset)}.`,
+          'Normal upgrade path': `Create a proposal with an IPFS link and onchain calldata in the [Voting contract](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) → collect **${formatNumber(Number(proposalSponsorThreshold / 10n ** 18n))} RAIL** sponsorship within ${formatSeconds(sponsorWindow)} → wait ${formatSeconds(votingStartOffset)} → cast Yay votes within ${formatSeconds(votingYayEndOffset)} and Nay votes within ${formatSeconds(votingNayEndOffset)} → pass with a simple majority and **${formatNumber(Number(quorum / 10n ** 18n))} RAIL** quorum → wait ${formatSeconds(executionStartOffset)} → permissionless execution through the Delegator within ${formatSeconds(executionEndOffset)}.`,
           'Exit window': `**${formatSeconds(executionStartOffset)}** — a passed proposal must wait this long before it can be executed, giving users time to unshield funds.`,
         },
         tokenGovernance: {
-          'Governance token': `\`RAIL\` 1 token = 1 vote, delegated. Total supply: **${formatLargeNumber(Number(railTotalSupply / 10n ** 18n))} RAIL**, DAO-owned treasury (unavailable for voting): **${formatLargeNumber(railTreasuryBalance)} RAIL**, staked for voting: **${formatLargeNumber(railStaked)} RAIL**, the rest is circulating supply.`,
+          'Governance token': `\`RAIL\` 1 token = 1 vote, delegated. Total supply: **${formatNumber(Number(railTotalSupply / 10n ** 18n))} RAIL**, DAO-owned treasury (unavailable for voting): **${formatNumber(railTreasuryBalance)} RAIL**, staked for voting: **${formatNumber(railStaked)} RAIL**, the rest is circulating supply.`,
           'Stake lock': `Unstaking has **${formatSeconds(stakeLocktime)}** delay.`,
           'Voting venue':
             '[Voting contract](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) on Ethereum. Proposal text is distributed over IPFS, its CID is available as a parameter of \`createPropsal()\` call on the voting contract.',
-          'Proposal threshold': `**No threshold to create a proposal.** A proposal must receive sponsorship from **${formatLargeNumber(Number(proposalSponsorThreshold / 10n ** 18n))} RAIL** stake within ${formatSeconds(sponsorWindow)}.`,
-          Quorum: `**${formatLargeNumber(Number(quorum / 10n ** 18n))} RAIL**, with a simple majority required for acceptance.`,
+          'Proposal threshold': `**No threshold to create a proposal.** A proposal must receive sponsorship from **${formatNumber(Number(proposalSponsorThreshold / 10n ** 18n))} RAIL** stake within ${formatSeconds(sponsorWindow)}.`,
+          Quorum: `**${formatNumber(Number(quorum / 10n ** 18n))} RAIL**, with a simple majority required for acceptance.`,
           'Execution model': `**Onchain calldata · Permissionless execution through the Delegator.** A passed proposal waits ${formatSeconds(executionStartOffset)}, after which anyone can execute it through the [Delegator contract](https://etherscan.io/address/0xB6d513f6222Ee92Fff975E901bd792E2513fB53B) within ${formatSeconds(executionEndOffset)}.`,
         },
       },

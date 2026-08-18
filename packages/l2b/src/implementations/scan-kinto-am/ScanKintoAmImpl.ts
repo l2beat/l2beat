@@ -1,3 +1,4 @@
+import { formatSeconds } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { ethers } from 'ethers'
 
@@ -234,18 +235,7 @@ function formatDuration(seconds: number): string {
   if (seconds < 0) return chalk.red('Invalid Duration') // Error color
   if (seconds === 0) return chalk.magenta('0s')
 
-  const days = Math.floor(seconds / 86400)
-  const hours = Math.floor((seconds % 86400) / 3600)
-  const minutes = Math.floor((seconds % 3600) / 60)
-  const secs = seconds % 60
-
-  const parts: string[] = []
-  if (days > 0) parts.push(`${days}d`)
-  if (hours > 0) parts.push(`${hours}h`)
-  if (minutes > 0) parts.push(`${minutes}m`)
-  if (secs > 0 || parts.length === 0) parts.push(`${secs}s`) // Show 0s if duration is 0
-
-  return chalk.magenta(parts.join(' '))
+  return chalk.magenta(formatSeconds(seconds, { preventRoundingUp: true }))
 }
 
 // Color: Purple(magenta) for timestamp
