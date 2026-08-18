@@ -37,7 +37,7 @@ export const across: BaseProject = {
       userRecovery: {
         value: 'Slow-fill fallback',
         description:
-          'If no relayer fast-fills a deposit, Across can complete it through the protocol slow-fill path. This is not available for chains without an Ethereum canonical bridge adapter.',
+          'If no relayer fast-fills a deposit, Across can complete it through the protocol slow-fill path. This is not available for chains without an Ethereum canonical bridge adapter, nor for V5 Gateway deposits, which are instead refunded on the origin chain after the fill deadline expires.',
       },
       solverAccess: {
         value: 'Permissionless',

@@ -1,5 +1,6 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import { utils } from 'ethers'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { ArbitrumScheduledTransactionsHandler } from './ArbitrumScheduledTransactionsHandler'
@@ -57,6 +58,74 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
       value: EXPECTED_DECODED_SCHEDULED_TRANSACTIONS as ContractValue,
       ignoreRelative: true,
     })
+  })
+
+  describe('decodeCalldata', () => {
+    const handler = new ArbitrumScheduledTransactionsHandler(
+      'scheduledTransactions',
+      [
+        'event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)',
+      ],
+    )
+
+    it('decodes calldata when the selector is present in the ABI', () => {
+      const iface = new utils.Interface([
+        'function adjustTotalDelegation(int256 amount)',
+      ])
+      const calldata = iface.encodeFunctionData('adjustTotalDelegation', [1])
+      expect(handler.decodeCalldata(iface, calldata)).toEqual({
+        function: 'adjustTotalDelegation',
+        inputs: [{ name: 'amount', value: 1 }],
+      })
+    })
+
+    it('falls back to raw calldata when the selector is not in the ABI', () => {
+      // adjustTotalDelegation(int256) has selector 0xec20b526, which is absent
+      // from this ABI. Without the fallback this throws "no matching function"
+      // and fails the entire scheduledTransactions field.
+      const iface = new utils.Interface(['function unrelated()'])
+      const calldata = `0xec20b526${'0'.repeat(63)}1`
+      expect(handler.decodeCalldata(iface, calldata)).toEqual({
+        function: '0xec20b526',
+        inputs: [{ name: 'calldata', value: calldata }],
+      })
+    })
+  })
+
+  it('keeps the raw entry when a scheduled tx cannot be decoded', async () => {
+    const handler = new ArbitrumScheduledTransactionsHandler(
+      'scheduledTransactions',
+      [
+        'event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)',
+      ],
+    )
+    handler.getRetryableTicketMagic = async () => RETRYABLE_TICKET_MAGIC
+    // Simulate a scheduled tx the decoder can't handle - e.g. a direct
+    // adjustTotalDelegation(int256) call that is not an execute() wrapper, so
+    // decodeExecuteCall throws before decodeCalldata is even reached.
+    handler.decodeLog = async () => {
+      throw new Error('no matching function (sighash 0xec20b526)')
+    }
+    const provider = mockObject<Thenable<IProvider>>({
+      chain: 'ethereum',
+      getLogs: async () => EXAMPLE_LOGS.slice(0, 1),
+      then: undefined,
+    })
+
+    // execute() must resolve (not reject) despite the undecodable tx.
+    const response = await handler.execute(
+      provider as IProvider,
+      ChainSpecificAddress.random(),
+    )
+    const value = response.value as Record<string, unknown>[]
+    expect(value.length).toEqual(1)
+    const entry = value[0]
+    expect(entry?.raw).not.toEqual(undefined)
+    expect(entry?.id).not.toEqual(undefined)
+    // Degraded: no decoded field, and the whole field did not error out.
+    expect(entry?.decoded).toEqual(undefined)
+    // The degradation is marked so it is visible in the diff, not silent.
+    expect(entry?.decodingFailed).toEqual(true)
   })
 })
 

@@ -62,6 +62,8 @@ export const lighterprover: BaseProject = {
       {
         hash: '0x836ea0348ed3ae0bf5136f58d874d57075d4094691b08c3ef02a6aaa332df363',
         name: 'Lighter verifier',
+        sourceLink:
+          'https://github.com/elliottech/lighter-prover/tree/8c01ea010d6fd46bdb77ef2f93a79278d1adf0df/circuit/src',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
@@ -71,9 +73,12 @@ export const lighterprover: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
-        verificationSteps:
-          'The sources for the verifier circuits are not published and thus the verifier cannot be independently regenerated.',
+        verificationStatus: 'successful',
+        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'lighterprover',
+          'verificationSteps-0x836ea034',
+        ),
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },

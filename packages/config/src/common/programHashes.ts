@@ -1829,6 +1829,19 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
         'common/programHashes/2006389624453304912912750132846114593020263069652857561377702883656839453432.md',
       ),
     },
+  '2373625305120835200243020426311988160128377108314438505880592663683179928225':
+    {
+      title: 'Virtual Starknet OS',
+      proverSystemProject: ProjectId('stwo'),
+      description:
+        'Proves correct execution of a single Starknet transaction against a recent finalized block, used for client-side proving (e.g. STRK-20 privacy pool actions). The Starknet OS only accepts client proof facts whose program hash is in its hardcoded allowlist, which contains exactly this hash.',
+      programUrl:
+        'https://github.com/starkware-libs/sequencer/tree/APOLLO-0.14.3-RC.11/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os',
+      verificationStatus: 'successful',
+      verificationSteps: readMarkdown(
+        'common/programHashes/2373625305120835200243020426311988160128377108314438505880592663683179928225.md',
+      ),
+    },
   '2733003247060056328192560178934419513655729851806095615814023997114795707702':
     {
       ...STARKNET_OS,

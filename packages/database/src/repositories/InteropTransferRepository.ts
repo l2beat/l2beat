@@ -119,18 +119,6 @@ export function hasAnyInteropTransferFinancialsFilter(
   return Object.values(filter).some((value) => value !== undefined)
 }
 
-export interface InteropMissingTokenInfo {
-  chain: string
-  tokenAddress: string
-  count: number
-  plugins: string[]
-}
-
-export interface InteropTransferTokenInfo {
-  chain: string
-  tokenAddress: string
-}
-
 export interface InteropTransferTokenAddress {
   chain: string
   address: string
@@ -855,44 +843,6 @@ export class InteropTransferRepository extends BaseRepository {
     return eb.and(conditions)
   }
 
-  async markAsUnprocessedByTokens(
-    tokens: InteropTransferTokenInfo[],
-  ): Promise<number> {
-    if (tokens.length === 0) {
-      return 0
-    }
-
-    const uniqueTokens = Array.from(
-      new Map(
-        tokens.map((token) => [`${token.chain}:${token.tokenAddress}`, token]),
-      ).values(),
-    )
-
-    const result = await this.db
-      .updateTable('InteropTransfer')
-      .set({ isProcessed: false })
-      .where('isProcessed', '=', true)
-      .where((eb) =>
-        eb.or(
-          uniqueTokens.map((token) =>
-            eb.or([
-              eb.and([
-                eb('srcChain', '=', token.chain),
-                eb('srcTokenAddress', '=', token.tokenAddress),
-              ]),
-              eb.and([
-                eb('dstChain', '=', token.chain),
-                eb('dstTokenAddress', '=', token.tokenAddress),
-              ]),
-            ]),
-          ),
-        ),
-      )
-      .executeTakeFirst()
-
-    return Number(result.numUpdatedRows)
-  }
-
   async getStats(
     timeRange?: InteropTransferTimeRange,
   ): Promise<InteropTransfersStatsRecord[]> {
@@ -1011,75 +961,5 @@ export class InteropTransferRepository extends BaseRepository {
       .deleteFrom('InteropTransfer')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
-  }
-
-  async getMissingTokensInfo(
-    timeRange?: InteropTransferTimeRange,
-  ): Promise<InteropMissingTokenInfo[]> {
-    let query = this.db
-      .selectFrom('InteropTransfer')
-      .select([
-        'plugin',
-        'srcValueUsd',
-        'dstValueUsd',
-        'srcChain',
-        'srcTokenAddress',
-        'dstChain',
-        'dstTokenAddress',
-      ])
-      .where('isProcessed', '=', true)
-      .where((eb) =>
-        eb.or([eb('srcValueUsd', 'is', null), eb('dstValueUsd', 'is', null)]),
-      )
-
-    if (timeRange !== undefined) {
-      query = query
-        .where('timestamp', '>', UnixTime.toDate(timeRange.from))
-        .where('timestamp', '<=', UnixTime.toDate(timeRange.to))
-    }
-
-    const rows = await query.execute()
-
-    const chainAddressCounts = new Map<string, number>()
-    const chainAddressPlugins = new Map<string, Set<string>>()
-
-    for (const row of rows) {
-      if (row.srcValueUsd === null && row.srcChain && row.srcTokenAddress) {
-        const key = `${row.srcChain}:${row.srcTokenAddress}`
-        chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
-        const plugins = chainAddressPlugins.get(key)
-        if (!plugins) {
-          chainAddressPlugins.set(key, new Set([row.plugin]))
-        } else {
-          plugins.add(row.plugin)
-        }
-      }
-      if (row.dstValueUsd === null && row.dstChain && row.dstTokenAddress) {
-        const key = `${row.dstChain}:${row.dstTokenAddress}`
-        chainAddressCounts.set(key, (chainAddressCounts.get(key) || 0) + 1)
-        const plugins = chainAddressPlugins.get(key)
-        if (!plugins) {
-          chainAddressPlugins.set(key, new Set([row.plugin]))
-        } else {
-          plugins.add(row.plugin)
-        }
-      }
-    }
-
-    const result: InteropMissingTokenInfo[] = []
-    for (const [key, count] of chainAddressCounts) {
-      const [chain, tokenAddress] = key.split(':')
-      const plugins = Array.from(
-        chainAddressPlugins.get(key) || new Set<string>(),
-      ).sort()
-      result.push({
-        chain: chain as string,
-        tokenAddress: tokenAddress as string,
-        count,
-        plugins,
-      })
-    }
-
-    return result
   }
 }

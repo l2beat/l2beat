@@ -12,6 +12,11 @@
     "Troves"
   ],
   "ignoreRelatives": ["WETH"],
+  "ignoreInWatchMode": [
+    "getEntireBranchColl",
+    "getEntireBranchDebt",
+    "getTroveIdsCount"
+  ],
   "fields": {
     "constructorArgs": {
       "handler": { "type": "constructorArgs", "nameArgs": true }

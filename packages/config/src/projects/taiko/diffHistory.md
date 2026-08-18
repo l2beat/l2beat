@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x3f0a03976363c3c4b27c5a6535414c8e390c88a0
+
+# Diff at Mon, 17 Aug 2026 08:31:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@804390f890116983904f8ba051435cd62c5cb578 block: 1785837430
+- current timestamp: 1786955407
+
+## Description
+
+Multisig changes.
+
+## Watched changes
+
+```diff
+    contract Taiko Foundation Treasury Multisig (eth:0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xA1D62c7df45847089cfB052396Abe4cDa7879d25"
+      values.$members.1:
++        "eth:0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a"
+      values.$members.0:
+-        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "eth:0x7A5299927F93ffCf33cf381CB0C03C2486b9299A"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      values.operatorMapping.2:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+    }
+```
+
 Generated with discovered.json: 0x513b4d18c023cfa878b0b0ac482731f2a80d327c
 
 # Diff at Tue, 04 Aug 2026 10:17:48 GMT:

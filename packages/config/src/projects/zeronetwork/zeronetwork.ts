@@ -10,6 +10,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zeronetwork')
+const archivedAt = UnixTime(1786523999) // 2026-08-12T08:39:59Z (last L2 block)
 const v26UpgradeTS = UnixTime(1742860739)
 const v29UpgradeTS = UnixTime(1783512011)
 const chainId = 543210
@@ -24,6 +25,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
   discovery,
   additionalBadges: [BADGES.RaaS.Caldera],
   addedAt: UnixTime(1731369600), // 2024-11-12T00:00:00Z
+  archivedAt,
   display: {
     name: 'ZERO Network',
     slug: 'zeronetwork',
@@ -59,6 +61,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
     chainId,
     explorerUrl: 'https://explorer.zero.network',
     sinceTimestamp: UnixTime(1729616414),
+    untilTimestamp: archivedAt,
     apis: [
       {
         type: 'rpc',

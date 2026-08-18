@@ -1,3 +1,97 @@
+Generated with discovered.json: 0xc179c8e7de505d8e6af4d026e2ae88a052f122b4
+
+# Diff at Wed, 12 Aug 2026 09:57:21 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@fcd1e391c3f4bb947d4d1cd82a80d26e44f435a9 block: 1785925620
+- current timestamp: 1786528574
+
+## Description
+
+Rotated two grvt ms members. 
+
+Upgraded boojum verifier to v29.5, one version behind the latest zksync era verifier. It is not reproduced yet.
+
+## Watched changes
+
+```diff
+    contract GrvtChainAdminMultisig (eth:0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x293d3512083507664Ee5EDe44c0477f600e3A3BE"
++        "eth:0x7C1B26554cF3A724613bF47B24f7C65F324702f9"
+      values.$members.1:
+-        "eth:0xe224125147fB0a3d0e1eC30Ed1573ed0632727CC"
++        "eth:0x436694cf0Fb5BF20F96c1FBA1315B26B32f06F4b"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (eth:0x7f33D100f482093182111d69a4a457289e99f4ec) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.
+```
+
+```diff
+    contract Diamond (eth:0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.9:
++        ["2026-08-11T09:38:47.000Z","0xe93d3af0aeb00f811edd3077b734b5e76842842ea919aaeead2c19c4d0157a31",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
+      values.$upgradeCount:
+-        9
++        10
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        124554051588
++        124554051589
+      values.getSemverProtocolVersion.2:
+-        4
++        5
+      values.getVerifier:
+-        "eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45"
++        "eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x9f5C39a2790f38542065E7854b90407371923375 or eth:0xd22cA89e8991FCE568456914c616d303e3142395 depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (eth:0x9f5C39a2790f38542065E7854b90407371923375) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (eth:0xd22cA89e8991FCE568456914c616d303e3142395) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+## Source code changes
+
+```diff
+.../grvt/{.flat@1785925620 => .flat}/L1VerifierFflonk.sol      |  6 +++---
+ .../grvt/{.flat@1785925620 => .flat}/L1VerifierPlonk.sol       | 10 +++++-----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+```
+
 Generated with discovered.json: 0xacb6852061d92f6b80e4b97b2a0192aefa4855fa
 
 # Diff at Wed, 05 Aug 2026 10:28:03 GMT:

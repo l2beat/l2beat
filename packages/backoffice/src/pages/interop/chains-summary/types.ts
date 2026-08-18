@@ -27,7 +27,6 @@ export interface ChainsSummaryRow {
   iconUrl: string | undefined
   production: EnvironmentChainSummaryData
   staging: EnvironmentChainSummaryData
-  missingTokensCount: number | undefined
   suspiciousTransfersCount: number | undefined
   notIncludedTransfersCount: number | undefined
 }

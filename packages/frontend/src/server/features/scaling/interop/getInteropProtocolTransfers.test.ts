@@ -2,6 +2,7 @@ import type { InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import { UNKNOWN_ABSTRACT_TOKEN_ID } from './consts'
 import { toInteropProtocolTransferDetailsItem } from './getInteropProtocolTransfers'
 
 describe(toInteropProtocolTransferDetailsItem.name, () => {
@@ -42,13 +43,11 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       timestamp: 123,
       srcAmount: undefined,
       srcSymbol: 'Unknown',
-      srcAbstractTokenId: 'eth',
-      srcTokenIssuer: null,
+      srcTokenHref: undefined,
       srcTokenIconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       dstAmount: 12.34,
       dstSymbol: 'USDC',
-      dstAbstractTokenId: 'eth',
-      dstTokenIssuer: null,
+      dstTokenHref: undefined,
       dstTokenIconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       valueUsd: 12.34,
       bridge: { name: 'Across', href: '/interop/protocols/across' },
@@ -98,6 +97,63 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
     expect(result.dstTxHashHref).toEqual('https://arbiscan.io/tx/0xdst')
     expect(result.srcTokenIconUrl).toEqual('https://token/eth.png')
     expect(result.dstTokenIconUrl).toEqual('https://token/eth.png')
+  })
+
+  it('builds token hrefs from the abstract token issuer and symbol', () => {
+    const result = toInteropProtocolTransferDetailsItem(
+      transfer(),
+      new Map(),
+      new Map([
+        [
+          'eth',
+          {
+            symbol: 'USDC',
+            iconUrl: 'https://token/usdc.png',
+            issuer: 'Circle',
+          },
+        ],
+      ]),
+      { name: 'Across', href: '/interop/protocols/across' },
+    )
+
+    expect(result.srcTokenHref).toEqual('/interop/tokens/eth/circle/usdc')
+    expect(result.dstTokenHref).toEqual('/interop/tokens/eth/circle/usdc')
+  })
+
+  it('does not link tokens we have no abstract token record for', () => {
+    const result = toInteropProtocolTransferDetailsItem(
+      transfer(),
+      new Map(),
+      new Map(),
+      { name: 'Across', href: '/interop/protocols/across' },
+    )
+
+    expect(result.srcTokenHref).toEqual(undefined)
+    expect(result.dstTokenHref).toEqual(undefined)
+  })
+
+  it('does not link the shared unknown token', () => {
+    const result = toInteropProtocolTransferDetailsItem(
+      transfer({
+        srcAbstractTokenId: UNKNOWN_ABSTRACT_TOKEN_ID,
+        dstAbstractTokenId: UNKNOWN_ABSTRACT_TOKEN_ID,
+      }),
+      new Map(),
+      new Map([
+        [
+          UNKNOWN_ABSTRACT_TOKEN_ID,
+          {
+            symbol: 'Unknown',
+            iconUrl: TOKEN_PLACEHOLDER_ICON_URL,
+            issuer: null,
+          },
+        ],
+      ]),
+      { name: 'Across', href: '/interop/protocols/across' },
+    )
+
+    expect(result.srcTokenHref).toEqual(undefined)
+    expect(result.dstTokenHref).toEqual(undefined)
   })
 
   it('keeps transfer item valid when tx hashes are missing', () => {
