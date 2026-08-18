@@ -1,24 +1,8 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { type InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect } from 'earl'
-import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
+
 import { getRollupStage } from './getRollupStage'
 
 describe(getRollupStage.name, () => {
-  let clock: InstalledClock
-
-  beforeEach(() => {
-    // The upcoming stage 1 requirements are only flagged as `upcoming` until
-    // the countdown expires, so pin the clock relative to it.
-    clock = install({
-      now: UnixTime.toDate(PROJECT_COUNTDOWNS.stageChanges - UnixTime.DAY),
-    })
-  })
-
-  afterEach(() => {
-    clock.uninstall()
-  })
-
   it('should return stage object', () => {
     const result = getRollupStage(
       {
