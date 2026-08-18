@@ -21,7 +21,7 @@ export function HomeAnomaliesTile({
     <HomeCard className={cn('overflow-hidden p-0 md:p-1', className)}>
       <a
         href="/scaling/liveness"
-        className="group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-surface-secondary/50 md:rounded-lg md:px-7 md:py-5"
+        className="group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-surface-secondary/50 md:rounded-sm md:px-7 md:py-5"
       >
         <div className="lg:hidden">
           <LiveIndicator size="md" disabled={!isOngoing} />

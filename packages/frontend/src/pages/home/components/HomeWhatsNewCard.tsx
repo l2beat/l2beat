@@ -1,5 +1,6 @@
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
+import { ChevronIcon } from '~/icons/Chevron'
 import { CloseIcon } from '~/icons/Close'
 import { cn } from '~/utils/cn'
 import { HomeCard } from './HomeCard'
@@ -68,9 +69,9 @@ function WhatsNewItemCard({ item }: { item: HomeWhatsNewItem }) {
       <a
         href={item.href}
         onClick={() => setWidgetClosed(true)}
-        className="group relative block flex-1 overflow-hidden md:flex md:flex-row md:rounded-lg md:border-2 md:border-divider lg:block lg:min-h-52 lg:rounded-none lg:border-0"
+        className="group relative block flex-1 overflow-hidden md:flex md:flex-row md:rounded-lg md:border-2 md:border-divider lg:flex lg:flex-col lg:rounded-none lg:border-0"
       >
-        <div className="relative aspect-video w-full overflow-hidden [container-type:size] md:aspect-auto md:min-h-[5.5rem] md:w-32 md:shrink-0 lg:absolute lg:inset-0 lg:min-h-0 lg:w-full">
+        <div className="relative aspect-video w-full overflow-hidden [container-type:size] md:aspect-auto md:min-h-[5.5rem] md:w-32 md:shrink-0 lg:min-h-32 lg:w-full lg:grow lg:basis-40">
           <img
             src={item.imageSrc}
             alt={item.imageAlt}
@@ -89,25 +90,26 @@ function WhatsNewItemCard({ item }: { item: HomeWhatsNewItem }) {
             />
           )}
         </div>
-        <div className="absolute inset-x-0 bottom-0 flex min-w-0 flex-col gap-0.5 bg-linear-to-t from-black/85 via-black/60 to-transparent p-2.5 pt-8 md:static md:flex-1 md:justify-center md:gap-1 md:bg-none md:p-3 md:pr-8 lg:absolute lg:inset-x-0 lg:bottom-0 lg:bg-linear-to-t lg:p-4 lg:pt-12 lg:pr-4">
+        <div className="absolute inset-x-0 bottom-0 flex min-w-0 flex-col gap-0.5 bg-linear-to-t from-black/85 via-black/60 to-transparent p-2.5 pt-8 md:static md:flex-1 md:justify-center md:gap-1 md:bg-none md:p-3 md:pr-8 lg:relative lg:flex-none lg:gap-1.5 lg:p-4 lg:pr-9">
           <span
             aria-hidden
-            className="font-bold text-white/70 text-xs uppercase tracking-wide md:hidden lg:block"
+            className="font-bold text-white/70 text-xs uppercase tracking-wide md:hidden lg:block lg:text-secondary"
           >
             What's new
           </span>
-          <span className="font-bold text-label-value-14 text-pure-white leading-tight md:text-heading-16 md:text-primary lg:text-pure-white">
+          <span className="font-bold text-label-value-14 text-pure-white leading-tight md:text-heading-16 md:text-primary lg:text-primary">
             {item.title}
           </span>
           {item.description && (
-            <p className="line-clamp-2 text-label-value-12 text-white/80 leading-snug md:text-label-value-13 md:text-secondary lg:text-white/80">
+            <p className="line-clamp-2 text-label-value-12 text-white/80 leading-snug md:text-label-value-13 md:text-secondary lg:text-secondary">
               {item.description}
             </p>
           )}
-          <span className="mt-0.5 flex items-center gap-1 font-bold text-[#66b2ff] text-xs md:text-link lg:text-[#66b2ff]">
+          <span className="mt-0.5 flex items-center gap-1 font-bold text-[#66b2ff] text-xs md:text-link lg:hidden">
             Explore
             <ArrowRightIcon className="size-3 fill-current transition-transform group-hover:translate-x-0.5" />
           </span>
+          <ChevronIcon className="-rotate-90 -translate-y-1/2 absolute top-1/2 right-4 hidden size-2.5 shrink-0 fill-secondary transition-colors group-hover:fill-link lg:block" />
         </div>
       </a>
       <button
