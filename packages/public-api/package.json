@@ -17,15 +17,15 @@
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
+    "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
+    "@l2beat/shared-pure": "workspace:*",
     "@l2beat/validate": "workspace:*",
     "express": "^5.0.0",
     "lodash": "^4.17.21",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "@l2beat/config": "workspace:*",
-    "@l2beat/shared-pure": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@types/express": "^5.0.0",
     "@types/lodash": "^4.17.4",
