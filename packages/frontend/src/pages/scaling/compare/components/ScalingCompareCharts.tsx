@@ -6,6 +6,7 @@ import {
   useState,
 } from 'react'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
+import { DashedButton } from '~/components/core/DashedButton'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
@@ -220,27 +221,22 @@ function CompareChartCard({
 
   return (
     <PrimaryCard>
-      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+      <div className="flex items-center justify-between gap-x-2 md:gap-x-4">
         <MetricSwitcher
           name={`compareMetric-${chartId}`}
           value={config.metric}
           onValueChange={(metric) => setConfig((prev) => ({ ...prev, metric }))}
         />
-        <div className="flex items-center gap-1">
-          {metric.Controls && (
-            <metric.Controls state={config} setState={setConfig} />
-          )}
-          {onRemove && (
-            <button
-              type="button"
-              aria-label="Remove chart"
-              onClick={onRemove}
-              className="ml-1 flex size-7 cursor-pointer items-center justify-center rounded-lg hover:bg-surface-secondary primary-card:hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
-            >
-              <CloseIcon className="size-2.5 fill-secondary" aria-hidden />
-            </button>
-          )}
-        </div>
+        {onRemove && (
+          <button
+            type="button"
+            aria-label="Remove chart"
+            onClick={onRemove}
+            className="flex size-7 shrink-0 cursor-pointer items-center justify-center rounded-lg hover:bg-surface-secondary primary-card:hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+          >
+            <CloseIcon className="size-2.5 fill-secondary" aria-hidden />
+          </button>
+        )}
       </div>
       <CompareChartIdProvider chartId={chartId}>
         <div
@@ -250,6 +246,11 @@ function CompareChartCard({
           <metric.Chart projects={projects} state={chartState} />
         </div>
       </CompareChartIdProvider>
+      {metric.Controls && (
+        <div className="mt-3 flex flex-wrap items-center gap-1">
+          <metric.Controls state={config} setState={setConfig} />
+        </div>
+      )}
     </PrimaryCard>
   )
 }
@@ -269,7 +270,7 @@ function MetricSwitcher({
 }) {
   const isClient = useIsClient()
   if (!isClient) {
-    return <Skeleton className="h-9 w-[340px]" />
+    return <Skeleton className="h-9 w-[300px] md:w-[340px]" />
   }
   return (
     <RadioGroup
@@ -278,13 +279,13 @@ function MetricSwitcher({
       value={value}
       onValueChange={(value) => onValueChange(value as CompareMetricId)}
       variant="highlighted"
-      className="h-9"
+      className="h-9 max-w-full overflow-x-auto"
     >
       {Object.values(COMPARE_METRICS).map((metric) => (
         <RadioGroupItem
           key={metric.id}
           value={metric.id}
-          className="h-full px-2 text-sm"
+          className="h-full whitespace-nowrap px-1.5 text-xs md:px-2 md:text-sm"
         >
           {metric.label}
         </RadioGroupItem>
@@ -306,21 +307,14 @@ function AddChartButton({
     // enabled element so the tooltip still receives pointer events.
     <Tooltip>
       <TooltipTrigger asChild disabled={!atCap}>
-        <button
-          type="button"
+        <DashedButton
           aria-disabled={atCap}
           onClick={atCap ? undefined : onClick}
-          className={cn(
-            'flex h-12 w-full items-center justify-center gap-1.5 rounded-xl border border-divider border-dashed font-medium text-secondary text-sm',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand',
-            atCap
-              ? 'cursor-not-allowed opacity-50'
-              : 'cursor-pointer hover:bg-surface-secondary',
-          )}
+          className="h-12 w-full rounded-xl"
         >
           <PlusIcon className="size-4" />
           Add chart
-        </button>
+        </DashedButton>
       </TooltipTrigger>
       <TooltipContent>
         Maximum of {MAX_COMPARE_CHARTS} charts reached
@@ -361,7 +355,7 @@ function CopyLinkButton({ getShareUrl }: { getShareUrl: () => string }) {
       onClick={() => void copy(getShareUrl()).then(setCopied)}
       className={cn(
         'inline-flex h-8 items-center gap-1.5 rounded-lg px-2 font-medium text-xs md:text-sm',
-        'bg-surface-primary hover:bg-surface-primary-hover',
+        'bg-surface-primary',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
       )}
     >

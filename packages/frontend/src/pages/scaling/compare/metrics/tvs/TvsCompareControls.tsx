@@ -1,3 +1,4 @@
+import { Checkbox } from '~/components/core/Checkbox'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import {
   Select,
@@ -5,12 +6,23 @@ import {
   SelectGroup,
   SelectItem,
   SelectLabel,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from '~/components/core/Select'
 import { Skeleton } from '~/components/core/Skeleton'
-import { DisplayControls } from '~/components/table/display/DisplayControls'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
+import {
+  DISPLAY_OPTIONS,
+  type DisplayOption,
+  type DisplayOptionsKey,
+} from '~/components/table/display/displayOptions'
 import { useIsClient } from '~/hooks/useIsClient'
+import { InfoIcon } from '~/icons/Info'
 import {
   COMPARE_TVS_ASSET_CATEGORIES,
   COMPARE_TVS_BRIDGE_TYPES,
@@ -48,43 +60,7 @@ export function TvsCompareControls({
   }
   const restrictedRwaFilterActive = state.tvsFilter === 'rwaRestricted'
   return (
-    <div className="flex items-center gap-1">
-      <Select
-        value={state.tvsFilter}
-        onValueChange={(value) =>
-          setState((prev) => ({
-            ...prev,
-            tvsFilter: value as CompareTvsFilter,
-          }))
-        }
-      >
-        <SelectTrigger className="h-9" aria-label="Filter the compared value">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent align="end">
-          <SelectItem value="all">All</SelectItem>
-          <SelectGroup>
-            <SelectLabel className="pl-2.5 text-secondary">
-              Bridge type
-            </SelectLabel>
-            {COMPARE_TVS_BRIDGE_TYPES.map((bridgeType) => (
-              <SelectItem key={bridgeType} value={bridgeType}>
-                {TVS_BRIDGE_TYPE_LABELS[bridgeType]}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-          <SelectGroup>
-            <SelectLabel className="pl-2.5 text-secondary">
-              Asset category
-            </SelectLabel>
-            {COMPARE_TVS_ASSET_CATEGORIES.map((assetCategory) => (
-              <SelectItem key={assetCategory} value={assetCategory}>
-                {TVS_ASSET_CATEGORY_LABELS[assetCategory]}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+    <div className="flex flex-wrap items-center gap-1">
       <RadioGroup
         name="compareTvsUnit"
         value={state.tvsUnit}
@@ -101,27 +77,106 @@ export function TvsCompareControls({
           ETH
         </RadioGroupItem>
       </RadioGroup>
-      <DisplayControls
-        display={{
-          // Show the effective value: the toggle is overridden to false
-          // while the Restricted RWAs filter is active, because excluding
-          // restricted RWAs while comparing them would zero the chart.
-          excludeRwaRestrictedTokens:
-            effectiveExcludeRwaRestrictedTokens(state),
-          excludeAssociatedTokens: state.excludeAssociatedTokens,
-        }}
-        disabled={
+      <Select
+        value={state.tvsFilter}
+        onValueChange={(value) =>
+          setState((prev) => ({
+            ...prev,
+            tvsFilter: value as CompareTvsFilter,
+          }))
+        }
+      >
+        <SelectTrigger
+          className="h-9 primary-card:bg-surface-secondary"
+          aria-label="Filter the compared value"
+        >
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent
+          align="end"
+          // Sized to the viewport instead of the default cap so the whole
+          // list is visible without scrolling wherever it fits.
+          className="max-h-(--radix-select-content-available-height)"
+        >
+          <SelectItem value="all">All</SelectItem>
+          <SelectSeparator />
+          <SelectGroup>
+            <SelectLabel>Bridge type</SelectLabel>
+            {COMPARE_TVS_BRIDGE_TYPES.map((bridgeType) => (
+              <SelectItem key={bridgeType} value={bridgeType}>
+                {TVS_BRIDGE_TYPE_LABELS[bridgeType]}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+          <SelectSeparator />
+          <SelectGroup>
+            <SelectLabel>Asset category</SelectLabel>
+            {COMPARE_TVS_ASSET_CATEGORIES.map((assetCategory) => (
+              <SelectItem key={assetCategory} value={assetCategory}>
+                {TVS_ASSET_CATEGORY_LABELS[assetCategory]}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+      <DisplayCheckbox
+        optionKey="excludeRwaRestrictedTokens"
+        // Show the effective value: the toggle is overridden to false while
+        // the Restricted RWAs filter is active, because excluding restricted
+        // RWAs while comparing them would zero the chart.
+        checked={effectiveExcludeRwaRestrictedTokens(state)}
+        disabledReason={
           restrictedRwaFilterActive
-            ? {
-                excludeRwaRestrictedTokens:
-                  'Unavailable while comparing restricted RWAs - it would exclude the very tokens being compared.',
-              }
+            ? 'Unavailable while comparing restricted RWAs - it would exclude the very tokens being compared.'
             : undefined
         }
-        setDisplay={(key, value) =>
-          setState((prev) => ({ ...prev, [key]: value }))
+        onCheckedChange={(excludeRwaRestrictedTokens) =>
+          setState((prev) => ({ ...prev, excludeRwaRestrictedTokens }))
+        }
+      />
+      <DisplayCheckbox
+        optionKey="excludeAssociatedTokens"
+        checked={state.excludeAssociatedTokens}
+        onCheckedChange={(excludeAssociatedTokens) =>
+          setState((prev) => ({ ...prev, excludeAssociatedTokens }))
         }
       />
     </div>
+  )
+}
+
+function DisplayCheckbox({
+  optionKey,
+  checked,
+  disabledReason,
+  onCheckedChange,
+}: {
+  optionKey: DisplayOptionsKey
+  checked: boolean
+  disabledReason?: string
+  onCheckedChange: (checked: boolean) => void
+}) {
+  const option: DisplayOption = DISPLAY_OPTIONS[optionKey]
+  const tooltip = disabledReason ?? option.tooltip
+  return (
+    <Checkbox
+      name={`compareTvs-${optionKey}`}
+      checked={checked}
+      disabled={disabledReason !== undefined}
+      onCheckedChange={(checked) => onCheckedChange(!!checked)}
+      className="h-9"
+    >
+      <div className="flex items-center gap-1">
+        {option.label}
+        {tooltip && (
+          <Tooltip>
+            <TooltipTrigger>
+              <InfoIcon className="size-3.5" />
+            </TooltipTrigger>
+            <TooltipContent>{tooltip}</TooltipContent>
+          </Tooltip>
+        )}
+      </div>
+    </Checkbox>
   )
 }

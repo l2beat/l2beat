@@ -30,9 +30,7 @@ export function ScalingComparePage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout>
-          <MainPageHeader description="Compare Ethereum scaling projects across metrics. Add charts to see value secured, activity, costs, and data posted side by side, and share the exact view with a link.">
-            Compare Projects
-          </MainPageHeader>
+          <MainPageHeader>Compare Projects</MainPageHeader>
           <ScalingCompareCharts
             allProjects={allProjects}
             initialState={initialState}
