@@ -1,3 +1,4 @@
+import { useCssSupports } from '~/hooks/useCssSupports'
 import { INTEROP_PAIR_SEPARATOR } from '~/server/features/scaling/interop/consts'
 import type {
   ChainData,
@@ -47,15 +48,12 @@ interface Props {
  *
  * Browsers that lack offset-path or linear() easing (the travel/idle split
  * depends on both) get the original SMIL markup instead — slower, but
- * correct everywhere SVG works. The check runs in the browser only: this
- * component never SSRs (FlowsGraphPanel renders it only after ResizeObserver
- * reports a size), so there is no hydration mismatch to worry about.
+ * correct everywhere SVG works. useCssSupports is client-only, which is fine
+ * here: this component never SSRs (FlowsGraphPanel renders it only after
+ * ResizeObserver reports a size), so there is no hydration mismatch.
  */
-const supportsCssMotion =
-  typeof CSS !== 'undefined' &&
-  typeof CSS.supports === 'function' &&
-  CSS.supports('offset-path', 'path("M 0 0")') &&
-  CSS.supports('animation-timing-function', 'linear(0 0%, 1 50%, 1 100%)')
+const CSS_MOTION_CONDITION =
+  '(offset-path: path("M 0 0")) and (animation-timing-function: linear(0 0%, 1 50%, 1 100%))'
 export function ParticleLayer({
   flows,
   chainData,
@@ -68,6 +66,7 @@ export function ParticleLayer({
   baseDollarsPerParticle,
 }: Props) {
   const { highlightedChains } = useInteropFlows()
+  const supportsCssMotion = useCssSupports(CSS_MOTION_CONDITION)
   const particleRadius = isSmallScreen ? 1.5 : 2
 
   const { flowsParticles } = useScaledParticleCounts(
