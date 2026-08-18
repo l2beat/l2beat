@@ -1,9 +1,9 @@
 import { assert } from '../tools/assert.js'
-import { notUndefined } from './notUndefined.js'
 import { pluralize } from './pluralize.js'
 
 const units = ['y', 'mo', 'd', 'h', 'm', 's']
 const fullUnits = ['year', 'month', 'day', 'hour', 'minute', 'second']
+const secondsInUnit = [365n * 86400n, 30n * 86400n, 86400n, 3600n, 60n, 1n]
 
 export function formatSeconds(
   seconds: number | bigint,
@@ -11,68 +11,34 @@ export function formatSeconds(
 ): string {
   assert(seconds !== undefined, 'seconds is required')
 
-  const value = Number(seconds)
-  if (value < 0) {
-    return `-${formatSeconds(-value, opts)}`
-  }
+  const total =
+    typeof seconds === 'bigint' ? seconds : BigInt(Math.trunc(seconds))
+  const negative = total < 0n
 
-  const SECONDS_IN_YEAR = 365 * 24 * 60 * 60
-  const SECONDS_IN_MONTH = 30 * 24 * 60 * 60
-  const SECONDS_IN_DAY = 24 * 60 * 60
-  const SECONDS_IN_HOUR = 60 * 60
-  const SECONDS_IN_MINUTE = 60
+  let remaining = negative ? -total : total
+  const parts = secondsInUnit.map((secondsPerUnit, index) => {
+    const count = remaining / secondsPerUnit
+    remaining %= secondsPerUnit
+    return { count, index }
+  })
 
-  const years = Math.floor(value / SECONDS_IN_YEAR)
-  const months = Math.floor((value % SECONDS_IN_YEAR) / SECONDS_IN_MONTH)
-  const days = Math.floor(
-    ((value % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) / SECONDS_IN_DAY,
-  )
-  const hours = Math.floor(
-    (((value % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) % SECONDS_IN_DAY) /
-      SECONDS_IN_HOUR,
-  )
-  const minutes = Math.floor(
-    ((((value % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) % SECONDS_IN_DAY) %
-      SECONDS_IN_HOUR) /
-      SECONDS_IN_MINUTE,
-  )
-  const secs = Math.floor(
-    ((((value % SECONDS_IN_YEAR) % SECONDS_IN_MONTH) % SECONDS_IN_DAY) %
-      SECONDS_IN_HOUR) %
-      SECONDS_IN_MINUTE,
-  )
-
-  const values = [years, months, days, hours, minutes, secs]
-  if (opts?.preventRoundingUp) {
-    return values
-      .map((v, i) =>
-        v > 0
-          ? opts.fullUnit
-            ? `${v} ${pluralize(v, fullUnits[i])}`
-            : `${v}${units[i]}`
-          : undefined,
-      )
-      .filter(notUndefined)
-      .join(' ')
-  }
-
-  const firstNonZeroIndex = values.findIndex((v) => v > 0)
-  if (firstNonZeroIndex === -1) {
+  const nonZero = parts.filter((part) => part.count > 0n)
+  const mostSignificant = nonZero.at(0)
+  if (!mostSignificant) {
     return opts?.fullUnit ? '0 seconds' : '0s'
   }
 
-  return values
-    .slice(firstNonZeroIndex, firstNonZeroIndex + 2)
-    .map((v, i) =>
-      v > 0
-        ? opts?.fullUnit
-          ? `${v} ${pluralize(
-              v,
-              fullUnits.slice(firstNonZeroIndex, firstNonZeroIndex + 2)[i],
-            )}`
-          : `${v}${units.slice(firstNonZeroIndex, firstNonZeroIndex + 2)[i]}`
-        : undefined,
+  const shown = opts?.preventRoundingUp
+    ? nonZero
+    : nonZero.filter((part) => part.index <= mostSignificant.index + 1)
+
+  const formatted = shown
+    .map(({ count, index }) =>
+      opts?.fullUnit
+        ? `${count} ${pluralize(Number(count), fullUnits[index])}`
+        : `${count}${units[index]}`,
     )
-    .filter(notUndefined)
     .join(' ')
+
+  return negative ? `-${formatted}` : formatted
 }

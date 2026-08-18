@@ -91,6 +91,19 @@ describe(formatSeconds.name, () => {
         '-1 minute 1 second',
       )
     })
+
+    it('keeps bigint arithmetic exact above MAX_SAFE_INTEGER', () => {
+      expect(
+        formatSeconds(9007199254740993n, { preventRoundingUp: true }),
+      ).toEqual('285616414y 8mo 24d 7h 36m 33s')
+    })
+
+    it('formats zero with both rounding styles', () => {
+      expect(formatSeconds(0, { preventRoundingUp: true })).toEqual('0s')
+      expect(
+        formatSeconds(0, { preventRoundingUp: true, fullUnit: true }),
+      ).toEqual('0 seconds')
+    })
   })
 
   describe('full units names', () => {
