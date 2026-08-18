@@ -76,6 +76,7 @@ type SectionId =
   | 'privacy-tvl'
   | 'privacy-flows'
   | 'privacy-assets-breakdown'
+  | 'note-discovery'
 type GroupId = 'da-layer' | 'da-bridge'
 
 export type ProjectSectionId = SectionId | GroupId | `${GroupId}-${SectionId}`
