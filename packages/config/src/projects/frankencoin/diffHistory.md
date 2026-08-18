@@ -7,7 +7,7 @@ Generated with discovered.json: 0x21779a0bc8be4d0edff5f14f95bd8d8463a7401a
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Initial discovery of Frankencoin, an oracle-free stablecoin protocol issuing ZCHF, minted against arbitrary collateral in auction-policed CDPs and 1:1 against whitelisted CHF stablecoins. All 18 contracts are immutable with no admin keys: ZCHF supply is controlled by 11 registered minter modules that anyone can propose and FPS pool share holders (2% of time-weighted votes) can veto during a public application period, after which a minter is irrevocable — the system's central trust assumption. All protocol income accrues to an equity reserve (FPS) that absorbs losses first; savers earn a governance-set rate directly or via the immutable svZCHF ERC4626 vault, and ZCHF expands to other chains through a rate-limited Chainlink CCIP token pool governed by the same FPS quorum.
 
 ## Initial discovery
 
