@@ -135,44 +135,41 @@ export function ScalingCompareCharts({
     <section className="flex flex-col gap-2 max-md:mt-4 md:mt-2">
       <CompareSeriesProvider projects={selectedProjects}>
         <CompareChartHoverProvider>
-          <PrimaryCard>
-            <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
-              <CompareProjectPicker
-                allProjects={allProjects}
-                metrics={displayedMetrics}
-                selectedProjects={selectedProjects}
-                isDefaultSelection={state.projects.length === 0}
-                onChange={(projects) =>
-                  setState((prev) => ({ ...prev, projects }))
+          <div className="flex flex-col gap-3 max-md:px-4 lg:px-2">
+            <CompareProjectPicker
+              allProjects={allProjects}
+              metrics={displayedMetrics}
+              selectedProjects={selectedProjects}
+              isDefaultSelection={state.projects.length === 0}
+              onChange={(projects) =>
+                setState((prev) => ({ ...prev, projects }))
+              }
+            />
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <CopyLinkButton
+                // Serialized on click from the live state, because the
+                // address bar only catches up after the URL-sync debounce.
+                getShareUrl={() =>
+                  window.location.origin +
+                  buildCompareUrl(
+                    window.location.pathname,
+                    toCompareUrlState(state),
+                  )
                 }
-                className="min-w-0 flex-1 basis-80"
               />
-              <div className="flex flex-wrap items-center gap-2">
-                <ChartRangeControls
-                  name="compareChart"
-                  value={state.chartRange}
-                  setValue={(chartRange) =>
-                    setState((prev) => ({ ...prev, chartRange }))
-                  }
-                  options={COMPARE_RANGE_OPTIONS.map((value) => ({
-                    value,
-                    label: value.toUpperCase(),
-                  }))}
-                />
-                <CopyLinkButton
-                  // Serialized on click from the live state, because the
-                  // address bar only catches up after the URL-sync debounce.
-                  getShareUrl={() =>
-                    window.location.origin +
-                    buildCompareUrl(
-                      window.location.pathname,
-                      toCompareUrlState(state),
-                    )
-                  }
-                />
-              </div>
+              <ChartRangeControls
+                name="compareChart"
+                value={state.chartRange}
+                setValue={(chartRange) =>
+                  setState((prev) => ({ ...prev, chartRange }))
+                }
+                options={COMPARE_RANGE_OPTIONS.map((value) => ({
+                  value,
+                  label: value.toUpperCase(),
+                }))}
+              />
             </div>
-          </PrimaryCard>
+          </div>
           {state.charts.map((config, index) => (
             <CompareChartCard
               // Charts carry no identity of their own in the URL, so the
@@ -364,7 +361,7 @@ function CopyLinkButton({ getShareUrl }: { getShareUrl: () => string }) {
       onClick={() => void copy(getShareUrl()).then(setCopied)}
       className={cn(
         'inline-flex h-8 items-center gap-1.5 rounded-lg px-2 font-medium text-xs md:text-sm',
-        'bg-surface-primary primary-card:bg-surface-secondary',
+        'bg-surface-primary hover:bg-surface-primary-hover',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1 focus-visible:ring-offset-transparent',
       )}
     >

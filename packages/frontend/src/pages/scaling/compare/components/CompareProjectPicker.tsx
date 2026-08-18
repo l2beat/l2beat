@@ -127,7 +127,7 @@ export function CompareProjectPicker({
                 onMouseLeave={() => setHoveredProjectId(undefined)}
                 onFocus={() => setHoveredProjectId(project.id)}
                 onBlur={() => setHoveredProjectId(undefined)}
-                className="flex h-7 items-center gap-1.5 rounded-full border border-divider bg-surface-primary primary-card:bg-surface-secondary py-1 pr-1.5 pl-1"
+                className="flex h-7 items-center gap-1.5 rounded-full border border-divider bg-surface-primary py-1 pr-1.5 pl-1"
                 // The ring makes the chip strip double as the charts' color key,
                 // so it must show exactly the series color the charts use - and
                 // no color at all when no chart has a series for the project.
@@ -173,7 +173,7 @@ export function CompareProjectPicker({
           setPinnedSlugs(selectedSlugs)
           setOpen(true)
         }}
-        className="flex h-7 cursor-pointer items-center gap-1.5 rounded-full border border-divider border-dashed py-1 pr-2.5 pl-1.5 font-medium text-secondary text-sm leading-none hover:bg-surface-secondary primary-card:hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+        className="flex h-7 cursor-pointer items-center gap-1.5 rounded-full border border-divider border-dashed py-1 pr-2.5 pl-1.5 font-medium text-secondary text-sm leading-none hover:bg-surface-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
       >
         <PlusIcon className="size-4" />
         Add project
