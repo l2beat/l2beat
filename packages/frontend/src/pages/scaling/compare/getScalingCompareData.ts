@@ -1,4 +1,4 @@
-import type { InMemoryCache } from '@l2beat/shared-pure'
+import { type InMemoryCache, ProjectId } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
@@ -65,8 +65,11 @@ async function getCompareData(originalUrl: string, cache: InMemoryCache) {
     validSlugs: allProjects.map((project) => project.slug),
   })
   // Always ranked by TVS regardless of chart metrics - the universe is
-  // already ordered by TVS descending.
-  const defaultProjects = allProjects.slice(0, DEFAULT_COMPARE_PROJECTS_COUNT)
+  // already ordered by TVS descending. Ethereum is a baseline to opt into,
+  // never a default.
+  const defaultProjects = allProjects
+    .filter((project) => project.id !== ProjectId.ETHEREUM)
+    .slice(0, DEFAULT_COMPARE_PROJECTS_COUNT)
   const defaultProjectSlugs = defaultProjects.map((project) => project.slug)
 
   // Chart data is only prefetched for the pristine default view; every
