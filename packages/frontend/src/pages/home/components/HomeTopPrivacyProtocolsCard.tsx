@@ -47,7 +47,7 @@ export function HomeTopPrivacyProtocolsCard({ entries }: Props) {
         linkLabel="View all"
       />
       <div className="mt-2 flex-1">
-        <BasicTable table={table} />
+        <BasicTable table={table} compact />
       </div>
     </HomeCard>
   )
