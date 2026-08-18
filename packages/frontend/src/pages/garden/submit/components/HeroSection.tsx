@@ -1,9 +1,8 @@
 import { Button } from '~/components/core/Button'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { externalLinks } from '~/consts/externalLinks'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { SproutIcon } from '../../components/SproutIcon'
-import { GARDEN_PATH } from '../links'
+import { GARDEN_PATH, SUBMISSION_QUESTIONS_PATH } from '../links'
 
 export function HeroSection() {
   return (
@@ -32,7 +31,7 @@ export function HeroSection() {
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
           <Button asChild variant="fill" className="w-full gap-2 sm:w-max">
             <a
-              href={externalLinks.gardenRequest}
+              href={SUBMISSION_QUESTIONS_PATH}
               target="_blank"
               rel="noreferrer noopener"
             >

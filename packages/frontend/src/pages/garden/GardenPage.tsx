@@ -3,6 +3,7 @@ import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { GardenBackground } from './assets/GardenBackground'
 import { GardenTable } from './components/GardenTable'
+import { IntegrateCropsCallout } from './components/IntegrateCropsCallout'
 import { PlantLegendSection } from './components/PlantLegendSection'
 import { SubmitProtocolCallout } from './components/SubmitProtocolCallout'
 import { GARDEN_ANIMATIONS_CSS, GARDEN_SURFACES_CSS } from './gardenCss'
@@ -30,6 +31,7 @@ export function GardenPage({ entries, ...props }: Props) {
               <GardenTable entries={entries} />
             </div>
             <SubmitProtocolCallout />
+            <IntegrateCropsCallout />
             <PlantLegendSection />
           </div>
         </div>

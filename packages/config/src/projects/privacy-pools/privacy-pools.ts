@@ -176,55 +176,6 @@ export const privacyPools: BaseProject = {
       }),
     },
   },
-  crops: {
-    censorshipResistance: {
-      sentiment: 'warning',
-      points: [
-        'Ragequit lives in the immutable pool contracts, so a depositor can always withdraw to their original address no matter what the Entrypoint or the ASP does.',
-        'The assets are never custodial.',
-      ],
-      missing: [
-        'The ASP postman can remove any deposit from the whitelist at any time, which forces the user to exit publicly and lose their privacy.',
-      ],
-      notReviewed: ['Relayer set size and independence.'],
-    },
-    openSource: {
-      sentiment: 'good',
-      points: [
-        'The contracts, circuits and supporting software needed to participate are publicly available.',
-        'Everything a user needs can be run locally.',
-      ],
-      notReviewed: [
-        'License permissiveness, so fork rights are unconfirmed.',
-        'Reproducibility of the ASP software and the association-set data it serves.',
-      ],
-    },
-    privacy: {
-      sentiment: 'warning',
-      points: [
-        'Deposits and private withdrawals are unlinkable through zk proofs.',
-        'The protocol cannot retroactively deanonymize past withdrawals.',
-      ],
-      missing: [
-        'Compliance is gated by centralized association set providers that decide which deposits may ever be withdrawn privately.',
-        'Privacy depends on relayer availability - with no relayer, the withdrawal has to come from a linkable address.',
-      ],
-      notReviewed: ['Anonymity set size.'],
-    },
-    security: {
-      sentiment: 'warning',
-      status: 'partiallyReviewed',
-      points: [
-        'Existing deposits stay recoverable through the immutable pool-level ragequit.',
-        'Withdrawals are protected by a zk proof system.',
-      ],
-      missing: [
-        'The multisig can instantly swap the Entrypoint implementation and the ASP root with no delay, so a malicious upgrade could steal new deposits.',
-        'The proof system depends on a trusted setup.',
-      ],
-      notReviewed: ['Audit coverage.', 'Circuit breakers and rate limits.'],
-    },
-  },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),

@@ -18,7 +18,6 @@ const CURATED_ORDER = [
   'aztecnetwork',
   'umbra',
   'uniswapv3',
-  'privacy-pools',
   'ethscriptions',
 ]
 

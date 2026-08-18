@@ -34,8 +34,14 @@ const PLANTS: {
     sentiment: 'neutral',
     status: 'notReviewed',
     title: 'Nothing planted',
+    description: 'The property is out of scope for this protocol.',
+  },
+  {
+    sentiment: 'neutral',
+    status: 'notReviewed',
+    title: 'Not reviewed',
     description:
-      'The property is out of scope for this protocol, or we have not reviewed it yet. Never a verdict, never a failure.',
+      'A dashed ring with no plant means the crop has not been reviewed at all.',
   },
 ]
 
@@ -44,11 +50,11 @@ export function PlantLegendSection() {
     <section className="mt-8 md:mt-12">
       <SectionHeading
         title="How to read a plant"
-        description="The shape and colour tell you the state of the property. The soil tells you how far our review got."
+        description="The shape and colour tell you the state of the property."
         size="md"
       />
       <PrimaryCard className="md:p-8">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
           {PLANTS.map((plant, index) => (
             <article key={plant.title} className="flex flex-col gap-2">
               <CropPlantSample
@@ -63,12 +69,6 @@ export function PlantLegendSection() {
             </article>
           ))}
         </div>
-        <p className="mt-6 border-divider border-t pt-5 text-paragraph-13 text-secondary md:text-paragraph-14">
-          <strong className="text-primary">Dashed soil</strong> means the crop
-          is only partially reviewed - we have formed a view but not finished
-          the work, so treat it as provisional. A dashed ring with no plant
-          means the crop has not been reviewed at all.
-        </p>
       </PrimaryCard>
     </section>
   )

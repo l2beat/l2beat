@@ -4,6 +4,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { externalLinks } from '~/consts/externalLinks'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { SproutIcon } from '../../components/SproutIcon'
+import { SUBMISSION_QUESTIONS_PATH } from '../links'
 
 export function ClosingSection() {
   return (
@@ -24,7 +25,7 @@ export function ClosingSection() {
           </p>
           <Button asChild variant="fill" className="mt-6 w-full gap-2 sm:w-max">
             <a
-              href={externalLinks.gardenRequest}
+              href={SUBMISSION_QUESTIONS_PATH}
               target="_blank"
               rel="noreferrer noopener"
             >
