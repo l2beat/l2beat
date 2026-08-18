@@ -88,6 +88,7 @@ export function InteropTokenOnchainDeploymentsSection({
                 ) : (
                   <PaginationLink
                     key={item.index}
+                    href="#onchain-deployments"
                     size="sm"
                     onClick={(e) => {
                       e.preventDefault()
