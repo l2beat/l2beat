@@ -373,5 +373,9 @@ export function getAllProtocolsColumns(
 }
 
 export function getHomeTopInteropProtocolsColumns() {
-  return [...homeCommonColumns, categoryColumn, last24hVolumeColumn]
+  return [
+    ...homeCommonColumns,
+    categoryColumn,
+    { ...last24hVolumeColumn, header: 'Last 24h volume' },
+  ]
 }
