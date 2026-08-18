@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -13,6 +13,21 @@ const discovery = new ProjectDiscovery('frankencoin')
 // governed rate to savers (including the svZCHF vault).
 const ratePercent = (contract: string): string =>
   `${discovery.getContractValue<number>(contract, 'currentRatePPM') / 10000}`
+
+// 18-decimals wei string -> whole ZCHF with thousands separators.
+const zchfAmount = (contract: string, key: string): string =>
+  (
+    BigInt(discovery.getContractValue<string>(contract, key)) /
+    10n ** 18n
+  ).toLocaleString('en-US')
+
+// Equity stores the minimum FPS holding duration left-shifted by 20 bits of
+// sub-second time resolution; unshift to get plain seconds (90 days).
+const minHoldingDurationSeconds = Number(
+  BigInt(
+    discovery.getContractValue<string>('Equity', 'MIN_HOLDING_DURATION'),
+  ) >> 20n,
+)
 
 export const frankencoin: BaseProject = {
   id: ProjectId('frankencoin'),
@@ -37,6 +52,28 @@ export const frankencoin: BaseProject = {
       {
         leadrate: ratePercent('SavingsV2'),
         savingsRate: ratePercent('Savings'),
+        minterFee: zchfAmount('Frankencoin', 'MIN_FEE'),
+        minApplicationPeriod: formatSeconds(
+          discovery.getContractValue<number>(
+            'Frankencoin',
+            'MIN_APPLICATION_PERIOD',
+          ),
+          { fullUnit: true },
+        ),
+        openingFee: zchfAmount('MintingHubV2', 'OPENING_FEE'),
+        challengerReward: `${
+          discovery.getContractValue<number>(
+            'MintingHubV2',
+            'CHALLENGER_REWARD',
+          ) / 10000
+        }`,
+        valuationFactor: discovery.getContractValue<number>(
+          'Equity',
+          'VALUATION_FACTOR',
+        ),
+        minHoldingDuration: formatSeconds(minHoldingDurationSeconds, {
+          fullUnit: true,
+        }),
       },
     ),
     links: {
