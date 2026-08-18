@@ -1,6 +1,6 @@
 {
   "name": "robinhood",
-  "timestamp": 1785409713,
+  "timestamp": 1786359815,
   "configHash": "0x45d1f46d19c7d77369b23a132f6ec5489efa0d0a35fd01a4896cdfeace31d988",
   "entries": [
     {
@@ -259,7 +259,7 @@
         ],
         "inbox": "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
         "isPostBoLD": true,
-        "latestConfirmed": "0x72a8590d5bc4b949238ed39e78e74b21f137c8de5ba71eec28edd0c34898731a",
+        "latestConfirmed": "0x4608f3926c5e3112a7a2a26848c30f83845dbcfd90fc5f11c2fe77b5502e28d3",
         "loserStakeEscrow": "eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9",
@@ -929,7 +929,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 60751,
+        "batchCount": 95338,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0xDaa526086787d9DEbE1D7F3FFdb1fE50cf8687F4"],
         "bridge": "eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3",
@@ -968,7 +968,7 @@
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 77090,
+        "totalDelayedMessagesRead": 115288,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1054,7 +1054,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2243670464604265466885144"
+        "totalSupply": "2243517861073716163476108"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -1162,7 +1162,7 @@
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
         ],
         "allowedOutboxList": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
-        "delayedMessageCount": 77105,
+        "delayedMessageCount": 115304,
         "inboxHistory": [
           "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
@@ -1170,8 +1170,8 @@
         "outboxHistory": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerInbox": "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96",
-        "sequencerMessageCount": 60751,
-        "sequencerReportedSubMessageCount": 23266993
+        "sequencerMessageCount": 95338,
+        "sequencerReportedSubMessageCount": 32747463
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1629,7 +1629,7 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "filteredTransactionsAdded": 6088,
+        "filteredTransactionsAdded": 6091,
         "filteredTransactionsDeleted": 0,
         "transactionFilterers": [
           "robinhood:0xebDc18A1F5C42fC25552eA233fAcf4054DF224b7"
@@ -1765,9 +1765,10 @@
       "name": "SafeL2",
       "address": "robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C",
       "type": "Contract",
+      "unverified": true,
       "template": "GnosisSafe",
       "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        null,
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
@@ -1796,7 +1797,7 @@
         "VERSION": "1.4.1"
       },
       "implementationNames": {
-        "robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C": "SafeProxy",
+        "robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C": "",
         "robinhood:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
       }
     },
@@ -1851,7 +1852,7 @@
         "getChainId": 4663,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 8 (75%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2366,8 +2367,8 @@
         "symbol": "NVDA",
         "terms": "https://robinhood.com/stocktoken/rhj",
         "tokenPaused": false,
-        "totalSupply": "27459880000000000000000",
-        "totalSupplyUI": "27459880000000000000000",
+        "totalSupply": "18476020000000000000000",
+        "totalSupplyUI": "18476020000000000000000",
         "uid": "0x00000000000000000000000000000000915f477416294f5099a5e0e09f327ce5",
         "uiMultiplier": "1000000000000000000"
       },
@@ -3792,9 +3793,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C": [
-      "constructor(address _singleton)"
-    ],
     "robinhood:0x3c3E52bC8C181D06A76e2518bBc655C5BB3Ce7Cd": [
       "event Initialized(uint8 version)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
@@ -3983,6 +3981,6 @@
     "robinhood/accessControlsRegistry": "0xa1fbf84eb609ea4cdccdf8a5051375ec6540a6484aa187e4fc021e7231538e24",
     "robinhood/rwa": "0x6a4b6026d07de4fbe785cf745eed6aab91d27bef2776ed3280a828368f1bf7b2"
   },
-  "usedBlockNumbers": { "ethereum": 25645274, "robinhood": 23267654 },
+  "usedBlockNumbers": { "ethereum": 25724172, "robinhood": 32747661 },
   "permissionsConfigHash": "0x520b503f3c9bb5253b5b60876b8bc989e1134376a9b01ce981bf188bacf2f3f0"
 }

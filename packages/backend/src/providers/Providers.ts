@@ -13,6 +13,7 @@ import {
   EthereumDaProvider,
   PriceProvider,
   SlotTimestampProvider,
+  StarknetBalanceProvider,
   StarknetTotalSupplyProvider,
   SvmBlockProvider,
   TotalSupplyProvider,
@@ -42,6 +43,7 @@ export class Providers {
   blockTimestamp: BlockTimestampProvider
   totalSupply: TotalSupplyProvider
   starknetTotalSupply: StarknetTotalSupplyProvider
+  starknetBalance: StarknetBalanceProvider
   balance: BalanceProvider
   svmBlock: SvmBlockProviders
   aztecBlock: AztecBlockProviders
@@ -119,6 +121,10 @@ export class Providers {
 
     this.totalSupply = new TotalSupplyProvider(this.clients.rpcClients, logger)
     this.starknetTotalSupply = new StarknetTotalSupplyProvider(
+      this.clients.starknetClients,
+      logger,
+    )
+    this.starknetBalance = new StarknetBalanceProvider(
       this.clients.starknetClients,
       logger,
     )

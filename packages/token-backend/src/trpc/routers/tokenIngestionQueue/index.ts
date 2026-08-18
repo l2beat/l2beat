@@ -25,6 +25,13 @@ export interface QueuePageRow {
   entry: TokenIngestionQueueRecord
   predictedOutcome: IngestionOutcomeView
   deployedTokenExists: boolean
+  /** True when this conflict entry can be offered the resolve dialog
+   * (create the abstract token manually, then retry). Derived from the
+   * fresh plan: the CoinGecko-symbol conflict is the only conflict that can
+   * fire while the plan wants to create a new abstract token from CoinGecko,
+   * so `state = conflict` + a `new-coingecko` pending plan identifies it
+   * without inspecting the stored message text. */
+  resolvableSymbolConflict: boolean
 }
 
 export const tokenIngestionQueueRouter = router({
@@ -55,6 +62,10 @@ export const tokenIngestionQueueRouter = router({
           entry,
           predictedOutcome: toIngestionOutcomeView(trace.outcome),
           deployedTokenExists: trace.existingDeployedToken !== undefined,
+          resolvableSymbolConflict:
+            entry.state === 'conflict' &&
+            trace.outcome.kind === 'pending' &&
+            trace.outcome.abstract.kind === 'new-coingecko',
         })
       }
 
@@ -95,6 +106,16 @@ export const tokenIngestionQueueRouter = router({
       }
 
       return { success: true }
+    }),
+  retryMany: readWriteProcedure
+    .input(v.array(QueueEntryAddress))
+    .mutation(async ({ ctx, input }) => {
+      let retried = 0
+      for (const entry of input) {
+        retried += await ctx.tokenDb.tokenIngestionQueue.retry(entry)
+      }
+
+      return { success: true, retried }
     }),
   preview: readOnlyProcedure
     .input(QueueEntryAddress)

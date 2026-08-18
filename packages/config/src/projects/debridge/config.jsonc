@@ -2,40 +2,104 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "debridge",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA"],
+  "initialAddresses": [
+    // DeBridgeGate (messaging + lock/mint token bridge)
+    "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
+    // DLN (intent protocol built on top of the messaging layer)
+    "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+    "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+    // periphery swap-and-forward router
+    "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251"
+  ],
   "names": {
-    "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c": "SignatureVerifier",
     "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA": "DeBridgeGate",
+    "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c": "SignatureVerifier",
+    "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824": "CallProxy",
+    "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464": "DeBridgeTokenDeployer",
+    "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636": "SimpleFeeProxy",
+    "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66": "DlnSource",
+    "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f": "DlnDestination",
+    "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9": "ExternalCallAdapter",
+    "eth:0xAE0361b1C3454b297129e01046057F1D294c7974": "ExternalCallExecutor",
+    "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251": "DeBridgeRouter",
     "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5": "Admin Multisig",
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "Weth",
     "eth:0xFCf83648b8cDeF62e5d03319a6f1FCE16e4D6A59": "WethGate"
   },
   "overrides": {
-    "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c": {
-      "fields": {
-        "oracles": {
-          "handler": {
-            "type": "array",
-            "method": "oracleAddresses",
-            "maxLength": 200
-          }
-        }
-      },
-      "ignoreMethods": ["oracleAddresses"],
-      "ignoreInWatchMode": ["currentBlock", "submissionsInBlock"]
-    },
-    "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA": {
-      "ignoreMethods": ["getChainFromConfig", "getChainToConfig"],
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5": {
-      "ignoreInWatchMode": ["nonce"]
-    },
     "eth:0xFCf83648b8cDeF62e5d03319a6f1FCE16e4D6A59": {
       "ignoreDiscovery": true
     },
     "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": {
       "ignoreDiscovery": true
+    },
+    // Permit2 (external Uniswap infrastructure)
+    "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3": {
+      "ignoreDiscovery": true
+    },
+    // EIP-7702 EOA (delegating to a Uniswap Calibur wallet) that holds the
+    // GOVERNANCE_DELEGATED_ORDER_CANCEL_ROLE on DlnDestination.
+    // Session-key bookkeeping and wallet internals are not watched (bot
+    // operations); a re-delegation still alerts via eip712Domain and
+    // namespaceAndVersion.
+    "eth:0x0746e7e4d15F30885616B4ac3D274393354E80c0": {
+      "ignoreMethods": ["getSeq", "nonceSequenceNumber", "keyAt"],
+      "ignoreRelatives": ["ENTRY_POINT"],
+      "ignoreInWatchMode": [
+        "keyCount",
+        "keyHashes",
+        "domainBytes",
+        "domainSeparator",
+        "CUSTOM_STORAGE_ROOT"
+      ]
+    },
+    "eth:0xAE0361b1C3454b297129e01046057F1D294c7974": {
+      "description": "Unverified contract registered as the default executor in the ExternalCallAdapter: it executes external calldata attached to DLN orders."
+    },
+    "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc": {
+      "description": "Unverified proxy referenced as the feeTreasury of the DeBridgeIntentManager."
+    },
+    "eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07": {
+      "description": "Unverified proxy holding the INTENT_MANAGER_ROLE on the IntentManagerValidator, allowing it to create DLN orders with custom or zero protocol fees."
+    },
+    // The following three contracts are unverified ProxyAdmin-style contracts
+    // ($admin of the intent manager stack proxies). They expose owner(), which
+    // is defined manually here so the upgrade permission forwards correctly.
+    "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F": {
+      "fields": {
+        "owner": {
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          },
+          "permissions": [{ "type": "act" }]
+        }
+      }
+    },
+    "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3": {
+      "fields": {
+        "owner": {
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          },
+          "permissions": [{ "type": "act" }]
+        }
+      }
+    },
+    "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816": {
+      "fields": {
+        "owner": {
+          "handler": {
+            "type": "call",
+            "method": "function owner() view returns (address)",
+            "args": []
+          },
+          "permissions": [{ "type": "act" }]
+        }
+      }
     }
   }
 }

@@ -1,0 +1,14 @@
+{
+  "DeBridgeRouter.sol": {
+    "hash": "0xfbd0e32e74cd0871ed9aaf242684ccae1423b67493f683b6c31d4282d6813a6a",
+    "address": "eth:0x3c857eD51c8a2747EE8c6F30EdDA5ea0D487CC64",
+    "chain": "ethereum",
+    "blockNumber": 25751894
+  },
+  "DeBridgeRouter_v3.2.0.sol": {
+    "hash": "0xbb3368874361b195a217b8488d3a15b0b0f5a6e5a1189b88964a97715889bbc8",
+    "address": "eth:0xCe56012E880851baa234cD092aF516A0fcA9CFe3",
+    "chain": "ethereum",
+    "blockNumber": 25780210
+  }
+}

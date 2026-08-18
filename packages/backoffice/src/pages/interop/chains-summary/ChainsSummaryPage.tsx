@@ -42,9 +42,6 @@ export function ChainsSummaryPage() {
     staleTime: 60_000,
   })
 
-  const missingTokensQuery = useQuery(
-    trpc.interop.missingTokens.list.queryOptions({ range }),
-  )
   const suspiciousTransfersQuery = useQuery(
     trpc.interop.activity.suspiciousTransfers.queryOptions({ range }),
   )
@@ -60,8 +57,7 @@ export function ChainsSummaryPage() {
   ]
   const isLoading = sources.some(({ query }) => query.isLoading)
   const isFetching = sources.some(({ query }) => query.isFetching)
-  const isTransferDataFetching =
-    missingTokensQuery.isFetching || suspiciousTransfersQuery.isFetching
+  const isTransferDataFetching = suspiciousTransfersQuery.isFetching
   const errors = sources.flatMap(({ label, query }) =>
     query.error instanceof Error ? [{ label, error: query.error }] : [],
   )
@@ -79,7 +75,6 @@ export function ChainsSummaryPage() {
         productionFrontend: productionFrontendQuery.data,
         stagingBackend: stagingBackend.data,
         stagingFrontend: stagingFrontendQuery.data,
-        missingTokens: missingTokensQuery.data,
         suspiciousTransfers: suspiciousTransfersQuery.data?.items,
         notIncludedTransfers: aggregatesQuery.data?.notIncludedTransfers,
       }),
@@ -88,7 +83,6 @@ export function ChainsSummaryPage() {
       productionFrontendQuery.data,
       stagingBackend.data,
       stagingFrontendQuery.data,
-      missingTokensQuery.data,
       suspiciousTransfersQuery.data,
       aggregatesQuery.data,
     ],

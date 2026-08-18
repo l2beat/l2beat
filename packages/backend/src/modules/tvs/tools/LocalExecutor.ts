@@ -15,6 +15,7 @@ import {
   MulticallV3Client,
   PriceProvider,
   RpcClientCompat,
+  StarknetBalanceProvider,
   StarknetClient,
   StarknetTotalSupplyProvider,
   TotalSupplyProvider,
@@ -104,6 +105,10 @@ export class LocalExecutor {
       starknetClients,
       logger,
     )
+    const starknetBalanceProvider = new StarknetBalanceProvider(
+      starknetClients,
+      logger,
+    )
     const balanceProvider = new BalanceProvider(rpcs, logger)
 
     return new DataFormulaExecutor(
@@ -115,6 +120,7 @@ export class LocalExecutor {
       blockTimestampProvider,
       totalSupplyProvider,
       starknetTotalSupplyProvider,
+      starknetBalanceProvider,
       balanceProvider,
       this.logger,
     )

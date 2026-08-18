@@ -1,42 +1,56 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { getRollupStage } from './getRollupStage'
+import { getRollupStage, UPCOMING_STAGE_1_ITEMS } from './getRollupStage'
+import type { UpcomingStageRequirements } from './stage'
+
+const PAST_TIME = UnixTime.now() - 30 * UnixTime.DAY
+const FUTURE_TIME = UnixTime.now() + 30 * UnixTime.DAY
+
+const upcomingExpiringAt = (expiresAt: number): UpcomingStageRequirements => ({
+  stage1: { expiresAt, items: UPCOMING_STAGE_1_ITEMS },
+})
+
+const FULLY_SATISFIED_CHECKLIST = {
+  stage0: {
+    callsItselfRollup: true,
+    stateRootsPostedToL1: true,
+    dataAvailabilityOnL1: true,
+    rollupNodeSourceAvailable: true,
+    stateVerificationOnL1: true,
+    fraudProofSystemAtLeast5Outsiders: true,
+  },
+  stage1: {
+    principle: true,
+    usersHave7DaysToExit: true,
+    usersCanExitWithoutCooperation: true,
+    securityCouncilProperlySetUp: true,
+    noRedTrustedSetups: true,
+    proverSourcePublished: true,
+    verifierContractsReproducible: true,
+    programHashesReproducible: true,
+  },
+  stage2: {
+    proofSystemOverriddenOnlyInCaseOfABug: false,
+    fraudProofSystemIsPermissionless: false,
+    delayWith30DExitWindow: false,
+  },
+} as const
+
+const OPTS = {
+  rollupNodeLink: 'randomlink',
+  additionalConsiderations: {
+    short: 'short notice',
+    long: 'long notice',
+  },
+}
 
 describe(getRollupStage.name, () => {
   it('should return stage object', () => {
     const result = getRollupStage(
-      {
-        stage0: {
-          callsItselfRollup: true,
-          stateRootsPostedToL1: true,
-          dataAvailabilityOnL1: true,
-          rollupNodeSourceAvailable: true,
-          stateVerificationOnL1: true,
-          fraudProofSystemAtLeast5Outsiders: true,
-        },
-        stage1: {
-          principle: true,
-          usersHave7DaysToExit: true,
-          usersCanExitWithoutCooperation: true,
-          securityCouncilProperlySetUp: true,
-          noRedTrustedSetups: true,
-          proverSourcePublished: true,
-          verifierContractsReproducible: true,
-          programHashesReproducible: true,
-        },
-        stage2: {
-          proofSystemOverriddenOnlyInCaseOfABug: false,
-          fraudProofSystemIsPermissionless: false,
-          delayWith30DExitWindow: false,
-        },
-      },
-      {
-        rollupNodeLink: 'randomlink',
-        additionalConsiderations: {
-          short: 'short notice',
-          long: 'long notice',
-        },
-      },
+      FULLY_SATISFIED_CHECKLIST,
+      OPTS,
+      upcomingExpiringAt(PAST_TIME),
     )
     expect(result).toEqual({
       message: undefined,
@@ -111,24 +125,20 @@ describe(getRollupStage.name, () => {
               description:
                 'The proof system meets the minimum trusted setup requirements defined in the L2BEAT [trusted setup assessment framework](https://forum.l2beat.com/t/the-trusted-setups-framework-for-zk-catalog/381).',
               satisfied: true,
-              upcoming: true,
             },
             {
               description: 'Prover source code is published.',
               satisfied: true,
-              upcoming: true,
             },
             {
               description:
                 "Onchain verifiers' smart contracts can be independently regenerated from the verifier source code.",
               satisfied: true,
-              upcoming: true,
             },
             {
               description:
                 'The sources of all programs used are public and program hashes can be independently regenerated.',
               satisfied: true,
-              upcoming: true,
             },
           ],
           stage: 'Stage 1',
@@ -164,32 +174,67 @@ describe(getRollupStage.name, () => {
   })
 
   it('should throw error if no rollup node link is present and rollupNodeSourceAvailable is satisfied', () => {
-    expect(() =>
-      getRollupStage({
-        stage0: {
-          callsItselfRollup: true,
-          stateRootsPostedToL1: true,
-          dataAvailabilityOnL1: true,
-          rollupNodeSourceAvailable: true,
-          stateVerificationOnL1: true,
-          fraudProofSystemAtLeast5Outsiders: true,
+    expect(() => getRollupStage(FULLY_SATISFIED_CHECKLIST)).toThrow(
+      'Rollup node link is required',
+    )
+  })
+
+  describe('upcoming Stage 1 requirements', () => {
+    it('flags them as upcoming while the countdown is still running', () => {
+      const result = getRollupStage(
+        FULLY_SATISFIED_CHECKLIST,
+        OPTS,
+        upcomingExpiringAt(FUTURE_TIME),
+      )
+
+      const stage1 = result.summary.find((s) => s.stage === 'Stage 1')
+      expect(
+        stage1?.requirements.filter((r) => r.upcoming === true).length,
+      ).toEqual(UPCOMING_STAGE_1_ITEMS.length)
+      expect(result.stage).toEqual('Stage 1')
+    })
+
+    it('keeps Stage 1 but marks a downgrade as pending when an upcoming requirement fails before expiry', () => {
+      const result = getRollupStage(
+        {
+          ...FULLY_SATISFIED_CHECKLIST,
+          stage1: {
+            ...FULLY_SATISFIED_CHECKLIST.stage1,
+            proverSourcePublished: false,
+          },
         },
-        stage1: {
-          principle: true,
-          usersHave7DaysToExit: true,
-          usersCanExitWithoutCooperation: true,
-          securityCouncilProperlySetUp: true,
-          noRedTrustedSetups: true,
-          proverSourcePublished: true,
-          verifierContractsReproducible: true,
-          programHashesReproducible: true,
+        OPTS,
+        upcomingExpiringAt(FUTURE_TIME),
+      )
+
+      expect(result.stage).toEqual('Stage 1')
+      // Stage 1 itself is not missing anything yet - only Stage 2 is.
+      expect(result.missing?.nextStage).toEqual('Stage 2')
+      expect(result.downgradePending).toEqual({
+        expiresAt: FUTURE_TIME,
+        reasons: ['Prover source code is not published.'],
+        toStage: 'Stage 0',
+      })
+    })
+
+    it('downgrades to Stage 0 once the countdown has expired', () => {
+      const result = getRollupStage(
+        {
+          ...FULLY_SATISFIED_CHECKLIST,
+          stage1: {
+            ...FULLY_SATISFIED_CHECKLIST.stage1,
+            proverSourcePublished: false,
+          },
         },
-        stage2: {
-          proofSystemOverriddenOnlyInCaseOfABug: false,
-          fraudProofSystemIsPermissionless: false,
-          delayWith30DExitWindow: false,
-        },
-      }),
-    ).toThrow('Rollup node link is required')
+        OPTS,
+        upcomingExpiringAt(PAST_TIME),
+      )
+
+      expect(result.stage).toEqual('Stage 0')
+      expect(result.downgradePending).toEqual(undefined)
+      expect(result.missing?.requirements).toEqual([
+        'Prover source code is not published.',
+      ])
+    })
   })
 })

@@ -1,3 +1,647 @@
+Generated with discovered.json: 0xac88e5ca40522d60e8a0bdc100af24fed674426b
+
+# Diff at Wed, 12 Aug 2026 10:31:09 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@5df6651f7eebb50f59623d015b1eacfc5b7e9d31 block: 1785409633
+- current timestamp: 1786530598
+
+## Description
+
+HIGH SEVERITY. Full migration off Zircuit's custom OP-stack fork onto a standard OP-stack fault-proof deployment, via 6 batched upgrade txs 2026-08-04 13:31-14:16 UTC. Matches Zircuit's public Conduit RaaS migration announced 2026-07-02. Checked $pastUpgrades for a bounce/rollback pattern: none found, intermediate hops are Optimism's shared StorageSetter contract used transiently within each batch tx.
+
+Admin control moved from Zircuit's own two multisigs (both deleted) to Conduit's shared multisig (4-of-10): zero signer overlap with the old multisigs, and already admin on ~25 other Conduit-hosted L2Beat projects. Now owner of SystemConfig, guardian of OptimismPortal2, owner of ProxyAdmin. superchainConfig now points to Conduit's shared SuperchainConfigFake_expiry (used by 11 other tracked projects).
+
+Old escape hatch removed entirely: L2OutputOracle, ResolverRegistry, local SuperchainConfig fork, and both SP1 verifiers are gone (permissionless exit via merkle proof/resolver after 1mo of no state updates no longer exists). Replaced by standard fault-proof stack: DisputeGameFactory, PermissionedDisputeGame (proposer+challenger permissioned, not yet open), AnchorStateRegistry, MIPS, PreimageOracle, DelayedWETH. proofMaturityDelaySeconds 604800 (7d), disputeGameFinalityDelaySeconds 302400 (3.5d).
+
+Version jumps: OptimismPortal2 2.2.0 -> 5.1.1, SystemConfig 1.12.0 -> 3.11.0, L1CrossDomainMessenger 2.4.0 -> 2.11.0, L1StandardBridge 2.3.0 -> 2.8.0, L1ERC721Bridge 2.2.0 -> 2.9.0.
+
+L1Block predeploy on L2 shows unverified: Zircuit's block explorer switched from Blockscout to Conduit's native explorer (explorer.zircuit.com). Confirmed via Conduit's own contract-verification API that this predeploy has no source match there yet - a real gap on the new explorer, not an L2Beat-side flake.
+
+Diff (OptimismPortal2): https://disco.l2beat.com/diff/eth:0xF7209f5471628aC5f68FE4ae98Feb7f02E0f40Be/eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202
+Diff (SystemConfig): https://disco.l2beat.com/diff/eth:0xaFD10586f3F2cB2aD34E8196563424a3a93EbE9F/eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      name:
+-        "OptimismPortal"
++        "OptimismPortal2"
+      template:
+-        "opstack/zircuit/OptimismPortal"
++        "opstack/OptimismPortal2"
+      sourceHashes.1:
+-        "0x75b3a40d24df23769d05a5f3bb0461a19038ca999e7d7a3bb9e1ea2579b405d6"
++        "0x3e7e2cb08ba995795937c9c2e8ea9d0e4d2e2de852f389055073384d5f79c59d"
+      description:
+-        "The main entry point to deposit funds from the host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a time defined by the eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+      values.$implementation:
+-        "eth:0xF7209f5471628aC5f68FE4ae98Feb7f02E0f40Be"
++        "eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202"
+      values.$pastUpgrades.8:
++        ["2026-08-04T13:31:59.000Z","0xe697fe2a042f60a3fb3f835e122e209bab529a36fe66bfc77af79dbb1bebdfa4",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.9:
++        ["2026-08-04T13:31:59.000Z","0xe697fe2a042f60a3fb3f835e122e209bab529a36fe66bfc77af79dbb1bebdfa4",["eth:0x2D778797049FE9259d947D1ED8e5442226dFB589"]]
+      values.$pastUpgrades.10:
++        ["2026-08-04T13:48:35.000Z","0x3fb4739c3ce4edcab46b84c2438e7d1f86b85e7e57970a7eaf6b6de11dda6080",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.11:
++        ["2026-08-04T13:48:35.000Z","0x3fb4739c3ce4edcab46b84c2438e7d1f86b85e7e57970a7eaf6b6de11dda6080",["eth:0xe2F826324b2faf99E513D16D266c3F80aE87832B"]]
+      values.$pastUpgrades.12:
++        ["2026-08-04T13:59:35.000Z","0xfb6124f237aaaccedd1f8d1298ae5f3b19871f7af18bd4c791a818487cc199de",["eth:0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd"]]
+      values.$pastUpgrades.13:
++        ["2026-08-04T14:04:47.000Z","0xf7628d3121b7e3f4dcd11e06791a07e8ffa71753962baadc04c62944d412a006",["eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4"]]
+      values.$pastUpgrades.14:
++        ["2026-08-04T14:11:35.000Z","0xf7dd2207111f0f269b7cdfa8a7fa703b664585513bc113e0d2c8bc7ce9eb355f",["eth:0x381E729FF983FA4BCEd820e7b922d79bF653B999"]]
+      values.$pastUpgrades.15:
++        ["2026-08-04T14:16:11.000Z","0xeb6b35d861c5b232c47bc0e604f0834975876f80181776e46cb486f7a398cf03",["eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202"]]
+      values.$upgradeCount:
+-        8
++        16
+      values.guardian:
+-        "eth:0x2c0B27F7C8F083B539557a0bA787041BF22DB276"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.l2Oracle:
+-        "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4"
+      values.resolverRegistry:
+-        "eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E"
+      values.superchainConfig:
+-        "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"
++        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
+      values.version:
+-        "2.2.0"
++        "5.1.1"
+      values.anchorStateRegistry:
++        "eth:0x2613d77fFBE105CA861D526061dC3ef191E17051"
+      values.disputeGameFactory:
++        "eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90"
+      values.disputeGameFinalityDelaySeconds:
++        302400
+      values.ethLockbox:
++        "eth:0x0000000000000000000000000000000000000000"
+      values.initVersion:
++        3
+      values.proofMaturityDelaySeconds:
++        604800
+      values.proxyAdmin:
++        "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      values.proxyAdminOwner:
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.RespectedGameString:
++        "PermissionedDisputeGame"
++++ severity: HIGH
+      values.respectedGameType:
++        1
+      values.respectedGameTypeUpdatedAt:
++        1785852695
+      implementationNames.eth:0xF7209f5471628aC5f68FE4ae98Feb7f02E0f40Be:
+-        "OptimismPortal"
+      implementationNames.eth:0x7Cf803296662e8C72A6C1d6450572209aCF7f202:
++        "OptimismPortal2"
+      fieldMeta:
++        {"respectedGameType":{"severity":"HIGH"},"paused":{"severity":"HIGH","description":"Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."}}
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0":"FaultDisputeGame","1":"PermissionedDisputeGame","8":"FaultDisputeGame","621":"AggregateVerifier","1337":"KailuaGame"}}]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x2a721cBE81a128be0F01040e3353c3805A5EA091) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0xe784f0244cc07b370089b601090cc4c3c7469c9fdd2a281bfa13b438c1b88e0d"
++        "0x1f2c13ad1144ce6548e578b834c33b0d65b1564aeb0d5c708ed4e7fb50535cc6"
+      values.$implementation:
+-        "eth:0xA5B66A9FBCE3d57dA2b3Bd764d0a05B95052f73F"
++        "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0"
+      values.$pastUpgrades.2:
++        ["2026-08-04T13:31:59.000Z","0xe697fe2a042f60a3fb3f835e122e209bab529a36fe66bfc77af79dbb1bebdfa4",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.3:
++        ["2026-08-04T13:31:59.000Z","0xe697fe2a042f60a3fb3f835e122e209bab529a36fe66bfc77af79dbb1bebdfa4",["eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"]]
+      values.$pastUpgrades.4:
++        ["2026-08-04T13:40:47.000Z","0x2b72943b3cf73e5f4dade0cc6edd2f78bc2cb3f518df2872cf6fd69aea924cc0",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.5:
++        ["2026-08-04T13:40:47.000Z","0x2b72943b3cf73e5f4dade0cc6edd2f78bc2cb3f518df2872cf6fd69aea924cc0",["eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"]]
+      values.$pastUpgrades.6:
++        ["2026-08-04T13:59:35.000Z","0xfb6124f237aaaccedd1f8d1298ae5f3b19871f7af18bd4c791a818487cc199de",["eth:0x3eA6084748ED1b2A9B5D4426181F1ad8C93F6231"]]
+      values.$pastUpgrades.7:
++        ["2026-08-04T14:04:47.000Z","0xf7628d3121b7e3f4dcd11e06791a07e8ffa71753962baadc04c62944d412a006",["eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B"]]
+      values.$pastUpgrades.8:
++        ["2026-08-04T14:11:35.000Z","0xf7dd2207111f0f269b7cdfa8a7fa703b664585513bc113e0d2c8bc7ce9eb355f",["eth:0x22D12E0FAebD62d429514A65EBAe32dd316c12D6"]]
+      values.$pastUpgrades.9:
++        ["2026-08-04T14:16:11.000Z","0xeb6b35d861c5b232c47bc0e604f0834975876f80181776e46cb486f7a398cf03",["eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0"]]
+      values.$upgradeCount:
+-        2
++        10
+      values.superchainConfig:
+-        "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"
++        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
+      values.version:
+-        "2.4.0"
++        "2.11.0"
+      values.initVersion:
++        3
+      values.proxyAdmin:
++        "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      values.proxyAdminOwner:
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.systemConfig:
++        "eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
+      implementationNames.eth:0xA5B66A9FBCE3d57dA2b3Bd764d0a05B95052f73F:
+-        "L1CrossDomainMessenger"
+      implementationNames.eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0:
++        "L1CrossDomainMessenger"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Zircuit Multisig 2 (eth:0x2c0B27F7C8F083B539557a0bA787041BF22DB276) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract SystemConfig (eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x3773dd699ed2a94c92b617c9e76c0191f58b9de68e2605999d076e287869e165"
++        "0xaa1b3bedab4e63198240e9dea4503f0e615e4d18a545961c9f11b72143279fbc"
+      values.$implementation:
+-        "eth:0xaFD10586f3F2cB2aD34E8196563424a3a93EbE9F"
++        "eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED"
+      values.$pastUpgrades.4:
++        ["2026-08-04T13:31:59.000Z","0xe697fe2a042f60a3fb3f835e122e209bab529a36fe66bfc77af79dbb1bebdfa4",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.5:
++        ["2026-08-04T13:31:59.000Z","0xe697fe2a042f60a3fb3f835e122e209bab529a36fe66bfc77af79dbb1bebdfa4",["eth:0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"]]
+      values.$pastUpgrades.6:
++        ["2026-08-04T13:40:47.000Z","0x2b72943b3cf73e5f4dade0cc6edd2f78bc2cb3f518df2872cf6fd69aea924cc0",["eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]]
+      values.$pastUpgrades.7:
++        ["2026-08-04T13:48:35.000Z","0x3fb4739c3ce4edcab46b84c2438e7d1f86b85e7e57970a7eaf6b6de11dda6080",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.8:
++        ["2026-08-04T13:48:35.000Z","0x3fb4739c3ce4edcab46b84c2438e7d1f86b85e7e57970a7eaf6b6de11dda6080",["eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]]
+      values.$pastUpgrades.9:
++        ["2026-08-04T13:59:35.000Z","0xfb6124f237aaaccedd1f8d1298ae5f3b19871f7af18bd4c791a818487cc199de",["eth:0x760C48C62A85045A6B69f07F4a9f22868659CbCc"]]
+      values.$pastUpgrades.10:
++        ["2026-08-04T14:04:47.000Z","0xf7628d3121b7e3f4dcd11e06791a07e8ffa71753962baadc04c62944d412a006",["eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647"]]
+      values.$pastUpgrades.11:
++        ["2026-08-04T14:11:35.000Z","0xf7dd2207111f0f269b7cdfa8a7fa703b664585513bc113e0d2c8bc7ce9eb355f",["eth:0x2bFE4A5Bd5A41e9d848d843ebCDFa15954e9A557"]]
+      values.$pastUpgrades.12:
++        ["2026-08-04T14:16:11.000Z","0xeb6b35d861c5b232c47bc0e604f0834975876f80181776e46cb486f7a398cf03",["eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED"]]
+      values.$upgradeCount:
+-        4
++        13
+      values.basefeeScalar:
+-        1368
++        7600
+      values.batcherHash:
+-        "eth:0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145"
++        "eth:0xCf8225801DF6Ef90aD3bc86808F574403A309de8"
+      values.blobbasefeeScalar:
+-        810949
++        862000
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
+-        0
++        50
+      values.eip1559Elasticity:
+-        0
++        6
+      values.L2_OUTPUT_ORACLE_SLOT:
+-        "0xe52a667f71ec761b9b381c7b76ca9b852adf7e8905da0e0ad49986a0a6871815"
+      values.l2OutputOracle:
+-        "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4"
+      values.minimumGasLimit:
+-        7000000
++        21000000
+      values.operatorFeeConstant:
+-        360000000000
++        0
+      values.operatorFeeScalar:
+-        4200000000
++        0
+      values.OSAKA_TX_MAX_GAS:
+-        16777216
+      values.owner:
+-        "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.resourceConfig.maxResourceLimit:
+-        6000000
++        20000000
+      values.resourceConfig._spacer:
+-        8
+      values.unsafeBlockSigner:
+-        "eth:0xAE8f771E297AAbfDE7ff35a33FB6D558f4E0a679"
++        "eth:0x0037e8264020bF2B3e6f57B529e07347f76F2D55"
+      values.version:
+-        "1.12.0"
++        "3.11.0"
+      values.daFootprintGasScalar:
++        0
+      values.disputeGameFactory:
++        "eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90"
+      values.getAddresses:
++        {"l1CrossDomainMessenger":"eth:0x2a721cBE81a128be0F01040e3353c3805A5EA091","l1ERC721Bridge":"eth:0x994eEb321F9cD79B077a5455fC248c77f30Dd244","l1StandardBridge":"eth:0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8","optimismPortal":"eth:0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1","optimismMintableERC20Factory":"eth:0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"}
+      values.guardian:
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.initVersion:
++        3
+      values.l2ChainId:
++        48900
+      values.maximumGasLimit:
++        500000000
+      values.minBaseFee:
++        0
+      values.paused:
++        false
+      values.proxyAdmin:
++        "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      values.proxyAdminOwner:
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.superchainConfig:
++        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
+      implementationNames.eth:0xaFD10586f3F2cB2aD34E8196563424a3a93EbE9F:
+-        "SystemConfig"
+      implementationNames.eth:0x2fA28989fc559836E9d66dFf3010C7F7f41c65ED:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      template:
+-        "opstack/zircuit/L1StandardBridge"
++        "opstack/L1StandardBridge"
+      sourceHashes.1:
+-        "0x2324f7b9f352cb131178a3853eb2383e5c82923461c55e76d14c23fd231664f9"
++        "0xcacd38e7b52353ad3463da40b7e7a29b028f95500a82590d2b8f8ffd26b83f6d"
+      description:
+-        "The main entry point to deposit ERC20 tokens from the host chain to this chain. This fork of the standard OP stack contract allows for permissionless 'escaping' of assets with merkle proofs or a resolver if there were no state updates for a configurable time."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+      values.$implementation:
+-        "eth:0x25DF2d6DDCa09C0f9Fce19373896be075F4f7d98"
++        "eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A"
+      values.$pastUpgrades.8:
++        ["2026-08-04T13:31:59.000Z","0xe697fe2a042f60a3fb3f835e122e209bab529a36fe66bfc77af79dbb1bebdfa4",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.9:
++        ["2026-08-04T13:31:59.000Z","0xe697fe2a042f60a3fb3f835e122e209bab529a36fe66bfc77af79dbb1bebdfa4",["eth:0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF"]]
+      values.$pastUpgrades.10:
++        ["2026-08-04T13:40:47.000Z","0x2b72943b3cf73e5f4dade0cc6edd2f78bc2cb3f518df2872cf6fd69aea924cc0",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.11:
++        ["2026-08-04T13:40:47.000Z","0x2b72943b3cf73e5f4dade0cc6edd2f78bc2cb3f518df2872cf6fd69aea924cc0",["eth:0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF"]]
+      values.$pastUpgrades.12:
++        ["2026-08-04T13:59:35.000Z","0xfb6124f237aaaccedd1f8d1298ae5f3b19871f7af18bd4c791a818487cc199de",["eth:0x78972E88Ab8BBB517a36cAea23b931BAB58AD3c6"]]
+      values.$pastUpgrades.13:
++        ["2026-08-04T14:04:47.000Z","0xf7628d3121b7e3f4dcd11e06791a07e8ffa71753962baadc04c62944d412a006",["eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A"]]
+      values.$pastUpgrades.14:
++        ["2026-08-04T14:11:35.000Z","0xf7dd2207111f0f269b7cdfa8a7fa703b664585513bc113e0d2c8bc7ce9eb355f",["eth:0xe32B192fb1DcA88fCB1C56B3ACb429e32238aDCb"]]
+      values.$pastUpgrades.15:
++        ["2026-08-04T14:16:11.000Z","0xeb6b35d861c5b232c47bc0e604f0834975876f80181776e46cb486f7a398cf03",["eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A"]]
+      values.$upgradeCount:
+-        8
++        16
+      values.accessController:
+-        "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"
+      values.superchainConfig:
+-        "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"
++        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
+      values.version:
+-        "2.3.0"
++        "2.8.0"
+      values.initVersion:
++        3
+      values.l2TokenBridge:
++        "eth:0x4200000000000000000000000000000000000010"
+      values.proxyAdmin:
++        "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      values.proxyAdminOwner:
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.systemConfig:
++        "eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
+      implementationNames.eth:0x25DF2d6DDCa09C0f9Fce19373896be075F4f7d98:
+-        "L1StandardBridge"
+      implementationNames.eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A:
++        "L1StandardBridge"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) [succinct/SP1Verifier]
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+    contract ProxyAdmin (eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) [global/ProxyAdmin] {
+    +++ description: None
+      values.owner:
+-        "eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      directlyReceivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0x2613d77fFBE105CA861D526061dC3ef191E17051","role":"admin"}
+      directlyReceivedPermissions.4:
+-        {"permission":"upgrade","from":"eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E","role":"admin"}
+      directlyReceivedPermissions.5.from:
+-        "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"
++        "eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90"
+      directlyReceivedPermissions.6.from:
+-        "eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4"
++        "eth:0x798d82222eC87C6B76aeF659A490e1ab9f7f9162"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ResolverRegistry (eth:0x6c89104690452AD7e209f0ab72287C2561d5cF0E) [opstack/zircuit/ResolverRegistry]
+    +++ description: Registers 'resolvers' which are allowed to supply authoritative data for blockchain balances to support escapes without merkle proofs from e.g. DeFi smart contracts on L2. A resolver can either be registered directly by the respective contract on L2 or by its deployer from L1, using deterministic deployment derivation.
+```
+
+```diff
+-   Status: DELETED
+    contract ZircuitSuperchainConfig (eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) [opstack/zircuit/SuperchainConfig]
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.
+```
+
+```diff
+-   Status: DELETED
+    contract L2OutputOracle (eth:0x92Ef6Af472b39F1b363da45E35530c24619245A4) [opstack/zircuit/L2OutputOracle_SP1_nokeepalive]
+    +++ description: Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition. Users can 'escape' their funds after 1mo of no state updates by supplying merkle proofs or using a resolver.
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x994eEb321F9cD79B077a5455fC248c77f30Dd244) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0xeebc391f228960e573a84b61884f39e3f4d64ad3a105cb7974f641c4a737954e"
++        "0x1f65fda230b6d0df44e466b06418b2e12a401ef82c07521ad18d2f4ae6c70fb2"
+      values.$implementation:
+-        "eth:0xDF129ECFc63Af454F62b69d03C0f0E21e69bcDAb"
++        "eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9"
+      values.$pastUpgrades.2:
++        ["2026-08-04T13:31:59.000Z","0xe697fe2a042f60a3fb3f835e122e209bab529a36fe66bfc77af79dbb1bebdfa4",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.3:
++        ["2026-08-04T13:31:59.000Z","0xe697fe2a042f60a3fb3f835e122e209bab529a36fe66bfc77af79dbb1bebdfa4",["eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"]]
+      values.$pastUpgrades.4:
++        ["2026-08-04T13:40:47.000Z","0x2b72943b3cf73e5f4dade0cc6edd2f78bc2cb3f518df2872cf6fd69aea924cc0",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.5:
++        ["2026-08-04T13:40:47.000Z","0x2b72943b3cf73e5f4dade0cc6edd2f78bc2cb3f518df2872cf6fd69aea924cc0",["eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"]]
+      values.$pastUpgrades.6:
++        ["2026-08-04T13:59:35.000Z","0xfb6124f237aaaccedd1f8d1298ae5f3b19871f7af18bd4c791a818487cc199de",["eth:0x276d3730f219f7ec22274f7263180b8452B46d47"]]
+      values.$pastUpgrades.7:
++        ["2026-08-04T14:04:47.000Z","0xf7628d3121b7e3f4dcd11e06791a07e8ffa71753962baadc04c62944d412a006",["eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013"]]
+      values.$pastUpgrades.8:
++        ["2026-08-04T14:11:35.000Z","0xf7dd2207111f0f269b7cdfa8a7fa703b664585513bc113e0d2c8bc7ce9eb355f",["eth:0x7f1d12fB2911EB095278085f721e644C1f675696"]]
+      values.$pastUpgrades.9:
++        ["2026-08-04T14:16:11.000Z","0xeb6b35d861c5b232c47bc0e604f0834975876f80181776e46cb486f7a398cf03",["eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9"]]
+      values.$upgradeCount:
+-        2
++        10
+      values.superchainConfig:
+-        "eth:0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"
++        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
+      values.version:
+-        "2.2.0"
++        "2.9.0"
+      values.initVersion:
++        3
+      values.proxyAdmin:
++        "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
+      values.proxyAdminOwner:
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.systemConfig:
++        "eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"
+      implementationNames.eth:0xDF129ECFc63Af454F62b69d03C0f0E21e69bcDAb:
+-        "L1ERC721Bridge"
+      implementationNames.eth:0x74f1aC50EB0BE98853805D381C884f5f9abDEcf9:
++        "L1ERC721Bridge"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1MockVerifierWithHash (eth:0xb4bd9A37998576C2FfD863b6dc9E0124021B8739) [N/A]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Zircuit Multisig 1 (eth:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      sourceHashes.1:
+-        "0x8fa0103a7f0708fce3badff106e2d615501b3405658422802ee59b7d9f9e5472"
++        "0x307d4cb83e682629880fe9bb874a188805e3b93cb11a2cbf80095975f1e5b04e"
+      values.$implementation:
+-        "eth:0xf885DA6A3B4c93905b02f36f9a13680922A554b0"
++        "eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB"
+      values.$pastUpgrades.1:
++        ["2026-08-04T13:31:59.000Z","0xe697fe2a042f60a3fb3f835e122e209bab529a36fe66bfc77af79dbb1bebdfa4",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.2:
++        ["2026-08-04T13:31:59.000Z","0xe697fe2a042f60a3fb3f835e122e209bab529a36fe66bfc77af79dbb1bebdfa4",["eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"]]
+      values.$pastUpgrades.3:
++        ["2026-08-04T13:40:47.000Z","0x2b72943b3cf73e5f4dade0cc6edd2f78bc2cb3f518df2872cf6fd69aea924cc0",["eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"]]
+      values.$pastUpgrades.4:
++        ["2026-08-04T13:59:35.000Z","0xfb6124f237aaaccedd1f8d1298ae5f3b19871f7af18bd4c791a818487cc199de",["eth:0x5493f4677A186f64805fe7317D6993ba4863988F"]]
+      values.$pastUpgrades.5:
++        ["2026-08-04T14:16:11.000Z","0xeb6b35d861c5b232c47bc0e604f0834975876f80181776e46cb486f7a398cf03",["eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB"]]
+      values.$upgradeCount:
+-        1
++        6
+      values.version:
+-        "1.9.0"
++        "1.10.2"
+      implementationNames.eth:0xf885DA6A3B4c93905b02f36f9a13680922A554b0:
+-        "OptimismMintableERC20Factory"
+      implementationNames.eth:0x8ee6fB13c6c9a7e401531168E196Fbf8b05cEabB:
++        "OptimismMintableERC20Factory"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGateway (eth:0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67) [succinct/SP1VerifierGateway]
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
+    contract L1Block (zircuit:0x4200000000000000000000000000000000000015) [N/A] {
+    +++ description: None
+      template:
+-        "opstack/Layer2/L1Block_depositExclusions"
+      sourceHashes:
+-        ["0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50","0xbb69c5830d6e822e4bf9c51ad08b5ade53450cf808a5cabc8665f40e5c6d7c1a"]
+      description:
+-        "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain. This version though also contains a storage slot for `depositExclusions`."
+      values.$implementation:
+-        "zircuit:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"
++        "zircuit:0xe95F7EdfB4cbf87eD14d94913448d89282513d66"
+      values.$pastUpgrades.1:
++        ["2026-08-04T14:50:01.000Z","0xd89e381f4e17d7226144ae90c4efef010f4f085afb76b191add65dcf51aef089",["zircuit:0xe95F7EdfB4cbf87eD14d94913448d89282513d66"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.basefee:
+-        129016686
+      values.baseFeeScalar:
+-        1368
+      values.batcherHash:
+-        "0x000000000000000000000000af1e4f6a47af647f87c0ec814d8032c4a4bff145"
+      values.blobBaseFee:
+-        6234620
+      values.blobBaseFeeScalar:
+-        810949
+      values.depositExclusions:
+-        "0x"
+      values.DEPOSITOR_ACCOUNT:
+-        "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
+      values.hash:
+-        "0x1cfd2189d2e946c9d3da809f0e22666602b7d2b84dcf08793f293371c9ad5f6a"
+      values.l1FeeOverhead:
+-        0
+      values.l1FeeScalar:
+-        0
+      values.number:
+-        25645265
+      values.operatorFeeConstant:
+-        360000000000
+      values.operatorFeeScalar:
+-        4200000000
+      values.sequenceNumber:
+-        5
+      values.timestamp:
+-        1785409595
+      values.version:
+-        "1.3.0"
+      implementationNames.zircuit:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12:
+-        "L1Block"
+      implementationNames.zircuit:0xe95F7EdfB4cbf87eD14d94913448d89282513d66:
++        ""
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (zircuit:0x4200000000000000000000000000000000000018) [global/ProxyAdmin] {
+    +++ description: None
+      values.owner:
+-        "zircuit:0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
++        "zircuit:0x5b5A62275DF8c60A80D3a25FAeC5aA7De116b857"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (zircuit:0xC463EaC02572CC964D43D2414023E2c6B62bAF38) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) [opstack/SuperchainConfigFake_expiry]
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle]
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract AnchorStateRegistry (eth:0x2613d77fFBE105CA861D526061dC3ef191E17051) [opstack/AnchorStateRegistry_post13]
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+```
+
+```diff
++   Status: CREATED
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (eth:0x4F80B390aF3b49dda96134DA1ac905b05e816496) [opstack/PermissionedDisputeGame]
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS]
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract DisputeGameFactory (eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90) [opstack/DisputeGameFactory]
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (eth:0x798d82222eC87C6B76aeF659A490e1ab9f7f9162) [opstack/DelayedWETH]
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5) [global/ProxyAdmin]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../AnchorStateRegistry/AnchorStateRegistry.sol    |  2688 +++++
+ .../AnchorStateRegistry}/Proxy.p.sol               |  1090 +-
+ .../Conduit Multisig 1}/GnosisSafe.sol             |     0
+ .../Conduit Multisig 1}/GnosisSafeProxy.p.sol      |     0
+ .../zircuit/.flat/DelayedWETH/DelayedWETH.sol      |  1080 ++
+ .../DelayedWETH}/Proxy.p.sol                       |  1090 +-
+ .../DisputeGameFactory/DisputeGameFactory.sol      |  2300 ++++
+ .../DisputeGameFactory}/Proxy.p.sol                |  1090 +-
+ .../GnosisSafe/GnosisSafe.sol => /dev/null         |  1026 --
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |    38 -
+ .../L1Block/L1Block.sol => /dev/null               |   334 -
+ .../L1CrossDomainMessenger.sol                     |  8093 +++++---------
+ .../L1ERC721Bridge/L1ERC721Bridge.sol              |  7429 ++----------
+ .../L1StandardBridge/L1StandardBridge.sol          | 11191 ++++---------------
+ .../L2OutputOracle/L2OutputOracle.sol => /dev/null |  3938 -------
+ /dev/null => ./src/projects/zircuit/.flat/MIPS.sol |  3274 ++++++
+ .../OptimismMintableERC20Factory.sol               |  1715 ++-
+ .../OptimismPortal/OptimismPortal.sol => /dev/null |  8377 --------------
+ .../.flat/OptimismPortal2/OptimismPortal2.sol      |  5459 +++++++++
+ .../OptimismPortal2}/Proxy.p.sol                   |     0
+ .../zircuit/.flat/PermissionedDisputeGame.sol      |  5774 ++++++++++
+ .../src/projects/zircuit/.flat/PreimageOracle.sol  |  1463 +++
+ ...:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5.sol |   427 +
+ .../ResolverRegistry.sol => /dev/null              |  8062 -------------
+ .../SP1MockVerifierWithHash.sol => /dev/null       |    39 -
+ .../dev/null                                       |  1402 ---
+ .../dev/null                                       |   614 -
+ .../SP1VerifierGateway.sol => /dev/null            |   329 -
+ .../zircuit/.flat/SuperchainConfig/Proxy.p.sol     |  1389 +++
+ .../.flat/SuperchainConfig/SuperchainConfig.sol    |   860 ++
+ .../SystemConfig/SystemConfig.sol                  |  3732 ++++---
+ .../Zircuit Multisig 2/GnosisSafe.sol => /dev/null |  1026 --
+ .../GnosisSafeProxy.p.sol => /dev/null             |    38 -
+ .../SuperchainConfig.sol => /dev/null              |  2988 -----
+ 34 files changed, 35476 insertions(+), 52879 deletions(-)
+```
+
 Generated with discovered.json: 0x0700c169cb352eae0d4617aff35db12cc105af4d
 
 # Diff at Thu, 30 Jul 2026 11:09:17 GMT:

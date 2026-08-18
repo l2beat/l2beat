@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import {
   get$Implementations,
+  getChainConfig,
   type IProvider,
   ProxyDetector,
 } from '@l2beat/discovery'
@@ -33,7 +34,12 @@ export async function getEvents(logger: Logger, args: EventArgs) {
   const chainName = ChainSpecificAddress.longChain(fullAddress)
 
   const explorer = getExplorerConfig({ ...args, chainName })
-  const provider = await getProvider(rpcUrl, explorer, chainName)
+  const provider = await getProvider(
+    rpcUrl,
+    explorer,
+    chainName,
+    getChainConfig(chainName).multicall,
+  )
 
   const onlyHashedTopics = inputTopics.every(
     (t) => Hash256.check(t) || t === 'null',

@@ -31,7 +31,7 @@ export function FlowsGraphPanel({
   baseDollarsPerParticle,
   topChainId,
   className,
-  maxSizeClassName = 'max-w-[min(70svh,calc(100svh-20rem))]',
+  maxSizeClassName = 'max-w-[max(min(70svh,calc(100svh-20rem)),30rem)]',
 }: FlowsGraphPanelProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: containerRef })

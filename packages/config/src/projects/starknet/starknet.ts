@@ -242,10 +242,20 @@ starknetProgramHashes.push(
 starknetProgramHashes.push(
   discovery.getContractValue<string>('Starknet', 'aggregatorProgramHash'),
 )
+// Virtual Starknet OS for client-side proving (e.g. STRK-20). Not stored in
+// the L1 core contract: it is pinned as ALLOWED_VIRTUAL_OS_PROGRAM_HASHES
+// inside the L1-registered Starknet OS program above. See
+// https://github.com/starkware-libs/sequencer/blob/5114457/crates/apollo_starknet_os_program/src/cairo/starkware/starknet/core/os/constants.cairo#L66-L71
+starknetProgramHashes.push(
+  '2373625305120835200243020426311988160128377108314438505880592663683179928225',
+)
 starknetProgramHashes.push(...acceptedSHARPVerifierChain.programPins)
 
 const starkwareMultisig2Stats = discovery.getMultisigStats(
   'Starkware Multisig 2',
+)
+const starkwareMultisig1Stats = discovery.getMultisigStats(
+  'Starkware Multisig 1',
 )
 const scMinorityStats = discovery.getMultisigStats(
   'Starkware SCMinority Multisig',
@@ -362,7 +372,7 @@ export const starknet: ScalingProject = {
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
         noRedTrustedSetups: true,
-        programHashesReproducible: false,
+        programHashesReproducible: true,
         proverSourcePublished: true,
         verifierContractsReproducible: true,
       },
@@ -375,7 +385,7 @@ export const starknet: ScalingProject = {
     {
       rollupNodeLink: 'https://github.com/eqlabs/pathfinder',
       securityCouncilReference:
-        'https://governance.starknet.io/learn/security_council',
+        'https://docs.starknet.io/learn/protocol/security-council',
       stage1PrincipleDescription:
         'While Starknet is considered Stage 1, the Security Council minority is employed to enforce censorship resistance in case the permissioned operator fails to include transactions. The process through which a censored user can contact the Security Council is not defined and currently unclear.',
     },
@@ -439,17 +449,47 @@ export const starknet: ScalingProject = {
     // exposed by the shared SHARP discovery.
     zkVerifiers: acceptedSHARPVerifierChain.factRegistries,
     programHashesDescription:
-      'The Starknet OS, aggregator, outer bootloader, supported-simple-bootloader commitment, and applicative bootloader are reproducible. Every SHARP verifier in the currently accepted fact-registry chain also pins a commitment to an ordered allowlist of recursive Cairo verifier programs. The active allowlist preimages and the programs behind them have not been reproduced, so an invalid nested-proof verifier cannot be ruled out independently.',
+      'The Starknet OS, virtual Starknet OS, aggregator, outer bootloader, supported-simple-bootloader commitment, and applicative bootloader are reproducible. Every SHARP verifier in the currently accepted fact-registry chain also pins a commitment to an ordered allowlist of recursive Cairo verifier programs. The active allowlist preimages and the programs behind them have not been reproduced, so an invalid nested-proof verifier cannot be ruled out independently.',
   },
   upgradesAndGovernance: {
     content: readProjectMarkdown('starknet', 'upgradesAndGovernance', {
       scThreshold,
+      starkwareMultisig1Stats,
       starkwareMultisig2Stats,
       executionDelay,
       sharpMsThreshold,
       sharpUpgradeDelay,
       scMinorityStats,
     }),
+    governanceInfo: {
+      securityCouncil: {
+        Composition: `**${scThreshold}** onchain Safe multisig — 12 members, geographically and organizationally diverse (<50% from one country, <4 from one organization). The Starknet Foundation appoints and can administratively remove members. No fixed term length and no live tokenholder election mechanism.`,
+        'Members public':
+          '**Not mapped**, SNIP-25 and Foundation announcements publish only composition criteria (technical reputation, KYC/AML, diversity limits, conflict-of-interest rules).',
+        Charter:
+          '[SNIP-25](https://github.com/starknet-io/SNIPs/blob/main/SNIPS/snip-25.md) defines duties (security-only mandate), vetting-failure reports, eligibility and the code of conduct.',
+        'Can bypass DAO?': `**Yes** — ${scThreshold} can approve and execute an emergency upgrade immediately. The same instant rights let it counteract a malicious action queued in the DelayedExecutor during its ${executionDelay} window.`,
+        'DAO can override SC?':
+          '**No**, the community can only dispute the emergency upgrades after the fact in advisory way.',
+      },
+      upgrades: {
+        'Major upgrade path': `Release announcement (≥1 SNIP + specific GitHub commit) → 2-week community deliberation → 1-week final review → 1-week STRK vote on the [Governance Hub on L2](https://governance.starknet.io/) → Security Council vetting → deployment queued in the DelayedExecutor by the ${starkwareMultisig1Stats} Starkware Multisig 1, whose ${executionDelay} onchain delay covers the procedural ≥7-day freeze → execution. Minimum wall-clock ≈ **5 weeks** (${executionDelay} onchain-enforced if executed via DelayedExecutor).`,
+        'Minor upgrade path': `Announcement (SNIP may be submitted in parallel) → 1-week review → 1-week STRK vote on L2 → deployment queued in the DelayedExecutor, whose ${executionDelay} onchain delay covers the procedural ≥5-day freeze → execution. No Security Council approval required. Minimum wall-clock ≈ **22 days** (${executionDelay} onchain-enforced if executed via DelayedExecutor).`,
+        'Emergency upgrade path': `**${scThreshold} Security Council, instant**.`,
+        'Exit window': `**${executionDelay}** enforced onchain by the DelayedExecutor on the normal upgrade path (procedurally ≥7 days after the vote for major releases, ≥5 days for minor). **0** for emergency upgrades by the Security Council.`,
+      },
+      tokenGovernance: {
+        'Governance token':
+          '\`STRK\` — ~10.15B total supply, not permanently capped. Users can vote with L1 STRK, natively staked STRK or L2 vSTRK tokens, each gives 1 vote. In 2025 the Starknet Foundation [delegated ~1.7B STRK](https://www.starknet.io/blog/starknet-foundation-delegation-program/) to ~180 ecosystem delegates.',
+        'Voting venue':
+          '[Starknet Governance Hub](https://governance.starknet.io/) using Snapshot X — proposals, space configuration and results are recorded and verified on Starknet, with relayed gasless signed votes.',
+        'Proposal threshold':
+          '**None**, but proposal admission is curated, not triggered permissionlessly by an onchain token threshold.',
+        Quorum:
+          '**No protocol-wide quorum rule published.** Historical votes used a simple majority with no minimum quorum.',
+        'Execution model': `**Vote as onchain record, permissioned deployment** — passed proposals are queued in the DelayedExecutor by the ${starkwareMultisig1Stats} Starkware Multisig 1 and execute after ${executionDelay}.`,
+      },
+    },
   },
   milestones: [
     {

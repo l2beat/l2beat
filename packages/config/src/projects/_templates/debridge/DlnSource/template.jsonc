@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Source-side escrow of the deBridge Liquidity Network (DLN) intent protocol: users lock the 'give' funds of a cross-chain order directly in this contract. Funds are released to the taker (claimUnlock) or refunded to the maker (claimCancel) only on a message from the DlnDestination configured for the order's destination chain, authenticated via the CallProxy of the deBridge messaging protocol (i.e. ultimately by deBridge validator signatures).",
+  "ignoreMethods": ["chainEngines", "dlnDestinationAddresses"],
+  "fields": {
+    "dlnDestinationAddressesMap": {
+      "description": "The admin-configured DlnDestination address per destination chain ID. Messages authenticated as coming from these addresses can unlock or refund all escrowed order funds.",
+      "handler": {
+        "type": "event",
+        "select": "dlnDestinationAddress",
+        "groupBy": "chainIdTo",
+        "set": { "event": "SetDlnDestinationAddress" },
+        "ignoreRelative": true
+      }
+    },
+    "globalFixedNativeFee": {
+      "description": "Flat protocol fee in native tokens charged per order (refunded if the order is cancelled)."
+    },
+    "globalTransferFeeBps": {
+      "description": "Variable protocol fee in basis points deducted from the order's give amount (no upper bound check; admin changes apply to new orders immediately)."
+    },
+    "intentManagerRights": {
+      "description": "Immutable allowlist contract: addresses it validates can create orders with custom or zero protocol fees and can designate an arbitrary address as the order maker (createSaltedOrderForIntent)."
+    },
+    "accessControl": { "handler": { "type": "accessControl" } },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the trusted DlnDestination address for each supported chain (a malicious address there can drain all escrowed order funds via forged unlock messages), change DLN fees without upper bound, unpause the contract, and grant/revoke all roles."
+        }
+      ]
+    },
+    "feeCollectorAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "FEE_COLLECTOR_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw accumulated DLN protocol fees (not user principal) to itself."
+        }
+      ]
+    }
+  },
+  "ignoreRelatives": ["dlnDestinationAddressesMap"]
+}

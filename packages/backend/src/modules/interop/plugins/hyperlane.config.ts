@@ -17,8 +17,16 @@ export interface HyperlaneNetwork {
 
 export const HyperlaneConfig = defineConfig<HyperlaneNetwork[]>('hyperlane')
 
+export type HyperlaneWarpRouteMap = Record<string, string>
+
+export const HyperlaneWarpRoutesConfig = defineConfig<HyperlaneWarpRouteMap>(
+  'hyperlane-warp-routes',
+)
+
 const HYPERLANE_METADATA_URL =
   'https://raw.githubusercontent.com/hyperlane-xyz/hyperlane-registry/main/chains/metadata.yaml'
+const HYPERLANE_WARP_ROUTES_URL =
+  'https://raw.githubusercontent.com/hyperlane-xyz/hyperlane-registry/main/deployments/warp_routes/warpRouteConfigs.yaml'
 
 const HYPERLANE_CHAIN_NAME_OVERRIDES = {
   polygon: 'polygonpos',
@@ -33,10 +41,20 @@ interface HyperlaneRegistryEntry {
   isTestnet: boolean
 }
 
+export interface HyperlaneWarpRouteRegistryEntry {
+  chain: string
+  router: string
+  standard: string
+}
+
 function getHyperlaneChainNameOverride(name: string) {
   return HYPERLANE_CHAIN_NAME_OVERRIDES[
     name as keyof typeof HYPERLANE_CHAIN_NAME_OVERRIDES
   ]
+}
+
+function normalizeHyperlaneChainName(name: string) {
+  return getHyperlaneChainNameOverride(name) ?? name
 }
 
 function parseNumberField(line: string, prefix: string): number | undefined {
@@ -51,6 +69,106 @@ function parseNumberField(line: string, prefix: string): number | undefined {
 function parseStringField(line: string, prefix: string): string | undefined {
   if (!line.startsWith(prefix)) return
   return line.slice(prefix.length)
+}
+
+function unquoteYamlString(value: string): string {
+  const trimmed = value.trim()
+  if (
+    (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+    (trimmed.startsWith("'") && trimmed.endsWith("'"))
+  ) {
+    return trimmed.slice(1, -1)
+  }
+  return trimmed
+}
+
+export function hyperlaneWarpRouteKey(chain: string, router: string): string {
+  return `${chain}:${router.toLowerCase()}`
+}
+
+export function parseHyperlaneWarpRouteRegistry(
+  yaml: string,
+): HyperlaneWarpRouteRegistryEntry[] {
+  const entries: HyperlaneWarpRouteRegistryEntry[] = []
+  let currentRouter: string | undefined
+  let currentChain: string | undefined
+  let currentStandard: string | undefined
+
+  const pushCurrent = () => {
+    if (!currentRouter || !currentChain || !currentStandard) return
+    entries.push({
+      chain: normalizeHyperlaneChainName(currentChain),
+      router: currentRouter,
+      standard: currentStandard,
+    })
+  }
+
+  for (const line of yaml.split('\n')) {
+    const router = parseStringField(line, '    - addressOrDenom: ')
+    if (router !== undefined) {
+      pushCurrent()
+      currentRouter = unquoteYamlString(router)
+      currentChain = undefined
+      currentStandard = undefined
+      continue
+    }
+
+    if (!currentRouter) continue
+
+    const chain = parseStringField(line, '      chainName: ')
+    if (chain !== undefined) {
+      currentChain = unquoteYamlString(chain)
+      continue
+    }
+
+    const standard = parseStringField(line, '      standard: ')
+    if (standard !== undefined) {
+      currentStandard = unquoteYamlString(standard)
+    }
+  }
+
+  pushCurrent()
+  return entries
+}
+
+export function buildHyperlaneWarpRouteMap(
+  entries: HyperlaneWarpRouteRegistryEntry[],
+): HyperlaneWarpRouteMap {
+  const result: HyperlaneWarpRouteMap = {}
+
+  for (const entry of entries) {
+    if (!/^0x[0-9a-fA-F]{40}$/.test(entry.router)) continue
+
+    const key = hyperlaneWarpRouteKey(entry.chain, entry.router)
+    const previousStandard = result[key]
+    if (previousStandard && previousStandard !== entry.standard) {
+      throw new Error(
+        `Conflicting Hyperlane warp route standards for ${key}: ${previousStandard} and ${entry.standard}`,
+      )
+    }
+    result[key] = entry.standard
+  }
+
+  return result
+}
+
+export function mergeHyperlaneWarpRouteMaps(
+  previous: HyperlaneWarpRouteMap | undefined,
+  latest: HyperlaneWarpRouteMap,
+): HyperlaneWarpRouteMap {
+  return { ...previous, ...latest }
+}
+
+function areHyperlaneWarpRouteMapsEqual(
+  a: HyperlaneWarpRouteMap | undefined,
+  b: HyperlaneWarpRouteMap,
+): boolean {
+  if (!a) return false
+  const aKeys = Object.keys(a)
+  const bKeys = Object.keys(b)
+  return (
+    aKeys.length === bKeys.length && bKeys.every((key) => a[key] === b[key])
+  )
 }
 
 export function parseHyperlaneRegistryMetadata(
@@ -168,7 +286,7 @@ export class HyperlaneConfigPlugin
   extends TimeLoop
   implements InteropConfigPlugin
 {
-  provides = [HyperlaneConfig]
+  provides = [HyperlaneConfig, HyperlaneWarpRoutesConfig]
 
   private readonly bootstrapNetworks: HyperlaneNetwork[]
   private readonly bootstrapChainNamesByChainId: Map<number, string>
@@ -192,7 +310,11 @@ export class HyperlaneConfigPlugin
 
   async run() {
     const previous = this.store.get(HyperlaneConfig)
-    const latest = await this.getLatestNetworks()
+    const previousWarpRoutes = this.store.get(HyperlaneWarpRoutesConfig)
+    const [latest, latestWarpRoutes] = await Promise.all([
+      this.getLatestNetworks(),
+      this.getLatestWarpRoutes(),
+    ])
 
     const reconciled = reconcileNetworks(previous, latest)
 
@@ -207,7 +329,30 @@ export class HyperlaneConfigPlugin
       this.logger.info('Networks updated', {
         plugin: HyperlaneConfig.key,
       })
-      this.store.set(HyperlaneConfig, reconciled.updated)
+      await this.store.set(HyperlaneConfig, reconciled.updated)
+    }
+
+    const removedWarpRoutes = previousWarpRoutes
+      ? Object.keys(previousWarpRoutes).filter(
+          (key) => latestWarpRoutes[key] === undefined,
+        )
+      : []
+    if (removedWarpRoutes.length > 0) {
+      this.logger.info('Upstream warp routes removed', {
+        plugin: HyperlaneWarpRoutesConfig.key,
+        removed: removedWarpRoutes,
+      })
+    }
+
+    const mergedWarpRoutes = mergeHyperlaneWarpRouteMaps(
+      previousWarpRoutes,
+      latestWarpRoutes,
+    )
+    if (!areHyperlaneWarpRouteMapsEqual(previousWarpRoutes, mergedWarpRoutes)) {
+      this.logger.info('Warp routes updated', {
+        plugin: HyperlaneWarpRoutesConfig.key,
+      })
+      await this.store.set(HyperlaneWarpRoutesConfig, mergedWarpRoutes)
     }
   }
 
@@ -249,5 +394,18 @@ export class HyperlaneConfigPlugin
     }
 
     return networks.sort((a, b) => a.chain.localeCompare(b.chain))
+  }
+
+  async getLatestWarpRoutes(): Promise<HyperlaneWarpRouteMap> {
+    const response = await this.http.fetchRaw(HYPERLANE_WARP_ROUTES_URL, {
+      timeout: 10_000,
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status} ${response.statusText}`)
+    }
+
+    const yaml = await response.text()
+    return buildHyperlaneWarpRouteMap(parseHyperlaneWarpRouteRegistry(yaml))
   }
 }

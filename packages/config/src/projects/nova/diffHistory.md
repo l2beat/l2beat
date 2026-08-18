@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x80f983b26de08e68dc788d13ef1e532007bdf166
+
+# Diff at Thu, 13 Aug 2026 09:20:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4a0cce7a33eee94f7395bc3adf267ebe20e3f4bc block: 1785996103
+- current timestamp: 1786612737
+
+## Description
+
+Track the ArbOS 61 transaction-filtering precompile (`0x..74`) via the new shared `orbitstack/ArbFilteredTransactionsManager` template, seeded as a relative off the L2UpgradeExecutor, with a `manualSourcePaths` pointer to the Nitro implementation. The feature is not enabled on Arbitrum Nova, so it yields no results today (0 filtered txs; `getAllTransactionFilterers` reverts, rendered as `EXPECT_REVERT`); it auto-populates if ever activated.
+
+## Watched changes
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      values.scheduledTransactions.136:
++        {"id":"0xca1f46b8ad7e85e9361445532fccf860739d3d56b7db05bf4cb27d6ea15b5b8e","decoded":{"chain":"arbitrum","contractName":"TransparentUpgradeableProxy","function":"0xec20b526","inputs":[{"name":"calldata","value":"0xec20b526ffffffffffffffffffffffffffffffffffffffffffd5ad352eec3ec51bda416e"}],"address":"arb1:0x912CE59144191C1204E64559FE8253a0e49E6548","calldata":"0xec20b526ffffffffffffffffffffffffffffffffffffffffffd5ad352eec3ec51bda416e","executor":"eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000a4bca8c7b5000000000000000000000000912ce59144191c1204e64559fe8253a0e49e654800000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000024ec20b526ffffffffffffffffffffffffffffffffffffffffffd5ad352eec3ec51bda416e0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785996103 (main branch discovery), not current.
+
+```diff
+    contract L2UpgradeExecutor (arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.transactionFilteringPrecompile:
++        "arb-nova:0x0000000000000000000000000000000000000074"
+    }
+```
+
 Generated with discovered.json: 0x69dd4b3e7d5e187f1bd678025c038e43d5407efc
 
 # Diff at Thu, 06 Aug 2026 06:03:32 GMT:

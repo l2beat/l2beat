@@ -2,6 +2,7 @@ import type { InteropTransferRecord } from '@l2beat/database'
 import { InteropTransferClassifier } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
+import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type {
@@ -110,27 +111,22 @@ export function toInteropProtocolTransferDetailsItem(
     transfer.dstTxHash,
   )
 
+  const srcSymbol = transfer.srcSymbol ?? UNKNOWN_TOKEN_SYMBOL
+  const dstSymbol = transfer.dstSymbol ?? UNKNOWN_TOKEN_SYMBOL
+
   return {
     transferId: transfer.transferId,
     timestamp: transfer.timestamp,
     srcAmount: transfer.srcAmount,
-    srcSymbol: transfer.srcSymbol ?? UNKNOWN_TOKEN_SYMBOL,
-    srcAbstractTokenId: transfer.srcAbstractTokenId,
-    srcTokenIssuer:
-      transfer.srcAbstractTokenId !== undefined
-        ? (tokensDetailsMap.get(transfer.srcAbstractTokenId)?.issuer ?? null)
-        : null,
+    srcSymbol,
+    srcTokenHref: getTokenHref(transfer.srcAbstractTokenId, tokensDetailsMap),
     srcTokenIconUrl: getTokenIconUrl(
       transfer.srcAbstractTokenId,
       tokensDetailsMap,
     ),
     dstAmount: transfer.dstAmount,
-    dstSymbol: transfer.dstSymbol ?? UNKNOWN_TOKEN_SYMBOL,
-    dstAbstractTokenId: transfer.dstAbstractTokenId,
-    dstTokenIssuer:
-      transfer.dstAbstractTokenId !== undefined
-        ? (tokensDetailsMap.get(transfer.dstAbstractTokenId)?.issuer ?? null)
-        : null,
+    dstSymbol,
+    dstTokenHref: getTokenHref(transfer.dstAbstractTokenId, tokensDetailsMap),
     dstTokenIconUrl: getTokenIconUrl(
       transfer.dstAbstractTokenId,
       tokensDetailsMap,
@@ -147,6 +143,25 @@ export function toInteropProtocolTransferDetailsItem(
     dstTxHash: transfer.dstTxHash,
     dstTxHashHref,
   }
+}
+
+function getTokenHref(
+  abstractTokenId: string | undefined,
+  tokensDetailsMap: TokensDetailsMap,
+): string | undefined {
+  if (!abstractTokenId) return undefined
+
+  // A transfer can carry an abstract token id we have no record for. There is
+  // no token page to link to in that case, so it stays unlinked - as does the
+  // shared "unknown" token, which getInteropTokenUrl rejects.
+  const details = tokensDetailsMap.get(abstractTokenId)
+  if (!details) return undefined
+
+  return getInteropTokenUrl({
+    id: abstractTokenId,
+    symbol: details.symbol,
+    issuer: details.issuer,
+  })
 }
 
 function getTokenIconUrl(

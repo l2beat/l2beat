@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Sandbox that executes arbitrary calldata attached to claimed cross-chain submissions on behalf of the DeBridgeGate. Calls are performed from this contract's address with attacker-choosable target and data, so external contracts must never trust it as a caller; it isolates such calls from the gate's balances.",
+  "ignoreMethods": ["submissionChainIdFrom", "submissionNativeSender"],
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke the DEBRIDGE_GATE_ROLE that authorizes contracts to execute arbitrary external calls through the CallProxy."
+        }
+      ]
+    }
+  }
+}

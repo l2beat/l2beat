@@ -1,11 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type {
   BalanceOfEscrowAmountFormula,
+  StarknetBalanceOfAmountFormula,
   StarknetTotalSupplyAmountFormula,
   TotalSupplyAmountFormula,
 } from '@l2beat/config'
 import type {
   BalanceProvider,
+  StarknetBalanceProvider,
   StarknetTotalSupplyProvider,
   TotalSupplyProvider,
 } from '@l2beat/shared'
@@ -26,6 +28,7 @@ export type OnchainAmountConfig =
   | BalanceOfEscrowAmountFormula
   | TotalSupplyAmountFormula
   | StarknetTotalSupplyAmountFormula
+  | StarknetBalanceOfAmountFormula
 
 interface OnchainAmountIndexerDeps
   extends Omit<
@@ -36,6 +39,7 @@ interface OnchainAmountIndexerDeps
   chain: string
   totalSupplyProvider: TotalSupplyProvider
   starknetTotalSupplyProvider: StarknetTotalSupplyProvider
+  starknetBalanceProvider: StarknetBalanceProvider
   balanceProvider: BalanceProvider
 }
 
@@ -98,10 +102,17 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
             blockNumber,
           )
 
+        const starknetBalanceRecords = await this.fetchStarknetBalances(
+          configurations,
+          timestamp,
+          blockNumber,
+        )
+
         const amounts = [
           ...escrowBalanceRecords,
           ...totalSupplyRecords,
           ...starknetTotalSupplyRecords,
+          ...starknetBalanceRecords,
         ]
 
         return async () => {
@@ -231,6 +242,42 @@ export class OnchainAmountIndexer extends ManagedMultiIndexer<OnchainAmountConfi
     return totalSupplies.map((supply, i) => ({
       configurationId: tokens[i].id,
       amount: supply,
+      timestamp,
+    }))
+  }
+
+  private async fetchStarknetBalances(
+    configurations: Configuration<OnchainAmountConfig>[],
+    timestamp: number,
+    blockNumber: number,
+  ) {
+    const balances = configurations.filter(
+      (c) => c.properties.type === 'starknetBalanceOf',
+    ) as Configuration<StarknetBalanceOfAmountFormula>[]
+
+    if (balances.length === 0) {
+      return []
+    }
+
+    this.logger.info('Fetching starknet balances', {
+      blockNumber,
+      balances: balances.length,
+    })
+
+    const amounts = await this.$.starknetBalanceProvider.getBalances(
+      balances.map((balance) => ({
+        token: balance.properties.address,
+        holder: balance.properties.escrowAddress,
+      })),
+      blockNumber,
+      this.$.chain,
+    )
+
+    this.logger.info('Fetched starknet balances')
+
+    return amounts.map((amount, i) => ({
+      configurationId: balances[i].id,
+      amount,
       timestamp,
     }))
   }
