@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { formatBytes, formatCurrency, ProjectId } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import round from 'lodash/round'
 import { Breakdown } from '~/components/breakdown/Breakdown'
@@ -18,8 +18,6 @@ import {
   type PercentageChangePeriod,
 } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { formatBytes } from '~/utils/number-format/formatBytes'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 interface DaSummaryBoxesProps {
   entries: DaSummaryEntry[]

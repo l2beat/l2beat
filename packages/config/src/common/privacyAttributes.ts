@@ -41,4 +41,10 @@ export const PRIVACY_ATTRIBUTES = {
     description:
       'Transfer amounts are private, while sender and recipient addresses remain public.',
   },
+  stealthAddresses: {
+    id: 'stealthAddresses',
+    label: 'Stealth addresses',
+    description:
+      'Uses fresh, one-time recipient addresses to obscure who controls the receiving address.',
+  },
 } as const satisfies Record<string, PrivacyAttribute>

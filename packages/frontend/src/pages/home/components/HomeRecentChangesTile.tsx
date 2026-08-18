@@ -1,10 +1,9 @@
 import { useState } from 'react'
+import { useDevice } from '~/hooks/useDevice'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { HomeCard } from './HomeCard'
 import { RecentChangesDialog } from './RecentChangesDialog'
-
-const VISIBLE_PROJECT_ICONS_COUNT = 5
 
 export interface HomeRecentChangesProject {
   name: string
@@ -14,21 +13,22 @@ export interface HomeRecentChangesProject {
 export function HomeRecentChangesTile({
   recentChangesCount,
   recentChangesProjects,
+  className,
 }: {
   recentChangesCount: number
   recentChangesProjects: HomeRecentChangesProject[]
+  className?: string
 }) {
+  const { isDesktop } = useDevice()
+  const visibleIcons = isDesktop ? 3 : 5
   const [dialogOpen, setDialogOpen] = useState(false)
   const disabled = recentChangesCount === 0
 
-  const visibleProjects = recentChangesProjects.slice(
-    0,
-    VISIBLE_PROJECT_ICONS_COUNT,
-  )
+  const visibleProjects = recentChangesProjects.slice(0, visibleIcons)
   const restCount = recentChangesProjects.length - visibleProjects.length
 
   return (
-    <HomeCard className="p-0 md:p-1">
+    <HomeCard className={cn('p-0 md:p-1', className)}>
       <button
         type="button"
         onClick={() => setDialogOpen(true)}
@@ -42,17 +42,25 @@ export function HomeRecentChangesTile({
         <div className="flex min-w-0 flex-1 flex-col">
           <span
             className={cn(
-              'truncate font-bold text-label-value-14 leading-tight transition-colors',
+              'font-bold text-label-value-14 leading-tight transition-colors lg:truncate',
               !disabled && 'group-hover:text-link',
             )}
           >
-            Recent changes{' '}
-            <span className="font-medium text-secondary">(past 7 days)</span>
+            <span className="lg:hidden">Recent changes</span>
+            <span className="max-lg:hidden">Updates</span>
+            <span className="font-medium text-secondary lg:hidden">
+              {' '}
+              (last 7 days)
+            </span>
           </span>
-          <span className="mt-0.5 truncate font-medium text-label-value-12 text-secondary">
-            {disabled
-              ? 'No project changes handled this week'
-              : `${recentChangesCount} project ${recentChangesCount === 1 ? 'change' : 'changes'} handled by the L2BEAT team`}
+
+          <span className="mt-0.5 truncate font-medium text-label-value-12 text-secondary leading-tight">
+            <span className="lg:hidden">
+              {disabled
+                ? 'No project changes handled this week'
+                : `${recentChangesCount} project ${recentChangesCount === 1 ? 'change' : 'changes'} handled by the L2BEAT team`}
+            </span>
+            <span className="max-lg:hidden">Last 7 days</span>
           </span>
         </div>
         {!disabled && (

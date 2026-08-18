@@ -1,0 +1,63 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "KMSVerifier",
+  "description": "Ethereum host-chain verifier for public decryption results produced through the Zama Gateway Decryption contract. Since v0.3.0 it is a stateless proof checker: KMS signer sets and thresholds are read from the ProtocolConfig contract, and confidential token wrappers accept a decrypted value when it is signed by the threshold of the current or any explicitly selected non-destroyed KMS context.",
+  "category": "core",
+  "ignoreMethods": ["proxiableUUID", "getSignersForKmsContext"],
+  "ignoreInWatchMode": [
+    "getKmsSigners",
+    "getThreshold",
+    "getCurrentKmsContextId"
+  ],
+  "fields": {
+    "protocolConfig": {
+      "description": "ProtocolConfig contract that stores the KMS contexts (signer sets and thresholds) this verifier reads during proof verification. Referenced as a compile-time constant without a getter.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+      }
+    },
+    "aclOwner": {
+      "description": "Owner of the Zama ACL contract. This account is authorized by onlyACLOwner for KMSVerifier upgrades. Context and threshold management moved to ProtocolConfig in v0.3.0.",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the KMSVerifier implementation."
+        }
+      ]
+    },
+    "getKmsSigners": {
+      "description": "KMS signers in the current context, read through from ProtocolConfig where they are indexed for permissions and monitoring.",
+      "type": "PERMISSION"
+    },
+    "getThreshold": {
+      "description": "Minimum number of unique valid KMS signatures required to accept a public decryption result, read through from the ProtocolConfig public-decryption threshold of the current context.",
+      "type": "RISK_PARAMETER"
+    },
+    "getCurrentKmsContextId": {
+      "description": "Identifier of the context used when proof extraData is empty or starts with version 0. Version 1 extraData can explicitly select any non-destroyed context, including for ciphertexts created after that context was superseded.",
+      "type": "RISK_PARAMETER"
+    },
+    "gatewayDecryption": {
+      "description": "Gateway Decryption contract whose EIP-712 source domain is verified by this Ethereum KMSVerifier.",
+      "severity": "HIGH",
+      "type": "L2",
+      "copy": "eip712Domain",
+      "edit": ["pipe", ["get", "verifyingContract"], ["format", "ZamaAddress"]]
+    },
+    "eip712Domain": {
+      "description": "Cross-chain EIP-712 source domain used when verifying KMS signatures over public decryption results. The verifying contract is on the Zama Gateway chain, not on Ethereum.",
+      "severity": "HIGH",
+      "type": "L2",
+      "edit": ["set", "verifyingContract", ["format", "ZamaAddress"]]
+    }
+  }
+}

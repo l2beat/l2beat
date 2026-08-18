@@ -66,7 +66,7 @@ export const morph: ScalingProject = {
   proofSystem: {
     type: 'Optimistic',
     name: 'SP1 Hypercube',
-    zkCatalogId: ProjectId('sp1hypercube'),
+    zkCatalogIds: [ProjectId('sp1hypercube')],
     challengeProtocol: 'Single-step',
   },
   display: {

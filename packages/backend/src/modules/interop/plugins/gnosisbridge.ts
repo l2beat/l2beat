@@ -34,6 +34,8 @@ const xdaiUserRequestForSignatureLog =
   'event UserRequestForSignature(address recipient, uint256 value, bytes32 nonce, address token)'
 const xdaiRelayedMessageLog =
   'event RelayedMessage(address recipient, uint256 value, bytes32 transactionHash)'
+const paidInterestLog =
+  'event PaidInterest(address indexed token, address to, uint256 value)'
 
 const transferLog =
   'event Transfer(address indexed from, address indexed to, uint256 value)'
@@ -56,6 +58,11 @@ const FOREIGN_XDAI_BRIDGE = ChainSpecificAddress(
 const HOME_XDAI_BRIDGE = ChainSpecificAddress(
   'gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6',
 )
+// XDaiForeignBridge.erc20token() returns USDS. Requests for DAI are fulfilled
+// by a destination-side conversion and do not change the backing asset.
+const XDAI_BRIDGE_BACKING_TOKEN = Address32.from(
+  '0xdc035d45d973e3ec169d2276ddab16f1e407384f',
+)
 
 type GnosisBridgeChain = 'ethereum' | 'gnosis'
 
@@ -76,9 +83,7 @@ interface XdaiTransferFinalizedArgs {
 
 interface XdaiWithdrawalFinalizedArgs {
   nonce: `0x${string}`
-  token: Address32 | undefined
   amount: bigint
-  wasMinted: boolean | undefined
 }
 
 const AmbMessageRequested = createInteropEventType<AmbMessageRequestedArgs>(
@@ -177,6 +182,7 @@ const parseXdaiUserRequestForSignature = createEventParser(
   xdaiUserRequestForSignatureLog,
 )
 const parseXdaiRelayedMessage = createEventParser(xdaiRelayedMessageLog)
+const parsePaidInterest = createEventParser(paidInterestLog)
 const parseTransfer = createEventParser(transferLog)
 
 export class GnosisBridgePlugin implements InteropPluginResyncable {
@@ -219,7 +225,7 @@ export class GnosisBridgePlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: xdaiUserRequestForAffirmationLog,
-        includeTxEvents: [transferLog],
+        includeTxEvents: [transferLog, paidInterestLog],
         addresses: [FOREIGN_XDAI_BRIDGE],
       },
       {
@@ -278,10 +284,20 @@ export class GnosisBridgePlugin implements InteropPluginResyncable {
           boundary: (log) =>
             parseXdaiUserRequestForAffirmation(log, null) !== undefined,
         })
+        // payInterest() emits the regular bridge request without moving an
+        // ERC-20 in the same transaction. Its following PaidInterest event is
+        // the only source of the bridged token address.
+        const paidInterest = findPaidInterestAfter(
+          input,
+          xdaiInitiated.value,
+          xdaiInitiated.recipient,
+        )
         return [
           XdaiTransferInitiated.create(input, {
             nonce: xdaiInitiated.nonce,
-            token: transfer?.token,
+            token:
+              transfer?.token ??
+              (paidInterest ? Address32.from(paidInterest.token) : undefined),
             amount: xdaiInitiated.value,
             wasBurned: transfer?.wasBurned,
           }),
@@ -292,15 +308,10 @@ export class GnosisBridgePlugin implements InteropPluginResyncable {
         ChainSpecificAddress.address(FOREIGN_XDAI_BRIDGE),
       ])
       if (xdaiFinalized) {
-        const transfer = findTokenTransferBefore(input, xdaiFinalized.value, {
-          boundary: (log) => parseXdaiRelayedMessage(log, null) !== undefined,
-        })
         return [
           XdaiWithdrawalFinalized.create(input, {
             nonce: xdaiFinalized.transactionHash,
-            token: transfer?.token,
             amount: xdaiFinalized.value,
-            wasMinted: transfer?.wasMinted,
           }),
         ]
       }
@@ -502,11 +513,6 @@ export class GnosisBridgePlugin implements InteropPluginResyncable {
     })
     if (!initiated) return
 
-    const wasMinted =
-      event.args.token === initiated.args.token
-        ? event.args.wasMinted
-        : undefined
-
     return [
       Result.Message('gnosisbridge.Message', {
         app: 'xdai-bridge',
@@ -519,9 +525,9 @@ export class GnosisBridgePlugin implements InteropPluginResyncable {
         srcAmount: initiated.args.amount,
         srcWasBurned: true,
         dstEvent: event,
-        dstTokenAddress: initiated.args.token,
+        dstTokenAddress: XDAI_BRIDGE_BACKING_TOKEN,
         dstAmount: event.args.amount,
-        dstWasMinted: wasMinted,
+        dstWasMinted: false,
       }),
     ]
   }
@@ -568,4 +574,27 @@ function findTokenTransferBefore(
 
   if (!found || !token) return
   return { token, wasBurned, wasMinted }
+}
+
+function findPaidInterestAfter(
+  input: LogToCapture,
+  amount: bigint,
+  recipient: string,
+) {
+  // payInterest() emits PaidInterest after its bridge request. Limit the scan
+  // to this request so a batched equal-amount payment cannot provide its token.
+  for (const [log] of iterateLogs(
+    input.txLogs,
+    input.log.logIndex ?? -1,
+    'after',
+  )) {
+    if (parseXdaiUserRequestForAffirmation(log, null)) break
+
+    const paidInterest = parsePaidInterest(log, [
+      ChainSpecificAddress.address(FOREIGN_XDAI_BRIDGE),
+    ])
+    if (paidInterest?.value === amount && paidInterest.to === recipient) {
+      return paidInterest
+    }
+  }
 }

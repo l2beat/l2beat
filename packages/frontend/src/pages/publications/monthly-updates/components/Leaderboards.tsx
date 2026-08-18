@@ -1,8 +1,7 @@
+import { formatCurrency, formatNumber } from '@l2beat/shared-pure'
 import { PercentChange } from '~/components/PercentChange'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatNumber } from '~/utils/number-format/formatNumber'
 
 interface Props {
   tvsLeaderboard: EcosystemMonthlyUpdateEntry['tvsLeaderboard']

@@ -1,11 +1,10 @@
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type {
   FrameworkChainPathItem,
   TopTokenItem,
 } from '~/server/features/scaling/interop/getTokenFrameworksData'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { ChainIcon } from '../../../components/ChainIcon'
 import {
   type InteropTransferDefaults,

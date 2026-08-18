@@ -1,4 +1,5 @@
 import type { KnownInteropBridgeType, ProjectId } from '@l2beat/shared-pure'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { type ColumnHelper, createColumnHelper } from '@tanstack/react-table'
 import type { BasicTableRow } from '~/components/table/BasicTable'
 import { EM_DASH } from '~/consts/characters'
@@ -7,7 +8,6 @@ import { TopTokensCell } from '~/pages/interop/components/tokens/TopTokensCell'
 import type { InteropSelection } from '~/pages/interop/utils/types'
 import type { TokenData } from '~/server/features/scaling/interop/types'
 import type { TopItems } from '~/server/features/scaling/interop/utils/getTopItems'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type {
   BurnAndMintProtocolEntry,
   LockAndMintProtocolEntry,

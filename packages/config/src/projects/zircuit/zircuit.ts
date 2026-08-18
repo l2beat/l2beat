@@ -5,6 +5,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { formatEther } from 'ethers/lib/utils'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -19,7 +20,6 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
@@ -29,50 +29,39 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { getSP1Verifiers } from '../../templates/opStack'
 import {
   explorerReferences,
   safeGetImplementation,
 } from '../../templates/utils'
-import type { ProjectScalingStateValidationCategory } from '../../types'
-import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { readMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('zircuit')
 
-const ZIRCUIT_FINALIZATION_PERIOD_SECONDS: number =
+// Migrated 2026-08-04 from a custom validity-proof + escape-hatch fork
+// (L2OutputOracle/SP1 verifiers/ResolverRegistry, all now deleted) onto a
+// standard OP-stack PermissionedDisputeGame deployment, operated via Conduit.
+// See diffHistory.md for the migration analysis.
+const ZIRCUIT_CHALLENGE_PERIOD_SECONDS: number =
   discovery.getContractValue<number>(
-    'L2OutputOracle',
-    'FINALIZATION_PERIOD_SECONDS',
+    'PermissionedDisputeGame',
+    'maxClockDuration',
   )
-
-// the opstack template automatically applies the correct risk rosette slices, so we do not override them
-// as soon as this is not the case anymore (backdoor removed, permissionless proposing etc.),
-// we should update the opstack.ts or not use it anymore
-const ZIRCUIT_STATE_VALIDATION: ProjectScalingStateValidationCategory = {
-  title: 'Validity proofs',
-  description:
-    'ZK proof verification contracts are deployed, but a mock verifier (SP1MockVerifierWithHash) is registered in the SP1VerifierGateway with selector 0xffffffff. This mock verifier accepts all proofs without verification, allowing the permissioned proposer to bypass ZK proof checks. Safety relies on the challenger deleting invalid outputs before finalization.',
-  risks: [
-    {
-      category: 'Funds can be stolen if',
-      text: 'the proposer submits an invalid state root using the mock verifier and the challenger fails to intervene before finalization.',
-    },
-    {
-      category: 'Funds can be stolen if',
-      text: 'the validity proof cryptography is broken or implemented incorrectly.',
-    },
-    {
-      category: 'Funds can be frozen if',
-      text: 'the SP1VerifierGateway is unable to route proof verification to a valid verifier.',
-    },
-  ],
-  references: [
-    {
-      title: 'VerifierV3 (SP1VerifierGateway) - Etherscan source code',
-      url: 'https://etherscan.io/address/0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67#code',
-    },
-  ],
-}
+const ZIRCUIT_EXECUTION_DELAY_SECONDS: number =
+  discovery.getContractValue<number>(
+    'OptimismPortal2',
+    'disputeGameFinalityDelaySeconds',
+  )
+const ZIRCUIT_PROOF_MATURITY_DELAY_SECONDS: number =
+  discovery.getContractValue<number>(
+    'OptimismPortal2',
+    'proofMaturityDelaySeconds',
+  )
+const ZIRCUIT_PERMISSIONED_GAME_BOND: number =
+  discovery.getContractValueOrUndefined<number>(
+    'DisputeGameFactory',
+    'initBondGame1',
+  ) ??
+  discovery.getContractValue<number[]>('DisputeGameFactory', 'initBonds')[1]
 
 const sequencerAddress = ChainSpecificAddress(
   discovery.getContractValue('SystemConfig', 'batcherHash'),
@@ -88,29 +77,26 @@ const sequencer = discovery.getContractValue<ChainSpecificAddress>(
   'SystemConfig',
   'batcherHash',
 )
-const timeLimitOutputRootSubmissionSeconds = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'timeLimitOutputRootSubmissionSeconds',
+// Batcher rotated as part of the Conduit migration. Boundary block is the new
+// batcher's first batch tx (old batcher's last batch tx was block 25681834).
+const OLD_BATCHER = ChainSpecificAddress(
+  'eth:0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145',
 )
-const portal = discovery.getContract('OptimismPortal')
-const l2OutputOracle = discovery.getContract('L2OutputOracle')
+const BATCHER_ROTATION_BLOCK = 25682284
+const BATCHER_ROTATION_TIMESTAMP = UnixTime(1785855323)
+const portal = discovery.getContract('OptimismPortal2')
 const explorerUrl = 'https://explorer.zircuit.com'
 
-const zircuitProgramHashes = []
-zircuitProgramHashes.push(
-  discovery.getContractValue<string>('L2OutputOracle', 'aggregationVkey'),
-)
-zircuitProgramHashes.push(
-  discovery.getContractValue<string>('L2OutputOracle', 'rangeVkeyCommitment'),
-)
-
 const genesisTimestamp = UnixTime(1719936217)
+// respectedGameTypeUpdatedAt on OptimismPortal2 - the moment the fault-proof
+// system (PermissionedDisputeGame) became the respected withdrawal path.
+const FAULT_PROOF_CUTOVER_TIMESTAMP = UnixTime(1785852695)
 
 export const zircuit: ScalingProject = {
   id: ProjectId('zircuit'),
   addedAt: UnixTime(1712559704), // 2024-04-08T07:01:44Z
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs, BADGES.Stack.OPStack],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   capability: 'universal',
   type: 'layer2',
   display: {
@@ -119,7 +105,7 @@ export const zircuit: ScalingProject = {
     purposes: ['Universal'],
     stacks: ['OP Stack'],
     description:
-      'Zircuit is a universal ZK Rollup. It is based on the Optimism Bedrock architecture, employing AI to identify and stop malicious transactions at the sequencer level.',
+      'Zircuit is a universal rollup. It is based on the Optimism Bedrock architecture, employing AI to identify and stop malicious transactions at the sequencer level.',
     links: {
       websites: ['https://zircuit.com/'],
       bridges: ['https://bridge.zircuit.com/', 'https://app.zircuit.com/'],
@@ -141,9 +127,11 @@ export const zircuit: ScalingProject = {
       },
       explanation: `Zircuit is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-      )} or until it gets published. The state root is settled ${formatSeconds(
-        ZIRCUIT_FINALIZATION_PERIOD_SECONDS,
-      )} after it has been posted.`,
+      )} or until it gets published. Once a dispute game is created for a proposed state root, it must go unchallenged for a challenge period of ${formatSeconds(
+        ZIRCUIT_CHALLENGE_PERIOD_SECONDS,
+      )} to resolve. After it resolves, a further dispute game finality delay of ${formatSeconds(
+        ZIRCUIT_EXECUTION_DELAY_SECONDS,
+      )} applies before the state root is considered settled.`,
     },
   },
   stage: getRollupStage(
@@ -153,22 +141,22 @@ export const zircuit: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
-        stateVerificationOnL1: false,
-        fraudProofSystemAtLeast5Outsiders: null,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: false,
       },
       stage1: {
         principle: false,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: false,
-        noRedTrustedSetups: false,
+        noRedTrustedSetups: null,
         programHashesReproducible: null,
-        proverSourcePublished: true,
-        verifierContractsReproducible: false,
+        proverSourcePublished: null,
+        verifierContractsReproducible: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
-        fraudProofSystemIsPermissionless: null,
+        fraudProofSystemIsPermissionless: false,
         delayWith30DExitWindow: false,
       },
     },
@@ -176,11 +164,25 @@ export const zircuit: ScalingProject = {
       rollupNodeLink: 'https://github.com/zircuit-labs/l2-geth-public',
     },
   ),
+  proofSystem: {
+    type: 'Optimistic',
+    challengeProtocol: 'Interactive',
+  },
   riskView: {
     stateValidation: {
-      ...RISK_VIEW.STATE_NONE,
-      executionDelay: ZIRCUIT_FINALIZATION_PERIOD_SECONDS,
+      ...RISK_VIEW.STATE_FP_INT(
+        ZIRCUIT_CHALLENGE_PERIOD_SECONDS,
+        ZIRCUIT_EXECUTION_DELAY_SECONDS,
+      ),
+      description:
+        RISK_VIEW.STATE_FP_INT().description +
+        ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
+      sentiment: 'bad',
+      initialBond: {
+        value: formatEther(ZIRCUIT_PERMISSIONED_GAME_BOND),
+      },
       permissioned: true,
+      defenderAdvantage: 'not-applicable',
     },
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -190,24 +192,12 @@ export const zircuit: ScalingProject = {
         RISK_VIEW.SEQUENCER_NO_MECHANISM().description +
         ' The L2 code has been modified to allow the sequencer to explicitly censor selected L1->L2 transactions.',
     },
-    proposerFailure: {
-      value: 'Use escape hatch',
-      sentiment: 'warning',
-      orderHint: Number.NEGATIVE_INFINITY,
-      description: `Users are able to trustlessly exit by submitting a Merkle proof of funds after ${formatSeconds(timeLimitOutputRootSubmissionSeconds)} with no new state proposals have passed. The escape of ETH and ERC-20 balances is permissionless while the escape of DeFi contract balances is trusted.`,
-    },
-  },
-  proofSystem: {
-    type: 'Validity',
-    zkCatalogId: ProjectId('sp1turbo'),
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-  },
-  stateValidation: {
-    categories: [ZIRCUIT_STATE_VALIDATION],
   },
   config: {
     associatedTokens: ['ZRC'],
@@ -221,6 +211,14 @@ export const zircuit: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: inboxStartBlock,
+        untilBlock: BATCHER_ROTATION_BLOCK,
+        inbox: ChainSpecificAddress.address(sequencerInbox),
+        sequencers: [ChainSpecificAddress.address(OLD_BATCHER)],
+      },
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: BATCHER_ROTATION_BLOCK,
         inbox: ChainSpecificAddress.address(sequencerInbox),
         sequencers: [ChainSpecificAddress.address(sequencer)],
       },
@@ -250,9 +248,22 @@ export const zircuit: ScalingProject = {
         ],
         query: {
           formula: 'transfer',
-          from: ChainSpecificAddress.address(sequencerAddress),
+          from: ChainSpecificAddress.address(OLD_BATCHER),
           to: ChainSpecificAddress.address(sequencerInbox),
           sinceTimestamp: genesisTimestamp,
+          untilTimestamp: BATCHER_ROTATION_TIMESTAMP,
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'transfer',
+          from: ChainSpecificAddress.address(sequencerAddress),
+          to: ChainSpecificAddress.address(sequencerInbox),
+          sinceTimestamp: BATCHER_ROTATION_TIMESTAMP,
         },
       },
       {
@@ -306,6 +317,24 @@ export const zircuit: ScalingProject = {
           functionSignature:
             'function proposeL2OutputV3(bytes32 _outputRoot, uint64 _claimNonce, address _claimSenderAddress, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress) payable',
           sinceTimestamp: UnixTime(1764017747),
+          untilTimestamp: FAULT_PROOF_CUTOVER_TIMESTAMP,
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+          { type: 'liveness', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: ChainSpecificAddress.address(
+            discovery.getContract('DisputeGameFactory').address,
+          ),
+          selector: '0x82ecf2f6',
+          functionSignature:
+            'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
+          sinceTimestamp: FAULT_PROOF_CUTOVER_TIMESTAMP,
         },
       },
     ],
@@ -349,18 +378,8 @@ export const zircuit: ScalingProject = {
     apis: [
       {
         type: 'rpc',
-        url: 'https://zircuit1-mainnet.p2pify.com/',
-        callsPerMinute: 300,
-      },
-      {
-        type: 'rpc',
-        url: 'https://zircuit1-mainnet.liquify.com/',
-        callsPerMinute: 300,
-      },
-      {
-        type: 'rpc',
-        url: 'https://zircuit-mainnet.drpc.org/',
-        callsPerMinute: 300,
+        url: 'https://zircuit.rpc.sentio.xyz',
+        callsPerMinute: 3000,
       },
       {
         type: 'sourcify',
@@ -373,8 +392,6 @@ export const zircuit: ScalingProject = {
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-    programHashes: zircuitProgramHashes.map((el) => PROGRAM_HASHES(el)),
-    zkVerifiers: getVerifiers(),
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   technology: {
@@ -426,28 +443,27 @@ export const zircuit: ScalingProject = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR_MESSAGING(
-          'optimistic',
-          discovery.getContractValue<number>(
-            l2OutputOracle.name ?? l2OutputOracle.address,
-            'FINALIZATION_PERIOD_SECONDS',
+        name: 'Regular exits',
+        description: readMarkdown('templates/opStack/regularExits.md', {
+          disputeGameFinalityDelaySeconds: formatSeconds(
+            ZIRCUIT_EXECUTION_DELAY_SECONDS,
           ),
-        ),
-        references: explorerReferences(explorerUrl, [
+          proofMaturityDelaySeconds: formatSeconds(
+            ZIRCUIT_PROOF_MATURITY_DELAY_SECONDS,
+          ),
+          challengePeriod: formatSeconds(ZIRCUIT_CHALLENGE_PERIOD_SECONDS),
+        }),
+        risks: [],
+        references: [
           {
-            title: `${portal.name}.sol - source code, proveWithdrawalTransaction function`,
-            address: safeGetImplementation(portal),
+            title: `${portal.name}.sol - Etherscan source code, proveWithdrawalTransaction function`,
+            url: `https://etherscan.io/address/${safeGetImplementation(portal)}#code`,
           },
           {
-            title: `${portal.name}.sol - source code, finalizeWithdrawalTransaction function`,
-            address: safeGetImplementation(portal),
+            title: `${portal.name}.sol - Etherscan source code, finalizeWithdrawalTransaction function`,
+            url: `https://etherscan.io/address/${safeGetImplementation(portal)}#code`,
           },
-          {
-            title: 'L2OutputOracle.sol - source code, PROPOSER check',
-            address: safeGetImplementation(l2OutputOracle),
-          },
-        ]),
-        risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
+        ],
       },
       {
         ...EXITS.FORCED_MESSAGING('all-messages'),
@@ -463,25 +479,6 @@ export const zircuit: ScalingProject = {
             url: 'https://docs.optimism.io/stack/transactions/forced-transaction',
           },
         ],
-      },
-      {
-        name: 'Escape mechanism',
-        description: readProjectMarkdown(
-          'zircuit',
-          'technologyExitMechanisms3',
-          {
-            timeLimitOutputRootSubmissionSeconds: formatSeconds(
-              timeLimitOutputRootSubmissionSeconds,
-            ),
-          },
-        ),
-        references: [
-          {
-            title: 'Etherscan - OptimismPortal - escapeEth() function',
-            url: 'https://etherscan.io/address/0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1',
-          },
-        ],
-        risks: [],
       },
     ],
     otherConsiderations: [
@@ -501,12 +498,20 @@ export const zircuit: ScalingProject = {
   },
   milestones: [
     {
+      title: 'Migrated to Conduit fault proofs',
+      url: 'https://www.conduit.xyz',
+      date: '2026-08-04T00:00:00.00Z',
+      description:
+        'Zircuit migrates to a standard OP Stack PermissionedDisputeGame deployment via Conduit.',
+      type: 'general',
+    },
+    {
       title: 'Proof system migrated to SP1',
+      url: 'https://zircuit.com/blog',
       date: '2025-08-25T00:00:00.00Z',
       description:
         'Zircuit deprecates its in-house proof system in favor of SP1.',
       type: 'general',
-      url: 'https://etherscan.io/address/0xf35A4088eA0231C44B9DB52D25c0E9E2fEe31f67',
     },
     {
       title: 'Escape mechanism',
@@ -523,11 +528,4 @@ export const zircuit: ScalingProject = {
       type: 'general',
     },
   ],
-}
-
-function getVerifiers(): ChainSpecificAddress[] {
-  const sp1Verifiers = getSP1Verifiers(discovery)
-  // mock verifier is not an actual sp1 verifier and needs to be removed
-  const mockVerifier = discovery.getContract('SP1MockVerifierWithHash').address
-  return sp1Verifiers.filter((item) => item !== mockVerifier)
 }

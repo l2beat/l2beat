@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { formatDollarValueNumber, ProjectId } from '@l2beat/shared-pure'
 import type { Row } from '@tanstack/react-table'
 import { createColumnHelper } from '@tanstack/react-table'
 import { GrissiniCell } from '~/components/rosette/grissini/GrissiniCell'
@@ -11,7 +11,6 @@ import { getDaCommonProjectColumns } from '~/components/table/common-project-col
 import { TableLink } from '~/components/table/TableLink'
 import { EM_DASH } from '~/consts/characters'
 import type { DaSummaryEntry } from '~/server/features/data-availability/summary/getDaSummaryEntries'
-import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
 import { DacMembersCell } from '../../../components/DacMembersCell'
 import { BridgeNameCell } from './BridgeNameCell'
 import { BridgeRiskCell } from './BridgeRiskCell'

@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Price router that reads token prices from the Chainlink Feed Registry, either directly in USD or via an ETH/USD bridge feed for ETH-quoted tokens, and reports them normalized to 18 decimals.",
+  "category": "core",
+  "fields": {
+    "ADMIN": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "appoint the manager and emergency operator of the OracleRouter and configure all token price feed routes, staleness limits and activation flags."
+        }
+      ]
+    },
+    "manager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configure the OracleRouter's token price feed routes, staleness limits and activation flags, and resync them with the Chainlink Feed Registry."
+        }
+      ]
+    }
+  }
+}

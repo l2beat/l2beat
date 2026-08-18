@@ -1,3 +1,246 @@
+Generated with discovered.json: 0x3f0a03976363c3c4b27c5a6535414c8e390c88a0
+
+# Diff at Mon, 17 Aug 2026 08:31:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@804390f890116983904f8ba051435cd62c5cb578 block: 1785837430
+- current timestamp: 1786955407
+
+## Description
+
+Multisig changes.
+
+## Watched changes
+
+```diff
+    contract Taiko Foundation Treasury Multisig (eth:0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0xA1D62c7df45847089cfB052396Abe4cDa7879d25"
+      values.$members.1:
++        "eth:0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a"
+      values.$members.0:
+-        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "eth:0x7A5299927F93ffCf33cf381CB0C03C2486b9299A"
+      values.$threshold:
+-        2
++        3
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      values.operatorMapping.2:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+    }
+```
+
+Generated with discovered.json: 0x513b4d18c023cfa878b0b0ac482731f2a80d327c
+
+# Diff at Tue, 04 Aug 2026 10:17:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5d9d6abd0ff73dbaef2b6951a36225f6176a8625 block: 1785325120
+- current timestamp: 1785837430
+
+## Description
+
+This is the onchain deployment of the [Unzen upgrade](https://dao.taiko.xyz/plugins/community-proposals/#/proposals/36), which will be activated on Aug 6.
+
+MainnetInbox diff: https://disco.l2beat.com/diff/eth:0x64523f2580f4E7038a121D55b220a9C12C1E8f01/eth:0x5253D4C91e80b880DdB54B78E74082Abe066F6b9
+- adds back forced txs
+- no self-proposal though
+
+ZK verifier diff: https://disco.l2beat.com/diff/eth:0x71808449A6217898d602c1a392D95b931Ac5d878/eth:0x7284aaC05555Ae6559bdAd8B4221eC9584254Eec
+- ZK proof always required: Taiko is a Stage 0 validity rollup
+
+add TEE and ZK program hashes for the new Unzen programs (ZK is reproduced [here](https://gist.github.com/sekuba/754362718c457edaba93d71dc073b91e))
+
+L2BEAT SC member safe moves to 1/1 (single signer: sekuba).
+
+## Watched changes
+
+```diff
+    contract TaikoRisc0Verifier (eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b) [taiko/Risc0Verifier] {
+    +++ description: Gating router contract to verify batches using RISC Zero.
++++ description: Taiko specific Image IDs (i.e. program digest) of Risc0 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedImages.0:
+-        "0xa38d1fac63aa6a553fdb6fea01fdc96534564c31de916aaafe5f5a1dd3bb908b"
++        "0x5a818b4c7dc80e9ba85d55492c20c263c67238724e3982f76d15a158e501210b"
++++ description: Taiko specific Image IDs (i.e. program digest) of Risc0 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them.
++++ severity: HIGH
+      values.trustedImages.1:
+-        "0x868b5154ae01a9a045051da2d7ba2e21d4132c7ec096da343fa24149407fefef"
++        "0x9cfcc1b34a98853c3c5873a4d456726e528246f7f03a4ea35f27c2543aa6e7f0"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) [taiko/AutomataDcapV3Attestation] {
+    +++ description: Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.
++++ description: Trusted SGX enclave measurements accepted by attestation verification.
++++ severity: HIGH
+      values.mrEnclaves.0:
+-        "0xbefb2c7ec44cefe57f4ff0ca815a8b8f15e05631bf3abe36cbc12d28f778fa36"
++        "0x2d2216efbe9d8e80ba24b86606ccd5ce9faf11033d31ad9e5d3c5c89965c8a57"
+    }
+```
+
+```diff
+    EOA  (eth:0x3D4997AAC0834BEb5ede861c424807Aa3F29b5bB) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2","description":"configure an agent address that represents this entity in the Security Council","role":".multisigSigners","via":[{"address":"eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06"}]}]
+    }
+```
+
+```diff
+    contract MainnetInbox (eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f) [taiko/MainnetInbox] {
+    +++ description: The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. Users can enqueue forced inclusions by publishing an L1 blob. Once an inclusion is due, subsequent proposals must process it, but proposing remains restricted by the configured proposer checker. If the configured prover whitelist is non-empty, proofs from non-whitelisted provers revert.
+      template:
+-        "taiko/MainnetInboxRestricted"
++        "taiko/MainnetInbox"
+      sourceHashes.1:
+-        "0xd6d3af78f692a4c928f8e1b046eca6884ed0d15d120df586c3509c802795d433"
++        "0xa0a8e3ebc196ae2703fc2c0dc5bc16012644bbcd103c34bf6241389ccadc0fd0"
+      description:
+-        "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. Forced inclusion submission and processing are disabled in this implementation. Proposals must come from the configured proposer checker, and if the configured prover whitelist is non-empty, proofs from non-whitelisted provers revert; the configured permissionless proving delay is not used to open proving."
++        "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. Users can enqueue forced inclusions by publishing an L1 blob. Once an inclusion is due, subsequent proposals must process it, but proposing remains restricted by the configured proposer checker. If the configured prover whitelist is non-empty, proofs from non-whitelisted provers revert."
+      values.$implementation:
+-        "eth:0x64523f2580f4E7038a121D55b220a9C12C1E8f01"
++        "eth:0x5253D4C91e80b880DdB54B78E74082Abe066F6b9"
+      values.$pastUpgrades.3:
++        ["2026-08-03T12:46:23.000Z","0x64875b5b84b41b520551854696c0ce408fb3e0aa2ede604cc95a5919b6140ea7",["eth:0x5253D4C91e80b880DdB54B78E74082Abe066F6b9"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.getConfig.proofVerifier:
+-        "eth:0x71808449A6217898d602c1a392D95b931Ac5d878"
++        "eth:0x7284aaC05555Ae6559bdAd8B4221eC9584254Eec"
++++ severity: HIGH
+      values.getCurrentForcedInclusionFee:
+-        1020000
++        1000000
+      values.impl:
+-        "eth:0x64523f2580f4E7038a121D55b220a9C12C1E8f01"
++        "eth:0x5253D4C91e80b880DdB54B78E74082Abe066F6b9"
+      values.noForce:
+-        [true]
+      fieldMeta.noForce:
+-        {"severity":"HIGH","description":"Forced inclusions are disabled in this implementation: saveForcedInclusion() always reverts and propose() only accepts zero forced inclusions."}
+      implementationNames.eth:0x64523f2580f4E7038a121D55b220a9C12C1E8f01:
+-        "MainnetInbox"
+      implementationNames.eth:0x5253D4C91e80b880DdB54B78E74082Abe066F6b9:
++        "MainnetInbox"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetVerifier (eth:0x71808449A6217898d602c1a392D95b931Ac5d878) [taiko/MainnetVerifier]
+    +++ description: Immutable verifier policy contract for Taiko mainnet. Each accepted proof must contain exactly two ordered sub-proofs: either SGX-GETH plus SGX-RETH/RISC0-RETH/SP1-RETH, or SGX-RETH plus SGX-GETH/RISC0-RETH/SP1-RETH. It routes each sub-proof to the corresponding downstream verifier.
+```
+
+```diff
+    contract TaikoSP1Verifier (eth:0x73A0Db393ef87ce781ac7957bE10D6628432100F) [taiko/SP1Verifier] {
+    +++ description: Gating router contract to verify batches using SP1.
++++ description: Taiko-specific SP1 program verification keys trusted by this verifier gateway. Only proofs for these programs can be successfully verified.
++++ severity: HIGH
+      values.trustedPrograms.0:
+-        "0x007594632ec31fae9d44799b97316fcbcaa3ff6b5db268c7a5d8025b3bbb487e"
++        "0x00ad090221a8fa0f09e1be7a53feb67be010f01310d4b2314a69d10152ee1ce0"
++++ description: Taiko-specific SP1 program verification keys trusted by this verifier gateway. Only proofs for these programs can be successfully verified.
++++ severity: HIGH
+      values.trustedPrograms.1:
+-        "0x3aca319730c7eba7288f33727316fcbc551ffb5a76c9a31e4bb004b63bbb487e"
++        "0x568481106a3e83c23c37cf4a3feb67be008780984352c8c514d3a20252ee1ce0"
++++ description: Taiko-specific SP1 program verification keys trusted by this verifier gateway. Only proofs for these programs can be successfully verified.
++++ severity: HIGH
+      values.trustedPrograms.2:
+-        "0x00e91cb391c22d6fd015e4c6041dbbe6efb2d8be6d4046eec28f12acba5a17bc"
++        "0x000b11691352e55fcf64f62620cefaa700161600093f2751032fe71ea912264d"
++++ description: Taiko-specific SP1 program verification keys trusted by this verifier gateway. Only proofs for these programs can be successfully verified.
++++ severity: HIGH
+      values.trustedPrograms.3:
+-        "0x748e59c8708b5bf402bc98c041dbbe6e7d96c5f335011bbb051e25593a5a17bc"
++        "0x0588b48954b957f36c9ec4c40cefaa7000b0b00024fc9d44065fce3d2912264d"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) [taiko/AutomataDcapV3Attestation] {
+    +++ description: Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.
++++ description: Trusted SGX enclave measurements accepted by attestation verification.
++++ severity: HIGH
+      values.mrEnclaves.0:
+-        "0xdccd8f30ea4a137ddfa63d743e3aa7c7a8e80585912d19c4b66f7d8d6098bec4"
++        "0x90c79e65d6d0f83d658ff96cd0ef1204438f20b406c93cf1d4fafa0cff29842e"
++++ description: Trusted SGX enclave measurements accepted by attestation verification.
++++ severity: HIGH
+      values.mrEnclaves.1:
+-        "0x92dd96a170d1ffb998afa210b3ef8af8c408ab76c4717e0eb8076d4a5da4e740"
++        "0x041cadb0541bf8249c368482172d218608f3693975b65f74beb2ed6f0044f951"
+    }
+```
+
+```diff
+    contract Gustavo Gonzalez Taiko (eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163"
++        "eth:0xCf76A87E24FE2054DCF02a5f65eAc0F24A34c439"
+    }
+```
+
+```diff
+    contract L2BEAT (eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0x6dcB04fCC1c597DAFad86e2886bE463d53CaFAdf"
+      values.$threshold:
+-        2
++        1
+      values.multisigThreshold:
+-        "2 of 2 (100%)"
++        "1 of 1 (100%)"
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2","description":"configure an agent address that represents this entity in the Security Council","role":".multisigSigners"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2","description":"configure an agent address that represents this entity in the Security Council","role":".multisigSigners"}]
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      values.operatorMapping.0:
+-        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
++        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+      values.operatorMapping.2:
+-        "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
++        "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkRequiredVerifier (eth:0x7284aaC05555Ae6559bdAd8B4221eC9584254Eec) [taiko/ZkRequiredVerifier]
+    +++ description: Immutable verifier policy contract for Taiko mainnet. Every accepted proof contains exactly two ordered sub-proofs and at least one must be a ZK proof. Accepted pairs are SGX-GETH or SGX-RETH with RISC0-RETH or SP1-RETH, and RISC0-RETH with SP1-RETH. The SGX-GETH plus SGX-RETH pair is not accepted.
+```
+
+## Source code changes
+
+```diff
+.../MainnetInbox/MainnetInbox.sol                  | 43 ++++++++++++++++++----
+ .../ZkRequiredVerifier.sol}                        | 38 +++++++++----------
+ 2 files changed, 53 insertions(+), 28 deletions(-)
+```
+
 Generated with discovered.json: 0xae9485c3fa9558efdd90a21fa07ec70ec16545c9
 
 # Diff at Thu, 30 Jul 2026 11:25:15 GMT:

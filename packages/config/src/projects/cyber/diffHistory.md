@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x8ae136723b89b48d5c8836afdcdf28d802e15910
+
+# Diff at Tue, 04 Aug 2026 21:27:45 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@44e2212a46e585fd2ddb21d6755695cf74e1f876 block: 1784282889
+- current timestamp: 1785878764
+
+## Description
+
+Guardian intervention by the operator: a resolved PermissionedDisputeGame proposal (`0x7373…f4c3`) was blacklisted on the OptimismPortal2 and the AnchorStateRegistry anchor was reset from a separate, valid game. Since the guardian role is derived from the Superchain-wide SuperchainConfig, both contracts were temporarily upgraded to `SuperchainConfigSetter` implementations pointing `superchainConfig` at an operator-controlled deployment; minutes later the pointer and original implementations were restored.
+
+## Watched changes
+
+```diff
+    contract AnchorStateRegistry (eth:0x0Ca6c5aef8dBC91368C61871fDC51Ef884843e07) [opstack/AnchorStateRegistry] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      values.$pastUpgrades.1:
++        ["2026-08-04T16:35:47.000Z","0x7e83c02dfbd4cf29d07626f34579b27937493b4436c3ad495a2b3b7e8b095d71",["eth:0x8C8a1F23F3AfE6aeF5F0030FaB44D5b17ee97268"]]
+      values.$pastUpgrades.2:
++        ["2026-08-04T16:38:47.000Z","0x65c4f08365a1298614ba2b61a7ae5cac0c517a405622c41bd2d68b150e5a88b7",["eth:0x795F854562d82b3A051e415f6c48B2766521C855"]]
+      values.$upgradeCount:
+-        1
++        3
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x1d59bc9fcE6B8E2B1bf86D4777289FFd83D24C99) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      values.$pastUpgrades.3:
++        ["2026-08-04T16:43:59.000Z","0x05ff2cb55118f839a31c2e8ea398c99d0f97dcb0d71535df87f14ece5c130475",["eth:0xa702D767ef8a7ba06eD0d605Fe584e2C42eeED44"]]
+      values.$pastUpgrades.4:
++        ["2026-08-04T16:45:47.000Z","0x5bc9e4731a28ac126a9f926e98369d4ddc5ae13adeaa22762f7123d0d15069e3",["eth:0xe2F826324b2faf99E513D16D266c3F80aE87832B"]]
+      values.$upgradeCount:
+-        3
++        5
+    }
+```
+
 Generated with discovered.json: 0xe1c9774c124f7697dbc2e24a9cc7fb714fc60a14
 
 # Diff at Fri, 17 Jul 2026 10:09:47 GMT:

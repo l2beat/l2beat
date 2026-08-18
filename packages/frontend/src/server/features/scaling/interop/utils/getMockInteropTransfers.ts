@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import type {
   InteropProtocolTransferDetailsItem,
   InteropProtocolTransfersResponse,
@@ -22,6 +23,11 @@ export function getMockInteropTransfers({
   const isTokenMock = tokenId !== undefined
   const symbol = tokenId?.includes('usdc') ? 'USDC' : 'ETH'
   const issuer = tokenId?.includes('usdc') ? 'circle' : 'ethereum'
+  const tokenHref = getInteropTokenUrl({
+    id: tokenId ?? 'eth',
+    symbol,
+    issuer,
+  })
 
   const items: InteropProtocolTransferDetailsItem[] = Array.from(
     { length: 5 },
@@ -32,15 +38,13 @@ export function getMockInteropTransfers({
       timestamp: timestamp - i * 60,
       srcAmount: 1_000,
       srcSymbol: symbol,
-      srcAbstractTokenId: tokenId ?? 'eth',
-      srcTokenIssuer: issuer,
+      srcTokenHref: tokenHref,
       srcTokenIconUrl: isTokenMock
         ? (INTEROP_CHAIN_DETAILS.get(srcChain)?.iconUrl ?? '')
         : ethIcon,
       dstAmount: 1_000,
       dstSymbol: symbol,
-      dstAbstractTokenId: tokenId ?? 'eth',
-      dstTokenIssuer: issuer,
+      dstTokenHref: tokenHref,
       dstTokenIconUrl: isTokenMock
         ? (INTEROP_CHAIN_DETAILS.get(dstChain)?.iconUrl ?? '')
         : ethIcon,

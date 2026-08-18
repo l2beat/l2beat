@@ -77,7 +77,6 @@ export type { InteropPluginSyncStateRecord } from './repositories/InteropPluginS
 export type { InteropRecentPriceRequest } from './repositories/InteropRecentPricesRepository'
 export {
   hasAnyInteropTransferFinancialsFilter,
-  type InteropMissingTokenInfo,
   type InteropSuspiciousTransferRecord,
   type InteropTokenRouteRecord,
   type InteropTransferFinancialsFilter,
@@ -85,7 +84,7 @@ export {
   type InteropTransferRecord,
   type InteropTransfersDetailedStatsRecord,
   type InteropTransfersStatsRecord,
-  type InteropTransferTokenInfo,
+  type InteropTransferTimeRange,
   type InteropTransferUpdate,
 } from './repositories/InteropTransferRepository'
 export type {

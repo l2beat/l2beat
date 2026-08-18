@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Butter FeeService",
+  "category": "bridge-external",
+  "description": "Fee configuration contract used by Butter Bridge to calculate cross-chain message fees and select the fee recipient.",
+  "ignoreMethods": ["baseGas"],
+  "fields": {
+    "authority": {
+      "description": "Authority contract consulted by FeeService management functions. Its role members can change fee parameters and the fee receiver.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [{ "type": "act" }]
+    },
+    "feeReceiver": {
+      "description": "Current recipient returned by FeeService for message fees collected by the Bridge.",
+      "severity": "HIGH"
+    }
+  }
+}

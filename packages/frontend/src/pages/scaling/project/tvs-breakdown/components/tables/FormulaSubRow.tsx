@@ -51,6 +51,7 @@ function Formula({
 }) {
   switch (formula.type) {
     case 'balanceOfEscrow':
+    case 'starknetBalanceOf':
       return <BalanceOfEscrow formula={formula} />
     case 'circulatingSupply':
       return <CirculatingSupply formula={formula} />
@@ -97,7 +98,7 @@ function BalanceOfEscrow({
 }: {
   formula: Extract<
     ProjectTvsBreakdownTokenEntry['formula'],
-    { type: 'balanceOfEscrow' }
+    { type: 'balanceOfEscrow' | 'starknetBalanceOf' }
   >
 }) {
   if (formula.addressMeta.address === 'native') {

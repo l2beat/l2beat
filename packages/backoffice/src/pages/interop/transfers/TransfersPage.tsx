@@ -8,14 +8,17 @@ import { LoadingState } from '~/components/LoadingState'
 import { TablePageSummaryCard } from '~/components/table/TablePageSummaryCard'
 import { AppLayout } from '~/layouts/AppLayout'
 import { useBackendTrpc } from '~/react-query/trpc'
+import { TransferDataRangeSelect } from '../TransferDataRangeSelect'
+import { useTransferDataRange } from '../transferDataRange'
 import { TransfersTable } from './table/TransfersTable'
 import type { TransferStatsRow } from './types'
 import { formatDollars } from './utils'
 
 export function TransfersPage() {
   const trpc = useBackendTrpc()
+  const [range, setRange] = useTransferDataRange()
   const { data, error, isError, isLoading, isFetching, refetch } = useQuery(
-    trpc.interop.transfers.stats.queryOptions(),
+    trpc.interop.transfers.stats.queryOptions({ range }),
   )
 
   const rows: TransferStatsRow[] = data ?? []
@@ -30,15 +33,22 @@ export function TransfersPage() {
         <TablePageSummaryCard
           title="Transfers"
           actions={
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => void refetch()}
-              disabled={isFetching}
-            >
-              <RefreshCwIcon className={isFetching ? 'animate-spin' : ''} />
-              Refresh
-            </Button>
+            <>
+              <TransferDataRangeSelect
+                value={range}
+                onValueChange={setRange}
+                disabled={isFetching}
+              />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => void refetch()}
+                disabled={isFetching}
+              >
+                <RefreshCwIcon className={isFetching ? 'animate-spin' : ''} />
+                Refresh
+              </Button>
+            </>
           }
           summary={
             <>
@@ -66,6 +76,7 @@ export function TransfersPage() {
             {!isLoading && !isError ? (
               <TransfersTable
                 data={rows}
+                range={range}
                 enableCsvExport
                 enablePairsCsvExport
               />

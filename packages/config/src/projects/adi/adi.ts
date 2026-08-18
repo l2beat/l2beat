@@ -21,7 +21,6 @@ import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { getZKStackVerifiers } from '../../templates/zkStack'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('adi')
@@ -53,12 +52,7 @@ export const adi: ScalingProject = {
   id: ProjectId('adi'),
   addedAt: UnixTime(1766016000), // 2025-12-18T00:00:00Z
   capability: 'universal',
-  badges: [
-    BADGES.Stack.ZKStack,
-    BADGES.Infra.ElasticChain,
-    BADGES.VM.EVM,
-    BADGES.DA.EthereumCalldata,
-  ],
+  badges: [BADGES.Stack.ZKStack, BADGES.VM.EVM, BADGES.DA.EthereumCalldata],
   display: {
     name: 'ADI Chain',
     purposes: ['Universal'],
@@ -85,7 +79,7 @@ export const adi: ScalingProject = {
     },
     // Do we need upgradesAndGovernanceImage? architectureImage? liveness?
   },
-  proofSystem: { type: 'Validity', zkCatalogId: ProjectId('airbender') },
+  proofSystem: { type: 'Validity', zkCatalogIds: [ProjectId('airbender')] },
   config: {
     associatedTokens: ['ADI'],
     escrows: [
@@ -282,7 +276,12 @@ export const adi: ScalingProject = {
       CONTRACTS.UPGRADE_NO_DELAY_RISK, // There is a Governance minDelay, but it is set to 0 now. This should be updated if minDelay increases
     ],
     // zkProgramHashes: [ZK_PROGRAM_HASHES(l2BootloaderHash)],  still need to check how this actually works with Airbender
-    zkVerifiers: getZKStackVerifiers(discovery, false),
+    zkVerifiers: [
+      discovery.getContractValue<ChainSpecificAddress>(
+        'ZKsyncOSDualVerifier',
+        'plonkVerifier0',
+      ),
+    ],
   },
   stateValidation: {
     description:

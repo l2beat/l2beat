@@ -1,3 +1,210 @@
+Generated with discovered.json: 0x4c78b1a2e88eade36bd3a9399cc78098e8a5bffe
+
+# Diff at Mon, 17 Aug 2026 09:13:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64c56c9daca8f43c84f156c35fb3aee7704892c1 block: 1786537235
+- current timestamp: 1786957091
+
+## Description
+
+Across V5 upgrade: new Gateway contract and two new fill entrypoints for v5 deposits. In executor mode, the SpokePool pulls the output tokens from the Gateway's current solver using the relayer's standing approvals to the SpokePool.
+
+The Gateway executes user-signed intent 'paths': anyone can submit one, and the Gateway pulls the depositor's funds via standing allowances or signed permits (Permit2 witness, EIP-3009, ERC-2612, EIP-712 transferFrom auths). It is owned and upgradable (no delay) by a new 3/5 'Across Gateway Multisig'.
+
+## Watched changes
+
+```diff
+    contract Ethereum_SpokePool (eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) [acrossv3/SpokePool] {
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it.
+      sourceHashes.1:
+-        "0x7c82111265c69f8a894d8029e30766541164d55fb1e814bf29ddacecaeee12c1"
++        "0x667fb3db67749e9488a6511b73f11c5acfa08bd66fa64944fe1d3064fa551c6e"
+      values.$implementation:
+-        "eth:0x5E5B726C81f43B953a62AD87E2835C85c4D9Dd3B"
++        "eth:0x456Ac26E5ec083EE9889eBa0d1a0A582502B8e84"
+      values.$pastUpgrades.11:
++        ["2026-08-14T18:02:35.000Z","0x8149765132e15fb4f1dce1cab83f087ca099d778fee49191dff408069b734ad3",["eth:0x456Ac26E5ec083EE9889eBa0d1a0A582502B8e84"]]
+      values.$upgradeCount:
+-        11
++        12
+      values.gateway:
++        "eth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707"
+      values.V5_MAGIC_PREFIX:
++        "0x89ae4bc75915265a3f10e926c3894a29534f1d6362ee8959cb0e5be00f3527fd"
+      implementationNames.eth:0x5E5B726C81f43B953a62AD87E2835C85c4D9Dd3B:
+-        "Ethereum_SpokePool"
+      implementationNames.eth:0x456Ac26E5ec083EE9889eBa0d1a0A582502B8e84:
++        "Ethereum_SpokePool"
+    }
+```
+
+```diff
+    contract OP_SpokePool (oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281) [acrossv3/SpokePool] {
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it.
+      name:
+-        "Optimism_SpokePool"
++        "OP_SpokePool"
+      sourceHashes.1:
+-        "0xa7af88e42066dce1580a5c39e3bd045de8511f8a453056cd46140e3df8b96f19"
++        "0x63512362033eb12727887f57a9397e800b1fa1b98ff0fe2742abe67f53d493f1"
+      values.$implementation:
+-        "oeth:0x0966F5034261CC50926fB9D5C1603A5034Ffa81c"
++        "oeth:0x60674c53a4cC4ED350659C95fb8020B5AC61cA1D"
+      values.$pastUpgrades.15:
++        ["2026-08-14T17:51:57.000Z","0x5ef940d028891d65c1ab1383d1cf63e514e1906c1a4f7483c1bdb6e2b9ca39bd",["oeth:0x60674c53a4cC4ED350659C95fb8020B5AC61cA1D"]]
+      values.$upgradeCount:
+-        15
++        16
+      values.gateway:
++        "oeth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707"
+      values.V5_MAGIC_PREFIX:
++        "0x89ae4bc75915265a3f10e926c3894a29534f1d6362ee8959cb0e5be00f3527fd"
+      implementationNames.oeth:0x0966F5034261CC50926fB9D5C1603A5034Ffa81c:
+-        "Optimism_SpokePool"
+      implementationNames.oeth:0x60674c53a4cC4ED350659C95fb8020B5AC61cA1D:
++        "OP_SpokePool"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Across Gateway Multisig (eth:0x4c45F70B1d9a7A6D1984daccAd74D0E973B73F01) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Gateway (eth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707) [acrossv3/Gateway]
+    +++ description: Entry point for Across V5 intent executions. Anyone can submit a user-signed execution path: the Gateway pulls the depositor's funds via standing token approvals or signed permits (Permit2 witness permits, EIP-3009, ERC-2612, EIP-712 transfer authorizations), then calls the committed executor. While executing, it exposes the execution context (submitter, executor, step commitment) that the SpokePool trusts to authenticate V5 fills.
+```
+
+```diff
++   Status: CREATED
+    contract Gateway (oeth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707) [acrossv3/Gateway]
+    +++ description: Entry point for Across V5 intent executions. Anyone can submit a user-signed execution path: the Gateway pulls the depositor's funds via standing token approvals or signed permits (Permit2 witness permits, EIP-3009, ERC-2612, EIP-712 transfer authorizations), then calls the committed executor. While executing, it exposes the execution context (submitter, executor, step commitment) that the SpokePool trusts to authenticate V5 fills.
+```
+
+```diff
++   Status: CREATED
+    contract Across Gateway Multisig (oeth:0xd396CcB6770EAB84045c9Bce2939c478639E2A7F) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol                                       | 1216 ++++
+ .../SafeProxy.p.sol                                |   42 +
+ .../SafeL2.sol                                     | 1286 +++++
+ .../SafeProxy.p.sol                                |   42 +
+ .../Ethereum_SpokePool/Ethereum_SpokePool.sol      |  845 ++-
+ .../ERC1967Proxy.p.sol                             |  612 ++
+ .../Gateway.sol                                    | 5861 ++++++++++++++++++++
+ .../ERC1967Proxy.p.sol                             |  611 ++
+ .../Gateway.sol                                    | 5860 +++++++++++++++++++
+ .../OP_SpokePool}/ERC1967Proxy.p.sol               |    0
+ .../OP_SpokePool/OP_SpokePool.sol}                 |  908 ++-
+ 11 files changed, 17153 insertions(+), 130 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786537235 (main branch discovery), not current.
+
+```diff
+    contract Ethereum_SpokePool (eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) [acrossv3/SpokePool] {
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it.
+      description:
+-        "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers."
++        "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it."
+    }
+```
+
+```diff
+    contract Optimism_SpokePool (oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281) [acrossv3/SpokePool] {
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it.
+      description:
+-        "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers."
++        "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it."
+    }
+```
+
+Generated with discovered.json: 0x7fa8d630dfa3a740fbe0f7d813dfb4c51ad5cc38
+
+# Diff at Wed, 12 Aug 2026 12:22:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe520bd4ade03975f1066b4ec47ec40ba7f6e27f block: 1786351959
+- current timestamp: 1786537235
+
+## Description
+
+More pool rebalance routes were disabled (see below for explanation).
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) [acrossv3/HubPool] {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.poolRebalanceRoutes.Ethereum.4.destinationToken:
+-        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Lens.0.destinationToken:
+-        "eth:0xE5ecd226b3032910CEaa43ba92EE8232f8237553"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Lens.2.destinationToken:
+-        "eth:0x88F08E304EC4f90D644Cec3Fb69b8aD414acf884"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.ZKsync Era.0.destinationToken:
+-        "eth:0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.ZKsync Era.1.destinationToken:
+-        "eth:0x493257fD37EDB34451f62EDf8D2a0C418852bA4C"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.ZKsync Era.2.destinationToken:
+-        "eth:0xBBeB516fb02a01611cBBE0453Fe3c580D7281011"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.ZKsync Era.3.destinationToken:
+-        "eth:0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x667d9988680dd58fa473f077e9d227a0a613edf8
+
+# Diff at Mon, 10 Aug 2026 08:54:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@be83079eed365197a392b6bfd65fa6506007093c block: 1785325146
+- current timestamp: 1786351959
+
+## Description
+
+More pool rebalance routes across ten destination chains were disabled (see below for explanation).
+
+## Watched changes
+
+```diff
+    contract HubPool (eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda) [acrossv3/HubPool] {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 30m and a bond amount of 0.45 ABT.
+      values.poolRebalanceRoutes.Ink.1.destinationToken:
+-        "eth:0x2D270e6886d130D724215A266106e6832161EAEd"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Blast.0.destinationToken:
+-        "eth:0x4300000000000000000000000000000000000004"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Blast.1.destinationToken:
+-        "eth:0xF7bc58b8D8f97ADC129cfC4c9f45Ce3C0E1D2692"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.poolRebalanceRoutes.Blast.2.destinationToken:
+-        "eth:0x4300000000000000000000000000000000000003"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x025743b917d01bd18822470b43f52901094ef074
 
 # Diff at Wed, 29 Jul 2026 11:40:27 GMT:

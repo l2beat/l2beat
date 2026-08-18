@@ -25,7 +25,7 @@
         { "type": "interact", "description": "can disable source chains." },
         {
           "type": "interact",
-          "description": "can enable 'RMN' verification for messages coming from a certain route, which require additional signatures to be accepted."
+          "description": "can toggle whether commits for a source route call the configured RMN verifier. Enabling this path is only live when that RMN implementation supports verify()."
         },
         {
           "type": "interact",
@@ -125,7 +125,7 @@
       ]
     },
     "sourceChainConfigs": {
-      "description": "Per-source-chain config for inbound CCIP messages: local Router used to deliver to receivers, whether the lane is enabled, whether RMN signature blessing is required on commits (false = blessing REQUIRED, true = blessing skipped — only OCR signatures gate the commit), and the bytes-encoded source-chain OnRamp address (left-padded EVM address for EVM sources; native encoding for non-EVM families). Keys are source-chain names. Replayed from SourceChainConfigSet events. minSeqNr is omitted because the event captures the value at config-change time, not the current commit counter (which advances on every _commitRoot).",
+      "description": "Per-source-chain config for inbound CCIP messages: local Router used to deliver to receivers, whether the lane is enabled, whether RMN verification is disabled, and the bytes-encoded source-chain OnRamp address (left-padded EVM address for EVM sources; native encoding for non-EVM families). When isRMNVerificationDisabled is false, roots must be submitted in the blessed list and commit() calls the configured RMN verify(); when true, that call is skipped and the OCR commit quorum is the root's signer gate. The validation and liveness provided by an enabled RMN path depend on the configured RMN implementation. Keys are source-chain names. Replayed from SourceChainConfigSet events. minSeqNr is omitted because the event captures the value at config-change time, not the current commit counter (which advances on every _commitRoot).",
       "handler": {
         "type": "event",
         "groupBy": "sourceChainSelector",

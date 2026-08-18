@@ -1,3 +1,4 @@
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
@@ -6,8 +7,6 @@ import type { InteropProtocolDashboardData } from '~/server/features/scaling/int
 import type { InteropProtocolEntry } from '~/server/features/scaling/interop/protocol/getInteropProtocolEntry'
 import type { ByBridgeTypeData } from '~/server/features/scaling/interop/types'
 import type { TransferTypeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { InteropNoDataBadge } from '../../components/InteropNoDataBadge'
 import { InteropTopPathValue } from '../../components/InteropTopPathValue'
 import { InteropTransferSizeBreakdown } from '../../components/InteropTransferSizeBreakdown'

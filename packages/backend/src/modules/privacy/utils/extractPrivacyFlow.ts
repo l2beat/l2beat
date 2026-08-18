@@ -18,6 +18,15 @@ const railgunInterface = new utils.Interface([
   'event Unshield(address to, tuple(uint8 tokenType, address tokenAddress, uint256 tokenSubID) token, uint256 amount, uint256 fee)',
 ])
 
+// Both events carry an indexed `token` and an `amount`, so a single extractor
+// serves every Umbra flow. Announcement covers ERC20 deposits and doubles as the
+// ETH withdrawal: sendEth forwards the value straight to the stealth address, so
+// the contract never custodies ETH and emits no withdrawal event for it.
+const umbraInterface = new utils.Interface([
+  'event Announcement(address indexed receiver, uint256 amount, address indexed token, bytes32 pkx, bytes32 ciphertext)',
+  'event TokenWithdrawal(address indexed receiver, address indexed acceptor, uint256 amount, address indexed token)',
+])
+
 const zamaInterface = new utils.Interface([
   'event Wrap(address indexed to, uint256 roundedAmount, bytes32 encryptedWrappedAmount)',
   'event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)',
@@ -39,6 +48,8 @@ export function extractPrivacyFlow(
       return extractRailgunShield(source, log)
     case 'railgunUnshield':
       return extractRailgunUnshield(source, log)
+    case 'umbraAmount':
+      return extractUmbraAmount(source, log)
     case 'zamaWrap':
       return extractZamaWrap(log)
     case 'zamaUnwrap':
@@ -101,6 +112,22 @@ function extractRailgunUnshield(
   }
 
   if (EthereumAddress(token.tokenAddress) !== source.params.tokenAddress) {
+    return undefined
+  }
+
+  return {
+    count: 1,
+    amount: BigInt(parsedLog.args.amount.toString()),
+  }
+}
+
+function extractUmbraAmount(
+  source: Extract<PrivacyFlowIndexerConfig, { extractor: 'umbraAmount' }>,
+  log: PrivacyRpcLog,
+): PrivacyFlowExtractResult | undefined {
+  const parsedLog = umbraInterface.parseLog(log)
+
+  if (EthereumAddress(parsedLog.args.token) !== source.params.tokenAddress) {
     return undefined
   }
 

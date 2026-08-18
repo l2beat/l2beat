@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RMN",
+  "description": "RMN 2.1 emergency-stop contract for CCIP. It stores global and route-specific curses: the owner and authorized callers can add curses, while only the owner can remove them and change the authorized-caller set. Its legacy v1.6 compatibility isBlessed() always returns true and its signer config is empty, so this implementation does not independently attest Merkle roots.",
+  "canActIndependently": false,
+  "category": "core",
+  "fields": {
+    "getAllAuthorizedCallers": {
+      "description": "Accounts authorized to add global or route-specific curses. Authorized callers cannot uncurse subjects or change this caller list.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add global or route-specific curses, halting the affected CCIP paths; they cannot uncurse subjects."
+        }
+      ]
+    },
+    "getCursedSubjects": {
+      "description": "Raw bytes16 subjects currently cursed by RMN. Each entry is either the special GLOBAL_CURSE_SUBJECT 0x01000000000000000000000000000001, which affects every CCIP path through this RMN, or bytes16(uint128(chainSelector)), which affects the corresponding route. An empty list means no curse is active. See cursedSubjects for the decoded view."
+    },
+    "cursedSubjects": {
+      "description": "Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the chain name from the CCIPChainName mapping (decimal selector when not in the mapping).",
+      "copy": "getCursedSubjects",
+      "edit": [
+        "map",
+        ["pipe", ["format", "CCIPCurseSubject"], ["format", "CCIPChainName"]]
+      ]
+    },
+    "isCursed": {
+      "description": "True when a global curse is active. The overloaded route-specific check also returns true for the requested subject when either that subject or the global subject is cursed."
+    },
+    "getReportDigestHeader": {
+      "description": "Hardcoded legacy v1.6 RMN report-digest header retained for compatibility. RMN 2.1 does not expose a verify() function or track a signer set."
+    },
+    "getVersionedConfig": {
+      "description": "Legacy v1.6 compatibility response. RMN 2.1 always returns version 0 with an empty signer set, zero threshold and zero RMNHome config digest."
+    },
+    "owner": {
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove global and route-specific curses, halting or restoring the affected CCIP paths."
+        },
+        {
+          "type": "interact",
+          "description": "add or remove authorized callers, delegating the ability to add curses."
+        },
+        { "type": "act" }
+      ]
+    }
+  }
+}

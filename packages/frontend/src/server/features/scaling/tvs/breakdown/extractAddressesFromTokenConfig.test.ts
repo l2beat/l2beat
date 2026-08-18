@@ -106,6 +106,27 @@ describe(extractAddressesFromTokenConfig.name, () => {
     expect(result.escrows).toEqualUnsorted([{ address: add2, chain: '1' }])
   })
 
+  it('should handle a Starknet token balance', () => {
+    const tokenAddress = '0x123'
+    const poolAddress = '0x456'
+
+    const result = extractAddressesFromTokenConfig(
+      mockToken({
+        type: 'starknetBalanceOf',
+        address: tokenAddress,
+        escrowAddress: poolAddress,
+        chain: 'starknet',
+        sinceTimestamp: 0,
+        decimals: 18,
+      }),
+    )
+
+    expect(result).toEqual({
+      addresses: [{ address: tokenAddress, chain: 'starknet' }],
+      escrows: [{ address: poolAddress, chain: 'starknet' }],
+    })
+  })
+
   it('should return empty array for types with no addresses', () => {
     const token = mockToken({
       type: 'calculation',

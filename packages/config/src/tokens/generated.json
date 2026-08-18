@@ -8469,6 +8469,27 @@
       }
     },
     {
+      "name": "USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xB6CEceAB302E2E4948951eE7843FC24E92933061",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1785169210,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/USDC.png?1769615602",
+      "chainId": 196,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
+    },
+    {
       "name": "OpenUSDT",
       "coingeckoId": "openusdt",
       "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",

@@ -18,6 +18,7 @@ import { AvalanchePlugin } from './avalanche'
 import { AxelarPlugin } from './axelar'
 import { AxelarITSPlugin } from './axelar-its'
 import { BeefyBridgePlugin } from './beefy-bridge'
+import { ButterNetworkPlugin } from './butternetwork'
 import { CCIPConfigPlugin } from './ccip/ccip.config'
 import { CCIPPlugin } from './ccip/ccip.plugin'
 import { CCTPConfigPlugin } from './cctp/cctp.config'
@@ -184,6 +185,7 @@ export function createInteropPlugins(
       new AgglayerPlugin(),
       new CircleGatewayPlugIn(deps.configs),
       new CelerPlugIn(),
+      new ButterNetworkPlugin(),
       new MesonPlugin(),
       new CCIPPlugin(deps.configs, deps.oneSidedChains),
       new CentriFugePlugin(deps.oneSidedChains),

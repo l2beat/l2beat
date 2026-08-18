@@ -432,14 +432,14 @@ function opStackCommon(
             ? {
                 type: 'Optimistic',
                 name: 'OP Succinct Lite',
-                zkCatalogId: ProjectId('sp1hypercube'),
+                zkCatalogIds: [ProjectId('sp1hypercube')],
                 challengeProtocol: 'Single-step',
               }
             : fraudProofType === 'AggregateProof'
               ? {
                   type: 'Optimistic',
                   name: 'SP1',
-                  zkCatalogId: ProjectId('sp1hypercube'),
+                  zkCatalogIds: [ProjectId('sp1hypercube')],
                   challengeProtocol: 'Single-step',
                 }
               : {

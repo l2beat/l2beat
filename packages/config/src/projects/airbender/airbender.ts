@@ -93,26 +93,26 @@ export const airbender: BaseProject = {
       //   ],
       //   verificationStatus: 'notVerified',
       // },
-      {
-        // Is a dummy to show adi as using airbender proof system. Verifier
-        // contract sources are unknown, so the actual hash cannot be computed.
-        // Fix once the sources are on etherscan.
-        hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
-        name: 'Airbender Fflonk Adi verifier',
-        proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
-        knownDeployments: [
-          {
-            address: ChainSpecificAddress.fromLong(
-              'ethereum',
-              '0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A',
-            ),
-          },
-        ],
-        verificationStatus: 'notVerified',
-      },
+      // {
+      //   // ADI doesn't use the fflonk verifier, it is not accessible on DualVerifier level
+      //   hash: '0x6f36a08c517b060fa97308cdb3e23b04842ff839d451a753ec8fae1a5408304a',
+      //   name: 'Airbender Fflonk Adi verifier',
+      //   proofSystem: ZK_CATALOG_TAGS.Fflonk.Zksync,
+      //   knownDeployments: [
+      //     {
+      //       address: ChainSpecificAddress.fromLong(
+      //         'ethereum',
+      //         '0xF6b3708BE4192CE4526c2F87D4c3eABA79230E6A',
+      //       ),
+      //     },
+      //   ],
+      //   verificationStatus: 'notVerified',
+      // },
       {
         hash: '0x124ebcd537a1e1c152774dd18f67660e35625bba0b669bf3b4836d636b105337',
         name: 'Airbender Plonk Adi verifier',
+        sourceLink:
+          'https://github.com/matter-labs/zksync-os/tree/v0.2.5/zksync_os',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Bellman,
         knownDeployments: [
           {
@@ -122,8 +122,12 @@ export const airbender: BaseProject = {
             ),
           },
         ],
-        verificationStatus: 'notVerified',
+        verificationStatus: 'successful',
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+        verificationSteps: readProjectMarkdown(
+          'airbender',
+          'verificationSteps-0x124ebcd5',
+        ),
       },
     ],
   },

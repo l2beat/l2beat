@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x910d6ca5e83c1e839b84c19f9e5a875167986866
+
+# Diff at Mon, 10 Aug 2026 13:06:53 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@352ff1eba99519e3c6090fccec5796e0475edcfa block: 1780586199
+- current timestamp: 1780586199
+
+## Description
+
+Config-related: fixed incorrect permissions and descriptions.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780586199 (main branch discovery), not current.
+
+```diff
+    contract ChainAdminOwnable (eth:0x2d6E82F1f8fba89a67cc8d742B12633db4732Ca7) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0xB272B188855128c10a933Edb62CC64c22B1f3754 act through it.
+      directlyReceivedPermissions.1.description:
+-        "revert batches for any connected chain (ZK cluster Admin role)."
++        "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role)."
+    }
+```
+
+```diff
+    contract ADI Multisig 2 (eth:0xB272B188855128c10a933Edb62CC64c22B1f3754) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "revert batches for any connected chain (ZK cluster Admin role)."
++        "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role)."
+    }
+```
+
+```diff
+    contract L1AssetRouter (eth:0xf25227EFAD2046d19777A4CA540b5C016Df7fe7A) [shared-zk-stack/L1AssetRouter] {
+    +++ description: Canonical central asset router for all ZK stack chains. Routes deposits and withdrawals to the respective asset handlers (like the L1NativeTokenVault); does not escrow funds itself.
+      description:
+-        "Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds)."
++        "Canonical central asset router for all ZK stack chains. Routes deposits and withdrawals to the respective asset handlers (like the L1NativeTokenVault); does not escrow funds itself."
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
+    }
+```
+
 Generated with discovered.json: 0x05801ec653fe387ddca0c81e18608b518d7e3c67
 
 # Diff at Thu, 04 Jun 2026 15:18:00 GMT:

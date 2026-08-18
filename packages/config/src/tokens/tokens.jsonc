@@ -9278,6 +9278,21 @@
   ],
   "xlayer": [
     {
+      "symbol": "USDC",
+      "address": "0xb6ceceab302e2e4948951ee7843fc24e92933061",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin",
+      "source": "external",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      },
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "USD₮0",
       "address": "0x779ded0c9e1022225f8e0630b35a9b54be713736",
       "coingeckoId": "usdt0",

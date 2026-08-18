@@ -1,21 +1,8 @@
 {
   "name": "taiko",
-  "timestamp": 1785325120,
+  "timestamp": 1786955407,
   "configHash": "0x4dd5f115c5a69c164ccdcf66d5c02ba417f4bbf018d42049bbba582efb82b51f",
   "entries": [
-    {
-      "address": "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
-          "description": "eligible to propose batches on L1; only the selected current-epoch operator can successfully propose.",
-          "role": ".operatorMapping"
-        }
-      ]
-    },
     {
       "name": "PEMCertChainLib",
       "address": "eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169",
@@ -55,8 +42,8 @@
         "riscoGroth16Verifier": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
         "taikoChainId": 167000,
         "trustedImages": [
-          "0xa38d1fac63aa6a553fdb6fea01fdc96534564c31de916aaafe5f5a1dd3bb908b",
-          "0x868b5154ae01a9a045051da2d7ba2e21d4132c7ec096da343fa24149407fefef"
+          "0x5a818b4c7dc80e9ba85d55492c20c263c67238724e3982f76d15a158e501210b",
+          "0x9cfcc1b34a98853c3c5873a4d456726e528246f7f03a4ea35f27c2543aa6e7f0"
         ]
       },
       "fieldMeta": {
@@ -713,7 +700,7 @@
         "impl": "eth:0x5e46443bd131eB6d4c6Fb4849bAD29af9596dd72",
         "inNonReentrant": false,
         "mrEnclaves": [
-          "0xbefb2c7ec44cefe57f4ff0ca815a8b8f15e05631bf3abe36cbc12d28f778fa36"
+          "0x2d2216efbe9d8e80ba24b86606ccd5ce9faf11033d31ad9e5d3c5c89965c8a57"
         ],
         "mrSigners": [
           "0x48fa5bbad91d274735d238715913c8712a7505bb6d0dd832764bedb46d587013"
@@ -810,7 +797,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1785325115,
+        "clock": 1786955399,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -1211,16 +1198,18 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
+          "eth:0xA1D62c7df45847089cfB052396Abe4cDa7879d25",
+          "eth:0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a",
+          "eth:0x7A5299927F93ffCf33cf381CB0C03C2486b9299A",
           "eth:0xF28C8D6b44361255FA7C116d09ccD5F914398C10",
           "eth:0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
         ],
-        "$threshold": 2,
+        "$threshold": 3,
         "domainSeparator": "0xb928db8cda7e0d8ed365dcdc0efbd2c664a02d405dc5a14d69af87929137db55",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 183,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 186,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1259,7 +1248,18 @@
     {
       "address": "eth:0x3D4997AAC0834BEb5ede861c424807Aa3F29b5bB",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2",
+          "description": "configure an agent address that represents this entity in the Security Council",
+          "role": ".multisigSigners",
+          "via": [
+            { "address": "eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06" }
+          ]
+        }
+      ]
     },
     {
       "address": "eth:0x3ffe3F16d47A54b1C6A3f47c9E6Ff5C2C1B32859",
@@ -1285,7 +1285,7 @@
         "automataDcapAttestation": "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
-        "nextInstanceId": 1,
+        "nextInstanceId": 2,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "registrar": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -1612,28 +1612,23 @@
       }
     },
     {
-      "address": "eth:0x6dcB04fCC1c597DAFad86e2886bE463d53CaFAdf",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "MainnetInbox",
       "address": "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f",
       "type": "Contract",
-      "template": "taiko/MainnetInboxRestricted",
+      "template": "taiko/MainnetInbox",
       "sourceHashes": [
         "0xe38a79e097149d54c3a08cd674ba5ffe929d1e8fc3c0c6c436ab5df7efcb1858",
-        "0xd6d3af78f692a4c928f8e1b046eca6884ed0d15d120df586c3509c802795d433"
+        "0xa0a8e3ebc196ae2703fc2c0dc5bc16012644bbcd103c34bf6241389ccadc0fd0"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. Forced inclusion submission and processing are disabled in this implementation. Proposals must come from the configured proposer checker, and if the configured prover whitelist is non-empty, proofs from non-whitelisted provers revert; the configured permissionless proving delay is not used to open proving.",
+      "description": "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. Users can enqueue forced inclusions by publishing an L1 blob. Once an inclusion is due, subsequent proposals must process it, but proposing remains restricted by the configured proposer checker. If the configured prover whitelist is non-empty, proofs from non-whitelisted provers revert.",
       "ignoreInWatchMode": ["getForcedInclusionState", "getCoreState"],
       "deployerAddress": "eth:0xe1ed3fE39ABF82d2e217539D0523C874492c38cF",
       "sinceTimestamp": 1772642207,
       "sinceBlock": 24585332,
       "values": {
         "$admin": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
-        "$implementation": "eth:0x64523f2580f4E7038a121D55b220a9C12C1E8f01",
+        "$implementation": "eth:0x5253D4C91e80b880DdB54B78E74082Abe066F6b9",
         "$pastUpgrades": [
           [
             "2026-03-04T16:36:47.000Z",
@@ -1649,12 +1644,17 @@
             "2026-06-29T13:18:35.000Z",
             "0xae7122add731c935d54d726ebe542e7d4f9f7321e3bdf4ec794309f813d981f7",
             ["eth:0x64523f2580f4E7038a121D55b220a9C12C1E8f01"]
+          ],
+          [
+            "2026-08-03T12:46:23.000Z",
+            "0x64875b5b84b41b520551854696c0ce408fb3e0aa2ede604cc95a5919b6140ea7",
+            ["eth:0x5253D4C91e80b880DdB54B78E74082Abe066F6b9"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "activationTimestamp": 1775135903,
         "getConfig": {
-          "proofVerifier": "eth:0x71808449A6217898d602c1a392D95b931Ac5d878",
+          "proofVerifier": "eth:0x7284aaC05555Ae6559bdAd8B4221eC9584254Eec",
           "proposerChecker": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
           "proverWhitelist": "eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae",
           "signalService": "eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
@@ -1673,34 +1673,29 @@
           "permissionlessInclusionMultiplier": 160
         },
         "getCoreState": {
-          "nextProposalId": 24748,
-          "lastProposalBlockId": 25638215,
-          "lastFinalizedProposalId": 24742,
-          "lastFinalizedTimestamp": 1785323375,
-          "lastCheckpointTimestamp": 1785323375,
-          "lastFinalizedBlockHash": "0xfabee993ec845d91cbb90cfa6b62653746b358c31491e861b8275142c2588be6"
+          "nextProposalId": 29005,
+          "lastProposalBlockId": 25773604,
+          "lastFinalizedProposalId": 28999,
+          "lastFinalizedTimestamp": 1786953659,
+          "lastCheckpointTimestamp": 1786953659,
+          "lastFinalizedBlockHash": "0xfe7f59ac1a8da1e6e0e347233e101d5a577de399b394faf638cce8f6bb86537b"
         },
-        "getCurrentForcedInclusionFee": 1020000,
-        "getForcedInclusionState": { "head_": 2, "tail_": 3 },
-        "impl": "eth:0x64523f2580f4E7038a121D55b220a9C12C1E8f01",
+        "getCurrentForcedInclusionFee": 1000000,
+        "getForcedInclusionState": { "head_": 3, "tail_": 3 },
+        "impl": "eth:0x5253D4C91e80b880DdB54B78E74082Abe066F6b9",
         "inNonReentrant": false,
-        "noForce": [true],
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "resolver": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
-        "noForce": {
-          "severity": "HIGH",
-          "description": "Forced inclusions are disabled in this implementation: saveForcedInclusion() always reverts and propose() only accepts zero forced inclusions."
-        },
         "paused": { "severity": "HIGH" },
         "getCurrentForcedInclusionFee": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f": "ERC1967Proxy",
-        "eth:0x64523f2580f4E7038a121D55b220a9C12C1E8f01": "MainnetInbox"
+        "eth:0x5253D4C91e80b880DdB54B78E74082Abe066F6b9": "MainnetInbox"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1710,18 +1705,23 @@
       "proxyType": "EOA"
     },
     {
-      "name": "MainnetVerifier",
-      "address": "eth:0x71808449A6217898d602c1a392D95b931Ac5d878",
+      "address": "eth:0x719304183f09a84C4D8dA8d64BDB6C6E0EEede4E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ZkRequiredVerifier",
+      "address": "eth:0x7284aaC05555Ae6559bdAd8B4221eC9584254Eec",
       "type": "Contract",
-      "template": "taiko/MainnetVerifier",
+      "template": "taiko/ZkRequiredVerifier",
       "sourceHashes": [
-        "0xd8de34f4010b0ba1199cd462c21f7b3a427abf428f6dc49344a1317c8381c469"
+        "0xd3fd437c531a0950cbd8933c87194028339e4aa265f286c780359f4f316b0f07"
       ],
       "proxyType": "immutable",
-      "description": "Immutable verifier policy contract for Taiko mainnet. Each accepted proof must contain exactly two ordered sub-proofs: either SGX-GETH plus SGX-RETH/RISC0-RETH/SP1-RETH, or SGX-RETH plus SGX-GETH/RISC0-RETH/SP1-RETH. It routes each sub-proof to the corresponding downstream verifier.",
+      "description": "Immutable verifier policy contract for Taiko mainnet. Every accepted proof contains exactly two ordered sub-proofs and at least one must be a ZK proof. Accepted pairs are SGX-GETH or SGX-RETH with RISC0-RETH or SP1-RETH, and RISC0-RETH with SP1-RETH. The SGX-GETH plus SGX-RETH pair is not accepted.",
       "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
-      "sinceTimestamp": 1782568847,
-      "sinceBlock": 25409439,
+      "sinceTimestamp": 1783672091,
+      "sinceBlock": 25500995,
       "values": {
         "$immutable": true,
         "opVerifier": "eth:0x0000000000000000000000000000000000000000",
@@ -1733,33 +1733,28 @@
       },
       "fieldMeta": {
         "sgxGethVerifier": {
-          "description": "SGX verifier for Geth-based proofs. Each accepted proof must include either this verifier or the SGX-RETH verifier."
+          "description": "SGX verifier for Geth-based proofs. It can only be paired with a ZK verifier."
         },
         "sgxRethVerifier": {
-          "description": "SGX verifier for Reth-based proofs. Each accepted proof must include either this verifier or the SGX-GETH verifier."
+          "description": "SGX verifier for Reth-based proofs. It can only be paired with a ZK verifier."
         },
         "risc0RethVerifier": {
-          "description": "RISC Zero verifier for Reth-based proofs that can serve as the second required verifier."
+          "description": "RISC Zero verifier for Reth-based validity proofs."
         },
         "sp1RethVerifier": {
-          "description": "SP1 verifier for Reth-based proofs that can serve as the second required verifier."
+          "description": "SP1 verifier for Reth-based validity proofs."
         },
         "opVerifier": {
-          "description": "Optional optimistic verifier slot. It is zero in the mainnet verifier constructor and cannot satisfy the policy."
+          "description": "Optional optimistic verifier slot. It is zero and cannot satisfy the mainnet policy."
         },
         "tdxGethVerifier": {
-          "description": "Optional TDX verifier slot. It is zero in the mainnet verifier constructor and cannot satisfy the policy."
+          "description": "Optional TDX verifier slot. It is zero and cannot satisfy the mainnet policy."
         }
       },
       "implementationNames": {
-        "eth:0x71808449A6217898d602c1a392D95b931Ac5d878": "MainnetVerifier"
+        "eth:0x7284aaC05555Ae6559bdAd8B4221eC9584254Eec": "ZkRequiredVerifier"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0x719304183f09a84C4D8dA8d64BDB6C6E0EEede4E",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "TaikoSP1Verifier",
@@ -1781,10 +1776,10 @@
         "sp1RemoteVerifier": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "taikoChainId": 167000,
         "trustedPrograms": [
-          "0x007594632ec31fae9d44799b97316fcbcaa3ff6b5db268c7a5d8025b3bbb487e",
-          "0x3aca319730c7eba7288f33727316fcbc551ffb5a76c9a31e4bb004b63bbb487e",
-          "0x00e91cb391c22d6fd015e4c6041dbbe6efb2d8be6d4046eec28f12acba5a17bc",
-          "0x748e59c8708b5bf402bc98c041dbbe6e7d96c5f335011bbb051e25593a5a17bc"
+          "0x00ad090221a8fa0f09e1be7a53feb67be010f01310d4b2314a69d10152ee1ce0",
+          "0x568481106a3e83c23c37cf4a3feb67be008780984352c8c514d3a20252ee1ce0",
+          "0x000b11691352e55fcf64f62620cefaa700161600093f2751032fe71ea912264d",
+          "0x0588b48954b957f36c9ec4c40cefaa7000b0b00024fc9d44065fce3d2912264d"
         ]
       },
       "fieldMeta": {
@@ -1973,6 +1968,11 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "address": "eth:0x7A5299927F93ffCf33cf381CB0C03C2486b9299A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Aragon Agent",
       "address": "eth:0x824Dce8d292a393DAb5FFdeb788DC1086257f678",
       "type": "EOA",
@@ -2055,8 +2055,8 @@
         "inNonReentrant": false,
         "lastUnpausedAt": 0,
         "mrEnclaves": [
-          "0xdccd8f30ea4a137ddfa63d743e3aa7c7a8e80585912d19c4b66f7d8d6098bec4",
-          "0x92dd96a170d1ffb998afa210b3ef8af8c408ab76c4717e0eb8076d4a5da4e740"
+          "0x90c79e65d6d0f83d658ff96cd0ef1204438f20b406c93cf1d4fafa0cff29842e",
+          "0x041cadb0541bf8249c368482172d218608f3693975b65f74beb2ed6f0044f951"
         ],
         "mrSigners": [
           "0x48fa5bbad91d274735d238715913c8712a7505bb6d0dd832764bedb46d587013"
@@ -2529,7 +2529,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 144,
+        "nonce": 145,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2857,7 +2857,7 @@
         "automataDcapAttestation": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
-        "nextInstanceId": 1,
+        "nextInstanceId": 2,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "registrar": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -2991,6 +2991,11 @@
       "implementationNames": {
         "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696": "RiscZeroVerifierEmergencyStop"
       }
+    },
+    {
+      "address": "eth:0xA1D62c7df45847089cfB052396Abe4cDa7879d25",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Toni Wahrstätter",
@@ -3142,7 +3147,7 @@
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163",
+          "eth:0xCf76A87E24FE2054DCF02a5f65eAc0F24A34c439",
           "eth:0xFa92ff698D57f7B875570D9F59501812B843CD44",
           "eth:0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
           "eth:0xF28C8D6b44361255FA7C116d09ccD5F914398C10",
@@ -3153,7 +3158,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 5 (80%)",
-        "nonce": 72,
+        "nonce": 73,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3402,7 +3407,7 @@
         "GAS_RESERVE": 800000,
         "impl": "eth:0x1c94D798CFA08F396E5BA9F81697289c53273381",
         "inNonReentrant": false,
-        "nextMessageId": 40416,
+        "nextMessageId": 40463,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pauser": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -3602,7 +3607,7 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2",
@@ -3617,16 +3622,13 @@
       "values": {
         "$immutable": false,
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "eth:0x3D4997AAC0834BEb5ede861c424807Aa3F29b5bB",
-          "eth:0x6dcB04fCC1c597DAFad86e2886bE463d53CaFAdf"
-        ],
-        "$threshold": 2,
+        "$members": ["eth:0x3D4997AAC0834BEb5ede861c424807Aa3F29b5bB"],
+        "$threshold": 1,
         "domainSeparator": "0xae594c52c29d405feb0ada763f5db9b0bdfb194b07d0804bfd2490415e9675fc",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 4,
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3661,7 +3663,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 39,
+        "nonce": 52,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3801,17 +3803,16 @@
           "eth:0x45D4403351Bc34283CE6450D91c099f40D06dA4e",
           "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
         ],
-        "getOperatorForCurrentEpoch": "eth:0x2267C7246523191b8bf7615B86b3bdEE612b7D9E",
-        "getOperatorForNextEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+        "getOperatorForCurrentEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+        "getOperatorForNextEpoch": "eth:0x2267C7246523191b8bf7615B86b3bdEE612b7D9E",
         "impl": "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149",
         "inNonReentrant": false,
-        "latestActivationEpoch": 1785124055,
+        "latestActivationEpoch": 1786707671,
         "OPERATOR_CHANGE_DELAY": 2,
-        "operatorCount": 3,
+        "operatorCount": 2,
         "operatorMapping": [
-          "eth:0x000cb000E880A92a8f383D69dA2142a969B93DE7",
-          "eth:0x2267C7246523191b8bf7615B86b3bdEE612b7D9E",
-          "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"
+          "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
+          "eth:0x2267C7246523191b8bf7615B86b3bdEE612b7D9E"
         ],
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
@@ -4388,6 +4389,98 @@
       "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
       "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
     ],
+    "eth:0x5253D4C91e80b880DdB54B78E74082Abe066F6b9": [
+      "constructor(address _proofVerifier, address _proposerChecker, address _proverWhitelist, address _signalService, address _bondToken)",
+      "error ACCESS_DENIED()",
+      "error ActivationRequired()",
+      "error BlobNotFound()",
+      "error CannotProposeInCurrentBlock()",
+      "error DeadlineExceeded()",
+      "error ETH_TRANSFER_FAILED()",
+      "error EmptyBatch()",
+      "error FUNC_NOT_IMPLEMENTED()",
+      "error FirstProposalIdTooLarge()",
+      "error INVALID_PAUSE_STATUS()",
+      "error IncorrectProposalCount()",
+      "error InsufficientBond()",
+      "error InvalidAddress()",
+      "error InvalidRecoveryState()",
+      "error LastProposalAlreadyFinalized()",
+      "error LastProposalHashMismatch()",
+      "error LastProposalIdTooLarge()",
+      "error LengthExceedsUint16()",
+      "error MustMaintainMinBond()",
+      "error NoBlobs()",
+      "error NoBondToWithdraw()",
+      "error NoWithdrawalRequested()",
+      "error NotEnoughCapacity()",
+      "error ParentBlockHashMismatch()",
+      "error ProverNotWhitelisted()",
+      "error REENTRANT_CALL()",
+      "error UnprocessedForcedInclusionIsDue()",
+      "error WithdrawalAlreadyRequested()",
+      "error ZERO_ADDRESS()",
+      "error ZERO_VALUE()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event BondDeposited(address indexed depositor, address indexed recipient, uint64 amount)",
+      "event BondWithdrawn(address indexed account, uint64 amount)",
+      "event ForcedInclusionSaved(tuple(uint64 feeInGwei, tuple(bytes32[] blobHashes, uint24 offset, uint48 timestamp) blobSlice) forcedInclusion)",
+      "event ForcedInclusionsVoided(uint48 oldHead, uint48 newHead)",
+      "event InboxActivated(bytes32 lastPacayaBlockHash)",
+      "event Initialized(uint8 version)",
+      "event LivenessBondSettled(address indexed payer, address indexed payee, uint64 livenessBond, uint64 credited, uint64 slashed)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Proposed(uint48 indexed id, address indexed proposer, bytes32 parentProposalHash, uint48 endOfSubmissionWindowTimestamp, uint8 basefeeSharingPctg, tuple(bool isForcedInclusion, tuple(bytes32[] blobHashes, uint24 offset, uint48 timestamp) blobSlice)[] sources)",
+      "event Proved(uint48 firstProposalId, uint48 firstNewProposalId, uint48 lastProposalId, address indexed actualProver)",
+      "event StateRecovered(uint48 nextProposalId, uint48 lastFinalizedProposalId, bytes32 lastFinalizedBlockHash)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "event WithdrawalCancelled(address indexed account)",
+      "event WithdrawalRequested(address indexed account, uint48 withdrawableAt)",
+      "function acceptOwnership()",
+      "function activate(bytes32 _lastPacayaBlockHash)",
+      "function activationTimestamp() view returns (uint48)",
+      "function cancelWithdrawal()",
+      "function decodeProposeInput(bytes _data) pure returns (tuple(uint48 deadline, tuple(uint16 blobStartIndex, uint16 numBlobs, uint24 offset) blobReference, uint16 numForcedInclusions) input_)",
+      "function decodeProveInput(bytes _data) pure returns (tuple(tuple(uint48 firstProposalId, bytes32 firstProposalParentBlockHash, bytes32 lastProposalHash, address actualProver, uint48 endBlockNumber, bytes32 endStateRoot, tuple(address proposer, uint48 timestamp, bytes32 blockHash)[] transitions) commitment) input_)",
+      "function deposit(uint64 _amount)",
+      "function depositTo(address _recipient, uint64 _amount)",
+      "function encodeProposeInput(tuple(uint48 deadline, tuple(uint16 blobStartIndex, uint16 numBlobs, uint24 offset) blobReference, uint16 numForcedInclusions) _input) pure returns (bytes encoded_)",
+      "function encodeProveInput(tuple(tuple(uint48 firstProposalId, bytes32 firstProposalParentBlockHash, bytes32 lastProposalHash, address actualProver, uint48 endBlockNumber, bytes32 endStateRoot, tuple(address proposer, uint48 timestamp, bytes32 blockHash)[] transitions) commitment) _input) pure returns (bytes encoded_)",
+      "function getBond(address _address) view returns (tuple(uint64 balance, uint48 withdrawalRequestedAt) bond_)",
+      "function getConfig() view returns (tuple(address proofVerifier, address proposerChecker, address proverWhitelist, address signalService, address bondToken, uint64 minBond, uint64 livenessBond, uint48 withdrawalDelay, uint48 provingWindow, uint48 permissionlessProvingDelay, uint48 maxProofSubmissionDelay, uint48 ringBufferSize, uint8 basefeeSharingPctg, uint16 forcedInclusionDelay, uint64 forcedInclusionFeeInGwei, uint64 forcedInclusionFeeDoubleThreshold, uint8 permissionlessInclusionMultiplier) config_)",
+      "function getCoreState() view returns (tuple(uint48 nextProposalId, uint48 lastProposalBlockId, uint48 lastFinalizedProposalId, uint48 lastFinalizedTimestamp, uint48 lastCheckpointTimestamp, bytes32 lastFinalizedBlockHash))",
+      "function getCurrentForcedInclusionFee() view returns (uint64 feeInGwei_)",
+      "function getForcedInclusionState() view returns (uint48 head_, uint48 tail_)",
+      "function getForcedInclusions(uint48 _start, uint48 _maxCount) view returns (tuple(uint64 feeInGwei, tuple(bytes32[] blobHashes, uint24 offset, uint48 timestamp) blobSlice)[] inclusions_)",
+      "function getProposalHash(uint256 _proposalId) view returns (bytes32)",
+      "function hashCommitment(tuple(uint48 firstProposalId, bytes32 firstProposalParentBlockHash, bytes32 lastProposalHash, address actualProver, uint48 endBlockNumber, bytes32 endStateRoot, tuple(address proposer, uint48 timestamp, bytes32 blockHash)[] transitions) _commitment) pure returns (bytes32)",
+      "function hashProposal(tuple(uint48 id, uint48 timestamp, uint48 endOfSubmissionWindowTimestamp, address proposer, bytes32 parentProposalHash, uint48 originBlockNumber, bytes32 originBlockHash, uint8 basefeeSharingPctg, tuple(bool isForcedInclusion, tuple(bytes32[] blobHashes, uint24 offset, uint48 timestamp) blobSlice)[] sources) _proposal) pure returns (bytes32)",
+      "function impl() view returns (address)",
+      "function inNonReentrant() view returns (bool)",
+      "function init(address _owner)",
+      "function init2(uint48 _lastFinalizedProposalId, bytes32 _lastFinalizedBlockHash)",
+      "function init3()",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function propose(bytes _lookahead, bytes _data)",
+      "function prove(bytes _data, bytes _proof)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function requestWithdrawal()",
+      "function resolver() view returns (address)",
+      "function saveForcedInclusion(tuple(uint16 blobStartIndex, uint16 numBlobs, uint24 offset) _blobReference) payable",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function withdraw(address _to, uint64 _amount)"
+    ],
     "eth:0x52Af16664155608b845BE18aa29620EbF6eA2D3a": [
       "constructor()",
       "error ActionFailed(uint256 index)",
@@ -4756,97 +4849,6 @@
     "eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E": [
       "constructor(address _singleton)"
     ],
-    "eth:0x64523f2580f4E7038a121D55b220a9C12C1E8f01": [
-      "constructor(address _proofVerifier, address _proposerChecker, address _proverWhitelist, address _signalService, address _bondToken)",
-      "error ACCESS_DENIED()",
-      "error ActivationRequired()",
-      "error BlobNotFound()",
-      "error CannotProposeInCurrentBlock()",
-      "error DeadlineExceeded()",
-      "error ETH_TRANSFER_FAILED()",
-      "error EmptyBatch()",
-      "error FUNC_NOT_IMPLEMENTED()",
-      "error FirstProposalIdTooLarge()",
-      "error ForcedInclusionsDisabled()",
-      "error INVALID_PAUSE_STATUS()",
-      "error IncorrectProposalCount()",
-      "error InsufficientBond()",
-      "error InvalidAddress()",
-      "error InvalidRecoveryState()",
-      "error LastProposalAlreadyFinalized()",
-      "error LastProposalHashMismatch()",
-      "error LastProposalIdTooLarge()",
-      "error LengthExceedsUint16()",
-      "error MustMaintainMinBond()",
-      "error NoBlobs()",
-      "error NoBondToWithdraw()",
-      "error NoWithdrawalRequested()",
-      "error NotEnoughCapacity()",
-      "error ParentBlockHashMismatch()",
-      "error ProverNotWhitelisted()",
-      "error REENTRANT_CALL()",
-      "error UnprocessedForcedInclusionIsDue()",
-      "error WithdrawalAlreadyRequested()",
-      "error ZERO_ADDRESS()",
-      "error ZERO_VALUE()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event BondDeposited(address indexed depositor, address indexed recipient, uint64 amount)",
-      "event BondWithdrawn(address indexed account, uint64 amount)",
-      "event ForcedInclusionSaved(tuple(uint64 feeInGwei, tuple(bytes32[] blobHashes, uint24 offset, uint48 timestamp) blobSlice) forcedInclusion)",
-      "event InboxActivated(bytes32 lastPacayaBlockHash)",
-      "event Initialized(uint8 version)",
-      "event LivenessBondSettled(address indexed payer, address indexed payee, uint64 livenessBond, uint64 credited, uint64 slashed)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Proposed(uint48 indexed id, address indexed proposer, bytes32 parentProposalHash, uint48 endOfSubmissionWindowTimestamp, uint8 basefeeSharingPctg, tuple(bool isForcedInclusion, tuple(bytes32[] blobHashes, uint24 offset, uint48 timestamp) blobSlice)[] sources)",
-      "event Proved(uint48 firstProposalId, uint48 firstNewProposalId, uint48 lastProposalId, address indexed actualProver)",
-      "event StateRecovered(uint48 nextProposalId, uint48 lastFinalizedProposalId, bytes32 lastFinalizedBlockHash)",
-      "event Unpaused(address account)",
-      "event Upgraded(address indexed implementation)",
-      "event WithdrawalCancelled(address indexed account)",
-      "event WithdrawalRequested(address indexed account, uint48 withdrawableAt)",
-      "function acceptOwnership()",
-      "function activate(bytes32 _lastPacayaBlockHash)",
-      "function activationTimestamp() view returns (uint48)",
-      "function cancelWithdrawal()",
-      "function decodeProposeInput(bytes _data) pure returns (tuple(uint48 deadline, tuple(uint16 blobStartIndex, uint16 numBlobs, uint24 offset) blobReference, uint16 numForcedInclusions) input_)",
-      "function decodeProveInput(bytes _data) pure returns (tuple(tuple(uint48 firstProposalId, bytes32 firstProposalParentBlockHash, bytes32 lastProposalHash, address actualProver, uint48 endBlockNumber, bytes32 endStateRoot, tuple(address proposer, uint48 timestamp, bytes32 blockHash)[] transitions) commitment) input_)",
-      "function deposit(uint64 _amount)",
-      "function depositTo(address _recipient, uint64 _amount)",
-      "function encodeProposeInput(tuple(uint48 deadline, tuple(uint16 blobStartIndex, uint16 numBlobs, uint24 offset) blobReference, uint16 numForcedInclusions) _input) pure returns (bytes encoded_)",
-      "function encodeProveInput(tuple(tuple(uint48 firstProposalId, bytes32 firstProposalParentBlockHash, bytes32 lastProposalHash, address actualProver, uint48 endBlockNumber, bytes32 endStateRoot, tuple(address proposer, uint48 timestamp, bytes32 blockHash)[] transitions) commitment) _input) pure returns (bytes encoded_)",
-      "function getBond(address _address) view returns (tuple(uint64 balance, uint48 withdrawalRequestedAt) bond_)",
-      "function getConfig() view returns (tuple(address proofVerifier, address proposerChecker, address proverWhitelist, address signalService, address bondToken, uint64 minBond, uint64 livenessBond, uint48 withdrawalDelay, uint48 provingWindow, uint48 permissionlessProvingDelay, uint48 maxProofSubmissionDelay, uint48 ringBufferSize, uint8 basefeeSharingPctg, uint16 forcedInclusionDelay, uint64 forcedInclusionFeeInGwei, uint64 forcedInclusionFeeDoubleThreshold, uint8 permissionlessInclusionMultiplier) config_)",
-      "function getCoreState() view returns (tuple(uint48 nextProposalId, uint48 lastProposalBlockId, uint48 lastFinalizedProposalId, uint48 lastFinalizedTimestamp, uint48 lastCheckpointTimestamp, bytes32 lastFinalizedBlockHash))",
-      "function getCurrentForcedInclusionFee() view returns (uint64 feeInGwei_)",
-      "function getForcedInclusionState() view returns (uint48 head_, uint48 tail_)",
-      "function getForcedInclusions(uint48 _start, uint48 _maxCount) view returns (tuple(uint64 feeInGwei, tuple(bytes32[] blobHashes, uint24 offset, uint48 timestamp) blobSlice)[] inclusions_)",
-      "function getProposalHash(uint256 _proposalId) view returns (bytes32)",
-      "function hashCommitment(tuple(uint48 firstProposalId, bytes32 firstProposalParentBlockHash, bytes32 lastProposalHash, address actualProver, uint48 endBlockNumber, bytes32 endStateRoot, tuple(address proposer, uint48 timestamp, bytes32 blockHash)[] transitions) _commitment) pure returns (bytes32)",
-      "function hashProposal(tuple(uint48 id, uint48 timestamp, uint48 endOfSubmissionWindowTimestamp, address proposer, bytes32 parentProposalHash, uint48 originBlockNumber, bytes32 originBlockHash, uint8 basefeeSharingPctg, tuple(bool isForcedInclusion, tuple(bytes32[] blobHashes, uint24 offset, uint48 timestamp) blobSlice)[] sources) _proposal) pure returns (bytes32)",
-      "function impl() view returns (address)",
-      "function inNonReentrant() view returns (bool)",
-      "function init(address _owner)",
-      "function init2(uint48 _lastFinalizedProposalId, bytes32 _lastFinalizedBlockHash)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function propose(bytes _lookahead, bytes _data)",
-      "function prove(bytes _data, bytes _proof)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function requestWithdrawal()",
-      "function resolver() view returns (address)",
-      "function saveForcedInclusion(tuple(uint16 blobStartIndex, uint16 numBlobs, uint24 offset) _blobReference) payable",
-      "function transferOwnership(address newOwner)",
-      "function unpause()",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function withdraw(address _to, uint64 _amount)"
-    ],
     "eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3": [
       "constructor(address _verifier, address guardian)",
       "error EnforcedPause()",
@@ -4876,7 +4878,7 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x71808449A6217898d602c1a392D95b931Ac5d878": [
+    "eth:0x7284aaC05555Ae6559bdAd8B4221eC9584254Eec": [
       "constructor(address _sgxGethVerifier, address _sgxRethVerifier, address _risc0RethVerifier, address _sp1RethVerifier)",
       "error CV_INVALID_SUB_VERIFIER()",
       "error CV_INVALID_SUB_VERIFIER_ORDER()",
@@ -5405,8 +5407,7 @@
     "taiko/DAO": "0x6844d4d70a1ee3095eca887823d6910d52637f7c9c7a9b5b46c45c4ef7f44979",
     "taiko/DefaultResolver": "0x3bdd61dc56b5feb822640d65e897e9c53937d6e553d599231f9ad0adb7a205ec",
     "taiko/EmergencyMultisig": "0x32024d72f27237360077fce58c58072f6c193c9101b4fd14933dbaac56982d71",
-    "taiko/MainnetInboxRestricted": "0x411d1d6cf2c99c32fc40f201d31538acec0b9f38e24a4b6e3791a957ecbf6818",
-    "taiko/MainnetVerifier": "0x215cf223af5b47bf8dab2909a0722a0465a0fc6dc7d60fffd22c4ec5e9018c67",
+    "taiko/MainnetInbox": "0x6a4d893b48c0d55e9095068167987cc4ddb72fa261c5606105bd2f128e19179e",
     "taiko/Multisig": "0x32024d72f27237360077fce58c58072f6c193c9101b4fd14933dbaac56982d71",
     "taiko/OptimisticTokenVotingPlugin": "0x43e2ff8d543873d60fb20183b097ca645ae67edc2fd29c5ad5e15fbcc194c3b8",
     "taiko/PEMCertChainLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
@@ -5424,8 +5425,9 @@
     "taiko/SP1Verifier": "0x5e5fb7ef03dc67c452b9f784ef02535bd98581d2128b214b9b5947e0933ecee2",
     "taiko/TaikoBridge": "0x8259bc64b5e1811b50ae0c34ba9239e281099e6192827c12571f01491926fcac",
     "taiko/TaikoDAOController": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
-    "taiko/TaikoToken": "0x715f0fe61aa0d583fd8574521dfa81827a944339f94c46c74a6a058c47089804"
+    "taiko/TaikoToken": "0x715f0fe61aa0d583fd8574521dfa81827a944339f94c46c74a6a058c47089804",
+    "taiko/ZkRequiredVerifier": "0x215cf223af5b47bf8dab2909a0722a0465a0fc6dc7d60fffd22c4ec5e9018c67"
   },
-  "usedBlockNumbers": { "ethereum": 25638242 },
-  "permissionsConfigHash": "0x990ce9da5102ac17e4c2dc9a3eff1c195197bb473f8022186bbd0dfad6e2f802"
+  "usedBlockNumbers": { "ethereum": 25773614 },
+  "permissionsConfigHash": "0x6afbcc592593f5caac13dbd5483451c71296de3701a7f3420367fafc2e1eccfa"
 }

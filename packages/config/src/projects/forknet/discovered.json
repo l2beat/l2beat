@@ -1,6 +1,6 @@
 {
   "name": "forknet",
-  "timestamp": 1784563592,
+  "timestamp": 1786696815,
   "configHash": "0x794819848e510d2b0445cdcda2aac92fe6008eb253c393aa8029d410f5c21e3c",
   "entries": [
     {
@@ -110,9 +110,34 @@
             "2026-07-17T11:30:11.000Z",
             "0x1f1d4768cc0d3f218a3f5aea7b6ceed0ae663498958e8194f208e88522c6404b",
             ["eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"]
+          ],
+          [
+            "2026-08-04T13:59:35.000Z",
+            "0xfb6124f237aaaccedd1f8d1298ae5f3b19871f7af18bd4c791a818487cc199de",
+            ["eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"]
+          ],
+          [
+            "2026-08-04T14:11:35.000Z",
+            "0xf7dd2207111f0f269b7cdfa8a7fa703b664585513bc113e0d2c8bc7ce9eb355f",
+            ["eth:0xCe28685EB204186b557133766eCA00334EB441E4"]
+          ],
+          [
+            "2026-08-04T14:16:11.000Z",
+            "0xeb6b35d861c5b232c47bc0e604f0834975876f80181776e46cb486f7a398cf03",
+            ["eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957"]
+          ],
+          [
+            "2026-08-13T13:32:47.000Z",
+            "0x2c62c31e4108c24123b9f5b3c26a87e5ec6b4fc3b85163c7257edb523316f9db",
+            ["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]
+          ],
+          [
+            "2026-08-13T13:32:47.000Z",
+            "0x2c62c31e4108c24123b9f5b3c26a87e5ec6b4fc3b85163c7257edb523316f9db",
+            ["eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550"]
           ]
         ],
-        "$upgradeCount": 5,
+        "$upgradeCount": 10,
         "guardian": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "initVersion": 2,
         "paused": false,
@@ -441,7 +466,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 280,
+        "nonce": 302,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2332,6 +2357,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
-  "usedBlockNumbers": { "ethereum": 25575010 },
+  "usedBlockNumbers": { "ethereum": 25752136 },
   "permissionsConfigHash": "0xfbfa71030bd634666d7e6b9e640f9c9629f23dec65274fa15311dd77cd3fe559"
 }

@@ -955,12 +955,12 @@
       "label": "eigen-da customer 0x52ebeea8a7dcaaa17ee398b9f9b01dfa64db63ae since 1735822800"
     },
     {
-      "id": "aded832161bb",
-      "label": "eigen-da customer 0x420ad2641f22bf6f180c52d0b0566e7ec701c45a since 1753412400"
+      "id": "3d7624c4d4f5",
+      "label": "ethereum inbox 0xfF000000000000000000000000000000000000FF sequencers[2] since 21541468"
     },
     {
-      "id": "f3f2e47f846c",
-      "label": "ethereum inbox 0xfF000000000000000000000000000000000000FF sequencers[1] since 21541468"
+      "id": "aded832161bb",
+      "label": "eigen-da customer 0x420ad2641f22bf6f180c52d0b0566e7ec701c45a since 1753412400"
     }
   ],
   "soon-base": [
@@ -1138,6 +1138,10 @@
     }
   ],
   "zircuit": [
+    {
+      "id": "198b3eb48085",
+      "label": "ethereum inbox 0xFF00000000000000000000000000000000048900 sequencers[1] since 25682284"
+    },
     {
       "id": "55ae2c32bf4d",
       "label": "ethereum inbox 0xFF00000000000000000000000000000000048900 sequencers[1] since 20219939"

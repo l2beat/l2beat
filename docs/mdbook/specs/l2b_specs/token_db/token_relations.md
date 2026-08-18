@@ -393,19 +393,19 @@ table, so the summary can be eyeballed against the roles in the table.
 The graph page in token-ui is a view of the relation observations resolved
 against the current token catalogue. Every observed `(chain, address)`
 endpoint is a node, including endpoints that do not yet have a
-`DeployedToken` row. Catalogued nodes are green and labelled with their
-deployed token symbol; uncatalogued nodes are orange and use a shortened
-address as their label. An edge is an observed token relation: burn-and-mint
-edges are blue and non-directional, while lock-and-mint edges are pink and
-carry an arrowhead pointing **from the locked token to the minted one**. The
-arrow follows `lockedToken`, never the endpoint column order — that order is
-lexicographic and says nothing about roles. A lock-and-mint edge whose
-`lockedToken` is unidentified is drawn without an arrowhead rather than
-guessing which token is the original. Nodes can be dragged and the canvas can
-be panned or zoomed. Edge stroke widths remain constant while zooming, and node
-visuals stop growing beyond 2x zoom so additional zoom creates useful space
-between them. Above 2.5x zoom, each edge shows its relation plugin name at its
-midpoint.
+`DeployedToken` row. Catalogued nodes are green and labelled on two lines with
+their deployed token symbol and chain; uncatalogued nodes are orange and use a
+shortened address followed by their chain. An edge is an observed token
+relation: burn-and-mint edges are blue and non-directional, while lock-and-mint
+edges are pink and carry an arrowhead pointing **from the locked token to the
+minted one**. The arrow follows `lockedToken`, never the endpoint column order
+— that order is lexicographic and says nothing about roles. A lock-and-mint
+edge whose `lockedToken` is unidentified is drawn without an arrowhead rather
+than guessing which token is the original. Nodes can be dragged and the canvas
+can be panned or zoomed. Edge stroke widths remain constant while zooming, and
+node visuals stop growing beyond 2x zoom so additional zoom creates useful
+space between them. Above 2.5x zoom, each edge shows its relation plugin name at
+its midpoint.
 
 Before drawing, the UI treats every connected component as a cluster and
 sorts the clusters by endpoint count (largest first, with a stable id

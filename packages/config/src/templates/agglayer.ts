@@ -441,7 +441,7 @@ function buildValidiumSections(
     config.nonTemplateProofSystem ??
     ({
       type: 'Validity',
-      zkCatalogId: ProjectId('zkprover'),
+      zkCatalogIds: [ProjectId('zkprover')],
     } satisfies ProjectScalingProofSystem)
 
   const dataAvailability = {

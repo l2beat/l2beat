@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SwapRouter",
+  "description": "V3 swap router supporting single- and multi-hop exact-input and exact-output swaps. Immutable and unprivileged; it executes the route encoded by the caller.",
+  "fields": {}
+}

@@ -12,13 +12,9 @@ export function getChainsSummaryRows(input: {
   stagingBackend: ChainsSummaryBackendChain[] | undefined
   productionFrontend: ChainsSummaryFrontendChain[] | undefined
   stagingFrontend: ChainsSummaryFrontendChain[] | undefined
-  missingTokens: { chain: string }[] | undefined
   suspiciousTransfers: { srcChain: string; dstChain: string }[] | undefined
   notIncludedTransfers: { srcChain: string; dstChain: string }[] | undefined
 }): ChainsSummaryRow[] {
-  const missingTokenCounts = countBy(input.missingTokens, (item) => [
-    item.chain,
-  ])
   const suspiciousTransferCounts = countBy(
     input.suspiciousTransfers,
     (item) => [item.srcChain, item.dstChain],
@@ -69,7 +65,6 @@ export function getChainsSummaryRows(input: {
           id,
         ),
         staging: buildEnvironmentData(stagingFrontend, stagingBackend, id),
-        missingTokensCount: countValue(missingTokenCounts, id),
         suspiciousTransfersCount: countValue(suspiciousTransferCounts, id),
         notIncludedTransfersCount: countValue(notIncludedTransferCounts, id),
       }

@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Butter VerifyTool",
+  "category": "bridge-external",
+  "description": "Cryptographic and RLP/Merkle-proof helper contract called by the Butter MAP LightNode to validate relay-chain headers and transaction receipts.",
+  "canActIndependently": false
+}

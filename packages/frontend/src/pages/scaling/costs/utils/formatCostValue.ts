@@ -1,6 +1,5 @@
+import { formatCurrency, formatNumber } from '@l2beat/shared-pure'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatNumber } from '~/utils/number-format/formatNumber'
 import type { CostsMetric } from '../components/CostsMetricContext'
 
 export function formatCostValue(

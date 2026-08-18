@@ -118,7 +118,7 @@ export const paradex: ScalingProject = {
   },
   proofSystem: {
     type: 'Validity',
-    zkCatalogId: ProjectId('stwo'),
+    zkCatalogIds: [ProjectId('stwo')],
   },
   chainConfig: {
     name: 'paradex',

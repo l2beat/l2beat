@@ -25,8 +25,10 @@ Note that (TODO: )
 */
 
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
+import { encodePacked, type Hex, keccak256 } from 'viem'
 import { BinaryReader } from '../../../tools/BinaryReader'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
+import { findParsedAfter, findTransferLogAfter } from './logScan'
 import { getBestEffortBridgeTypeFromPartialSupplyAction } from './partialSupplyActionBridgeType'
 import {
   createEventParser,
@@ -84,10 +86,18 @@ const receivedMessageLog =
   'event ReceivedMessage(bytes32 digest, uint16 sourceChainId, bytes32 sourceNttManagerAddress, uint64 sequence)'
 const parseReceivedMessage = createEventParser(receivedMessageLog)
 
+const messageAttestedToLog =
+  'event MessageAttestedTo(bytes32 digest, address transceiver, uint8 index)'
+const parseMessageAttestedTo = createEventParser(messageAttestedToLog)
+
+const transferRedeemedLog = 'event TransferRedeemed(bytes32 indexed digest)'
+const parseTransferRedeemed = createEventParser(transferRedeemedLog)
+
 export const TransceiverMessage = createInteropEventType<{
-  sourceNttManagerAddress: string
-  recipientNttManagerAddress: string
-  nttManagerPayload: string
+  sourceNttManagerAddress: Address32
+  recipientNttManagerAddress: Address32
+  nttManagerPayload: Hex
+  messageDigest?: Hex | undefined
   $dstChain: string
   transferAmount?: bigint | undefined
   transferTokenAddress?: Address32 | undefined
@@ -98,9 +108,8 @@ export const ReceivedRelayedMessage = createInteropEventType<{
   digest: `0x${string}`
   emitterAddress: string
   $srcChain: string
-  transferAmount?: bigint | undefined
-  transferTokenAddress?: Address32 | undefined
-  dstWasMinted?: boolean | undefined
+  messageDigest?: Hex | undefined
+  nttManagerAddress?: Address32 | undefined
 }>('wormhole-ntt.ReceivedRelayedMessage')
 
 export const ReceivedMessage = createInteropEventType<{
@@ -109,16 +118,22 @@ export const ReceivedMessage = createInteropEventType<{
   sourceNttManagerAddress: `0x${string}`
   sequence: bigint
   $srcChain: string
+  messageDigest?: Hex | undefined
+  nttManagerAddress?: Address32 | undefined
+}>('wormhole-ntt.ReceivedMessage')
+
+export const NttTransferRedeemed = createInteropEventType<{
+  digest: Hex
+  nttManagerAddress: Address32
   transferAmount?: bigint | undefined
   transferTokenAddress?: Address32 | undefined
   dstWasMinted?: boolean | undefined
-}>('wormhole-ntt.ReceivedMessage')
+}>('wormhole-ntt.TransferRedeemed')
 
 type ReceivedNttEvent = InteropEvent<{
   $srcChain: string
-  transferAmount?: bigint | undefined
-  transferTokenAddress?: Address32 | undefined
-  dstWasMinted?: boolean | undefined
+  messageDigest?: Hex | undefined
+  nttManagerAddress?: Address32 | undefined
 }>
 
 export class WormholeNTTPlugin implements InteropPluginResyncable {
@@ -141,12 +156,18 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
       {
         type: 'event',
         signature: receivedRelayedMessageLog,
-        includeTxEvents: [transferLog],
+        includeTxEvents: [messageAttestedToLog],
         addresses: '*',
       },
       {
         type: 'event',
         signature: receivedMessageLog,
+        includeTxEvents: [messageAttestedToLog],
+        addresses: '*',
+      },
+      {
+        type: 'event',
+        signature: transferRedeemedLog,
         includeTxEvents: [transferLog],
         addresses: '*',
       },
@@ -159,6 +180,9 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
 
     const send = parseSendTransceiverMessage(input.log, null)
     if (send) {
+      const sourceNetwork = wormholeNetworks.find(
+        (network) => network.chain === input.chain,
+      )
       const decoded = decodeNTTManagerPayload(send.message.nttManagerPayload)
       const sourceToken = decoded?.sourceToken
         ? Address32.cropToEthereumAddress(
@@ -182,9 +206,19 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
 
       return [
         TransceiverMessage.create(input, {
-          sourceNttManagerAddress: send.message.sourceNttManagerAddress,
-          recipientNttManagerAddress: send.message.recipientNttManagerAddress,
+          sourceNttManagerAddress: Address32.from(
+            send.message.sourceNttManagerAddress,
+          ),
+          recipientNttManagerAddress: Address32.from(
+            send.message.recipientNttManagerAddress,
+          ),
           nttManagerPayload: send.message.nttManagerPayload,
+          messageDigest: sourceNetwork
+            ? getNttManagerMessageDigest(
+                sourceNetwork.wormholeChainId,
+                send.message.nttManagerPayload,
+              )
+            : undefined,
           $dstChain: findWormholeChain(
             wormholeNetworks,
             Number(send.recipientChain),
@@ -202,15 +236,7 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
 
     const received = parseReceivedRelayedMessage(input.log, null)
     if (received) {
-      // Find the ERC-20 Transfer closest after this event (token mint/unlock)
-      const dstTransfers = input.txLogs
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        .filter((x) => x.logIndex! > input.log.logIndex!)
-        .map((x) => ({ log: x, parsed: parseTransfer(x, null) }))
-        .filter((x) => x.parsed)
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        .sort((a, b) => a.log.logIndex! - b.log.logIndex!)
-      const dstClosest = dstTransfers[0]
+      const attestation = findNttMessageAttestation(input)
 
       return [
         ReceivedRelayedMessage.create(input, {
@@ -220,28 +246,15 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
             wormholeNetworks,
             Number(received.emitterChainId),
           ),
-          transferAmount: dstClosest?.parsed?.value,
-          transferTokenAddress: dstClosest
-            ? Address32.from(dstClosest.log.address)
-            : undefined,
-          dstWasMinted: dstClosest?.parsed
-            ? EthereumAddress(dstClosest.parsed.from) === ZERO_ADDRESS
-            : undefined,
+          messageDigest: attestation?.digest,
+          nttManagerAddress: attestation?.nttManagerAddress,
         }),
       ]
     }
 
     const receivedCore = parseReceivedMessage(input.log, null)
     if (receivedCore) {
-      // Find the ERC-20 Transfer closest after this event (token mint/unlock)
-      const dstTransfers = input.txLogs
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        .filter((x) => x.logIndex! > input.log.logIndex!)
-        .map((x) => ({ log: x, parsed: parseTransfer(x, null) }))
-        .filter((x) => x.parsed)
-        // biome-ignore lint/style/noNonNullAssertion: It's there
-        .sort((a, b) => a.log.logIndex! - b.log.logIndex!)
-      const dstClosest = dstTransfers[0]
+      const attestation = findNttMessageAttestation(input)
 
       return [
         ReceivedMessage.create(input, {
@@ -253,19 +266,42 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
             wormholeNetworks,
             Number(receivedCore.sourceChainId),
           ),
-          transferAmount: dstClosest?.parsed?.value,
-          transferTokenAddress: dstClosest
-            ? Address32.from(dstClosest.log.address)
-            : undefined,
-          dstWasMinted: dstClosest?.parsed
-            ? EthereumAddress(dstClosest.parsed.from) === ZERO_ADDRESS
-            : undefined,
+          messageDigest: attestation?.digest,
+          nttManagerAddress: attestation?.nttManagerAddress,
+        }),
+      ]
+    }
+
+    const redeemed = parseTransferRedeemed(input.log, null)
+    if (redeemed) {
+      const nttManagerAddress = Address32.from(input.log.address)
+      const { transfer } = findTransferLogAfter(
+        input.txLogs,
+        input.log.logIndex ?? -1,
+        (log) => parseTransfer(log, null),
+        (transfer) =>
+          transfer.from === Address32.ZERO ||
+          transfer.from === nttManagerAddress,
+      )
+
+      return [
+        NttTransferRedeemed.create(input, {
+          digest: redeemed.digest,
+          nttManagerAddress,
+          transferAmount: transfer?.value,
+          transferTokenAddress: transfer?.logAddress,
+          dstWasMinted: transfer ? transfer.from === Address32.ZERO : undefined,
         }),
       ]
     }
   }
 
-  matchTypes = [TransceiverMessage, ReceivedRelayedMessage, ReceivedMessage]
+  matchTypes = [
+    ReceivedRelayedMessage,
+    ReceivedMessage,
+    NttTransferRedeemed,
+    TransceiverMessage,
+  ]
   match(received: InteropEvent, db: InteropEventDb): MatchResult | undefined {
     if (TransceiverMessage.checkType(received)) {
       return this.matchSent(received, db)
@@ -310,45 +346,18 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
               ]
             }
 
-            // Standard NTT token transfer
-            const decoded = decodeNTTManagerPayload(
-              sentTransceiverMessage.args.nttManagerPayload,
-            )
-            // Prefer real ERC-20 Transfer amount (native decimals) over NTT trimmed amount
-            const srcAmount =
-              sentTransceiverMessage.args.transferAmount ?? decoded?.amount
-            const srcTokenAddress =
-              sentTransceiverMessage.args.transferTokenAddress ??
-              (decoded?.sourceToken
-                ? Address32.from(decoded.sourceToken)
-                : undefined)
-
             return [
               Result.Message('wormhole.Message', {
                 app: 'wormhole-ntt-relayer',
                 srcEvent: logMessagePublished,
                 dstEvent: delivery,
               }),
-              Result.Transfer('wormhole-ntt.Transfer', {
-                extraEvents: [logMessagePublished, delivery],
-                srcEvent: sentTransceiverMessage,
-                dstEvent: received,
-                srcTokenAddress,
-                srcAmount,
-                srcWasBurned: sentTransceiverMessage.args.srcWasBurned,
-                dstTokenAddress: received.args.transferTokenAddress,
-                dstAmount: received.args.transferAmount ?? srcAmount,
-                dstWasMinted: received.args.dstWasMinted,
-              }),
             ]
           }
         }
       }
 
-      return this.matchOneSidedReceived(
-        received,
-        delivery ? [delivery] : undefined,
-      )
+      return
     }
 
     // Core path (without Wormhole Relayer)
@@ -384,46 +393,87 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
           ]
         }
 
-        const decoded = decodeNTTManagerPayload(
-          sentTransceiverMessage.args.nttManagerPayload,
-        )
-        const srcAmount =
-          sentTransceiverMessage.args.transferAmount ?? decoded?.amount
-        const srcTokenAddress =
-          sentTransceiverMessage.args.transferTokenAddress ??
-          (decoded?.sourceToken
-            ? Address32.from(decoded.sourceToken)
-            : undefined)
-
         return [
           Result.Message('wormhole.Message', {
             app: 'wormhole-ntt-core',
             srcEvent: logMessagePublished,
             dstEvent: received,
           }),
-          Result.Transfer('wormhole-ntt.Transfer', {
-            extraEvents: [logMessagePublished],
-            srcEvent: sentTransceiverMessage,
-            dstEvent: received,
-            srcTokenAddress,
-            srcAmount,
-            srcWasBurned: sentTransceiverMessage.args.srcWasBurned,
-            dstTokenAddress: received.args.transferTokenAddress,
-            dstAmount: received.args.transferAmount ?? srcAmount,
-            dstWasMinted: received.args.dstWasMinted,
-          }),
         ]
       }
 
-      return this.matchOneSidedReceived(received)
+      return
     }
+
+    if (NttTransferRedeemed.checkType(received)) {
+      return this.matchTransferRedeemed(received, db)
+    }
+  }
+
+  private matchTransferRedeemed(
+    redeemed: InteropEvent<{
+      digest: Hex
+      nttManagerAddress: Address32
+      transferAmount?: bigint | undefined
+      transferTokenAddress?: Address32 | undefined
+      dstWasMinted?: boolean | undefined
+    }>,
+    db: InteropEventDb,
+  ): MatchResult | undefined {
+    const sentTransceiverMessage = db.find(TransceiverMessage, {
+      messageDigest: redeemed.args.digest,
+      recipientNttManagerAddress: redeemed.args.nttManagerAddress,
+    })
+
+    if (sentTransceiverMessage) {
+      const payloadPrefix = getPayloadPrefix(
+        sentTransceiverMessage.args.nttManagerPayload,
+      )
+      if (payloadPrefix === M0IT_PREFIX) return
+
+      const decoded = decodeNTTManagerPayload(
+        sentTransceiverMessage.args.nttManagerPayload,
+      )
+      const srcAmount =
+        sentTransceiverMessage.args.transferAmount ?? decoded?.amount
+      const srcTokenAddress =
+        sentTransceiverMessage.args.transferTokenAddress ??
+        (decoded?.sourceToken ? Address32.from(decoded.sourceToken) : undefined)
+
+      return [
+        Result.Transfer('wormhole-ntt.Transfer', {
+          srcEvent: sentTransceiverMessage,
+          dstEvent: redeemed,
+          srcTokenAddress,
+          srcAmount,
+          srcWasBurned: sentTransceiverMessage.args.srcWasBurned,
+          dstTokenAddress: redeemed.args.transferTokenAddress,
+          dstAmount: redeemed.args.transferAmount ?? srcAmount,
+          dstWasMinted: redeemed.args.dstWasMinted,
+        }),
+      ]
+    }
+
+    const received =
+      db.find(ReceivedRelayedMessage, {
+        messageDigest: redeemed.args.digest,
+        nttManagerAddress: redeemed.args.nttManagerAddress,
+      }) ??
+      db.find(ReceivedMessage, {
+        messageDigest: redeemed.args.digest,
+        nttManagerAddress: redeemed.args.nttManagerAddress,
+      })
+    if (!received) return
+
+    return this.matchOneSidedRedemption(received, redeemed)
   }
 
   private matchSent(
     sentTransceiverMessage: InteropEvent<{
-      sourceNttManagerAddress: string
-      recipientNttManagerAddress: string
-      nttManagerPayload: string
+      sourceNttManagerAddress: Address32
+      recipientNttManagerAddress: Address32
+      nttManagerPayload: Hex
+      messageDigest?: Hex | undefined
       $dstChain: string
       transferAmount?: bigint | undefined
       transferTokenAddress?: Address32 | undefined
@@ -492,16 +542,22 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
     ]
   }
 
-  private matchOneSidedReceived(
+  private matchOneSidedRedemption(
     received: ReceivedNttEvent,
-    extraEvents?: InteropEvent[],
+    redeemed: InteropEvent<{
+      digest: Hex
+      nttManagerAddress: Address32
+      transferAmount?: bigint | undefined
+      transferTokenAddress?: Address32 | undefined
+      dstWasMinted?: boolean | undefined
+    }>,
   ): MatchResult | undefined {
     const srcChain = received.args.$srcChain
     if (!this.oneSidedChains.includes(srcChain)) return
 
     if (
-      received.args.transferAmount === undefined &&
-      received.args.transferTokenAddress === undefined
+      redeemed.args.transferAmount === undefined &&
+      redeemed.args.transferTokenAddress === undefined
     ) {
       return
     }
@@ -509,18 +565,37 @@ export class WormholeNTTPlugin implements InteropPluginResyncable {
     return [
       Result.Transfer('wormhole-ntt.Transfer', {
         srcChain,
-        dstEvent: received,
-        dstTokenAddress: received.args.transferTokenAddress,
-        dstAmount: received.args.transferAmount,
-        dstWasMinted: received.args.dstWasMinted,
+        dstEvent: redeemed,
+        dstTokenAddress: redeemed.args.transferTokenAddress,
+        dstAmount: redeemed.args.transferAmount,
+        dstWasMinted: redeemed.args.dstWasMinted,
         bridgeType: getBestEffortBridgeTypeFromPartialSupplyAction({
           srcWasBurned: undefined,
-          dstWasMinted: received.args.dstWasMinted,
+          dstWasMinted: redeemed.args.dstWasMinted,
         }),
-        extraEvents,
+        extraEvents: [received],
       }),
     ]
   }
+}
+
+function findNttMessageAttestation(input: LogToCapture) {
+  const transceiverAddress = Address32.from(input.log.address)
+
+  return findParsedAfter(input.txLogs, input.log.logIndex ?? -1, (log) => {
+    const attestation = parseMessageAttestedTo(log, null)
+    if (!attestation) return
+    if (Address32.from(attestation.transceiver) !== transceiverAddress) return
+
+    return {
+      digest: attestation.digest,
+      nttManagerAddress: Address32.from(log.address),
+    }
+  })
+}
+
+function getNttManagerMessageDigest(sourceChainId: number, payload: Hex): Hex {
+  return keccak256(encodePacked(['uint16', 'bytes'], [sourceChainId, payload]))
 }
 
 // M^0 Protocol uses the same Wormhole Transceiver to broadcast M Earning Index updates.

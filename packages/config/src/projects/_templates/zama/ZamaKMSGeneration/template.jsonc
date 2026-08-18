@@ -1,0 +1,54 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "KMSGeneration",
+  "description": "Orchestrates FHE key and CRS generation on the Ethereum host chain, taking over the workflows removed from the Gateway KMSGeneration in v0.5.0. The ACL owner triggers and aborts generations; KMS node transaction senders registered in ProtocolConfig submit EIP-712-signed responses that activate a key or CRS once the ProtocolConfig key-generation threshold is reached.",
+  "category": "core",
+  "ignoreMethods": [
+    "proxiableUUID",
+    "getKeyParamsType",
+    "getCrsParamsType",
+    "isRequestDone",
+    "getConsensusTxSenders",
+    "getKeyMaterials",
+    "getCrsMaterials"
+  ],
+  "fields": {
+    "protocolConfig": {
+      "description": "ProtocolConfig contract providing the KMS node set and the key-generation consensus threshold. Referenced as a compile-time constant without a getter.",
+      "type": "EXTERNAL",
+      "handler": {
+        "type": "hardcoded",
+        "value": "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+      }
+    },
+    "aclOwner": {
+      "description": "Owner of the Zama ACL contract. This account is authorized by onlyACLOwner for KMSGeneration administration.",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "call",
+        "method": "function owner() view returns (address)",
+        "args": [],
+        "address": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6"
+      },
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "upgrade the KMSGeneration implementation."
+        },
+        {
+          "type": "interact",
+          "description": "trigger and abort FHE key and CRS generation rounds executed by the KMS nodes."
+        }
+      ]
+    },
+    "getActiveKeyId": {
+      "description": "Identifier of the currently active FHE key generated through this contract."
+    },
+    "getActiveCrsId": {
+      "description": "Identifier of the currently active CRS generated through this contract."
+    },
+    "eip712Domain": {
+      "description": "EIP-712 domain against which KMS key- and CRS-generation response signatures are verified."
+    }
+  }
+}

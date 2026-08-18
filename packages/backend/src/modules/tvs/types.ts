@@ -2,6 +2,7 @@ import type {
   BalanceOfEscrowAmountFormula,
   CirculatingSupplyAmountFormula,
   ConstAmountFormula,
+  StarknetBalanceOfAmountFormula,
   StarknetTotalSupplyAmountFormula,
   TotalSupplyAmountFormula,
   TvsToken,
@@ -45,6 +46,9 @@ export type TotalSupplyAmountConfig = TotalSupplyAmountFormula &
 export type StarknetTotalSupplyAmountConfig = StarknetTotalSupplyAmountFormula &
   AmountConfigBase
 
+export type StarknetBalanceOfAmountConfig = StarknetBalanceOfAmountFormula &
+  AmountConfigBase
+
 export type CirculatingSupplyAmountConfig = CirculatingSupplyAmountFormula &
   AmountConfigBase
 
@@ -54,6 +58,7 @@ export type AmountConfig =
   | BalanceOfEscrowAmountConfig
   | TotalSupplyAmountConfig
   | StarknetTotalSupplyAmountConfig
+  | StarknetBalanceOfAmountConfig
   | CirculatingSupplyAmountConfig
   | ConstAmountConfig
 
@@ -61,6 +66,7 @@ export type OnchainAmountConfig =
   | BalanceOfEscrowAmountConfig
   | TotalSupplyAmountConfig
   | StarknetTotalSupplyAmountConfig
+  | StarknetBalanceOfAmountConfig
 
 export function isOnchainAmountConfig(
   config: AmountConfig,
@@ -68,7 +74,8 @@ export function isOnchainAmountConfig(
   return (
     config.type === 'totalSupply' ||
     config.type === 'balanceOfEscrow' ||
-    config.type === 'starknetTotalSupply'
+    config.type === 'starknetTotalSupply' ||
+    config.type === 'starknetBalanceOf'
   )
 }
 

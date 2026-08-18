@@ -60,16 +60,16 @@ export const lighterprover: BaseProject = {
     ],
     verifierHashes: [
       {
-        hash: '0xc5abe8a935b2a7a05f47ee05d8a4ca6e3310df45f9e203d4ea4aa947d978fccb',
+        hash: '0x836ea0348ed3ae0bf5136f58d874d57075d4094691b08c3ef02a6aaa332df363',
         name: 'Lighter verifier',
         sourceLink:
-          'https://github.com/elliottech/lighter-prover/tree/642cca8e1d4853cdcbb21eed4f15c04bbd154ce4/circuit/src',
+          'https://github.com/elliottech/lighter-prover/tree/8c01ea010d6fd46bdb77ef2f93a79278d1adf0df/circuit/src',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0xEd0a60EDaCd8c9B1221d2D9F753b6dF09Ea3baaa',
+              '0xf7b964eD0C05a7aA12fdC54865295531C9D2AEC1',
             ),
           },
         ],
@@ -77,7 +77,7 @@ export const lighterprover: BaseProject = {
         attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
         verificationSteps: readProjectMarkdown(
           'lighterprover',
-          'verificationSteps-0xc5abe8a9',
+          'verificationSteps-0x836ea034',
         ),
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
@@ -110,6 +110,12 @@ export const lighterprover: BaseProject = {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
               '0x866418061d4C1168e1c8E8f6facE79675395E008',
+            ),
+          },
+          {
+            address: ChainSpecificAddress.fromLong(
+              'robinhood',
+              '0x56aeED6920DBB9E198C2C0072147A45684A06E10',
             ),
           },
         ],

@@ -1,4 +1,8 @@
-import { formatSeconds } from '@l2beat/shared-pure'
+import {
+  formatCurrency,
+  formatInteger,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { type ReactNode, useState } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
@@ -12,8 +16,6 @@ import { ScrollWithGradient } from '~/components/ScrollWithGradient'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { formatInteger } from '~/utils/number-format/formatInteger'
 import { Last24HoursBadge } from './Last24HoursBadge'
 
 export type DominanceMetric = 'volume' | 'transfers'

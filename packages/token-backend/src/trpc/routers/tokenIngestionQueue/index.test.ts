@@ -39,36 +39,72 @@ describe('tokenIngestionQueueRouter', () => {
 
   describe('getPage', () => {
     it('returns one page of queue entries with predicted outcomes', async () => {
-      const existingEntry = queueEntry({
+      const symbolConflictEntry = queueEntry({
         chain: 'ethereum',
         address: '0x111',
         state: 'conflict',
+        message:
+          'CoinGecko would create abstract token ABC123:WKAS, but the deployed token symbol is KAS.',
       })
       const newEntry = queueEntry({
         chain: 'base',
         address: '0x222',
         state: 'staged',
       })
-      const page = { entries: [existingEntry, newEntry], totalCount: 12 }
+      const transferConflictEntry = queueEntry({
+        chain: 'ethereum',
+        address: '0x333',
+        state: 'conflict',
+        message:
+          'Non-swapping transfers point to abstract token USDC01:USDC, but the deployed token symbol is WETH.',
+      })
+      const page = {
+        entries: [symbolConflictEntry, newEntry, transferConflictEntry],
+        totalCount: 12,
+      }
       const getPage = mockFn().resolvesTo(page)
       const deployedToken = mockObject<DeployedTokenRecord>({})
       const transferIndex = { findInvolving: mockFn().returns([]) }
       const getInteropTransferIndex = mockFn().resolvesTo(transferIndex)
+      // A CoinGecko-symbol conflict only fires while the plan wants to build
+      // a new abstract token from CoinGecko — the flag is derived from that.
+      const symbolConflictPlanOutcome = {
+        kind: 'pending' as const,
+        operation: 'update' as const,
+        existing: deployedToken,
+        abstract: {
+          kind: 'new-coingecko' as const,
+          coingeckoId: 'wrapped-kaspa',
+          symbol: 'wkas',
+        },
+        symbolFallback: 'WKAS',
+        neighborsToEnqueue: [],
+        proof: { kind: 'coingecko' as const },
+      }
       const plan = mockFn()
         .resolvesToOnce({
           address: {
-            chain: existingEntry.chain,
-            address: existingEntry.address,
+            chain: symbolConflictEntry.chain,
+            address: symbolConflictEntry.address,
           },
           existingDeployedToken: deployedToken,
           steps: [],
-          outcome: { kind: 'conflict', message: 'test conflict' },
+          outcome: symbolConflictPlanOutcome,
         })
         .resolvesToOnce({
           address: { chain: newEntry.chain, address: newEntry.address },
           existingDeployedToken: undefined,
           steps: [],
           outcome: { kind: 'noop', deployedToken },
+        })
+        .resolvesToOnce({
+          address: {
+            chain: transferConflictEntry.chain,
+            address: transferConflictEntry.address,
+          },
+          existingDeployedToken: deployedToken,
+          steps: [],
+          outcome: { kind: 'conflict', message: 'test conflict' },
         })
 
       const caller = createRouter({
@@ -90,13 +126,13 @@ describe('tokenIngestionQueueRouter', () => {
       expect(result.totalCount).toEqual(12)
       expect(result.rows).toEqual([
         {
-          entry: existingEntry,
+          entry: symbolConflictEntry,
           predictedOutcome: {
-            kind: 'conflict',
-            message: 'test conflict',
+            ...symbolConflictPlanOutcome,
             description: expect.a(String),
           },
           deployedTokenExists: true,
+          resolvableSymbolConflict: true,
         },
         {
           entry: newEntry,
@@ -106,6 +142,17 @@ describe('tokenIngestionQueueRouter', () => {
             description: expect.a(String),
           },
           deployedTokenExists: false,
+          resolvableSymbolConflict: false,
+        },
+        {
+          entry: transferConflictEntry,
+          predictedOutcome: {
+            kind: 'conflict',
+            message: 'test conflict',
+            description: expect.a(String),
+          },
+          deployedTokenExists: true,
+          resolvableSymbolConflict: false,
         },
       ])
       expect(getPage).toHaveBeenCalledWith({
@@ -114,9 +161,18 @@ describe('tokenIngestionQueueRouter', () => {
         chains: undefined,
       })
       expect(getInteropTransferIndex).toHaveBeenCalledWith()
-      expect(plan).toHaveBeenCalledTimes(2)
-      expect(plan).toHaveBeenNthCalledWith(1, existingEntry, transferIndex)
+      expect(plan).toHaveBeenCalledTimes(3)
+      expect(plan).toHaveBeenNthCalledWith(
+        1,
+        symbolConflictEntry,
+        transferIndex,
+      )
       expect(plan).toHaveBeenNthCalledWith(2, newEntry, transferIndex)
+      expect(plan).toHaveBeenNthCalledWith(
+        3,
+        transferConflictEntry,
+        transferIndex,
+      )
     })
   })
 
@@ -255,6 +311,30 @@ describe('tokenIngestionQueueRouter', () => {
       ).toBeRejectedWith(TRPCError)
     })
   })
+
+  describe('retryMany', () => {
+    it('retries supplied entries and returns the count', async () => {
+      const retry = mockFn().resolvesToOnce(1).resolvesToOnce(0)
+      const caller = createRouter(
+        mockObject<TokenDatabase>({
+          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
+            {
+              retry,
+            },
+          ),
+        }),
+      )
+
+      const first = { chain: 'ethereum', address: '0x111' }
+      const second = { chain: 'base', address: '0x222' }
+      const result = await caller.retryMany([first, second])
+
+      expect(result).toEqual({ success: true, retried: 1 })
+      expect(retry).toHaveBeenCalledTimes(2)
+      expect(retry.calls[0]?.args[0]).toEqual(first)
+      expect(retry.calls[1]?.args[0]).toEqual(second)
+    })
+  })
 })
 
 function createRouter(
@@ -287,11 +367,12 @@ function queueEntry(overrides: {
   chain: string
   address: string
   state: TokenIngestionQueueRecord['state']
+  message?: string
 }): TokenIngestionQueueRecord {
   return {
-    ...overrides,
     message: null,
     createdAt: UnixTime(1),
     updatedAt: UnixTime(1),
+    ...overrides,
   }
 }

@@ -3,5 +3,11 @@
     "hash": "0x68e264eaf049e5c99469c4f5009d68623f106947a3dce700528e852de006e302",
     "address": "eth:0x240d0038d87b5A27e4Fb7FB0c27F9b45D89b2C4F",
     "blockNumber": 22222873
+  },
+  "L2OutputOracle_soon_v2": {
+    "hash": "0xdd3163e24f4499875ec5e4fea7ac5b5d87fdf0dd82b599bdc5c7af997b68c2d4",
+    "address": "eth:0x8b89b84B978f00e4Db5B70c3a0a567A74Cf7fDD4",
+    "chain": "ethereum",
+    "blockNumber": 25648602
   }
 }

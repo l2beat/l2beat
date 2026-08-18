@@ -1,3 +1,4 @@
+import { formatBytes } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
@@ -9,7 +10,6 @@ import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPer
 import { getScalingCommonProjectColumns } from '~/components/table/common-project-columns/ScalingCommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
 import type { ScalingRiskDaEntry } from '~/server/features/scaling/risks/data-availability/getScalingRiskDaEntries'
-import { formatBytes } from '~/utils/number-format/formatBytes'
 
 const columnHelper = createColumnHelper<ScalingRiskDaEntry>()
 

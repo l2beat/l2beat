@@ -1,4 +1,9 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import {
+  formatActivityCount,
+  formatInteger,
+  formatUopsRatio,
+  ProjectId,
+} from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import { Badge } from '~/components/badge/Badge'
@@ -15,9 +20,6 @@ import { EM_DASH } from '~/consts/characters'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { formatTimestamp } from '~/utils/dates'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
-import { formatInteger } from '~/utils/number-format/formatInteger'
-import { formatUopsRatio } from '~/utils/number-format/formatUopsRatio'
 import type { ActivityMetric } from '../ActivityMetricContext'
 import { MaxCountCell } from './MaxCountCell'
 

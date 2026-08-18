@@ -1,4 +1,4 @@
-import { formatBytes } from '~/utils/number-format/formatBytes'
+import { formatBytes } from '@l2beat/shared-pure'
 import type { SizeMetrics } from './sizeMetrics'
 
 export interface DevToolsMetric {

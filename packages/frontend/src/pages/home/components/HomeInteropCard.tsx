@@ -1,27 +1,27 @@
+import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { type ReactNode, useMemo } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import { CursorClickIcon } from '~/icons/CursorClick'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '~/pages/interop/components/flows/consts'
+import { FlowsGeneralStats } from '~/pages/interop/components/flows/FlowsGeneralStats'
 import { FlowsGraphPanel } from '~/pages/interop/components/flows/graph/FlowsGraphPanel'
 import {
   type InteropFlowsProtocol,
   InteropFlowsProvider,
   useInteropFlows,
 } from '~/pages/interop/components/flows/utils/InteropFlowsContext'
+import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
 import { useTRPC } from '~/trpc/React'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
-import { HomeInteropSelectedPath } from './HomeInteropSelectedPath'
 
 interface Props {
   interopChains: InteropChainWithIcon[]
@@ -51,8 +51,7 @@ function HomeInteropCardContent({
   interopChains: InteropChainWithIcon[]
 }) {
   const trpc = useTRPC()
-  const { selectedChains, allChains, selectedProtocols, highlightedChains } =
-    useInteropFlows()
+  const { selectedChains, allChains, selectedProtocols } = useInteropFlows()
   const hasEnoughChains = selectedChains.length >= MIN_SELECTED_CHAINS
   const hasEnoughProtocols = selectedProtocols.length >= MIN_SELECTED_PROTOCOLS
 
@@ -75,11 +74,6 @@ function HomeInteropCardContent({
       ),
     [data?.chainData],
   )
-
-  const visibleHighlightedChains = isLoading
-    ? highlightedChains
-    : highlightedChains.filter((chainId) => activeIds.has(chainId))
-  const hasSelection = visibleHighlightedChains.length > 0
 
   const activeChains = useMemo(
     () =>
@@ -123,141 +117,106 @@ function HomeInteropCardContent({
         href="/interop/summary"
         timeframe="Last 24h"
       />
-      <div className="mt-2.5 grid @min-[440px]:grid-cols-4 grid-cols-2 gap-2">
-        <StatTile
-          title="Volume"
-          isLoading={statsLoading}
-          emphasized
-          primary={
-            totalVolume !== undefined
-              ? formatCurrency(totalVolume, 'usd')
-              : EM_DASH
-          }
-        />
-        <StatTile
-          title="Top chain"
-          isLoading={statsLoading}
-          primary={topChainData?.name ?? EM_DASH}
-          secondary={
-            topChain
-              ? `${formatPercent(topChainShare)} · ${formatCurrency(topChain.totalVolume, 'usd')}`
-              : undefined
-          }
-          icon={
-            topChainData ? (
-              <img
-                src={topChainData.iconUrl}
-                alt={topChainData.name}
-                className="size-5 shrink-0 rounded-full"
-              />
-            ) : undefined
-          }
-        />
-        <StatTile
-          title="Top token"
-          isLoading={statsLoading}
-          primary={topToken?.symbol ?? EM_DASH}
-          secondary={
-            topToken ? formatCurrency(topToken.volume, 'usd') : undefined
-          }
-          icon={
-            topToken ? (
-              <img
-                src={topToken.iconUrl}
-                alt={topToken.symbol}
-                className="size-5 shrink-0 rounded-full"
-              />
-            ) : undefined
-          }
-        />
-        <StatTile
-          title="Top chain path"
-          isLoading={statsLoading}
-          primary={
-            srcChain && dstChain ? (
-              <div className="flex items-center gap-1.5">
+      <div className="@min-[800px]:mt-4 flex @min-[800px]:grid min-h-0 flex-1 @min-[800px]:grid-cols-[minmax(0,1fr)_240px] flex-col @min-[800px]:gap-4 max-sm:flex-col-reverse">
+        <div className="mt-2.5 grid @min-[800px]:hidden grid-cols-2 gap-2 sm:@min-[460px]:grid-cols-4">
+          <StatTile
+            title="Volume"
+            isLoading={statsLoading}
+            emphasized
+            primary={
+              totalVolume !== undefined
+                ? formatCurrency(totalVolume, 'usd')
+                : EM_DASH
+            }
+          />
+          <StatTile
+            title="Top chain"
+            isLoading={statsLoading}
+            href={topChainData?.href}
+            primary={topChainData?.name ?? EM_DASH}
+            secondary={
+              topChain
+                ? `${formatPercent(topChainShare)} · ${formatCurrency(topChain.totalVolume, 'usd')}`
+                : undefined
+            }
+            icon={
+              topChainData ? (
                 <img
-                  src={srcChain.iconUrl}
-                  alt={srcChain.name}
+                  src={topChainData.iconUrl}
+                  alt={topChainData.name}
                   className="size-5 shrink-0 rounded-full"
                 />
-                <ArrowRightIcon className="size-3 fill-brand" />
+              ) : undefined
+            }
+          />
+          <StatTile
+            title="Top token"
+            isLoading={statsLoading}
+            href={topToken ? getInteropTokenUrl(topToken) : undefined}
+            primary={topToken?.symbol ?? EM_DASH}
+            secondary={
+              topToken ? formatCurrency(topToken.volume, 'usd') : undefined
+            }
+            icon={
+              topToken ? (
                 <img
-                  src={dstChain.iconUrl}
-                  alt={dstChain.name}
+                  src={topToken.iconUrl}
+                  alt={topToken.symbol}
                   className="size-5 shrink-0 rounded-full"
                 />
-              </div>
-            ) : (
-              EM_DASH
-            )
-          }
-          secondary={
-            topRoute ? formatCurrency(topRoute.volume, 'usd') : undefined
-          }
-        />
-      </div>
-      <div
-        className={cn(
-          'mt-6 flex @min-[900px]:grid min-h-0 flex-1 flex-col @min-[900px]:gap-4 @min-[900px]:transition-[grid-template-columns] @min-[900px]:duration-300 @min-[900px]:ease-in-out motion-reduce:transition-none',
-          hasSelection
-            ? '@min-[900px]:grid-cols-[1fr_280px]'
-            : '@min-[900px]:grid-cols-[1fr_0px]',
-        )}
-      >
-        <div className="-mx-2 flex min-h-0 min-w-0 flex-1 flex-col overflow-x-clip">
-          <div className="mb-3 flex justify-center">
-            <SelectInfo
-              highlightedChainsNumber={visibleHighlightedChains.length}
-            />
-          </div>
-          <FlowsGraphPanel
-            activeChains={activeChains}
-            data={data}
-            hasEnoughChains={hasEnoughChains}
-            hasEnoughProtocols={hasEnoughProtocols}
-            isLoading={isLoading}
-            className="pb-2"
+              ) : undefined
+            }
+          />
+          <StatTile
+            title="Top chain"
+            isLoading={statsLoading}
+            href={
+              srcChain && dstChain
+                ? '/interop/summary?from=' + srcChain.id + '&to=' + dstChain.id
+                : undefined
+            }
+            primary={
+              srcChain && dstChain ? (
+                <div className="flex items-center gap-1.5">
+                  <img
+                    src={srcChain.iconUrl}
+                    alt={srcChain.name}
+                    className="size-5 shrink-0 rounded-full"
+                  />
+                  <ArrowRightIcon className="size-3 fill-brand" />
+                  <img
+                    src={dstChain.iconUrl}
+                    alt={dstChain.name}
+                    className="size-5 shrink-0 rounded-full"
+                  />
+                </div>
+              ) : (
+                EM_DASH
+              )
+            }
+            secondary={
+              topRoute ? formatCurrency(topRoute.volume, 'usd') : undefined
+            }
           />
         </div>
-        <div
-          className={cn(
-            'flex min-h-0 min-w-0 @min-[900px]:translate-x-3 flex-col @min-[900px]:overflow-hidden @min-[900px]:opacity-0 @min-[900px]:transition-[transform,opacity] @min-[900px]:duration-300 @min-[900px]:ease-out motion-reduce:transition-none',
-            hasSelection &&
-              '@min-[900px]:translate-x-0 @min-[900px]:opacity-100',
-          )}
-        >
-          {hasSelection && data && (
-            <HomeInteropSelectedPath
+        <div className="@min-[800px]:order-1 @min-[800px]:mt-0 mt-6 flex min-h-0 flex-1 flex-col">
+          <div className="-mx-2 pointer-events-none flex min-h-0 min-w-0 flex-1 flex-col overflow-x-clip">
+            <FlowsGraphPanel
+              activeChains={activeChains}
               data={data}
-              allChains={allChains}
-              selectedChains={selectedChains}
-              visibleHighlightedChains={visibleHighlightedChains}
-              className="@min-[900px]:mt-0 mt-4 @min-[900px]:h-full @min-[900px]:w-[280px]"
+              hasEnoughChains={hasEnoughChains}
+              hasEnoughProtocols={hasEnoughProtocols}
+              isLoading={isLoading}
+              className="pb-2"
+              maxSizeClassName="max-w-[max(min(70dvh,calc(100dvh-20rem)),30rem)] @min-[800px]:h-full @min-[800px]:w-auto @min-[800px]:max-w-full"
             />
-          )}
+          </div>
+        </div>
+        <div className="@min-[800px]:order-3 @min-[800px]:block hidden h-full">
+          <FlowsGeneralStats title="" description="" linkTopRouteToSummary />
         </div>
       </div>
     </HomeCard>
-  )
-}
-
-function SelectInfo({
-  highlightedChainsNumber,
-}: {
-  highlightedChainsNumber: number
-}) {
-  const text =
-    highlightedChainsNumber === 1
-      ? 'Select second chain to view detailed data'
-      : 'Select chain or pair of chains to view detailed data'
-  return (
-    <div className="flex items-center gap-0.5">
-      <CursorClickIcon className="size-3.5 shrink-0 fill-brand" />
-      <p className="font-medium text-brand text-label-value-13 italic leading-none">
-        {text}
-      </p>
-    </div>
   )
 }
 
@@ -268,6 +227,7 @@ function StatTile({
   icon,
   isLoading,
   emphasized,
+  href,
   className,
 }: {
   title: string
@@ -276,12 +236,17 @@ function StatTile({
   icon?: ReactNode
   isLoading: boolean
   emphasized?: boolean
+  href?: string
   className?: string
 }) {
+  const ValueWrapper = href ? 'a' : 'div'
   return (
     <div
       className={cn(
         'flex flex-col items-center gap-1 rounded-lg border border-divider bg-surface-primary px-3 py-2 text-center',
+        // Four tiles in a row on a ~460-620px card leaves ~90px of text per
+        // tile, so trade side padding for value width before it truncates.
+        'sm:@min-[460px]:@max-[620px]:px-2',
         className,
       )}
     >
@@ -295,17 +260,19 @@ function StatTile({
         </>
       ) : (
         <>
-          <div
+          <ValueWrapper
+            href={href}
             className={cn(
               'flex min-w-0 items-center justify-center gap-1.5 font-bold',
               emphasized ? 'flex-1 text-label-value-20' : 'text-label-value-15',
+              href && 'hover:underline',
             )}
           >
             {icon}
-            <span className="min-w-0 truncate">{primary}</span>
-          </div>
+            <span className="min-w-0 truncate leading-tight">{primary}</span>
+          </ValueWrapper>
           {secondary !== undefined && (
-            <span className="truncate font-medium text-label-value-12 text-secondary">
+            <span className="truncate font-medium text-label-value-12 text-secondary leading-tight">
               {secondary}
             </span>
           )}

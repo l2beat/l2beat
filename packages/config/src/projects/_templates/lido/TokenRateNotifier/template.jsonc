@@ -1,8 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Pushes the current stETH token rate to registered observer contracts after rebases.",
+  "description": "Notifies registered observer contracts after each stETH rebase (oracle report). Observers either just push the current token rate or additionally receive the full rebase report payload.",
   "category": "core",
-  "ignoreMethods": ["observers"],
   "fields": {
     "owner": {
       "permissions": [

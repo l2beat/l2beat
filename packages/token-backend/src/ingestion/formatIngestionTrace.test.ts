@@ -56,6 +56,26 @@ describe(formatIngestionTrace.name, () => {
     )
   })
 
+  it('renders the symbol adoption step', () => {
+    const trace: IngestionTrace = {
+      id: 'ing_test',
+      address: { chain: 'ethereum', address: '0xccc' },
+      existingDeployedToken: undefined,
+      steps: [
+        { kind: 'adopted-deployed-token-symbol', from: '$PEPE', to: 'Pepe' },
+      ],
+      outcome: { kind: 'skip', reason: 'test' },
+    }
+
+    const log = formatIngestionTrace(trace)
+
+    expect(
+      log.includes(
+        '1. CoinGecko symbol $PEPE differs only in punctuation from the deployed-token symbol; adopted Pepe.',
+      ),
+    ).toEqual(true)
+  })
+
   it('handles conflict outcomes', () => {
     const trace: IngestionTrace = {
       id: 'ing_test',
