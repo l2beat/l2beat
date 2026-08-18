@@ -52,7 +52,8 @@
               "url": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
               "util": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
               "vm": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
-              "zlib": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead."
+              "zlib": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
+              "earl": "earl is a test-only dependency. Use lodash/isEqual for deep equality or move this file under a test/ directory."
             }
           }
         }

@@ -11,7 +11,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { EVMLog, IRpcClient } from '@l2beat/shared'
 import { Address32, EthereumAddress } from '@l2beat/shared-pure'
-import { isEqual } from 'earl'
+import isEqual from 'lodash/isEqual'
 import { decodeEventLog, encodeEventTopics, type Hex, parseAbi } from 'viem'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import {
