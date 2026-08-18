@@ -168,6 +168,10 @@ export const privacyPools: BaseProject = {
       description:
         'Compliance is enforced through centralized association set providers, which can refuse deposits into the pool, sending them back to the sender.',
     },
+    noteDiscovery: {
+      description:
+        'In privacy Pools UI, user needs to provide the seed phrase, from which their nullifiers and secrets are derived deterministically. The private user balance is computed locally by scanning every `Deposited`, `Withdrawn`, and `Ragequit` event of every supported pool and matching the derived commitments against the ones in the events. Because every event is requested, the RPC provider learns neither which event belong to the user, nor into which pool the user has deposited from the queries alone.',
+    },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     riskSummary: readProjectMarkdown('privacy-pools', 'riskSummary'),
     upgradesAndGovernance: {
