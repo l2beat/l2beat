@@ -814,14 +814,3 @@
     opacity: 0;
   }
 }
-
-/*
- * Without offset-path every particle would sit at the origin of the graph's
- * user space, so they would render as a clump in the top-left corner rather
- * than flowing. Hide them instead.
- */
-@supports not (offset-path: path("M 0 0")) {
-  .interop-particle {
-    display: none;
-  }
-}

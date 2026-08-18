@@ -44,7 +44,18 @@ interface Props {
  * on every frame: at ~270 particles that was ~15k layouts/s, 80%+ of the main
  * thread, and it halved the framerate of the whole page. The CSS equivalent
  * animates a transform instead and leaves layout untouched.
+ *
+ * Browsers that lack offset-path or linear() easing (the travel/idle split
+ * depends on both) get the original SMIL markup instead — slower, but
+ * correct everywhere SVG works. The check runs in the browser only: this
+ * component never SSRs (FlowsGraphPanel renders it only after ResizeObserver
+ * reports a size), so there is no hydration mismatch to worry about.
  */
+const supportsCssMotion =
+  typeof CSS !== 'undefined' &&
+  typeof CSS.supports === 'function' &&
+  CSS.supports('offset-path', 'path("M 0 0")') &&
+  CSS.supports('animation-timing-function', 'linear(0 0%, 1 50%, 1 100%)')
 export function ParticleLayer({
   flows,
   chainData,
@@ -121,10 +132,34 @@ export function ParticleLayer({
               // until its turn comes up in the first cycle.
               const delay = `${initialOffset + i * particleInterval}s`
 
+              if (!supportsCssMotion) {
+                return (
+                  <circle key={i} r={particleRadius} fill={color} opacity={0}>
+                    <animateMotion
+                      path={path}
+                      dur={`${cycleDuration}s`}
+                      keyPoints="0;1;1"
+                      keyTimes={`0;${t};1`}
+                      calcMode="linear"
+                      begin={delay}
+                      repeatCount="indefinite"
+                    />
+                    <animate
+                      attributeName="opacity"
+                      dur={`${cycleDuration}s`}
+                      begin={delay}
+                      calcMode="discrete"
+                      values={'0.8;0'}
+                      keyTimes={`0;${t}`}
+                      repeatCount="indefinite"
+                    />
+                  </circle>
+                )
+              }
+
               return (
                 <circle
                   key={i}
-                  className="interop-particle"
                   r={particleRadius}
                   fill={color}
                   opacity={0}
