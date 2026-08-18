@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x9dc926d0554d2fdc0fd3edd59c420b31eae5bff4
+
+# Diff at Mon, 17 Aug 2026 11:33:43 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@9b7337c108d300967ecea6d6606607859d1de669 block: 1786357730
+- current timestamp: 1786966360
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes: templatized the v30.0 boojum verifiers.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786357730 (main branch discovery), not current.
+
+```diff
+    contract L1VerifierPlonk (eth:0x35CD3865199F2D9c574f34DD72520B19842d440c) [shared-zk-stack/L1VerifierPlonk] {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      template:
++        "shared-zk-stack/L1VerifierPlonk"
+      description:
++        "Verifies a zk-SNARK proof using an implementation of the PlonK proof system."
+      fieldMeta:
++        {"verificationKeyHash":{"severity":"HIGH","description":"keccak256 hash of the verification keys."}}
+    }
+```
+
+```diff
+    contract L1VerifierFflonk (eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66) [shared-zk-stack/L1VerifierFflonk] {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      template:
++        "shared-zk-stack/L1VerifierFflonk"
+      description:
++        "Verifies a zk-SNARK proof using an implementation of the fflonk proof system."
+      fieldMeta:
++        {"verificationKeyHash":{"severity":"HIGH","description":"keccak256 hash of the verification keys."}}
+    }
+```
+
 Generated with discovered.json: 0x52e3946a23d1f365ddfdf46938ee65312a3158f9
 
 # Diff at Mon, 10 Aug 2026 10:29:53 GMT:

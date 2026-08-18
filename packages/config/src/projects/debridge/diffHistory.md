@@ -1,3 +1,156 @@
+Generated with discovered.json: 0x4d2048d2fc0580042dc05e7115a2f727431a23ee
+
+# Diff at Tue, 18 Aug 2026 06:41:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@288dd9f3392793b0bfa7f3e6e155408cf3c705ba block: 1786706330
+- current timestamp: 1787035190
+
+## Description
+
+Common theme: support for fee-on-transfer/rebasing tokens on the fulfillment path by measuring actual received amounts instead of requiring exact transfers.
+
+- DlnSource 1.7.1 -> 1.8.0 ([impl diff](https://disco.l2beat.com/diff/eth:0x322B481088143d9Ff74e4169Fb7f12F7808690DF/eth:0x2b426a0Ac391490e88d15B304436e7a84Df78611))
+- DlnDestination 1.7.0 -> 1.7.1 ([impl diff](https://disco.l2beat.com/diff/eth:0xE540eb6BfEE129d28d47E26Ad33a138d66FD78f5/eth:0xD9b4f9CacFFB59F2B982ad3c45096e3AA4B4020e))
+- ExternalCallAdapter 1.1.0 -> 1.2.0 ([impl diff](https://disco.l2beat.com/diff/eth:0x7EA200f06c17cB9f64A3c8973a76DD8359fd68FA/eth:0xE143DbAEC892cEf2Af836dB49870A0Bcf9d5E6A1))
+- DeBridgeRouter 3.1.0 -> 3.2.0 ([impl diff](https://disco.l2beat.com/diff/eth:0x3c857eD51c8a2747EE8c6F30EdDA5ea0D487CC64/eth:0xCe56012E880851baa234cD092aF516A0fcA9CFe3))
+
+No significant permission or governance changes
+
+## Watched changes
+
+```diff
+    contract ExternalCallAdapter (eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9) [debridge/ExternalCallAdapter] {
+    +++ description: Escrow and dispatcher for external calls attached to DLN orders: it receives the taker's funds of orders that carry calldata and releases them when the calldata is executed by the registered executor, or refunds the order authority on cancellation.
+      sourceHashes.1:
+-        "0x9e1d6978ce2fd4ad04aa5969d3bcef97fd54b2ded7c0d62599131196aec314dc"
++        "0x18bbebb819a937958472cbe9848d10adb1983dbffea723e7ba5e79e2ac6a50f2"
+      values.$implementation:
+-        "eth:0x7EA200f06c17cB9f64A3c8973a76DD8359fd68FA"
++        "eth:0xE143DbAEC892cEf2Af836dB49870A0Bcf9d5E6A1"
+      values.$pastUpgrades.3:
++        ["2026-08-17T10:20:35.000Z","0x30e7e8dac55cb6f8ac7b7cc81c9132f01acb5fbb87ed1f44b568183518670fbb",["eth:0xE143DbAEC892cEf2Af836dB49870A0Bcf9d5E6A1"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.version:
+-        "1.1.0"
++        "1.2.0"
+      implementationNames.eth:0x7EA200f06c17cB9f64A3c8973a76DD8359fd68FA:
+-        "DlnExternalCallAdapter"
+      implementationNames.eth:0xE143DbAEC892cEf2Af836dB49870A0Bcf9d5E6A1:
++        "DlnExternalCallAdapter"
+    }
+```
+
+```diff
+    contract DeBridgeRouter (eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251) [debridge/DeBridgeRouter] {
+    +++ description: Optional periphery router that can swap input tokens via whitelisted DEX routers and forward the proceeds into the DLN contracts (order creation, or order fulfillment on the hardcoded DlnDestination via fillCrossChain) in a single transaction. It does not custody funds across transactions and is not part of the DLN critical path.
+      sourceHashes.1:
+-        "0xfbd0e32e74cd0871ed9aaf242684ccae1423b67493f683b6c31d4282d6813a6a"
++        "0xbb3368874361b195a217b8488d3a15b0b0f5a6e5a1189b88964a97715889bbc8"
+      values.$implementation:
+-        "eth:0x3c857eD51c8a2747EE8c6F30EdDA5ea0D487CC64"
++        "eth:0xCe56012E880851baa234cD092aF516A0fcA9CFe3"
+      values.$pastUpgrades.10:
++        ["2026-08-17T10:20:35.000Z","0x30e7e8dac55cb6f8ac7b7cc81c9132f01acb5fbb87ed1f44b568183518670fbb",["eth:0xCe56012E880851baa234cD092aF516A0fcA9CFe3"]]
+      values.$upgradeCount:
+-        10
++        11
+      values.version:
+-        310
++        320
+      values.dlnDestination:
++        "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f"
+      implementationNames.eth:0x3c857eD51c8a2747EE8c6F30EdDA5ea0D487CC64:
+-        "DeBridgeRouter"
+      implementationNames.eth:0xCe56012E880851baa234cD092aF516A0fcA9CFe3:
++        "DeBridgeRouter"
+    }
+```
+
+```diff
+    contract DlnDestination (eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f) [debridge/DlnDestination] {
+    +++ description: Destination side of the deBridge Liquidity Network (DLN) intent protocol: takers fulfill orders here permissionlessly by paying the 'take' amount, which is forwarded to the order recipient in the same transaction (this contract holds no user funds). The taker then sends an unlock message back to the source chain's DlnSource through the deBridge messaging protocol to claim the escrowed maker funds.
+      sourceHashes.1:
+-        "0x925d0cfe1e1388a72765060d6905fa5bfd29e5a50bf4dcd11c2747a9d3097825"
++        "0xcca702480efa62cd07a9ea9b50d25bd2fec07bdb974ed969b52461235e056c6b"
+      values.$implementation:
+-        "eth:0xE540eb6BfEE129d28d47E26Ad33a138d66FD78f5"
++        "eth:0xD9b4f9CacFFB59F2B982ad3c45096e3AA4B4020e"
+      values.$pastUpgrades.5:
++        ["2026-08-17T10:20:35.000Z","0x30e7e8dac55cb6f8ac7b7cc81c9132f01acb5fbb87ed1f44b568183518670fbb",["eth:0xD9b4f9CacFFB59F2B982ad3c45096e3AA4B4020e"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.version:
+-        "1.7.0"
++        "1.7.1"
+      implementationNames.eth:0xE540eb6BfEE129d28d47E26Ad33a138d66FD78f5:
+-        "DlnDestination"
+      implementationNames.eth:0xD9b4f9CacFFB59F2B982ad3c45096e3AA4B4020e:
++        "DlnDestination"
+    }
+```
+
+```diff
+    contract DlnSource (eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66) [debridge/DlnSource] {
+    +++ description: Source-side escrow of the deBridge Liquidity Network (DLN) intent protocol: users lock the 'give' funds of a cross-chain order directly in this contract. Funds are released to the taker (claimUnlock) or refunded to the maker (claimCancel) only on a message from the DlnDestination configured for the order's destination chain, authenticated via the CallProxy of the deBridge messaging protocol (i.e. ultimately by deBridge validator signatures).
+      sourceHashes.1:
+-        "0x1ee6b36758f7c1cb71e4ed6d4e731d42a09413cdfeaf71a16c0554633c6047c9"
++        "0x1a65dd672c1d690b7748bf1c367c91be2553be1610e4efa604279e7855978cb5"
+      values.$implementation:
+-        "eth:0x322B481088143d9Ff74e4169Fb7f12F7808690DF"
++        "eth:0x2b426a0Ac391490e88d15B304436e7a84Df78611"
+      values.$pastUpgrades.5:
++        ["2026-08-17T10:20:35.000Z","0x30e7e8dac55cb6f8ac7b7cc81c9132f01acb5fbb87ed1f44b568183518670fbb",["eth:0x2b426a0Ac391490e88d15B304436e7a84Df78611"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.version:
+-        "1.7.1"
++        "1.8.0"
+      implementationNames.eth:0x322B481088143d9Ff74e4169Fb7f12F7808690DF:
+-        "DlnSource"
+      implementationNames.eth:0x2b426a0Ac391490e88d15B304436e7a84Df78611:
++        "DlnSource"
+    }
+```
+
+## Source code changes
+
+```diff
+.../DeBridgeRouter/DeBridgeRouter.sol              | 442 +++++++++++-
+ .../DlnDestination/DlnDestination.sol              | 125 +++-
+ .../DlnSource/DlnSource.sol                        | 101 ++-
+ .../ExternalCallAdapter/DlnExternalCallAdapter.sol | 738 ++++++++++++---------
+ 4 files changed, 1023 insertions(+), 383 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786706330 (main branch discovery), not current.
+
+```diff
+    contract DeBridgeRouter (eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251) [debridge/DeBridgeRouter] {
+    +++ description: Optional periphery router that can swap input tokens via whitelisted DEX routers and forward the proceeds into the DLN contracts (order creation, or order fulfillment on the hardcoded DlnDestination via fillCrossChain) in a single transaction. It does not custody funds across transactions and is not part of the DLN critical path.
+      description:
+-        "Optional periphery router that can swap input tokens via whitelisted DEX routers and forward the proceeds into the DLN contracts in a single transaction. It does not custody funds across transactions and is not part of the DLN critical path."
++        "Optional periphery router that can swap input tokens via whitelisted DEX routers and forward the proceeds into the DLN contracts (order creation, or order fulfillment on the hardcoded DlnDestination via fillCrossChain) in a single transaction. It does not custody funds across transactions and is not part of the DLN critical path."
+    }
+```
+
+```diff
+    contract DlnSource (eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66) [debridge/DlnSource] {
+    +++ description: Source-side escrow of the deBridge Liquidity Network (DLN) intent protocol: users lock the 'give' funds of a cross-chain order directly in this contract. Funds are released to the taker (claimUnlock) or refunded to the maker (claimCancel) only on a message from the DlnDestination configured for the order's destination chain, authenticated via the CallProxy of the deBridge messaging protocol (i.e. ultimately by deBridge validator signatures).
+      fieldMeta.intentManagerRights.description:
+-        "Immutable allowlist contract: addresses it validates can create orders with custom or zero protocol fees (createSaltedOrderForIntent)."
++        "Immutable allowlist contract: addresses it validates can create orders with custom or zero protocol fees and can designate an arbitrary address as the order maker (createSaltedOrderForIntent)."
+    }
+```
+
 Generated with discovered.json: 0x7afcf14042868e28950376055745c27d87c409a4
 
 # Diff at Fri, 14 Aug 2026 11:20:27 GMT:

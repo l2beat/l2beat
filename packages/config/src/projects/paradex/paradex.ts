@@ -1,7 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
-  formatLargeNumber,
+  formatNumber,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -57,7 +57,7 @@ function formatMaxTotalBalanceString(
   maxTotalBalance: number,
   decimals: number,
 ) {
-  return `The current bridge cap is ${formatLargeNumber(
+  return `The current bridge cap is ${formatNumber(
     maxTotalBalance / 10 ** decimals,
   )} ${ticker}.`
 }

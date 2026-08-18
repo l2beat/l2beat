@@ -35,6 +35,19 @@ const bannerWrapperVariants = cva('hidden lg:block 2xl:mr-0', {
   },
 })
 
+const contentWrapperVariants = cva(
+  'flex min-w-0 flex-1 flex-col has-data-hide-overflow-x:overflow-x-clip md:pt-5 lg:pt-0',
+  {
+    variants: {
+      variant: {
+        default: 'lg:ml-3',
+        wide: 'lg:ml-3',
+        home: 'lg:ml-0',
+      },
+    },
+  },
+)
+
 const contentAreaVariants = cva('mx-auto flex w-full min-w-0 grow flex-col', {
   variants: {
     variant: {
@@ -95,7 +108,7 @@ export function SideNavLayout({
         />
         <div
           className={cn(
-            'flex min-w-0 flex-1 flex-col has-data-hide-overflow-x:overflow-x-clip md:pt-5 lg:ml-3 lg:pt-0',
+            contentWrapperVariants({ variant }),
             childrenWrapperClassName,
           )}
         >

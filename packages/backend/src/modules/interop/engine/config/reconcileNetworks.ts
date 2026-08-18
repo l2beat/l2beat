@@ -1,4 +1,4 @@
-import { isEqual } from 'earl'
+import isEqual from 'lodash/isEqual'
 
 export function reconcileNetworks<T extends { chain: string }>(
   previousNetworks: T[] | undefined,

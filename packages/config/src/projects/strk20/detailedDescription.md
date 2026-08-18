@@ -7,8 +7,6 @@ Note that the proven (L1-verified) Starknet OS only checks that submitted proof 
 ### Privacy considerations
 The protocol supports private transfers, arbitrary amounts, partial withdrawals through private change notes, and DeFi actions through external helper contracts. DeFi integrations use open notes: the pool creates a note whose final amount is filled after an external helper, such as a swap or lending adapter, measures the onchain output.
 
-Recipients discover notes from onchain data through account-linked channels and token-specific subchannels. This avoids scanning all pool activity, but the discovery address is visible when channel metadata is written or read. Using a trusted or local node for note / channel discovery or separating note discovery from withdrawal submission is therefore crucial for privacy.
-
 ### Fees
 The pool currently charges a flat fee of 4 STRK plus gas for any action that uses the privacy pool, including deposits, swaps, and withdrawals.
 
