@@ -33,15 +33,9 @@ const PLANTS: {
   {
     sentiment: 'neutral',
     status: 'notReviewed',
-    title: 'Nothing planted',
-    description: 'The property is out of scope for this protocol.',
-  },
-  {
-    sentiment: 'neutral',
-    status: 'notReviewed',
     title: 'Not reviewed',
     description:
-      'A dashed ring with no plant means the crop has not been reviewed at all.',
+      'A dashed ring with no plant. Either the property is out of scope for this protocol, or we have not reviewed it yet.',
   },
 ]
 
@@ -54,7 +48,7 @@ export function PlantLegendSection() {
         size="md"
       />
       <PrimaryCard className="md:p-8">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {PLANTS.map((plant, index) => (
             <article key={plant.title} className="flex flex-col gap-2">
               <CropPlantSample

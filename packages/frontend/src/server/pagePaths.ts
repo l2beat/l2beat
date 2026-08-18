@@ -36,6 +36,7 @@ export const STATIC_PAGE_PATHS = [
   '/native-rollups',
   '/garden',
   '/garden/submit',
+  '/garden/integrate',
   '/faq',
   '/about-us',
   '/brand-kit',

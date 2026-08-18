@@ -113,6 +113,8 @@ export const pageLoaders = {
   GardenPage: async () => (await import('./garden/GardenPage')).GardenPage,
   SubmitProtocolPage: async () =>
     (await import('./garden/submit/SubmitProtocolPage')).SubmitProtocolPage,
+  IntegrateCropsPage: async () =>
+    (await import('./garden/integrate/IntegrateCropsPage')).IntegrateCropsPage,
   GlossaryPage: async () =>
     (await import('./glossary/GlossaryPage')).GlossaryPage,
   AboutUsPage: async () => (await import('./about/AboutUsPage')).AboutUsPage,
