@@ -8,6 +8,7 @@ import {
   CommandItem,
   CommandList,
 } from '~/components/core/Command'
+import { DashedButton } from '~/components/core/DashedButton'
 import {
   Tooltip,
   TooltipContent,
@@ -127,7 +128,7 @@ export function CompareProjectPicker({
                 onMouseLeave={() => setHoveredProjectId(undefined)}
                 onFocus={() => setHoveredProjectId(project.id)}
                 onBlur={() => setHoveredProjectId(undefined)}
-                className="flex h-7 items-center gap-1.5 rounded-full border border-divider bg-surface-primary primary-card:bg-surface-secondary py-1 pr-1.5 pl-1"
+                className="flex h-7 items-center gap-1.5 rounded-lg border border-divider bg-surface-primary py-1 pr-1.5 pl-1"
                 // The ring makes the chip strip double as the charts' color key,
                 // so it must show exactly the series color the charts use - and
                 // no color at all when no chart has a series for the project.
@@ -167,17 +168,16 @@ export function CompareProjectPicker({
           </Tooltip>
         )
       })}
-      <button
-        type="button"
+      <DashedButton
         onClick={() => {
           setPinnedSlugs(selectedSlugs)
           setOpen(true)
         }}
-        className="flex h-7 cursor-pointer items-center gap-1.5 rounded-full border border-divider border-dashed py-1 pr-2.5 pl-1.5 font-medium text-secondary text-sm leading-none hover:bg-surface-secondary primary-card:hover:bg-surface-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+        className="h-7 rounded-lg py-1 pr-2.5 pl-1.5"
       >
         <PlusIcon className="size-4" />
         Add project
-      </button>
+      </DashedButton>
       {isDefaultSelection && (
         <p className="w-full font-medium text-2xs text-secondary">
           Showing top projects by default. Add or remove projects to build your
