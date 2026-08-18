@@ -10,9 +10,13 @@ export function formatSeconds(
   opts?: { preventRoundingUp?: boolean; fullUnit?: boolean },
 ): string {
   assert(seconds !== undefined, 'seconds is required')
+  assert(
+    typeof seconds === 'bigint' || Number.isFinite(Number(seconds)),
+    'seconds must be finite',
+  )
 
   const total =
-    typeof seconds === 'bigint' ? seconds : BigInt(Math.trunc(seconds))
+    typeof seconds === 'bigint' ? seconds : BigInt(Math.trunc(Number(seconds)))
   const negative = total < 0n
 
   let remaining = negative ? -total : total
