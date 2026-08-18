@@ -12,8 +12,8 @@ import {
   type EthereumAddress,
   type UnixTime,
 } from '@l2beat/shared-pure'
-import { isEqual } from 'earl'
 import { providers } from 'ethers'
+import isEqual from 'lodash/isEqual'
 import { ProjectService } from '../ProjectService'
 import type { ChainConfig } from '../types'
 import type { GeneratedToken, Output, SourceEntry } from './types'
