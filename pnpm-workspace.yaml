@@ -1,6 +1,10 @@
 packages:
   - 'packages/*'
 
+# Only install package versions published at least a week ago, to reduce
+# exposure to supply chain attacks in freshly published releases.
+minimumReleaseAge: 10080
+
 overrides:
   'form-data@^2': 2.5.4
   'form-data@^4': 4.0.4
