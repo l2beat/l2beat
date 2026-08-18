@@ -1,0 +1,1209 @@
+{
+  "name": "frankencoin",
+  "timestamp": 1787039840,
+  "configHash": "0x535caac1612e7fa48b90b4f3b6009017ff9fb1384d71763539338b282c29c807",
+  "entries": [
+    {
+      "name": "Equity",
+      "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xf35d17f53f7855048e767dce3294ce630aa0273dbdbf0a613229e7b23a4b02e1"
+      ],
+      "proxyType": "immutable",
+      "description": "Reserve pool of the Frankencoin system and ERC20 governance token (Frankencoin Pool Share, FPS). It holds all ZCHF reserves (minter reserves and equity). Anyone can mint FPS by depositing ZCHF at a price of 3x the underlying equity per share and redeem after a minimum holding period of 90 days. Votes are proportional to FPS balance multiplied by holding time; holders (with delegation helpers) reaching 2% of total votes are 'qualified' to exercise governance vetoes and proposals across the system. There is no admin: governance actions are hardcoded quorum checks. If equity falls below 1000 ZCHF (e.g. after covering large losses), qualified holders can restructure the cap table and wipe out passive shareholders.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
+          "delay": 604800,
+          "description": "propose adding or removing chains and remote token pools in the ZCHF CCIPTokenPool configuration (executable by anyone after a 7-day delay), and propose transferring the CCIP token admin role and pool ownership to a new admin (21-day delay). Requires 2% of FPS votes.",
+          "role": ".GOVERNANCE"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
+          "description": "immediately set CCIP per-chain rate limits for bridged ZCHF and deny (veto) any pending CCIPAdmin proposal. Requires 2% of FPS votes.",
+          "role": ".GOVERNANCE"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+          "delay": 604800,
+          "description": "propose a new interest rate for the Savings module, which ZCHF savers (including the SavingsVault) earn and which is broadcast as leadrate to Frankencoin deployments on other chains. Requires 2% of FPS votes; anyone can apply the change after the 7-day delay, and a counter-proposal can cancel it.",
+          "role": ".equity"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+          "delay": 604800,
+          "description": "propose a new leadrate (base interest rate) for the Frankencoin system, which savers in SavingsV2 earn and MintingHubV2 positions pay on top of their risk premium. Requires 2% of FPS votes; anyone can apply the change after the 7-day delay, and a counter-proposal can cancel it.",
+          "role": ".equity"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5052D3Cc819f53116641e89b96Ff4cD1EE80B182",
+          "description": "halve the accumulated FPS holding duration of the FPSWrapper contract (qualified FPS holders with 2% of votes), which delays or prevents WFPS holders from redeeming their underlying FPS for ZCHF (redemption requires a 90-day holding duration).",
+          "role": ".underlying"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "description": "veto (deny) suggested new minter modules of the Frankencoin system during their application period (at least 14 days). This power is held by any FPS holder or delegating group commanding at least 2% of all votes in the Equity contract, and is the main governance safeguard of the system: a minter that slips through can mint unlimited ZCHF.",
+          "role": ".reserve"
+        }
+      ],
+      "ignoreInWatchMode": ["price", "totalSupply", "totalVotes"],
+      "deployerAddress": "eth:0x58f13e67E465d302a733285488f868e917D99629",
+      "sinceTimestamp": 1698530243,
+      "sinceBlock": 18451518,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "DOMAIN_SEPARATOR": "0xb0fe1d8373263d2b320b24a4303f6902da9771e5e1a5f379a68082aad9e4c527",
+        "MIN_HOLDING_DURATION": 8153726976000,
+        "name": "Frankencoin Pool Share",
+        "price": "1316125620572192667824",
+        "symbol": "FPS",
+        "totalSupply": "8673270956780873563063",
+        "totalVotes": "267609437175928088298224959447733736",
+        "VALUATION_FACTOR": 3,
+        "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+      },
+      "implementationNames": {
+        "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2": "Equity"
+      }
+    },
+    {
+      "name": "CCIPAdmin",
+      "address": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xaa5f26b47ac1727ebfa25f3502b5f7762d1f80dbe6009eda23d9b0d2f2e96408"
+      ],
+      "proxyType": "immutable",
+      "description": "Governance wrapper that owns and administers the ZCHF CCIPTokenPool and the ZCHF entry in Chainlink's TokenAdminRegistry. All actions are driven by qualified FPS holders: configuration changes (adding/removing supported chains and remote pools) are proposed with a 7-day timelock and transferring the admin role itself with a 21-day timelock; after the delay anyone can execute. Qualified holders can also deny pending proposals and set CCIP rate limits immediately.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+          "description": "configure remote chains, pool addresses, router, allowlist, admins, and rebalancer for this token pool.",
+          "role": ".owner"
+        }
+      ],
+      "deployerAddress": "eth:0xb16f9a646201af698A21Bd0D3AFDA0518A86D2A7",
+      "sinceTimestamp": 1748940743,
+      "sinceBlock": 22623055,
+      "values": {
+        "$immutable": true,
+        "DAY": 86400,
+        "GOVERNANCE": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+        "TOKEN_ADMIN_REGISTRY": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+        "tokenPool": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+        "ZCHF": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+      },
+      "implementationNames": {
+        "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8": "CCIPAdmin"
+      }
+    },
+    {
+      "name": "Savings",
+      "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x98de8dd587ed149a025b2a3d08634666ab3afec0536895921c1cc094cd2518d3"
+      ],
+      "proxyType": "immutable",
+      "description": "Current savings module (with referral-fee support). ZCHF savers deposit here to earn the module's governance-set interest rate; interest is minted continuously against the equity reserve (booked as a loss to Equity). Savers can optionally set a referrer (e.g. a frontend) that earns up to 25% of their collected interest. The SavingsVault (svZCHF) deposits into this module, and the LeadrateSender broadcasts this module's rate to Frankencoin deployments on other chains. Rate changes are proposed by qualified FPS holders (2% of votes) and can be applied by anyone after a 7-day delay.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "role": ".minters"
+        }
+      ],
+      "ignoreInWatchMode": ["currentTicks"],
+      "deployerAddress": "eth:0x0170F42f224b99CcbbeE673093589c5f9691dd06",
+      "sinceTimestamp": 1747891715,
+      "sinceBlock": 22536327,
+      "values": {
+        "$immutable": true,
+        "currentRatePPM": 35000,
+        "currentTicks": 1319195700000,
+        "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+        "INTEREST_DELAY": 259200,
+        "nextChange": 1774551239,
+        "nextRatePPM": 35000,
+        "ZCHF": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+      },
+      "implementationNames": {
+        "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38": "Savings"
+      }
+    },
+    {
+      "name": "StablecoinBridgeVCHF",
+      "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xec1edc8c6321d98d1f401d780844918007dec8f6dde5088cb1c3582fca68ef19"
+      ],
+      "proxyType": "immutable",
+      "description": "Bridge that mints ZCHF 1:1 against the VCHF (VNX Swiss Franc) stablecoin, up to a limit of 2M ZCHF and until its one-year horizon (April 2026). ZCHF can always be burned to redeem the VCHF held here.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "role": ".minters"
+        }
+      ],
+      "ignoreInWatchMode": ["minted"],
+      "deployerAddress": "eth:0x0170F42f224b99CcbbeE673093589c5f9691dd06",
+      "sinceTimestamp": 1744827131,
+      "sinceBlock": 22283268,
+      "values": {
+        "$immutable": true,
+        "chf": "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f",
+        "horizon": 1776276731,
+        "limit": "2000000000000000000000000",
+        "minted": 0,
+        "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+      },
+      "implementationNames": {
+        "eth:0x3B71ba73299F925a837836160c3E1Fec74340403": "StablecoinBridge"
+      }
+    },
+    {
+      "name": "SavingsV2",
+      "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa9b8c420c4ec4fbd1a45e9859d5a5d6ffc153513625e0562cce4d398f7bdd99f"
+      ],
+      "proxyType": "immutable",
+      "description": "Original savings module of the Frankencoin V2 system, still active. Its governance-set interest rate is the system's leadrate: MintingHubV2 positions pay this rate plus their risk premium. ZCHF savers deposit here to earn the leadrate (interest is minted against the equity reserve and capped by it), with a 3-day interest delay/lockup on deposits. Rate changes are proposed by qualified FPS holders (2% of votes) and can be applied by anyone after a 7-day delay.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "role": ".minters"
+        }
+      ],
+      "ignoreInWatchMode": ["currentTicks"],
+      "deployerAddress": "eth:0x14A401702BdD9CF803ce8CB38c5F8723008FBD03",
+      "sinceTimestamp": 1732727483,
+      "sinceBlock": 21280492,
+      "values": {
+        "$immutable": true,
+        "currentRatePPM": 10000,
+        "currentTicks": 1289714340000,
+        "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+        "INTEREST_DELAY": 259200,
+        "nextChange": 1770717611,
+        "nextRatePPM": 10000,
+        "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+      },
+      "implementationNames": {
+        "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE": "Savings"
+      }
+    },
+    {
+      "name": "StablecoinBridgeCHFAU",
+      "address": "eth:0x3e445ff4ddDf0ff8aE7458c9746eD80bD664F6C1",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x9279e115ddca68b2b3076c4523429608113ec5518c7eb70cdd7d5f09a70c0924"
+      ],
+      "proxyType": "immutable",
+      "description": "Bridge that mints ZCHF against the CHFAU (Alpen Blue Swiss Franc, 6 decimals) stablecoin at a decimal-adjusted 1:1 rate, up to a limit of 10M ZCHF and until its one-year horizon (April 2027). ZCHF can always be burned to redeem the CHFAU held here.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "role": ".minters"
+        }
+      ],
+      "ignoreInWatchMode": ["minted"],
+      "deployerAddress": "eth:0x8525EdE9a3f231FF3B88f4ae40F5371626C3f227",
+      "sinceTimestamp": 1775738855,
+      "sinceBlock": 24842253,
+      "values": {
+        "$immutable": true,
+        "chf": "eth:0xBD4DfC058eb95b8De5ceAF39966A1a70F5556F78",
+        "decimalMultiplier": 1000000000000,
+        "horizon": 1807188455,
+        "limit": "10000000000000000000000000",
+        "minted": "660717645577000000000000",
+        "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+      },
+      "implementationNames": {
+        "eth:0x3e445ff4ddDf0ff8aE7458c9746eD80bD664F6C1": "StablecoinBridge"
+      }
+    },
+    {
+      "name": "LeadrateSender",
+      "address": "eth:0x4d433780A16d425c5dB1F725A6d104233a8Ef28D",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xceeb9dc1bba3420039afec3dcac4d150ca48d9995b75e76e0f236e8a367ed008"
+      ],
+      "proxyType": "immutable",
+      "description": "Permissionless helper that pushes the current interest rate of the Savings module to bridged Frankencoin savings modules on other chains via CCIP. Anyone can trigger a push by paying the CCIP fee.",
+      "deployerAddress": "eth:0xb16f9a646201af698A21Bd0D3AFDA0518A86D2A7",
+      "sinceTimestamp": 1748940755,
+      "sinceBlock": 22623056,
+      "values": {
+        "$immutable": true,
+        "LEADRATE": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+        "LINK": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "ROUTER": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      },
+      "implementationNames": {
+        "eth:0x4d433780A16d425c5dB1F725A6d104233a8Ef28D": "LeadrateSender"
+      }
+    },
+    {
+      "name": "FPSWrapper",
+      "address": "eth:0x5052D3Cc819f53116641e89b96Ff4cD1EE80B182",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa617a1ce73b5780e200ebb35482f4e8ed7e2ea293ecee9fb1efc3c41659d3fb4"
+      ],
+      "proxyType": "immutable",
+      "description": "Wrapper token (WFPS) for the FPS governance token, e.g. for use on other chains or venues. Wrapped shares cannot vote individually. Anyone can unwrap, or directly redeem the underlying FPS for ZCHF through unwrapAndSell() (subject to the wrapper's collective holding duration).",
+      "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0x9aaDa0f3DbF8390BA0B5F22Ff0b5aa814554BBcC",
+      "sinceTimestamp": 1710508535,
+      "sinceBlock": 19440583,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "name": "Wrapped Frankencoin Pool Share",
+        "symbol": "WFPS",
+        "totalSupply": "763837322392421669797",
+        "underlying": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2"
+      },
+      "implementationNames": {
+        "eth:0x5052D3Cc819f53116641e89b96Ff4cD1EE80B182": "FPSWrapper"
+      }
+    },
+    {
+      "name": "MintingHubV1",
+      "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe9eab3b61b2d768d4c9a720ba560f96827b64d04deadbff194bd7b1df15921af"
+      ],
+      "proxyType": "immutable",
+      "description": "First, now deprecated version of the hub for collateralized minting positions (fixed upfront fees instead of continuous interest). It remains a registered minter and technically still allows opening positions, but the official frontend has migrated to MintingHubV2.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "role": ".minters"
+        }
+      ],
+      "deployerAddress": "eth:0x58f13e67E465d302a733285488f868e917D99629",
+      "sinceTimestamp": 1698530459,
+      "sinceBlock": 18451536,
+      "values": {
+        "$immutable": true,
+        "CHALLENGER_REWARD": 20000,
+        "OPENING_FEE": "1000000000000000000000",
+        "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+      },
+      "implementationNames": {
+        "eth:0x7546762fdb1a6d9146b33960545C3f6394265219": "MintingHub"
+      }
+    },
+    {
+      "name": "StablecoinBridgeXCHF",
+      "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xec1edc8c6321d98d1f401d780844918007dec8f6dde5088cb1c3582fca68ef19"
+      ],
+      "proxyType": "immutable",
+      "description": "Bootstrap bridge that minted ZCHF 1:1 against the XCHF (CryptoFranc) stablecoin. Its one-year minting horizon expired in October 2024, so it can no longer mint; remaining ZCHF from this bridge can still be burned to redeem the XCHF held here.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "role": ".minters"
+        }
+      ],
+      "ignoreInWatchMode": ["minted"],
+      "deployerAddress": "eth:0x58f13e67E465d302a733285488f868e917D99629",
+      "sinceTimestamp": 1698530879,
+      "sinceBlock": 18451571,
+      "values": {
+        "$immutable": true,
+        "chf": "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08",
+        "horizon": 1729980479,
+        "limit": "10000000000000000000000000",
+        "minted": "17000094858261410",
+        "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+      },
+      "implementationNames": {
+        "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF": "StablecoinBridge"
+      }
+    },
+    {
+      "name": "BridgeAccounting",
+      "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x1a3481d99ead367e84e80ab22124db30e9d6383bf3087d6e11490d1a91e86e69"
+      ],
+      "proxyType": "immutable",
+      "description": "Receives profit/loss settlement messages from bridged Frankencoin deployments on other chains via CCIP and books them into the mainnet system: received ZCHF profits are collected into the Equity reserve, reported losses are covered from it (this contract is a registered minter). Only accepts messages from the registered remote token contracts.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "role": ".minters"
+        }
+      ],
+      "deployerAddress": "eth:0xb16f9a646201af698A21Bd0D3AFDA0518A86D2A7",
+      "sinceTimestamp": 1748940635,
+      "sinceBlock": 22623046,
+      "values": {
+        "$immutable": true,
+        "getRouter": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+        "TOKEN_ADMIN_REGISTRY": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+        "ZCHF": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+      },
+      "implementationNames": {
+        "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16": "BridgeAccounting"
+      }
+    },
+    {
+      "name": "CCIPTokenPool",
+      "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+      "type": "Contract",
+      "template": "transporter/TokenPool",
+      "sourceHashes": [
+        "0xb9a80a7c5ddcc86d6f9ecb02dac9f7fcf84f8a85ccd4fb6a31bd411ebcfc30c1"
+      ],
+      "proxyType": "immutable",
+      "description": "Chainlink CCIP BurnMintTokenPool for ZCHF: burns ZCHF on Ethereum when bridging out and mints ZCHF (it is a registered minter) when bridging in from supported chains. Owned and configured by the CCIPAdmin contract; minting is gated by Chainlink's CCIP offramps and the per-chain rate limits.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "role": ".minters"
+        }
+      ],
+      "ignoreInWatchMode": [
+        "getOnRamps",
+        "getCurrentBridgedAmount",
+        "getUnsiloedLiquidity",
+        "getLockedTokens",
+        "getSupportedChains"
+      ],
+      "deployerAddress": "eth:0xb16f9a646201af698A21Bd0D3AFDA0518A86D2A7",
+      "sinceTimestamp": 1748940743,
+      "sinceBlock": 22623055,
+      "values": {
+        "$immutable": true,
+        "getAllowList": [],
+        "getAllowListEnabled": false,
+        "getRateLimitAdmin": "eth:0x0000000000000000000000000000000000000000",
+        "getRmnProxy": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
+        "getRouter": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+        "getSupportedChains": [
+          "4051577828743386545",
+          "4949039107694359620",
+          "3734403246176062136",
+          "15971525489660198786",
+          "6433500567565415381",
+          "465200170687744372",
+          "1673871237479749969"
+        ],
+        "getToken": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+        "getTokenDecimals": 18,
+        "owner": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
+        "typeAndVersion": "BurnMintTokenPool 1.5.1"
+      },
+      "implementationNames": {
+        "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79": "BurnMintTokenPool"
+      }
+    },
+    {
+      "name": "PositionRoller",
+      "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x8001ee352664e08cd835aeac9886b5ed27f6c504a327bd2660bdee67616b5f72"
+      ],
+      "proxyType": "immutable",
+      "description": "Helper (registered as minter) that lets position owners roll their debt and collateral from one minting position into another (e.g. into a later expiration) in a single transaction, using its minting rights to flash-repay the source position.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "role": ".minters"
+        }
+      ],
+      "deployerAddress": "eth:0x14A401702BdD9CF803ce8CB38c5F8723008FBD03",
+      "sinceTimestamp": 1732727915,
+      "sinceBlock": 21280527,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6": "PositionRoller"
+      }
+    },
+    {
+      "name": "Frankencoin",
+      "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xdf09570043b9eff066d0d39ed727c1a0f8714e99aea998632cbdfb7517607eef"
+      ],
+      "proxyType": "immutable",
+      "description": "The Frankencoin (ZCHF) token, an ERC20 stablecoin tracking the Swiss franc. The contract itself is immutable and has no owner: all supply changes go through 'minter' modules that anyone can suggest by paying a 1000 ZCHF application fee and that become active unless vetoed by qualified FPS holders within the application period. Registered minters (and the positions they register) can mint and burn ZCHF freely and book profits and losses against the reserve held in the Equity contract.",
+      "ignoreInWatchMode": ["totalSupply", "equity", "minterReserve"],
+      "deployerAddress": "eth:0x58f13e67E465d302a733285488f868e917D99629",
+      "sinceTimestamp": 1698530243,
+      "sinceBlock": 18451518,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "DOMAIN_SEPARATOR": "0x0030eba518c077921487bde9523478fa8ba39b881d0372fd1cb104a3080bfcb0",
+        "equity": "3805038040128000823285101",
+        "MIN_APPLICATION_PERIOD": 1209600,
+        "MIN_FEE": "1000000000000000000000",
+        "minterReserve": "8626260624449616410628789",
+        "minters": [
+          "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
+          "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
+          "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+          "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+          "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+          "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
+          "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+          "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
+          "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
+          "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
+          "eth:0x3e445ff4ddDf0ff8aE7458c9746eD80bD664F6C1"
+        ],
+        "name": "Frankencoin",
+        "reserve": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+        "symbol": "ZCHF",
+        "totalSupply": "30194143889227133167490161"
+      },
+      "fieldMeta": {
+        "MIN_APPLICATION_PERIOD": {
+          "description": "Minimum veto period (in seconds) for new minter applications."
+        },
+        "minters": {
+          "description": "All currently registered (or pending, if suggested recently) minter modules, reconstructed from MinterApplied/MinterDenied events. Once a minter's application period has passed without a veto, it can never be removed."
+        },
+        "reserve": {
+          "description": "The Equity contract holding the ZCHF reserve. FPS holders with at least 2% of votes can veto pending minter applications."
+        }
+      },
+      "implementationNames": {
+        "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": "Frankencoin"
+      }
+    },
+    {
+      "name": "MintingHubV2",
+      "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x05d53bf668ba1801e242e4865992b1f46414a2f0c35101bb439c0d2fc1b9fb73"
+      ],
+      "proxyType": "immutable",
+      "description": "Second and current version of the hub for collateralized minting positions. Anyone can permissionlessly open a position with arbitrary ERC20 collateral (min 5000 ZCHF worth) against a 1000 ZCHF opening fee, or clone an existing position. New or cloned positions can be vetoed on the position contract by qualified FPS holders (2% of votes) during the position's initialization period. Once live, positions mint ZCHF against their collateral at an interest rate of leadrate (from the SavingsV2 contract) plus a position-specific risk premium, and are kept honest through permissionless collateral auctions (challenges) that reward the challenger with 2% and penalize undercollateralized owners. Individual position contracts are registered as minters via this hub and are not listed individually here.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "role": ".minters"
+        }
+      ],
+      "deployerAddress": "eth:0x14A401702BdD9CF803ce8CB38c5F8723008FBD03",
+      "sinceTimestamp": 1732730699,
+      "sinceBlock": 21280757,
+      "values": {
+        "$immutable": true,
+        "CHALLENGER_REWARD": 20000,
+        "EXPIRED_PRICE_FACTOR": 10,
+        "OPENING_FEE": "1000000000000000000000",
+        "rate": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+        "roller": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+        "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+      },
+      "fieldMeta": {
+        "rate": {
+          "description": "The Leadrate contract (SavingsV2) determining the base interest rate that positions pay on minted ZCHF."
+        }
+      },
+      "implementationNames": {
+        "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557": "MintingHub"
+      }
+    },
+    {
+      "name": "SavingsVault",
+      "address": "eth:0xE5F130253fF137f9917C0107659A4c5262abf6b0",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3a1d59d75b002236846bb47cd681a65c6162f7e1b11bcfe924e2e7332a392f8b"
+      ],
+      "proxyType": "immutable",
+      "description": "ERC4626 tokenized vault (svZCHF) wrapping the Savings module: deposited ZCHF is forwarded to the Savings module and accrued interest is auto-compounded into the share price. Ownership of the vault has been renounced, so the owner-only referral-fee skim (up to 25% of interest to a referrer) can never be activated and the vault is fully immutable. Vault shares are freely transferable and withdrawals are only limited by the Savings module's 3-day interest delay accounting.",
+      "ignoreInWatchMode": [
+        "price",
+        "totalAssets",
+        "totalClaimed",
+        "totalSupply",
+        "info"
+      ],
+      "deployerAddress": "eth:0x0170F42f224b99CcbbeE673093589c5f9691dd06",
+      "sinceTimestamp": 1767008927,
+      "sinceBlock": 24118106,
+      "values": {
+        "$immutable": true,
+        "asset": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+        "decimals": 18,
+        "info": {
+          "saved": "21443227532554219147776",
+          "ticks": 1324303414198,
+          "referrer": "eth:0x0000000000000000000000000000000000000000",
+          "referralFeePPM": 0
+        },
+        "name": "SavingsVault ZCHF",
+        "owner": "eth:0x0000000000000000000000000000000000000000",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "price": "1021224347557687760",
+        "savings": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
+        "symbol": "svZCHF",
+        "totalAssets": "21443227532554219147776",
+        "totalClaimed": "6737071241256864040",
+        "totalSupply": "20997567854543260870296"
+      },
+      "implementationNames": {
+        "eth:0xE5F130253fF137f9917C0107659A4c5262abf6b0": "SavingsVaultZCHF_2"
+      }
+    },
+    {
+      "name": "TransferReference",
+      "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x2c86a62ceb00ccf79f684380ddc743e727db921a60c824cac70b5ebc8feaa315"
+      ],
+      "proxyType": "immutable",
+      "description": "Convenience contract for ZCHF transfers with an attached payment reference (e.g. for invoicing), both on Ethereum and cross-chain via CCIP. It is a registered minter, which grants it unlimited ZCHF transfer allowance from every account; its code only ever moves funds of the calling account, or of accounts that granted the caller an explicit infinite allowance.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "role": ".minters"
+        }
+      ],
+      "deployerAddress": "eth:0x0170F42f224b99CcbbeE673093589c5f9691dd06",
+      "sinceTimestamp": 1749614039,
+      "sinceBlock": 22678761,
+      "values": {
+        "$immutable": true,
+        "LINK": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "ROUTER": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+        "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+      },
+      "implementationNames": {
+        "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916": "TransferReference"
+      }
+    },
+    {
+      "name": "GovernanceSender",
+      "address": "eth:0xFD23272DfcB13Dc3Fabd8DB851fCD4827Af876EB",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa8da27393f1fbdff9e759a40ce8dd796c32a9f3d9d6802efd3af637f31c1d452"
+      ],
+      "proxyType": "immutable",
+      "description": "Permissionless helper that pushes FPS voting-power snapshots from the Equity contract to bridged governance contracts on other chains via CCIP, enabling qualified FPS holders to exercise governance there. Anyone can trigger a sync by paying the CCIP fee.",
+      "deployerAddress": "eth:0xb16f9a646201af698A21Bd0D3AFDA0518A86D2A7",
+      "sinceTimestamp": 1748940743,
+      "sinceBlock": 22623055,
+      "values": {
+        "$immutable": true,
+        "GOVERNANCE": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
+        "LINK": "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "ROUTER": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D"
+      },
+      "implementationNames": {
+        "eth:0xFD23272DfcB13Dc3Fabd8DB851fCD4827Af876EB": "GovernanceSender"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2": [
+      "constructor(address zchf_)",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error NotQualified()",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Delegation(address indexed from, address indexed to)",
+      "event Trade(address who, int256 amount, uint256 totPrice, uint256 newprice)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function MIN_HOLDING_DURATION() view returns (uint256)",
+      "function VALUATION_FACTOR() view returns (uint32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function calculateProceeds(uint256 shares) view returns (uint256)",
+      "function calculateShares(uint256 investment) view returns (uint256)",
+      "function canRedeem(address owner) view returns (bool)",
+      "function checkQualified(address sender, address[] helpers) view",
+      "function decimals() view returns (uint8)",
+      "function delegateVoteTo(address delegate)",
+      "function delegates(address owner) view returns (address delegate)",
+      "function holdingDuration(address holder) view returns (uint256)",
+      "function invest(uint256 amount, uint256 expectedShares) returns (uint256)",
+      "function kamikaze(address[] targets, uint256 votesToDestroy)",
+      "function name() pure returns (string)",
+      "function nonces(address account) view returns (uint256 nonce)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function price() view returns (uint256)",
+      "function redeem(address target, uint256 shares) returns (uint256)",
+      "function redeemExpected(address target, uint256 shares, uint256 expectedProceeds) returns (uint256)",
+      "function redeemFrom(address owner, address target, uint256 shares, uint256 expectedProceeds) returns (uint256)",
+      "function relativeVotes(address holder) view returns (uint256)",
+      "function restructureCapTable(address[] helpers, address[] addressesToWipe)",
+      "function symbol() pure returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function totalVotes() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
+      "function votes(address holder) view returns (uint256)",
+      "function votesDelegated(address sender, address[] helpers) view returns (uint256)",
+      "function zchf() view returns (address)"
+    ],
+    "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8": [
+      "constructor(address tokenAdminRegistry, address zchf)",
+      "error AlreadyRegistered()",
+      "error ProposalAlreadyMade(bytes32 hash)",
+      "error TokenPoolNotSet()",
+      "error TooEarly(uint64 deadline)",
+      "error UnknownProposal(bytes32 hash)",
+      "event AddChainProposed(bytes32 hash, address indexed proposer, tuple(uint64 remoteChainSelector, bytes[] remotePoolAddresses, bytes remoteTokenAddress, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig) update)",
+      "event AdminTransferProposed(bytes32 hash, address indexed proposer, address newAdmin)",
+      "event AdminTransferred(address newAdmin)",
+      "event ChainAdded(tuple(uint64 remoteChainSelector, bytes[] remotePoolAddresses, bytes remoteTokenAddress, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig) config)",
+      "event ChainRemoved(uint64 id)",
+      "event ProposalDenied(bytes32 hash)",
+      "event ProposalEnacted(bytes32 hash)",
+      "event ProposalMade(bytes32 hash, uint64 deadline)",
+      "event RateLimit(uint64 remoteChain, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundConfigs, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundConfig)",
+      "event RemotePoolAdded(uint64 indexed chain, bytes indexed poolAddress)",
+      "event RemotePoolRemoved(uint64 indexed chain, bytes indexed poolAddress)",
+      "event RemotePoolUpdateProposed(bytes32 hash, address indexed proposer, tuple(bool add, uint64 chain, bytes poolAddress) update)",
+      "event RemoveChainProposed(bytes32 hash, address indexed proposer, uint64 chain)",
+      "event TokenPoolSet(address indexed tokenPool)",
+      "function DAY() view returns (uint64)",
+      "function GOVERNANCE() view returns (address)",
+      "function TOKEN_ADMIN_REGISTRY() view returns (address)",
+      "function ZCHF() view returns (address)",
+      "function acceptAdmin(address _tokenPool, tuple(uint64 remoteChainSelector, bytes[] remotePoolAddresses, bytes remoteTokenAddress, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig)[] chainsToAdd)",
+      "function applyAddChain(tuple(uint64 remoteChainSelector, bytes[] remotePoolAddresses, bytes remoteTokenAddress, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig) config)",
+      "function applyAdminTransfer(address newAdmin)",
+      "function applyRateLimit(uint64 chain, tuple(bool isEnabled, uint128 capacity, uint128 rate) inbound, tuple(bool isEnabled, uint128 capacity, uint128 rate) outbound, address[] helpers)",
+      "function applyRemotePoolUpdate(tuple(bool add, uint64 chain, bytes poolAddress) update)",
+      "function applyRemoveChain(uint64 chainId)",
+      "function deny(bytes32 hash, address[] helpers)",
+      "function proposals(bytes32 hash) view returns (uint64 deadline)",
+      "function proposeAddChain(tuple(uint64 remoteChainSelector, bytes[] remotePoolAddresses, bytes remoteTokenAddress, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig) config, address[] helpers)",
+      "function proposeAdminTransfer(address newAdmin, address[] helpers)",
+      "function proposeRemotePoolUpdate(tuple(bool add, uint64 chain, bytes poolAddress) update, address[] helpers)",
+      "function proposeRemoveChain(uint64 chainId, address[] helpers)",
+      "function registerToken(address registry, address _tokenPool, tuple(uint64 remoteChainSelector, bytes[] remotePoolAddresses, bytes remoteTokenAddress, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig)[] chainsToAdd)",
+      "function tokenPool() view returns (address)"
+    ],
+    "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38": [
+      "constructor(address zchf_, uint24 initialRatePPM)",
+      "error ChangeNotReady()",
+      "error FundsLocked(uint40 remainingSeconds)",
+      "error ModuleDisabled()",
+      "error NoPendingChange()",
+      "error ReferralFeeTooHigh(uint32 fee)",
+      "event InterestCollected(address indexed account, uint256 interest, uint256 referrerFee)",
+      "event RateChanged(uint24 newRate)",
+      "event RateProposed(address who, uint24 nextRate, uint40 nextChange)",
+      "event Saved(address indexed account, uint192 amount)",
+      "event Withdrawn(address indexed account, uint192 amount)",
+      "function INTEREST_DELAY() view returns (uint64)",
+      "function ZCHF() view returns (address)",
+      "function accruedInterest(address accountOwner) view returns (uint192)",
+      "function accruedInterest(address accountOwner, uint256 timestamp) view returns (uint192)",
+      "function adjust(uint192 targetAmount, address referrer, uint24 referralFeePPM)",
+      "function adjust(uint192 targetAmount)",
+      "function applyChange()",
+      "function calculateInterest(tuple(uint192 saved, uint64 ticks, address referrer, uint32 referralFeePPM) account, uint64 ticks) pure returns (uint192)",
+      "function currentRatePPM() view returns (uint24)",
+      "function currentTicks() view returns (uint64)",
+      "function dropReferrer()",
+      "function equity() view returns (address)",
+      "function nextChange() view returns (uint40)",
+      "function nextRatePPM() view returns (uint24)",
+      "function proposeChange(uint24 newRatePPM_, address[] helpers)",
+      "function refreshBalance(address owner) returns (uint192)",
+      "function refreshMyBalance() returns (uint192)",
+      "function save(address owner, uint192 amount)",
+      "function save(uint192 amount)",
+      "function save(uint192 amount, address referrer, uint24 referralFeePPM)",
+      "function savings(address) view returns (uint192 saved, uint64 ticks, address referrer, uint32 referralFeePPM)",
+      "function ticks(uint256 timestamp) view returns (uint64)",
+      "function withdraw(address target, uint192 amount) returns (uint256)",
+      "function withdraw(uint192 amount, address referrer, uint24 referralFeePPM)"
+    ],
+    "eth:0x3B71ba73299F925a837836160c3E1Fec74340403": [
+      "constructor(address other, address zchfAddress, uint256 limit_)",
+      "error Expired(uint256 time, uint256 expiration)",
+      "error Limit(uint256 amount, uint256 limit)",
+      "error UnsupportedToken(address token)",
+      "function burn(uint256 amount)",
+      "function burnAndSend(address target, uint256 amount)",
+      "function chf() view returns (address)",
+      "function horizon() view returns (uint256)",
+      "function limit() view returns (uint256)",
+      "function mint(uint256 amount)",
+      "function mintTo(address target, uint256 amount)",
+      "function minted() view returns (uint256)",
+      "function zchf() view returns (address)"
+    ],
+    "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE": [
+      "constructor(address zchf_, uint24 initialRatePPM)",
+      "error ChangeNotReady()",
+      "error FundsLocked(uint40 remainingSeconds)",
+      "error ModuleDisabled()",
+      "error NoPendingChange()",
+      "event InterestCollected(address indexed account, uint256 interest)",
+      "event RateChanged(uint24 newRate)",
+      "event RateProposed(address who, uint24 nextRate, uint40 nextChange)",
+      "event Saved(address indexed account, uint192 amount)",
+      "event Withdrawn(address indexed account, uint192 amount)",
+      "function INTEREST_DELAY() view returns (uint64)",
+      "function accruedInterest(address accountOwner) view returns (uint192)",
+      "function accruedInterest(address accountOwner, uint256 timestamp) view returns (uint192)",
+      "function adjust(uint192 targetAmount)",
+      "function applyChange()",
+      "function calculateInterest(tuple(uint192 saved, uint64 ticks) account, uint64 ticks) view returns (uint192)",
+      "function currentRatePPM() view returns (uint24)",
+      "function currentTicks() view returns (uint64)",
+      "function equity() view returns (address)",
+      "function nextChange() view returns (uint40)",
+      "function nextRatePPM() view returns (uint24)",
+      "function proposeChange(uint24 newRatePPM_, address[] helpers)",
+      "function refreshBalance(address owner) returns (uint192)",
+      "function refreshMyBalance() returns (uint192)",
+      "function save(address owner, uint192 amount)",
+      "function save(uint192 amount)",
+      "function savings(address) view returns (uint192 saved, uint64 ticks)",
+      "function ticks(uint256 timestamp) view returns (uint64)",
+      "function withdraw(address target, uint192 amount) returns (uint256)",
+      "function zchf() view returns (address)"
+    ],
+    "eth:0x3e445ff4ddDf0ff8aE7458c9746eD80bD664F6C1": [
+      "constructor(address other, address zchfAddress, uint256 limit_)",
+      "error Expired(uint256 time, uint256 expiration)",
+      "error Limit(uint256 amount, uint256 limit)",
+      "error UnsupportedToken(address token)",
+      "event Burn(address indexed zchfHolder, uint256 amount)",
+      "event Credit(address indexed target, uint256 amount)",
+      "event Mint(address indexed target, uint256 amount)",
+      "event Payout(address indexed target, uint256 amount)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(uint256 zchfAmount)",
+      "function burnAndCredit(address target, uint256 zchfAmount)",
+      "function burnAndSend(address target, uint256 zchfAmount)",
+      "function chf() view returns (address)",
+      "function credits(address) view returns (uint256)",
+      "function decimalMultiplier() view returns (uint256)",
+      "function horizon() view returns (uint256)",
+      "function limit() view returns (uint256)",
+      "function mint(uint256 amount)",
+      "function mintTo(address target, uint256 amount)",
+      "function minted() view returns (uint256)",
+      "function payoutCredit(address target)",
+      "function zchf() view returns (address)"
+    ],
+    "eth:0x4d433780A16d425c5dB1F725A6d104233a8Ef28D": [
+      "constructor(address leadrate, address router, address linkToken)",
+      "error InsufficientFeeTokenAllowance(address token, uint256 fee)",
+      "error InsufficientFeeTokens(address token, uint256 fee)",
+      "error LengthMismatch(uint256 expected, uint256 given)",
+      "event Pushed(uint64 chain, bytes indexed bridgedLeadrate, uint24 newRatePPM)",
+      "function LEADRATE() view returns (address)",
+      "function LINK() view returns (address)",
+      "function ROUTER() view returns (address)",
+      "function getCCIPFee(uint64 chain, bytes target, bool nativeToken, bytes extraArgs) view returns (uint256)",
+      "function getCCIPFee(uint64 chain, address target, bool nativeToken, bytes extraArgs) view returns (uint256)",
+      "function getCCIPFee(uint64 chain, address target, bool nativeToken) view returns (uint256)",
+      "function pushLeadrate(uint64[] chains, bytes[] targets)",
+      "function pushLeadrate(uint64 chain, address target, tuple(uint256 gasLimit, bool allowOutOfOrderExecution) extraArgs) payable",
+      "function pushLeadrate(uint64 chain, address target) payable",
+      "function pushLeadrate(uint64[] chains, bytes[] targets, bytes[] extraArgs)",
+      "function pushLeadrate(uint64 chain, bytes target, bytes extraArgs) payable"
+    ],
+    "eth:0x5052D3Cc819f53116641e89b96Ff4cD1EE80B182": [
+      "constructor()",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function depositFor(address account, uint256 amount) returns (bool)",
+      "function halveHoldingDuration(address[] helpers)",
+      "function name() pure returns (string)",
+      "function symbol() pure returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
+      "function underlying() view returns (address)",
+      "function unwrap(uint256 amount)",
+      "function unwrapAndSell(uint256 amount)",
+      "function withdrawTo(address account, uint256 amount) returns (bool)",
+      "function wrap(uint256 amount)"
+    ],
+    "eth:0x7546762fdb1a6d9146b33960545C3f6394265219": [
+      "constructor(address _zchf, address _factory)",
+      "error InvalidPos()",
+      "error UnexpectedPrice()",
+      "event ChallengeAverted(address indexed position, uint256 number, uint256 size)",
+      "event ChallengeStarted(address indexed challenger, address indexed position, uint256 size, uint256 number)",
+      "event ChallengeSucceeded(address indexed position, uint256 number, uint256 bid, uint256 acquiredCollateral, uint256 challengeSize)",
+      "event PositionOpened(address indexed owner, address indexed position, address zchf, address collateral, uint256 price)",
+      "event PostPonedReturn(address collateral, address indexed beneficiary, uint256 amount)",
+      "function CHALLENGER_REWARD() view returns (uint32)",
+      "function OPENING_FEE() view returns (uint256)",
+      "function bid(uint32 _challengeNumber, uint256 size, bool postponeCollateralReturn)",
+      "function challenge(address _positionAddr, uint256 _collateralAmount, uint256 expectedPrice) returns (uint256)",
+      "function challenges(uint256) view returns (address challenger, uint64 start, address position, uint256 size)",
+      "function clone(address position, uint256 _initialCollateral, uint256 _initialMint, uint256 expiration) returns (address)",
+      "function openPosition(address _collateralAddress, uint256 _minCollateral, uint256 _initialCollateral, uint256 _mintingMaximum, uint256 _initPeriodSeconds, uint256 _expirationSeconds, uint64 _challengeSeconds, uint32 _annualInterestPPM, uint256 _liqPrice, uint32 _reservePPM) returns (address)",
+      "function openPositionOneWeek(address _collateralAddress, uint256 _minCollateral, uint256 _initialCollateral, uint256 _mintingMaximum, uint256 _expirationSeconds, uint64 _challengeSeconds, uint32 _annualInterestPPM, uint256 _liqPrice, uint32 _reservePPM) returns (address)",
+      "function pendingReturns(address collateral, address owner) view returns (uint256 amount)",
+      "function price(uint32 challengeNumber) view returns (uint256)",
+      "function returnPostponedCollateral(address collateral, address target)",
+      "function zchf() view returns (address)"
+    ],
+    "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF": [
+      "constructor(address other, address zchfAddress, uint256 limit_)",
+      "error Expired(uint256 time, uint256 expiration)",
+      "error Limit(uint256 amount, uint256 limit)",
+      "error UnsupportedToken(address token)",
+      "function burn(uint256 amount)",
+      "function burnAndSend(address target, uint256 amount)",
+      "function chf() view returns (address)",
+      "function horizon() view returns (uint256)",
+      "function limit() view returns (uint256)",
+      "function mint(uint256 amount)",
+      "function mintTo(address target, uint256 amount)",
+      "function minted() view returns (uint256)",
+      "function zchf() view returns (address)"
+    ],
+    "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16": [
+      "constructor(address zchf, address registry, address router)",
+      "error InvalidRouter(address router)",
+      "error InvalidSender(uint64 chain, bytes sender)",
+      "event ReceivedLosses(uint256 losses)",
+      "event ReceivedProfits(uint256 amount)",
+      "event ReceivedSettlement(uint64 indexed chain, bytes indexed sender, uint256 losses, uint256 profits)",
+      "function TOKEN_ADMIN_REGISTRY() view returns (address)",
+      "function ZCHF() view returns (address)",
+      "function ccipReceive(tuple(bytes32 messageId, uint64 sourceChainSelector, bytes sender, bytes data, tuple(address token, uint256 amount)[] destTokenAmounts) message)",
+      "function getRouter() view returns (address)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
+    "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79": [
+      "constructor(address token, uint8 localTokenDecimals, address[] allowlist, address rmnProxy, address router)",
+      "error AggregateValueMaxCapacityExceeded(uint256 capacity, uint256 requested)",
+      "error AggregateValueRateLimitReached(uint256 minWaitInSeconds, uint256 available)",
+      "error AllowListNotEnabled()",
+      "error BucketOverfilled()",
+      "error CallerIsNotARampOnRouter(address caller)",
+      "error CannotTransferToSelf()",
+      "error ChainAlreadyExists(uint64 chainSelector)",
+      "error ChainNotAllowed(uint64 remoteChainSelector)",
+      "error CursedByRMN()",
+      "error DisabledNonZeroRateLimit(tuple(bool isEnabled, uint128 capacity, uint128 rate) config)",
+      "error InvalidDecimalArgs(uint8 expected, uint8 actual)",
+      "error InvalidRateLimitRate(tuple(bool isEnabled, uint128 capacity, uint128 rate) rateLimiterConfig)",
+      "error InvalidRemoteChainDecimals(bytes sourcePoolData)",
+      "error InvalidRemotePoolForChain(uint64 remoteChainSelector, bytes remotePoolAddress)",
+      "error InvalidSourcePoolAddress(bytes sourcePoolAddress)",
+      "error InvalidToken(address token)",
+      "error MismatchedArrayLengths()",
+      "error MustBeProposedOwner()",
+      "error NonExistentChain(uint64 remoteChainSelector)",
+      "error OnlyCallableByOwner()",
+      "error OverflowDetected(uint8 remoteDecimals, uint8 localDecimals, uint256 remoteAmount)",
+      "error OwnerCannotBeZero()",
+      "error PoolAlreadyAdded(uint64 remoteChainSelector, bytes remotePoolAddress)",
+      "error RateLimitMustBeDisabled()",
+      "error SenderNotAllowed(address sender)",
+      "error TokenMaxCapacityExceeded(uint256 capacity, uint256 requested, address tokenAddress)",
+      "error TokenRateLimitReached(uint256 minWaitInSeconds, uint256 available, address tokenAddress)",
+      "error Unauthorized(address caller)",
+      "error ZeroAddressNotAllowed()",
+      "event AllowListAdd(address sender)",
+      "event AllowListRemove(address sender)",
+      "event Burned(address indexed sender, uint256 amount)",
+      "event ChainAdded(uint64 remoteChainSelector, bytes remoteToken, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig)",
+      "event ChainConfigured(uint64 remoteChainSelector, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig)",
+      "event ChainRemoved(uint64 remoteChainSelector)",
+      "event ConfigChanged(tuple(bool isEnabled, uint128 capacity, uint128 rate) config)",
+      "event Locked(address indexed sender, uint256 amount)",
+      "event Minted(address indexed sender, address indexed recipient, uint256 amount)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "event RateLimitAdminSet(address rateLimitAdmin)",
+      "event Released(address indexed sender, address indexed recipient, uint256 amount)",
+      "event RemotePoolAdded(uint64 indexed remoteChainSelector, bytes remotePoolAddress)",
+      "event RemotePoolRemoved(uint64 indexed remoteChainSelector, bytes remotePoolAddress)",
+      "event RouterUpdated(address oldRouter, address newRouter)",
+      "event TokensConsumed(uint256 tokens)",
+      "function acceptOwnership()",
+      "function addRemotePool(uint64 remoteChainSelector, bytes remotePoolAddress)",
+      "function applyAllowListUpdates(address[] removes, address[] adds)",
+      "function applyChainUpdates(uint64[] remoteChainSelectorsToRemove, tuple(uint64 remoteChainSelector, bytes[] remotePoolAddresses, bytes remoteTokenAddress, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundRateLimiterConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundRateLimiterConfig)[] chainsToAdd)",
+      "function getAllowList() view returns (address[])",
+      "function getAllowListEnabled() view returns (bool)",
+      "function getCurrentInboundRateLimiterState(uint64 remoteChainSelector) view returns (tuple(uint128 tokens, uint32 lastUpdated, bool isEnabled, uint128 capacity, uint128 rate))",
+      "function getCurrentOutboundRateLimiterState(uint64 remoteChainSelector) view returns (tuple(uint128 tokens, uint32 lastUpdated, bool isEnabled, uint128 capacity, uint128 rate))",
+      "function getRateLimitAdmin() view returns (address)",
+      "function getRemotePools(uint64 remoteChainSelector) view returns (bytes[])",
+      "function getRemoteToken(uint64 remoteChainSelector) view returns (bytes)",
+      "function getRmnProxy() view returns (address rmnProxy)",
+      "function getRouter() view returns (address router)",
+      "function getSupportedChains() view returns (uint64[])",
+      "function getToken() view returns (address token)",
+      "function getTokenDecimals() view returns (uint8 decimals)",
+      "function isRemotePool(uint64 remoteChainSelector, bytes remotePoolAddress) view returns (bool)",
+      "function isSupportedChain(uint64 remoteChainSelector) view returns (bool)",
+      "function isSupportedToken(address token) view returns (bool)",
+      "function lockOrBurn(tuple(bytes receiver, uint64 remoteChainSelector, address originalSender, uint256 amount, address localToken) lockOrBurnIn) returns (tuple(bytes destTokenAddress, bytes destPoolData))",
+      "function owner() view returns (address)",
+      "function releaseOrMint(tuple(bytes originalSender, uint64 remoteChainSelector, address receiver, uint256 amount, address localToken, bytes sourcePoolAddress, bytes sourcePoolData, bytes offchainTokenData) releaseOrMintIn) returns (tuple(uint256 destinationAmount))",
+      "function removeRemotePool(uint64 remoteChainSelector, bytes remotePoolAddress)",
+      "function setChainRateLimiterConfig(uint64 remoteChainSelector, tuple(bool isEnabled, uint128 capacity, uint128 rate) outboundConfig, tuple(bool isEnabled, uint128 capacity, uint128 rate) inboundConfig)",
+      "function setChainRateLimiterConfigs(uint64[] remoteChainSelectors, tuple(bool isEnabled, uint128 capacity, uint128 rate)[] outboundConfigs, tuple(bool isEnabled, uint128 capacity, uint128 rate)[] inboundConfigs)",
+      "function setRateLimitAdmin(address rateLimitAdmin)",
+      "function setRouter(address newRouter)",
+      "function supportsInterface(bytes4 interfaceId) pure returns (bool)",
+      "function transferOwnership(address to)",
+      "function typeAndVersion() view returns (string)"
+    ],
+    "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6": [
+      "constructor(address zchf_)",
+      "error Log(uint256, uint256, uint256)",
+      "error NotOwner(address pos)",
+      "error NotPosition(address pos)",
+      "event Roll(address source, uint256 collWithdraw, uint256 repay, address target, uint256 collDeposit, uint256 mint)",
+      "function findRepaymentAmount(address pos) view returns (uint256)",
+      "function roll(address source, uint256 repay, uint256 collWithdraw, address target, uint256 mint, uint256 collDeposit, uint40 expiration)",
+      "function rollFully(address source, address target)",
+      "function rollFullyWithExpiration(address source, address target, uint40 expiration)"
+    ],
+    "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": [
+      "constructor(uint256 _minApplicationPeriod)",
+      "error AlreadyRegistered()",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error FeeTooLow()",
+      "error NotMinter()",
+      "error PeriodTooShort()",
+      "error TooLate()",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Loss(address indexed reportingMinter, uint256 amount)",
+      "event MinterApplied(address indexed minter, uint256 applicationPeriod, uint256 applicationFee, string message)",
+      "event MinterDenied(address indexed minter, string message)",
+      "event Profit(address indexed reportingMinter, uint256 amount)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function MIN_APPLICATION_PERIOD() view returns (uint256)",
+      "function MIN_FEE() view returns (uint256)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(uint256 _amount)",
+      "function burnFrom(address _owner, uint256 _amount)",
+      "function burnFromWithReserve(address payer, uint256 targetTotalBurnAmount, uint32 reservePPM) returns (uint256)",
+      "function burnWithReserve(uint256 _amountExcludingReserve, uint32 _reservePPM) returns (uint256)",
+      "function burnWithoutReserve(uint256 amount, uint32 reservePPM)",
+      "function calculateAssignedReserve(uint256 mintedAmount, uint32 _reservePPM) view returns (uint256)",
+      "function calculateFreedAmount(uint256 amountExcludingReserve, uint32 reservePPM) view returns (uint256)",
+      "function collectProfits(address source, uint256 _amount)",
+      "function coverLoss(address source, uint256 _amount)",
+      "function decimals() view returns (uint8)",
+      "function denyMinter(address _minter, address[] _helpers, string _message)",
+      "function equity() view returns (uint256)",
+      "function getPositionParent(address _position) view returns (address)",
+      "function initialize(address _minter, string _message)",
+      "function isMinter(address _minter) view returns (bool)",
+      "function mint(address _target, uint256 _amount)",
+      "function mintWithReserve(address _target, uint256 _amount, uint32 _reservePPM, uint32 _feesPPM)",
+      "function minterReserve() view returns (uint256)",
+      "function minters(address minter) view returns (uint256 validityStart)",
+      "function name() pure returns (string)",
+      "function nonces(address account) view returns (uint256 nonce)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function positions(address position) view returns (address registeringMinter)",
+      "function registerPosition(address _position)",
+      "function reserve() view returns (address)",
+      "function suggestMinter(address _minter, uint256 _applicationPeriod, uint256 _applicationFee, string _message)",
+      "function symbol() pure returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
+    ],
+    "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557": [
+      "constructor(address _zchf, address _leadrate, address _roller, address _factory)",
+      "error IncompatibleCollateral()",
+      "error InsufficientCollateral()",
+      "error InvalidPos()",
+      "error UnexpectedPrice()",
+      "event ChallengeAverted(address indexed position, uint256 number, uint256 size)",
+      "event ChallengeStarted(address indexed challenger, address indexed position, uint256 size, uint256 number)",
+      "event ChallengeSucceeded(address indexed position, uint256 number, uint256 bid, uint256 acquiredCollateral, uint256 challengeSize)",
+      "event ForcedSale(address pos, uint256 amount, uint256 priceE36MinusDecimals)",
+      "event PositionOpened(address indexed owner, address indexed position, address original, address collateral)",
+      "event PostPonedReturn(address collateral, address indexed beneficiary, uint256 amount)",
+      "function CHALLENGER_REWARD() view returns (uint256)",
+      "function EXPIRED_PRICE_FACTOR() view returns (uint256)",
+      "function OPENING_FEE() view returns (uint256)",
+      "function bid(uint32 _challengeNumber, uint256 size, bool postponeCollateralReturn)",
+      "function buyExpiredCollateral(address pos, uint256 upToAmount) returns (uint256)",
+      "function challenge(address _positionAddr, uint256 _collateralAmount, uint256 minimumPrice) returns (uint256)",
+      "function challenges(uint256) view returns (address challenger, uint40 start, address position, uint256 size)",
+      "function clone(address parent, uint256 _initialCollateral, uint256 _initialMint, uint40 expiration) returns (address)",
+      "function clone(address owner, address parent, uint256 _initialCollateral, uint256 _initialMint, uint40 expiration) returns (address)",
+      "function expiredPurchasePrice(address pos) view returns (uint256)",
+      "function openPosition(address _collateralAddress, uint256 _minCollateral, uint256 _initialCollateral, uint256 _mintingMaximum, uint40 _initPeriodSeconds, uint40 _expirationSeconds, uint40 _challengeSeconds, uint24 _riskPremium, uint256 _liqPrice, uint24 _reservePPM) returns (address)",
+      "function pendingReturns(address collateral, address owner) view returns (uint256 amount)",
+      "function price(uint32 challengeNumber) view returns (uint256)",
+      "function rate() view returns (address)",
+      "function returnPostponedCollateral(address collateral, address target)",
+      "function roller() view returns (address)",
+      "function zchf() view returns (address)"
+    ],
+    "eth:0xE5F130253fF137f9917C0107659A4c5262abf6b0": [
+      "constructor(address _owner, address _coin, address _savings, string _name, string _symbol)",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error ERC4626ExceededMaxDeposit(address receiver, uint256 assets, uint256 max)",
+      "error ERC4626ExceededMaxMint(address receiver, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxRedeem(address owner, uint256 shares, uint256 max)",
+      "error ERC4626ExceededMaxWithdraw(address owner, uint256 assets, uint256 max)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeERC20FailedOperation(address token)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
+      "event InterestClaimed(uint256 interest, uint256 referralFee, uint256 totalClaimed)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SetReferral(address indexed referrer, uint24 referralFeePPM)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)",
+      "function acceptOwnership()",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function asset() view returns (address)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function convertToAssets(uint256 shares) view returns (uint256)",
+      "function convertToShares(uint256 assets) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function deposit(uint256 assets, address receiver) returns (uint256)",
+      "function info() view returns (tuple(uint192 saved, uint64 ticks, address referrer, uint32 referralFeePPM))",
+      "function maxDeposit(address) view returns (uint256)",
+      "function maxMint(address) view returns (uint256)",
+      "function maxRedeem(address owner) view returns (uint256)",
+      "function maxWithdraw(address owner) view returns (uint256)",
+      "function mint(uint256 shares, address receiver) returns (uint256)",
+      "function name() view returns (string)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function previewDeposit(uint256 assets) view returns (uint256)",
+      "function previewMint(uint256 shares) view returns (uint256)",
+      "function previewRedeem(uint256 shares) view returns (uint256)",
+      "function previewWithdraw(uint256 assets) view returns (uint256)",
+      "function price() view returns (uint256)",
+      "function redeem(uint256 shares, address receiver, address owner) returns (uint256)",
+      "function renounceOwnership()",
+      "function savings() view returns (address)",
+      "function setReferral(address referrer, uint24 referralFeePPM)",
+      "function symbol() view returns (string)",
+      "function totalAssets() view returns (uint256)",
+      "function totalClaimed() view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(uint256 assets, address receiver, address owner) returns (uint256)"
+    ],
+    "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916": [
+      "constructor(address token, address router, address link)",
+      "error InfiniteAllowanceRequired(address owner, address spender)",
+      "error InsufficientFeeTokenAllowance(address token, uint256 fee)",
+      "error InsufficientFeeTokens(address token, uint256 fee)",
+      "event CrossTransfer(address indexed sender, address indexed from, uint64 toChain, bytes indexed to, uint256 amount, string ref)",
+      "event Transfer(address indexed from, address indexed to, uint256 amount, string ref)",
+      "function LINK() view returns (address)",
+      "function ROUTER() view returns (address)",
+      "function crossTransfer(uint64 targetChain, bytes recipient, uint256 amount, bytes extraArgs, string ref) payable returns (bool)",
+      "function crossTransfer(uint64 targetChain, address recipient, uint256 amount, tuple(uint256 gasLimit, bool allowOutOfOrderExecution) extraArgs, string ref) payable returns (bool)",
+      "function crossTransfer(uint64 targetChain, address recipient, uint256 amount, string ref) payable returns (bool)",
+      "function crossTransferFrom(uint64 targetChain, address owner, address recipient, uint256 amount, string ref) payable returns (bool)",
+      "function crossTransferFrom(uint64 targetChain, address owner, address recipient, uint256 amount, tuple(uint256 gasLimit, bool allowOutOfOrderExecution) extraArgs, string ref) payable returns (bool)",
+      "function crossTransferFrom(uint64 targetChain, address owner, bytes recipient, uint256 amount, bytes extraArgs, string ref) payable returns (bool)",
+      "function getCCIPFee(uint64 targetChain, address target, uint256 amount, bool nativeToken) view returns (uint256)",
+      "function getCCIPFee(uint64 targetChain, bytes target, uint256 amount, bool nativeToken, bytes extraArgs) view returns (uint256)",
+      "function getCCIPFee(uint64 targetChain, address target, uint256 amount, bool nativeToken, bytes extraArgs) view returns (uint256)",
+      "function transfer(address recipient, uint256 amount, string ref) returns (bool)",
+      "function transferFrom(address owner, address recipient, uint256 amount, string ref) returns (bool)",
+      "function zchf() view returns (address)"
+    ],
+    "eth:0xFD23272DfcB13Dc3Fabd8DB851fCD4827Af876EB": [
+      "constructor(address _governance, address _router, address _linkToken)",
+      "error InsufficientFeeTokenAllowance(address token, uint256 fee)",
+      "error InsufficientFeeTokens(address token, uint256 fee)",
+      "event VotesSynced(uint64 indexed chain, bytes receiver, address[] syncedVoters)",
+      "function GOVERNANCE() view returns (address)",
+      "function LINK() view returns (address)",
+      "function ROUTER() view returns (address)",
+      "function getCCIPFee(uint64 chain, bytes receiver, address[] voters, bool nativeToken, bytes extraArgs) view returns (uint256)",
+      "function getCCIPFee(uint64 chain, address receiver, address[] voters, bool useNativeToken, tuple(uint256 gasLimit, bool allowOutOfOrderExecution) extraArgs) view returns (uint256)",
+      "function getCCIPFee(uint64 chain, address receiver, address[] voters, bool useNativeToken) view returns (uint256)",
+      "function pushVotes(uint64 chain, address receiver, address[] voters) payable",
+      "function pushVotes(uint64 chain, address receiver, address[] voters, tuple(uint256 gasLimit, bool allowOutOfOrderExecution) extraArgs) payable",
+      "function pushVotes(uint64 chain, bytes receiver, address[] voters, bytes extraArgs) payable"
+    ]
+  },
+  "usedTemplates": {
+    "transporter/TokenPool": "0xd3e2593c0a667658845c680a3433d8a2252fb4839d2e1d16674d97e3081d856d"
+  },
+  "usedBlockNumbers": { "ethereum": 25780626 },
+  "permissionsConfigHash": "0x2af96253a93001875a8209efaa330133bfddbe13774b84b66dac8ccf664cc8b7"
+}
