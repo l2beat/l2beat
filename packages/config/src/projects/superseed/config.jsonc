@@ -4,6 +4,11 @@
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x2c2150aa5c75A24fB93d4fD2F2a895D618054f07"],
   "overrides": {
+    // OPContractsManagerV2 (shared upgrade tooling). Ignored so discovery
+    // doesn't follow it into bare implementations; authority is the ProxyAdmin owner.
+    "eth:0xbfb9219d933ec96Ac99C4f3D7231eFE43757811F": {
+      "ignoreDiscovery": true
+    },
     "eth:0x8b097CF1f9BbD9cbFD0DD561858a1FCbC8857Be0": {
       "ignoreDiscovery": true
     },
