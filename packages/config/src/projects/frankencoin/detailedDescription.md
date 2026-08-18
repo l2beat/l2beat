@@ -24,7 +24,7 @@ The CHF peg is held by arbitrage: the stablecoin 'bridges' (or rather stability 
 
 ### The equity reserve
 
-The equity reserve is funded by everything the protocol earns: FPS investments, the prepaid interest and opening fees from minting positions, minter application fees (kept even when the minter is vetoed), reserve contributions forfeited by liquidated positions, and profits settled back from bridged deployments. Its outflows are savings interest, FPS redemptions, and covering losses. FPS holders thus collect all protocol income in exchange for standing first in line for every loss.
+The equity reserve is funded by everything the protocol earns: FPS investments, the prepaid interest and opening fees from minting positions, minter application fees (kept even when the minter is vetoed), reserve contributions forfeited by liquidated positions, and profits settled back from bridged deployments. Its outflows are savings interest, FPS redemptions, and covering losses. FPS holders thus collect all protocol income in exchange for standing first in line for every loss. There are no dividends: the FPS price is a live formula, `{{valuationFactor}} × equity / totalSupply`, so every profit and loss shows up directly in the share price, and holders realize it by redeeming FPS for ZCHF at that price (after the {{minHoldingDuration}} minimum holding).
 
 ### Governance
 
