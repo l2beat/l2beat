@@ -1,8 +1,14 @@
-import { Address32 } from '@l2beat/shared-pure'
+import { Address32, type InteropBridgeType } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getTokenDb } from '~/server/tokenDb'
 import { getAggregatedInteropSnapshotTimestamp } from '../utils/getAggregatedInteropTimestamp'
+
+/** Plugins observed minting this deployment, from the token database's relations. */
+export interface InteropTokenMintingPlugin {
+  plugin: string
+  bridgeType: InteropBridgeType
+}
 
 export interface InteropTokenOnchainDeployment {
   chain: string
@@ -12,6 +18,7 @@ export interface InteropTokenOnchainDeployment {
   volume: number | null
   transferCount: number | null
   avgDuration: number | null
+  mintingPlugins: InteropTokenMintingPlugin[]
 }
 
 export async function getInteropTokenOnchainDeployments(
@@ -36,15 +43,31 @@ export async function getInteropTokenOnchainDeployments(
   })
 
   const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
-  const stats = snapshotTimestamp
-    ? await db.aggregatedInteropDeployedToken.getSummedStatsByTimestampAndTokens(
-        snapshotTimestamp,
-        statsKeys,
-      )
-    : []
+  const [stats, mintingPlugins] = await Promise.all([
+    snapshotTimestamp
+      ? db.aggregatedInteropDeployedToken.getSummedStatsByTimestampAndTokens(
+          snapshotTimestamp,
+          statsKeys,
+        )
+      : [],
+    tokenDb.tokenRelation.getMintingPluginsForMany(
+      deployedTokens.map((token) => ({
+        chain: token.chain,
+        address: token.address,
+      })),
+    ),
+  ])
   const statsMap = new Map(
     stats.map((stat) => [`${stat.tokenChain}|${stat.tokenAddress}`, stat]),
   )
+  // Relations store addresses lowercased, so key on the same form.
+  const mintingPluginsMap = new Map<string, InteropTokenMintingPlugin[]>()
+  for (const row of mintingPlugins) {
+    const key = `${row.chain}|${row.address}`
+    const plugins = mintingPluginsMap.get(key) ?? []
+    plugins.push({ plugin: row.plugin, bridgeType: row.bridgeType })
+    mintingPluginsMap.set(key, plugins)
+  }
   const supportedChains = new Set(supportedChainIds)
 
   const deployments = deployedTokens.map((token) => {
@@ -64,6 +87,10 @@ export async function getInteropTokenOnchainDeployments(
         stat && stat.transfersWithDurationCount > 0
           ? Math.round(stat.totalDurationSum / stat.transfersWithDurationCount)
           : null,
+      mintingPlugins:
+        mintingPluginsMap.get(
+          `${token.chain}|${token.address.toLowerCase()}`,
+        ) ?? [],
     }
   })
 
@@ -82,6 +109,7 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
     volume: 2_170_000,
     transferCount: 403,
     avgDuration: 24,
+    mintingPlugins: [],
   },
   {
     chain: 'arbitrum',
@@ -91,6 +119,10 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
     volume: 392_430,
     transferCount: 125,
     avgDuration: 19,
+    mintingPlugins: [
+      { plugin: 'cctp-v2', bridgeType: 'burnAndMint' },
+      { plugin: 'orbitstack', bridgeType: 'lockAndMint' },
+    ],
   },
   {
     chain: 'base',
@@ -100,5 +132,6 @@ const MOCK_INTEROP_TOKEN_DEPLOYMENTS: InteropTokenOnchainDeployment[] = [
     volume: null,
     transferCount: null,
     avgDuration: null,
+    mintingPlugins: [{ plugin: 'opstack', bridgeType: 'lockAndMint' }],
   },
 ]

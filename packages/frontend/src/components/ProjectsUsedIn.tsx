@@ -27,6 +27,10 @@ interface Props {
   noL2ClassName?: string
   maxProjects?: number
   noLink?: boolean
+  /** Copy of the dialog opened by the `+N` button. */
+  dialogTitle?: string
+  dialogDescription?: string
+  dialogEmptyText?: string
 }
 
 export function ProjectsUsedIn({
@@ -35,6 +39,9 @@ export function ProjectsUsedIn({
   noL2ClassName,
   maxProjects = 5,
   noLink,
+  dialogTitle = 'Projects used in',
+  dialogDescription = 'Search for projects used in',
+  dialogEmptyText = 'No projects found.',
 }: Props) {
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -115,13 +122,13 @@ export function ProjectsUsedIn({
           <CommandDialog
             open={open}
             onOpenChange={setOpen}
-            title="Projects used in"
-            description="Search for projects used in"
+            title={dialogTitle}
+            description={dialogDescription}
           >
             <Command className="rounded-none">
               <CommandInput placeholder="Start typing to find project..." />
               <CommandList>
-                <CommandEmpty>No projects found.</CommandEmpty>
+                <CommandEmpty>{dialogEmptyText}</CommandEmpty>
                 <CommandGroup>
                   {usedIn.map((project) => (
                     <CommandItem
