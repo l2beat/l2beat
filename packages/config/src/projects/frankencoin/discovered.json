@@ -1,55 +1,56 @@
 {
   "name": "frankencoin",
-  "timestamp": 1787039840,
-  "configHash": "0x535caac1612e7fa48b90b4f3b6009017ff9fb1384d71763539338b282c29c807",
+  "timestamp": 1787043820,
+  "configHash": "0xd40829085d971d8fe740f8f621ecf8e7e38766e7425722d1792601f3de999246",
   "entries": [
     {
       "name": "Equity",
       "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
       "type": "Contract",
+      "template": "frankencoin/Equity",
       "sourceHashes": [
         "0xf35d17f53f7855048e767dce3294ce630aa0273dbdbf0a613229e7b23a4b02e1"
       ],
       "proxyType": "immutable",
-      "description": "Reserve pool of the Frankencoin system and ERC20 governance token (Frankencoin Pool Share, FPS). It holds all ZCHF reserves (minter reserves and equity). Anyone can mint FPS by depositing ZCHF at a price of 3x the underlying equity per share and redeem after a minimum holding period of 90 days. Votes are proportional to FPS balance multiplied by holding time; holders (with delegation helpers) reaching 2% of total votes are 'qualified' to exercise governance vetoes and proposals across the system. There is no admin: governance actions are hardcoded quorum checks. If equity falls below 1000 ZCHF (e.g. after covering large losses), qualified holders can restructure the cap table and wipe out passive shareholders.",
+      "description": "Reserve of the Frankencoin system and its governance token (FPS): holds all ZCHF reserves and absorbs losses before ZCHF holders do. FPS is minted and redeemed permissionlessly against ZCHF at a formula price (3x underlying equity, 90-day minimum holding before redemption). Votes equal FPS balance times holding time; 2% of total votes qualifies an address (with delegates) for all veto and proposal rights in the system. There is no admin.",
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
           "delay": 604800,
-          "description": "propose adding or removing chains and remote token pools in the ZCHF CCIPTokenPool configuration (executable by anyone after a 7-day delay), and propose transferring the CCIP token admin role and pool ownership to a new admin (21-day delay). Requires 2% of FPS votes.",
+          "description": "propose changes to the ZCHF CCIP token pool configuration (add/remove chains and remote pools; 7-day delay) or a transfer of the CCIP admin role and pool ownership (21-day delay), with 2% of FPS votes.",
           "role": ".GOVERNANCE"
         },
         {
           "permission": "interact",
           "from": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
-          "description": "immediately set CCIP per-chain rate limits for bridged ZCHF and deny (veto) any pending CCIPAdmin proposal. Requires 2% of FPS votes.",
+          "description": "immediately set per-chain CCIP rate limits for bridged ZCHF and veto pending CCIPAdmin proposals, with 2% of FPS votes.",
           "role": ".GOVERNANCE"
         },
         {
           "permission": "interact",
           "from": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
           "delay": 604800,
-          "description": "propose a new interest rate for the Savings module, which ZCHF savers (including the SavingsVault) earn and which is broadcast as leadrate to Frankencoin deployments on other chains. Requires 2% of FPS votes; anyone can apply the change after the 7-day delay, and a counter-proposal can cancel it.",
+          "description": "propose a new interest rate for the Savings module with 2% of FPS votes, in force after 7 days unless replaced by a counter-proposal. The rate is paid to savers (including the SavingsVault) by minting against the equity reserve.",
           "role": ".equity"
         },
         {
           "permission": "interact",
           "from": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
           "delay": 604800,
-          "description": "propose a new leadrate (base interest rate) for the Frankencoin system, which savers in SavingsV2 earn and MintingHubV2 positions pay on top of their risk premium. Requires 2% of FPS votes; anyone can apply the change after the 7-day delay, and a counter-proposal can cancel it.",
+          "description": "propose a new leadrate with 2% of FPS votes, in force after 7 days unless replaced by a counter-proposal. This sets the rate that all MintingHubV2 positions pay and SavingsV2 depositors earn.",
           "role": ".equity"
         },
         {
           "permission": "interact",
           "from": "eth:0x5052D3Cc819f53116641e89b96Ff4cD1EE80B182",
-          "description": "halve the accumulated FPS holding duration of the FPSWrapper contract (qualified FPS holders with 2% of votes), which delays or prevents WFPS holders from redeeming their underlying FPS for ZCHF (redemption requires a 90-day holding duration).",
+          "description": "halve the accrued holding duration of the FPSWrapper with 2% of FPS votes, delaying WFPS holders' ability to redeem the underlying FPS for ZCHF.",
           "role": ".underlying"
         },
         {
           "permission": "interact",
           "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "description": "veto (deny) suggested new minter modules of the Frankencoin system during their application period (at least 14 days). This power is held by any FPS holder or delegating group commanding at least 2% of all votes in the Equity contract, and is the main governance safeguard of the system: a minter that slips through can mint unlimited ZCHF.",
+          "description": "veto pending minter applications with 2% of FPS votes. This is the system's main safeguard: an unvetoed minter is irrevocable and can mint unlimited ZCHF.",
           "role": ".reserve"
         }
       ],
@@ -66,7 +67,7 @@
         "price": "1316125620572192667824",
         "symbol": "FPS",
         "totalSupply": "8673270956780873563063",
-        "totalVotes": "267609437175928088298224959447733736",
+        "totalVotes": "267645669997654929703953572643313128",
         "VALUATION_FACTOR": 3,
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
@@ -78,11 +79,12 @@
       "name": "CCIPAdmin",
       "address": "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8",
       "type": "Contract",
+      "template": "frankencoin/CCIPAdmin",
       "sourceHashes": [
         "0xaa5f26b47ac1727ebfa25f3502b5f7762d1f80dbe6009eda23d9b0d2f2e96408"
       ],
       "proxyType": "immutable",
-      "description": "Governance wrapper that owns and administers the ZCHF CCIPTokenPool and the ZCHF entry in Chainlink's TokenAdminRegistry. All actions are driven by qualified FPS holders: configuration changes (adding/removing supported chains and remote pools) are proposed with a 7-day timelock and transferring the admin role itself with a 21-day timelock; after the delay anyone can execute. Qualified holders can also deny pending proposals and set CCIP rate limits immediately.",
+      "description": "Owner and admin of the ZCHF CCIP token pool and of the ZCHF entry in Chainlink's TokenAdminRegistry. Every action requires 2% of FPS votes: pool configuration changes (adding/removing chains and remote pools) execute after a 7-day timelock, handover of the admin role after 21 days; setting rate limits and vetoing pending proposals is immediate.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -110,16 +112,17 @@
       "name": "Savings",
       "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
       "type": "Contract",
+      "template": "frankencoin/Savings",
       "sourceHashes": [
         "0x98de8dd587ed149a025b2a3d08634666ab3afec0536895921c1cc094cd2518d3"
       ],
       "proxyType": "immutable",
-      "description": "Current savings module (with referral-fee support). ZCHF savers deposit here to earn the module's governance-set interest rate; interest is minted continuously against the equity reserve (booked as a loss to Equity). Savers can optionally set a referrer (e.g. a frontend) that earns up to 25% of their collected interest. The SavingsVault (svZCHF) deposits into this module, and the LeadrateSender broadcasts this module's rate to Frankencoin deployments on other chains. Rate changes are proposed by qualified FPS holders (2% of votes) and can be applied by anyone after a 7-day delay.",
+      "description": "Current savings module: deposited ZCHF earns a governance-set interest rate, minted against the equity reserve (3-day interest delay on deposits). Savers can opt into a referral fee of up to 25% of their interest for frontends. Rate changes are proposed by qualified FPS holders and take effect after 7 days unless replaced by a counter-proposal.",
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "description": "mint and burn ZCHF without restriction, transfer ZCHF from any account (minters have unlimited allowance), and book profits and losses against the reserve held in the Equity contract.",
           "role": ".minters"
         }
       ],
@@ -130,7 +133,7 @@
       "values": {
         "$immutable": true,
         "currentRatePPM": 35000,
-        "currentTicks": 1319195700000,
+        "currentTicks": 1319335140000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
         "nextChange": 1774551239,
@@ -145,16 +148,17 @@
       "name": "StablecoinBridgeVCHF",
       "address": "eth:0x3B71ba73299F925a837836160c3E1Fec74340403",
       "type": "Contract",
+      "template": "frankencoin/StablecoinBridge",
       "sourceHashes": [
         "0xec1edc8c6321d98d1f401d780844918007dec8f6dde5088cb1c3582fca68ef19"
       ],
       "proxyType": "immutable",
-      "description": "Bridge that mints ZCHF 1:1 against the VCHF (VNX Swiss Franc) stablecoin, up to a limit of 2M ZCHF and until its one-year horizon (April 2026). ZCHF can always be burned to redeem the VCHF held here.",
+      "description": "Mints ZCHF against a whitelisted Swiss franc stablecoin held in escrow, at a fixed 1:1 (decimal-adjusted) rate, up to a hard cap and only until its expiration. ZCHF can always be burned here to redeem the escrowed stablecoin. A depeg or freeze of the escrowed stablecoin impairs ZCHF backing up to the cap.",
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "description": "mint and burn ZCHF without restriction, transfer ZCHF from any account (minters have unlimited allowance), and book profits and losses against the reserve held in the Equity contract.",
           "role": ".minters"
         }
       ],
@@ -170,6 +174,17 @@
         "minted": 0,
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
+      "fieldMeta": {
+        "limit": {
+          "description": "Maximum ZCHF that can ever be minted through this bridge."
+        },
+        "horizon": {
+          "description": "Timestamp after which the bridge can no longer mint (one year from deployment)."
+        },
+        "minted": {
+          "description": "ZCHF currently outstanding from this bridge."
+        }
+      },
       "implementationNames": {
         "eth:0x3B71ba73299F925a837836160c3E1Fec74340403": "StablecoinBridge"
       }
@@ -178,16 +193,17 @@
       "name": "SavingsV2",
       "address": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
       "type": "Contract",
+      "template": "frankencoin/SavingsV2",
       "sourceHashes": [
         "0xa9b8c420c4ec4fbd1a45e9859d5a5d6ffc153513625e0562cce4d398f7bdd99f"
       ],
       "proxyType": "immutable",
-      "description": "Original savings module of the Frankencoin V2 system, still active. Its governance-set interest rate is the system's leadrate: MintingHubV2 positions pay this rate plus their risk premium. ZCHF savers deposit here to earn the leadrate (interest is minted against the equity reserve and capped by it), with a 3-day interest delay/lockup on deposits. Rate changes are proposed by qualified FPS holders (2% of votes) and can be applied by anyone after a 7-day delay.",
+      "description": "Original savings module and the system's leadrate source: MintingHubV2 positions pay this contract's rate plus their risk premium, and depositors earn it on saved ZCHF (interest is minted against the equity reserve and capped by it; 3-day interest delay on deposits). Rate changes are proposed by qualified FPS holders and take effect after 7 days unless replaced by a counter-proposal.",
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "description": "mint and burn ZCHF without restriction, transfer ZCHF from any account (minters have unlimited allowance), and book profits and losses against the reserve held in the Equity contract.",
           "role": ".minters"
         }
       ],
@@ -198,7 +214,7 @@
       "values": {
         "$immutable": true,
         "currentRatePPM": 10000,
-        "currentTicks": 1289714340000,
+        "currentTicks": 1289754180000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
         "nextChange": 1770717611,
@@ -213,16 +229,17 @@
       "name": "StablecoinBridgeCHFAU",
       "address": "eth:0x3e445ff4ddDf0ff8aE7458c9746eD80bD664F6C1",
       "type": "Contract",
+      "template": "frankencoin/StablecoinBridge",
       "sourceHashes": [
         "0x9279e115ddca68b2b3076c4523429608113ec5518c7eb70cdd7d5f09a70c0924"
       ],
       "proxyType": "immutable",
-      "description": "Bridge that mints ZCHF against the CHFAU (Alpen Blue Swiss Franc, 6 decimals) stablecoin at a decimal-adjusted 1:1 rate, up to a limit of 10M ZCHF and until its one-year horizon (April 2027). ZCHF can always be burned to redeem the CHFAU held here.",
+      "description": "Mints ZCHF against a whitelisted Swiss franc stablecoin held in escrow, at a fixed 1:1 (decimal-adjusted) rate, up to a hard cap and only until its expiration. ZCHF can always be burned here to redeem the escrowed stablecoin. A depeg or freeze of the escrowed stablecoin impairs ZCHF backing up to the cap.",
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "description": "mint and burn ZCHF without restriction, transfer ZCHF from any account (minters have unlimited allowance), and book profits and losses against the reserve held in the Equity contract.",
           "role": ".minters"
         }
       ],
@@ -239,6 +256,17 @@
         "minted": "660717645577000000000000",
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
+      "fieldMeta": {
+        "limit": {
+          "description": "Maximum ZCHF that can ever be minted through this bridge."
+        },
+        "horizon": {
+          "description": "Timestamp after which the bridge can no longer mint (one year from deployment)."
+        },
+        "minted": {
+          "description": "ZCHF currently outstanding from this bridge."
+        }
+      },
       "implementationNames": {
         "eth:0x3e445ff4ddDf0ff8aE7458c9746eD80bD664F6C1": "StablecoinBridge"
       }
@@ -247,11 +275,12 @@
       "name": "LeadrateSender",
       "address": "eth:0x4d433780A16d425c5dB1F725A6d104233a8Ef28D",
       "type": "Contract",
+      "template": "frankencoin/LeadrateSender",
       "sourceHashes": [
         "0xceeb9dc1bba3420039afec3dcac4d150ca48d9995b75e76e0f236e8a367ed008"
       ],
       "proxyType": "immutable",
-      "description": "Permissionless helper that pushes the current interest rate of the Savings module to bridged Frankencoin savings modules on other chains via CCIP. Anyone can trigger a push by paying the CCIP fee.",
+      "description": "Permissionless helper that pushes the Savings module's current interest rate to bridged savings modules on other chains via CCIP; anyone can trigger a push by paying the CCIP fee.",
       "deployerAddress": "eth:0xb16f9a646201af698A21Bd0D3AFDA0518A86D2A7",
       "sinceTimestamp": 1748940755,
       "sinceBlock": 22623056,
@@ -269,11 +298,12 @@
       "name": "FPSWrapper",
       "address": "eth:0x5052D3Cc819f53116641e89b96Ff4cD1EE80B182",
       "type": "Contract",
+      "template": "frankencoin/FPSWrapper",
       "sourceHashes": [
         "0xa617a1ce73b5780e200ebb35482f4e8ed7e2ea293ecee9fb1efc3c41659d3fb4"
       ],
       "proxyType": "immutable",
-      "description": "Wrapper token (WFPS) for the FPS governance token, e.g. for use on other chains or venues. Wrapped shares cannot vote individually. Anyone can unwrap, or directly redeem the underlying FPS for ZCHF through unwrapAndSell() (subject to the wrapper's collective holding duration).",
+      "description": "Wrapper token (WFPS) for FPS. Wrapped shares cannot vote individually and can be unwrapped or redeemed for ZCHF at any time, subject to the wrapper's collective holding duration.",
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x9aaDa0f3DbF8390BA0B5F22Ff0b5aa814554BBcC",
       "sinceTimestamp": 1710508535,
@@ -294,16 +324,17 @@
       "name": "MintingHubV1",
       "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
       "type": "Contract",
+      "template": "frankencoin/MintingHubV1",
       "sourceHashes": [
         "0xe9eab3b61b2d768d4c9a720ba560f96827b64d04deadbff194bd7b1df15921af"
       ],
       "proxyType": "immutable",
-      "description": "First, now deprecated version of the hub for collateralized minting positions (fixed upfront fees instead of continuous interest). It remains a registered minter and technically still allows opening positions, but the official frontend has migrated to MintingHubV2.",
+      "description": "Deprecated first version of the minting hub with the same oracle-free, auction-policed design (upfront fees instead of continuous interest). It remains a registered minter forever.",
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "description": "mint and burn ZCHF without restriction, transfer ZCHF from any account (minters have unlimited allowance), and book profits and losses against the reserve held in the Equity contract.",
           "role": ".minters"
         }
       ],
@@ -324,16 +355,17 @@
       "name": "StablecoinBridgeXCHF",
       "address": "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
       "type": "Contract",
+      "template": "frankencoin/StablecoinBridge",
       "sourceHashes": [
         "0xec1edc8c6321d98d1f401d780844918007dec8f6dde5088cb1c3582fca68ef19"
       ],
       "proxyType": "immutable",
-      "description": "Bootstrap bridge that minted ZCHF 1:1 against the XCHF (CryptoFranc) stablecoin. Its one-year minting horizon expired in October 2024, so it can no longer mint; remaining ZCHF from this bridge can still be burned to redeem the XCHF held here.",
+      "description": "Mints ZCHF against a whitelisted Swiss franc stablecoin held in escrow, at a fixed 1:1 (decimal-adjusted) rate, up to a hard cap and only until its expiration. ZCHF can always be burned here to redeem the escrowed stablecoin. A depeg or freeze of the escrowed stablecoin impairs ZCHF backing up to the cap.",
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "description": "mint and burn ZCHF without restriction, transfer ZCHF from any account (minters have unlimited allowance), and book profits and losses against the reserve held in the Equity contract.",
           "role": ".minters"
         }
       ],
@@ -349,6 +381,17 @@
         "minted": "17000094858261410",
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
+      "fieldMeta": {
+        "limit": {
+          "description": "Maximum ZCHF that can ever be minted through this bridge."
+        },
+        "horizon": {
+          "description": "Timestamp after which the bridge can no longer mint (one year from deployment)."
+        },
+        "minted": {
+          "description": "ZCHF currently outstanding from this bridge."
+        }
+      },
       "implementationNames": {
         "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF": "StablecoinBridge"
       }
@@ -357,16 +400,17 @@
       "name": "BridgeAccounting",
       "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
       "type": "Contract",
+      "template": "frankencoin/BridgeAccounting",
       "sourceHashes": [
         "0x1a3481d99ead367e84e80ab22124db30e9d6383bf3087d6e11490d1a91e86e69"
       ],
       "proxyType": "immutable",
-      "description": "Receives profit/loss settlement messages from bridged Frankencoin deployments on other chains via CCIP and books them into the mainnet system: received ZCHF profits are collected into the Equity reserve, reported losses are covered from it (this contract is a registered minter). Only accepts messages from the registered remote token contracts.",
+      "description": "Books profit/loss settlements from bridged Frankencoin deployments on other chains into the mainnet reserve (it is a registered minter). Accepts CCIP messages only from the ZCHF token contracts registered in the token pool.",
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "description": "mint and burn ZCHF without restriction, transfer ZCHF from any account (minters have unlimited allowance), and book profits and losses against the reserve held in the Equity contract.",
           "role": ".minters"
         }
       ],
@@ -384,7 +428,7 @@
       }
     },
     {
-      "name": "CCIPTokenPool",
+      "name": "BurnMintTokenPool",
       "address": "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
       "type": "Contract",
       "template": "transporter/TokenPool",
@@ -392,12 +436,11 @@
         "0xb9a80a7c5ddcc86d6f9ecb02dac9f7fcf84f8a85ccd4fb6a31bd411ebcfc30c1"
       ],
       "proxyType": "immutable",
-      "description": "Chainlink CCIP BurnMintTokenPool for ZCHF: burns ZCHF on Ethereum when bridging out and mints ZCHF (it is a registered minter) when bridging in from supported chains. Owned and configured by the CCIPAdmin contract; minting is gated by Chainlink's CCIP offramps and the per-chain rate limits.",
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "description": "mint and burn ZCHF without restriction, transfer ZCHF from any account (minters have unlimited allowance), and book profits and losses against the reserve held in the Equity contract.",
           "role": ".minters"
         }
       ],
@@ -440,16 +483,17 @@
       "name": "PositionRoller",
       "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
       "type": "Contract",
+      "template": "frankencoin/PositionRoller",
       "sourceHashes": [
         "0x8001ee352664e08cd835aeac9886b5ed27f6c504a327bd2660bdee67616b5f72"
       ],
       "proxyType": "immutable",
-      "description": "Helper (registered as minter) that lets position owners roll their debt and collateral from one minting position into another (e.g. into a later expiration) in a single transaction, using its minting rights to flash-repay the source position.",
+      "description": "Helper that rolls debt and collateral from one minting position into another in a single transaction. It is a registered minter but uses that right only transiently within a roll.",
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "description": "mint and burn ZCHF without restriction, transfer ZCHF from any account (minters have unlimited allowance), and book profits and losses against the reserve held in the Equity contract.",
           "role": ".minters"
         }
       ],
@@ -465,11 +509,12 @@
       "name": "Frankencoin",
       "address": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
       "type": "Contract",
+      "template": "frankencoin/Frankencoin",
       "sourceHashes": [
         "0xdf09570043b9eff066d0d39ed727c1a0f8714e99aea998632cbdfb7517607eef"
       ],
       "proxyType": "immutable",
-      "description": "The Frankencoin (ZCHF) token, an ERC20 stablecoin tracking the Swiss franc. The contract itself is immutable and has no owner: all supply changes go through 'minter' modules that anyone can suggest by paying a 1000 ZCHF application fee and that become active unless vetoed by qualified FPS holders within the application period. Registered minters (and the positions they register) can mint and burn ZCHF freely and book profits and losses against the reserve held in the Equity contract.",
+      "description": "The ZCHF stablecoin token. Immutable and ownerless: supply is controlled exclusively by registered 'minter' modules. Anyone can apply to add a minter by paying a 1000 ZCHF fee; it becomes active unless vetoed by FPS holders with 2% of votes during the application period (at least 14 days). Once active, a minter is irrevocable.",
       "ignoreInWatchMode": ["totalSupply", "equity", "minterReserve"],
       "deployerAddress": "eth:0x58f13e67E465d302a733285488f868e917D99629",
       "sinceTimestamp": 1698530243,
@@ -505,10 +550,10 @@
           "description": "Minimum veto period (in seconds) for new minter applications."
         },
         "minters": {
-          "description": "All currently registered (or pending, if suggested recently) minter modules, reconstructed from MinterApplied/MinterDenied events. Once a minter's application period has passed without a veto, it can never be removed."
+          "description": "All registered (or, if recently suggested, pending) minter modules, reconstructed from MinterApplied/MinterDenied events."
         },
         "reserve": {
-          "description": "The Equity contract holding the ZCHF reserve. FPS holders with at least 2% of votes can veto pending minter applications."
+          "description": "The Equity contract holding the ZCHF reserve."
         }
       },
       "implementationNames": {
@@ -519,16 +564,17 @@
       "name": "MintingHubV2",
       "address": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
       "type": "Contract",
+      "template": "frankencoin/MintingHubV2",
       "sourceHashes": [
         "0x05d53bf668ba1801e242e4865992b1f46414a2f0c35101bb439c0d2fc1b9fb73"
       ],
       "proxyType": "immutable",
-      "description": "Second and current version of the hub for collateralized minting positions. Anyone can permissionlessly open a position with arbitrary ERC20 collateral (min 5000 ZCHF worth) against a 1000 ZCHF opening fee, or clone an existing position. New or cloned positions can be vetoed on the position contract by qualified FPS holders (2% of votes) during the position's initialization period. Once live, positions mint ZCHF against their collateral at an interest rate of leadrate (from the SavingsV2 contract) plus a position-specific risk premium, and are kept honest through permissionless collateral auctions (challenges) that reward the challenger with 2% and penalize undercollateralized owners. Individual position contracts are registered as minters via this hub and are not listed individually here.",
+      "description": "Permissionless factory for collateralized ZCHF minting positions: anyone can open or clone a position with any ERC20 collateral and a self-declared liquidation price, paying a 1000 ZCHF fee. No price oracle is used; anyone can challenge an overpriced position in a collateral auction (2% challenger reward) and qualified FPS holders (2% of votes) can veto new positions during their initialization period. Live positions pay the leadrate plus a fixed risk premium and are individually registered as minters (not listed here).",
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "description": "mint and burn ZCHF without restriction, transfer ZCHF from any account (minters have unlimited allowance), and book profits and losses against the reserve held in the Equity contract.",
           "role": ".minters"
         }
       ],
@@ -546,7 +592,7 @@
       },
       "fieldMeta": {
         "rate": {
-          "description": "The Leadrate contract (SavingsV2) determining the base interest rate that positions pay on minted ZCHF."
+          "description": "The contract providing the leadrate, the base interest rate positions pay on minted ZCHF."
         }
       },
       "implementationNames": {
@@ -557,11 +603,12 @@
       "name": "SavingsVault",
       "address": "eth:0xE5F130253fF137f9917C0107659A4c5262abf6b0",
       "type": "Contract",
+      "template": "frankencoin/SavingsVault",
       "sourceHashes": [
         "0x3a1d59d75b002236846bb47cd681a65c6162f7e1b11bcfe924e2e7332a392f8b"
       ],
       "proxyType": "immutable",
-      "description": "ERC4626 tokenized vault (svZCHF) wrapping the Savings module: deposited ZCHF is forwarded to the Savings module and accrued interest is auto-compounded into the share price. Ownership of the vault has been renounced, so the owner-only referral-fee skim (up to 25% of interest to a referrer) can never be activated and the vault is fully immutable. Vault shares are freely transferable and withdrawals are only limited by the Savings module's 3-day interest delay accounting.",
+      "description": "ERC4626 vault (svZCHF) over the Savings module: deposited ZCHF is forwarded there and interest auto-compounds into the share price. Ownership has been renounced, so its only privileged function (activating a referral-fee skim of up to 25% of interest) is permanently disabled and the vault is fully immutable.",
       "ignoreInWatchMode": [
         "price",
         "totalAssets",
@@ -577,8 +624,8 @@
         "asset": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
         "decimals": 18,
         "info": {
-          "saved": "21443227532554219147776",
-          "ticks": 1324303414198,
+          "saved": "21448935868524400209413",
+          "ticks": 1324304472143,
           "referrer": "eth:0x0000000000000000000000000000000000000000",
           "referralFeePPM": 0
         },
@@ -588,9 +635,9 @@
         "price": "1021224347557687760",
         "savings": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
         "symbol": "svZCHF",
-        "totalAssets": "21443227532554219147776",
+        "totalAssets": "21448935868524400209413",
         "totalClaimed": "6737071241256864040",
-        "totalSupply": "20997567854543260870296"
+        "totalSupply": "21003157552814588664372"
       },
       "implementationNames": {
         "eth:0xE5F130253fF137f9917C0107659A4c5262abf6b0": "SavingsVaultZCHF_2"
@@ -600,16 +647,17 @@
       "name": "TransferReference",
       "address": "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
       "type": "Contract",
+      "template": "frankencoin/TransferReference",
       "sourceHashes": [
         "0x2c86a62ceb00ccf79f684380ddc743e727db921a60c824cac70b5ebc8feaa315"
       ],
       "proxyType": "immutable",
-      "description": "Convenience contract for ZCHF transfers with an attached payment reference (e.g. for invoicing), both on Ethereum and cross-chain via CCIP. It is a registered minter, which grants it unlimited ZCHF transfer allowance from every account; its code only ever moves funds of the calling account, or of accounts that granted the caller an explicit infinite allowance.",
+      "description": "Convenience contract for ZCHF transfers with an attached payment reference, on Ethereum and cross-chain via CCIP. It is registered as a minter solely for the resulting unlimited allowance; its code only moves funds of the caller or of accounts that granted the caller an explicit infinite allowance.",
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
-          "description": "mint ZCHF to any address and burn ZCHF from any address (registered minters and their registered positions also enjoy unlimited ZCHF transfer allowance from every account), book profits to and cover losses from the ZCHF reserve held in the Equity contract, and register new minting positions that inherit these rights.",
+          "description": "mint and burn ZCHF without restriction, transfer ZCHF from any account (minters have unlimited allowance), and book profits and losses against the reserve held in the Equity contract.",
           "role": ".minters"
         }
       ],
@@ -630,11 +678,12 @@
       "name": "GovernanceSender",
       "address": "eth:0xFD23272DfcB13Dc3Fabd8DB851fCD4827Af876EB",
       "type": "Contract",
+      "template": "frankencoin/GovernanceSender",
       "sourceHashes": [
         "0xa8da27393f1fbdff9e759a40ce8dd796c32a9f3d9d6802efd3af637f31c1d452"
       ],
       "proxyType": "immutable",
-      "description": "Permissionless helper that pushes FPS voting-power snapshots from the Equity contract to bridged governance contracts on other chains via CCIP, enabling qualified FPS holders to exercise governance there. Anyone can trigger a sync by paying the CCIP fee.",
+      "description": "Permissionless helper that pushes FPS voting-power snapshots to bridged governance contracts on other chains via CCIP; anyone can trigger a sync by paying the CCIP fee.",
       "deployerAddress": "eth:0xb16f9a646201af698A21Bd0D3AFDA0518A86D2A7",
       "sinceTimestamp": 1748940743,
       "sinceBlock": 22623055,
@@ -1202,8 +1251,23 @@
     ]
   },
   "usedTemplates": {
+    "frankencoin/BridgeAccounting": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "frankencoin/CCIPAdmin": "0x7b3d25750c9ea2e92807657049546ba3b26899152a56e8d2f3c0dcaebafabb85",
+    "frankencoin/Equity": "0xf863ecdb92bf8955d7f6ae1e0e9aadd60c30523eb2ff79b5b94ec9a84ff763c4",
+    "frankencoin/FPSWrapper": "0xdea7555cca5453f812b325358e4ced2fb1be1d1ec84f5e8041e6f7674c97f5c0",
+    "frankencoin/Frankencoin": "0xfe332b99b095b6de78021eda41548eb9f10372c8386e89b9deef1dbf563d508b",
+    "frankencoin/GovernanceSender": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "frankencoin/LeadrateSender": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "frankencoin/MintingHubV1": "0x8760ed03abe46cb507ea6364ccb9aad7e04b5e32c39a48cb81efd7277e495054",
+    "frankencoin/MintingHubV2": "0x6082d5e2fab5553c272fd17c02362dd886ddc80a0afd83b5349cce4812df2f46",
+    "frankencoin/PositionRoller": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "frankencoin/Savings": "0x9f26fdf0e4510441ce68ba4715fb458cac0e7d1f30ee65b9febf07a067cf55b8",
+    "frankencoin/SavingsV2": "0x9f26fdf0e4510441ce68ba4715fb458cac0e7d1f30ee65b9febf07a067cf55b8",
+    "frankencoin/SavingsVault": "0x8bd9f28462675ae9a17fb327d790d1b63978145d534932b03d99ed0f69b96487",
+    "frankencoin/StablecoinBridge": "0x5e054ca5dcc3559e081a6e43cc6d6b715e0e69cc7d52302b7396a7ecf472387f",
+    "frankencoin/TransferReference": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "transporter/TokenPool": "0xd3e2593c0a667658845c680a3433d8a2252fb4839d2e1d16674d97e3081d856d"
   },
-  "usedBlockNumbers": { "ethereum": 25780626 },
-  "permissionsConfigHash": "0x2af96253a93001875a8209efaa330133bfddbe13774b84b66dac8ccf664cc8b7"
+  "usedBlockNumbers": { "ethereum": 25780956 },
+  "permissionsConfigHash": "0x5260bbcbc303f13a6108c35d4e5855c8cbb3732266bfa1db610410152bf7261d"
 }

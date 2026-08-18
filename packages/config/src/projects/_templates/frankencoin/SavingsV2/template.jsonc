@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SavingsV2",
+  "description": "Original savings module and the system's leadrate source: MintingHubV2 positions pay this contract's rate plus their risk premium, and depositors earn it on saved ZCHF (interest is minted against the equity reserve and capped by it; 3-day interest delay on deposits). Rate changes are proposed by qualified FPS holders and take effect after 7 days unless replaced by a counter-proposal.",
+  "ignoreInWatchMode": ["currentTicks"],
+  "ignoreMethods": ["ticks"],
+  "fields": {
+    "equity": {
+      "permissions": [
+        {
+          "type": "interact",
+          "delay": "604800",
+          "description": "propose a new leadrate with 2% of FPS votes, in force after 7 days unless replaced by a counter-proposal. This sets the rate that all MintingHubV2 positions pay and SavingsV2 depositors earn."
+        }
+      ]
+    }
+  }
+}
