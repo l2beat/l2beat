@@ -7,6 +7,7 @@ import {
 } from 'react'
 import { ChartRangeControls } from '~/components/core/chart/ChartRangeControls'
 import { DashedButton } from '~/components/core/DashedButton'
+import { OverflowWrapper } from '~/components/core/OverflowWrapper'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
@@ -171,22 +172,24 @@ export function ScalingCompareCharts({
               />
             </div>
           </div>
-          {state.charts.map((config, index) => (
-            <CompareChartCard
-              // Charts carry no identity of their own in the URL, so the
-              // index is the only stable key; card-local state is limited
-              // to hydration skeletons, so remounts on removal are cheap.
-              key={index}
-              chartId={index}
-              config={config}
-              chartRange={state.chartRange}
-              projects={selectedProjects}
-              setConfig={setChartConfig(index)}
-              onRemove={
-                state.charts.length > 1 ? () => removeChart(index) : undefined
-              }
-            />
-          ))}
+          <div className="flex flex-col md:gap-2">
+            {state.charts.map((config, index) => (
+              <CompareChartCard
+                // Charts carry no identity of their own in the URL, so the
+                // index is the only stable key; card-local state is limited
+                // to hydration skeletons, so remounts on removal are cheap.
+                key={index}
+                chartId={index}
+                config={config}
+                chartRange={state.chartRange}
+                projects={selectedProjects}
+                setConfig={setChartConfig(index)}
+                onRemove={
+                  state.charts.length > 1 ? () => removeChart(index) : undefined
+                }
+              />
+            ))}
+          </div>
           <AddChartButton
             onClick={addChart}
             atCap={state.charts.length >= MAX_COMPARE_CHARTS}
@@ -273,24 +276,26 @@ function MetricSwitcher({
     return <Skeleton className="h-9 w-[300px] md:w-[340px]" />
   }
   return (
-    <RadioGroup
-      name={name}
-      aria-label="Chart metric"
-      value={value}
-      onValueChange={(value) => onValueChange(value as CompareMetricId)}
-      variant="highlighted"
-      className="h-9 max-w-full overflow-x-auto"
-    >
-      {Object.values(COMPARE_METRICS).map((metric) => (
-        <RadioGroupItem
-          key={metric.id}
-          value={metric.id}
-          className="h-full whitespace-nowrap px-1.5 text-xs md:px-2 md:text-sm"
-        >
-          {metric.label}
-        </RadioGroupItem>
-      ))}
-    </RadioGroup>
+    <OverflowWrapper className="min-w-0">
+      <RadioGroup
+        name={name}
+        aria-label="Chart metric"
+        value={value}
+        onValueChange={(value) => onValueChange(value as CompareMetricId)}
+        variant="highlighted"
+        className="h-9"
+      >
+        {Object.values(COMPARE_METRICS).map((metric) => (
+          <RadioGroupItem
+            key={metric.id}
+            value={metric.id}
+            className="h-full whitespace-nowrap px-1.5 text-xs md:px-2 md:text-sm"
+          >
+            {metric.label}
+          </RadioGroupItem>
+        ))}
+      </RadioGroup>
+    </OverflowWrapper>
   )
 }
 
@@ -305,21 +310,23 @@ function AddChartButton({
     // The button stays visible (not hidden) at the cap: a vanishing button
     // reads as a bug, while the tooltip teaches the limit. It stays a real
     // enabled element so the tooltip still receives pointer events.
-    <Tooltip>
-      <TooltipTrigger asChild disabled={!atCap}>
-        <DashedButton
-          aria-disabled={atCap}
-          onClick={atCap ? undefined : onClick}
-          className="h-12 w-full rounded-xl"
-        >
-          <PlusIcon className="size-4" />
-          Add chart
-        </DashedButton>
-      </TooltipTrigger>
-      <TooltipContent>
-        Maximum of {MAX_COMPARE_CHARTS} charts reached
-      </TooltipContent>
-    </Tooltip>
+    <div className="max-md:px-4">
+      <Tooltip>
+        <TooltipTrigger asChild disabled={!atCap}>
+          <DashedButton
+            aria-disabled={atCap}
+            onClick={atCap ? undefined : onClick}
+            className="h-12 w-full rounded-xl"
+          >
+            <PlusIcon className="size-4" />
+            Add chart
+          </DashedButton>
+        </TooltipTrigger>
+        <TooltipContent>
+          Maximum of {MAX_COMPARE_CHARTS} charts reached
+        </TooltipContent>
+      </Tooltip>
+    </div>
   )
 }
 

@@ -5,7 +5,7 @@ import type {
   TvsToken,
   ValueFormula,
 } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
@@ -33,10 +33,11 @@ export interface CompareProjectEntry {
 }
 
 /**
- * The selectable universe of the compare page: live scaling projects only
- * (rollups, validiums & optimiums, others) - no archived, no upcoming,
- * no Ethereum. Ordered by TVS descending, which is the order the picker
- * shows them in.
+ * The selectable universe of the compare page: Ethereum as the baseline,
+ * then live scaling projects only (rollups, validiums & optimiums, others) -
+ * no archived, no upcoming. Projects are ordered by TVS descending, which is
+ * the order the picker shows them in; Ethereum is pinned first so the
+ * baseline is easy to find rather than buried among 0-TVS projects.
  */
 export async function getCompareProjectEntries(): Promise<
   CompareProjectEntry[]
@@ -51,7 +52,7 @@ export async function getCompareProjectEntries(): Promise<
     get7dTvsBreakdown({ type: 'layer2' }),
   ])
 
-  return projects
+  const entries = projects
     .map((project) => ({
       id: project.id,
       slug: project.slug,
@@ -64,6 +65,25 @@ export async function getCompareProjectEntries(): Promise<
       hasDaTracking: (project.daTrackingConfig?.length ?? 0) > 0,
     }))
     .sort((a, b) => b.tvs - a.tvs || a.name.localeCompare(b.name))
+  return [getEthereumEntry(), ...entries]
+}
+
+/**
+ * Ethereum as a compare entry. Only activity tracks it, so on every other
+ * metric it is marked "no data" like any project without that tracking.
+ */
+function getEthereumEntry(): CompareProjectEntry {
+  return {
+    id: ProjectId.ETHEREUM,
+    slug: 'ethereum',
+    name: 'Ethereum',
+    shortName: undefined,
+    iconUrl: manifest.getUrl('/icons/ethereum.png'),
+    tvsSinceTimestamp: undefined,
+    costsSinceTimestamp: undefined,
+    tvs: 0,
+    hasDaTracking: false,
+  }
 }
 
 function getCostsSinceTimestamp(
