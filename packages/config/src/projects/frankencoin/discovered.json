@@ -1,6 +1,6 @@
 {
   "name": "frankencoin",
-  "timestamp": 1787043820,
+  "timestamp": 1787044896,
   "configHash": "0xd40829085d971d8fe740f8f621ecf8e7e38766e7425722d1792601f3de999246",
   "entries": [
     {
@@ -64,10 +64,10 @@
         "DOMAIN_SEPARATOR": "0xb0fe1d8373263d2b320b24a4303f6902da9771e5e1a5f379a68082aad9e4c527",
         "MIN_HOLDING_DURATION": 8153726976000,
         "name": "Frankencoin Pool Share",
-        "price": "1316125620572192667824",
+        "price": "1316133241561395638099",
         "symbol": "FPS",
-        "totalSupply": "8673270956780873563063",
-        "totalVotes": "267645669997654929703953572643313128",
+        "totalSupply": "8673295955082447425800",
+        "totalVotes": "267655492174230817897242350149142879",
         "VALUATION_FACTOR": 3,
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
@@ -133,7 +133,7 @@
       "values": {
         "$immutable": true,
         "currentRatePPM": 35000,
-        "currentTicks": 1319335140000,
+        "currentTicks": 1319372940000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
         "nextChange": 1774551239,
@@ -214,7 +214,7 @@
       "values": {
         "$immutable": true,
         "currentRatePPM": 10000,
-        "currentTicks": 1289754180000,
+        "currentTicks": 1289764980000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
         "nextChange": 1770717611,
@@ -523,7 +523,7 @@
         "$immutable": true,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x0030eba518c077921487bde9523478fa8ba39b881d0372fd1cb104a3080bfcb0",
-        "equity": "3805038040128000823285101",
+        "equity": "3805071040128000823285101",
         "MIN_APPLICATION_PERIOD": 1209600,
         "MIN_FEE": "1000000000000000000000",
         "minterReserve": "8626260624449616410628789",
@@ -1268,6 +1268,6 @@
     "frankencoin/TransferReference": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "transporter/TokenPool": "0xd3e2593c0a667658845c680a3433d8a2252fb4839d2e1d16674d97e3081d856d"
   },
-  "usedBlockNumbers": { "ethereum": 25780956 },
+  "usedBlockNumbers": { "ethereum": 25781046 },
   "permissionsConfigHash": "0x5260bbcbc303f13a6108c35d4e5855c8cbb3732266bfa1db610410152bf7261d"
 }
