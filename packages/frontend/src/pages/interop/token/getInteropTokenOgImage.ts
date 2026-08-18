@@ -5,6 +5,7 @@ import satori from 'satori'
 import { TokenOpengraphImage } from '~/components/opengraph-image/Token'
 import { getActiveInteropAbstractTokens } from '~/server/features/scaling/interop/token/getInteropAbstractTokens'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
+import { formatIssuer } from '~/utils/formatIssuer'
 
 const OG_IMAGE_SIZE = { width: 1200, height: 630 }
 const ICON_FETCH_TIMEOUT_MS = 5_000
@@ -42,7 +43,7 @@ async function renderInteropTokenOgImage(
       backgroundSrc: assets.backgroundSrc,
       iconSrc,
       symbol: token.symbol,
-      caption: token.issuer?.toUpperCase(),
+      caption: token.issuer ? formatIssuer(token.issuer) : undefined,
       size: OG_IMAGE_SIZE,
     }),
     {
