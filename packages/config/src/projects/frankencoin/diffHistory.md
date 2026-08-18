@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xdfa54c60ce23f1a3369e8bf1f7224d2734e61eab
+Generated with discovered.json: 0x21779a0bc8be4d0edff5f14f95bd8d8463a7401a
 
-# Diff at Tue, 18 Aug 2026 10:08:11 GMT:
+# Diff at Tue, 18 Aug 2026 13:28:24 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current timestamp: 1787047621
+- current timestamp: 1787059635
 
 ## Description
 
@@ -62,7 +62,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract MintingHubV1 (eth:0x7546762fdb1a6d9146b33960545C3f6394265219) [frankencoin/MintingHubV1]
-    +++ description: Deprecated first version of the minting hub with the same oracle-free, auction-policed design (upfront fees instead of continuous interest). The official frontend no longer supports it, but it remains a registered minter forever and stays permissionlessly usable.
+    +++ description: Deprecated first version of the minting hub with the same oracle-free, auction-policed design (fixed upfront fees instead of the leadrate-linked interest of V2). The official frontend no longer supports it, but it remains a registered minter forever and stays permissionlessly usable.
 ```
 
 ```diff
@@ -92,13 +92,13 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract Frankencoin (eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB) [frankencoin/Frankencoin]
-    +++ description: The ZCHF stablecoin token. Immutable and ownerless: supply is controlled exclusively by registered 'minter' modules. Anyone can apply to add a minter by paying a 1000 ZCHF fee; it becomes active unless vetoed by FPS holders with 2% of votes during the application period (at least 14 days). Once active, a minter is irrevocable.
+    +++ description: The ZCHF stablecoin token. Immutable and ownerless: supply is controlled exclusively by registered 'minter' modules. Anyone can apply to add a minter by paying a fee of at least 1,000 ZCHF; it becomes active unless vetoed by FPS holders with 2% of votes during the application period (at least 14 days). Once active, a minter is irrevocable.
 ```
 
 ```diff
 +   Status: CREATED
     contract MintingHubV2 (eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557) [frankencoin/MintingHubV2]
-    +++ description: Permissionless factory for collateralized ZCHF minting positions: anyone can open or clone a position with any ERC20 collateral and a self-declared liquidation price, paying a 1000 ZCHF fee. No price oracle is used; anyone can challenge an overpriced position in a collateral auction (2% challenger reward) and qualified FPS holders (2% of votes) can veto new positions during their initialization period. Live positions pay the leadrate plus a fixed risk premium and are individually registered as minters (not listed here).
+    +++ description: Permissionless factory for collateralized ZCHF minting positions: anyone can open a position with any ERC20 collateral and a self-declared liquidation price for a 1,000 ZCHF fee, or clone an approved one for free. No price oracle is used; anyone can challenge an overpriced position in a collateral auction (2% challenger reward) and qualified FPS holders (2% of votes) can veto new positions during their initialization period. Positions prepay interest (leadrate plus a fixed risk premium) at minting for the term to expiration and are individually registered as minters (not listed here).
 ```
 
 ```diff

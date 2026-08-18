@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Reserve of the Frankencoin system and its governance token (FPS): holds all ZCHF reserves and absorbs losses before ZCHF holders do. FPS is minted and redeemed permissionlessly against ZCHF at a formula price (3x underlying equity, 90-day minimum holding before redemption). Votes equal FPS balance times holding time; 2% of total votes qualifies an address (with delegates) for all veto and proposal rights in the system. There is no admin.",
+  "description": "Reserve of the Frankencoin system and its governance token (FPS): holds all ZCHF reserves and absorbs losses before ZCHF holders do. FPS is minted and redeemed permissionlessly against ZCHF at a formula price ({{VALUATION_FACTOR}}x underlying equity, 90-day minimum holding before redemption). Votes equal FPS balance times holding time; 2% of total votes qualifies an address (with delegates) for all veto and proposal rights in the system. There is no admin.",
   "ignoreMethods": ["calculateProceeds", "calculateShares"],
   "ignoreInWatchMode": ["price", "totalSupply", "totalVotes"]
 }

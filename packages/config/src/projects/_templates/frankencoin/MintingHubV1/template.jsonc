@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "MintingHubV1",
-  "description": "Deprecated first version of the minting hub with the same oracle-free, auction-policed design (upfront fees instead of continuous interest). The official frontend no longer supports it, but it remains a registered minter forever and stays permissionlessly usable.",
+  "description": "Deprecated first version of the minting hub with the same oracle-free, auction-policed design (fixed upfront fees instead of the leadrate-linked interest of V2). The official frontend no longer supports it, but it remains a registered minter forever and stays permissionlessly usable.",
   "ignoreMethods": ["challenges"],
   "fields": {
     "openedPositions": {
