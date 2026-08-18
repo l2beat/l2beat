@@ -31,15 +31,15 @@
   },
   "dependencies": {
     "@l2beat/discovery": "workspace:*",
+    "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
+    "@l2beat/validate": "workspace:*",
     "ethers": "^5.7.2",
     "lodash": "^4.17.21",
     "sqlite3": "5.1.7"
   },
   "devDependencies": {
-    "@l2beat/validate": "workspace:*",
     "@l2beat/backend-tools": "workspace:*",
-    "@l2beat/shared": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@types/diff": "^7.0.2",
     "@types/lodash": "^4.17.12",
