@@ -67,6 +67,7 @@ async function getCachedData(manifest: Manifest, slug: string, url: string) {
       'daTrackingConfig',
       'costsInfo',
       'activityConfig',
+      'crops',
     ],
   })
   if (!project) return undefined
@@ -90,6 +91,7 @@ async function getCachedData(manifest: Manifest, slug: string, url: string) {
     props: {
       ...appLayoutProps,
       projectEntry,
+      crops: project.crops,
       queryState: helpers.dehydrate(),
     },
   }

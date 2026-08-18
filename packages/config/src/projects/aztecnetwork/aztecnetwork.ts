@@ -806,4 +806,54 @@ export const aztecnetwork: ScalingProject = {
       type: 'general',
     },
   ],
+  crops: {
+    censorshipResistance: {
+      sentiment: 'warning',
+      points: [
+        'Sequencing is permissionless with no single privileged actor.',
+        'The protocol cannot be paused and the exit window is infinite.',
+      ],
+      missing: [
+        'It lacks determinism: there is no L1 forced-transaction queue and no deterministic maximum inclusion delay, so inclusion is only probabilistic.',
+      ],
+    },
+    openSource: {
+      sentiment: 'good',
+      points: [
+        'Apache 2.0 licensed.',
+        'The onchain verifier has been reproduced.',
+        'The rollup is even forkable onchain by design.',
+      ],
+      notReviewed: [
+        'Node build reproducibility, as distinct from the verifier.',
+      ],
+    },
+    privacy: {
+      sentiment: 'good',
+      points: [
+        'Privacy is protocol-native: the AztecVM supports private and public smart contracts.',
+        'Balances and identities in private state are encrypted.',
+        'Each private transaction is proven client-side.',
+      ],
+      notReviewed: [
+        'Anonymity set size.',
+        'What becomes visible when a transaction touches public state.',
+      ],
+    },
+    security: {
+      sentiment: 'warning',
+      status: 'partiallyReviewed',
+      points: [
+        'State is validated with validity proofs and the v5 rollup is immutable.',
+      ],
+      missing: [
+        'The bridge was insecure until the very recent v5 upgrade (July 2026), leaving a migration risk and burden.',
+      ],
+      notReviewed: [
+        'Quantum safety, which is currently unclear.',
+        'Multiproof.',
+        'Circuit breakers and rate limits.',
+      ],
+    },
+  },
 }
