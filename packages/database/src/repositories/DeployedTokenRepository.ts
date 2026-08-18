@@ -17,7 +17,7 @@ export type DeployedTokenRecord = {
   abstractTokenId: string | null
   decimals: number
   deploymentTimestamp: UnixTime
-  ignored: boolean
+  ignored?: boolean
   metadata: DeployedTokenMetadata | null
   abstractTokenAssignmentProof?: unknown
 }

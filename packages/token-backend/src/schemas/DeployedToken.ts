@@ -23,7 +23,7 @@ export const DeployedTokenRecord = v.object({
   abstractTokenId: v.union([v.string(), v.null()]),
   decimals: v.number(),
   deploymentTimestamp: v.number(),
-  ignored: v.boolean(),
+  ignored: v.boolean().optional(),
   metadata: v.union([Metadata, v.null()]),
   abstractTokenAssignmentProof: v.unknown(),
 })
