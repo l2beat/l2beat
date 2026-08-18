@@ -1,11 +1,6 @@
 # Submit your protocol — The Infinite Garden
 
-Answer what applies and send it back to us. Partial answers are fine: anything
-left blank becomes a caveat in the write-up rather than a reason to reject.
-Everything you send is public.
-
-Multiple-choice questions are marked `[choose one]` or `[choose all]`.
-
+Answer what applies and publish as a forum post.
 ---
 
 ## 1. The basics
