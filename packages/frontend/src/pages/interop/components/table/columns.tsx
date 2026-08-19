@@ -96,7 +96,7 @@ const homeCommonColumns = [
   logoColumn,
   makeNameColumn({
     nameMaxWidthClass: 'max-w-[112px]',
-    headClassName: 'min-w-[7.5rem]',
+    headClassName: 'min-w-[7.5rem] lg:pl-2.5',
     cellClassName: 'lg:pl-2.5',
   }),
 ]
@@ -373,5 +373,9 @@ export function getAllProtocolsColumns(
 }
 
 export function getHomeTopInteropProtocolsColumns() {
-  return [...homeCommonColumns, categoryColumn, last24hVolumeColumn]
+  return [
+    ...homeCommonColumns,
+    categoryColumn,
+    { ...last24hVolumeColumn, header: 'Last 24h volume' },
+  ]
 }

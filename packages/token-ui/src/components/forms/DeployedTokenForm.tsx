@@ -30,6 +30,7 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -120,6 +121,7 @@ export const DeployedTokenSchema = v.object({
   abstractTokenId: v.string().optional(),
   deploymentTimestamp: v.string(),
   comment: v.string().optional(),
+  ignored: v.boolean(),
   metadata: Metadata.optional(),
 })
 
@@ -656,6 +658,30 @@ export function DeployedTokenForm({
                   <Textarea {...field} />
                 </FormControl>
                 <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="ignored"
+            render={({ field }) => (
+              <FormItem className="grid gap-1">
+                <div className="flex flex-row items-center gap-2">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={(checked) =>
+                        field.onChange(checked === true)
+                      }
+                    />
+                  </FormControl>
+                  <FormLabel className="font-normal text-sm">Ignored</FormLabel>
+                </div>
+                <FormDescription>
+                  When ignoring, put reason in the comment. Ignored tokens stay
+                  in TokenDB but are excluded from graphs and calculations. You
+                  may need to refresh financials after ignoring a token.
+                </FormDescription>
               </FormItem>
             )}
           />

@@ -4,6 +4,7 @@
 
 - [TokenDB](#tokendb)
   - [Two "planning" subsystems — what they share, what they don't](#two-planning-subsystems--what-they-share-what-they-dont)
+  - [The `ignored` flag on deployed tokens](#the-ignored-flag-on-deployed-tokens)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -90,3 +91,55 @@ them. The non-swapping-transfer proof carries the *full* transfer
 because the interop transfer table is a sliding 7-day window; BigInt raw
 amounts are stored in JSON as decimal strings. A persistent history
 table will land in a follow-up change.
+
+## The `ignored` flag on deployed tokens
+
+`DeployedToken.ignored` is a manually set, **interpretation-level**
+flag: "this deployment is noise (a test token, a broken deployment) —
+do not let it shape anything we compute or show". It is *not* an
+observation-level filter, and keeping that distinction is crucial:
+the observation/interpretation doctrine in
+[token relations](./token_relations.md) applies unchanged.
+
+What stays exactly the same for an ignored token:
+
+- Interop transfer capture and token relation ingestion record its
+  activity like any other token's, and automatic token ingestion keeps
+  maintaining the row (it never clears a manually set `ignored` — see
+  [automatic token ingestion](./automatic_token_ingestion.md)).
+- Ordinary read endpoints (tokens by key, relations) keep returning it,
+  and raw transfer lists on l2beat.com keep showing its transfers. The
+  observations exist and stay inspectable — e.g. to look at minters.
+- token-ui keeps showing the token (marked as ignored), because
+  operators must be able to audit it and un-ignore it. Generic
+  repository getters must therefore never filter on the flag.
+
+What changes — each a deliberate, named interpretation boundary:
+
+- **Financial interpretation** (the choke point for l2beat.com token
+  data): the interop financials loop refuses to price ignored tokens,
+  so their transfers never get `abstractTokenId`/price/value stamped
+  onto them. Everything derived from those stamps — the
+  `AggregatedInteropToken` rows behind every token list and dashboard,
+  volumes, token pairs (which fold unstamped transfers into their
+  existing `unknown` bucket) — excludes the token with no further
+  filtering. `AggregatedInteropDeployedToken` is the one aggregate
+  keyed by raw address, so it still records the activity; its only
+  consumer filters at read time (next point).
+- **Presentation**: l2beat.com reads that list deployed tokens straight
+  from TokenDB skip ignored rows (currently one such read: the "Onchain
+  deployments" section of an interop token page).
+- **Graph clustering**: the token-ui relations graph omits the node and
+  every edge touching it, so an ignored token cannot merge two clusters
+  (see [token relations](./token_relations.md)).
+
+Flagging a token that already has processed transfers requires
+reprocessing those transfers (interop dashboard → financials →
+reprocess) so the already-written stamps are cleared; the next hourly
+aggregate snapshot is then clean. Older snapshots keep whatever
+interpretation was current when they were built.
+
+Future consumers should follow the same rule: apply `ignored` at a
+named interpretation or presentation boundary, never inside shared
+reads — admin tooling, ingestion, and the financials loop itself all
+need to see ignored rows to do their jobs.

@@ -1,4 +1,4 @@
-import { formatDuration } from '~/components/chart/liveness/LivenessChart'
+import { formatSeconds } from '@l2beat/shared-pure'
 import type { LivenessAnomaly } from '~/server/features/layer2s/liveness/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
@@ -27,7 +27,7 @@ export function AnomalyText({
             getDurationColorClassName(anomaly.durationInSeconds),
           )}
         >
-          {formatDuration(anomaly.durationInSeconds)}
+          {formatSeconds(anomaly.durationInSeconds)}
         </span>
         {' ('}since{' '}
         <span className="font-medium">
@@ -40,7 +40,7 @@ export function AnomalyText({
             getDurationColorClassName(anomaly.avgInterval),
           )}
         >
-          {formatDuration(anomaly.avgInterval)}
+          {formatSeconds(anomaly.avgInterval)}
         </span>{' '}
         on average.
       </p>
@@ -60,7 +60,7 @@ export function AnomalyText({
           getDurationColorClassName(anomaly.durationInSeconds),
         )}
       >
-        {formatDuration(anomaly.durationInSeconds)}
+        {formatSeconds(anomaly.durationInSeconds)}
       </span>
       {' ('}from{' '}
       <span className="font-medium">
@@ -82,7 +82,7 @@ export function AnomalyText({
           getDurationColorClassName(anomaly.avgInterval),
         )}
       >
-        {formatDuration(anomaly.avgInterval)}
+        {formatSeconds(anomaly.avgInterval)}
       </span>{' '}
       on average.
     </p>

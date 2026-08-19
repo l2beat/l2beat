@@ -291,7 +291,12 @@ function AbstractTokenView({
                     key={`${token.chain}+${token.address}`}
                     className="flex items-center justify-between gap-2 px-6 odd:bg-muted"
                   >
-                    {token.chain} ({token.symbol})
+                    <span>
+                      {token.chain} ({token.symbol}){' '}
+                      {token.ignored && (
+                        <span title="Ignored deployed token">⛔</span>
+                      )}
+                    </span>
                     <Button asChild variant="link" size="icon">
                       <Link to={`/tokens/${token.chain}/${token.address}`}>
                         <ArrowRightIcon />

@@ -2615,7 +2615,7 @@ function getOracleChallengePeriod(templateVars: OpStackConfigCommon): number {
         'AnchorStateRegistry',
         'challengePeriodFromOracle',
       )
-    if (fromAnchor !== undefined) return fromAnchor
+    if (typeof fromAnchor === 'number') return fromAnchor
   }
   return 86400
 }

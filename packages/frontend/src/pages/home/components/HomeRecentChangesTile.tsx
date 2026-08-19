@@ -34,7 +34,7 @@ export function HomeRecentChangesTile({
         onClick={() => setDialogOpen(true)}
         disabled={disabled}
         className={cn(
-          'group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors md:rounded-lg md:px-7 md:py-5',
+          'group flex w-full items-center gap-3 px-4 py-3 text-left transition-colors md:rounded-sm md:px-7 md:py-5',
           !disabled && 'hover:bg-surface-secondary/50',
           disabled && 'cursor-default',
         )}

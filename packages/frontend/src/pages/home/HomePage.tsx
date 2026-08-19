@@ -81,8 +81,8 @@ export function HomePage({
           childrenWrapperClassName="max-md:bg-surface-primary"
         >
           <MainPageHeader>Home</MainPageHeader>
-          <div className="flex flex-col md:gap-4 xl:gap-6 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
-            <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-[minmax(260px,280px)_minmax(280px,1fr)] xl:gap-6 2xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)]">
+          <div className="flex flex-col md:gap-4 [&_.primary-card]:max-md:rounded-none [&_.primary-card]:max-md:border-divider [&_.primary-card]:max-md:border-b">
+            <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-[minmax(260px,280px)_minmax(280px,1fr)] 2xl:grid-cols-[minmax(260px,340px)_minmax(340px,1fr)_minmax(400px,1.35fr)]">
               <HomeStatsStrip counts={projectCounts} className="lg:hidden" />
               <div className="flex min-w-0 flex-col gap-4 max-lg:hidden">
                 <HomeRecentProjectsCard
@@ -106,7 +106,7 @@ export function HomePage({
                   defaultSelectedFlowChains={defaultSelectedFlowChains}
                 />
               </div>
-              <div className="flex min-h-0 min-w-0 flex-col md:grid md:grid-cols-2 md:gap-4 lg:max-2xl:col-span-full xl:gap-6 2xl:flex">
+              <div className="flex min-h-0 min-w-0 flex-col md:grid md:grid-cols-2 md:gap-4 lg:max-2xl:col-span-full 2xl:flex">
                 <div className="flex min-h-0 min-w-0 flex-col 2xl:flex-1">
                   <HomeL2Card
                     charts={l2Charts}
@@ -130,7 +130,7 @@ export function HomePage({
               <HomeWhatsNewCard item={whatsNewItem} />
               <HomeRecentProjectsCard projects={recentProjects} />
             </div>
-            <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-2 xl:gap-6">
+            <div className="grid grid-cols-1 md:gap-4 lg:grid-cols-2">
               <HomeTopInteropProtocolsCard
                 interopChains={interopChains}
                 defaultSelectedFlowChains={defaultSelectedFlowChains}

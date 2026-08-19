@@ -2,7 +2,7 @@ import {
   assert,
   ChainSpecificAddress,
   EthereumAddress,
-  formatLargeNumber,
+  formatNumber,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -198,22 +198,26 @@ export const tornadoCash: BaseProject = {
       description:
         'There is no protocol-level compliance mechanism or way to compromise user privacy.',
     },
+    noteDiscovery: {
+      description:
+        "A Tornado Cash note is generated locally at deposit time and kept by the user, so normally nothing has to be discovered to spend it. Users can additionally back up notes onchain: the note is encrypted to a user's private key and is emitted as an `EncryptedNote` event on `TornadoRouter`. The recovery downloads all such events and tries to decrypt each one locally. Because every event is requested, the RPC provider learns neither which events belong to the user, nor into which pool the user has deposited from the queries alone.",
+    },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
     riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('tornado-cash', 'upgradesAndGovernance'),
       governanceInfo: {
         upgrades: {
-          'Normal upgrade path': `Lock and optionally delegate TORN in the [Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) → submit a proposal with at least **${formatLargeNumber(Number(proposalThreshold / 10n ** 18n))} TORN** → wait ${formatSeconds(votingDelay)} → vote for ${formatSeconds(votingPeriod)} (extended by ${formatSeconds(voteExtendTime)} if the outcome changes during the last ${formatSeconds(closingPeriod)}) → pass with a simple majority and **${formatLargeNumber(Number(quorumVotes / 10n ** 18n))} TORN** quorum → wait ${formatSeconds(executionDelay)} → permissionless execution within ${formatSeconds(executionExpiration)}. The DAO controls protocol and periphery components, but cannot upgrade or modify existing pools.`,
+          'Normal upgrade path': `Lock and optionally delegate TORN in the [Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) → submit a proposal with at least **${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN** → wait ${formatSeconds(votingDelay)} → vote for ${formatSeconds(votingPeriod)} (extended by ${formatSeconds(voteExtendTime)} if the outcome changes during the last ${formatSeconds(closingPeriod)}) → pass with a simple majority and **${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN** quorum → wait ${formatSeconds(executionDelay)} → permissionless execution within ${formatSeconds(executionExpiration)}. The DAO controls protocol and periphery components, but cannot upgrade or modify existing pools.`,
           'Exit window': `**${formatSeconds(executionDelay)}** for DAO-controlled changes — an accepted proposal remains timelocked for this period before it can be executed. Existing Tornado Cash pools are immutable and cannot be upgraded by the DAO.`,
         },
         tokenGovernance: {
-          'Governance token': `\`TORN\`, 1 token = 1 vote, delegated. Total supply: **${formatLargeNumber(Number(tornTotalSupply / 10n ** 18n))} TORN**, DAO-owned TORN (unavailable for voting): **${formatLargeNumber(Number(tornTreasury / 10n ** 18n))} TORN**, staked for voting: **${formatLargeNumber(Number(tornStaked / 10n ** 18n))} TORN**, the rest is circulating supply.`,
+          'Governance token': `\`TORN\`, 1 token = 1 vote, delegated. Total supply: **${formatNumber(Number(tornTotalSupply / 10n ** 18n))} TORN**, DAO-owned TORN (unavailable for voting): **${formatNumber(Number(tornTreasury / 10n ** 18n))} TORN**, staked for voting: **${formatNumber(Number(tornStaked / 10n ** 18n))} TORN**, the rest is circulating supply.`,
           'Stake lock': `After voting or proposing, staked tokens are locked for **${stakeLockPeriod}** after proposal ends, preventing governance hopping.`,
           'Voting venue':
             '[Governance contract](https://etherscan.io/address/0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) on Ethereum. Proposals are viewable on the voting tab of the frontend, see the note on secure frontend above.',
-          'Proposal threshold': `**${formatLargeNumber(Number(proposalThreshold / 10n ** 18n))} TORN** locked in governance.`,
-          Quorum: `**${formatLargeNumber(Number(quorumVotes / 10n ** 18n))} TORN**, with a simple majority required for acceptance.`,
+          'Proposal threshold': `**${formatNumber(Number(proposalThreshold / 10n ** 18n))} TORN** locked in governance.`,
+          Quorum: `**${formatNumber(Number(quorumVotes / 10n ** 18n))} TORN**, with a simple majority required for acceptance.`,
           'Execution model': `**Permissionless execution after an onchain vote and timelock.** An accepted proposal waits ${formatSeconds(executionDelay)} and can then be executed by anyone within ${formatSeconds(executionExpiration)}. Proposal executable payload is committed in the \`propose()\` transaction.`,
         },
       },
