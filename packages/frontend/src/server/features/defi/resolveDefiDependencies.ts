@@ -53,20 +53,6 @@ export async function getDefiDependencyProjectsById(
   )
 }
 
-export interface DefiDependencyProject {
-  name: string
-  slug: string
-  href?: string
-}
-
-export interface DefiDependency {
-  name: string
-  icon: string
-  description: string
-  href?: string
-  reviewed: boolean
-}
-
 export function resolveDefiDependencies(
   dependencies: ProjectExternalDependency[],
   projectsById: ReadonlyMap<string, DefiDependencyProject>,
