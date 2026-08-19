@@ -17,7 +17,7 @@ export const ENDPOINTS: EndpointDoc[] = [
     path: '/api/garden/project/lookup',
     summary: 'Which protocol is this address?',
     description:
-      'Hand it the contracts a user is about to touch; it answers with the protocols they belong to and a rating per crop. Addresses are matched against L2BEAT discovery - proxies, implementations, and the accounts holding permissions over them - for reviewed protocols only, so anything else comes back empty rather than as a guess.',
+      'Hand it the contracts a user is about to touch; it answers with the protocols they belong to and a rating per crop.',
     params: [
       {
         name: 'addresses',
@@ -54,7 +54,7 @@ export const ENDPOINTS: EndpointDoc[] = [
     path: '/api/garden/project/{id}',
     summary: 'Everything about one protocol',
     description:
-      'The same crops, plus the reasoning behind each one: what the rating rests on, what is missing, and what we have not assessed. `{id}` is the project id or its slug; anything we have not reviewed answers 404.',
+      '`{id}` is the project id or its slug; anything we have not reviewed answers 404.',
     request: `${BASE}/api/garden/project/tornado-cash`,
     response: `{
   "attestations": { ... },
@@ -81,25 +81,23 @@ export const ENDPOINTS: EndpointDoc[] = [
     path: '/api/garden/crops',
     summary: 'The whole garden',
     description:
-      'Every reviewed protocol in one response, plus `framework` - the label and definition of each crop, and of every sentiment and status we might send. Use it to mirror the garden or to warm a cache.',
+      'Every reviewed protocol in one response, and the attestation that names them. Use it to mirror the garden or to warm a cache; for a single lookup on a request path, prefer the two endpoints above.',
     request: `${BASE}/api/garden/crops`,
     response: `{
-  "framework": {
-    "crops": [
-      { "key": "censorshipResistance", "letter": "CR", "label": "Censorship resistance", "description": "…" },
-      ...
-    ],
-    "sentiments": { "good": "Good", "warning": "Medium", "bad": "Bad", ... },
-    "statuses": { "reviewed": "Reviewed", "partiallyReviewed": "Partially reviewed", ... }
-  },
   "attestations": {
+    "network": "ethereum",
+    "chainId": 1,
+    "isTestnet": false,
+    "eas": "0x…",
     "schemaUid": "0x…",
+    "schema": "string[] projectIds,uint64 reviewedAt,uint32 revision",
     "attester": "0x…",
     "current": {
       "uid": "0x…",
       "revision": 3,
       "reviewedAt": 1787132641,
       "projectIds": ["aztecnetwork", "ethscriptions", "tornado-cash", ...],
+      "txHash": "0x…",
       "explorerUrl": "…"
     }
   },
@@ -120,6 +118,5 @@ export const VERIFY_STEPS = [
 export const BADGE_RULES = [
   'Link the badge to your page in the garden, so a visitor can read the evaluation rather than only see that one exists.',
   'The badge says we have reviewed you and named you onchain. It is not a certification, an audit, or an endorsement - please do not describe it as any of those.',
-  'Do not recolour the badge, change the wording, or use it if we have removed you from the set. Adding your own frame or placing it in a footer row is fine.',
   'Your rating can change. The badge deliberately does not show the four crops, so it never goes stale on your site - the link behind it always shows the current evaluation.',
 ]

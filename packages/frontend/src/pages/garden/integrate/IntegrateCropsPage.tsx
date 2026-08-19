@@ -177,10 +177,7 @@ function ConsumerSections({
     <>
       <SectionDivider id={CONSUMERS_ID} label="For wallets and interfaces" />
       <section className="mt-6 md:mt-8">
-        <SectionHeading
-          title="Endpoints"
-          description="No API key, no signup, no rate limit to negotiate. Every endpoint sends Access-Control-Allow-Origin: *, so a wallet or a block explorer can call it straight from the browser. Please attribute the evaluations to L2BEAT and link back to the protocol page."
-        />
+        <SectionHeading title="Endpoints" description="" />
         <div className="flex flex-col gap-4 md:gap-6">
           {ENDPOINTS.map((endpoint) => (
             <EndpointCard key={endpoint.path} endpoint={endpoint} />
@@ -231,7 +228,7 @@ function AttestationsSection({
     <section className="mt-8 md:mt-12">
       <SectionHeading
         title="Verifying the set onchain"
-        description="One attestation on Ethereum Attestation Service names every protocol we have reviewed. Read it and you have the set without trusting an HTTP response; then ask this API what each id is worth."
+        description="One attestation on Ethereum Attestation Service names every protocol we have reviewed. Ask the API for details."
       />
       <PrimaryCard className="max-md:mx-4 md:p-8">
         <dl className="grid gap-x-8 gap-y-3 md:grid-cols-[auto_1fr]">
