@@ -78,16 +78,11 @@ export async function getPrivacyProjectEntry(
   const defaultChartRange = optionToRange('1y')
   const [
     contractUtils,
-    allProjectsWithContracts,
     allProjects,
     tvs,
-    zkCatalogProjects,
     totalValueLockedUsd,
   ] = await Promise.all([
     getContractUtils(),
-    ps.getProjects({
-      select: ['contracts'],
-    }),
     ps.getProjects({
       optional: [
         'display',
@@ -98,9 +93,6 @@ export async function getPrivacyProjectEntry(
       ],
     }),
     get7dTvsBreakdown({ type: 'all' }),
-    ps.getProjects({
-      select: ['zkCatalogInfo'],
-    }),
     getTotalValueLockedUsd(details, helpers, defaultChartRange),
   ])
 
@@ -124,8 +116,8 @@ export async function getPrivacyProjectEntry(
     },
     contractUtils,
     EMPTY_PROJECTS_CHANGE_REPORT,
-    zkCatalogProjects,
-    allProjectsWithContracts,
+    [],
+    [],
     EMPTY_TVS_BREAKDOWN,
   )
 

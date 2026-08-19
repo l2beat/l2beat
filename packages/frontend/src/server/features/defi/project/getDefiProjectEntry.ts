@@ -65,18 +65,10 @@ export async function getDefiProjectEntry(
   const [
     contractUtils,
     projectsChangeReport,
-    allProjectsWithContracts,
-    zkCatalogProjects,
     dependencyProjectsById,
   ] = await Promise.all([
     getContractUtils(),
     getProjectsChangeReport(),
-    ps.getProjects({
-      select: ['contracts'],
-    }),
-    ps.getProjects({
-      select: ['zkCatalogInfo'],
-    }),
     getDefiDependencyProjectsById(project.externalDependencies),
     project.tvsConfig !== undefined
       ? helpers.queryClient.prefetchQuery(
@@ -110,8 +102,8 @@ export async function getDefiProjectEntry(
     },
     contractUtils,
     projectsChangeReport,
-    zkCatalogProjects,
-    allProjectsWithContracts,
+    [],
+    [],
     EMPTY_TVS_BREAKDOWN,
   )
 
