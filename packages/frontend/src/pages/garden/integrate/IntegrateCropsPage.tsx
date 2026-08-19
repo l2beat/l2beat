@@ -54,7 +54,7 @@ export function IntegrateCropsPage({
           <h1 className="pt-5 font-bold text-2xl max-md:px-4 lg:hidden">
             Integrate CROPS
           </h1>
-          <MainPageHeader description="Two ways in. Show your users what a protocol is made of, or show your users that we have looked at yours.">
+          <MainPageHeader description="">
             Integrate CROPS
           </MainPageHeader>
           <main>
@@ -78,7 +78,7 @@ function AudiencePicker() {
         href={`#${CONSUMERS_ID}`}
         eyebrow="For wallets, explorers and interfaces"
         title="Show the crops"
-        description="Ask us what a contract belongs to and get back the four crops for that protocol, ready to render at the moment a user is about to sign. No key, no signup."
+        description="Get the crops for a protocol based on id or a contract address."
         cta="Read the API"
         art={<WalletMock />}
       />
@@ -86,7 +86,7 @@ function AudiencePicker() {
         href={`#${PROTOCOLS_ID}`}
         eyebrow="For reviewed protocols"
         title="Wear the badge"
-        description="If we have reviewed you and named you in the onchain set, you can say so on your own site. Copy one line of HTML - no script, no image hosted by us."
+        description="If we have reviewed you and named you in the onchain set, you can say so on your own site."
         cta="Get the badge"
         art={<BadgeArt />}
       />
