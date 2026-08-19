@@ -43,7 +43,7 @@ import {
   toCompareUrlState,
 } from '../utils/compareChartState'
 import { parseCompareStateFromSearchParams } from '../utils/parseCompareStateFromSearchParams'
-import { CompareChartHoveredContext } from './CompareChartHoverContext'
+import { CompareChartHoveredProvider } from './CompareChartHoverContext'
 import { CompareProjectPicker } from './CompareProjectPicker'
 import { CompareSeriesProvider } from './CompareSeriesContext'
 
@@ -244,7 +244,7 @@ function CompareChartCard({
           </button>
         )}
       </div>
-      <CompareChartHoveredContext.Provider value={isHovered}>
+      <CompareChartHoveredProvider isHovered={isHovered}>
         <div
           onMouseEnter={() => onHoverChange(true)}
           onMouseLeave={() => onHoverChange(false)}
@@ -255,7 +255,7 @@ function CompareChartCard({
             chartRange={chartRange}
           />
         </div>
-      </CompareChartHoveredContext.Provider>
+      </CompareChartHoveredProvider>
       {metric.Controls && (
         <div className="mt-3 flex flex-wrap items-center gap-1">
           <metric.Controls config={config} setConfig={setConfig} />
