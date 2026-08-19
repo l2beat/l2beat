@@ -1,10 +1,10 @@
-import { Button } from '~/components/core/Button'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { cn } from '~/utils/cn'
+import { CalloutCard } from '../components/CalloutCard'
 import { SectionHeading } from '../components/SectionHeading'
 import { SproutIcon } from '../components/SproutIcon'
 import { GARDEN_ANIMATIONS_CSS, GARDEN_SURFACES_CSS } from '../gardenCss'
@@ -312,20 +312,15 @@ function ProtocolSection() {
         </PrimaryCard>
       </section>
 
-      <section className="mt-8 md:mt-12">
-        <SectionHeading
+      <section className="mt-8 max-md:mx-4 md:mt-12">
+        <CalloutCard
+          horizontal
+          tone="garden"
           title="Not reviewed yet?"
           description="The garden is open. Answer the submission questions and we will evaluate the protocol against the four crops; if it lands in the set, the badge above is yours."
-          size="md"
+          cta="Submit your protocol"
+          href={SUBMIT_PROTOCOL_PATH}
         />
-        <div className="max-md:mx-4">
-          <Button asChild variant="fill" className="gap-2">
-            <a href={SUBMIT_PROTOCOL_PATH}>
-              <SproutIcon />
-              Submit your protocol
-            </a>
-          </Button>
-        </div>
       </section>
     </>
   )
