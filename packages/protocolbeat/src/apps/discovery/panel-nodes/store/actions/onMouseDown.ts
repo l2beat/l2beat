@@ -76,7 +76,7 @@ export function onMouseDown(
           const field = node.fields.find(
             (f) => !hiddenFields?.has(f.name) && boxContains(f.box, x, y),
           )
-          if (field !== undefined) {
+          if (field?.target !== undefined) {
             selected = [field.target]
           }
         } else if (!event.shiftKey && !includes) {

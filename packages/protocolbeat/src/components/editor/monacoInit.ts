@@ -7,6 +7,7 @@ import 'monaco-editor/esm/vs/language/json/monaco.contribution'
 import { StandaloneServices } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneServices'
 
 import { getSharedDiffProvider } from './diff/customDiffProvider'
+import * as cairo from './languages/cairo'
 import { jsonDiagnostics } from './languages/json'
 import * as solidity from './languages/solidity'
 import { theme } from './theme'
@@ -151,6 +152,10 @@ function init() {
   monaco.languages.register({ id: 'solidity' })
   monaco.languages.setMonarchTokensProvider('solidity', solidity.language)
   monaco.languages.setLanguageConfiguration('solidity', solidity.configuration)
+
+  monaco.languages.register({ id: 'cairo' })
+  monaco.languages.setMonarchTokensProvider('cairo', cairo.language)
+  monaco.languages.setLanguageConfiguration('cairo', cairo.configuration)
 
   monaco.languages.json.jsonDefaults.setDiagnosticsOptions(jsonDiagnostics)
 

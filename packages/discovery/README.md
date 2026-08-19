@@ -1480,3 +1480,107 @@ The precedence order is as follows: Global < Project Global < Contract Local
 - Contract Local Configurations: Define these within the configuration of a specific contract in `config.jsonc`. Use the `"formatConfigs"` key within the contract's configuration object.
 
 This structure allows for clear and organized management of formatting definitions, ensuring that your values are formatted precisely where needed using the `format` BLIP function.
+
+# Starknet discovery
+
+Starknet projects are discovered with a dedicated mini-engine (`src/starknet/`)
+instead of the EVM engine, invoked via:
+
+```
+l2b discover-starknet <project> [-m "diffHistory message"]
+```
+
+It produces the same artifacts as EVM discovery — `discovered.json`, `.flat/`
+sources, `diffHistory.md`, clingo-modelled permissions — so the discovery UI,
+diff tooling and permission preview work unchanged. Plain `l2b discover`
+redirects to this command for Starknet-only projects.
+
+Pass `--dev` to rerun on the block and timestamp of the existing
+`discovered.json` — reruns are then byte-stable, which makes config and
+template iteration diffable.
+
+## Configuration
+
+Starknet addresses use the `strk:` prefix with the canonical zero-padded
+64-hex felt form, e.g.
+`strk:0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a`.
+
+Required entries in `packages/config/.env`:
+
+- `STARKNET_RPC_URL_FOR_DISCOVERY` (or `STARKNET_RPC_URL`) — any Starknet
+  JSON-RPC endpoint (spec ≥ 0.7). Alternatively set `STARKSCAN_API_KEY` to use
+  the Starkscan RPC.
+- `VOYAGER_API_KEY` — verified Cairo sources, deployment blocks and name
+  aliases. Without it, sources fall back to ABI-generated interfaces and role
+  scans start from block 0. Voyager 404s (unverified classes) are cached;
+  transient Voyager failures abort the run so they never poison the cache
+  with a false "unverified" answer.
+- `STARKNET_EVENT_BLOCK_SPAN_FOR_DISCOVERY` — max block range per
+  `starknet_getEvents` call. Default 10000 (the Starkscan cap); Alchemy
+  accepts 1000000, which makes full-history role scans ~100x cheaper.
+
+Because the update monitor cannot run Starknet discovery yet, Starknet
+projects MUST set `"archived": true` in their `config.jsonc` and are refreshed
+manually with `l2b discover-starknet`.
+
+## What the engine does per contract
+
+1. `starknet_getClassHashAt` — undeployed addresses become `EOA` entries.
+2. Fetches the class and parses the on-chain Sierra ABI (no explorer needed).
+   Cairo 0 (legacy) ABIs are supported for accounts and simple getters.
+   Classes exposing the SNIP-6 account interface (`__execute__`,
+   `__validate__`, `is_valid_signature`) are classified as `EOA` (wallets)
+   and their key material is read across the common account standards
+   (the Starknet counterpart of Safe owners): `$signers`/`$threshold` for
+   StarkWare/Braavos-style and Argent multisigs, `$publicKey` for
+   OpenZeppelin single-key accounts (Cairo 0 and 1), `$owner`/`$guardian`
+   for Argent user accounts. Accounts carrying `$signers` present like EVM
+   Safes: they are typed `Multisig`, named `Multisig 1`, `Multisig 2`, ...
+   (in address order; config `names` take precedence), and their classes
+   shape-match templates like any contract (see
+   `_templates/starknet/MultisigAccount`), so a known multisig class gets
+   its description automatically.
+3. Applies a template — explicitly suggested via `fields[].template` on a
+   referrer, or shape-matched by the sha256 of the flattened source against
+   `_templates/**/shapes.json` (multiple shape entries per template cover
+   class variants).
+4. Calls every 0-arg view function (minus `ignoreMethods`) and decodes the
+   results using the Cairo type system: `u256`, `ByteArray`, `Option`,
+   arrays/spans, structs, enums. Unknown types degrade to `{ $rawFelts }`.
+   Printable `felt252` values render as Cairo short strings (`'2.0'`).
+5. Executes user-configured `call` handler fields:
+   `{ "handler": { "type": "call", "method": "<fn>", "args": [...] } }` where
+   args are raw calldata felts, numbers or `strk:`/`eth:` addresses.
+6. Reconstructs StarkWare-style roles by replaying `RoleGranted`/`RoleRevoked`
+   events into `values.$roles` (state is not readable via view functions).
+7. Applies `copy` and `edit` (BLIP) field configs — used by templates to
+   derive per-role holder fields from `$roles` so each role can carry its own
+   permission definition.
+8. Sets `proxyType: "StarkWare Replaceable"` when the class exposes the
+   replaceability interface; the class hash is tracked as `values.$classHash`.
+9. Fetches verified sources from Voyager, pruned to the Scarb packages the
+   class actually references (dev-dependencies excluded), concatenated into
+   one `.flat/<Name>.cairo` file. Unverified classes get a generated
+   interface.
+
+### Address semantics (important for reviewers)
+
+Only values decoded from Cairo `ContractAddress`-typed outputs become
+`strk:` addresses — and only those are crawled as relatives. `ClassHash` and
+`felt252` values stay plain hex so class hashes and program hashes never
+pollute the relations graph. Cairo `EthAddress` values decode to checksummed
+`eth:` addresses (displayed with Etherscan links, never crawled).
+
+## Known limitations
+
+- Cairo 0 (legacy) classes: account key getters work, but complex value
+  decoding falls back to `$rawFelts`.
+- Event decoding for roles assumes the StarkWare component layout
+  (`data = [role, account, sender]`).
+- `updateDiffHistory` diffs Starknet projects against the committed discovery
+  without re-running on the previous block, so config-only changes are not
+  separated from on-chain changes in `diffHistory.md`.
+- Cross-project references (`entrypoints`) and mixed EVM+Starknet projects
+  are not supported; Starknet contracts live in their own project folders.
+- The template shape hash covers the flattened source, so changes to the
+  flattening/pruning logic require updating `shapes.json` hashes.

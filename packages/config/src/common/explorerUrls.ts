@@ -44,4 +44,5 @@ export const EXPLORER_URLS: Record<string, string> = {
   katana: 'https://katanascan.com',
   robinhood: 'https://robinhoodchain.blockscout.com',
   bsc: 'https://bscscan.com',
+  starknet: 'https://starkscan.co',
 }

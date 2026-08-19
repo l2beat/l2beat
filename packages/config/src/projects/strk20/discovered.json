@@ -1,0 +1,331 @@
+{
+  "name": "strk20",
+  "timestamp": 1786632517,
+  "configHash": "0x0a5463bcac0c499af4dce69bca425bbf16804770605658a0d0e31413baacd339",
+  "entries": [
+    {
+      "name": "Multisig 1",
+      "address": "strk:0x00d79041634625e5288296fbc648088788710ba44903a3a49468a66567749e77",
+      "type": "EOA",
+      "template": "starknet/MultisigAccount",
+      "sourceHashes": [
+        "0x5d8fc4c35f6b9d11d5effabbc557b9a7e4ccb999c60021069f7a1b751fedf9b1"
+      ],
+      "description": "Multisig account contract on Starknet. Transactions must be approved by the configured threshold of signer keys before the account executes them.",
+      "values": {
+        "$accountClassHash": "0x6e150953b26271a740bf2b6e9bca17cc52c68d765f761295de51ceb8526ee72",
+        "$signers": [
+          "0x1d6532694c05f58cf53844683641cbd29358a66a9259d933acb31340ec93e93",
+          "0x680481fe7c279af9fd1d544e569ccd1dc1d519e178c5acebe09ebdf5db8def9"
+        ],
+        "$threshold": 2
+      },
+      "fieldMeta": {
+        "$signers": {
+          "severity": "HIGH",
+          "description": "Public keys of the signers controlling this account."
+        },
+        "$threshold": {
+          "severity": "HIGH",
+          "description": "Number of signer approvals required to execute a transaction."
+        },
+        "$accountClassHash": {
+          "description": "Sierra class hash of the account contract."
+        }
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "Multisig 2",
+      "address": "strk:0x02796da10aba2e1f445c38eba07e5a4393d6dab30d203d3432deb824e891619a",
+      "type": "EOA",
+      "template": "starknet/MultisigAccount",
+      "sourceHashes": [
+        "0x5d8fc4c35f6b9d11d5effabbc557b9a7e4ccb999c60021069f7a1b751fedf9b1"
+      ],
+      "description": "Multisig account contract on Starknet. Transactions must be approved by the configured threshold of signer keys before the account executes them.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "strk:0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a",
+          "description": "configure the privacy pool: set fees, the fee collector, the auditor and screener public keys, the proof validity window, and block open-note depositors.",
+          "role": ".appGovernors"
+        }
+      ],
+      "values": {
+        "$accountClassHash": "0x6e150953b26271a740bf2b6e9bca17cc52c68d765f761295de51ceb8526ee72",
+        "$signers": [
+          "0x7762c57be14e4355217ef44d5f92d93c07891aa4fe65fe02cddf261fbe89ecc",
+          "0x1de18f0024011e569c50943d36fa7d38069b10d1ebe300d84cd72adc56e5bee",
+          "0x5a8d1d2a65f13b9ad709837a1e8c4184ea04663170546d6bcffbdda323e889f",
+          "0x46e3bc2a540e9a98e3bd06724a693c91e1db0ed13bbc2fdafc944a51379cd2c"
+        ],
+        "$threshold": 2
+      },
+      "fieldMeta": {
+        "$signers": {
+          "severity": "HIGH",
+          "description": "Public keys of the signers controlling this account."
+        },
+        "$threshold": {
+          "severity": "HIGH",
+          "description": "Number of signer approvals required to execute a transaction."
+        },
+        "$accountClassHash": {
+          "description": "Sierra class hash of the account contract."
+        }
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "PrivacyPool",
+      "address": "strk:0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a",
+      "type": "Contract",
+      "template": "starknet/PrivacyPool",
+      "sourceHashes": [
+        "0x57aa2376663a631f254b875341bbac6e3387a56a6e5529be96b254046524e4f3"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "description": "STRK-20 privacy pool on Starknet. Users deposit tokens into private notes and transact them privately. Client-side proofs are verified by the sequencer, not on L1.",
+      "sinceTimestamp": 1776679728,
+      "sinceBlock": 8978970,
+      "values": {
+        "$classHash": "0x67dddd89d80fedadc06b6f160798f94800a4a70164e5a24301cd0d6076b554d",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x0663cc699d9c51b7d4d434e06f5982692167546ce525d9155edb476ac9a117d6"
+          ],
+          "SECURITY_ADMIN": [
+            "strk:0x0663cc699d9c51b7d4d434e06f5982692167546ce525d9155edb476ac9a117d6"
+          ],
+          "APP_GOVERNOR": [
+            "strk:0x02796da10aba2e1f445c38eba07e5a4393d6dab30d203d3432deb824e891619a"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x0663cc699d9c51b7d4d434e06f5982692167546ce525d9155edb476ac9a117d6"
+          ],
+          "0xa5a83e9807e87f281d865ab54b7b0ed2f7f4bbfef73888810ca16e95e734eb": [
+            "strk:0x0663cc699d9c51b7d4d434e06f5982692167546ce525d9155edb476ac9a117d6"
+          ]
+        },
+        "appGovernors": [
+          "strk:0x02796da10aba2e1f445c38eba07e5a4393d6dab30d203d3432deb824e891619a"
+        ],
+        "get_auditor_public_key": "0x1eed60b8d483b3bede62d1cc0f32874aea30747e6943437c858359b41801bf7",
+        "get_fee_amount": "6000000000000000000",
+        "get_fee_collector": "strk:0x00d79041634625e5288296fbc648088788710ba44903a3a49468a66567749e77",
+        "get_proof_validity_blocks": 450,
+        "get_screener_public_key": "0x501cc452e5a4370e2f0879c9a863b3efc915005817487460b23a8d6ef88fdb2",
+        "get_upgrade_delay": 0,
+        "get_version": "'2.0'",
+        "governanceAdmins": [
+          "strk:0x0663cc699d9c51b7d4d434e06f5982692167546ce525d9155edb476ac9a117d6"
+        ],
+        "is_paused": false,
+        "securityAdmins": [
+          "strk:0x0663cc699d9c51b7d4d434e06f5982692167546ce525d9155edb476ac9a117d6"
+        ],
+        "upgradeGovernors": [
+          "strk:0x0663cc699d9c51b7d4d434e06f5982692167546ce525d9155edb476ac9a117d6"
+        ]
+      },
+      "fieldMeta": {
+        "$classHash": {
+          "severity": "HIGH",
+          "description": "Sierra class hash of the pool. A change means the contract was upgraded via the StarkWare replaceability component."
+        },
+        "$roles": {
+          "severity": "HIGH",
+          "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events. GOVERNANCE_ADMIN administers roles, UPGRADE_GOVERNOR can queue and activate implementations, SECURITY_ADMIN/SECURITY_AGENT manage pausing, APP_GOVERNOR configures the pool."
+        },
+        "upgradeGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the UPGRADE_GOVERNOR role."
+        },
+        "governanceAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the GOVERNANCE_ADMIN role."
+        },
+        "securityAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the SECURITY_ADMIN role."
+        },
+        "securityAgents": {
+          "description": "Holders of the SECURITY_AGENT role."
+        },
+        "appGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_GOVERNOR role."
+        },
+        "get_upgrade_delay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to."
+        },
+        "get_auditor_public_key": {
+          "severity": "HIGH",
+          "description": "Public key of the auditor that can decrypt user viewing data - a core privacy trust assumption."
+        },
+        "get_screener_public_key": {
+          "severity": "HIGH",
+          "description": "Public key of the screener whose deposit attestations the pool accepts."
+        },
+        "get_fee_collector": { "description": "Account receiving pool fees." },
+        "get_fee_amount": {
+          "description": "Fee charged by the pool per action, in the fee token's smallest unit."
+        },
+        "get_proof_validity_blocks": {
+          "description": "Number of blocks a client-side proof stays valid after being produced."
+        },
+        "is_paused": {
+          "severity": "LOW",
+          "description": "Whether the pool is currently paused."
+        }
+      },
+      "implementationNames": {
+        "strk:0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a": "StarknetCanonicalPrivacyPool"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "name": "Multisig 3",
+      "address": "strk:0x0663cc699d9c51b7d4d434e06f5982692167546ce525d9155edb476ac9a117d6",
+      "type": "EOA",
+      "template": "starknet/MultisigAccount",
+      "sourceHashes": [
+        "0x5d8fc4c35f6b9d11d5effabbc557b9a7e4ccb999c60021069f7a1b751fedf9b1"
+      ],
+      "description": "Multisig account contract on Starknet. Transactions must be approved by the configured threshold of signer keys before the account executes them.",
+      "eoaWithUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "strk:0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a",
+          "description": "grant and revoke all StarkWare roles of the privacy pool, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a",
+          "description": "unpause the privacy pool and manage the SECURITY_ADMIN and SECURITY_AGENT roles.",
+          "role": ".securityAdmins"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a",
+          "role": ".upgradeGovernors"
+        }
+      ],
+      "values": {
+        "$accountClassHash": "0x6e150953b26271a740bf2b6e9bca17cc52c68d765f761295de51ceb8526ee72",
+        "$signers": [
+          "0x2173ec8ef9711bef454b0dea155cfed4115516c646503aed8041b3d6acb636",
+          "0x84b113c2ebf3898d7d732d79117e0a007b8b2e3029e8209d0a7d59bdb12e03",
+          "0x65a10aac58bac433bfa974fc543ecffe0263f10fcc5d20b4381c6f3c914ff0d",
+          "0x15b6970d7b5548034b1361e515a5b3a90c79401f431b6bf4f04bec10a3671ea",
+          "0x38aad1cd0059083b7e71ab9d433b9b46d42a140aa9277140e7a2b6cc0c0719b",
+          "0x27ffddbb2f2afe7f37eb515fc835954c4c4cd81e20b943b84d8c236b7033e4a",
+          "0x3edac362fc0f4f4b734a7c91bb7a7a64dad3d58407beba31f43bec131f0583b",
+          "0x13d393461321727d077139d121d2ee574dd5efb4d27ce473ee36f42a200bda1",
+          "0xc1946dc87b63cc7158f76cef2b2bf0d59e30c07cb182f4eb1fef18056bd779",
+          "0x1812403b646df40654181b889cb42f96c8271feb656ec55d62b2de9bdf4c392",
+          "0x76457df468d82ee981a9cc8de801174cc80675f29577fc77db7ae842c99640c",
+          "0x18c9a2e520cba2de4b7b1b85244464a247a08f4848eda79998116c17b32063f"
+        ],
+        "$threshold": 7
+      },
+      "fieldMeta": {
+        "$signers": {
+          "severity": "HIGH",
+          "description": "Public keys of the signers controlling this account."
+        },
+        "$threshold": {
+          "severity": "HIGH",
+          "description": "Number of signer approvals required to execute a transaction."
+        },
+        "$accountClassHash": {
+          "description": "Sierra class hash of the account contract."
+        }
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    }
+  ],
+  "abis": {
+    "strk:0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a": [
+      "event AuditorPublicKeySet(auditor_public_key: felt252)",
+      "event Deposit(user_addr: ContractAddress, token: ContractAddress, amount: u128)",
+      "event EncNoteCreated(note_id: felt252, packed_value: felt252)",
+      "event ExternalContractInvoked(contract_address: ContractAddress, selector: felt252)",
+      "event FeeAmountSet(fee_amount: u128)",
+      "event FeeCollectorSet(fee_collector: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event NoteUsed(nullifier: felt252)",
+      "event OpenNoteCreated(enc_recipient_addr: EncUserAddr, token: ContractAddress, note_id: felt252)",
+      "event OpenNoteDeposited(depositor: ContractAddress, token: ContractAddress, note_id: felt252, amount: u128)",
+      "event OpenNoteDepositorBlockSet(depositor: ContractAddress, blocked: bool)",
+      "event Paused(account: ContractAddress)",
+      "event ProofValidityBlocksSet(proof_validity_blocks: u64)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleGrantedWithDelay(role: felt252, account: ContractAddress, sender: ContractAddress, delay: u64)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event ScreenerPublicKeySet(screener_public_key: felt252)",
+      "event Unpaused(account: ContractAddress)",
+      "event ViewingKeySet(user_addr: ContractAddress, public_key: felt252, enc_private_key: EncPrivateKey)",
+      "event Withdrawal(enc_user_addr: EncUserAddr, to_addr: ContractAddress, token: ContractAddress, amount: u128)",
+      "fn __execute__(calls: Array<Call>)",
+      "fn __validate__(calls: Array<Call>) -> felt252 view",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn add_new_implementation_unsafe(implementation_data: ImplementationData)",
+      "fn apply_actions(actions: Span<ServerAction>, screening: Option<ScreeningAttestation>)",
+      "fn channel_exists(channel_marker: felt252) -> bool view",
+      "fn compile_actions(user_addr: ContractAddress, user_private_key: felt252, client_actions: Span<ClientAction>) -> Span<ServerAction> view",
+      "fn compile_and_panic(user_addr: ContractAddress, user_private_key: felt252, client_actions: Span<ClientAction>)",
+      "fn disable_legacy_role_reclaim()",
+      "fn get_auditor_public_key() -> felt252 view",
+      "fn get_channel_info(recipient_addr: ContractAddress, channel_index: u64) -> EncChannelInfo view",
+      "fn get_enc_private_key(user_addr: ContractAddress) -> EncPrivateKey view",
+      "fn get_fee_amount() -> u128 view",
+      "fn get_fee_collector() -> ContractAddress view",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_note(note_id: felt252) -> Note view",
+      "fn get_num_of_channels(recipient_addr: ContractAddress) -> u64 view",
+      "fn get_outgoing_channel_info(outgoing_channel_id: felt252) -> EncOutgoingChannelInfo view",
+      "fn get_proof_validity_blocks() -> u64 view",
+      "fn get_public_key(user_addr: ContractAddress) -> felt252 view",
+      "fn get_screener_public_key() -> felt252 view",
+      "fn get_subchannel_info(subchannel_id: felt252) -> EncSubchannelInfo view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn get_version() -> felt252 view",
+      "fn grant_role(role: Role, account: ContractAddress)",
+      "fn has_role(role: Role, account: ContractAddress) -> bool view",
+      "fn is_open_note_depositor_blocked(depositor: ContractAddress) -> bool view",
+      "fn is_paused() -> bool view",
+      "fn nullifier_exists(nullifier: felt252) -> bool view",
+      "fn pause()",
+      "fn reclaim_legacy_roles()",
+      "fn reclaim_legacy_roles_for_accounts(accounts: Span<ContractAddress>)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn renounce(role: Role)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn revoke_role(role: Role, account: ContractAddress)",
+      "fn set_auditor_public_key(auditor_public_key: felt252)",
+      "fn set_fee_amount(fee_amount: u128)",
+      "fn set_fee_collector(fee_collector: ContractAddress)",
+      "fn set_open_note_depositor_blocked(depositor: ContractAddress, blocked: bool)",
+      "fn set_proof_validity_blocks(proof_validity_blocks: u64)",
+      "fn set_screener_public_key(screener_public_key: felt252)",
+      "fn subchannel_exists(subchannel_marker: felt252) -> bool view",
+      "fn unpause()",
+      "fn validate_upgradeability(implementation_data: ImplementationData)"
+    ]
+  },
+  "usedTemplates": {
+    "starknet/MultisigAccount": "0x7776abcb1616bab1f6626860771d46ffdd322663cf61eca88de4b981de39b7fd",
+    "starknet/PrivacyPool": "0x8924ed0b23595c2f86deb2eac966f189a22e524f87f19380e0a9c911ed9582fe"
+  },
+  "usedBlockNumbers": { "starknet": 13233798 },
+  "permissionsConfigHash": "0xb3c2da91e53a6749e117273d42cdba49e0575a26cb927d1d7ef2d860869a3153"
+}

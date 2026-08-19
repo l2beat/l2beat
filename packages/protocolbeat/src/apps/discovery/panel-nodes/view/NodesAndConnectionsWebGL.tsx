@@ -1379,6 +1379,7 @@ class WebGLRenderer {
     let maxVertices = 0
     for (const { node, flags, visibleFields } of renderNodes) {
       for (const { field, index } of visibleFields) {
+        if (field.target === undefined) continue
         if (!isFieldConnectionLive(node, field, data.liveGroupTargets)) continue
         if (flags.fieldTargetHidden[index]) continue
         const target = data.visibleById.get(field.target)
@@ -1406,6 +1407,7 @@ class WebGLRenderer {
     let v = 0
     for (const { node, flags, visibleFields } of renderNodes) {
       for (const { field, index } of visibleFields) {
+        if (field.target === undefined) continue
         if (!isFieldConnectionLive(node, field, data.liveGroupTargets)) continue
         if (flags.fieldTargetHidden[index]) continue
         const target = data.visibleById.get(field.target)
@@ -2256,6 +2258,7 @@ function buildDrawData(
     for (const node of visible) {
       if (!selectedSet.has(node.id)) continue
       for (const { field } of getVisibleFields(node)) {
+        if (field.target === undefined) continue
         if (!isFieldConnectionLive(node, field, liveGroupTargets)) continue
         if (hidden.has(field.target)) continue
         highlightedSet.add(field.target)
@@ -2264,6 +2267,7 @@ function buildDrawData(
     for (const node of visible) {
       if (highlightedSet.has(node.id)) continue
       for (const { field } of getVisibleFields(node)) {
+        if (field.target === undefined) continue
         if (!isFieldConnectionLive(node, field, liveGroupTargets)) continue
         if (hidden.has(field.target)) continue
         if (selectedSet.has(field.target)) {
@@ -2280,7 +2284,7 @@ function buildDrawData(
     const fieldTargetHidden = new Uint8Array(fieldCount)
     for (let i = 0; i < node.fields.length; i++) {
       const field = node.fields[i]
-      if (!field) continue
+      if (!field || field.target === undefined) continue
       if (selectedSet.has(field.target)) {
         fieldHighlighted[i] = 1
       }

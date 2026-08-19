@@ -70,6 +70,7 @@ export function isFieldConnectionLive(
   field: Field,
   liveGroupTargets: ReadonlyMap<string, ReadonlySet<string>>,
 ): boolean {
+  if (field.target === undefined) return false
   if (node.hiddenFields.includes(field.name)) return false
   if (node.subnodes.length === 0) return true
   return liveGroupTargets.get(node.id)?.has(field.target) ?? false
@@ -192,7 +193,8 @@ function layoutFields(node: Node, boxById: Map<string, Box>): Node {
     if (!hidden?.has(field.name)) {
       row++
     }
-    const targetBox = boxById.get(field.target)
+    const targetBox =
+      field.target !== undefined ? boxById.get(field.target) : undefined
     const box: Box = {
       x: node.box.x,
       y: node.box.y + HEADER_HEIGHT + r * FIELD_HEIGHT,

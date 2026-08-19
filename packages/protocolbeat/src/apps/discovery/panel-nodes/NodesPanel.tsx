@@ -120,7 +120,10 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
       }
       for (const eoa of chain.eoas) {
         const [prefix, address] = eoa.address.split(':') as [string, string]
-        const fallback = `EOA ${prefix}:${address.slice(0, 6)}…${address.slice(-4)}`
+        const kind = eoa.type === 'Multisig' ? 'Multisig' : 'EOA'
+        const fallback = `${kind} ${prefix}:${address.slice(0, 6)}…${address.slice(-4)}`
+        // Starknet accounts carry fields ($signers, $threshold, $publicKey)
+        const eoaFields = eoa.fields ?? []
         const node: Node = {
           id: eoa.address,
           isInitial: false,
@@ -133,8 +136,10 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           color: 0,
           hueShift,
           data: null,
-          fields: [],
-          hiddenFields: [],
+          fields: toNodeFields(eoaFields),
+          hiddenFields: preferences.hideLargeArrays
+            ? getKeysToHideOnLoad(eoaFields)
+            : [],
           opened: false,
           subnodes: [],
         }
@@ -267,7 +272,43 @@ function getNodeFields(
       },
     ]
   }
+  // Starknet account keys are public keys, not addresses - shown as
+  // display-only rows (no connection), like EVM multisig member lists
+  if (
+    isAccountKeyPath(path) &&
+    (value.type === 'hex' || value.type === 'number')
+  ) {
+    const display =
+      value.type === 'hex'
+        ? `${value.value.slice(0, 8)}…${value.value.slice(-6)}`
+        : value.value
+    return [
+      {
+        name: path,
+        label: `${path}: ${display}`,
+        box: { x: 0, y: 0, width: 0, height: 0 },
+        connection: {
+          from: { direction: 'left', x: 0, y: 0 },
+          to: { direction: 'left', x: 0, y: 0 },
+        },
+      },
+    ]
+  }
   return []
+}
+
+const ACCOUNT_KEY_FIELDS = [
+  '$signers',
+  '$threshold',
+  '$publicKey',
+  '$owner',
+  '$guardian',
+]
+
+function isAccountKeyPath(path: string): boolean {
+  return ACCOUNT_KEY_FIELDS.some(
+    (field) => path === field || path.startsWith(`${field}[`),
+  )
 }
 
 function extractFieldValue(value: FieldValue): string {

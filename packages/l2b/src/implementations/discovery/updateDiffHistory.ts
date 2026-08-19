@@ -215,6 +215,19 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
     return { prevDiscovery: undefined, codeDiff: undefined }
   }
 
+  // The rediscovery below runs the EVM engine, which cannot analyze Starknet
+  // projects (they are discovered with `l2b discover-starknet`). Diff against
+  // the committed discovery as-is instead of re-running on the past block.
+  const isStarknetOnly = discoveryFromMainBranch.entries.every((entry) =>
+    entry.address.startsWith('strk:'),
+  )
+  if (isStarknetOnly) {
+    logger.info(
+      `${projectName} lives on Starknet - diffing against the committed discovery without rerunning`,
+    )
+    return { prevDiscovery: discoveryFromMainBranch, codeDiff: undefined }
+  }
+
   const discoveries = new DiscoveryRegistry()
   // We rediscover on the past block number, but with current configs and dependencies
   const prevStructure = await rediscoverStructureOnBlock(

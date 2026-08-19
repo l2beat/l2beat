@@ -199,7 +199,11 @@ export function collectOutgoingFields(members: readonly Node[]): Field[] {
   const seenTargets = new Set<string>()
   for (const node of members) {
     for (const field of node.fields) {
-      if (internal.includes(field.target) || seenTargets.has(field.target)) {
+      if (
+        field.target === undefined ||
+        internal.includes(field.target) ||
+        seenTargets.has(field.target)
+      ) {
         continue
       }
       seenTargets.add(field.target)

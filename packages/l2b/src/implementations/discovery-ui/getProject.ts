@@ -111,7 +111,7 @@ export function getProject(
       .filter(
         (x) => ChainSpecificAddress.address(x.address) !== EthereumAddress.ZERO,
       )
-      .map((x) => eoaFromDiscovery(x, withinDepthAddresses))
+      .map((x) => eoaFromDiscovery(meta, x, withinDepthAddresses))
       .sort(orderAddressEntries)
 
     if (contracts.length === 0 && eoas.length === 0) {
@@ -177,19 +177,39 @@ function toAddressSet(
 }
 
 function eoaFromDiscovery(
+  meta: Record<string, { name?: string; type: ApiAddressType }>,
   entry: EntryParameters,
   withinDepthAddresses: ReadonlySet<ChainSpecificAddress>,
 ): ApiAddressEntry {
   const roles = getRoles(entry)
+  // Starknet account entries carry values ($signers, $threshold, $publicKey)
+  const fields: Field[] = Object.entries(entry.values ?? {})
+    .map(
+      ([name, value]): Field => ({
+        name,
+        value: parseFieldValue(value, meta),
+        description: undefined,
+        handler: undefined,
+      }),
+    )
+    .sort((a, b) => a.name.localeCompare(b.name))
+
+  const isMultisig = Array.isArray(entry.values?.$signers)
+
   return {
     name: entry.name || undefined,
-    type: roles.length > 0 ? 'EOAPermissioned' : 'EOA',
+    type: isMultisig
+      ? 'Multisig'
+      : roles.length > 0
+        ? 'EOAPermissioned'
+        : 'EOA',
     roles: roles,
     description: entry.description,
     referencedBy: [],
     address: entry.address,
     chain: ChainSpecificAddress.longChain(entry.address),
     isReachable: withinDepthAddresses.has(entry.address),
+    fields,
   }
 }
 
@@ -311,15 +331,20 @@ function abiEntry(entry: string): ApiAbiEntry {
     return { value: entry }
   }
 
-  const iface = new utils.Interface([entry])
-  return {
-    value: entry,
-    topic: entry.startsWith('event')
-      ? iface.getEventTopic(entry.slice(6))
-      : undefined,
-    signature: entry.startsWith('function')
-      ? iface.getSighash(entry.slice(9))
-      : undefined,
+  try {
+    const iface = new utils.Interface([entry])
+    return {
+      value: entry,
+      topic: entry.startsWith('event')
+        ? iface.getEventTopic(entry.slice(6))
+        : undefined,
+      signature: entry.startsWith('function')
+        ? iface.getSighash(entry.slice(9))
+        : undefined,
+    }
+  } catch {
+    // Non-EVM ABIs (e.g. Cairo signatures) are shown verbatim
+    return { value: entry }
   }
 }
 

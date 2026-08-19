@@ -1,0 +1,3491 @@
+{
+  "name": "starknet-l2",
+  "timestamp": 1786632511,
+  "configHash": "0x49ae822ef3cb74e5b8d7377b76500a4a72af812811fece954675695b7e7894cf",
+  "entries": [
+    {
+      "name": "StarkGateWrappedStakedEther",
+      "address": "strk:0x0057912720381af14b0e5c87aa4718ed5e527eab60b3801ebf702ab09139e38b",
+      "type": "Contract",
+      "unverified": true,
+      "sourceHashes": [
+        "0x9a4e1bf534f5b6c29b31d5e3f82d799d06073d8e67424b00be75be2385b72a29"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "sinceTimestamp": 1737535726,
+      "sinceBlock": 1088566,
+      "values": {
+        "$classHash": "0x5ffbcfeb50d200a0677c48a129a11245a3fc519d1d98d76882d1c9a1b19c6ed",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x03103066e6c7037ba947ea9a7b5b8d110ae7f3d631fa5849435d0dc1fc5ef785"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x03103066e6c7037ba947ea9a7b5b8d110ae7f3d631fa5849435d0dc1fc5ef785"
+          ]
+        },
+        "decimals": 18,
+        "get_upgrade_delay": 0,
+        "name": "'Wrapped Staked Ether'",
+        "symbol": "'wstETH'",
+        "total_supply": "1841513100356747530304",
+        "totalSupply": "1841513100356747530304"
+      },
+      "implementationNames": {
+        "strk:0x0057912720381af14b0e5c87aa4718ed5e527eab60b3801ebf702ab09139e38b": "StarkGateWrappedStakedEther"
+      }
+    },
+    {
+      "name": "FRAXBridge",
+      "address": "strk:0x006646a87b8e9e51a893c52facd89f99539a152b96e72daee6a7a3734aa5299a",
+      "type": "Contract",
+      "template": "starknet/StarkgateTokenBridge",
+      "sourceHashes": [
+        "0xf7a6ba4c87e3d5fec134990017683ad9c91654cd851edcce40c55e759d8619da"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "description": "Starkgate token bridge on Starknet (L2 side). Mints the L2 token on deposits and burns it on withdrawals, relayed through the Starknet core messaging contract on Ethereum.",
+      "sinceTimestamp": 1692790251,
+      "sinceBlock": 167944,
+      "values": {
+        "$classHash": "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "SECURITY_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ]
+        },
+        "get_erc20_class_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_identity": "'STARKGATE'",
+        "get_l2_token_governance": "strk:0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_upgrade_delay": 0,
+        "get_version": "0x2",
+        "governanceAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "securityAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "upgradeGovernors": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ]
+      },
+      "fieldMeta": {
+        "$classHash": {
+          "severity": "HIGH",
+          "description": "Sierra class hash of the bridge. A change means the contract was upgraded via the StarkWare replaceability component."
+        },
+        "$roles": {
+          "severity": "HIGH",
+          "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events."
+        },
+        "upgradeGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the UPGRADE_GOVERNOR role."
+        },
+        "governanceAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the GOVERNANCE_ADMIN role."
+        },
+        "securityAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the SECURITY_ADMIN role."
+        },
+        "securityAgents": {
+          "description": "Holders of the SECURITY_AGENT role."
+        },
+        "appGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_GOVERNOR role."
+        },
+        "appRoleAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_ROLE_ADMIN role."
+        },
+        "get_upgrade_delay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to."
+        },
+        "get_l1_bridge": {
+          "description": "The L1 counterpart of this bridge on Ethereum."
+        },
+        "get_erc20_class_hash": {
+          "description": "Class hash used when the bridge deploys new L2 token contracts."
+        },
+        "get_l2_token_governance": {
+          "description": "Account allowed to govern the L2 token contracts deployed by this bridge."
+        }
+      },
+      "implementationNames": {
+        "strk:0x006646a87b8e9e51a893c52facd89f99539a152b96e72daee6a7a3734aa5299a": "StarkGateFRAXBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "rETHBridge",
+      "address": "strk:0x0078da8023b3c08e5a41540a34f7c385fd4f4540d5668f1be3ede0d3bb1b9d4d",
+      "type": "Contract",
+      "template": "starknet/StarkgateTokenBridge",
+      "sourceHashes": [
+        "0xf7a6ba4c87e3d5fec134990017683ad9c91654cd851edcce40c55e759d8619da"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "description": "Starkgate token bridge on Starknet (L2 side). Mints the L2 token on deposits and burns it on withdrawals, relayed through the Starknet core messaging contract on Ethereum.",
+      "sinceTimestamp": 1685884332,
+      "sinceBlock": 72345,
+      "values": {
+        "$classHash": "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "SECURITY_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ]
+        },
+        "get_erc20_class_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_identity": "'STARKGATE'",
+        "get_l2_token_governance": "strk:0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_upgrade_delay": 0,
+        "get_version": "0x2",
+        "governanceAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "securityAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "upgradeGovernors": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ]
+      },
+      "fieldMeta": {
+        "$classHash": {
+          "severity": "HIGH",
+          "description": "Sierra class hash of the bridge. A change means the contract was upgraded via the StarkWare replaceability component."
+        },
+        "$roles": {
+          "severity": "HIGH",
+          "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events."
+        },
+        "upgradeGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the UPGRADE_GOVERNOR role."
+        },
+        "governanceAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the GOVERNANCE_ADMIN role."
+        },
+        "securityAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the SECURITY_ADMIN role."
+        },
+        "securityAgents": {
+          "description": "Holders of the SECURITY_AGENT role."
+        },
+        "appGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_GOVERNOR role."
+        },
+        "appRoleAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_ROLE_ADMIN role."
+        },
+        "get_upgrade_delay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to."
+        },
+        "get_l1_bridge": {
+          "description": "The L1 counterpart of this bridge on Ethereum."
+        },
+        "get_erc20_class_hash": {
+          "description": "Class hash used when the bridge deploys new L2 token contracts."
+        },
+        "get_l2_token_governance": {
+          "description": "Account allowed to govern the L2 token contracts deployed by this bridge."
+        }
+      },
+      "implementationNames": {
+        "strk:0x0078da8023b3c08e5a41540a34f7c385fd4f4540d5668f1be3ede0d3bb1b9d4d": "StarkGateRETHBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "wstETHBridge",
+      "address": "strk:0x0088eedbe2fe3918b69ccb411713b7fa72079d4eddf291103ccbe41e78a9615c",
+      "type": "Contract",
+      "unverified": true,
+      "template": "starknet/StarkgateTokenBridge",
+      "sourceHashes": [
+        "0x3b8b700cf6029dd5b2aced002fd236d5243a25ccfb3fa0355743935d4531976c"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "description": "Starkgate token bridge on Starknet (L2 side). Mints the L2 token on deposits and burns it on withdrawals, relayed through the Starknet core messaging contract on Ethereum.",
+      "sinceTimestamp": 1685461735,
+      "sinceBlock": 67548,
+      "values": {
+        "$classHash": "0x54419e4ceed1d9a705d8d149e0ccffa608c3830b3c504939daba4179900eda1",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+            "strk:0x07ba4bb6a9ec398598c9c08424af6bdb83f56e78ffc8f07f0da0dfae8deca432",
+            "strk:0x03103066e6c7037ba947ea9a7b5b8d110ae7f3d631fa5849435d0dc1fc5ef785"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x07ba4bb6a9ec398598c9c08424af6bdb83f56e78ffc8f07f0da0dfae8deca432",
+            "strk:0x03103066e6c7037ba947ea9a7b5b8d110ae7f3d631fa5849435d0dc1fc5ef785"
+          ],
+          "SECURITY_ADMIN": [
+            "strk:0x07ba4bb6a9ec398598c9c08424af6bdb83f56e78ffc8f07f0da0dfae8deca432"
+          ]
+        },
+        "get_deprecated_l2_token": "strk:0x042b8f0484674ca266ac5d08e4ac6a3fe65bd3129795def2dca5c34ecc5f96d2",
+        "get_erc20_class_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_identity": "'STARKGATE'",
+        "get_l2_token_governance": "strk:0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_new_l2_token": "strk:0x0057912720381af14b0e5c87aa4718ed5e527eab60b3801ebf702ab09139e38b",
+        "get_upgrade_delay": 0,
+        "get_version": "0x2",
+        "governanceAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+          "strk:0x07ba4bb6a9ec398598c9c08424af6bdb83f56e78ffc8f07f0da0dfae8deca432",
+          "strk:0x03103066e6c7037ba947ea9a7b5b8d110ae7f3d631fa5849435d0dc1fc5ef785"
+        ],
+        "securityAdmins": [
+          "strk:0x07ba4bb6a9ec398598c9c08424af6bdb83f56e78ffc8f07f0da0dfae8deca432"
+        ],
+        "upgradeGovernors": [
+          "strk:0x07ba4bb6a9ec398598c9c08424af6bdb83f56e78ffc8f07f0da0dfae8deca432",
+          "strk:0x03103066e6c7037ba947ea9a7b5b8d110ae7f3d631fa5849435d0dc1fc5ef785"
+        ]
+      },
+      "fieldMeta": {
+        "$classHash": {
+          "severity": "HIGH",
+          "description": "Sierra class hash of the bridge. A change means the contract was upgraded via the StarkWare replaceability component."
+        },
+        "$roles": {
+          "severity": "HIGH",
+          "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events."
+        },
+        "upgradeGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the UPGRADE_GOVERNOR role."
+        },
+        "governanceAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the GOVERNANCE_ADMIN role."
+        },
+        "securityAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the SECURITY_ADMIN role."
+        },
+        "securityAgents": {
+          "description": "Holders of the SECURITY_AGENT role."
+        },
+        "appGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_GOVERNOR role."
+        },
+        "appRoleAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_ROLE_ADMIN role."
+        },
+        "get_upgrade_delay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to."
+        },
+        "get_l1_bridge": {
+          "description": "The L1 counterpart of this bridge on Ethereum."
+        },
+        "get_erc20_class_hash": {
+          "description": "Class hash used when the bridge deploys new L2 token contracts."
+        },
+        "get_l2_token_governance": {
+          "description": "Account allowed to govern the L2 token contracts deployed by this bridge."
+        }
+      },
+      "implementationNames": {
+        "strk:0x0088eedbe2fe3918b69ccb411713b7fa72079d4eddf291103ccbe41e78a9615c": "StarkGateWstETHBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "Multisig 1",
+      "address": "strk:0x00eaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0",
+      "type": "EOA",
+      "template": "starknet/MultisigAccount",
+      "sourceHashes": [
+        "0x5d8fc4c35f6b9d11d5effabbc557b9a7e4ccb999c60021069f7a1b751fedf9b1"
+      ],
+      "description": "Multisig account contract on Starknet. Transactions must be approved by the configured threshold of signer keys before the account executes them.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "strk:0x0594c1582459ea03f77deaf9eb7e3917d6994a03c13405ba42867f83d85f085d",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x073314940630fd6dcda0d772d4c972c4e0a9946bef9dabf4ef84eda8ef542b82",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        }
+      ],
+      "values": {
+        "$accountClassHash": "0x6e150953b26271a740bf2b6e9bca17cc52c68d765f761295de51ceb8526ee72",
+        "$signers": [
+          "0x68f027f51f69b0577980b7ec0ccdf2407ff47e1a02ce8b8ab119e4b342346db",
+          "0x42ec840a035b6e3ce897844629ba756297f08deb74ab5cde22b5cc9441d8936",
+          "0x33c9a1d62f296644861e5f3114cb6e7e1629ab22dcaefa11c262e3fc8bdbe6a",
+          "0x29a5d3fee7156f714c165ee06ffd92d211e0c77719c40cd53ae66547bdc1802",
+          "0x722844ea9af37480bb1c01217bcba48c22e7444a7acf6729a57477310bf94f3",
+          "0x2ad52b194312e9734ac655684f9c2213f496a3072e51df1922f105eaa1f635c",
+          "0x15a237905066bcf0ccb8a4b53c8a23006af554a96459cb129564055d42a56da",
+          "0x4e299cd72f74eaff0f6e871de2efedb62b256d75277a449ab034fd7492aa360",
+          "0x20f21ca402f6e323ea913f555df1abed95d49edb46ddb5f441d2b100c8c7e9d",
+          "0x5d471f9d83dfcbb057d4c1c3d52c41441ebf654bf9e42cfe4625c882da8a04e",
+          "0x1d6c9f6d2330076570a4d41c4b689e4e7b2ad03c1a0b58bd10581f339609870",
+          "0x222bbfe5fdcd2ec61319342b78e7e3885cafc34a0e486ffcb7969eac1e09cde",
+          "0x48ba4c87a2996a310684fd1c9543383cdfffb51ad688964ced12fdb5359a162",
+          "0x25fd8c7b8e20fbfedd782262f08f729c453b8e6879ec59ee9967fcd3a3eaced"
+        ],
+        "$threshold": 9
+      },
+      "fieldMeta": {
+        "$signers": {
+          "severity": "HIGH",
+          "description": "Public keys of the signers controlling this account."
+        },
+        "$threshold": {
+          "severity": "HIGH",
+          "description": "Number of signer approvals required to execute a transaction."
+        },
+        "$accountClassHash": {
+          "description": "Sierra class hash of the account contract."
+        }
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "RealmsLORDSToken",
+      "address": "strk:0x0124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x159eb00c328a305721ab57a9d28e51b0d2df505b1424ce67c63b4b5ec48516d8"
+      ],
+      "sinceTimestamp": 1687524139,
+      "sinceBlock": 88597,
+      "values": {
+        "$classHash": "0x9f9205f50528a4c6308c69c675c14e65f31c72b1f7f1d2375d04fae1eec546",
+        "decimals": 18,
+        "name": "'Lords'",
+        "symbol": "'LORDS'",
+        "total_supply": "113089211464666440106341401",
+        "totalSupply": "113089211464666440106341401"
+      },
+      "implementationNames": {
+        "strk:0x0124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49": "RealmsLORDSToken"
+      }
+    },
+    {
+      "name": "LBTCBridge",
+      "address": "strk:0x0239eee60e6d0bed42315ac74a1fc43db8074646d4d2a0a9e6fa5272685a0eb5",
+      "type": "Contract",
+      "unverified": true,
+      "template": "starknet/StarkgateTokenBridge",
+      "sourceHashes": [
+        "0x5ba6d80fa347e2db1b59228cbd664f66889fd2a62802438bcbf43f27f8087d02"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "description": "Starkgate token bridge on Starknet (L2 side). Mints the L2 token on deposits and burns it on withdrawals, relayed through the Starknet core messaging contract on Ethereum.",
+      "sinceTimestamp": 1757941524,
+      "sinceBlock": 2205003,
+      "values": {
+        "$classHash": "0x4384330bbd2328dd33244436a25e43158572831f0794775df6a301896bce6f8",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+          ],
+          "SECURITY_ADMIN": [
+            "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+          ],
+          "APP_ROLE_ADMIN": [
+            "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+          ],
+          "APP_GOVERNOR": [
+            "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+          ]
+        },
+        "appGovernors": [
+          "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+        ],
+        "appRoleAdmins": [
+          "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+        ],
+        "get_erc20_class_hash": "0x076791ef97c042f81fbf352ad95f39a22554ee8d7927b2ce3c681f3418b5206a",
+        "get_identity": "'STARKGATE'",
+        "get_l2_token_governance": "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29",
+        "get_upgrade_delay": 0,
+        "get_version": "0x2",
+        "governanceAdmins": [
+          "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+        ],
+        "securityAdmins": [
+          "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+        ],
+        "upgradeGovernors": [
+          "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+        ]
+      },
+      "fieldMeta": {
+        "$classHash": {
+          "severity": "HIGH",
+          "description": "Sierra class hash of the bridge. A change means the contract was upgraded via the StarkWare replaceability component."
+        },
+        "$roles": {
+          "severity": "HIGH",
+          "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events."
+        },
+        "upgradeGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the UPGRADE_GOVERNOR role."
+        },
+        "governanceAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the GOVERNANCE_ADMIN role."
+        },
+        "securityAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the SECURITY_ADMIN role."
+        },
+        "securityAgents": {
+          "description": "Holders of the SECURITY_AGENT role."
+        },
+        "appGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_GOVERNOR role."
+        },
+        "appRoleAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_ROLE_ADMIN role."
+        },
+        "get_upgrade_delay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to."
+        },
+        "get_l1_bridge": {
+          "description": "The L1 counterpart of this bridge on Ethereum."
+        },
+        "get_erc20_class_hash": {
+          "description": "Class hash used when the bridge deploys new L2 token contracts."
+        },
+        "get_l2_token_governance": {
+          "description": "Account allowed to govern the L2 token contracts deployed by this bridge."
+        }
+      },
+      "implementationNames": {
+        "strk:0x0239eee60e6d0bed42315ac74a1fc43db8074646d4d2a0a9e6fa5272685a0eb5": "StarkGateLBTCBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "strk:0x03103066e6c7037ba947ea9a7b5b8d110ae7f3d631fa5849435d0dc1fc5ef785",
+      "type": "EOA",
+      "sourceHashes": [
+        "0xc71a5f620db5731945ec261f0a43193980255cae147321f7a21a50faa29a0c59"
+      ],
+      "eoaWithUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "strk:0x0088eedbe2fe3918b69ccb411713b7fa72079d4eddf291103ccbe41e78a9615c",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x0616757a151c21f9be8775098d591c2807316d992bbc3bb1a5c1821630589256",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x0088eedbe2fe3918b69ccb411713b7fa72079d4eddf291103ccbe41e78a9615c",
+          "role": ".upgradeGovernors"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x0616757a151c21f9be8775098d591c2807316d992bbc3bb1a5c1821630589256",
+          "role": ".upgradeGovernors"
+        }
+      ],
+      "values": {
+        "$accountClassHash": "0xe2eb8f5672af4e6a4e8a8f1b44989685e668489b0a25437733756c5a34a1d6",
+        "$publicKey": "0x6a3f9f758532997e723cf6d5f82886d5fa9cf883e18e493e51c7bb466c7aeb2"
+      }
+    },
+    {
+      "name": "SolvBTCBridge",
+      "address": "strk:0x032c68653622292bedf0ed6d941888a01d3923c7f4eb633a0c08c5497a1f5f58",
+      "type": "Contract",
+      "unverified": true,
+      "template": "starknet/StarkgateTokenBridge",
+      "sourceHashes": [
+        "0x6e4ab30d4aa1a37886771f3229d4f5041202bcf3a09662d4a11dbbb309120e09"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "description": "Starkgate token bridge on Starknet (L2 side). Mints the L2 token on deposits and burns it on withdrawals, relayed through the Starknet core messaging contract on Ethereum.",
+      "sinceTimestamp": 1750859601,
+      "sinceBlock": 1520833,
+      "values": {
+        "$classHash": "0x13a5b438f6a653c045cb4ff56f3fb9af303d8d488106d4f7c42d6f09fe65436",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+          ],
+          "SECURITY_ADMIN": [
+            "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+          ],
+          "APP_ROLE_ADMIN": [
+            "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+          ],
+          "APP_GOVERNOR": [
+            "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+          ]
+        },
+        "appGovernors": [
+          "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+        ],
+        "appRoleAdmins": [
+          "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+        ],
+        "get_erc20_class_hash": "0x05ffbcfeb50d200a0677c48a129a11245a3fc519d1d98d76882d1c9a1b19c6ed",
+        "get_identity": "'STARKGATE'",
+        "get_l1_bridge": "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10",
+        "get_l2_token_governance": "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29",
+        "get_upgrade_delay": 0,
+        "get_version": "'2.0.1-halt'",
+        "governanceAdmins": [
+          "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+        ],
+        "securityAdmins": [
+          "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+        ],
+        "upgradeGovernors": [
+          "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29"
+        ]
+      },
+      "fieldMeta": {
+        "$classHash": {
+          "severity": "HIGH",
+          "description": "Sierra class hash of the bridge. A change means the contract was upgraded via the StarkWare replaceability component."
+        },
+        "$roles": {
+          "severity": "HIGH",
+          "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events."
+        },
+        "upgradeGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the UPGRADE_GOVERNOR role."
+        },
+        "governanceAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the GOVERNANCE_ADMIN role."
+        },
+        "securityAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the SECURITY_ADMIN role."
+        },
+        "securityAgents": {
+          "description": "Holders of the SECURITY_AGENT role."
+        },
+        "appGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_GOVERNOR role."
+        },
+        "appRoleAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_ROLE_ADMIN role."
+        },
+        "get_upgrade_delay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to."
+        },
+        "get_l1_bridge": {
+          "description": "The L1 counterpart of this bridge on Ethereum."
+        },
+        "get_erc20_class_hash": {
+          "description": "Class hash used when the bridge deploys new L2 token contracts."
+        },
+        "get_l2_token_governance": {
+          "description": "Account allowed to govern the L2 token contracts deployed by this bridge."
+        }
+      },
+      "implementationNames": {
+        "strk:0x032c68653622292bedf0ed6d941888a01d3923c7f4eb633a0c08c5497a1f5f58": "TokenBridgeAdmin"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "strk:0x0399eb3460eb885b5e1f5f2aebf63dadb7493f4cbf34868434366bbb55422c4e",
+      "type": "EOA",
+      "sourceHashes": [
+        "0x99f7cfa73a66b7546c1a4ebee601c29ca31065209ddfe7d387f9e60440bcc3ce"
+      ],
+      "values": {
+        "$accountClassHash": "0x36078334509b514626504edc9fb252328d1a240e4e948bef8d0c08dff45927f",
+        "$guardian": "0x0",
+        "$owner": "0x26f603a97e18b41e383400c6bb000a319174cc058ef3eb3bed92f1ffb749de8"
+      }
+    },
+    {
+      "name": "StarkGateLegacyStarknetWrappedStakedEther",
+      "address": "strk:0x042b8f0484674ca266ac5d08e4ac6a3fe65bd3129795def2dca5c34ecc5f96d2",
+      "type": "Contract",
+      "unverified": true,
+      "sourceHashes": [
+        "0x9a4e1bf534f5b6c29b31d5e3f82d799d06073d8e67424b00be75be2385b72a29"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "sinceTimestamp": 1685482440,
+      "sinceBlock": 67702,
+      "values": {
+        "$classHash": "0x5ffbcfeb50d200a0677c48a129a11245a3fc519d1d98d76882d1c9a1b19c6ed",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x07ba4bb6a9ec398598c9c08424af6bdb83f56e78ffc8f07f0da0dfae8deca432"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x07ba4bb6a9ec398598c9c08424af6bdb83f56e78ffc8f07f0da0dfae8deca432"
+          ],
+          "SECURITY_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ]
+        },
+        "decimals": 18,
+        "get_upgrade_delay": 0,
+        "name": "'Starknet Wrapped Staked Ether'",
+        "symbol": "'wstETH'",
+        "total_supply": "92765458126097494306",
+        "totalSupply": "92765458126097494306"
+      },
+      "implementationNames": {
+        "strk:0x042b8f0484674ca266ac5d08e4ac6a3fe65bd3129795def2dca5c34ecc5f96d2": "StarkGateLegacyStarknetWrappedStakedEther"
+      }
+    },
+    {
+      "address": "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07",
+      "type": "EOA",
+      "sourceHashes": [
+        "0xf6d9d2eae12ec0ea20d4f5f982de11ec81aa320911da4347fb8a1993544b65b2"
+      ],
+      "eoaWithUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "strk:0x006646a87b8e9e51a893c52facd89f99539a152b96e72daee6a7a3734aa5299a",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x006646a87b8e9e51a893c52facd89f99539a152b96e72daee6a7a3734aa5299a",
+          "description": "unpause the bridge and manage the SECURITY_ADMIN and SECURITY_AGENT roles.",
+          "role": ".securityAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x0078da8023b3c08e5a41540a34f7c385fd4f4540d5668f1be3ede0d3bb1b9d4d",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x0078da8023b3c08e5a41540a34f7c385fd4f4540d5668f1be3ede0d3bb1b9d4d",
+          "description": "unpause the bridge and manage the SECURITY_ADMIN and SECURITY_AGENT roles.",
+          "role": ".securityAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x0088eedbe2fe3918b69ccb411713b7fa72079d4eddf291103ccbe41e78a9615c",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x04fe90c0c4594b4a5ce3031a4bbdfbc7c046b4b9d7cf31b79647540c85b8ec79",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x04fe90c0c4594b4a5ce3031a4bbdfbc7c046b4b9d7cf31b79647540c85b8ec79",
+          "description": "unpause the bridge and manage the SECURITY_ADMIN and SECURITY_AGENT roles.",
+          "role": ".securityAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x05841ed9b790719b61dc98826246a7a3012dd35b0ed728e3c455af2647385c80",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x05841ed9b790719b61dc98826246a7a3012dd35b0ed728e3c455af2647385c80",
+          "description": "unpause the bridge and manage the SECURITY_ADMIN and SECURITY_AGENT roles.",
+          "role": ".securityAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x05cd48fccbfd8aa2773fe22c217e808319ffcc1c5a6a463f7d8fa2da48218196",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x05cd48fccbfd8aa2773fe22c217e808319ffcc1c5a6a463f7d8fa2da48218196",
+          "description": "unpause the bridge and manage the SECURITY_ADMIN and SECURITY_AGENT roles.",
+          "role": ".securityAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x06bf25c0911c6c63abfe3600428144d0d0dbf8b7bfbc44306a3386aa95a24296",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x06bf25c0911c6c63abfe3600428144d0d0dbf8b7bfbc44306a3386aa95a24296",
+          "description": "unpause the bridge and manage the SECURITY_ADMIN and SECURITY_AGENT roles.",
+          "role": ".securityAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x06dcc61c4cf056ff42a8f4b8635c207e3da73332282aa2132058022520fa0179",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x06dcc61c4cf056ff42a8f4b8635c207e3da73332282aa2132058022520fa0179",
+          "description": "unpause the bridge and manage the SECURITY_ADMIN and SECURITY_AGENT roles.",
+          "role": ".securityAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x074761a8d48ce002963002becc6d9c3dd8a2a05b1075d55e5967f42296f16bd0",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x074761a8d48ce002963002becc6d9c3dd8a2a05b1075d55e5967f42296f16bd0",
+          "description": "unpause the bridge and manage the SECURITY_ADMIN and SECURITY_AGENT roles.",
+          "role": ".securityAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x07aeec4870975311a7396069033796b61cd66ed49d22a786cba12a8d76717302",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x07aeec4870975311a7396069033796b61cd66ed49d22a786cba12a8d76717302",
+          "description": "unpause the bridge and manage the SECURITY_ADMIN and SECURITY_AGENT roles.",
+          "role": ".securityAdmins"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x006646a87b8e9e51a893c52facd89f99539a152b96e72daee6a7a3734aa5299a",
+          "role": ".upgradeGovernors"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x0078da8023b3c08e5a41540a34f7c385fd4f4540d5668f1be3ede0d3bb1b9d4d",
+          "role": ".upgradeGovernors"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x04fe90c0c4594b4a5ce3031a4bbdfbc7c046b4b9d7cf31b79647540c85b8ec79",
+          "role": ".upgradeGovernors"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x05841ed9b790719b61dc98826246a7a3012dd35b0ed728e3c455af2647385c80",
+          "role": ".upgradeGovernors"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x0594c1582459ea03f77deaf9eb7e3917d6994a03c13405ba42867f83d85f085d",
+          "delay": 691200,
+          "role": ".upgradeGovernors"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x05cd48fccbfd8aa2773fe22c217e808319ffcc1c5a6a463f7d8fa2da48218196",
+          "role": ".upgradeGovernors"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x06bf25c0911c6c63abfe3600428144d0d0dbf8b7bfbc44306a3386aa95a24296",
+          "role": ".upgradeGovernors"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x06dcc61c4cf056ff42a8f4b8635c207e3da73332282aa2132058022520fa0179",
+          "role": ".upgradeGovernors"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x073314940630fd6dcda0d772d4c972c4e0a9946bef9dabf4ef84eda8ef542b82",
+          "delay": 691200,
+          "role": ".upgradeGovernors"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x074761a8d48ce002963002becc6d9c3dd8a2a05b1075d55e5967f42296f16bd0",
+          "role": ".upgradeGovernors"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x07aeec4870975311a7396069033796b61cd66ed49d22a786cba12a8d76717302",
+          "role": ".upgradeGovernors"
+        }
+      ],
+      "values": {
+        "$accountClassHash": "0x7ab95e820d92b974797c8f139ad72f8550adaa068febe4e38da9a4a9539a81d",
+        "$publicKey": "0x29803aca16da1f6e70320fcd6902b4a3538ea36fa573f58301a4701802914fc"
+      }
+    },
+    {
+      "address": "strk:0x04758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+      "type": "EOA",
+      "sourceHashes": [
+        "0x621134b7dff2696fa9defde44d68b9884ff220b4ab81b4637d12dd69f3099cd3"
+      ],
+      "eoaWithUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "strk:0x0616757a151c21f9be8775098d591c2807316d992bbc3bb1a5c1821630589256",
+          "description": "configure the bridge, e.g. set the L1 bridge counterpart and token parameters.",
+          "role": ".appGovernors"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x0616757a151c21f9be8775098d591c2807316d992bbc3bb1a5c1821630589256",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x0616757a151c21f9be8775098d591c2807316d992bbc3bb1a5c1821630589256",
+          "description": "unpause the bridge and manage the SECURITY_ADMIN and SECURITY_AGENT roles.",
+          "role": ".securityAdmins"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x0594c1582459ea03f77deaf9eb7e3917d6994a03c13405ba42867f83d85f085d",
+          "delay": 691200,
+          "role": ".upgradeGovernors"
+        }
+      ],
+      "values": {
+        "$accountClassHash": "0x6f500f527355dfdb8093c7fe46e6f73c96a867392b49fa4157a757538928539",
+        "$publicKey": "0x253d0e6960f2750a8e6be109d6e1f6a7408486cbebd32a14cee80a80e6b540b"
+      }
+    },
+    {
+      "name": "UNIBridge",
+      "address": "strk:0x04fe90c0c4594b4a5ce3031a4bbdfbc7c046b4b9d7cf31b79647540c85b8ec79",
+      "type": "Contract",
+      "template": "starknet/StarkgateTokenBridge",
+      "sourceHashes": [
+        "0xf7a6ba4c87e3d5fec134990017683ad9c91654cd851edcce40c55e759d8619da"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "description": "Starkgate token bridge on Starknet (L2 side). Mints the L2 token on deposits and burns it on withdrawals, relayed through the Starknet core messaging contract on Ethereum.",
+      "sinceTimestamp": 1698062121,
+      "sinceBlock": 347679,
+      "values": {
+        "$classHash": "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "SECURITY_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ]
+        },
+        "get_erc20_class_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_identity": "'STARKGATE'",
+        "get_l2_token_governance": "strk:0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_upgrade_delay": 0,
+        "get_version": "0x2",
+        "governanceAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "securityAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "upgradeGovernors": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ]
+      },
+      "fieldMeta": {
+        "$classHash": {
+          "severity": "HIGH",
+          "description": "Sierra class hash of the bridge. A change means the contract was upgraded via the StarkWare replaceability component."
+        },
+        "$roles": {
+          "severity": "HIGH",
+          "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events."
+        },
+        "upgradeGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the UPGRADE_GOVERNOR role."
+        },
+        "governanceAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the GOVERNANCE_ADMIN role."
+        },
+        "securityAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the SECURITY_ADMIN role."
+        },
+        "securityAgents": {
+          "description": "Holders of the SECURITY_AGENT role."
+        },
+        "appGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_GOVERNOR role."
+        },
+        "appRoleAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_ROLE_ADMIN role."
+        },
+        "get_upgrade_delay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to."
+        },
+        "get_l1_bridge": {
+          "description": "The L1 counterpart of this bridge on Ethereum."
+        },
+        "get_erc20_class_hash": {
+          "description": "Class hash used when the bridge deploys new L2 token contracts."
+        },
+        "get_l2_token_governance": {
+          "description": "Account allowed to govern the L2 token contracts deployed by this bridge."
+        }
+      },
+      "implementationNames": {
+        "strk:0x04fe90c0c4594b4a5ce3031a4bbdfbc7c046b4b9d7cf31b79647540c85b8ec79": "StarkGateUNIBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "strk:0x05184d0ca467011a1eeff75043eb79835b05ad46b752ece284e8838aea5bab29",
+      "type": "EOA",
+      "sourceHashes": [
+        "0x4f58eeff9b15bfb9246be1bb4049828e8a23481874f1c5e98a6a5f9f8cad1a1f"
+      ],
+      "eoaWithUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "strk:0x0239eee60e6d0bed42315ac74a1fc43db8074646d4d2a0a9e6fa5272685a0eb5",
+          "description": "configure the bridge, e.g. set the L1 bridge counterpart and token parameters.",
+          "role": ".appGovernors"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x0239eee60e6d0bed42315ac74a1fc43db8074646d4d2a0a9e6fa5272685a0eb5",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x0239eee60e6d0bed42315ac74a1fc43db8074646d4d2a0a9e6fa5272685a0eb5",
+          "description": "manage the APP_GOVERNOR and OPERATOR roles.",
+          "role": ".appRoleAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x0239eee60e6d0bed42315ac74a1fc43db8074646d4d2a0a9e6fa5272685a0eb5",
+          "description": "unpause the bridge and manage the SECURITY_ADMIN and SECURITY_AGENT roles.",
+          "role": ".securityAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x032c68653622292bedf0ed6d941888a01d3923c7f4eb633a0c08c5497a1f5f58",
+          "description": "configure the bridge, e.g. set the L1 bridge counterpart and token parameters.",
+          "role": ".appGovernors"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x032c68653622292bedf0ed6d941888a01d3923c7f4eb633a0c08c5497a1f5f58",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x032c68653622292bedf0ed6d941888a01d3923c7f4eb633a0c08c5497a1f5f58",
+          "description": "manage the APP_GOVERNOR and OPERATOR roles.",
+          "role": ".appRoleAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x032c68653622292bedf0ed6d941888a01d3923c7f4eb633a0c08c5497a1f5f58",
+          "description": "unpause the bridge and manage the SECURITY_ADMIN and SECURITY_AGENT roles.",
+          "role": ".securityAdmins"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x0239eee60e6d0bed42315ac74a1fc43db8074646d4d2a0a9e6fa5272685a0eb5",
+          "role": ".upgradeGovernors"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x032c68653622292bedf0ed6d941888a01d3923c7f4eb633a0c08c5497a1f5f58",
+          "role": ".upgradeGovernors"
+        }
+      ],
+      "values": {
+        "$accountClassHash": "0x5b4b537eaa2399e3aa99c4e2e0208ebd6c71bc1467938cd52c798c601e43564",
+        "$publicKey": "0x55e2a0f3df1fefc6a0d6edf93aea12e5551db8033086e12109aee0ee13fe0b6"
+      }
+    },
+    {
+      "name": "LUSDBridge",
+      "address": "strk:0x05841ed9b790719b61dc98826246a7a3012dd35b0ed728e3c455af2647385c80",
+      "type": "Contract",
+      "template": "starknet/StarkgateTokenBridge",
+      "sourceHashes": [
+        "0xf7a6ba4c87e3d5fec134990017683ad9c91654cd851edcce40c55e759d8619da"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "description": "Starkgate token bridge on Starknet (L2 side). Mints the L2 token on deposits and burns it on withdrawals, relayed through the Starknet core messaging contract on Ethereum.",
+      "sinceTimestamp": 1688047231,
+      "sinceBlock": 93711,
+      "values": {
+        "$classHash": "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "SECURITY_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ]
+        },
+        "get_erc20_class_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_identity": "'STARKGATE'",
+        "get_l2_token_governance": "strk:0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_upgrade_delay": 0,
+        "get_version": "0x2",
+        "governanceAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "securityAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "upgradeGovernors": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ]
+      },
+      "fieldMeta": {
+        "$classHash": {
+          "severity": "HIGH",
+          "description": "Sierra class hash of the bridge. A change means the contract was upgraded via the StarkWare replaceability component."
+        },
+        "$roles": {
+          "severity": "HIGH",
+          "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events."
+        },
+        "upgradeGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the UPGRADE_GOVERNOR role."
+        },
+        "governanceAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the GOVERNANCE_ADMIN role."
+        },
+        "securityAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the SECURITY_ADMIN role."
+        },
+        "securityAgents": {
+          "description": "Holders of the SECURITY_AGENT role."
+        },
+        "appGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_GOVERNOR role."
+        },
+        "appRoleAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_ROLE_ADMIN role."
+        },
+        "get_upgrade_delay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to."
+        },
+        "get_l1_bridge": {
+          "description": "The L1 counterpart of this bridge on Ethereum."
+        },
+        "get_erc20_class_hash": {
+          "description": "Class hash used when the bridge deploys new L2 token contracts."
+        },
+        "get_l2_token_governance": {
+          "description": "Account allowed to govern the L2 token contracts deployed by this bridge."
+        }
+      },
+      "implementationNames": {
+        "strk:0x05841ed9b790719b61dc98826246a7a3012dd35b0ed728e3c455af2647385c80": "StarkGateLUSDBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "STRKBridge",
+      "address": "strk:0x0594c1582459ea03f77deaf9eb7e3917d6994a03c13405ba42867f83d85f085d",
+      "type": "Contract",
+      "template": "starknet/StarkgateTokenBridge",
+      "sourceHashes": [
+        "0xf7a6ba4c87e3d5fec134990017683ad9c91654cd851edcce40c55e759d8619da"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "description": "Starkgate token bridge on Starknet (L2 side). Mints the L2 token on deposits and burns it on withdrawals, relayed through the Starknet core messaging contract on Ethereum.",
+      "sinceTimestamp": 1699792107,
+      "sinceBlock": 394135,
+      "values": {
+        "$classHash": "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x00eaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x04758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "SECURITY_ADMIN": [
+            "strk:0x073b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3"
+          ],
+          "SECURITY_AGENT": [
+            "strk:0x07cb6648d32504bc4d6073f1e5fd9021a15f6963776a8dbe0d9e2f744743fb40"
+          ]
+        },
+        "get_erc20_class_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_identity": "'STARKGATE'",
+        "get_l2_token_governance": "strk:0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_upgrade_delay": 691200,
+        "get_version": "0x2",
+        "governanceAdmins": [
+          "strk:0x00eaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0"
+        ],
+        "securityAdmins": [
+          "strk:0x073b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3"
+        ],
+        "securityAgents": [
+          "strk:0x07cb6648d32504bc4d6073f1e5fd9021a15f6963776a8dbe0d9e2f744743fb40"
+        ],
+        "upgradeGovernors": [
+          "strk:0x04758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ]
+      },
+      "fieldMeta": {
+        "$classHash": {
+          "severity": "HIGH",
+          "description": "Sierra class hash of the bridge. A change means the contract was upgraded via the StarkWare replaceability component."
+        },
+        "$roles": {
+          "severity": "HIGH",
+          "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events."
+        },
+        "upgradeGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the UPGRADE_GOVERNOR role."
+        },
+        "governanceAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the GOVERNANCE_ADMIN role."
+        },
+        "securityAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the SECURITY_ADMIN role."
+        },
+        "securityAgents": {
+          "description": "Holders of the SECURITY_AGENT role."
+        },
+        "appGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_GOVERNOR role."
+        },
+        "appRoleAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_ROLE_ADMIN role."
+        },
+        "get_upgrade_delay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to."
+        },
+        "get_l1_bridge": {
+          "description": "The L1 counterpart of this bridge on Ethereum."
+        },
+        "get_erc20_class_hash": {
+          "description": "Class hash used when the bridge deploys new L2 token contracts."
+        },
+        "get_l2_token_governance": {
+          "description": "Account allowed to govern the L2 token contracts deployed by this bridge."
+        }
+      },
+      "implementationNames": {
+        "strk:0x0594c1582459ea03f77deaf9eb7e3917d6994a03c13405ba42867f83d85f085d": "StarkGateSTRKBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "USDCBridge",
+      "address": "strk:0x05cd48fccbfd8aa2773fe22c217e808319ffcc1c5a6a463f7d8fa2da48218196",
+      "type": "Contract",
+      "template": "starknet/StarkgateTokenBridge",
+      "sourceHashes": [
+        "0xf7a6ba4c87e3d5fec134990017683ad9c91654cd851edcce40c55e759d8619da"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "description": "Starkgate token bridge on Starknet (L2 side). Mints the L2 token on deposits and burns it on withdrawals, relayed through the Starknet core messaging contract on Ethereum.",
+      "sinceTimestamp": 1657094995,
+      "sinceBlock": 3135,
+      "values": {
+        "$classHash": "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "SECURITY_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ]
+        },
+        "get_erc20_class_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_identity": "'STARKGATE'",
+        "get_l2_token_governance": "strk:0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_upgrade_delay": 0,
+        "get_version": "0x2",
+        "governanceAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "securityAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "upgradeGovernors": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ]
+      },
+      "fieldMeta": {
+        "$classHash": {
+          "severity": "HIGH",
+          "description": "Sierra class hash of the bridge. A change means the contract was upgraded via the StarkWare replaceability component."
+        },
+        "$roles": {
+          "severity": "HIGH",
+          "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events."
+        },
+        "upgradeGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the UPGRADE_GOVERNOR role."
+        },
+        "governanceAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the GOVERNANCE_ADMIN role."
+        },
+        "securityAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the SECURITY_ADMIN role."
+        },
+        "securityAgents": {
+          "description": "Holders of the SECURITY_AGENT role."
+        },
+        "appGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_GOVERNOR role."
+        },
+        "appRoleAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_ROLE_ADMIN role."
+        },
+        "get_upgrade_delay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to."
+        },
+        "get_l1_bridge": {
+          "description": "The L1 counterpart of this bridge on Ethereum."
+        },
+        "get_erc20_class_hash": {
+          "description": "Class hash used when the bridge deploys new L2 token contracts."
+        },
+        "get_l2_token_governance": {
+          "description": "Account allowed to govern the L2 token contracts deployed by this bridge."
+        }
+      },
+      "implementationNames": {
+        "strk:0x05cd48fccbfd8aa2773fe22c217e808319ffcc1c5a6a463f7d8fa2da48218196": "StarkGateUSDCBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "MultiBridge",
+      "address": "strk:0x0616757a151c21f9be8775098d591c2807316d992bbc3bb1a5c1821630589256",
+      "type": "Contract",
+      "template": "starknet/StarkgateTokenBridge",
+      "sourceHashes": [
+        "0xd5ba847131b2f1df6113a5cfde064ec3518431ac2a87edde451d75c6f051253f"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "description": "Starkgate token bridge on Starknet (L2 side). Mints the L2 token on deposits and burns it on withdrawals, relayed through the Starknet core messaging contract on Ethereum.",
+      "sinceTimestamp": 1707329051,
+      "sinceBlock": 535613,
+      "values": {
+        "$classHash": "0x65d7265ac12b330bc42737281a9b73af17bd904d477779a014874d118c4ddbf",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x04758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+            "strk:0x03103066e6c7037ba947ea9a7b5b8d110ae7f3d631fa5849435d0dc1fc5ef785"
+          ],
+          "SECURITY_ADMIN": [
+            "strk:0x04758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+          ],
+          "APP_GOVERNOR": [
+            "strk:0x04758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x03103066e6c7037ba947ea9a7b5b8d110ae7f3d631fa5849435d0dc1fc5ef785"
+          ]
+        },
+        "appGovernors": [
+          "strk:0x04758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+        ],
+        "get_erc20_class_hash": "0x00b45dbc3714180381c5680e41931172d67194d77d504413465390e0bef194ec",
+        "get_identity": "'STARKGATE'",
+        "get_l1_bridge": "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+        "get_l2_token_governance": "strk:0x03103066e6c7037ba947ea9a7b5b8d110ae7f3d631fa5849435d0dc1fc5ef785",
+        "get_upgrade_delay": 0,
+        "get_version": "0x2",
+        "governanceAdmins": [
+          "strk:0x04758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c",
+          "strk:0x03103066e6c7037ba947ea9a7b5b8d110ae7f3d631fa5849435d0dc1fc5ef785"
+        ],
+        "securityAdmins": [
+          "strk:0x04758595201d9d01be9f8bd232fe3a1c0b5c7b953219c9faa35779b3e73c214c"
+        ],
+        "upgradeGovernors": [
+          "strk:0x03103066e6c7037ba947ea9a7b5b8d110ae7f3d631fa5849435d0dc1fc5ef785"
+        ]
+      },
+      "fieldMeta": {
+        "$classHash": {
+          "severity": "HIGH",
+          "description": "Sierra class hash of the bridge. A change means the contract was upgraded via the StarkWare replaceability component."
+        },
+        "$roles": {
+          "severity": "HIGH",
+          "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events."
+        },
+        "upgradeGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the UPGRADE_GOVERNOR role."
+        },
+        "governanceAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the GOVERNANCE_ADMIN role."
+        },
+        "securityAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the SECURITY_ADMIN role."
+        },
+        "securityAgents": {
+          "description": "Holders of the SECURITY_AGENT role."
+        },
+        "appGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_GOVERNOR role."
+        },
+        "appRoleAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_ROLE_ADMIN role."
+        },
+        "get_upgrade_delay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to."
+        },
+        "get_l1_bridge": {
+          "description": "The L1 counterpart of this bridge on Ethereum."
+        },
+        "get_erc20_class_hash": {
+          "description": "Class hash used when the bridge deploys new L2 token contracts."
+        },
+        "get_l2_token_governance": {
+          "description": "Account allowed to govern the L2 token contracts deployed by this bridge."
+        }
+      },
+      "implementationNames": {
+        "strk:0x0616757a151c21f9be8775098d591c2807316d992bbc3bb1a5c1821630589256": "StarkGateMultiBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "FXSBridge",
+      "address": "strk:0x06bf25c0911c6c63abfe3600428144d0d0dbf8b7bfbc44306a3386aa95a24296",
+      "type": "Contract",
+      "template": "starknet/StarkgateTokenBridge",
+      "sourceHashes": [
+        "0xf7a6ba4c87e3d5fec134990017683ad9c91654cd851edcce40c55e759d8619da"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "description": "Starkgate token bridge on Starknet (L2 side). Mints the L2 token on deposits and burns it on withdrawals, relayed through the Starknet core messaging contract on Ethereum.",
+      "sinceTimestamp": 1692790391,
+      "sinceBlock": 167949,
+      "values": {
+        "$classHash": "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "SECURITY_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ]
+        },
+        "get_erc20_class_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_identity": "'STARKGATE'",
+        "get_l2_token_governance": "strk:0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_upgrade_delay": 0,
+        "get_version": "0x2",
+        "governanceAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "securityAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "upgradeGovernors": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ]
+      },
+      "fieldMeta": {
+        "$classHash": {
+          "severity": "HIGH",
+          "description": "Sierra class hash of the bridge. A change means the contract was upgraded via the StarkWare replaceability component."
+        },
+        "$roles": {
+          "severity": "HIGH",
+          "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events."
+        },
+        "upgradeGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the UPGRADE_GOVERNOR role."
+        },
+        "governanceAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the GOVERNANCE_ADMIN role."
+        },
+        "securityAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the SECURITY_ADMIN role."
+        },
+        "securityAgents": {
+          "description": "Holders of the SECURITY_AGENT role."
+        },
+        "appGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_GOVERNOR role."
+        },
+        "appRoleAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_ROLE_ADMIN role."
+        },
+        "get_upgrade_delay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to."
+        },
+        "get_l1_bridge": {
+          "description": "The L1 counterpart of this bridge on Ethereum."
+        },
+        "get_erc20_class_hash": {
+          "description": "Class hash used when the bridge deploys new L2 token contracts."
+        },
+        "get_l2_token_governance": {
+          "description": "Account allowed to govern the L2 token contracts deployed by this bridge."
+        }
+      },
+      "implementationNames": {
+        "strk:0x06bf25c0911c6c63abfe3600428144d0d0dbf8b7bfbc44306a3386aa95a24296": "StarkGateFXSBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "sfrxETHBridge",
+      "address": "strk:0x06dcc61c4cf056ff42a8f4b8635c207e3da73332282aa2132058022520fa0179",
+      "type": "Contract",
+      "template": "starknet/StarkgateTokenBridge",
+      "sourceHashes": [
+        "0xf7a6ba4c87e3d5fec134990017683ad9c91654cd851edcce40c55e759d8619da"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "description": "Starkgate token bridge on Starknet (L2 side). Mints the L2 token on deposits and burns it on withdrawals, relayed through the Starknet core messaging contract on Ethereum.",
+      "sinceTimestamp": 1692790458,
+      "sinceBlock": 167951,
+      "values": {
+        "$classHash": "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "SECURITY_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ]
+        },
+        "get_erc20_class_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_identity": "'STARKGATE'",
+        "get_l2_token_governance": "strk:0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_upgrade_delay": 0,
+        "get_version": "0x2",
+        "governanceAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "securityAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "upgradeGovernors": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ]
+      },
+      "fieldMeta": {
+        "$classHash": {
+          "severity": "HIGH",
+          "description": "Sierra class hash of the bridge. A change means the contract was upgraded via the StarkWare replaceability component."
+        },
+        "$roles": {
+          "severity": "HIGH",
+          "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events."
+        },
+        "upgradeGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the UPGRADE_GOVERNOR role."
+        },
+        "governanceAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the GOVERNANCE_ADMIN role."
+        },
+        "securityAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the SECURITY_ADMIN role."
+        },
+        "securityAgents": {
+          "description": "Holders of the SECURITY_AGENT role."
+        },
+        "appGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_GOVERNOR role."
+        },
+        "appRoleAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_ROLE_ADMIN role."
+        },
+        "get_upgrade_delay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to."
+        },
+        "get_l1_bridge": {
+          "description": "The L1 counterpart of this bridge on Ethereum."
+        },
+        "get_erc20_class_hash": {
+          "description": "Class hash used when the bridge deploys new L2 token contracts."
+        },
+        "get_l2_token_governance": {
+          "description": "Account allowed to govern the L2 token contracts deployed by this bridge."
+        }
+      },
+      "implementationNames": {
+        "strk:0x06dcc61c4cf056ff42a8f4b8635c207e3da73332282aa2132058022520fa0179": "StarkGateSfrxETHBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "ETHBridge",
+      "address": "strk:0x073314940630fd6dcda0d772d4c972c4e0a9946bef9dabf4ef84eda8ef542b82",
+      "type": "Contract",
+      "template": "starknet/StarkgateTokenBridge",
+      "sourceHashes": [
+        "0xf7a6ba4c87e3d5fec134990017683ad9c91654cd851edcce40c55e759d8619da"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "description": "Starkgate token bridge on Starknet (L2 side). Mints the L2 token on deposits and burns it on withdrawals, relayed through the Starknet core messaging contract on Ethereum.",
+      "sinceTimestamp": 1647370777,
+      "sinceBlock": 1407,
+      "values": {
+        "$classHash": "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x00eaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "SECURITY_ADMIN": [
+            "strk:0x073b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3"
+          ],
+          "SECURITY_AGENT": [
+            "strk:0x07cb6648d32504bc4d6073f1e5fd9021a15f6963776a8dbe0d9e2f744743fb40"
+          ]
+        },
+        "get_erc20_class_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_identity": "'STARKGATE'",
+        "get_l2_token_governance": "strk:0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_upgrade_delay": 691200,
+        "get_version": "0x2",
+        "governanceAdmins": [
+          "strk:0x00eaeaded2fdf232bda77a2db0adea38b222a67559a7ec93bb446fc0759d2df0"
+        ],
+        "securityAdmins": [
+          "strk:0x073b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3"
+        ],
+        "securityAgents": [
+          "strk:0x07cb6648d32504bc4d6073f1e5fd9021a15f6963776a8dbe0d9e2f744743fb40"
+        ],
+        "upgradeGovernors": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ]
+      },
+      "fieldMeta": {
+        "$classHash": {
+          "severity": "HIGH",
+          "description": "Sierra class hash of the bridge. A change means the contract was upgraded via the StarkWare replaceability component."
+        },
+        "$roles": {
+          "severity": "HIGH",
+          "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events."
+        },
+        "upgradeGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the UPGRADE_GOVERNOR role."
+        },
+        "governanceAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the GOVERNANCE_ADMIN role."
+        },
+        "securityAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the SECURITY_ADMIN role."
+        },
+        "securityAgents": {
+          "description": "Holders of the SECURITY_AGENT role."
+        },
+        "appGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_GOVERNOR role."
+        },
+        "appRoleAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_ROLE_ADMIN role."
+        },
+        "get_upgrade_delay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to."
+        },
+        "get_l1_bridge": {
+          "description": "The L1 counterpart of this bridge on Ethereum."
+        },
+        "get_erc20_class_hash": {
+          "description": "Class hash used when the bridge deploys new L2 token contracts."
+        },
+        "get_l2_token_governance": {
+          "description": "Account allowed to govern the L2 token contracts deployed by this bridge."
+        }
+      },
+      "implementationNames": {
+        "strk:0x073314940630fd6dcda0d772d4c972c4e0a9946bef9dabf4ef84eda8ef542b82": "StarkGateETHBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "Multisig 2",
+      "address": "strk:0x073b4e1fcfbdd38286307c498256fd23fb1f1e008d3ef17c5ab248bb8d2dd0a3",
+      "type": "EOA",
+      "template": "starknet/MultisigAccount",
+      "sourceHashes": [
+        "0x5d8fc4c35f6b9d11d5effabbc557b9a7e4ccb999c60021069f7a1b751fedf9b1"
+      ],
+      "description": "Multisig account contract on Starknet. Transactions must be approved by the configured threshold of signer keys before the account executes them.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "strk:0x0594c1582459ea03f77deaf9eb7e3917d6994a03c13405ba42867f83d85f085d",
+          "description": "unpause the bridge and manage the SECURITY_ADMIN and SECURITY_AGENT roles.",
+          "role": ".securityAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x073314940630fd6dcda0d772d4c972c4e0a9946bef9dabf4ef84eda8ef542b82",
+          "description": "unpause the bridge and manage the SECURITY_ADMIN and SECURITY_AGENT roles.",
+          "role": ".securityAdmins"
+        }
+      ],
+      "values": {
+        "$accountClassHash": "0x6e150953b26271a740bf2b6e9bca17cc52c68d765f761295de51ceb8526ee72",
+        "$signers": [
+          "0x6c8c3f508a1263b41a41926cb86e4a94303a50b226c4a96d3b8980f6385c68",
+          "0x1724fffb72ff0d63577496642753e5cf964b19228eeb9ec23a7d1376038970a",
+          "0x1ece546c371c5afd5b9860732936367431fa8a71435d0d30f56384baff7f3aa",
+          "0x2f5d0607c205c36e65b626c9101467bd4e4ca57964eaa85bf46d90fd12f37da",
+          "0x2cc819eb30e61ed2ecfd0e92cceaa039202445060192e49cfb4cf554325ac6",
+          "0x652ac7c8ae26be00f5edcb8dc8ddff4183e75a1e39482f330bb4c563e851f2f",
+          "0x1bbec87969619b26394803a420d104df33ccc0e57edc87b45566065132e3879",
+          "0x36799e91b4f1b77dc30b9eb6a2abbdcd7633171d3f8e0866379c1007220948d",
+          "0x30f97ecfefa01d22741c69247b60ca1770e5c9241af6703abc7ee64003a9ec2",
+          "0x62b55ae2c8ef379589d8923ff9acf532856dd7fc34a24dd57d355e295e00305",
+          "0x187bea00c6b61c80b80d9601b44f44d894250d06e39bab3a38a81d08ee94215",
+          "0x273715b6e720fd1950fda8ccd83a4a1c3dfb2cb91bfc5841305a0d14e7dec04"
+        ],
+        "$threshold": 3
+      },
+      "fieldMeta": {
+        "$signers": {
+          "severity": "HIGH",
+          "description": "Public keys of the signers controlling this account."
+        },
+        "$threshold": {
+          "severity": "HIGH",
+          "description": "Number of signer approvals required to execute a transaction."
+        },
+        "$accountClassHash": {
+          "description": "Sierra class hash of the account contract."
+        }
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "USDTBridge",
+      "address": "strk:0x074761a8d48ce002963002becc6d9c3dd8a2a05b1075d55e5967f42296f16bd0",
+      "type": "Contract",
+      "template": "starknet/StarkgateTokenBridge",
+      "sourceHashes": [
+        "0xf7a6ba4c87e3d5fec134990017683ad9c91654cd851edcce40c55e759d8619da"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "description": "Starkgate token bridge on Starknet (L2 side). Mints the L2 token on deposits and burns it on withdrawals, relayed through the Starknet core messaging contract on Ethereum.",
+      "sinceTimestamp": 1657094995,
+      "sinceBlock": 3135,
+      "values": {
+        "$classHash": "0x358663e6ed9d37efd33d4661e20b2bad143e0f92076b0c91fe65f31ccf55046",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "SECURITY_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ]
+        },
+        "get_erc20_class_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_identity": "'STARKGATE'",
+        "get_l2_token_governance": "strk:0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_upgrade_delay": 0,
+        "get_version": "0x2",
+        "governanceAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "securityAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "upgradeGovernors": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ]
+      },
+      "fieldMeta": {
+        "$classHash": {
+          "severity": "HIGH",
+          "description": "Sierra class hash of the bridge. A change means the contract was upgraded via the StarkWare replaceability component."
+        },
+        "$roles": {
+          "severity": "HIGH",
+          "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events."
+        },
+        "upgradeGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the UPGRADE_GOVERNOR role."
+        },
+        "governanceAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the GOVERNANCE_ADMIN role."
+        },
+        "securityAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the SECURITY_ADMIN role."
+        },
+        "securityAgents": {
+          "description": "Holders of the SECURITY_AGENT role."
+        },
+        "appGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_GOVERNOR role."
+        },
+        "appRoleAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_ROLE_ADMIN role."
+        },
+        "get_upgrade_delay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to."
+        },
+        "get_l1_bridge": {
+          "description": "The L1 counterpart of this bridge on Ethereum."
+        },
+        "get_erc20_class_hash": {
+          "description": "Class hash used when the bridge deploys new L2 token contracts."
+        },
+        "get_l2_token_governance": {
+          "description": "Account allowed to govern the L2 token contracts deployed by this bridge."
+        }
+      },
+      "implementationNames": {
+        "strk:0x074761a8d48ce002963002becc6d9c3dd8a2a05b1075d55e5967f42296f16bd0": "StarkGateUSDTBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "WBTCBridge",
+      "address": "strk:0x07aeec4870975311a7396069033796b61cd66ed49d22a786cba12a8d76717302",
+      "type": "Contract",
+      "unverified": true,
+      "template": "starknet/StarkgateTokenBridge",
+      "sourceHashes": [
+        "0x6e4ab30d4aa1a37886771f3229d4f5041202bcf3a09662d4a11dbbb309120e09"
+      ],
+      "proxyType": "StarkWare Replaceable",
+      "description": "Starkgate token bridge on Starknet (L2 side). Mints the L2 token on deposits and burns it on withdrawals, relayed through the Starknet core messaging contract on Ethereum.",
+      "sinceTimestamp": 1656440326,
+      "sinceBlock": 2889,
+      "values": {
+        "$classHash": "0x13a5b438f6a653c045cb4ff56f3fb9af303d8d488106d4f7c42d6f09fe65436",
+        "$roles": {
+          "GOVERNANCE_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "UPGRADE_GOVERNOR": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ],
+          "SECURITY_ADMIN": [
+            "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+          ]
+        },
+        "get_erc20_class_hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_identity": "'STARKGATE'",
+        "get_l1_bridge": "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+        "get_l2_token_governance": "strk:0x0000000000000000000000000000000000000000000000000000000000000000",
+        "get_upgrade_delay": 0,
+        "get_version": "'2.0.1-halt'",
+        "governanceAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "securityAdmins": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ],
+        "upgradeGovernors": [
+          "strk:0x045653a585ec600d7f050279376d353f84c7d6d09cf225aefbcb83bfaf4abb07"
+        ]
+      },
+      "fieldMeta": {
+        "$classHash": {
+          "severity": "HIGH",
+          "description": "Sierra class hash of the bridge. A change means the contract was upgraded via the StarkWare replaceability component."
+        },
+        "$roles": {
+          "severity": "HIGH",
+          "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events."
+        },
+        "upgradeGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the UPGRADE_GOVERNOR role."
+        },
+        "governanceAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the GOVERNANCE_ADMIN role."
+        },
+        "securityAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the SECURITY_ADMIN role."
+        },
+        "securityAgents": {
+          "description": "Holders of the SECURITY_AGENT role."
+        },
+        "appGovernors": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_GOVERNOR role."
+        },
+        "appRoleAdmins": {
+          "severity": "HIGH",
+          "description": "Holders of the APP_ROLE_ADMIN role."
+        },
+        "get_upgrade_delay": {
+          "severity": "HIGH",
+          "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to."
+        },
+        "get_l1_bridge": {
+          "description": "The L1 counterpart of this bridge on Ethereum."
+        },
+        "get_erc20_class_hash": {
+          "description": "Class hash used when the bridge deploys new L2 token contracts."
+        },
+        "get_l2_token_governance": {
+          "description": "Account allowed to govern the L2 token contracts deployed by this bridge."
+        }
+      },
+      "implementationNames": {
+        "strk:0x07aeec4870975311a7396069033796b61cd66ed49d22a786cba12a8d76717302": "StarkGateWBTCBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "name": "BridgeExecutor",
+      "address": "strk:0x07ba4bb6a9ec398598c9c08424af6bdb83f56e78ffc8f07f0da0dfae8deca432",
+      "type": "Contract",
+      "unverified": true,
+      "sourceHashes": [
+        "0xd4f9e95f5e4d64f1f8c901773b6c856167ae55838bd8d48ebd8b7b80fdcc9224"
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "strk:0x0088eedbe2fe3918b69ccb411713b7fa72079d4eddf291103ccbe41e78a9615c",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself.",
+          "role": ".governanceAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x0088eedbe2fe3918b69ccb411713b7fa72079d4eddf291103ccbe41e78a9615c",
+          "description": "unpause the bridge and manage the SECURITY_ADMIN and SECURITY_AGENT roles.",
+          "role": ".securityAdmins"
+        },
+        {
+          "permission": "upgrade",
+          "from": "strk:0x0088eedbe2fe3918b69ccb411713b7fa72079d4eddf291103ccbe41e78a9615c",
+          "role": ".upgradeGovernors"
+        }
+      ],
+      "sinceTimestamp": 1725899561,
+      "sinceBlock": 705525,
+      "values": {
+        "$classHash": "0x611bf8ac1d6e31031e37e428c48547b8be4179d3d047d95fde9452d6c7a6a15",
+        "get_actions_set_count": 1,
+        "get_delay": 600,
+        "get_ethereum_governance_executor": "eth:0x0000000000000000000000000000000000000000",
+        "get_grace_period": 36000,
+        "get_guardian": "strk:0x0399eb3460eb885b5e1f5f2aebf63dadb7493f4cbf34868434366bbb55422c4e",
+        "get_maximum_delay": 7200,
+        "get_minimum_delay": 480
+      },
+      "implementationNames": {
+        "strk:0x07ba4bb6a9ec398598c9c08424af6bdb83f56e78ffc8f07f0da0dfae8deca432": "BridgeExecutor"
+      }
+    },
+    {
+      "name": "LORDSBridge",
+      "address": "strk:0x07c76a71952ce3acd1f953fd2a3fda8564408b821ff367041c89f44526076633",
+      "type": "Contract",
+      "unverified": true,
+      "sourceHashes": [
+        "0xdda74812d599c7306bbf217cee25e711228d4b5d0882b79dcf10b5138912e8e7"
+      ],
+      "sinceTimestamp": 1687523258,
+      "sinceBlock": 88589,
+      "values": {
+        "$classHash": "0x5fb3b18d4f82a562b3d885bb9aa080056f12989cc413a36ecd537d9056c4ce3",
+        "get_l1_bridge": "0x23a2aac5d0fa69e3243994672822ba43e34e5c9",
+        "get_token": "strk:0x0124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49"
+      },
+      "implementationNames": {
+        "strk:0x07c76a71952ce3acd1f953fd2a3fda8564408b821ff367041c89f44526076633": "RealmsLORDSBridge"
+      }
+    },
+    {
+      "address": "strk:0x07cb6648d32504bc4d6073f1e5fd9021a15f6963776a8dbe0d9e2f744743fb40",
+      "type": "EOA",
+      "sourceHashes": [
+        "0xc71a5f620db5731945ec261f0a43193980255cae147321f7a21a50faa29a0c59"
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "strk:0x0594c1582459ea03f77deaf9eb7e3917d6994a03c13405ba42867f83d85f085d",
+          "description": "pause the bridge.",
+          "role": ".securityAgents"
+        },
+        {
+          "permission": "interact",
+          "from": "strk:0x073314940630fd6dcda0d772d4c972c4e0a9946bef9dabf4ef84eda8ef542b82",
+          "description": "pause the bridge.",
+          "role": ".securityAgents"
+        }
+      ],
+      "values": {
+        "$accountClassHash": "0xe2eb8f5672af4e6a4e8a8f1b44989685e668489b0a25437733756c5a34a1d6",
+        "$publicKey": "0x1f507fa835de39f55ab17666f4712cc5de7aeef93b6c40d4f04174fe18a27c3"
+      }
+    }
+  ],
+  "abis": {
+    "strk:0x0057912720381af14b0e5c87aa4718ed5e527eab60b3801ebf702ab09139e38b": [
+      "event Approval(owner: ContractAddress, spender: ContractAddress, value: u256)",
+      "event GovernanceAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event GovernanceAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event Transfer(from: ContractAddress, to: ContractAddress, value: u256)",
+      "event UpgradeGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn allowance(owner: ContractAddress, spender: ContractAddress) -> u256 view",
+      "fn approve(spender: ContractAddress, amount: u256) -> bool",
+      "fn balanceOf(account: ContractAddress) -> u256 view",
+      "fn balance_of(account: ContractAddress) -> u256 view",
+      "fn decimals() -> u8 view",
+      "fn decreaseAllowance(spender: ContractAddress, subtractedValue: u256) -> bool",
+      "fn decrease_allowance(spender: ContractAddress, subtracted_value: u256) -> bool",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_role_admin(role: felt252) -> felt252 view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn has_role(role: felt252, account: ContractAddress) -> bool view",
+      "fn increaseAllowance(spender: ContractAddress, addedValue: u256) -> bool",
+      "fn increase_allowance(spender: ContractAddress, added_value: u256) -> bool",
+      "fn is_governance_admin(account: ContractAddress) -> bool view",
+      "fn is_upgrade_governor(account: ContractAddress) -> bool view",
+      "fn name() -> felt252 view",
+      "fn permissionedBurn(account: ContractAddress, amount: u256)",
+      "fn permissionedMint(account: ContractAddress, amount: u256)",
+      "fn permissioned_burn(account: ContractAddress, amount: u256)",
+      "fn permissioned_mint(account: ContractAddress, amount: u256)",
+      "fn register_governance_admin(account: ContractAddress)",
+      "fn register_upgrade_governor(account: ContractAddress)",
+      "fn remove_governance_admin(account: ContractAddress)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn remove_upgrade_governor(account: ContractAddress)",
+      "fn renounce(role: felt252)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn symbol() -> felt252 view",
+      "fn totalSupply() -> u256 view",
+      "fn total_supply() -> u256 view",
+      "fn transfer(recipient: ContractAddress, amount: u256) -> bool",
+      "fn transferFrom(sender: ContractAddress, recipient: ContractAddress, amount: u256) -> bool",
+      "fn transfer_from(sender: ContractAddress, recipient: ContractAddress, amount: u256) -> bool"
+    ],
+    "strk:0x006646a87b8e9e51a893c52facd89f99539a152b96e72daee6a7a3734aa5299a": [
+      "event AppGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event AppRoleAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppRoleAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event DeployHandled(l1_token: EthAddress, name: felt252, symbol: felt252, decimals: u8)",
+      "event DepositHandled(l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256)",
+      "event DepositWithMessageHandled(depositor: EthAddress, l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256, message: Span<felt252>)",
+      "event Erc20ClassHashStored(previous_hash: ClassHash, erc20_class_hash: ClassHash)",
+      "event GovernanceAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event GovernanceAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event L1BridgeSet(l1_bridge_address: EthAddress)",
+      "event L2TokenGovernanceChanged(previous_governance: ContractAddress, new_governance: ContractAddress)",
+      "event OperatorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event OperatorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event SecurityAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event SecurityAgentAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAgentRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event TokenAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event TokenAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event UpgradeGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event WithdrawInitiated(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "event WithdrawalLimitDisabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event WithdrawalLimitEnabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event deposit_handled(account: ContractAddress, amount: u256)",
+      "event withdraw_initiated(l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn disable_withdrawal_limit(l1_token: EthAddress)",
+      "fn enable_withdrawal_limit(l1_token: EthAddress)",
+      "fn get_erc20_class_hash() -> ClassHash view",
+      "fn get_identity() -> felt252 view",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_l1_token(l2_token: ContractAddress) -> EthAddress view",
+      "fn get_l2_token(l1_token: EthAddress) -> ContractAddress view",
+      "fn get_l2_token_governance() -> ContractAddress view",
+      "fn get_remaining_withdrawal_quota(l1_token: EthAddress) -> u256 view",
+      "fn get_role_admin(role: felt252) -> felt252 view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn get_version() -> felt252 view",
+      "fn has_role(role: felt252, account: ContractAddress) -> bool view",
+      "fn initiate_token_withdraw(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256)",
+      "fn initiate_withdraw(l1_recipient: EthAddress, amount: u256)",
+      "fn is_app_governor(account: ContractAddress) -> bool view",
+      "fn is_app_role_admin(account: ContractAddress) -> bool view",
+      "fn is_governance_admin(account: ContractAddress) -> bool view",
+      "fn is_operator(account: ContractAddress) -> bool view",
+      "fn is_security_admin(account: ContractAddress) -> bool view",
+      "fn is_security_agent(account: ContractAddress) -> bool view",
+      "fn is_token_admin(account: ContractAddress) -> bool view",
+      "fn is_upgrade_governor(account: ContractAddress) -> bool view",
+      "fn register_app_governor(account: ContractAddress)",
+      "fn register_app_role_admin(account: ContractAddress)",
+      "fn register_governance_admin(account: ContractAddress)",
+      "fn register_operator(account: ContractAddress)",
+      "fn register_security_admin(account: ContractAddress)",
+      "fn register_security_agent(account: ContractAddress)",
+      "fn register_token_admin(account: ContractAddress)",
+      "fn register_upgrade_governor(account: ContractAddress)",
+      "fn remove_app_governor(account: ContractAddress)",
+      "fn remove_app_role_admin(account: ContractAddress)",
+      "fn remove_governance_admin(account: ContractAddress)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn remove_operator(account: ContractAddress)",
+      "fn remove_security_admin(account: ContractAddress)",
+      "fn remove_security_agent(account: ContractAddress)",
+      "fn remove_token_admin(account: ContractAddress)",
+      "fn remove_upgrade_governor(account: ContractAddress)",
+      "fn renounce(role: felt252)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn set_erc20_class_hash(erc20_class_hash: ClassHash)",
+      "fn set_l1_bridge(l1_bridge_address: EthAddress)",
+      "fn set_l2_token_governance(l2_token_governance: ContractAddress)"
+    ],
+    "strk:0x0078da8023b3c08e5a41540a34f7c385fd4f4540d5668f1be3ede0d3bb1b9d4d": [
+      "event AppGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event AppRoleAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppRoleAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event DeployHandled(l1_token: EthAddress, name: felt252, symbol: felt252, decimals: u8)",
+      "event DepositHandled(l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256)",
+      "event DepositWithMessageHandled(depositor: EthAddress, l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256, message: Span<felt252>)",
+      "event Erc20ClassHashStored(previous_hash: ClassHash, erc20_class_hash: ClassHash)",
+      "event GovernanceAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event GovernanceAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event L1BridgeSet(l1_bridge_address: EthAddress)",
+      "event L2TokenGovernanceChanged(previous_governance: ContractAddress, new_governance: ContractAddress)",
+      "event OperatorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event OperatorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event SecurityAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event SecurityAgentAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAgentRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event TokenAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event TokenAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event UpgradeGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event WithdrawInitiated(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "event WithdrawalLimitDisabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event WithdrawalLimitEnabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event deposit_handled(account: ContractAddress, amount: u256)",
+      "event withdraw_initiated(l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn disable_withdrawal_limit(l1_token: EthAddress)",
+      "fn enable_withdrawal_limit(l1_token: EthAddress)",
+      "fn get_erc20_class_hash() -> ClassHash view",
+      "fn get_identity() -> felt252 view",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_l1_token(l2_token: ContractAddress) -> EthAddress view",
+      "fn get_l2_token(l1_token: EthAddress) -> ContractAddress view",
+      "fn get_l2_token_governance() -> ContractAddress view",
+      "fn get_remaining_withdrawal_quota(l1_token: EthAddress) -> u256 view",
+      "fn get_role_admin(role: felt252) -> felt252 view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn get_version() -> felt252 view",
+      "fn has_role(role: felt252, account: ContractAddress) -> bool view",
+      "fn initiate_token_withdraw(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256)",
+      "fn initiate_withdraw(l1_recipient: EthAddress, amount: u256)",
+      "fn is_app_governor(account: ContractAddress) -> bool view",
+      "fn is_app_role_admin(account: ContractAddress) -> bool view",
+      "fn is_governance_admin(account: ContractAddress) -> bool view",
+      "fn is_operator(account: ContractAddress) -> bool view",
+      "fn is_security_admin(account: ContractAddress) -> bool view",
+      "fn is_security_agent(account: ContractAddress) -> bool view",
+      "fn is_token_admin(account: ContractAddress) -> bool view",
+      "fn is_upgrade_governor(account: ContractAddress) -> bool view",
+      "fn register_app_governor(account: ContractAddress)",
+      "fn register_app_role_admin(account: ContractAddress)",
+      "fn register_governance_admin(account: ContractAddress)",
+      "fn register_operator(account: ContractAddress)",
+      "fn register_security_admin(account: ContractAddress)",
+      "fn register_security_agent(account: ContractAddress)",
+      "fn register_token_admin(account: ContractAddress)",
+      "fn register_upgrade_governor(account: ContractAddress)",
+      "fn remove_app_governor(account: ContractAddress)",
+      "fn remove_app_role_admin(account: ContractAddress)",
+      "fn remove_governance_admin(account: ContractAddress)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn remove_operator(account: ContractAddress)",
+      "fn remove_security_admin(account: ContractAddress)",
+      "fn remove_security_agent(account: ContractAddress)",
+      "fn remove_token_admin(account: ContractAddress)",
+      "fn remove_upgrade_governor(account: ContractAddress)",
+      "fn renounce(role: felt252)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn set_erc20_class_hash(erc20_class_hash: ClassHash)",
+      "fn set_l1_bridge(l1_bridge_address: EthAddress)",
+      "fn set_l2_token_governance(l2_token_governance: ContractAddress)"
+    ],
+    "strk:0x0088eedbe2fe3918b69ccb411713b7fa72079d4eddf291103ccbe41e78a9615c": [
+      "event AppGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event AppRoleAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppRoleAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event DeployHandled(l1_token: EthAddress, name: felt252, symbol: felt252, decimals: u8)",
+      "event DepositHandled(l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256)",
+      "event DepositWithMessageHandled(depositor: EthAddress, l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256, message: Span<felt252>)",
+      "event Erc20ClassHashStored(previous_hash: ClassHash, erc20_class_hash: ClassHash)",
+      "event GovernanceAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event GovernanceAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event L1BridgeSet(l1_bridge_address: EthAddress)",
+      "event L2TokenGovernanceChanged(previous_governance: ContractAddress, new_governance: ContractAddress)",
+      "event OperatorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event OperatorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event SecurityAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event SecurityAgentAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAgentRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event TokenAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event TokenAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event UpgradeGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event WithdrawInitiated(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "event WithdrawalLimitDisabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event WithdrawalLimitEnabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event deposit_handled(account: ContractAddress, amount: u256)",
+      "event withdraw_initiated(l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn disable_withdrawal_limit(l1_token: EthAddress)",
+      "fn enable_withdrawal_limit(l1_token: EthAddress)",
+      "fn get_deprecated_l2_token() -> ContractAddress view",
+      "fn get_erc20_class_hash() -> ClassHash view",
+      "fn get_identity() -> felt252 view",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_l1_token(l2_token: ContractAddress) -> EthAddress view",
+      "fn get_l2_token(l1_token: EthAddress) -> ContractAddress view",
+      "fn get_l2_token_governance() -> ContractAddress view",
+      "fn get_new_l2_token() -> ContractAddress view",
+      "fn get_remaining_withdrawal_quota(l1_token: EthAddress) -> u256 view",
+      "fn get_role_admin(role: felt252) -> felt252 view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn get_version() -> felt252 view",
+      "fn has_role(role: felt252, account: ContractAddress) -> bool view",
+      "fn initiate_token_withdraw(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256)",
+      "fn initiate_withdraw(l1_recipient: EthAddress, amount: u256)",
+      "fn is_app_governor(account: ContractAddress) -> bool view",
+      "fn is_app_role_admin(account: ContractAddress) -> bool view",
+      "fn is_governance_admin(account: ContractAddress) -> bool view",
+      "fn is_operator(account: ContractAddress) -> bool view",
+      "fn is_security_admin(account: ContractAddress) -> bool view",
+      "fn is_security_agent(account: ContractAddress) -> bool view",
+      "fn is_token_admin(account: ContractAddress) -> bool view",
+      "fn is_upgrade_governor(account: ContractAddress) -> bool view",
+      "fn migrate_balance_to_deprecated_token()",
+      "fn migrate_balance_to_new_token()",
+      "fn register_app_governor(account: ContractAddress)",
+      "fn register_app_role_admin(account: ContractAddress)",
+      "fn register_governance_admin(account: ContractAddress)",
+      "fn register_operator(account: ContractAddress)",
+      "fn register_security_admin(account: ContractAddress)",
+      "fn register_security_agent(account: ContractAddress)",
+      "fn register_token_admin(account: ContractAddress)",
+      "fn register_upgrade_governor(account: ContractAddress)",
+      "fn remove_app_governor(account: ContractAddress)",
+      "fn remove_app_role_admin(account: ContractAddress)",
+      "fn remove_governance_admin(account: ContractAddress)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn remove_operator(account: ContractAddress)",
+      "fn remove_security_admin(account: ContractAddress)",
+      "fn remove_security_agent(account: ContractAddress)",
+      "fn remove_token_admin(account: ContractAddress)",
+      "fn remove_upgrade_governor(account: ContractAddress)",
+      "fn renounce(role: felt252)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn set_erc20_class_hash(erc20_class_hash: ClassHash)",
+      "fn set_l1_bridge(l1_bridge_address: EthAddress)",
+      "fn set_l2_token_governance(l2_token_governance: ContractAddress)"
+    ],
+    "strk:0x0124aeb495b947201f5fac96fd1138e326ad86195b98df6dec9009158a533b49": [
+      "event Approval()",
+      "event Transfer()",
+      "fn allowance(owner: ContractAddress, spender: ContractAddress) -> u256 view",
+      "fn approve(spender: ContractAddress, amount: u256) -> bool",
+      "fn balanceOf(account: ContractAddress) -> u256 view",
+      "fn balance_of(account: ContractAddress) -> u256 view",
+      "fn burn(owner: ContractAddress, amount: u256) -> bool",
+      "fn constructor(l2_bridge: ContractAddress)",
+      "fn decimals() -> u8 view",
+      "fn mint(recipient: ContractAddress, amount: u256) -> bool",
+      "fn name() -> felt252 view",
+      "fn symbol() -> felt252 view",
+      "fn totalSupply() -> u256 view",
+      "fn total_supply() -> u256 view",
+      "fn transfer(recipient: ContractAddress, amount: u256) -> bool",
+      "fn transferFrom(sender: ContractAddress, recipient: ContractAddress, amount: u256) -> bool",
+      "fn transfer_from(sender: ContractAddress, recipient: ContractAddress, amount: u256) -> bool"
+    ],
+    "strk:0x0239eee60e6d0bed42315ac74a1fc43db8074646d4d2a0a9e6fa5272685a0eb5": [
+      "event AppGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event AppRoleAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppRoleAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event DeployHandled(l1_token: EthAddress, name: felt252, symbol: felt252, decimals: u8)",
+      "event DepositHandled(l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256)",
+      "event DepositWithMessageHandled(depositor: EthAddress, l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256, message: Span<felt252>)",
+      "event Erc20ClassHashStored(previous_hash: ClassHash, erc20_class_hash: ClassHash)",
+      "event GovernanceAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event GovernanceAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event L1BridgeSet(l1_bridge_address: EthAddress)",
+      "event L2TokenGovernanceChanged(previous_governance: ContractAddress, new_governance: ContractAddress)",
+      "event OperatorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event OperatorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event SecurityAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event SecurityAgentAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAgentRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event TokenAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event TokenAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event UpgradeGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event WithdrawInitiated(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "event WithdrawalLimitDisabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event WithdrawalLimitEnabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event deposit_handled(account: ContractAddress, amount: u256)",
+      "event withdraw_initiated(l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn disable_withdrawal_limit(l1_token: EthAddress)",
+      "fn enable_withdrawal_limit(l1_token: EthAddress)",
+      "fn get_erc20_class_hash() -> ClassHash view",
+      "fn get_identity() -> felt252 view",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_l1_token(l2_token: ContractAddress) -> EthAddress view",
+      "fn get_l2_token(l1_token: EthAddress) -> ContractAddress view",
+      "fn get_l2_token_governance() -> ContractAddress view",
+      "fn get_remaining_withdrawal_quota(l1_token: EthAddress) -> u256 view",
+      "fn get_role_admin(role: felt252) -> felt252 view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn get_version() -> felt252 view",
+      "fn has_role(role: felt252, account: ContractAddress) -> bool view",
+      "fn initiate_token_withdraw(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256)",
+      "fn initiate_withdraw(l1_recipient: EthAddress, amount: u256)",
+      "fn is_app_governor(account: ContractAddress) -> bool view",
+      "fn is_app_role_admin(account: ContractAddress) -> bool view",
+      "fn is_governance_admin(account: ContractAddress) -> bool view",
+      "fn is_operator(account: ContractAddress) -> bool view",
+      "fn is_security_admin(account: ContractAddress) -> bool view",
+      "fn is_security_agent(account: ContractAddress) -> bool view",
+      "fn is_token_admin(account: ContractAddress) -> bool view",
+      "fn is_upgrade_governor(account: ContractAddress) -> bool view",
+      "fn register_app_governor(account: ContractAddress)",
+      "fn register_app_role_admin(account: ContractAddress)",
+      "fn register_governance_admin(account: ContractAddress)",
+      "fn register_operator(account: ContractAddress)",
+      "fn register_security_admin(account: ContractAddress)",
+      "fn register_security_agent(account: ContractAddress)",
+      "fn register_token_admin(account: ContractAddress)",
+      "fn register_upgrade_governor(account: ContractAddress)",
+      "fn remove_app_governor(account: ContractAddress)",
+      "fn remove_app_role_admin(account: ContractAddress)",
+      "fn remove_governance_admin(account: ContractAddress)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn remove_operator(account: ContractAddress)",
+      "fn remove_security_admin(account: ContractAddress)",
+      "fn remove_security_agent(account: ContractAddress)",
+      "fn remove_token_admin(account: ContractAddress)",
+      "fn remove_upgrade_governor(account: ContractAddress)",
+      "fn renounce(role: felt252)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn set_erc20_class_hash(erc20_class_hash: ClassHash)",
+      "fn set_l1_bridge(l1_bridge_address: EthAddress)",
+      "fn set_l2_token_governance(l2_token_governance: ContractAddress)"
+    ],
+    "strk:0x032c68653622292bedf0ed6d941888a01d3923c7f4eb633a0c08c5497a1f5f58": [
+      "event AppGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event AppRoleAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppRoleAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event DeployHandled(l1_token: EthAddress, name: felt252, symbol: felt252, decimals: u8)",
+      "event DepositHandled(l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256)",
+      "event DepositWithMessageHandled(depositor: EthAddress, l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256, message: Span<felt252>)",
+      "event Erc20ClassHashStored(previous_hash: ClassHash, erc20_class_hash: ClassHash)",
+      "event GovernanceAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event GovernanceAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event L1BridgeSet(l1_bridge_address: EthAddress)",
+      "event L2TokenGovernanceChanged(previous_governance: ContractAddress, new_governance: ContractAddress)",
+      "event OperatorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event OperatorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event SecurityAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event SecurityAgentAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAgentRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event TokenAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event TokenAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event TokenAlreadyHalted(l1_token: EthAddress, l2_token: ContractAddress)",
+      "event TokenHaltAcknowledged(l1_token: EthAddress, l2_token: ContractAddress, total_supply: u256)",
+      "event TokenHalted(l1_token: EthAddress, l2_token: ContractAddress)",
+      "event UpgradeGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event WithdrawInitiated(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "event WithdrawalLimitDisabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event WithdrawalLimitEnabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event deposit_handled(account: ContractAddress, amount: u256)",
+      "event withdraw_initiated(l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "fn acknowledge_token_halt(l1_token: EthAddress)",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn disable_withdrawal_limit(l1_token: EthAddress)",
+      "fn enable_withdrawal_limit(l1_token: EthAddress)",
+      "fn get_erc20_class_hash() -> ClassHash view",
+      "fn get_identity() -> felt252 view",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_l1_bridge() -> EthAddress view",
+      "fn get_l1_token(l2_token: ContractAddress) -> EthAddress view",
+      "fn get_l2_token(l1_token: EthAddress) -> ContractAddress view",
+      "fn get_l2_token_governance() -> ContractAddress view",
+      "fn get_remaining_withdrawal_quota(l1_token: EthAddress) -> u256 view",
+      "fn get_role_admin(role: felt252) -> felt252 view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn get_version() -> felt252 view",
+      "fn has_role(role: felt252, account: ContractAddress) -> bool view",
+      "fn initiate_token_withdraw(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256)",
+      "fn initiate_withdraw(l1_recipient: EthAddress, amount: u256)",
+      "fn is_app_governor(account: ContractAddress) -> bool view",
+      "fn is_app_role_admin(account: ContractAddress) -> bool view",
+      "fn is_governance_admin(account: ContractAddress) -> bool view",
+      "fn is_operator(account: ContractAddress) -> bool view",
+      "fn is_security_admin(account: ContractAddress) -> bool view",
+      "fn is_security_agent(account: ContractAddress) -> bool view",
+      "fn is_token_admin(account: ContractAddress) -> bool view",
+      "fn is_upgrade_governor(account: ContractAddress) -> bool view",
+      "fn register_app_governor(account: ContractAddress)",
+      "fn register_app_role_admin(account: ContractAddress)",
+      "fn register_governance_admin(account: ContractAddress)",
+      "fn register_operator(account: ContractAddress)",
+      "fn register_security_admin(account: ContractAddress)",
+      "fn register_security_agent(account: ContractAddress)",
+      "fn register_token_admin(account: ContractAddress)",
+      "fn register_upgrade_governor(account: ContractAddress)",
+      "fn remove_app_governor(account: ContractAddress)",
+      "fn remove_app_role_admin(account: ContractAddress)",
+      "fn remove_governance_admin(account: ContractAddress)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn remove_operator(account: ContractAddress)",
+      "fn remove_security_admin(account: ContractAddress)",
+      "fn remove_security_agent(account: ContractAddress)",
+      "fn remove_token_admin(account: ContractAddress)",
+      "fn remove_upgrade_governor(account: ContractAddress)",
+      "fn renounce(role: felt252)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn set_erc20_class_hash(erc20_class_hash: ClassHash)",
+      "fn set_l1_bridge(l1_bridge_address: EthAddress)",
+      "fn set_l2_token_governance(l2_token_governance: ContractAddress)"
+    ],
+    "strk:0x042b8f0484674ca266ac5d08e4ac6a3fe65bd3129795def2dca5c34ecc5f96d2": [
+      "event Approval(owner: ContractAddress, spender: ContractAddress, value: u256)",
+      "event GovernanceAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event GovernanceAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event Transfer(from: ContractAddress, to: ContractAddress, value: u256)",
+      "event UpgradeGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn allowance(owner: ContractAddress, spender: ContractAddress) -> u256 view",
+      "fn approve(spender: ContractAddress, amount: u256) -> bool",
+      "fn balanceOf(account: ContractAddress) -> u256 view",
+      "fn balance_of(account: ContractAddress) -> u256 view",
+      "fn decimals() -> u8 view",
+      "fn decreaseAllowance(spender: ContractAddress, subtractedValue: u256) -> bool",
+      "fn decrease_allowance(spender: ContractAddress, subtracted_value: u256) -> bool",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_role_admin(role: felt252) -> felt252 view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn has_role(role: felt252, account: ContractAddress) -> bool view",
+      "fn increaseAllowance(spender: ContractAddress, addedValue: u256) -> bool",
+      "fn increase_allowance(spender: ContractAddress, added_value: u256) -> bool",
+      "fn is_governance_admin(account: ContractAddress) -> bool view",
+      "fn is_upgrade_governor(account: ContractAddress) -> bool view",
+      "fn name() -> felt252 view",
+      "fn permissionedBurn(account: ContractAddress, amount: u256)",
+      "fn permissionedMint(account: ContractAddress, amount: u256)",
+      "fn permissioned_burn(account: ContractAddress, amount: u256)",
+      "fn permissioned_mint(account: ContractAddress, amount: u256)",
+      "fn register_governance_admin(account: ContractAddress)",
+      "fn register_upgrade_governor(account: ContractAddress)",
+      "fn remove_governance_admin(account: ContractAddress)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn remove_upgrade_governor(account: ContractAddress)",
+      "fn renounce(role: felt252)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn symbol() -> felt252 view",
+      "fn totalSupply() -> u256 view",
+      "fn total_supply() -> u256 view",
+      "fn transfer(recipient: ContractAddress, amount: u256) -> bool",
+      "fn transferFrom(sender: ContractAddress, recipient: ContractAddress, amount: u256) -> bool",
+      "fn transfer_from(sender: ContractAddress, recipient: ContractAddress, amount: u256) -> bool"
+    ],
+    "strk:0x04fe90c0c4594b4a5ce3031a4bbdfbc7c046b4b9d7cf31b79647540c85b8ec79": [
+      "event AppGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event AppRoleAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppRoleAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event DeployHandled(l1_token: EthAddress, name: felt252, symbol: felt252, decimals: u8)",
+      "event DepositHandled(l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256)",
+      "event DepositWithMessageHandled(depositor: EthAddress, l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256, message: Span<felt252>)",
+      "event Erc20ClassHashStored(previous_hash: ClassHash, erc20_class_hash: ClassHash)",
+      "event GovernanceAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event GovernanceAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event L1BridgeSet(l1_bridge_address: EthAddress)",
+      "event L2TokenGovernanceChanged(previous_governance: ContractAddress, new_governance: ContractAddress)",
+      "event OperatorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event OperatorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event SecurityAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event SecurityAgentAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAgentRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event TokenAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event TokenAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event UpgradeGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event WithdrawInitiated(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "event WithdrawalLimitDisabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event WithdrawalLimitEnabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event deposit_handled(account: ContractAddress, amount: u256)",
+      "event withdraw_initiated(l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn disable_withdrawal_limit(l1_token: EthAddress)",
+      "fn enable_withdrawal_limit(l1_token: EthAddress)",
+      "fn get_erc20_class_hash() -> ClassHash view",
+      "fn get_identity() -> felt252 view",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_l1_token(l2_token: ContractAddress) -> EthAddress view",
+      "fn get_l2_token(l1_token: EthAddress) -> ContractAddress view",
+      "fn get_l2_token_governance() -> ContractAddress view",
+      "fn get_remaining_withdrawal_quota(l1_token: EthAddress) -> u256 view",
+      "fn get_role_admin(role: felt252) -> felt252 view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn get_version() -> felt252 view",
+      "fn has_role(role: felt252, account: ContractAddress) -> bool view",
+      "fn initiate_token_withdraw(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256)",
+      "fn initiate_withdraw(l1_recipient: EthAddress, amount: u256)",
+      "fn is_app_governor(account: ContractAddress) -> bool view",
+      "fn is_app_role_admin(account: ContractAddress) -> bool view",
+      "fn is_governance_admin(account: ContractAddress) -> bool view",
+      "fn is_operator(account: ContractAddress) -> bool view",
+      "fn is_security_admin(account: ContractAddress) -> bool view",
+      "fn is_security_agent(account: ContractAddress) -> bool view",
+      "fn is_token_admin(account: ContractAddress) -> bool view",
+      "fn is_upgrade_governor(account: ContractAddress) -> bool view",
+      "fn register_app_governor(account: ContractAddress)",
+      "fn register_app_role_admin(account: ContractAddress)",
+      "fn register_governance_admin(account: ContractAddress)",
+      "fn register_operator(account: ContractAddress)",
+      "fn register_security_admin(account: ContractAddress)",
+      "fn register_security_agent(account: ContractAddress)",
+      "fn register_token_admin(account: ContractAddress)",
+      "fn register_upgrade_governor(account: ContractAddress)",
+      "fn remove_app_governor(account: ContractAddress)",
+      "fn remove_app_role_admin(account: ContractAddress)",
+      "fn remove_governance_admin(account: ContractAddress)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn remove_operator(account: ContractAddress)",
+      "fn remove_security_admin(account: ContractAddress)",
+      "fn remove_security_agent(account: ContractAddress)",
+      "fn remove_token_admin(account: ContractAddress)",
+      "fn remove_upgrade_governor(account: ContractAddress)",
+      "fn renounce(role: felt252)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn set_erc20_class_hash(erc20_class_hash: ClassHash)",
+      "fn set_l1_bridge(l1_bridge_address: EthAddress)",
+      "fn set_l2_token_governance(l2_token_governance: ContractAddress)"
+    ],
+    "strk:0x05841ed9b790719b61dc98826246a7a3012dd35b0ed728e3c455af2647385c80": [
+      "event AppGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event AppRoleAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppRoleAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event DeployHandled(l1_token: EthAddress, name: felt252, symbol: felt252, decimals: u8)",
+      "event DepositHandled(l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256)",
+      "event DepositWithMessageHandled(depositor: EthAddress, l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256, message: Span<felt252>)",
+      "event Erc20ClassHashStored(previous_hash: ClassHash, erc20_class_hash: ClassHash)",
+      "event GovernanceAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event GovernanceAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event L1BridgeSet(l1_bridge_address: EthAddress)",
+      "event L2TokenGovernanceChanged(previous_governance: ContractAddress, new_governance: ContractAddress)",
+      "event OperatorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event OperatorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event SecurityAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event SecurityAgentAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAgentRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event TokenAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event TokenAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event UpgradeGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event WithdrawInitiated(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "event WithdrawalLimitDisabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event WithdrawalLimitEnabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event deposit_handled(account: ContractAddress, amount: u256)",
+      "event withdraw_initiated(l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn disable_withdrawal_limit(l1_token: EthAddress)",
+      "fn enable_withdrawal_limit(l1_token: EthAddress)",
+      "fn get_erc20_class_hash() -> ClassHash view",
+      "fn get_identity() -> felt252 view",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_l1_token(l2_token: ContractAddress) -> EthAddress view",
+      "fn get_l2_token(l1_token: EthAddress) -> ContractAddress view",
+      "fn get_l2_token_governance() -> ContractAddress view",
+      "fn get_remaining_withdrawal_quota(l1_token: EthAddress) -> u256 view",
+      "fn get_role_admin(role: felt252) -> felt252 view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn get_version() -> felt252 view",
+      "fn has_role(role: felt252, account: ContractAddress) -> bool view",
+      "fn initiate_token_withdraw(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256)",
+      "fn initiate_withdraw(l1_recipient: EthAddress, amount: u256)",
+      "fn is_app_governor(account: ContractAddress) -> bool view",
+      "fn is_app_role_admin(account: ContractAddress) -> bool view",
+      "fn is_governance_admin(account: ContractAddress) -> bool view",
+      "fn is_operator(account: ContractAddress) -> bool view",
+      "fn is_security_admin(account: ContractAddress) -> bool view",
+      "fn is_security_agent(account: ContractAddress) -> bool view",
+      "fn is_token_admin(account: ContractAddress) -> bool view",
+      "fn is_upgrade_governor(account: ContractAddress) -> bool view",
+      "fn register_app_governor(account: ContractAddress)",
+      "fn register_app_role_admin(account: ContractAddress)",
+      "fn register_governance_admin(account: ContractAddress)",
+      "fn register_operator(account: ContractAddress)",
+      "fn register_security_admin(account: ContractAddress)",
+      "fn register_security_agent(account: ContractAddress)",
+      "fn register_token_admin(account: ContractAddress)",
+      "fn register_upgrade_governor(account: ContractAddress)",
+      "fn remove_app_governor(account: ContractAddress)",
+      "fn remove_app_role_admin(account: ContractAddress)",
+      "fn remove_governance_admin(account: ContractAddress)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn remove_operator(account: ContractAddress)",
+      "fn remove_security_admin(account: ContractAddress)",
+      "fn remove_security_agent(account: ContractAddress)",
+      "fn remove_token_admin(account: ContractAddress)",
+      "fn remove_upgrade_governor(account: ContractAddress)",
+      "fn renounce(role: felt252)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn set_erc20_class_hash(erc20_class_hash: ClassHash)",
+      "fn set_l1_bridge(l1_bridge_address: EthAddress)",
+      "fn set_l2_token_governance(l2_token_governance: ContractAddress)"
+    ],
+    "strk:0x0594c1582459ea03f77deaf9eb7e3917d6994a03c13405ba42867f83d85f085d": [
+      "event AppGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event AppRoleAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppRoleAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event DeployHandled(l1_token: EthAddress, name: felt252, symbol: felt252, decimals: u8)",
+      "event DepositHandled(l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256)",
+      "event DepositWithMessageHandled(depositor: EthAddress, l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256, message: Span<felt252>)",
+      "event Erc20ClassHashStored(previous_hash: ClassHash, erc20_class_hash: ClassHash)",
+      "event GovernanceAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event GovernanceAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event L1BridgeSet(l1_bridge_address: EthAddress)",
+      "event L2TokenGovernanceChanged(previous_governance: ContractAddress, new_governance: ContractAddress)",
+      "event OperatorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event OperatorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event SecurityAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event SecurityAgentAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAgentRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event TokenAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event TokenAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event UpgradeGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event WithdrawInitiated(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "event WithdrawalLimitDisabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event WithdrawalLimitEnabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event deposit_handled(account: ContractAddress, amount: u256)",
+      "event withdraw_initiated(l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn disable_withdrawal_limit(l1_token: EthAddress)",
+      "fn enable_withdrawal_limit(l1_token: EthAddress)",
+      "fn get_erc20_class_hash() -> ClassHash view",
+      "fn get_identity() -> felt252 view",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_l1_token(l2_token: ContractAddress) -> EthAddress view",
+      "fn get_l2_token(l1_token: EthAddress) -> ContractAddress view",
+      "fn get_l2_token_governance() -> ContractAddress view",
+      "fn get_remaining_withdrawal_quota(l1_token: EthAddress) -> u256 view",
+      "fn get_role_admin(role: felt252) -> felt252 view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn get_version() -> felt252 view",
+      "fn has_role(role: felt252, account: ContractAddress) -> bool view",
+      "fn initiate_token_withdraw(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256)",
+      "fn initiate_withdraw(l1_recipient: EthAddress, amount: u256)",
+      "fn is_app_governor(account: ContractAddress) -> bool view",
+      "fn is_app_role_admin(account: ContractAddress) -> bool view",
+      "fn is_governance_admin(account: ContractAddress) -> bool view",
+      "fn is_operator(account: ContractAddress) -> bool view",
+      "fn is_security_admin(account: ContractAddress) -> bool view",
+      "fn is_security_agent(account: ContractAddress) -> bool view",
+      "fn is_token_admin(account: ContractAddress) -> bool view",
+      "fn is_upgrade_governor(account: ContractAddress) -> bool view",
+      "fn register_app_governor(account: ContractAddress)",
+      "fn register_app_role_admin(account: ContractAddress)",
+      "fn register_governance_admin(account: ContractAddress)",
+      "fn register_operator(account: ContractAddress)",
+      "fn register_security_admin(account: ContractAddress)",
+      "fn register_security_agent(account: ContractAddress)",
+      "fn register_token_admin(account: ContractAddress)",
+      "fn register_upgrade_governor(account: ContractAddress)",
+      "fn remove_app_governor(account: ContractAddress)",
+      "fn remove_app_role_admin(account: ContractAddress)",
+      "fn remove_governance_admin(account: ContractAddress)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn remove_operator(account: ContractAddress)",
+      "fn remove_security_admin(account: ContractAddress)",
+      "fn remove_security_agent(account: ContractAddress)",
+      "fn remove_token_admin(account: ContractAddress)",
+      "fn remove_upgrade_governor(account: ContractAddress)",
+      "fn renounce(role: felt252)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn set_erc20_class_hash(erc20_class_hash: ClassHash)",
+      "fn set_l1_bridge(l1_bridge_address: EthAddress)",
+      "fn set_l2_token_governance(l2_token_governance: ContractAddress)"
+    ],
+    "strk:0x05cd48fccbfd8aa2773fe22c217e808319ffcc1c5a6a463f7d8fa2da48218196": [
+      "event AppGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event AppRoleAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppRoleAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event DeployHandled(l1_token: EthAddress, name: felt252, symbol: felt252, decimals: u8)",
+      "event DepositHandled(l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256)",
+      "event DepositWithMessageHandled(depositor: EthAddress, l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256, message: Span<felt252>)",
+      "event Erc20ClassHashStored(previous_hash: ClassHash, erc20_class_hash: ClassHash)",
+      "event GovernanceAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event GovernanceAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event L1BridgeSet(l1_bridge_address: EthAddress)",
+      "event L2TokenGovernanceChanged(previous_governance: ContractAddress, new_governance: ContractAddress)",
+      "event OperatorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event OperatorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event SecurityAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event SecurityAgentAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAgentRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event TokenAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event TokenAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event UpgradeGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event WithdrawInitiated(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "event WithdrawalLimitDisabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event WithdrawalLimitEnabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event deposit_handled(account: ContractAddress, amount: u256)",
+      "event withdraw_initiated(l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn disable_withdrawal_limit(l1_token: EthAddress)",
+      "fn enable_withdrawal_limit(l1_token: EthAddress)",
+      "fn get_erc20_class_hash() -> ClassHash view",
+      "fn get_identity() -> felt252 view",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_l1_token(l2_token: ContractAddress) -> EthAddress view",
+      "fn get_l2_token(l1_token: EthAddress) -> ContractAddress view",
+      "fn get_l2_token_governance() -> ContractAddress view",
+      "fn get_remaining_withdrawal_quota(l1_token: EthAddress) -> u256 view",
+      "fn get_role_admin(role: felt252) -> felt252 view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn get_version() -> felt252 view",
+      "fn has_role(role: felt252, account: ContractAddress) -> bool view",
+      "fn initiate_token_withdraw(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256)",
+      "fn initiate_withdraw(l1_recipient: EthAddress, amount: u256)",
+      "fn is_app_governor(account: ContractAddress) -> bool view",
+      "fn is_app_role_admin(account: ContractAddress) -> bool view",
+      "fn is_governance_admin(account: ContractAddress) -> bool view",
+      "fn is_operator(account: ContractAddress) -> bool view",
+      "fn is_security_admin(account: ContractAddress) -> bool view",
+      "fn is_security_agent(account: ContractAddress) -> bool view",
+      "fn is_token_admin(account: ContractAddress) -> bool view",
+      "fn is_upgrade_governor(account: ContractAddress) -> bool view",
+      "fn register_app_governor(account: ContractAddress)",
+      "fn register_app_role_admin(account: ContractAddress)",
+      "fn register_governance_admin(account: ContractAddress)",
+      "fn register_operator(account: ContractAddress)",
+      "fn register_security_admin(account: ContractAddress)",
+      "fn register_security_agent(account: ContractAddress)",
+      "fn register_token_admin(account: ContractAddress)",
+      "fn register_upgrade_governor(account: ContractAddress)",
+      "fn remove_app_governor(account: ContractAddress)",
+      "fn remove_app_role_admin(account: ContractAddress)",
+      "fn remove_governance_admin(account: ContractAddress)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn remove_operator(account: ContractAddress)",
+      "fn remove_security_admin(account: ContractAddress)",
+      "fn remove_security_agent(account: ContractAddress)",
+      "fn remove_token_admin(account: ContractAddress)",
+      "fn remove_upgrade_governor(account: ContractAddress)",
+      "fn renounce(role: felt252)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn set_erc20_class_hash(erc20_class_hash: ClassHash)",
+      "fn set_l1_bridge(l1_bridge_address: EthAddress)",
+      "fn set_l2_token_governance(l2_token_governance: ContractAddress)"
+    ],
+    "strk:0x0616757a151c21f9be8775098d591c2807316d992bbc3bb1a5c1821630589256": [
+      "event AppGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event AppRoleAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppRoleAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event DeployHandled(l1_token: EthAddress, name: felt252, symbol: felt252, decimals: u8)",
+      "event DepositHandled(l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256)",
+      "event DepositWithMessageHandled(depositor: EthAddress, l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256, message: Span<felt252>)",
+      "event Erc20ClassHashStored(previous_hash: ClassHash, erc20_class_hash: ClassHash)",
+      "event GovernanceAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event GovernanceAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event L1BridgeSet(l1_bridge_address: EthAddress)",
+      "event L2TokenGovernanceChanged(previous_governance: ContractAddress, new_governance: ContractAddress)",
+      "event LockedAmountMonitoringEnabled(l1_token: EthAddress, amount: u256)",
+      "event OperatorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event OperatorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleGrantedWithDelay(role: felt252, account: ContractAddress, sender: ContractAddress, delay: u64)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event SecurityAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event SecurityAgentAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAgentRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event SecurityGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event TokenAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event TokenAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event UpgradeAgentAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeAgentRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event UpgradeGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event WithdrawInitiated(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "event WithdrawalLimitDisabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event WithdrawalLimitEnabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event deposit_handled(account: ContractAddress, amount: u256)",
+      "event withdraw_initiated(l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn disable_legacy_role_reclaim()",
+      "fn disable_withdrawal_limit(l1_token: EthAddress)",
+      "fn enable_locked_amount_monitoring(l1_token: EthAddress, locked_amount: u256)",
+      "fn enable_withdrawal_limit(l1_token: EthAddress)",
+      "fn get_erc20_class_hash() -> ClassHash view",
+      "fn get_identity() -> felt252 view",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_l1_bridge() -> EthAddress view",
+      "fn get_l1_token(l2_token: ContractAddress) -> EthAddress view",
+      "fn get_l2_token(l1_token: EthAddress) -> ContractAddress view",
+      "fn get_l2_token_governance() -> ContractAddress view",
+      "fn get_remaining_withdrawal_quota(l1_token: EthAddress) -> u256 view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn get_version() -> felt252 view",
+      "fn grant_role(role: Role, account: ContractAddress)",
+      "fn has_role(role: Role, account: ContractAddress) -> bool view",
+      "fn initiate_token_withdraw(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256)",
+      "fn initiate_withdraw(l1_recipient: EthAddress, amount: u256)",
+      "fn is_app_governor(account: ContractAddress) -> bool view",
+      "fn is_app_role_admin(account: ContractAddress) -> bool view",
+      "fn is_governance_admin(account: ContractAddress) -> bool view",
+      "fn is_operator(account: ContractAddress) -> bool view",
+      "fn is_security_admin(account: ContractAddress) -> bool view",
+      "fn is_security_agent(account: ContractAddress) -> bool view",
+      "fn is_security_governor(account: ContractAddress) -> bool view",
+      "fn is_token_admin(account: ContractAddress) -> bool view",
+      "fn is_upgrade_agent(account: ContractAddress) -> bool view",
+      "fn is_upgrade_governor(account: ContractAddress) -> bool view",
+      "fn reclaim_legacy_roles()",
+      "fn reclaim_legacy_roles_for_accounts(accounts: Span<ContractAddress>)",
+      "fn register_app_governor(account: ContractAddress)",
+      "fn register_app_role_admin(account: ContractAddress)",
+      "fn register_governance_admin(account: ContractAddress)",
+      "fn register_operator(account: ContractAddress)",
+      "fn register_security_admin(account: ContractAddress)",
+      "fn register_security_agent(account: ContractAddress)",
+      "fn register_security_governor(account: ContractAddress)",
+      "fn register_token_admin(account: ContractAddress)",
+      "fn register_upgrade_agent(account: ContractAddress)",
+      "fn register_upgrade_governor(account: ContractAddress)",
+      "fn remove_app_governor(account: ContractAddress)",
+      "fn remove_app_role_admin(account: ContractAddress)",
+      "fn remove_governance_admin(account: ContractAddress)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn remove_operator(account: ContractAddress)",
+      "fn remove_security_admin(account: ContractAddress)",
+      "fn remove_security_agent(account: ContractAddress)",
+      "fn remove_security_governor(account: ContractAddress)",
+      "fn remove_token_admin(account: ContractAddress)",
+      "fn remove_upgrade_agent(account: ContractAddress)",
+      "fn remove_upgrade_governor(account: ContractAddress)",
+      "fn renounce(role: Role)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn revoke_role(role: Role, account: ContractAddress)",
+      "fn set_erc20_class_hash(erc20_class_hash: ClassHash)",
+      "fn set_l1_bridge(l1_bridge_address: EthAddress)",
+      "fn set_l2_token_governance(l2_token_governance: ContractAddress)"
+    ],
+    "strk:0x06bf25c0911c6c63abfe3600428144d0d0dbf8b7bfbc44306a3386aa95a24296": [
+      "event AppGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event AppRoleAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppRoleAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event DeployHandled(l1_token: EthAddress, name: felt252, symbol: felt252, decimals: u8)",
+      "event DepositHandled(l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256)",
+      "event DepositWithMessageHandled(depositor: EthAddress, l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256, message: Span<felt252>)",
+      "event Erc20ClassHashStored(previous_hash: ClassHash, erc20_class_hash: ClassHash)",
+      "event GovernanceAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event GovernanceAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event L1BridgeSet(l1_bridge_address: EthAddress)",
+      "event L2TokenGovernanceChanged(previous_governance: ContractAddress, new_governance: ContractAddress)",
+      "event OperatorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event OperatorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event SecurityAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event SecurityAgentAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAgentRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event TokenAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event TokenAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event UpgradeGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event WithdrawInitiated(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "event WithdrawalLimitDisabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event WithdrawalLimitEnabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event deposit_handled(account: ContractAddress, amount: u256)",
+      "event withdraw_initiated(l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn disable_withdrawal_limit(l1_token: EthAddress)",
+      "fn enable_withdrawal_limit(l1_token: EthAddress)",
+      "fn get_erc20_class_hash() -> ClassHash view",
+      "fn get_identity() -> felt252 view",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_l1_token(l2_token: ContractAddress) -> EthAddress view",
+      "fn get_l2_token(l1_token: EthAddress) -> ContractAddress view",
+      "fn get_l2_token_governance() -> ContractAddress view",
+      "fn get_remaining_withdrawal_quota(l1_token: EthAddress) -> u256 view",
+      "fn get_role_admin(role: felt252) -> felt252 view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn get_version() -> felt252 view",
+      "fn has_role(role: felt252, account: ContractAddress) -> bool view",
+      "fn initiate_token_withdraw(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256)",
+      "fn initiate_withdraw(l1_recipient: EthAddress, amount: u256)",
+      "fn is_app_governor(account: ContractAddress) -> bool view",
+      "fn is_app_role_admin(account: ContractAddress) -> bool view",
+      "fn is_governance_admin(account: ContractAddress) -> bool view",
+      "fn is_operator(account: ContractAddress) -> bool view",
+      "fn is_security_admin(account: ContractAddress) -> bool view",
+      "fn is_security_agent(account: ContractAddress) -> bool view",
+      "fn is_token_admin(account: ContractAddress) -> bool view",
+      "fn is_upgrade_governor(account: ContractAddress) -> bool view",
+      "fn register_app_governor(account: ContractAddress)",
+      "fn register_app_role_admin(account: ContractAddress)",
+      "fn register_governance_admin(account: ContractAddress)",
+      "fn register_operator(account: ContractAddress)",
+      "fn register_security_admin(account: ContractAddress)",
+      "fn register_security_agent(account: ContractAddress)",
+      "fn register_token_admin(account: ContractAddress)",
+      "fn register_upgrade_governor(account: ContractAddress)",
+      "fn remove_app_governor(account: ContractAddress)",
+      "fn remove_app_role_admin(account: ContractAddress)",
+      "fn remove_governance_admin(account: ContractAddress)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn remove_operator(account: ContractAddress)",
+      "fn remove_security_admin(account: ContractAddress)",
+      "fn remove_security_agent(account: ContractAddress)",
+      "fn remove_token_admin(account: ContractAddress)",
+      "fn remove_upgrade_governor(account: ContractAddress)",
+      "fn renounce(role: felt252)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn set_erc20_class_hash(erc20_class_hash: ClassHash)",
+      "fn set_l1_bridge(l1_bridge_address: EthAddress)",
+      "fn set_l2_token_governance(l2_token_governance: ContractAddress)"
+    ],
+    "strk:0x06dcc61c4cf056ff42a8f4b8635c207e3da73332282aa2132058022520fa0179": [
+      "event AppGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event AppRoleAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppRoleAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event DeployHandled(l1_token: EthAddress, name: felt252, symbol: felt252, decimals: u8)",
+      "event DepositHandled(l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256)",
+      "event DepositWithMessageHandled(depositor: EthAddress, l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256, message: Span<felt252>)",
+      "event Erc20ClassHashStored(previous_hash: ClassHash, erc20_class_hash: ClassHash)",
+      "event GovernanceAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event GovernanceAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event L1BridgeSet(l1_bridge_address: EthAddress)",
+      "event L2TokenGovernanceChanged(previous_governance: ContractAddress, new_governance: ContractAddress)",
+      "event OperatorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event OperatorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event SecurityAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event SecurityAgentAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAgentRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event TokenAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event TokenAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event UpgradeGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event WithdrawInitiated(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "event WithdrawalLimitDisabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event WithdrawalLimitEnabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event deposit_handled(account: ContractAddress, amount: u256)",
+      "event withdraw_initiated(l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn disable_withdrawal_limit(l1_token: EthAddress)",
+      "fn enable_withdrawal_limit(l1_token: EthAddress)",
+      "fn get_erc20_class_hash() -> ClassHash view",
+      "fn get_identity() -> felt252 view",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_l1_token(l2_token: ContractAddress) -> EthAddress view",
+      "fn get_l2_token(l1_token: EthAddress) -> ContractAddress view",
+      "fn get_l2_token_governance() -> ContractAddress view",
+      "fn get_remaining_withdrawal_quota(l1_token: EthAddress) -> u256 view",
+      "fn get_role_admin(role: felt252) -> felt252 view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn get_version() -> felt252 view",
+      "fn has_role(role: felt252, account: ContractAddress) -> bool view",
+      "fn initiate_token_withdraw(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256)",
+      "fn initiate_withdraw(l1_recipient: EthAddress, amount: u256)",
+      "fn is_app_governor(account: ContractAddress) -> bool view",
+      "fn is_app_role_admin(account: ContractAddress) -> bool view",
+      "fn is_governance_admin(account: ContractAddress) -> bool view",
+      "fn is_operator(account: ContractAddress) -> bool view",
+      "fn is_security_admin(account: ContractAddress) -> bool view",
+      "fn is_security_agent(account: ContractAddress) -> bool view",
+      "fn is_token_admin(account: ContractAddress) -> bool view",
+      "fn is_upgrade_governor(account: ContractAddress) -> bool view",
+      "fn register_app_governor(account: ContractAddress)",
+      "fn register_app_role_admin(account: ContractAddress)",
+      "fn register_governance_admin(account: ContractAddress)",
+      "fn register_operator(account: ContractAddress)",
+      "fn register_security_admin(account: ContractAddress)",
+      "fn register_security_agent(account: ContractAddress)",
+      "fn register_token_admin(account: ContractAddress)",
+      "fn register_upgrade_governor(account: ContractAddress)",
+      "fn remove_app_governor(account: ContractAddress)",
+      "fn remove_app_role_admin(account: ContractAddress)",
+      "fn remove_governance_admin(account: ContractAddress)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn remove_operator(account: ContractAddress)",
+      "fn remove_security_admin(account: ContractAddress)",
+      "fn remove_security_agent(account: ContractAddress)",
+      "fn remove_token_admin(account: ContractAddress)",
+      "fn remove_upgrade_governor(account: ContractAddress)",
+      "fn renounce(role: felt252)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn set_erc20_class_hash(erc20_class_hash: ClassHash)",
+      "fn set_l1_bridge(l1_bridge_address: EthAddress)",
+      "fn set_l2_token_governance(l2_token_governance: ContractAddress)"
+    ],
+    "strk:0x073314940630fd6dcda0d772d4c972c4e0a9946bef9dabf4ef84eda8ef542b82": [
+      "event AppGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event AppRoleAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppRoleAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event DeployHandled(l1_token: EthAddress, name: felt252, symbol: felt252, decimals: u8)",
+      "event DepositHandled(l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256)",
+      "event DepositWithMessageHandled(depositor: EthAddress, l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256, message: Span<felt252>)",
+      "event Erc20ClassHashStored(previous_hash: ClassHash, erc20_class_hash: ClassHash)",
+      "event GovernanceAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event GovernanceAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event L1BridgeSet(l1_bridge_address: EthAddress)",
+      "event L2TokenGovernanceChanged(previous_governance: ContractAddress, new_governance: ContractAddress)",
+      "event OperatorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event OperatorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event SecurityAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event SecurityAgentAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAgentRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event TokenAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event TokenAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event UpgradeGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event WithdrawInitiated(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "event WithdrawalLimitDisabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event WithdrawalLimitEnabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event deposit_handled(account: ContractAddress, amount: u256)",
+      "event withdraw_initiated(l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn disable_withdrawal_limit(l1_token: EthAddress)",
+      "fn enable_withdrawal_limit(l1_token: EthAddress)",
+      "fn get_erc20_class_hash() -> ClassHash view",
+      "fn get_identity() -> felt252 view",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_l1_token(l2_token: ContractAddress) -> EthAddress view",
+      "fn get_l2_token(l1_token: EthAddress) -> ContractAddress view",
+      "fn get_l2_token_governance() -> ContractAddress view",
+      "fn get_remaining_withdrawal_quota(l1_token: EthAddress) -> u256 view",
+      "fn get_role_admin(role: felt252) -> felt252 view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn get_version() -> felt252 view",
+      "fn has_role(role: felt252, account: ContractAddress) -> bool view",
+      "fn initiate_token_withdraw(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256)",
+      "fn initiate_withdraw(l1_recipient: EthAddress, amount: u256)",
+      "fn is_app_governor(account: ContractAddress) -> bool view",
+      "fn is_app_role_admin(account: ContractAddress) -> bool view",
+      "fn is_governance_admin(account: ContractAddress) -> bool view",
+      "fn is_operator(account: ContractAddress) -> bool view",
+      "fn is_security_admin(account: ContractAddress) -> bool view",
+      "fn is_security_agent(account: ContractAddress) -> bool view",
+      "fn is_token_admin(account: ContractAddress) -> bool view",
+      "fn is_upgrade_governor(account: ContractAddress) -> bool view",
+      "fn register_app_governor(account: ContractAddress)",
+      "fn register_app_role_admin(account: ContractAddress)",
+      "fn register_governance_admin(account: ContractAddress)",
+      "fn register_operator(account: ContractAddress)",
+      "fn register_security_admin(account: ContractAddress)",
+      "fn register_security_agent(account: ContractAddress)",
+      "fn register_token_admin(account: ContractAddress)",
+      "fn register_upgrade_governor(account: ContractAddress)",
+      "fn remove_app_governor(account: ContractAddress)",
+      "fn remove_app_role_admin(account: ContractAddress)",
+      "fn remove_governance_admin(account: ContractAddress)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn remove_operator(account: ContractAddress)",
+      "fn remove_security_admin(account: ContractAddress)",
+      "fn remove_security_agent(account: ContractAddress)",
+      "fn remove_token_admin(account: ContractAddress)",
+      "fn remove_upgrade_governor(account: ContractAddress)",
+      "fn renounce(role: felt252)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn set_erc20_class_hash(erc20_class_hash: ClassHash)",
+      "fn set_l1_bridge(l1_bridge_address: EthAddress)",
+      "fn set_l2_token_governance(l2_token_governance: ContractAddress)"
+    ],
+    "strk:0x074761a8d48ce002963002becc6d9c3dd8a2a05b1075d55e5967f42296f16bd0": [
+      "event AppGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event AppRoleAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppRoleAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event DeployHandled(l1_token: EthAddress, name: felt252, symbol: felt252, decimals: u8)",
+      "event DepositHandled(l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256)",
+      "event DepositWithMessageHandled(depositor: EthAddress, l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256, message: Span<felt252>)",
+      "event Erc20ClassHashStored(previous_hash: ClassHash, erc20_class_hash: ClassHash)",
+      "event GovernanceAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event GovernanceAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event L1BridgeSet(l1_bridge_address: EthAddress)",
+      "event L2TokenGovernanceChanged(previous_governance: ContractAddress, new_governance: ContractAddress)",
+      "event OperatorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event OperatorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event SecurityAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event SecurityAgentAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAgentRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event TokenAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event TokenAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event UpgradeGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event WithdrawInitiated(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "event WithdrawalLimitDisabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event WithdrawalLimitEnabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event deposit_handled(account: ContractAddress, amount: u256)",
+      "event withdraw_initiated(l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn disable_withdrawal_limit(l1_token: EthAddress)",
+      "fn enable_withdrawal_limit(l1_token: EthAddress)",
+      "fn get_erc20_class_hash() -> ClassHash view",
+      "fn get_identity() -> felt252 view",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_l1_token(l2_token: ContractAddress) -> EthAddress view",
+      "fn get_l2_token(l1_token: EthAddress) -> ContractAddress view",
+      "fn get_l2_token_governance() -> ContractAddress view",
+      "fn get_remaining_withdrawal_quota(l1_token: EthAddress) -> u256 view",
+      "fn get_role_admin(role: felt252) -> felt252 view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn get_version() -> felt252 view",
+      "fn has_role(role: felt252, account: ContractAddress) -> bool view",
+      "fn initiate_token_withdraw(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256)",
+      "fn initiate_withdraw(l1_recipient: EthAddress, amount: u256)",
+      "fn is_app_governor(account: ContractAddress) -> bool view",
+      "fn is_app_role_admin(account: ContractAddress) -> bool view",
+      "fn is_governance_admin(account: ContractAddress) -> bool view",
+      "fn is_operator(account: ContractAddress) -> bool view",
+      "fn is_security_admin(account: ContractAddress) -> bool view",
+      "fn is_security_agent(account: ContractAddress) -> bool view",
+      "fn is_token_admin(account: ContractAddress) -> bool view",
+      "fn is_upgrade_governor(account: ContractAddress) -> bool view",
+      "fn register_app_governor(account: ContractAddress)",
+      "fn register_app_role_admin(account: ContractAddress)",
+      "fn register_governance_admin(account: ContractAddress)",
+      "fn register_operator(account: ContractAddress)",
+      "fn register_security_admin(account: ContractAddress)",
+      "fn register_security_agent(account: ContractAddress)",
+      "fn register_token_admin(account: ContractAddress)",
+      "fn register_upgrade_governor(account: ContractAddress)",
+      "fn remove_app_governor(account: ContractAddress)",
+      "fn remove_app_role_admin(account: ContractAddress)",
+      "fn remove_governance_admin(account: ContractAddress)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn remove_operator(account: ContractAddress)",
+      "fn remove_security_admin(account: ContractAddress)",
+      "fn remove_security_agent(account: ContractAddress)",
+      "fn remove_token_admin(account: ContractAddress)",
+      "fn remove_upgrade_governor(account: ContractAddress)",
+      "fn renounce(role: felt252)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn set_erc20_class_hash(erc20_class_hash: ClassHash)",
+      "fn set_l1_bridge(l1_bridge_address: EthAddress)",
+      "fn set_l2_token_governance(l2_token_governance: ContractAddress)"
+    ],
+    "strk:0x07aeec4870975311a7396069033796b61cd66ed49d22a786cba12a8d76717302": [
+      "event AppGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event AppRoleAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event AppRoleAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event DeployHandled(l1_token: EthAddress, name: felt252, symbol: felt252, decimals: u8)",
+      "event DepositHandled(l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256)",
+      "event DepositWithMessageHandled(depositor: EthAddress, l1_token: EthAddress, l2_recipient: ContractAddress, amount: u256, message: Span<felt252>)",
+      "event Erc20ClassHashStored(previous_hash: ClassHash, erc20_class_hash: ClassHash)",
+      "event GovernanceAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event GovernanceAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event ImplementationAdded(implementation_data: ImplementationData)",
+      "event ImplementationFinalized(impl_hash: ClassHash)",
+      "event ImplementationRemoved(implementation_data: ImplementationData)",
+      "event ImplementationReplaced(implementation_data: ImplementationData)",
+      "event L1BridgeSet(l1_bridge_address: EthAddress)",
+      "event L2TokenGovernanceChanged(previous_governance: ContractAddress, new_governance: ContractAddress)",
+      "event OperatorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event OperatorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event RoleAdminChanged(role: felt252, previous_admin_role: felt252, new_admin_role: felt252)",
+      "event RoleGranted(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)",
+      "event SecurityAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event SecurityAgentAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event SecurityAgentRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event TokenAdminAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event TokenAdminRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event TokenAlreadyHalted(l1_token: EthAddress, l2_token: ContractAddress)",
+      "event TokenHaltAcknowledged(l1_token: EthAddress, l2_token: ContractAddress, total_supply: u256)",
+      "event TokenHalted(l1_token: EthAddress, l2_token: ContractAddress)",
+      "event UpgradeGovernorAdded(added_account: ContractAddress, added_by: ContractAddress)",
+      "event UpgradeGovernorRemoved(removed_account: ContractAddress, removed_by: ContractAddress)",
+      "event WithdrawInitiated(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "event WithdrawalLimitDisabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event WithdrawalLimitEnabled(sender: ContractAddress, l1_token: EthAddress)",
+      "event deposit_handled(account: ContractAddress, amount: u256)",
+      "event withdraw_initiated(l1_recipient: EthAddress, amount: u256, caller_address: ContractAddress)",
+      "fn acknowledge_token_halt(l1_token: EthAddress)",
+      "fn add_new_implementation(implementation_data: ImplementationData)",
+      "fn disable_withdrawal_limit(l1_token: EthAddress)",
+      "fn enable_withdrawal_limit(l1_token: EthAddress)",
+      "fn get_erc20_class_hash() -> ClassHash view",
+      "fn get_identity() -> felt252 view",
+      "fn get_impl_activation_time(implementation_data: ImplementationData) -> u64 view",
+      "fn get_l1_bridge() -> EthAddress view",
+      "fn get_l1_token(l2_token: ContractAddress) -> EthAddress view",
+      "fn get_l2_token(l1_token: EthAddress) -> ContractAddress view",
+      "fn get_l2_token_governance() -> ContractAddress view",
+      "fn get_remaining_withdrawal_quota(l1_token: EthAddress) -> u256 view",
+      "fn get_role_admin(role: felt252) -> felt252 view",
+      "fn get_upgrade_delay() -> u64 view",
+      "fn get_version() -> felt252 view",
+      "fn has_role(role: felt252, account: ContractAddress) -> bool view",
+      "fn initiate_token_withdraw(l1_token: EthAddress, l1_recipient: EthAddress, amount: u256)",
+      "fn initiate_withdraw(l1_recipient: EthAddress, amount: u256)",
+      "fn is_app_governor(account: ContractAddress) -> bool view",
+      "fn is_app_role_admin(account: ContractAddress) -> bool view",
+      "fn is_governance_admin(account: ContractAddress) -> bool view",
+      "fn is_operator(account: ContractAddress) -> bool view",
+      "fn is_security_admin(account: ContractAddress) -> bool view",
+      "fn is_security_agent(account: ContractAddress) -> bool view",
+      "fn is_token_admin(account: ContractAddress) -> bool view",
+      "fn is_upgrade_governor(account: ContractAddress) -> bool view",
+      "fn register_app_governor(account: ContractAddress)",
+      "fn register_app_role_admin(account: ContractAddress)",
+      "fn register_governance_admin(account: ContractAddress)",
+      "fn register_operator(account: ContractAddress)",
+      "fn register_security_admin(account: ContractAddress)",
+      "fn register_security_agent(account: ContractAddress)",
+      "fn register_token_admin(account: ContractAddress)",
+      "fn register_upgrade_governor(account: ContractAddress)",
+      "fn remove_app_governor(account: ContractAddress)",
+      "fn remove_app_role_admin(account: ContractAddress)",
+      "fn remove_governance_admin(account: ContractAddress)",
+      "fn remove_implementation(implementation_data: ImplementationData)",
+      "fn remove_operator(account: ContractAddress)",
+      "fn remove_security_admin(account: ContractAddress)",
+      "fn remove_security_agent(account: ContractAddress)",
+      "fn remove_token_admin(account: ContractAddress)",
+      "fn remove_upgrade_governor(account: ContractAddress)",
+      "fn renounce(role: felt252)",
+      "fn replace_to(implementation_data: ImplementationData)",
+      "fn set_erc20_class_hash(erc20_class_hash: ClassHash)",
+      "fn set_l1_bridge(l1_bridge_address: EthAddress)",
+      "fn set_l2_token_governance(l2_token_governance: ContractAddress)"
+    ],
+    "strk:0x07ba4bb6a9ec398598c9c08424af6bdb83f56e78ffc8f07f0da0dfae8deca432": [
+      "event ActionsSetCanceled(actions_set_id: u32)",
+      "event ActionsSetExecuted(actions_set_id: u32, caller: ContractAddress, returned_data: Array<Span<felt252>>)",
+      "event ActionsSetQueued(actions_set_id: u32, actions_set: ActionSet)",
+      "event DelayUpdate(previous_delay: u64, new_delay: u64)",
+      "event EthereumGovernanceExecutorUpdate(previous_ethereum_governance_executor: EthAddress, new_ethereum_governance_executor: EthAddress)",
+      "event GracePeriodUpdate(previous_grace_period: u64, new_grace_period: u64)",
+      "event GuardianUpdate(previous_guardian: ContractAddress, new_guardian: ContractAddress)",
+      "event MaximumDelayUpdate(previous_maximum_delay: u64, new_maximum_delay: u64)",
+      "event MinimumDelayUpdate(previous_minimum_delay: u64, new_minimum_delay: u64)",
+      "fn cancel(actions_set_id: u32)",
+      "fn execute(actions_set_id: u32)",
+      "fn get_actions_set_by_id(action_set_id: u32) -> ActionSet view",
+      "fn get_actions_set_count() -> u32 view",
+      "fn get_current_state(action_set_id: u32) -> ActionSetState view",
+      "fn get_delay() -> u64 view",
+      "fn get_ethereum_governance_executor() -> EthAddress view",
+      "fn get_grace_period() -> u64 view",
+      "fn get_guardian() -> ContractAddress view",
+      "fn get_maximum_delay() -> u64 view",
+      "fn get_minimum_delay() -> u64 view",
+      "fn is_action_queued(action_hash: u256) -> bool view",
+      "fn update_delay(delay: u64)",
+      "fn update_ethereum_governance_executor(ethereum_governance_executor: EthAddress)",
+      "fn update_grace_period(grace_period: u64)",
+      "fn update_guardian(guardian: ContractAddress)",
+      "fn update_maximum_delay(maximum_delay: u64)",
+      "fn update_minimum_delay(minimum_delay: u64)"
+    ],
+    "strk:0x07c76a71952ce3acd1f953fd2a3fda8564408b821ff367041c89f44526076633": [
+      "event DepositHandled()",
+      "event WithdrawalInitiated()",
+      "fn constructor(l1_bridge: felt252)",
+      "fn get_l1_bridge() -> felt252 view",
+      "fn get_token() -> ContractAddress view",
+      "fn handle_deposit(from_address: felt252, recipient: ContractAddress, amount: u256)",
+      "fn initiate_withdrawal(l1_recipient: felt252, amount: u256)",
+      "fn set_l2_token_once(l2_token: ContractAddress)"
+    ]
+  },
+  "usedTemplates": {
+    "starknet/MultisigAccount": "0x7776abcb1616bab1f6626860771d46ffdd322663cf61eca88de4b981de39b7fd",
+    "starknet/StarkgateTokenBridge": "0x6671279238d7fb1ed1fe60b59445ae267888f89cc67aa1ad17b86da697aeca79"
+  },
+  "usedBlockNumbers": { "starknet": 13233771 },
+  "permissionsConfigHash": "0xd42391b8f163affd8041d931efe490d96f0732c0225757645fb21bfd67937ef2"
+}

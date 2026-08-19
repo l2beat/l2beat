@@ -205,6 +205,7 @@ function buildView(
     for (const node of visible) {
       if (!selectedSet.has(node.id)) continue
       for (const field of node.fields) {
+        if (field.target === undefined) continue
         if (!isFieldConnectionLive(node, field, liveGroupTargets)) continue
         if (hiddenSet.has(field.target)) continue
         highlightedSet.add(field.target)
@@ -213,6 +214,7 @@ function buildView(
     for (const node of visible) {
       if (highlightedSet.has(node.id)) continue
       for (const field of node.fields) {
+        if (field.target === undefined) continue
         if (!isFieldConnectionLive(node, field, liveGroupTargets)) continue
         if (hiddenSet.has(field.target)) continue
         if (selectedSet.has(field.target)) {
@@ -244,12 +246,18 @@ function buildView(
       const field = node.fields[i]
       if (!field) continue
 
-      const targetSelected = selectedSet.has(field.target)
-      const targetHidden = hiddenSet.has(field.target)
+      const targetSelected =
+        field.target !== undefined && selectedSet.has(field.target)
+      const targetHidden =
+        field.target !== undefined && hiddenSet.has(field.target)
       fieldHighlightedMask += targetSelected ? '1' : '0'
       fieldTargetHiddenMask += targetHidden ? '1' : '0'
 
-      if (!isFieldConnectionLive(node, field, liveGroupTargets) || targetHidden)
+      if (
+        field.target === undefined ||
+        !isFieldConnectionLive(node, field, liveGroupTargets) ||
+        targetHidden
+      )
         continue
 
       const targetNode = visibleById.get(field.target)

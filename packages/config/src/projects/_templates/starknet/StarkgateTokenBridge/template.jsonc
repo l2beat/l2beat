@@ -1,0 +1,99 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Starkgate token bridge on Starknet (L2 side). Mints the L2 token on deposits and burns it on withdrawals, relayed through the Starknet core messaging contract on Ethereum.",
+  "category": "bridge-canonical",
+  "fields": {
+    "$classHash": {
+      "description": "Sierra class hash of the bridge. A change means the contract was upgraded via the StarkWare replaceability component.",
+      "severity": "HIGH"
+    },
+    "$roles": {
+      "description": "StarkWare-style access control roles, reconstructed from RoleGranted/RoleRevoked events.",
+      "severity": "HIGH"
+    },
+    "upgradeGovernors": {
+      "copy": "$roles",
+      "edit": ["get", "UPGRADE_GOVERNOR"],
+      "severity": "HIGH",
+      "description": "Holders of the UPGRADE_GOVERNOR role.",
+      "permissions": [
+        {
+          "type": "upgrade",
+          "delay": "{{get_upgrade_delay}}"
+        }
+      ]
+    },
+    "governanceAdmins": {
+      "copy": "$roles",
+      "edit": ["get", "GOVERNANCE_ADMIN"],
+      "severity": "HIGH",
+      "description": "Holders of the GOVERNANCE_ADMIN role.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke all StarkWare roles of the bridge, including UPGRADE_GOVERNOR and GOVERNANCE_ADMIN itself."
+        }
+      ]
+    },
+    "securityAdmins": {
+      "copy": "$roles",
+      "edit": ["get", "SECURITY_ADMIN"],
+      "severity": "HIGH",
+      "description": "Holders of the SECURITY_ADMIN role.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "unpause the bridge and manage the SECURITY_ADMIN and SECURITY_AGENT roles."
+        }
+      ]
+    },
+    "securityAgents": {
+      "copy": "$roles",
+      "edit": ["get", "SECURITY_AGENT"],
+      "description": "Holders of the SECURITY_AGENT role.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the bridge."
+        }
+      ]
+    },
+    "appGovernors": {
+      "copy": "$roles",
+      "edit": ["get", "APP_GOVERNOR"],
+      "severity": "HIGH",
+      "description": "Holders of the APP_GOVERNOR role.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "configure the bridge, e.g. set the L1 bridge counterpart and token parameters."
+        }
+      ]
+    },
+    "appRoleAdmins": {
+      "copy": "$roles",
+      "edit": ["get", "APP_ROLE_ADMIN"],
+      "severity": "HIGH",
+      "description": "Holders of the APP_ROLE_ADMIN role.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the APP_GOVERNOR and OPERATOR roles."
+        }
+      ]
+    },
+    "get_upgrade_delay": {
+      "description": "Delay in seconds between adding a new implementation and being able to activate it via replace_to.",
+      "severity": "HIGH"
+    },
+    "get_l1_bridge": {
+      "description": "The L1 counterpart of this bridge on Ethereum."
+    },
+    "get_erc20_class_hash": {
+      "description": "Class hash used when the bridge deploys new L2 token contracts."
+    },
+    "get_l2_token_governance": {
+      "description": "Account allowed to govern the L2 token contracts deployed by this bridge."
+    }
+  }
+}

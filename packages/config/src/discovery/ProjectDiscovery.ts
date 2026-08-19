@@ -113,7 +113,13 @@ export class ProjectDiscovery {
 
   getEOAName(address: ChainSpecificAddress): string {
     if (!(address in this.eoaIDMap)) {
-      this.eoaIDMap[address] = `EOA ${Object.keys(this.eoaIDMap).length + 1}`
+      // Starknet multisig accounts are EOA entries carrying $signers
+      const entry = this.getEntryByAddress(address)
+      const label = Array.isArray(entry?.values?.$signers) ? 'Multisig' : 'EOA'
+      const count =
+        Object.values(this.eoaIDMap).filter((name) => name.startsWith(label))
+          .length + 1
+      this.eoaIDMap[address] = `${label} ${count}`
     }
 
     return this.eoaIDMap[address]
@@ -448,13 +454,15 @@ export class ProjectDiscovery {
 
       const raw = ChainSpecificAddress.address(address)
       const chain = ChainSpecificAddress.longChain(address)
-      const name = `${raw.slice(0, 6)}…${raw.slice(38, 42)}`
+      const name = `${raw.slice(0, 6)}…${raw.slice(-4)}`
       const explorerUrl = EXPLORER_URLS[chain]
       assert(
         isNonNullable(explorerUrl),
         `Failed to find explorer url for chain [${chain}]`,
       )
-      const url = `${explorerUrl}/address/${raw}`
+      // Starkscan addresses contracts under /contract, not /address
+      const addressPath = chain === 'starknet' ? 'contract' : 'address'
+      const url = `${explorerUrl}/${addressPath}/${raw}`
 
       result.push({ address, type, isVerified, name, url })
     }
@@ -795,6 +803,7 @@ export class ProjectDiscovery {
     return [
       contractOrEoa.description,
       this.describeGnosisSafeMembership(contractOrEoa),
+      describeStarknetAccountKeys(contractOrEoa),
       this.permissionRegistry.describePermissions(contractOrEoa, describeRoles),
     ]
       .filter(notUndefined)
@@ -1153,4 +1162,35 @@ function concatName(names: string[]): string {
   }
 
   return names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1]
+}
+
+/**
+ * Starknet account entries carry their key material in values ($signers,
+ * $threshold, $publicKey, $owner, $guardian - see the starknet discovery
+ * docs in packages/discovery). Describe it so multisig structure shows up
+ * in permission previews just like Gnosis Safe membership does.
+ */
+function describeStarknetAccountKeys(
+  entry: EntryParameters,
+): string | undefined {
+  const values = entry.values ?? {}
+  const signers = values.$signers
+  if (Array.isArray(signers) && signers.length > 0) {
+    const threshold = values.$threshold ?? '?'
+    return [
+      `This is a Starknet multisig account with a threshold of ${threshold} out of ${signers.length} signer keys:`,
+      ...signers.map((key) => `${key}`),
+    ].join('\n')
+  }
+  if (typeof values.$publicKey === 'string') {
+    return `This is a Starknet account controlled by a single signer key ${values.$publicKey}.`
+  }
+  if (typeof values.$owner === 'string') {
+    const guardian =
+      typeof values.$guardian === 'string' && BigInt(values.$guardian) !== 0n
+        ? ` and guardian key ${values.$guardian}`
+        : ' and no guardian'
+    return `This is a Starknet Argent account with owner key ${values.$owner}${guardian}.`
+  }
+  return undefined
 }

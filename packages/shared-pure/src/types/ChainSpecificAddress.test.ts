@@ -159,4 +159,71 @@ describe(ChainSpecificAddress.name, () => {
       expect(ChainSpecificAddress.address(address)).toEqual(rawAddress)
     })
   })
+
+  describe('felt chains (strk)', () => {
+    const PADDED =
+      'strk:0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a'
+
+    it('accepts a padded 64-hex felt address', () => {
+      expect(ChainSpecificAddress(PADDED).toString()).toEqual(PADDED)
+    })
+
+    it('normalizes unpadded and uppercase felt addresses', () => {
+      const unpadded =
+        'strk:0x40337B1AF3C663E86E333BAB5A4B28DA8D4652A15A69BEEE2B677776FFE812A'
+      expect(ChainSpecificAddress(unpadded).toString()).toEqual(PADDED)
+    })
+
+    it('round-trips through check', () => {
+      expect(ChainSpecificAddress.check(PADDED)).toEqual(true)
+    })
+
+    it('rejects felts longer than 64 hex chars', () => {
+      expect(() => ChainSpecificAddress(`strk:0x${'1'.repeat(65)}`)).toThrow(
+        TypeError,
+      )
+    })
+
+    it('rejects non-hex felt addresses', () => {
+      expect(() => ChainSpecificAddress('strk:0xzz')).toThrow(TypeError)
+    })
+
+    it('rejects felt-length addresses on evm chains', () => {
+      expect(() =>
+        ChainSpecificAddress(
+          'eth:0x040337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a',
+        ),
+      ).toThrow(TypeError)
+    })
+
+    it('supports from with a raw felt', () => {
+      expect(
+        ChainSpecificAddress.from(
+          'strk',
+          '0x40337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a',
+        ).toString(),
+      ).toEqual(PADDED)
+    })
+
+    it('supports fromLong', () => {
+      expect(
+        ChainSpecificAddress.fromLong(
+          'starknet',
+          '0x40337b1af3c663e86e333bab5a4b28da8d4652a15a69beee2b677776ffe812a',
+        ).toString(),
+      ).toEqual(PADDED)
+    })
+
+    it('supports ZERO for starknet', () => {
+      expect(ChainSpecificAddress.ZERO('starknet').toString()).toEqual(
+        `strk:0x${'0'.repeat(64)}`,
+      )
+    })
+
+    it('resolves chain and longChain', () => {
+      const address = ChainSpecificAddress(PADDED)
+      expect(ChainSpecificAddress.chain(address)).toEqual('strk')
+      expect(ChainSpecificAddress.longChain(address)).toEqual('starknet')
+    })
+  })
 })

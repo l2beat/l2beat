@@ -84,8 +84,9 @@ export function updateNodePositions(
     const nextFields: Field[] = new Array(node.fields.length)
     for (let i = 0; i < node.fields.length; i++) {
       const field = node.fields[i] as Field
-      const targetBox = nextBoxes.get(field.target)
-      if (!targetBox) {
+      const targetBox =
+        field.target !== undefined ? nextBoxes.get(field.target) : undefined
+      if (field.target !== undefined && !targetBox) {
         throw new Error('missing dimensions for node ' + field.target)
       }
 
@@ -100,11 +101,9 @@ export function updateNodePositions(
         width: nextBox.width,
         height: FIELD_HEIGHT,
       }
-      const nextConnection = processConnection(
-        currentVisibleIndex,
-        nextBox,
-        targetBox,
-      )
+      const nextConnection = targetBox
+        ? processConnection(currentVisibleIndex, nextBox, targetBox)
+        : field.connection
 
       if (
         boxesEqual(field.box, nextFieldBox) &&
@@ -231,7 +230,7 @@ function indexSubnodes(
 
 function nodeHasMovedTarget(node: Node, movedIds: Set<string>): boolean {
   for (const field of node.fields) {
-    if (movedIds.has(field.target)) return true
+    if (field.target !== undefined && movedIds.has(field.target)) return true
   }
   return false
 }

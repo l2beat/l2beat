@@ -28,11 +28,13 @@ export function getUpdateMonitorConfig(
         .map((entry) => ChainSpecificAddress.longChain(entry.address)),
     ),
   ]
-  const enabledChains = allChains.filter((chain) =>
-    flags.isEnabled('updateMonitor', 'chain', chain),
+  const enabledChains = allChains.filter(
+    (chain) =>
+      flags.isEnabled('updateMonitor', 'chain', chain) &&
+      hasEvmExplorerApi(chain, chains),
   )
   const disabledChains = allChains.filter(
-    (chain) => !flags.isEnabled('updateMonitor', 'chain', chain),
+    (chain) => !enabledChains.includes(chain),
   )
 
   const allProjects = configReader.readAllDiscoveredProjects()
@@ -70,6 +72,25 @@ export function getUpdateMonitorConfig(
       ),
     },
   }
+}
+
+/**
+ * The update monitor can only run the EVM discovery engine. Chains without an
+ * EVM explorer api (e.g. starknet) are discovered with dedicated tooling and
+ * must not crash config assembly.
+ */
+function hasEvmExplorerApi(chain: string, chains: ChainConfig[]): boolean {
+  const chainConfig = chains.find((c) => c.name === chain)
+  return (
+    chainConfig !== undefined &&
+    chainConfig.apis.some(
+      (api) =>
+        api.type === 'etherscan' ||
+        api.type === 'blockscout' ||
+        api.type === 'routescan' ||
+        api.type === 'sourcify',
+    )
+  )
 }
 
 function getChainDiscoveryConfig(

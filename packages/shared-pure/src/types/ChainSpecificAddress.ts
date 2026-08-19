@@ -62,7 +62,20 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   plasma: 'plasma',
   xlayer: 'xlayer',
   robinhood: 'robinhood',
+  strk: 'starknet',
 } as const
+
+// Chains whose addresses are field elements (up to 32 bytes) instead of
+// 20-byte ERC-55 addresses. Canonical form: lowercase, zero-padded to 64 hex chars.
+const FELT_CHAINS: ReadonlySet<string> = new Set(['strk'])
+const FELT_REGEX = /^0x[0-9a-fA-F]{1,64}$/
+
+function normalizeFeltAddress(raw: string): string {
+  if (!FELT_REGEX.test(raw)) {
+    throw new TypeError(`Invalid felt address: ${raw}`)
+  }
+  return `0x${raw.slice(2).toLowerCase().padStart(64, '0')}`
+}
 
 const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(
   Object.entries(SHORT_TO_LONG_CHAIN_NAMES).map(([short, long]) => [
@@ -85,6 +98,16 @@ export function ChainSpecificAddress(value: string): ChainSpecificAddress {
   const [chain, address] = value.split(':')
   if (chain === undefined || address === undefined) {
     throw new TypeError(`Incorrect ChainSpecificAddress format: ${value}`)
+  }
+
+  if (FELT_CHAINS.has(chain)) {
+    let normalized: string
+    try {
+      normalized = normalizeFeltAddress(address)
+    } catch {
+      throw new TypeError(`Invalid ChainSpecificAddress: ${value}`)
+    }
+    return `${chain}:${normalized}` as unknown as ChainSpecificAddress
   }
 
   const result = validateAddress(address)
@@ -117,6 +140,9 @@ ChainSpecificAddress.from = function from(
   shortChainName: string,
   pureAddress: string | EthereumAddress,
 ) {
+  if (FELT_CHAINS.has(shortChainName)) {
+    return ChainSpecificAddress(`${shortChainName}:${pureAddress}`)
+  }
   const pureAddressPadded = EthereumAddress.from(pureAddress)
   return ChainSpecificAddress(`${shortChainName}:${pureAddressPadded}`)
 }
@@ -157,5 +183,10 @@ ChainSpecificAddress.longChain = function longChain(
 ChainSpecificAddress.ZERO = function ZERO(
   longChainName: string,
 ): ChainSpecificAddress {
+  const shortChainName =
+    LONG_TO_SHORT_CHAIN_NAMES[longChainName as LongChainName]
+  if (shortChainName !== undefined && FELT_CHAINS.has(shortChainName)) {
+    return ChainSpecificAddress.from(shortChainName, '0x0')
+  }
   return ChainSpecificAddress.fromLong(longChainName, EthereumAddress.ZERO)
 }

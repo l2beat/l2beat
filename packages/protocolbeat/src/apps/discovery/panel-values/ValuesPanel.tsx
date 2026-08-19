@@ -86,7 +86,7 @@ function Display({
 
   const contractConfigDialog = canModify && <ContractConfigDialog />
 
-  const fieldsFromSelected = 'fields' in selected ? selected.fields : []
+  const fieldsFromSelected = selected.fields ?? []
   const ignoredMethodsSet = new Set(ignoredMethods)
   const fields = fieldsFromSelected.filter(
     (field) => !ignoredMethodsSet.has(field.name),
@@ -286,13 +286,13 @@ function getAddressesToCopy(selected: ApiProjectContract | ApiAddressEntry) {
 function findAddressToCopy(
   selected: ApiProjectContract | ApiAddressEntry,
 ): string[] {
-  const hasFields = 'fields' in selected && selected.fields.length > 0
+  const fields = selected.fields ?? []
 
-  if (!hasFields) {
+  if (fields.length === 0) {
     return [selected.address]
   }
 
-  const implementations = selected.fields.find(
+  const implementations = fields.find(
     (field) => field.name === '$implementation',
   )
 

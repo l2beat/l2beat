@@ -27,6 +27,7 @@ const configReader = new ConfigReader(paths.discovery)
 export const onChainProjects: string[] = [
   'blobstream',
   'eigenda',
+  'starknet-l2',
   'shared-eigenlayer',
   'swell',
   'worldcoin',
@@ -76,6 +77,28 @@ describe('discovery config.jsonc', () => {
         'Following projects do not have the same name as ProjectIds: ' +
           notCorresponding.join(', ') +
           '. Add them to config/src/projects/[layer2s|bridges|layer3s|onChainProjects]',
+      )
+    }
+  })
+
+  it('starknet projects are archived (the update monitor cannot discover them)', () => {
+    const notArchived = configs
+      .filter(
+        (c) =>
+          c.structure.initialAddresses.length > 0 &&
+          c.structure.initialAddresses.every(
+            (a) => ChainSpecificAddress.chain(a) === 'strk',
+          ),
+      )
+      .filter((c) => !c.archived)
+      .map((c) => c.name)
+
+    expect(notArchived).toBeEmpty()
+    if (notArchived.length > 0) {
+      console.log(
+        'Starknet projects must set "archived": true until the update ' +
+          'monitor supports Starknet discovery. Offending projects: ' +
+          notArchived.join(', '),
       )
     }
   })

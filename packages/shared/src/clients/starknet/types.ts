@@ -80,6 +80,45 @@ export const StarknetCallResponse = v.object({
   ),
 })
 
+export type StarknetClassHashResponse = v.infer<
+  typeof StarknetClassHashResponse
+>
+export const StarknetClassHashResponse = v.object({
+  jsonrpc: v.literal('2.0'),
+  result: v.string().check((v) => HEX_REGEX.test(v), 'Invalid hex string'),
+})
+
+export type StarknetContractClass = v.infer<typeof StarknetContractClass>
+export const StarknetContractClass = v.object({
+  /**
+   * Sierra classes carry the ABI as a JSON-encoded string;
+   * some gateways return it pre-parsed as an array.
+   * Legacy (Cairo 0) classes may omit it.
+   */
+  abi: v.union([v.string(), v.array(v.unknown())]).optional(),
+  contract_class_version: v.string().optional(),
+})
+
+export type StarknetClassResponse = v.infer<typeof StarknetClassResponse>
+export const StarknetClassResponse = v.object({
+  jsonrpc: v.literal('2.0'),
+  result: StarknetContractClass,
+})
+
+export type StarknetStorageResponse = v.infer<typeof StarknetStorageResponse>
+export const StarknetStorageResponse = v.object({
+  jsonrpc: v.literal('2.0'),
+  result: v.string().check((v) => HEX_REGEX.test(v), 'Invalid hex string'),
+})
+
+/** https://github.com/starkware-libs/starknet-specs JSON-RPC error codes */
+export const STARKNET_ERROR_CODES = {
+  CONTRACT_NOT_FOUND: 20,
+  ENTRYPOINT_NOT_FOUND: 21,
+  CLASS_HASH_NOT_FOUND: 28,
+  CONTRACT_ERROR: 40,
+} as const
+
 export type StarknetErrorResponse = v.infer<typeof StarknetErrorResponse>
 export const StarknetErrorResponse = v.object({
   jsonrpc: v.literal('2.0'),

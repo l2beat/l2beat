@@ -226,7 +226,7 @@ function indexEdges(leafNodes: readonly Node[]): {
         throw new Error(`Duplicate field name ${node.id}:${field.name}`)
       }
       fieldNames.add(field.name)
-      if (!leafIds.has(field.target)) continue
+      if (field.target === undefined || !leafIds.has(field.target)) continue
       const edge = {
         source: node.id,
         target: field.target,

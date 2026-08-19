@@ -1,0 +1,41 @@
+{
+  "TokenBridge": {
+    "hash": "0xf7a6ba4c87e3d5fec134990017683ad9c91654cd851edcce40c55e759d8619da",
+    "address": [
+      "strk:0x073314940630fd6dcda0d772d4c972c4e0a9946bef9dabf4ef84eda8ef542b82",
+      "strk:0x0594c1582459ea03f77deaf9eb7e3917d6994a03c13405ba42867f83d85f085d",
+      "strk:0x05cd48fccbfd8aa2773fe22c217e808319ffcc1c5a6a463f7d8fa2da48218196",
+      "strk:0x074761a8d48ce002963002becc6d9c3dd8a2a05b1075d55e5967f42296f16bd0",
+      "strk:0x006646a87b8e9e51a893c52facd89f99539a152b96e72daee6a7a3734aa5299a",
+      "strk:0x06bf25c0911c6c63abfe3600428144d0d0dbf8b7bfbc44306a3386aa95a24296",
+      "strk:0x05841ed9b790719b61dc98826246a7a3012dd35b0ed728e3c455af2647385c80",
+      "strk:0x04fe90c0c4594b4a5ce3031a4bbdfbc7c046b4b9d7cf31b79647540c85b8ec79",
+      "strk:0x0078da8023b3c08e5a41540a34f7c385fd4f4540d5668f1be3ede0d3bb1b9d4d",
+      "strk:0x06dcc61c4cf056ff42a8f4b8635c207e3da73332282aa2132058022520fa0179"
+    ],
+    "blockNumber": 8978970
+  },
+  "TokenBridge_btc": {
+    "hash": "0x6e4ab30d4aa1a37886771f3229d4f5041202bcf3a09662d4a11dbbb309120e09",
+    "address": [
+      "strk:0x07aeec4870975311a7396069033796b61cd66ed49d22a786cba12a8d76717302",
+      "strk:0x032c68653622292bedf0ed6d941888a01d3923c7f4eb633a0c08c5497a1f5f58"
+    ],
+    "blockNumber": 8978970
+  },
+  "TokenBridge_lbtc": {
+    "hash": "0x5ba6d80fa347e2db1b59228cbd664f66889fd2a62802438bcbf43f27f8087d02",
+    "address": "strk:0x0239eee60e6d0bed42315ac74a1fc43db8074646d4d2a0a9e6fa5272685a0eb5",
+    "blockNumber": 8978970
+  },
+  "TokenBridge_wstETH": {
+    "hash": "0x3b8b700cf6029dd5b2aced002fd236d5243a25ccfb3fa0355743935d4531976c",
+    "address": "strk:0x0088eedbe2fe3918b69ccb411713b7fa72079d4eddf291103ccbe41e78a9615c",
+    "blockNumber": 8978970
+  },
+  "MultiTokenBridge": {
+    "hash": "0xd5ba847131b2f1df6113a5cfde064ec3518431ac2a87edde451d75c6f051253f",
+    "address": "strk:0x0616757a151c21f9be8775098d591c2807316d992bbc3bb1a5c1821630589256",
+    "blockNumber": 8978970
+  }
+}

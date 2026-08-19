@@ -33,6 +33,7 @@ export const EXPLORER_URLS: Record<string, string> = {
   jovay: 'https://explorer.jovay.io/l2/address',
   katana: 'https://katanascan.com',
   robinhood: 'https://robinhoodchain.blockscout.com/address',
+  strk: 'https://starkscan.co/contract',
 }
 
 export function getExplorerTxUrl(chain: string): string | undefined {
@@ -40,8 +41,8 @@ export function getExplorerTxUrl(chain: string): string | undefined {
   if (!base) {
     return undefined
   }
-  if (/\/address$/.test(base)) {
-    return base.replace(/\/address$/, '/tx')
+  if (/\/(address|contract)$/.test(base)) {
+    return base.replace(/\/(address|contract)$/, '/tx')
   }
   return `${base.replace(/\/$/, '')}/tx`
 }

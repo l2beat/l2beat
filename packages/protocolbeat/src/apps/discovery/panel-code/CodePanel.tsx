@@ -155,6 +155,8 @@ function getCodeFiles(
     name: source.name,
     content: joinDeclarations(source.declarations),
     readOnly: true,
-    language: 'solidity' as const,
+    language: source.name.endsWith('.cairo')
+      ? ('cairo' as const)
+      : ('solidity' as const),
   }))
 }
