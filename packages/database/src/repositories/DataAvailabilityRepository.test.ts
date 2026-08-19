@@ -683,6 +683,98 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
   })
 
   describe(
+    DataAvailabilityRepository.prototype.deleteByConfigurationIdOutsideTimeRange
+      .name,
+    () => {
+      const HOUR = UnixTime.HOUR
+
+      it('deletes rows before the range, leaving other configurations intact', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+          record('project-a', 'layer-a', 'config-id-1', START + HOUR, 200n),
+          record('project-a', 'layer-a', 'config-id-1', START + 2 * HOUR, 300n),
+          record('project-b', 'layer-a', 'config-id-2', START, 400n),
+        ])
+
+        const deleted =
+          await repository.deleteByConfigurationIdOutsideTimeRange(
+            'config-id-1',
+            START + HOUR,
+            null,
+          )
+
+        expect(deleted).toEqual(1)
+        expect(await repository.getAll()).toEqualUnsorted([
+          record('project-a', 'layer-a', 'config-id-1', START + HOUR, 200n),
+          record('project-a', 'layer-a', 'config-id-1', START + 2 * HOUR, 300n),
+          record('project-b', 'layer-a', 'config-id-2', START, 400n),
+        ])
+      })
+
+      it('deletes rows after the range, leaving other configurations intact', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+          record('project-a', 'layer-a', 'config-id-1', START + HOUR, 200n),
+          record('project-a', 'layer-a', 'config-id-1', START + 2 * HOUR, 300n),
+          record('project-b', 'layer-a', 'config-id-2', START + 2 * HOUR, 400n),
+        ])
+
+        const deleted =
+          await repository.deleteByConfigurationIdOutsideTimeRange(
+            'config-id-1',
+            null,
+            START + HOUR,
+          )
+
+        expect(deleted).toEqual(1)
+        expect(await repository.getAll()).toEqualUnsorted([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+          record('project-a', 'layer-a', 'config-id-1', START + HOUR, 200n),
+          record('project-b', 'layer-a', 'config-id-2', START + 2 * HOUR, 400n),
+        ])
+      })
+
+      it('deletes rows on both sides of the range', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+          record('project-a', 'layer-a', 'config-id-1', START + HOUR, 200n),
+          record('project-a', 'layer-a', 'config-id-1', START + 2 * HOUR, 300n),
+        ])
+
+        const deleted =
+          await repository.deleteByConfigurationIdOutsideTimeRange(
+            'config-id-1',
+            START + HOUR,
+            START + HOUR,
+          )
+
+        expect(deleted).toEqual(2)
+        expect(await repository.getAll()).toEqualUnsorted([
+          record('project-a', 'layer-a', 'config-id-1', START + HOUR, 200n),
+        ])
+      })
+
+      it('deletes nothing when the range is unbounded', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+        ])
+
+        const deleted =
+          await repository.deleteByConfigurationIdOutsideTimeRange(
+            'config-id-1',
+            null,
+            null,
+          )
+
+        expect(deleted).toEqual(0)
+        expect(await repository.getAll()).toEqualUnsorted([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+        ])
+      })
+    },
+  )
+
+  describe(
     DataAvailabilityRepository.prototype.deleteByConfigurationId.name,
     () => {
       it('should delete records within the specified time range', async () => {

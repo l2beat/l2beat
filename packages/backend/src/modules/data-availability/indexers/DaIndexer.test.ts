@@ -13,7 +13,7 @@ import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { Configuration } from '../../../tools/uif/multi/types'
 import type { BlobService } from '../services/BlobService'
-import type { DaService } from '../services/DaService'
+import { DaService } from '../services/DaService'
 import { DaIndexer } from './DaIndexer'
 
 // All test cases work on one layer.
@@ -190,10 +190,281 @@ describe(DaIndexer.name, () => {
     })
   })
 
+  describe(DaIndexer.prototype.trimData.name, () => {
+    it('deletes records before the raised sinceBlock, boundary hour included', async () => {
+      const configuration = config('project-a', undefined, {
+        sinceBlock: 200,
+      })
+
+      const { repository, indexer, daProvider } = mockIndexer({
+        configurations: [configuration],
+        // Block 200 is 15 minutes into hour 10
+        blockTimestamps: () =>
+          UnixTime(10 * UnixTime.HOUR + 15 * UnixTime.MINUTE),
+      })
+
+      await indexer.trimData([{ id: createId('project-a'), range: [100, 199] }])
+
+      expect(daProvider.getBlockTimestamp).toHaveBeenOnlyCalledWith(
+        DA_LAYER,
+        200,
+      )
+      expect(
+        repository.deleteByConfigurationIdOutsideTimeRange,
+      ).toHaveBeenOnlyCalledWith(
+        createId('project-a'),
+        // Hour 10 straddles the boundary so it is deleted as well
+        UnixTime(11 * UnixTime.HOUR),
+        null,
+      )
+      expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+    })
+
+    it('deletes records after the untilBlock, boundary hour included', async () => {
+      const configuration = config('project-a', undefined, {
+        sinceBlock: 100,
+        untilBlock: 300,
+      })
+
+      const { repository, indexer, daProvider } = mockIndexer({
+        configurations: [configuration],
+        // Block 300 is 1 minute into hour 20
+        blockTimestamps: () => UnixTime(20 * UnixTime.HOUR + UnixTime.MINUTE),
+      })
+
+      await indexer.trimData([{ id: createId('project-a'), range: [301, 500] }])
+
+      expect(daProvider.getBlockTimestamp).toHaveBeenOnlyCalledWith(
+        DA_LAYER,
+        300,
+      )
+      expect(
+        repository.deleteByConfigurationIdOutsideTimeRange,
+      ).toHaveBeenOnlyCalledWith(
+        createId('project-a'),
+        null,
+        // Hour 20 straddles the boundary so it is deleted as well
+        UnixTime(19 * UnixTime.HOUR),
+      )
+      expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+    })
+
+    it('trims both edges when the whole range changed', async () => {
+      const configuration = config('project-a', undefined, {
+        sinceBlock: 200,
+        untilBlock: 300,
+      })
+
+      const { repository, indexer } = mockIndexer({
+        configurations: [configuration],
+        blockTimestamps: (blockNumber) =>
+          UnixTime(
+            blockNumber === 200 ? 10 * UnixTime.HOUR : 20 * UnixTime.HOUR,
+          ),
+      })
+
+      await indexer.trimData([
+        { id: createId('project-a'), range: [100, 199] },
+        { id: createId('project-a'), range: [301, 500] },
+      ])
+
+      expect(
+        repository.deleteByConfigurationIdOutsideTimeRange,
+      ).toHaveBeenCalledTimes(2)
+      expect(
+        repository.deleteByConfigurationIdOutsideTimeRange,
+      ).toHaveBeenNthCalledWith(
+        1,
+        createId('project-a'),
+        UnixTime(11 * UnixTime.HOUR),
+        null,
+      )
+      expect(
+        repository.deleteByConfigurationIdOutsideTimeRange,
+      ).toHaveBeenNthCalledWith(
+        2,
+        createId('project-a'),
+        null,
+        UnixTime(19 * UnixTime.HOUR),
+      )
+    })
+  })
+
+  describe('range edits trim instead of wiping', () => {
+    it('trims when sinceBlock of an existing configuration is raised', async () => {
+      const configuration = config('project-a', undefined, { sinceBlock: 200 })
+      const indexerService = mockObject<IndexerService>({
+        getSavedConfigurations: mockFn().resolvesTo([
+          {
+            id: createId('project-a'),
+            properties: 'old-properties',
+            minHeight: 100,
+            maxHeight: null,
+            currentHeight: 500,
+          },
+        ]),
+        insertConfigurations: mockFn().resolvesTo(undefined),
+        upsertConfigurations: mockFn().resolvesTo(undefined),
+        deleteConfigurations: mockFn().resolvesTo(undefined),
+      })
+
+      const { repository, indexer } = mockIndexer({
+        configurations: [configuration],
+        indexerService,
+        blockTimestamps: () => UnixTime(10 * UnixTime.HOUR),
+      })
+
+      await indexer.initialize()
+
+      expect(
+        repository.deleteByConfigurationIdOutsideTimeRange,
+      ).toHaveBeenOnlyCalledWith(
+        createId('project-a'),
+        UnixTime(11 * UnixTime.HOUR),
+        null,
+      )
+      expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('does not double count after a trim', () => {
+    // Blocks are 10 minutes apart, blocks 1-6 fall into hour 100, blocks 7-12
+    // fall into hour 101.
+    const HOUR_0 = UnixTime(100 * UnixTime.HOUR)
+    const HOUR_1 = UnixTime(101 * UnixTime.HOUR)
+    const BLOB_SIZE = 100n
+    const blockTimestamps = (blockNumber: number) =>
+      UnixTime(HOUR_0 + (blockNumber - 1) * 10 * UnixTime.MINUTE)
+
+    it('untilBlock trimmed and then extended counts each blob once', async () => {
+      const inbox = EthereumAddress.random()
+      const configuration = config('project-a', inbox, {
+        sinceBlock: 1,
+        untilBlock: 9,
+      })
+
+      const store = new InMemoryDataAvailabilityStore()
+
+      const { indexer } = mockIndexer({
+        configurations: [configuration],
+        repository: store.asRepository(),
+        daService: new DaService(),
+        blockTimestamps,
+        getBlobs: (from, to) => {
+          const blobs: DaBlob[] = []
+          for (let block = from; block <= to; block++) {
+            blobs.push({
+              type: 'ethereum',
+              daLayer: DA_LAYER,
+              blockTimestamp: blockTimestamps(block),
+              blockNumber: block,
+              size: BLOB_SIZE,
+              inbox,
+              sequencer: EthereumAddress.random(),
+              topics: [],
+            })
+          }
+          return blobs
+        },
+      })
+
+      // The configuration was indexed up to block 12 before untilBlock was set
+      await (
+        await indexer.multiUpdate(
+          1,
+          12,
+          toIndexerConfigurations([configuration]),
+        )
+      )()
+      expect(store.totals()).toEqual([
+        [HOUR_0, 6n * BLOB_SIZE],
+        [HOUR_1, 6n * BLOB_SIZE],
+      ])
+
+      // untilBlock is set to 9, which falls into hour 101
+      await indexer.trimData([{ id: createId('project-a'), range: [10, 12] }])
+      expect(store.totals()).toEqual([[HOUR_0, 6n * BLOB_SIZE]])
+
+      // untilBlock is extended again, indexing resumes from currentHeight + 1
+      await (
+        await indexer.multiUpdate(
+          10,
+          12,
+          toIndexerConfigurations([configuration]),
+        )
+      )()
+
+      // Blocks 7-9 are lost (bounded, one hour), blocks 10-12 are counted once.
+      // Had we kept the boundary hour, it would be 6 + 3 blobs there.
+      expect(store.totals()).toEqual([
+        [HOUR_0, 6n * BLOB_SIZE],
+        [HOUR_1, 3n * BLOB_SIZE],
+      ])
+    })
+  })
+
   beforeEach(() => {
     _TEST_ONLY_resetUniqueIds()
   })
 })
+
+/** Minimal in-memory stand-in for the DataAvailability table */
+class InMemoryDataAvailabilityStore {
+  private records: DataAvailabilityRecord[] = []
+
+  asRepository(): Database['dataAvailability'] {
+    return mockObject<Database['dataAvailability']>({
+      upsertMany: async (records: DataAvailabilityRecord[]) => {
+        for (const record of records) {
+          const index = this.records.findIndex(
+            (r) =>
+              r.timestamp === record.timestamp &&
+              r.daLayer === record.daLayer &&
+              r.projectId === record.projectId &&
+              r.configurationId === record.configurationId,
+          )
+          if (index === -1) {
+            this.records.push({ ...record })
+          } else {
+            this.records[index] = { ...record }
+          }
+        }
+        return records.length
+      },
+      getForDaLayerInTimeRange: async (
+        daLayer: string,
+        from: UnixTime,
+        to: UnixTime,
+      ) =>
+        this.records
+          .filter(
+            (r) =>
+              r.daLayer === daLayer && r.timestamp >= from && r.timestamp < to,
+          )
+          .map((r) => ({ ...r })),
+      deleteByConfigurationIdOutsideTimeRange: async (
+        configurationId: string,
+        from: UnixTime | null,
+        to: UnixTime | null,
+      ) => {
+        const before = this.records.length
+        this.records = this.records.filter(
+          (r) =>
+            r.configurationId !== configurationId ||
+            ((from === null || r.timestamp >= from) &&
+              (to === null || r.timestamp <= to)),
+        )
+        return before - this.records.length
+      },
+    })
+  }
+
+  totals(): [UnixTime, bigint][] {
+    return this.records
+      .map((r): [UnixTime, bigint] => [r.timestamp, r.totalSize])
+      .sort((a, b) => a[0] - b[0])
+  }
+}
 
 function toIndexerConfigurations(
   configurations: BlockDaIndexedConfig[],
@@ -214,10 +485,16 @@ function mockIndexer($: {
   previousRecords?: DataAvailabilityRecord[]
   generatedRecords?: DataAvailabilityRecord[]
   useBlobService?: boolean
+  repository?: Database['dataAvailability']
+  daService?: DaService
+  blockTimestamps?: (blockNumber: number) => UnixTime
+  getBlobs?: (from: number, to: number) => DaBlob[]
 }) {
+  // Returned to the test, unless the test brought its own repository
   const repository = mockObject<Database['dataAvailability']>({
     deleteByConfigIds: mockFn().resolvesTo(10),
     deleteByConfigurationId: mockFn().resolvesTo({}),
+    deleteByConfigurationIdOutsideTimeRange: mockFn().resolvesTo(10),
     upsertMany: mockFn().resolvesTo(undefined),
     getForDaLayerInTimeRange: mockFn().resolvesTo($.previousRecords ?? []),
   })
@@ -226,6 +503,7 @@ function mockIndexer($: {
     updateSyncedUntil: mockFn().resolvesTo(undefined),
   })
 
+  // Returned to the test, unless the test brought its own service
   const daService = mockObject<DaService>({
     generateRecords: mockFn().returns({
       records: $.generatedRecords ?? [],
@@ -235,7 +513,11 @@ function mockIndexer($: {
   })
 
   const daProvider = mockObject<DaProvider>({
-    getBlobs: async () => $.blobs ?? [], // Empty response
+    getBlobs: async (_, from, to) =>
+      $.getBlobs ? $.getBlobs(from, to) : ($.blobs ?? []), // Empty response
+    getBlockTimestamp: mockFn(async (_: string, blockNumber: number) =>
+      $.blockTimestamps ? $.blockTimestamps(blockNumber) : UnixTime(0),
+    ),
   })
 
   const blobService = $.useBlobService
@@ -253,13 +535,13 @@ function mockIndexer($: {
         properties: c,
       })),
       daProvider,
-      daService,
+      daService: $.daService ?? daService,
       daLayer: DA_LAYER,
       batchSize: $.batchSize ?? 100,
       parents: [],
       indexerService: $.indexerService ?? mockObject<IndexerService>(),
       db: mockDatabase({
-        dataAvailability: repository,
+        dataAvailability: $.repository ?? repository,
         syncMetadata: syncMetadataRepository,
       }),
       blobService,
@@ -277,7 +559,11 @@ function mockIndexer($: {
   }
 }
 
-function config(project: string, inbox?: string): BlockDaIndexedConfig {
+function config(
+  project: string,
+  inbox?: string,
+  blocks?: { sinceBlock?: number; untilBlock?: number },
+): BlockDaIndexedConfig {
   return {
     type: 'ethereum',
     configurationId: createId(project),
@@ -285,7 +571,8 @@ function config(project: string, inbox?: string): BlockDaIndexedConfig {
     daLayer: ProjectId(DA_LAYER),
     inbox: inbox ?? EthereumAddress.random(),
     sequencers: [],
-    sinceBlock: 1,
+    sinceBlock: blocks?.sinceBlock ?? 1,
+    untilBlock: blocks?.untilBlock,
     topics: inbox ? ['topic'] : [],
   }
 }

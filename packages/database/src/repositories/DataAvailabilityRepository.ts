@@ -254,6 +254,35 @@ export class DataAvailabilityRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  /**
+   * Deletes rows of a single configuration that fall outside of the given
+   * inclusive time range. `null` means the range is unbounded on that side.
+   */
+  async deleteByConfigurationIdOutsideTimeRange(
+    configurationId: string,
+    from: UnixTime | null,
+    to: UnixTime | null,
+  ): Promise<number> {
+    if (from === null && to === null) return 0
+
+    const result = await this.db
+      .deleteFrom('DataAvailability')
+      .where('configurationId', '=', configurationId)
+      .where((eb) =>
+        eb.or(
+          [
+            from !== null
+              ? eb('timestamp', '<', UnixTime.toDate(from))
+              : undefined,
+            to !== null ? eb('timestamp', '>', UnixTime.toDate(to)) : undefined,
+          ].filter((x) => x !== undefined),
+        ),
+      )
+      .executeTakeFirst()
+
+    return Number(result.numDeletedRows)
+  }
+
   async deleteByConfigurationId(configurationId: string): Promise<number> {
     const result = await this.db
       .deleteFrom('DataAvailability')

@@ -10,6 +10,7 @@ import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexe
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
+  TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../tools/uif/multi/types'
 import type { BlobService } from '../services/BlobService'
@@ -167,6 +168,67 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
         configurations: configurations.length,
         deletedRecords,
       })
+    }
+  }
+
+  /**
+   * Drops the data outside of a configuration's block range instead of wiping
+   * its whole history. Runs when sinceBlock is raised or untilBlock changes.
+   *
+   * Records are hourly buckets and hold no block numbers, so the boundary block
+   * is mapped to its timestamp and the hour it falls into is deleted together
+   * with the out-of-range side. That hour mixes blobs from both sides of the
+   * boundary and its partial size cannot be subtracted. Keeping it would be
+   * worse: the framework leaves currentHeight at the boundary block, so its
+   * blobs would be added a second time once indexing resumes (DaService sums
+   * new blobs into existing records). We undercount by at most one hour per
+   * edited edge and never double count.
+   */
+  override async trimData(
+    configurations: TrimRemovalConfiguration[],
+  ): Promise<void> {
+    for (const { id, range } of configurations) {
+      const configuration = this.$.configurations.find((c) => c.id === id)
+      assert(configuration, `Configuration not found: ${id}`)
+
+      // Trimming the head means everything before the new minHeight was removed
+      const isHeadTrim = range[1] < configuration.minHeight
+      const boundaryBlock = isHeadTrim
+        ? configuration.minHeight
+        : configuration.maxHeight
+      assert(
+        boundaryBlock !== null,
+        `Configuration ${id} has no boundary to trim to`,
+      )
+
+      const boundaryBucket = UnixTime.toStartOf(
+        await this.$.daProvider.getBlockTimestamp(
+          this.$.daLayer,
+          boundaryBlock,
+        ),
+        'hour',
+      )
+
+      const [from, to] = isHeadTrim
+        ? [boundaryBucket + UnixTime.HOUR, null]
+        : [null, boundaryBucket - UnixTime.HOUR]
+
+      const deletedRecords =
+        await this.$.db.dataAvailability.deleteByConfigurationIdOutsideTimeRange(
+          id,
+          from,
+          to,
+        )
+
+      if (deletedRecords > 0) {
+        this.logger.info('Trimmed DA records for configuration', {
+          id,
+          range,
+          from,
+          to,
+          deletedRecords,
+        })
+      }
     }
   }
 
