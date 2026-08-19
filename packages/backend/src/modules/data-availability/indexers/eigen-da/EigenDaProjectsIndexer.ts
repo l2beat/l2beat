@@ -124,28 +124,12 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
       Extract<TimestampDaIndexedConfig, { type: 'eigen-da' }>
     >[]
 
-    const records = mapEigenProjectData(
+    return mapEigenProjectData(
       data,
       projectsConfigurations,
       this.daLayer,
       startOfTheDay,
     )
-
-    // The API reports every customer regardless of our ranges. Keep only the
-    // hourly buckets inside the configuration's range, cut at full hours the
-    // same way trimData cuts them, so later updates never recreate trimmed rows.
-    const byId = new Map(projectsConfigurations.map((c) => [c.id, c]))
-    return records.filter((record) => {
-      const configuration = byId.get(record.configurationId)
-      assert(configuration)
-      return (
-        record.timestamp >=
-          UnixTime.toStartOf(configuration.minHeight, 'hour') &&
-        (configuration.maxHeight === null ||
-          record.timestamp <
-            UnixTime.toStartOf(configuration.maxHeight + 1, 'hour'))
-      )
-    })
   }
 
   override async wipeData(
