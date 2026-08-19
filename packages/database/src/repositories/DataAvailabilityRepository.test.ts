@@ -683,6 +683,54 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
   })
 
   describe(
+    DataAvailabilityRepository.prototype.deleteByConfigInTimeRange.name,
+    () => {
+      it('deletes the rows of the configuration inside the range, leaves the rest', async () => {
+        const HOUR = UnixTime.HOUR
+        const a0 = record('project-a', 'layer-a', 'config-id-1', START, 1n)
+        const a1 = record(
+          'project-a',
+          'layer-a',
+          'config-id-1',
+          START + HOUR,
+          2n,
+        )
+        const a2 = record(
+          'project-a',
+          'layer-a',
+          'config-id-1',
+          START + 2 * HOUR,
+          3n,
+        )
+        const a3 = record(
+          'project-a',
+          'layer-a',
+          'config-id-1',
+          START + 3 * HOUR,
+          4n,
+        )
+        const b1 = record(
+          'project-b',
+          'layer-a',
+          'config-id-2',
+          START + HOUR,
+          5n,
+        )
+        await repository.upsertMany([a0, a1, a2, a3, b1])
+
+        const deleted = await repository.deleteByConfigInTimeRange(
+          'config-id-1',
+          START + HOUR,
+          START + 2 * HOUR,
+        )
+
+        expect(deleted).toEqual(2)
+        expect(await repository.getAll()).toEqualUnsorted([a0, a3, b1])
+      })
+    },
+  )
+
+  describe(
     DataAvailabilityRepository.prototype.deleteByConfigurationId.name,
     () => {
       it('should delete records within the specified time range', async () => {
