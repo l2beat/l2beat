@@ -1,8 +1,11 @@
 import type { ProjectCrops } from '@l2beat/config'
 import { toCanonicalCrops } from '@l2beat/config/build/crops/canonicalCrops'
-import { ATTESTATION_SCHEMA_UID } from '@l2beat/config/build/crops/eas'
+import {
+  ATTESTATION_SCHEMA,
+  ATTESTATION_SCHEMA_UID,
+} from '@l2beat/config/build/crops/eas'
 import { expect } from 'earl'
-import type { Hex } from 'viem'
+import { type Hex, hexToString } from 'viem'
 import { findIdentifyingStrings } from './anonymity'
 import { diffAttestations } from './diff'
 import type { OnchainAttestation } from './easClient'
@@ -11,6 +14,7 @@ import {
   decodePayload,
   encodePayload,
   hashEvaluation,
+  payloadMatches,
   toPayload,
 } from './payload'
 import { assertSchemaUid, computeSchemaUid } from './schema'
@@ -65,12 +69,32 @@ describe('crop attestations', () => {
     it('carries the resolved ratings, not the raw config', () => {
       const payload = toPayload(subject(), 1700000000, 1)
       // privacy is notReviewed, so it must read neutral rather than empty.
-      expect(payload.ratings).toEqual([
-        ['good', 'reviewed'],
-        ['good', 'reviewed'],
-        ['neutral', 'notReviewed'],
-        ['warning', 'partiallyReviewed'],
-      ])
+      expect(payload.ratings).toEqual(['good', 'good', 'neutral', 'warning'])
+    })
+
+    it('does not attest review status', () => {
+      const payload = toPayload(subject(), 1700000000, 1)
+      const encoded = encodePayload(payload)
+      expect(ATTESTATION_SCHEMA).not.toInclude('Status')
+      for (const status of ['reviewed', 'partiallyReviewed', 'notReviewed']) {
+        expect(hexToString(encoded)).not.toInclude(status)
+      }
+    })
+
+    it('still replaces an attestation when only the status changed', () => {
+      // Status is out of the payload but inside evaluationHash, so a
+      // status-only edit must still read as a different evaluation.
+      const before = toPayload(subject(), 1700000000, 1)
+      const after = toPayload(
+        subject('uniswapv3', {
+          ...CROPS,
+          security: { sentiment: 'warning', status: 'reviewed' },
+        }),
+        1700000000,
+        1,
+      )
+      expect(after.ratings).toEqual(before.ratings)
+      expect(payloadMatches(before, after)).toEqual(false)
     })
   })
 
@@ -165,7 +189,25 @@ describe('crop attestations', () => {
       expect(diff[0]?.kind).toEqual('changed')
       expect(diff[0]?.payload?.revision).toEqual(3)
       expect(diff[0]?.payload?.reviewedAt).toEqual(now)
-      expect(diff[0]?.revoke).toEqual(uid as Hex)
+      expect(diff[0]?.revoke).toEqual({
+        uid: uid as Hex,
+        schema: ATTESTATION_SCHEMA_UID as Hex,
+      })
+    })
+
+    it('replaces an attestation made under a superseded schema', () => {
+      const stale = `0x${'22'.repeat(32)}` as Hex
+      const diff = diffAttestations({
+        subjects: [subject()],
+        ledger: [ledger],
+        // Data encoded under the old schema is not decodable under the new
+        // params, so the schema alone has to be enough to spot it.
+        onchain: new Map([[uid, onchain('0xdeadbeef', { schema: stale })]]),
+        now,
+      })
+      expect(diff[0]?.kind).toEqual('changed')
+      expect(diff[0]?.payload?.revision).toEqual(3)
+      expect(diff[0]?.revoke).toEqual({ uid: uid as Hex, schema: stale })
     })
 
     it('re-attests when the ledger uid was revoked out of band', () => {
@@ -194,7 +236,10 @@ describe('crop attestations', () => {
       })
       expect(diff[0]?.kind).toEqual('orphaned')
       expect(diff[0]?.payload).toEqual(undefined)
-      expect(diff[0]?.revoke).toEqual(uid as Hex)
+      expect(diff[0]?.revoke).toEqual({
+        uid: uid as Hex,
+        schema: ATTESTATION_SCHEMA_UID as Hex,
+      })
     })
   })
 })

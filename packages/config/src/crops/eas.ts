@@ -13,6 +13,13 @@
  * understand the verdict. `evaluationHash` is a commitment to the full
  * evaluation text (see serializeCanonicalCrops), not a pointer to it.
  *
+ * Only the rating itself goes onchain. Review status - how thoroughly a crop
+ * was looked at - is process metadata rather than a verdict, it moves for
+ * reasons that are ours and not the protocol's, and a reader who wants it can
+ * take it from the API. It is still covered by `evaluationHash`, so a
+ * status-only change still invalidates the attestation and forces a new
+ * revision; it simply is not a field anyone has to read onchain.
+ *
  * Nothing here names L2BEAT, and nothing may be added that does while the
  * attestations live on a testnet - see the anonymity guard in packages/l2b.
  */
@@ -20,13 +27,9 @@ export const ATTESTATION_SCHEMA = [
   'string projectId',
   'string projectName',
   'string censorshipResistance',
-  'string censorshipResistanceStatus',
   'string openSource',
-  'string openSourceStatus',
   'string privacy',
-  'string privacyStatus',
   'string security',
-  'string securityStatus',
   'uint64 reviewedAt',
   'uint32 revision',
   'bytes32 evaluationHash',
@@ -44,7 +47,7 @@ export const ATTESTATION_SCHEMA_REVOCABLE = true
  * computes it. Identical on every network, since the inputs are.
  */
 export const ATTESTATION_SCHEMA_UID =
-  '0x47e63e38f060745119bd8bc687c4c18a5a7bbd8359b90e3b7d4204ea0c38ec99'
+  '0x06c2dd60f63667eda4637078bfa47d5900230712f790bf0b7b62bab3d23b00a9'
 
 export type AttestationNetwork = 'sepolia' | 'ethereum'
 

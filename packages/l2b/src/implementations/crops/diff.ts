@@ -1,6 +1,6 @@
 import type { CropAttestation } from '@l2beat/config/build/crops/attestations'
-import type { Hex } from 'viem'
-import type { OnchainAttestation } from './easClient'
+import { ATTESTATION_SCHEMA_UID } from '@l2beat/config/build/crops/eas'
+import type { OnchainAttestation, Revocation } from './easClient'
 import {
   type CropPayload,
   type CropSubject,
@@ -22,8 +22,8 @@ export interface CropDiffEntry {
   onchain: OnchainAttestation | undefined
   /** The payload to attest, for `new` and `changed`. */
   payload: CropPayload | undefined
-  /** The uid to revoke first, for `changed` and `orphaned`. */
-  revoke: Hex | undefined
+  /** What to revoke first, for `changed` and `orphaned`. */
+  revoke: Revocation | undefined
   reason: string
 }
 
@@ -82,6 +82,25 @@ export function diffAttestations(input: DiffInput): CropDiffEntry[] {
       continue
     }
 
+    // A schema change makes the old payload unreadable under the new params,
+    // so it is replaced without being decoded. The revocation names the schema
+    // it was attested under, which is the only schema EAS will accept for it.
+    if (onchain.schema.toLowerCase() !== ATTESTATION_SCHEMA_UID.toLowerCase()) {
+      entries.push(
+        entry(
+          subject,
+          ledger,
+          onchain,
+          'changed',
+          ledger.revision + 1,
+          input.now,
+          { uid: onchain.uid, schema: onchain.schema },
+          'attested under a superseded schema',
+        ),
+      )
+      continue
+    }
+
     const current = decodePayload(onchain.data)
     const wanted = toPayload(subject, current.reviewedAt, ledger.revision)
     if (payloadMatches(current, wanted)) {
@@ -108,7 +127,7 @@ export function diffAttestations(input: DiffInput): CropDiffEntry[] {
         'changed',
         ledger.revision + 1,
         input.now,
-        onchain.uid,
+        { uid: onchain.uid, schema: onchain.schema },
         'evaluation differs from config',
       ),
     )
@@ -128,7 +147,7 @@ export function diffAttestations(input: DiffInput): CropDiffEntry[] {
       payload: undefined,
       revoke:
         onchain && onchain.revocationTime === 0
-          ? (onchain.uid as Hex)
+          ? { uid: onchain.uid, schema: onchain.schema }
           : undefined,
       reason: 'project no longer declares crops',
     })
@@ -144,7 +163,7 @@ function entry(
   kind: CropDiffKind,
   revision: number,
   reviewedAt: number,
-  revoke: Hex | undefined,
+  revoke: Revocation | undefined,
   reason: string,
 ): CropDiffEntry {
   return {

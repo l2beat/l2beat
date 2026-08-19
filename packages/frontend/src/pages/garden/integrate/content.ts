@@ -116,5 +116,6 @@ export const VERIFY_STEPS = [
   'Check `revocationTime == 0`. When a rating changes we revoke the old attestation and issue a new one, so a revoked attestation is a stale verdict and must not be shown.',
   'Check `attester` and `schema` against the values below, so an attestation someone else made cannot be mistaken for ours.',
   'The four ratings are in the attestation itself, as plain strings. You do not need to call us to read them.',
+  'Review status is not onchain - only the rating is. It is still covered by `evaluationHash`, so a status change still produces a new attestation; read the status itself from the `status` field in the API.',
   'To check the reasoning too, hash the canonical evaluation JSON and compare it to `evaluationHash` in the attestation.',
 ]

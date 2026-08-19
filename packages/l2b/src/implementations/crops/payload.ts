@@ -20,23 +20,26 @@ export const ATTESTATION_PARAMS = [
   { name: 'projectId', type: 'string' },
   { name: 'projectName', type: 'string' },
   { name: 'censorshipResistance', type: 'string' },
-  { name: 'censorshipResistanceStatus', type: 'string' },
   { name: 'openSource', type: 'string' },
-  { name: 'openSourceStatus', type: 'string' },
   { name: 'privacy', type: 'string' },
-  { name: 'privacyStatus', type: 'string' },
   { name: 'security', type: 'string' },
-  { name: 'securityStatus', type: 'string' },
   { name: 'reviewedAt', type: 'uint64' },
   { name: 'revision', type: 'uint32' },
   { name: 'evaluationHash', type: 'bytes32' },
 ] as const
 
+/** Where the fixed-width tail starts, i.e. how many strings precede it. */
+const RATINGS_OFFSET = 2
+const TAIL_OFFSET = RATINGS_OFFSET + CROP_KEYS.length
+
 export interface CropPayload {
   projectId: string
   projectName: string
-  /** Sentiment then status, per crop, in CROP_KEYS order. */
-  ratings: [string, string][]
+  /**
+   * One sentiment per crop, in CROP_KEYS order. Review status is deliberately
+   * not attested - see the schema comment in @l2beat/config.
+   */
+  ratings: string[]
   reviewedAt: number
   revision: number
   evaluationHash: Hex
@@ -86,10 +89,7 @@ export function toPayload(
   return {
     projectId: subject.projectId,
     projectName: subject.projectName,
-    ratings: CROP_KEYS.map((key) => {
-      const evaluation = subject.canonical.crops[key]
-      return [evaluation.sentiment, evaluation.status] as [string, string]
-    }),
+    ratings: CROP_KEYS.map((key) => subject.canonical.crops[key].sentiment),
     reviewedAt,
     revision,
     evaluationHash: subject.evaluationHash,
@@ -97,11 +97,7 @@ export function toPayload(
 }
 
 export function encodePayload(payload: CropPayload): Hex {
-  const values = [
-    payload.projectId,
-    payload.projectName,
-    ...payload.ratings.flat(),
-  ]
+  const values = [payload.projectId, payload.projectName, ...payload.ratings]
   // The anonymity rule applies to what actually lands onchain, so check the
   // schema and the string values rather than the hex blob they encode to.
   assertAnonymous('The attestation schema', ATTESTATION_SCHEMA)
@@ -110,16 +106,7 @@ export function encodePayload(payload: CropPayload): Hex {
   return encodeAbiParameters(ATTESTATION_PARAMS, [
     payload.projectId,
     payload.projectName,
-    ...(payload.ratings.flat() as [
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-    ]),
+    ...(payload.ratings as [string, string, string, string]),
     BigInt(payload.reviewedAt),
     payload.revision,
     payload.evaluationHash,
@@ -128,18 +115,13 @@ export function encodePayload(payload: CropPayload): Hex {
 
 export function decodePayload(data: Hex): CropPayload {
   const decoded = decodeAbiParameters(ATTESTATION_PARAMS, data)
-  const [projectId, projectName, ...rest] = decoded
-  const ratings: [string, string][] = []
-  for (let i = 0; i < CROP_KEYS.length; i++) {
-    ratings.push([rest[i * 2] as string, rest[i * 2 + 1] as string])
-  }
   return {
-    projectId,
-    projectName,
-    ratings,
-    reviewedAt: Number(decoded[10]),
-    revision: Number(decoded[11]),
-    evaluationHash: decoded[12],
+    projectId: decoded[0],
+    projectName: decoded[1],
+    ratings: decoded.slice(RATINGS_OFFSET, TAIL_OFFSET) as string[],
+    reviewedAt: Number(decoded[TAIL_OFFSET]),
+    revision: Number(decoded[TAIL_OFFSET + 1]),
+    evaluationHash: decoded[TAIL_OFFSET + 2] as Hex,
   }
 }
 
@@ -150,15 +132,10 @@ export function payloadMatches(a: CropPayload, b: CropPayload): boolean {
     a.projectName === b.projectName &&
     a.evaluationHash.toLowerCase() === b.evaluationHash.toLowerCase() &&
     a.ratings.length === b.ratings.length &&
-    a.ratings.every(
-      (rating, i) =>
-        rating[0] === b.ratings[i]?.[0] && rating[1] === b.ratings[i]?.[1],
-    )
+    a.ratings.every((rating, i) => rating === b.ratings[i])
   )
 }
 
 export function describePayload(payload: CropPayload): string {
-  return CROP_KEYS.map(
-    (key, i) => `${key}=${payload.ratings[i]?.join('/')}`,
-  ).join(' ')
+  return CROP_KEYS.map((key, i) => `${key}=${payload.ratings[i]}`).join(' ')
 }

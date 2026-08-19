@@ -17,6 +17,7 @@ import {
 } from '../implementations/crops/args'
 import type { CropDiffEntry } from '../implementations/crops/diff'
 import { diffAttestations } from '../implementations/crops/diff'
+import type { Revocation } from '../implementations/crops/easClient'
 import {
   createReader,
   createSigner,
@@ -98,7 +99,7 @@ export const CropsAttest = command({
     )
     const toRevoke = diff
       .map((x) => x.revoke)
-      .filter((x): x is Hex => x !== undefined)
+      .filter((x): x is Revocation => x !== undefined)
 
     if (toAttest.length === 0 && toRevoke.length === 0) {
       console.log(chalk.green('\nNothing to publish.'))

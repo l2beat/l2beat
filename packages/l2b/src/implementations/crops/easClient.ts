@@ -141,6 +141,17 @@ export interface NewAttestation {
   data: Hex
 }
 
+/**
+ * EAS checks the schema a revocation request names against the attestation's
+ * own schema, so a uid attested under an earlier schema can only be revoked by
+ * naming that schema. Carrying it here is what makes a schema change a
+ * migration we can run rather than a set of orphans onchain.
+ */
+export interface Revocation {
+  uid: Hex
+  schema: Hex
+}
+
 export const ZERO_UID = `0x${'0'.repeat(64)}` as Hex
 export const ZERO_ADDRESS =
   '0x0000000000000000000000000000000000000000' as Address
@@ -168,14 +179,19 @@ function multiAttestArgs(attestations: NewAttestation[]) {
   ] as const
 }
 
-function multiRevokeArgs(uids: Hex[]) {
+/** One request per schema, since EAS groups revocations by schema. */
+function multiRevokeArgs(revocations: Revocation[]) {
+  const bySchema = new Map<Hex, Hex[]>()
+  for (const revocation of revocations) {
+    const uids = bySchema.get(revocation.schema) ?? []
+    uids.push(revocation.uid)
+    bySchema.set(revocation.schema, uids)
+  }
   return [
-    [
-      {
-        schema: ATTESTATION_SCHEMA_UID as Hex,
-        data: uids.map((uid) => ({ uid, value: 0n })),
-      },
-    ],
+    [...bySchema].map(([schema, uids]) => ({
+      schema,
+      data: uids.map((uid) => ({ uid, value: 0n })),
+    })),
   ] as const
 }
 
@@ -198,7 +214,7 @@ export async function multiAttest(
 export async function multiRevoke(
   signer: WalletClient,
   network: AttestationNetworkConfig,
-  uids: Hex[],
+  revocations: Revocation[],
 ): Promise<Hex> {
   return await signer.writeContract({
     chain: null,
@@ -206,7 +222,7 @@ export async function multiRevoke(
     address: network.eas as Address,
     abi: EAS_ABI,
     functionName: 'multiRevoke',
-    args: multiRevokeArgs(uids),
+    args: multiRevokeArgs(revocations),
   })
 }
 
@@ -214,7 +230,7 @@ export async function estimateGas(
   reader: PublicClient,
   network: AttestationNetworkConfig,
   account: Address,
-  work: { attestations: NewAttestation[]; revoke: Hex[] },
+  work: { attestations: NewAttestation[]; revoke: Revocation[] },
 ): Promise<bigint> {
   let total = 0n
   if (work.revoke.length > 0) {
