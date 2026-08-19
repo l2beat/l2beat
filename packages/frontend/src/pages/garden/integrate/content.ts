@@ -81,7 +81,7 @@ export const ENDPOINTS: EndpointDoc[] = [
     path: '/api/garden/crops',
     summary: 'The whole garden',
     description:
-      'Every reviewed protocol in one response, and the attestation that names them. Use it to mirror the garden or to warm a cache; for a single lookup on a request path, prefer the two endpoints above.',
+      'Every reviewed protocol in one response, and the attestation that names them.',
     request: `${BASE}/api/garden/crops`,
     response: `{
   "attestations": {
@@ -118,5 +118,5 @@ export const VERIFY_STEPS = [
 export const BADGE_RULES = [
   'Link the badge to your page in the garden, so a visitor can read the evaluation rather than only see that one exists.',
   'The badge says we have reviewed you and named you onchain. It is not a certification, an audit, or an endorsement - please do not describe it as any of those.',
-  'Your rating can change. The badge deliberately does not show the four crops, so it never goes stale on your site - the link behind it always shows the current evaluation.',
+  'Your rating can change. Make sure to check the API for the latest status before showing the badge.',
 ]
