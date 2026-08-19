@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xb19290cefacd84d12d7c20c3850d5c08d3ad64ac
+Generated with discovered.json: 0x0f121e3aa3dacec00502a316de3c7471a442d50e
 
-# Diff at Wed, 19 Aug 2026 07:37:41 GMT:
+# Diff at Wed, 19 Aug 2026 09:29:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@749303717f8b6b45f3a1f7423b3810f4aceac36b block: 1783068981
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1783068981
 - current timestamp: 1783068981
 
 ## Description
 
-Mark cTornado governance/comp fields as LOW severity (COMP reward recipient, no other permissions on the pool).
+Classify Tornado Cash critical contracts for the ossification factor: pool templates, withdraw Verifier, and MiMCHasher are flagged critical.
 
 ## Config/verification related changes
 
@@ -26,6 +26,64 @@ discovery. Values are for block 1783068981 (main branch discovery), not current.
 +        "Recipient of claimed COMP rewards from this pool. It has no other permissions on the pool."
       fieldMeta.governance.severity:
 +        "LOW"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_10K_DAI (eth:0x07687e702b410Fa43f4cB4Af7FA097918ffD2730) [tornado-cash/ERC20Tornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 10K DAI deposits.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_1000_USDT (eth:0x0836222F2B2B24A3F36f98668Ed8F0B38D1a872f) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1000 USDT deposits.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_0.1_ETH (eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc) [tornado-cash/TornadoCash_Eth_01] {
+    +++ description: Fixed-denomination Tornado Cash pool for 0.1 ETH deposits.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_100_USDT (eth:0x169AD27A470D064DEDE56a2D3ff727986b15D52B) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 USDT deposits.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_0.1_WBTC (eth:0x178169B423a011fff22B9e3F3abeA13414dDD0F1) [tornado-cash/ERC20Tornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 0.1 WBTC deposits.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_5K_cDAI (eth:0x22aaA7720ddd5388A3c0A3333430953C68f1849b) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 5K cDAI deposits.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_100K_DAI (eth:0x23773E65ed146A459791799d01336DB287f25334) [tornado-cash/ERC20Tornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100K DAI deposits.
+      critical:
++        true
     }
 ```
 
@@ -39,6 +97,72 @@ discovery. Values are for block 1783068981 (main branch discovery), not current.
 +        "Recipient of claimed COMP rewards from this pool. It has no other permissions on the pool."
       fieldMeta.governance.severity:
 +        "LOW"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_1000_USDC (eth:0x4736dCf1b7A3d580672CcE6E7c65cd5cc9cFBa9D) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1000 USDC deposits.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_1_ETH (eth:0x47CE0C6eD5B0Ce3d3A51fdb1C52DC66a7c3c2936) [tornado-cash/TornadoCash_eth] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1 ETH deposits.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_1_WBTC (eth:0x610B717796ad172B316836AC95a2ffad065CeaB4) [tornado-cash/ERC20Tornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1 WBTC deposits.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract MiMCHasher (eth:0x83584f83f26aF4eDDA9CBe8C730bc87C364b28fe) [N/A] {
+    +++ description: MiMC hasher used by newer Tornado pool generations for commitment-tree operations, manually verified against the pinned Tornado circomlib generator.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_10_ETH (eth:0x910Cbd523D972eb0a6f4cAe4618aD62622b39DbF) [tornado-cash/TornadoCash_eth] {
+    +++ description: Fixed-denomination Tornado Cash pool for 10 ETH deposits.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_100_ETH (eth:0xA160cdAB225685dA1d56aa342Ad8841c3b53f291) [tornado-cash/TornadoCash_eth] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 ETH deposits.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_10_WBTC (eth:0xbB93e510BbCD0B7beb5A853875f9eC60275CF498) [tornado-cash/ERC20Tornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 10 WBTC deposits.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Verifier (eth:0xce172ce1F20EC0B3728c9965470eaf994A03557A) [tornado-cash/Verifier] {
+    +++ description: Groth16 verifier contract used by Tornado Cash pool withdrawal proofs.
+      critical:
++        true
     }
 ```
 
@@ -52,6 +176,32 @@ discovery. Values are for block 1783068981 (main branch discovery), not current.
 +        "Recipient of claimed COMP rewards from this pool. It has no other permissions on the pool."
       fieldMeta.governance.severity:
 +        "LOW"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_100_DAI (eth:0xD4B88Df4D29F5CedD6857912842cff3b20C8Cfa3) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 DAI deposits.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_100_USDC (eth:0xd96f2B1c14Db8458374d9Aca76E26c3D18364307) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 100 USDC deposits.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Pool_1000_DAI (eth:0xFD8610d20aA15b7B2E3Be39B396a1bC3516c7144) [tornado-cash/TornadoCash_erc20_v1] {
+    +++ description: Fixed-denomination Tornado Cash pool for 1000 DAI deposits.
+      critical:
++        true
     }
 ```
 
