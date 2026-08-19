@@ -30,18 +30,11 @@ export function DefiDependenciesCell({
         )
 
         if (!dependency.href) {
-          return (
-            <span key={`${index}:${dependency.name}`}>
-              {image}
-            </span>
-          )
+          return <span key={`${index}:${dependency.name}`}>{image}</span>
         }
 
         return (
-          <a
-            key={`${index}:${dependency.name}`}
-            href={dependency.href}
-          >
+          <a key={`${index}:${dependency.name}`} href={dependency.href}>
             {image}
           </a>
         )
