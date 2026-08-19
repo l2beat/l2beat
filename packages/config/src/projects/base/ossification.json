@@ -1,1 +1,64 @@
-{}
+{
+  "historicalContracts": [
+    {
+      "address": "eth:0x847b5c174615b1b7fdf770882256e2d3e95b9d92",
+      "name": "OpFoundationUpgradeSafe",
+      "critical": true,
+      "upgradeTimestamps": [],
+      "diffEventCount": 1,
+      "lastSeenAt": 1772299542,
+      "lastSeenCommit": "bc5cbc9b04c6897ddc11b0f0225c2837cf57ef6a",
+      "note": "While in Base's perimeter it was foundationSafe of the DeputyPauseModule (can swap the pause deputy, giving a unilateral path to pause Base withdrawals via the shared SuperchainConfig), co-owner (2-of-2) of the SuperchainProxyAdminOwner that upgrades that SuperchainConfig, and LivenessModule fallback owner of the Security Council."
+    },
+    {
+      "address": "eth:0x95703e0982140d16f8eba6d158fccede42f04a4c",
+      "name": "SuperchainConfig",
+      "critical": true,
+      "upgradeTimestamps": [1705954799, 1718044163, 1718044163, 1743612623, 1753379243, 1764092795],
+      "diffEventCount": 0,
+      "lastSeenAt": 1772299542,
+      "lastSeenCommit": "bc5cbc9b04c6897ddc11b0f0225c2837cf57ef6a",
+      "note": "Shared Superchain pause switch used by Base while present: the guardian could pause Base withdrawals, blacklist dispute games, and switch the respected game type - direct freezing of project funds (opstack/SuperchainConfig template is critical today)."
+    },
+    {
+      "address": "eth:0x9ba6e03d8b90de867373db8cf1a58d2f7f006b3a",
+      "name": "OpFoundationOperationsSafe",
+      "critical": true,
+      "upgradeTimestamps": [],
+      "diffEventCount": 1,
+      "lastSeenAt": 1772299542,
+      "lastSeenCommit": "bc5cbc9b04c6897ddc11b0f0225c2837cf57ef6a",
+      "note": "In the L2OutputOracle era it was OP_SIGNER of Challenger1of2 and could unilaterally delete Base's output roots (indefinitely freezing withdrawals); later a 2-of-2 co-owner of the Base Governance Multisig that owns Base's L1 ProxyAdmin (upgrade of the whole system)."
+    },
+    {
+      "address": "eth:0x3e8a0b63f57e975c268d610ece93da5f78c01321",
+      "name": "DelayedWETH_PermissionedGames",
+      "critical": true,
+      "upgradeTimestamps": [1728308027, 1744214879],
+      "diffEventCount": 0,
+      "lastSeenAt": 1759299244,
+      "lastSeenCommit": "9f609056a8f06eef9834f5c4c91fc201125d2c49",
+      "note": "Held the bonded ETH backing permissioned dispute games; compromise or malicious upgrade redistributes bonds and breaks the incentive layer of the proof system securing withdrawals (opstack/DelayedWETH template is critical today)."
+    },
+    {
+      "address": "eth:0xa2f2ac6f5af72e494a227d79db20473cf7a1ffe8",
+      "name": "DelayedWETH_PermissionlessGames",
+      "critical": true,
+      "upgradeTimestamps": [1728308027, 1744214879],
+      "diffEventCount": 0,
+      "lastSeenAt": 1759299244,
+      "lastSeenCommit": "9f609056a8f06eef9834f5c4c91fc201125d2c49",
+      "note": "Held the bonded ETH backing permissionless fault dispute games; compromise or malicious upgrade redistributes bonds and breaks the incentive layer of the proof system securing withdrawals (opstack/DelayedWETH template is critical today)."
+    },
+    {
+      "address": "eth:0x56315b90c40730925ec5485cf004d835058518a0",
+      "name": "L2OutputOracle",
+      "critical": true,
+      "upgradeTimestamps": [1686793919, 1690314251, 1719592367, 1719592367],
+      "diffEventCount": 0,
+      "lastSeenAt": 1730280854,
+      "lastSeenCommit": "af90cb7afd0641230b42ba4344181a5c5ae9d96e",
+      "note": "Pre-fault-proof state root oracle: a fraudulent output root accepted here (via PROPOSER compromise or malicious upgrade) enables theft of all escrowed funds through OptimismPortal withdrawals after the 7d finalization window (opstack/L2OutputOracle template is critical today)."
+    }
+  ]
+}

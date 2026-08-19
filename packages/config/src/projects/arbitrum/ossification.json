@@ -1,1 +1,24 @@
-{}
+{
+  "historicalContracts": [
+    {
+      "address": "eth:0x5ef0d09d1e6204141b4d37530808ed19f60fba35",
+      "name": "RollupProxy",
+      "critical": true,
+      "upgradeTimestamps": [1661457944, 1663124880, 1667926079],
+      "diffEventCount": 0,
+      "lastSeenAt": 1739175260,
+      "lastSeenCommit": "00d99d20e8140719d03608d46cd437b8ffb6966b",
+      "note": "Pre-BoLD rollup core: confirmed state commitments (nodes) and managed the validator set; a compromised or maliciously upgraded RollupProxy confirms an invalid node, letting the Outbox release all escrowed Bridge funds (successor RollupProxy is critical today)."
+    },
+    {
+      "address": "eth:0xe5896783a2f463446e1f624e64aa6836be4c6f58",
+      "name": "ChallengeManager",
+      "critical": true,
+      "upgradeTimestamps": [1661457944, 1710423719, 1724809031],
+      "diffEventCount": 0,
+      "lastSeenAt": 1739175260,
+      "lastSeenCommit": "00d99d20e8140719d03608d46cd437b8ffb6966b",
+      "note": "Pre-BoLD fraud proof adjudicator: resolved interactive challenges via the one-step provers; compromise or a malicious OSP upgrade makes invalid assertions win challenges and be confirmed, enabling theft of escrowed funds (successor EdgeChallengeManager is critical today)."
+    }
+  ]
+}

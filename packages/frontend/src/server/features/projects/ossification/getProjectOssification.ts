@@ -23,13 +23,29 @@ const fileCache = new Map<string, { mtimeMs: number; parsed: unknown }>()
  * override). There is no derived fallback — unclassified projects have
  * no ossification factor.
  */
+/** Committed judgment file. `historicalContracts` holds contracts that once
+ *  were critical but have been removed from discovery, classified by the
+ *  research team (see scripts/ossification-backfill.ts). Only entries with
+ *  countable events are stored; only `critical: true` ones are consumed. */
+interface OssificationJson {
+  historicalContracts?: {
+    address?: string
+    name?: string
+    critical?: boolean | null
+    upgradeTimestamps?: number[]
+  }[]
+}
+
 export async function getProjectOssification(
   projectId: string,
 ): Promise<OssificationFactor | undefined> {
   if (!PROJECT_ID_RE.test(projectId)) {
     return undefined
   }
-  if (readProjectJson(projectId, 'ossification.json') === undefined) {
+  const ossificationJson = readProjectJson(projectId, 'ossification.json') as
+    | OssificationJson
+    | undefined
+  if (ossificationJson === undefined) {
     return undefined
   }
 
@@ -47,12 +63,20 @@ export async function getProjectOssification(
   }
 
   const currentTvs = await getCurrentProjectTvs(projectId)
+  const historical = (ossificationJson.historicalContracts ?? [])
+    .filter((contract) => contract.critical === true && contract.address)
+    .map((contract) => ({
+      address: contract.address as string,
+      name: contract.name ?? (contract.address as string),
+      upgradeTimestamps: contract.upgradeTimestamps ?? [],
+    }))
 
   return getOssificationFactor(
     critical.map(toOssificationEntry),
     getDiscoveryUpdates(projectId, Number.POSITIVE_INFINITY),
     UnixTime.now(),
     currentTvs,
+    historical,
   )
 }
 

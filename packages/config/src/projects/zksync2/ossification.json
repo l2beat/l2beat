@@ -1,1 +1,22 @@
-{}
+{
+  "historicalContracts": [
+    {
+      "address": "gateway:0x912b84eeeebeca74d307b9a2b09c68332aa5426c",
+      "name": "ChainTypeManager",
+      "critical": true,
+      "upgradeTimestamps": [1747351626, 1750343223, 1760520413],
+      "lastSeenAt": 1769437668,
+      "lastSeenCommit": "27ba038f9f7ba9445c022a06ce91f646a6ce80b6",
+      "note": "ChainTypeManager on the Gateway settlement layer defining upgrade data and the proof system for Era's gateway DiamondProxy while Era settled via Gateway (Era L1 Diamond had a non-zero getSettlementLayer): compromise pushes a malicious upgrade/verifier onto Era's gateway instance, forging Era state whose message roots relay to L1 and release the L1 escrows."
+    },
+    {
+      "address": "gateway:0xce7cbd23193d029410b40e0fd8a79a5121f9250c",
+      "name": "DiamondProxy",
+      "critical": true,
+      "upgradeTimestamps": [1753710939, 1754092633, 1761147485, 1769184984],
+      "lastSeenAt": 1769437668,
+      "lastSeenCommit": "27ba038f9f7ba9445c022a06ce91f646a6ce80b6",
+      "note": "Era's own DiamondProxy (getChainId 324) on the Gateway settlement layer where Era batches were committed, proven and executed while it settled via Gateway: a malicious facet cut or verifier swap forges Era batches with fake L2->L1 withdrawal logs that relay to Ethereum and drain Era's L1 escrows."
+    }
+  ]
+}

@@ -1,1 +1,54 @@
-{}
+{
+  "historicalContracts": [
+    {
+      "address": "eth:0x21429af66058bc3e4ae4a8f2ec4531aac433ecbc",
+      "name": "DelayedWETH_PermissionedGames",
+      "critical": true,
+      "upgradeTimestamps": [1733920163, 1743612623],
+      "diffEventCount": 0,
+      "lastSeenAt": 1753427192,
+      "lastSeenCommit": "295d114e709e8645bf1ccf4060f325de53a829ab",
+      "note": "Held the bonded ETH backing permissioned dispute games; compromise or malicious upgrade redistributes bonds and breaks the incentive layer of the proof system securing withdrawals (opstack/DelayedWETH template is critical today)."
+    },
+    {
+      "address": "eth:0x323dfc63c9b83cb83f40325aab74b245937cbdf0",
+      "name": "DelayedWETH_PermissionlessGames",
+      "critical": true,
+      "upgradeTimestamps": [1733920211, 1743612623],
+      "diffEventCount": 0,
+      "lastSeenAt": 1753427192,
+      "lastSeenCommit": "295d114e709e8645bf1ccf4060f325de53a829ab",
+      "note": "Held the bonded ETH backing permissionless fault dispute games; compromise or malicious upgrade redistributes bonds and breaks the incentive layer of the proof system securing withdrawals (opstack/DelayedWETH template is critical today)."
+    },
+    {
+      "address": "eth:0x18dac71c228d1c32c99489b7323d441e1175e443",
+      "name": "AnchorStateRegistry",
+      "critical": true,
+      "upgradeTimestamps": [1715887055, 1726016099, 1726016099],
+      "diffEventCount": 0,
+      "lastSeenAt": 1743080391,
+      "lastSeenCommit": "7ad8feb1158dbdc5b36e5c575f1e31f1edefa523",
+      "note": "Stored the confirmed anchor state root seeding every new dispute game; a poisoned anchor lets invalid withdrawal claims resolve as valid in OptimismPortal2 (opstack/AnchorStateRegistry template is critical today)."
+    },
+    {
+      "address": "oeth:0x5a7749f83b81b301cab5f48eb8516b986daef23d",
+      "name": "OldQuixoticNFTBridge",
+      "critical": false,
+      "upgradeTimestamps": [],
+      "diffEventCount": 3,
+      "lastSeenAt": 1725963861,
+      "lastSeenCommit": "d6e0802469d4e44aed845995f39b1ee5717d9f7d",
+      "note": "Deprecated third-party NFT bridge on OP Mainnet; NFTs are not counted in project TVS, so its compromise cannot cause loss/freezing of project funds (consistent with current classification)."
+    },
+    {
+      "address": "eth:0xdfe97868233d1aa22e815a266982f2cf17685a27",
+      "name": "L2OutputOracle",
+      "critical": true,
+      "upgradeTimestamps": [],
+      "diffEventCount": 2,
+      "lastSeenAt": 1717598829,
+      "lastSeenCommit": "69b4ffe7dba0b56aaa50bbb787cec30d93db8977",
+      "note": "Pre-fault-proof state root oracle: a fraudulent output root accepted here (via PROPOSER compromise or malicious upgrade) enables theft of all escrowed funds through OptimismPortal withdrawals after the 7d finalization window (opstack/L2OutputOracle template is critical today)."
+    }
+  ]
+}

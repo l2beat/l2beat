@@ -253,6 +253,59 @@ describe(getOssificationFactor.name, () => {
     )
     expect(result).toEqual(undefined)
   })
+
+  it('counts backfilled historical events without touching the project clock', () => {
+    const result = getOssificationFactor(
+      [entry({ sinceTimestamp: NOW - 4 * YEAR })],
+      [],
+      NOW,
+      undefined,
+      [
+        {
+          address: ADDRESS_B,
+          name: 'OldInbox',
+          // initial deployment + two upgrades, one inside the 3y rate window
+          upgradeTimestamps: [NOW - 5 * YEAR, NOW - 4 * YEAR, NOW - 1 * YEAR],
+        },
+      ],
+    )
+    // clock and score come from the live perimeter only
+    expect(result?.projectAgeSeconds).toEqual(4 * YEAR)
+    expect(result?.score).toEqual(86)
+    expect(result?.contracts.length ?? 0).toEqual(1)
+    // events from the removed contract still count
+    expect(result?.lastCriticalChange).toEqual(NOW - 1 * YEAR)
+    expect(result?.clusteredEventCount).toEqual(1)
+  })
+
+  it('attributes diff history to backfilled historical addresses', () => {
+    const result = getOssificationFactor(
+      [entry({ sinceTimestamp: NOW - 4 * YEAR })],
+      [update(NOW - 30 * DAY, highSeverityBlock(ADDRESS_B))],
+      NOW,
+      undefined,
+      [{ address: ADDRESS_B, name: 'OldVerifier', upgradeTimestamps: [] }],
+    )
+    expect(result?.lastCriticalChange).toEqual(NOW - 30 * DAY)
+    expect(result?.projectAgeSeconds).toEqual(4 * YEAR)
+  })
+
+  it('ignores historical entries that shadow a live contract', () => {
+    const result = getOssificationFactor(
+      [entry({ sinceTimestamp: NOW - 4 * YEAR })],
+      [],
+      NOW,
+      undefined,
+      [
+        {
+          address: ADDRESS_A,
+          name: 'Example',
+          upgradeTimestamps: [NOW - 5 * YEAR, NOW - 1 * YEAR],
+        },
+      ],
+    )
+    expect(result?.lastCriticalChange).toEqual(null)
+  })
 })
 
 describe(deriveOssificationPerimeter.name, () => {

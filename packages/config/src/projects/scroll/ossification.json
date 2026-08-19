@@ -1,1 +1,76 @@
-{}
+{
+  "historicalContracts": [
+    {
+      "address": "eth:0x1abaea1f7c830bd89acc67ec4af516284b1bc33c",
+      "name": "Euro Coin Token",
+      "critical": false,
+      "upgradeTimestamps": [1654870298, 1654870298, 1705000247],
+      "lastSeenAt": 1773229405,
+      "lastSeenCommit": "0929f8ccb0690328c030ae10601b90e945866adb",
+      "note": "Circle's L1 EURC FiatTokenProxy tracked only via L1USDCGateway reference; EURC is not counted in scroll TVS and the EURC gateway is deliberately not critical, so its upgrades (Circle ops) put no scroll funds at risk."
+    },
+    {
+      "address": "scr:0x7ac440cae8eb6328de4fa621163a792c1ea9d4fe",
+      "name": "L2WETHGatewayCounterpart",
+      "critical": false,
+      "upgradeTimestamps": [],
+      "lastSeenAt": 1756131373,
+      "lastSeenCommit": "90dd8b76055bf0f493df8c45097d37e26f847015",
+      "note": "Phantom entry: the L1WETHGateway address resolved on the scroll chain (unverified immutable contract, no values or permissions); nothing on either chain trusts the scroll-chain address, so its compromise reaches no funds; removed by the cross-chain discovery refactor."
+    },
+    {
+      "address": "scr:0xf610a9dfb7c89644979b4a0f27063e9e7d7cda32",
+      "name": "L2WstETHToken",
+      "critical": true,
+      "upgradeTimestamps": [1696920347, 1709625145],
+      "lastSeenAt": 1756131373,
+      "lastSeenCommit": "90dd8b76055bf0f493df8c45097d37e26f847015",
+      "note": "Bridged wstETH token minted by L2LidoGateway, ProxyAdmin-upgradeable: a malicious implementation mints unbacked L2 wstETH that withdraws through the gateway and drains the L1 Lido wstETH escrow (in scroll TVS, escrow flagged critical today)."
+    },
+    {
+      "address": "eth:0x0d7e906bd9cafa154b048cfa766cc1e54e39af9b",
+      "name": "L1MessageQueue",
+      "critical": true,
+      "upgradeTimestamps": [1696782311, 1708590023, 1724196995],
+      "lastSeenAt": 1745479453,
+      "lastSeenCommit": "f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61",
+      "note": "Core ProxyAdmin-upgradeable queue gating all L1->L2 messages and popped by ScrollChain at batch finalization: a compromised queue injects deposit messages that credit unbacked ETH on L2 (stealing from the messenger escrow) or bricks finalization, freezing withdrawals; its successor L1MessageQueueV2 is critical today."
+    },
+    {
+      "address": "eth:0x5bcfd99c34cf7e06fc756f6f5ae7400504852bc4",
+      "name": "L1BatchBridgeGateway",
+      "critical": false,
+      "upgradeTimestamps": [1716184139, 1716187139],
+      "lastSeenAt": 1745479453,
+      "lastSeenCommit": "f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61",
+      "note": "Deposit-side batching helper that forwards ETH L1->L2 like any user; never a TVS escrow in scroll config and holds no permission over the canonical escrows, so compromise only touches in-transit deposits not counted as project funds."
+    },
+    {
+      "address": "scr:0x6774bcbd5cecef1336b5300fb5186a12ddd8b367",
+      "name": "L1ScrollMessengerCounterpart",
+      "critical": false,
+      "upgradeTimestamps": [],
+      "lastSeenAt": 1745479453,
+      "lastSeenCommit": "f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61",
+      "note": "Phantom entry: the L1ScrollMessenger address resolved on the scroll chain via L2ScrollMessenger.counterpart (unverified immutable contract, no values or permissions); no L1 contract trusts this address as an L2 message sender, so compromise reaches no funds."
+    },
+    {
+      "address": "scr:0x7f2b8c31f88b6006c382775eea88297ec1e3e905",
+      "name": "L1ETHGatewayCounterpart",
+      "critical": false,
+      "upgradeTimestamps": [],
+      "lastSeenAt": 1745479453,
+      "lastSeenCommit": "f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61",
+      "note": "Phantom entry: the L1ETHGateway address resolved on the scroll chain via L2ETHGateway.counterpart (unverified immutable contract, no values or permissions); L1 gateways only honor their real L2 counterpart addresses, so compromise reaches no funds."
+    },
+    {
+      "address": "scr:0xd8a791fe2be73eb6e6cf1eb0cb3f36adc9b3f8f9",
+      "name": "L1StandardERC20GatewayCounterpart",
+      "critical": false,
+      "upgradeTimestamps": [],
+      "lastSeenAt": 1745479453,
+      "lastSeenCommit": "f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61",
+      "note": "Phantom entry: the L1StandardERC20Gateway address resolved on the scroll chain via an L2GatewayRouter reference (unverified immutable contract, no values or permissions); the L1 escrow only honors its real L2 counterpart, so compromise reaches no funds."
+    }
+  ]
+}

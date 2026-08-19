@@ -1,1 +1,184 @@
-{}
+{
+  "historicalContracts": [
+    {
+      "address": "eth:0x91f67118dd47d502b1f0c354d0611997b022f29e",
+      "name": "QuotaManager",
+      "critical": true,
+      "upgradeTimestamps": [1715578067, 1717663871],
+      "lastSeenAt": 1782205685,
+      "lastSeenCommit": "419182729fd91580dbe9c13af59a8b0c5073bb0d",
+      "note": "Defined per-token withdrawal limits enforced on the bridge outflow path; compromise/mutation sets quotas to zero and freezes all bridge withdrawals (or removes the rate-limit backstop during an exploit)."
+    },
+    {
+      "address": "eth:0x96337327648dcfa22b014009cf10a2d5e2f305f6",
+      "name": "TaikoSP1Verifier",
+      "critical": true,
+      "upgradeTimestamps": [],
+      "lastSeenAt": 1782205685,
+      "lastSeenCommit": "419182729fd91580dbe9c13af59a8b0c5073bb0d",
+      "note": "Live SP1 gating router with trustedPrograms vkeys in the batch proof path; compromise or a malicious trusted-program hash accepts fake validity proofs, finalizing a forged state root and draining the bridge."
+    },
+    {
+      "address": "eth:0xef9eaa1dd30a9aa1df01c36411b5f082aa65fbaa",
+      "name": "L1SharedAddressManager",
+      "critical": true,
+      "upgradeTimestamps": [1714550603, 1715408795, 1716722231, 1721140223, 1730452835],
+      "lastSeenAt": 1782205685,
+      "lastSeenCommit": "419182729fd91580dbe9c13af59a8b0c5073bb0d",
+      "note": "Resolved trusted addresses for Bridge/SignalService/Vaults (remapping acts as an upgrade); compromise points the bridge at a malicious SignalService to forge withdrawal messages and drain escrows."
+    },
+    {
+      "address": "taiko:0x1670000000000000000000000000000000000001",
+      "name": "Bridge",
+      "critical": true,
+      "upgradeTimestamps": [1716802235, 1716959027, 1717148375, 1717486847, 1717750463, 1719503519, 1719806771, 1730452979],
+      "lastSeenAt": 1781611732,
+      "lastSeenCommit": "b21d706196724763b669b9a0eb8ff6eab34695fc",
+      "note": "L2-side message bridge in the deposit/withdrawal validation path; compromise mints forged L2->L1 messages that release L1 escrow funds."
+    },
+    {
+      "address": "taiko:0x1670000000000000000000000000000000000002",
+      "name": "ERC20Vault",
+      "critical": true,
+      "upgradeTimestamps": [1716802307, 1717750463, 1718023859, 1730452979],
+      "lastSeenAt": 1781611732,
+      "lastSeenCommit": "b21d706196724763b669b9a0eb8ff6eab34695fc",
+      "note": "L2-side token vault paired with the L1 ERC20Vault escrow; compromise emits fraudulent burn/withdraw messages that unlock the L1 escrow's tokens."
+    },
+    {
+      "address": "taiko:0x1670000000000000000000000000000000000005",
+      "name": "SignalService",
+      "critical": true,
+      "upgradeTimestamps": [1747624787, 1775138543, 1777563432],
+      "lastSeenAt": 1781611732,
+      "lastSeenCommit": "b21d706196724763b669b9a0eb8ff6eab34695fc",
+      "note": "L2-side signal/state-root registry used to validate cross-chain messages; compromise attests fake signals/state roots enabling forged withdrawals in both directions."
+    },
+    {
+      "address": "taiko:0x1670000000000000000000000000000000010001",
+      "name": "Anchor",
+      "critical": true,
+      "upgradeTimestamps": [1730452979, 1747624787, 1754914103, 1755179444, 1770777907, 1775138543, 1777563432],
+      "lastSeenAt": 1781611732,
+      "lastSeenCommit": "b21d706196724763b669b9a0eb8ff6eab34695fc",
+      "note": "L2 anchor system contract syncing L1 state roots into the L2 (withdrawal-validation input); compromise injects a fake L1 state root, allowing forged deposit messages to mint/withdraw on L2."
+    },
+    {
+      "address": "eth:0x05d88855361808fa1d7fc28084ef3fca191c4e03",
+      "name": "ForcedInclusionStore",
+      "critical": true,
+      "upgradeTimestamps": [1747268747, 1747268747],
+      "lastSeenAt": 1775558040,
+      "lastSeenCommit": "a224a12c25f232c6a9e164d6dfb6d05c6aab5a62",
+      "note": "Mandatory dependency of TaikoWrapper.proposeBatch (forced-inclusion queue); a critical mutation making its due/consume checks revert bricks all batch proposals, halting the chain and freezing bridged funds."
+    },
+    {
+      "address": "eth:0x06a9ab27c7e2255df1815e6cc0168d7755feb19a",
+      "name": "TaikoL1",
+      "critical": true,
+      "upgradeTimestamps": [1714550627, 1715408795, 1716300911, 1716827831, 1716873491, 1717481411, 1717663871, 1717732931, 1717749635, 1719903815, 1720874075, 1721140223, 1729065323, 1730452835, 1730610923, 1731252767, 1731253583, 1731255023, 1734921911, 1734923555, 1734965747, 1735049951, 1739429867, 1740626843, 1747298447, 1747362983, 1752542435, 1754919911, 1756244927, 1764720995, 1774964687],
+      "lastSeenAt": 1775558040,
+      "lastSeenCommit": "a224a12c25f232c6a9e164d6dfb6d05c6aab5a62",
+      "note": "Core rollup entrypoint and L2 state machine holding bonds and verified state roots; compromise finalizes an arbitrary state transition, letting the attacker prove fake withdrawals against all bridge escrows."
+    },
+    {
+      "address": "eth:0x68d30f47f19c07bccef4ac7fae2dc12fca3e0dc9",
+      "name": "ProverSet",
+      "critical": false,
+      "upgradeTimestamps": [1716217559, 1716634859, 1717663871, 1717732931, 1717844051, 1720874075, 1721140223, 1721197175, 1730452835, 1734921911, 1739429867, 1747298447],
+      "lastSeenAt": 1775558040,
+      "lastSeenCommit": "a224a12c25f232c6a9e164d6dfb6d05c6aab5a62",
+      "note": "Taiko team operator proxy for proposing/proving; it holds only its own TAIKO bonds and its proofs are still checked by the verifiers, so compromise risks operator funds, not user funds."
+    },
+    {
+      "address": "eth:0x73ee496da20e5c65340c040b0d8c3c891c1f74ae",
+      "name": "Risc0VerifierGateway",
+      "critical": true,
+      "upgradeTimestamps": [1747268759, 1749700235, 1753329371, 1764814439],
+      "lastSeenAt": 1775558040,
+      "lastSeenCommit": "a224a12c25f232c6a9e164d6dfb6d05c6aab5a62",
+      "note": "Live entry contract for RISC Zero batch proofs in the Pacaya multi-proof path; compromise routes to a malicious verifier that accepts fake proofs, finalizing forged state and draining the bridge."
+    },
+    {
+      "address": "eth:0x9f9d2fc7abe74c79f86f0d1212107692430eef72",
+      "name": "TaikoWrapper",
+      "critical": true,
+      "upgradeTimestamps": [1747268747, 1754919911, 1756244927],
+      "lastSeenAt": 1775558040,
+      "lastSeenCommit": "a224a12c25f232c6a9e164d6dfb6d05c6aab5a62",
+      "note": "Sole entry point for block/batch proposals into the inbox (enforcing forced inclusion); a critical mutation that reverts proposals halts the chain and freezes all bridged funds."
+    },
+    {
+      "address": "eth:0xb16931e78d0ce3c9298bbeef3b5e2276d34b8da1",
+      "name": "VerifierGateway",
+      "critical": true,
+      "upgradeTimestamps": [1747268747, 1747268759],
+      "lastSeenAt": 1775558040,
+      "lastSeenCommit": "a224a12c25f232c6a9e164d6dfb6d05c6aab5a62",
+      "note": "Multi-proof gateway that routed each proof type to its verifier (ComposeVerifier); compromise redirects any proof type to an always-true verifier, finalizing fake state and draining the bridge."
+    },
+    {
+      "address": "eth:0xbee1040d0aab17ae19454384904525ae4a3602b9",
+      "name": "SP1VerifierGateway",
+      "critical": true,
+      "upgradeTimestamps": [1747268759, 1748997623],
+      "lastSeenAt": 1775558040,
+      "lastSeenCommit": "a224a12c25f232c6a9e164d6dfb6d05c6aab5a62",
+      "note": "Live entry contract for SP1 batch proofs in the Pacaya multi-proof path; compromise accepts fake SP1 proofs, finalizing forged state roots and draining the bridge."
+    },
+    {
+      "address": "eth:0xd5aa0e20e8a6e9b04f080cf8797410fafaa9688a",
+      "name": "PreconfRouter",
+      "critical": true,
+      "upgradeTimestamps": [1753275179, 1754913371, 1756244927, 1764814439],
+      "lastSeenAt": 1775558040,
+      "lastSeenCommit": "a224a12c25f232c6a9e164d6dfb6d05c6aab5a62",
+      "note": "Exclusive proposal route into TaikoWrapper for whitelisted preconf operators; a critical mutation that rejects all proposals halts batch production, freezing bridged funds."
+    },
+    {
+      "address": "eth:0x9b17fda35ed7eb7bb11a73ab69d0462045364514",
+      "name": "ProverSet",
+      "critical": false,
+      "upgradeTimestamps": [1718783471, 1730907959, 1739426723, 1747812347],
+      "lastSeenAt": 1765525543,
+      "lastSeenCommit": "81c42785ea757342386cfdf74c774c3fceba37f8",
+      "note": "Taiko team operator proxy for proposing/proving; holds only its own bonds and its outputs are validated by the verifier contracts, so no path to user funds."
+    },
+    {
+      "address": "eth:0x579a8d63a2db646284cbfe31fe5082c9989e985c",
+      "name": "GuardianMinorityProver",
+      "critical": true,
+      "upgradeTimestamps": [1714550627, 1715408795, 1715746175, 1716358991, 1717663871, 1721197175, 1730452835],
+      "lastSeenAt": 1747993527,
+      "lastSeenCommit": "80133bc1176f8bfe90d061618817551845176f55",
+      "note": "Second-highest-tier verifier (guardian minority) that overrides SGX/ZK proofs; compromise proves a fake state transition that finalizes unless the full guardian tier contests in time, enabling bridge drain."
+    },
+    {
+      "address": "eth:0x579f40d0be111b823962043702cabe6aaa290780",
+      "name": "L1RollupAddressManager",
+      "critical": true,
+      "upgradeTimestamps": [1714550615, 1715408795, 1716722231, 1717663871, 1719930659, 1721140223, 1730452835, 1730549099, 1731054947, 1731216107, 1734921911],
+      "lastSeenAt": 1747993527,
+      "lastSeenCommit": "80133bc1176f8bfe90d061618817551845176f55",
+      "note": "Resolved TaikoL1's trusted rollup addresses including tier verifiers (remapping acts as an upgrade); compromise swaps in a malicious verifier so fake proofs finalize and drain the bridge."
+    },
+    {
+      "address": "eth:0xb0f3186fc1963f774f52ff455dc86aedd0b31f81",
+      "name": "SgxVerifier",
+      "critical": true,
+      "upgradeTimestamps": [1714550627, 1715408795, 1717663871, 1721197175, 1721356979, 1730452835],
+      "lastSeenAt": 1747993527,
+      "lastSeenCommit": "80133bc1176f8bfe90d061618817551845176f55",
+      "note": "Live SGX-tier proof verifier in the tier system; compromise (e.g. registering a rogue attested instance) proves fake state transitions that finalize if uncontested, draining the bridge."
+    },
+    {
+      "address": "eth:0xe3d777143ea25a6e031d1e921f396750885f43ac",
+      "name": "GuardianProver",
+      "critical": true,
+      "upgradeTimestamps": [1714550627, 1715408795, 1715746175, 1716358991, 1717663871, 1721197175, 1730452835],
+      "lastSeenAt": 1747993527,
+      "lastSeenCommit": "80133bc1176f8bfe90d061618817551845176f55",
+      "note": "Top-tier verifier: guardian multisig proofs override all other tiers uncontested and it held the chain_watchdog pause; compromise finalizes arbitrary fake state (bridge drain) or pauses proving (freeze)."
+    }
+  ]
+}
