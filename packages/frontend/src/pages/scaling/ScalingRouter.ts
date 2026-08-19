@@ -66,7 +66,7 @@ export function createScalingRouter(
     res.status(200).send(html)
   })
 
-  if (env.FEATURE_FLAG_COMPARE_PROJECTS) {
+  if (env.CLIENT_SIDE_COMPARE_PROJECTS) {
     // No validateRoute: the compare page parses and sanitizes its query
     // params itself (unknown values fall back to defaults, never 400).
     router.get('/scaling/compare', async (req, res) => {

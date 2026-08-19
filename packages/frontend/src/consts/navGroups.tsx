@@ -75,7 +75,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
         title: 'Costs',
         href: '/scaling/costs',
       },
-      env.FEATURE_FLAG_COMPARE_PROJECTS && {
+      env.CLIENT_SIDE_COMPARE_PROJECTS && {
         title: 'Compare',
         href: '/scaling/compare',
       },

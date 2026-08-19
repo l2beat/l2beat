@@ -804,7 +804,7 @@ function getProjectCompareUrl(
   project: Project<never, 'archivedAt'>,
   metric: CompareMetricId,
 ): string | undefined {
-  if (!env.FEATURE_FLAG_COMPARE_PROJECTS || project.archivedAt) {
+  if (!env.CLIENT_SIDE_COMPARE_PROJECTS || project.archivedAt) {
     return undefined
   }
   return getCompareEntryUrl({ metric, projectSlug: project.slug })

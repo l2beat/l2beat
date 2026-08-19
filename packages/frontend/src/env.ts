@@ -22,12 +22,9 @@ const CLIENT_CONFIG = {
   CLIENT_SIDE_SHOW_HIRING_BADGE: featureFlag.default(false),
   CLIENT_SIDE_TRACKED_TXS_OUTAGE: featureFlag.default(false),
   CLIENT_SIDE_OPENPANEL_CLIENT_ID: z.string().optional(),
-  // Client-side because the compare entry points (sidebar, chart buttons)
-  // are rendered by client components and must hydrate identically.
-  FEATURE_FLAG_COMPARE_PROJECTS: featureFlag.default(false),
+  CLIENT_SIDE_COMPARE_PROJECTS: featureFlag.default(false),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
-/** The env keys safe to embed in the HTML for the browser bundle. */
 export const CLIENT_ENV_KEYS = Object.keys(CLIENT_CONFIG)
 
 const SERVER_CONFIG = {
@@ -140,6 +137,6 @@ function getRawEnv(): Record<
     CLIENT_SIDE_TRACKED_TXS_OUTAGE: process.env.CLIENT_SIDE_TRACKED_TXS_OUTAGE,
     CLIENT_SIDE_OPENPANEL_CLIENT_ID:
       process.env.CLIENT_SIDE_OPENPANEL_CLIENT_ID,
-    FEATURE_FLAG_COMPARE_PROJECTS: process.env.FEATURE_FLAG_COMPARE_PROJECTS,
+    CLIENT_SIDE_COMPARE_PROJECTS: process.env.CLIENT_SIDE_COMPARE_PROJECTS,
   }
 }

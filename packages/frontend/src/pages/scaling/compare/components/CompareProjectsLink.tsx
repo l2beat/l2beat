@@ -28,7 +28,7 @@ const VARIANT_CLASSES = {
 /**
  * An entry point to the compare page, highlighted like the other promoted
  * links (`TvsBreakdownButton`). Renders nothing while
- * `FEATURE_FLAG_COMPARE_PROJECTS` is off, so callers can place it
+ * `CLIENT_SIDE_COMPARE_PROJECTS` is off, so callers can place it
  * unconditionally.
  */
 export function CompareProjectsLink({
@@ -37,7 +37,7 @@ export function CompareProjectsLink({
   className,
   children = 'Compare projects',
 }: Props) {
-  if (!env.FEATURE_FLAG_COMPARE_PROJECTS) return null
+  if (!env.CLIENT_SIDE_COMPARE_PROJECTS) return null
   return (
     <a
       href={href}

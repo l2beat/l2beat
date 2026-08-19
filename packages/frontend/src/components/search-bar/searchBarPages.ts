@@ -36,7 +36,7 @@ export const searchBarPages = withIndex([
     tags: ['pages', 'scaling'],
     href: '/scaling/activity',
   },
-  ...(env.FEATURE_FLAG_COMPARE_PROJECTS
+  ...(env.CLIENT_SIDE_COMPARE_PROJECTS
     ? [
         {
           category: 'scaling' as const,
