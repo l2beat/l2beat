@@ -19,6 +19,7 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
+import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import {
   countRecentDiscoveryUpdates,
   getDiscoveryUpdates,
@@ -688,6 +689,18 @@ export async function getScalingProjectEntry(
         governanceInfo: upgradesAndGovernance?.governanceInfo,
         pastUpgrades: getPastUpgradesData(allPastUpgrades),
         isUnderReview: !!project.statuses.reviewStatus,
+      },
+    })
+  }
+
+  const ossification = getProjectOssification(project.id)
+  if (ossification) {
+    sections.push({
+      type: 'OssificationSection',
+      props: {
+        id: 'ossification',
+        title: 'Ossification',
+        ossification,
       },
     })
   }

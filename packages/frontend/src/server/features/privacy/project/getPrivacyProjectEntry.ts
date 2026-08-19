@@ -18,6 +18,7 @@ import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
+import { getProjectOssification } from '../../projects/ossification/getProjectOssification'
 import type { ProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
@@ -276,6 +277,18 @@ export async function getPrivacyProjectEntry(
         title: 'Verifier IDs',
         variant: 'privacy',
         ...verifiersSection,
+      },
+    })
+  }
+
+  const ossification = getProjectOssification(details.id)
+  if (ossification) {
+    sections.push({
+      type: 'OssificationSection',
+      props: {
+        id: 'ossification',
+        title: 'Ossification',
+        ossification,
       },
     })
   }

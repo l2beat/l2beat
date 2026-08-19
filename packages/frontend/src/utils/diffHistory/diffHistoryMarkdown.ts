@@ -39,10 +39,10 @@ export function isHighSeverityDiffBody(body: string): boolean {
     return true
   }
 
-  return containsImplementationChange(body)
+  return isImplementationChangeDiffBody(body)
 }
 
-function containsImplementationChange(body: string): boolean {
+export function isImplementationChangeDiffBody(body: string): boolean {
   const lines = body.split('\n')
 
   for (let i = 0; i < lines.length; i++) {

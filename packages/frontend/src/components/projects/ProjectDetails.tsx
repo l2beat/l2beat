@@ -19,6 +19,7 @@ import { L3RiskAnalysisSection } from './sections/L3RiskAnalysisSection'
 import { LivenessSection } from './sections/liveness/LivenessSection'
 import { MarkdownSection } from './sections/MarkdownSection'
 import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidentsSection'
+import { OssificationSection } from './sections/OssificationSection'
 import { PermissionsSection } from './sections/permissions/PermissionsSection'
 import { PrivacyAssetsBreakdownSection } from './sections/privacy/PrivacyAssetsBreakdownSection'
 import { PrivacyFlowsSection } from './sections/privacy/PrivacyFlowsSection'
@@ -344,6 +345,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 {...{ nested, sectionOrder }}
                 {...item.props}
                 selectedUpdateId={props.selectedUpdateId}
+              />
+            )
+          case 'OssificationSection':
+            return (
+              <OssificationSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
               />
             )
           case 'PrivacyTvlSection':

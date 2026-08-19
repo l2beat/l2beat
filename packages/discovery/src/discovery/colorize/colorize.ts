@@ -32,6 +32,7 @@ export function colorize(
     result.entries.push({
       name: entryConfig.name ?? entryConfig.displayName ?? e.name,
       description: interpolateString(entryConfig.description, e),
+      critical: entryConfig.critical,
       references: getReferences(entryConfig, e),
       category: resolveCategory(entryConfig),
       fieldMeta: getFieldsMeta(entryConfig),

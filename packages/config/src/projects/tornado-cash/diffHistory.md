@@ -1,3 +1,60 @@
+Generated with discovered.json: 0xb19290cefacd84d12d7c20c3850d5c08d3ad64ac
+
+# Diff at Wed, 19 Aug 2026 07:37:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@749303717f8b6b45f3a1f7423b3810f4aceac36b block: 1783068981
+- current timestamp: 1783068981
+
+## Description
+
+Mark cTornado governance/comp fields as LOW severity (COMP reward recipient, no other permissions on the pool).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783068981 (main branch discovery), not current.
+
+```diff
+    contract Pool_50K_cDAI (eth:0x03893a7c7463AE47D46bc7f091665f1893656003) [tornado-cash/cTornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 50K cDAI deposits.
+      fieldMeta.comp.severity:
++        "LOW"
+      fieldMeta.governance.description:
+-        "Recipient of claimed COMP rewards from this pool."
++        "Recipient of claimed COMP rewards from this pool. It has no other permissions on the pool."
+      fieldMeta.governance.severity:
++        "LOW"
+    }
+```
+
+```diff
+    contract Pool_500K_cDAI (eth:0x2717c5e28cf931547B621a5dddb772Ab6A35B701) [tornado-cash/cTornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 500K cDAI deposits.
+      fieldMeta.comp.severity:
++        "LOW"
+      fieldMeta.governance.description:
+-        "Recipient of claimed COMP rewards from this pool."
++        "Recipient of claimed COMP rewards from this pool. It has no other permissions on the pool."
+      fieldMeta.governance.severity:
++        "LOW"
+    }
+```
+
+```diff
+    contract Pool_5M_cDAI (eth:0xD21be7248e0197Ee08E0c20D4a96DEBdaC3D20Af) [tornado-cash/cTornado] {
+    +++ description: Fixed-denomination Tornado Cash pool for 5M cDAI deposits.
+      fieldMeta.comp.severity:
++        "LOW"
+      fieldMeta.governance.description:
+-        "Recipient of claimed COMP rewards from this pool."
++        "Recipient of claimed COMP rewards from this pool. It has no other permissions on the pool."
+      fieldMeta.governance.severity:
++        "LOW"
+    }
+```
+
 Generated with discovered.json: 0x80b6786b458bb7d7e4ce214aa98baa2fd3882b24
 
 # Diff at Thu, 30 Jul 2026 14:13:58 GMT:

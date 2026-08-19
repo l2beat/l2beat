@@ -764,6 +764,7 @@
             }
           },
           "category": { "type": "string" },
+          "critical": { "type": "boolean" },
           "description": { "type": "string" },
           "references": {
             "type": "array",

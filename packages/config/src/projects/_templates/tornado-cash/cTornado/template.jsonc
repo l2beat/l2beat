@@ -17,10 +17,12 @@
       "description": "Merkle-tree hasher used for commitments and root updates."
     },
     "comp": {
-      "description": "COMP token accrued by the cToken position and claimable to governance."
+      "description": "COMP token accrued by the cToken position and claimable to governance.",
+      "severity": "LOW"
     },
     "governance": {
-      "description": "Recipient of claimed COMP rewards from this pool."
+      "description": "Recipient of claimed COMP rewards from this pool. It has no other permissions on the pool.",
+      "severity": "LOW"
     }
   },
   "ignoreInWatchMode": ["currentRootIndex", "getLastRoot", "nextIndex"]

@@ -1,0 +1,100 @@
+import { existsSync, readFileSync, statSync } from 'fs'
+import path from 'path'
+import { getDiscoveryUpdates } from '../recent-changes/getDiscoveryUpdates'
+import {
+  getOssificationFactor,
+  type OssificationEntry,
+  type OssificationFactor,
+} from './getOssificationFactor'
+import type { DiscoveredEntryLite } from './getOssificationPerimeter'
+
+const PROJECT_ID_RE = /^[a-z0-9-]+$/i
+
+const fileCache = new Map<string, { mtimeMs: number; parsed: unknown }>()
+
+/**
+ * The ossification factor is computed only for projects that opted in by
+ * committing an ossification.json, and only over contracts the research
+ * team flagged `critical` in discovery (template default, config.jsonc
+ * override). There is no derived fallback — unclassified projects have
+ * no ossification factor.
+ */
+export function getProjectOssification(
+  projectId: string,
+): OssificationFactor | undefined {
+  if (!PROJECT_ID_RE.test(projectId)) {
+    return undefined
+  }
+  if (readProjectJson(projectId, 'ossification.json') === undefined) {
+    return undefined
+  }
+
+  const discovered = readProjectJson(projectId, 'discovered.json') as
+    | { entries?: DiscoveredEntryLite[] }
+    | undefined
+  const critical = (discovered?.entries ?? []).filter(
+    (entry): entry is DiscoveredEntryLite & { address: string } =>
+      entry.type === 'Contract' &&
+      entry.address !== undefined &&
+      entry.critical === true,
+  )
+  if (critical.length === 0) {
+    return undefined
+  }
+
+  return getOssificationFactor(
+    critical.map(toOssificationEntry),
+    getDiscoveryUpdates(projectId, Number.POSITIVE_INFINITY),
+  )
+}
+
+function toOssificationEntry(
+  entry: DiscoveredEntryLite & { address: string },
+): OssificationEntry {
+  return {
+    address: entry.address,
+    name: entry.name ?? entry.address,
+    isVerified: entry.unverified !== true,
+    sinceTimestamp: entry.sinceTimestamp,
+    upgradeTimestamps: parsePastUpgrades(entry.values?.$pastUpgrades),
+  }
+}
+
+function parsePastUpgrades(value: unknown): number[] {
+  if (!Array.isArray(value)) return []
+  const timestamps: number[] = []
+  for (const upgrade of value) {
+    if (!Array.isArray(upgrade) || typeof upgrade[0] !== 'string') continue
+    const timestamp = Date.parse(upgrade[0])
+    if (Number.isFinite(timestamp)) {
+      timestamps.push(Math.floor(timestamp / 1000))
+    }
+  }
+  return timestamps.sort((a, b) => a - b)
+}
+
+function readProjectJson(projectId: string, file: string): unknown | undefined {
+  const filePath = path.join(
+    process.cwd(),
+    '../config/src/projects',
+    projectId,
+    file,
+  )
+  if (!existsSync(filePath)) {
+    return undefined
+  }
+
+  const mtimeMs = statSync(filePath).mtimeMs
+  const cached = fileCache.get(filePath)
+  if (cached && cached.mtimeMs === mtimeMs) {
+    return cached.parsed
+  }
+
+  try {
+    const parsed: unknown = JSON.parse(readFileSync(filePath, 'utf-8'))
+    fileCache.set(filePath, { mtimeMs, parsed })
+    return parsed
+  } catch {
+    return undefined
+  }
+}
