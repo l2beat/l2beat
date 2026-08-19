@@ -280,4 +280,46 @@ describe(AccessControlHandler.name, () => {
       ignoreRelative: undefined,
     })
   })
+
+  it('keeps DEFAULT_ADMIN_ROLE members when the ABI exposes DEFAULT_ADMIN_ROLE()', async () => {
+    // Regression: OpenZeppelin's AccessControl exposes a `DEFAULT_ADMIN_ROLE()` view
+    // returning bytes32(0). Hashing it to keccak256("DEFAULT_ADMIN_ROLE") registered a
+    // phantom role under the same display name which, together with includeEmptyRoles,
+    // used to overwrite the real (bytes32(0)) role's members with an empty set.
+    const address = ChainSpecificAddress.random()
+    const admin = EthereumAddress.random()
+    const provider = mockObject<IProvider>({
+      chain: 'ethereum',
+      async getLogs() {
+        return [RoleGranted('0x' + '0'.repeat(64), admin)]
+      },
+    })
+
+    const handler = new AccessControlHandler(
+      'someName',
+      { type: 'accessControl', includeEmptyRoles: true },
+      [
+        'function DEFAULT_ADMIN_ROLE() view returns (bytes32)',
+        'function WIZARD_ROLE() view returns (bytes32)',
+      ],
+    )
+    const value = await handler.execute(provider, address)
+
+    expect(value).toEqual({
+      field: 'someName',
+      value: {
+        DEFAULT_ADMIN_ROLE: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [
+            ChainSpecificAddress.fromLong('ethereum', admin).toString(),
+          ],
+        },
+        WIZARD_ROLE: {
+          adminRole: 'DEFAULT_ADMIN_ROLE',
+          members: [],
+        },
+      },
+      ignoreRelative: undefined,
+    })
+  })
 })

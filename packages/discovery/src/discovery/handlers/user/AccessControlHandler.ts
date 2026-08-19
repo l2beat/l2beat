@@ -50,6 +50,15 @@ export class AccessControlHandler implements Handler {
       const name = entry.match(/^function (\w+)_ROLE\(\)/)?.[1]
       if (name) {
         const fullName = name + '_ROLE'
+        // OpenZeppelin's AccessControl exposes a `DEFAULT_ADMIN_ROLE()` accessor whose
+        // value is bytes32(0), already registered above. Deriving
+        // keccak256("DEFAULT_ADMIN_ROLE") here would register a phantom hash under the
+        // same "DEFAULT_ADMIN_ROLE" display name; in `execute` the by-name mapping then
+        // collapses the two entries and the phantom (empty) one can overwrite the real
+        // zero-hash role's members.
+        if (fullName === 'DEFAULT_ADMIN_ROLE') {
+          continue
+        }
         if (explicitlyNamedRoles?.has(fullName)) {
           continue
         }
