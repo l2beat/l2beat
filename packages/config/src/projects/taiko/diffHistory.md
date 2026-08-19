@@ -1,3 +1,311 @@
+Generated with discovered.json: 0xcffbe2672274a8de9559c1d4f60dda503bfd40c7
+
+# Diff at Wed, 19 Aug 2026 10:22:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1786955407
+- current timestamp: 1786955407
+
+## Description
+
+Refresh after ossification criticality classification (critical flags + trust-defining severities).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786955407 (main branch discovery), not current.
+
+```diff
+    contract PEMCertChainLib (eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169) [taiko/PEMCertChainLib] {
+    +++ description: Library for managing PEM certificate chains.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract TaikoRisc0Verifier (eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b) [taiko/Risc0Verifier] {
+    +++ description: Gating router contract to verify batches using RISC Zero.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SignerList (Security Council) (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) [taiko/SignerList] {
+    +++ description: A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.
+      fieldMeta.multisigSigners:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) [taiko/AutomataDcapV3Attestation] {
+    +++ description: Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Taiko Token (eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) [taiko/TaikoToken] {
+    +++ description: ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.
+      critical:
++        true
+      fieldMeta:
++        {"paused":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
+      critical:
++        true
+    }
+```
+
+```diff
+    contract EmergencyMultisig (eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) [taiko/EmergencyMultisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    reference SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SecureSgxVerifier (eth:0x41e79EB4F03aBB5DF8716B759528dc5d8f6a84Ee) [taiko/SgxVerifier] {
+    +++ description: Verifier contract for SGX proven blocks. Registered SGX instances can sign accepted proofs until their instance expiry.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SigVerifyLib (eth:0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9) [taiko/SigVerifyLib] {
+    +++ description: Library for verifying signatures.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier] {
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract MainnetInbox (eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f) [taiko/MainnetInbox] {
+    +++ description: The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. Users can enqueue forced inclusions by publishing an L1 blob. Once an inclusion is due, subsequent proposals must process it, but proposing remains restricted by the configured proposer checker. If the configured prover whitelist is non-empty, proofs from non-whitelisted provers revert.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ZkRequiredVerifier (eth:0x7284aaC05555Ae6559bdAd8B4221eC9584254Eec) [taiko/ZkRequiredVerifier] {
+    +++ description: Immutable verifier policy contract for Taiko mainnet. Every accepted proof contains exactly two ordered sub-proofs and at least one must be a ZK proof. Accepted pairs are SGX-GETH or SGX-RETH with RISC0-RETH or SP1-RETH, and RISC0-RETH with SP1-RETH. The SGX-GETH plus SGX-RETH pair is not accepted.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract TaikoSP1Verifier (eth:0x73A0Db393ef87ce781ac7957bE10D6628432100F) [taiko/SP1Verifier] {
+    +++ description: Gating router contract to verify batches using SP1.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) [taiko/TaikoDAOController] {
+    +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) [taiko/AutomataDcapV3Attestation] {
+    +++ description: Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DefaultResolver (eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e) [taiko/DefaultResolver] {
+    +++ description: Maps chainId-name pairs to contract addresses. Bridge and vault contracts resolve their counterparties through this registry, so changes in this mapping effectively act as contract upgrades. The pause function is intentionally disabled in this implementation.
+      critical:
++        true
+      fieldMeta:
++        {"namedAddresses":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract MainnetERC20Vault (eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) [taiko/SharedERC20Vault] {
+    +++ description: Shared vault for Taiko chains for bridged ERC20 tokens. Pausing stops token sends, message-triggered releases, and recalls. Released or minted tokens are subject to the configured quota manager.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Taiko Multisig (eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) [GnosisSafe] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DAO (eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261) [taiko/DAO] {
+    +++ description: The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SecureSgxVerifier (eth:0x9D3C595BFf6Ff7D2b2CbdEcF94aD917eB2fCFFd8) [taiko/SgxVerifier] {
+    +++ description: Verifier contract for SGX proven blocks. Registered SGX instances can sign accepted proofs until their instance expiry.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SignalService (eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) [taiko/SignalService] {
+    +++ description: Facilitates secure cross-chain message passing by storing signals and state-root checkpoints. Bridge escrows and other applications use it to prove that a specific L1<->L2 signal or checkpointed state transition occurred via Merkle proofs. Pausing disables signal proof verification.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+      critical:
++        true
+    }
+```
+
+```diff
+    contract QuotaManager (eth:0xBaCb003f0B13CeAF09Eb9Baf5915A640BD4Bc6cC) [taiko/QuotaManager] {
+    +++ description: Defines withdrawal quotas for ETH and ERC20 releases from the shared bridge. A token quota of zero means unlimited withdrawals for that token.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract MainnetBridge (eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) [taiko/TaikoBridge] {
+    +++ description: Shared bridge escrow for Taiko chains for bridged ETH and arbitrary bridge messages. Pausing stops sending, processing, recalling, retrying, and failing messages. ETH released from the bridge is subject to the configured quota manager.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProverWhitelist (eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae) [taiko/ProverWhitelist] {
+    +++ description: Defines the prover whitelist queried by the inbox before accepting proofs. If the inbox is configured with this contract and the whitelist is non-empty, only whitelisted provers can prove proposals.
+      critical:
++        true
+      fieldMeta:
++        {"whitelisted":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      fieldMeta.operatorMapping:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x3f0a03976363c3c4b27c5a6535414c8e390c88a0
 
 # Diff at Mon, 17 Aug 2026 08:31:35 GMT:

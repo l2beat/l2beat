@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x68bfb539b052e3442956c6cc790dfe665440ed2e
+
+# Diff at Wed, 19 Aug 2026 10:01:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1783591047
+- current timestamp: 1783591047
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783591047 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x622333688CC1878C7ff4205c89bDe051798788A7) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.batcherHash:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x5f65af672308fa3c0d0c63c0a3681e7d40ab7857
 
 # Diff at Thu, 09 Jul 2026 09:58:51 GMT:

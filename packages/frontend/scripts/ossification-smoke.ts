@@ -2,14 +2,18 @@ import { formatSeconds } from '@l2beat/shared-pure'
 import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 
 const IDS = [
+  'tornado-cash',
+  'privacy-pools',
+  'railgun',
+  'uniswapv3',
   'taiko',
   'arbitrum',
   'optimism',
+  'base',
+  'zksync2',
   'scroll',
   'linea',
-  'zksync2',
-  'base',
-  'tornado-cash',
+  'starknet',
 ]
 
 function main() {

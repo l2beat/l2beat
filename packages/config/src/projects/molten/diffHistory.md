@@ -1,3 +1,153 @@
+Generated with discovered.json: 0xf59354a60c671a222fb1a70ee5bfc2c04c341af6
+
+# Diff at Wed, 19 Aug 2026 10:01:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1782746641
+- current timestamp: 1782746641
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782746641 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      fieldMeta.wasmModuleRoot.severity:
++        "HIGH"
+      fieldMeta.validators:
++        {"severity":"HIGH"}
+      fieldMeta.anyTrustFastConfirmer:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) [orbitstack/SequencerInbox_Celestia_Espresso] {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      fieldMeta.batchPosters:
++        {"severity":"HIGH"}
+      fieldMeta.dacKeyset:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Inbox (arb1:0x235000876bd58336C802B3546Fc0250f285fCc79) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0x23b7734232dA19D2Cf73010a25C8Ffc4eBfc2f5f) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0x59CDE86f1a538a7a2329269d3704CA302DF23736) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ERC20Gateway (arb1:0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80) [orbitstack/ERC20Gateway] {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ChallengeManager (arb1:0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8) [orbitstack/OneStepProverHostIo_Celestia] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb1:0x7E67B50d510929610f840fb09707feA01b8E457B) [orbitstack/OneStepProverMath] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      critical:
++        true
+      fieldMeta:
++        {"executors":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0x9676D55Ccd46ce72235b16bA645008D1D3350B14) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract GatewayRouter (arb1:0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF) [orbitstack/GatewayRouter] {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Outbox (arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Bridge (arb1:0xE1d32C985825562edAa906fAC39295370Db72195) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0xe3b13e7b160aE4b799A7B3F9877316e717706291) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x3c7da19481c858ec66f7d68f81156e07d695d4b8
 
 # Diff at Wed, 29 Jul 2026 11:32:29 GMT:

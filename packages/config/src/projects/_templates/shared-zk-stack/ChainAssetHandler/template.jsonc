@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "description": "Specialized contract for managing chain assets, i.e. chain migrations.",
   "fields": {
     "owner": {

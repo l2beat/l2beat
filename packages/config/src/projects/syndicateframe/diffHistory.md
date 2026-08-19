@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x0f8a8acd0a4d35f0cea1bc6ee0cb57e3b727b6ad
+
+# Diff at Wed, 19 Aug 2026 10:01:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1763728682
+- current timestamp: 1763728682
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1763728682 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (base:0x0ED44be59Ea62a9960CB97f8aC54088304D05791) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2OutputOracle (base:0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OptimismPortal (base:0x52fA397D799f1CE416a2089B964Aa293c347994F) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AddressManager (base:0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SystemConfig (base:0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.batcherHash:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1StandardBridge (base:0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x4cf2abfa149808c2aec4c079ea6709cc8436f8d4
 
 # Diff at Tue, 09 Jun 2026 12:43:40 GMT:

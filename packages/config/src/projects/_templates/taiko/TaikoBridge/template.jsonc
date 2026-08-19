@@ -1,4 +1,5 @@
 {
+  "critical": true,
   "description": "Shared bridge escrow for Taiko chains for bridged ETH and arbitrary bridge messages. Pausing stops sending, processing, recalling, retrying, and failing messages. ETH released from the bridge is subject to the configured quota manager.",
   "ignoreMethods": ["getMessageMinGasLimit", "context"],
   "ignoreInWatchMode": ["nextMessageId"],

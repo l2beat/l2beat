@@ -1,3 +1,121 @@
+Generated with discovered.json: 0x2e7c198ba0a09975d70df7d2044ffb866bc88964
+
+# Diff at Wed, 19 Aug 2026 10:18:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1784846614
+- current timestamp: 1784846614
+
+## Description
+
+Refresh after ossification criticality classification (critical flags + trust-defining severities).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784846614 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (eth:0x0CA3A2FBC3D770b578223FBB6b062fa875a2eE75) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x1ED92E1bc9A2735216540EDdD0191144681cb77E) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.batcherHash:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle] {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x5d0Ff601BC8580D8682c0462df55343Cb0b99285) [opstack/SuperchainConfigFake] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      critical:
++        true
+      fieldMeta:
++        {"paused":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x6C7198250087B29A8040eC63903Bc130f4831Cc9) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x8546840adF796875cD9AAcc5B3B048f6B2c9D563) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x86183e7b1D908D9A5C3Bc59cC2232F2ffE4E7145) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AddressManager (eth:0x9754fD3D63B3EAC3fd62b6D54DE4f61b00D6E0Df) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152) [opstack/PermissionedDisputeGame] {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0xEEd67E139CC7721EC656B449F01B7b4D7dCFD671) [opstack/AnchorStateRegistry] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract MIPS (eth:0xF027F4A985560fb13324e943edf55ad6F1d15Dc1) [opstack/MIPS] {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0xdb398b3655e5ffd9268f1ebb8dbc62cafe93d3a1
 
 # Diff at Tue, 21 Jul 2026 15:40:29 GMT:

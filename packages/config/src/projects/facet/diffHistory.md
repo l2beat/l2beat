@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x2441e7cce24a44b7837768dab521113c864b52ff
+
+# Diff at Wed, 19 Aug 2026 10:01:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1780407005
+- current timestamp: 1780407005
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1780407005 (main branch discovery), not current.
+
+```diff
+    contract L1ETHLockbox (eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909) [opstack/L1StandardBridge_facet] {
+    +++ description: Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x35e40f10ee92e5381ecbc86bef17a3bdd1a4c06e
 
 # Diff at Tue, 09 Jun 2026 12:43:33 GMT:

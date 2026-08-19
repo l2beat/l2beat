@@ -127,6 +127,9 @@
       "ignoreDiscovery": true
     },
     "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40": {
+      // legacy outbox, still registered in the Bridge's allowedOutboxList:
+      // can call the Bridge to move any escrowed funds.
+      "critical": true,
       "ignoreMethods": ["outboxEntries", "outboxEntryExists"]
     },
     "eth:0xD3B5b60020504bc3489D6949d545893982BA3011": {
@@ -153,6 +156,9 @@
       "ignoreRelatives": ["ARBITRUM_STAKERS"]
     },
     "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a": {
+      // legacy outbox, still registered in the Bridge's allowedOutboxList:
+      // can call the Bridge to move any escrowed funds.
+      "critical": true,
       "ignoreMethods": [
         "l2ToL1BatchNum",
         "l2ToL1OutputId",
@@ -161,6 +167,8 @@
       ]
     },
     "eth:0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a": {
+      // escrow holding TVS-counted wstETH for the Lido custom gateway.
+      "critical": true,
       "category": "bridge-external",
       "ignoreRelatives": ["l2Token", "l1Token"],
       "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
@@ -172,15 +180,60 @@
       "ignoreDiscovery": true
     },
     "eth:0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A": {
+      // escrow holding TVS-counted LPT for the Livepeer gateway.
+      "critical": true,
       "category": "bridge-external"
     },
     "eth:0xA10c7CE4b876998858b1a9E12b10092229539400": {
+      // MakerDAO escrow holding TVS-counted DAI, L1DaiGateway can pull from it.
+      "critical": true,
       "category": "bridge-external"
     },
-    "eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD": { "category": "spam" },
-    "eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": { "category": "spam" },
-    "eth:0x14797f5432f699Cb4d4dB04DF599B74952d78d7b": { "category": "spam" },
-    "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa": { "category": "spam" },
-    "eth:0xc4940069140142236D4065b866018f7b2BeC77fD": { "category": "spam" }
+    // ProxyAdmin of the core system contracts (Bridge, RollupProxy, Inbox,
+    // Outbox(es), SequencerInbox): can swap their implementations.
+    "eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD": {
+      "critical": true,
+      "category": "spam"
+    },
+    // ProxyAdmin of the L1 UpgradeExecutor: can swap its implementation.
+    "eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": {
+      "critical": true,
+      "category": "spam"
+    },
+    // Beacon governing the OutboxEntry implementation used by OutboxV0, which
+    // is still an allowed outbox in the Bridge: a malicious implementation can
+    // forge/replay legacy withdrawal records against the Bridge escrow.
+    "eth:0x14797f5432f699Cb4d4dB04DF599B74952d78d7b": {
+      "critical": true,
+      "category": "spam"
+    },
+    // ProxyAdmin of the token gateways (L1ERC20Gateway, L1CustomGateway,
+    // GatewayRouter): can swap their implementations and drain escrows.
+    "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa": {
+      "critical": true,
+      "category": "spam"
+    },
+    // OutboxEntry beacon implementation: enforces merkle-root/spent-state
+    // validity of legacy withdrawals executed through the still-allowed OutboxV0.
+    "eth:0xc4940069140142236D4065b866018f7b2BeC77fD": {
+      "critical": true,
+      "category": "spam"
+    },
+    // L2ProxyAdmin (global/ProxyAdmin shape): can swap implementations of the
+    // L2 governance stack (L2Timelock, L2UpgradeExecutor, ARB token, governors).
+    "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e": {
+      "critical": true
+    },
+    // L2GatewaysProxyAdmin (global/ProxyAdmin shape): can swap implementations
+    // of the L2 token gateways, whose withdrawal messages the L1 gateways trust.
+    "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86": {
+      "critical": true
+    },
+    // nomineeVetter safe of the SecurityCouncilNomineeElectionGovernor: can
+    // exclude compliant nominees and include its own picks when the nominee
+    // count is short, ultimately seating a malicious Security Council cohort.
+    "arb1:0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C": {
+      "critical": true
+    }
   }
 }

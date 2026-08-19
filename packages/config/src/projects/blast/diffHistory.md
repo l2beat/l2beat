@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x25c87be944a55bcee9e3da0453ccc71acbe4bced
+
+# Diff at Wed, 19 Aug 2026 10:01:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1772118382
+- current timestamp: 1772118382
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1772118382 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (eth:0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb) [opstack/OptimismPortal] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.batcherHash:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x697402166Fbf2F22E970df8a6486Ef171dbfc524) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xE064B565Cf2A312a3e66Fe4118890583727380C0) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0xdad3414348a072fa0195edeb5086dd09da85c394
 
 # Diff at Tue, 09 Jun 2026 12:43:31 GMT:

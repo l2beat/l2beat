@@ -23,6 +23,7 @@
       ],
       "proxyType": "immutable",
       "description": "used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -110,6 +111,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "eth:0x0125aeb5fF473De23ab72454B2bbC45613Ff3bd7",
       "sinceTimestamp": 1731366083,
@@ -194,6 +196,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
+      "critical": true,
       "ignoreInWatchMode": [
         "anchorGame",
         "getAnchorRoot",
@@ -314,6 +317,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "deployerAddress": "eth:0x0125aeb5fF473De23ab72454B2bbC45613Ff3bd7",
       "sinceTimestamp": 1731366083,
       "sinceBlock": 21167590,
@@ -337,6 +341,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
+      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0xc37f6a6c4AB335E20d10F034B90386E2fb70bbF5",
       "sinceTimestamp": 1760460347,
@@ -379,6 +384,7 @@
       ],
       "proxyType": "immutable",
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
+      "critical": true,
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1740762647,
       "sinceBlock": 21946249,
@@ -408,6 +414,7 @@
       ],
       "proxyType": "immutable",
       "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -473,6 +480,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
       "deployerAddress": "eth:0x0125aeb5fF473De23ab72454B2bbC45613Ff3bd7",
       "sinceTimestamp": 1731366083,
@@ -602,7 +610,8 @@
         },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "batcherHash": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A": "Proxy",
@@ -684,6 +693,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "critical": true,
       "deployerAddress": "eth:0x0125aeb5fF473De23ab72454B2bbC45613Ff3bd7",
       "sinceTimestamp": 1731366083,
       "sinceBlock": 21167590,
@@ -721,6 +731,7 @@
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
+      "critical": true,
       "deployerAddress": "eth:0x926E9595fb147A376800022a554C8c05444EB658",
       "sinceTimestamp": 1766424179,
       "sinceBlock": 24069615,
@@ -984,6 +995,7 @@
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
+      "critical": true,
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1762212215,
       "sinceBlock": 23722054,
@@ -1013,6 +1025,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
+      "critical": true,
       "ignoreInWatchMode": [
         "permissionedGamesTotal",
         "gameCount",
@@ -1110,6 +1123,7 @@
       ],
       "proxyType": "immutable",
       "description": "Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1230,6 +1244,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.",
+      "critical": true,
       "deployerAddress": "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9",
       "sinceTimestamp": 1705954799,
       "sinceBlock": 19064589,
@@ -1408,6 +1423,7 @@
       ],
       "proxyType": "immutable",
       "description": "A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1465,6 +1481,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
+      "critical": true,
       "ignoreInWatchMode": ["params", "balance"],
       "deployerAddress": "eth:0x0125aeb5fF473De23ab72454B2bbC45613Ff3bd7",
       "sinceTimestamp": 1731366083,
@@ -1738,6 +1755,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "deployerAddress": "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5",
       "sinceTimestamp": 1624400033,
       "sinceBlock": 12686687,

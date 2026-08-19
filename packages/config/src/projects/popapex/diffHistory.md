@@ -1,3 +1,121 @@
+Generated with discovered.json: 0xadd97832cb8d1af0b4b9c1faea33e1da3300bcff
+
+# Diff at Wed, 19 Aug 2026 10:01:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1768984689
+- current timestamp: 1768984689
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768984689 (main branch discovery), not current.
+
+```diff
+    contract Outbox (arb1:0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0x33c1514Bf90e202d242C299b37C60f908aa206D4) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      critical:
++        true
+      fieldMeta:
++        {"executors":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0x54E0923782b701044444De5d8c3A45aC890b0881) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x65AD139061B3f6DDb16170a07b925337ddf42407) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      fieldMeta.wasmModuleRoot.severity:
++        "HIGH"
+      fieldMeta.validators:
++        {"severity":"HIGH"}
+      fieldMeta.anyTrustFastConfirmer:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0xa58F38102579dAE7C584850780dDA55744f67DF1) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.batchPosters:
++        {"severity":"HIGH"}
+      fieldMeta.dacKeyset:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ChallengeManager (arb1:0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Inbox (arb1:0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0xD89d54007079071cBA859127318b9F34eeB78049) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb1:0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4) [orbitstack/OneStepProverMath] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x2cb4b4a7d8ffda3a0d9d6befedde42f5a9e26f92
 
 # Diff at Fri, 12 Jun 2026 10:18:59 GMT:

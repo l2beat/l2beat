@@ -1,3 +1,71 @@
+Generated with discovered.json: 0xa7faba290546bc6b3235653213a39cf456c8a844
+
+# Diff at Wed, 19 Aug 2026 10:01:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1786615271
+- current timestamp: 1786615271
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786615271 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DualVerifier (eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e) [shared-zk-stack/DualVerifier] {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x9f5C39a2790f38542065E7854b90407371923375 or eth:0xd22cA89e8991FCE568456914c616d303e3142395 depending on the supplied proof type.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1VerifierFflonk (eth:0x9f5C39a2790f38542065E7854b90407371923375) [shared-zk-stack/L1VerifierFflonk] {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ZeroNetworkZkEvmAdmin (eth:0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9 act through it.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1VerifierPlonk (eth:0xd22cA89e8991FCE568456914c616d303e3142395) [shared-zk-stack/L1VerifierPlonk] {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Diamond (eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.validators:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0xae1c51696ee4bc410291d12998b16491af067376
 
 # Diff at Thu, 13 Aug 2026 10:02:14 GMT:

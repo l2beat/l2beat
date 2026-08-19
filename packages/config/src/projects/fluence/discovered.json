@@ -13,6 +13,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "sinceTimestamp": 1724148899,
       "sinceBlock": 20569170,
       "values": { "$immutable": true },
@@ -44,6 +45,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "critical": true,
       "sinceTimestamp": 1722412055,
       "sinceBlock": 20425137,
       "values": {
@@ -151,6 +153,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "sinceTimestamp": 1724148875,
       "sinceBlock": 20569168,
       "values": { "$immutable": true },
@@ -228,6 +231,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
+      "critical": true,
       "sinceTimestamp": 1722412055,
       "sinceBlock": 20425137,
       "values": {
@@ -285,6 +289,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "sinceTimestamp": 1724148863,
       "sinceBlock": 20569167,
       "values": { "$immutable": true },
@@ -316,6 +321,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "critical": true,
       "sinceTimestamp": 1722412055,
       "sinceBlock": 20425137,
       "values": {
@@ -434,6 +440,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -484,6 +491,7 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["eth:0x7F629403fDCC02aD83aA5debd1D4B1548982afaC"]
       },
+      "fieldMeta": { "executors": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x6BCe4c44668C77ff67730C14d2378857103F53C7": "TransparentUpgradeableProxy",
         "eth:0x6c21303F5986180B1394d2C89f3e883890E2867b": "UpgradeExecutor"
@@ -678,6 +686,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "sinceTimestamp": 1724148911,
       "sinceBlock": 20569171,
       "values": {
@@ -776,6 +785,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "sinceTimestamp": 1724148887,
       "sinceBlock": 20569169,
       "values": { "$immutable": true },
@@ -794,6 +804,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
+      "critical": true,
       "ignoreInWatchMode": [
         "batchCount",
         "totalDelayedMessagesRead",
@@ -862,7 +873,9 @@
       "fieldMeta": {
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
-        }
+        },
+        "batchPosters": { "severity": "HIGH" },
+        "dacKeyset": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xD04Cf183526aDC4a37B72D49bFe6eE19d9E19bd0": "TransparentUpgradeableProxy",
@@ -881,6 +894,7 @@
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
+      "critical": true,
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -968,7 +982,8 @@
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
         "wasmModuleRoot": {
-          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
+          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.",
+          "severity": "HIGH"
         },
         "arbOsFromWmRoot": {
           "description": "ArbOS version derived from known wasmModuleRoots."
@@ -978,7 +993,9 @@
         },
         "challenges": {
           "description": "Emitted on createChallenge() in RollupUserLogic."
-        }
+        },
+        "validators": { "severity": "HIGH" },
+        "anyTrustFastConfirmer": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f": "RollupProxy",

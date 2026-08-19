@@ -1,3 +1,47 @@
+Generated with discovered.json: 0xc478213d50beca6e58ab4372186f0b1a3b48404a
+
+# Diff at Wed, 19 Aug 2026 10:01:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1752575723
+- current timestamp: 1752575723
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752575723 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (eth:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.batcherHash:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x827962404D7104202C5aaa6b929115C8211d9596) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x38fb463ee7515f9fdc4fdba870cfbe5f7d07cb06
 
 # Diff at Thu, 30 Jul 2026 11:44:27 GMT:

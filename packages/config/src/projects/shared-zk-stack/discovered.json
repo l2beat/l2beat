@@ -204,6 +204,7 @@
       ],
       "proxyType": "immutable",
       "description": "A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -274,6 +275,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.",
+      "critical": true,
       "deployerAddress": "eth:0x71d84c3404a6ae258E6471d4934B96a2033F9438",
       "sinceTimestamp": 1717520639,
       "sinceBlock": 20019828,
@@ -816,6 +818,7 @@
       ],
       "proxyType": "immutable",
       "description": "Custom Multisig implementation that has a general threshold of 6 but also specific thresholds for upgrade approvals (4) or soft freezes (3).",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -876,7 +879,9 @@
         "hardFreezeNonce": {
           "severity": "HIGH",
           "description": "Increments with each hardFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for HARD_FREEZE_PERIOD"
-        }
+        },
+        "$members": { "severity": "HIGH" },
+        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x59195219d1176E42f8e607e9AC114926D47f9035": "SecurityCouncil"
@@ -900,6 +905,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.",
+      "critical": true,
       "ignoreInWatchMode": ["sharedTree", "getAggregatedRoot"],
       "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739109035,
@@ -955,6 +961,7 @@
       ],
       "proxyType": "immutable",
       "description": "Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1002,6 +1009,10 @@
         "PROPOSE_L2_GOVERNOR_PROPOSAL_THRESHOLD": 5,
         "PROTOCOL_UPGRADE_HANDLER": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "ZKSYNC_ERA": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324"
+      },
+      "fieldMeta": {
+        "$members": { "severity": "HIGH" },
+        "$threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8": "Guardians"
@@ -1167,6 +1178,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.",
+      "critical": true,
       "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739108915,
       "sinceBlock": 21809357,
@@ -1245,6 +1257,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Canonical central asset router for all ZK stack chains. Routes deposits and withdrawals to the respective asset handlers (like the L1NativeTokenVault); does not escrow funds itself.",
+      "critical": true,
       "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739109071,
       "sinceBlock": 21809370,
@@ -1516,6 +1529,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Canonical central asset escrow for all ZK stack chains.",
+      "critical": true,
       "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739109131,
       "sinceBlock": 21809375,
@@ -1638,6 +1652,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,1.",
+      "critical": true,
       "deployerAddress": "eth:0x71d84c3404a6ae258E6471d4934B96a2033F9438",
       "sinceTimestamp": 1717520663,
       "sinceBlock": 20019830,
@@ -1810,6 +1825,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.",
+      "critical": true,
       "deployerAddress": "eth:0x71d84c3404a6ae258E6471d4934B96a2033F9438",
       "sinceTimestamp": 1717521479,
       "sinceBlock": 20019898,
@@ -1879,6 +1895,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Specialized contract for managing chain assets, i.e. chain migrations.",
+      "critical": true,
       "deployerAddress": "eth:0x5555555590930f501c88B73Ea43B3EEb5A71643c",
       "sinceTimestamp": 1758286391,
       "sinceBlock": 23397250,
@@ -1941,6 +1958,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -2081,6 +2099,7 @@
       ],
       "proxyType": "immutable",
       "description": "Simple registry for allowed DA address pairs for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). Rollup DA address pairs (especially the L1 part) usually point to contracts that validate if data was made available on Ethereum.",
+      "critical": true,
       "deployerAddress": "eth:0x043DA37F21c4C83b97b546724c75600c2D0C9E16",
       "sinceTimestamp": 1739108879,
       "sinceBlock": 21809354,
@@ -2150,6 +2169,7 @@
       ],
       "proxyType": "immutable",
       "description": "A custom contract allowing a 3/3 of eth:0x59195219d1176E42f8e607e9AC114926D47f9035, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",

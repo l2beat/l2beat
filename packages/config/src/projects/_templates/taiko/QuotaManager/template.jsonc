@@ -1,4 +1,5 @@
 {
+  "critical": true,
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Defines withdrawal quotas for ETH and ERC20 releases from the shared bridge. A token quota of zero means unlimited withdrawals for that token.",
   "ignoreMethods": ["proxiableUUID"],

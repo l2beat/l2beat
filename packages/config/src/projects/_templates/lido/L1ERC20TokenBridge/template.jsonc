@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L1ERC20TokenBridge",
+  "critical": true,
   "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.",
   "ignoreRelatives": [
     "l1Token",

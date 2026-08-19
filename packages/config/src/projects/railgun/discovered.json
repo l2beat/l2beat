@@ -126,6 +126,7 @@
       ],
       "proxyType": "immutable",
       "description": "Admin interface for Railgun's pausable upgradeable proxies. It does not hold funds, but its controller can operate every proxy attached to it.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -200,6 +201,7 @@
       ],
       "proxyType": "immutable",
       "description": "Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -419,6 +421,7 @@
       ],
       "proxyType": "immutable",
       "description": "Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -704,6 +707,7 @@
       ],
       "proxyType": "immutable",
       "description": "Permission router proxy owned by Railgun governance.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -906,6 +910,7 @@
       ],
       "proxyType": "immutable",
       "description": "Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1283,6 +1288,7 @@
       ],
       "proxyType": "immutable",
       "description": "RAIL governance token contract with a capped (100,000,000 RAIL total supply) mint schedule and an early anti-bot transfer override.",
+      "critical": true,
       "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1625318205,
       "sinceBlock": 12754822,
@@ -1454,6 +1460,7 @@
       ],
       "proxyType": "immutable",
       "description": "RAIL staking contract that tracks delegated voting power, enforces a 1mo unstake delay, and snapshots staking balances for governance every 1d. Its parameters define the governance voting system.",
+      "critical": true,
       "ignoreInWatchMode": ["RAILStaked"],
       "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1625670240,
@@ -1575,6 +1582,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.",
+      "critical": true,
       "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1651422389,
       "sinceBlock": 14693013,

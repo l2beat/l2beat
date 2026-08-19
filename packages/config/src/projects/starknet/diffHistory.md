@@ -1,3 +1,215 @@
+Generated with discovered.json: 0xb1f7fc6989d2ff8c4ff8d279ee709a2694db8ff7
+
+# Diff at Wed, 19 Aug 2026 10:21:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1786612387
+- current timestamp: 1786612387
+
+## Description
+
+Refresh after ossification criticality classification (critical flags + trust-defining severities).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786612387 (main branch discovery), not current.
+
+```diff
+    contract Starkware Multisig 2 (eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) [GnosisSafe] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract LORDSBridge (eth:0x023A2aAc5d0fa69E3243994672822BA43E34E5C9) [starknet/LordsL1Bridge] {
+    +++ description: Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DAIBridge (eth:0x0437465dfb5B79726e35F08559B0cBea55bb585C) [maker/L1Escrow] {
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Starkware Security Council (eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) [GnosisSafe] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract WBTCBridge (eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4) [starknet/StarknetMultiBridge_haltable] {
+    +++ description: Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.
+      critical:
++        true
+    }
+```
+
+```diff
+    reference SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract FXSBridge (eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Starkware Multisig 1 (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) [GnosisSafe] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract LBTCBridge (eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e) [starknet/StarknetMultiBridge] {
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1DaiGateway (eth:0x9F96fE0633eE838D0298E8b8980E6716bE81388d) [starknet/L1EscrowDAI] {
+    +++ description: Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SolvBTCBridge (eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10) [starknet/StarknetMultiBridge_haltable] {
+    +++ description: Haltable version of the Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually. Deposits for a particular token can be halted by app governor, halt must be finalized in the second transaction that also sweeps all funds into a clrearing address. There is no logic to resume bridging after the halt.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ETHBridge (eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) [starknet/StarknetEthBridge] {
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract USDTBridge (eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract wstETHBridge (eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Starknet (eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) [starknet/Starknet] {
+    +++ description: Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.
+      fieldMeta.operators:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DelayedExecutor (eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c) [starknet/DelayedExecutor] {
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract STRKBridge (eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract rETHBridge (eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract sfrxETHBridge (eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract FRAXBridge (eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract LUSDBridge (eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract MultiBridge (eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) [starknet/StarknetMultiBridge] {
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5% of the locked funds per 24 hours for each token individually.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract USDCBridge (eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract UNIBridge (eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x82b8dede7660a537c32b2f4924a06b8400c7522b
 
 # Diff at Thu, 13 Aug 2026 09:14:33 GMT:

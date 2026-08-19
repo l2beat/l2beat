@@ -1,3 +1,103 @@
+Generated with discovered.json: 0x791a5b2d98ac11b6656eb7af01a549ba87cc0c99
+
+# Diff at Wed, 19 Aug 2026 10:01:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1786722093
+- current timestamp: 1786722093
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786722093 (main branch discovery), not current.
+
+```diff
+    contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) [opstack/SuperchainConfigFake_expiry] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.batcherHash:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x5456f02c08e9A018E42C39b351328E5AA864174A) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0x61E44dC0dae6888B5a301887732217d5725B0bFf) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x87DAFf495b5F6c4f79CEeAAF85f1Ef3df3B30d21) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x9793C7fD587b979D2894A0e52Eb41461378AFbF4) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DelayedWETH (eth:0x97FB4d882175097A4BBfc61d67f9Fb28723C3c94) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e) [opstack/PermissionedDisputeGame] {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0xdac149e56033e04bceb3c6aaef8088712bb16620
 
 # Diff at Fri, 14 Aug 2026 15:42:53 GMT:

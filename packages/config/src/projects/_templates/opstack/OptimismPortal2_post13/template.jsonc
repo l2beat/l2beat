@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "OptimismPortal2",
+  "critical": true,
   "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. The state root respected for withdrawals comnes from the {{ RespectedGameString }}.",
   "ignoreMethods": ["isOutputFinalized"],
   "ignoreInWatchMode": ["params", "balance"],

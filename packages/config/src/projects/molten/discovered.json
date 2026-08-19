@@ -53,6 +53,7 @@
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
+      "critical": true,
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -134,7 +135,8 @@
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
         "wasmModuleRoot": {
-          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
+          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.",
+          "severity": "HIGH"
         },
         "arbOsFromWmRoot": {
           "description": "ArbOS version derived from known wasmModuleRoots."
@@ -144,7 +146,9 @@
         },
         "challenges": {
           "description": "Emitted on createChallenge() in RollupUserLogic."
-        }
+        },
+        "validators": { "severity": "HIGH" },
+        "anyTrustFastConfirmer": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0": "RollupProxy",
@@ -198,6 +202,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.",
+      "critical": true,
       "ignoreInWatchMode": [
         "batchCount",
         "totalDelayedMessagesRead",
@@ -277,7 +282,9 @@
       "fieldMeta": {
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
-        }
+        },
+        "batchPosters": { "severity": "HIGH" },
+        "dacKeyset": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2": "TransparentUpgradeableProxy",
@@ -329,6 +336,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "critical": true,
       "deployerAddress": "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
       "sinceTimestamp": 1712019082,
       "sinceBlock": 196643801,
@@ -376,6 +384,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "arb1:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1746599905,
       "sinceBlock": 334105362,
@@ -603,6 +612,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "arb1:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1746599895,
       "sinceBlock": 334105322,
@@ -622,6 +632,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
+      "critical": true,
       "deployerAddress": "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
       "sinceTimestamp": 1712019098,
       "sinceBlock": 196643863,
@@ -963,6 +974,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
+      "critical": true,
       "deployerAddress": "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
       "sinceTimestamp": 1712019082,
       "sinceBlock": 196643801,
@@ -1014,6 +1026,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.",
+      "critical": true,
       "deployerAddress": "arb1:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1746599902,
       "sinceBlock": 334105349,
@@ -1036,6 +1049,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "arb1:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1746599899,
       "sinceBlock": 334105335,
@@ -1152,6 +1166,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1209,6 +1224,7 @@
           "arb1:0x2E5d207a4C0F7e7C52F6622DCC6EB44bC0fE1A13"
         ]
       },
+      "fieldMeta": { "executors": { "severity": "HIGH" } },
       "implementationNames": {
         "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d": "TransparentUpgradeableProxy",
         "arb1:0x20C6be2A0429A82a7bF113905a29d36CF6753B10": "UpgradeExecutor"
@@ -1231,6 +1247,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "critical": true,
       "deployerAddress": "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
       "sinceTimestamp": 1712019082,
       "sinceBlock": 196643801,
@@ -1324,6 +1341,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
+      "critical": true,
       "deployerAddress": "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
       "sinceTimestamp": 1712019098,
       "sinceBlock": 196643863,
@@ -1367,6 +1385,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "critical": true,
       "deployerAddress": "arb1:0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
       "sinceTimestamp": 1712019082,
       "sinceBlock": 196643801,
@@ -1487,6 +1506,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
+      "critical": true,
       "ignoreInWatchMode": [
         "delayedMessageCount",
         "sequencerMessageCount",
@@ -1571,6 +1591,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "arb1:0x02867114B27d686f3565E2060424e985a1E565f5",
       "sinceTimestamp": 1746599892,
       "sinceBlock": 334105310,

@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x2019dcac9ed37d514fbd31401575374e134b4655
+
+# Diff at Wed, 19 Aug 2026 10:01:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1784193913
+- current timestamp: 1784193913
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784193913 (main branch discovery), not current.
+
+```diff
+    contract USDC Bridge (eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) [starknet/StarknetERC20Bridge] {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) [starknet/Starknet] {
+    +++ description: Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.
+      fieldMeta.operators:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x5bfc25f811e8a6ba775e2785fb0e66cc6d34706b
 
 # Diff at Mon, 27 Jul 2026 10:16:36 GMT:

@@ -1,3 +1,431 @@
+Generated with discovered.json: 0x7e64769aa7a2860cfc542eda9ece8e526bcb2251
+
+# Diff at Wed, 19 Aug 2026 10:15:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1786617413
+- current timestamp: 1786617413
+
+## Description
+
+Refresh after ossification criticality classification (critical flags + trust-defining severities).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786617413 (main branch discovery), not current.
+
+```diff
+    contract L2ERC20Gateway (arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe) [orbitstack/layer2/L2ERC20Gateway] {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2Timelock (arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) [orbitstack/layer2/L2Timelock] {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) [orbitstack/layer2/L2SecurityCouncilEmergency] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2DAIGateway (arb1:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) [orbitstack/layer2/L2DAIGateway] {
+    +++ description: Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberElectionGovernor (arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C) [orbitstack/layer2/SecurityCouncilMemberElectionGovernor] {
+    +++ description: Token governance contract for the Security Council member elections.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2GatewayRouter (arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933) [orbitstack/layer2/L2GatewayRouter] {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2WethGateway (arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B) [orbitstack/layer2/L2WethGateway] {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2LPTGateway (arb1:0x6D2457a4ad276000A615295f7A80F79E48CcD318) [orbitstack/layer2/L2LPTGateway] {
+    +++ description: Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberRemovalGovernor (arb1:0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad) [orbitstack/layer2/SecurityCouncilMemberRemovalGovernor] {
+    +++ description: Token governance contract for the Security Council member removals.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract UpgradeExecRouteBuilder (arb1:0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a) [orbitstack/layer2/UpgradeExecRouteBuilder] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SecurityCouncilNomineeElectionGovernor (arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0) [orbitstack/layer2/SecurityCouncilNomineeElectionGovernor] {
+    +++ description: Token governance contract for the Security Council nominee elections.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (arb1:0x912CE59144191C1204E64559FE8253a0e49E6548) [orbitstack/layer2/L2ArbitrumToken] {
+    +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberSyncAction (arb1:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a) [orbitstack/layer2/SecurityCouncilMemberSyncAction] {
+    +++ description: Contract used by the security council management system to sync SecurityCouncil members between the L1 and the L2.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2SecurityCouncilPropose (arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) [orbitstack/layer2/L2SecurityCouncilPropose] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (arb1:0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C) [GnosisSafe] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2ARBGateway (arb1:0xCaD7828a19b363A2B44717AFB1786B5196974D8E) [orbitstack/layer2/L2ARBGateway] {
+    +++ description: ARB sent from L2 to L1 is escrowed in this contract and minted on L1.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) [orbitstack/layer2/L2UpgradeExecutor] {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) [orbitstack/layer2/SecurityCouncilManager] {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (arb1:0xdb216562328215E010F819B5aBe947bad4ca961e) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CoreGovernor (arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) [orbitstack/layer2/CoreGovernor] {
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals). Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds).
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Outbox (eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract wstETHEscrow (eth:0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x14797f5432f699Cb4d4dB04DF599B74952d78d7b) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.batchPosters:
++        {"severity":"HIGH"}
+      fieldMeta.dacKeyset:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProver0 (eth:0x35FBC5F03d86E88973B06Fb9C5a913D54AbdF731) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      critical:
++        true
+      fieldMeta:
++        {"executors":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x4397fE1E959Ba81B9D5f1A9679Ddd891955A42d6) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Inbox (eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      fieldMeta.wasmModuleRoot.severity:
++        "HIGH"
+      fieldMeta.getValidators:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ArbitrumProxyAdmin (eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract UpgradeExecutorAdmin (eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RollupEventInbox (eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OutboxV0 (eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract LPTL1Escrow (eth:0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract GatewayRouter (eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef) [orbitstack/GatewayRouter] {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OutboxV1 (eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Bridge (eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract GatewaysAdmin (eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (eth:0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1Escrow (eth:0xA10c7CE4b876998858b1a9E12b10092229539400) [maker/L1Escrow] {
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC) [orbitstack/ERC20Gateway2] {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (eth:0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0) [orbitstack/EdgeChallengeManager] {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverMath (eth:0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921) [orbitstack/OneStepProverMath] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OutboxEntry (eth:0xc4940069140142236D4065b866018f7b2BeC77fD) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1CustomGateway (eth:0xcEe284F754E854890e311e3280b767F80797180d) [orbitstack/CustomGateway2] {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1DaiGateway (eth:0xD3B5b60020504bc3489D6949d545893982BA3011) [orbitstack/L1DaiGateway] {
+    +++ description: Counterpart of the L2DaiGateway. Allows for bridging DAI from L1 to L2.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverMemory (eth:0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Arbitrum Security Council (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) [orbitstack/SecurityCouncil] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x5d62b9e5a2dd768b3fe41aafb76bed342e4efa8a
 
 # Diff at Thu, 13 Aug 2026 10:38:19 GMT:

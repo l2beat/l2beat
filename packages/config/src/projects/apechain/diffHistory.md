@@ -1,3 +1,137 @@
+Generated with discovered.json: 0x8d3dede7d894f2a5f3bfe492e08a21de054ce73f
+
+# Diff at Wed, 19 Aug 2026 10:01:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1786359767
+- current timestamp: 1786359767
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786359767 (main branch discovery), not current.
+
+```diff
+    contract Inbox (arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      fieldMeta.wasmModuleRoot.severity:
++        "HIGH"
+      fieldMeta.validators:
++        {"severity":"HIGH"}
+      fieldMeta.anyTrustFastConfirmer:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (arb1:0x4aBF0E8C011142bAb19ff3C921880B71E68150Ca) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Outbox (arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverMemory (arb1:0x550B7B23Ed78BA25B3aBCBb290ADf1190aC28E19) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Bridge (arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverMath (arb1:0x8A4ed18B4d31bCeA908B0f96B4347a9F99e816b3) [orbitstack/OneStepProverMath] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProver0 (arb1:0xa301f8EdD4Cdf10553b6aB39d9724c56d7ab582F) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0xa3180c7a17dd46DEf808477093592D8231e024a8) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ChallengeManager (arb1:0xAB2182C8c9a9d853Cf06A77967D2b3971A453ee1) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0xe032d15909e90f9A36901abB08944653e9E87d72) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      critical:
++        true
+      fieldMeta:
++        {"executors":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SequencerInbox (arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C) [orbitstack/SequencerInbox_Espresso] {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.batchPosters:
++        {"severity":"HIGH"}
+      fieldMeta.dacKeyset:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x2a0ff3a86c2e79bf3a324d79832b3835a57c14c6
 
 # Diff at Mon, 10 Aug 2026 11:03:54 GMT:

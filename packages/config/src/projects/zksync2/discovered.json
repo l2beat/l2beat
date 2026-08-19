@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "timestamp": 1786966191,
-  "configHash": "0x320135d7c7306490d61d9055bcc0b2a24d9d8ec53d52cf67b138f0abe4539f91",
+  "configHash": "0xc8f9b08ffd66e482a76682cb27966326865f2add2f3bbe83cb4fb42737474884",
   "entries": [
     {
       "name": "ProxyAdmin",
@@ -12,6 +12,7 @@
         "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -40,6 +41,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
+      "critical": true,
       "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1786713407,
       "sinceBlock": 25753516,
@@ -123,6 +125,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -186,6 +189,7 @@
           }
         }
       },
+      "fieldMeta": { "validatorVTL": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": "TransparentUpgradeableProxy",
         "eth:0x6086051f93412F550C0820e76f0fbE85F64C7ef8": "ValidatorTimelock"
@@ -210,6 +214,7 @@
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.",
+      "critical": true,
       "ignoreInWatchMode": [
         "getTotalPriorityTxs",
         "getTotalBlocksCommitted",
@@ -696,6 +701,7 @@
       },
       "fieldMeta": {
         "getAdmin": { "severity": "HIGH" },
+        "validators": { "severity": "HIGH" },
         "getTransactionFilterer": {
           "severity": "HIGH",
           "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
@@ -754,6 +760,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.",
+      "critical": true,
       "deployerAddress": "eth:0x61ce1F6514C651C39964961DB1948C6f70a4747a",
       "sinceTimestamp": 1698065351,
       "sinceBlock": 18413072,
@@ -812,6 +819,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.",
+      "critical": true,
       "deployerAddress": "eth:0x29DF43F75149D0552475A6f9B2aC96E28796ed0b",
       "sinceTimestamp": 1676370683,
       "sinceBlock": 16626406,
@@ -922,6 +930,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
+      "critical": true,
       "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1786713395,
       "sinceBlock": 25753515,
@@ -1030,6 +1039,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router contract for verifiers. Routes verification requests to eth:0x8470d6B3fd71B5fE3906B4ea04498d18F721eDe9 or eth:0x0DAAB2B7b38ab48712996E760152c569FA356DbF depending on the supplied proof type.",
+      "critical": true,
       "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1786713431,
       "sinceBlock": 25753518,
@@ -1071,6 +1081,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",

@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "ignoreMethods": ["l1RollingHashes"],
   "ignoreInWatchMode": [
     "currentPeriodAmountInWei",
@@ -10,6 +11,7 @@
   "fields": {
     "accessControl": { "handler": { "type": "accessControl" } },
     "l1l2MessageSetter": {
+      "severity": "HIGH",
       "copy": "accessControl",
       "edit": ["get", "L1_L2_MESSAGE_SETTER_ROLE", "members"],
       "permissions": [

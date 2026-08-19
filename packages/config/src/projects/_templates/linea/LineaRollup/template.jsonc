@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "LineaRollup",
+  "critical": true,
   "description": "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.",
   "ignoreInWatchMode": [
     "currentPeriodAmountInWei",

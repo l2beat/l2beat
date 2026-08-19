@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "description": "Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.",
   "ignoreMethods": [
     "getEffectiveMinimumWithdrawalReserve",

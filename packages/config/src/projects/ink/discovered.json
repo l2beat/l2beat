@@ -23,6 +23,7 @@
       ],
       "proxyType": "immutable",
       "description": "used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -110,6 +111,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.",
+      "critical": true,
       "ignoreInWatchMode": [
         "gameCount",
         "permissionedGameArgs",
@@ -219,6 +221,7 @@
       ],
       "proxyType": "immutable",
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
+      "critical": true,
       "deployerAddress": "eth:0xE69104DD872222E1Bd7C1adD47588F8C62ed64C0",
       "sinceTimestamp": 1778190599,
       "sinceBlock": 25045956,
@@ -248,6 +251,7 @@
       ],
       "proxyType": "immutable",
       "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -278,6 +282,7 @@
       ],
       "proxyType": "immutable",
       "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
+      "critical": true,
       "deployerAddress": "eth:0xE69104DD872222E1Bd7C1adD47588F8C62ed64C0",
       "sinceTimestamp": 1778190599,
       "sinceBlock": 25045956,
@@ -470,6 +475,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
+      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1782428747,
@@ -678,6 +684,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.",
+      "critical": true,
       "ignoreInWatchMode": ["params", "balance"],
       "deployerAddress": "eth:0x0125aeb5fF473De23ab72454B2bbC45613Ff3bd7",
       "sinceTimestamp": 1733498411,
@@ -792,6 +799,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
       "deployerAddress": "eth:0x0125aeb5fF473De23ab72454B2bbC45613Ff3bd7",
       "sinceTimestamp": 1733498411,
@@ -930,7 +938,8 @@
         },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "batcherHash": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364": "Proxy",
@@ -1047,6 +1056,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "eth:0x0125aeb5fF473De23ab72454B2bbC45613Ff3bd7",
       "sinceTimestamp": 1733498411,
@@ -1158,6 +1168,7 @@
       ],
       "proxyType": "immutable",
       "description": "Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1283,6 +1294,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "critical": true,
       "deployerAddress": "eth:0x0125aeb5fF473De23ab72454B2bbC45613Ff3bd7",
       "sinceTimestamp": 1733498411,
       "sinceBlock": 21344310,
@@ -1321,6 +1333,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.",
+      "critical": true,
       "deployerAddress": "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9",
       "sinceTimestamp": 1705954799,
       "sinceBlock": 19064589,
@@ -1396,6 +1409,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "deployerAddress": "eth:0x0125aeb5fF473De23ab72454B2bbC45613Ff3bd7",
       "sinceTimestamp": 1733498411,
       "sinceBlock": 21344310,
@@ -1472,6 +1486,7 @@
       ],
       "proxyType": "immutable",
       "description": "A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1589,6 +1604,7 @@
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
+      "critical": true,
       "deployerAddress": "eth:0xE69104DD872222E1Bd7C1adD47588F8C62ed64C0",
       "sinceTimestamp": 1778190599,
       "sinceBlock": 25045956,
@@ -1613,6 +1629,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A simple escrow contract storing ETH for the canonical bridge.",
+      "critical": true,
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1753379243,
       "sinceBlock": 22990599,
@@ -1819,6 +1836,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "deployerAddress": "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5",
       "sinceTimestamp": 1624400033,
       "sinceBlock": 12686687,
@@ -1841,6 +1859,7 @@
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
+      "critical": true,
       "deployerAddress": "eth:0xE69104DD872222E1Bd7C1adD47588F8C62ed64C0",
       "sinceTimestamp": 1778190599,
       "sinceBlock": 25045956,
@@ -1951,6 +1970,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.",
+      "critical": true,
       "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1753379243,
@@ -2056,6 +2076,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "ink:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1733498412,
@@ -2167,6 +2188,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
+      "critical": true,
       "deployerAddress": "ink:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
@@ -2446,6 +2468,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.",
+      "critical": true,
       "deployerAddress": "ink:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1733498412,
       "sinceBlock": 0,
@@ -2522,6 +2545,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",

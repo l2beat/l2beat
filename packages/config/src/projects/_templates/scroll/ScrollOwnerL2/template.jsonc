@@ -1,10 +1,12 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.",
+  "critical": true,
   "category": "core",
   "canActIndependently": false,
   "fields": {
     "accessControl": {
+      "severity": "HIGH",
       "handler": {
         "type": "scrollAccessControl",
         "roleNames": {

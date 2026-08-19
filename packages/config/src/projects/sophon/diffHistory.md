@@ -1,3 +1,87 @@
+Generated with discovered.json: 0x7b8fef323a3a70d2eaab84521ffbb581d577c7a3
+
+# Diff at Wed, 19 Aug 2026 10:01:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1786966187
+- current timestamp: 1786966187
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786966187 (main branch discovery), not current.
+
+```diff
+    contract Diamond (eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.validators:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract EraVerifierPlonk (eth:0x0DAAB2B7b38ab48712996E760152c569FA356DbF) [shared-zk-stack/L1VerifierPlonk] {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract EraVerifierFflonk (eth:0x8470d6B3fd71B5fE3906B4ea04498d18F721eDe9) [shared-zk-stack/L1VerifierFflonk] {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AvailL1DAValidator (eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120) [shared-zk-stack/AvailL1DAValidator] {
+    +++ description: Contract that verifies that the validiums data was made available on Avail by querying the eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract EraDualVerifier (eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081) [shared-zk-stack/DualVerifier] {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x8470d6B3fd71B5fE3906B4ea04498d18F721eDe9 or eth:0x0DAAB2B7b38ab48712996E760152c569FA356DbF depending on the supplied proof type.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SophonZkEvmAdmin (eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1 act through it.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1USDCBridge (eth:0xf553E6D903AA43420ED7e3bc2313bE9286A8F987) [shared-zk-stack/L1USDCBridge] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0xf566015ba9c731c165597868894811075630ffe9
 
 # Diff at Mon, 17 Aug 2026 11:30:50 GMT:

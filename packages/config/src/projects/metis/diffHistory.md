@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xe428fbe856066577bcf3ebf25cb5f0bfb429bf91
+
+# Diff at Wed, 19 Aug 2026 10:01:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1767796662
+- current timestamp: 1767796662
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767796662 (main branch discovery), not current.
+
+```diff
+    contract L2CrossDomainMessenger (metis-andromeda:0x4200000000000000000000000000000000000007) [opstack/Layer2/L2CrossDomainMessenger] {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2StandardBridge (metis-andromeda:0x4200000000000000000000000000000000000010) [opstack/Layer2/L2StandardBridge] {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x8b99cb76e2ed2a5c7b1fcbfeb228b196df4c23d7
 
 # Diff at Tue, 09 Jun 2026 12:43:36 GMT:

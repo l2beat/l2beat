@@ -18,6 +18,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "sinceTimestamp": 1715334959,
       "sinceBlock": 19838878,
       "values": {
@@ -40,6 +41,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1715334971,
       "sinceBlock": 19838879,
@@ -399,6 +401,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "critical": true,
       "sinceTimestamp": 1715334971,
       "sinceBlock": 19838879,
       "values": {
@@ -418,6 +421,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
+      "fieldMeta": { "paused": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x5e8d351FD046Aa0b3DDA24096751996C0c397C61": "Proxy",
         "eth:0xF3E372Ec07a9Bf0C94ff21ceBe02952F2164996F": "SuperchainConfig"
@@ -440,6 +444,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1715334971,
       "sinceBlock": 19838879,
@@ -502,7 +507,8 @@
         },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "batcherHash": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9": "Proxy",
@@ -595,6 +601,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
+      "critical": true,
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",

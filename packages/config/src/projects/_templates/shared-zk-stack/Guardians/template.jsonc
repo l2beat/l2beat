@@ -1,15 +1,18 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "description": "Custom Multisig implementation that has a general threshold of {{EIP1271_THRESHOLD}} and a specific threshold for extending the legal voting period of {{EXTEND_LEGAL_VETO_THRESHOLD}}.",
   "ignoreMethods": ["members"],
   "fields": {
     "$members": {
+      "severity": "HIGH",
       "handler": {
         "type": "array",
         "method": "members"
       }
     },
     "$threshold": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "EIP1271_THRESHOLD",

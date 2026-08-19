@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated.",
+  "critical": true,
   "category": "core",
   "ignoreMethods": [
     "committedBatches",
@@ -12,6 +13,7 @@
   "ignoreRelatives": ["messageQueueV1"], // deprecated
   "fields": {
     "sequencers": {
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "account",
@@ -26,6 +28,7 @@
       }
     },
     "provers": {
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "account",

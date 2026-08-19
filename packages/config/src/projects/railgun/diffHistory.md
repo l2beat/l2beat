@@ -1,3 +1,85 @@
+Generated with discovered.json: 0xe4c25f15bb3126038b57ea9f4fb52425db398478
+
+# Diff at Wed, 19 Aug 2026 10:01:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1786961539
+- current timestamp: 1786961539
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786961539 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8) [railgun/ProxyAdmin] {
+    +++ description: Admin interface for Railgun's pausable upgradeable proxies. It does not hold funds, but its controller can operate every proxy attached to it.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract VerificationKeySetter_64DA (eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract VerificationKeySetter_9086 (eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Delegator (eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B) [railgun/Delegator] {
+    +++ description: Permission router proxy owned by Railgun governance.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Rail Token (eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D) [railgun/RailToken] {
+    +++ description: RAIL governance token contract with a capped (100,000,000 RAIL total supply) mint schedule and an early anti-bot transfer override.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Staking (eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20) [railgun/Staking] {
+    +++ description: RAIL staking contract that tracks delegated voting power, enforces a 1mo unstake delay, and snapshots staking balances for governance every 1d. Its parameters define the governance voting system.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RailgunSmartWallet (eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9) [railgun/RailgunSmartWallet] {
+    +++ description: Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x684ef9c4e26669601d84b8db86cababa1e76c968
 
 # Diff at Mon, 17 Aug 2026 10:15:56 GMT:

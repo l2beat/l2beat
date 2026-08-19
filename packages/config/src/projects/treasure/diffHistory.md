@@ -1,3 +1,71 @@
+Generated with discovered.json: 0xc3dbda36d41e6914cf1f8642b47fd848858f4d05
+
+# Diff at Wed, 19 Aug 2026 10:01:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1753944354
+- current timestamp: 1753944354
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753944354 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock2 (eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) [shared-zk-stack/ValidatorTimelock] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Diamond (eth:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.validators:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ValidatorTimelock (eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) [shared-zk-stack/ValidatorTimelock] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ValidiumL1DAValidator (eth:0x907b30407249949521Bf0c89A43558dae200146A) [shared-zk-stack/ValidiumL1DAValidator] {
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract TreasureZkEvmAdmin (eth:0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x282370D1e925ee897CB29Cb3beC13aAe0743067C act through it.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Verifier (eth:0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5) [shared-zk-stack/old/Verifier] {
+    +++ description: Implements the ZK proof verification logic.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x04f765293de9e4199cc91cd7f09742beb0c5abf9
 
 # Diff at Mon, 27 Jul 2026 11:01:28 GMT:

@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xdca2a719d38de07fa11f64b990df01ceac3bfaa1
+
+# Diff at Wed, 19 Aug 2026 10:01:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1743926099
+- current timestamp: 1743926099
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1743926099 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x631d9ab34e379acb2f8c0a2dabbc296f258853d4
 
 # Diff at Fri, 15 May 2026 12:36:05 GMT:

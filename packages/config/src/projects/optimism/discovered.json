@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "timestamp": 1784283055,
-  "configHash": "0xc3115e3985e3bea24feada9131482b349366db34b07586039f0cf7dfa678f718",
+  "configHash": "0x7bda9d07540f2b3b2f498d5dd8a05fd3e37163389c57e2d33c3323c6864aac43",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -23,6 +23,7 @@
       ],
       "proxyType": "immutable",
       "description": "used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -61,6 +62,7 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -111,6 +113,7 @@
       ],
       "proxyType": "immutable",
       "description": "Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.",
+      "critical": true,
       "deployerAddress": "eth:0x075da589886BA445d7c7e81c472059dE7AE65250",
       "sinceTimestamp": 1625675779,
       "sinceBlock": 12781431,
@@ -138,6 +141,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
+      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1782428747,
@@ -185,6 +189,7 @@
       ],
       "proxyType": "immutable",
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
+      "critical": true,
       "deployerAddress": "eth:0xE69104DD872222E1Bd7C1adD47588F8C62ed64C0",
       "sinceTimestamp": 1778190599,
       "sinceBlock": 25045956,
@@ -215,6 +220,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
       "deployerAddress": "eth:0x354F3f4ECdcA5E0A7acE08d71348cdC1Dab48960",
       "sinceTimestamp": 1685377403,
@@ -382,6 +388,7 @@
         "VERSION": 0
       },
       "fieldMeta": {
+        "batcherHash": { "severity": "HIGH" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
@@ -407,6 +414,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.",
+      "critical": true,
       "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1753379243,
@@ -496,6 +504,7 @@
       ],
       "proxyType": "immutable",
       "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -511,7 +520,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "21d 13h",
+        "timeSinceLastL2beatInteraction": "1mo 24d",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -529,6 +538,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5",
       "sinceTimestamp": 1624400997,
@@ -675,6 +685,7 @@
       ],
       "proxyType": "immutable",
       "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
+      "critical": true,
       "deployerAddress": "eth:0xE69104DD872222E1Bd7C1adD47588F8C62ed64C0",
       "sinceTimestamp": 1778190599,
       "sinceBlock": 25045956,
@@ -812,6 +823,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A simple escrow contract storing ETH for the canonical bridge.",
+      "critical": true,
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1753379243,
       "sinceBlock": 22990599,
@@ -864,6 +876,7 @@
       ],
       "proxyType": "immutable",
       "description": "Stores DAI deposited from the attached L1DAITokenBridge.",
+      "critical": true,
       "deployerAddress": "eth:0x075da589886BA445d7c7e81c472059dE7AE65250",
       "sinceTimestamp": 1625675683,
       "sinceBlock": 12781427,
@@ -902,6 +915,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -989,6 +1003,7 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1245,6 +1260,7 @@
       ],
       "proxyType": "immutable",
       "description": "Custom escrow for SNX bridged via canonical messaging.",
+      "critical": true,
       "deployerAddress": "eth:0xDe910777C787903F78C89e7a0bf7F4C435cBB1Fe",
       "sinceTimestamp": 1620680982,
       "sinceBlock": 12409015,
@@ -1377,6 +1393,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.",
+      "critical": true,
       "deployerAddress": "eth:0x2a61d3ba5030Ef471C74f612962c7367ECa3a62d",
       "sinceTimestamp": 1659687799,
       "sinceBlock": 15281202,
@@ -1463,6 +1480,7 @@
       ],
       "proxyType": "immutable",
       "description": "Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1516,6 +1534,7 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1589,6 +1608,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.",
+      "critical": true,
       "deployerAddress": "eth:0x25BdF215CA623A02622843abE38363FfdB3E79A9",
       "sinceTimestamp": 1705954799,
       "sinceBlock": 19064589,
@@ -1665,6 +1685,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "critical": true,
       "deployerAddress": "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5",
       "sinceTimestamp": 1624401464,
       "sinceBlock": 12686786,
@@ -1705,6 +1726,7 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x6B7C001F4af36A576babA2aF3b5251Fc326Ab09A",
       "sinceTimestamp": 1610850364,
@@ -1776,6 +1798,7 @@
       ],
       "proxyType": "immutable",
       "description": "A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1837,6 +1860,7 @@
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
+      "critical": true,
       "deployerAddress": "eth:0xE69104DD872222E1Bd7C1adD47588F8C62ed64C0",
       "sinceTimestamp": 1778190599,
       "sinceBlock": 25045956,
@@ -1861,6 +1885,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.",
+      "critical": true,
       "ignoreInWatchMode": ["params", "balance"],
       "deployerAddress": "eth:0x354F3f4ECdcA5E0A7acE08d71348cdC1Dab48960",
       "sinceTimestamp": 1685377379,
@@ -2009,6 +2034,7 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2089,6 +2115,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "deployerAddress": "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5",
       "sinceTimestamp": 1624400033,
       "sinceBlock": 12686687,
@@ -2113,6 +2140,7 @@
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
+      "critical": true,
       "deployerAddress": "eth:0xE69104DD872222E1Bd7C1adD47588F8C62ed64C0",
       "sinceTimestamp": 1778190599,
       "sinceBlock": 25045956,
@@ -2218,6 +2246,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.",
+      "critical": true,
       "ignoreInWatchMode": [
         "gameCount",
         "permissionedGameArgs",
@@ -2370,6 +2399,7 @@
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -2414,6 +2444,7 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2495,6 +2526,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
@@ -2616,6 +2648,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
+      "critical": true,
       "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
@@ -2905,6 +2938,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.",
+      "critical": true,
       "deployerAddress": "oeth:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1636665399,
       "sinceBlock": 0,
@@ -2981,6 +3015,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -3330,6 +3365,7 @@
       ],
       "proxyType": "immutable",
       "description": "The OP token contract. The minting policy is controlled by the oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005.",
+      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "oeth:0xcDE47C1a5e2d60b9ff262b0a3b6d486048575Ad9",
       "sinceTimestamp": 1650979836,
@@ -3361,6 +3397,7 @@
       ],
       "proxyType": "immutable",
       "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
+      "critical": true,
       "deployerAddress": "oeth:0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
       "sinceTimestamp": 1665174739,
       "sinceBlock": 28103702,
@@ -3556,6 +3593,7 @@
         "0xd366f745f0b211567995cba05bc2f3ec23d5b5816955b2151befbd1be367438f"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",

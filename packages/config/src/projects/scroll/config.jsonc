@@ -89,6 +89,8 @@
       "ignoreDiscovery": true
     },
     "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": {
+      // proposer on TimelockSCEmergency/TimelockSCSlow: no-delay core upgrades, verifier updates, ScrollOwner role admin
+      "critical": true,
       "description": "Multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.",
       "references": [
         {
@@ -102,6 +104,8 @@
       ]
     },
     "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": {
+      // proposer on L2 TimelockSCEmergencyScroll/TimelockSCSlow: no-delay upgrades of all L2 core contracts
+      "critical": true,
       "description": "L2 counterpart of ScrollAdminMultisig.",
       "references": [
         {
@@ -115,11 +119,15 @@
       "fields": { "counterpart": { "edit": ["format", "ScrollAddress"] } }
     },
     "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515": {
+      // DaiEscrow: holds DAI counted in TVS, releases it on L2 withdrawal messages
+      "critical": true,
       "ignoreRelatives": ["counterpart"],
       "fields": { "counterpart": { "edit": ["format", "ScrollAddress"] } },
       "category": "bridge-external"
     },
     "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504": {
+      // wstETH escrow: holds wstETH counted in TVS, releases it on L2 withdrawal messages
+      "critical": true,
       "ignoreMethods": ["l1Token", "l2Token"],
       "ignoreRelatives": ["owner", "$admin"],
       "fields": { "counterpart": { "edit": ["format", "ScrollAddress"] } },
@@ -182,11 +190,15 @@
       }
     },
     "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": {
+      // plonk verifier used by the active v7/v8 ZkEvmVerifiers (proof verification path)
+      "critical": true,
       "manualSourcePaths": {
         "eth:0x39854DF30b3482Ef546F68B8981Fae5A2C426eA4": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/0.5.2/bundle/verifier.bin"
       }
     },
     "eth:0x749fC77A1a131632a8b88e8703E489557660C75e": {
+      // plonk verifier used by the active v9 ZkEvmVerifierPostFeynman (proof verification path)
+      "critical": true,
       "manualSourcePaths": {
         "eth:0x749fC77A1a131632a8b88e8703E489557660C75e": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/v0.7.1/verifier/verifier.bin"
       }
@@ -202,16 +214,22 @@
       "ignoreDiscovery": true
     },
     "scr:0x5300000000000000000000000000000000000000": {
+      // L2MessageQueue: builds the withdrawal merkle tree whose root (withdrawRoot) is used on L1 to validate all withdrawals
+      "critical": true,
       "description": "Used to append messages to the L2MessageQueue from the L2ScrollMessenger.",
       "ignoreMethods": ["branches"],
       "ignoreInWatchMode": ["messageRoot", "nextMessageIndex"]
     },
     "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4": {
+      // bridged USDC token: unauthorized L2 minting is redeemable against the L1USDCGateway escrow
+      "critical": true,
       "category": "bridge-external",
       "description": "Contract of the USDC token on Scroll.",
       "ignoreMethods": ["totalSupply"]
     },
     "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0": {
+      // AgoraGovernor is proposer on L2 TimelockSCSlow which holds DEFAULT_ADMIN_ROLE on ScrollOwner (L2): code change bypasses voting and can queue role grants that upgrade all L2 core contracts
+      "critical": true,
       "description": "Used to propose and manage onchain governance proposals.",
       "category": "gov",
       "fields": {
@@ -242,21 +260,31 @@
       ]
     },
     "scr:0xd29687c813D741E2F938F4aC377128810E217b1b": {
+      // SCR is counted in TVS (native), and SCR voting power decides AgoraGovernor proposals that flow into the DEFAULT_ADMIN timelock of ScrollOwner (L2)
+      "critical": true,
       "ignoreMethods": ["getPastTotalSupply", "clock"]
     },
     "scr:0x66e5312EDeEAef6e80759A0F789e7914Fb401484": {
+      // beacon/factory for all bridged standard ERC20s on L2: its implementation pointer defines the code of tokens redeemable against L1 escrow
+      "critical": true,
       "description": "Contract used to deploy ScrollStandardERC20 tokens for L2StandardERC20Gateway."
     },
     "scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A": {
+      // L2StandardERC20Gateway: trusted counterpart of L1StandardERC20Gateway, can send withdrawal messages releasing L1 escrow
+      "critical": true,
       "category": "core",
       "description": "Contract used to withdraw ERC20 tokens on L2 and finalize deposit the tokens from L1.",
       "fields": { "counterpart": { "edit": ["format", "EthereumAddress"] } }
     },
     "scr:0x64CCBE37c9A82D85A1F2E74649b7A42923067988": {
+      // trusted counterpart of L1CustomERC20Gateway (pufETH etc.), can send withdrawal messages releasing L1 escrow
+      "critical": true,
       "description": "Counterpart to the L1CustomERC20Gateway contract.",
       "fields": { "counterpart": { "edit": ["format", "EthereumAddress"] } }
     },
     "scr:0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE": {
+      // controller of USDC minters on Scroll: minter changes enable unauthorized minting redeemable against the L1 USDC escrow
+      "critical": true,
       "description": " Contract that uses controllers to manage minters for USDC on Scroll."
     },
     "scr:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc": {
@@ -268,20 +296,30 @@
       "fields": { "counterpart": { "edit": ["format", "EthereumAddress"] } }
     },
     "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": {
+      // L2ScrollMessenger: holds the pre-minted ETH escrow on L2 and is the sole sender of withdrawal messages trusted by L1 gateways
+      "critical": true,
       "description": "ETH is pre-minted to this contract in the genesis block and released on Scroll whenever corresponding deposits are made on Ethereum.",
       "fields": { "counterpart": { "edit": ["format", "EthereumAddress"] } }
     },
     "scr:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0": {
+      // L2ETHGateway: trusted counterpart of L1ETHGateway, can send withdrawal messages releasing L1 ETH escrow
+      "critical": true,
       "description": "Contract of the L2ScrollMessenger contract.",
       "fields": { "counterpart": { "edit": ["format", "EthereumAddress"] } }
     },
     "scr:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69": {
+      // ScrollStandardERC20: beacon implementation of every bridged standard ERC20 on L2; its code defines balances redeemable against L1 escrow
+      "critical": true,
       "description": "Contract of the ERC20 standard token used by the ERC20 factory."
     },
     "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79": {
+      // L2GatewayRouter: entry point pulling user tokens via approvals and routing withdrawals to gateways; malicious code steals TVS-backed L2 tokens
+      "critical": true,
       "description": "Counterpart to the L1GatewayRouter contract."
     },
     "scr:0x7003E7B7186f0E6601203b99F7B8DECBfA391cf9": {
+      // L2WETHGateway: trusted counterpart of L1WETHGateway, can send withdrawal messages releasing L1 WETH escrow
+      "critical": true,
       "fields": {
         "counterpart": { "edit": ["format", "EthereumAddress"] },
         "l1WETH": { "edit": ["format", "EthereumAddress"] }
@@ -305,13 +343,83 @@
     "scr:0x69C2eD64171bF5737c2B78bdF722e68a032B2825": { "category": "spam" },
     "scr:0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F": { "category": "spam" },
     "scr:0xFb77d22ED83F42922F9542e39dCfA9F8C47FDaFf": { "category": "spam" },
-    "scr:0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E": { "category": "spam" },
+    "scr:0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E": {
+      // ProposalTypesConfigurator: live-wired into AgoraGovernor (PROPOSAL_TYPES_CONFIGURATOR); defines quorum/approval thresholds, so a change lets near-zero votes pass proposals into the DEFAULT_ADMIN timelock of ScrollOwner (L2)
+      "critical": true,
+      "category": "spam"
+    },
     "scr:0x0c67D8D067E349669dfEAB132A7c03A90594eE09": {
       "ignoreDiscovery": true
     },
     "eth:0xbc4b3d9A89F187dBaA0D2E60985Ea1FFFa5247d2": {
+      // EURC gateway: EURC is not counted in scroll TVS, so deliberately not critical
       "ignoreRelatives": ["l1USDC"],
       "ignoreInWatchMode": ["totalBridgedUSDC"]
+    },
+    // --- ossification factor: per-address critical flags ---
+    "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072": {
+      // ProxyAdmin of all L1 core proxies (ScrollChain, messenger, queue, gateways, escrows)
+      "critical": true
+    },
+    "scr:0xA76acF000C890b0DD7AEEf57627d9899F955d026": {
+      // ProxyAdmin of all L2 core proxies (L2ScrollMessenger, gateways, USDC)
+      "critical": true
+    },
+    "scr:0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45": {
+      // ProxyAdmin of L2LidoGateway (counterpart of the wstETH escrow)
+      "critical": true
+    },
+    "scr:0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e": {
+      // ProxyAdmin of SCRToken (SCR counted in TVS; SCR is also governance voting power)
+      "critical": true
+    },
+    "scr:0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81": {
+      // ProxyAdmin of AgoraGovernor, which is proposer on the DEFAULT_ADMIN timelock of ScrollOwner (L2)
+      "critical": true
+    },
+    "eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": {
+      // proposer on TimelockEmergency (emergency-nodelay role): can pause ScrollChain/messenger/queue (freezing), remove sequencers/provers, revert unfinalized batches
+      "critical": true
+    },
+    "scr:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": {
+      // proposer on L2 TimelockEmergency (emergency-nodelay role): can pause L2ScrollMessenger via L2PauseController and pause the L2 USDC gateway (freezing)
+      "critical": true
+    },
+    "eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": {
+      // proposer on TimelockFast (ops-fast role): can set ERC20 gateway mappings in L1GatewayRouter and update token mappings in custom/NFT gateways (redirect deposits/withdrawals)
+      "critical": true
+    },
+    "scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": {
+      // proposer on L2 TimelockFast (ops-fast role): can transfer ownership of Scroll USDC and MasterMinter (unauthorized minting against L1 escrow) and change L2 gateway/token mappings
+      "critical": true
+    },
+    "scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9": {
+      // L2LidoGateway: trusted counterpart of the wstETH escrow, can send withdrawal messages releasing it
+      "critical": true
+    },
+    "scr:0x33B60d5Dd260d453cAC3782b0bDC01ce84672142": {
+      // L2USDCGateway: trusted counterpart of L1USDCGateway, burns/mints L2 USDC and can send withdrawal messages releasing the L1 USDC escrow
+      "critical": true
+    },
+    "eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA": {
+      // ZkEvmVerifierPostEuclid-2: registered verifier version 7 (>= 7 usable to verify Scroll STF)
+      "critical": true
+    },
+    "eth:0xa8d4702Aa5c09AF5dD1323E1842a43789021F485": {
+      // ZkEvmVerifierPostFeynman: registered verifier version 8
+      "critical": true
+    },
+    "eth:0x4AF7f3aBd780Fbd319c4356a219100A45F85DDb5": {
+      // ZkEvmVerifierPostFeynman: registered verifier version 9
+      "critical": true
+    },
+    "eth:0x808297224e86b1a6055B5F790a2cE07Ed611f955": {
+      // ZkEvmVerifierPostFeynman: registered verifier version 10 (latest)
+      "critical": true
+    },
+    "eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C": {
+      // plonk verifier used by the active v10 ZkEvmVerifierPostFeynman (proof verification path)
+      "critical": true
     }
   }
 }

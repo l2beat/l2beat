@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "description": "A governance proxy that lets {{owner}} act through it.",
   "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
   "fields": {

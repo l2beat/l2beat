@@ -190,6 +190,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
+      "critical": true,
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -286,6 +287,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1716592061,
       "sinceBlock": 14901357,
@@ -526,6 +528,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "critical": true,
       "sinceTimestamp": 1716592053,
       "sinceBlock": 14901353,
       "values": {
@@ -569,6 +572,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1716592045,
       "sinceBlock": 14901349,
@@ -631,7 +635,8 @@
         },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "batcherHash": { "severity": "HIGH" }
       },
       "implementationNames": {
         "base:0xad22377De22537e4e6bd192AeBCa524a79B0d3Fd": "Proxy",
@@ -654,6 +659,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "sinceTimestamp": 1716591983,
       "sinceBlock": 14901318,
       "values": {
@@ -681,6 +687,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
+      "critical": true,
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1716592039,
       "sinceBlock": 14901346,
@@ -730,6 +737,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "critical": true,
       "sinceTimestamp": 1716592011,
       "sinceBlock": 14901332,
       "values": {
@@ -749,6 +757,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
+      "fieldMeta": { "paused": { "severity": "HIGH" } },
       "implementationNames": {
         "base:0xFC57b0947C079073A1C5Fe61887Eb3495972EE72": "Proxy",
         "base:0x068E44eB31e111028c41598E4535be7468674D0A": "SuperchainConfig"

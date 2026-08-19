@@ -1,3 +1,151 @@
+Generated with discovered.json: 0xf0f9b8b9e35a287b8f0e6ce0b4b3ee9a59198ab5
+
+# Diff at Wed, 19 Aug 2026 10:01:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1783603061
+- current timestamp: 1783603061
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783603061 (main branch discovery), not current.
+
+```diff
+    contract RollupEventInbox (base:0x0961428Ce999C15f5E2624d0bEbd9729387e8185) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Outbox (base:0x10e9F660ed21e662e7f3fB4a49B0Bd9B219bEf95) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ERC20Gateway (base:0x167D43d1D60DE2320B5E143F9c6a058092A913C2) [orbitstack/ERC20Gateway] {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract GatewayRouter (base:0x3CaA4581e7bA1aF2607e0198aF4E4C208f09c98b) [orbitstack/GatewayRouter] {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverMemory (base:0x760C1B5Fe95B2C66D67662Ec544975BDbb129645) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProofEntry (base:0x76600101E42Dd9355D29741288407923268C06ed) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (base:0x841A6E8230CA0f563a841Eb6BF8dfe129672Bdc5) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Inbox (base:0x8635f49481A90DeD18E8D0eB374028C4b39E700F) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProver0 (base:0x86c239F206A0878FB07243ABb4aFa932e6Ace911) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OneStepProverMath (base:0x9F5F2dA42BE9833654C1D702e2E8cfFfC7a0A6A5) [orbitstack/OneStepProverMath] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RollupProxy (base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      fieldMeta.wasmModuleRoot.severity:
++        "HIGH"
+      fieldMeta.getValidators:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Bridge (base:0xcdf10130c75D42a3880Ae521734EaA8631aC2905) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (base:0xd935fb2fA935Ba3D60cc001D757B0E45f540C6f1) [orbitstack/EdgeChallengeManager] {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SequencerInbox (base:0xdA2445f1cA60bC2C739A96298746aDBB6706f011) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.batchPosters:
++        {"severity":"HIGH"}
+      fieldMeta.dacKeyset:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract UpgradeExecutor (base:0xfdFBECa29FFf84A5e1e31F8572509E2C36fF4B81) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      critical:
++        true
+      fieldMeta:
++        {"executors":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xf430d4347896d284fabb28525f3ecd16711deaa7
 
 # Diff at Thu, 11 Jun 2026 11:27:07 GMT:

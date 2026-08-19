@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SuperchainConfigLocal",
+  "critical": true,
   "description": "A local contract acting as source of truth for the paused status and the guardian role for the local chain.",
   "fields": {
     "guardian": {
