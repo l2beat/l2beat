@@ -15,7 +15,7 @@ import { getPermissionsSection } from '~/utils/project/contracts-and-permissions
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { optionToRange } from '~/utils/range/range'
-import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
+import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { EMPTY_TVS_BREAKDOWN } from '../../scaling/tvs/get7dTvsBreakdown'
 import { resolveDefiDependencies } from '../resolveDefiDependencies'
 
@@ -64,11 +64,13 @@ export async function getDefiProjectEntry(
   const icon = manifest.getUrl(`/icons/${project.slug}.png`)
   const [
     contractUtils,
+    projectsChangeReport,
     allProjectsWithContracts,
     zkCatalogProjects,
     dependencyProjects,
   ] = await Promise.all([
     getContractUtils(),
+    getProjectsChangeReport(),
     ps.getProjects({
       select: ['contracts'],
     }),
@@ -94,7 +96,7 @@ export async function getDefiProjectEntry(
       isUnderReview,
     },
     contractUtils,
-    EMPTY_PROJECTS_CHANGE_REPORT,
+    projectsChangeReport,
   )
 
   const contractsSection = getContractsSection(
@@ -107,7 +109,7 @@ export async function getDefiProjectEntry(
       isUnderReview,
     },
     contractUtils,
-    EMPTY_PROJECTS_CHANGE_REPORT,
+    projectsChangeReport,
     zkCatalogProjects,
     allProjectsWithContracts,
     EMPTY_TVS_BREAKDOWN,
