@@ -12,15 +12,16 @@ import type {
 /**
  * The id hashes the identity fields only (inbox, sequencers, topics,
  * namespace, appIds, customerId), so a disappeared id means those fields
- * changed - typically discovery picked up a sequencer/inbox rotation. Editing
- * the entry in place loses everything indexed under the old id; the old entry
- * has to be frozen instead. See projects/ink/ink.ts for the resulting shape.
+ * changed - typically discovery picked up a sequencer/inbox rotation through
+ * the project's open helper entry (getOpStackDaTracking & co). Editing the
+ * entry in place loses everything indexed under the old id; the old entry has
+ * to be frozen instead. See projects/ink/ink.ts for the resulting shape.
  */
 const FREEZE_RECIPE = [
   'Freeze the old configuration instead of letting it disappear:',
-  "1. In the project's .ts, turn the old entry into literals: copy the values it had before the change (inbox, sequencers/topics, namespace, appIds, customerId, since) from git history - the pre-change discovered.json or project .ts; the snapshot line above tells you which entry it is - so it keeps producing exactly this id. If the entry came from a template, move it to nonTemplateDaTracking.",
+  "1. In the project's .ts daTracking array, turn the old entry into literals: copy the values it had before the change (inbox, sequencers/topics, namespace, appIds, customerId, since) from git history - the pre-change discovered.json or project .ts; the snapshot line above tells you which entry it is - so it keeps producing exactly this id. If the entry is a helper call (getOpStackDaTracking / getOrbitStackDaTracking / getZkStackDaTracking), replace the call with the literal entry it used to produce.",
   "2. Close it with 'untilBlock' (or 'untilTimestamp' for eigen-da) at the last block the old configuration was live - verify the exact block on-chain. If you cannot, the current discovery run's usedBlockNumbers[<chain>] in discovered.json is a safe upper bound (the change had already happened by then).",
-  "3. Add the new entry with the new values, starting where the old one ended (sinceBlock = the old entry's untilBlock). If you only bracketed the change, start it at the previous discovery run's usedBlockNumbers[<chain>] (from the pre-change discovered.json) - overlaps between entries are fine, holes are not.",
+  "3. Add the new entry with the new values as the last array element, starting where the old one ended (sinceBlock = the old entry's untilBlock). For a template stack that is the helper call again - getOpStackDaTracking(discovery, { sinceBlock }) - so the next rotation is caught the same way. If you only bracketed the change, start it at the previous discovery run's usedBlockNumbers[<chain>] (from the pre-change discovered.json) - overlaps between entries are fine, holes are not.",
   '4. If the configuration really stopped being used (the project left the layer), close it as in step 2 and do not add a new entry - a deleted entry is gone for good, a closed one is kept.',
   "5. Only then run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot as the sign-off. Regenerating it first 'fixes' CI and silently accepts the wipe.",
 ].join('\n')
@@ -32,7 +33,7 @@ const FREEZE_RECIPE = [
  */
 const RANGE_CHANGE_RECIPE = [
   'The id hashes the identity fields and NOT the range, so this is the same configuration with a moved window. On deploy the backend trims the indexed data to the new range: raising since or lowering/setting until deletes only the records outside it (plus up to an hour at the edited edge - records are hourly buckets); lowering since still wipes the configuration and re-indexes it from the new start. See "Editing sinceBlock / untilBlock" in docs/da-tracking.md.',
-  "- If you did not intend the move (usually discovery drift on a sinceBlock): pin the range by writing the snapshot's since/until into the project's .ts as literals instead of the discovered values, and leave the snapshot alone.",
+  "- If you did not intend the move: ranges are literals in the project's .ts (also in the helper calls), so find the edit that changed since/until, restore the snapshot's values and leave the snapshot alone.",
   "- If you intended it (you just closed an open entry with 'untilBlock' while freezing it, or you are deliberately correcting a range): run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot.",
   'Do not resolve it by freezing the entry and adding a second one with the same identity fields - both would hash to the same id.',
 ].join('\n')

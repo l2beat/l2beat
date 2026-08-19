@@ -7,7 +7,7 @@ import { BADGES } from '../../common/badges'
 import { REASON_FOR_BEING_OTHER } from '../../common/reasonsForBeingOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('phala')
 
@@ -20,6 +20,7 @@ const opSuccinctL2OutputOracle = EthereumAddress(
 export const phala: ScalingProject = opStackL2({
   addedAt: UnixTime(1734388655), // Dec-16-2024 10:37:35 PM UTC
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 21418009 })],
   genesisTimestamp: UnixTime.fromDate(new Date('2024-12-16T22:14:09Z')),
   display: {
     name: 'Phala',

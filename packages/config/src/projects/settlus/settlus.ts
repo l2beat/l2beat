@@ -16,7 +16,7 @@ export const settlus: ScalingProject = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1737636288), // 2025-01-23T12:44:48+00:00
   additionalBadges: [BADGES.RaaS.Alchemy],
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),

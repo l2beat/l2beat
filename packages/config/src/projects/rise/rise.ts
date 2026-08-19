@@ -78,7 +78,7 @@ export const rise: ScalingProject = opStackL2({
       type: 'general',
     },
   ],
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       type: 'eigen-da',
       daLayer: ProjectId('eigenda'),
