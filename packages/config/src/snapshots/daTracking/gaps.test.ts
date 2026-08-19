@@ -1,5 +1,7 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { findCoverageGaps, type TrackedRange } from './gaps'
+import type { BaseProject } from '../../types'
+import { findCoverageGaps, findDaTrackingGaps, type TrackedRange } from './gaps'
 
 describe(findCoverageGaps.name, () => {
   const entry = (
@@ -126,5 +128,45 @@ describe(findCoverageGaps.name, () => {
         after: eigen(1700007200),
       },
     ])
+  })
+})
+
+describe(findDaTrackingGaps.name, () => {
+  const project = (id: string, ...ranges: [number, number?][]): BaseProject =>
+    ({
+      id: ProjectId(id),
+      daTrackingConfig: ranges.map(([sinceBlock, untilBlock]) => ({
+        type: 'ethereum' as const,
+        daLayer: ProjectId('ethereum'),
+        inbox: '0xInbox',
+        sinceBlock,
+        untilBlock,
+      })),
+    }) as BaseProject
+
+  it('reports a gap between two config entries', () => {
+    const violations = findDaTrackingGaps([project('taiko', [100, 200], [300])])
+
+    expect(violations.length).toEqual(1)
+    expect(violations[0].projectId).toEqual('taiko')
+    expect(violations[0].message).toInclude('taiko/ethereum/201-299')
+  })
+
+  it('skips a gap listed in the legacy exclusions', () => {
+    const violations = findDaTrackingGaps(
+      [project('taiko', [100, 200], [300])],
+      ['taiko/ethereum/201-299'],
+    )
+
+    expect(violations).toEqual([])
+  })
+
+  it('only excludes the exact gap that is listed', () => {
+    const violations = findDaTrackingGaps(
+      [project('taiko', [100, 200], [300])],
+      ['taiko/ethereum/201-298'],
+    )
+
+    expect(violations.length).toEqual(1)
   })
 })

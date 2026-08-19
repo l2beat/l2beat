@@ -1,9 +1,16 @@
 import { formatRange, type RangeChange } from './ranges'
 import type { ConfigViolation, SnapshotDomain, SnapshotIdentity } from './types'
 
-type Domain = Pick<SnapshotDomain, 'name' | 'wipeWarning' | 'freezeRecipe'>
+type Domain = Pick<
+  SnapshotDomain,
+  'name' | 'wipeWarning' | 'freezeRecipe' | 'rangeChangeRecipe'
+>
 
-const AI_GUARD_RAIL =
+/**
+ * Appended by every message that reports data loss, so a recipe can never
+ * forget it - resolving these needs on-chain judgement an agent cannot make.
+ */
+export const AI_GUARD_RAIL =
   "If you're an AI, don't address this error yourself - pass it over to a human."
 
 /** Every message the guard can fail with, so they can be asserted directly. */
@@ -17,8 +24,9 @@ export function removalMessage(
     `${domain.name} identities disappeared for ${projectId}:`,
     ...missing.map((e) => `- ${e.id} (${e.label}) [${formatRange(e)}]`),
     domain.wipeWarning,
-    'Verify on-chain whether the configuration really stopped being used. If it did, freeze it - do not let it disappear.',
+    'The identity fields changed, so this is a different configuration - verify on-chain that the old one really stopped being used.',
     domain.freezeRecipe,
+    AI_GUARD_RAIL,
   ].join('\n')
 }
 
@@ -35,7 +43,8 @@ export function rangeChangeMessage(
     ),
     'On deploy the backend takes the new range as authoritative: it re-syncs each configuration from its new start and DROPS whatever it already indexed outside the new range.',
     'A range almost never changes on purpose - it is usually discovery drift moving a since, and nobody typed it.',
-    domain.freezeRecipe,
+    domain.rangeChangeRecipe,
+    AI_GUARD_RAIL,
   ].join('\n')
 }
 
@@ -62,6 +71,7 @@ export function duplicateIdsMessage(
       ({ id, owners }) =>
         `- ${id}: ${owners.map((o) => `${o.projectId} (${o.label})`).join(', ')}`,
     ),
+    'Two configs hash to the same backend configuration id, so the indexer cannot tell them apart. This also happens when a range change is "fixed" by freezing an entry and re-adding it with the same identity fields - only the identity fields are hashed, ranges are not.',
   ].join('\n')
 }
 
@@ -72,7 +82,7 @@ export function gapMessage(
   return [
     `${domain.name} configs stop covering a project and pick it up again later:`,
     ...violations.map((v) => v.message),
-    'Close each gap by adding a config entry covering the missing range. Do NOT widen an existing range - that changes its identity range and re-syncs it. If the gap is real and accepted, add its key to LEGACY_COVERAGE_GAPS with a comment explaining it.',
+    'Close each gap by adding a config entry covering the missing range. Do NOT widen an existing range - that changes its range and re-syncs it. If the gap is real and accepted, add its key to LEGACY_COVERAGE_GAPS with a comment explaining it.',
     AI_GUARD_RAIL,
   ].join('\n')
 }

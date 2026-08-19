@@ -1,6 +1,11 @@
 import { expect } from 'earl'
 import { daTrackingDomain } from './daTracking/identities'
-import { gapMessage, rangeChangeMessage, removalMessage } from './messages'
+import {
+  AI_GUARD_RAIL,
+  gapMessage,
+  rangeChangeMessage,
+  removalMessage,
+} from './messages'
 
 describe('snapshot guard messages', () => {
   const domain = daTrackingDomain
@@ -31,9 +36,7 @@ describe('snapshot guard messages', () => {
     })
 
     it('keeps the AI guard-rail line', () => {
-      expect(message).toInclude(
-        "If you're an AI, don't address this error yourself - pass it over to a human.",
-      )
+      expect(message).toInclude(AI_GUARD_RAIL)
     })
   })
 
@@ -53,15 +56,20 @@ describe('snapshot guard messages', () => {
       expect(message).toInclude('100 -> open => 150 -> open')
     })
 
-    it('warns about the data loss and walks through the freeze recipe', () => {
+    it('warns about the data loss and offers pin-or-accept', () => {
       expect(message).toInclude('DROPS')
-      expect(message).toInclude(domain.freezeRecipe)
+      expect(message).toInclude(domain.rangeChangeRecipe)
+      expect(message).toInclude('pin the range')
+      expect(message).toInclude('If the move is intended')
+    })
+
+    it('does not tell the human to freeze and re-add, which would collide on the id', () => {
+      expect(message).not.toInclude(domain.freezeRecipe)
+      expect(message).toInclude('Do not freeze it and add a second entry')
     })
 
     it('keeps the AI guard-rail line', () => {
-      expect(message).toInclude(
-        "If you're an AI, don't address this error yourself - pass it over to a human.",
-      )
+      expect(message).toInclude(AI_GUARD_RAIL)
     })
   })
 
@@ -77,9 +85,7 @@ describe('snapshot guard messages', () => {
       expect(message).toInclude('taiko is not tracked between 201 and 299')
       expect(message).toInclude('Do NOT widen an existing range')
       expect(message).toInclude('LEGACY_COVERAGE_GAPS')
-      expect(message).toInclude(
-        "If you're an AI, don't address this error yourself - pass it over to a human.",
-      )
+      expect(message).toInclude(AI_GUARD_RAIL)
     })
   })
 })

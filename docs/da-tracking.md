@@ -87,20 +87,36 @@ enforces it and fails when:
 - a new identity is **not yet in the snapshot** - harmless, just regenerate;
 - two configs **hash to the same id**.
 
-### Range changes: freeze, don't regenerate
+### Don't just regenerate
 
-When the guard reports a removed identity or a moved range, regenerating the
-snapshot only silences the alarm - the data is still lost on deploy. Instead:
+Regenerating the snapshot only silences the alarm - the data is still lost on
+deploy. Which fix applies depends on what changed, because `createDaTrackingId`
+hashes the **identity fields only** (inbox, sequencers, topics, namespace,
+appIds, customerId) and deliberately **not** the range. The guard error spells
+out the applicable recipe; the short version:
 
-1. In the project's config, replace the changed entry's discovered values with
-   the literals from the snapshot, so the old identity and its `since` stay
-   exactly as they were.
-2. Close that entry with `untilBlock` (`untilTimestamp` for eigen-da) at the
-   last block/timestamp the old configuration was live.
+**The range moved, the id is the same.** Same configuration, moved window -
+usually discovery drift on a `sinceBlock`. Freezing the entry and adding a
+second one here would produce two entries with the same id, which the guard's
+duplicate check rejects. Either pin the range (write the snapshot's literal
+`since`/`until` into the project's config instead of the discovered value), or,
+if the move is intended, accept it knowingly: raising `since` or lowering
+`until` trims the data outside the new range, and lowering `since` makes the
+backend re-index the configuration from scratch.
+
+**The id disappeared.** The identity fields changed, so it is a different
+configuration and the old one must be frozen, not edited (see the two ethereum
+entries in `packages/config/src/projects/ink/ink.ts`, a sequencer rotation):
+
+1. Replace the old entry's discovered values with the literals from the
+   snapshot, so its id stays exactly as it is.
+2. Close it with `untilBlock` (`untilTimestamp` for eigen-da) at the last
+   block/timestamp the old configuration was live.
 3. Add a new entry with the new values, starting where the old one ended. For
    the lower bound of the change bracket use the previous discovery run's
    `usedBlockNumbers[<chain>]` from the pre-change `discovered.json`.
-4. Only then, after verifying with `pnpm da:preview`, accept the change:
+
+Only then, after verifying with `pnpm da:preview`, accept the change:
 
 ```bash
 cd packages/config

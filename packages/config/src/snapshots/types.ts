@@ -1,9 +1,7 @@
-export interface SnapshotIdentity {
-  id: string
-  label: string
+export interface Range {
   /**
    * Start of the tracked range. Blocks or unix seconds depending on the
-   * config the identity was built from - the unit is implied by the config
+   * config the range was built from - the unit is implied by the config
    * type, both sides of a comparison always come from the same config.
    */
   since: number
@@ -12,6 +10,11 @@ export interface SnapshotIdentity {
    * Absent means the range is still open.
    */
   until?: number
+}
+
+export interface SnapshotIdentity extends Range {
+  id: string
+  label: string
 }
 
 /** Project id -> identities, sorted by key and id for stable diffs. */
@@ -38,12 +41,18 @@ export interface SnapshotDomain {
   /** What the backend destroys when an identity disappears */
   wipeWarning: string
   /**
-   * Multi-line, human-facing instructions for resolving a removed identity or
-   * a changed range without losing data. Must end with the "if you're an AI"
-   * guard-rail line - blind snapshot regeneration is the failure mode this
-   * whole guard exists to prevent.
+   * Multi-line, human-facing instructions for an identity that disappeared,
+   * i.e. a config whose identity fields changed and that must be frozen
+   * rather than edited in place.
    */
   freezeRecipe: string
+  /**
+   * Multi-line, human-facing instructions for a config whose identity is
+   * unchanged but whose range moved. Deliberately different from
+   * freezeRecipe: the id does not depend on the range, so "freeze and re-add"
+   * would produce two entries with the same id.
+   */
+  rangeChangeRecipe: string
   generate: () => Snapshot
   /**
    * Optional invariants checked against the runtime configs (not the

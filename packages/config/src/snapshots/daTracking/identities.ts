@@ -1,18 +1,38 @@
 import { createDaTrackingId } from '@l2beat/shared'
+import groupBy from 'lodash/groupBy'
 import { join } from 'path'
 import { getProjects } from '../../processing/getProjects'
 import type { BaseProject, ProjectDaTrackingConfig } from '../../types'
-import type { Range } from '../ranges'
-import type { Snapshot, SnapshotDomain, SnapshotIdentity } from '../types'
+import type {
+  Range,
+  Snapshot,
+  SnapshotDomain,
+  SnapshotIdentity,
+} from '../types'
 import { findDaTrackingGaps } from './gaps'
 
+/**
+ * For a config whose identity fields changed - the old id is gone for good, so
+ * the old entry has to be frozen instead of edited. See the two ethereum
+ * entries in projects/ink/ink.ts for a worked example (sequencer rotation).
+ */
 const FREEZE_RECIPE = [
-  'Do NOT just regenerate the snapshot. A removed id or a moved range makes the backend re-sync the configuration from its new start and drop everything outside it. Instead, freeze the old range and open a new one:',
-  "1. In the project's config, replace the changed entry's discovered values with the literals from the snapshot above, so the old identity and its 'since' stay exactly as they are.",
+  'Freeze the old configuration, do not let it disappear:',
+  "1. In the project's config, replace the old entry's discovered values with the literals from the snapshot above, so its id stays exactly as it is.",
   "2. Close that entry with 'untilBlock' (or 'untilTimestamp' for eigen-da) at the last block/timestamp the old configuration was live.",
   "3. Add a new entry with the new values, starting where the old one ended. For the lower bound of the change bracket use the previous discovery run's usedBlockNumbers[<chain>] from the pre-change 'discovered.json'.",
   "4. Only then run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot.",
-  "If you're an AI, don't address this error yourself - pass it over to a human.",
+].join('\n')
+
+/**
+ * For a config whose identity is unchanged but whose range moved. The id is a
+ * hash of the identity fields only, so the "freeze and add a new entry" recipe
+ * does not apply here - it would produce two entries with the same id.
+ */
+const RANGE_CHANGE_RECIPE = [
+  'The id hashes the identity fields (inbox, sequencers, topics, namespace, appIds, customerId) and NOT the range, so this is the same configuration with a moved window. Do not freeze it and add a second entry - the two would collide on the id.',
+  "If the move is unintended (usually discovery drift on a sinceBlock): pin the range by writing the snapshot's literal since/until into the project's config instead of the discovered values, and leave the snapshot alone.",
+  "If the move is intended: accept it knowingly, then run 'pnpm snapshots:generate' in packages/config. Raising 'since' or lowering 'until' TRIMS the data outside the new range; lowering 'since' makes the backend re-index the configuration from scratch.",
 ].join('\n')
 
 export const daTrackingDomain: SnapshotDomain = {
@@ -21,6 +41,7 @@ export const daTrackingDomain: SnapshotDomain = {
   wipeWarning:
     'On deploy the backend WILL WIPE all DA data indexed under these configurations (ManagedMultiIndexer deletes configurations whose id disappears).',
   freezeRecipe: FREEZE_RECIPE,
+  rangeChangeRecipe: RANGE_CHANGE_RECIPE,
   generate: () => generateDaTrackingIdentities(getProjects()),
   findConfigViolations: () => findDaTrackingGaps(getProjects()),
 }
@@ -34,13 +55,12 @@ export const daTrackingDomain: SnapshotDomain = {
 export function generateDaTrackingIdentities(
   projects: BaseProject[],
 ): Snapshot {
-  const result: Record<string, SnapshotIdentity[]> = {}
-
+  // Deliberately no dedup - duplicate ids are a config error (colliding
+  // backend configuration ids) and the guard test must see them.
+  const flat: (SnapshotIdentity & { projectId: string })[] = []
   forEachDaTrackingConfig(projects, (projectId, config) => {
-    // Deliberately no dedup - duplicate ids are a config error (colliding
-    // backend configuration ids) and the guard test must see them.
-    result[projectId] ??= []
-    result[projectId].push({
+    flat.push({
+      projectId,
       id: createDaTrackingId(config),
       label: createLabel(config),
       ...getConfigRange(config),
@@ -48,11 +68,13 @@ export function generateDaTrackingIdentities(
   })
 
   return Object.fromEntries(
-    Object.entries(result)
+    Object.entries(groupBy(flat, (e) => e.projectId))
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([projectId, identities]) => [
         projectId,
-        identities.sort((a, b) => a.id.localeCompare(b.id)),
+        identities
+          .map(({ projectId: _, ...identity }) => identity)
+          .sort((a, b) => a.id.localeCompare(b.id)),
       ]),
   )
 }

@@ -1,9 +1,4 @@
-import type { SnapshotIdentity } from './types'
-
-export interface Range {
-  since: number
-  until?: number
-}
+import type { Range, SnapshotIdentity } from './types'
 
 export interface RangeChange {
   id: string

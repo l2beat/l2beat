@@ -1,18 +1,16 @@
+import groupBy from 'lodash/groupBy'
 import type { BaseProject } from '../../types'
 import { formatRange } from '../ranges'
-import type { ConfigViolation } from '../types'
+import type { ConfigViolation, Range } from '../types'
 import {
   createLabel,
   forEachDaTrackingConfig,
   getConfigRange,
 } from './identities'
 
-export interface TrackedRange {
+export interface TrackedRange extends Range {
   daLayer: string
   label: string
-  since: number
-  /** Absent means the range is still open, i.e. it covers everything after. */
-  until?: number
 }
 
 export interface CoverageGap {
@@ -41,7 +39,9 @@ export interface CoverageGap {
  */
 export function findCoverageGaps(entries: TrackedRange[]): CoverageGap[] {
   const gaps: CoverageGap[] = []
-  for (const [daLayer, layerEntries] of groupByLayer(entries)) {
+  for (const [daLayer, layerEntries] of Object.entries(
+    groupBy(entries, (e) => e.daLayer),
+  )) {
     const sorted = [...layerEntries].sort((a, b) => a.since - b.since)
     let frontier = sorted[0].since - 1
     let last = sorted[0]
@@ -68,14 +68,6 @@ export function findCoverageGaps(entries: TrackedRange[]): CoverageGap[] {
   return gaps
 }
 
-function groupByLayer(entries: TrackedRange[]): Map<string, TrackedRange[]> {
-  const byLayer = new Map<string, TrackedRange[]>()
-  for (const entry of entries) {
-    byLayer.set(entry.daLayer, [...(byLayer.get(entry.daLayer) ?? []), entry])
-  }
-  return byLayer
-}
-
 /**
  * Gaps that predate this check. They are not fixed by editing ranges - moving
  * a since/until makes the backend re-sync and wipe the affected configuration.
@@ -87,22 +79,25 @@ function groupByLayer(entries: TrackedRange[]): Map<string, TrackedRange[]> {
 export const LEGACY_COVERAGE_GAPS: string[] = []
 
 /** Coverage gaps across all projects, minus the accepted legacy ones. */
-export function findDaTrackingGaps(projects: BaseProject[]): ConfigViolation[] {
-  const byProject = new Map<string, TrackedRange[]>()
+export function findDaTrackingGaps(
+  projects: BaseProject[],
+  legacyGaps: string[] = LEGACY_COVERAGE_GAPS,
+): ConfigViolation[] {
+  const flat: (TrackedRange & { projectId: string })[] = []
   forEachDaTrackingConfig(projects, (projectId, config) => {
-    byProject.set(projectId, [
-      ...(byProject.get(projectId) ?? []),
-      {
-        daLayer: config.daLayer,
-        label: createLabel(config),
-        ...getConfigRange(config),
-      },
-    ])
+    flat.push({
+      projectId,
+      daLayer: config.daLayer,
+      label: createLabel(config),
+      ...getConfigRange(config),
+    })
   })
 
-  const legacy = new Set(LEGACY_COVERAGE_GAPS)
+  const legacy = new Set(legacyGaps)
   const violations: ConfigViolation[] = []
-  for (const [projectId, entries] of byProject) {
+  for (const [projectId, entries] of Object.entries(
+    groupBy(flat, (e) => e.projectId),
+  )) {
     for (const gap of findCoverageGaps(entries)) {
       if (legacy.has(gapKey(projectId, gap))) {
         continue
