@@ -317,7 +317,7 @@ function ProtocolSection() {
           horizontal
           tone="garden"
           title="Not reviewed yet?"
-          description="The garden is open. Answer the submission questions and we will evaluate the protocol against the four crops; if it lands in the set, the badge above is yours."
+          description="The garden is open. Answer the submission questions and we will evaluate the protocol against the four crops."
           cta="Submit your protocol"
           href={SUBMIT_PROTOCOL_PATH}
         />
