@@ -245,9 +245,13 @@ function CompareChartCard({
         )}
       </div>
       <CompareChartHoveredProvider isHovered={isHovered}>
+        {/* Touch fires no mouseenter while dragging and Recharts keeps the
+            tooltip open after touchend, so the touched card is registered
+            explicitly and stays the hovered one until another is touched. */}
         <div
           onMouseEnter={() => onHoverChange(true)}
           onMouseLeave={() => onHoverChange(false)}
+          onTouchStart={() => onHoverChange(true)}
         >
           <metric.Chart
             projects={projects}
