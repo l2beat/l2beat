@@ -12,7 +12,6 @@ import type {
   TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../../tools/uif/multi/types'
-import { getEigenDaTrimRange } from './getEigenDaTrimRange'
 
 export interface Dependencies
   extends Omit<
@@ -132,7 +131,12 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
     configurations: TrimRemovalConfiguration[],
   ): Promise<void> {
     for (const configuration of configurations) {
-      const [from, to] = getEigenDaTrimRange(configuration.range)
+      // Records are hourly buckets, so cut at full hours: keep the bucket holding
+      // the new sinceTimestamp (range ends at since - 1; nothing re-indexes it),
+      // drop the bucket holding the new untilTimestamp (range starts at until + 1;
+      // it is re-fetched if the range grows again). Same rule as DaIndexer.
+      const from = UnixTime.toStartOf(configuration.range[0], 'hour')
+      const to = UnixTime.toStartOf(configuration.range[1] + 1, 'hour') - 1
       const deletedRecords =
         await this.$.db.dataAvailability.deleteByConfigInTimeRange(
           configuration.id,

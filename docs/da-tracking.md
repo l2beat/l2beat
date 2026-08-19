@@ -87,8 +87,7 @@ Rows are hourly buckets, so an edge that is not a full hour has a bucket
 straddling it. The rule matches the block DA indexer: at the `since` edge the
 straddling hour is kept (it is never indexed again, so deleting it would leave
 a hole); at the `until` edge it is deleted (indexing resumes inside that hour
-if the range is ever extended again, so nothing is lost for good). See
-`getEigenDaTrimRange` in `packages/backend`.
+if the range is ever extended again, so nothing is lost for good).
 
 ## Guarding against silent data wipes
 
