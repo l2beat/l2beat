@@ -172,17 +172,26 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
   }
 
   /**
-   * Drops the data outside of a configuration's block range instead of wiping
-   * its whole history. Runs when sinceBlock is raised or untilBlock changes.
+   * Deletes the data OUTSIDE of the given ranges - the opposite of the sibling
+   * trimData implementations, which delete the range they are given. Records
+   * hold no block numbers, so the range itself cannot be translated into a
+   * delete; only the block that survived at the edited edge can.
    *
-   * Records are hourly buckets and hold no block numbers, so the boundary block
-   * is mapped to its timestamp and the hour it falls into is deleted together
-   * with the out-of-range side. That hour mixes blobs from both sides of the
-   * boundary and its partial size cannot be subtracted. Keeping it would be
-   * worse: the framework leaves currentHeight at the boundary block, so its
-   * blobs would be added a second time once indexing resumes (DaService sums
-   * new blobs into existing records). We undercount by at most one hour per
-   * edited edge and never double count.
+   * Runs when sinceBlock is raised or untilBlock is changed. The block that
+   * survived at that edge is mapped to its timestamp and everything beyond the
+   * hour it falls into is deleted. That hour mixes blobs from both sides of the
+   * boundary and its partial size cannot be subtracted, so each edge picks the
+   * error it can live with:
+   *
+   * - untilBlock: the hour is deleted too. The framework leaves currentHeight
+   *   at untilBlock, so if the range is extended again indexing resumes inside
+   *   that hour and DaService sums the new blobs into the record that is still
+   *   there - the same blobs would be counted twice. We lose up to an hour of
+   *   in-range data instead.
+   * - sinceBlock: the hour is kept, overcounting the blobs it holds from below
+   *   sinceBlock. Nothing re-indexes it: mergeConfigurations only trims the
+   *   head while currentHeight stays above the new sinceBlock, and wipes the
+   *   configuration otherwise, so there is no record left to sum into.
    */
   override async trimData(
     configurations: TrimRemovalConfiguration[],
@@ -191,30 +200,31 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
       const configuration = this.$.configurations.find((c) => c.id === id)
       assert(configuration, `Configuration not found: ${id}`)
 
-      // Trimming the head means everything before the new minHeight was removed
+      // A head trim covers [oldMinHeight, minHeight - 1], a tail trim covers
+      // [maxHeight + 1, currentHeight], so the ranges cannot be confused
       const isHeadTrim = range[1] < configuration.minHeight
+
       const boundaryBlock = isHeadTrim
         ? configuration.minHeight
         : configuration.maxHeight
+      assert(boundaryBlock !== null, `Configuration ${id} has no boundary`)
       assert(
-        boundaryBlock !== null,
-        `Configuration ${id} has no boundary to trim to`,
+        isHeadTrim || range[0] > boundaryBlock,
+        `Range ${range} is outside of configuration ${id}`,
       )
 
-      const boundaryBucket = UnixTime.toStartOf(
-        await this.$.daProvider.getBlockTimestamp(
-          this.$.daLayer,
-          boundaryBlock,
-        ),
+      // One rpc call inside the update transaction, on a configuration change
+      const boundaryHour = UnixTime.toStartOf(
+        await this.$.daProvider.getBlockTimestamp(this.daLayer, boundaryBlock),
         'hour',
       )
 
       const [from, to] = isHeadTrim
-        ? [boundaryBucket + UnixTime.HOUR, null]
-        : [null, boundaryBucket - UnixTime.HOUR]
+        ? [boundaryHour, null]
+        : [null, boundaryHour - UnixTime.HOUR]
 
       const deletedRecords =
-        await this.$.db.dataAvailability.deleteByConfigurationIdOutsideTimeRange(
+        await this.$.db.dataAvailability.deleteByConfigOutsideTimeRange(
           id,
           from,
           to,

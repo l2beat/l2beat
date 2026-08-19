@@ -529,9 +529,30 @@ describe(ManagedMultiIndexer.name, () => {
         )
       expect(after).toEqualUnsorted([saved('d', 1000, null, null)])
 
-      expect(indexer.trimData).toHaveBeenOnlyCalledWith([
-        { id: 'd'.repeat(12), range: [100, 999] },
+      // everything that was downloaded is out of range now
+      expect(indexer.trimData).not.toHaveBeenCalled()
+      expect(indexer.wipeData).toHaveBeenOnlyCalledWith([
+        { id: 'd'.repeat(12) },
       ])
+    })
+
+    it('minHeight changed with nothing downloaded yet', async () => {
+      const indexer = await initializeMockIndexer(
+        indexerService,
+        [saved('d', 100, null, null)],
+        [actual('d', 150, null)],
+      )
+
+      await indexer.start()
+
+      const after =
+        await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
+          INDEXER_ID,
+        )
+      expect(after).toEqualUnsorted([saved('d', 150, null, null)])
+
+      expect(indexer.trimData).not.toHaveBeenCalled()
+      expect(indexer.wipeData).not.toHaveBeenCalled()
     })
 
     it('maxHeight changed without need to trim', async () => {

@@ -3,7 +3,7 @@ import type { DataAvailabilityRecord, Database } from '@l2beat/database'
 import type { DaBlob, DaProvider } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
-import { expect, mockFn, mockObject } from 'earl'
+import { expect, type MockObject, mockFn, mockObject } from 'earl'
 import type {
   BlockDaIndexedConfig,
   DataAvailabilityTrackingConfig,
@@ -191,7 +191,7 @@ describe(DaIndexer.name, () => {
   })
 
   describe(DaIndexer.prototype.trimData.name, () => {
-    it('deletes records before the raised sinceBlock, boundary hour included', async () => {
+    it('deletes records before the raised sinceBlock, keeping the boundary hour', async () => {
       const configuration = config('project-a', undefined, {
         sinceBlock: 200,
       })
@@ -210,11 +210,11 @@ describe(DaIndexer.name, () => {
         200,
       )
       expect(
-        repository.deleteByConfigurationIdOutsideTimeRange,
+        repository.deleteByConfigOutsideTimeRange,
       ).toHaveBeenOnlyCalledWith(
         createId('project-a'),
-        // Hour 10 straddles the boundary so it is deleted as well
-        UnixTime(11 * UnixTime.HOUR),
+        // Hour 10 holds in-range blobs and is never re-indexed, so it stays
+        UnixTime(10 * UnixTime.HOUR),
         null,
       )
       expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
@@ -239,7 +239,7 @@ describe(DaIndexer.name, () => {
         300,
       )
       expect(
-        repository.deleteByConfigurationIdOutsideTimeRange,
+        repository.deleteByConfigOutsideTimeRange,
       ).toHaveBeenOnlyCalledWith(
         createId('project-a'),
         null,
@@ -268,20 +268,14 @@ describe(DaIndexer.name, () => {
         { id: createId('project-a'), range: [301, 500] },
       ])
 
-      expect(
-        repository.deleteByConfigurationIdOutsideTimeRange,
-      ).toHaveBeenCalledTimes(2)
-      expect(
-        repository.deleteByConfigurationIdOutsideTimeRange,
-      ).toHaveBeenNthCalledWith(
+      expect(repository.deleteByConfigOutsideTimeRange).toHaveBeenCalledTimes(2)
+      expect(repository.deleteByConfigOutsideTimeRange).toHaveBeenNthCalledWith(
         1,
         createId('project-a'),
-        UnixTime(11 * UnixTime.HOUR),
+        UnixTime(10 * UnixTime.HOUR),
         null,
       )
-      expect(
-        repository.deleteByConfigurationIdOutsideTimeRange,
-      ).toHaveBeenNthCalledWith(
+      expect(repository.deleteByConfigOutsideTimeRange).toHaveBeenNthCalledWith(
         2,
         createId('project-a'),
         null,
@@ -293,37 +287,99 @@ describe(DaIndexer.name, () => {
   describe('range edits trim instead of wiping', () => {
     it('trims when sinceBlock of an existing configuration is raised', async () => {
       const configuration = config('project-a', undefined, { sinceBlock: 200 })
-      const indexerService = mockObject<IndexerService>({
-        getSavedConfigurations: mockFn().resolvesTo([
-          {
-            id: createId('project-a'),
-            properties: 'old-properties',
-            minHeight: 100,
-            maxHeight: null,
-            currentHeight: 500,
-          },
-        ]),
-        insertConfigurations: mockFn().resolvesTo(undefined),
-        upsertConfigurations: mockFn().resolvesTo(undefined),
-        deleteConfigurations: mockFn().resolvesTo(undefined),
-      })
-
       const { repository, indexer } = mockIndexer({
         configurations: [configuration],
-        indexerService,
+        indexerService: mockIndexerService({
+          minHeight: 100,
+          maxHeight: null,
+          currentHeight: 500,
+        }),
         blockTimestamps: () => UnixTime(10 * UnixTime.HOUR),
       })
 
       await indexer.initialize()
 
       expect(
-        repository.deleteByConfigurationIdOutsideTimeRange,
+        repository.deleteByConfigOutsideTimeRange,
       ).toHaveBeenOnlyCalledWith(
         createId('project-a'),
-        UnixTime(11 * UnixTime.HOUR),
+        UnixTime(10 * UnixTime.HOUR),
         null,
       )
       expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+    })
+
+    it('trims when untilBlock of an existing configuration is set', async () => {
+      const configuration = config('project-a', undefined, {
+        sinceBlock: 100,
+        untilBlock: 200,
+      })
+      const { repository, indexer, daProvider } = mockIndexer({
+        configurations: [configuration],
+        indexerService: mockIndexerService({
+          minHeight: 100,
+          maxHeight: null,
+          currentHeight: 500,
+        }),
+        // Block 200 is 30 minutes into hour 20
+        blockTimestamps: () =>
+          UnixTime(20 * UnixTime.HOUR + 30 * UnixTime.MINUTE),
+      })
+
+      await indexer.initialize()
+
+      // mergeConfigurations emits [maxHeight + 1, currentHeight] = [201, 500]
+      expect(daProvider.getBlockTimestamp).toHaveBeenOnlyCalledWith(
+        DA_LAYER,
+        200,
+      )
+      expect(
+        repository.deleteByConfigOutsideTimeRange,
+      ).toHaveBeenOnlyCalledWith(
+        createId('project-a'),
+        null,
+        UnixTime(19 * UnixTime.HOUR),
+      )
+      expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+    })
+
+    it('does nothing when sinceBlock of a never indexed configuration is raised', async () => {
+      const configuration = config('project-a', undefined, { sinceBlock: 200 })
+      const { repository, indexer, daProvider } = mockIndexer({
+        configurations: [configuration],
+        indexerService: mockIndexerService({
+          minHeight: 100,
+          maxHeight: null,
+          currentHeight: null,
+        }),
+      })
+
+      await indexer.initialize()
+
+      expect(daProvider.getBlockTimestamp).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigOutsideTimeRange).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+    })
+
+    it('wipes when sinceBlock is raised past what was indexed', async () => {
+      const configuration = config('project-a', undefined, { sinceBlock: 600 })
+      const { repository, indexer, daProvider } = mockIndexer({
+        configurations: [configuration],
+        indexerService: mockIndexerService({
+          minHeight: 100,
+          maxHeight: null,
+          currentHeight: 500,
+        }),
+      })
+
+      await indexer.initialize()
+
+      // All the indexed data is out of range, nothing is left to trim around
+      expect(daProvider.getBlockTimestamp).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigOutsideTimeRange).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
+        createId('project-a'),
+      ])
     })
   })
 
@@ -348,7 +404,14 @@ describe(DaIndexer.name, () => {
       const { indexer } = mockIndexer({
         configurations: [configuration],
         repository: store.asRepository(),
-        daService: new DaService(),
+        daService: mockObject<DaService>({
+          generateRecords: (blobs, previousRecords, configurations) =>
+            new DaService().generateRecords(
+              blobs,
+              previousRecords,
+              configurations,
+            ),
+        }),
         blockTimestamps,
         getBlobs: (from, to) => {
           const blobs: DaBlob[] = []
@@ -395,7 +458,7 @@ describe(DaIndexer.name, () => {
       )()
 
       // Blocks 7-9 are lost (bounded, one hour), blocks 10-12 are counted once.
-      // Had we kept the boundary hour, it would be 6 + 3 blobs there.
+      // Had we kept the boundary hour, it would hold 6 + 3 blobs.
       expect(store.totals()).toEqual([
         [HOUR_0, 6n * BLOB_SIZE],
         [HOUR_1, 3n * BLOB_SIZE],
@@ -412,7 +475,7 @@ describe(DaIndexer.name, () => {
 class InMemoryDataAvailabilityStore {
   private records: DataAvailabilityRecord[] = []
 
-  asRepository(): Database['dataAvailability'] {
+  asRepository(): MockObject<Database['dataAvailability']> {
     return mockObject<Database['dataAvailability']>({
       upsertMany: async (records: DataAvailabilityRecord[]) => {
         for (const record of records) {
@@ -442,7 +505,7 @@ class InMemoryDataAvailabilityStore {
               r.daLayer === daLayer && r.timestamp >= from && r.timestamp < to,
           )
           .map((r) => ({ ...r })),
-      deleteByConfigurationIdOutsideTimeRange: async (
+      deleteByConfigOutsideTimeRange: async (
         configurationId: string,
         from: UnixTime | null,
         to: UnixTime | null,
@@ -485,32 +548,34 @@ function mockIndexer($: {
   previousRecords?: DataAvailabilityRecord[]
   generatedRecords?: DataAvailabilityRecord[]
   useBlobService?: boolean
-  repository?: Database['dataAvailability']
-  daService?: DaService
+  repository?: MockObject<Database['dataAvailability']>
+  daService?: MockObject<DaService>
   blockTimestamps?: (blockNumber: number) => UnixTime
   getBlobs?: (from: number, to: number) => DaBlob[]
 }) {
-  // Returned to the test, unless the test brought its own repository
-  const repository = mockObject<Database['dataAvailability']>({
-    deleteByConfigIds: mockFn().resolvesTo(10),
-    deleteByConfigurationId: mockFn().resolvesTo({}),
-    deleteByConfigurationIdOutsideTimeRange: mockFn().resolvesTo(10),
-    upsertMany: mockFn().resolvesTo(undefined),
-    getForDaLayerInTimeRange: mockFn().resolvesTo($.previousRecords ?? []),
-  })
+  const repository =
+    $.repository ??
+    mockObject<Database['dataAvailability']>({
+      deleteByConfigIds: mockFn().resolvesTo(10),
+      deleteByConfigurationId: mockFn().resolvesTo({}),
+      deleteByConfigOutsideTimeRange: mockFn().resolvesTo(10),
+      upsertMany: mockFn().resolvesTo(undefined),
+      getForDaLayerInTimeRange: mockFn().resolvesTo($.previousRecords ?? []),
+    })
 
   const syncMetadataRepository = mockObject<Database['syncMetadata']>({
     updateSyncedUntil: mockFn().resolvesTo(undefined),
   })
 
-  // Returned to the test, unless the test brought its own service
-  const daService = mockObject<DaService>({
-    generateRecords: mockFn().returns({
-      records: $.generatedRecords ?? [],
-      latestTimestamp:
-        $.generatedRecords?.[$.generatedRecords.length - 1]?.timestamp ?? 0,
-    }),
-  })
+  const daService =
+    $.daService ??
+    mockObject<DaService>({
+      generateRecords: mockFn().returns({
+        records: $.generatedRecords ?? [],
+        latestTimestamp:
+          $.generatedRecords?.[$.generatedRecords.length - 1]?.timestamp ?? 0,
+      }),
+    })
 
   const daProvider = mockObject<DaProvider>({
     getBlobs: async (_, from, to) =>
@@ -535,13 +600,13 @@ function mockIndexer($: {
         properties: c,
       })),
       daProvider,
-      daService: $.daService ?? daService,
+      daService,
       daLayer: DA_LAYER,
       batchSize: $.batchSize ?? 100,
       parents: [],
       indexerService: $.indexerService ?? mockObject<IndexerService>(),
       db: mockDatabase({
-        dataAvailability: $.repository ?? repository,
+        dataAvailability: repository,
         syncMetadata: syncMetadataRepository,
       }),
       blobService,
@@ -557,6 +622,26 @@ function mockIndexer($: {
     daProvider,
     blobService,
   }
+}
+
+/** Saved state of the single 'project-a' configuration */
+function mockIndexerService(saved: {
+  minHeight: number
+  maxHeight: number | null
+  currentHeight: number | null
+}) {
+  return mockObject<IndexerService>({
+    getSavedConfigurations: mockFn().resolvesTo([
+      {
+        id: createId('project-a'),
+        properties: 'old-properties',
+        ...saved,
+      },
+    ]),
+    insertConfigurations: mockFn().resolvesTo(undefined),
+    upsertConfigurations: mockFn().resolvesTo(undefined),
+    deleteConfigurations: mockFn().resolvesTo(undefined),
+  })
 }
 
 function config(

@@ -34,10 +34,7 @@ export class DaProvider {
     daLayer: string,
     blockNumber: number,
   ): Promise<UnixTime> {
-    const provider = this.providers.get(daLayer)
-    assert(provider, `Missing DaProvider for ${daLayer}`)
-
-    return await provider.getBlockTimestamp(blockNumber)
+    return await this.getDaProvider(daLayer).getBlockTimestamp(blockNumber)
   }
 
   getDaProvider(daLayer: string): DaBlobProvider {

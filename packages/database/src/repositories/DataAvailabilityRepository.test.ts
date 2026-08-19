@@ -683,8 +683,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
   })
 
   describe(
-    DataAvailabilityRepository.prototype.deleteByConfigurationIdOutsideTimeRange
-      .name,
+    DataAvailabilityRepository.prototype.deleteByConfigOutsideTimeRange.name,
     () => {
       const HOUR = UnixTime.HOUR
 
@@ -696,12 +695,11 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           record('project-b', 'layer-a', 'config-id-2', START, 400n),
         ])
 
-        const deleted =
-          await repository.deleteByConfigurationIdOutsideTimeRange(
-            'config-id-1',
-            START + HOUR,
-            null,
-          )
+        const deleted = await repository.deleteByConfigOutsideTimeRange(
+          'config-id-1',
+          START + HOUR,
+          null,
+        )
 
         expect(deleted).toEqual(1)
         expect(await repository.getAll()).toEqualUnsorted([
@@ -719,12 +717,11 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           record('project-b', 'layer-a', 'config-id-2', START + 2 * HOUR, 400n),
         ])
 
-        const deleted =
-          await repository.deleteByConfigurationIdOutsideTimeRange(
-            'config-id-1',
-            null,
-            START + HOUR,
-          )
+        const deleted = await repository.deleteByConfigOutsideTimeRange(
+          'config-id-1',
+          null,
+          START + HOUR,
+        )
 
         expect(deleted).toEqual(1)
         expect(await repository.getAll()).toEqualUnsorted([
@@ -741,12 +738,11 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           record('project-a', 'layer-a', 'config-id-1', START + 2 * HOUR, 300n),
         ])
 
-        const deleted =
-          await repository.deleteByConfigurationIdOutsideTimeRange(
-            'config-id-1',
-            START + HOUR,
-            START + HOUR,
-          )
+        const deleted = await repository.deleteByConfigOutsideTimeRange(
+          'config-id-1',
+          START + HOUR,
+          START + HOUR,
+        )
 
         expect(deleted).toEqual(2)
         expect(await repository.getAll()).toEqualUnsorted([
@@ -759,12 +755,11 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           record('project-a', 'layer-a', 'config-id-1', START, 100n),
         ])
 
-        const deleted =
-          await repository.deleteByConfigurationIdOutsideTimeRange(
-            'config-id-1',
-            null,
-            null,
-          )
+        const deleted = await repository.deleteByConfigOutsideTimeRange(
+          'config-id-1',
+          null,
+          null,
+        )
 
         expect(deleted).toEqual(0)
         expect(await repository.getAll()).toEqualUnsorted([

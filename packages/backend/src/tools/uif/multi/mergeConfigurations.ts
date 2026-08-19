@@ -55,21 +55,24 @@ export function mergeConfigurations<T>(
       }
       currentHeight = null
     } else if (c.minHeight > stored.minHeight) {
-      // If trimming disabled we wipe everything
-      if (configurationsTrimmingDisabled) {
-        if (stored.currentHeight) {
+      // With nothing downloaded there is nothing to remove
+      if (stored.currentHeight !== null) {
+        if (
+          configurationsTrimmingDisabled ||
+          stored.currentHeight < c.minHeight
+        ) {
+          // Everything that was downloaded is out of range now. A trim would
+          // remove the same rows, but a wipe also tells the indexer that the
+          // configuration starts from scratch.
           toWipeData.push({
             id: stored.id,
           })
           currentHeight = null
-        }
-      } else {
-        toTrimData.push({
-          id: stored.id,
-          range: [stored.minHeight, c.minHeight - 1],
-        })
-        if (currentHeight !== null && currentHeight < c.minHeight) {
-          currentHeight = null
+        } else {
+          toTrimData.push({
+            id: stored.id,
+            range: [stored.minHeight, c.minHeight - 1],
+          })
         }
       }
     }

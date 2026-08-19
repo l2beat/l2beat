@@ -258,7 +258,7 @@ export class DataAvailabilityRepository extends BaseRepository {
    * Deletes rows of a single configuration that fall outside of the given
    * inclusive time range. `null` means the range is unbounded on that side.
    */
-  async deleteByConfigurationIdOutsideTimeRange(
+  async deleteByConfigOutsideTimeRange(
     configurationId: string,
     from: UnixTime | null,
     to: UnixTime | null,

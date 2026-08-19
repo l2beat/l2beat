@@ -248,12 +248,28 @@ describe(mergeConfigurations.name, () => {
       expect(result).toEqual({
         diff: {
           ...EMPTY_DIFF,
-          // TODO: this possibly could be wiped
-          toTrimData: [trimRemoval('a', 100, 999)],
+          // Everything downloaded so far is out of range
+          toWipeData: [wipeRemoval('a')],
           toUpdate: [{ ...actual('a', 1000, null), currentHeight: null }],
         },
         configurations: [{ ...actual('a', 1000, null), currentHeight: null }],
         safeHeight: 999,
+      })
+    })
+
+    it('minHeight updated up, nothing downloaded yet', () => {
+      const result = mergeConfigurations(
+        [saved('a', 100, 400, null)],
+        [actual('a', 200, 400)],
+        SERIALIZE,
+      )
+      expect(result).toEqual({
+        diff: {
+          ...EMPTY_DIFF,
+          toUpdate: [{ ...actual('a', 200, 400), currentHeight: null }],
+        },
+        configurations: [{ ...actual('a', 200, 400), currentHeight: null }],
+        safeHeight: 199,
       })
     })
 
@@ -333,6 +349,23 @@ describe(mergeConfigurations.name, () => {
           diff: {
             ...EMPTY_DIFF,
             toWipeData: [wipeRemoval('a')],
+            toUpdate: [{ ...actual('a', 200, 400), currentHeight: null }],
+          },
+          configurations: [{ ...actual('a', 200, 400), currentHeight: null }],
+          safeHeight: 199,
+        })
+      })
+
+      it('minHeight updated up, nothing downloaded yet', () => {
+        const result = mergeConfigurations(
+          [saved('a', 100, 400, null)],
+          [actual('a', 200, 400)],
+          SERIALIZE,
+          TRIMMING_DISABLED,
+        )
+        expect(result).toEqual({
+          diff: {
+            ...EMPTY_DIFF,
             toUpdate: [{ ...actual('a', 200, 400), currentHeight: null }],
           },
           configurations: [{ ...actual('a', 200, 400), currentHeight: null }],

@@ -71,22 +71,31 @@ block in the window, so prefer `DA_PREVIEW_DB_URL` for windows longer than a
 few hours. EigenDA per-project data is published as daily files starting
 2025-08-01; days without a file are skipped with a warning.
 
-## Editing sinceBlock / untilBlock
+## Editing sinceBlock / untilBlock (block indexer)
 
 Since/until are excluded from the configuration id, so changing them keeps the
-history under the same id. The block indexer trims instead of wiping:
+history under the same id. The block indexer (ethereum, celestia, avail) trims
+instead of wiping:
 
 - raising `sinceBlock` deletes only the records before the new start
 - setting or lowering `untilBlock` deletes only the records after the new end
-- lowering `sinceBlock` still wipes and re-indexes the configuration from
-  scratch, because the pipeline cannot leave gaps in the indexed range
+- raising `sinceBlock` past what was already indexed wipes the configuration -
+  everything indexed so far is out of range anyway
+- lowering `sinceBlock` also wipes and re-indexes from scratch, because the
+  pipeline cannot leave gaps in the indexed range
 
-`DataAvailability` records are hourly buckets and hold no block numbers, so the
-boundary block is mapped to its timestamp and the whole hour it falls into is
-deleted along with the out-of-range side. That hour mixes blobs from inside and
-outside the new range and its partial size cannot be subtracted, so trimming
-undercounts by at most one hour per edited edge - never double counts, which is
-what would happen if the bucket were kept and the range later extended again.
+`DataAvailability` rows are hourly buckets and hold no block numbers, so the
+block that survived at the edited edge is mapped to its timestamp and the hour
+it falls into decides the cut. That hour holds blobs from both sides of the
+edge and its partial size cannot be subtracted, so the two edges differ:
+
+- `untilBlock`: the boundary hour is deleted as well, losing up to an hour of
+  in-range data. Indexing stops at `untilBlock`, so if the range is later
+  extended it resumes inside that hour and the sizes would be added on top of
+  a record that is still there - the same blobs twice.
+- `sinceBlock`: the boundary hour is kept, so it still counts the blobs it
+  holds from below `sinceBlock` (up to an hour of overcounting). That hour is
+  never indexed again, so nothing can be counted twice.
 
 ## Guarding against silent data wipes
 
