@@ -164,11 +164,12 @@ export async function getPrivacyProjectEntry(
     }
 
     sections.push({
-      type: 'PrivacyTvlSection',
+      type: 'TvsValueSection',
       props: {
         id: 'privacy-tvl',
         title: 'Value Locked',
         defaultRange: defaultChartRange,
+        rangeControls: 'privacy',
         project: chartProject,
       },
     })
@@ -323,7 +324,7 @@ async function getTotalValueLockedUsd(
   // The flows chart prefetch rides along so both charts are dehydrated for the client
   const [tvlChart] = await Promise.all([
     helpers.queryClient.fetchQuery(
-      helpers.trpc.privacy.tvlChart.queryOptions({
+      helpers.trpc.tvs.chartByProjects.queryOptions({
         projectIds: [details.id],
         range,
       }),

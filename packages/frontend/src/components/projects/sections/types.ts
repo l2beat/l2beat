@@ -4,7 +4,6 @@ import type { CostsSectionProps } from './costs/CostsSection'
 import type { DaRiskSummarySectionProps } from './DaRiskSummarySection'
 import type { DetailedDescriptionSectionProps } from './DetailedDescriptionSection'
 import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
-import type { DefiTvlSectionProps } from './defi/DefiTvlSection'
 import type { ExternalDependenciesSectionProps } from './ExternalDependenciesSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
@@ -24,7 +23,6 @@ import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
 import type { PrivacyAssetsBreakdownSectionProps } from './privacy/PrivacyAssetsBreakdownSection'
 import type { PrivacyFlowsSectionProps } from './privacy/PrivacyFlowsSection'
-import type { PrivacyTvlSectionProps } from './privacy/PrivacyTvlSection'
 import type { ProgramHashesSectionProps } from './program-hashes/ProgramHashesSection'
 import type { RiskAnalysisSectionProps } from './RiskAnalysisSection'
 import type { RiskSummarySectionProps } from './RiskSummarySection'
@@ -36,6 +34,7 @@ import type { TechnologyChoicesSectionProps } from './TechnologyChoicesSection'
 import type { TrustedSetupSectionProps } from './TrustedSetupsSection'
 import type { ThroughputSectionProps } from './throughput/ThroughputSection'
 import type { ScalingTvsSectionProps } from './tvs/ScalingTvsSection'
+import type { TvsValueSectionProps } from './tvs/TvsValueSection'
 import type { ZkCatalogTvsSectionProps } from './tvs/ZkCatalogTvsSection'
 import type { UpdatesSectionProps } from './UpdatesSection'
 import type { UpgradesAndGovernanceSectionProps } from './UpgradesAndGovernanceSection'
@@ -270,9 +269,9 @@ interface ProjectDetailsUpdatesSection {
   props: ProjectDetailsProps<UpdatesSectionProps>
 }
 
-interface ProjectDetailsPrivacyTvlSection {
-  type: 'PrivacyTvlSection'
-  props: ProjectDetailsProps<PrivacyTvlSectionProps>
+interface ProjectDetailsTvsValueSection {
+  type: 'TvsValueSection'
+  props: ProjectDetailsProps<TvsValueSectionProps>
 }
 
 interface ProjectDetailsPrivacyFlowsSection {
@@ -283,11 +282,6 @@ interface ProjectDetailsPrivacyFlowsSection {
 interface ProjectDetailsPrivacyAssetsBreakdownSection {
   type: 'PrivacyAssetsBreakdownSection'
   props: ProjectDetailsProps<PrivacyAssetsBreakdownSectionProps>
-}
-
-interface ProjectDetailsDefiTvlSection {
-  type: 'DefiTvlSection'
-  props: ProjectDetailsProps<DefiTvlSectionProps>
 }
 
 interface ProjectDetailsExternalDependenciesSection {
@@ -335,9 +329,8 @@ export type ProjectDetailsSection = {
   | ProjectDetailsInteropTokenTransfersSection
   | ProjectDetailsUpgradesAndGovernanceSection
   | ProjectDetailsUpdatesSection
-  | ProjectDetailsPrivacyTvlSection
+  | ProjectDetailsTvsValueSection
   | ProjectDetailsPrivacyFlowsSection
   | ProjectDetailsPrivacyAssetsBreakdownSection
-  | ProjectDetailsDefiTvlSection
   | ProjectDetailsExternalDependenciesSection
 )

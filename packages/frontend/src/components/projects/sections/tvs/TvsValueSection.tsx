@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
+import { TvsChartRangeControls } from '~/components/chart/tvs/TvsChartRangeControls'
 import { TvsValueChart } from '~/components/chart/tvs/TvsValueChart'
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
@@ -11,20 +12,22 @@ import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
-export interface PrivacyTvlSectionProps extends ProjectSectionProps {
+export interface TvsValueSectionProps extends ProjectSectionProps {
   defaultRange: ChartRange
   project: ChartProject
+  rangeControls: 'tvs' | 'privacy'
 }
 
-export function PrivacyTvlSection({
+export function TvsValueSection({
   defaultRange,
   project,
+  rangeControls,
   ...projectSectionProps
-}: PrivacyTvlSectionProps) {
+}: TvsValueSectionProps) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const { data, isLoading } = useQuery(
-    trpc.privacy.tvlChart.queryOptions({
+    trpc.tvs.chartByProjects.queryOptions({
       projectIds: [project.id],
       range,
     }),
@@ -44,11 +47,16 @@ export function PrivacyTvlSection({
     [chartData],
   )
 
+  const RangeControls =
+    rangeControls === 'tvs'
+      ? TvsChartRangeControls
+      : PrivacyFlowsChartRangeControls
+
   return (
     <ProjectSection {...projectSectionProps}>
       <ChartControlsWrapper className="mb-4">
         <ProjectChartTimeRange timeRange={timeRange} />
-        <PrivacyFlowsChartRangeControls range={range} setRange={setRange} />
+        <RangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
       <TvsValueChart
         data={chartData}

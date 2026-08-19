@@ -81,7 +81,7 @@ export async function getDefiProjectEntry(
     getTrackedDependencyProjects(project.externalDependencies),
     project.tvsConfig !== undefined
       ? helpers.queryClient.prefetchQuery(
-          helpers.trpc.defi.tvlChart.queryOptions({
+          helpers.trpc.tvs.chartByProjects.queryOptions({
             projectIds: [project.id],
             range: defaultChartRange,
           }),
@@ -144,11 +144,12 @@ export async function getDefiProjectEntry(
 
   if (project.tvsConfig !== undefined) {
     sections.push({
-      type: 'DefiTvlSection',
+      type: 'TvsValueSection',
       props: {
         id: 'tvs',
         title: 'Value Locked',
         defaultRange: defaultChartRange,
+        rangeControls: 'tvs',
         project: {
           id: project.id,
           name: project.name,

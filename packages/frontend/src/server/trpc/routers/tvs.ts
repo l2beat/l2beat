@@ -26,12 +26,19 @@ import {
   getTokenTvsChart,
   TokenTvsChartParams,
 } from '~/server/features/scaling/tvs/tokens/getTokenTvsChart'
+import {
+  getTvsChartByProjects,
+  TvsChartByProjectsParams,
+} from '~/server/features/tvs/getTvsChartByProjects'
 import { procedure, router } from '../trpc'
 
 export const tvsRouter = router({
   chart: procedure
     .input(TvsChartDataParams)
     .query(({ input }) => getTvsChart(input)),
+  chartByProjects: procedure
+    .input(TvsChartByProjectsParams)
+    .query(({ input }) => getTvsChartByProjects(input)),
   detailedChart: procedure
     .input(DetailedTvsChartDataParams)
     .query(({ input }) => getDetailedTvsChart(input)),

@@ -2,17 +2,10 @@ import {
   getPrivacyFlowsChart,
   PrivacyFlowsChartParams,
 } from '~/server/features/privacy/getPrivacyFlowsChart'
-import {
-  getTvsChartByProjects,
-  TvsChartByProjectsParams,
-} from '~/server/features/tvs/getTvsChartByProjects'
 import { procedure, router } from '../trpc'
 
 export const privacyRouter = router({
   flowsChart: procedure
     .input(PrivacyFlowsChartParams)
     .query(({ input }) => getPrivacyFlowsChart(input)),
-  tvlChart: procedure
-    .input(TvsChartByProjectsParams)
-    .query(({ input }) => getTvsChartByProjects(input)),
 })
