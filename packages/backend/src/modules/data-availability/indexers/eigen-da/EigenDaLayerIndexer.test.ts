@@ -4,8 +4,8 @@ import type { EigenApiClient } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { TimestampDaIndexedConfig } from '../../../../config/Config'
-import { mockDatabase } from '../../../../test/database'
-import type { IndexerService } from '../../../../tools/uif/IndexerService'
+import { describeDatabase, mockDatabase } from '../../../../test/database'
+import { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
 import type {
   Configuration,
@@ -230,9 +230,7 @@ describe(EigenDaLayerIndexer.name, () => {
 
       // the 05:00 bucket is kept - it holds the data of the whole hour and
       // nothing would ever re-index it
-      expect(
-        repository.deleteByConfigurationIdInTimeRange,
-      ).toHaveBeenOnlyCalledWith(
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
         configurations[0].id,
         START,
         START + 5 * UnixTime.HOUR - 1,
@@ -254,9 +252,11 @@ describe(EigenDaLayerIndexer.name, () => {
         { id: configurations[0].id, range: [START, newMinHeight - 1] },
       ])
 
-      expect(
-        repository.deleteByConfigurationIdInTimeRange,
-      ).toHaveBeenOnlyCalledWith(configurations[0].id, START, newMinHeight - 1)
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
+        configurations[0].id,
+        START,
+        newMinHeight - 1,
+      )
     })
 
     it('does not delete anything when the trim stays within one bucket', async () => {
@@ -274,9 +274,7 @@ describe(EigenDaLayerIndexer.name, () => {
         { id: configurations[0].id, range: [START, newMinHeight - 1] },
       ])
 
-      expect(
-        repository.deleteByConfigurationIdInTimeRange,
-      ).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigInTimeRange).not.toHaveBeenCalled()
     })
 
     it('deletes records after the new maxHeight, keeping its bucket', async () => {
@@ -300,16 +298,14 @@ describe(EigenDaLayerIndexer.name, () => {
       ])
 
       // records are hour aligned, so the 10:00 bucket is not in the range
-      expect(
-        repository.deleteByConfigurationIdInTimeRange,
-      ).toHaveBeenOnlyCalledWith(
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
         configurations[0].id,
         newMaxHeight + 1,
         currentHeight,
       )
     })
 
-    it('trims every configuration', async () => {
+    it('trims every requested range', async () => {
       const configurations = [
         createConfiguration(DA_LAYER, DA_LAYER, {
           minHeight: START + 5 * UnixTime.HOUR,
@@ -332,9 +328,7 @@ describe(EigenDaLayerIndexer.name, () => {
         },
       ])
 
-      expect(
-        repository.deleteByConfigurationIdInTimeRange,
-      ).toHaveBeenCalledTimes(2)
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenCalledTimes(2)
     })
   })
 
@@ -364,9 +358,7 @@ describe(EigenDaLayerIndexer.name, () => {
 
       const { safeHeight } = await indexer.initialize()
 
-      expect(
-        repository.deleteByConfigurationIdInTimeRange,
-      ).toHaveBeenOnlyCalledWith(
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
         configurations[0].id,
         MAX_HEIGHT + 1,
         CURRENT_HEIGHT,
@@ -399,9 +391,7 @@ describe(EigenDaLayerIndexer.name, () => {
       expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
         configurations[0].id,
       ])
-      expect(
-        repository.deleteByConfigurationIdInTimeRange,
-      ).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigInTimeRange).not.toHaveBeenCalled()
       expect(safeHeight).toEqual(START - 1)
     })
 
@@ -426,9 +416,7 @@ describe(EigenDaLayerIndexer.name, () => {
 
       await indexer.initialize()
 
-      expect(
-        repository.deleteByConfigurationIdInTimeRange,
-      ).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigInTimeRange).not.toHaveBeenCalled()
       expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
 
       const updateCallback = await indexer.multiUpdate(
@@ -462,7 +450,7 @@ function mockIndexer($: {
   const repository = mockObject<Database['dataAvailability']>({
     deleteByConfigIds: mockFn().resolvesTo(10),
     deleteByConfigurationId: mockFn().resolvesTo(10),
-    deleteByConfigurationIdInTimeRange: mockFn().resolvesTo(10),
+    deleteByConfigInTimeRange: mockFn().resolvesTo(10),
     upsertMany: mockFn().resolvesTo(undefined),
   })
 
@@ -549,3 +537,109 @@ function savedConfiguration(
     currentHeight: overrides.currentHeight,
   }
 }
+
+describeDatabase(`${EigenDaLayerIndexer.name} range edits`, (db) => {
+  const CONFIG_ID = 'eigenlayer01'
+  const OTHER_CONFIG_ID = 'eigenlayer02'
+  const INDEXER_ID = `eigenda_layer_indexer::${DA_LAYER}`
+  const START = UnixTime.fromDate(new Date('2025-09-01T00:00:00Z'))
+  // in the middle of the 10:00 bucket
+  const MAX_HEIGHT = START + 10 * UnixTime.HOUR + 30 * UnixTime.MINUTE
+  const CURRENT_HEIGHT = START + 20 * UnixTime.HOUR
+
+  beforeEach(() => {
+    _TEST_ONLY_resetUniqueIds()
+  })
+
+  afterEach(async () => {
+    _TEST_ONLY_resetUniqueIds()
+    await db.dataAvailability.deleteAll()
+    await db.indexerConfiguration.deleteAll()
+    await db.indexerState.deleteAll()
+  })
+
+  it('lowering untilTimestamp trims the rows instead of wiping them', async () => {
+    const indexerService = new IndexerService(db)
+    const configuration: Configuration<TimestampDaIndexedConfig> = {
+      id: CONFIG_ID,
+      minHeight: START,
+      maxHeight: MAX_HEIGHT,
+      properties: {
+        configurationId: CONFIG_ID,
+        projectId: ProjectId(DA_LAYER),
+        type: 'baseLayer' as const,
+        daLayer: DA_LAYER,
+        sinceTimestamp: START,
+      },
+    }
+
+    // the configuration as it was saved before untilTimestamp was set
+    await indexerService.upsertConfigurations(
+      INDEXER_ID,
+      [{ ...configuration, maxHeight: null, currentHeight: CURRENT_HEIGHT }],
+      (v) => JSON.stringify(v),
+    )
+
+    const indexedHours = []
+    for (let t = START; t < CURRENT_HEIGHT; t += UnixTime.HOUR) {
+      indexedHours.push(t)
+    }
+    await db.dataAvailability.upsertMany([
+      ...indexedHours.map((timestamp) => ({
+        timestamp,
+        totalSize: 100n,
+        projectId: DA_LAYER,
+        daLayer: DA_LAYER,
+        configurationId: CONFIG_ID,
+      })),
+      // another configuration must not be affected
+      ...indexedHours.map((timestamp) => ({
+        timestamp,
+        totalSize: 200n,
+        projectId: 'project-a',
+        daLayer: DA_LAYER,
+        configurationId: OTHER_CONFIG_ID,
+      })),
+    ])
+
+    const indexer = new EigenDaLayerIndexer(
+      {
+        daLayer: DA_LAYER,
+        eigenClient: mockObject<EigenApiClient>({}),
+        configurations: [configuration],
+        parents: [],
+        indexerService,
+        db,
+      },
+      Logger.SILENT,
+    )
+
+    const { safeHeight } = await indexer.initialize()
+
+    expect(safeHeight).toEqual(MAX_HEIGHT)
+
+    const records = await db.dataAvailability.getAll()
+
+    // the 10:00 bucket straddles the new untilTimestamp and is kept
+    expect(
+      records
+        .filter((r) => r.configurationId === CONFIG_ID)
+        .map((r) => r.timestamp)
+        .sort((a, b) => a - b),
+    ).toEqual(indexedHours.filter((t) => t <= START + 10 * UnixTime.HOUR))
+
+    expect(
+      records.filter((r) => r.configurationId === OTHER_CONFIG_ID).length,
+    ).toEqual(indexedHours.length)
+
+    expect(await indexerService.getSavedConfigurations(INDEXER_ID)).toEqual([
+      {
+        id: CONFIG_ID,
+        properties: JSON.stringify(configuration.properties),
+        minHeight: START,
+        maxHeight: MAX_HEIGHT,
+        currentHeight: MAX_HEIGHT,
+      },
+    ])
+  })
+})

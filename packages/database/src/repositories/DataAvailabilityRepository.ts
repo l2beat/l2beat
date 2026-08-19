@@ -262,12 +262,11 @@ export class DataAvailabilityRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async deleteByConfigurationIdInTimeRange(
+  async deleteByConfigInTimeRange(
     configurationId: string,
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ): Promise<number> {
-    if (toInclusive < fromInclusive) return 0
     const result = await this.db
       .deleteFrom('DataAvailability')
       .where('configurationId', '=', configurationId)

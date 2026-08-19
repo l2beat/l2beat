@@ -386,12 +386,60 @@ describe(EigenDaProjectsIndexer.name, () => {
         { id: configurations[0].id, range: [START, newMinHeight - 1] },
       ])
 
-      expect(
-        repository.deleteByConfigurationIdInTimeRange,
-      ).toHaveBeenOnlyCalledWith(
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
         configurations[0].id,
         START,
         START + 5 * UnixTime.HOUR - 1,
+      )
+    })
+
+    it('does not delete anything when the trim stays within one bucket', async () => {
+      const newMinHeight = START + 30 * UnixTime.MINUTE
+      const configurations = [
+        createConfiguration('project1', DA_LAYER, 'customer1', {
+          minHeight: newMinHeight,
+        }),
+      ]
+
+      const { indexer, repository } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+      })
+
+      await indexer.trimData([
+        { id: configurations[0].id, range: [START, newMinHeight - 1] },
+      ])
+
+      expect(repository.deleteByConfigInTimeRange).not.toHaveBeenCalled()
+    })
+
+    it('spares the previous day records written below minHeight', async () => {
+      // this indexer writes the records of the previous day at every 02:00
+      // height, so records below minHeight are legitimate and nothing would
+      // ever recreate them - only what the framework asks for is deleted
+      const oldMinHeight = UnixTime.fromDate(new Date('2025-09-01T00:00:00Z'))
+      const newMinHeight = UnixTime.fromDate(new Date('2025-09-10T00:00:00Z'))
+      const configurations = [
+        createConfiguration('project1', DA_LAYER, 'customer1', {
+          minHeight: newMinHeight,
+        }),
+      ]
+
+      const { indexer, repository } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+      })
+
+      await indexer.trimData([
+        { id: configurations[0].id, range: [oldMinHeight, newMinHeight - 1] },
+      ])
+
+      // the records of 2025-08-31, written by the first 02:00 update of the
+      // configuration, are below the trimmed range and stay
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
+        configurations[0].id,
+        oldMinHeight,
+        newMinHeight - 1,
       )
     })
 
@@ -414,9 +462,7 @@ describe(EigenDaProjectsIndexer.name, () => {
         { id: configurations[0].id, range: [newMaxHeight + 1, currentHeight] },
       ])
 
-      expect(
-        repository.deleteByConfigurationIdInTimeRange,
-      ).toHaveBeenOnlyCalledWith(
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
         configurations[0].id,
         newMaxHeight + 1,
         currentHeight,
@@ -450,9 +496,7 @@ describe(EigenDaProjectsIndexer.name, () => {
 
       const { safeHeight } = await indexer.initialize()
 
-      expect(
-        repository.deleteByConfigurationIdInTimeRange,
-      ).toHaveBeenOnlyCalledWith(
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
         configurations[0].id,
         MAX_HEIGHT + 1,
         CURRENT_HEIGHT,
@@ -460,6 +504,35 @@ describe(EigenDaProjectsIndexer.name, () => {
       expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
       expect(indexerService.upsertConfigurations).toHaveBeenCalledTimes(1)
       expect(safeHeight).toEqual(MAX_HEIGHT)
+    })
+
+    it('wipes when sinceTimestamp is lowered - gaps are not allowed', async () => {
+      const configurations = [
+        createConfiguration('project1', DA_LAYER, 'customer1', {
+          minHeight: START,
+        }),
+      ]
+
+      const { indexer, repository } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+        savedConfigurations: [
+          {
+            ...savedConfiguration(configurations[0], {
+              currentHeight: CURRENT_HEIGHT,
+            }),
+            minHeight: START + UnixTime.DAY,
+          },
+        ],
+      })
+
+      const { safeHeight } = await indexer.initialize()
+
+      expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
+        configurations[0].id,
+      ])
+      expect(repository.deleteByConfigInTimeRange).not.toHaveBeenCalled()
+      expect(safeHeight).toEqual(START - 1)
     })
 
     it('does not double count when untilTimestamp is extended again', async () => {
@@ -497,9 +570,7 @@ describe(EigenDaProjectsIndexer.name, () => {
 
       await indexer.initialize()
 
-      expect(
-        repository.deleteByConfigurationIdInTimeRange,
-      ).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigInTimeRange).not.toHaveBeenCalled()
       expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
 
       // the whole day of the kept bucket is fetched again at 02:00 of the next
@@ -546,7 +617,7 @@ function mockIndexer($: {
   const repository = mockObject<Database['dataAvailability']>({
     deleteByConfigIds: mockFn().resolvesTo(10),
     deleteByConfigurationId: mockFn().resolvesTo(10),
-    deleteByConfigurationIdInTimeRange: mockFn().resolvesTo(10),
+    deleteByConfigInTimeRange: mockFn().resolvesTo(10),
     upsertMany: mockFn().resolvesTo(undefined),
   })
 

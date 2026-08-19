@@ -714,8 +714,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
   )
 
   describe(
-    DataAvailabilityRepository.prototype.deleteByConfigurationIdInTimeRange
-      .name,
+    DataAvailabilityRepository.prototype.deleteByConfigInTimeRange.name,
     () => {
       const HOUR_0 = UnixTime.toStartOf(UnixTime.now(), 'day')
       const HOUR_1 = HOUR_0 + UnixTime.HOUR
@@ -732,12 +731,11 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           record('project-b', 'layer-a', 'config-id-2', HOUR_2, 600n),
         ])
 
-        const deletedCount =
-          await repository.deleteByConfigurationIdInTimeRange(
-            'config-id-1',
-            HOUR_1,
-            HOUR_2,
-          )
+        const deletedCount = await repository.deleteByConfigInTimeRange(
+          'config-id-1',
+          HOUR_1,
+          HOUR_2,
+        )
 
         expect(deletedCount).toEqual(2)
 
@@ -757,12 +755,11 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           record('project-a', 'layer-a', 'config-id-1', HOUR_2, 300n),
         ])
 
-        const deletedCount =
-          await repository.deleteByConfigurationIdInTimeRange(
-            'config-id-1',
-            HOUR_0,
-            HOUR_2,
-          )
+        const deletedCount = await repository.deleteByConfigInTimeRange(
+          'config-id-1',
+          HOUR_0,
+          HOUR_2,
+        )
 
         expect(deletedCount).toEqual(3)
         expect(await repository.getAll()).toEqual([])
@@ -773,12 +770,11 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           record('project-a', 'layer-a', 'config-id-1', HOUR_1, 200n),
         ])
 
-        const deletedCount =
-          await repository.deleteByConfigurationIdInTimeRange(
-            'config-id-1',
-            HOUR_2,
-            HOUR_1,
-          )
+        const deletedCount = await repository.deleteByConfigInTimeRange(
+          'config-id-1',
+          HOUR_2,
+          HOUR_1,
+        )
 
         expect(deletedCount).toEqual(0)
         expect(await repository.getAll()).toEqualUnsorted([

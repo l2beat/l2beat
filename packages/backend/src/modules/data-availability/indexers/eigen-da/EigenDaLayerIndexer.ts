@@ -131,18 +131,7 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
   override async trimData(
     configurations: TrimRemovalConfiguration[],
   ): Promise<void> {
-    const deletedRecords = await trimEigenDaData(
-      this.$.db,
-      this.$.configurations,
-      configurations,
-    )
-
-    if (deletedRecords > 0) {
-      this.logger.info('Trimmed DA records for configurations', {
-        configurations: configurations.length,
-        deletedRecords,
-      })
-    }
+    await trimEigenDaData(this.$, this.logger, configurations)
   }
 
   get daLayer() {

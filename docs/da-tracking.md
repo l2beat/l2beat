@@ -83,3 +83,29 @@ accept it:
 cd packages/config
 pnpm snapshots:generate
 ```
+
+## Editing since/until of an EigenDA configuration
+
+The EigenDA indexers (`EigenDaLayerIndexer`, `EigenDaProjectsIndexer`) are
+timestamp based - their indexer heights ARE unix timestamps - and they implement
+`trimData`. Editing `sinceTimestamp` or `untilTimestamp` of an existing
+`eigen-da` entry (same configuration id) therefore trims the configuration's
+`DataAvailability` rows to the new range instead of wiping its whole history.
+Lowering `sinceTimestamp` still wipes and re-indexes, because gaps in downloaded
+data are not allowed.
+
+Rows are hourly buckets holding the data of the whole hour they start, so a
+bucket can straddle the edge of the new range. Only buckets lying ENTIRELY
+outside the retained range are deleted - **the straddling hour is KEPT**:
+
+- deleting it would leave a permanent hole, because after a trim the
+  configuration's `currentHeight` stays where it was and nothing would ever
+  re-index that hour,
+- keeping it cannot double count if the range is extended again later:
+  `DataAvailability` rows are upserted by overwriting `totalSize`, never by
+  accumulating it.
+
+The trim deletes only the range the indexer framework asks for, not everything
+outside the configuration range: `EigenDaProjectsIndexer` writes the rows of the
+previous day at every 02:00 height, so rows legitimately exist below
+`sinceTimestamp`.
