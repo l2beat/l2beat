@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x1ef69115d9475aa5b68ae29124a75d86d238509c
+
+# Diff at Thu, 20 Aug 2026 15:32:19 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@490d1ebdb014748d72479deb28674a95e7cdbfb3 block: 1785450156
+- current timestamp: 1787239875
+
+## Description
+
+The batcher resumed posting batches on 2026-08-17 after 37 days of inactivity, now publishing EigenDA v3 certificates to the batch inbox hourly through a new EigenDA on-demand payment account (`0xcB3a6380C666Ff97F474E11FD41519c320b7a276`).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
+-        false
++        "v3"
+      values.sequencerInbox:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xfF000000000000000000000000000000000000FF"
+    }
+```
+
 Generated with discovered.json: 0x7a4fb7de5de606f78eda69e66b0d883b3a9ac97f
 
 # Diff at Thu, 30 Jul 2026 22:24:05 GMT:

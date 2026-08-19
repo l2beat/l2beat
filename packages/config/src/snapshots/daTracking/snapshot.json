@@ -1888,6 +1888,15 @@
       }
     },
     {
+      "id": "3718f22abb41",
+      "config": {
+        "type": "eigen-da",
+        "daLayer": "eigenda",
+        "sinceTimestamp": 1786951919,
+        "customerId": "0xcb3a6380c666ff97f474e11fd41519c320b7a276"
+      }
+    },
+    {
       "id": "3d7624c4d4f5",
       "config": {
         "type": "ethereum",
