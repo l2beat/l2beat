@@ -422,8 +422,7 @@
       }
     },
     "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60": {
-      "description": "Aave Risk Council Safe authorized to update GHO bridge and rate limits through the GhoCcipSteward, subject to the steward-enforced delay and per-update bounds.",
-      "ignoreRelatives": true
+      "description": "Aave Risk Council Safe authorized to update GHO bridge and rate limits through the GhoCcipSteward, subject to the steward-enforced delay and per-update bounds."
     },
     "eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E": {
       "description": "Deprecated router used by BSC.",

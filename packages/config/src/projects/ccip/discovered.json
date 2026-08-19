@@ -1,7 +1,7 @@
 {
   "name": "ccip",
   "timestamp": 1787129183,
-  "configHash": "0x8eac493ad26a643b25575108d530c82361ad837c92096c598f9fc951739e8afc",
+  "configHash": "0xdd381e65aa1ba2ba4c8fecdd7c3b2ec65f93a5f1c84965cd146c286c2ddf2e5e",
   "entries": [
     {
       "name": "ArbitrumOffRamp_v1_6",
@@ -6547,6 +6547,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61",
       "type": "EOA",
       "proxyType": "EOA",
@@ -10125,6 +10130,11 @@
       "implementationNames": {
         "eth:0x5Fd81cF5734498467634Ed9432aad298022e15Ff": "CommitStore"
       }
+    },
+    {
+      "address": "eth:0x606dC57cd166643760E049609bfd1D8a698D3bAc",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "CommitStore",
@@ -51953,6 +51963,11 @@
       ]
     },
     {
+      "address": "eth:0xb647055A9915bF9c8021a684E175A353525b9890",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "CommitStore",
       "address": "eth:0xb86C91861A7043fffC26C7740C3678eE09599234",
       "type": "Contract",
@@ -53375,6 +53390,11 @@
     },
     {
       "address": "eth:0xC6fA4C71F42dD1881E29DDe853FA5CcD18A59624",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xCAC616Fffb687cBDDD250b2aE6F672449462985C",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -69992,5 +70012,5 @@
     "optimism": 155765203,
     "polygonpos": 92282770
   },
-  "permissionsConfigHash": "0x916613033b6d2e16e51926047f0a7e9419056a6d7916b4c19c4e13569a784af2"
+  "permissionsConfigHash": "0x20f1b5d6ccc11f9615688b250c2493b33ce74a0815f6c685eb88d17ff84fb213"
 }
