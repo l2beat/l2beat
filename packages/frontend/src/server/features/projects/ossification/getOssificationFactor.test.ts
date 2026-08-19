@@ -190,7 +190,7 @@ describe(getOssificationFactor.name, () => {
       NOW,
     )
     expect(result?.score).toEqual(0)
-    expect(result?.contracts[0]?.maturity).toEqual(0)
+    expect(result?.maturity).toEqual(0)
   })
 
   it('uses the newest critical contract clock for the whole project', () => {
@@ -229,17 +229,14 @@ describe(getOssificationFactor.name, () => {
     expect(result?.score ?? 100).toBeLessThan(10)
   })
 
-  it('expresses maturity against current project TVS in USD', () => {
+  it('leaves exposure to the loader', () => {
     const result = getOssificationFactor(
       [entry({ sinceTimestamp: NOW - 4 * YEAR })],
       [],
       NOW,
-      100,
     )
-    const maturity = 1 - Math.exp(-2)
-    expect(result?.currentTvs).toEqual(100)
-    expect(result?.maturity).toEqual(maturity)
-    expect(result?.implicitBugBounty).toEqual(100 * maturity)
+    expect(result?.maturity).toEqual(1 - Math.exp(-2))
+    expect(result?.exposure).toEqual(null)
   })
 
   it('does not score a perimeter with an unknown contract clock', () => {
@@ -259,7 +256,6 @@ describe(getOssificationFactor.name, () => {
       [entry({ sinceTimestamp: NOW - 4 * YEAR })],
       [],
       NOW,
-      undefined,
       [
         {
           address: ADDRESS_B,
@@ -283,7 +279,6 @@ describe(getOssificationFactor.name, () => {
       [entry({ sinceTimestamp: NOW - 4 * YEAR })],
       [update(NOW - 30 * DAY, highSeverityBlock(ADDRESS_B))],
       NOW,
-      undefined,
       [{ address: ADDRESS_B, name: 'OldVerifier', upgradeTimestamps: [] }],
     )
     expect(result?.lastCriticalChange).toEqual(NOW - 30 * DAY)
@@ -295,7 +290,6 @@ describe(getOssificationFactor.name, () => {
       [entry({ sinceTimestamp: NOW - 4 * YEAR })],
       [],
       NOW,
-      undefined,
       [
         {
           address: ADDRESS_A,

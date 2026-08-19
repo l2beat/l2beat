@@ -44,8 +44,6 @@ export interface OssificationContractBreakdown {
   ageSeconds: number | null
   hasChanged: boolean
   criticalChangeCount: number
-  /** 0..1, null when clockStart is unknown */
-  maturity: number | null
 }
 
 export interface OssificationFactor {
@@ -53,11 +51,11 @@ export interface OssificationFactor {
   score: number
   /** 0..1 maturity of the project-wide critical perimeter */
   maturity: number
-  /** Current project TVS in USD. Null when TVS data is unavailable. */
-  currentTvs: number | null
-  /** Current TVS multiplied by project maturity. This expresses the
-   *  accumulated adversarial exposure in present-day USD terms. */
-  implicitBugBounty: number | null
+  /** Battle-tested exposure in USD·years: project TVS integrated over the
+   *  time since the last critical change — the accumulated implicit bug
+   *  bounty the unchanged perimeter has withstood. Filled by the loader
+   *  (needs the TVS series); null when TVS data is unavailable. */
+  exposure: number | null
   /** The project clock starts at the most recent deployment or critical
    *  change anywhere in the critical perimeter. */
   projectClockStart: number | null
@@ -91,7 +89,6 @@ export function getOssificationFactor(
   entries: OssificationEntry[],
   updates: DiscoveryUpdate[],
   now: number = UnixTime.now(),
-  currentTvs?: number,
   historical: OssificationHistoricalEntry[] = [],
 ): OssificationFactor | undefined {
   if (entries.length === 0) {
@@ -156,16 +153,9 @@ export function getOssificationFactor(
   const maturity = hasUnverifiedContract
     ? 0
     : 1 - Math.exp(-projectAgeSeconds / OSSIFICATION_LAMBDA_SECONDS)
-  const validCurrentTvs =
-    currentTvs !== undefined && Number.isFinite(currentTvs) && currentTvs >= 0
-      ? currentTvs
-      : null
 
-  breakdowns.sort((a, b) => {
-    if (a.maturity === null) return 1
-    if (b.maturity === null) return -1
-    return a.maturity - b.maturity
-  })
+  // youngest clock first
+  breakdowns.sort((a, b) => (b.clockStart ?? 0) - (a.clockStart ?? 0))
 
   changeEvents.sort((a, b) => a - b)
   const clusters = clusterEvents(changeEvents)
@@ -187,9 +177,7 @@ export function getOssificationFactor(
   return {
     score: Math.round(maturity * 100),
     maturity,
-    currentTvs: validCurrentTvs,
-    implicitBugBounty:
-      validCurrentTvs !== null ? validCurrentTvs * maturity : null,
+    exposure: null,
     projectClockStart,
     projectAgeSeconds,
     lastCriticalChange,
@@ -250,13 +238,6 @@ function getContractBreakdown(
     ? lastReset
     : (entry.sinceTimestamp ?? null)
 
-  const maturity = !entry.isVerified
-    ? 0
-    : clockStart !== null
-      ? 1 -
-        Math.exp(-Math.max(0, now - clockStart) / OSSIFICATION_LAMBDA_SECONDS)
-      : null
-
   return {
     name: entry.name,
     address: entry.address,
@@ -267,7 +248,6 @@ function getContractBreakdown(
     criticalChangeCount:
       Math.max(0, entry.upgradeTimestamps.length - 1) +
       diffEventTimestamps.length,
-    maturity,
   }
 }
 

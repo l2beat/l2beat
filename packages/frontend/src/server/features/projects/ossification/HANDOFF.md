@@ -5,15 +5,18 @@ Self-contained notes for whoever works on this next (human or agent). State as o
 ## What this is
 
 An L2BEAT-original security metric measuring how battle-tested the code securing a
-project's funds is. Three numbers per project:
+project's funds is. Three numbers per project (UI labels in quotes):
 
-- **Score (0–100)**: maturity of the complete project-wide critical perimeter,
-  `m(age) = 1 − exp(−age / 2yr)`. `age` starts at the latest deployment or critical
-  change anywhere in the perimeter.
-- **Accumulated implicit bug bounty (USD)**: `B = current project TVS × m(age)`.
-  This expresses accumulated adversarial exposure in present-day dollars. It is an
-  estimate, not a literal bounty or reward.
-- **Critical changes / year**: project-wide 24h-clustered critical change events,
+- **"Ossification" (0–100)**: maturity of the complete project-wide critical
+  perimeter, `m(age) = 1 − exp(−age / 2yr)`. `age` starts at the latest deployment or
+  critical change anywhere in the perimeter — shown as **"Last change"** ("X ago").
+- **"Battle-tested exposure" (USD·years)**: `∫ TVS(t) dt` from the project clock
+  start to now (trapezoid over the daily TVS series, flat-extended to now). The
+  accumulated implicit bug bounty the unchanged perimeter has withstood. Monotone,
+  cannot be deflated by market moves or inflated by a TVS spike, unlike the earlier
+  spot `TVS × m` variant it replaced. Shares the unverified gate with the score
+  (unverified perimeter accumulates 0); null when no TVS series exists.
+- **"Critical changes / year"**: project-wide 24h-clustered critical change events,
   trailing 36 months.
 
 Critical change events per contract = implementation upgrades (from `$pastUpgrades` in
@@ -36,11 +39,15 @@ Deliberate design decisions (do not re-litigate casually):
   one security perimeter. A new critical deployment or a critical change anywhere makes
   that perimeter newly unproven. This avoids architecture-dependent scores and does not
   infer fractional criticality that the label does not encode.
-- Project TVS only — there is no address allocation, fund-holder classification, or equal
-  weighting fallback. V1 uses current TVS rather than integrating historical TVS. That
-  keeps the bounty in intuitive USD; a raw TVS integral would have dollar-year units and
-  would add historical-data assumptions. Uniswap v3 currently has no TVS record, so its
-  score renders while its implicit bounty is unavailable.
+- Project TVS only — there is no address allocation, fund-holder classification, or
+  equal weighting fallback. Exposure integrates the project-level daily TVS series
+  (retained indefinitely; coverage spans every cohort clock). Uniswap v3 currently has
+  no TVS record, so its score renders while exposure is n/a.
+- Shared modules can be merged into a project's perimeter via `includeProjects` in
+  ossification.json (e.g. zksync2 includes shared-zk-stack): the included project's
+  `critical: true` contracts join the perimeter fully (clock, unverified gate, events)
+  and both diffHistories are parsed with events clustered together. The included
+  project needs no ossification.json of its own.
 - Rationale, prior art, and calibration live in the research memo (ask sekuba for the
   artifact link if needed).
 
@@ -71,10 +78,12 @@ Deliberate design decisions (do not re-litigate casually):
 - `getOssificationFactor.ts` — pure project-wide compute, event extraction, and retained
   per-contract evidence (tested in
   `getOssificationFactor.test.ts`).
-- `getProjectOssification.ts` — async loader: reads ossification.json (opt-in gate),
-  discovered.json (flags, `$pastUpgrades`, `sinceTimestamp`, `unverified`), diffHistory.md
-  (parsed via `getDiscoveryUpdates`), and current project `TokenValue` rows. It sums
-  `valueForProject`; it never reads address-level `TvsAmount` rows.
+- `getProjectOssification.ts` — async loader: reads ossification.json (opt-in gate,
+  `includeProjects`, `historicalContracts`), discovered.json of the project and every
+  included project (flags, `$pastUpgrades`, `sinceTimestamp`, `unverified`),
+  diffHistory.md of each (parsed via `getDiscoveryUpdates`), and computes exposure
+  from the summed project `TokenValue` daily series
+  (`getSummedByTimestampByProjects`); it never reads address-level rows.
 - `getOssificationPerimeter.ts` — the old value-graph closure, now a LINT/RESEARCH TOOL
   ONLY (escrow seeds from tvs.json + trackedTxsConfig, closed over values references and
   permission holders). Never decides membership.
@@ -149,9 +158,9 @@ The backfill restores those events:
   templates ARE template-flagged (escrow in every usage).
 - `manualSourcePaths` in an override clears the `unverified` flag (manually verified
   contracts, e.g. tornado's MiMCHasher, correctly count as verified).
-- The score is independent of TVS availability. If current project `TokenValue` rows are
-  unavailable (including `env.MOCK`), the score still renders and the implicit bounty is
-  null/N/A.
+- The score is independent of TVS availability. If project `TokenValue` rows are
+  unavailable (including `env.MOCK`), the score still renders and the battle-tested
+  exposure is null/N/A.
 - A newly deployed critical contract resets the project clock even though deployment is
   not counted as an upgrade event. This is intentional: the complete perimeter cannot be
   older than its newest critical component.
@@ -160,11 +169,15 @@ The backfill restores those events:
 
 ## Current state
 
-Live project-wide cohort on 2026-08-19: tornado-cash 93, uniswapv3 93 (bounty N/A),
-privacy-pools 23, arbitrum 9, optimism 6, linea 5, starknet 5, base 3, taiko 2,
-railgun 0 (2-day clock, rounded), zksync2 0 (2-day clock, rounded), scroll 0
-(unverified critical contract). Dollar bounty values depend on current TVS and are
-expected to move continuously. Frontend tests and typechecks were green at this handoff.
+Live project-wide cohort on 2026-08-19 (ossification / battle-tested exposure):
+tornado-cash 93 / $2.49B·yr, uniswapv3 93 / n/a (no TVS record), privacy-pools 23 /
+$2.9M·yr, arbitrum 9 / $1.86B·yr, optimism 6 / $170M·yr, linea 5 / $32M·yr,
+starknet 5 / $44M·yr, base 3 / $675M·yr, taiko 2 / $445K·yr, railgun 0 (2-day clock),
+zksync2 0 / $12.7M·yr (perimeter 29 = 9 own + 20 imported from shared-zk-stack via
+`includeProjects`, events clustered together), scroll 0 / $0 (unverified critical
+contract gates both score and exposure). Exposure moves with the TVS series but is
+monotone within an unchanged period. Frontend and config test suites were green at
+this handoff.
 
 Backfill (phase 2) is done for the cohort: 43 removed contracts with countable events
 were classified across taiko (18/20 critical), base (6/6), optimism (4/5), arbitrum

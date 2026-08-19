@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "timestamp": 1786965974,
-  "configHash": "0x3cfbef9b419550ca818702997dd476035cf856077dc776dc57bf78ae7be2c697",
+  "configHash": "0xfca730dc74168b7079325ad0ef050971f0d25fc07f2ae5608aa191ebd029b44b",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -96,6 +96,7 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -637,6 +638,7 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -872,6 +874,8 @@
         "unfreezeNonce": 0
       },
       "fieldMeta": {
+        "$members": { "severity": "HIGH" },
+        "$threshold": { "severity": "HIGH" },
         "softFreezeNonce": {
           "severity": "HIGH",
           "description": "Increments with each softFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for SOFT_FREEZE_PERIOD"
@@ -879,9 +883,7 @@
         "hardFreezeNonce": {
           "severity": "HIGH",
           "description": "Increments with each hardFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for HARD_FREEZE_PERIOD"
-        },
-        "$members": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0x59195219d1176E42f8e607e9AC114926D47f9035": "SecurityCouncil"
@@ -1482,6 +1484,7 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1583,6 +1586,7 @@
         "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -2424,6 +2428,7 @@
       ],
       "proxyType": "immutable",
       "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 0s.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -2632,6 +2637,7 @@
       ],
       "proxyType": "immutable",
       "description": "Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",

@@ -30,18 +30,18 @@ async function main() {
     console.log(
       [
         id.padEnd(14),
-        `score ${String(result.score).padStart(3)}`,
-        `bounty ${
-          result.implicitBugBounty !== null
-            ? formatCurrency(result.implicitBugBounty, 'usd').padStart(9)
-            : 'n/a'.padStart(9)
+        `ossification ${String(result.score).padStart(3)}`,
+        `exposure ${
+          result.exposure !== null
+            ? `${formatCurrency(result.exposure, 'usd')}·yr`.padStart(12)
+            : 'n/a'.padStart(12)
         }`,
-        `unchanged ${
+        `lastChange(clock) ${
           result.projectAgeSeconds !== null
             ? formatSeconds(result.projectAgeSeconds).padEnd(18)
             : 'unknown'.padEnd(18)
         }`,
-        `lastChange ${
+        `lastEvent ${
           result.lastCriticalChangeAgeSeconds !== null
             ? formatSeconds(result.lastCriticalChangeAgeSeconds).padEnd(18)
             : 'never'.padEnd(18)

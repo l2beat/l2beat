@@ -22,33 +22,34 @@ export function OssificationSection({
     <ProjectSection {...sectionProps}>
       <div className="flex flex-col gap-4">
         <p className="text-secondary text-sm leading-relaxed">
-          The ossification factor measures how battle-tested the complete set of
-          code securing this project is. Contracts classified as critical by our
-          research team form one project-wide perimeter. Deploying or critically
-          changing any contract in it resets the project clock. A critical
-          change is an implementation upgrade or a high-severity value change,
-          such as a verifier key or permission set. Changes within 24 hours
-          count as one event. The score grows as the whole perimeter remains
-          unchanged; the accumulated implicit bug bounty multiplies that
-          maturity by current project TVS. It estimates adversarial exposure in
-          present-day dollars, not a literal reward.
+          Ossification measures how battle-tested the code securing this project
+          is. Contracts classified as critical by our research team form one
+          project-wide perimeter; deploying or critically changing any of them
+          counts as a change to the whole perimeter. A critical change is an
+          implementation upgrade or a high-severity value change, such as a
+          verifier key or permission set, and changes within 24 hours count as
+          one event. Ossification grows the longer the perimeter stays
+          unchanged. The battle-tested exposure is the value secured summed up
+          over that unchanged period — the implicit bug bounty the code has
+          withstood, expressed in dollar-years, not a literal reward.
         </p>
         <ChartStats className="md:grid-cols-2 lg:grid-cols-4">
-          <ChartStatsItem label="Ossification score" className="max-md:h-7">
+          <ChartStatsItem label="Ossification" className="max-md:h-7">
             <span className="tabular-nums">{ossification.score} / 100</span>
           </ChartStatsItem>
-          <ChartStatsItem label="Implicit bug bounty" className="max-md:h-7">
-            {ossification.implicitBugBounty !== null ? (
+          <ChartStatsItem label="Battle-tested exposure" className="max-md:h-7">
+            {ossification.exposure !== null ? (
               <span className="tabular-nums">
-                {formatCurrency(ossification.implicitBugBounty, 'usd')}
+                {formatCurrency(ossification.exposure, 'usd')}
+                <span className="ml-0.5 text-secondary text-xs">·years</span>
               </span>
             ) : (
               <NotApplicableBadge />
             )}
           </ChartStatsItem>
-          <ChartStatsItem label="Perimeter unchanged" className="max-md:h-7">
+          <ChartStatsItem label="Last change" className="max-md:h-7">
             {ossification.projectAgeSeconds !== null ? (
-              formatSeconds(ossification.projectAgeSeconds)
+              `${formatSeconds(ossification.projectAgeSeconds)} ago`
             ) : (
               <NotApplicableBadge />
             )}

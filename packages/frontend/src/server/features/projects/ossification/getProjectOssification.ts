@@ -3,8 +3,10 @@ import { existsSync, readFileSync, statSync } from 'fs'
 import path from 'path'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getTvsTargetTimestamp } from '../../scaling/tvs/utils/getTvsTargetTimestamp'
-import { getDiscoveryUpdates } from '../recent-changes/getDiscoveryUpdates'
+import {
+  type DiscoveryUpdate,
+  getDiscoveryUpdates,
+} from '../recent-changes/getDiscoveryUpdates'
 import {
   getOssificationFactor,
   type OssificationEntry,
@@ -13,21 +15,21 @@ import {
 import type { DiscoveredEntryLite } from './getOssificationPerimeter'
 
 const PROJECT_ID_RE = /^[a-z0-9-]+$/i
+const SECONDS_PER_YEAR = 365 * 24 * 60 * 60
 
 const fileCache = new Map<string, { mtimeMs: number; parsed: unknown }>()
 
-/**
- * The ossification factor is computed only for projects that opted in by
- * committing an ossification.json, and only over contracts the research
- * team flagged `critical` in discovery (template default, config.jsonc
- * override). There is no derived fallback — unclassified projects have
- * no ossification factor.
- */
-/** Committed judgment file. `historicalContracts` holds contracts that once
- *  were critical but have been removed from discovery, classified by the
- *  research team (see scripts/ossification-backfill.ts). Only entries with
- *  countable events are stored; only `critical: true` ones are consumed. */
+/** Committed judgment file — the opt-in marker for the ossification factor.
+ *  `includeProjects`: discovery projects whose critical contracts and change
+ *  history count as part of this project's perimeter (tightly integrated
+ *  shared modules, e.g. zksync2 <- shared-zk-stack). Their events are
+ *  clustered together with the project's own.
+ *  `historicalContracts`: contracts that once were critical but have been
+ *  removed from discovery, classified by the research team (see
+ *  scripts/ossification-backfill.ts). Only entries with countable events are
+ *  stored; only `critical: true` ones are consumed. */
 interface OssificationJson {
+  includeProjects?: string[]
   historicalContracts?: {
     address?: string
     name?: string
@@ -36,6 +38,13 @@ interface OssificationJson {
   }[]
 }
 
+/**
+ * The ossification factor is computed only for projects that opted in by
+ * committing an ossification.json, and only over contracts the research
+ * team flagged `critical` in discovery (template default, config.jsonc
+ * override). There is no derived fallback — unclassified projects have
+ * no ossification factor.
+ */
 export async function getProjectOssification(
   projectId: string,
 ): Promise<OssificationFactor | undefined> {
@@ -49,20 +58,32 @@ export async function getProjectOssification(
     return undefined
   }
 
-  const discovered = readProjectJson(projectId, 'discovered.json') as
-    | { entries?: DiscoveredEntryLite[] }
-    | undefined
-  const critical = (discovered?.entries ?? []).filter(
-    (entry): entry is DiscoveredEntryLite & { address: string } =>
-      entry.type === 'Contract' &&
-      entry.address !== undefined &&
-      entry.critical === true,
-  )
+  const projectIds = [
+    projectId,
+    ...(ossificationJson.includeProjects ?? []).filter((id) =>
+      PROJECT_ID_RE.test(id),
+    ),
+  ]
+  const critical: (DiscoveredEntryLite & { address: string })[] = []
+  const updates: DiscoveryUpdate[] = []
+  for (const id of projectIds) {
+    const discovered = readProjectJson(id, 'discovered.json') as
+      | { entries?: DiscoveredEntryLite[] }
+      | undefined
+    critical.push(
+      ...(discovered?.entries ?? []).filter(
+        (entry): entry is DiscoveredEntryLite & { address: string } =>
+          entry.type === 'Contract' &&
+          entry.address !== undefined &&
+          entry.critical === true,
+      ),
+    )
+    updates.push(...getDiscoveryUpdates(id, Number.POSITIVE_INFINITY))
+  }
   if (critical.length === 0) {
     return undefined
   }
 
-  const currentTvs = await getCurrentProjectTvs(projectId)
   const historical = (ossificationJson.historicalContracts ?? [])
     .filter((contract) => contract.critical === true && contract.address)
     .map((contract) => ({
@@ -71,13 +92,17 @@ export async function getProjectOssification(
       upgradeTimestamps: contract.upgradeTimestamps ?? [],
     }))
 
-  return getOssificationFactor(
+  const factor = getOssificationFactor(
     critical.map(toOssificationEntry),
-    getDiscoveryUpdates(projectId, Number.POSITIVE_INFINITY),
+    updates,
     UnixTime.now(),
-    currentTvs,
     historical,
   )
+  if (factor === undefined) {
+    return undefined
+  }
+
+  return { ...factor, exposure: await getExposure(projectId, factor) }
 }
 
 function toOssificationEntry(
@@ -92,21 +117,45 @@ function toOssificationEntry(
   }
 }
 
-async function getCurrentProjectTvs(
+/** ∫ TVS dt from the project clock start to now (trapezoid over the daily
+ *  series, flat-extended to now), in USD·years. Shares the unverified gate
+ *  with the score: an unverified perimeter accumulates nothing. */
+async function getExposure(
   projectId: string,
-): Promise<number | undefined> {
-  if (env.MOCK) return undefined
+  factor: OssificationFactor,
+): Promise<number | null> {
+  if (env.MOCK || factor.projectClockStart === null) return null
+  if (factor.maturity === 0) return 0
 
-  const tokenValues = await getDb().tvsTokenValue.getByProjectAtOrBefore(
-    projectId,
-    getTvsTargetTimestamp(),
+  const now = UnixTime.now()
+  const series = await getDb().tvsTokenValue.getSummedByTimestampByProjects(
+    [projectId],
+    UnixTime(factor.projectClockStart),
+    UnixTime(now),
+    {
+      forSummary: false,
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: false,
+    },
   )
-  if (tokenValues.length === 0) return undefined
+  const points = series
+    .map((row) => ({ t: Number(row.timestamp), v: Number(row.value) }))
+    .filter((point) => Number.isFinite(point.v))
+    .sort((a, b) => a.t - b.t)
+  if (points.length === 0) return null
 
-  return tokenValues.reduce(
-    (sum, tokenValue) => sum + tokenValue.valueForProject,
-    0,
-  )
+  let integral = 0
+  for (let i = 1; i < points.length; i++) {
+    const a = points[i - 1]
+    const b = points[i]
+    if (!a || !b) continue
+    integral += ((a.v + b.v) / 2) * (b.t - a.t)
+  }
+  const last = points.at(-1)
+  if (last && now > last.t) {
+    integral += last.v * (now - last.t)
+  }
+  return integral / SECONDS_PER_YEAR
 }
 
 function parsePastUpgrades(value: unknown): number[] {
