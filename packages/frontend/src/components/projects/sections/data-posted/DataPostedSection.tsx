@@ -4,6 +4,7 @@ import { ProjectDataPostedChart } from '~/components/chart/data-posted/ProjectDa
 import type { ChartProject } from '~/components/core/chart/Chart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { CustomLink } from '~/components/link/CustomLink'
+import { CompareProjectsLink } from '~/pages/scaling/compare/components/CompareProjectsLink'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -26,6 +27,8 @@ export interface DataPostedSectionProps extends ProjectSectionProps {
   daTrackingConfig: (ProjectDaTrackingConfig & {
     daLayerName: string
   })[]
+  /** Entry to the compare page with this project pre-selected. */
+  compareUrl?: string
 }
 
 export function DataPostedSection({
@@ -35,10 +38,24 @@ export function DataPostedSection({
   milestones,
   defaultRange,
   daTrackingConfig,
+  compareUrl,
   ...sectionProps
 }: DataPostedSectionProps) {
   return (
-    <ProjectSection {...sectionProps}>
+    <ProjectSection
+      {...sectionProps}
+      headerAccessory={
+        compareUrl && (
+          <CompareProjectsLink
+            variant="section"
+            href={compareUrl}
+            className="max-md:hidden"
+          >
+            Compare
+          </CompareProjectsLink>
+        )
+      }
+    >
       <p className="text-paragraph-15 md:text-paragraph-16">
         This section shows how much data the project publishes to its
         data-availability (DA) layer over time. The project currently posts data
@@ -87,6 +104,15 @@ export function DataPostedSection({
       />
       <HorizontalSeparator className="my-4" />
       <DataPostedTrackedTransactions daTrackingConfig={daTrackingConfig} />
+      {compareUrl && (
+        <CompareProjectsLink
+          variant="section"
+          href={compareUrl}
+          className="mt-4 md:hidden"
+        >
+          Compare with other projects
+        </CompareProjectsLink>
+      )}
     </ProjectSection>
   )
 }

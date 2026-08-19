@@ -4,6 +4,8 @@ import { useMemo } from 'react'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
+import { CompareProjectsLink } from '~/pages/scaling/compare/components/CompareProjectsLink'
+import { getCompareEntryUrl } from '~/pages/scaling/compare/utils/getCompareEntryUrl'
 import {
   type CostsMetric,
   useCostsMetricContext,
@@ -135,9 +137,10 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
         />
       </div>
       <ChartControlsWrapper>
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap items-center gap-1">
           <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
           <CostsMetricControls value={metric} onValueChange={onMetricChange} />
+          <CompareProjectsLink href={getCompareEntryUrl({ metric: 'costs' })} />
         </div>
         <CostsChartRangeControls
           range={range}

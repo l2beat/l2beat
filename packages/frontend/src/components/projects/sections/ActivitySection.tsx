@@ -34,7 +34,11 @@ export function ActivitySection({
       {...sectionProps}
       headerAccessory={
         compareUrl && (
-          <CompareProjectsLink href={compareUrl} className="max-md:hidden">
+          <CompareProjectsLink
+            variant="section"
+            href={compareUrl}
+            className="max-md:hidden"
+          >
             Compare
           </CompareProjectsLink>
         )
@@ -58,8 +62,9 @@ export function ActivitySection({
       )}
       {compareUrl && (
         <CompareProjectsLink
+          variant="section"
           href={compareUrl}
-          className="mt-4 h-10 w-full md:hidden"
+          className="mt-4 md:hidden"
         >
           Compare with other projects
         </CompareProjectsLink>

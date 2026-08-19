@@ -44,7 +44,9 @@ export function ScalingTvsSection({
       headerAccessory={
         <div className="flex items-center gap-2 max-md:hidden">
           {compareUrl && (
-            <CompareProjectsLink href={compareUrl}>Compare</CompareProjectsLink>
+            <CompareProjectsLink variant="section" href={compareUrl}>
+              Compare
+            </CompareProjectsLink>
           )}
           {tvsBreakdownUrl && (
             <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
@@ -75,8 +77,9 @@ export function ScalingTvsSection({
             />
             {compareUrl && (
               <CompareProjectsLink
+                variant="section"
                 href={compareUrl}
-                className="mt-3 h-10 w-full md:hidden"
+                className="mt-3 md:hidden"
               >
                 Compare with other projects
               </CompareProjectsLink>

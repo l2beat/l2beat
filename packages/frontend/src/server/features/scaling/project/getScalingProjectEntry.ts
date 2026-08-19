@@ -449,6 +449,7 @@ export async function getScalingProjectEntry(
         title: 'Onchain costs',
         milestones: sortedMilestones,
         project: projectWithIcon,
+        compareUrl: getProjectCompareUrl(project, 'costs'),
         ...costsSection,
       },
     })
@@ -462,6 +463,7 @@ export async function getScalingProjectEntry(
         title: 'Data posted',
         milestones: sortedMilestones,
         project: projectWithIcon,
+        compareUrl: getProjectCompareUrl(project, 'data-posted'),
         ...dataPostedSection,
       },
     })
