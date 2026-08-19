@@ -14,7 +14,6 @@ export interface GardenLookupMatch {
   href: string | null
   /** Discovery's name for whatever sits at this address. */
   contractName: string
-  role: 'proxy' | 'implementation' | 'permission'
   crops: CropsApiSummary
   attestation: { uid: string; revision: number } | null
 }
@@ -60,7 +59,6 @@ export async function getGardenLookupApiData(queries: string[]) {
             name: project.name,
             href: project.href,
             contractName: match.targetName,
-            role: match.role,
             crops: toCropsSummary(project.crops),
             attestation: project.attestation
               ? {

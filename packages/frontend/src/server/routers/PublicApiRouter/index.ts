@@ -145,10 +145,10 @@ export function createPublicApiRouter() {
     res.json(await getGardenCropsApiData())
   })
 
-  // Registered before /api/garden/crops/:slug would be reached, and on its own
-  // path so it can never be shadowed by a project slug.
+  // Must be registered before /api/garden/project/:id, or "lookup" is read as
+  // a project id and every call 404s.
   router.get(
-    '/api/garden/lookup',
+    '/api/garden/project/lookup',
     validateRoute({
       query: v.object({ addresses: v.string() }),
     }),
@@ -174,16 +174,16 @@ export function createPublicApiRouter() {
   )
 
   router.get(
-    '/api/garden/crops/:slug',
+    '/api/garden/project/:id',
     validateRoute({
-      params: v.object({ slug: v.string() }),
+      params: v.object({ id: v.string() }),
     }),
     async (req, res) => {
-      const data = await getGardenCropsProjectApiData(req.params.slug)
+      const data = await getGardenCropsProjectApiData(req.params.id)
       if (!data) {
         res
           .status(404)
-          .json({ error: `No crops evaluation for ${req.params.slug}` })
+          .json({ error: `No crops evaluation for ${req.params.id}` })
         return
       }
       res.json(data)

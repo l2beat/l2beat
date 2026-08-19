@@ -14,7 +14,7 @@ const BASE = 'https://l2beat.com'
 
 export const ENDPOINTS: EndpointDoc[] = [
   {
-    path: '/api/garden/lookup',
+    path: '/api/garden/project/lookup',
     summary: 'Which protocol is this address?',
     description:
       'Hand it the contracts a user is about to touch; it answers with the protocols they belong to and a rating per crop. Addresses are matched against L2BEAT discovery - proxies, implementations, and the accounts holding permissions over them - for reviewed protocols only, so anything else comes back empty rather than as a guess.',
@@ -25,7 +25,7 @@ export const ENDPOINTS: EndpointDoc[] = [
           'Up to 50 comma-separated chain:address pairs. The chain may be a short name (eth), a long name (ethereum) or a chain id (1).',
       },
     ],
-    request: `${BASE}/api/garden/lookup?addresses=eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc`,
+    request: `${BASE}/api/garden/project/lookup?addresses=eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc`,
     response: `{
   "attestations": { ... },
   "results": [
@@ -37,7 +37,6 @@ export const ENDPOINTS: EndpointDoc[] = [
           "name": "Tornado Cash",
           "href": "${BASE}/privacy/projects/tornado-cash",
           "contractName": "Pool_0.1_ETH",
-          "role": "implementation",
           "crops": {
             "censorshipResistance": { "sentiment": "good", "status": "reviewed" },
             "openSource": { "sentiment": "good", "status": "reviewed" },
@@ -52,11 +51,11 @@ export const ENDPOINTS: EndpointDoc[] = [
 }`,
   },
   {
-    path: '/api/garden/crops/:slug',
+    path: '/api/garden/project/{id}',
     summary: 'Everything about one protocol',
     description:
-      'The same crops, plus the reasoning behind each one: what the rating rests on, what is missing, and what we have not assessed. Accepts a slug or a project id, and answers 404 for anything we have not reviewed.',
-    request: `${BASE}/api/garden/crops/tornado-cash`,
+      'The same crops, plus the reasoning behind each one: what the rating rests on, what is missing, and what we have not assessed. `{id}` is the project id or its slug; anything we have not reviewed answers 404.',
+    request: `${BASE}/api/garden/project/tornado-cash`,
     response: `{
   "attestations": { ... },
   "id": "tornado-cash",
@@ -114,7 +113,7 @@ export const VERIFY_STEPS = [
   'Check `revocationTime == 0`. When the set changes we revoke the old attestation and issue the next revision, so a revoked attestation is a stale claim and must not be shown.',
   'Check `attester` and `schema` against the values below, so an attestation someone else made cannot be mistaken for ours.',
   'Decode `projectIds`. That array is the whole claim: these are the protocols we have reviewed, as of `reviewedAt`, at revision `revision`.',
-  'For what any of those ids is actually worth - the rating per crop, the reasoning, what we did not look at - call `/api/garden/crops/:id`. Ratings move as protocols change; the set moves far less, which is why only the set is onchain.',
+  'For what any of those ids is actually worth - the rating per crop, the reasoning, what we did not look at - call `/api/garden/project/{id}`. Ratings move as protocols change; the set moves far less, which is why only the set is onchain.',
 ]
 
 /** What a reviewed protocol may and may not say with the badge. */
