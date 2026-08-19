@@ -12,6 +12,7 @@ import { getScalingProjectData } from './project/getScalingProjectData'
 import { getScalingProjectTvsBreakdownData } from './project/tvs-breakdown/getScalingProjectTvsBreakdownData'
 import { getScalingRiskDataAvailabilityData } from './risk/data-availability/getScalingRiskDataAvailabilityData'
 import { getScalingRiskData } from './risk/getScalingRiskData'
+import { getScalingRiskOssificationData } from './risk/ossification/getScalingRiskOssificationData'
 import { getScalingRiskSequencingData } from './risk/sequencing/getScalingRiskSequencingData'
 import { getScalingRiskStateValidationData } from './risk/state-validation/getScalingRiskStateValidationData'
 import { getScalingSummaryData } from './summary/getScalingSummaryData'
@@ -60,6 +61,12 @@ export function createScalingRouter(
 
   router.get('/scaling/risk/sequencing', async (req, res) => {
     const data = await getScalingRiskSequencingData(req, manifest, cache)
+    const html = await render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
+
+  router.get('/scaling/risk/ossification', async (req, res) => {
+    const data = await getScalingRiskOssificationData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })

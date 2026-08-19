@@ -23,6 +23,9 @@ export const pageLoaders = {
   ScalingRiskSequencingPage: async () =>
     (await import('./scaling/risk/sequencing/ScalingRiskSequencingPage'))
       .ScalingRiskSequencingPage,
+  ScalingRiskOssificationPage: async () =>
+    (await import('./scaling/risk/ossification/ScalingRiskOssificationPage'))
+      .ScalingRiskOssificationPage,
   ScalingLivenessPage: async () =>
     (await import('./scaling/liveness/ScalingLivenessPage'))
       .ScalingLivenessPage,

@@ -56,6 +56,12 @@ export const searchBarPages = withIndex([
   },
   {
     category: 'scaling',
+    name: 'Ossification',
+    tags: ['pages', 'scaling', 'risks'],
+    href: '/scaling/risk/ossification',
+  },
+  {
+    category: 'scaling',
     name: 'Liveness',
     tags: ['pages', 'scaling'],
     href: '/scaling/liveness',

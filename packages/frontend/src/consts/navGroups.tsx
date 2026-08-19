@@ -56,6 +56,10 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
             title: 'Sequencing',
             href: '/scaling/risk/sequencing',
           },
+          {
+            title: 'Ossification',
+            href: '/scaling/risk/ossification',
+          },
         ],
       },
       {

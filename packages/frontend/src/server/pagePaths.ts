@@ -13,6 +13,7 @@ export const STATIC_PAGE_PATHS = [
   '/scaling/risk/state-validation',
   '/scaling/risk/data-availability',
   '/scaling/risk/sequencing',
+  '/scaling/risk/ossification',
   '/scaling/tvs',
   '/scaling/tvs/breakdown',
   '/scaling/liveness',
