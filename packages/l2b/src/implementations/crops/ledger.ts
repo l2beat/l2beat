@@ -64,8 +64,8 @@ function format(
       `    network: ${str(ledger.network)} as const,`,
       `    attester: ${str(ledger.attester)},`,
       `    firstBlock: ${ledger.firstBlock},`,
-      ...arrayLines('live', sortByProject(ledger.live).map(live)),
-      ...arrayLines('revoked', sortByProject(ledger.revoked).map(revoked)),
+      ...arrayLines('live', byRevision(ledger.live).map(live)),
+      ...arrayLines('revoked', byRevision(ledger.revoked).map(revoked)),
       '  },',
     ].join('\n')
   })
@@ -80,22 +80,19 @@ function arrayLines(name: string, entries: string[]): string[] {
   return [`    ${name}: [`, ...entries, '    ],']
 }
 
-function sortByProject<T extends { projectId: string; revision: number }>(
-  items: T[],
-): T[] {
-  return [...items].sort(
-    (a, b) => a.projectId.localeCompare(b.projectId) || a.revision - b.revision,
-  )
+/** Oldest revision first, so the file reads as a history. */
+function byRevision<T extends { revision: number }>(items: T[]): T[] {
+  return [...items].sort((a, b) => a.revision - b.revision)
 }
 
 function live(attestation: CropAttestation): string {
   return [
     '      {',
-    `        projectId: ${str(attestation.projectId)},`,
     `        uid: ${str(attestation.uid)},`,
+    `        schema: ${str(attestation.schema)},`,
     `        revision: ${attestation.revision},`,
     `        reviewedAt: ${attestation.reviewedAt},`,
-    `        evaluationHash: ${str(attestation.evaluationHash)},`,
+    `        projectIds: ${strArray(attestation.projectIds)},`,
     `        txHash: ${str(attestation.txHash)},`,
     `        block: ${attestation.block},`,
     '      },',
@@ -105,9 +102,10 @@ function live(attestation: CropAttestation): string {
 function revoked(attestation: RevokedCropAttestation): string {
   return [
     '      {',
-    `        projectId: ${str(attestation.projectId)},`,
     `        uid: ${str(attestation.uid)},`,
+    `        schema: ${str(attestation.schema)},`,
     `        revision: ${attestation.revision},`,
+    `        projectIds: ${strArray(attestation.projectIds)},`,
     `        revokedTxHash: ${str(attestation.revokedTxHash)},`,
     `        revokedBlock: ${attestation.revokedBlock},`,
     '      },',
@@ -116,4 +114,8 @@ function revoked(attestation: RevokedCropAttestation): string {
 
 function str(value: string): string {
   return `'${value.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`
+}
+
+function strArray(values: string[]): string {
+  return `[${values.map(str).join(', ')}]`
 }

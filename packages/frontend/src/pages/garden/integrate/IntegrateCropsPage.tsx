@@ -5,8 +5,13 @@ import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { cn } from '~/utils/cn'
 import { SectionHeading } from '../components/SectionHeading'
+import { SproutIcon } from '../components/SproutIcon'
 import { GARDEN_ANIMATIONS_CSS, GARDEN_SURFACES_CSS } from '../gardenCss'
+import { GARDEN_PATH } from '../submit/links'
+import { BadgeStudio } from './components/BadgeStudio'
+import { WalletMock } from './components/WalletMock'
 import {
+  BADGE_RULES,
   ENDPOINTS,
   type EndpointDoc,
   VERIFY_STEPS,
@@ -21,11 +26,21 @@ export interface IntegrateCropsAttestations {
   schemaUid: string
   schema: string
   attester: string | null
+  current: {
+    uid: string
+    revision: number
+    reviewedAt: number
+    projectIds: string[]
+    explorerUrl: string
+  } | null
 }
 
 export interface IntegrateCropsPageProps extends AppLayoutProps {
   attestations: IntegrateCropsAttestations
 }
+
+const CONSUMERS_ID = 'for-apps'
+const PROTOCOLS_ID = 'for-protocols'
 
 export function IntegrateCropsPage({
   attestations,
@@ -39,12 +54,13 @@ export function IntegrateCropsPage({
           <h1 className="pt-5 font-bold text-2xl max-md:px-4 lg:hidden">
             Integrate CROPS
           </h1>
-          <MainPageHeader>Integrate CROPS</MainPageHeader>
+          <MainPageHeader description="Two ways in. Show your users what a protocol is made of, or show your users that we have looked at yours.">
+            Integrate CROPS
+          </MainPageHeader>
           <main>
-            <IntroSection />
-            <EndpointsSection />
-            <VocabularySection />
-            <AttestationsSection attestations={attestations} />
+            <AudiencePicker />
+            <ConsumerSections attestations={attestations} />
+            <ProtocolSection attestations={attestations} />
           </main>
         </div>
         <ScrollToTopButton />
@@ -53,41 +69,164 @@ export function IntegrateCropsPage({
   )
 }
 
-function IntroSection() {
+/* ------------------------------------------------------------------ split */
+
+function AudiencePicker() {
   return (
-    <section className="mt-6 md:mt-8">
-      <SectionHeading
-        title="The CROPS evaluations, as data"
-        description="Every evaluation in The Infinite Garden is available over a plain JSON API. There is no API key, no signup and no rate limit to negotiate: the endpoints are open and send Access-Control-Allow-Origin: *, so a wallet or a block explorer can call them straight from the browser."
+    <section className="mt-6 grid gap-4 max-md:px-4 md:mt-8 md:grid-cols-2 md:gap-6">
+      <AudienceCard
+        href={`#${CONSUMERS_ID}`}
+        eyebrow="For wallets, explorers and interfaces"
+        title="Show the crops"
+        description="Ask us what a contract belongs to and get back the four crops for that protocol, ready to render at the moment a user is about to sign. No key, no signup."
+        cta="Read the API"
+        art={<WalletMock />}
       />
-      <PrimaryCard className="max-md:mx-4 md:p-8">
-        <p className="text-paragraph-15 md:text-paragraph-16">
-          The most useful entry point for a wallet is{' '}
-          <Code>/api/garden/lookup</Code>. Give it the contracts a user is about
-          to interact with and it tells you which reviewed protocol they belong
-          to, so you can show the four crops at the moment it matters rather
-          than asking anyone to look a protocol up by name.
-        </p>
-        <p className="mt-3 text-paragraph-15 text-secondary md:text-paragraph-16">
-          Please attribute the evaluations to L2BEAT and link back to the
-          protocol page, so a user can read the reasoning rather than only the
-          colour.
-        </p>
-      </PrimaryCard>
+      <AudienceCard
+        href={`#${PROTOCOLS_ID}`}
+        eyebrow="For reviewed protocols"
+        title="Wear the badge"
+        description="If we have reviewed you and named you in the onchain set, you can say so on your own site. Copy one line of HTML - no script, no image hosted by us."
+        cta="Get the badge"
+        art={<BadgeArt />}
+      />
     </section>
   )
 }
 
-function EndpointsSection() {
+function AudienceCard({
+  href,
+  eyebrow,
+  title,
+  description,
+  cta,
+  art,
+}: {
+  href: string
+  eyebrow: string
+  title: string
+  description: string
+  cta: string
+  art: React.ReactNode
+}) {
   return (
-    <section className="mt-8 md:mt-12">
-      <SectionHeading title="Endpoints" />
-      <div className="flex flex-col gap-4 md:gap-6">
-        {ENDPOINTS.map((endpoint) => (
-          <EndpointCard key={endpoint.path} endpoint={endpoint} />
-        ))}
+    <a
+      href={href}
+      className="group flex flex-col overflow-hidden rounded-2xl border border-divider bg-surface-primary transition-colors hover:border-[#9ec98a] dark:hover:border-[#3d5230]"
+    >
+      <div className="flex min-h-[220px] items-center justify-center bg-gradient-to-b from-[#f4f9f0] to-surface-primary px-6 py-8 dark:from-[#151a12] dark:to-surface-primary">
+        {art}
       </div>
-    </section>
+      <div className="flex grow flex-col border-divider border-t p-5 md:p-6">
+        <span className="font-semibold text-[#4a7a35] text-subtitle-12 uppercase tracking-wider dark:text-[#8fd06a]">
+          {eyebrow}
+        </span>
+        <h2 className="mt-1.5 font-bold text-heading-20 md:text-heading-24">
+          {title}
+        </h2>
+        <p className="mt-2 grow text-paragraph-14 text-secondary md:text-paragraph-15">
+          {description}
+        </p>
+        <span className="mt-4 inline-flex items-center gap-1.5 font-semibold text-paragraph-14 group-hover:underline">
+          {cta}
+          <span aria-hidden>&rarr;</span>
+        </span>
+      </div>
+    </a>
+  )
+}
+
+/** A still of the badge, for the card that leads to the badge studio. */
+function BadgeArt() {
+  return (
+    <div className="flex flex-col items-center gap-3">
+      <span className="inline-flex items-center gap-2.5 rounded-xl border border-[#d8e3cd] bg-white px-3.5 py-2.5 shadow-[0_10px_30px_-14px_rgba(16,32,20,.5)] dark:border-[#2c3a22] dark:bg-[#17181a]">
+        <SproutIcon className="size-5 text-[#16863f] dark:text-[#3fe07f]" />
+        <span className="flex flex-col leading-tight">
+          <span className="font-bold text-[#16863f] text-[13px] tracking-wide dark:text-[#3fe07f]">
+            CROPS
+          </span>
+          <span className="text-[11px] text-secondary">
+            Reviewed &amp; attested onchain
+          </span>
+        </span>
+        <span className="self-stretch border-divider border-l" />
+        <span className="font-semibold text-[11px] text-secondary tracking-widest">
+          L2BEAT
+        </span>
+      </span>
+      <span className="inline-flex items-center gap-2 rounded-full border border-[#d8e3cd] bg-white px-3 py-1.5 dark:border-[#2c3a22] dark:bg-[#17181a]">
+        <SproutIcon className="size-3.5 text-[#16863f] dark:text-[#3fe07f]" />
+        <span className="font-bold text-[#16863f] text-[12px] tracking-wide dark:text-[#3fe07f]">
+          CROPS
+        </span>
+        <span className="text-[12px] text-secondary">attested</span>
+      </span>
+    </div>
+  )
+}
+
+/* -------------------------------------------------- for apps and wallets */
+
+function ConsumerSections({
+  attestations,
+}: {
+  attestations: IntegrateCropsAttestations
+}) {
+  return (
+    <>
+      <SectionDivider id={CONSUMERS_ID} label="For wallets and interfaces" />
+      <section className="mt-6 md:mt-8">
+        <SectionHeading
+          title="The CROPS evaluations, as data"
+          description="Every evaluation in The Infinite Garden is available over a plain JSON API. There is no API key, no signup and no rate limit to negotiate: the endpoints are open and send Access-Control-Allow-Origin: *, so a wallet or a block explorer can call them straight from the browser."
+        />
+        <PrimaryCard className="max-md:mx-4 md:p-8">
+          <p className="text-paragraph-15 md:text-paragraph-16">
+            The most useful entry point is <Code>/api/garden/lookup</Code>. Give
+            it the contracts a user is about to interact with and it tells you
+            which reviewed protocol they belong to, so you can show the four
+            crops at the moment it matters rather than asking anyone to look a
+            protocol up by name.
+          </p>
+          <p className="mt-3 text-paragraph-15 text-secondary md:text-paragraph-16">
+            Please attribute the evaluations to L2BEAT and link back to the
+            protocol page, so a user can read the reasoning rather than only the
+            colour.
+          </p>
+        </PrimaryCard>
+      </section>
+
+      <section className="mt-8 md:mt-12">
+        <SectionHeading title="Endpoints" />
+        <div className="flex flex-col gap-4 md:gap-6">
+          {ENDPOINTS.map((endpoint) => (
+            <EndpointCard key={endpoint.path} endpoint={endpoint} />
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-8 md:mt-12">
+        <SectionHeading
+          title="Reading a crop"
+          description="Four crops, two independent axes. These are the rules the garden itself follows, so an integration that follows them will always agree with our pages."
+        />
+        <PrimaryCard className="max-md:mx-4 md:p-8">
+          <ul className="flex flex-col gap-3">
+            {VOCABULARY_NOTES.map((note) => (
+              <li
+                key={note}
+                className="text-paragraph-14 text-secondary md:text-paragraph-16"
+              >
+                <Markup text={note} />
+              </li>
+            ))}
+          </ul>
+        </PrimaryCard>
+      </section>
+
+      <AttestationsSection attestations={attestations} />
+    </>
   )
 }
 
@@ -123,50 +262,28 @@ function EndpointCard({ endpoint }: { endpoint: EndpointDoc }) {
   )
 }
 
-function VocabularySection() {
-  return (
-    <section className="mt-8 md:mt-12">
-      <SectionHeading
-        title="Reading a crop"
-        description="Four crops, two independent axes. These are the rules the garden itself follows, so an integration that follows them will always agree with our pages."
-      />
-      <PrimaryCard className="max-md:mx-4 md:p-8">
-        <ul className="flex flex-col gap-3">
-          {VOCABULARY_NOTES.map((note) => (
-            <li
-              key={note}
-              className="text-paragraph-14 text-secondary md:text-paragraph-16"
-            >
-              <Markup text={note} />
-            </li>
-          ))}
-        </ul>
-      </PrimaryCard>
-    </section>
-  )
-}
-
 function AttestationsSection({
   attestations,
 }: {
   attestations: IntegrateCropsAttestations
 }) {
+  const current = attestations.current
   return (
     <section className="mt-8 md:mt-12">
       <SectionHeading
-        title="Verifying a rating onchain"
-        description="Each evaluation is also published as an Ethereum Attestation Service attestation, so you do not have to take an HTTP response on trust. The ratings are in the attestation as plain strings: reading one needs no lookup table and no call back to us."
+        title="Verifying the set onchain"
+        description="One attestation on Ethereum Attestation Service names every protocol we have reviewed. Read it and you have the set without trusting an HTTP response; then ask this API what each id is worth."
       />
       {attestations.isTestnet && (
         <div className="mb-4 rounded-lg border border-[#efd9a6] bg-[#fdf7ea] p-4 text-paragraph-14 max-md:mx-4 md:text-paragraph-16 dark:border-[#ffc107]/50 dark:bg-[#ffc107]/10">
           <span className="font-bold">
-            These attestations are on {attestations.network}, a testnet.
+            This attestation is on {attestations.network}, a testnet.
           </span>{' '}
-          They exist so integrators can build against the real thing, and are
-          not yet production claims. Treat the API as the current source of
-          truth until this says mainnet - the{' '}
-          <Code>attestations.isTestnet</Code> field in every response says the
-          same thing, so you can gate on it in code.
+          It exists so integrators can build against the real thing, and is not
+          yet a production claim. Treat the API as the current source of truth
+          until this says mainnet - the <Code>attestations.isTestnet</Code>{' '}
+          field in every response says the same thing, so you can gate on it in
+          code.
         </div>
       )}
       <PrimaryCard className="max-md:mx-4 md:p-8">
@@ -179,6 +296,26 @@ function AttestationsSection({
           <Constant label="Attester">
             {attestations.attester ?? 'not published yet'}
           </Constant>
+          <Constant label="Attestation">
+            {current ? (
+              <a
+                href={current.explorerUrl}
+                className="underline underline-offset-2"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {current.uid}
+              </a>
+            ) : (
+              'not published yet'
+            )}
+          </Constant>
+          {current && (
+            <Constant label="Covers">
+              revision {current.revision} &middot; {current.projectIds.length}{' '}
+              projects
+            </Constant>
+          )}
         </dl>
         <CodeBlock wrap>{attestations.schema}</CodeBlock>
         <ol className="mt-5 flex list-decimal flex-col gap-3 pl-5">
@@ -193,6 +330,88 @@ function AttestationsSection({
         </ol>
       </PrimaryCard>
     </section>
+  )
+}
+
+/* ------------------------------------------------ for reviewed protocols */
+
+function ProtocolSection({
+  attestations,
+}: {
+  attestations: IntegrateCropsAttestations
+}) {
+  const count = attestations.current?.projectIds.length ?? 0
+  return (
+    <>
+      <SectionDivider id={PROTOCOLS_ID} label="For reviewed protocols" />
+      <section className="mt-6 md:mt-8">
+        <SectionHeading
+          title="Wear the badge"
+          description="If your project is in the attested set, the badge is yours to use. It is one anchor tag with inline styles - no script, no stylesheet, and no image served from our domain, so it cannot slow your page down or break when we deploy."
+        />
+        <div className="max-md:mx-4">
+          <BadgeStudio href={`https://l2beat.com${GARDEN_PATH}`} />
+        </div>
+      </section>
+
+      <section className="mt-8 md:mt-12">
+        <SectionHeading
+          title="Using it fairly"
+          description={
+            count > 0
+              ? `${count} protocols are named in the current attestation. These are the terms that come with being one of them.`
+              : 'These are the terms that come with being in the attested set.'
+          }
+          size="md"
+        />
+        <PrimaryCard className="max-md:mx-4 md:p-8">
+          <ul className="flex flex-col gap-3">
+            {BADGE_RULES.map((rule) => (
+              <li
+                key={rule}
+                className="flex gap-3 text-paragraph-14 text-secondary md:text-paragraph-16"
+              >
+                <SproutIcon className="mt-1 size-4 shrink-0 text-[#4a7a35] dark:text-[#8fd06a]" />
+                <span>
+                  <Markup text={rule} />
+                </span>
+              </li>
+            ))}
+          </ul>
+        </PrimaryCard>
+      </section>
+
+      <section className="mt-8 md:mt-12">
+        <SectionHeading
+          title="Not reviewed yet?"
+          description="The garden is open. Answer the submission questions and we will evaluate the protocol against the four crops; if it lands in the set, the badge above is yours."
+          size="md"
+        />
+        <div className="max-md:mx-4">
+          <a
+            href="/garden/submit"
+            className="inline-flex items-center gap-2 rounded-lg bg-[#15ca60] px-4 py-2.5 font-semibold text-paragraph-15 text-white transition-opacity hover:opacity-90"
+          >
+            <SproutIcon />
+            Submit your protocol
+          </a>
+        </div>
+      </section>
+    </>
+  )
+}
+
+/* ------------------------------------------------------------- primitives */
+
+function SectionDivider({ id, label }: { id: string; label: string }) {
+  return (
+    <div id={id} className="mt-12 flex items-center gap-4 max-md:px-4 md:mt-16">
+      <span className="h-px grow bg-divider" />
+      <span className="font-semibold text-secondary text-subtitle-12 uppercase tracking-[0.14em]">
+        {label}
+      </span>
+      <span className="h-px grow bg-divider" />
+    </div>
   )
 }
 

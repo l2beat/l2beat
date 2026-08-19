@@ -1,40 +1,24 @@
-import type { ProjectCrops } from '@l2beat/config'
-import { toCanonicalCrops } from '@l2beat/config/build/crops/canonicalCrops'
+import type { CropAttestation } from '@l2beat/config/build/crops/attestations'
 import {
   ATTESTATION_SCHEMA,
   ATTESTATION_SCHEMA_UID,
 } from '@l2beat/config/build/crops/eas'
 import { expect } from 'earl'
-import { type Hex, hexToString } from 'viem'
+import type { Hex } from 'viem'
 import { findIdentifyingStrings } from './anonymity'
-import { diffAttestations } from './diff'
 import type { OnchainAttestation } from './easClient'
 import {
-  type CropSubject,
   decodePayload,
+  diffSet,
   encodePayload,
-  hashEvaluation,
-  payloadMatches,
+  setMatches,
   toPayload,
 } from './payload'
+import { planAttestation } from './plan'
 import { assertSchemaUid, computeSchemaUid } from './schema'
 
-const CROPS: ProjectCrops = {
-  censorshipResistance: { sentiment: 'good', points: ['immutable pools'] },
-  openSource: { sentiment: 'good' },
-  privacy: { status: 'notReviewed' },
-  security: { sentiment: 'warning', status: 'partiallyReviewed' },
-}
-
-function subject(id = 'uniswapv3', crops = CROPS): CropSubject {
-  const canonical = toCanonicalCrops(id, 'Uniswap V3', crops)
-  return {
-    projectId: id,
-    projectName: 'Uniswap V3',
-    canonical,
-    evaluationHash: hashEvaluation(canonical),
-  }
-}
+const IDS = ['aztecnetwork', 'tornado-cash', 'uniswapv3']
+const OLD_SCHEMA = `0x${'99'.repeat(32)}` as Hex
 
 describe('crop attestations', () => {
   describe('schema', () => {
@@ -58,188 +42,238 @@ describe('crop attestations', () => {
         ),
       ).not.toEqual(ATTESTATION_SCHEMA_UID as Hex)
     })
+
+    it('attests the set and nothing about a rating', () => {
+      expect(ATTESTATION_SCHEMA).toEqual(
+        'string[] projectIds,uint64 reviewedAt,uint32 revision',
+      )
+    })
   })
 
   describe('payload', () => {
     it('round trips through abi encoding', () => {
-      const payload = toPayload(subject(), 1700000000, 3)
+      const payload = toPayload(IDS, 1700000000, 3)
       expect(decodePayload(encodePayload(payload))).toEqual(payload)
     })
 
-    it('carries the resolved ratings, not the raw config', () => {
-      const payload = toPayload(subject(), 1700000000, 1)
-      // privacy is notReviewed, so it must read neutral rather than empty.
-      expect(payload.ratings).toEqual(['good', 'good', 'neutral', 'warning'])
+    it('sorts the set, so the same members always encode the same bytes', () => {
+      const a = encodePayload(toPayload(IDS, 1700000000, 1))
+      const b = encodePayload(toPayload([...IDS].reverse(), 1700000000, 1))
+      expect(a).toEqual(b)
     })
 
-    it('does not attest review status', () => {
-      const payload = toPayload(subject(), 1700000000, 1)
-      const encoded = encodePayload(payload)
-      expect(ATTESTATION_SCHEMA).not.toInclude('Status')
-      for (const status of ['reviewed', 'partiallyReviewed', 'notReviewed']) {
-        expect(hexToString(encoded)).not.toInclude(status)
-      }
-    })
-
-    it('still replaces an attestation when only the status changed', () => {
-      // Status is out of the payload but inside evaluationHash, so a
-      // status-only edit must still read as a different evaluation.
-      const before = toPayload(subject(), 1700000000, 1)
-      const after = toPayload(
-        subject('uniswapv3', {
-          ...CROPS,
-          security: { sentiment: 'warning', status: 'reviewed' },
-        }),
-        1700000000,
-        1,
+    it('refuses to encode a set that names us', () => {
+      expect(() => encodePayload(toPayload(['l2beat-test'], 1, 1))).toThrow(
+        /must not appear onchain/,
       )
-      expect(after.ratings).toEqual(before.ratings)
-      expect(payloadMatches(before, after)).toEqual(false)
+    })
+  })
+
+  describe(setMatches.name, () => {
+    it('ignores order', () => {
+      expect(setMatches(IDS, [...IDS].reverse())).toEqual(true)
+    })
+
+    it('notices a different member', () => {
+      expect(
+        setMatches(IDS, ['aztecnetwork', 'tornado-cash', 'umbra']),
+      ).toEqual(false)
+    })
+
+    it('notices a different size', () => {
+      expect(setMatches(IDS, IDS.slice(1))).toEqual(false)
+    })
+  })
+
+  describe(diffSet.name, () => {
+    it('reports what joined and what left', () => {
+      expect(diffSet(['a', 'b'], ['b', 'c'])).toEqual({
+        added: ['a'],
+        removed: ['c'],
+      })
     })
   })
 
   describe('anonymity guard', () => {
-    it('accepts the ratings vocabulary', () => {
-      expect(
-        findIdentifyingStrings('uniswapv3 Uniswap V3 good reviewed neutral'),
-      ).toEqual([])
+    it('accepts a set of project ids', () => {
+      expect(findIdentifyingStrings(IDS.join(' '))).toEqual([])
     })
 
     it('rejects anything naming us or the framework', () => {
       expect(findIdentifyingStrings('reviewed by L2BEAT')).toEqual(['l2beat'])
       expect(findIdentifyingStrings('CROPS framework')).toEqual(['crops'])
     })
-
-    it('refuses to encode a payload that names us', () => {
-      const named = subject('l2beat-test')
-      expect(() => encodePayload(toPayload(named, 1, 1))).toThrow(
-        /must not appear onchain/,
-      )
-    })
   })
 
-  describe(diffAttestations.name, () => {
+  describe(planAttestation.name, () => {
     const now = 1800000000
-    const uid = `0x${'11'.repeat(32)}`
+    const uid = `0x${'11'.repeat(32)}` as Hex
 
     function onchain(
-      data: Hex,
       overrides: Partial<OnchainAttestation> = {},
     ): OnchainAttestation {
       return {
-        uid: uid as Hex,
+        uid,
         schema: ATTESTATION_SCHEMA_UID as Hex,
         attester: '0x0000000000000000000000000000000000000001',
         time: 1700000000,
         revocationTime: 0,
         refUID: `0x${'0'.repeat(64)}` as Hex,
-        data,
+        data: encodePayload(toPayload(IDS, 1700000000, 2)),
         ...overrides,
       }
     }
 
-    const ledger = {
-      projectId: 'uniswapv3',
-      uid,
-      revision: 2,
-      reviewedAt: 1700000000,
-      evaluationHash: hashEvaluation(subject().canonical),
-      txHash: '0xabc',
-      block: 100,
+    function entry(overrides: Partial<CropAttestation> = {}): CropAttestation {
+      return {
+        uid,
+        schema: ATTESTATION_SCHEMA_UID,
+        revision: 2,
+        reviewedAt: 1700000000,
+        projectIds: IDS,
+        txHash: '0xabc',
+        block: 100,
+        ...overrides,
+      }
     }
 
-    it('reports a project with no attestation as new at revision 1', () => {
-      const diff = diffAttestations({
-        subjects: [subject()],
+    it('attests at revision 1 when nothing is attested yet', () => {
+      const plan = planAttestation({
+        projectIds: IDS,
         ledger: [],
         onchain: new Map(),
         now,
       })
-      expect(diff.length).toEqual(1)
-      expect(diff[0]?.kind).toEqual('new')
-      expect(diff[0]?.payload?.revision).toEqual(1)
-      expect(diff[0]?.revoke).toEqual(undefined)
+      expect(plan.kind).toEqual('new')
+      expect(plan.payload?.revision).toEqual(1)
+      expect(plan.payload?.projectIds).toEqual(IDS)
+      expect(plan.revoke).toEqual([])
     })
 
-    it('reports an unchanged evaluation as unchanged, with nothing to publish', () => {
-      const live = encodePayload(toPayload(subject(), 1700000000, 2))
-      const diff = diffAttestations({
-        subjects: [subject()],
-        ledger: [ledger],
-        onchain: new Map([[uid, onchain(live)]]),
+    it('does nothing when the live set already matches config', () => {
+      const plan = planAttestation({
+        projectIds: IDS,
+        ledger: [entry()],
+        onchain: new Map([[uid, onchain()]]),
         now,
       })
-      expect(diff[0]?.kind).toEqual('unchanged')
-      expect(diff[0]?.payload).toEqual(undefined)
-      expect(diff[0]?.revoke).toEqual(undefined)
+      expect(plan.kind).toEqual('unchanged')
+      expect(plan.payload).toEqual(undefined)
+      expect(plan.revoke).toEqual([])
     })
 
-    it('bumps the revision and revokes the old uid when the rating changes', () => {
-      const live = encodePayload(toPayload(subject(), 1700000000, 2))
-      const changed = subject('uniswapv3', {
-        ...CROPS,
-        security: { sentiment: 'bad', status: 'reviewed' },
-      })
-      const diff = diffAttestations({
-        subjects: [changed],
-        ledger: [ledger],
-        onchain: new Map([[uid, onchain(live)]]),
+    it('replaces the attestation when a project joins the set', () => {
+      const grown = [...IDS, 'umbra'].sort()
+      const plan = planAttestation({
+        projectIds: grown,
+        ledger: [entry()],
+        onchain: new Map([[uid, onchain()]]),
         now,
       })
-      expect(diff[0]?.kind).toEqual('changed')
-      expect(diff[0]?.payload?.revision).toEqual(3)
-      expect(diff[0]?.payload?.reviewedAt).toEqual(now)
-      expect(diff[0]?.revoke).toEqual({
-        uid: uid as Hex,
-        schema: ATTESTATION_SCHEMA_UID as Hex,
-      })
+      expect(plan.kind).toEqual('changed')
+      expect(plan.added).toEqual(['umbra'])
+      expect(plan.removed).toEqual([])
+      expect(plan.payload?.revision).toEqual(3)
+      expect(plan.payload?.reviewedAt).toEqual(now)
+      expect(plan.revoke).toEqual([
+        { uid, schema: ATTESTATION_SCHEMA_UID as Hex },
+      ])
     })
 
-    it('replaces an attestation made under a superseded schema', () => {
-      const stale = `0x${'22'.repeat(32)}` as Hex
-      const diff = diffAttestations({
-        subjects: [subject()],
-        ledger: [ledger],
-        // Data encoded under the old schema is not decodable under the new
-        // params, so the schema alone has to be enough to spot it.
-        onchain: new Map([[uid, onchain('0xdeadbeef', { schema: stale })]]),
+    it('replaces the attestation when a project leaves the set', () => {
+      const plan = planAttestation({
+        projectIds: IDS.slice(1),
+        ledger: [entry()],
+        onchain: new Map([[uid, onchain()]]),
         now,
       })
-      expect(diff[0]?.kind).toEqual('changed')
-      expect(diff[0]?.payload?.revision).toEqual(3)
-      expect(diff[0]?.revoke).toEqual({ uid: uid as Hex, schema: stale })
+      expect(plan.kind).toEqual('changed')
+      expect(plan.removed).toEqual(['aztecnetwork'])
+      expect(plan.payload?.projectIds).toEqual(IDS.slice(1))
     })
 
-    it('re-attests when the ledger uid was revoked out of band', () => {
-      const live = encodePayload(toPayload(subject(), 1700000000, 2))
-      const diff = diffAttestations({
-        subjects: [subject()],
-        ledger: [ledger],
+    it('trusts the chain over the ledger when the two disagree', () => {
+      // The ledger claims the current set; the chain says otherwise. Skipping
+      // the publish here would leave the wrong set live indefinitely.
+      const plan = planAttestation({
+        projectIds: IDS,
+        ledger: [entry()],
         onchain: new Map([
-          [uid, onchain(live, { revocationTime: 1750000000 })],
+          [
+            uid,
+            onchain({
+              data: encodePayload(toPayload(IDS.slice(1), 1700000000, 2)),
+            }),
+          ],
         ]),
         now,
       })
-      expect(diff[0]?.kind).toEqual('new')
-      expect(diff[0]?.payload?.revision).toEqual(3)
-      // Nothing to revoke - it is already revoked.
-      expect(diff[0]?.revoke).toEqual(undefined)
+      expect(plan.kind).toEqual('changed')
+      expect(plan.payload?.projectIds).toEqual(IDS)
+      expect(plan.revoke).toEqual([
+        { uid, schema: ATTESTATION_SCHEMA_UID as Hex },
+      ])
     })
 
-    it('reports an attested project that no longer declares crops as orphaned', () => {
-      const live = encodePayload(toPayload(subject(), 1700000000, 2))
-      const diff = diffAttestations({
-        subjects: [],
-        ledger: [ledger],
-        onchain: new Map([[uid, onchain(live)]]),
+    it('revokes under the schema an attestation was made with, not the current one', () => {
+      // The migration path: data written under an older schema cannot be
+      // decoded here, and EAS will only accept a revocation naming that schema.
+      const plan = planAttestation({
+        projectIds: IDS,
+        ledger: [entry({ schema: OLD_SCHEMA })],
+        onchain: new Map([
+          [uid, onchain({ schema: OLD_SCHEMA, data: '0xdead' })],
+        ]),
         now,
       })
-      expect(diff[0]?.kind).toEqual('orphaned')
-      expect(diff[0]?.payload).toEqual(undefined)
-      expect(diff[0]?.revoke).toEqual({
-        uid: uid as Hex,
-        schema: ATTESTATION_SCHEMA_UID as Hex,
+      expect(plan.kind).toEqual('changed')
+      expect(plan.reason).toEqual('attested under a superseded schema')
+      expect(plan.revoke).toEqual([{ uid, schema: OLD_SCHEMA }])
+      expect(plan.payload?.projectIds).toEqual(IDS)
+    })
+
+    it('revokes every extra live attestation, keeping the one that is current', () => {
+      const stale = `0x${'22'.repeat(32)}` as Hex
+      const plan = planAttestation({
+        projectIds: IDS,
+        ledger: [
+          entry(),
+          entry({ uid: stale, revision: 1, schema: OLD_SCHEMA }),
+        ],
+        onchain: new Map([
+          [uid, onchain()],
+          [stale, onchain({ uid: stale, schema: OLD_SCHEMA, data: '0xdead' })],
+        ]),
+        now,
       })
+      expect(plan.kind).toEqual('changed')
+      expect(plan.keeper?.uid).toEqual(uid)
+      // Nothing to publish - the keeper already says the right thing.
+      expect(plan.payload).toEqual(undefined)
+      expect(plan.revoke).toEqual([{ uid: stale, schema: OLD_SCHEMA }])
+    })
+
+    it('re-attests when the ledger uid was revoked out of band', () => {
+      const plan = planAttestation({
+        projectIds: IDS,
+        ledger: [entry()],
+        onchain: new Map([[uid, onchain({ revocationTime: 1750000000 })]]),
+        now,
+      })
+      expect(plan.kind).toEqual('new')
+      expect(plan.payload?.revision).toEqual(3)
+      // Nothing to revoke - it is already revoked.
+      expect(plan.revoke).toEqual([])
+    })
+
+    it('never reuses a revision number', () => {
+      const plan = planAttestation({
+        projectIds: IDS,
+        ledger: [entry({ revision: 7 })],
+        onchain: new Map(),
+        now,
+      })
+      expect(plan.payload?.revision).toEqual(8)
     })
   })
 })

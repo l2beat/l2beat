@@ -11,61 +11,112 @@ export const CROP_ATTESTATION_DATA = {
     firstBlock: 11515690,
     live: [
       {
-        projectId: 'aztecnetwork',
-        uid: '0x1c10224ed1156f3fc3a2e6edd68de09707a6a19067c9afdee7a474c09a90258a',
-        revision: 1,
-        reviewedAt: 1787063642,
-        evaluationHash:
-          '0xdc1e05d88e4222ff2ae9bb2392a890a7e9b8bec8d6be502e67e6f814f47e7fd6',
+        uid: '0x5da1f37424f3264eda2d01b061aadfa301193736ff0b0a657bac0ffe09eaf46c',
+        schema:
+          '0x06c2dd60f63667eda4637078bfa47d5900230712f790bf0b7b62bab3d23b00a9',
+        revision: 2,
+        reviewedAt: 1787126071,
+        projectIds: ['aztecnetwork'],
         txHash:
-          '0x47ba4ea88c71d3a3aec0e637c859e7d0c44e3bfdd20062f01838f99c642cd9d3',
-        block: 11515690,
+          '0x6b14fc1954d30ddbe6051188ce25ce455e9d7dcc37f287354da6996fc3e2de40',
+        block: 11520733,
       },
       {
-        projectId: 'ethscriptions',
-        uid: '0x3967bd2e9b7aee7f2a8560fab7150785aa37870ddfcb8adefb9eb9b81661881c',
-        revision: 1,
-        reviewedAt: 1787063642,
-        evaluationHash:
-          '0x480c04499db3f72245e1751305cfc7e2408ee8f05c343e0347c015fd840c4f91',
+        uid: '0x94aac1cfc19baf84e67a3314037997ab2aea59783fcb148723f79f2632ed7501',
+        schema:
+          '0x06c2dd60f63667eda4637078bfa47d5900230712f790bf0b7b62bab3d23b00a9',
+        revision: 2,
+        reviewedAt: 1787126071,
+        projectIds: ['ethscriptions'],
         txHash:
-          '0x47ba4ea88c71d3a3aec0e637c859e7d0c44e3bfdd20062f01838f99c642cd9d3',
-        block: 11515690,
+          '0x6b14fc1954d30ddbe6051188ce25ce455e9d7dcc37f287354da6996fc3e2de40',
+        block: 11520733,
       },
       {
-        projectId: 'tornado-cash',
-        uid: '0x919b5c2ac5614641055d628a4e5bee699192b600a5d3416ccda6128f26636902',
-        revision: 1,
-        reviewedAt: 1787063642,
-        evaluationHash:
-          '0x9282869e066aaba71865e4380d9889f431af6ccf72e8d66ae60ca1afec54faf5',
+        uid: '0x4512ee206aa981a931fedbc827883d3a2c9bbeebd34da088d0864a552f627a80',
+        schema:
+          '0x06c2dd60f63667eda4637078bfa47d5900230712f790bf0b7b62bab3d23b00a9',
+        revision: 2,
+        reviewedAt: 1787126071,
+        projectIds: ['tornado-cash'],
         txHash:
-          '0x47ba4ea88c71d3a3aec0e637c859e7d0c44e3bfdd20062f01838f99c642cd9d3',
-        block: 11515690,
+          '0x6b14fc1954d30ddbe6051188ce25ce455e9d7dcc37f287354da6996fc3e2de40',
+        block: 11520733,
       },
       {
-        projectId: 'umbra',
-        uid: '0xdd71d079ec50708187a0e8f1e154f777a3259180a38d410bb3daeb252c77acc1',
-        revision: 1,
-        reviewedAt: 1787063642,
-        evaluationHash:
-          '0xa403c3fa9de24feb753163bc3eee0315371d581e70a0150e86bd4729d3ba9f0c',
+        uid: '0x4ff521fa8693ed6f35713c6ffe4bf7037b1e1909eb4d3e86be22bfc1df85734a',
+        schema:
+          '0x06c2dd60f63667eda4637078bfa47d5900230712f790bf0b7b62bab3d23b00a9',
+        revision: 2,
+        reviewedAt: 1787126071,
+        projectIds: ['umbra'],
         txHash:
-          '0x47ba4ea88c71d3a3aec0e637c859e7d0c44e3bfdd20062f01838f99c642cd9d3',
-        block: 11515690,
+          '0x6b14fc1954d30ddbe6051188ce25ce455e9d7dcc37f287354da6996fc3e2de40',
+        block: 11520733,
       },
       {
-        projectId: 'uniswapv3',
-        uid: '0x27f8f5b21a8c666633f014741ee6ad5fc6c7da6a16f66c121811a85eb6ec4901',
-        revision: 1,
-        reviewedAt: 1787063642,
-        evaluationHash:
-          '0xda01ee138884222e5685c02b576de055b924876010203e04cb28d051d24d271d',
+        uid: '0x462d8c4bff581d0f470d13659e9bd1cd7e8d528ec1f08769fff3922baf281fa8',
+        schema:
+          '0x06c2dd60f63667eda4637078bfa47d5900230712f790bf0b7b62bab3d23b00a9',
+        revision: 2,
+        reviewedAt: 1787126071,
+        projectIds: ['uniswapv3'],
         txHash:
-          '0x47ba4ea88c71d3a3aec0e637c859e7d0c44e3bfdd20062f01838f99c642cd9d3',
-        block: 11515690,
+          '0x6b14fc1954d30ddbe6051188ce25ce455e9d7dcc37f287354da6996fc3e2de40',
+        block: 11520733,
       },
     ],
-    revoked: [],
+    revoked: [
+      {
+        uid: '0x1c10224ed1156f3fc3a2e6edd68de09707a6a19067c9afdee7a474c09a90258a',
+        schema:
+          '0x47e63e38f060745119bd8bc687c4c18a5a7bbd8359b90e3b7d4204ea0c38ec99',
+        revision: 1,
+        projectIds: ['aztecnetwork'],
+        revokedTxHash:
+          '0xa3432347314f83026e0b59b11ddc3df3b92a1a2cb7b391f819b5d4ca2fd33668',
+        revokedBlock: 11520732,
+      },
+      {
+        uid: '0x3967bd2e9b7aee7f2a8560fab7150785aa37870ddfcb8adefb9eb9b81661881c',
+        schema:
+          '0x47e63e38f060745119bd8bc687c4c18a5a7bbd8359b90e3b7d4204ea0c38ec99',
+        revision: 1,
+        projectIds: ['ethscriptions'],
+        revokedTxHash:
+          '0xa3432347314f83026e0b59b11ddc3df3b92a1a2cb7b391f819b5d4ca2fd33668',
+        revokedBlock: 11520732,
+      },
+      {
+        uid: '0x919b5c2ac5614641055d628a4e5bee699192b600a5d3416ccda6128f26636902',
+        schema:
+          '0x47e63e38f060745119bd8bc687c4c18a5a7bbd8359b90e3b7d4204ea0c38ec99',
+        revision: 1,
+        projectIds: ['tornado-cash'],
+        revokedTxHash:
+          '0xa3432347314f83026e0b59b11ddc3df3b92a1a2cb7b391f819b5d4ca2fd33668',
+        revokedBlock: 11520732,
+      },
+      {
+        uid: '0xdd71d079ec50708187a0e8f1e154f777a3259180a38d410bb3daeb252c77acc1',
+        schema:
+          '0x47e63e38f060745119bd8bc687c4c18a5a7bbd8359b90e3b7d4204ea0c38ec99',
+        revision: 1,
+        projectIds: ['umbra'],
+        revokedTxHash:
+          '0xa3432347314f83026e0b59b11ddc3df3b92a1a2cb7b391f819b5d4ca2fd33668',
+        revokedBlock: 11520732,
+      },
+      {
+        uid: '0x27f8f5b21a8c666633f014741ee6ad5fc6c7da6a16f66c121811a85eb6ec4901',
+        schema:
+          '0x47e63e38f060745119bd8bc687c4c18a5a7bbd8359b90e3b7d4204ea0c38ec99',
+        revision: 1,
+        projectIds: ['uniswapv3'],
+        revokedTxHash:
+          '0xa3432347314f83026e0b59b11ddc3df3b92a1a2cb7b391f819b5d4ca2fd33668',
+        revokedBlock: 11520732,
+      },
+    ],
   },
 }

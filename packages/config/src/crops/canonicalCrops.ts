@@ -1,17 +1,15 @@
 import type {
   ProjectCropEvaluation,
   ProjectCropStatus,
-  ProjectCrops,
   Sentiment,
 } from '../types'
 
 // Deliberately dependency-free: this module is deep-imported by the frontend
-// (which must not pull in a crypto library) and by the l2b CLI (which does the
-// hashing itself). Keep it pure.
+// and by the l2b CLI. Keep it pure.
 
 /**
- * The four crops, in the order they are attested and hashed. Changing this
- * order changes every evaluation hash, so it is fixed on purpose.
+ * The four crops, in the order they are rendered and served. Fixed on purpose:
+ * consumers index into responses by position as often as by key.
  */
 export const CROP_KEYS = [
   'censorshipResistance',
@@ -53,66 +51,4 @@ export function resolveCropEvaluation(
     missing: evaluation.missing ?? [],
     notReviewed: evaluation.notReviewed ?? [],
   }
-}
-
-export interface CanonicalCrops {
-  projectId: string
-  projectName: string
-  crops: Record<CropKey, ResolvedCropEvaluation>
-}
-
-export function toCanonicalCrops(
-  projectId: string,
-  projectName: string,
-  crops: ProjectCrops,
-): CanonicalCrops {
-  const resolved = {} as Record<CropKey, ResolvedCropEvaluation>
-  for (const key of CROP_KEYS) {
-    resolved[key] = resolveCropEvaluation(crops[key])
-  }
-  return { projectId, projectName, crops: resolved }
-}
-
-/**
- * The exact preimage of `evaluationHash`. Every field is emitted in a fixed
- * order with no whitespace, so the same evaluation always serializes to the
- * same bytes no matter how the config object was written.
- */
-export function serializeCanonicalCrops(canonical: CanonicalCrops): string {
-  const crops = CROP_KEYS.map((key) => {
-    const evaluation = canonical.crops[key]
-    return [
-      json(key),
-      ':{',
-      '"sentiment":',
-      json(evaluation.sentiment),
-      ',"status":',
-      json(evaluation.status),
-      ',"points":',
-      jsonArray(evaluation.points),
-      ',"missing":',
-      jsonArray(evaluation.missing),
-      ',"notReviewed":',
-      jsonArray(evaluation.notReviewed),
-      '}',
-    ].join('')
-  }).join(',')
-
-  return [
-    '{"projectId":',
-    json(canonical.projectId),
-    ',"projectName":',
-    json(canonical.projectName),
-    ',"crops":{',
-    crops,
-    '}}',
-  ].join('')
-}
-
-function json(value: string): string {
-  return JSON.stringify(value)
-}
-
-function jsonArray(values: string[]): string {
-  return `[${values.map(json).join(',')}]`
 }

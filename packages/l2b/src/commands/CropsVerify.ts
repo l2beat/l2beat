@@ -13,9 +13,9 @@ import {
 } from '../implementations/crops/easClient'
 import {
   decodePayload,
-  getCropSubjects,
-  payloadMatches,
-  toPayload,
+  diffSet,
+  getAttestedProjectIds,
+  setMatches,
 } from '../implementations/crops/payload'
 import { defaultRpcUrl } from '../implementations/crops/rpc'
 import { assertSchemaUid } from '../implementations/crops/schema'
@@ -27,7 +27,7 @@ import { assertSchemaUid } from '../implementations/crops/schema'
 export const CropsVerify = command({
   name: 'crops-verify',
   description:
-    'Checks every committed crop attestation against EAS and against the evaluations in config.',
+    'Checks the committed crop attestation against EAS and against the set of projects with crop evaluations in config.',
   args: {
     network: networkOption,
     rpcUrl: rpcUrlOption,
@@ -37,79 +37,76 @@ export const CropsVerify = command({
 
     const network = args.network
     const ledger = CROP_ATTESTATIONS[network.name]
-    if (!ledger) {
+    if (!ledger || ledger.live.length === 0) {
       console.log(chalk.dim(`Nothing attested on ${network.name} yet.`))
       return
     }
 
     const reader = createReader(args.rpcUrl ?? defaultRpcUrl(network))
-    const subjects = await getCropSubjects()
+    const projectIds = await getAttestedProjectIds()
     const problems: string[] = []
 
     for (const record of ledger.live) {
-      const subject = subjects.find((x) => x.projectId === record.projectId)
-      if (!subject) {
-        problems.push(
-          `${record.projectId}: attested but no longer declares crops - revoke it with \`l2b crops-attest --execute\``,
-        )
-        continue
-      }
-
+      const label = `rev ${record.revision} (${record.uid})`
       const onchain = await getAttestation(reader, network, record.uid as Hex)
       if (!onchain) {
-        problems.push(`${record.projectId}: uid ${record.uid} does not exist`)
+        problems.push(`${label}: does not exist`)
         continue
       }
       if (onchain.revocationTime !== 0) {
-        problems.push(`${record.projectId}: uid ${record.uid} is revoked`)
+        problems.push(`${label}: is revoked`)
+        continue
+      }
+      if (onchain.attester.toLowerCase() !== ledger.attester.toLowerCase()) {
+        problems.push(
+          `${label}: attested by ${onchain.attester}, expected ${ledger.attester}`,
+        )
         continue
       }
       if (
         onchain.schema.toLowerCase() !== ATTESTATION_SCHEMA_UID.toLowerCase()
       ) {
-        problems.push(`${record.projectId}: wrong schema ${onchain.schema}`)
-        continue
-      }
-      if (onchain.attester.toLowerCase() !== ledger.attester.toLowerCase()) {
         problems.push(
-          `${record.projectId}: attested by ${onchain.attester}, expected ${ledger.attester}`,
-        )
-        continue
-      }
-      if (
-        record.evaluationHash.toLowerCase() !==
-        subject.evaluationHash.toLowerCase()
-      ) {
-        problems.push(
-          `${record.projectId}: config evaluation changed - ledger hash ${record.evaluationHash}, config hash ${subject.evaluationHash}`,
+          `${label}: attested under superseded schema ${onchain.schema} - revoke it with \`l2b crops-attest --execute\``,
         )
         continue
       }
 
       const current = decodePayload(onchain.data)
-      const wanted = toPayload(subject, current.reviewedAt, current.revision)
-      if (!payloadMatches(current, wanted)) {
-        problems.push(`${record.projectId}: onchain ratings differ from config`)
+      if (!setMatches(current.projectIds, record.projectIds)) {
+        problems.push(
+          `${label}: ledger says ${record.projectIds.length} projects, chain says ${current.projectIds.length}`,
+        )
+        continue
+      }
+      if (!setMatches(current.projectIds, projectIds)) {
+        const { added, removed } = diffSet(projectIds, current.projectIds)
+        problems.push(
+          `${label}: the attested set differs from config - ${[
+            ...added.map((id) => `+${id}`),
+            ...removed.map((id) => `-${id}`),
+          ].join(' ')}`,
+        )
         continue
       }
 
       console.log(
         chalk.green('ok      '),
-        record.projectId.padEnd(16),
         `rev=${record.revision}`,
+        `${current.projectIds.length} projects`,
         chalk.dim(getAttestationUrl(network, record.uid)),
       )
+      for (const id of current.projectIds) {
+        console.log(chalk.dim(`           ${id}`))
+      }
     }
 
-    // Reviewed but never attested is a gap worth reporting, not a failure.
-    for (const subject of subjects) {
-      if (!ledger.live.some((x) => x.projectId === subject.projectId)) {
-        console.log(
-          chalk.yellow('missing '),
-          subject.projectId.padEnd(16),
-          'declares crops but has no attestation',
-        )
-      }
+    // More than one live attestation is not a drift, but a reader cannot tell
+    // which one speaks for us, so it has to be reported.
+    if (ledger.live.length > 1) {
+      problems.push(
+        `${ledger.live.length} attestations are live at once - run \`l2b crops-attest --execute\` to revoke the extras`,
+      )
     }
 
     if (problems.length > 0) {
@@ -120,6 +117,6 @@ export const CropsVerify = command({
       process.exitCode = 1
       return
     }
-    console.log(chalk.green('\nAll committed attestations verify.'))
+    console.log(chalk.green('\nThe committed attestation verifies.'))
   },
 })

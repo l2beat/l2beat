@@ -1,6 +1,6 @@
 import {
-  getCropAttestation,
   getCropAttestationLedger,
+  getCurrentCropAttestation,
 } from '@l2beat/config/build/crops/attestations'
 import type {
   CropKey,
@@ -17,15 +17,21 @@ import {
   ATTESTATION_SCHEMA_UID,
   getAttestationUrl,
 } from '@l2beat/config/build/crops/eas'
+import {
+  CROP_DEFINITIONS,
+  CROP_SENTIMENT_LABELS,
+  CROP_STATUS_LABELS,
+} from '@l2beat/config/build/crops/vocabulary'
 import { ps } from '~/server/projects'
 import { getGardenProjectPath } from './getGardenProjectPath'
 
 const BASE_URL = 'https://l2beat.com'
 
-/** Where consumers can verify a rating for themselves. */
+/** The current onchain claim: which project ids we stand behind, and when. */
 export function getAttestationsMeta() {
   const network = ATTESTATION_NETWORKS[ATTESTATION_NETWORK]
   const ledger = getCropAttestationLedger(ATTESTATION_NETWORK)
+  const current = getCurrentCropAttestation(ATTESTATION_NETWORK)
   return {
     network: network.name,
     chainId: network.chainId,
@@ -36,22 +42,34 @@ export function getAttestationsMeta() {
     schemaUid: ATTESTATION_SCHEMA_UID,
     schema: ATTESTATION_SCHEMA,
     attester: ledger?.attester ?? null,
+    // One attestation covers the whole set. Null before the first publish.
+    current: current
+      ? {
+          uid: current.uid,
+          revision: current.revision,
+          reviewedAt: current.reviewedAt,
+          projectIds: current.projectIds,
+          txHash: current.txHash,
+          explorerUrl: getAttestationUrl(network, current.uid),
+        }
+      : null,
   }
 }
 
-/** The vocabulary, so a consumer can render every value we might send. */
+/**
+ * The vocabulary, with the labels and definitions our own pages render, so a
+ * consumer can display every value we might send without inventing copy.
+ */
 export const CROPS_FRAMEWORK = {
-  crops: CROP_KEYS,
-  sentiments: ['good', 'warning', 'bad', 'neutral', 'UnderReview'],
-  statuses: ['reviewed', 'partiallyReviewed', 'notReviewed'],
+  crops: CROP_DEFINITIONS,
+  sentiments: CROP_SENTIMENT_LABELS,
+  statuses: CROP_STATUS_LABELS,
 } as const
 
 export interface CropsApiAttestation {
   uid: string
   revision: number
   reviewedAt: number
-  evaluationHash: string
-  txHash: string
   explorerUrl: string
 }
 
@@ -62,6 +80,13 @@ export interface CropsApiProject {
   /** Absolute url of the project page. Null for projects without one. */
   href: string | null
   crops: Record<CropKey, ResolvedCropEvaluation>
+  /** Whether the current onchain attestation names this project. */
+  attested: boolean
+  /**
+   * The attestation covering this project. Shared by every attested project -
+   * one attestation names the whole set - so the uid is the same for all of
+   * them and only membership differs.
+   */
   attestation: CropsApiAttestation | null
 }
 
@@ -77,6 +102,10 @@ export async function getCropsProjects(): Promise<CropsApiProject[]> {
     select: ['crops'],
     optional: ['scalingInfo', 'privacyInfo'],
   })
+  const attestation = getAttestation()
+  const attested = new Set(
+    getCurrentCropAttestation(ATTESTATION_NETWORK)?.projectIds ?? [],
+  )
 
   return projects
     .map((project) => {
@@ -85,13 +114,17 @@ export async function getCropsProjects(): Promise<CropsApiProject[]> {
       for (const key of CROP_KEYS) {
         crops[key] = resolveCropEvaluation(project.crops[key])
       }
+      const isAttested = attested.has(project.id)
       return {
         id: project.id,
         slug: project.slug,
         name: project.name,
         href: path ? `${BASE_URL}${path}` : null,
         crops,
-        attestation: getAttestation(project.id),
+        attested: isAttested,
+        // Null rather than omitted, so consumers do not have to distinguish
+        // "no field" from "reviewed but not attested yet".
+        attestation: isAttested ? attestation : null,
       }
     })
     .sort((a, b) => a.id.localeCompare(b.id))
@@ -110,19 +143,15 @@ export function toCropsSummary(
   return summary
 }
 
-function getAttestation(projectId: string): CropsApiAttestation | null {
-  const attestation = getCropAttestation(ATTESTATION_NETWORK, projectId)
+function getAttestation(): CropsApiAttestation | null {
+  const attestation = getCurrentCropAttestation(ATTESTATION_NETWORK)
   if (!attestation) {
-    // Reviewed but not attested yet. Null rather than omitted, so consumers do
-    // not have to distinguish "no field" from "not attested".
     return null
   }
   return {
     uid: attestation.uid,
     revision: attestation.revision,
     reviewedAt: attestation.reviewedAt,
-    evaluationHash: attestation.evaluationHash,
-    txHash: attestation.txHash,
     explorerUrl: getAttestationUrl(
       ATTESTATION_NETWORKS[ATTESTATION_NETWORK],
       attestation.uid,

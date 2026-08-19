@@ -8,38 +8,34 @@
 /**
  * The schema registered in the EAS SchemaRegistry.
  *
- * Ratings are plain strings rather than enum codes so that an attestation can
- * be read on its own: no codebook, no URI to fetch, nothing offchain needed to
- * understand the verdict. `evaluationHash` is a commitment to the full
- * evaluation text (see serializeCanonicalCrops), not a pointer to it.
+ * One attestation covers the whole reviewed set: the project ids we stand
+ * behind, when we last reviewed them, and which revision of the set this is.
+ * Nothing else. A consumer reads it once and then asks the API about each id -
+ * ratings, the reasoning behind each crop, and the tooltip copy all live there,
+ * where they can be corrected without a transaction.
  *
- * Only the rating itself goes onchain. Review status - how thoroughly a crop
- * was looked at - is process metadata rather than a verdict, it moves for
- * reasons that are ours and not the protocol's, and a reader who wants it can
- * take it from the API. It is still covered by `evaluationHash`, so a
- * status-only change still invalidates the attestation and forces a new
- * revision; it simply is not a field anyone has to read onchain.
+ * That is deliberate. Ratings move as protocols change; membership of the set
+ * moves far less. Attesting only the membership means the onchain record stays
+ * true for longer, and the one claim it does make - "we have reviewed these" -
+ * is the claim a wallet or a badge actually needs.
+ *
+ * Revocable, because the set changes: adding or removing a project revokes this
+ * attestation and issues the next revision.
  *
  * Nothing here names L2BEAT, and nothing may be added that does while the
  * attestations live on a testnet - see the anonymity guard in packages/l2b.
  */
 export const ATTESTATION_SCHEMA = [
-  'string projectId',
-  'string projectName',
-  'string censorshipResistance',
-  'string openSource',
-  'string privacy',
-  'string security',
+  'string[] projectIds',
   'uint64 reviewedAt',
   'uint32 revision',
-  'bytes32 evaluationHash',
 ].join(',')
 
 /** No resolver contract - we register the schema and nothing else. */
 export const ATTESTATION_SCHEMA_RESOLVER =
   '0x0000000000000000000000000000000000000000'
 
-/** Ratings change, so attestations must be revocable. */
+/** The attested set changes, so attestations must be revocable. */
 export const ATTESTATION_SCHEMA_REVOCABLE = true
 
 /**
@@ -47,7 +43,7 @@ export const ATTESTATION_SCHEMA_REVOCABLE = true
  * computes it. Identical on every network, since the inputs are.
  */
 export const ATTESTATION_SCHEMA_UID =
-  '0x06c2dd60f63667eda4637078bfa47d5900230712f790bf0b7b62bab3d23b00a9'
+  '0xbe00b10abb2fbae864b99c6ace4e0e622d5f690f822466e167353c32534dc3fb'
 
 export type AttestationNetwork = 'sepolia' | 'ethereum'
 

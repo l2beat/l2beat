@@ -11,58 +11,6 @@ const BASE = 'https://l2beat.com'
 
 export const ENDPOINTS: EndpointDoc[] = [
   {
-    path: '/api/garden/crops',
-    summary: 'Every reviewed protocol',
-    description:
-      'The full evaluations for every protocol in the garden, including the reasoning behind each crop. Use it to mirror the garden, or to cache the whole set.',
-    example: `GET ${BASE}/api/garden/crops
-
-{
-  "framework": {
-    "crops": ["censorshipResistance", "openSource", "privacy", "security"],
-    "sentiments": ["good", "warning", "bad", "neutral", "UnderReview"],
-    "statuses": ["reviewed", "partiallyReviewed", "notReviewed"]
-  },
-  "attestations": { "network": "sepolia", "isTestnet": true, ... },
-  "projects": [
-    {
-      "id": "uniswapv3",
-      "slug": "uniswapv3",
-      "name": "Uniswap V3",
-      "href": null,
-      "crops": {
-        "censorshipResistance": {
-          "sentiment": "good",
-          "status": "reviewed",
-          "points": ["Pools are immutable and adminless: ..."],
-          "missing": [],
-          "notReviewed": ["The routers and interfaces users actually reach ..."]
-        },
-        ...
-      },
-      "attestation": null
-    }
-  ]
-}`,
-  },
-  {
-    path: '/api/garden/crops/:slug',
-    summary: 'One protocol',
-    description:
-      'The same project object on its own. Accepts a slug or a project id, and answers 404 for anything we have not reviewed.',
-    example: `GET ${BASE}/api/garden/crops/tornado-cash
-
-{
-  "framework": { ... },
-  "attestations": { ... },
-  "id": "tornado-cash",
-  "name": "Tornado Cash",
-  "href": "${BASE}/privacy/projects/tornado-cash",
-  "crops": { ... },
-  "attestation": { "uid": "0x…", "revision": 1, "explorerUrl": "…" }
-}`,
-  },
-  {
     path: '/api/garden/lookup',
     summary: 'Which protocol is this address?',
     description:
@@ -94,11 +42,75 @@ export const ENDPOINTS: EndpointDoc[] = [
             "privacy": { "sentiment": "good", "status": "reviewed" },
             "security": { "sentiment": "good", "status": "partiallyReviewed" }
           },
-          "attestation": { "uid": "0x…", "revision": 1 }
+          "attestation": { "uid": "0x…", "revision": 3 }
         }
       ]
     }
   ]
+}`,
+  },
+  {
+    path: '/api/garden/crops/:slug',
+    summary: 'Everything about one protocol',
+    description:
+      'The full evaluation for a single protocol: the rating for each crop, the reasoning behind it, what is missing, and what we have not looked at. This is where the detail lives - the attestation onchain names the id, this endpoint says what the id is worth. Accepts a slug or a project id, and answers 404 for anything we have not reviewed.',
+    example: `GET ${BASE}/api/garden/crops/tornado-cash
+
+{
+  "framework": {
+    "crops": [
+      {
+        "key": "censorshipResistance",
+        "letter": "CR",
+        "label": "Censorship resistance",
+        "description": "Whether a user can transact without anyone being able to stop them: …"
+      },
+      ...
+    ],
+    "sentiments": { "good": "Good", "warning": "Medium", "bad": "Bad", ... },
+    "statuses": { "reviewed": "Reviewed", "partiallyReviewed": "Partially reviewed", ... }
+  },
+  "attestations": { ... },
+  "id": "tornado-cash",
+  "name": "Tornado Cash",
+  "href": "${BASE}/privacy/projects/tornado-cash",
+  "attested": true,
+  "attestation": { "uid": "0x…", "revision": 3, "explorerUrl": "…" },
+  "crops": {
+    "censorshipResistance": {
+      "sentiment": "good",
+      "status": "reviewed",
+      "points": ["Pools are immutable and adminless: …"],
+      "missing": [],
+      "notReviewed": ["The routers and interfaces users actually reach …"]
+    },
+    ...
+  }
+}`,
+  },
+  {
+    path: '/api/garden/crops',
+    summary: 'The whole garden',
+    description:
+      'Every reviewed protocol in one response, in the same shape. Use it to mirror the garden or to warm a cache; for a single lookup on a request path, prefer the two endpoints above.',
+    example: `GET ${BASE}/api/garden/crops
+
+{
+  "framework": { ... },
+  "attestations": {
+    "network": "sepolia",
+    "isTestnet": true,
+    "schemaUid": "0x…",
+    "attester": "0x…",
+    "current": {
+      "uid": "0x…",
+      "revision": 3,
+      "reviewedAt": 1787126071,
+      "projectIds": ["aztecnetwork", "ethscriptions", "tornado-cash", ...],
+      "explorerUrl": "…"
+    }
+  },
+  "projects": [ { "id": "aztecnetwork", ... }, ... ]
 }`,
   },
 ]
@@ -108,14 +120,22 @@ export const VOCABULARY_NOTES = [
   '`sentiment` is the colour of the crop - how good it is. `status` is how thoroughly we looked. They are independent, and both are always present in a response: we resolve the defaults so you do not have to.',
   'A crop with `status: "notReviewed"` always reads `sentiment: "neutral"`. It is not a claim that the protocol is mediocre; it is the absence of a claim, and it should render as grey or as nothing at all.',
   '`points` is what an evaluation rests on, `missing` is what we checked and did not find, and `notReviewed` is what we have not assessed. Never present `notReviewed` as a criticism of the protocol.',
-  'A protocol may appear with no `attestation` yet. The evaluation is still ours and still current - it simply has not been signed onchain.',
+  'Every label and definition we render is in `framework`, so you can build the same tooltip we do without paraphrasing us into something subtly different.',
+  'A protocol may appear with `attested: false`. The evaluation is still ours and still current - it simply has not been named onchain yet.',
 ]
 
 export const VERIFY_STEPS = [
-  'Read the attestation from the EAS contract with the uid the API gave you: `getAttestation(uid)`.',
-  'Check `revocationTime == 0`. When a rating changes we revoke the old attestation and issue a new one, so a revoked attestation is a stale verdict and must not be shown.',
+  'Read the attestation from the EAS contract with the uid in `attestations.current`: `getAttestation(uid)`.',
+  'Check `revocationTime == 0`. When the set changes we revoke the old attestation and issue the next revision, so a revoked attestation is a stale claim and must not be shown.',
   'Check `attester` and `schema` against the values below, so an attestation someone else made cannot be mistaken for ours.',
-  'The four ratings are in the attestation itself, as plain strings. You do not need to call us to read them.',
-  'Review status is not onchain - only the rating is. It is still covered by `evaluationHash`, so a status change still produces a new attestation; read the status itself from the `status` field in the API.',
-  'To check the reasoning too, hash the canonical evaluation JSON and compare it to `evaluationHash` in the attestation.',
+  'Decode `projectIds`. That array is the whole claim: these are the protocols we have reviewed, as of `reviewedAt`, at revision `revision`.',
+  'For what any of those ids is actually worth - the rating per crop, the reasoning, what we did not look at - call `/api/garden/crops/:id`. Ratings move as protocols change; the set moves far less, which is why only the set is onchain.',
+]
+
+/** What a reviewed protocol may and may not say with the badge. */
+export const BADGE_RULES = [
+  'Link the badge to your page in the garden, so a visitor can read the evaluation rather than only see that one exists.',
+  'The badge says we have reviewed you and named you onchain. It is not a certification, an audit, or an endorsement - please do not describe it as any of those.',
+  'Do not recolour the badge, change the wording, or use it if we have removed you from the set. Adding your own frame or placing it in a footer row is fine.',
+  'Your rating can change. The badge deliberately does not show the four crops, so it never goes stale on your site - the link behind it always shows the current evaluation.',
 ]
