@@ -96,6 +96,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
             decimals: 8,
             deploymentTimestamp: 20,
             comment: 'updated comment',
+            ignored: true,
           },
         )
 
@@ -110,6 +111,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
           decimals: 8,
           deploymentTimestamp: 20,
           comment: 'updated comment',
+          ignored: true,
         })
       })
     },
@@ -679,6 +681,7 @@ function deployedToken(
     decimals: overrides.decimals ?? 18,
     deploymentTimestamp: overrides.deploymentTimestamp ?? 0,
     comment: overrides.comment ?? null,
+    ignored: overrides.ignored ?? false,
     metadata: overrides.metadata ?? {
       tvs: {
         includeInCalculations: true,

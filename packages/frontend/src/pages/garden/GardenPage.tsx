@@ -2,18 +2,23 @@ import { MainPageHeader } from '~/components/MainPageHeader'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { GardenBackground } from './assets/GardenBackground'
+import {
+  AttestationNotice,
+  type GardenAttestation,
+} from './components/AttestationNotice'
+import { GardenCallouts } from './components/GardenCallouts'
 import { GardenTable } from './components/GardenTable'
-import { IntegrateCropsCallout } from './components/IntegrateCropsCallout'
 import { PlantLegendSection } from './components/PlantLegendSection'
-import { SubmitProtocolCallout } from './components/SubmitProtocolCallout'
 import { GARDEN_ANIMATIONS_CSS, GARDEN_SURFACES_CSS } from './gardenCss'
 import type { GardenEntry } from './getGardenData'
 
 interface Props extends AppLayoutProps {
   entries: GardenEntry[]
+  /** Absent until the set has been attested for the first time. */
+  attestation: GardenAttestation | undefined
 }
 
-export function GardenPage({ entries, ...props }: Props) {
+export function GardenPage({ entries, attestation, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
@@ -30,8 +35,8 @@ export function GardenPage({ entries, ...props }: Props) {
             <div className="mt-4 overflow-hidden rounded-xl bg-surface-primary max-md:mx-4 md:px-6">
               <GardenTable entries={entries} />
             </div>
-            <SubmitProtocolCallout />
-            <IntegrateCropsCallout />
+            <AttestationNotice attestation={attestation} />
+            <GardenCallouts />
             <PlantLegendSection />
           </div>
         </div>

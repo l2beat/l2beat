@@ -1,21 +1,46 @@
-import type { ProjectCropStatus, ProjectCrops, Sentiment } from '@l2beat/config'
+import type { ProjectCropStatus, Sentiment } from '@l2beat/config'
+import type { CropKey } from '@l2beat/config/build/crops/canonicalCrops'
 
-export const CROP_COLUMNS: {
-  key: keyof ProjectCrops
+// The words the garden puts on screen.
+//
+// Keep them here rather than in @l2beat/config: this module is imported by
+// client components, and tsc emits `export const` from config as
+// `exports.X = void 0` followed by an assignment, which cjs-module-lexer cannot
+// see. A browser import of the built file then fails to find the named export,
+// which throws during hydration and silently kills every interactive element on
+// the page - not just the ones that read these constants.
+
+export interface CropDefinition {
+  key: CropKey
+  /** The letter in the chip under each plant. */
   letter: string
   label: string
-}[] = [
+}
+
+export const CROP_COLUMNS: CropDefinition[] = [
   {
     key: 'censorshipResistance',
     letter: 'CR',
     label: 'Censorship resistance',
   },
-  { key: 'openSource', letter: 'O', label: 'Open source' },
-  { key: 'privacy', letter: 'P', label: 'Privacy' },
-  { key: 'security', letter: 'S', label: 'Security' },
+  {
+    key: 'openSource',
+    letter: 'O',
+    label: 'Open source',
+  },
+  {
+    key: 'privacy',
+    letter: 'P',
+    label: 'Privacy',
+  },
+  {
+    key: 'security',
+    letter: 'S',
+    label: 'Security',
+  },
 ]
 
-// The color/quality of a crop, independent of how thoroughly it was reviewed.
+/** The colour/quality of a crop, independent of how thoroughly it was reviewed. */
 export const CROP_SENTIMENT_LABELS: Record<Sentiment, string> = {
   good: 'Good',
   warning: 'Medium',
@@ -24,7 +49,7 @@ export const CROP_SENTIMENT_LABELS: Record<Sentiment, string> = {
   UnderReview: 'Under review',
 }
 
-// The review state of a crop, independent of its sentiment/color.
+/** The review state of a crop, independent of its sentiment/colour. */
 export const CROP_STATUS_LABELS: Record<ProjectCropStatus, string> = {
   reviewed: 'Reviewed',
   partiallyReviewed: 'Partially reviewed',

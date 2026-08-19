@@ -1,4 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getAttestationsMeta } from '~/server/features/garden/getCropsProjects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -24,7 +25,12 @@ export async function getIntegrateCropsData(
     },
     ssr: {
       page: 'IntegrateCropsPage',
-      props: await getAppLayoutProps(),
+      props: {
+        ...(await getAppLayoutProps()),
+        // Read from config rather than retyped here, so the page cannot drift
+        // from what the CLI actually signs.
+        attestations: getAttestationsMeta(),
+      },
     },
   }
 }

@@ -62,6 +62,7 @@ function toDeployedToken(
     decimals: fileEntry.decimals,
     deploymentTimestamp: fileEntry.deploymentTimestamp,
     comment: null,
+    ignored: false,
     metadata: {},
   }
 }

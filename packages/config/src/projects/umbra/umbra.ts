@@ -125,6 +125,10 @@ export const umbra: BaseProject = {
       description:
         'There is no protocol-level compliance mechanism or privileged view key. Umbra hides who controls the receiving address, but the sender, amount, and stealth address remain public and privacy can be weakened by transaction patterns or poor withdrawal hygiene.',
     },
+    noteDiscovery: {
+      description:
+        'Each Umbra payment emits an `Announcement` containing a one-time stealth address and encrypted data for the recipient. The recipient downloads all announcement events and checks them locally with their viewing key; a successful check identifies a payment and lets the recipient derive the key controlling its stealth address. The indexer or RPC provider does not learn which announcements belong to the user from the queries alone, because all announcements are fetched.\n\nUmbra Advanced mode allows setting start and end block numbers for transfer discovery scan. Using this feature could degrade your privacy against an RPC provider, who would be able to narrow down potential window for your incoming transfers. It is recommended to use this feature only with a trusted (e.g. your own) RPC node.',
+    },
     attributes: [
       PRIVACY_ATTRIBUTES.anyAmount,
       PRIVACY_ATTRIBUTES.stealthAddresses,

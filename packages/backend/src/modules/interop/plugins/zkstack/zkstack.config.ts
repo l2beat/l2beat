@@ -23,7 +23,7 @@ import {
   EthereumAddress,
 } from '@l2beat/shared-pure'
 import type { TokenDbClient } from '@l2beat/token-backend'
-import { isEqual } from 'earl'
+import isEqual from 'lodash/isEqual'
 import {
   decodeFunctionResult,
   encodeFunctionData,

@@ -94,6 +94,7 @@ export function InteropTokensTableView({
                 ) : (
                   <PaginationLink
                     key={item.index}
+                    href="#interop-tokens"
                     size="sm"
                     onClick={(e) => {
                       e.preventDefault()

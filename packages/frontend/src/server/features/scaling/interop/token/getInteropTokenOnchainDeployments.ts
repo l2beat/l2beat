@@ -24,8 +24,9 @@ export async function getInteropTokenOnchainDeployments(
   const db = getDb()
   const tokenDb = getTokenDb()
 
-  const deployedTokens =
+  const deployedTokens = (
     await tokenDb.deployedToken.getByAbstractTokenId(tokenId)
+  ).filter((token) => !token.ignored)
   if (deployedTokens.length === 0) return []
 
   // Aggregates store token addresses in Address32 format,

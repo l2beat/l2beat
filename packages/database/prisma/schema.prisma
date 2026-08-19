@@ -510,6 +510,7 @@ model DeployedToken {
   decimals                     Int
   deploymentTimestamp          DateTime @db.Timestamp(6)
   comment                      String?  @db.Text
+  ignored                      Boolean  @default(false)
   metadata                     Json?
   abstractTokenAssignmentProof Json?
 

@@ -153,6 +153,7 @@ export function InteropTransfersTableView({
                 ) : (
                   <PaginationLink
                     key={item.index}
+                    href="#interop-transfers"
                     size="sm"
                     onClick={(e) => {
                       e.preventDefault()

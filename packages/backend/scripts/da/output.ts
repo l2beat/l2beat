@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { formatBytes, UnixTime } from '@l2beat/shared-pure'
 import * as fs from 'fs'
 import type { RecordGap } from './gaps'
 
@@ -39,7 +39,9 @@ export function summarizeRecords(
       logger.info(projectId, {
         configuration: config,
         hours: configRecords.length,
-        totalSize: formatBytes(totalSize),
+        totalSize: formatBytes(totalSize, {
+          decimals: totalSize < 1024 ? 0 : 2,
+        }),
       })
     }
   }
@@ -77,15 +79,4 @@ export function writePreviewJson(path: string, payload: unknown): void {
       2,
     ),
   )
-}
-
-function formatBytes(bytes: bigint): string {
-  const units = ['B', 'KiB', 'MiB', 'GiB', 'TiB']
-  let value = Number(bytes)
-  let unit = 0
-  while (value >= 1024 && unit < units.length - 1) {
-    value /= 1024
-    unit++
-  }
-  return `${value.toFixed(unit === 0 ? 0 : 2)} ${units[unit]}`
 }

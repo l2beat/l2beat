@@ -135,6 +135,9 @@ export const sp1hypercube: BaseProject = {
       {
         projectId: ProjectId('phala'),
         sinceTimestamp: UnixTime(1771445567),
+        // Switched back to a standard OP Stack PermissionedDisputeGame
+        // deployment, no longer uses SP1.
+        untilTimestamp: UnixTime(1773378287),
       },
       {
         projectId: ProjectId('kroma'),

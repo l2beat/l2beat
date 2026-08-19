@@ -1,7 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
-  formatLargeNumber,
+  formatNumber,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -176,7 +176,7 @@ const v5ActivationTimestamp = UnixTime(1784060567) // 14 July 2026 20:22:47 UTC
 const v5ActivationBlock = 25533241 // https://etherscan.io/tx/0xff2db4e4bba583f2451478bfe4703e16afc79f0b463fb60615ebe3494142437b
 
 function formatAztecAmount(amount: bigint): string {
-  return `${formatLargeNumber(Number(amount / 10n ** 18n))} AZTEC`
+  return `${formatNumber(Number(amount / 10n ** 18n))} AZTEC`
 }
 
 function formatPercentage(value: string): string {

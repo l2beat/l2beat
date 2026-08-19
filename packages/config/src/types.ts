@@ -1000,6 +1000,7 @@ export interface ProjectPrivacyInfo {
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
   privacy: PrivacySummaryValue
+  noteDiscovery?: PrivacyNoteDiscovery
   attributes?: PrivacyAttribute[]
   /**
    * Privacy-specific quantum-resistance flag. Distinct in meaning from
@@ -1008,6 +1009,11 @@ export interface ProjectPrivacyInfo {
   quantumResistant?: true
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
+}
+
+export interface PrivacyNoteDiscovery {
+  description: string
+  risks?: string[]
 }
 
 export interface PrivacyExitWindow extends ExitWindowRisk {

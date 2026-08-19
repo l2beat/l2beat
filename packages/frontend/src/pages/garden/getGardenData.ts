@@ -1,6 +1,8 @@
 import type { Project, ProjectCrops } from '@l2beat/config'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getDb } from '~/server/database'
+import { getGardenAttestation } from '~/server/features/garden/getGardenAttestation'
+import { getGardenProjectPath } from '~/server/features/garden/getGardenProjectPath'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
@@ -106,7 +108,7 @@ export async function getGardenData(
     .map((project) => ({
       name: project.name,
       slug: project.slug,
-      href: getHref(project),
+      href: getGardenProjectPath(project),
       subtitle: getSubtitle(project),
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       types: getTypes(project),
@@ -132,6 +134,7 @@ export async function getGardenData(
       props: {
         ...(await getAppLayoutProps()),
         entries,
+        attestation: getGardenAttestation(),
       },
     },
   }
@@ -203,19 +206,6 @@ function getMetric(
     value: tvs.breakdown.total,
     change: tvs.change.total,
   }
-}
-
-// Only privacy and scaling projects have a detail page we can link to. A
-// defi-only project like Uniswap v3 has none, and the shared getProjectUrl
-// helper would resolve it to a /scaling/projects/ URL that 404s.
-function getHref(project: GardenProject): string | undefined {
-  if (project.privacyInfo) {
-    return `/privacy/projects/${project.slug}`
-  }
-  if (project.scalingInfo) {
-    return `/scaling/projects/${project.slug}`
-  }
-  return undefined
 }
 
 function getSubtitle(project: GardenProject): string {
