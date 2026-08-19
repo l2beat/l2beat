@@ -19,8 +19,7 @@ export interface CompareProjectEntry {
   iconUrl: string
   /**
    * Earliest TVS data timestamp derived from the project's TVS config.
-   * Undefined when the project has no TVS tracking or its TVS is excluded
-   * from display via `EXCLUDED_TVS_PROJECTS`.
+   * Undefined when the project has no TVS tracking.
    */
   tvsSinceTimestamp: number | undefined
   /**
@@ -32,10 +31,6 @@ export interface CompareProjectEntry {
   tvs: number
   /** False when the project has no DA tracking, so no data-posted data. */
   hasDaTracking: boolean
-  /**
-   * False when the project has no activity tracking or its activity is
-   * excluded from display via `EXCLUDED_ACTIVITY_PROJECTS`.
-   */
   hasActivityTracking: boolean
 }
 
@@ -103,10 +98,6 @@ function getEthereumEntry(): CompareProjectEntry {
   }
 }
 
-/**
- * The same exclusions the TVS and activity pages apply, so a project whose
- * metric is hidden there cannot be compared on it either.
- */
 function isTvsExcluded(projectId: ProjectId): boolean {
   return env.EXCLUDED_TVS_PROJECTS?.includes(projectId) ?? false
 }
