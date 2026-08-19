@@ -1,3 +1,4 @@
+import { Button } from '~/components/core/Button'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
@@ -59,7 +60,7 @@ export function IntegrateCropsPage({
           <main>
             <AudiencePicker />
             <ConsumerSections attestations={attestations} />
-            <ProtocolSection attestations={attestations} />
+            <ProtocolSection />
           </main>
         </div>
         <ScrollToTopButton />
@@ -281,12 +282,7 @@ function AttestationsSection({
 
 /* ------------------------------------------------ for reviewed protocols */
 
-function ProtocolSection({
-  attestations,
-}: {
-  attestations: IntegrateCropsAttestations
-}) {
-  const count = attestations.current?.projectIds.length ?? 0
+function ProtocolSection() {
   return (
     <>
       <SectionDivider id={PROTOCOLS_ID} label="For reviewed protocols" />
@@ -301,15 +297,7 @@ function ProtocolSection({
       </section>
 
       <section className="mt-8 md:mt-12">
-        <SectionHeading
-          title="Using it fairly"
-          description={
-            count > 0
-              ? `${count} protocols are named in the current attestation. These are the terms that come with being one of them.`
-              : 'These are the terms that come with being in the attested set.'
-          }
-          size="md"
-        />
+        <SectionHeading title="Using it fairly" size="md" />
         <PrimaryCard className="max-md:mx-4 md:p-8">
           <ul className="flex flex-col gap-3">
             {BADGE_RULES.map((rule) => (
@@ -334,13 +322,12 @@ function ProtocolSection({
           size="md"
         />
         <div className="max-md:mx-4">
-          <a
-            href={SUBMIT_PROTOCOL_PATH}
-            className="inline-flex items-center gap-2 rounded-lg bg-[#15ca60] px-4 py-2.5 font-semibold text-paragraph-15 text-white transition-opacity hover:opacity-90"
-          >
-            <SproutIcon />
-            Submit your protocol
-          </a>
+          <Button asChild variant="fill" className="gap-2">
+            <a href={SUBMIT_PROTOCOL_PATH}>
+              <SproutIcon />
+              Submit your protocol
+            </a>
+          </Button>
         </div>
       </section>
     </>

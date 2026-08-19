@@ -6,10 +6,9 @@ import {
   AttestationNotice,
   type GardenAttestation,
 } from './components/AttestationNotice'
+import { GardenCallouts } from './components/GardenCallouts'
 import { GardenTable } from './components/GardenTable'
-import { IntegrateCropsCallout } from './components/IntegrateCropsCallout'
 import { PlantLegendSection } from './components/PlantLegendSection'
-import { SubmitProtocolCallout } from './components/SubmitProtocolCallout'
 import { GARDEN_ANIMATIONS_CSS, GARDEN_SURFACES_CSS } from './gardenCss'
 import type { GardenEntry } from './getGardenData'
 
@@ -37,8 +36,7 @@ export function GardenPage({ entries, attestation, ...props }: Props) {
               <GardenTable entries={entries} />
             </div>
             <AttestationNotice attestation={attestation} />
-            <SubmitProtocolCallout />
-            <IntegrateCropsCallout />
+            <GardenCallouts />
             <PlantLegendSection />
           </div>
         </div>
