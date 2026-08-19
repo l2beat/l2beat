@@ -113,10 +113,7 @@ function NavCollapsibleItem({
   closeMobileSidebar: () => void
 }) {
   const pathname = usePathname()
-  const allGroupLinks = useMemo(
-    () => [...group.links, ...(group.secondaryLinks ?? []).flat()],
-    [group.links, group.secondaryLinks],
-  )
+  const allGroupLinks = useMemo(() => group.links.flat(), [group.links])
   const isGroupActive = pathname.startsWith('/' + group.match)
   const isAnyLinkActive = allGroupLinks.some((link) =>
     isLinkActive({ href: link.href, pathname, exact: link.exactMatch }),
@@ -124,7 +121,7 @@ function NavCollapsibleItem({
 
   const [open, setOpen] = useState(isAnyLinkActive)
 
-  if (!group.links[0]) return null
+  if (allGroupLinks.length === 0) return null
 
   return (
     <Collapsible className="flex flex-col" open={open} onOpenChange={setOpen}>
@@ -146,61 +143,45 @@ function NavCollapsibleItem({
       </CollapsibleTrigger>
       <CollapsibleContent>
         <SidebarGroupSub>
-          {group.links.map((item) => (
-            <Fragment key={item.title}>
-              <SidebarGroupSubButton
-                href={item.href}
-                isActive={isLinkActive({
-                  href: item.href,
-                  pathname,
-                  exact: item.exactMatch,
-                })}
-                onClick={closeMobileSidebar}
-              >
-                <span className="leading-tight">{item.title}</span>
-              </SidebarGroupSubButton>
-              {item.subLinks && item.subLinks.length > 0 && (
-                <SidebarGroupSub className="mt-1 mb-1.5 gap-2">
-                  {item.subLinks.map((subItem) => (
-                    <SidebarGroupSubLink
-                      key={subItem.title}
-                      href={subItem.href}
-                      isActive={isLinkActive({
-                        href: subItem.href,
-                        pathname,
-                        exact: subItem.exactMatch,
-                      })}
-                      onClick={closeMobileSidebar}
-                    >
-                      {subItem.title}
-                    </SidebarGroupSubLink>
-                  ))}
-                </SidebarGroupSub>
-              )}
+          {group.links.map((section, index) => (
+            // Sections carry no identity of their own, so the index is the key.
+            <Fragment key={index}>
+              {index > 0 && <SidebarSeparator />}
+              {section.map((item) => (
+                <Fragment key={item.title}>
+                  <SidebarGroupSubButton
+                    href={item.href}
+                    isActive={isLinkActive({
+                      href: item.href,
+                      pathname,
+                      exact: item.exactMatch,
+                    })}
+                    onClick={closeMobileSidebar}
+                  >
+                    <span className="leading-tight">{item.title}</span>
+                  </SidebarGroupSubButton>
+                  {item.subLinks && item.subLinks.length > 0 && (
+                    <SidebarGroupSub className="mt-1 mb-1.5 gap-2">
+                      {item.subLinks.map((subItem) => (
+                        <SidebarGroupSubLink
+                          key={subItem.title}
+                          href={subItem.href}
+                          isActive={isLinkActive({
+                            href: subItem.href,
+                            pathname,
+                            exact: subItem.exactMatch,
+                          })}
+                          onClick={closeMobileSidebar}
+                        >
+                          {subItem.title}
+                        </SidebarGroupSubLink>
+                      ))}
+                    </SidebarGroupSub>
+                  )}
+                </Fragment>
+              ))}
             </Fragment>
           ))}
-          {group.secondaryLinks?.map(
-            (section, index) =>
-              section.length > 0 && (
-                <Fragment key={index}>
-                  <SidebarSeparator />
-                  {section.map((item) => (
-                    <SidebarGroupSubButton
-                      href={item.href}
-                      key={item.title}
-                      isActive={isLinkActive({
-                        href: item.href,
-                        pathname,
-                        exact: item.exactMatch,
-                      })}
-                      onClick={closeMobileSidebar}
-                    >
-                      <span>{item.title}</span>
-                    </SidebarGroupSubButton>
-                  ))}
-                </Fragment>
-              ),
-          )}
         </SidebarGroupSub>
       </CollapsibleContent>
     </Collapsible>

@@ -14,18 +14,16 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
   const currentGroup = groups
     .filter((g) => g.type === 'multiple')
     .find((g) => {
+      const firstLink = g.links[0]?.[0]
       return (
-        g.links[0] &&
-        isLinkActive({ href: `/${g.links[0].href.split('/')[1]}`, pathname }) &&
+        firstLink &&
+        isLinkActive({ href: `/${firstLink.href.split('/')[1]}`, pathname }) &&
         !g.disableMobileTabs
       )
     })
   if (!currentGroup) return null
 
-  const links = [
-    ...currentGroup.links,
-    ...(currentGroup.secondaryLinks ?? []).flat(),
-  ]
+  const links = currentGroup.links.flat()
 
   // Do not display the tabs if the current group is not found,
   // or the current group does not have a link that matches the current path.
