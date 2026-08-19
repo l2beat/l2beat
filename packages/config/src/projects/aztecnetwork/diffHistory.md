@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x720420fa5485a104ed7399635bd00a0f9cd1961c
+
+# Diff at Wed, 19 Aug 2026 14:30:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d2e2bc06ec20855418beac0870bda56fe35159a1 block: 1785325171
+- current timestamp: 1787149104
+
+## Description
+
+The Registry owner (EOA) appointed a one-shot revocation payload, which then marked 29 milestone ATPs with a total allocation of 35,579,336 AZTEC as revoked. The ATPs are token vaults that vest over time to a given beneficiary address. This is Aztec Labs internal accounting, not DAO related.
+
+## Watched changes
+
+```diff
+    contract AztecTokenPositionRegistry_ProtocolTreasury (eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80) [aztecnetwork/AztecTokenPositionRegistry] {
+    +++ description: AZTEC token-position Registry referenced by the ProtocolTreasury for its activation cutoff and by other ecosystem vesting contracts.
++++ description: Address used by ATP positions as the revocation authority.
+      values.getRevoker:
+-        "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350"
++        "eth:0xA70D1A21b251eE5F15C4aD77179114d70917F0Bf"
+    }
+```
+
 Generated with discovered.json: 0xeb6a6b3452a25ce402ae0eeea93afe8b6384558c
 
 # Diff at Wed, 29 Jul 2026 11:40:44 GMT:
