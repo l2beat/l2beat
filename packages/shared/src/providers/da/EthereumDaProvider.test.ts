@@ -155,6 +155,28 @@ describe(EthereumDaProvider.name, () => {
     },
   )
 
+  describe(EthereumDaProvider.prototype.getBlockTimestamp.name, () => {
+    it('returns the timestamp of the block', async () => {
+      const mockRpcClient = mockObject<RpcClient>({
+        getBlock: mockFn().resolvesTo({ timestamp: UnixTime(1_700_000_000) }),
+      })
+      const provider = new EthereumDaProvider(
+        mockObject<BeaconChainClient>(),
+        mockRpcClient,
+        'ethereum',
+      )
+
+      const timestamp = await provider.getBlockTimestamp(123)
+
+      expect(timestamp).toEqual(UnixTime(1_700_000_000))
+      // getBlock is overloaded, earl picks the includeTxs: true signature
+      expect(mockRpcClient.getBlock).toHaveBeenOnlyCalledWith(
+        123,
+        false as unknown as true,
+      )
+    })
+  })
+
   describe(EthereumDaProvider.prototype.getRelevantBlobs.name, () => {
     it('should return empty blobs for type 2 transaction', async () => {
       const mockRpcClient = mockObject<RpcClient>({

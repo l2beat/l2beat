@@ -11,7 +11,10 @@ import type {
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import type { Configuration } from '../../../tools/uif/multi/types'
+import type {
+  Configuration,
+  SavedConfiguration,
+} from '../../../tools/uif/multi/types'
 import type { BlobService } from '../services/BlobService'
 import type { DaService } from '../services/DaService'
 import { DaIndexer } from './DaIndexer'
@@ -20,13 +23,14 @@ import { DaIndexer } from './DaIndexer'
 // DaIndexer assumes that all configurations will have the same layer.
 // Rest of the code is generic and works the same regardless of layer type (see DaService)
 const DA_LAYER = 'test-layer'
+const HOUR = UnixTime.HOUR
 
 describe(DaIndexer.name, () => {
   describe(DaIndexer.prototype.multiUpdate.name, () => {
     it('fetches blobs, generates records, saves metrics to DB', async () => {
       const mockInbox = EthereumAddress.random()
       const configurations = [
-        config('project-a', mockInbox),
+        config('project-a', { inbox: mockInbox }),
         config('project-b'),
       ]
       const blobs = [blob(100, 100_000), blob(200, 200_000)]
@@ -68,7 +72,7 @@ describe(DaIndexer.name, () => {
     it('fetches blobs from cache, generates records, saves metrics to DB', async () => {
       const mockInbox = EthereumAddress.random()
       const configurations = [
-        config('project-a', mockInbox),
+        config('project-a', { inbox: mockInbox }),
         config('project-b'),
       ]
       const blobs = [blob(100, 100_000), blob(200, 200_000)]
@@ -170,6 +174,84 @@ describe(DaIndexer.name, () => {
     })
   })
 
+  describe(DaIndexer.prototype.trimData.name, () => {
+    it('deletes every hour the trimmed range touches', async () => {
+      const { indexer, repository, daProvider } = mockIndexer({
+        blockTimestamps: { 100: 3 * HOUR + 15 * 60, 199: 7 * HOUR + 30 * 60 },
+      })
+
+      await indexer.trimData([{ id: createId('project-a'), range: [100, 199] }])
+
+      expect(daProvider.getBlockTimestamp).toHaveBeenNthCalledWith(
+        1,
+        DA_LAYER,
+        100,
+      )
+      expect(daProvider.getBlockTimestamp).toHaveBeenNthCalledWith(
+        2,
+        DA_LAYER,
+        199,
+      )
+      // the hours straddling the edges are deleted as well
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
+        createId('project-a'),
+        3 * HOUR,
+        7 * HOUR,
+      )
+    })
+  })
+
+  describe('range edits on initialize', () => {
+    it('setting untilBlock trims instead of wiping', async () => {
+      const { indexer, repository } = mockIndexer({
+        configurations: [config('project-a', { untilBlock: 200 })],
+        savedConfigurations: [savedConfiguration('project-a', 1, null, 500)],
+        blockTimestamps: { 201: 10 * HOUR + 60, 500: 12 * HOUR + 60 },
+      })
+
+      await indexer.initialize()
+
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
+        createId('project-a'),
+        10 * HOUR,
+        12 * HOUR,
+      )
+      expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+    })
+
+    it('raising sinceBlock trims instead of wiping', async () => {
+      const { indexer, repository } = mockIndexer({
+        configurations: [config('project-a', { sinceBlock: 100 })],
+        savedConfigurations: [savedConfiguration('project-a', 1, null, 500)],
+        blockTimestamps: { 1: 60, 99: 2 * HOUR + 60 },
+      })
+
+      await indexer.initialize()
+
+      expect(repository.deleteByConfigInTimeRange).toHaveBeenOnlyCalledWith(
+        createId('project-a'),
+        0,
+        2 * HOUR,
+      )
+      expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+    })
+
+    it('lowering sinceBlock still wipes - gaps are not allowed', async () => {
+      const { indexer, repository, daProvider } = mockIndexer({
+        configurations: [config('project-a', { sinceBlock: 50 })],
+        savedConfigurations: [savedConfiguration('project-a', 100, null, 500)],
+      })
+
+      await indexer.initialize()
+
+      expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
+        createId('project-a'),
+      ])
+      expect(repository.deleteByConfigInTimeRange).not.toHaveBeenCalled()
+      expect(daProvider.getBlockTimestamp).not.toHaveBeenCalled()
+    })
+  })
+
   describe(DaIndexer.prototype.wipeData.name, () => {
     it('wipes all data saved by configuration', async () => {
       const configurations = [config('project-a'), config('project-b')]
@@ -209,17 +291,26 @@ function toIndexerConfigurations(
 function mockIndexer($: {
   configurations?: DataAvailabilityTrackingConfig['blockProjects']
   batchSize?: number
-  indexerService?: IndexerService
+  savedConfigurations?: SavedConfiguration<string>[]
   blobs?: DaBlob[]
   previousRecords?: DataAvailabilityRecord[]
   generatedRecords?: DataAvailabilityRecord[]
   useBlobService?: boolean
+  blockTimestamps?: Record<number, number>
 }) {
   const repository = mockObject<Database['dataAvailability']>({
     deleteByConfigIds: mockFn().resolvesTo(10),
     deleteByConfigurationId: mockFn().resolvesTo({}),
+    deleteByConfigInTimeRange: mockFn().resolvesTo(5),
     upsertMany: mockFn().resolvesTo(undefined),
     getForDaLayerInTimeRange: mockFn().resolvesTo($.previousRecords ?? []),
+  })
+
+  const indexerService = mockObject<IndexerService>({
+    getSavedConfigurations: mockFn().resolvesTo($.savedConfigurations ?? []),
+    insertConfigurations: mockFn().resolvesTo(undefined),
+    upsertConfigurations: mockFn().resolvesTo(undefined),
+    deleteConfigurations: mockFn().resolvesTo(undefined),
   })
 
   const syncMetadataRepository = mockObject<Database['syncMetadata']>({
@@ -236,6 +327,13 @@ function mockIndexer($: {
 
   const daProvider = mockObject<DaProvider>({
     getBlobs: async () => $.blobs ?? [], // Empty response
+    getBlockTimestamp: mockFn(async (_: string, blockNumber: number) => {
+      const timestamp = $.blockTimestamps?.[blockNumber]
+      if (timestamp === undefined) {
+        throw new Error(`No timestamp mocked for block ${blockNumber}`)
+      }
+      return UnixTime(timestamp)
+    }),
   })
 
   const blobService = $.useBlobService
@@ -257,7 +355,7 @@ function mockIndexer($: {
       daLayer: DA_LAYER,
       batchSize: $.batchSize ?? 100,
       parents: [],
-      indexerService: $.indexerService ?? mockObject<IndexerService>(),
+      indexerService,
       db: mockDatabase({
         dataAvailability: repository,
         syncMetadata: syncMetadataRepository,
@@ -277,16 +375,36 @@ function mockIndexer($: {
   }
 }
 
-function config(project: string, inbox?: string): BlockDaIndexedConfig {
+function config(
+  project: string,
+  opts: { inbox?: string; sinceBlock?: number; untilBlock?: number } = {},
+): BlockDaIndexedConfig {
   return {
     type: 'ethereum',
     configurationId: createId(project),
     projectId: ProjectId(project),
     daLayer: ProjectId(DA_LAYER),
-    inbox: inbox ?? EthereumAddress.random(),
+    inbox: opts.inbox ?? EthereumAddress.random(),
     sequencers: [],
-    sinceBlock: 1,
-    topics: inbox ? ['topic'] : [],
+    sinceBlock: opts.sinceBlock ?? 1,
+    untilBlock: opts.untilBlock,
+    topics: opts.inbox ? ['topic'] : [],
+  }
+}
+
+function savedConfiguration(
+  project: string,
+  minHeight: number,
+  maxHeight: number | null,
+  currentHeight: number | null,
+): SavedConfiguration<string> {
+  return {
+    id: createId(project),
+    // properties only decide whether an update is emitted, irrelevant here
+    properties: '',
+    minHeight,
+    maxHeight,
+    currentHeight,
   }
 }
 

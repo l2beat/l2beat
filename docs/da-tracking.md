@@ -71,6 +71,23 @@ block in the window, so prefer `DA_PREVIEW_DB_URL` for windows longer than a
 few hours. EigenDA per-project data is published as daily files starting
 2025-08-01; days without a file are skipped with a warning.
 
+## Editing sinceBlock / untilBlock
+
+`sinceBlock` / `untilBlock` are not part of the configuration id, so editing
+them keeps the history indexed under that id. The block indexer (ethereum,
+celestia, avail) trims instead of wiping:
+
+- raising `sinceBlock` deletes only the records before the new start
+- setting or lowering `untilBlock` deletes only the records after the new end
+- lowering `sinceBlock` still wipes the configuration and re-indexes it from
+  the new start, because the indexed range cannot have gaps
+
+Records are hourly buckets, so the hour the edited edge falls into cannot be
+split - it holds blobs from both sides of the edge. It is deleted together
+with the out-of-range records: up to an hour of in-range data is lost per
+edited edge, but nothing is ever counted twice (see `DaIndexer.trimData` in
+`packages/backend`).
+
 ## Editing sinceTimestamp / untilTimestamp (eigen-da)
 
 Since/until are not part of the configuration id, so editing them keeps the
@@ -84,9 +101,9 @@ new range instead of wiping them:
   the pipeline cannot leave gaps in the indexed range
 
 Rows are hourly buckets, so an edge that is not a full hour has a bucket
-straddling it. The rule matches the block DA indexer: at the `since` edge the
-straddling hour is kept (it is never indexed again, so deleting it would leave
-a hole); at the `until` edge it is deleted (indexing resumes inside that hour
+straddling it. Unlike the block DA indexer, the `since` edge keeps the
+straddling hour (it is never indexed again, so deleting it would leave a
+hole); at the `until` edge it is deleted (indexing resumes inside that hour
 if the range is ever extended again, so nothing is lost for good).
 
 ## Guarding against silent data wipes
