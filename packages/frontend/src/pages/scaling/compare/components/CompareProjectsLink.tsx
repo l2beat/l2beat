@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react'
 import { env } from '~/env'
-import { LineChartIcon } from '~/icons/LineChart'
 import { cn } from '~/utils/cn'
 
 interface Props {
@@ -43,15 +42,12 @@ export function CompareProjectsLink({
     <a
       href={href}
       className={cn(
-        'items-center justify-center gap-1.5 whitespace-nowrap font-bold text-xs leading-none',
+        'items-center justify-center whitespace-nowrap font-bold text-xs leading-none',
         'ring-brand ring-offset-1 ring-offset-background focus:outline-none focus:ring-2',
         VARIANT_CLASSES[variant],
         className,
       )}
     >
-      {/* Sized to the text so the button height matches its icon-less
-          siblings (e.g. TvsBreakdownButton). */}
-      <LineChartIcon className="size-3 shrink-0 fill-current" aria-hidden />
       {children}
     </a>
   )
