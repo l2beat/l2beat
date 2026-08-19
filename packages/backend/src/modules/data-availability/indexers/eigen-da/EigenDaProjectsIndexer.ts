@@ -43,10 +43,18 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
     )
   }
 
+  /**
+   * The active `configurations` are intentionally unused: the daily file
+   * fetched at 02:00 holds the PREVIOUS day, so "active at this height" is the
+   * wrong window for it. Ranges are enforced per record in getByProjectData
+   * instead. ManagedMultiIndexer is still worth it for the per-configuration
+   * lifecycle: backfill of a new configuration from its since, wipe on removal,
+   * trim / re-index on range edits.
+   */
   override async multiUpdate(
     from: number,
     to: number,
-    configurations: Configuration<TimestampDaIndexedConfig>[],
+    _configurations: Configuration<TimestampDaIndexedConfig>[],
   ) {
     const adjustedFrom = UnixTime.toStartOf(from, 'hour')
     const adjustedTo = Math.min(adjustedFrom + UnixTime.HOUR, to)
@@ -93,7 +101,6 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
       this.logger.info('Saved DA metrics into DB', {
         from,
         to: adjustedTo,
-        configurations: configurations.length,
         records: projectData.length,
       })
 
