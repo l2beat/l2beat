@@ -18,10 +18,10 @@ import {
   getAttestationUrl,
 } from '@l2beat/config/build/crops/eas'
 import {
-  CROP_DEFINITIONS,
+  CROP_COLUMNS,
   CROP_SENTIMENT_LABELS,
   CROP_STATUS_LABELS,
-} from '@l2beat/config/build/crops/vocabulary'
+} from '~/pages/garden/crops'
 import { ps } from '~/server/projects'
 import { getGardenProjectPath } from './getGardenProjectPath'
 
@@ -61,7 +61,7 @@ export function getAttestationsMeta() {
  * consumer can display every value we might send without inventing copy.
  */
 export const CROPS_FRAMEWORK = {
-  crops: CROP_DEFINITIONS,
+  crops: CROP_COLUMNS,
   sentiments: CROP_SENTIMENT_LABELS,
   statuses: CROP_STATUS_LABELS,
 } as const

@@ -15,14 +15,14 @@ export function GardenCallouts() {
       <CalloutCard
         tone="garden"
         title="Want your protocol in the garden?"
-        description="See what we look for in each crop, then send it in. Reviews are free and the reasoning is always published."
+        description="See what we look for in each crop, then send it in."
         cta="Submit your protocol"
         href={SUBMIT_PROTOCOL_PATH}
       />
       <CalloutCard
         tone="brand"
         title="Want to show the CROPS to your users?"
-        description="A keyless JSON API, and a badge for protocols we have reviewed. Show the four crops right where someone is about to sign."
+        description="A keyless JSON API, and a badge for protocols we have reviewed."
         cta="Integrate CROPS"
         href={INTEGRATE_CROPS_PATH}
       />

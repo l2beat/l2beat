@@ -49,17 +49,17 @@ export function BadgeStudio({ href }: { href: string }) {
           value={theme}
           onChange={setTheme}
         />
-        <span className="text-paragraph-13 text-secondary max-sm:hidden">
+        <span className="ml-auto text-paragraph-13 text-secondary max-md:hidden">
           {VARIANTS.find((x) => x.value === variant)?.hint}
         </span>
       </div>
 
       <div
         className={cn(
-          'flex min-h-[132px] items-center justify-center p-6',
-          // The checkerboard makes the badge's own background visible, so the
-          // light badge on a dark site (and the reverse) is an obvious mistake
-          // before it is a live one.
+          'flex min-h-[140px] items-center justify-center p-6',
+          // The panel carries the badge's own background, so a light badge on
+          // a dark site (and the reverse) is an obvious mistake here rather
+          // than a live one.
           theme === 'dark' ? 'bg-[#0d0e10]' : 'bg-[#f3f5f7]',
         )}
       >
@@ -70,22 +70,23 @@ export function BadgeStudio({ href }: { href: string }) {
         <div dangerouslySetInnerHTML={{ __html: preview }} />
       </div>
 
-      <div className="relative border-divider border-t">
-        <div className="absolute top-3 right-3 flex items-center gap-2">
-          <span className="text-paragraph-12 text-secondary max-sm:hidden">
-            html
-          </span>
-          <CopyButton
-            toCopy={snippet}
-            copyText="Copy badge"
-            className="rounded-md bg-surface-tertiary p-1.5"
-            iconClassName="size-4"
-          />
-        </div>
-        <pre className="overflow-x-auto p-4 pr-16 font-mono text-paragraph-12 leading-relaxed md:text-paragraph-13">
-          {snippet}
-        </pre>
+      {/* The copy control gets its own strip rather than floating over the
+          code: overlaid, it sat on top of the first line, which is the one
+          line a reader most wants to see. */}
+      <div className="flex items-center justify-between border-divider border-t bg-surface-secondary px-4 py-2">
+        <span className="font-semibold text-secondary text-subtitle-12 uppercase tracking-wider">
+          html
+        </span>
+        <CopyButton
+          toCopy={snippet}
+          copyText="Copy badge"
+          className="flex items-center gap-1.5 rounded-md px-2 py-1 font-medium text-paragraph-13 hover:bg-surface-tertiary"
+          iconClassName="size-4"
+        />
       </div>
+      <pre className="overflow-x-auto p-4 font-mono text-paragraph-12 leading-relaxed md:text-paragraph-13">
+        {snippet}
+      </pre>
     </div>
   )
 }
