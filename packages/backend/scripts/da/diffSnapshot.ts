@@ -1,4 +1,8 @@
-/** Structurally compatible with Snapshot from @l2beat/config snapshots. */
+/**
+ * Structurally compatible with Snapshot from @l2beat/config snapshots. Only
+ * the identity is diffed here - since/until changes are caught by the guard
+ * test in packages/config, which knows how to explain them.
+ */
 export type IdentitySnapshot = Record<string, { id: string; label: string }[]>
 
 export interface SnapshotDiffEntry {

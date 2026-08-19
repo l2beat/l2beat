@@ -73,13 +73,55 @@ few hours. EigenDA per-project data is published as daily files starting
 
 ## Guarding against silent data wipes
 
-The committed snapshot is enforced by
-`packages/config/src/snapshots/guard.test.ts`: it fails when an identity
-disappears or the snapshot is stale, so identity changes are always explicit.
-After verifying your change with `pnpm da:preview`, regenerate the snapshot to
-accept it:
+`packages/config/src/snapshots/daTracking/snapshot.json` pins every backend DA
+configuration - its id, its label and its `since`/`until` range - for every
+project, sovereign projects included. `packages/config/src/snapshots/guard.test.ts`
+enforces it and fails when:
+
+- an identity **disappears** - the backend deletes configurations whose id is
+  gone and wipes all data indexed under them;
+- an identity's **range changed** - equally destructive, the backend re-syncs
+  the configuration from the new `since` and drops what falls outside the new
+  range. This is the case that used to pass silently: `sinceBlock` values come
+  from discovery, so a re-discovery can move one without anyone typing it;
+- a new identity is **not yet in the snapshot** - harmless, just regenerate;
+- two configs **hash to the same id**.
+
+### Range changes: freeze, don't regenerate
+
+When the guard reports a removed identity or a moved range, regenerating the
+snapshot only silences the alarm - the data is still lost on deploy. Instead:
+
+1. In the project's config, replace the changed entry's discovered values with
+   the literals from the snapshot, so the old identity and its `since` stay
+   exactly as they were.
+2. Close that entry with `untilBlock` (`untilTimestamp` for eigen-da) at the
+   last block/timestamp the old configuration was live.
+3. Add a new entry with the new values, starting where the old one ended. For
+   the lower bound of the change bracket use the previous discovery run's
+   `usedBlockNumbers[<chain>]` from the pre-change `discovered.json`.
+4. Only then, after verifying with `pnpm da:preview`, accept the change:
 
 ```bash
 cd packages/config
 pnpm snapshots:generate
 ```
+
+### No gaps
+
+The guard also checks the configs themselves (not the snapshot file): within a
+project and a single DA layer, the entries must cover a continuous range.
+
+- Ranges are inclusive on both ends and compared in the layer's native unit -
+  blocks, or unix seconds for eigen-da. A layer never mixes the two.
+- **Overlaps are allowed** on purpose, e.g. a delta sequencer tracked next to
+  the main one.
+- `next.since <= prev.until + 1` counts as adjacency, not a gap. Both the
+  existing convention (`next.since === prev.until`, the handover block counted
+  by both entries) and a strict `prev.until + 1` handover pass.
+- A **trailing closed entry** is fine - the project simply left the layer.
+- A closed entry whose `until` leaves a hole before the next entry's `since`
+  **fails**. Fix it by adding a config entry covering the missing range, never
+  by widening an existing one - that changes its range and re-syncs it. A gap
+  that is real and accepted goes into `LEGACY_COVERAGE_GAPS` in
+  `packages/config/src/snapshots/daTracking/gaps.ts` with a comment.

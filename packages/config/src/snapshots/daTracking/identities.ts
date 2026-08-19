@@ -2,14 +2,27 @@ import { createDaTrackingId } from '@l2beat/shared'
 import { join } from 'path'
 import { getProjects } from '../../processing/getProjects'
 import type { BaseProject, ProjectDaTrackingConfig } from '../../types'
+import type { Range } from '../ranges'
 import type { Snapshot, SnapshotDomain, SnapshotIdentity } from '../types'
+import { findDaTrackingGaps } from './gaps'
+
+const FREEZE_RECIPE = [
+  'Do NOT just regenerate the snapshot. A removed id or a moved range makes the backend re-sync the configuration from its new start and drop everything outside it. Instead, freeze the old range and open a new one:',
+  "1. In the project's config, replace the changed entry's discovered values with the literals from the snapshot above, so the old identity and its 'since' stay exactly as they are.",
+  "2. Close that entry with 'untilBlock' (or 'untilTimestamp' for eigen-da) at the last block/timestamp the old configuration was live.",
+  "3. Add a new entry with the new values, starting where the old one ended. For the lower bound of the change bracket use the previous discovery run's usedBlockNumbers[<chain>] from the pre-change 'discovered.json'.",
+  "4. Only then run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot.",
+  "If you're an AI, don't address this error yourself - pass it over to a human.",
+].join('\n')
 
 export const daTrackingDomain: SnapshotDomain = {
   name: 'da-tracking',
   snapshotPath: join(__dirname, 'snapshot.json'),
   wipeWarning:
     'On deploy the backend WILL WIPE all DA data indexed under these configurations (ManagedMultiIndexer deletes configurations whose id disappears).',
+  freezeRecipe: FREEZE_RECIPE,
   generate: () => generateDaTrackingIdentities(getProjects()),
+  findConfigViolations: () => findDaTrackingGaps(getProjects()),
 }
 
 /**
@@ -23,29 +36,16 @@ export function generateDaTrackingIdentities(
 ): Snapshot {
   const result: Record<string, SnapshotIdentity[]> = {}
 
-  const add = (projectId: string, config: ProjectDaTrackingConfig) => {
+  forEachDaTrackingConfig(projects, (projectId, config) => {
     // Deliberately no dedup - duplicate ids are a config error (colliding
     // backend configuration ids) and the guard test must see them.
     result[projectId] ??= []
     result[projectId].push({
       id: createDaTrackingId(config),
       label: createLabel(config),
+      ...getConfigRange(config),
     })
-  }
-
-  for (const project of projects) {
-    for (const config of project.daTrackingConfig ?? []) {
-      add(project.id, config)
-    }
-    for (const sovereign of project.daLayer?.sovereignProjectsTrackingConfig ??
-      []) {
-      for (const config of sovereign.daTrackingConfig) {
-        // The backend attaches the DA layer's project id before hashing
-        // (getBlockDaTrackingSovereignProjects in backend da.ts).
-        add(sovereign.projectId, { daLayer: project.id, ...config })
-      }
-    }
-  }
+  })
 
   return Object.fromEntries(
     Object.entries(result)
@@ -57,7 +57,42 @@ export function generateDaTrackingIdentities(
   )
 }
 
-function createLabel(config: ProjectDaTrackingConfig): string {
+/**
+ * Single walk over every DA tracking configuration in the config, used by both
+ * the identity snapshot and the config invariants, so they can never disagree
+ * on which configs exist.
+ */
+export function forEachDaTrackingConfig(
+  projects: BaseProject[],
+  callback: (projectId: string, config: ProjectDaTrackingConfig) => void,
+): void {
+  for (const project of projects) {
+    for (const config of project.daTrackingConfig ?? []) {
+      callback(project.id, config)
+    }
+    for (const sovereign of project.daLayer?.sovereignProjectsTrackingConfig ??
+      []) {
+      for (const config of sovereign.daTrackingConfig) {
+        // The backend attaches the DA layer's project id before hashing
+        // (getBlockDaTrackingSovereignProjects in backend da.ts).
+        callback(sovereign.projectId, { daLayer: project.id, ...config })
+      }
+    }
+  }
+}
+
+/**
+ * The range in the config's native unit - blocks for the block-based layers,
+ * unix seconds for eigen-da. Ranges are only ever compared within a single DA
+ * layer, and a layer never mixes the two kinds.
+ */
+export function getConfigRange(config: ProjectDaTrackingConfig): Range {
+  return config.type === 'eigen-da'
+    ? { since: config.sinceTimestamp, until: config.untilTimestamp }
+    : { since: config.sinceBlock, until: config.untilBlock }
+}
+
+export function createLabel(config: ProjectDaTrackingConfig): string {
   switch (config.type) {
     case 'ethereum': {
       const sequencers = config.sequencers
