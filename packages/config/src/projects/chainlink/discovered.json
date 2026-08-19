@@ -1,7 +1,7 @@
 {
   "name": "chainlink",
   "timestamp": 1786960649,
-  "configHash": "0x2274b018f155862966f5ea9f517d18cd7a7064124997f45c5f66d993ebae1f5f",
+  "configHash": "0x2b86a003b09a0d3103f1aed20373ea845cea7cf4de8e98609e38190318586c89",
   "entries": [
     {
       "address": "eth:0x05724B9C8C1dDE1b2f659d7c0676ff63f6d5E781",

@@ -1,7 +1,7 @@
 {
   "name": "polygon-pos",
   "timestamp": 1785325317,
-  "configHash": "0x76377d49aa426ba48ebae5098f9928517a2351102a1465831f022000f577d935",
+  "configHash": "0x98ac02324a6cd108ecdb36b897e757dda73979d283b96a4ce6765176480f3af7",
   "entries": [
     {
       "name": "ERC1155Predicate",

@@ -1,7 +1,7 @@
 {
   "name": "sophon",
-  "timestamp": 1787136744,
-  "configHash": "0xf2e4e55652de287f26914a9ad50e3b40fd8622e2413d313194bfe5fc53495873",
+  "timestamp": 1787147637,
+  "configHash": "0x3f98f0f4c2a9ae655c216b369e91bf02b3ef6b88bae0e1852dc3b68724d9deb2",
   "entries": [
     {
       "name": "SophonTransactionFilterer",
@@ -380,12 +380,12 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 39259,
-        "getTotalBatchesExecuted": 39258,
-        "getTotalBatchesVerified": 39259,
-        "getTotalBlocksCommitted": 39259,
-        "getTotalBlocksExecuted": 39258,
-        "getTotalBlocksVerified": 39259,
+        "getTotalBatchesCommitted": 39260,
+        "getTotalBatchesExecuted": 39259,
+        "getTotalBatchesVerified": 39260,
+        "getTotalBlocksCommitted": 39260,
+        "getTotalBlocksExecuted": 39259,
+        "getTotalBlocksVerified": 39260,
         "getTotalPriorityTxs": 10212,
         "getTransactionFilterer": "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41",
         "getVerifier": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
@@ -1478,6 +1478,6 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6",
     "sophon/SophonTransactionFilterer": "0x5af79cc105e47429633fc735f1601adf54bbd92b355c622bdab306600a542b7c"
   },
-  "usedBlockNumbers": { "ethereum": 25788678 },
+  "usedBlockNumbers": { "ethereum": 25789580 },
   "permissionsConfigHash": "0x7383ea2d416cadb94942b16accaef43d15da31450e235fd8809542c6e7f76615"
 }
