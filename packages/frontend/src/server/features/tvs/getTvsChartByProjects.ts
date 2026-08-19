@@ -7,27 +7,27 @@ import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTim
 import { ChartRange, rangeToResolution } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 
-export const PrivacyTvlChartParams = v.object({
+export const TvsChartByProjectsParams = v.object({
   projectIds: v.array(v.string()),
   range: ChartRange,
 })
 
-export type PrivacyTvlChartParams = v.infer<typeof PrivacyTvlChartParams>
+export type TvsChartByProjectsParams = v.infer<typeof TvsChartByProjectsParams>
 
-export interface PrivacyTvlChartResponse {
+export interface TvsChartByProjectsResponse {
   chart: [timestamp: number, valuesByProject: Record<string, number | null>][]
   syncedUntil: number | undefined
 }
 
-export async function getPrivacyTvlChart(
-  params: PrivacyTvlChartParams,
-): Promise<PrivacyTvlChartResponse> {
+export async function getTvsChartByProjects(
+  params: TvsChartByProjectsParams,
+): Promise<TvsChartByProjectsResponse> {
   if (params.projectIds.length === 0) {
     return { chart: [], syncedUntil: undefined }
   }
 
   if (env.MOCK) {
-    return getMockPrivacyTvlChart(params)
+    return getMockTvsChartByProjects(params)
   }
 
   const db = getDb()
@@ -81,7 +81,7 @@ export async function getPrivacyTvlChart(
     { addTarget: true },
   )
 
-  const chart: PrivacyTvlChartResponse['chart'] = timestamps.map(
+  const chart: TvsChartByProjectsResponse['chart'] = timestamps.map(
     (timestamp) => {
       const valuesByProjectAtTimestamp: Record<string, number | null> = {}
       for (const projectId of params.projectIds) {
@@ -98,9 +98,9 @@ export async function getPrivacyTvlChart(
   }
 }
 
-function getMockPrivacyTvlChart(
-  params: PrivacyTvlChartParams,
-): PrivacyTvlChartResponse {
+function getMockTvsChartByProjects(
+  params: TvsChartByProjectsParams,
+): TvsChartByProjectsResponse {
   const days = rangeToDays(params.range) ?? 365
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = params.range[0] ?? to - days * UnixTime.DAY
@@ -116,7 +116,7 @@ function getMockPrivacyTvlChart(
   const chart = generateTimestamps(
     [UnixTime(from), UnixTime(to)],
     resolution,
-  ).map((timestamp): PrivacyTvlChartResponse['chart'][number] => {
+  ).map((timestamp): TvsChartByProjectsResponse['chart'][number] => {
     const valuesByProject: Record<string, number | null> = {}
     for (const projectId of params.projectIds) {
       const base = baseValueByProject.get(projectId) ?? 0

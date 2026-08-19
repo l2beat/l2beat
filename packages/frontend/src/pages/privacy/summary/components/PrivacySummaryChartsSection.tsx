@@ -25,7 +25,7 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
     trpc.privacy.flowsChart.queryOptions({ projectIds, range }),
   )
   const { data: tvlData, isLoading: isTvlLoading } = useQuery(
-    trpc.privacy.tvlChart.queryOptions({ projectIds, range }),
+    trpc.tvs.chartByProjects.queryOptions({ projectIds, range }),
   )
 
   const flowChartTimeRange = useMemo(

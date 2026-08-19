@@ -20,6 +20,11 @@ export interface SevenDayTvsBreakdown {
   projects: Record<string, ProjectSevenDayTvsBreakdown>
 }
 
+export const EMPTY_TVS_BREAKDOWN: SevenDayTvsBreakdown = {
+  total: 0,
+  projects: {},
+}
+
 export interface ProjectSevenDayTvsBreakdown {
   breakdown: BreakdownSplit
   breakdown7d: BreakdownSplit

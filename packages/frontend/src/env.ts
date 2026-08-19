@@ -21,6 +21,7 @@ const CLIENT_CONFIG = {
   CLIENT_SIDE_HOME_PAGE: featureFlag.default(false),
   CLIENT_SIDE_SHOW_HIRING_BADGE: featureFlag.default(false),
   CLIENT_SIDE_TRACKED_TXS_OUTAGE: featureFlag.default(false),
+  CLIENT_SIDE_DEFI_ENABLED: featureFlag.default(false),
   CLIENT_SIDE_OPENPANEL_CLIENT_ID: z.string().optional(),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
@@ -133,6 +134,7 @@ function getRawEnv(): Record<
     CLIENT_SIDE_HOME_PAGE: process.env.CLIENT_SIDE_HOME_PAGE,
     CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.CLIENT_SIDE_SHOW_HIRING_BADGE,
     CLIENT_SIDE_TRACKED_TXS_OUTAGE: process.env.CLIENT_SIDE_TRACKED_TXS_OUTAGE,
+    CLIENT_SIDE_DEFI_ENABLED: process.env.CLIENT_SIDE_DEFI_ENABLED,
     CLIENT_SIDE_OPENPANEL_CLIENT_ID:
       process.env.CLIENT_SIDE_OPENPANEL_CLIENT_ID,
   }
