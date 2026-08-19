@@ -31,6 +31,7 @@ describe(getPermissionsSection.name, () => {
 
     expect(section.actors.length).toEqual(1)
     expect(section.actors[0]?.groupCount).toEqual(2)
+    expect(section.actors[0]?.additionalAnchorIds).toEqual(['second'])
     expect(section.actors[0]?.addresses.map((x) => x.address)).toEqual([
       ChainSpecificAddress.address(ADDRESS_A),
       ChainSpecificAddress.address(ADDRESS_B),

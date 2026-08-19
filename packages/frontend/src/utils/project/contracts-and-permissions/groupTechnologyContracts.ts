@@ -49,10 +49,18 @@ export function groupTechnologyContracts<T>(
 
     const group = result[existingIndex]
     assert(group, 'Group must exist')
+    const additionalAnchorIds = [
+      ...new Set([
+        ...(group.additionalAnchorIds ?? []),
+        contract.id,
+        ...(contract.additionalAnchorIds ?? []),
+      ]),
+    ].filter((id) => id !== group.id)
     result[existingIndex] = {
       ...group,
       addresses: [...group.addresses, ...contract.addresses],
       groupCount: (group.groupCount ?? 1) + (contract.groupCount ?? 1),
+      additionalAnchorIds,
     }
   }
 
