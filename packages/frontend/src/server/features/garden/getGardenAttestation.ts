@@ -18,8 +18,6 @@ export function getGardenAttestation(): GardenAttestation | undefined {
   }
   const network = ATTESTATION_NETWORKS[ATTESTATION_NETWORK]
   return {
-    network: network.name,
-    isTestnet: network.isTestnet,
     uid: attestation.uid,
     revision: attestation.revision,
     reviewedAt: attestation.reviewedAt,

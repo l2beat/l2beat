@@ -2,8 +2,6 @@ import { formatTimestamp } from '~/utils/dates'
 import { SproutIcon } from './SproutIcon'
 
 export interface GardenAttestation {
-  network: string
-  isTestnet: boolean
   uid: string
   revision: number
   reviewedAt: number
@@ -13,9 +11,7 @@ export interface GardenAttestation {
 
 /**
  * The onchain counterpart of the table above it. One attestation names every
- * project in the garden, so this is a single link rather than one per row - and
- * it says which network, because on a testnet it is a rehearsal rather than a
- * claim anyone should build on.
+ * project in the garden, so this is a single link rather than one per row.
  */
 export function AttestationNotice({
   attestation,
@@ -35,10 +31,7 @@ export function AttestationNotice({
           </span>{' '}
           <span className="text-secondary">
             Revision {attestation.revision}, reviewed{' '}
-            {formatTimestamp(attestation.reviewedAt, { mode: 'date' })}
-            {attestation.isTestnet
-              ? ` — on ${attestation.network}, a testnet, so it is a rehearsal rather than a production claim.`
-              : '.'}
+            {formatTimestamp(attestation.reviewedAt, { mode: 'date' })}.
           </span>
         </p>
       </div>

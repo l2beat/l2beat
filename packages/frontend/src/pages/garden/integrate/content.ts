@@ -4,7 +4,10 @@ export interface EndpointDoc {
   description: string
   /** Query parameters, if any. */
   params?: { name: string; description: string }[]
-  example: string
+  /** The full url, shown on its own line with a copy button. */
+  request: string
+  /** The response body, abbreviated. */
+  response: string
 }
 
 const BASE = 'https://l2beat.com'
@@ -14,17 +17,16 @@ export const ENDPOINTS: EndpointDoc[] = [
     path: '/api/garden/lookup',
     summary: 'Which protocol is this address?',
     description:
-      'The endpoint for wallets: hand it the contracts a user is about to touch and it answers with the protocols they belong to, plus a compact rating per crop. Addresses are matched against L2BEAT discovery - the contracts, their implementations, and the accounts holding permissions over them - for reviewed protocols only, so anything else comes back as an empty match rather than a guess.',
+      'Hand it the contracts a user is about to touch; it answers with the protocols they belong to and a rating per crop. Addresses are matched against L2BEAT discovery - proxies, implementations, and the accounts holding permissions over them - for reviewed protocols only, so anything else comes back empty rather than as a guess.',
     params: [
       {
         name: 'addresses',
         description:
-          'Up to 50 comma-separated chain:address pairs. The chain may be an ERC-3770 short name (eth), a long name (ethereum) or a chain id (1). Address casing does not matter.',
+          'Up to 50 comma-separated chain:address pairs. The chain may be a short name (eth), a long name (ethereum) or a chain id (1).',
       },
     ],
-    example: `GET ${BASE}/api/garden/lookup?addresses=eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc
-
-{
+    request: `${BASE}/api/garden/lookup?addresses=eth:0x12D66f87A04A9E220743712cE6d9bB1B5616B8Fc`,
+    response: `{
   "attestations": { ... },
   "results": [
     {
@@ -53,23 +55,9 @@ export const ENDPOINTS: EndpointDoc[] = [
     path: '/api/garden/crops/:slug',
     summary: 'Everything about one protocol',
     description:
-      'The full evaluation for a single protocol: the rating for each crop, the reasoning behind it, what is missing, and what we have not looked at. This is where the detail lives - the attestation onchain names the id, this endpoint says what the id is worth. Accepts a slug or a project id, and answers 404 for anything we have not reviewed.',
-    example: `GET ${BASE}/api/garden/crops/tornado-cash
-
-{
-  "framework": {
-    "crops": [
-      {
-        "key": "censorshipResistance",
-        "letter": "CR",
-        "label": "Censorship resistance",
-        "description": "Whether a user can transact without anyone being able to stop them: …"
-      },
-      ...
-    ],
-    "sentiments": { "good": "Good", "warning": "Medium", "bad": "Bad", ... },
-    "statuses": { "reviewed": "Reviewed", "partiallyReviewed": "Partially reviewed", ... }
-  },
+      'The same crops, plus the reasoning behind each one: what the rating rests on, what is missing, and what we have not assessed. Accepts a slug or a project id, and answers 404 for anything we have not reviewed.',
+    request: `${BASE}/api/garden/crops/tornado-cash`,
+    response: `{
   "attestations": { ... },
   "id": "tornado-cash",
   "name": "Tornado Cash",
@@ -84,7 +72,9 @@ export const ENDPOINTS: EndpointDoc[] = [
       "missing": [],
       "notReviewed": ["The routers and interfaces users actually reach …"]
     },
-    ...
+    "openSource": { "sentiment": "good", "status": "reviewed", ... },
+    "privacy": { "sentiment": "good", "status": "reviewed", ... },
+    "security": { "sentiment": "good", "status": "partiallyReviewed", ... }
   }
 }`,
   },
@@ -92,20 +82,24 @@ export const ENDPOINTS: EndpointDoc[] = [
     path: '/api/garden/crops',
     summary: 'The whole garden',
     description:
-      'Every reviewed protocol in one response, in the same shape. Use it to mirror the garden or to warm a cache; for a single lookup on a request path, prefer the two endpoints above.',
-    example: `GET ${BASE}/api/garden/crops
-
-{
-  "framework": { ... },
+      'Every reviewed protocol in one response, plus `framework` - the label and definition of each crop, and of every sentiment and status we might send. Use it to mirror the garden or to warm a cache.',
+    request: `${BASE}/api/garden/crops`,
+    response: `{
+  "framework": {
+    "crops": [
+      { "key": "censorshipResistance", "letter": "CR", "label": "Censorship resistance", "description": "…" },
+      ...
+    ],
+    "sentiments": { "good": "Good", "warning": "Medium", "bad": "Bad", ... },
+    "statuses": { "reviewed": "Reviewed", "partiallyReviewed": "Partially reviewed", ... }
+  },
   "attestations": {
-    "network": "sepolia",
-    "isTestnet": true,
     "schemaUid": "0x…",
     "attester": "0x…",
     "current": {
       "uid": "0x…",
       "revision": 3,
-      "reviewedAt": 1787126071,
+      "reviewedAt": 1787132641,
       "projectIds": ["aztecnetwork", "ethscriptions", "tornado-cash", ...],
       "explorerUrl": "…"
     }
@@ -113,15 +107,6 @@ export const ENDPOINTS: EndpointDoc[] = [
   "projects": [ { "id": "aztecnetwork", ... }, ... ]
 }`,
   },
-]
-
-/** The rules a consumer would otherwise have to infer from our markup. */
-export const VOCABULARY_NOTES = [
-  '`sentiment` is the colour of the crop - how good it is. `status` is how thoroughly we looked. They are independent, and both are always present in a response: we resolve the defaults so you do not have to.',
-  'A crop with `status: "notReviewed"` always reads `sentiment: "neutral"`. It is not a claim that the protocol is mediocre; it is the absence of a claim, and it should render as grey or as nothing at all.',
-  '`points` is what an evaluation rests on, `missing` is what we checked and did not find, and `notReviewed` is what we have not assessed. Never present `notReviewed` as a criticism of the protocol.',
-  'Every label and definition we render is in `framework`, so you can build the same tooltip we do without paraphrasing us into something subtly different.',
-  'A protocol may appear with `attested: false`. The evaluation is still ours and still current - it simply has not been named onchain yet.',
 ]
 
 export const VERIFY_STEPS = [

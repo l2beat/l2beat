@@ -18,8 +18,9 @@ export async function getGardenCropsProjectApiData(slug: string) {
   if (!project) {
     return undefined
   }
+  // No `framework` here: it is the same block on every project, and a
+  // consumer that wants the labels can fetch it once from /api/garden/crops.
   return {
-    framework: CROPS_FRAMEWORK,
     attestations: getAttestationsMeta(),
     ...project,
   }

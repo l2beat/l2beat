@@ -35,20 +35,15 @@ export function WalletMock() {
           </div>
         </div>
 
-        <div className="mx-5 mt-4 rounded-2xl border border-[#cfe3c0] border-dashed bg-[#f6faf3] p-3.5 dark:border-[#2c3a22] dark:bg-[#15ca60]/[.06]">
-          <div className="flex items-center justify-between">
-            <span className="font-bold text-paragraph-12 uppercase tracking-wider">
-              CROPS
-            </span>
-            <span className="text-paragraph-11 text-secondary">
-              attested onchain
-            </span>
-          </div>
-          <div className="mt-1 flex items-end justify-between">
+        <div className="mx-5 mt-3 flex items-center justify-between rounded-xl border border-[#cfe3c0] border-dashed bg-[#f6faf3] px-3 py-2 dark:border-[#2c3a22] dark:bg-[#15ca60]/[.06]">
+          <span className="font-bold text-[10px] uppercase tracking-wider">
+            CROPS
+          </span>
+          <div className="flex items-end gap-1">
             {SAMPLE.map((crop, index) => (
               <span
                 key={crop.key}
-                className="flex flex-col items-center gap-0.5"
+                className="flex scale-75 flex-col items-center gap-0.5"
               >
                 <CropPlantSample
                   sentiment={crop.sentiment}
