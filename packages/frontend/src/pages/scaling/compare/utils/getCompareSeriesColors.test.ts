@@ -20,7 +20,11 @@ describe(getCompareSeriesColors.name, () => {
 
   it('gives Ethereum its fixed chart color without taking a palette slot', () => {
     const without = getCompareSeriesColors(['arbitrum', 'base'])
-    const withEthereum = getCompareSeriesColors(['arbitrum', 'ethereum', 'base'])
+    const withEthereum = getCompareSeriesColors([
+      'arbitrum',
+      'ethereum',
+      'base',
+    ])
 
     expect(withEthereum.ethereum).toEqual('var(--chart-ethereum)')
     expect(withEthereum.arbitrum).toEqual(without.arbitrum)
