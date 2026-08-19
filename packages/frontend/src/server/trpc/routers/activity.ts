@@ -2,14 +2,14 @@ import { v as z } from '@l2beat/validate'
 import {
   ActivityChartParams,
   getActivityChart,
-} from '~/server/features/scaling/activity/getActivityChart'
-import { getActivityChartStats } from '~/server/features/scaling/activity/getActivityChartStats'
+} from '~/server/features/layer2s/activity/getActivityChart'
+import { getActivityChartStats } from '~/server/features/layer2s/activity/getActivityChartStats'
 import {
   EthereumActivityChartParams,
   getEthereumActivityChart,
-} from '~/server/features/scaling/activity/getEthereumActivityChart'
-import { getRecategorisedActivityChart } from '~/server/features/scaling/activity/getRecategorisedActivityChart'
-import { ActivityProjectFilter } from '~/server/features/scaling/activity/utils/projectFilterUtils'
+} from '~/server/features/layer2s/activity/getEthereumActivityChart'
+import { getRecategorisedActivityChart } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
+import { ActivityProjectFilter } from '~/server/features/layer2s/activity/utils/projectFilterUtils'
 import { ChartRange } from '~/utils/range/range'
 import { procedure, router } from '../trpc'
 

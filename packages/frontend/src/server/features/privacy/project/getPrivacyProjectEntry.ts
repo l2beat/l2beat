@@ -18,9 +18,11 @@ import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
-import type { ProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
-import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
+import {
+  EMPTY_TVS_BREAKDOWN,
+  get7dTvsBreakdown,
+} from '../../layer2s/tvs/get7dTvsBreakdown'
+import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
 import {
   getPrivacyTrustedSetup,
@@ -69,55 +71,27 @@ export interface ProjectPrivacyEntry {
   sections: ProjectDetailsSection[]
 }
 
-const EMPTY_PROJECTS_CHANGE_REPORT: ProjectsChangeReport = {
-  projects: {},
-  getChanges: () => ({
-    impactfulChange: false,
-    becameVerifiedContracts: {},
-  }),
-  hasImplementationChanged: () => false,
-  hasHighSeverityFieldChanged: () => false,
-  hasUltimateUpgraderChanged: () => false,
-  getBecameVerifiedContracts: () => ({}),
-}
-
-const EMPTY_TVS_BREAKDOWN: SevenDayTvsBreakdown = {
-  total: 0,
-  projects: {},
-}
-
 export async function getPrivacyProjectEntry(
   details: PrivacyProjectDetails,
   helpers: SsrHelpers,
 ): Promise<ProjectPrivacyEntry> {
   const defaultChartRange = optionToRange('1y')
-  const [
-    contractUtils,
-    allProjectsWithContracts,
-    allProjects,
-    tvs,
-    zkCatalogProjects,
-    totalValueLockedUsd,
-  ] = await Promise.all([
-    getContractUtils(),
-    ps.getProjects({
-      select: ['contracts'],
-    }),
-    ps.getProjects({
-      optional: [
-        'display',
-        'daBridge',
-        'scalingInfo',
-        'daLayer',
-        'privacyInfo',
-      ],
-    }),
-    get7dTvsBreakdown({ type: 'all' }),
-    ps.getProjects({
-      select: ['zkCatalogInfo'],
-    }),
-    getTotalValueLockedUsd(details, helpers, defaultChartRange),
-  ])
+  const [contractUtils, allProjects, tvs, totalValueLockedUsd] =
+    await Promise.all([
+      getContractUtils(),
+      ps.getProjects({
+        optional: [
+          'display',
+          'daBridge',
+          'scalingInfo',
+          'daLayer',
+          'privacyInfo',
+          'defiInfo',
+        ],
+      }),
+      get7dTvsBreakdown({ type: 'all' }),
+      getTotalValueLockedUsd(details, helpers, defaultChartRange),
+    ])
 
   const permissionsSection = getPermissionsSection(
     {
@@ -139,8 +113,8 @@ export async function getPrivacyProjectEntry(
     },
     contractUtils,
     EMPTY_PROJECTS_CHANGE_REPORT,
-    zkCatalogProjects,
-    allProjectsWithContracts,
+    [],
+    [],
     EMPTY_TVS_BREAKDOWN,
   )
 
@@ -194,11 +168,12 @@ export async function getPrivacyProjectEntry(
     }
 
     sections.push({
-      type: 'PrivacyTvlSection',
+      type: 'TvsValueSection',
       props: {
         id: 'privacy-tvl',
         title: 'Value Locked',
         defaultRange: defaultChartRange,
+        rangeControls: 'privacy',
         project: chartProject,
       },
     })
@@ -353,7 +328,7 @@ async function getTotalValueLockedUsd(
   // The flows chart prefetch rides along so both charts are dehydrated for the client
   const [tvlChart] = await Promise.all([
     helpers.queryClient.fetchQuery(
-      helpers.trpc.privacy.tvlChart.queryOptions({
+      helpers.trpc.tvs.chartByProjects.queryOptions({
         projectIds: [details.id],
         range,
       }),

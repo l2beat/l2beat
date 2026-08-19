@@ -3,13 +3,13 @@ import { useMemo } from 'react'
 import { TvsChartControls } from '~/components/chart/tvs/TvsChartControls'
 import { useTvsChartControlsContext } from '~/components/chart/tvs/TvsChartControlsContext'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
-import { useScalingRwaRestrictedTokensContext } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
+import { useL2RwaRestrictedTokensContext } from '~/pages/layer2s/components/L2RwaRestrictedTokensContext'
 import { useTRPC } from '~/trpc/React'
 
 export function ChartControls({ projectId }: { projectId: string }) {
   const trpc = useTRPC()
   const { range, unit, setUnit, setRange } = useTvsChartControlsContext()
-  const { excludeRwaRestrictedTokens } = useScalingRwaRestrictedTokensContext()
+  const { excludeRwaRestrictedTokens } = useL2RwaRestrictedTokensContext()
   const { data } = useQuery(
     trpc.tvs.detailedChart.queryOptions({
       filter: { type: 'projects', projectIds: [projectId] },

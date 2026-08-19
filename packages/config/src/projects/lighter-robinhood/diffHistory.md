@@ -1,3 +1,34 @@
+Generated with discovered.json: 0xf76fcf8d2aefa08c6f330fde215c2768518ce8d2
+
+# Diff at Wed, 19 Aug 2026 12:10:28 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a370e767776b076bdee7fe699dbe0b6597849e65 block: 1786615810
+- current timestamp: 1787136754
+
+## Description
+
+Verified all contracts and removed spam.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786615810 (main branch discovery), not current.
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [N/A] {
+    +++ description: None
+      unverified:
+-        true
+      implementationNames.robinhood:0x1be72833f96e47366610CCFb9Bec081FE69EECf5:
+-        ""
++        "AdditionalZkLighter"
+      sourceHashes:
++        ["0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6","0x7ce2f744c6d607ee57b68b69025659533ae352619bab2cea5c26e5cc9175d95d"]
+    }
+```
+
 Generated with discovered.json: 0x762eefd9aa9099dd9504c8370f54e277a4717442
 
 # Diff at Thu, 13 Aug 2026 10:41:42 GMT:

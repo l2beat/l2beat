@@ -254,6 +254,14 @@ export class DataAvailabilityRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async deleteByConfigurationId(configurationId: string): Promise<number> {
+    const result = await this.db
+      .deleteFrom('DataAvailability')
+      .where('configurationId', '=', configurationId)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
   async deleteByConfigInTimeRange(
     configurationId: string,
     fromInclusive: UnixTime,
@@ -264,14 +272,6 @@ export class DataAvailabilityRepository extends BaseRepository {
       .where('configurationId', '=', configurationId)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<=', UnixTime.toDate(toInclusive))
-      .executeTakeFirst()
-    return Number(result.numDeletedRows)
-  }
-
-  async deleteByConfigurationId(configurationId: string): Promise<number> {
-    const result = await this.db
-      .deleteFrom('DataAvailability')
-      .where('configurationId', '=', configurationId)
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

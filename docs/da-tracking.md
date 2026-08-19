@@ -88,6 +88,24 @@ with the out-of-range records: up to an hour of in-range data is lost per
 edited edge, but nothing is ever counted twice (see `DaIndexer.trimData` in
 `packages/backend`).
 
+## Editing sinceTimestamp / untilTimestamp (eigen-da)
+
+Since/until are not part of the configuration id, so editing them keeps the
+history under the same id. The EigenDA indexers implement `trimData`, so on
+deploy such an edit trims the configuration's `DataAvailability` rows to the
+new range instead of wiping them:
+
+- raising `sinceTimestamp` deletes only the rows before the new start
+- setting or lowering `untilTimestamp` deletes only the rows after the new end
+- lowering `sinceTimestamp` still wipes and re-indexes from scratch, because
+  the pipeline cannot leave gaps in the indexed range
+
+Rows are hourly buckets, so an edge that is not a full hour has a bucket
+straddling it. Unlike the block DA indexer, the `since` edge keeps the
+straddling hour (it is never indexed again, so deleting it would leave a
+hole); at the `until` edge it is deleted (indexing resumes inside that hour
+if the range is ever extended again, so nothing is lost for good).
+
 ## Guarding against silent data wipes
 
 The committed snapshot is enforced by

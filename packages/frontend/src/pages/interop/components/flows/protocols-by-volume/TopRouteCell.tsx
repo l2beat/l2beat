@@ -1,6 +1,6 @@
 import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
+import type { ProtocolEntry } from '~/server/features/layer2s/interop/types'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 
 export function TopRouteCell({ route }: { route: ProtocolEntry['topRoute'] }) {

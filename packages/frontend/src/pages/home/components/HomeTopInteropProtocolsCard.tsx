@@ -14,7 +14,7 @@ import { TopNBadge } from '~/pages/interop/summary/components/TopNBadge'
 import {
   pickTopProtocolEntries,
   TOP_PROTOCOLS_LIMIT,
-} from '~/server/features/scaling/interop/utils/pickTopProtocolEntries'
+} from '~/server/features/layer2s/interop/utils/pickTopProtocolEntries'
 import { useTRPC } from '~/trpc/React'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'

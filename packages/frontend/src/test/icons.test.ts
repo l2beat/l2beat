@@ -96,6 +96,29 @@ describe('icons', () => {
       }
     })
   })
+
+  describe('defi', () => {
+    it('every not-tracked DeFi dependency has an icon', async () => {
+      const icons = getIcons('../../static/icons')
+      const projects = await ps.getProjects({
+        where: ['defiInfo'],
+        optional: ['externalDependencies'],
+      })
+
+      const requiredIcons = [
+        ...new Set(
+          projects
+            .flatMap((project) => project.externalDependencies ?? [])
+            .filter((dependency) => dependency.type === 'not-tracked')
+            .map((dependency) => dependency.icon),
+        ),
+      ].sort()
+
+      for (const icon of requiredIcons) {
+        expect(icons).toInclude(icon)
+      }
+    })
+  })
 })
 
 function getIcons(dir: string) {

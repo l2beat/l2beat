@@ -685,47 +685,42 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
   describe(
     DataAvailabilityRepository.prototype.deleteByConfigInTimeRange.name,
     () => {
-      it('deletes the rows of the configuration inside the range, leaves the rest', async () => {
-        const HOUR = UnixTime.HOUR
-        const a0 = record('project-a', 'layer-a', 'config-id-1', START, 1n)
-        const a1 = record(
-          'project-a',
-          'layer-a',
-          'config-id-1',
-          START + HOUR,
-          2n,
-        )
-        const a2 = record(
-          'project-a',
-          'layer-a',
-          'config-id-1',
-          START + 2 * HOUR,
-          3n,
-        )
-        const a3 = record(
-          'project-a',
-          'layer-a',
-          'config-id-1',
-          START + 3 * HOUR,
-          4n,
-        )
-        const b1 = record(
-          'project-b',
-          'layer-a',
-          'config-id-2',
-          START + HOUR,
-          5n,
-        )
-        await repository.upsertMany([a0, a1, a2, a3, b1])
+      it('deletes only the rows of the configuration inside the inclusive range', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', START - 1, 100n),
+          record('project-a', 'layer-a', 'config-id-1', START, 200n),
+          record('project-a', 'layer-a', 'config-id-1', START + 1, 300n),
+          record('project-a', 'layer-a', 'config-id-1', START + 2, 400n),
+          record('project-a', 'layer-a', 'config-id-1', START + 3, 500n),
+          record('project-b', 'layer-a', 'config-id-2', START + 1, 600n),
+        ])
 
         const deleted = await repository.deleteByConfigInTimeRange(
           'config-id-1',
-          START + HOUR,
-          START + 2 * HOUR,
+          START,
+          START + 2,
         )
+        expect(deleted).toEqual(3)
 
-        expect(deleted).toEqual(2)
-        expect(await repository.getAll()).toEqualUnsorted([a0, a3, b1])
+        const results = await repository.getAll()
+        expect(results).toEqualUnsorted([
+          record('project-a', 'layer-a', 'config-id-1', START - 1, 100n),
+          record('project-a', 'layer-a', 'config-id-1', START + 3, 500n),
+          record('project-b', 'layer-a', 'config-id-2', START + 1, 600n),
+        ])
+      })
+
+      it('returns 0 when nothing matches', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+        ])
+
+        const deleted = await repository.deleteByConfigInTimeRange(
+          'config-id-1',
+          START + 1,
+          START + 2,
+        )
+        expect(deleted).toEqual(0)
       })
     },
   )
