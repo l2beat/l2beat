@@ -75,17 +75,21 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
         title: 'Costs',
         href: '/layer2s/costs',
       },
-      env.CLIENT_SIDE_COMPARE_PROJECTS && {
-        title: 'Compare',
-        href: '/layer2s/compare',
-      },
     ]),
-    secondaryLinks: [
-      {
-        title: 'Archived',
-        href: '/layer2s/archived',
-      },
-    ],
+    secondaryLinks: compact<NavLink[]>([
+      [
+        {
+          title: 'Archived',
+          href: '/layer2s/archived',
+        },
+      ],
+      env.CLIENT_SIDE_COMPARE_PROJECTS && [
+        {
+          title: 'Compare',
+          href: '/layer2s/compare',
+        },
+      ],
+    ]),
   },
   {
     type: 'multiple',
@@ -147,10 +151,12 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
       },
     ],
     secondaryLinks: [
-      {
-        title: 'Archived',
-        href: '/data-availability/archived',
-      },
+      [
+        {
+          title: 'Archived',
+          href: '/data-availability/archived',
+        },
+      ],
     ],
   },
   {

@@ -114,7 +114,7 @@ function NavCollapsibleItem({
 }) {
   const pathname = usePathname()
   const allGroupLinks = useMemo(
-    () => [...group.links, ...(group.secondaryLinks ?? [])],
+    () => [...group.links, ...(group.secondaryLinks ?? []).flat()],
     [group.links, group.secondaryLinks],
   )
   const isGroupActive = pathname.startsWith('/' + group.match)
@@ -179,24 +179,27 @@ function NavCollapsibleItem({
               )}
             </Fragment>
           ))}
-          {group.secondaryLinks && group.secondaryLinks.length > 0 && (
-            <>
-              <SidebarSeparator />
-              {group.secondaryLinks.map((item) => (
-                <SidebarGroupSubButton
-                  href={item.href}
-                  key={item.title}
-                  isActive={isLinkActive({
-                    href: item.href,
-                    pathname,
-                    exact: item.exactMatch,
-                  })}
-                  onClick={closeMobileSidebar}
-                >
-                  <span>{item.title}</span>
-                </SidebarGroupSubButton>
-              ))}
-            </>
+          {group.secondaryLinks?.map(
+            (section, index) =>
+              section.length > 0 && (
+                <Fragment key={index}>
+                  <SidebarSeparator />
+                  {section.map((item) => (
+                    <SidebarGroupSubButton
+                      href={item.href}
+                      key={item.title}
+                      isActive={isLinkActive({
+                        href: item.href,
+                        pathname,
+                        exact: item.exactMatch,
+                      })}
+                      onClick={closeMobileSidebar}
+                    >
+                      <span>{item.title}</span>
+                    </SidebarGroupSubButton>
+                  ))}
+                </Fragment>
+              ),
           )}
         </SidebarGroupSub>
       </CollapsibleContent>
