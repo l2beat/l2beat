@@ -3,14 +3,12 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import { cn } from '~/utils/cn'
-import { CalloutCard } from '../components/CalloutCard'
 import { SectionHeading } from '../components/SectionHeading'
 import { SproutIcon } from '../components/SproutIcon'
 import { GARDEN_ANIMATIONS_CSS, GARDEN_SURFACES_CSS } from '../gardenCss'
-import { GARDEN_PATH, SUBMIT_PROTOCOL_PATH } from '../submit/links'
+import { GARDEN_PATH } from '../submit/links'
 import { BadgeStudio } from './components/BadgeStudio'
-import { RequestLine } from './components/RequestLine'
+import { CodeSnippet, RequestHeader } from './components/CodeSnippet'
 import { WalletMock } from './components/WalletMock'
 import {
   BADGE_RULES,
@@ -54,9 +52,7 @@ export function IntegrateCropsPage({
           <h1 className="pt-5 font-bold text-2xl max-md:px-4 lg:hidden">
             Integrate CROPS
           </h1>
-          <MainPageHeader description="">
-            Integrate CROPS
-          </MainPageHeader>
+          <MainPageHeader description="">Integrate CROPS</MainPageHeader>
           <main>
             <AudiencePicker />
             <ConsumerSections attestations={attestations} />
@@ -212,8 +208,20 @@ function EndpointCard({ endpoint }: { endpoint: EndpointDoc }) {
           ))}
         </dl>
       )}
-      <RequestLine url={endpoint.request} />
-      <CodeBlock>{endpoint.response}</CodeBlock>
+      <CodeSnippet
+        className="mt-4"
+        language="text"
+        code=""
+        header={<RequestHeader url={endpoint.request} />}
+        copy={endpoint.request}
+        copyText="Copy URL"
+      />
+      <CodeSnippet
+        className="mt-3"
+        language="json"
+        code={endpoint.response}
+        label="response"
+      />
     </PrimaryCard>
   )
 }
@@ -261,7 +269,15 @@ function AttestationsSection({
             </Constant>
           )}
         </dl>
-        <CodeBlock wrap>{attestations.schema}</CodeBlock>
+        <CodeSnippet
+          className="mt-4"
+          language="text"
+          code={attestations.schema}
+          label="schema"
+          copy={attestations.schema}
+          copyText="Copy schema"
+          wrap
+        />
         <ol className="mt-5 flex list-decimal flex-col gap-3 pl-5">
           {VERIFY_STEPS.map((step) => (
             <li
@@ -311,17 +327,6 @@ function ProtocolSection() {
           </ul>
         </PrimaryCard>
       </section>
-
-      <section className="mt-8 max-md:mx-4 md:mt-12">
-        <CalloutCard
-          horizontal
-          tone="garden"
-          title="Not reviewed yet?"
-          description="The garden is open. Answer the submission questions and we will evaluate the protocol against the four crops."
-          cta="Submit your protocol"
-          href={SUBMIT_PROTOCOL_PATH}
-        />
-      </section>
     </>
   )
 }
@@ -364,26 +369,6 @@ function Code({ children }: { children: React.ReactNode }) {
     <code className="rounded bg-surface-tertiary px-1.5 py-0.5 font-mono text-paragraph-13">
       {children}
     </code>
-  )
-}
-
-function CodeBlock({
-  children,
-  wrap,
-}: {
-  children: string
-  /** For a single long line, like the schema, where indentation carries nothing. */
-  wrap?: boolean
-}) {
-  return (
-    <pre
-      className={cn(
-        'mt-3 rounded-lg bg-surface-tertiary p-4 font-mono text-paragraph-13 leading-relaxed',
-        wrap ? 'whitespace-pre-wrap break-all' : 'overflow-x-auto',
-      )}
-    >
-      {children}
-    </pre>
   )
 }
 

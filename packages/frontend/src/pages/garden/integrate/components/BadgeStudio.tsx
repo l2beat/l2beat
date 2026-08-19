@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react'
-import { CopyButton } from '~/components/CopyButton'
 import { cn } from '~/utils/cn'
 import {
   type BadgeTheme,
@@ -7,6 +6,7 @@ import {
   cropsBadgeHtml,
   cropsBadgeSnippet,
 } from '../badge'
+import { CodeSnippet } from './CodeSnippet'
 
 const VARIANTS: { value: BadgeVariant; label: string; hint: string }[] = [
   { value: 'full', label: 'Full', hint: 'Footers, about pages, docs' },
@@ -70,23 +70,14 @@ export function BadgeStudio({ href }: { href: string }) {
         <div dangerouslySetInnerHTML={{ __html: preview }} />
       </div>
 
-      {/* The copy control gets its own strip rather than floating over the
-          code: overlaid, it sat on top of the first line, which is the one
-          line a reader most wants to see. */}
-      <div className="flex items-center justify-between border-divider border-t bg-surface-secondary px-4 py-2">
-        <span className="font-semibold text-secondary text-subtitle-12 uppercase tracking-wider">
-          html
-        </span>
-        <CopyButton
-          toCopy={snippet}
-          copyText="Copy badge"
-          className="flex items-center gap-1.5 rounded-md px-2 py-1 font-medium text-paragraph-13 hover:bg-surface-tertiary"
-          iconClassName="size-4"
-        />
-      </div>
-      <pre className="overflow-x-auto p-4 font-mono text-paragraph-12 leading-relaxed md:text-paragraph-13">
-        {snippet}
-      </pre>
+      <CodeSnippet
+        className="rounded-none border-0 border-divider border-t"
+        language="html"
+        code={snippet}
+        label="html"
+        copy={snippet}
+        copyText="Copy badge"
+      />
     </div>
   )
 }
