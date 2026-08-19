@@ -15,6 +15,7 @@ import {
   DEFAULT_COMPARE_PROJECTS_COUNT,
   toCompareClientState,
 } from './utils/compareChartState'
+import { COMPARE_PAGE_PATH } from './utils/getCompareEntryUrl'
 import { parseCompareStateFromSearchParams } from './utils/parseCompareStateFromSearchParams'
 
 export async function getScalingCompareData(
@@ -76,7 +77,7 @@ async function getCompareData(originalUrl: string, cache: InMemoryCache) {
   // customized URL renders with client-side loading states instead. The
   // canonical-URL check collapses garbage params into the default view.
   const isDefaultView =
-    buildCompareUrl('/scaling/compare', initialState) === '/scaling/compare'
+    buildCompareUrl(COMPARE_PAGE_PATH, initialState) === COMPARE_PAGE_PATH
   if (!isDefaultView) {
     return {
       allProjects,

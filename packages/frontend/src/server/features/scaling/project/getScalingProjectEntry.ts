@@ -19,6 +19,8 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
+import type { CompareMetricId } from '~/pages/scaling/compare/utils/compareChartState'
+import { getCompareEntryUrl } from '~/pages/scaling/compare/utils/getCompareEntryUrl'
 import {
   countRecentDiscoveryUpdates,
   getDiscoveryUpdates,
@@ -399,6 +401,7 @@ export async function getScalingProjectEntry(
         id: 'tvs',
         title: 'Value Secured',
         tvsBreakdownUrl: `/scaling/projects/${project.slug}/tvs-breakdown`,
+        compareUrl: getProjectCompareUrl(project, 'tvs'),
         milestones: sortedMilestones,
         tokens,
         tvsInfo: project.tvsInfo,
@@ -432,6 +435,7 @@ export async function getScalingProjectEntry(
         milestones: sortedMilestones,
         category: project.scalingInfo.type,
         project: projectWithIcon,
+        compareUrl: getProjectCompareUrl(project, 'activity'),
         ...activitySection,
       },
     })
@@ -445,6 +449,7 @@ export async function getScalingProjectEntry(
         title: 'Onchain costs',
         milestones: sortedMilestones,
         project: projectWithIcon,
+        compareUrl: getProjectCompareUrl(project, 'costs'),
         ...costsSection,
       },
     })
@@ -458,6 +463,7 @@ export async function getScalingProjectEntry(
         title: 'Data posted',
         milestones: sortedMilestones,
         project: projectWithIcon,
+        compareUrl: getProjectCompareUrl(project, 'data-posted'),
         ...dataPostedSection,
       },
     })
@@ -788,4 +794,14 @@ export async function getScalingProjectEntry(
   }
 
   return { ...common, sections }
+}
+
+function getProjectCompareUrl(
+  project: Project<never, 'archivedAt'>,
+  metric: CompareMetricId,
+): string | undefined {
+  if (!env.CLIENT_SIDE_COMPARE_PROJECTS || project.archivedAt) {
+    return undefined
+  }
+  return getCompareEntryUrl({ metric, projectSlug: project.slug })
 }

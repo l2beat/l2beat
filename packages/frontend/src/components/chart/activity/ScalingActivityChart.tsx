@@ -10,6 +10,8 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { useIsClient } from '~/hooks/useIsClient'
 import { useActivityChartRangeContext } from '~/pages/scaling/activity/components/ActivityChartRangeContext'
 import { ActivityChartRangeControls } from '~/pages/scaling/activity/components/ActivityChartRangeControls'
+import { CompareProjectsLink } from '~/pages/scaling/compare/components/CompareProjectsLink'
+import { getCompareEntryUrl } from '~/pages/scaling/compare/utils/getCompareEntryUrl'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
 import { useTRPC } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
@@ -102,7 +104,7 @@ function Controls({ scale, setScale, range, setRange }: ControlsProps) {
   const isClient = useIsClient()
   return (
     <ChartControlsWrapper>
-      <div className="flex gap-1">
+      <div className="flex flex-wrap items-center gap-2">
         {isClient ? (
           <RadioGroup
             name="activityChartScale"
@@ -115,6 +117,9 @@ function Controls({ scale, setScale, range, setRange }: ControlsProps) {
         ) : (
           <Skeleton className="h-8 w-[91px] md:w-[95px]" />
         )}
+        <CompareProjectsLink
+          href={getCompareEntryUrl({ metric: 'activity' })}
+        />
       </div>
       <ActivityChartRangeControls range={range} setRange={setRange} />
     </ChartControlsWrapper>

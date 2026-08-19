@@ -1,5 +1,5 @@
 import compact from 'lodash/compact'
-import type { NavGroup } from '~/components/nav/types'
+import type { NavGroup, NavLink } from '~/components/nav/types'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/Bridges'
@@ -28,7 +28,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     icon: (
       <ScalingIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
-    links: [
+    links: compact<NavLink>([
       {
         title: 'Summary',
         href: '/scaling/summary',
@@ -75,7 +75,11 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
         title: 'Costs',
         href: '/scaling/costs',
       },
-    ],
+      env.CLIENT_SIDE_COMPARE_PROJECTS && {
+        title: 'Compare',
+        href: '/scaling/compare',
+      },
+    ]),
     secondaryLinks: [
       {
         title: 'Archived',

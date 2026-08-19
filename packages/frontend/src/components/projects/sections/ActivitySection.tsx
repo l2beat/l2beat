@@ -3,6 +3,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { EthereumActivityChart } from '~/components/chart/activity/EthereumActivityChart'
 import { ChartDataSourceInfo } from '~/components/chart/ChartDataSourceInfo'
 import type { ChartProject } from '~/components/core/chart/Chart'
+import { CompareProjectsLink } from '~/pages/scaling/compare/components/CompareProjectsLink'
 import type { ChartRange } from '~/utils/range/range'
 import { ProjectActivityChart } from '../../chart/activity/ProjectActivityChart'
 import { ProjectSection } from './ProjectSection'
@@ -15,6 +16,7 @@ export interface ActivitySectionProps extends ProjectSectionProps {
   category?: ProjectScalingCategory
   defaultRange: ChartRange
   dataSource: string | undefined
+  compareUrl?: string
 }
 
 export function ActivitySection({
@@ -23,10 +25,24 @@ export function ActivitySection({
   category,
   defaultRange,
   dataSource,
+  compareUrl,
   ...sectionProps
 }: ActivitySectionProps) {
   return (
-    <ProjectSection {...sectionProps}>
+    <ProjectSection
+      {...sectionProps}
+      headerAccessory={
+        compareUrl && (
+          <CompareProjectsLink
+            variant="section"
+            href={compareUrl}
+            className="max-md:hidden"
+          >
+            Compare
+          </CompareProjectsLink>
+        )
+      }
+    >
       {dataSource && <ChartDataSourceInfo dataSource={dataSource} />}
       {project.id === ProjectId.ETHEREUM ? (
         <EthereumActivityChart
@@ -42,6 +58,15 @@ export function ActivitySection({
           category={category}
           defaultRange={defaultRange}
         />
+      )}
+      {compareUrl && (
+        <CompareProjectsLink
+          variant="section"
+          href={compareUrl}
+          className="mt-4 md:hidden"
+        >
+          Compare with other projects
+        </CompareProjectsLink>
       )}
     </ProjectSection>
   )

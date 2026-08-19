@@ -36,6 +36,16 @@ export const searchBarPages = withIndex([
     tags: ['pages', 'scaling'],
     href: '/scaling/activity',
   },
+  ...(env.CLIENT_SIDE_COMPARE_PROJECTS
+    ? [
+        {
+          category: 'scaling' as const,
+          name: 'Compare Projects',
+          tags: ['pages', 'scaling', 'compare'],
+          href: '/scaling/compare',
+        },
+      ]
+    : []),
   {
     category: 'scaling',
     name: 'Data Availability',

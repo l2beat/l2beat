@@ -48,7 +48,7 @@ export const STATIC_PAGE_PATHS = [
 ] as const satisfies PagePath[]
 
 export async function getPagePaths(): Promise<PagePath[]> {
-  const flaggedPaths: PagePath[] = env.FEATURE_FLAG_COMPARE_PROJECTS
+  const flaggedPaths: PagePath[] = env.CLIENT_SIDE_COMPARE_PROJECTS
     ? ['/scaling/compare']
     : []
   return [
