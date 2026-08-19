@@ -110,7 +110,7 @@ export const VERIFY_STEPS = [
   'Read the attestation from the EAS contract with the uid in `attestations.current`: `getAttestation(uid)`.',
   'Check `revocationTime == 0`. When the set changes we revoke the old attestation and issue the next revision, so a revoked attestation is a stale claim and must not be shown.',
   'Check `attester` and `schema` against the values below, so an attestation someone else made cannot be mistaken for ours.',
-  'Decode `projectIds`. That array is the whole claim: these are the protocols we have reviewed, as of `reviewedAt`, at revision `revision`.',
+  'Decode `projectIds` - these are the protocols we have reviewed, as of `reviewedAt`, at revision `revision`.',
   'For what any of those ids is actually worth - the rating per crop, the reasoning, what we did not look at - call `/api/garden/project/{id}`. Ratings move as protocols change; the set moves far less, which is why only the set is onchain.',
 ]
 
