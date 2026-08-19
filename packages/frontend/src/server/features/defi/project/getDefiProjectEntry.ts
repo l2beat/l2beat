@@ -12,8 +12,8 @@ import { getPermissionsSection } from '~/utils/project/contracts-and-permissions
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { optionToRange } from '~/utils/range/range'
+import { EMPTY_TVS_BREAKDOWN } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import { EMPTY_TVS_BREAKDOWN } from '../../scaling/tvs/get7dTvsBreakdown'
 import {
   getDefiDependencyProjectsById,
   resolveDefiDependencies,

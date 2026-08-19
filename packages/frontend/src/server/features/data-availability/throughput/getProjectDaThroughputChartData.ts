@@ -49,8 +49,8 @@ export async function getProjectDaThroughputChartData(
     getProjectDaThroughputChart(params),
     getDaThroughputTable([params.projectId]),
   ])
-  const projectData = params.includeScalingOnly
-    ? throughputTable.scalingOnlyData[params.projectId]
+  const projectData = params.includeL2Only
+    ? throughputTable.l2OnlyData[params.projectId]
     : throughputTable.data[params.projectId]
 
   if (!chartData || chartData.chart.length === 0 || !projectData) {

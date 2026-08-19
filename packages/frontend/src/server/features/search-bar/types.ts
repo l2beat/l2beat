@@ -17,7 +17,7 @@ export type SearchBarProjectEntry = SearchBarEntry & {
     | 'ecosystem'
     | 'privacy'
     | 'defi'
-  scalingCategory?: ProjectScalingCategory
+  l2Category?: ProjectScalingCategory
   filePrepared?: Fuzzysort.Prepared
   projectAddresses?: EthereumAddress[]
 }

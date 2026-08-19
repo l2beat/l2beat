@@ -1,5 +1,5 @@
 import { formatInteger } from '@l2beat/shared-pure'
-import type { FrameworkTableEntry } from '~/server/features/scaling/interop/getTokenFrameworksData'
+import type { FrameworkTableEntry } from '~/server/features/layer2s/interop/getTokenFrameworksData'
 import { cn } from '~/utils/cn'
 import type { InteropTransferDefaults } from '../../../components/InteropTransferTrigger'
 import { getInteropTokenUrl } from '../../../utils/getInteropTokenUrl'

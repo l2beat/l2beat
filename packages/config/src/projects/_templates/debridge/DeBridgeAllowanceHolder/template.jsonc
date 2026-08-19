@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Immutable allowance sink of the deBridge intent system: users approve this contract (directly or as Permit2 spender) so that the upgradeable executor contracts never hold approvals themselves. Its transfer functions carry no intent-level checks: any ALLOWED_SPENDER_ROLE holder can move any approved token from any approver to any recipient.",
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "allowedSpenderAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "ALLOWED_SPENDER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "unconditionally transfer any amount of any token from any user who approved the DeBridgeAllowanceHolder (directly or via Permit2) to any recipient, and make arbitrary calls from its address."
+        }
+      ]
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant and revoke the ALLOWED_SPENDER_ROLE, i.e. authorize any address (including itself) to spend all outstanding user approvals of the deBridge intent system."
+        }
+      ]
+    }
+  },
+  "ignoreRelatives": ["getPermit2OrFail"]
+}

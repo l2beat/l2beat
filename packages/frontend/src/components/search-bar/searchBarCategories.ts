@@ -5,7 +5,7 @@ export interface SearchBarCategoryConfig {
 }
 
 export const searchBarCategories = {
-  scaling: {
+  l2: {
     name: 'Scaling',
   },
   da: {

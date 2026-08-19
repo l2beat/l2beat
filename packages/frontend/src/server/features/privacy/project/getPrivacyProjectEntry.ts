@@ -18,11 +18,11 @@ import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
-import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import {
   EMPTY_TVS_BREAKDOWN,
   get7dTvsBreakdown,
-} from '../../scaling/tvs/get7dTvsBreakdown'
+} from '../../layer2s/tvs/get7dTvsBreakdown'
+import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
 import {
   getPrivacyTrustedSetup,
@@ -143,6 +143,21 @@ export async function getPrivacyProjectEntry(
         title: 'Protocol description',
         description: undefined,
         detailedDescription: details.display.detailedDescription,
+      },
+    })
+  }
+
+  if (details.noteDiscovery) {
+    sections.push({
+      type: 'MarkdownSection',
+      props: {
+        id: 'note-discovery',
+        title: 'Note discovery',
+        content: details.noteDiscovery.description,
+        risks: details.noteDiscovery.risks?.map((text) => ({
+          text,
+          isCritical: false,
+        })),
       },
     })
   }

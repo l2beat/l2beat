@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "GovernorBravoDelegator",
   "description": "Upgradeable Governor Bravo governance proxy. Holders with more than the current proposal threshold of {{ proposalThresholdFmt }} {{ votingTokenSymbol }} can create proposals. Voting begins {{ votingDelayFmt }} blocks after proposal creation and lasts {{ votingPeriodFmt }} blocks; success requires more for-votes than against-votes and at least {{ quorumVotesFmt }} {{ votingTokenSymbol }} voting for. Successful proposals are queued in the configured timelock. The proxy admin can replace the implementation or nominate a new admin.",
+  "ignoreInWatchMode": ["proposalCount"],
   "fields": {
     "votingTokenSymbol": {
       "handler": {
@@ -97,8 +98,7 @@
         "type": "call",
         "method": "function proposalCount() view returns (uint256)",
         "args": []
-      },
-      "ignoreInWatchMode": true
+      }
     }
   }
 }

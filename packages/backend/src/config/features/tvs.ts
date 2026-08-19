@@ -32,10 +32,12 @@ export async function getTvsConfig(
 
   let projects = enabledProjects.map((p) => ({
     projectId: p.id,
-    // Temporary filter for Marlin token
-    // Coingecko started returning wrong response just for this token
+    // Temporary filter for Marlin and Venice tokens
+    // Coingecko started returning wrong response just for these tokens
     // which results in halting all TVS sync. We should investigate this issue and remove this filter once it's fixed.
-    tokens: p.tvsConfig.filter((t) => t.priceId !== 'marlin'),
+    tokens: p.tvsConfig.filter(
+      (t) => t.priceId !== 'marlin' && t.priceId !== 'venice-token',
+    ),
   }))
 
   // sinceTimestamp override for local development

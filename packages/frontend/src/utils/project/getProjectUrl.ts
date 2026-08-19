@@ -35,5 +35,5 @@ export function getProjectUrl(
   if (project.defiInfo) {
     return `/defi/projects/${project.slug}`
   }
-  return `/scaling/projects/${project.slug}`
+  return `/layer2s/projects/${project.slug}`
 }

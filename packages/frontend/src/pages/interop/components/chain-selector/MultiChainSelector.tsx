@@ -1,5 +1,5 @@
 import { SwapIcon } from '~/icons/Swap'
-import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { AllProtocolsDialog } from './AllProtocolsDialog'
 import { MultiChainSelectorButton } from './MultiChainSelectorButton'

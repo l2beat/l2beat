@@ -43,8 +43,22 @@ export const stargate: BaseProject = {
         plugin: 'stargate',
         bridgeType: 'lockAndMint',
       },
+      {
+        plugin: 'stargate',
+        bridgeType: 'burnAndMint',
+      },
     ],
     durationSplit: {
+      burnAndMint: [
+        {
+          label: 'Bus',
+          transferTypes: ['stargate-v2-bus.Transfer'],
+        },
+        {
+          label: 'Taxi',
+          transferTypes: ['stargate-v2-taxi.Transfer'],
+        },
+      ],
       lockAndMint: [
         {
           label: 'Bus',

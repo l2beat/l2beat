@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "relay",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    // RelayDepository (settlement protocol escrow, 'protocol v2')
+    "base:0x4cD00E387622C35bDDB9b4c962C136462338BC31",
+    // RelayReceiver (legacy passthrough deposit contract, forwards to solver EOA)
+    "base:0xa5F565650890fBA1824Ee0F21EbBbF660a179934",
+    // RelayRouterV3 (stateless swap/call router)
+    "base:0xb92fe925DC43a0ECdE6c8b1a2709c170Ec4fFf4f",
+    // RelayApprovalProxyV3 (ERC20 entry point pulling user approvals/permits)
+    "base:0xCcC88a9d1B4ED6b0EABA998850414b24f1c315bE"
+  ],
+  "names": {
+    "base:0x4cD00E387622C35bDDB9b4c962C136462338BC31": "RelayDepository",
+    "base:0xa5F565650890fBA1824Ee0F21EbBbF660a179934": "RelayReceiver",
+    "base:0xb92fe925DC43a0ECdE6c8b1a2709c170Ec4fFf4f": "RelayRouterV3",
+    "base:0xCcC88a9d1B4ED6b0EABA998850414b24f1c315bE": "RelayApprovalProxyV3"
+  },
+  "overrides": {
+    "base:0xa5F565650890fBA1824Ee0F21EbBbF660a179934": {
+      "fields": {
+        // private immutable SOLVER constructor arg, verified against the
+        // deployment tx (0xa39f53fe...) and the deployed bytecode. It cannot
+        // change for this address (immutable value in a non-proxy contract),
+        // so hardcoding is safe here. The generic constructorArgs handler
+        // misdecodes it because the contract was deployed through a factory.
+        "solver": {
+          "description": "The immutable solver address that receives all funds sent to this contract.",
+          "handler": {
+            "type": "hardcoded",
+            "value": "base:0xf70da97812CB96acDF810712Aa562db8dfA3dbEF"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "receive all user funds deposited through the RelayReceiver, with no onchain obligation to fill the associated orders."
+            }
+          ]
+        }
+      }
+    }
+  }
+}

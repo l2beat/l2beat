@@ -1,4 +1,8 @@
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import { REASON_FOR_BEING_OTHER } from '../../common/reasonsForBeingOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -6,6 +10,12 @@ import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('phala')
+
+// historical OPSuccinctL2OutputOracle, unused since 2026-03 and no longer part
+// of the discovered system after the v7 (U19) upgrade
+const opSuccinctL2OutputOracle = EthereumAddress(
+  '0xb45440830bd8D288bB2B5B01Be303ae60fc855d8',
+)
 
 export const phala: ScalingProject = opStackL2({
   addedAt: UnixTime(1734388655), // Dec-16-2024 10:37:35 PM UTC
@@ -82,9 +92,7 @@ export const phala: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: ChainSpecificAddress.address(
-          discovery.getContract('OPSuccinctL2OutputOracle').address,
-        ),
+        address: opSuccinctL2OutputOracle,
         selector: '0x9ad84880',
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof)',
@@ -99,9 +107,7 @@ export const phala: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: ChainSpecificAddress.address(
-          discovery.getContract('OPSuccinctL2OutputOracle').address,
-        ),
+        address: opSuccinctL2OutputOracle,
         selector: '0x59c3e00a', // non-optimistic mode
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',
@@ -116,9 +122,7 @@ export const phala: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: ChainSpecificAddress.address(
-          discovery.getContract('OPSuccinctL2OutputOracle').address,
-        ),
+        address: opSuccinctL2OutputOracle,
         selector: '0x9aaab648', // optimistic mode
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber)',
@@ -133,9 +137,7 @@ export const phala: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: ChainSpecificAddress.address(
-          discovery.getContract('OPSuccinctL2OutputOracle').address,
-        ),
+        address: opSuccinctL2OutputOracle,
         selector: '0xa4ee9d7b', // non-optimistic mode
         functionSignature:
           'function proposeL2Output(bytes32 _configName, bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',
@@ -171,9 +173,7 @@ export const phala: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: ChainSpecificAddress.address(
-          discovery.getContract('OPSuccinctL2OutputOracle').address,
-        ),
+        address: opSuccinctL2OutputOracle,
         selector: '0x7a41a035', // non-optimistic mode
         functionSignature:
           'function dgfProposeL2Output(bytes32 _configName, bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',

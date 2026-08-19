@@ -58,6 +58,11 @@ const FOREIGN_XDAI_BRIDGE = ChainSpecificAddress(
 const HOME_XDAI_BRIDGE = ChainSpecificAddress(
   'gno:0x7301CFA0e1756B71869E93d4e4Dca5c7d0eb0AA6',
 )
+// XDaiForeignBridge.erc20token() returns USDS. Requests for DAI are fulfilled
+// by a destination-side conversion and do not change the backing asset.
+const XDAI_BRIDGE_BACKING_TOKEN = Address32.from(
+  '0xdc035d45d973e3ec169d2276ddab16f1e407384f',
+)
 
 type GnosisBridgeChain = 'ethereum' | 'gnosis'
 
@@ -78,9 +83,7 @@ interface XdaiTransferFinalizedArgs {
 
 interface XdaiWithdrawalFinalizedArgs {
   nonce: `0x${string}`
-  token: Address32 | undefined
   amount: bigint
-  wasMinted: boolean | undefined
 }
 
 const AmbMessageRequested = createInteropEventType<AmbMessageRequestedArgs>(
@@ -305,15 +308,10 @@ export class GnosisBridgePlugin implements InteropPluginResyncable {
         ChainSpecificAddress.address(FOREIGN_XDAI_BRIDGE),
       ])
       if (xdaiFinalized) {
-        const transfer = findTokenTransferBefore(input, xdaiFinalized.value, {
-          boundary: (log) => parseXdaiRelayedMessage(log, null) !== undefined,
-        })
         return [
           XdaiWithdrawalFinalized.create(input, {
             nonce: xdaiFinalized.transactionHash,
-            token: transfer?.token,
             amount: xdaiFinalized.value,
-            wasMinted: transfer?.wasMinted,
           }),
         ]
       }
@@ -515,11 +513,6 @@ export class GnosisBridgePlugin implements InteropPluginResyncable {
     })
     if (!initiated) return
 
-    const wasMinted =
-      event.args.token === initiated.args.token
-        ? event.args.wasMinted
-        : undefined
-
     return [
       Result.Message('gnosisbridge.Message', {
         app: 'xdai-bridge',
@@ -532,9 +525,9 @@ export class GnosisBridgePlugin implements InteropPluginResyncable {
         srcAmount: initiated.args.amount,
         srcWasBurned: true,
         dstEvent: event,
-        dstTokenAddress: initiated.args.token,
+        dstTokenAddress: XDAI_BRIDGE_BACKING_TOKEN,
         dstAmount: event.args.amount,
-        dstWasMinted: wasMinted,
+        dstWasMinted: false,
       }),
     ]
   }

@@ -56,7 +56,7 @@ export async function generateProjectOgImages(
 async function generateProjectOgImage(
   project: Project<never, 'interopConfig'>,
   type:
-    | 'scaling'
+    | 'layer2s'
     | 'zk-catalog'
     | 'data-availability'
     | 'interop'
@@ -79,7 +79,7 @@ async function generateProjectOgImage(
       }
       size={size}
     >
-      {`${type.replace('-', ' ').toUpperCase()} • PROJECT PAGE`}
+      {`${type === 'layer2s' ? 'LAYER 2S' : type.replace('-', ' ').toUpperCase()} • PROJECT PAGE`}
     </ProjectOpengraphImage>,
     {
       ...size,
@@ -115,7 +115,7 @@ export function getOpengraphProjectTypes(
   >,
 ) {
   const types: (
-    | 'scaling'
+    | 'layer2s'
     | 'zk-catalog'
     | 'data-availability'
     | 'interop'
@@ -123,7 +123,7 @@ export function getOpengraphProjectTypes(
     | 'defi'
   )[] = []
   if (project.scalingInfo) {
-    types.push('scaling')
+    types.push('layer2s')
   }
   if (project.zkCatalogInfo) {
     types.push('zk-catalog')

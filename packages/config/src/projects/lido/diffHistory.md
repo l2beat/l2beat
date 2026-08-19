@@ -1,3 +1,167 @@
+Generated with discovered.json: 0x8418fc8ac7758d095c0e38237e7f995168550564
+
+# Diff at Mon, 17 Aug 2026 10:06:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9b7337c108d300967ecea6d6606607859d1de669 block: 1786537268
+- current timestamp: 1786960746
+
+## Description
+
+Wiring for the Lido DAO buyback program's revenue accounting:
+
+- The `LidoLocator` implementation was upgraded only to swap the immutable `postTokenRebaseReceiver` to a redeployed `TokenRateNotifier`.
+- The new `TokenRateNotifier` has two targets: the pre-existing `OpStackTokenRatePusher` and the new `StakingRevenueSource`, which accrues the DAO treasury's fee share of each stETH rebase and converts it into a cumulative USD figure for the buyback program.
+- `StakingRevenueSource` values stETH via the new `OracleRouter`, which reads prices from Chainlink's canonical Feed Registry. The router's admin is the Aragon `Voting` app and its manager is the DAO's `TreasuryManagementCommittee` 4/7 multisig; both can configure feed routes, staleness limits, and activation flags.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract TokenRateNotifier (eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9) [N/A]
+    +++ description: None
+```
+
+```diff
+    contract Voting (eth:0x2e59A20f205bB85a89C53f1936454680651E618e) [lido/Voting] {
+    +++ description: Lido DAO's Aragon token voting application. LDO holders vote on executable DAO scripts, with configurable support, quorum, vote duration, and an objection phase.
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x79ef3a538200Fe4981D67E7e886bfb36D4Cb5a31","description":"appoint the manager and emergency operator of the OracleRouter and configure all token price feed routes, staleness limits and activation flags.","role":".ADMIN"}
+    }
+```
+
+```diff
+    contract Lido Dao Agent (eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) [lido/LidoDaoAgent] {
+    +++ description: The Lido DAO's Aragon execution and treasury agent. It can transfer assets, execute arbitrary calls or scripts, and validate signatures according to granular ACL permissions.
+      directlyReceivedPermissions.26:
++        {"permission":"interact","from":"eth:0xbe05d12Fd10919F1881125006523452F6aFF791b","description":"add or remove token-rate observers and transfer or renounce ownership.","role":".owner"}
+    }
+```
+
+```diff
+    contract LidoLocator (eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb) [lido/LidoLocator] {
+    +++ description: Canonical registry of the active Lido core, oracle, staking, withdrawal, top-up, consolidation, and StakingVault subsystem contract addresses.
+      values.$implementation:
+-        "eth:0x0360002bf51DCae1c0267aE0AFDaBacAF7De686b"
++        "eth:0xF2Ffb952e129a63F0614Ff87126E1d4a494A2313"
+      values.$pastUpgrades.11:
++        ["2026-08-14T13:06:35.000Z","0x5a7868439de1003dc5f3d7ecf99826410c17883794bcd38ff75dd0e0bcce57c4",["eth:0xF2Ffb952e129a63F0614Ff87126E1d4a494A2313"]]
+      values.$upgradeCount:
+-        11
++        12
+      values.oracleReportComponents.4:
+-        "eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9"
++        "eth:0xbe05d12Fd10919F1881125006523452F6aFF791b"
+      values.postTokenRebaseReceiver:
+-        "eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9"
++        "eth:0xbe05d12Fd10919F1881125006523452F6aFF791b"
+      values.proxy__getImplementation:
+-        "eth:0x0360002bf51DCae1c0267aE0AFDaBacAF7De686b"
++        "eth:0xF2Ffb952e129a63F0614Ff87126E1d4a494A2313"
+      implementationNames.eth:0x0360002bf51DCae1c0267aE0AFDaBacAF7De686b:
+-        "LidoLocator"
+      implementationNames.eth:0xF2Ffb952e129a63F0614Ff87126E1d4a494A2313:
++        "LidoLocator"
+    }
+```
+
+```diff
+    contract EmergencyProtectedTimelock (eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316) [lido/EmergencyProtectedTimelock] {
+    +++ description: Timelock used by Dual Governance. Governance submits and schedules batches, anyone may execute a ready batch, and time-bounded emergency committees can activate emergency mode and execute already submitted proposals without the ordinary schedule delay.
+      receivedPermissions.28:
++        {"permission":"interact","from":"eth:0xbe05d12Fd10919F1881125006523452F6aFF791b","description":"add or remove token-rate observers and transfer or renounce ownership.","role":".owner","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    reference FeedRegistry (eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakingRevenueSource (eth:0x6220212a33a87Ed7Cc386B67eB2c393974F28C38) [lido/StakingRevenueSource]
+    +++ description: Tracks Lido DAO staking revenue for the buyback program: as a TokenRateNotifier observer it accrues the treasury fee share of each stETH rebase and converts it into a monotonic cumulative USD figure at the OracleRouter spot price.
+```
+
+```diff
++   Status: CREATED
+    contract OracleRouter (eth:0x79ef3a538200Fe4981D67E7e886bfb36D4Cb5a31) [lido/OracleRouter]
+    +++ description: Price router that reads token prices from the Chainlink Feed Registry, either directly in USD or via an ETH/USD bridge feed for ETH-quoted tokens, and reports them normalized to 18 decimals.
+```
+
+```diff
++   Status: CREATED
+    reference Chainlink_ETH_USD_Aggregator (eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TreasuryManagementCommittee (eth:0xa02FC823cCE0D016bD7e17ac684c9abAb2d6D647) [GnosisSafe]
+    +++ description: Multisig of the Lido DAO Treasury Management Committee.
+```
+
+```diff
++   Status: CREATED
+    contract TokenRateNotifier (eth:0xbe05d12Fd10919F1881125006523452F6aFF791b) [lido/TokenRateNotifier]
+    +++ description: Notifies registered observer contracts after each stETH rebase (oracle report). Observers either just push the current token rate or additionally receive the full rebase report payload.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/lido/.flat/OracleRouter.sol       | 1314 ++++++++++++++++++++
+ .../projects/lido/.flat/StakingRevenueSource.sol   |  516 ++++++++
+ .../TokenRateNotifier.sol                          |  191 ++-
+ .../TreasuryManagementCommittee/GnosisSafe.sol     | 1026 +++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   38 +
+ 5 files changed, 3033 insertions(+), 52 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786537268 (main branch discovery), not current.
+
+```diff
+    contract TokenRateNotifier (eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9) [N/A] {
+    +++ description: None
+      template:
+-        "lido/TokenRateNotifier"
+      description:
+-        "Pushes the current stETH token rate to registered observer contracts after rebases."
+      values.observers:
++        ["eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE"]
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Lido Dao Agent (eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) [lido/LidoDaoAgent] {
+    +++ description: The Lido DAO's Aragon execution and treasury agent. It can transfer assets, execute arbitrary calls or scripts, and validate signatures according to granular ACL permissions.
+      directlyReceivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9","description":"add or remove token-rate observers and transfer or renounce ownership.","role":".owner"}
+    }
+```
+
+```diff
+    contract EmergencyProtectedTimelock (eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316) [lido/EmergencyProtectedTimelock] {
+    +++ description: Timelock used by Dual Governance. Governance submits and schedules batches, anyone may execute a ready batch, and time-bounded emergency committees can activate emergency mode and execute already submitted proposals without the ordinary schedule delay.
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0x25e35855783bec3E49355a29e110f02Ed8b05ba9","description":"add or remove token-rate observers and transfer or renounce ownership.","role":".owner","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OpStackTokenRatePusher (eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE) [lido/OpStackTokenRatePusher]
+    +++ description: Pushes the current wstETH token rate to the token rate oracle on Optimism via the canonical OP Stack messenger whenever a rebase is reported.
+```
+
 Generated with discovered.json: 0xe4b7dd83295286c36a0d2f0c2b2510dc805eccaf
 
 # Diff at Tue, 04 Aug 2026 13:19:22 GMT:

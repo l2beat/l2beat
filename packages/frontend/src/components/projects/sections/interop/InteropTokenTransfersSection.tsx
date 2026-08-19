@@ -177,6 +177,7 @@ export function InteropTokenTransfersSection({
                 ) : (
                   <PaginationLink
                     key={item.index}
+                    href="#interop-transfers"
                     size="sm"
                     onClick={(e) => {
                       e.preventDefault()

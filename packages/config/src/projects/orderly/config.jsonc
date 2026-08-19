@@ -10,6 +10,11 @@
     "eth:0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4": "OrderlyMultisig"
   },
   "overrides": {
+    // OPContractsManagerV2 (shared upgrade tooling). Ignored so discovery
+    // doesn't follow it into bare implementations; authority is the ProxyAdmin owner.
+    "eth:0xbfb9219d933ec96Ac99C4f3D7231eFE43757811F": {
+      "ignoreDiscovery": true
+    },
     "eth:0xC8BF04A73704051E5E274F1B43B1F2F153Db2136": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
     },

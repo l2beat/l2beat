@@ -33,7 +33,7 @@ import type { StateValidationSectionProps } from './state-validation/StateValida
 import type { TechnologyChoicesSectionProps } from './TechnologyChoicesSection'
 import type { TrustedSetupSectionProps } from './TrustedSetupsSection'
 import type { ThroughputSectionProps } from './throughput/ThroughputSection'
-import type { ScalingTvsSectionProps } from './tvs/ScalingTvsSection'
+import type { L2TvsSectionProps } from './tvs/L2TvsSection'
 import type { TvsValueSectionProps } from './tvs/TvsValueSection'
 import type { ZkCatalogTvsSectionProps } from './tvs/ZkCatalogTvsSection'
 import type { UpdatesSectionProps } from './UpdatesSection'
@@ -78,6 +78,8 @@ type SectionId =
   | 'privacy-flows'
   | 'privacy-assets-breakdown'
   | 'external-dependencies'
+  | 'note-discovery'
+
 type GroupId = 'da-layer' | 'da-bridge'
 
 export type ProjectSectionId = SectionId | GroupId | `${GroupId}-${SectionId}`
@@ -104,9 +106,9 @@ interface ProjectDetailsThroughputSection {
   props: ProjectDetailsProps<ThroughputSectionProps>
 }
 
-interface ProjectDetailsScalingTvsSection {
-  type: 'ScalingTvsSection'
-  props: ProjectDetailsProps<ScalingTvsSectionProps>
+interface ProjectDetailsL2TvsSection {
+  type: 'L2TvsSection'
+  props: ProjectDetailsProps<L2TvsSectionProps>
 }
 
 interface ProjectDetailsActivitySection {
@@ -313,7 +315,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsGroup
   | ProjectDetailsGrissiniRiskAnalysisSection
   | ProjectDetailsThroughputSection
-  | ProjectDetailsScalingTvsSection
+  | ProjectDetailsL2TvsSection
   | ProjectDetailsActivitySection
   | ProjectDetailsTrustedSetupSection
   | ProjectDetailsVerifiersSection
