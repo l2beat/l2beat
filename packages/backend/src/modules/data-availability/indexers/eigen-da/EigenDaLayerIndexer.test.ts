@@ -7,7 +7,10 @@ import type { TimestampDaIndexedConfig } from '../../../../config/Config'
 import { mockDatabase } from '../../../../test/database'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
-import type { Configuration } from '../../../../tools/uif/multi/types'
+import type {
+  Configuration,
+  SavedConfiguration,
+} from '../../../../tools/uif/multi/types'
 import { EigenDaLayerIndexer } from './EigenDaLayerIndexer'
 
 const DA_LAYER = 'eigen-da'
@@ -205,16 +208,261 @@ describe(EigenDaLayerIndexer.name, () => {
       ])
     })
   })
+
+  describe(EigenDaLayerIndexer.prototype.trimData.name, () => {
+    const START = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
+
+    it('deletes records before the new minHeight, keeping its bucket', async () => {
+      // minHeight is raised into the middle of the 05:00 bucket
+      const newMinHeight = START + 5 * UnixTime.HOUR + 30 * UnixTime.MINUTE
+      const configurations = [
+        createConfiguration(DA_LAYER, DA_LAYER, { minHeight: newMinHeight }),
+      ]
+
+      const { indexer, repository } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+      })
+
+      await indexer.trimData([
+        { id: configurations[0].id, range: [START, newMinHeight - 1] },
+      ])
+
+      // the 05:00 bucket is kept - it holds the data of the whole hour and
+      // nothing would ever re-index it
+      expect(
+        repository.deleteByConfigurationIdInTimeRange,
+      ).toHaveBeenOnlyCalledWith(
+        configurations[0].id,
+        START,
+        START + 5 * UnixTime.HOUR - 1,
+      )
+    })
+
+    it('deletes all records before an hour aligned minHeight', async () => {
+      const newMinHeight = START + 5 * UnixTime.HOUR
+      const configurations = [
+        createConfiguration(DA_LAYER, DA_LAYER, { minHeight: newMinHeight }),
+      ]
+
+      const { indexer, repository } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+      })
+
+      await indexer.trimData([
+        { id: configurations[0].id, range: [START, newMinHeight - 1] },
+      ])
+
+      expect(
+        repository.deleteByConfigurationIdInTimeRange,
+      ).toHaveBeenOnlyCalledWith(configurations[0].id, START, newMinHeight - 1)
+    })
+
+    it('does not delete anything when the trim stays within one bucket', async () => {
+      const newMinHeight = START + 30 * UnixTime.MINUTE
+      const configurations = [
+        createConfiguration(DA_LAYER, DA_LAYER, { minHeight: newMinHeight }),
+      ]
+
+      const { indexer, repository } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+      })
+
+      await indexer.trimData([
+        { id: configurations[0].id, range: [START, newMinHeight - 1] },
+      ])
+
+      expect(
+        repository.deleteByConfigurationIdInTimeRange,
+      ).not.toHaveBeenCalled()
+    })
+
+    it('deletes records after the new maxHeight, keeping its bucket', async () => {
+      // maxHeight is lowered into the middle of the 10:00 bucket
+      const newMaxHeight = START + 10 * UnixTime.HOUR + 30 * UnixTime.MINUTE
+      const currentHeight = START + 20 * UnixTime.HOUR
+      const configurations = [
+        createConfiguration(DA_LAYER, DA_LAYER, {
+          minHeight: START,
+          maxHeight: newMaxHeight,
+        }),
+      ]
+
+      const { indexer, repository } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+      })
+
+      await indexer.trimData([
+        { id: configurations[0].id, range: [newMaxHeight + 1, currentHeight] },
+      ])
+
+      // records are hour aligned, so the 10:00 bucket is not in the range
+      expect(
+        repository.deleteByConfigurationIdInTimeRange,
+      ).toHaveBeenOnlyCalledWith(
+        configurations[0].id,
+        newMaxHeight + 1,
+        currentHeight,
+      )
+    })
+
+    it('trims every configuration', async () => {
+      const configurations = [
+        createConfiguration(DA_LAYER, DA_LAYER, {
+          minHeight: START + 5 * UnixTime.HOUR,
+        }),
+      ]
+
+      const { indexer, repository } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+      })
+
+      await indexer.trimData([
+        {
+          id: configurations[0].id,
+          range: [START, START + 5 * UnixTime.HOUR - 1],
+        },
+        {
+          id: configurations[0].id,
+          range: [START + 30 * UnixTime.HOUR, START + 40 * UnixTime.HOUR],
+        },
+      ])
+
+      expect(
+        repository.deleteByConfigurationIdInTimeRange,
+      ).toHaveBeenCalledTimes(2)
+    })
+  })
+
+  describe('range edits', () => {
+    const START = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
+    const MAX_HEIGHT = START + 10 * UnixTime.HOUR + 30 * UnixTime.MINUTE
+    const CURRENT_HEIGHT = START + 20 * UnixTime.HOUR
+
+    it('trims instead of wiping when untilTimestamp is lowered', async () => {
+      const configurations = [
+        createConfiguration(DA_LAYER, DA_LAYER, {
+          minHeight: START,
+          maxHeight: MAX_HEIGHT,
+        }),
+      ]
+
+      const { indexer, repository, indexerService } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+        savedConfigurations: [
+          savedConfiguration(configurations[0], {
+            maxHeight: null,
+            currentHeight: CURRENT_HEIGHT,
+          }),
+        ],
+      })
+
+      const { safeHeight } = await indexer.initialize()
+
+      expect(
+        repository.deleteByConfigurationIdInTimeRange,
+      ).toHaveBeenOnlyCalledWith(
+        configurations[0].id,
+        MAX_HEIGHT + 1,
+        CURRENT_HEIGHT,
+      )
+      expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+      expect(indexerService.upsertConfigurations).toHaveBeenCalledTimes(1)
+      expect(safeHeight).toEqual(MAX_HEIGHT)
+    })
+
+    it('wipes when sinceTimestamp is lowered - gaps are not allowed', async () => {
+      const configurations = [
+        createConfiguration(DA_LAYER, DA_LAYER, { minHeight: START }),
+      ]
+
+      const { indexer, repository } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+        savedConfigurations: [
+          {
+            ...savedConfiguration(configurations[0], {
+              currentHeight: CURRENT_HEIGHT,
+            }),
+            minHeight: START + 5 * UnixTime.HOUR,
+          },
+        ],
+      })
+
+      const { safeHeight } = await indexer.initialize()
+
+      expect(repository.deleteByConfigIds).toHaveBeenOnlyCalledWith([
+        configurations[0].id,
+      ])
+      expect(
+        repository.deleteByConfigurationIdInTimeRange,
+      ).not.toHaveBeenCalled()
+      expect(safeHeight).toEqual(START - 1)
+    })
+
+    it('does not double count when untilTimestamp is extended again', async () => {
+      const throughput = 1_000_000
+      const configurations = [
+        createConfiguration(DA_LAYER, DA_LAYER, { minHeight: START }),
+      ]
+
+      // the trim above left currentHeight at the (kept) 10:00 bucket
+      const { indexer, repository } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+        throughput,
+        savedConfigurations: [
+          savedConfiguration(configurations[0], {
+            maxHeight: MAX_HEIGHT,
+            currentHeight: MAX_HEIGHT,
+          }),
+        ],
+      })
+
+      await indexer.initialize()
+
+      expect(
+        repository.deleteByConfigurationIdInTimeRange,
+      ).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+
+      const updateCallback = await indexer.multiUpdate(
+        MAX_HEIGHT + 1,
+        CURRENT_HEIGHT,
+        configurations,
+      )
+      await updateCallback()
+
+      // the kept bucket is fetched for the whole hour again and upserted with
+      // an overwrite of totalSize, so its value does not accumulate
+      expect(repository.upsertMany).toHaveBeenOnlyCalledWith([
+        {
+          timestamp: START + 10 * UnixTime.HOUR,
+          totalSize: BigInt(throughput),
+          projectId: 'eigenda',
+          daLayer: DA_LAYER,
+          configurationId: configurations[0].id,
+        },
+      ])
+    })
+  })
 })
 
 function mockIndexer($: {
   configurations: Configuration<TimestampDaIndexedConfig>[]
   daLayer: string
   throughput?: number
+  savedConfigurations?: SavedConfiguration<string>[]
 }) {
   const repository = mockObject<Database['dataAvailability']>({
     deleteByConfigIds: mockFn().resolvesTo(10),
     deleteByConfigurationId: mockFn().resolvesTo(10),
+    deleteByConfigurationIdInTimeRange: mockFn().resolvesTo(10),
     upsertMany: mockFn().resolvesTo(undefined),
   })
 
@@ -229,7 +477,7 @@ function mockIndexer($: {
   })
 
   const indexerService = mockObject<IndexerService>({
-    getSavedConfigurations: mockFn().resolvesTo([]),
+    getSavedConfigurations: mockFn().resolvesTo($.savedConfigurations ?? []),
     insertConfigurations: mockFn().resolvesTo(undefined),
     upsertConfigurations: mockFn().resolvesTo(undefined),
     deleteConfigurations: mockFn().resolvesTo(undefined),
@@ -270,11 +518,12 @@ function mockIndexer($: {
 function createConfiguration(
   projectId: string,
   daLayer: string,
+  range?: { minHeight?: number; maxHeight?: number | null },
 ): Configuration<TimestampDaIndexedConfig> {
   return {
     id: `config-${projectId}`,
-    minHeight: 1640995200, // 2022-01-01 00:00:00 UTC
-    maxHeight: null,
+    minHeight: range?.minHeight ?? 1640995200, // 2022-01-01 00:00:00 UTC
+    maxHeight: range?.maxHeight ?? null,
     properties: {
       configurationId: `config-${projectId}`,
       projectId: ProjectId(projectId),
@@ -282,5 +531,21 @@ function createConfiguration(
       daLayer,
       sinceTimestamp: UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
     },
+  }
+}
+
+function savedConfiguration(
+  configuration: Configuration<TimestampDaIndexedConfig>,
+  overrides: { maxHeight?: number | null; currentHeight: number },
+): SavedConfiguration<string> {
+  return {
+    id: configuration.id,
+    properties: JSON.stringify(configuration.properties),
+    minHeight: configuration.minHeight,
+    maxHeight:
+      overrides.maxHeight === undefined
+        ? configuration.maxHeight
+        : overrides.maxHeight,
+    currentHeight: overrides.currentHeight,
   }
 }

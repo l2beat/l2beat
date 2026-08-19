@@ -714,6 +714,81 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
   )
 
   describe(
+    DataAvailabilityRepository.prototype.deleteByConfigurationIdInTimeRange
+      .name,
+    () => {
+      const HOUR_0 = UnixTime.toStartOf(UnixTime.now(), 'day')
+      const HOUR_1 = HOUR_0 + UnixTime.HOUR
+      const HOUR_2 = HOUR_0 + 2 * UnixTime.HOUR
+      const HOUR_3 = HOUR_0 + 3 * UnixTime.HOUR
+
+      it('deletes only rows of the configuration inside the range', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', HOUR_0, 100n),
+          record('project-a', 'layer-a', 'config-id-1', HOUR_1, 200n),
+          record('project-a', 'layer-a', 'config-id-1', HOUR_2, 300n),
+          record('project-a', 'layer-a', 'config-id-1', HOUR_3, 400n),
+          record('project-b', 'layer-a', 'config-id-2', HOUR_1, 500n),
+          record('project-b', 'layer-a', 'config-id-2', HOUR_2, 600n),
+        ])
+
+        const deletedCount =
+          await repository.deleteByConfigurationIdInTimeRange(
+            'config-id-1',
+            HOUR_1,
+            HOUR_2,
+          )
+
+        expect(deletedCount).toEqual(2)
+
+        const remainingRecords = await repository.getAll()
+        expect(remainingRecords).toEqualUnsorted([
+          record('project-a', 'layer-a', 'config-id-1', HOUR_0, 100n),
+          record('project-a', 'layer-a', 'config-id-1', HOUR_3, 400n),
+          record('project-b', 'layer-a', 'config-id-2', HOUR_1, 500n),
+          record('project-b', 'layer-a', 'config-id-2', HOUR_2, 600n),
+        ])
+      })
+
+      it('the range is inclusive on both ends', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', HOUR_0, 100n),
+          record('project-a', 'layer-a', 'config-id-1', HOUR_1, 200n),
+          record('project-a', 'layer-a', 'config-id-1', HOUR_2, 300n),
+        ])
+
+        const deletedCount =
+          await repository.deleteByConfigurationIdInTimeRange(
+            'config-id-1',
+            HOUR_0,
+            HOUR_2,
+          )
+
+        expect(deletedCount).toEqual(3)
+        expect(await repository.getAll()).toEqual([])
+      })
+
+      it('returns 0 for an empty range', async () => {
+        await repository.upsertMany([
+          record('project-a', 'layer-a', 'config-id-1', HOUR_1, 200n),
+        ])
+
+        const deletedCount =
+          await repository.deleteByConfigurationIdInTimeRange(
+            'config-id-1',
+            HOUR_2,
+            HOUR_1,
+          )
+
+        expect(deletedCount).toEqual(0)
+        expect(await repository.getAll()).toEqualUnsorted([
+          record('project-a', 'layer-a', 'config-id-1', HOUR_1, 200n),
+        ])
+      })
+    },
+  )
+
+  describe(
     DataAvailabilityRepository.prototype.getLatestTimestampsByConfigId.name,
     () => {
       it('returns latest timestamp for each configuration ID', async () => {

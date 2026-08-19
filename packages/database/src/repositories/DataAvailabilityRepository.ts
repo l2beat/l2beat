@@ -262,6 +262,21 @@ export class DataAvailabilityRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async deleteByConfigurationIdInTimeRange(
+    configurationId: string,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<number> {
+    if (toInclusive < fromInclusive) return 0
+    const result = await this.db
+      .deleteFrom('DataAvailability')
+      .where('configurationId', '=', configurationId)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
   async getMaxHistoricalRecordByDaLayer(
     daLayers: string[],
   ): Promise<DataAvailabilityRecord[]> {

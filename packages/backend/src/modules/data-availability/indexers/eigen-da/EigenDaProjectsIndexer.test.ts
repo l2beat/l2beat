@@ -7,7 +7,10 @@ import type { TimestampDaIndexedConfig } from '../../../../config/Config'
 import { mockDatabase } from '../../../../test/database'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
-import type { Configuration } from '../../../../tools/uif/multi/types'
+import type {
+  Configuration,
+  SavedConfiguration,
+} from '../../../../tools/uif/multi/types'
 import { EigenDaProjectsIndexer } from './EigenDaProjectsIndexer'
 
 const DA_LAYER = 'eigen-da'
@@ -361,6 +364,173 @@ describe(EigenDaProjectsIndexer.name, () => {
       ])
     })
   })
+
+  describe(EigenDaProjectsIndexer.prototype.trimData.name, () => {
+    const START = UnixTime.fromDate(new Date('2025-09-01T00:00:00Z'))
+
+    it('deletes records before the new minHeight, keeping its bucket', async () => {
+      // minHeight is raised into the middle of the 05:00 bucket
+      const newMinHeight = START + 5 * UnixTime.HOUR + 30 * UnixTime.MINUTE
+      const configurations = [
+        createConfiguration('project1', DA_LAYER, 'customer1', {
+          minHeight: newMinHeight,
+        }),
+      ]
+
+      const { indexer, repository } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+      })
+
+      await indexer.trimData([
+        { id: configurations[0].id, range: [START, newMinHeight - 1] },
+      ])
+
+      expect(
+        repository.deleteByConfigurationIdInTimeRange,
+      ).toHaveBeenOnlyCalledWith(
+        configurations[0].id,
+        START,
+        START + 5 * UnixTime.HOUR - 1,
+      )
+    })
+
+    it('deletes records after the new maxHeight, keeping its bucket', async () => {
+      const newMaxHeight = START + 10 * UnixTime.HOUR + 30 * UnixTime.MINUTE
+      const currentHeight = START + 5 * UnixTime.DAY
+      const configurations = [
+        createConfiguration('project1', DA_LAYER, 'customer1', {
+          minHeight: START,
+          maxHeight: newMaxHeight,
+        }),
+      ]
+
+      const { indexer, repository } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+      })
+
+      await indexer.trimData([
+        { id: configurations[0].id, range: [newMaxHeight + 1, currentHeight] },
+      ])
+
+      expect(
+        repository.deleteByConfigurationIdInTimeRange,
+      ).toHaveBeenOnlyCalledWith(
+        configurations[0].id,
+        newMaxHeight + 1,
+        currentHeight,
+      )
+    })
+  })
+
+  describe('range edits', () => {
+    const START = UnixTime.fromDate(new Date('2025-09-01T00:00:00Z'))
+    const MAX_HEIGHT = UnixTime.fromDate(new Date('2025-09-05T12:30:00Z'))
+    const CURRENT_HEIGHT = UnixTime.fromDate(new Date('2025-09-10T02:00:00Z'))
+
+    it('trims instead of wiping when untilTimestamp is lowered', async () => {
+      const configurations = [
+        createConfiguration('project1', DA_LAYER, 'customer1', {
+          minHeight: START,
+          maxHeight: MAX_HEIGHT,
+        }),
+      ]
+
+      const { indexer, repository, indexerService } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+        savedConfigurations: [
+          savedConfiguration(configurations[0], {
+            maxHeight: null,
+            currentHeight: CURRENT_HEIGHT,
+          }),
+        ],
+      })
+
+      const { safeHeight } = await indexer.initialize()
+
+      expect(
+        repository.deleteByConfigurationIdInTimeRange,
+      ).toHaveBeenOnlyCalledWith(
+        configurations[0].id,
+        MAX_HEIGHT + 1,
+        CURRENT_HEIGHT,
+      )
+      expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+      expect(indexerService.upsertConfigurations).toHaveBeenCalledTimes(1)
+      expect(safeHeight).toEqual(MAX_HEIGHT)
+    })
+
+    it('does not double count when untilTimestamp is extended again', async () => {
+      const configurations = [
+        createConfiguration('project1', DA_LAYER, 'customer1', {
+          minHeight: START,
+        }),
+      ]
+      // the kept bucket of the trim above and the hour right after it
+      const keptBucket = UnixTime.fromDate(new Date('2025-09-05T12:00:00Z'))
+      const projectData = [
+        {
+          customer_id: 'customer1',
+          datetime: keptBucket,
+          total_size_mb: 100,
+        },
+        {
+          customer_id: 'customer1',
+          datetime: keptBucket + UnixTime.HOUR,
+          total_size_mb: 200,
+        },
+      ]
+
+      const { indexer, repository } = mockIndexer({
+        configurations,
+        daLayer: DA_LAYER,
+        projectData,
+        savedConfigurations: [
+          savedConfiguration(configurations[0], {
+            maxHeight: MAX_HEIGHT,
+            currentHeight: MAX_HEIGHT,
+          }),
+        ],
+      })
+
+      await indexer.initialize()
+
+      expect(
+        repository.deleteByConfigurationIdInTimeRange,
+      ).not.toHaveBeenCalled()
+      expect(repository.deleteByConfigIds).not.toHaveBeenCalled()
+
+      // the whole day of the kept bucket is fetched again at 02:00 of the next
+      // day and upserted with an overwrite of totalSize, so its value does not
+      // accumulate
+      const from = UnixTime.fromDate(new Date('2025-09-06T01:00:00Z'))
+      const updateCallback = await indexer.multiUpdate(
+        from,
+        from + 30 * UnixTime.HOUR,
+        configurations,
+      )
+      await updateCallback()
+
+      expect(repository.upsertMany).toHaveBeenOnlyCalledWith([
+        {
+          timestamp: keptBucket,
+          totalSize: BigInt(Math.round(100 * 1024 * 1024)),
+          projectId: configurations[0].properties.projectId,
+          daLayer: DA_LAYER,
+          configurationId: configurations[0].id,
+        },
+        {
+          timestamp: keptBucket + UnixTime.HOUR,
+          totalSize: BigInt(Math.round(200 * 1024 * 1024)),
+          projectId: configurations[0].properties.projectId,
+          daLayer: DA_LAYER,
+          configurationId: configurations[0].id,
+        },
+      ])
+    })
+  })
 })
 
 function mockIndexer($: {
@@ -371,10 +541,12 @@ function mockIndexer($: {
     datetime: number
     total_size_mb: number
   }[]
+  savedConfigurations?: SavedConfiguration<string>[]
 }) {
   const repository = mockObject<Database['dataAvailability']>({
     deleteByConfigIds: mockFn().resolvesTo(10),
     deleteByConfigurationId: mockFn().resolvesTo(10),
+    deleteByConfigurationIdInTimeRange: mockFn().resolvesTo(10),
     upsertMany: mockFn().resolvesTo(undefined),
   })
 
@@ -387,7 +559,7 @@ function mockIndexer($: {
   })
 
   const indexerService = mockObject<IndexerService>({
-    getSavedConfigurations: mockFn().resolvesTo([]),
+    getSavedConfigurations: mockFn().resolvesTo($.savedConfigurations ?? []),
     insertConfigurations: mockFn().resolvesTo(undefined),
     upsertConfigurations: mockFn().resolvesTo(undefined),
     deleteConfigurations: mockFn().resolvesTo(undefined),
@@ -429,11 +601,12 @@ function createConfiguration(
   projectId: string,
   daLayer: string,
   customerId?: string,
+  range?: { minHeight?: number; maxHeight?: number | null },
 ): Configuration<TimestampDaIndexedConfig> {
   return {
     id: `config-${projectId}`,
-    minHeight: 1640995200, // 2022-01-01 00:00:00 UTC
-    maxHeight: null,
+    minHeight: range?.minHeight ?? 1640995200, // 2022-01-01 00:00:00 UTC
+    maxHeight: range?.maxHeight ?? null,
     properties: {
       configurationId: `config-${projectId}`,
       projectId: ProjectId(projectId),
@@ -442,5 +615,21 @@ function createConfiguration(
       sinceTimestamp: UnixTime.fromDate(new Date('2022-01-01T00:00:00Z')),
       customerId: customerId ?? 'default-customer',
     },
+  }
+}
+
+function savedConfiguration(
+  configuration: Configuration<TimestampDaIndexedConfig>,
+  overrides: { maxHeight?: number | null; currentHeight: number },
+): SavedConfiguration<string> {
+  return {
+    id: configuration.id,
+    properties: JSON.stringify(configuration.properties),
+    minHeight: configuration.minHeight,
+    maxHeight:
+      overrides.maxHeight === undefined
+        ? configuration.maxHeight
+        : overrides.maxHeight,
+    currentHeight: overrides.currentHeight,
   }
 }
