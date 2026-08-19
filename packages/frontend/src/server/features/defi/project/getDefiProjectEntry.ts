@@ -1,7 +1,4 @@
-import type {
-  ProjectExternalDependency,
-  ProjectRedWarning,
-} from '@l2beat/config'
+import type { ProjectRedWarning } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
@@ -14,11 +11,13 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/getC
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
-import { getProjectUrl } from '~/utils/project/getProjectUrl'
 import { optionToRange } from '~/utils/range/range'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { EMPTY_TVS_BREAKDOWN } from '../../scaling/tvs/get7dTvsBreakdown'
-import { resolveDefiDependencies } from '../resolveDefiDependencies'
+import {
+  getDefiDependencyProjectsById,
+  resolveDefiDependencies,
+} from '../resolveDefiDependencies'
 
 export interface ProjectDefiEntry {
   id: ProjectId
@@ -68,7 +67,7 @@ export async function getDefiProjectEntry(
     projectsChangeReport,
     allProjectsWithContracts,
     zkCatalogProjects,
-    dependencyProjects,
+    dependencyProjectsById,
   ] = await Promise.all([
     getContractUtils(),
     getProjectsChangeReport(),
@@ -78,7 +77,7 @@ export async function getDefiProjectEntry(
     ps.getProjects({
       select: ['zkCatalogInfo'],
     }),
-    getTrackedDependencyProjects(project.externalDependencies),
+    getDefiDependencyProjectsById(project.externalDependencies),
     project.tvsConfig !== undefined
       ? helpers.queryClient.prefetchQuery(
           helpers.trpc.tvs.chartByProjects.queryOptions({
@@ -168,7 +167,7 @@ export async function getDefiProjectEntry(
         title: 'External dependencies',
         dependencies: resolveDefiDependencies(
           project.externalDependencies,
-          new Map(dependencyProjects.map((entry) => [entry.id, entry])),
+          dependencyProjectsById,
         ),
       },
     })
@@ -221,39 +220,4 @@ export async function getDefiProjectEntry(
     },
     sections,
   }
-}
-
-async function getTrackedDependencyProjects(
-  dependencies: ProjectExternalDependency[] | undefined,
-) {
-  if (!dependencies) {
-    return []
-  }
-
-  const trackedIds = [
-    ...new Set(
-      dependencies
-        .filter((dependency) => dependency.type === 'tracked')
-        .map((dependency) => dependency.projectId),
-    ),
-  ]
-
-  if (trackedIds.length === 0) {
-    return []
-  }
-
-  const [projects, daLayers] = await Promise.all([
-    ps.getProjects({
-      ids: trackedIds,
-      optional: ['defiInfo', 'privacyInfo', 'daBridge', 'daLayer'],
-    }),
-    ps.getProjects({ where: ['daLayer'] }),
-  ])
-
-  return projects.map((project) => ({
-    id: project.id,
-    name: project.name,
-    slug: project.slug,
-    href: getProjectUrl(project, daLayers),
-  }))
 }

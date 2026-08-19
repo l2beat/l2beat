@@ -1,13 +1,12 @@
 import type { Project, ProjectDefiCategory } from '@l2beat/config'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
-import { getProjectUrl } from '~/utils/project/getProjectUrl'
 import { optionToRange } from '~/utils/range/range'
 import {
   type DefiDependency,
   type DefiDependencyProject,
+  getDefiDependencyProjectsById,
   resolveDefiDependencies,
 } from './resolveDefiDependencies'
 
@@ -35,7 +34,9 @@ export async function getDefiSummaryEntries(
 ): Promise<DefiSummaryEntry[]> {
   const [tvlByProject, dependencyProjectsById] = await Promise.all([
     getTotalValueLockedByProject(projects),
-    getDependencyProjectsById(projects),
+    getDefiDependencyProjectsById(
+      projects.flatMap((project) => project.externalDependencies ?? []),
+    ),
   ])
   return buildDefiSummaryEntries(projects, tvlByProject, dependencyProjectsById)
 }
@@ -68,53 +69,6 @@ export function buildDefiSummaryEntries(
       }
     })
     .sort(compareDefiSummaryEntries)
-}
-
-async function getDependencyProjectsById(
-  projects: DefiProject[],
-): Promise<Map<string, DefiDependencyProject>> {
-  const dependencyProjectsById = new Map(
-    projects.map((project) => [
-      project.id,
-      {
-        name: project.name,
-        slug: project.slug,
-        href: `/defi/projects/${project.slug}`,
-      },
-    ]),
-  )
-
-  const missingIds = [
-    ...new Set(
-      projects
-        .flatMap((project) => project.externalDependencies ?? [])
-        .filter((dependency) => dependency.type === 'tracked')
-        .map((dependency) => dependency.projectId)
-        .filter((projectId) => !dependencyProjectsById.has(projectId)),
-    ),
-  ]
-
-  if (missingIds.length === 0) {
-    return dependencyProjectsById
-  }
-
-  const [extraProjects, daLayers] = await Promise.all([
-    ps.getProjects({
-      ids: missingIds,
-      optional: ['defiInfo', 'privacyInfo', 'daBridge', 'daLayer'],
-    }),
-    ps.getProjects({ where: ['daLayer'] }),
-  ])
-
-  for (const project of extraProjects) {
-    dependencyProjectsById.set(project.id, {
-      name: project.name,
-      slug: project.slug,
-      href: getProjectUrl(project, daLayers),
-    })
-  }
-
-  return dependencyProjectsById
 }
 
 async function getTotalValueLockedByProject(

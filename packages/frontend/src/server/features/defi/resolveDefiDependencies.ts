@@ -1,6 +1,57 @@
 import type { ProjectExternalDependency } from '@l2beat/config'
+import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
+import { getProjectUrl } from '~/utils/project/getProjectUrl'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+
+export interface DefiDependencyProject {
+  name: string
+  slug: string
+  href?: string
+}
+
+export interface DefiDependency {
+  name: string
+  icon: string
+  description: string
+  href?: string
+  reviewed: boolean
+}
+
+export async function getDefiDependencyProjectsById(
+  dependencies: ProjectExternalDependency[] | undefined,
+): Promise<Map<string, DefiDependencyProject>> {
+  const trackedIds = [
+    ...new Set(
+      (dependencies ?? [])
+        .filter((dependency) => dependency.type === 'tracked')
+        .map((dependency) => dependency.projectId),
+    ),
+  ]
+
+  if (trackedIds.length === 0) {
+    return new Map()
+  }
+
+  const [projects, daLayers] = await Promise.all([
+    ps.getProjects({
+      ids: trackedIds,
+      optional: ['defiInfo', 'privacyInfo', 'daBridge', 'daLayer'],
+    }),
+    ps.getProjects({ where: ['daLayer'] }),
+  ])
+
+  return new Map(
+    projects.map((project) => [
+      project.id,
+      {
+        name: project.name,
+        slug: project.slug,
+        href: getProjectUrl(project, daLayers),
+      },
+    ]),
+  )
+}
 
 export interface DefiDependencyProject {
   name: string
