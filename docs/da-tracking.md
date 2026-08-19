@@ -71,6 +71,24 @@ block in the window, so prefer `DA_PREVIEW_DB_URL` for windows longer than a
 few hours. EigenDA per-project data is published as daily files starting
 2025-08-01; days without a file are skipped with a warning.
 
+## Editing sinceTimestamp / untilTimestamp (eigen-da)
+
+Since/until are not part of the configuration id, so editing them keeps the
+history under the same id. The EigenDA indexers implement `trimData`, so on
+deploy such an edit trims the configuration's `DataAvailability` rows to the
+new range instead of wiping them:
+
+- raising `sinceTimestamp` deletes only the rows before the new start
+- setting or lowering `untilTimestamp` deletes only the rows after the new end
+- lowering `sinceTimestamp` still wipes and re-indexes from scratch, because
+  the pipeline cannot leave gaps in the indexed range
+
+Rows are hourly buckets, so an edge that is not a full hour has a bucket
+straddling it. The rule matches the block DA indexer: at the `since` edge the
+straddling hour is kept (it is never indexed again, so deleting it would leave
+a hole); at the `until` edge it is deleted (indexing resumes inside that hour
+if the range is ever extended again, so nothing is lost for good).
+
 ## Guarding against silent data wipes
 
 The committed snapshot is enforced by
