@@ -41,6 +41,7 @@ export async function getPrivacyProjectData(
       props: {
         ...appLayoutProps,
         entry: projectEntry,
+        crops: details.crops,
         queryState: helpers.dehydrate(),
       },
     },

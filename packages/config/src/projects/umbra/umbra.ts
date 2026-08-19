@@ -138,6 +138,47 @@ export const umbra: BaseProject = {
       content: readProjectMarkdown('umbra', 'upgradesAndGovernance'),
     },
   },
+  crops: {
+    censorshipResistance: {
+      sentiment: 'good',
+      points: [
+        'The core contracts are immutable, cannot be paused, and have no upgrade path, so the exit window is infinite.',
+        'Passes the walkaway test: nobody can stop a recipient from claiming a payment already sent to them, and withdrawals can always be self-relayed.',
+        'Nobody can censor an individual user - the owner can only raise the ETH toll on contract-routed payments, which applies to everyone equally and cannot touch payment or withdrawal logic.',
+      ],
+      notReviewed: ['Relayer set size and independence.'],
+    },
+    openSource: {
+      sentiment: 'good',
+      points: [
+        'The immutable core contracts, the cryptographic library and the frontend are published and can be built and run locally.',
+      ],
+      notReviewed: ['License permissiveness, so fork rights are unconfirmed.'],
+    },
+    privacy: {
+      sentiment: 'good',
+      points: [
+        'Recipient privacy with no protocol-level compliance mechanism, no privileged view key, and no way for anyone to retroactively deanonymize a payment.',
+      ],
+      missing: [
+        'Only who controls the receiving address is hidden - the sender, the amount and the stealth address stay public.',
+        'Privacy still depends on the recipient practising good withdrawal hygiene and avoiding recognizable timing or amount patterns.',
+      ],
+      notReviewed: ['Anonymity set size.'],
+    },
+    security: {
+      sentiment: 'good',
+      status: 'partiallyReviewed',
+      points: [
+        'A small, immutable, externally audited contract set with no proof system and no trusted setup.',
+      ],
+      missing: [
+        'Stealth addresses rely on elliptic-curve key agreement, so they are not quantum-resistant.',
+        'Immutability means the unsupported-token accounting caveat cannot be patched.',
+      ],
+      notReviewed: ['Monitoring, circuit breakers and rate limits.'],
+    },
+  },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),

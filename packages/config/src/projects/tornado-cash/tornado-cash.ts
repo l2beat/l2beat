@@ -223,6 +223,54 @@ export const tornadoCash: BaseProject = {
       },
     },
   },
+  crops: {
+    censorshipResistance: {
+      sentiment: 'good',
+      points: [
+        'The immutable core has no admin, no pause and no upgrade path, so the exit window is infinite.',
+        'Selective censorship, blanket censorship and walkaway resistance are all solid.',
+        '26 active relayers over the last month, and users can always self-relay withdrawals.',
+      ],
+      missing: [
+        'The relayer set is the weakest link in an otherwise permissionless design.',
+      ],
+      notReviewed: [
+        'Whether the relayers form independent pools or one set with shared infrastructure.',
+      ],
+    },
+    openSource: {
+      sentiment: 'good',
+      points: [
+        'The core is GPL-3.0 licensed, so the right to run, modify and fork is granted outright.',
+        'The published source is reproducible: anyone can audit it and run it locally to participate.',
+      ],
+      notReviewed: [
+        'Reproducibility of the relayer software, which sits outside the core.',
+      ],
+    },
+    privacy: {
+      sentiment: 'good',
+      points: [
+        'Unstoppable user privacy, with no protocol-level compliance mechanism and no backdoor.',
+        'Strong, clearly defined anonymity set numbers per fixed-denomination pool.',
+      ],
+    },
+    security: {
+      sentiment: 'good',
+      status: 'partiallyReviewed',
+      points: [
+        'A simple, well-ossified design, audited extensively - plausibly including by malicious actors.',
+      ],
+      missing: [
+        'It is not quantum-resistant, which may expose user privacy to harvest-now-decrypt-later attacks.',
+        'Immutability means bugs cannot be patched.',
+      ],
+      notReviewed: [
+        'Circuit breakers and rate limits.',
+        'Formal verification.',
+      ],
+    },
+  },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),

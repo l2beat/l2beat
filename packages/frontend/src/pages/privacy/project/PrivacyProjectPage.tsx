@@ -1,9 +1,11 @@
+import type { ProjectCrops } from '@l2beat/config'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { GardenCropsNotice } from '~/components/projects/GardenCropsNotice'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
@@ -24,10 +26,16 @@ import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 
 interface Props extends AppLayoutProps {
   entry: ProjectPrivacyEntry
+  crops?: ProjectCrops
   queryState: DehydratedState
 }
 
-export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
+export function PrivacyProjectPage({
+  entry,
+  crops,
+  queryState,
+  ...props
+}: Props) {
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
   const isNavigationEmpty = navigationSections.length === 0
 
@@ -131,6 +139,8 @@ export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
                         </div>
                       </div>
                     </PrimaryCard>
+
+                    {crops && <GardenCropsNotice crops={crops} />}
 
                     <ProjectDetails items={entry.sections} />
                   </HighlightableLinkContextProvider>

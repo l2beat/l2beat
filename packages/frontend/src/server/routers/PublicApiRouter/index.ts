@@ -4,6 +4,11 @@ import { ActivityProjectFilterType } from '~/server/features/scaling/activity/ut
 import { TvsProjectFilterType } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
 import { optionToRange } from '~/utils/range/range'
 import { validateRoute } from '~/utils/validateRoute'
+import {
+  getGardenCropsApiData,
+  getGardenCropsProjectApiData,
+} from './getGardenCropsApiData'
+import { getGardenLookupApiData } from './getGardenLookupApiData'
 import { getScalingActivityApiData } from './getScalingActivityApiData'
 import { getScalingActivityProjectApiData } from './getScalingActivityProjectApiData'
 import { getScalingSummaryApiData } from './getScalingSummaryApiData'
@@ -13,6 +18,10 @@ import { getScalingTvsProjectBreakdownApiData } from './getScalingTvsProjectBrea
 
 const TvsRangeSchema = v.enum(['7d', '30d', '90d', '180d', '1y', 'max'])
 const ActivityRangeSchema = v.enum(['30d', '90d', '180d', '1y', 'max'])
+
+// Enough for a wallet to ask about a whole transaction's worth of contracts
+// without turning the endpoint into a bulk export.
+const MAX_LOOKUP_ADDRESSES = 50
 
 export function createPublicApiRouter() {
   const router = express.Router()
@@ -126,6 +135,57 @@ export function createPublicApiRouter() {
     }),
     async (req, res) => {
       const data = await getScalingTvsProjectBreakdownApiData(req.params.slug)
+      res.json(data)
+    },
+  )
+
+  // The garden endpoints are keyless on purpose: wallets and other interfaces
+  // should be able to show the CROPS evaluations without onboarding with us.
+  router.get('/api/garden/crops', async (_, res) => {
+    res.json(await getGardenCropsApiData())
+  })
+
+  // Registered before /api/garden/crops/:slug would be reached, and on its own
+  // path so it can never be shadowed by a project slug.
+  router.get(
+    '/api/garden/lookup',
+    validateRoute({
+      query: v.object({ addresses: v.string() }),
+    }),
+    async (req, res) => {
+      const queries = req.query.addresses
+        .split(',')
+        .map((x) => x.trim())
+        .filter((x) => x.length > 0)
+
+      if (queries.length === 0) {
+        res.status(400).json({ error: 'addresses must not be empty' })
+        return
+      }
+      if (queries.length > MAX_LOOKUP_ADDRESSES) {
+        res.status(400).json({
+          error: `at most ${MAX_LOOKUP_ADDRESSES} addresses per request, got ${queries.length}`,
+        })
+        return
+      }
+
+      res.json(await getGardenLookupApiData(queries))
+    },
+  )
+
+  router.get(
+    '/api/garden/crops/:slug',
+    validateRoute({
+      params: v.object({ slug: v.string() }),
+    }),
+    async (req, res) => {
+      const data = await getGardenCropsProjectApiData(req.params.slug)
+      if (!data) {
+        res
+          .status(404)
+          .json({ error: `No crops evaluation for ${req.params.slug}` })
+        return
+      }
       res.json(data)
     },
   )

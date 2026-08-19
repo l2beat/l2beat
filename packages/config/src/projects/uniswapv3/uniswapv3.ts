@@ -160,6 +160,49 @@ export const uniswapv3: BaseProject = {
   // contract its operation depends on. The section renders an explicit
   // "none" message instead of being omitted.
   externalDependencies: [],
+  crops: {
+    censorshipResistance: {
+      sentiment: 'good',
+      points: [
+        'Pools are immutable and adminless: nothing can be paused or upgraded.',
+        'Anyone can deploy a pool for any token pair at an enabled fee tier, and swapping or withdrawing liquidity needs no permission and passes through no operator.',
+        'UNI tokenholder governance, acting through a 2d timelock, holds only two bounded powers over v3 pools: enabling new fee tiers, and setting a protocol fee capped at 1/4 of LP fees per side.',
+        'Governance cannot block a swap, freeze a position, or reach LP funds.',
+      ],
+      notReviewed: [
+        'The routers and interfaces users actually reach the pools through, which sit outside them.',
+      ],
+    },
+    openSource: {
+      sentiment: 'good',
+      points: [
+        'The v3 core and periphery contracts are GPL licensed - the business-source grant on the core expired in 2023.',
+        'They are verified onchain, and can be built and run locally alongside a self-hosted interface.',
+      ],
+    },
+    privacy: {
+      status: 'notReviewed',
+      notReviewed: [
+        'Not reviewed. Swaps and positions are public onchain, and the protocol makes no privacy claim.',
+      ],
+    },
+    security: {
+      sentiment: 'good',
+      points: [
+        'Every contract that holds or routes user funds is immutable, with no upgrade path.',
+        'No external dependency - no oracle, no bridge.',
+        'The core has been battle-tested at very high volume since 2021.',
+      ],
+      missing: [
+        'A governance-set protocol fee remains: currently 1/4 of LP fees per side, 1/6 on the 0.3% tier, with proceeds burned as UNI through the Firepit.',
+        'Per-pool token and liquidity risk stays with the user.',
+      ],
+      notReviewed: [
+        'The router and approval contracts that sit outside the pools, which are assessed separately.',
+        'Circuit breakers and rate limits.',
+      ],
+    },
+  },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
