@@ -25,9 +25,9 @@ export function ExternalDependenciesSection({
   return (
     <ProjectSection {...sectionProps}>
       <ul className="flex flex-col gap-4">
-        {dependencies.map((dependency) => (
+        {dependencies.map((dependency, index) => (
           <li
-            key={`${dependency.name}:${dependency.icon}`}
+            key={`${index}:${dependency.name}:${dependency.icon}`}
             className="flex items-start gap-3"
           >
             <img

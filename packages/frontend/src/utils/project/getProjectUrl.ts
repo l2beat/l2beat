@@ -2,13 +2,14 @@ import type {
   Project,
   ProjectDaBridge,
   ProjectDaLayer,
+  ProjectDefiInfo,
   ProjectPrivacyInfo,
 } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 
 export type ProjectWithPageMetadata = Project<
   never,
-  'daBridge' | 'scalingInfo' | 'daLayer' | 'privacyInfo'
+  'daBridge' | 'scalingInfo' | 'daLayer' | 'privacyInfo' | 'defiInfo'
 >
 
 export function getProjectUrl(
@@ -17,6 +18,7 @@ export function getProjectUrl(
     daBridge?: ProjectDaBridge | undefined
     daLayer?: ProjectDaLayer | undefined
     privacyInfo?: ProjectPrivacyInfo | undefined
+    defiInfo?: ProjectDefiInfo | undefined
   },
   daLayers: { id: ProjectId; slug: string }[],
 ): string {
@@ -29,6 +31,9 @@ export function getProjectUrl(
   }
   if (project.privacyInfo) {
     return `/privacy/projects/${project.slug}`
+  }
+  if (project.defiInfo) {
+    return `/defi/projects/${project.slug}`
   }
   return `/scaling/projects/${project.slug}`
 }

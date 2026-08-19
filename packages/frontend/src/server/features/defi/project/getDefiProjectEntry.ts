@@ -123,7 +123,10 @@ export async function getDefiProjectEntry(
 
   const sections: ProjectDetailsSection[] = []
 
-  if (project.display.detailedDescription) {
+  if (
+    project.display.detailedDescription ||
+    (project.display.references && project.display.references.length > 0)
+  ) {
     sections.push({
       type: 'DetailedDescriptionSection',
       props: {
