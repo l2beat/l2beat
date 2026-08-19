@@ -16,7 +16,6 @@ export interface CostsSectionProps extends ProjectSectionProps {
   milestones: Milestone[]
   trackedTransactions: TrackedTransactionsByType
   defaultRange: ChartRange
-  /** Entry to the compare page with this project pre-selected. */
   compareUrl?: string
 }
 

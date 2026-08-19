@@ -23,7 +23,6 @@ export interface ScalingTvsSectionProps extends ProjectSectionProps {
   milestones: Milestone[]
   tvsInfo: ProjectTvsInfo
   tvsBreakdownUrl?: string
-  /** Entry to the compare page with this project pre-selected. */
   compareUrl?: string
   defaultRange: ChartRange
 }

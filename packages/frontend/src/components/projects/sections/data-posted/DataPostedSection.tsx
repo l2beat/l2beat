@@ -27,7 +27,6 @@ export interface DataPostedSectionProps extends ProjectSectionProps {
   daTrackingConfig: (ProjectDaTrackingConfig & {
     daLayerName: string
   })[]
-  /** Entry to the compare page with this project pre-selected. */
   compareUrl?: string
 }
 

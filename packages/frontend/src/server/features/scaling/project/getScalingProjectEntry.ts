@@ -796,10 +796,6 @@ export async function getScalingProjectEntry(
   return { ...common, sections }
 }
 
-/**
- * The compare page only lists live scaling projects, so archived ones get
- * no entry link. Undefined while the compare page is behind its flag.
- */
 function getProjectCompareUrl(
   project: Project<never, 'archivedAt'>,
   metric: CompareMetricId,

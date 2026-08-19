@@ -16,7 +16,6 @@ export interface ActivitySectionProps extends ProjectSectionProps {
   category?: ProjectScalingCategory
   defaultRange: ChartRange
   dataSource: string | undefined
-  /** Entry to the compare page with this project pre-selected. */
   compareUrl?: string
 }
 

@@ -3,14 +3,7 @@ import { env } from '~/env'
 import { cn } from '~/utils/cn'
 
 interface Props {
-  /** A URL from `getCompareEntryUrl`. */
   href: string
-  /**
-   * `controls` sits inline among chart controls, so it is a compact gradient
-   * pill at every breakpoint. `section` mirrors `TvsBreakdownButton` in a
-   * project section: a full-width outline button on mobile and a gradient
-   * one on desktop.
-   */
   variant?: 'controls' | 'section'
   className?: string
   children?: ReactNode
@@ -25,12 +18,6 @@ const VARIANT_CLASSES = {
   ),
 }
 
-/**
- * An entry point to the compare page, highlighted like the other promoted
- * links (`TvsBreakdownButton`). Renders nothing while
- * `CLIENT_SIDE_COMPARE_PROJECTS` is off, so callers can place it
- * unconditionally.
- */
 export function CompareProjectsLink({
   href,
   variant = 'controls',
