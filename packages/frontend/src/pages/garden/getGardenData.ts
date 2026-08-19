@@ -1,6 +1,7 @@
 import type { Project, ProjectCrops } from '@l2beat/config'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getDb } from '~/server/database'
+import { getGardenAttestation } from '~/server/features/garden/getGardenAttestation'
 import { getGardenProjectPath } from '~/server/features/garden/getGardenProjectPath'
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
@@ -133,6 +134,7 @@ export async function getGardenData(
       props: {
         ...(await getAppLayoutProps()),
         entries,
+        attestation: getGardenAttestation(),
       },
     },
   }

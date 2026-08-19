@@ -11,59 +11,21 @@ export const CROP_ATTESTATION_DATA = {
     firstBlock: 11515690,
     live: [
       {
-        uid: '0x5da1f37424f3264eda2d01b061aadfa301193736ff0b0a657bac0ffe09eaf46c',
+        uid: '0xe390390934d3ac2a3f238a0b6f655ec9f847c7dade8240e7450ecd3ef339d24d',
         schema:
-          '0x06c2dd60f63667eda4637078bfa47d5900230712f790bf0b7b62bab3d23b00a9',
-        revision: 2,
-        reviewedAt: 1787126071,
-        projectIds: ['aztecnetwork'],
+          '0xbe00b10abb2fbae864b99c6ace4e0e622d5f690f822466e167353c32534dc3fb',
+        revision: 3,
+        reviewedAt: 1787132641,
+        projectIds: [
+          'aztecnetwork',
+          'ethscriptions',
+          'tornado-cash',
+          'umbra',
+          'uniswapv3',
+        ],
         txHash:
-          '0x6b14fc1954d30ddbe6051188ce25ce455e9d7dcc37f287354da6996fc3e2de40',
-        block: 11520733,
-      },
-      {
-        uid: '0x94aac1cfc19baf84e67a3314037997ab2aea59783fcb148723f79f2632ed7501',
-        schema:
-          '0x06c2dd60f63667eda4637078bfa47d5900230712f790bf0b7b62bab3d23b00a9',
-        revision: 2,
-        reviewedAt: 1787126071,
-        projectIds: ['ethscriptions'],
-        txHash:
-          '0x6b14fc1954d30ddbe6051188ce25ce455e9d7dcc37f287354da6996fc3e2de40',
-        block: 11520733,
-      },
-      {
-        uid: '0x4512ee206aa981a931fedbc827883d3a2c9bbeebd34da088d0864a552f627a80',
-        schema:
-          '0x06c2dd60f63667eda4637078bfa47d5900230712f790bf0b7b62bab3d23b00a9',
-        revision: 2,
-        reviewedAt: 1787126071,
-        projectIds: ['tornado-cash'],
-        txHash:
-          '0x6b14fc1954d30ddbe6051188ce25ce455e9d7dcc37f287354da6996fc3e2de40',
-        block: 11520733,
-      },
-      {
-        uid: '0x4ff521fa8693ed6f35713c6ffe4bf7037b1e1909eb4d3e86be22bfc1df85734a',
-        schema:
-          '0x06c2dd60f63667eda4637078bfa47d5900230712f790bf0b7b62bab3d23b00a9',
-        revision: 2,
-        reviewedAt: 1787126071,
-        projectIds: ['umbra'],
-        txHash:
-          '0x6b14fc1954d30ddbe6051188ce25ce455e9d7dcc37f287354da6996fc3e2de40',
-        block: 11520733,
-      },
-      {
-        uid: '0x462d8c4bff581d0f470d13659e9bd1cd7e8d528ec1f08769fff3922baf281fa8',
-        schema:
-          '0x06c2dd60f63667eda4637078bfa47d5900230712f790bf0b7b62bab3d23b00a9',
-        revision: 2,
-        reviewedAt: 1787126071,
-        projectIds: ['uniswapv3'],
-        txHash:
-          '0x6b14fc1954d30ddbe6051188ce25ce455e9d7dcc37f287354da6996fc3e2de40',
-        block: 11520733,
+          '0x70efd2da37e8f291fc74ccb1a7b72afe9243ee6b46105027c732d9c04c66aefd',
+        block: 11521266,
       },
     ],
     revoked: [
@@ -116,6 +78,56 @@ export const CROP_ATTESTATION_DATA = {
         revokedTxHash:
           '0xa3432347314f83026e0b59b11ddc3df3b92a1a2cb7b391f819b5d4ca2fd33668',
         revokedBlock: 11520732,
+      },
+      {
+        uid: '0x5da1f37424f3264eda2d01b061aadfa301193736ff0b0a657bac0ffe09eaf46c',
+        schema:
+          '0x06c2dd60f63667eda4637078bfa47d5900230712f790bf0b7b62bab3d23b00a9',
+        revision: 2,
+        projectIds: ['aztecnetwork'],
+        revokedTxHash:
+          '0xf5c21464513a6e6d00875403fc38d88a07b880abef555feac43b117664c3dbeb',
+        revokedBlock: 11521265,
+      },
+      {
+        uid: '0x94aac1cfc19baf84e67a3314037997ab2aea59783fcb148723f79f2632ed7501',
+        schema:
+          '0x06c2dd60f63667eda4637078bfa47d5900230712f790bf0b7b62bab3d23b00a9',
+        revision: 2,
+        projectIds: ['ethscriptions'],
+        revokedTxHash:
+          '0xf5c21464513a6e6d00875403fc38d88a07b880abef555feac43b117664c3dbeb',
+        revokedBlock: 11521265,
+      },
+      {
+        uid: '0x4512ee206aa981a931fedbc827883d3a2c9bbeebd34da088d0864a552f627a80',
+        schema:
+          '0x06c2dd60f63667eda4637078bfa47d5900230712f790bf0b7b62bab3d23b00a9',
+        revision: 2,
+        projectIds: ['tornado-cash'],
+        revokedTxHash:
+          '0xf5c21464513a6e6d00875403fc38d88a07b880abef555feac43b117664c3dbeb',
+        revokedBlock: 11521265,
+      },
+      {
+        uid: '0x4ff521fa8693ed6f35713c6ffe4bf7037b1e1909eb4d3e86be22bfc1df85734a',
+        schema:
+          '0x06c2dd60f63667eda4637078bfa47d5900230712f790bf0b7b62bab3d23b00a9',
+        revision: 2,
+        projectIds: ['umbra'],
+        revokedTxHash:
+          '0xf5c21464513a6e6d00875403fc38d88a07b880abef555feac43b117664c3dbeb',
+        revokedBlock: 11521265,
+      },
+      {
+        uid: '0x462d8c4bff581d0f470d13659e9bd1cd7e8d528ec1f08769fff3922baf281fa8',
+        schema:
+          '0x06c2dd60f63667eda4637078bfa47d5900230712f790bf0b7b62bab3d23b00a9',
+        revision: 2,
+        projectIds: ['uniswapv3'],
+        revokedTxHash:
+          '0xf5c21464513a6e6d00875403fc38d88a07b880abef555feac43b117664c3dbeb',
+        revokedBlock: 11521265,
       },
     ],
   },
