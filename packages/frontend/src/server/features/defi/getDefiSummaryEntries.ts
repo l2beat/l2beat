@@ -3,6 +3,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
+import { getProjectUrl } from '~/utils/project/getProjectUrl'
 import { optionToRange } from '~/utils/range/range'
 import {
   type DefiDependency,
@@ -75,7 +76,11 @@ async function getDependencyProjectsById(
   const dependencyProjectsById = new Map(
     projects.map((project) => [
       project.id,
-      { name: project.name, slug: project.slug, isDefi: true },
+      {
+        name: project.name,
+        slug: project.slug,
+        href: `/defi/projects/${project.slug}`,
+      },
     ]),
   )
 
@@ -93,16 +98,19 @@ async function getDependencyProjectsById(
     return dependencyProjectsById
   }
 
-  const extraProjects = await ps.getProjects({
-    ids: missingIds,
-    optional: ['defiInfo'],
-  })
+  const [extraProjects, daLayers] = await Promise.all([
+    ps.getProjects({
+      ids: missingIds,
+      optional: ['defiInfo', 'privacyInfo', 'daBridge', 'daLayer'],
+    }),
+    ps.getProjects({ where: ['daLayer'] }),
+  ])
 
   for (const project of extraProjects) {
     dependencyProjectsById.set(project.id, {
       name: project.name,
       slug: project.slug,
-      isDefi: project.defiInfo !== undefined,
+      href: getProjectUrl(project, daLayers),
     })
   }
 

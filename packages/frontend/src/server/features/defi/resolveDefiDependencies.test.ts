@@ -5,8 +5,22 @@ import { resolveDefiDependencies } from './resolveDefiDependencies'
 
 describe(resolveDefiDependencies.name, () => {
   const projectsById = new Map([
-    ['chainlink', { name: 'Chainlink', slug: 'chainlink', isDefi: true }],
-    ['acrossv3', { name: 'Across v3', slug: 'acrossv3', isDefi: false }],
+    [
+      'chainlink',
+      {
+        name: 'Chainlink',
+        slug: 'chainlink',
+        href: '/defi/projects/chainlink',
+      },
+    ],
+    [
+      'across',
+      {
+        name: 'Across',
+        slug: 'across',
+        href: '/interop/protocols/across',
+      },
+    ],
   ])
 
   it('links tracked dependencies that exist as DeFi projects', () => {
@@ -49,20 +63,21 @@ describe(resolveDefiDependencies.name, () => {
     ])
   })
 
-  it('shows tracked non-DeFi projects without a DeFi link', () => {
+  it('links tracked non-DeFi projects to their project page', () => {
     const dependencies: ProjectExternalDependency[] = [
       {
         type: 'tracked',
-        projectId: ProjectId('acrossv3'),
+        projectId: ProjectId('across'),
         description: 'Bridge',
       },
     ]
 
     expect(resolveDefiDependencies(dependencies, projectsById)).toEqual([
       {
-        name: 'Across v3',
-        icon: '/icons/acrossv3.png',
+        name: 'Across',
+        icon: '/icons/across.png',
         description: 'Bridge',
+        href: '/interop/protocols/across',
         reviewed: true,
       },
     ])

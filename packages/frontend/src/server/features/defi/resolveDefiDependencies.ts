@@ -5,7 +5,7 @@ import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 export interface DefiDependencyProject {
   name: string
   slug: string
-  isDefi: boolean
+  href?: string
 }
 
 export interface DefiDependency {
@@ -44,7 +44,7 @@ export function resolveDefiDependencies(
       name: project.name,
       icon: manifest.getUrl(`/icons/${project.slug}.png`),
       description: dependency.description,
-      ...(project.isDefi ? { href: `/defi/projects/${project.slug}` } : {}),
+      ...(project.href ? { href: project.href } : {}),
       reviewed: true,
     }
   })

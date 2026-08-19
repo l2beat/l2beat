@@ -14,6 +14,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/getC
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { getProjectUrl } from '~/utils/project/getProjectUrl'
 import { optionToRange } from '~/utils/range/range'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { EMPTY_TVS_BREAKDOWN } from '../../scaling/tvs/get7dTvsBreakdown'
@@ -166,16 +167,7 @@ export async function getDefiProjectEntry(
         title: 'External dependencies',
         dependencies: resolveDefiDependencies(
           project.externalDependencies,
-          new Map(
-            dependencyProjects.map((entry) => [
-              entry.id,
-              {
-                name: entry.name,
-                slug: entry.slug,
-                isDefi: entry.defiInfo !== undefined,
-              },
-            ]),
-          ),
+          new Map(dependencyProjects.map((entry) => [entry.id, entry])),
         ),
       },
     })
@@ -249,8 +241,18 @@ async function getTrackedDependencyProjects(
     return []
   }
 
-  return await ps.getProjects({
-    ids: trackedIds,
-    optional: ['defiInfo'],
-  })
+  const [projects, daLayers] = await Promise.all([
+    ps.getProjects({
+      ids: trackedIds,
+      optional: ['defiInfo', 'privacyInfo', 'daBridge', 'daLayer'],
+    }),
+    ps.getProjects({ where: ['daLayer'] }),
+  ])
+
+  return projects.map((project) => ({
+    id: project.id,
+    name: project.name,
+    slug: project.slug,
+    href: getProjectUrl(project, daLayers),
+  }))
 }

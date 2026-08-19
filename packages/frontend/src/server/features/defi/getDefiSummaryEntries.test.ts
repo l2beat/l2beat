@@ -262,7 +262,11 @@ function defiDependencyProjectsById(projects: DefiProject[]) {
   return new Map(
     projects.map((project) => [
       project.id,
-      { name: project.name, slug: project.slug, isDefi: true },
+      {
+        name: project.name,
+        slug: project.slug,
+        href: `/defi/projects/${project.slug}`,
+      },
     ]),
   )
 }
