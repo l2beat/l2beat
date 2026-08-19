@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
 import { HighlightablePrimaryCard } from '~/components/primary-card/HighlightablePrimaryCard'
-import { CompareProjectsLink } from '~/pages/scaling/compare/components/CompareProjectsLink'
+import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
 import { cn } from '~/utils/cn'
 import { UnderReviewCallout } from '../UnderReviewCallout'
 import type { ProjectSectionId } from './types'

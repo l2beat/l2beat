@@ -18,7 +18,7 @@ import {
 import { BasicTable } from '~/components/table/BasicTable'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { useTable } from '~/hooks/useTable'
-import type { InteropScope } from '~/server/features/scaling/interop/types'
+import type { InteropScope } from '~/server/features/layer2s/interop/types'
 import { useTRPC } from '~/trpc/React'
 import { useInteropSelectedChains } from '../../../utils/InteropSelectedChainsContext'
 import { BetweenChainsInfo } from '../../BetweenChainsInfo'

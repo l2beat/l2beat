@@ -18,9 +18,9 @@ import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
+import type { SevenDayTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
+import { get7dTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
 import type { ProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
-import type { SevenDayTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
-import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
 import {
   getPrivacyTrustedSetup,

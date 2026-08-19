@@ -5,22 +5,22 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { HomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
-import type { HomeScalingCharts } from '~/server/features/home/getHomeScalingCharts'
+import type { HomeL2Charts } from '~/server/features/home/getHomeL2Charts'
+import type { OngoingAnomaliesOverview } from '~/server/features/layer2s/liveness/getOngoingAnomaliesOverview'
+import type { L2SummaryEntry } from '~/server/features/layer2s/summary/getL2SummaryEntries'
+import type { TvsTableData } from '~/server/features/layer2s/tvs/getTvsTableData'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
-import type { OngoingAnomaliesOverview } from '~/server/features/scaling/liveness/getOngoingAnomaliesOverview'
-import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
-import type { TvsTableData } from '~/server/features/scaling/tvs/getTvsTableData'
 import type { ZkCatalogEntry } from '~/server/features/zk-catalog/getZkCatalogEntries'
 import type { InteropChainWithIcon } from '../interop/components/chain-selector/types'
 import type { InteropFlowsProtocol } from '../interop/components/flows/utils/InteropFlowsContext'
 import { HomeAnomaliesTile } from './components/HomeAnomaliesTile'
 import { HomeEthereumCard } from './components/HomeEthereumCard'
 import { HomeInteropCard } from './components/HomeInteropCard'
+import type { HomeL2CategoryCounts } from './components/HomeL2Card'
+import { HomeL2Card } from './components/HomeL2Card'
 import type { HomeRecentChangesProject } from './components/HomeRecentChangesTile'
 import { HomeRecentChangesTile } from './components/HomeRecentChangesTile'
 import { HomeRecentProjectsCard } from './components/HomeRecentProjectsCard'
-import type { HomeScalingCategoryCounts } from './components/HomeScalingCard'
-import { HomeScalingCard } from './components/HomeScalingCard'
 import { HomeStatsStrip } from './components/HomeStatsStrip'
 import { HomeTopChainsCard } from './components/HomeTopChainsCard'
 import { HomeTopInteropProtocolsCard } from './components/HomeTopInteropProtocolsCard'
@@ -34,18 +34,18 @@ import type { HomeProjectCounts } from './getHomeProjectCounts'
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
   projectCounts: HomeProjectCounts
-  topChains: ScalingSummaryEntry[]
+  topChains: L2SummaryEntry[]
   topChainsTvsData: TvsTableData
   topPrivacyProtocols: PrivacySummaryEntry[]
   topZkProvers: ZkCatalogEntry[]
-  scalingCharts: HomeScalingCharts
+  l2Charts: HomeL2Charts
   ethereumCharts: HomeEthereumCharts
   ethereumEconomicSecurity: number | undefined
   recentProjects: HomeRecentProject[]
   interopChains: InteropChainWithIcon[]
   interopProtocols: InteropFlowsProtocol[]
   defaultSelectedFlowChains: string[]
-  scalingCategoryCounts: HomeScalingCategoryCounts
+  l2CategoryCounts: HomeL2CategoryCounts
   recentChangesCount: number
   recentChangesProjects: HomeRecentChangesProject[]
   ongoingAnomalies: OngoingAnomaliesOverview
@@ -59,14 +59,14 @@ export function HomePage({
   topChainsTvsData,
   topPrivacyProtocols,
   topZkProvers,
-  scalingCharts,
+  l2Charts,
   ethereumCharts,
   ethereumEconomicSecurity,
   recentProjects,
   interopChains,
   interopProtocols,
   defaultSelectedFlowChains,
-  scalingCategoryCounts,
+  l2CategoryCounts,
   recentChangesCount,
   recentChangesProjects,
   ongoingAnomalies,
@@ -108,9 +108,9 @@ export function HomePage({
               </div>
               <div className="flex min-h-0 min-w-0 flex-col md:grid md:grid-cols-2 md:gap-4 lg:max-2xl:col-span-full 2xl:flex">
                 <div className="flex min-h-0 min-w-0 flex-col 2xl:flex-1">
-                  <HomeScalingCard
-                    charts={scalingCharts}
-                    scalingCategoryCounts={scalingCategoryCounts}
+                  <HomeL2Card
+                    charts={l2Charts}
+                    l2CategoryCounts={l2CategoryCounts}
                   />
                 </div>
                 <div className="flex min-h-0 min-w-0 flex-col 2xl:flex-1">

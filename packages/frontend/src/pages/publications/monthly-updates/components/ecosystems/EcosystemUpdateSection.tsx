@@ -24,13 +24,13 @@ export function EcosystemUpdateSection({ ecosystem, from, to }: Props) {
         <MonthlyUpdateTvsChart
           type="ecosystem"
           entries={ecosystem.projects}
-          allScalingProjectsTvs={ecosystem.allScalingProjects.tvs}
+          allL2ProjectsTvs={ecosystem.allL2Projects.tvs}
           from={from}
           to={to}
         />
         <MonthlyUpdateActivityChart
           entries={ecosystem.projects}
-          allScalingProjectsUops={ecosystem.allScalingProjects.uops}
+          allL2ProjectsUops={ecosystem.allL2Projects.uops}
           from={from}
           to={to}
         />

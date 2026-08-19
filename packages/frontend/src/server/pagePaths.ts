@@ -7,17 +7,17 @@ type PagePath = `/${string}`
 
 export const STATIC_PAGE_PATHS = [
   ...(env.CLIENT_SIDE_HOME_PAGE ? (['/'] as const) : []),
-  '/scaling/summary',
-  '/scaling/activity',
-  '/scaling/risk',
-  '/scaling/risk/state-validation',
-  '/scaling/risk/data-availability',
-  '/scaling/risk/sequencing',
-  '/scaling/tvs',
-  '/scaling/tvs/breakdown',
-  '/scaling/liveness',
-  '/scaling/costs',
-  '/scaling/archived',
+  '/layer2s/summary',
+  '/layer2s/activity',
+  '/layer2s/risk',
+  '/layer2s/risk/state-validation',
+  '/layer2s/risk/data-availability',
+  '/layer2s/risk/sequencing',
+  '/layer2s/tvs',
+  '/layer2s/tvs/breakdown',
+  '/layer2s/liveness',
+  '/layer2s/costs',
+  '/layer2s/archived',
   '/interop/summary',
   '/interop/non-minting',
   '/interop/lock-and-mint',
@@ -49,7 +49,7 @@ export const STATIC_PAGE_PATHS = [
 
 export async function getPagePaths(): Promise<PagePath[]> {
   const flaggedPaths: PagePath[] = env.CLIENT_SIDE_COMPARE_PROJECTS
-    ? ['/scaling/compare']
+    ? ['/layer2s/compare']
     : []
   return [
     ...STATIC_PAGE_PATHS,
@@ -60,7 +60,7 @@ export async function getPagePaths(): Promise<PagePath[]> {
 
 async function getDynamicPagePaths(): Promise<PagePath[]> {
   const [
-    scalingProjects,
+    l2Projects,
     zkCatalogProjects,
     ecosystemProjects,
     daLayers,
@@ -81,10 +81,10 @@ async function getDynamicPagePaths(): Promise<PagePath[]> {
 
   const paths: PagePath[] = []
 
-  for (const project of scalingProjects) {
-    paths.push(`/scaling/projects/${project.slug}`)
+  for (const project of l2Projects) {
+    paths.push(`/layer2s/projects/${project.slug}`)
     if (project.tvsConfig) {
-      paths.push(`/scaling/projects/${project.slug}/tvs-breakdown`)
+      paths.push(`/layer2s/projects/${project.slug}/tvs-breakdown`)
     }
   }
 

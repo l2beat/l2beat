@@ -11,7 +11,7 @@ import { navSecondaryLinks } from '~/consts/navSecondaryLinks'
 import { env } from '~/env'
 import { cn } from '~/utils/cn'
 
-const LOGO_LINK = env.CLIENT_SIDE_HOME_PAGE ? '/' : '/scaling/summary'
+const LOGO_LINK = env.CLIENT_SIDE_HOME_PAGE ? '/' : '/layer2s/summary'
 
 export type SideNavLayoutVariant = 'default' | 'wide' | 'home'
 

@@ -3,7 +3,7 @@ import type {
   LockAndMintProtocolData,
   NonMintingProtocolData,
   ProtocolEntry,
-} from '~/server/features/scaling/interop/types'
+} from '~/server/features/layer2s/interop/types'
 
 type BridgeTypeProtocolEntryCommon = Pick<
   ProtocolEntry,
