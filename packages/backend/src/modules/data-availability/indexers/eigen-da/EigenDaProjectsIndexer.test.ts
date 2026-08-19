@@ -211,6 +211,35 @@ describe(EigenDaProjectsIndexer.name, () => {
       ])
     })
 
+    it('drops buckets outside the configuration range, cut at full hours', async () => {
+      const startOfDay = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
+      const configuration = {
+        ...createConfiguration('project1', DA_LAYER, 'customer1'),
+        minHeight: startOfDay + 10 * UnixTime.HOUR,
+        maxHeight: startOfDay + 14 * UnixTime.HOUR + 1800, // 14:30
+      }
+      const mockData = [9, 10, 13, 14, 15].map((hour) => ({
+        customer_id: 'customer1',
+        datetime: startOfDay + hour * UnixTime.HOUR,
+        total_size_mb: hour,
+      }))
+
+      const { indexer } = mockIndexer({
+        configurations: [configuration],
+        daLayer: DA_LAYER,
+        projectData: mockData,
+      })
+
+      const to = startOfDay + UnixTime.DAY + 2 * UnixTime.HOUR
+      const result = await indexer.getByProjectData(to)
+
+      // 09:00 is before since, 14:00 holds the until and 15:00 is after it
+      expect(result.map((r) => r.timestamp)).toEqual([
+        startOfDay + 10 * UnixTime.HOUR,
+        startOfDay + 13 * UnixTime.HOUR,
+      ])
+    })
+
     it('should filter out data outside the target day', async () => {
       const configurations = [
         createConfiguration('project1', DA_LAYER, 'customer1'),
