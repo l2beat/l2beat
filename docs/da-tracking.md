@@ -121,9 +121,10 @@ layer's `sovereignProjectsTrackingConfig`. The guard tests in
   only, so a changed `sinceBlock`/`untilBlock`/`sinceTimestamp`/
   `untilTimestamp` keeps the id but makes the backend re-sync the
   configuration to the new range. Without `trimData` support (the DA indexers
-  today) that is a full wipe and re-index from the new `since`, and blobs
-  older than the layer's retention are gone for good. The failure prints the
-  old and the new range;
+  today) any range change - closing an entry with `untilBlock` included - is
+  a full wipe and re-index from `since`: slow, and only lossless where the
+  layer still serves the old data. The failure prints the old and the new
+  range;
 - **no coverage gaps** (`daTracking/gaps.test.ts`) - per project and DA
   layer, entries sorted by `since` must not leave a hole: a closed entry
   whose `until` ends before the next entry's `since` on the same layer fails.
@@ -161,7 +162,7 @@ shape):
    change, start it at the previous discovery run's `usedBlockNumbers[<chain>]`
    from the pre-change `discovered.json` - overlaps are fine, holes are not.
 4. If the configuration genuinely stopped being used, close it as in step 2
-   and add nothing - deleting it wipes its history, closing it keeps it.
+   and add nothing - a deleted entry is gone for good, a closed one is kept.
 5. Only then regenerate the snapshot and commit it as the sign-off.
 
 ### A range changed - pin it or accept it

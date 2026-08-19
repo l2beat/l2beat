@@ -21,7 +21,7 @@ const FREEZE_RECIPE = [
   "1. In the project's .ts, turn the old entry into literals: copy the values it had before the change (inbox, sequencers/topics, namespace, appIds, customerId, since) from git history - the pre-change discovered.json or project .ts; the snapshot line above tells you which entry it is - so it keeps producing exactly this id. If the entry came from a template, move it to nonTemplateDaTracking.",
   "2. Close it with 'untilBlock' (or 'untilTimestamp' for eigen-da) at the last block the old configuration was live - verify the exact block on-chain. If you cannot, the current discovery run's usedBlockNumbers[<chain>] in discovered.json is a safe upper bound (the change had already happened by then).",
   "3. Add the new entry with the new values, starting where the old one ended (sinceBlock = the old entry's untilBlock). If you only bracketed the change, start it at the previous discovery run's usedBlockNumbers[<chain>] (from the pre-change discovered.json) - overlaps between entries are fine, holes are not.",
-  '4. If the configuration really stopped being used (the project left the layer), close it as in step 2 and do not add a new entry - deleting it wipes its history, closing it keeps it.',
+  '4. If the configuration really stopped being used (the project left the layer), close it as in step 2 and do not add a new entry - a deleted entry is gone for good, a closed one is kept.',
   "5. Only then run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot as the sign-off. Regenerating it first 'fixes' CI and silently accepts the wipe.",
 ].join('\n')
 
@@ -31,7 +31,7 @@ const FREEZE_RECIPE = [
  * with the same id.
  */
 const RANGE_CHANGE_RECIPE = [
-  'The id hashes the identity fields and NOT the range, so this is the same configuration with a moved window.',
+  'The id hashes the identity fields and NOT the range, so this is the same configuration with a moved window. The DA indexers have no trimData support yet, so on deploy ANY range change - closing an entry with untilBlock included - wipes the configuration and re-indexes it from its since; that is slow and only lossless where the layer still serves the old data.',
   "- If you did not intend the move (usually discovery drift on a sinceBlock): pin the range by writing the snapshot's since/until into the project's .ts as literals instead of the discovered values, and leave the snapshot alone.",
   "- If you intended it (you just closed an open entry with 'untilBlock' while freezing it, or you are deliberately correcting a range): run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot.",
   'Do not resolve it by freezing the entry and adding a second one with the same identity fields - both would hash to the same id.',

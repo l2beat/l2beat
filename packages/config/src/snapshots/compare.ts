@@ -45,6 +45,10 @@ export function formatRange(range: Range): string {
   return `${range.since} -> ${range.until ?? 'open'}`
 }
 
+function formatIdentity(identity: SnapshotIdentity): string {
+  return `- ${identity.id} (${identity.label}) [${formatRange(identity)}]`
+}
+
 type Domain = Pick<
   SnapshotDomain,
   'name' | 'wipeWarning' | 'freezeRecipe' | 'rangeChangeRecipe'
@@ -60,7 +64,7 @@ export function removalMessage(
 ): string {
   return [
     `${domain.name} identities disappeared for ${projectId}:`,
-    ...missing.map((e) => `- ${e.id} (${e.label}) [${formatRange(e)}]`),
+    ...missing.map(formatIdentity),
     domain.wipeWarning,
     domain.freezeRecipe,
     AI_GUARD_RAIL,
@@ -78,7 +82,7 @@ export function rangeChangeMessage(
       (c) =>
         `- ${c.id} (${c.label}): ${formatRange(c.old)} => ${formatRange(c.new)}`,
     ),
-    "On deploy the backend re-syncs the configuration to the new range: data outside it is dropped, and an indexer without trimData support (the DA indexers today) wipes the whole configuration and re-indexes it from the new since - anything older than the layer's data retention is lost for good.",
+    'On deploy the backend re-syncs the configuration to the new range and drops what it indexed outside it.',
     domain.rangeChangeRecipe,
     AI_GUARD_RAIL,
   ].join('\n')
@@ -91,7 +95,7 @@ export function additionMessage(
 ): string {
   return [
     `New ${domain.name} identities are not yet in the snapshot for ${projectId}:`,
-    ...added.map((e) => `- ${e.id} (${e.label}) [${formatRange(e)}]`),
+    ...added.map(formatIdentity),
     'This is usually not a problem - it means a new data tracking configuration was added for this project (or an existing one was re-keyed; if this error appears together with a "disappeared" error for the same project, resolve that one first).',
     "To register the new identities, run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot.",
   ].join('\n')

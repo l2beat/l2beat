@@ -73,6 +73,11 @@ export function findCoverageGaps(entries: TrackedRange[]): CoverageGap[] {
  */
 export const LEGACY_COVERAGE_GAPS: string[] = []
 
+export interface ProjectGap {
+  projectId: string
+  gap: CoverageGap
+}
+
 export function gapKey(projectId: string, gap: CoverageGap): string {
   return `${projectId}/${gap.daLayer}/${gap.from}-${gap.to}`
 }
@@ -81,7 +86,7 @@ export function gapKey(projectId: string, gap: CoverageGap): string {
 export function findDaTrackingGaps(
   projects: BaseProject[],
   legacyGaps: string[] = LEGACY_COVERAGE_GAPS,
-): { projectId: string; gap: CoverageGap }[] {
+): ProjectGap[] {
   const flat: (TrackedRange & { projectId: string })[] = []
   forEachDaTrackingConfig(projects, (projectId, config) => {
     flat.push({
@@ -101,9 +106,7 @@ export function findDaTrackingGaps(
   )
 }
 
-export function gapMessage(
-  gaps: { projectId: string; gap: CoverageGap }[],
-): string {
+export function gapMessage(gaps: ProjectGap[]): string {
   return [
     'da-tracking stops covering a project and picks it up again later:',
     ...gaps.map(

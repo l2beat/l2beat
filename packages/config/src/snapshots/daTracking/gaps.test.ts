@@ -11,79 +11,81 @@ import {
 } from './gaps'
 
 describe(findCoverageGaps.name, () => {
-  const entry = (
+  const open = (since: number, daLayer = 'ethereum'): TrackedRange => ({
+    daLayer,
+    label: `${daLayer} ${since}`,
+    since,
+  })
+  const closed = (
     since: number,
-    until?: number,
+    until: number,
     daLayer = 'ethereum',
-  ): TrackedRange => ({ daLayer, label: `${daLayer} ${since}`, since, until })
+  ): TrackedRange & { until: number } => ({ ...open(since, daLayer), until })
 
   const gap = (
-    before: TrackedRange,
+    before: TrackedRange & { until: number },
     after: TrackedRange,
     daLayer = 'ethereum',
   ): CoverageGap => ({
     daLayer,
-    from: (before.until ?? Number.NaN) + 1,
+    from: before.until + 1,
     to: after.since - 1,
     before,
     after,
   })
 
   it('accepts a single open entry', () => {
-    expect(findCoverageGaps([entry(100)])).toEqual([])
+    expect(findCoverageGaps([open(100)])).toEqual([])
   })
 
   it('accepts a trailing closed entry', () => {
-    expect(findCoverageGaps([entry(100, 200)])).toEqual([])
-    expect(findCoverageGaps([entry(100, 200), entry(201, 300)])).toEqual([])
+    expect(findCoverageGaps([closed(100, 200)])).toEqual([])
+    expect(findCoverageGaps([closed(100, 200), closed(201, 300)])).toEqual([])
   })
 
   it('accepts the handover convention next.since === prev.until', () => {
-    expect(findCoverageGaps([entry(100, 200), entry(200)])).toEqual([])
+    expect(findCoverageGaps([closed(100, 200), open(200)])).toEqual([])
   })
 
   it('accepts adjacent entries next.since === prev.until + 1', () => {
-    expect(findCoverageGaps([entry(100, 200), entry(201)])).toEqual([])
+    expect(findCoverageGaps([closed(100, 200), open(201)])).toEqual([])
   })
 
   it('accepts overlapping entries', () => {
-    expect(findCoverageGaps([entry(100, 250), entry(150)])).toEqual([])
+    expect(findCoverageGaps([closed(100, 250), open(150)])).toEqual([])
     expect(
-      findCoverageGaps([entry(100), entry(150, 160), entry(170, 180)]),
+      findCoverageGaps([open(100), closed(150, 160), closed(170, 180)]),
     ).toEqual([])
   })
 
   it('reports a hole between a closed entry and its successor', () => {
-    const [a, b] = [entry(100, 200), entry(202)]
+    const [a, b] = [closed(100, 200), open(202)]
     expect(findCoverageGaps([a, b])).toEqual([gap(a, b)])
   })
 
   it('measures the hole from the furthest covered point, not the last entry', () => {
     // The overlapping entry ends earlier than the first one - the covered
     // frontier must not go backwards.
-    const [a, b, c] = [entry(100, 500), entry(200, 300), entry(600)]
+    const [a, b, c] = [closed(100, 500), closed(200, 300), open(600)]
     expect(findCoverageGaps([a, b, c])).toEqual([gap(a, c)])
   })
 
   it('reports multiple holes', () => {
-    const [a, b, c] = [entry(100, 200), entry(300, 400), entry(500)]
+    const [a, b, c] = [closed(100, 200), closed(300, 400), open(500)]
     expect(findCoverageGaps([a, b, c])).toEqual([gap(a, b), gap(b, c)])
   })
 
   it('sorts by since itself', () => {
-    const [a, b] = [entry(100, 200), entry(300)]
+    const [a, b] = [closed(100, 200), open(300)]
     expect(findCoverageGaps([b, a])).toEqual([gap(a, b)])
   })
 
   it('compares entries per DA layer', () => {
     // A closed ethereum range followed by a celestia range is a layer
     // switch, not a hole - the layers have unrelated units.
-    const [a, b] = [entry(100, 200), entry(5, undefined, 'celestia')]
+    const [a, b] = [closed(100, 200), open(5, 'celestia')]
     expect(findCoverageGaps([a, b])).toEqual([])
-    const [c, d] = [
-      entry(100, 200, 'celestia'),
-      entry(300, undefined, 'celestia'),
-    ]
+    const [c, d] = [closed(100, 200, 'celestia'), open(300, 'celestia')]
     expect(findCoverageGaps([a, c, d])).toEqual([gap(c, d, 'celestia')])
   })
 })
