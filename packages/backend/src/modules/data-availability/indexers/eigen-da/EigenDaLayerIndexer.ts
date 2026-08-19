@@ -9,8 +9,10 @@ import { ManagedMultiIndexer } from '../../../../tools/uif/multi/ManagedMultiInd
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
+  TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../../tools/uif/multi/types'
+import { getEigenDaTrimRange } from './getEigenDaTrimRange'
 
 export interface Dependencies
   extends Omit<
@@ -123,6 +125,29 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
         configurations: configurations.length,
         deletedRecords,
       })
+    }
+  }
+
+  override async trimData(
+    configurations: TrimRemovalConfiguration[],
+  ): Promise<void> {
+    for (const configuration of configurations) {
+      const [from, to] = getEigenDaTrimRange(configuration.range)
+      const deletedRecords =
+        await this.$.db.dataAvailability.deleteByConfigInTimeRange(
+          configuration.id,
+          from,
+          to,
+        )
+
+      if (deletedRecords > 0) {
+        this.logger.info('Trimmed DA records for configuration', {
+          id: configuration.id,
+          from,
+          to,
+          deletedRecords,
+        })
+      }
     }
   }
 
