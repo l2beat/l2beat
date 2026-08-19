@@ -1,6 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { searchEntries } from '~/components/search-bar/searchBarResults'
-import { getActiveInteropAbstractTokens } from '~/server/features/scaling/interop/token/getInteropAbstractTokens'
+import { getActiveInteropAbstractTokens } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { ps } from '~/server/projects'
 import { getLogger } from '../../utils/logger'
 import type { SearchBarProjectEntry, SearchBarTokenEntry } from './types'

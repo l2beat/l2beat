@@ -16,11 +16,11 @@ import { createGlossaryRouter } from './glossary/GlossaryRouter'
 import { createGovernanceRouter } from './governance/GovernanceRouter'
 import { createHomeRouter } from './home/HomeRouter'
 import { createInteropRouter } from './interop/InteropRouter'
+import { createL2Router } from './layer2s/L2Router'
 import { createMultisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createNativeRollupsRouter } from './native-rollups/NativeRollupsRouter'
 import { createPrivacyRouter } from './privacy/PrivacyRouter'
 import { createPublicationsRouter } from './publications/PublicationsRouter'
-import { createScalingRouter } from './scaling/ScalingRouter'
 import { createStagesRouter } from './stages/StagesRouter'
 import { createTermsOfServiceRouter } from './terms-of-service/TermsOfServiceRouter'
 import { createZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
@@ -49,13 +49,13 @@ export function createServerPageRouter(
     // (refetched, since 307 has no validators) on every use.
     router.get('/', (_req, res) => {
       res.set('Cache-Control', 'no-cache')
-      res.redirect(307, '/scaling/summary')
+      res.redirect(307, '/layer2s/summary')
     })
   }
 
   const routers = [
     ...(env.CLIENT_SIDE_HOME_PAGE ? [createHomeRouter] : []),
-    createScalingRouter,
+    createL2Router,
     createInteropRouter,
     createDataAvailabilityRouter,
     createZkCatalogRouter,

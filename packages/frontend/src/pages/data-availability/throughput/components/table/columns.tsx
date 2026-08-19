@@ -13,7 +13,7 @@ import { TableLink } from '~/components/table/TableLink'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
 import { formatTimestamp } from '~/utils/dates'
 
-export type DaThroughputTableData = Omit<DaThroughputEntry, 'scalingOnlyData'>
+export type DaThroughputTableData = Omit<DaThroughputEntry, 'l2OnlyData'>
 
 const columnHelper = createColumnHelper<DaThroughputTableData>()
 

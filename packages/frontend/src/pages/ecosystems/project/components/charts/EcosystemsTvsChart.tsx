@@ -42,14 +42,14 @@ export function EcosystemsTvsChart({
   id,
   name,
   entries,
-  allScalingProjectsTvs,
+  allL2ProjectsTvs,
   className,
   ecosystemMilestones,
 }: {
   id: string
   name: string
   entries: EcosystemEntry['liveProjects']
-  allScalingProjectsTvs: EcosystemEntry['allScalingProjects']['tvs']
+  allL2ProjectsTvs: EcosystemEntry['allL2Projects']['tvs']
   className?: string
   ecosystemMilestones: EcosystemMilestone[]
 }) {
@@ -99,7 +99,7 @@ export function EcosystemsTvsChart({
     } satisfies ChartMeta
   }, [name])
 
-  const { withRwaRestricted, withoutRwaRestricted } = allScalingProjectsTvs
+  const { withRwaRestricted, withoutRwaRestricted } = allL2ProjectsTvs
   const stats = getStats(
     chartData,
     excludeRwaRestrictedTokens ? withoutRwaRestricted : withRwaRestricted,
@@ -231,7 +231,7 @@ function Header({
 
 function getStats(
   chartData: TvsChartDataPoint[] | undefined,
-  allScalingProjectsTvs: number,
+  allL2ProjectsTvs: number,
 ) {
   if (!chartData) {
     return undefined
@@ -248,6 +248,6 @@ function getStats(
 
   return {
     total: last.value,
-    marketShare: last.value / allScalingProjectsTvs,
+    marketShare: last.value / allL2ProjectsTvs,
   }
 }
