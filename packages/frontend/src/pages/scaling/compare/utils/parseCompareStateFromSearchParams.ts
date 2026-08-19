@@ -1,10 +1,8 @@
+import { COMPARE_METRIC_DEFS } from '../metrics/compareMetricDefs'
+import type { CompareUrlFields } from '../metrics/types'
 import {
-  COMPARE_ACTIVITY_UNITS,
-  COMPARE_COSTS_UNITS,
   COMPARE_METRIC_IDS,
   COMPARE_RANGE_OPTIONS,
-  COMPARE_TVS_FILTERS,
-  COMPARE_TVS_UNITS,
   type CompareChartConfig,
   type CompareChartState,
   type CompareRange,
@@ -42,70 +40,24 @@ function parseCharts(value: string | null): CompareChartConfig[] {
   return charts.length > 0 ? charts : [createDefaultChartConfig()]
 }
 
+/**
+ * A chart token is the metric id followed by `:`-separated `key=value`
+ * fields, decoded by the metric's own `urlControls` codec.
+ */
 function parseChartToken(token: string): CompareChartConfig | undefined {
-  const [metricField, ...fields] = token.split(':')
+  const [metricField, ...fieldTokens] = token.split(':')
   const metric = COMPARE_METRIC_IDS.find((id) => id === metricField)
   if (!metric) return undefined
-  const config = createDefaultChartConfig(metric)
-  for (const field of fields) {
-    const [key, value = null] = field.split('=')
-    switch (key) {
-      // The `unit` key is shared between metrics, so it is only applied to
-      // the token's own metric - the value sets overlap (usd/eth), and
-      // without the gate a costs unit would leak into the TVS control.
-      case 'unit':
-        if (metric === 'activity') {
-          config.activityUnit = parseOneOf(
-            value,
-            COMPARE_ACTIVITY_UNITS,
-            config.activityUnit,
-          )
-        } else if (metric === 'tvs') {
-          config.tvsUnit = parseOneOf(value, COMPARE_TVS_UNITS, config.tvsUnit)
-        } else if (metric === 'costs') {
-          config.costsUnit = parseOneOf(
-            value,
-            COMPARE_COSTS_UNITS,
-            config.costsUnit,
-          )
-        }
-        break
-      case 'filter':
-        config.tvsFilter = parseOneOf(
-          value,
-          COMPARE_TVS_FILTERS,
-          config.tvsFilter,
-        )
-        break
-      case 'excludeAssociated':
-        config.excludeAssociatedTokens = parseBoolean(
-          value,
-          config.excludeAssociatedTokens,
-        )
-        break
-      case 'excludeRwa':
-        config.excludeRwaRestrictedTokens = parseBoolean(
-          value,
-          config.excludeRwaRestrictedTokens,
-        )
-        break
-    }
+  const fields: CompareUrlFields = Object.fromEntries(
+    fieldTokens.map((fieldToken) => {
+      const [key, value = ''] = fieldToken.split('=')
+      return [key, value]
+    }),
+  )
+  return {
+    ...createDefaultChartConfig(metric),
+    ...COMPARE_METRIC_DEFS[metric].urlControls?.parse(fields),
   }
-  return config
-}
-
-function parseOneOf<T extends string>(
-  value: string | null,
-  options: readonly T[],
-  fallback: T,
-): T {
-  return options.find((option) => option === value) ?? fallback
-}
-
-function parseBoolean(value: string | null, defaultValue: boolean): boolean {
-  if (value === 'true') return true
-  if (value === 'false') return false
-  return defaultValue
 }
 
 function parseProjects(value: string | null, validSlugs: string[]): string[] {

@@ -796,12 +796,14 @@ export async function getScalingProjectEntry(
   return { ...common, sections }
 }
 
+/**
+ * Archived projects have no live data to compare. The feature flag is
+ * applied by `CompareProjectsLink` itself, like on every other entry point.
+ */
 function getProjectCompareUrl(
   project: Project<never, 'archivedAt'>,
   metric: CompareMetricId,
 ): string | undefined {
-  if (!env.CLIENT_SIDE_COMPARE_PROJECTS || project.archivedAt) {
-    return undefined
-  }
+  if (project.archivedAt) return undefined
   return getCompareEntryUrl({ metric, projectSlug: project.slug })
 }

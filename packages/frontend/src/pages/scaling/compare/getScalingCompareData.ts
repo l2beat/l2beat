@@ -7,13 +7,12 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
-import { COMPARE_SERVER_METRICS } from './server/compareServerMetrics'
+import { COMPARE_METRIC_DEFS } from './metrics/compareMetricDefs'
 import { buildCompareUrl } from './utils/buildCompareUrl'
 import {
   type CompareChartState,
   compareRangeToChartRange,
   DEFAULT_COMPARE_PROJECTS_COUNT,
-  toCompareClientState,
 } from './utils/compareChartState'
 import { COMPARE_PAGE_PATH } from './utils/getCompareEntryUrl'
 import { parseCompareStateFromSearchParams } from './utils/parseCompareStateFromSearchParams'
@@ -112,15 +111,17 @@ async function getPrefetchedChartData(
   defaultProjects: CompareProjectEntry[],
 ) {
   const initialChartRange = compareRangeToChartRange(initialState.range)
-  const clientState = toCompareClientState(initialState, initialChartRange)
   const helpers = getSsrHelpers()
-  for (const chart of clientState.charts) {
-    await COMPARE_SERVER_METRICS[chart.metric].prefetch(
-      helpers,
-      defaultProjects,
-      { ...chart, chartRange: clientState.chartRange },
-    )
-  }
+  await Promise.all(
+    initialState.charts.map((chart) =>
+      COMPARE_METRIC_DEFS[chart.metric].prefetch(
+        helpers,
+        defaultProjects,
+        chart,
+        initialChartRange,
+      ),
+    ),
+  )
 
   return {
     initialChartRange,

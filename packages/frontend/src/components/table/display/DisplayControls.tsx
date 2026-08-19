@@ -1,4 +1,3 @@
-import { Checkbox } from '~/components/core/Checkbox'
 import {
   Drawer,
   DrawerContent,
@@ -12,30 +11,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/components/core/Popover'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
-import { InfoIcon } from '~/icons/Info'
 import { SlidersIcon } from '~/icons/Sliders'
 import { cn } from '~/utils/cn'
-import {
-  DISPLAY_OPTIONS,
-  type DisplayOption,
-  type DisplayOptionsKey,
-} from './displayOptions'
+import { DisplayOptionCheckbox } from './DisplayOptionCheckbox'
+import type { DisplayOptionsKey } from './displayOptions'
 
 interface Props<K extends DisplayOptionsKey> {
   display: Record<K, boolean>
   setDisplay: (key: K, value: boolean) => void
-  /** Options to disable, mapped to the hint explaining why. */
-  disabled?: Partial<Record<K, string>>
 }
 export function DisplayControls<K extends DisplayOptionsKey>({
   display,
   setDisplay,
-  disabled,
 }: Props<K>) {
   const providedEntries = Object.entries(display) as [K, boolean][]
 
@@ -72,12 +59,12 @@ export function DisplayControls<K extends DisplayOptionsKey>({
           side="bottom"
         >
           {providedEntries.map(([key, value]) => (
-            <DisplayCheckbox
+            <DisplayOptionCheckbox
               key={key}
               optionKey={key}
-              value={value}
-              setDisplay={setDisplay}
-              disabledReason={disabled?.[key]}
+              checked={value}
+              onCheckedChange={(checked) => setDisplay(key, checked)}
+              className="w-full hover:bg-surface-primary-hover max-md:pl-0"
             />
           ))}
         </PopoverContent>
@@ -97,52 +84,17 @@ export function DisplayControls<K extends DisplayOptionsKey>({
           </DrawerHeader>
           <div className="mb-5 flex flex-wrap gap-1">
             {providedEntries.map(([key, value]) => (
-              <DisplayCheckbox
+              <DisplayOptionCheckbox
                 key={key}
                 optionKey={key}
-                value={value}
-                setDisplay={setDisplay}
-                disabledReason={disabled?.[key]}
+                checked={value}
+                onCheckedChange={(checked) => setDisplay(key, checked)}
+                className="w-full hover:bg-surface-primary-hover max-md:pl-0"
               />
             ))}
           </div>
         </DrawerContent>
       </Drawer>
     </>
-  )
-}
-
-function DisplayCheckbox<K extends DisplayOptionsKey>({
-  optionKey,
-  value,
-  setDisplay,
-  disabledReason,
-}: {
-  optionKey: K
-  value: boolean
-  setDisplay: (key: K, value: boolean) => void
-  disabledReason?: string
-}) {
-  const option: DisplayOption = DISPLAY_OPTIONS[optionKey]
-  return (
-    <Checkbox
-      name={optionKey}
-      checked={value}
-      disabled={disabledReason !== undefined}
-      onCheckedChange={(checked) => setDisplay(optionKey, !!checked)}
-      className="w-full rounded-sm hover:bg-surface-primary-hover max-md:pl-0"
-    >
-      <div className="flex items-center gap-1 text-sm">
-        {option.label}
-        {(disabledReason ?? option.tooltip) && (
-          <Tooltip>
-            <TooltipTrigger>
-              <InfoIcon className="size-3.5" />
-            </TooltipTrigger>
-            <TooltipContent>{disabledReason ?? option.tooltip}</TooltipContent>
-          </Tooltip>
-        )}
-      </div>
-    </Checkbox>
   )
 }

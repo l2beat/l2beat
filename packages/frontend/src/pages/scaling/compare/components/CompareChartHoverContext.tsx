@@ -1,65 +1,13 @@
-import {
-  createContext,
-  type ReactNode,
-  useContext,
-  useMemo,
-  useState,
-} from 'react'
-
-interface CompareChartHoverContextType {
-  /** Index of the chart card the pointer is currently over, if any. */
-  hoveredChartId: number | undefined
-  setHoveredChartId: (chartId: number | undefined) => void
-}
-
-const CompareChartHoverContext = createContext<CompareChartHoverContextType>({
-  hoveredChartId: undefined,
-  setHoveredChartId: () => {},
-})
+import { createContext, useContext } from 'react'
 
 /**
- * Tracks which chart card the pointer is over. Recharts' sync activates the
- * tooltip on every chart at once; this tells each chart whether it is the
- * hovered one (full tooltip) or a follower (crosshair only).
+ * Whether the enclosing chart card is the one under the pointer (or no card
+ * is). Recharts' sync activates the tooltip on every chart at once; followers
+ * read `false` here and render only the crosshair, so one full tooltip shows
+ * per hover. Defaults to `true` so charts outside a card behave normally.
  */
-export function CompareChartHoverProvider({
-  children,
-}: {
-  children: ReactNode
-}) {
-  const [hoveredChartId, setHoveredChartId] = useState<number>()
-  const value = useMemo(
-    () => ({ hoveredChartId, setHoveredChartId }),
-    [hoveredChartId],
-  )
-  return (
-    <CompareChartHoverContext.Provider value={value}>
-      {children}
-    </CompareChartHoverContext.Provider>
-  )
-}
+export const CompareChartHoveredContext = createContext(true)
 
-export function useCompareChartHover() {
-  return useContext(CompareChartHoverContext)
-}
-
-/** The id a chart card gives to everything rendered inside it. */
-const CompareChartIdContext = createContext<number | undefined>(undefined)
-
-export function CompareChartIdProvider({
-  chartId,
-  children,
-}: {
-  chartId: number
-  children: ReactNode
-}) {
-  return (
-    <CompareChartIdContext.Provider value={chartId}>
-      {children}
-    </CompareChartIdContext.Provider>
-  )
-}
-
-export function useCompareChartId() {
-  return useContext(CompareChartIdContext)
+export function useIsCompareChartHovered() {
+  return useContext(CompareChartHoveredContext)
 }

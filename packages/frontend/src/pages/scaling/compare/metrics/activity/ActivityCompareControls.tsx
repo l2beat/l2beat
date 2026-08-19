@@ -5,8 +5,8 @@ import type { CompareActivityUnit } from '../../utils/compareChartState'
 import type { CompareMetricControlsProps } from '../types'
 
 export function ActivityCompareControls({
-  state,
-  setState,
+  config,
+  setConfig,
 }: CompareMetricControlsProps) {
   const isClient = useIsClient()
   if (!isClient) {
@@ -14,9 +14,9 @@ export function ActivityCompareControls({
   }
   return (
     <ActivityMetricControls<CompareActivityUnit>
-      value={state.activityUnit}
+      value={config.activityUnit}
       onValueChange={(activityUnit) =>
-        setState((prev) => ({ ...prev, activityUnit }))
+        setConfig((prev) => ({ ...prev, activityUnit }))
       }
       projectChart
       className="h-9"

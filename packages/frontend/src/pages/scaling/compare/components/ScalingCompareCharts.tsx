@@ -43,11 +43,7 @@ import {
   toCompareUrlState,
 } from '../utils/compareChartState'
 import { parseCompareStateFromSearchParams } from '../utils/parseCompareStateFromSearchParams'
-import {
-  CompareChartHoverProvider,
-  CompareChartIdProvider,
-  useCompareChartHover,
-} from './CompareChartHoverContext'
+import { CompareChartHoveredContext } from './CompareChartHoverContext'
 import { CompareProjectPicker } from './CompareProjectPicker'
 import { CompareSeriesProvider } from './CompareSeriesContext'
 
@@ -69,6 +65,9 @@ export function ScalingCompareCharts({
   const [state, setState] = useState(() =>
     toCompareClientState(initialState, initialChartRange),
   )
+  // The chart card under the pointer, if any. Recharts syncs the hover to
+  // every chart; only this one renders the full tooltip.
+  const [hoveredChartId, setHoveredChartId] = useState<number>()
 
   const validSlugs = useMemo(
     () => allProjects.map((project) => project.slug),
@@ -136,65 +135,69 @@ export function ScalingCompareCharts({
   return (
     <section className="flex flex-col gap-2 max-md:mt-4 md:mt-2">
       <CompareSeriesProvider projects={selectedProjects}>
-        <CompareChartHoverProvider>
-          <div className="flex flex-col gap-3 max-md:px-4 lg:px-2">
-            <CompareProjectPicker
-              allProjects={allProjects}
-              metrics={displayedMetrics}
-              selectedProjects={selectedProjects}
-              isDefaultSelection={state.projects.length === 0}
-              onChange={(projects) =>
-                setState((prev) => ({ ...prev, projects }))
+        <div className="flex flex-col gap-3 max-md:px-4 lg:px-2">
+          <CompareProjectPicker
+            allProjects={allProjects}
+            metrics={displayedMetrics}
+            selectedProjects={selectedProjects}
+            isDefaultSelection={state.projects.length === 0}
+            onChange={(projects) => setState((prev) => ({ ...prev, projects }))}
+          />
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <CopyLinkButton
+              // Serialized on click from the live state, because the
+              // address bar only catches up after the URL-sync debounce.
+              getShareUrl={() =>
+                window.location.origin +
+                buildCompareUrl(
+                  window.location.pathname,
+                  toCompareUrlState(state),
+                )
               }
             />
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <CopyLinkButton
-                // Serialized on click from the live state, because the
-                // address bar only catches up after the URL-sync debounce.
-                getShareUrl={() =>
-                  window.location.origin +
-                  buildCompareUrl(
-                    window.location.pathname,
-                    toCompareUrlState(state),
-                  )
-                }
-              />
-              <ChartRangeControls
-                name="compareChart"
-                value={state.chartRange}
-                setValue={(chartRange) =>
-                  setState((prev) => ({ ...prev, chartRange }))
-                }
-                options={COMPARE_RANGE_OPTIONS.map((value) => ({
-                  value,
-                  label: value.toUpperCase(),
-                }))}
-              />
-            </div>
+            <ChartRangeControls
+              name="compareChart"
+              value={state.chartRange}
+              setValue={(chartRange) =>
+                setState((prev) => ({ ...prev, chartRange }))
+              }
+              options={COMPARE_RANGE_OPTIONS.map((value) => ({
+                value,
+                label: value.toUpperCase(),
+              }))}
+            />
           </div>
-          <div className="flex flex-col md:gap-2">
-            {state.charts.map((config, index) => (
-              <CompareChartCard
-                // Charts carry no identity of their own in the URL, so the
-                // index is the only stable key; card-local state is limited
-                // to hydration skeletons, so remounts on removal are cheap.
-                key={index}
-                chartId={index}
-                config={config}
-                chartRange={state.chartRange}
-                projects={selectedProjects}
-                setConfig={setChartConfig(index)}
-                onRemove={
-                  state.charts.length > 1 ? () => removeChart(index) : undefined
-                }
-              />
-            ))}
-          </div>
-          <AddChartButton
-            onClick={addChart}
-            atCap={state.charts.length >= MAX_COMPARE_CHARTS}
-          />
-        </CompareChartHoverProvider>
+        </div>
+        <div className="flex flex-col md:gap-2">
+          {state.charts.map((config, index) => (
+            <CompareChartCard
+              // Charts carry no identity of their own in the URL, so the
+              // index is the only stable key; card-local state is limited
+              // to hydration skeletons, so remounts on removal are cheap.
+              key={index}
+              chartId={index}
+              config={config}
+              chartRange={state.chartRange}
+              projects={selectedProjects}
+              setConfig={setChartConfig(index)}
+              isHovered={
+                hoveredChartId === undefined || hoveredChartId === index
+              }
+              onHoverChange={(hovered) =>
+                setHoveredChartId((prev) =>
+                  hovered ? index : prev === index ? undefined : prev,
+                )
+              }
+              onRemove={
+                state.charts.length > 1 ? () => removeChart(index) : undefined
+              }
+            />
+          ))}
+        </div>
+        <AddChartButton
+          onClick={addChart}
+          atCap={state.charts.length >= MAX_COMPARE_CHARTS}
+        />
       </CompareSeriesProvider>
     </section>
   )
@@ -206,6 +209,8 @@ function CompareChartCard({
   chartRange,
   projects,
   setConfig,
+  isHovered,
+  onHoverChange,
   onRemove,
 }: {
   chartId: number
@@ -213,14 +218,12 @@ function CompareChartCard({
   chartRange: ChartRange
   projects: CompareProjectEntry[]
   setConfig: Dispatch<SetStateAction<CompareChartConfig>>
+  /** False while another card is hovered, so this card's tooltip hides. */
+  isHovered: boolean
+  onHoverChange: (hovered: boolean) => void
   onRemove: (() => void) | undefined
 }) {
   const metric = COMPARE_METRICS[config.metric]
-  const { setHoveredChartId } = useCompareChartHover()
-  const chartState = useMemo(
-    () => ({ ...config, chartRange }),
-    [config, chartRange],
-  )
 
   return (
     <PrimaryCard>
@@ -241,17 +244,21 @@ function CompareChartCard({
           </button>
         )}
       </div>
-      <CompareChartIdProvider chartId={chartId}>
+      <CompareChartHoveredContext.Provider value={isHovered}>
         <div
-          onMouseEnter={() => setHoveredChartId(chartId)}
-          onMouseLeave={() => setHoveredChartId(undefined)}
+          onMouseEnter={() => onHoverChange(true)}
+          onMouseLeave={() => onHoverChange(false)}
         >
-          <metric.Chart projects={projects} state={chartState} />
+          <metric.Chart
+            projects={projects}
+            config={config}
+            chartRange={chartRange}
+          />
         </div>
-      </CompareChartIdProvider>
+      </CompareChartHoveredContext.Provider>
       {metric.Controls && (
         <div className="mt-3 flex flex-wrap items-center gap-1">
-          <metric.Controls state={config} setState={setConfig} />
+          <metric.Controls config={config} setConfig={setConfig} />
         </div>
       )}
     </PrimaryCard>

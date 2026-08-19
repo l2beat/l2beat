@@ -4,12 +4,12 @@ import { useMemo } from 'react'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import {
-  type CompareChartPoint,
   CompareMetricLineChart,
+  toCompareChartPoints,
 } from '../../components/CompareMetricLineChart'
 import type { CompareTvsFilter } from '../../utils/compareChartState'
 import type { CompareMetricChartProps } from '../types'
-import { getTvsCompareChartParams } from './getTvsCompareChartParams'
+import { getTvsCompareChartParams } from './tvsCompareMetric'
 
 /** Indices into `ProjectTvsChartDataPoint` for each TVS filter. */
 const TVS_FILTER_VALUE_INDEX: Record<CompareTvsFilter, number> = {
@@ -25,30 +25,34 @@ const TVS_FILTER_VALUE_INDEX: Record<CompareTvsFilter, number> = {
   other: 9,
 }
 
-export function TvsCompareChart({ projects, state }: CompareMetricChartProps) {
+export function TvsCompareChart({
+  projects,
+  config,
+  chartRange,
+}: CompareMetricChartProps) {
   const trpc = useTRPC()
   const { data, isLoading } = useQuery(
     trpc.tvs.detailedChartWithProjectsRanges.queryOptions(
-      getTvsCompareChartParams(projects, state),
+      getTvsCompareChartParams(projects, config, chartRange),
     ),
   )
-  const unit = state.tvsUnit
-  const valueIndex = TVS_FILTER_VALUE_INDEX[state.tvsFilter]
+  const unit = config.tvsUnit
+  const valueIndex = TVS_FILTER_VALUE_INDEX[config.tvsFilter]
 
   const chartData = useMemo(
     () =>
-      data?.chart.map(([timestamp, ethPrice, valuesByProject]) => {
-        const point: CompareChartPoint = { timestamp }
-        const divider = unit === 'usd' ? 1 : ethPrice
-        for (const project of projects) {
-          const value = valuesByProject[project.id]?.[valueIndex]
-          point[project.id] =
-            value !== undefined && divider !== null && divider !== 0
-              ? value / divider
-              : null
-        }
-        return point
-      }),
+      data &&
+      toCompareChartPoints(
+        data.chart,
+        projects,
+        ([, ethPrice, valuesByProject], projectId) => {
+          const value = valuesByProject[projectId]?.[valueIndex]
+          const divider = unit === 'usd' ? 1 : ethPrice
+          return value !== undefined && divider !== null && divider !== 0
+            ? value / divider
+            : null
+        },
+      ),
     [data, projects, unit, valueIndex],
   )
 

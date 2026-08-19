@@ -1,5 +1,38 @@
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
 import type { ChartRange } from '~/utils/range/range'
+import {
+  COMPARE_COSTS_UNITS,
+  DEFAULT_COMPARE_COSTS_UNIT,
+} from '../../utils/compareChartState'
+import { parseOneOf } from '../../utils/urlFields'
+import type { CompareMetricDef, CompareUrlFields } from '../types'
+
+export const costsCompareMetric: CompareMetricDef = {
+  id: 'costs',
+  label: 'Costs',
+  hasData: hasCostsData,
+  noDataLabel: 'No costs data',
+  urlControls: {
+    parse: (fields) => ({
+      costsUnit: parseOneOf(
+        fields.unit,
+        COMPARE_COSTS_UNITS,
+        DEFAULT_COMPARE_COSTS_UNIT,
+      ),
+    }),
+    serialize: (controls): CompareUrlFields =>
+      controls.costsUnit !== DEFAULT_COMPARE_COSTS_UNIT
+        ? { unit: controls.costsUnit }
+        : {},
+  },
+  prefetch: async (helpers, projects, _config, chartRange) => {
+    await helpers.queryClient.prefetchQuery(
+      helpers.trpc.costs.detailedChartWithProjectsRanges.queryOptions(
+        getCostsCompareChartParams(projects, chartRange),
+      ),
+    )
+  },
+}
 
 /**
  * Whether the project has onchain costs tracking. The single source for the

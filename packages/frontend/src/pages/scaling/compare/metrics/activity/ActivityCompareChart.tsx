@@ -5,35 +5,33 @@ import { countPerSecond } from '~/server/features/scaling/activity/utils/countPe
 import { useTRPC } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
 import {
-  type CompareChartPoint,
   CompareMetricLineChart,
+  toCompareChartPoints,
 } from '../../components/CompareMetricLineChart'
 import type { CompareMetricChartProps } from '../types'
-import { getActivityCompareChartParams } from './getActivityCompareChartParams'
+import { getActivityCompareChartParams } from './activityCompareMetric'
 
 export function ActivityCompareChart({
   projects,
-  state,
+  config,
+  chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
   const { data, isLoading } = useQuery(
     trpc.activity.detailedChartWithProjectsRanges.queryOptions(
-      getActivityCompareChartParams(projects, state.chartRange),
+      getActivityCompareChartParams(projects, chartRange),
     ),
   )
-  const unit = state.activityUnit
+  const unit = config.activityUnit
 
   const chartData = useMemo(
     () =>
-      data?.chart.map(([timestamp, valuesByProject]) => {
-        const point: CompareChartPoint = { timestamp }
-        for (const project of projects) {
-          const values = valuesByProject[project.id]
-          point[project.id] = values
-            ? countPerSecond(unit === 'tps' ? values[0] : values[1])
-            : null
-        }
-        return point
+      data &&
+      toCompareChartPoints(data.chart, projects, ([, valuesByProject], id) => {
+        const values = valuesByProject[id]
+        return values
+          ? countPerSecond(unit === 'tps' ? values[0] : values[1])
+          : null
       }),
     [data, projects, unit],
   )

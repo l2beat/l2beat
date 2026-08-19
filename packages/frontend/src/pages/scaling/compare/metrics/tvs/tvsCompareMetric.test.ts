@@ -1,19 +1,20 @@
 import { expect } from 'earl'
 import type { ChartRange } from '~/utils/range/range'
-import { getTvsCompareChartParams } from './getTvsCompareChartParams'
+import { getTvsCompareChartParams } from './tvsCompareMetric'
 
-const BASE_STATE = {
-  chartRange: [1700000000, 1710000000] as ChartRange,
+const CHART_RANGE: ChartRange = [1700000000, 1710000000]
+const BASE_CONFIG = {
   excludeAssociatedTokens: false,
   excludeRwaRestrictedTokens: true,
 }
 
 describe(getTvsCompareChartParams.name, () => {
   it('passes the exclusion toggles through', () => {
-    const params = getTvsCompareChartParams([], {
-      ...BASE_STATE,
-      tvsFilter: 'canonical',
-    })
+    const params = getTvsCompareChartParams(
+      [],
+      { ...BASE_CONFIG, tvsFilter: 'canonical' },
+      CHART_RANGE,
+    )
 
     expect(params.excludeRwaRestrictedTokens).toEqual(true)
   })
@@ -21,10 +22,11 @@ describe(getTvsCompareChartParams.name, () => {
   it('overrides the rwa exclusion while the restricted rwa filter is active', () => {
     // Excluding restricted RWAs while comparing them would query an
     // all-zero restricted RWA component for every project.
-    const params = getTvsCompareChartParams([], {
-      ...BASE_STATE,
-      tvsFilter: 'rwaRestricted',
-    })
+    const params = getTvsCompareChartParams(
+      [],
+      { ...BASE_CONFIG, tvsFilter: 'rwaRestricted' },
+      CHART_RANGE,
+    )
 
     expect(params.excludeRwaRestrictedTokens).toEqual(false)
   })

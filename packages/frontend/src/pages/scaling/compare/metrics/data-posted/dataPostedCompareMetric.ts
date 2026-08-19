@@ -1,5 +1,20 @@
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
 import type { ChartRange } from '~/utils/range/range'
+import type { CompareMetricDef } from '../types'
+
+export const dataPostedCompareMetric: CompareMetricDef = {
+  id: 'data-posted',
+  label: 'Data posted',
+  hasData: hasDataPostedData,
+  noDataLabel: 'No data posted tracking',
+  prefetch: async (helpers, projects, _config, chartRange) => {
+    await helpers.queryClient.prefetchQuery(
+      helpers.trpc.da.detailedChartWithProjectsRanges.queryOptions(
+        getDataPostedCompareChartParams(projects, chartRange),
+      ),
+    )
+  },
+}
 
 /**
  * Whether the project has DA tracking. The single source for the picker's

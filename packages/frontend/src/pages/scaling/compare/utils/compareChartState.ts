@@ -70,7 +70,8 @@ export type CompareRange = CompareRangeOption | { from: number; to: number }
  * The configuration of a single chart card: its metric plus every per-metric
  * control. Controls of inactive metrics are kept so switching a card's
  * metric back and forth preserves its settings; only the active metric's
- * controls are encoded in the URL.
+ * controls are encoded in the URL, by that metric's `urlControls` codec in
+ * `COMPARE_METRIC_DEFS`.
  */
 export interface CompareChartConfig {
   metric: CompareMetricId
@@ -85,13 +86,8 @@ export interface CompareChartConfig {
   excludeRwaRestrictedTokens: boolean
 }
 
-/**
- * A chart config with the page-level range resolved to concrete timestamps -
- * everything a single chart needs to query and render.
- */
-export type CompareChartClientConfig = CompareChartConfig & {
-  chartRange: ChartRange
-}
+/** The per-metric controls of a chart card, without the metric itself. */
+export type CompareChartControls = Omit<CompareChartConfig, 'metric'>
 
 export interface CompareChartState {
   /** Project slugs in selection order, shared by every chart. */
@@ -162,21 +158,6 @@ export function nextChartMetric(charts: CompareChartConfig[]): CompareMetricId {
     COMPARE_METRIC_IDS.find((metric) => !used.has(metric)) ??
     DEFAULT_COMPARE_METRIC
   )
-}
-
-/**
- * The exclude-restricted-RWA toggle conflicts with the Restricted RWAs
- * filter: combined they would render an all-zero chart. While that filter is
- * active the toggle is disabled and overridden to false; the stored value is
- * kept so switching the filter away restores the user's choice.
- */
-export function effectiveExcludeRwaRestrictedTokens(state: {
-  tvsFilter: CompareTvsFilter
-  excludeRwaRestrictedTokens: boolean
-}): boolean {
-  return state.tvsFilter === 'rwaRestricted'
-    ? false
-    : state.excludeRwaRestrictedTokens
 }
 
 export function compareRangeToChartRange(range: CompareRange): ChartRange {

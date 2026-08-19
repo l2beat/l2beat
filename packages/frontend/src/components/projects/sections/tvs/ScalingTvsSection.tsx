@@ -3,7 +3,6 @@ import { ProjectAssetCategoryTvsChart } from '~/components/chart/tvs/stacked/Pro
 import { ProjectBridgeTypeTvsChart } from '~/components/chart/tvs/stacked/ProjectBridgeTypeTvsChart'
 import { SelectedTokenContextProvider } from '~/components/chart/tvs/token/SelectedTokenContext'
 import type { ChartProject } from '~/components/core/chart/Chart'
-import { CompareProjectsLink } from '~/pages/scaling/compare/components/CompareProjectsLink'
 import { ScalingRwaRestrictedTokensContextProvider } from '~/pages/scaling/components/ScalingRwaRestrictedTokensContext'
 import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { ChartRange } from '~/utils/range/range'
@@ -23,7 +22,6 @@ export interface ScalingTvsSectionProps extends ProjectSectionProps {
   milestones: Milestone[]
   tvsInfo: ProjectTvsInfo
   tvsBreakdownUrl?: string
-  compareUrl?: string
   defaultRange: ChartRange
 }
 
@@ -33,7 +31,6 @@ export function ScalingTvsSection({
   tokens,
   tvsInfo,
   tvsBreakdownUrl,
-  compareUrl,
   defaultRange,
   ...sectionProps
 }: ScalingTvsSectionProps) {
@@ -41,16 +38,12 @@ export function ScalingTvsSection({
     <ProjectSection
       {...sectionProps}
       headerAccessory={
-        <div className="flex items-center gap-2 max-md:hidden">
-          {compareUrl && (
-            <CompareProjectsLink variant="section" href={compareUrl}>
-              Compare
-            </CompareProjectsLink>
-          )}
-          {tvsBreakdownUrl && (
-            <TvsBreakdownButton tvsBreakdownUrl={tvsBreakdownUrl} />
-          )}
-        </div>
+        tvsBreakdownUrl && (
+          <TvsBreakdownButton
+            tvsBreakdownUrl={tvsBreakdownUrl}
+            className="max-md:hidden"
+          />
+        )
       }
     >
       <ScalingRwaRestrictedTokensContextProvider>
@@ -74,15 +67,6 @@ export function ScalingTvsSection({
               tvsBreakdownUrl={tvsBreakdownUrl}
               tvsInfo={tvsInfo}
             />
-            {compareUrl && (
-              <CompareProjectsLink
-                variant="section"
-                href={compareUrl}
-                className="mt-3 md:hidden"
-              >
-                Compare with other projects
-              </CompareProjectsLink>
-            )}
           </SelectedTokenContextProvider>
         </TvsChartControlsContextProvider>
       </ScalingRwaRestrictedTokensContextProvider>

@@ -5,8 +5,8 @@ import type { CompareCostsUnit } from '../../utils/compareChartState'
 import type { CompareMetricControlsProps } from '../types'
 
 export function CostsCompareControls({
-  state,
-  setState,
+  config,
+  setConfig,
 }: CompareMetricControlsProps) {
   const isClient = useIsClient()
   if (!isClient) {
@@ -15,9 +15,9 @@ export function CostsCompareControls({
   return (
     <RadioGroup
       name="compareCostsUnit"
-      value={state.costsUnit}
+      value={config.costsUnit}
       onValueChange={(value) =>
-        setState((prev) => ({ ...prev, costsUnit: value as CompareCostsUnit }))
+        setConfig((prev) => ({ ...prev, costsUnit: value as CompareCostsUnit }))
       }
       variant="highlighted"
       className="h-9"

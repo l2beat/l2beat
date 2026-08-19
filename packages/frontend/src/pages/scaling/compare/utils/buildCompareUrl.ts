@@ -1,14 +1,9 @@
+import { COMPARE_METRIC_DEFS } from '../metrics/compareMetricDefs'
 import {
   type CompareChartConfig,
   type CompareChartState,
-  DEFAULT_COMPARE_ACTIVITY_UNIT,
-  DEFAULT_COMPARE_COSTS_UNIT,
-  DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS,
-  DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS,
   DEFAULT_COMPARE_METRIC,
   DEFAULT_COMPARE_RANGE,
-  DEFAULT_COMPARE_TVS_FILTER,
-  DEFAULT_COMPARE_TVS_UNIT,
 } from './compareChartState'
 
 /**
@@ -49,43 +44,12 @@ export function buildCompareUrl(
   return query ? `${path}?${query}` : path
 }
 
+/** The metric id plus the non-default controls of the metric's own codec. */
 function buildChartToken(config: CompareChartConfig): string {
-  const fields: string[] = [config.metric]
-  // Per-metric controls are only encoded for the metric they belong to.
-  if (
-    config.metric === 'activity' &&
-    config.activityUnit !== DEFAULT_COMPARE_ACTIVITY_UNIT
-  ) {
-    fields.push(`unit=${config.activityUnit}`)
-  }
-  if (
-    config.metric === 'costs' &&
-    config.costsUnit !== DEFAULT_COMPARE_COSTS_UNIT
-  ) {
-    fields.push(`unit=${config.costsUnit}`)
-  }
-  if (config.metric === 'tvs') {
-    if (config.tvsUnit !== DEFAULT_COMPARE_TVS_UNIT) {
-      fields.push(`unit=${config.tvsUnit}`)
-    }
-    if (config.tvsFilter !== DEFAULT_COMPARE_TVS_FILTER) {
-      fields.push(`filter=${config.tvsFilter}`)
-    }
-    if (
-      config.excludeAssociatedTokens !==
-      DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS
-    ) {
-      fields.push(`excludeAssociated=${config.excludeAssociatedTokens}`)
-    }
-    // The exclude-restricted-RWA toggle is disabled and overridden while
-    // the Restricted RWAs filter is active, so its value is not encoded.
-    if (
-      config.tvsFilter !== 'rwaRestricted' &&
-      config.excludeRwaRestrictedTokens !==
-        DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS
-    ) {
-      fields.push(`excludeRwa=${config.excludeRwaRestrictedTokens}`)
-    }
-  }
-  return fields.join(':')
+  const fields =
+    COMPARE_METRIC_DEFS[config.metric].urlControls?.serialize(config) ?? {}
+  return [
+    config.metric,
+    ...Object.entries(fields).map(([key, value]) => `${key}=${value}`),
+  ].join(':')
 }

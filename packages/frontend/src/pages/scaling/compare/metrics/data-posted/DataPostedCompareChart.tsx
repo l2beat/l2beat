@@ -4,34 +4,33 @@ import { useMemo } from 'react'
 import { useTRPC } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
 import {
-  type CompareChartPoint,
   CompareMetricLineChart,
+  toCompareChartPoints,
 } from '../../components/CompareMetricLineChart'
 import type { CompareMetricChartProps } from '../types'
-import { getDataPostedCompareChartParams } from './getDataPostedCompareChartParams'
+import { getDataPostedCompareChartParams } from './dataPostedCompareMetric'
 
 export function DataPostedCompareChart({
   projects,
-  state,
+  chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
   const { data, isLoading } = useQuery(
     trpc.da.detailedChartWithProjectsRanges.queryOptions(
-      getDataPostedCompareChartParams(projects, state.chartRange),
+      getDataPostedCompareChartParams(projects, chartRange),
     ),
   )
 
   const chartData = useMemo(
     () =>
-      data?.chart.map(([timestamp, valuesByProject]) => {
-        const point: CompareChartPoint = { timestamp }
-        for (const project of projects) {
-          // Projects without DA tracking are absent from the response and
-          // stay null, so they never render as an empty/zero series.
-          point[project.id] = valuesByProject[project.id] ?? null
-        }
-        return point
-      }),
+      data &&
+      // Projects without DA tracking are absent from the response and stay
+      // null, so they never render as an empty/zero series.
+      toCompareChartPoints(
+        data.chart,
+        projects,
+        ([, valuesByProject], id) => valuesByProject[id] ?? null,
+      ),
     [data, projects],
   )
 

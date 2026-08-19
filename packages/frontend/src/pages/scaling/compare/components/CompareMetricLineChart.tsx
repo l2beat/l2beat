@@ -16,10 +16,7 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import type { CompareProjectEntry } from '~/server/features/scaling/compare/getCompareProjectEntries'
-import {
-  useCompareChartHover,
-  useCompareChartId,
-} from './CompareChartHoverContext'
+import { useIsCompareChartHovered } from './CompareChartHoverContext'
 import { useCompareSeries } from './CompareSeriesContext'
 
 /**
@@ -29,6 +26,27 @@ import { useCompareSeries } from './CompareSeriesContext'
 export interface CompareChartPoint {
   timestamp: number
   [projectId: string]: number | null
+}
+
+/**
+ * Maps the rows of a `detailedChartWithProjectsRanges` response (a timestamp
+ * followed by per-project values) to chart points, one value per selected
+ * project. `getValue` returns `null` where the project has no data.
+ */
+export function toCompareChartPoints<
+  Row extends [timestamp: number, ...unknown[]],
+>(
+  rows: Row[],
+  projects: CompareProjectEntry[],
+  getValue: (row: Row, projectId: string) => number | null,
+): CompareChartPoint[] {
+  return rows.map((row) => {
+    const point: CompareChartPoint = { timestamp: row[0] }
+    for (const project of projects) {
+      point[project.id] = getValue(row, project.id)
+    }
+    return point
+  })
 }
 
 interface Props {
@@ -145,18 +163,11 @@ function CustomTooltip({
   renderTimestamp: (label: number) => ReactNode
 }) {
   const { meta } = useChart()
-  const { hoveredChartId } = useCompareChartHover()
-  const chartId = useCompareChartId()
+  const isHovered = useIsCompareChartHovered()
   // On a synced hover the follower charts show only the crosshair cursor -
   // one full tooltip per hover is plenty, and with many projects selected
   // several tall tooltips at once would cover the very charts being compared.
-  if (
-    hoveredChartId !== undefined &&
-    chartId !== undefined &&
-    hoveredChartId !== chartId
-  ) {
-    return null
-  }
+  if (!isHovered) return null
   if (!payload || typeof label !== 'number') return null
 
   const visible = payload.filter(

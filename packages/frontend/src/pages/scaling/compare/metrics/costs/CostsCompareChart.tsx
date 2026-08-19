@@ -6,40 +6,40 @@ import { useTRPC } from '~/trpc/React'
 import { formatRange } from '~/utils/dates'
 import { rangeToResolution } from '~/utils/range/range'
 import {
-  type CompareChartPoint,
   CompareMetricLineChart,
+  toCompareChartPoints,
 } from '../../components/CompareMetricLineChart'
 import type { CompareMetricChartProps } from '../types'
-import { getCostsCompareChartParams } from './getCostsCompareChartParams'
+import { getCostsCompareChartParams } from './costsCompareMetric'
 
 const UNIT_INDEX = { gas: 0, eth: 1, usd: 2 } as const
 
 export function CostsCompareChart({
   projects,
-  state,
+  config,
+  chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
   const { data, isLoading } = useQuery(
     trpc.costs.detailedChartWithProjectsRanges.queryOptions(
-      getCostsCompareChartParams(projects, state.chartRange),
+      getCostsCompareChartParams(projects, chartRange),
     ),
   )
-  const unit = state.costsUnit
+  const unit = config.costsUnit
 
   const chartData = useMemo(
     () =>
-      data?.chart.map(([timestamp, valuesByProject]) => {
-        const point: CompareChartPoint = { timestamp }
-        for (const project of projects) {
-          const values = valuesByProject[project.id]
-          point[project.id] = values ? values[UNIT_INDEX[unit]] : null
-        }
-        return point
-      }),
+      data &&
+      toCompareChartPoints(
+        data.chart,
+        projects,
+        ([, valuesByProject], id) =>
+          valuesByProject[id]?.[UNIT_INDEX[unit]] ?? null,
+      ),
     [data, projects, unit],
   )
 
-  const resolution = rangeToResolution(state.chartRange)
+  const resolution = rangeToResolution(chartRange)
 
   return (
     <CompareMetricLineChart
