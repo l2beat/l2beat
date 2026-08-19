@@ -76,25 +76,22 @@ export async function getPrivacyProjectEntry(
   helpers: SsrHelpers,
 ): Promise<ProjectPrivacyEntry> {
   const defaultChartRange = optionToRange('1y')
-  const [
-    contractUtils,
-    allProjects,
-    tvs,
-    totalValueLockedUsd,
-  ] = await Promise.all([
-    getContractUtils(),
-    ps.getProjects({
-      optional: [
-        'display',
-        'daBridge',
-        'scalingInfo',
-        'daLayer',
-        'privacyInfo',
-      ],
-    }),
-    get7dTvsBreakdown({ type: 'all' }),
-    getTotalValueLockedUsd(details, helpers, defaultChartRange),
-  ])
+  const [contractUtils, allProjects, tvs, totalValueLockedUsd] =
+    await Promise.all([
+      getContractUtils(),
+      ps.getProjects({
+        optional: [
+          'display',
+          'daBridge',
+          'scalingInfo',
+          'daLayer',
+          'privacyInfo',
+          'defiInfo',
+        ],
+      }),
+      get7dTvsBreakdown({ type: 'all' }),
+      getTotalValueLockedUsd(details, helpers, defaultChartRange),
+    ])
 
   const permissionsSection = getPermissionsSection(
     {

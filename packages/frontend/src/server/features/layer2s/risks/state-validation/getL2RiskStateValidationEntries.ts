@@ -57,6 +57,7 @@ export async function getL2RiskStateValidationEntries() {
         'scalingInfo',
         'daLayer',
         'privacyInfo',
+        'defiInfo',
       ],
     }),
     getContractUtils(),

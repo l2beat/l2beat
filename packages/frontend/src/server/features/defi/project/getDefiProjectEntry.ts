@@ -62,23 +62,20 @@ export async function getDefiProjectEntry(
 
   const defaultChartRange = optionToRange('1y')
   const icon = manifest.getUrl(`/icons/${project.slug}.png`)
-  const [
-    contractUtils,
-    projectsChangeReport,
-    dependencyProjectsById,
-  ] = await Promise.all([
-    getContractUtils(),
-    getProjectsChangeReport(),
-    getDefiDependencyProjectsById(project.externalDependencies),
-    project.tvsConfig !== undefined
-      ? helpers.queryClient.prefetchQuery(
-          helpers.trpc.tvs.chartByProjects.queryOptions({
-            projectIds: [project.id],
-            range: defaultChartRange,
-          }),
-        )
-      : undefined,
-  ])
+  const [contractUtils, projectsChangeReport, dependencyProjectsById] =
+    await Promise.all([
+      getContractUtils(),
+      getProjectsChangeReport(),
+      getDefiDependencyProjectsById(project.externalDependencies),
+      project.tvsConfig !== undefined
+        ? helpers.queryClient.prefetchQuery(
+            helpers.trpc.tvs.chartByProjects.queryOptions({
+              projectIds: [project.id],
+              range: defaultChartRange,
+            }),
+          )
+        : undefined,
+    ])
 
   const isUnderReview = !!project.statuses.reviewStatus
   const permissionsSection = getPermissionsSection(
