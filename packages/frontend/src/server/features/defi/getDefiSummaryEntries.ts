@@ -1,9 +1,9 @@
 import type { Project, ProjectDefiCategory } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
+import { optionToRange } from '~/utils/range/range'
 import {
   type DefiDependency,
   type DefiDependencyProject,
@@ -129,18 +129,18 @@ async function getTotalValueLockedByProject(
     )
   }
 
-  const tokenValues = await getDb().tvsTokenValue.getLastNonZeroValueByProjects(
-    UnixTime.now(),
+  const values = await getDb().tvsTokenValue.getSummedByProjectForRanges(
     trackedIds,
+    [optionToRange('3d')],
+    {
+      excludeAssociatedTokens: false,
+      excludeRwaRestrictedTokens: false,
+    },
   )
 
   const tvlByProject = new Map<string, number>()
-  for (const tokenValue of tokenValues) {
-    tvlByProject.set(
-      tokenValue.projectId,
-      (tvlByProject.get(tokenValue.projectId) ?? 0) +
-        tokenValue.valueForProject,
-    )
+  for (const row of values) {
+    tvlByProject.set(row.project, row.value)
   }
   return tvlByProject
 }
