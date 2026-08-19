@@ -36,7 +36,7 @@ export async function getL2CompareData(
           'Compare Ethereum scaling projects across metrics like value secured and activity, on one or more charts.',
         url: req.originalUrl,
         openGraph: {
-          image: '/meta-images/layer2s/summary/opengraph-image.png',
+          image: '/meta-images/layer2s/compare/opengraph-image.png',
         },
       }),
     },

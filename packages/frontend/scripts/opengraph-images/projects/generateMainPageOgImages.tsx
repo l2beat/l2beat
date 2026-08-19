@@ -52,6 +52,10 @@ const mainPages: MainPage[] = [
   },
   {
     type: 'layer2s',
+    title: 'Compare',
+  },
+  {
+    type: 'layer2s',
     title: 'Upcoming',
   },
   {
