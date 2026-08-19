@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import mean from 'lodash/mean'
 import {
   extractDiffBlockSpans,
   isHighSeverityDiffBody,
@@ -50,19 +49,27 @@ export interface OssificationContractBreakdown {
 }
 
 export interface OssificationFactor {
-  /** 0-100, mean maturity over the contract perimeter */
+  /** 0-100 maturity of the project-wide critical perimeter */
   score: number
+  /** 0..1 maturity of the project-wide critical perimeter */
+  maturity: number
+  /** Current project TVS in USD. Null when TVS data is unavailable. */
+  currentTvs: number | null
+  /** Current TVS multiplied by project maturity. This expresses the
+   *  accumulated adversarial exposure in present-day USD terms. */
+  implicitBugBounty: number | null
+  /** The project clock starts at the most recent deployment or critical
+   *  change anywhere in the critical perimeter. */
+  projectClockStart: number | null
+  projectAgeSeconds: number | null
   /** Timestamp of the last observed critical change, null if none ever */
   lastCriticalChange: number | null
   lastCriticalChangeAgeSeconds: number | null
-  /** The contract whose clock started most recently */
-  weakestLink: { name: string; address: string; ageSeconds: number } | null
   /** 24h-clustered critical change events per year, trailing window */
   criticalChangesPerYear: number
   clusteredEventCount: number
   windowSeconds: number
   contracts: OssificationContractBreakdown[]
-  unknownAgeCount: number
 }
 
 interface ContractRecord {
@@ -74,6 +81,7 @@ export function getOssificationFactor(
   entries: OssificationEntry[],
   updates: DiscoveryUpdate[],
   now: number = UnixTime.now(),
+  currentTvs?: number,
 ): OssificationFactor | undefined {
   if (entries.length === 0) {
     return undefined
@@ -98,25 +106,29 @@ export function getOssificationFactor(
 
   const breakdowns: OssificationContractBreakdown[] = []
   const changeEvents: number[] = []
-  let unknownAgeCount = 0
   for (const record of records.values()) {
     const breakdown = getContractBreakdown(record, now)
     breakdowns.push(breakdown)
-    if (breakdown.clockStart === null) {
-      unknownAgeCount++
-    }
     changeEvents.push(
       ...record.entry.upgradeTimestamps.slice(1),
       ...record.diffEventTimestamps,
     )
   }
 
-  const maturities = breakdowns
-    .map((breakdown) => breakdown.maturity)
-    .filter((maturity) => maturity !== null)
-  if (maturities.length === 0) {
-    return undefined
-  }
+  const projectClockStart = getProjectClockStart(breakdowns)
+  if (projectClockStart === null) return undefined
+
+  const projectAgeSeconds = Math.max(0, now - projectClockStart)
+  const hasUnverifiedContract = breakdowns.some(
+    (breakdown) => !breakdown.isVerified,
+  )
+  const maturity = hasUnverifiedContract
+    ? 0
+    : 1 - Math.exp(-projectAgeSeconds / OSSIFICATION_LAMBDA_SECONDS)
+  const validCurrentTvs =
+    currentTvs !== undefined && Number.isFinite(currentTvs) && currentTvs >= 0
+      ? currentTvs
+      : null
 
   breakdowns.sort((a, b) => {
     if (a.maturity === null) return 1
@@ -139,19 +151,23 @@ export function getOssificationFactor(
 
   const lastCriticalChange = changeEvents.at(-1) ?? null
   return {
-    score: Math.round(mean(maturities) * 100),
+    score: Math.round(maturity * 100),
+    maturity,
+    currentTvs: validCurrentTvs,
+    implicitBugBounty:
+      validCurrentTvs !== null ? validCurrentTvs * maturity : null,
+    projectClockStart,
+    projectAgeSeconds,
     lastCriticalChange,
     lastCriticalChangeAgeSeconds:
       lastCriticalChange !== null
         ? Math.max(0, now - lastCriticalChange)
         : null,
-    weakestLink: getWeakestLink(breakdowns, now),
     criticalChangesPerYear:
       clusteredEventCount / (windowSeconds / SECONDS_PER_YEAR),
     clusteredEventCount,
     windowSeconds,
     contracts: breakdowns,
-    unknownAgeCount,
   }
 }
 
@@ -254,23 +270,18 @@ function getObservationStart(
   return start
 }
 
-function getWeakestLink(
+function getProjectClockStart(
   breakdowns: OssificationContractBreakdown[],
-  now: number,
-): OssificationFactor['weakestLink'] {
-  let weakest: OssificationContractBreakdown | undefined
+): number | null {
+  let projectClockStart: number | null = null
   for (const breakdown of breakdowns) {
-    if (breakdown.clockStart === null) continue
-    if (!weakest || breakdown.clockStart > (weakest.clockStart ?? 0)) {
-      weakest = breakdown
-    }
+    // Every critical contract is part of the project-wide perimeter. If any
+    // individual clock is unknown, the age of the complete perimeter is too.
+    if (breakdown.clockStart === null) return null
+    projectClockStart = Math.max(
+      projectClockStart ?? Number.NEGATIVE_INFINITY,
+      breakdown.clockStart,
+    )
   }
-  if (!weakest || weakest.clockStart === null) {
-    return null
-  }
-  return {
-    name: weakest.name,
-    address: weakest.address,
-    ageSeconds: Math.max(0, now - weakest.clockStart),
-  }
+  return projectClockStart
 }

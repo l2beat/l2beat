@@ -1,4 +1,4 @@
-import { formatSeconds } from '@l2beat/shared-pure'
+import { formatCurrency, formatSeconds } from '@l2beat/shared-pure'
 import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 
 const IDS = [
@@ -16,9 +16,13 @@ const IDS = [
   'starknet',
 ]
 
-function main() {
-  for (const id of IDS) {
-    const result = getProjectOssification(id)
+async function main() {
+  const requestedIds = process.argv
+    .slice(2)
+    .filter((arg) => !arg.startsWith('--'))
+  const ids = requestedIds.length > 0 ? requestedIds : IDS
+  for (const id of ids) {
+    const result = await getProjectOssification(id)
     if (!result) {
       console.log(`${id}: no data`)
       continue
@@ -27,6 +31,16 @@ function main() {
       [
         id.padEnd(14),
         `score ${String(result.score).padStart(3)}`,
+        `bounty ${
+          result.implicitBugBounty !== null
+            ? formatCurrency(result.implicitBugBounty, 'usd').padStart(9)
+            : 'n/a'.padStart(9)
+        }`,
+        `unchanged ${
+          result.projectAgeSeconds !== null
+            ? formatSeconds(result.projectAgeSeconds).padEnd(18)
+            : 'unknown'.padEnd(18)
+        }`,
         `lastChange ${
           result.lastCriticalChangeAgeSeconds !== null
             ? formatSeconds(result.lastCriticalChangeAgeSeconds).padEnd(18)
@@ -35,11 +49,6 @@ function main() {
         `rate ${result.criticalChangesPerYear.toFixed(1)}/yr`,
         `events(3y) ${result.clusteredEventCount}`,
         `contracts ${result.contracts.length}`,
-        `weakest: ${result.weakestLink?.name} (${
-          result.weakestLink
-            ? formatSeconds(result.weakestLink.ageSeconds)
-            : '?'
-        })`,
       ].join('  '),
     )
     if (process.argv.includes('--perimeter')) {
@@ -51,4 +60,7 @@ function main() {
   }
 }
 
-main()
+main().catch((error) => {
+  console.error(error)
+  process.exit(1)
+})

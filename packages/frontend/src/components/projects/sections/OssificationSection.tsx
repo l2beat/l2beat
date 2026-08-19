@@ -1,4 +1,4 @@
-import { formatSeconds } from '@l2beat/shared-pure'
+import { formatCurrency, formatSeconds } from '@l2beat/shared-pure'
 import { Badge } from '~/components/badge/Badge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
@@ -6,7 +6,6 @@ import type {
   OssificationContractBreakdown,
   OssificationFactor,
 } from '~/server/features/projects/ossification/getOssificationFactor'
-import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
@@ -23,27 +22,35 @@ export function OssificationSection({
     <ProjectSection {...sectionProps}>
       <div className="flex flex-col gap-4">
         <p className="text-secondary text-sm leading-relaxed">
-          The ossification factor measures how battle-tested the code securing
-          this project is. Every contract in the critical perimeter carries a
-          clock that starts at its deployment and resets on every critical
-          change — implementation upgrades and high-severity value changes such
-          as verifier keys or permission sets. Code that secures value for years
-          without changing earns a high score; frequently changed code is
-          unproven, since exploits historically cluster in the weeks after a
-          change. Changes within 24 hours count as a single event. The perimeter
-          is the set of contracts classified as critical by our research team:
-          those whose compromise can lead to loss or freezing of user funds,
-          directly or through permissions they hold.
+          The ossification factor measures how battle-tested the complete set of
+          code securing this project is. Contracts classified as critical by our
+          research team form one project-wide perimeter. Deploying or critically
+          changing any contract in it resets the project clock. A critical
+          change is an implementation upgrade or a high-severity value change,
+          such as a verifier key or permission set. Changes within 24 hours
+          count as one event. The score grows as the whole perimeter remains
+          unchanged; the accumulated implicit bug bounty multiplies that
+          maturity by current project TVS. It estimates adversarial exposure in
+          present-day dollars, not a literal reward.
         </p>
-        <ChartStats className="md:grid-cols-3 lg:grid-cols-3">
+        <ChartStats className="md:grid-cols-2 lg:grid-cols-4">
           <ChartStatsItem label="Ossification score" className="max-md:h-7">
             <span className="tabular-nums">{ossification.score} / 100</span>
           </ChartStatsItem>
-          <ChartStatsItem label="Last critical change" className="max-md:h-7">
-            {ossification.lastCriticalChangeAgeSeconds !== null ? (
-              `${formatSeconds(ossification.lastCriticalChangeAgeSeconds)} ago`
+          <ChartStatsItem label="Implicit bug bounty" className="max-md:h-7">
+            {ossification.implicitBugBounty !== null ? (
+              <span className="tabular-nums">
+                {formatCurrency(ossification.implicitBugBounty, 'usd')}
+              </span>
             ) : (
-              <span>None observed</span>
+              <NotApplicableBadge />
+            )}
+          </ChartStatsItem>
+          <ChartStatsItem label="Perimeter unchanged" className="max-md:h-7">
+            {ossification.projectAgeSeconds !== null ? (
+              formatSeconds(ossification.projectAgeSeconds)
+            ) : (
+              <NotApplicableBadge />
             )}
           </ChartStatsItem>
           <ChartStatsItem
@@ -59,25 +66,7 @@ export function OssificationSection({
             )}
           </ChartStatsItem>
         </ChartStats>
-        {ossification.weakestLink && (
-          <p className="text-secondary text-xs">
-            Youngest code in the perimeter:{' '}
-            <span className="font-medium text-primary">
-              {ossification.weakestLink.name}
-            </span>{' '}
-            ({formatSeconds(ossification.weakestLink.ageSeconds)} old)
-          </p>
-        )}
         <ContractBreakdownTable contracts={ossification.contracts} />
-        {ossification.unknownAgeCount > 0 && (
-          <p className="text-secondary text-xs">
-            {ossification.unknownAgeCount}{' '}
-            {ossification.unknownAgeCount === 1 ? 'contract' : 'contracts'}{' '}
-            without a known deployment or change timestamp{' '}
-            {ossification.unknownAgeCount === 1 ? 'is' : 'are'} excluded from
-            the score.
-          </p>
-        )}
       </div>
     </ProjectSection>
   )
@@ -99,12 +88,13 @@ function ContractBreakdownTable({
           <thead>
             <tr className="text-left text-2xs text-secondary uppercase">
               <th className="px-4 py-2 font-medium">Contract</th>
-              <th className="px-4 py-2 font-medium">Clock started</th>
+              <th className="px-4 py-2 font-medium">
+                Individual clock started
+              </th>
               <th className="px-4 py-2 text-right font-medium">Age</th>
               <th className="px-4 py-2 text-right font-medium">
                 Critical changes
               </th>
-              <th className="px-4 py-2 text-right font-medium">Maturity</th>
             </tr>
           </thead>
           <tbody>
@@ -147,23 +137,6 @@ function ContractBreakdownTable({
                 </td>
                 <td className="px-4 py-2 text-right tabular-nums">
                   {contract.criticalChangeCount}
-                </td>
-                <td
-                  className={cn(
-                    'px-4 py-2 text-right font-medium tabular-nums',
-                    contract.maturity !== null &&
-                      contract.maturity < 0.25 &&
-                      'text-negative',
-                    contract.maturity !== null &&
-                      contract.maturity >= 0.75 &&
-                      'text-positive',
-                  )}
-                >
-                  {contract.maturity !== null ? (
-                    `${Math.round(contract.maturity * 100)}%`
-                  ) : (
-                    <NotApplicableBadge />
-                  )}
                 </td>
               </tr>
             ))}

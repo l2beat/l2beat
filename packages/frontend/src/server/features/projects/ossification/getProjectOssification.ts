@@ -1,5 +1,9 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { existsSync, readFileSync, statSync } from 'fs'
 import path from 'path'
+import { env } from '~/env'
+import { getDb } from '~/server/database'
+import { getTvsTargetTimestamp } from '../../scaling/tvs/utils/getTvsTargetTimestamp'
 import { getDiscoveryUpdates } from '../recent-changes/getDiscoveryUpdates'
 import {
   getOssificationFactor,
@@ -19,9 +23,9 @@ const fileCache = new Map<string, { mtimeMs: number; parsed: unknown }>()
  * override). There is no derived fallback — unclassified projects have
  * no ossification factor.
  */
-export function getProjectOssification(
+export async function getProjectOssification(
   projectId: string,
-): OssificationFactor | undefined {
+): Promise<OssificationFactor | undefined> {
   if (!PROJECT_ID_RE.test(projectId)) {
     return undefined
   }
@@ -42,9 +46,13 @@ export function getProjectOssification(
     return undefined
   }
 
+  const currentTvs = await getCurrentProjectTvs(projectId)
+
   return getOssificationFactor(
     critical.map(toOssificationEntry),
     getDiscoveryUpdates(projectId, Number.POSITIVE_INFINITY),
+    UnixTime.now(),
+    currentTvs,
   )
 }
 
@@ -58,6 +66,23 @@ function toOssificationEntry(
     sinceTimestamp: entry.sinceTimestamp,
     upgradeTimestamps: parsePastUpgrades(entry.values?.$pastUpgrades),
   }
+}
+
+async function getCurrentProjectTvs(
+  projectId: string,
+): Promise<number | undefined> {
+  if (env.MOCK) return undefined
+
+  const tokenValues = await getDb().tvsTokenValue.getByProjectAtOrBefore(
+    projectId,
+    getTvsTargetTimestamp(),
+  )
+  if (tokenValues.length === 0) return undefined
+
+  return tokenValues.reduce(
+    (sum, tokenValue) => sum + tokenValue.valueForProject,
+    0,
+  )
 }
 
 function parsePastUpgrades(value: unknown): number[] {

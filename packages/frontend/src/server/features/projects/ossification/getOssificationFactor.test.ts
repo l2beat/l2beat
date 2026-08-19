@@ -93,9 +93,9 @@ describe(getOssificationFactor.name, () => {
     )
     // m(4y) = 1 - e^-2 = 0.8647
     expect(result?.score).toEqual(86)
+    expect(result?.projectAgeSeconds).toEqual(4 * YEAR)
     expect(result?.lastCriticalChange).toEqual(null)
     expect(result?.criticalChangesPerYear).toEqual(0)
-    expect(result?.weakestLink?.ageSeconds).toEqual(4 * YEAR)
     expect(result?.contracts[0]?.hasChanged).toEqual(false)
   })
 
@@ -121,7 +121,7 @@ describe(getOssificationFactor.name, () => {
     )
     expect(result?.lastCriticalChange).toEqual(NOW - 30 * DAY)
     expect(result?.contracts[0]?.criticalChangeCount).toEqual(1)
-    expect(result?.weakestLink?.ageSeconds).toEqual(30 * DAY)
+    expect(result?.projectAgeSeconds).toEqual(30 * DAY)
     // m(30d) is tiny
     expect(result?.score ?? 100).toBeLessThan(10)
   })
@@ -176,7 +176,7 @@ describe(getOssificationFactor.name, () => {
     expect(result?.contracts[0]?.criticalChangeCount).toEqual(1)
   })
 
-  it('scores unverified contracts as zero maturity', () => {
+  it('scores the whole perimeter as zero when a critical contract is unverified', () => {
     const result = getOssificationFactor(
       [
         entry({ isVerified: false, sinceTimestamp: NOW - 4 * YEAR }),
@@ -189,12 +189,60 @@ describe(getOssificationFactor.name, () => {
       [],
       NOW,
     )
-    // mean(0, 0.8647) = 0.432
-    expect(result?.score).toEqual(43)
+    expect(result?.score).toEqual(0)
     expect(result?.contracts[0]?.maturity).toEqual(0)
   })
 
-  it('excludes contracts without any timestamp from the score', () => {
+  it('uses the newest critical contract clock for the whole project', () => {
+    const result = getOssificationFactor(
+      [
+        entry({ sinceTimestamp: NOW - 4 * YEAR }),
+        entry({
+          address: ADDRESS_B,
+          name: 'Other',
+          sinceTimestamp: NOW,
+        }),
+      ],
+      [],
+      NOW,
+    )
+    expect(result?.score).toEqual(0)
+    expect(result?.projectClockStart).toEqual(NOW)
+    expect(result?.projectAgeSeconds).toEqual(0)
+  })
+
+  it('applies a change in any critical contract to the whole project', () => {
+    const result = getOssificationFactor(
+      [
+        entry({ sinceTimestamp: NOW - 4 * YEAR }),
+        entry({
+          address: ADDRESS_B,
+          name: 'Other',
+          sinceTimestamp: NOW - 4 * YEAR,
+        }),
+      ],
+      [update(NOW - 30 * DAY, highSeverityBlock(ADDRESS_A))],
+      NOW,
+    )
+    expect(result?.projectClockStart).toEqual(NOW - 30 * DAY)
+    expect(result?.projectAgeSeconds).toEqual(30 * DAY)
+    expect(result?.score ?? 100).toBeLessThan(10)
+  })
+
+  it('expresses maturity against current project TVS in USD', () => {
+    const result = getOssificationFactor(
+      [entry({ sinceTimestamp: NOW - 4 * YEAR })],
+      [],
+      NOW,
+      100,
+    )
+    const maturity = 1 - Math.exp(-2)
+    expect(result?.currentTvs).toEqual(100)
+    expect(result?.maturity).toEqual(maturity)
+    expect(result?.implicitBugBounty).toEqual(100 * maturity)
+  })
+
+  it('does not score a perimeter with an unknown contract clock', () => {
     const result = getOssificationFactor(
       [
         entry({ sinceTimestamp: NOW - 4 * YEAR }),
@@ -203,8 +251,7 @@ describe(getOssificationFactor.name, () => {
       [],
       NOW,
     )
-    expect(result?.score).toEqual(86)
-    expect(result?.unknownAgeCount).toEqual(1)
+    expect(result).toEqual(undefined)
   })
 })
 

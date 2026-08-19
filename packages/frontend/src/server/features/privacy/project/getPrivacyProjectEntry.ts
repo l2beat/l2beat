@@ -99,6 +99,7 @@ export async function getPrivacyProjectEntry(
     tvs,
     zkCatalogProjects,
     totalValueLockedUsd,
+    ossification,
   ] = await Promise.all([
     getContractUtils(),
     ps.getProjects({
@@ -118,6 +119,7 @@ export async function getPrivacyProjectEntry(
       select: ['zkCatalogInfo'],
     }),
     getTotalValueLockedUsd(details, helpers, defaultChartRange),
+    getProjectOssification(details.id),
   ])
 
   const permissionsSection = getPermissionsSection(
@@ -281,7 +283,6 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  const ossification = getProjectOssification(details.id)
   if (ossification) {
     sections.push({
       type: 'OssificationSection',

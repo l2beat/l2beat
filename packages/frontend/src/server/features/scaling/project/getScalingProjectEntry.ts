@@ -191,6 +191,7 @@ export async function getScalingProjectEntry(
     allProjectsWithContracts,
     allProjects,
     interopProjects,
+    ossification,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
@@ -215,6 +216,7 @@ export async function getScalingProjectEntry(
     ps.getProjects({
       select: ['interopConfig'],
     }),
+    getProjectOssification(project.id),
   ])
 
   const projectLiveness = liveness[project.id]
@@ -693,7 +695,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const ossification = getProjectOssification(project.id)
   if (ossification) {
     sections.push({
       type: 'OssificationSection',
