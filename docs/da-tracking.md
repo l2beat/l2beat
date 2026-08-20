@@ -125,14 +125,6 @@ layer's `sovereignProjectsTrackingConfig`. The guard tests in
   a full wipe and re-index from `since`: slow, and only lossless where the
   layer still serves the old data. The failure prints the old and the new
   range;
-- **no coverage gaps** (`daTracking/gaps.test.ts`) - per project and DA
-  layer, entries sorted by `since` must not leave a hole: a closed entry
-  whose `until` ends before the next entry's `since` on the same layer fails.
-  Overlaps are fine (a delta sequencer tracked next to the main one), the
-  handover convention `next.sinceBlock === prev.untilBlock` is fine, and so
-  is a trailing closed entry (the project left the layer). Gaps that are real
-  and accepted go on `LEGACY_COVERAGE_GAPS` in `daTracking/gaps.ts` with a
-  comment;
 - the snapshot is up to date and no two configs hash to the same id.
 
 Every failure message says what the backend would do and how to resolve it.

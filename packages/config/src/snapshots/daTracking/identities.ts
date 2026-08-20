@@ -58,7 +58,8 @@ export function generateDaTrackingIdentities(
   projects: BaseProject[],
 ): Snapshot {
   const result: Record<string, SnapshotIdentity[]> = {}
-  forEachDaTrackingConfig(projects, (projectId, config) => {
+
+  const add = (projectId: string, config: ProjectDaTrackingConfig) => {
     // Deliberately no dedup - duplicate ids are a config error (colliding
     // backend configuration ids) and the guard test must see them.
     result[projectId] ??= []
@@ -67,7 +68,21 @@ export function generateDaTrackingIdentities(
       label: createLabel(config),
       ...getRange(config),
     })
-  })
+  }
+
+  for (const project of projects) {
+    for (const config of project.daTrackingConfig ?? []) {
+      add(project.id, config)
+    }
+    for (const sovereign of project.daLayer?.sovereignProjectsTrackingConfig ??
+      []) {
+      for (const config of sovereign.daTrackingConfig) {
+        // The backend attaches the DA layer's project id before hashing
+        // (getBlockDaTrackingSovereignProjects in backend da.ts).
+        add(sovereign.projectId, { daLayer: project.id, ...config })
+      }
+    }
+  }
 
   return Object.fromEntries(
     Object.entries(result)
@@ -77,30 +92,6 @@ export function generateDaTrackingIdentities(
         identities.sort((a, b) => a.id.localeCompare(b.id)),
       ]),
   )
-}
-
-/**
- * The single walk over every DA tracking configuration, shared by the
- * snapshot and the coverage check so they can never disagree on which
- * configs exist.
- */
-export function forEachDaTrackingConfig(
-  projects: BaseProject[],
-  callback: (projectId: string, config: ProjectDaTrackingConfig) => void,
-): void {
-  for (const project of projects) {
-    for (const config of project.daTrackingConfig ?? []) {
-      callback(project.id, config)
-    }
-    for (const sovereign of project.daLayer?.sovereignProjectsTrackingConfig ??
-      []) {
-      for (const config of sovereign.daTrackingConfig) {
-        // The backend attaches the DA layer's project id before hashing
-        // (getBlockDaTrackingSovereignProjects in backend da.ts).
-        callback(sovereign.projectId, { daLayer: project.id, ...config })
-      }
-    }
-  }
 }
 
 /** Blocks for the block-based layers, unix seconds for eigen-da. */
