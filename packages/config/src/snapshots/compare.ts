@@ -170,7 +170,7 @@ export function compareProject(
   }
   if (rangeChanges.length) {
     lines.push(
-      'On deploy the backend re-syncs a configuration whose range moved to the new range and drops what it indexed outside it.',
+      'On deploy the backend trims the indexed data to the new range (lowering since wipes and re-indexes the configuration from the new start).',
       domain.rangeChangeRecipe,
     )
   }
