@@ -12,12 +12,13 @@ import { getDataPostedCompareChartParams } from './dataPostedCompareMetric'
 
 export function DataPostedCompareChart({
   projects,
+  queryProjects,
   chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
   const { data, isLoading } = useQuery(
     trpc.da.detailedChartWithProjectsRanges.queryOptions(
-      getDataPostedCompareChartParams(projects, chartRange),
+      getDataPostedCompareChartParams(queryProjects, chartRange),
     ),
   )
 

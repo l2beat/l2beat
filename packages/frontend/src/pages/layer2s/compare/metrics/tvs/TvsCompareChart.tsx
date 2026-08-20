@@ -27,13 +27,14 @@ const TVS_FILTER_VALUE_INDEX: Record<CompareTvsFilter, number> = {
 
 export function TvsCompareChart({
   projects,
+  queryProjects,
   config,
   chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
   const { data, isLoading } = useQuery(
     trpc.tvs.detailedChartWithProjectsRanges.queryOptions(
-      getTvsCompareChartParams(projects, config, chartRange),
+      getTvsCompareChartParams(queryProjects, config, chartRange),
     ),
   )
   const unit = config.tvsUnit

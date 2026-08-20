@@ -153,6 +153,8 @@ export function CompareMetricLineChart({
   )
 }
 
+const MAX_TOOLTIP_ROWS = 10
+
 function CustomTooltip({
   payload,
   label,
@@ -179,6 +181,10 @@ function CustomTooltip({
   )
   if (visible.length === 0) return null
 
+  const sorted = [...visible].sort((a, b) => (b.value ?? 0) - (a.value ?? 0))
+  const shown = sorted.slice(0, MAX_TOOLTIP_ROWS)
+  const hiddenCount = sorted.length - shown.length
+
   return (
     <ChartTooltipWrapper>
       <div className="flex w-[200px] flex-col [@media(min-width:600px)]:w-60">
@@ -186,33 +192,36 @@ function CustomTooltip({
           {renderTimestamp(label)}
         </div>
         <div className="mt-2 flex flex-col gap-2">
-          {[...visible]
-            .sort((a, b) => (b.value ?? 0) - (a.value ?? 0))
-            .map((entry) => {
-              const config = entry.name ? meta[entry.name] : undefined
-              if (!config) return null
-              return (
-                <div
-                  key={entry.name}
-                  className="flex items-center justify-between gap-x-3"
-                >
-                  <div className="flex items-center gap-1">
-                    <ChartDataIndicator
-                      backgroundColor={config.color}
-                      type={config.indicatorType}
-                    />
-                    <span className="font-medium text-label-value-14">
-                      {config.label}
-                    </span>
-                  </div>
-                  <span className="whitespace-nowrap font-medium text-label-value-15 text-primary tabular-nums">
-                    {entry.value !== null && entry.value !== undefined
-                      ? formatValue(entry.value)
-                      : 'No data'}
+          {shown.map((entry) => {
+            const config = entry.name ? meta[entry.name] : undefined
+            if (!config) return null
+            return (
+              <div
+                key={entry.name}
+                className="flex items-center justify-between gap-x-3"
+              >
+                <div className="flex items-center gap-1">
+                  <ChartDataIndicator
+                    backgroundColor={config.color}
+                    type={config.indicatorType}
+                  />
+                  <span className="font-medium text-label-value-14">
+                    {config.label}
                   </span>
                 </div>
-              )
-            })}
+                <span className="whitespace-nowrap font-medium text-label-value-15 text-primary tabular-nums">
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatValue(entry.value)
+                    : 'No data'}
+                </span>
+              </div>
+            )
+          })}
+          {hiddenCount > 0 && (
+            <div className="font-medium text-label-value-14 text-secondary">
+              +{hiddenCount} more
+            </div>
+          )}
         </div>
       </div>
     </ChartTooltipWrapper>

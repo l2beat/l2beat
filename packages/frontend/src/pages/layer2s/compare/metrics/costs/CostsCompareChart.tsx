@@ -16,13 +16,14 @@ const UNIT_INDEX = { gas: 0, eth: 1, usd: 2 } as const
 
 export function CostsCompareChart({
   projects,
+  queryProjects,
   config,
   chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
   const { data, isLoading } = useQuery(
     trpc.costs.detailedChartWithProjectsRanges.queryOptions(
-      getCostsCompareChartParams(projects, chartRange),
+      getCostsCompareChartParams(queryProjects, chartRange),
     ),
   )
   const unit = config.costsUnit

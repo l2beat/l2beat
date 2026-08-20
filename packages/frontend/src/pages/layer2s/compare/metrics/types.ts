@@ -10,6 +10,7 @@ import type {
 
 export interface CompareMetricChartProps {
   projects: CompareProjectEntry[]
+  queryProjects: CompareProjectEntry[]
   config: CompareChartConfig
   chartRange: ChartRange
 }
