@@ -107,7 +107,9 @@ export const tornadoCash: BaseProject = {
   discoveryInfo: getDiscoveryInfo([discovery]),
   statuses: {
     yellowWarning: undefined,
-    redWarning: undefined,
+    redWarning: {
+      text: 'The tornado.cash website linked from the official project GitHub is malicious. Using it will result in the loss of deposited funds.',
+    },
     emergencyWarning: undefined,
     reviewStatus: undefined,
     unverifiedContracts: [],

@@ -1,0 +1,1123 @@
+{
+  "name": "privacy-boost",
+  "timestamp": 1786976781,
+  "configHash": "0xfcad90424a23dfb4083cac1ef89f84952973865c1a58e76329f6cf680d6b3af0",
+  "entries": [
+    {
+      "address": "oeth:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "TokenRegistryProxyAdmin",
+      "address": "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "description": "Admin contract of the TokenRegistry proxy.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6",
+          "role": "admin"
+        }
+      ],
+      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
+      "sinceTimestamp": 1776186485,
+      "sinceBlock": 150293854,
+      "values": {
+        "$immutable": true,
+        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "AuthRegistry",
+      "address": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
+      "type": "Contract",
+      "template": "privacy-boost/AuthRegistry",
+      "sourceHashes": [
+        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
+        "0x6428f3cd5084b5378b6215a3d5732d338b7579e92f92b364ee6f1db1cd9c9f16"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Registry of account authorization keys for the PrivacyBoost pool. Accounts register BabyJubJub approval public keys into Merkle trees with EIP-712 owner signatures (submitted directly or through allowed relays), and can rotate or revoke them. PrivacyBoost snapshots the tree roots and epoch proofs validate spend authorization against them.",
+      "ignoreInWatchMode": [
+        "registryRoot",
+        "getAllAuthTreeRoots",
+        "currentAuthTreeNumber"
+      ],
+      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
+      "sinceTimestamp": 1776186491,
+      "sinceBlock": 150293857,
+      "values": {
+        "$admin": "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C",
+        "$implementation": "oeth:0xcCdF755866c708A4a8D0002DC3f1a574226DF38b",
+        "$pastUpgrades": [
+          [
+            "2026-04-14T17:08:11.000Z",
+            "0x641f9c6a837b145e5a8a9f7d6cb35e080bd128eaaec7827c1665c090a22535d5",
+            ["oeth:0x2b32CD80464bE013007Ff35bBEEA29478194eA56"]
+          ],
+          [
+            "2026-05-26T17:25:39.000Z",
+            "0xb9fbb085beef52c1c553f428b94180fc54ebdf3a50a3616b0efbae4756b572c3",
+            ["oeth:0xcCdF755866c708A4a8D0002DC3f1a574226DF38b"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "allowedRelays": ["oeth:0x6Bd37032571F47e50f312542ae05D548B69DC9B0"],
+        "AUTH_ROOT_HISTORY_SIZE": 64,
+        "authTreeDepth": 20,
+        "currentAuthTreeNumber": 0,
+        "getAllAuthTreeRoots": [
+          "5398227354879575023860008932715422015413994674660928590378430081318556491740"
+        ],
+        "MAX_AUTH_TREE_NUMBER": 32767,
+        "operator": "oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B",
+        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
+        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
+        "registryRoot": "5398227354879575023860008932715422015413994674660928590378430081318556491740"
+      },
+      "fieldMeta": {
+        "allowedRelays": {
+          "description": "Relays allowed to submit account key registrations, rotations and revocations signed by account owners."
+        },
+        "authTreeDepth": { "description": "Depth of the auth Merkle trees." }
+      },
+      "implementationNames": {
+        "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f": "TransparentUpgradeableProxy",
+        "oeth:0xcCdF755866c708A4a8D0002DC3f1a574226DF38b": "AuthRegistry"
+      }
+    },
+    {
+      "name": "AdminMultisig",
+      "address": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
+          "description": "set the operator address of the AuthRegistry.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0x67b1bD839203223870fBF51e4CDf2104E3Ca966b",
+          "description": "register and replace the Groth16 verification keys used to validate epoch proofs.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6",
+          "description": "register new ERC-20 tokens to be accepted by the PrivacyBoost pool.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xC829061276e95D11aF92E678DE2B767AcFB4e924",
+          "description": "register and replace the Groth16 verification keys used to validate deposit proofs.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
+          "description": "replace the epoch, deposit and forced withdrawal proof verifiers, set the withdrawal fee (up to 10%), and set the treasury and operator addresses.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xF023c61C5c745Be40fd30B0d48C0929839Ec3C67",
+          "description": "register and replace the Groth16 verification keys used to validate forced withdrawal proofs.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
+          "role": "admin",
+          "via": [
+            { "address": "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6",
+          "role": "admin",
+          "via": [
+            { "address": "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
+          "role": "admin",
+          "via": [
+            { "address": "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C",
+          "role": ".owner"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "oeth:0x6802795f87DCD0F42Ffc46F7a0ca52fDa4bA34aA",
+      "sinceTimestamp": 1776185181,
+      "sinceBlock": 150293202,
+      "values": {
+        "$immutable": false,
+        "$implementation": "oeth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "oeth:0x769ef261964f1eDe0a554b74e9bB900d3Fb4AF1E",
+          "oeth:0x90d3EbF1bbE3075F41772bB6f0A54e6038C84244",
+          "oeth:0xfEa8d7D07365a1A429319EF7A7a265CB4F530237"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x107dd9a24adb165f1f8fc36d91b8bf46f210130c3dda2ac1189433726c7decb9",
+        "getChainId": 10,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 9,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC": "SafeProxy",
+        "oeth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "name": "Groth16EpochVerifier",
+      "address": "oeth:0x67b1bD839203223870fBF51e4CDf2104E3Ca966b",
+      "type": "Contract",
+      "template": "privacy-boost/Groth16EpochVerifier",
+      "sourceHashes": [
+        "0xf88413dfadb885db4a5441a0537ff2101b38b37d2c7e8e29adeb79cda91d6aef"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for PrivacyBoost private transfer / withdrawal epoch proofs. Verification keys are stored in SSTORE2 data contracts, keyed by circuit configuration (max transfers, inputs and outputs per transfer). Registered epoch keys are not enumerable on-chain.",
+      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
+      "sinceTimestamp": 1776186493,
+      "sinceBlock": 150293858,
+      "values": {
+        "$immutable": true,
+        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
+        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
+        "supportedParams": []
+      },
+      "implementationNames": {
+        "oeth:0x67b1bD839203223870fBF51e4CDf2104E3Ca966b": "Groth16EpochVerifier"
+      }
+    },
+    {
+      "address": "oeth:0x6Bd37032571F47e50f312542ae05D548B69DC9B0",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
+          "description": "submit account key registrations, rotations and revocations with valid owner signatures.",
+          "role": ".allowedRelays"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
+          "description": "submit epochs of private transfers, withdrawals and deposits with validity proofs, and snapshot auth tree roots.",
+          "role": ".allowedRelays"
+        }
+      ]
+    },
+    {
+      "address": "oeth:0x769ef261964f1eDe0a554b74e9bB900d3Fb4AF1E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "OperatorMultisig",
+      "address": "oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
+          "description": "manage the allowlist of relays that can submit key operations to the AuthRegistry on behalf of users.",
+          "role": ".operator"
+        },
+        {
+          "permission": "interact",
+          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
+          "description": "manage the relay allowlist and schedule changes of the auth snapshot interval.",
+          "role": ".operator"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "oeth:0x6802795f87DCD0F42Ffc46F7a0ca52fDa4bA34aA",
+      "sinceTimestamp": 1776185193,
+      "sinceBlock": 150293208,
+      "values": {
+        "$immutable": false,
+        "$implementation": "oeth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "oeth:0x769ef261964f1eDe0a554b74e9bB900d3Fb4AF1E",
+          "oeth:0x90d3EbF1bbE3075F41772bB6f0A54e6038C84244",
+          "oeth:0xfEa8d7D07365a1A429319EF7A7a265CB4F530237"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xbc5f6644f498e3cb518a53fc08b48385af44f807ade5f9c7cc49c5db3e762e13",
+        "getChainId": 10,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 1,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B": "SafeProxy",
+        "oeth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "name": "TokenRegistry",
+      "address": "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6",
+      "type": "Contract",
+      "template": "privacy-boost/TokenRegistry",
+      "sourceHashes": [
+        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
+        "0xd2a7367ae9af91937028b55397ea119f00b4d2169467d0b199f085e6998c7187"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Registry mapping compact token IDs to the ERC-20 tokens accepted by the PrivacyBoost pool.",
+      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
+      "sinceTimestamp": 1776186485,
+      "sinceBlock": 150293854,
+      "values": {
+        "$admin": "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd",
+        "$implementation": "oeth:0x238e6ec4968c9b00b16293139951c23815Ca1134",
+        "$pastUpgrades": [
+          [
+            "2026-04-14T17:08:05.000Z",
+            "0x969857c177e78cddd77fb7d52805242d5af5b357e33e3ba282e67aa416457f9e",
+            ["oeth:0x238e6ec4968c9b00b16293139951c23815Ca1134"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "nextId": 4,
+        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
+        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
+        "tokens": [
+          {
+            "tokenType": 0,
+            "tokenAddress": "oeth:0x4200000000000000000000000000000000000006",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "oeth:0x4200000000000000000000000000000000000042",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "oeth:0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+            "tokenSubId": 0
+          },
+          {
+            "tokenType": 0,
+            "tokenAddress": "oeth:0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+            "tokenSubId": 0
+          }
+        ]
+      },
+      "fieldMeta": {
+        "nextId": {
+          "description": "Latest token ID assigned; tokens are registered with IDs 1..nextId."
+        },
+        "tokens": {
+          "description": "Registered tokens (token type, token address, sub-id) by token ID."
+        }
+      },
+      "implementationNames": {
+        "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6": "TransparentUpgradeableProxy",
+        "oeth:0x238e6ec4968c9b00b16293139951c23815Ca1134": "TokenRegistry"
+      }
+    },
+    {
+      "address": "oeth:0x90d3EbF1bbE3075F41772bB6f0A54e6038C84244",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "PrivacyBoostProxyAdmin",
+      "address": "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "description": "Admin contract of the PrivacyBoost proxy.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
+          "role": "admin"
+        }
+      ],
+      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
+      "sinceTimestamp": 1776188243,
+      "sinceBlock": 150294733,
+      "values": {
+        "$immutable": true,
+        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "TreasuryMultisig",
+      "address": "oeth:0xc82018cbC82A50064e3DdEF79EAdC319710Ffc5e",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "oeth:0x6802795f87DCD0F42Ffc46F7a0ca52fDa4bA34aA",
+      "sinceTimestamp": 1776185205,
+      "sinceBlock": 150293214,
+      "values": {
+        "$immutable": false,
+        "$implementation": "oeth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "oeth:0x769ef261964f1eDe0a554b74e9bB900d3Fb4AF1E",
+          "oeth:0x90d3EbF1bbE3075F41772bB6f0A54e6038C84244",
+          "oeth:0xfEa8d7D07365a1A429319EF7A7a265CB4F530237"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xc09f95394a435ef45082065b1512af944fd6bc028e974f195028abbb80008d4e",
+        "getChainId": 10,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 1,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "oeth:0xc82018cbC82A50064e3DdEF79EAdC319710Ffc5e": "SafeProxy",
+        "oeth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "name": "Groth16DepositVerifier",
+      "address": "oeth:0xC829061276e95D11aF92E678DE2B767AcFB4e924",
+      "type": "Contract",
+      "template": "privacy-boost/Groth16DepositVerifier",
+      "sourceHashes": [
+        "0x43aec7d58ab670517942498a888ff1818b8eade7ecf6f9e19846d4e1f1e475f2"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for PrivacyBoost deposit epoch proofs. Verification keys are stored in SSTORE2 data contracts, registered per supported batch size.",
+      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
+      "sinceTimestamp": 1776186497,
+      "sinceBlock": 150293860,
+      "values": {
+        "$immutable": true,
+        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
+        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
+        "supportedParams": [1, 8, 32],
+        "vkInfo": [
+          {
+            "icLen": 31,
+            "vkConstants": "oeth:0x32E2b0989C55f9D083c597Fd0347c587F4609C05"
+          },
+          {
+            "icLen": 59,
+            "vkConstants": "oeth:0x3749CB974b6E0a0f6dE165Cb69A16393E964F45b"
+          },
+          {
+            "icLen": 155,
+            "vkConstants": "oeth:0x4338A3C434E950F1aB5BBA3b09eef6D041900Dc4"
+          }
+        ]
+      },
+      "fieldMeta": {
+        "supportedParams": {
+          "description": "Deposit batch sizes with a registered verification key."
+        },
+        "vkInfo": {
+          "description": "Verification key pointers (IC length, SSTORE2 constants contract) per supported batch size."
+        }
+      },
+      "implementationNames": {
+        "oeth:0xC829061276e95D11aF92E678DE2B767AcFB4e924": "Groth16DepositVerifier"
+      }
+    },
+    {
+      "name": "PrivacyBoost",
+      "address": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
+      "type": "Contract",
+      "template": "privacy-boost/PrivacyBoost",
+      "sourceHashes": [
+        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
+        "0x0969b8ba50a27e47a32264c554c7bb5f41f38b4371347f61b08d4d8ac55ce613"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Main contract of the PrivacyBoost private transfer pool. It escrows registered ERC-20 tokens deposited against note commitments, and lets allowed relays batch private transfers and withdrawals into epochs that are verified with Groth16 proofs against a note Merkle tree. Users can exit without relay cooperation via a delayed forced withdrawal with their own proof.",
+      "ignoreInWatchMode": ["latestSnapshotRound", "currentTreeNumber"],
+      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
+      "sinceTimestamp": 1776188243,
+      "sinceBlock": 150294733,
+      "values": {
+        "$admin": "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2",
+        "$implementation": "oeth:0x0b9B98d3B95D74487C481e7830ab440896aE62E5",
+        "$pastUpgrades": [
+          [
+            "2026-04-14T17:37:23.000Z",
+            "0xdcf02ee332e61ef9468f869e0f309ec445008906b5419c660a5fab69e2424b8d",
+            ["oeth:0x0b9B98d3B95D74487C481e7830ab440896aE62E5"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "allowedRelays": ["oeth:0x6Bd37032571F47e50f312542ae05D548B69DC9B0"],
+        "authRegistry": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
+        "authSnapshotInterval": 30,
+        "authSnapshotScheduleVersion": 0,
+        "authSnapshotStartBlock": 0,
+        "authSnapshotStartRound": 0,
+        "cancelDelay": 10800,
+        "currentAuthSnapshotInterval": 30,
+        "currentTreeNumber": 0,
+        "depositVerifier": "oeth:0xC829061276e95D11aF92E678DE2B767AcFB4e924",
+        "epochVerifier": "oeth:0x67b1bD839203223870fBF51e4CDf2104E3Ca966b",
+        "forcedVerifier": "oeth:0xF023c61C5c745Be40fd30B0d48C0929839Ec3C67",
+        "forcedWithdrawalDelay": 129600,
+        "latestSnapshotRound": 5189627,
+        "maxBatchSize": 100,
+        "maxFeeTokens": 4,
+        "maxForcedInputs": 8,
+        "maxInputsPerTransfer": 15,
+        "maxOutputsPerTransfer": 11,
+        "merkleDepth": 24,
+        "operator": "oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B",
+        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
+        "pendingAuthSnapshotEffectiveBlock": 0,
+        "pendingAuthSnapshotInterval": 0,
+        "pendingAuthSnapshotStartRound": 0,
+        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
+        "tokenRegistry": "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6",
+        "treasury": "oeth:0xc82018cbC82A50064e3DdEF79EAdC319710Ffc5e",
+        "withdrawFeeBps": 40
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "operator": { "severity": "HIGH" },
+        "allowedRelays": {
+          "severity": "HIGH",
+          "description": "Relays allowed to submit epochs to the pool."
+        },
+        "epochVerifier": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier used for private transfer / withdrawal epoch proofs."
+        },
+        "depositVerifier": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier used for deposit epoch proofs."
+        },
+        "forcedVerifier": {
+          "severity": "HIGH",
+          "description": "Groth16 verifier used for forced withdrawal proofs."
+        },
+        "tokenRegistry": {
+          "severity": "HIGH",
+          "description": "Registry of ERC-20 tokens accepted by the pool."
+        },
+        "authRegistry": {
+          "severity": "HIGH",
+          "description": "Registry of account authorization keys whose tree roots are snapshotted and used to validate spend authorization in epoch proofs."
+        },
+        "treasury": {
+          "severity": "HIGH",
+          "description": "Address receiving withdrawal fees."
+        },
+        "withdrawFeeBps": {
+          "description": "Withdrawal fee in basis points, charged on withdrawals and forced withdrawals."
+        },
+        "cancelDelay": {
+          "description": "Number of blocks after which an unprocessed deposit request can be cancelled and refunded by the depositor."
+        },
+        "forcedWithdrawalDelay": {
+          "description": "Number of blocks between requesting and executing a forced withdrawal."
+        },
+        "authSnapshotInterval": {
+          "description": "Block interval between snapshots of auth tree roots."
+        }
+      },
+      "implementationNames": {
+        "oeth:0xca689828854a422CF1f778be03CA80549408F620": "TransparentUpgradeableProxy",
+        "oeth:0x0b9B98d3B95D74487C481e7830ab440896aE62E5": "PrivacyBoost"
+      }
+    },
+    {
+      "name": "Groth16ForcedVerifier",
+      "address": "oeth:0xF023c61C5c745Be40fd30B0d48C0929839Ec3C67",
+      "type": "Contract",
+      "template": "privacy-boost/Groth16ForcedVerifier",
+      "sourceHashes": [
+        "0xc381b8c9dd9f9b5306cefcf1e97d1aa771e201a49593cf4ec16b0d5141daceca"
+      ],
+      "proxyType": "immutable",
+      "description": "Groth16 verifier for PrivacyBoost forced withdrawal proofs, used by the permissionless exit path. Verification keys are stored in SSTORE2 data contracts, registered per supported input count.",
+      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
+      "sinceTimestamp": 1776186501,
+      "sinceBlock": 150293862,
+      "values": {
+        "$immutable": true,
+        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
+        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
+        "supportedParams": [8],
+        "vkInfo": [
+          {
+            "icLen": 58,
+            "vkConstants": "oeth:0x0A66dC3234318571DB375b34dd61B424821CeBe7"
+          }
+        ]
+      },
+      "fieldMeta": {
+        "supportedParams": {
+          "description": "Forced withdrawal input counts with a registered verification key."
+        },
+        "vkInfo": {
+          "description": "Verification key pointers (IC length, SSTORE2 constants contract) per supported input count."
+        }
+      },
+      "implementationNames": {
+        "oeth:0xF023c61C5c745Be40fd30B0d48C0929839Ec3C67": "Groth16ForcedVerifier"
+      }
+    },
+    {
+      "name": "AuthRegistryProxyAdmin",
+      "address": "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "description": "Admin contract of the AuthRegistry proxy.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f",
+          "role": "admin"
+        }
+      ],
+      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
+      "sinceTimestamp": 1776186491,
+      "sinceBlock": 150293857,
+      "values": {
+        "$immutable": true,
+        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C": "ProxyAdmin"
+      }
+    },
+    {
+      "address": "oeth:0xfEa8d7D07365a1A429319EF7A7a265CB4F530237",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {
+    "oeth:0x0b9B98d3B95D74487C481e7830ab440896aE62E5": [
+      "constructor(address tokenRegistry_, address authRegistry_, uint32 maxBatchSize_, uint32 maxInputsPerTransfer_, uint32 maxOutputsPerTransfer_, uint32 maxFeeTokens_, uint256 cancelDelay_, uint256 forcedWithdrawalDelay_, uint32 maxForcedInputs_, uint8 merkleDepth_)",
+      "error AuthSnapshotIntervalNoChange()",
+      "error AuthSnapshotIntervalOutOfRange(uint256 value, uint256 min, uint256 max)",
+      "error AuthSnapshotIntervalUpdatePending()",
+      "error AuthTreeNotSnapshotted()",
+      "error CancelTooEarly()",
+      "error DepositAlreadyExists()",
+      "error DepositAlreadyProcessed()",
+      "error DuplicateInputCommitment()",
+      "error DuplicateNullifier()",
+      "error DuplicateTreeNumber()",
+      "error DuplicateTreeRootPair()",
+      "error FeeExceedsMaximum()",
+      "error FeeOnTransferNotSupported(uint256 requested, uint256 received)",
+      "error ForcedWithdrawalAlreadyRequested()",
+      "error ForcedWithdrawalMismatch()",
+      "error ForcedWithdrawalNotRequested()",
+      "error ForcedWithdrawalTooEarly()",
+      "error InvalidArrayLengths()",
+      "error InvalidAuthRegistryAddress()",
+      "error InvalidAuthSnapshotRound()",
+      "error InvalidAuthTreeNumber()",
+      "error InvalidBatchConfig()",
+      "error InvalidDeposit()",
+      "error InvalidEpochConfig()",
+      "error InvalidEpochState()",
+      "error InvalidInitialization()",
+      "error InvalidNullifierSet()",
+      "error InvalidOperatorAddress()",
+      "error InvalidSlotPadding()",
+      "error InvalidTokenRegistryAddress()",
+      "error InvalidWithdrawal()",
+      "error MaxBatchSizeCannotBeZero()",
+      "error MaxFeeTokensCannotBeZero()",
+      "error MaxForcedInputsCannotBeZero()",
+      "error MaxInputsPerTransferCannotBeZero()",
+      "error MaxOutputsPerTransferCannotBeZero()",
+      "error MerkleDepthOutOfRange(uint8 value, uint8 min, uint8 max)",
+      "error NonCanonicalEncoding()",
+      "error NotAllowedRelay()",
+      "error NotDepositor()",
+      "error NotInitializing()",
+      "error NotOperator()",
+      "error NotRequester()",
+      "error NotRequesterOrOwner()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ReentrancyGuardReentrantCall()",
+      "error RootNotKnown()",
+      "error SafeERC20FailedOperation(address token)",
+      "error TokenNotSupported(uint8 tokenType)",
+      "error TooManyDistinctTrees()",
+      "error TreasuryNotSet()",
+      "error TreeNumberOverflow()",
+      "error WithdrawalSlotsNotStrictAscending(uint256 index, uint32 prev, uint32 curr)",
+      "event AuthSnapshotIntervalActivated(uint256 oldInterval, uint256 newInterval, uint256 startBlock, uint256 startRound, uint256 version)",
+      "event AuthSnapshotIntervalUpdateScheduled(uint256 oldInterval, uint256 newInterval, uint256 effectiveBlock, uint256 effectiveRound, uint256 newVersion)",
+      "event AuthSnapshotIntervalUpdated(uint256 oldValue, uint256 newValue)",
+      "event AuthTreeSnapshotted(uint256 indexed round, uint256 indexed treeNum, uint256 root)",
+      "event DepositCancelled(uint256 indexed depositRequestId)",
+      "event DepositEpochSubmitted(uint256 indexed treeNum, uint256 indexed rootNew, uint32 countOld, uint32 countNew)",
+      "event DepositRequested(uint256 indexed depositRequestId, address indexed depositor, uint16 tokenId, uint96 totalAmount, uint16 commitmentCount, uint256 commitmentsHash, uint256[] commitments, tuple(bytes32 viewingKey, bytes32 teeWrapKey, bytes32 receiverWrapKey, bytes32 ct0, bytes32 ct1, bytes16 ct2)[] ciphertexts)",
+      "event DepositVerifierUpdated(address indexed oldVerifier, address indexed newVerifier)",
+      "event EpochSubmitted(uint256 indexed treeNum, uint256 indexed rootNew, uint32 countOld, uint32 countNew)",
+      "event EpochVerifierUpdated(address indexed oldVerifier, address indexed newVerifier)",
+      "event FeesUpdated(uint16 withdrawFeeBps)",
+      "event ForcedWithdrawalCancelled(uint256[] nullifiers, uint256[] inputCommitments)",
+      "event ForcedWithdrawalExecuted(address indexed withdrawalTo, uint16 tokenId, uint96 amount, uint256[] nullifiers, uint256[] inputCommitments)",
+      "event ForcedWithdrawalRequested(address indexed requester, address indexed withdrawalTo, uint16 tokenId, uint96 amount, uint256[] nullifiers, uint256[] inputCommitments)",
+      "event Initialized(uint64 version)",
+      "event OperatorUpdated(address indexed oldOperator, address indexed newOperator)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RelayUpdated(address relay, bool allowed)",
+      "event TreasuryUpdated(address oldTreasury, address newTreasury)",
+      "event TreeAdvanced(uint256 oldTreeNumber, uint256 newTreeNumber)",
+      "function acceptOwnership()",
+      "function allowedRelays(address relay) view returns (bool allowed)",
+      "function authRegistry() view returns (address)",
+      "function authSnapshotInterval() view returns (uint256)",
+      "function authSnapshotRoundAt(uint256 blockNumber) view returns (uint256)",
+      "function authSnapshotScheduleVersion() view returns (uint256)",
+      "function authSnapshotStartBlock() view returns (uint256)",
+      "function authSnapshotStartRound() view returns (uint256)",
+      "function authSnapshots(uint256 round, uint256 treeNum) view returns (uint256 root)",
+      "function cancelDelay() view returns (uint256)",
+      "function cancelDeposit(uint256 _depositRequestId)",
+      "function cancelForcedWithdrawal(uint256[] nullifiers, uint256[] inputCommitments)",
+      "function commitmentToRequestKey(uint256 commitment) view returns (uint256 requestKey)",
+      "function currentAuthSnapshotInterval() view returns (uint256)",
+      "function currentAuthSnapshotRound() view returns (uint256)",
+      "function currentTreeNumber() view returns (uint256)",
+      "function depositNonces(address depositor) view returns (uint32 nonce)",
+      "function depositVerifier() view returns (address)",
+      "function epochVerifier() view returns (address)",
+      "function executeForcedWithdrawal(uint256[] nullifiers, uint256[] inputCommitments)",
+      "function forcedVerifier() view returns (address)",
+      "function forcedWithdrawalDelay() view returns (uint256)",
+      "function forcedWithdrawalRequests(uint256 requestKey) view returns (uint64 requestBlock, address requester, address withdrawalTo, uint16 tokenId, uint96 amount, uint16 withdrawFeeBps, uint8 inputCount, uint256 spenderAccountId, bytes32 nullifiersHash, bytes32 commitmentsHash)",
+      "function initialize(address initialOwner, address epochVerifier_, address depositVerifier_, address forcedVerifier_, uint16 withdrawFeeBps_, address treasury_, uint256 authSnapshotInterval_)",
+      "function isKnownTreeRoot(uint256 treeNum, uint256 root_) view returns (bool)",
+      "function latestSnapshotRound() view returns (uint256)",
+      "function maxBatchSize() view returns (uint32)",
+      "function maxFeeTokens() view returns (uint32)",
+      "function maxForcedInputs() view returns (uint32)",
+      "function maxInputsPerTransfer() view returns (uint32)",
+      "function maxOutputsPerTransfer() view returns (uint32)",
+      "function merkleDepth() view returns (uint8)",
+      "function nullifierSpent(uint256 nullifier) view returns (bool spent)",
+      "function operator() view returns (address)",
+      "function owner() view returns (address)",
+      "function pendingAuthSnapshotEffectiveBlock() view returns (uint256)",
+      "function pendingAuthSnapshotInterval() view returns (uint256)",
+      "function pendingAuthSnapshotStartRound() view returns (uint256)",
+      "function pendingDeposits(uint256 depositRequestId) view returns (address depositor, uint16 tokenId, uint96 totalAmount, uint64 requestBlock, uint32 nonce, uint16 commitmentCount, uint256 commitmentsHash)",
+      "function pendingOwner() view returns (address)",
+      "function processedDeposits(uint256 depositRequestId) view returns (bool processed)",
+      "function renounceOwnership()",
+      "function requestDeposit(uint16 _tokenId, uint96 _totalAmount, uint256[] _commitments, tuple(bytes32 viewingKey, bytes32 teeWrapKey, bytes32 receiverWrapKey, bytes32 ct0, bytes32 ct1, bytes16 ct2)[] _ciphertexts) returns (uint256 depositRequestId)",
+      "function requestForcedWithdrawal(tuple(uint256 treeNumber, uint256 root)[] knownRoots, tuple(tuple(uint256 treeNumber, uint256 root)[] usedAuthRoots, uint256 authSnapshotRound) authState, uint256 spenderAccountId, uint256[] nullifiers, uint256[] inputCommitments, tuple(address to, uint16 tokenId, uint96 amount) withdrawal, uint256[8] proof)",
+      "function setAllowedRelays(address[] relays, bool allowed)",
+      "function setAuthSnapshotInterval(uint256 authSnapshotInterval_)",
+      "function setDepositVerifier(address verifier_)",
+      "function setEpochVerifier(address verifier_)",
+      "function setFees(uint16 withdrawFeeBps_)",
+      "function setOperator(address operator_)",
+      "function setTreasury(address treasury_)",
+      "function snapshotAuthTrees(uint256[] treeNums)",
+      "function submitDepositEpoch(tuple(tuple(uint256 treeNumber, uint256 root)[] usedRoots, uint256 activeTreeNumber, uint32 countOld, uint256 rootNew, uint32 countNew, bool rollover) treeState, uint32 nTotalCommitments, tuple(uint256 commitment, bytes32 receiverWrapKey, bytes32 ct0, bytes32 ct1, bytes32 ct2, bytes16 ct3)[] outputs, tuple(uint256 depositRequestId)[] deposits, uint256[8] proof)",
+      "function submitEpoch(tuple(tuple(uint256 treeNumber, uint256 root)[] usedRoots, uint256 activeTreeNumber, uint32 countOld, uint256 rootNew, uint32 countNew, bool rollover) treeState, tuple(tuple(uint256 treeNumber, uint256 root)[] usedAuthRoots, uint256 authSnapshotRound) authState, uint32 nTransfers, uint32 feeTokenCount, uint256 feeNPK, uint32[] inputsPerTransfer, uint32[] outputsPerTransfer, uint256[][] nullifiers, tuple(bytes32 viewingKey, bytes32 teeWrapKey, tuple(uint256 commitment, bytes32 receiverWrapKey, bytes32 ct0, bytes32 ct1, bytes32 ct2, bytes16 ct3)[] outputs)[] transfers, tuple(bytes32 viewingKey, bytes32 teeWrapKey, tuple(uint256 commitment, bytes32 receiverWrapKey, bytes32 ct0, bytes32 ct1, bytes32 ct2, bytes16 ct3)[] outputs) feeTransfer, tuple(address to, uint16 tokenId, uint96 amount)[] withdrawals, uint32[] withdrawalSlots, uint256[] digestRootIndices, uint256[8] proof)",
+      "function syncAuthSnapshotInterval()",
+      "function tokenRegistry() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function treasury() view returns (address)",
+      "function treeCount(uint256 treeNum) view returns (uint32 leafCount)",
+      "function treeRoot(uint256 treeNum) view returns (uint256 root)",
+      "function treeRootHistory(uint256 treeNum, uint256) view returns (uint256 roots)",
+      "function treeRootHistoryCursor(uint256 treeNum) view returns (uint256 cursor)",
+      "function withdrawFeeBps() view returns (uint16)"
+    ],
+    "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "oeth:0x238e6ec4968c9b00b16293139951c23815Ca1134": [
+      "constructor()",
+      "error InvalidInitialization()",
+      "error NotAContract()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error TokenAlreadyRegistered()",
+      "error TokenIdOverflow()",
+      "error TokenTypeNotSupported(uint8 tokenType)",
+      "error ZeroAddress()",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event TokenRegistered(uint16 indexed tokenId, uint8 tokenType, address tokenAddress, uint256 tokenSubId)",
+      "function acceptOwnership()",
+      "function idOf(bytes32 key) view returns (uint16 tokenId)",
+      "function initialize(address initialOwner)",
+      "function nextId() view returns (uint16)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function register(uint8 tokenType, address tokenAddress, uint256 tokenSubId) returns (uint16 tokenId)",
+      "function renounceOwnership()",
+      "function tokenOf(uint16 tokenId) view returns (uint8 tokenType, address tokenAddress, uint256 tokenSubId)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "oeth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "oeth:0x54e87D7D0E420B24B9FdFE9cFcAe88162093A48f": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC": [
+      "constructor(address _singleton)"
+    ],
+    "oeth:0x67b1bD839203223870fBF51e4CDf2104E3Ca966b": [
+      "constructor(address initialOwner)",
+      "error EmptyICSources()",
+      "error ICSourceMismatch()",
+      "error InvalidICLength()",
+      "error InvalidParam()",
+      "error InvalidPublicInputLength()",
+      "error InvalidVKConstants()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error PrecompileCallFailed()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error VerifyingKeyNotFound()",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function acceptOwnership()",
+      "function getVKInfo(uint32 param) view returns (uint256 icLen, address vkConstants)",
+      "function isSupported(uint32 circuitParam) view returns (bool supported)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function registerEpochVK(uint32 maxTransfers, uint32 maxInputsPerTransfer, uint32 maxOutputsPerTransfer, address[] icxSources_, address[] icySources_, address vkConstants_, uint256 icLen_)",
+      "function registerVK(uint32 param, address[] icxSources_, address[] icySources_, address vkConstants_, uint256 icLen_)",
+      "function renounceOwnership()",
+      "function supportedParams(uint256) view returns (uint32)",
+      "function transferOwnership(address newOwner)",
+      "function verifyEpoch(uint32 maxTransfers, uint32 maxInputsPerTransfer, uint32 maxOutputsPerTransfer, uint256[8] proof, uint256[] publicInputs) view returns (bool)"
+    ],
+    "oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B": [
+      "constructor(address _singleton)"
+    ],
+    "oeth:0x867872f80b1e22D30C4b06FcB474aC10B9DAA2f6": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "oeth:0xc82018cbC82A50064e3DdEF79EAdC319710Ffc5e": [
+      "constructor(address _singleton)"
+    ],
+    "oeth:0xC829061276e95D11aF92E678DE2B767AcFB4e924": [
+      "constructor(address initialOwner)",
+      "error EmptyICSources()",
+      "error ICSourceMismatch()",
+      "error InvalidICLength()",
+      "error InvalidParam()",
+      "error InvalidPublicInputLength()",
+      "error InvalidVKConstants()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error PrecompileCallFailed()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error VerifyingKeyNotFound()",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function acceptOwnership()",
+      "function getVKInfo(uint32 param) view returns (uint256 icLen, address vkConstants)",
+      "function isSupported(uint32 circuitParam) view returns (bool supported)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function registerVK(uint32 param, address[] icxSources_, address[] icySources_, address vkConstants_, uint256 icLen_)",
+      "function renounceOwnership()",
+      "function supportedParams(uint256) view returns (uint32)",
+      "function transferOwnership(address newOwner)",
+      "function verifyDeposit(uint32 batchSize, uint256[8] proof, uint256[] publicInputs) view returns (bool)"
+    ],
+    "oeth:0xca689828854a422CF1f778be03CA80549408F620": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "oeth:0xcCdF755866c708A4a8D0002DC3f1a574226DF38b": [
+      "constructor(uint8 authTreeDepth_)",
+      "error AlreadyRegistered()",
+      "error AuthKeyAlreadyRevoked()",
+      "error AuthKeyNotFound()",
+      "error InvalidAccountId()",
+      "error InvalidAuthPublicKey()",
+      "error InvalidERC7739AppDomain()",
+      "error InvalidERC7739ContentsDescription()",
+      "error InvalidERC7739ContentsHash()",
+      "error InvalidERC7739WrappedSignature()",
+      "error InvalidInitialization()",
+      "error InvalidLeaf()",
+      "error InvalidOperatorAddress()",
+      "error InvalidRelayAddress()",
+      "error InvalidSignature()",
+      "error InvalidSignatureLength()",
+      "error NotAuthorized()",
+      "error NotInitializing()",
+      "error NotOperator()",
+      "error NotRegistered()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error OwnerMismatch()",
+      "error RegistryFull()",
+      "error SignatureExpired()",
+      "event AuthKeyAdded(uint256 indexed accountId, bytes32 indexed authKeyId, uint256 treeNumber, uint256 authPkX, uint256 authPkY)",
+      "event AuthKeyRevoked(uint256 indexed accountId, bytes32 indexed authKeyId, uint32 treeIndex)",
+      "event AuthKeyRotated(uint256 indexed accountId, bytes32 indexed authKeyId, uint256 newAuthPkX, uint256 newAuthPkY, uint32 treeIndex, uint64 newExpiry)",
+      "event Initialized(uint64 version)",
+      "event OperatorUpdated(address indexed oldOperator, address indexed newOperator)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Registered(uint256 indexed accountId, address indexed owner, uint256 treeNumber, uint256 authPkX, uint256 authPkY, uint64 expiry)",
+      "event RelayUpdated(address indexed relay, bool allowed)",
+      "event RootUpdated(uint256 indexed treeNumber, uint256 root)",
+      "function AUTH_ROOT_HISTORY_SIZE() view returns (uint256)",
+      "function MAX_AUTH_TREE_NUMBER() view returns (uint16)",
+      "function acceptOwnership()",
+      "function allowedRelays(address relay) view returns (bool allowed)",
+      "function authKeyIndexOf(bytes32 authKeyId) view returns (uint32)",
+      "function authKeyRevoked(bytes32 authKeyId) view returns (bool)",
+      "function authKeyTreeOf(bytes32 authKeyId) view returns (uint16)",
+      "function authTreeCount(uint256 treeNum) view returns (uint32)",
+      "function authTreeDepth() view returns (uint8)",
+      "function authTreeRoot(uint256 treeNum) view returns (uint256)",
+      "function authTreeRootHistory(uint256 treeNum, uint256 idx) view returns (uint256 root)",
+      "function authTreeRootHistoryCursor(uint256 treeNum) view returns (uint256)",
+      "function computeAccountId(address owner, uint256 salt) pure returns (uint256)",
+      "function computeAuthKeyId(uint256 accountId, uint256 authPkX) pure returns (bytes32)",
+      "function computeLeaf(uint256 accountId, uint256 authPkX, uint256 authPkY, uint64 expiry) pure returns (uint256)",
+      "function currentAuthTreeNumber() view returns (uint256)",
+      "function getAllAuthTreeRoots() view returns (uint256[] roots)",
+      "function getAuthKeyInfo(bytes32 authKeyId) view returns (uint16 treeNum, uint32 index, bool revoked)",
+      "function getAuthKeys(uint256 accountId) view returns (bytes32[])",
+      "function initialize(address initialOwner)",
+      "function nonces(uint256 accountId) view returns (uint256)",
+      "function operator() view returns (address)",
+      "function owner() view returns (address)",
+      "function ownerOf(uint256 accountId) view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function register(uint256 salt, uint256 authPkX, uint256 authPkY, uint64 expiry, address expectedOwner, bytes sig)",
+      "function register(uint256 salt, uint256 authPkX, uint256 authPkY, uint64 expiry, address expectedOwner, tuple(uint8 v, bytes32 r, bytes32 s) sig)",
+      "function registryRoot() view returns (uint256)",
+      "function renounceOwnership()",
+      "function revoke(uint256 accountId, uint256 authPkX, uint64 expiry, tuple(uint8 v, bytes32 r, bytes32 s) sig)",
+      "function revoke(uint256 accountId, uint256 authPkX, uint64 expiry, bytes sig)",
+      "function rotate(uint256 accountId, uint256 oldAuthPkX, uint256 newAuthPkX, uint256 newAuthPkY, uint64 newExpiry, bytes sig)",
+      "function rotate(uint256 accountId, uint256 oldAuthPkX, uint256 newAuthPkX, uint256 newAuthPkY, uint64 newExpiry, tuple(uint8 v, bytes32 r, bytes32 s) sig)",
+      "function setAllowedRelays(address[] relays, bool allowed)",
+      "function setOperator(address operator_)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "oeth:0xF023c61C5c745Be40fd30B0d48C0929839Ec3C67": [
+      "constructor(address initialOwner)",
+      "error EmptyICSources()",
+      "error ICSourceMismatch()",
+      "error InvalidICLength()",
+      "error InvalidParam()",
+      "error InvalidPublicInputLength()",
+      "error InvalidVKConstants()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error PrecompileCallFailed()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error VerifyingKeyNotFound()",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function acceptOwnership()",
+      "function getVKInfo(uint32 param) view returns (uint256 icLen, address vkConstants)",
+      "function isSupported(uint32 circuitParam) view returns (bool supported)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function registerVK(uint32 param, address[] icxSources_, address[] icySources_, address vkConstants_, uint256 icLen_)",
+      "function renounceOwnership()",
+      "function supportedParams(uint256) view returns (uint32)",
+      "function transferOwnership(address newOwner)",
+      "function verifyForcedWithdraw(uint32 maxInputs, uint256[8] proof, uint256[] publicInputs) view returns (bool)"
+    ],
+    "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ]
+  },
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "privacy-boost/AuthRegistry": "0x70a3f6b0d6c04afea3fb7f8fa8ed9a082701416a6e1d617f1c0f3d602d6d9225",
+    "privacy-boost/Groth16DepositVerifier": "0x84c9fd274b17cea210f3ec8c383bb80ca0383bb0610c163a56fa234731c4668f",
+    "privacy-boost/Groth16EpochVerifier": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "privacy-boost/Groth16ForcedVerifier": "0x84c9fd274b17cea210f3ec8c383bb80ca0383bb0610c163a56fa234731c4668f",
+    "privacy-boost/PrivacyBoost": "0x29fd1405b85859db665cd9dd919883bb59034f8a0aef5eaa972ec54f898bca76",
+    "privacy-boost/TokenRegistry": "0x5862dbcfbe28cca245e3f2a7d1bca8c58fc6b6b8e2d77666a7042529cac6a5e4"
+  },
+  "usedBlockNumbers": { "optimism": 155689002 },
+  "permissionsConfigHash": "0x7c7c66ee0b650dcaeda6f69ccc70ffffcce5f888b45542d504661af5f874f645"
+}
