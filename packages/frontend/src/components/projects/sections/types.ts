@@ -19,7 +19,6 @@ import type { L3RiskAnalysisSectionProps } from './L3RiskAnalysisSection'
 import type { LivenessSectionProps } from './liveness/LivenessSection'
 import type { MarkdownSectionProps } from './MarkdownSection'
 import type { MilestonesAndIncidentsSectionProps } from './MilestonesAndIncidentsSection'
-import type { OssificationSectionProps } from './OssificationSection'
 import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
 import type { PrivacyAssetsBreakdownSectionProps } from './privacy/PrivacyAssetsBreakdownSection'
@@ -60,7 +59,6 @@ type SectionId =
   | 'state-validation'
   | 'upgrades-and-governance'
   | 'updates'
-  | 'ossification'
   | 'permissions'
   | 'contracts'
   | 'sequencing'
@@ -273,11 +271,6 @@ interface ProjectDetailsUpdatesSection {
   props: ProjectDetailsProps<UpdatesSectionProps>
 }
 
-interface ProjectDetailsOssificationSection {
-  type: 'OssificationSection'
-  props: ProjectDetailsProps<OssificationSectionProps>
-}
-
 interface ProjectDetailsTvsValueSection {
   type: 'TvsValueSection'
   props: ProjectDetailsProps<TvsValueSectionProps>
@@ -338,7 +331,6 @@ export type ProjectDetailsSection = {
   | ProjectDetailsInteropTokenTransfersSection
   | ProjectDetailsUpgradesAndGovernanceSection
   | ProjectDetailsUpdatesSection
-  | ProjectDetailsOssificationSection
   | ProjectDetailsTvsValueSection
   | ProjectDetailsPrivacyFlowsSection
   | ProjectDetailsPrivacyAssetsBreakdownSection

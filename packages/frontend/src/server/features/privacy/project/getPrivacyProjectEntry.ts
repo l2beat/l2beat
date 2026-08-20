@@ -23,6 +23,7 @@ import {
   get7dTvsBreakdown,
 } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { getProjectOssification } from '../../projects/ossification/getProjectOssification'
+import { getDiscoveryUpdates } from '../../projects/recent-changes/getDiscoveryUpdates'
 import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
 import {
@@ -131,6 +132,7 @@ export async function getPrivacyProjectEntry(
   const hasTrackedAssets = details.assets.length > 0
   const discoveryHref =
     contractsSection || permissionsSection ? discoUi.href : undefined
+  const discoveryUpdates = ossification ? getDiscoveryUpdates(details.id) : []
 
   const sections: ProjectDetailsSection[] = []
 
@@ -259,10 +261,11 @@ export async function getPrivacyProjectEntry(
 
   if (ossification) {
     sections.push({
-      type: 'OssificationSection',
+      type: 'UpdatesSection',
       props: {
-        id: 'ossification',
-        title: 'Ossification',
+        id: 'updates',
+        title: 'Updates',
+        updates: discoveryUpdates,
         ossification,
       },
     })

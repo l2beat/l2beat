@@ -90,6 +90,13 @@ literally**:
 Severity is a binary event gate, not a weight. Multiple qualifying changes within
 24 hours form one project event.
 
+The per-contract evidence splits changes into code and state. Code changes are
+implementation upgrades; state changes are HIGH non-implementation watched changes.
+Diff blocks are grouped by contract and discovery update, and a mixed update is a
+code change. Update cards use the same classification: any critical code change makes
+the card a critical code update; otherwise a qualifying card is a critical state
+update.
+
 ## Important history caveat
 
 The runtime does not inspect today's `fieldMeta` and reconstruct old value changes.
@@ -186,8 +193,8 @@ events, fix discovery/handler coverage or add auditable historical inputs instea
   from full git history.
 - `scripts/ossification-smoke.ts [projectId...] --perimeter`: score and perimeter
   inspection.
-- UI: `/security`, project `#ossification` sections, and
-  `getOssificationEntries.ts`.
+- UI: `/security` and the Ossification details inside project Updates sections
+  (direct-linked by `#ossification`), fed by `getOssificationEntries.ts`.
 
 Use Node 22 through `fnm`. RPC and explorer credentials are in
 `packages/config/.env`. Discovery inputs such as `.flat/` and current

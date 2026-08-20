@@ -4,32 +4,32 @@ import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import type { OssificationContractBreakdown } from '~/server/features/projects/ossification/getOssificationFactor'
 import type { ProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
-import { formatTimestamp } from '~/utils/dates'
-import { ProjectSection } from './ProjectSection'
-import type { ProjectSectionProps } from './types'
 
-export interface OssificationSectionProps extends ProjectSectionProps {
+export interface OssificationDetailsProps {
   ossification: ProjectOssification
 }
 
-export function OssificationSection({
+export function OssificationDetails({
   ossification,
-  ...sectionProps
-}: OssificationSectionProps) {
+}: OssificationDetailsProps) {
   return (
-    <ProjectSection {...sectionProps}>
+    <div
+      id="ossification"
+      className="flex scroll-mt-[38px] flex-col gap-4 md:scroll-mt-14 lg:scroll-mt-4"
+    >
+      <h3 className="text-heading-20">Ossification</h3>
       <div className="flex flex-col gap-4">
         <p className="text-secondary text-sm leading-relaxed">
           Ossification measures how battle-tested the code securing this project
           is. Contracts classified as critical by our research team form one
-          project-wide perimeter; deploying or critically changing any of them
-          counts as a change to the whole perimeter. A critical change is an
-          implementation upgrade or a high-severity value change, such as a
-          verifier key or permission set, and changes within 24 hours count as
-          one event. Ossification grows the longer the perimeter stays
+          project-wide perimeter. Deploying or critically changing any of them
+          counts as a change to the project; changes within 24 hours count as
+          one event. Code changes are implementation upgrades, while state
+          changes are high-severity value changes. A mixed update counts as a
+          code change. Ossification grows the longer the perimeter stays
           unchanged. The battle-tested exposure is the value secured summed up
           over that unchanged period — the implicit bug bounty the code has
-          withstood, expressed in dollar-years, not a literal reward.
+          withstood.
         </p>
         <ChartStats className="md:grid-cols-2 lg:grid-cols-4">
           <ChartStatsItem label="Ossification" className="max-md:h-7">
@@ -67,7 +67,7 @@ export function OssificationSection({
         </ChartStats>
         <ContractBreakdownTable contracts={ossification.contracts} />
       </div>
-    </ProjectSection>
+    </div>
   )
 }
 
@@ -87,12 +87,10 @@ function ContractBreakdownTable({
           <thead>
             <tr className="text-left text-2xs text-secondary uppercase">
               <th className="px-4 py-2 font-medium">Contract</th>
-              <th className="px-4 py-2 font-medium">
-                Individual clock started
-              </th>
               <th className="px-4 py-2 text-right font-medium">Age</th>
+              <th className="px-4 py-2 text-right font-medium">Code changes</th>
               <th className="px-4 py-2 text-right font-medium">
-                Critical changes
+                State changes
               </th>
             </tr>
           </thead>
@@ -115,18 +113,6 @@ function ContractBreakdownTable({
                     </Badge>
                   )}
                 </td>
-                <td className="whitespace-nowrap px-4 py-2 text-secondary">
-                  {contract.clockStart !== null ? (
-                    <>
-                      {formatTimestamp(contract.clockStart)}
-                      <span className="ml-1 text-2xs">
-                        ({contract.hasChanged ? 'last change' : 'deployment'})
-                      </span>
-                    </>
-                  ) : (
-                    <NotApplicableBadge />
-                  )}
-                </td>
                 <td className="whitespace-nowrap px-4 py-2 text-right tabular-nums">
                   {contract.ageSeconds !== null ? (
                     formatSeconds(contract.ageSeconds)
@@ -135,7 +121,10 @@ function ContractBreakdownTable({
                   )}
                 </td>
                 <td className="px-4 py-2 text-right tabular-nums">
-                  {contract.criticalChangeCount}
+                  {contract.codeChangeCount}
+                </td>
+                <td className="px-4 py-2 text-right tabular-nums">
+                  {contract.stateChangeCount}
                 </td>
               </tr>
             ))}

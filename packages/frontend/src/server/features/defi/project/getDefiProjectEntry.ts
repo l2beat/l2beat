@@ -4,6 +4,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
+import { getDiscoveryUpdates } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -119,6 +120,7 @@ export async function getDefiProjectEntry(
   }
 
   const sections: ProjectDetailsSection[] = []
+  const discoveryUpdates = ossification ? getDiscoveryUpdates(project.id) : []
 
   if (
     project.display.detailedDescription ||
@@ -170,10 +172,11 @@ export async function getDefiProjectEntry(
 
   if (ossification) {
     sections.push({
-      type: 'OssificationSection',
+      type: 'UpdatesSection',
       props: {
-        id: 'ossification',
-        title: 'Ossification',
+        id: 'updates',
+        title: 'Updates',
+        updates: discoveryUpdates,
         ossification,
       },
     })

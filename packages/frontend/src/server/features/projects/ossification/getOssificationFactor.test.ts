@@ -96,7 +96,8 @@ describe(getOssificationFactor.name, () => {
     expect(result?.projectAgeSeconds).toEqual(4 * YEAR)
     expect(result?.lastCriticalChange).toEqual(null)
     expect(result?.criticalChangesPerYear).toEqual(0)
-    expect(result?.contracts[0]?.hasChanged).toEqual(false)
+    expect(result?.contracts[0]?.codeChangeCount).toEqual(0)
+    expect(result?.contracts[0]?.stateChangeCount).toEqual(0)
   })
 
   it('resets the clock on a proxy upgrade and skips the initial deployment', () => {
@@ -108,8 +109,8 @@ describe(getOssificationFactor.name, () => {
     // m(2y) = 1 - e^-1 = 0.632
     expect(result?.score).toEqual(63)
     expect(result?.lastCriticalChange).toEqual(NOW - 2 * YEAR)
-    expect(result?.contracts[0]?.criticalChangeCount).toEqual(1)
-    expect(result?.contracts[0]?.hasChanged).toEqual(true)
+    expect(result?.contracts[0]?.codeChangeCount).toEqual(1)
+    expect(result?.contracts[0]?.stateChangeCount).toEqual(0)
     expect(result?.clusteredEventCount).toEqual(1)
   })
 
@@ -125,7 +126,7 @@ describe(getOssificationFactor.name, () => {
       NOW,
     )
     expect(result?.projectClockStart).toEqual(NOW - YEAR)
-    expect(result?.contracts[0]?.hasChanged).toEqual(false)
+    expect(result?.contracts[0]?.codeChangeCount).toEqual(0)
   })
 
   it('counts a high-severity value change from diff history', () => {
@@ -135,7 +136,11 @@ describe(getOssificationFactor.name, () => {
       NOW,
     )
     expect(result?.lastCriticalChange).toEqual(NOW - 30 * DAY)
-    expect(result?.contracts[0]?.criticalChangeCount).toEqual(1)
+    expect(result?.contracts[0]?.codeChangeCount).toEqual(0)
+    expect(result?.contracts[0]?.stateChangeCount).toEqual(1)
+    expect(result?.criticalUpdates).toEqual([
+      { id: `update-${NOW - 30 * DAY}`, type: 'state' },
+    ])
     expect(result?.projectAgeSeconds).toEqual(30 * DAY)
     // m(30d) is tiny
     expect(result?.score ?? 100).toBeLessThan(10)
@@ -147,8 +152,12 @@ describe(getOssificationFactor.name, () => {
       [update(NOW - 30 * DAY, implementationChangeBlock(ADDRESS_A))],
       NOW,
     )
-    expect(result?.contracts[0]?.criticalChangeCount).toEqual(0)
+    expect(result?.contracts[0]?.codeChangeCount).toEqual(0)
+    expect(result?.contracts[0]?.stateChangeCount).toEqual(0)
     expect(result?.lastCriticalChange).toEqual(null)
+    expect(result?.criticalUpdates).toEqual([
+      { id: `update-${NOW - 30 * DAY}`, type: 'code' },
+    ])
   })
 
   it('uses implementation-change diffs for proxies without $pastUpgrades', () => {
@@ -157,8 +166,34 @@ describe(getOssificationFactor.name, () => {
       [update(NOW - 30 * DAY, implementationChangeBlock(ADDRESS_A))],
       NOW,
     )
-    expect(result?.contracts[0]?.criticalChangeCount).toEqual(1)
+    expect(result?.contracts[0]?.codeChangeCount).toEqual(1)
+    expect(result?.contracts[0]?.stateChangeCount).toEqual(0)
     expect(result?.lastCriticalChange).toEqual(NOW - 30 * DAY)
+  })
+
+  it('classifies a mixed diff update as one code change', () => {
+    const result = getOssificationFactor(
+      [
+        entry({
+          upgradeTimestamps: [NOW - 4 * YEAR, NOW - 30 * DAY],
+        }),
+      ],
+      [
+        update(
+          NOW - 30 * DAY,
+          [
+            implementationChangeBlock(ADDRESS_A),
+            highSeverityBlock(ADDRESS_A),
+          ].join('\n\n'),
+        ),
+      ],
+      NOW,
+    )
+    expect(result?.contracts[0]?.codeChangeCount).toEqual(1)
+    expect(result?.contracts[0]?.stateChangeCount).toEqual(0)
+    expect(result?.criticalUpdates).toEqual([
+      { id: `update-${NOW - 30 * DAY}`, type: 'code' },
+    ])
   })
 
   it('clusters events within 24 hours into a single event', () => {
@@ -188,7 +223,7 @@ describe(getOssificationFactor.name, () => {
       [update(NOW - 30 * DAY, highSeverityBlock(bareAddress))],
       NOW,
     )
-    expect(result?.contracts[0]?.criticalChangeCount).toEqual(1)
+    expect(result?.contracts[0]?.stateChangeCount).toEqual(1)
   })
 
   it('matches chain prefixes containing hyphens', () => {
@@ -198,7 +233,7 @@ describe(getOssificationFactor.name, () => {
       [update(NOW - 30 * DAY, highSeverityBlock(address))],
       NOW,
     )
-    expect(result?.contracts[0]?.criticalChangeCount).toEqual(1)
+    expect(result?.contracts[0]?.stateChangeCount).toEqual(1)
   })
 
   it('scores the whole perimeter as zero when a critical contract is unverified', () => {

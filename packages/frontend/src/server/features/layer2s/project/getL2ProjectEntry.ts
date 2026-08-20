@@ -701,24 +701,14 @@ export async function getL2ProjectEntry(
     })
   }
 
-  if (ossification) {
-    sections.push({
-      type: 'OssificationSection',
-      props: {
-        id: 'ossification',
-        title: 'Ossification',
-        ossification,
-      },
-    })
-  }
-
-  if (discoveryUpdates.length > 0) {
+  if (ossification || discoveryUpdates.length > 0) {
     sections.push({
       type: 'UpdatesSection',
       props: {
         id: 'updates',
         title: 'Updates',
         updates: discoveryUpdates,
+        ossification,
       },
     })
   }
