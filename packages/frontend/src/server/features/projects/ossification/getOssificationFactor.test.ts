@@ -76,6 +76,20 @@ function implementationChangeBlock(address: string): string {
   ].join('\n')
 }
 
+function pastUpgradeChangeBlock(address: string): string {
+  return [
+    '```diff',
+    `    contract Example (${address}) {`,
+    '    +++ description: test contract',
+    '      values.$pastUpgrades.10:',
+    '+        ["2026-04-21T03:26:47.000Z","0x123",["eth:0x111"]]',
+    '      values.$pastUpgrades.11:',
+    '+        ["2026-04-21T03:26:47.000Z","0x123",["eth:0x222"]]',
+    '    }',
+    '```',
+  ].join('\n')
+}
+
 describe(getOssificationFactor.name, () => {
   it('returns undefined without entries', () => {
     expect(getOssificationFactor([], [], NOW)).toEqual(undefined)
@@ -158,6 +172,25 @@ describe(getOssificationFactor.name, () => {
     expect(result?.criticalUpdates).toEqual([
       { id: `update-${NOW - 30 * DAY}`, type: 'code' },
     ])
+  })
+
+  it('tags an upgrade-and-restore update from appended $pastUpgrades', () => {
+    const upgradeTimestamp = NOW - 31 * DAY
+    const result = getOssificationFactor(
+      [
+        entry({
+          upgradeTimestamps: [NOW - 3 * YEAR, upgradeTimestamp],
+        }),
+      ],
+      [update(NOW - 30 * DAY, pastUpgradeChangeBlock(ADDRESS_A))],
+      NOW,
+    )
+
+    expect(result?.criticalUpdates).toEqual([
+      { id: `update-${NOW - 30 * DAY}`, type: 'code' },
+    ])
+    expect(result?.contracts[0]?.codeChangeCount).toEqual(1)
+    expect(result?.lastCriticalChange).toEqual(upgradeTimestamp)
   })
 
   it('uses implementation-change diffs for proxies without $pastUpgrades', () => {

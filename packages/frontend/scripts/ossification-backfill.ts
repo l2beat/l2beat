@@ -12,6 +12,7 @@ import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { execFileSync } from 'child_process'
 import { readFileSync } from 'fs'
 import path from 'path'
+import { parseUpgradeTimestamps } from '~/server/features/projects/ossification/parseUpgradeTimestamps'
 import { getDiscoveryUpdates } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import {
   extractDiffBlockAddress,
@@ -78,18 +79,6 @@ function toChainSpecific(
   } catch {
     return undefined
   }
-}
-
-function parseUpgradeTimestamps(value: unknown): number[] {
-  if (!Array.isArray(value)) return []
-  const timestamps: number[] = []
-  for (const upgrade of value) {
-    if (!Array.isArray(upgrade) || typeof upgrade[0] !== 'string') continue
-    const timestamp = Date.parse(upgrade[0])
-    if (Number.isFinite(timestamp))
-      timestamps.push(Math.floor(timestamp / 1000))
-  }
-  return timestamps.sort((a, b) => a - b)
 }
 
 function scanProject(projectId: string): HistoricalContract[] {

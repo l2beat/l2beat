@@ -68,7 +68,7 @@ If yes, it is critical from the ossification perspective.
 | `discovered.json` contract | `type === "Contract"`, has an address, and `critical === true` | Joins the current security perimeter |
 | `includeProjects` | Listed in the root project's `ossification.json` | Adds that project's current critical contracts and discovery history to the same perimeter |
 | `sinceTimestamp` | Current critical contracts only | Deployment candidate for the contract clock; deployment resets maturity but is not a change-rate event |
-| `$pastUpgrades` | Current critical contracts; first item is the initial implementation | Latest timestamp can reset the clock; every item after the first is a change-rate event |
+| `$pastUpgrades` | Current critical contracts; first transaction is the initial implementation | Latest transaction timestamp can reset the clock; every transaction after the first is a change-rate event. Multiple upgrade records from one transaction (for example upgrade, execute, restore) form one code change |
 | Watched discovery diff | Address belongs to a current critical contract and the block is a non-implementation `severity: HIGH` change | Resets the clock and adds a change-rate event |
 | Implementation diff fallback | Address belongs to a current critical contract and that contract has no `$pastUpgrades` | Resets the clock and adds an event regardless of field severity |
 | `unverified` | Any current critical contract | Gates maturity, score, and exposure to zero |
@@ -108,6 +108,13 @@ Implementation history is stronger: `$pastUpgrades` supplies onchain timestamps 
 all recognized upgrades mechanically. When `$pastUpgrades` exists, implementation
 diff blocks are ignored to avoid double counting. Without it, implementation diffs
 are the fallback and use the discovery review timestamp.
+
+Upgrade events are deduplicated by transaction hash. A successful transaction that
+temporarily installs code and restores the previous implementation still resets the
+clock, because the temporary implementation was live during execution, but it is one
+code change rather than two. A reverted EVM transaction produces no upgrade record
+and does not reset the clock. Historical entries that store only timestamps dedupe
+equal timestamps as the best available transaction identity.
 
 Consequences for validation:
 

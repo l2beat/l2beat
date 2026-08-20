@@ -13,6 +13,10 @@ import {
   type OssificationFactor,
 } from './getOssificationFactor'
 import type { DiscoveredEntryLite } from './getOssificationPerimeter'
+import {
+  deduplicateUpgradeTimestamps,
+  parseUpgradeTimestamps,
+} from './parseUpgradeTimestamps'
 
 const PROJECT_ID_RE = /^[a-z0-9-]+$/i
 const SECONDS_PER_YEAR = 365 * 24 * 60 * 60
@@ -96,7 +100,9 @@ export async function getProjectOssification(
     .map((contract) => ({
       address: contract.address as string,
       name: contract.name ?? (contract.address as string),
-      upgradeTimestamps: contract.upgradeTimestamps ?? [],
+      upgradeTimestamps: deduplicateUpgradeTimestamps(
+        contract.upgradeTimestamps ?? [],
+      ),
     }))
 
   const factor = getOssificationFactor(
@@ -120,7 +126,7 @@ function toOssificationEntry(
     name: entry.name ?? entry.address,
     isVerified: entry.unverified !== true,
     sinceTimestamp: entry.sinceTimestamp,
-    upgradeTimestamps: parsePastUpgrades(entry.values?.$pastUpgrades),
+    upgradeTimestamps: parseUpgradeTimestamps(entry.values?.$pastUpgrades),
   }
 }
 
@@ -163,19 +169,6 @@ async function getExposure(
     integral += last.v * (now - last.t)
   }
   return integral / SECONDS_PER_YEAR
-}
-
-function parsePastUpgrades(value: unknown): number[] {
-  if (!Array.isArray(value)) return []
-  const timestamps: number[] = []
-  for (const upgrade of value) {
-    if (!Array.isArray(upgrade) || typeof upgrade[0] !== 'string') continue
-    const timestamp = Date.parse(upgrade[0])
-    if (Number.isFinite(timestamp)) {
-      timestamps.push(Math.floor(timestamp / 1000))
-    }
-  }
-  return timestamps.sort((a, b) => a - b)
 }
 
 function readProjectJson(projectId: string, file: string): unknown | undefined {

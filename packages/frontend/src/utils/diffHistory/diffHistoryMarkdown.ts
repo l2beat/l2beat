@@ -53,16 +53,30 @@ export function isImplementationChangeDiffBody(body: string): boolean {
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i] ?? ''
-    if (!mentionsImplementationField(line)) {
-      continue
-    }
+    const isImplementation = mentionsImplementationField(line)
+    const isAppendedUpgrade = mentionsPastUpgradeEntry(line)
+    if (!isImplementation && !isAppendedUpgrade) continue
 
-    if (isDiffValueLine(line)) {
+    const isRelevantDiffLine = isAppendedUpgrade
+      ? isAddedDiffValueLine
+      : isDiffValueLine
+    if (isRelevantDiffLine(line)) {
       return true
     }
 
-    const nextMeaningfulLines = lines.slice(i + 1, i + 5)
-    if (nextMeaningfulLines.some(isDiffValueLine)) {
+    const nextMeaningfulLines = lines
+      .slice(i + 1, i + 5)
+      .filter((line) => line.trim() !== '')
+    if (isAppendedUpgrade) {
+      if (
+        nextMeaningfulLines[0] !== undefined &&
+        isAddedDiffValueLine(nextMeaningfulLines[0])
+      ) {
+        return true
+      }
+      continue
+    }
+    if (nextMeaningfulLines.some(isRelevantDiffLine)) {
       return true
     }
   }
@@ -74,10 +88,18 @@ function mentionsImplementationField(line: string): boolean {
   return /["']?\$?implementation["']?\s*:/i.test(line)
 }
 
+function mentionsPastUpgradeEntry(line: string): boolean {
+  return /\$pastUpgrades\.\d+\s*:/i.test(line)
+}
+
 function isDiffValueLine(line: string): boolean {
   if (line.startsWith('+++') || line.startsWith('---')) {
     return false
   }
 
   return /^\s*[+-]\s+/.test(line)
+}
+
+function isAddedDiffValueLine(line: string): boolean {
+  return !line.startsWith('+++') && /^\s*\+\s+/.test(line)
 }

@@ -27,8 +27,8 @@ export interface OssificationEntry {
   isVerified: boolean
   /** Deployment timestamp */
   sinceTimestamp?: number
-  /** Timestamps from $pastUpgrades, sorted ascending. The first one is the
-   *  initial implementation setting, not a change. */
+  /** One timestamp per $pastUpgrades transaction, sorted ascending. The first
+   *  one is the initial implementation setting, not a change. */
   upgradeTimestamps: number[]
 }
 
