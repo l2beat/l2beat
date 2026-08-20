@@ -179,8 +179,6 @@ export function CompareProjectPicker({
         Add project
       </DashedButton>
       {!isDefaultSelection && (
-        // Clearing the explicit selection falls back to the top-N defaults,
-        // the same state as a fresh visit.
         <DashedButton
           onClick={() => onChange([])}
           className="h-7 rounded-lg px-2.5"

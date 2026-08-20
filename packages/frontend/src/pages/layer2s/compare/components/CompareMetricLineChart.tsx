@@ -181,9 +181,6 @@ function CustomTooltip({
   )
   if (visible.length === 0) return null
 
-  // With many projects selected a full list would grow taller than the
-  // chart itself; the rows are value-sorted, so the cutoff drops the least
-  // significant series.
   const sorted = [...visible].sort((a, b) => (b.value ?? 0) - (a.value ?? 0))
   const shown = sorted.slice(0, MAX_TOOLTIP_ROWS)
   const hiddenCount = sorted.length - shown.length

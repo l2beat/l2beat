@@ -10,13 +10,6 @@ import type {
 
 export interface CompareMetricChartProps {
   projects: CompareProjectEntry[]
-  /**
-   * The selection to query data for: `projects` debounced, so toggling
-   * several projects in a row fires one backend query instead of one per
-   * click. Charts render from the live `projects` and read data for it from
-   * here - projects not yet in the response simply have no line until the
-   * debounced query catches up.
-   */
   queryProjects: CompareProjectEntry[]
   config: CompareChartConfig
   chartRange: ChartRange

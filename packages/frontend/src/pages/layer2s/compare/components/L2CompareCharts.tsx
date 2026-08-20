@@ -88,9 +88,6 @@ export function L2CompareCharts({
       .map((slug) => bySlug.get(slug))
       .filter((project) => project !== undefined)
   }, [state.projects, allProjects, defaultProjectSlugs])
-  // Selecting projects one by one would fire a backend query per click;
-  // charts query for this debounced selection instead. The initial value
-  // matches the SSR-prefetched query input, so first paint reuses it.
   const queryProjects = useDebouncedValue(selectedProjects, 400)
 
   const displayedMetrics = useMemo(() => {
