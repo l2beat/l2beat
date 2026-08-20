@@ -161,6 +161,7 @@
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
+      "critical": true,
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -245,7 +246,8 @@
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
         "wasmModuleRoot": {
-          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
+          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.",
+          "severity": "HIGH"
         },
         "arbOsFromWmRoot": {
           "description": "ArbOS version derived from known wasmModuleRoots."
@@ -255,7 +257,9 @@
         },
         "challenges": {
           "description": "Emitted on createChallenge() in RollupUserLogic."
-        }
+        },
+        "validators": { "severity": "HIGH" },
+        "anyTrustFastConfirmer": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0": "RollupProxy",
@@ -309,6 +313,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -360,6 +365,7 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["arb-nova:0x04b47Ba4A06bc88279BaCd4af2185090e2FF3F57"]
       },
+      "fieldMeta": { "executors": { "severity": "HIGH" } },
       "implementationNames": {
         "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9": "TransparentUpgradeableProxy",
         "arb-nova:0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1": "UpgradeExecutor"
@@ -377,6 +383,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "critical": true,
       "deployerAddress": "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a",
       "sinceTimestamp": 1709904018,
       "sinceBlock": 55663578,
@@ -409,6 +416,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148392,
       "sinceBlock": 75267048,
@@ -502,6 +510,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148409,
       "sinceBlock": 75267056,
@@ -526,6 +535,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
+      "critical": true,
       "deployerAddress": "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a",
       "sinceTimestamp": 1709904018,
       "sinceBlock": 55663578,
@@ -623,6 +633,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148416,
       "sinceBlock": 75267060,
@@ -659,6 +670,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148424,
       "sinceBlock": 75267067,
@@ -694,6 +706,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "critical": true,
       "deployerAddress": "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a",
       "sinceTimestamp": 1709904018,
       "sinceBlock": 55663578,
@@ -741,6 +754,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
+      "critical": true,
       "ignoreInWatchMode": [
         "delayedMessageCount",
         "sequencerMessageCount",
@@ -823,6 +837,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
+      "critical": true,
       "ignoreInWatchMode": [
         "batchCount",
         "totalDelayedMessagesRead",
@@ -893,7 +908,9 @@
       "fieldMeta": {
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
-        }
+        },
+        "batchPosters": { "severity": "HIGH" },
+        "dacKeyset": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77": "TransparentUpgradeableProxy",
@@ -934,6 +951,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148400,
       "sinceBlock": 75267052,
@@ -953,6 +971,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "critical": true,
       "deployerAddress": "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a",
       "sinceTimestamp": 1709904018,
       "sinceBlock": 55663578,

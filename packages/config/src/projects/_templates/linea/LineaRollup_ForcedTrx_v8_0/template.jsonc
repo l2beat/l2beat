@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "LineaRollup",
+  "critical": true,
   "description": "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.",
   "ignoreInWatchMode": [
     "currentPeriodAmountInWei",
@@ -36,6 +37,7 @@
       ]
     },
     "verifiers": {
+      "severity": "HIGH",
       "description": "Mapping of proof type to ZK Plonk Verifier contract.",
       "handler": {
         "type": "array",
@@ -111,6 +113,7 @@
       ]
     },
     "Operators": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "OPERATOR_ROLE"

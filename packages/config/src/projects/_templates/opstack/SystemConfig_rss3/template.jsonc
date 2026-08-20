@@ -1,9 +1,11 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SystemConfig",
+  "critical": true,
   "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
   "fields": {
     "batcherHash": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

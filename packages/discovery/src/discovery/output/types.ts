@@ -97,6 +97,7 @@ export type StructureEntry = {
 export type ColorEntry = {
   name?: string
   description?: string
+  critical?: boolean
   fieldMeta?: Record<string, FieldMeta>
   references?: ExternalReference[]
   category?: ContractCategory

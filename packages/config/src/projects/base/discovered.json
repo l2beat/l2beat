@@ -1,7 +1,7 @@
 {
   "name": "base",
   "timestamp": 1785226129,
-  "configHash": "0x8f4d91a966c931bbd753e0ebaa304934f2595f71a06a2d7732d497d2d46b91af",
+  "configHash": "0xc50c3da8ae27ada487838c2252a3b1065d0b2a7299911425bda1d4022d438cd0",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -68,6 +68,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "base:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686789349,
@@ -106,6 +107,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
+      "critical": true,
       "deployerAddress": "base:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
@@ -342,6 +344,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.",
+      "critical": true,
       "deployerAddress": "base:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686789349,
       "sinceBlock": 0,
@@ -396,6 +399,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "EIP1967 proxy",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -804,6 +808,7 @@
       ],
       "proxyType": "immutable",
       "description": "EIP-2935 system contract storing the last 8191 L1 blockhashes. Bytecode is canonical to the EIP, deployed at the same address across networks.",
+      "critical": true,
       "deployerAddress": "eth:0x3462413Af4609098e1E27A490f554f260213D685",
       "sinceTimestamp": 1739979839,
       "sinceBlock": 21881387,
@@ -827,6 +832,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -983,6 +989,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 3d.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1060,6 +1067,7 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1129,6 +1137,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.",
+      "critical": true,
       "ignoreInWatchMode": ["getRegisteredSigners"],
       "deployerAddress": "eth:0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E",
       "sinceTimestamp": 1779394811,
@@ -1189,6 +1198,7 @@
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1751494343,
       "sinceBlock": 22834443,
@@ -1219,6 +1229,7 @@
       ],
       "proxyType": "immutable",
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
+      "critical": true,
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1740762647,
       "sinceBlock": 21946249,
@@ -1248,6 +1259,7 @@
       ],
       "proxyType": "immutable",
       "description": "Stateless verifier that validates AggregateVerifier TEE proofs by recovering an ECDSA signature over the journal and checking the recovered signer against TEEProverRegistry. Enforces PCR0 match by comparing the signer's registered image hash to the AggregateVerifier's TEE_IMAGE_HASH. Can be permanently nullified by a successful AggregateVerifier.nullify call.",
+      "critical": true,
       "deployerAddress": "eth:0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E",
       "sinceTimestamp": 1779394835,
       "sinceBlock": 25145977,
@@ -1277,6 +1289,7 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x644e3DedB0e4F83Bfcf8F9992964d240224B74dc",
       "sinceTimestamp": 1745514203,
@@ -1367,6 +1380,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1755283775,
       "sinceBlock": 23148334,
@@ -1393,6 +1407,7 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1513,6 +1528,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "critical": true,
       "deployerAddress": "eth:0x6606D3c20CC94cc7aA1D430C0E83a5129976153A",
       "sinceTimestamp": 1686793895,
       "sinceBlock": 17482143,
@@ -1561,6 +1577,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.",
+      "critical": true,
       "ignoreInWatchMode": [
         "gameCount",
         "permissionedGameArgs",
@@ -1691,6 +1708,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier.",
+      "critical": true,
       "ignoreInWatchMode": ["params", "balance"],
       "deployerAddress": "eth:0x6606D3c20CC94cc7aA1D430C0E83a5129976153A",
       "sinceTimestamp": 1686793895,
@@ -1814,6 +1832,7 @@
       ],
       "proxyType": "immutable",
       "description": "Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1756842743,
       "sinceBlock": 23277627,
@@ -1885,6 +1904,7 @@
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
+      "critical": true,
       "deployerAddress": "eth:0x926E9595fb147A376800022a554C8c05444EB658",
       "sinceTimestamp": 1766424179,
       "sinceBlock": 24069615,
@@ -2084,6 +2104,7 @@
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
+      "critical": true,
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1762212215,
       "sinceBlock": 23722054,
@@ -2108,6 +2129,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
+      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x1841CB3C2ce6870D0417844C817849da64E6e937",
       "sinceTimestamp": 1759862579,
@@ -2185,6 +2207,7 @@
       ],
       "proxyType": "immutable",
       "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
+      "critical": true,
       "deployerAddress": "eth:0x926E9595fb147A376800022a554C8c05444EB658",
       "sinceTimestamp": 1766424179,
       "sinceBlock": 24069615,
@@ -2285,6 +2308,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "critical": true,
       "ignoreInWatchMode": ["gasLimit", "overhead"],
       "deployerAddress": "eth:0x6606D3c20CC94cc7aA1D430C0E83a5129976153A",
       "sinceTimestamp": 1686793895,
@@ -2438,6 +2462,7 @@
         "VERSION": 0
       },
       "fieldMeta": {
+        "batcherHash": { "severity": "HIGH" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
@@ -2472,6 +2497,7 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2645,6 +2671,7 @@
         "$immutable": true,
         "wards": ["eth:0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB"]
       },
+      "fieldMeta": { "wards": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3": "Escrow"
       }
@@ -2659,6 +2686,7 @@
       ],
       "proxyType": "immutable",
       "description": "ZK-based verifier of AWS Nitro Enclave attestation documents. Used by TEEProverRegistry to validate new enclave signer registrations against the AWS Nitro PKI.",
+      "critical": true,
       "deployerAddress": "eth:0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E",
       "sinceTimestamp": 1779394727,
       "sinceBlock": 25145968,
@@ -2731,6 +2759,7 @@
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1756842755,
       "sinceBlock": 23277628,
@@ -2767,6 +2796,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "eth:0x6606D3c20CC94cc7aA1D430C0E83a5129976153A",
       "sinceTimestamp": 1686793895,
@@ -2870,6 +2900,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1718237375,
       "sinceBlock": 20079232,
@@ -2906,6 +2937,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "deployerAddress": "eth:0x6606D3c20CC94cc7aA1D430C0E83a5129976153A",
       "sinceTimestamp": 1686793895,
       "sinceBlock": 17482143,
@@ -2934,6 +2966,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.",
+      "critical": true,
       "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
       "deployerAddress": "eth:0x1841CB3C2ce6870D0417844C817849da64E6e937",
       "sinceTimestamp": 1759862579,
@@ -3013,6 +3046,7 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c",
       "sinceTimestamp": 1684875515,
@@ -3130,6 +3164,7 @@
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1755283787,
       "sinceBlock": 23148335,
@@ -3223,6 +3258,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1751494331,
       "sinceBlock": 22834442,
@@ -3260,6 +3296,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. The guardian can pause, unpause, and extend pauses, while the incident responder can only pause. Each pause automatically expires after 3 months.",
+      "critical": true,
       "deployerAddress": "eth:0x644e3DedB0e4F83Bfcf8F9992964d240224B74dc",
       "sinceTimestamp": 1771973279,
       "sinceBlock": 24529846,
@@ -3302,6 +3339,7 @@
       ],
       "proxyType": "immutable",
       "description": "Thin router that forwards SP1 ZK proof verification from the AggregateVerifier game to the SP1 verifier gateway. Can be permanently nullified by a successful AggregateVerifier.nullify call.",
+      "critical": true,
       "deployerAddress": "eth:0x1841CB3C2ce6870D0417844C817849da64E6e937",
       "sinceTimestamp": 1780357679,
       "sinceBlock": 25225910,
@@ -3341,6 +3379,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v6.1.0).",
+      "critical": true,
       "deployerAddress": "eth:0x9193a78157957F3E03beE50A3E6a51F0f1669E23",
       "sinceTimestamp": 1776172415,
       "sinceBlock": 24878258,
@@ -3365,6 +3404,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
+      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E",
       "sinceTimestamp": 1779394823,
@@ -3457,6 +3497,7 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "critical": true,
       "deployerAddress": "eth:0x1841CB3C2ce6870D0417844C817849da64E6e937",
       "sinceTimestamp": 1780357499,
       "sinceBlock": 25225895,
@@ -3502,6 +3543,7 @@
       ],
       "proxyType": "immutable",
       "description": "Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (5d) to FAST_FINALIZATION_DELAY (1d).",
+      "critical": true,
       "ignoreInWatchMode": [
         "bondAmount",
         "bondClaimed",

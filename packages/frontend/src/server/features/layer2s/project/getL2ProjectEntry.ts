@@ -19,6 +19,7 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
+import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import {
   countRecentDiscoveryUpdates,
   getDiscoveryUpdates,
@@ -190,6 +191,7 @@ export async function getL2ProjectEntry(
     allProjectsWithContracts,
     allProjects,
     interopProjects,
+    ossification,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
@@ -220,6 +222,7 @@ export async function getL2ProjectEntry(
     ps.getProjects({
       select: ['interopConfig'],
     }),
+    getProjectOssification(project.id),
   ])
 
   const projectLiveness = liveness[project.id]
@@ -694,6 +697,17 @@ export async function getL2ProjectEntry(
         governanceInfo: upgradesAndGovernance?.governanceInfo,
         pastUpgrades: getPastUpgradesData(allPastUpgrades),
         isUnderReview: !!project.statuses.reviewStatus,
+      },
+    })
+  }
+
+  if (ossification) {
+    sections.push({
+      type: 'OssificationSection',
+      props: {
+        id: 'ossification',
+        title: 'Ossification',
+        ossification,
       },
     })
   }

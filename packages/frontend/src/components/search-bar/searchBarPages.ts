@@ -73,6 +73,12 @@ export const searchBarPages = withIndex([
     href: '/layer2s/archived',
   },
   {
+    category: 'security',
+    name: 'Security',
+    tags: ['pages', 'ossification'],
+    href: '/security',
+  },
+  {
     category: 'da',
     name: 'Summary',
     tags: ['pages', 'da', 'data', 'availability'],

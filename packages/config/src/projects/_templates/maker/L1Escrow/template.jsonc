@@ -4,6 +4,7 @@
   "ignoreRelatives": ["wards", "dai"],
   "fields": {
     "wards": {
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "usr",

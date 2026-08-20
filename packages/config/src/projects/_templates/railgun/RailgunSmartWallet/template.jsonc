@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "RailgunSmartWallet",
+  "critical": true,
   "description": "Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.",
   "category": "core",
   "ignoreMethods": [

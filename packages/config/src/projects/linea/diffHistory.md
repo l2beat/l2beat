@@ -1,3 +1,175 @@
+Generated with discovered.json: 0x690b26beea6eac3ee3a55dbaf5deebdfba50f840
+
+# Diff at Thu, 20 Aug 2026 06:21:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1784543140
+- current timestamp: 1784543140
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784543140 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) [linea/L1TokenBridge_v1_1] {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      fieldMeta.remoteSender:
++        {"severity":"HIGH","description":"The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PlonkVerifierFull (eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PlonkVerifierFull (eth:0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract BridgedToken (eth:0x36f274C1C197F277EA3C57859729398FCc8a3763) [linea/BridgedToken] {
+    +++ description: Standard implementation used for assets that are native to the other layer and are bridged to this layer.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract LidoStVaultYieldProvider (eth:0x486D8cADc10489B30b64c890aEc747F1220eEEC3) [linea/LidoStakingVaultYieldProvider] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Linea Security Council (eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3) [GnosisSafe] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) [linea/LineaRollup_ForcedTrx_v8_0] {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
+      fieldMeta.verifiers.severity:
++        "HIGH"
+      fieldMeta.Operators:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Timelock (eth:0xd6B95c960779c72B8C6752119849318E5d550574) [global/Timelock] {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) [linea/YieldManager] {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E) [global/ProxyAdmin] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract TokenBridge (linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9) [linea/L1TokenBridge_v1_1] {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      fieldMeta.remoteSender:
++        {"severity":"HIGH","description":"The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2MessageService (linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec) [linea/L2MessageService_v1_0] {
+    +++ description: None
+      fieldMeta.l1l2MessageSetter:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2Timelock (linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca) [global/Timelock] {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract BridgedToken (linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF) [linea/BridgedToken] {
+    +++ description: Standard implementation used for assets that are native to the other layer and are bridged to this layer.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Linea Multisig 3 (linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD) [GnosisSafe] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x7d5ab043524bbfa6e5ad3f4c520c7cd2e771e40d
 
 # Diff at Mon, 20 Jul 2026 10:28:28 GMT:

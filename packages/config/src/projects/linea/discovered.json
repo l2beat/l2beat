@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "timestamp": 1784543140,
-  "configHash": "0xbed9112d38b3dd51aa89ea6b6767dc307e1c13601ff6b7dc5a7d6584a32c589b",
+  "configHash": "0x8ce0042bb1293a809cb6b561c7f5a5c902d9cea7d55af0233c2f64a5cf4673c9",
   "entries": [
     {
       "name": "TokenBridge",
@@ -14,6 +14,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge and escrow ERC-20 tokens.",
+      "critical": true,
       "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1691067875,
       "sinceBlock": 17834649,
@@ -197,6 +198,10 @@
         "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": { "severity": "HIGH" },
         "isPaused_NATIVE_YIELD_REPORTING": { "severity": "HIGH" },
         "isPaused_STATE_DATA_SUBMISSION": { "severity": "HIGH" },
+        "remoteSender": {
+          "severity": "HIGH",
+          "description": "The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here."
+        },
         "nonSecurityCouncilCooldownEnd": {
           "severity": "HIGH",
           "description": "Timestamp until which non security council entities can't pause the rollup."
@@ -223,6 +228,7 @@
         "0x5284cae847244cb9b1159302d71c4e787c6ad89fd6c57dc2e22d7283cf511707"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x89F1668D215Bb5839A0A7a1A4619b1541258388c",
       "sinceTimestamp": 1783527107,
       "sinceBlock": 25488961,
@@ -252,6 +258,7 @@
         "0x691eadb19ab093ff1d8d4aaba79c0c056580ed53b4f399896da767a43907d2a0"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x89F1668D215Bb5839A0A7a1A4619b1541258388c",
       "sinceTimestamp": 1776685703,
       "sinceBlock": 24920910,
@@ -321,6 +328,7 @@
       ],
       "proxyType": "immutable",
       "description": "Standard implementation used for assets that are native to the other layer and are bridged to this layer.",
+      "critical": true,
       "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1691067827,
       "sinceBlock": 17834645,
@@ -401,6 +409,7 @@
         "0x2175bed044eb0a1c87005be4bea72f81fdbca7c576d10074b7bec17cf3c2756a"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1770742547,
       "sinceBlock": 24427705,
@@ -579,6 +588,7 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -899,6 +909,7 @@
       ],
       "proxyType": "immutable",
       "description": "A beacon with an upgradeable implementation currently set as eth:0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.",
+      "critical": true,
       "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1691067839,
       "sinceBlock": 17834646,
@@ -1042,6 +1053,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.",
+      "critical": true,
       "ignoreInWatchMode": [
         "currentPeriodAmountInWei",
         "currentL2StoredL1MessageNumber",
@@ -1330,8 +1342,10 @@
         "yieldManager": { "severity": "HIGH" },
         "livenessRecoveryOperator": { "severity": "HIGH" },
         "verifiers": {
+          "severity": "HIGH",
           "description": "Mapping of proof type to ZK Plonk Verifier contract."
         },
+        "Operators": { "severity": "HIGH" },
         "isPaused_GENERAL": { "severity": "HIGH" },
         "isPaused_L1_L2": { "severity": "HIGH" },
         "isPaused_L2_L1": { "severity": "HIGH" },
@@ -1417,6 +1431,7 @@
       ],
       "proxyType": "immutable",
       "description": "A standard timelock with access control. The current minimum delay is 0s.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1495,6 +1510,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.",
+      "critical": true,
       "ignoreInWatchMode": ["userFundsInYieldProvidersTotal"],
       "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1770742511,
@@ -1694,6 +1710,7 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -1751,6 +1768,7 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -1816,6 +1834,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge and escrow ERC-20 tokens.",
+      "critical": true,
       "deployerAddress": "linea:0x49ee40140E522651744e1C27828c76eE92802833",
       "sinceTimestamp": 1691068282,
       "sinceBlock": 116555,
@@ -1999,6 +2018,10 @@
         "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": { "severity": "HIGH" },
         "isPaused_NATIVE_YIELD_REPORTING": { "severity": "HIGH" },
         "isPaused_STATE_DATA_SUBMISSION": { "severity": "HIGH" },
+        "remoteSender": {
+          "severity": "HIGH",
+          "description": "The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here."
+        },
         "nonSecurityCouncilCooldownEnd": {
           "severity": "HIGH",
           "description": "Timestamp until which non security council entities can't pause the rollup."
@@ -2032,6 +2055,7 @@
         "0x56a0fcd479f6728490feadda405a466779d6640c892dbf6e6120f159015b07a9"
       ],
       "proxyType": "EIP1967 proxy",
+      "critical": true,
       "ignoreInWatchMode": [
         "currentPeriodAmountInWei",
         "currentPeriodEnd",
@@ -2182,6 +2206,7 @@
         "USED_RATE_LIMIT_RESETTER_ROLE": "0x0cf0d2deb70d7bdac2fa48c4ac99bc558170be0ce5fcb994caefa4bf7b96edf9"
       },
       "fieldMeta": {
+        "l1l2MessageSetter": { "severity": "HIGH" },
         "sender": {
           "description": "Value used to identify the crosschain caller during a crosschain call. It defaults to a inaccessible address outside of calls."
         },
@@ -2368,6 +2393,7 @@
       ],
       "proxyType": "immutable",
       "description": "A standard timelock with access control. The current minimum delay is 0s.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -2503,6 +2529,7 @@
       ],
       "proxyType": "immutable",
       "description": "Standard implementation used for assets that are native to the other layer and are bridged to this layer.",
+      "critical": true,
       "deployerAddress": "linea:0x49ee40140E522651744e1C27828c76eE92802833",
       "sinceTimestamp": 1691068234,
       "sinceBlock": 116551,
@@ -2539,6 +2566,7 @@
       ],
       "proxyType": "immutable",
       "description": "A beacon with an upgradeable implementation currently set as linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF. Beacon proxy contracts pointing to this beacon will all use its implementation.",
+      "critical": true,
       "deployerAddress": "linea:0x49ee40140E522651744e1C27828c76eE92802833",
       "sinceTimestamp": 1691068246,
       "sinceBlock": 116552,
@@ -2561,6 +2589,7 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",

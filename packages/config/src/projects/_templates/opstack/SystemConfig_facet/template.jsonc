@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SystemConfig_facet",
+  "critical": true,
   "ignoreInWatchMode": ["scalar", "overhead"],
   "ignoreRelatives": ["gasPayingToken"],
   "fields": {

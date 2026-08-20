@@ -1,4 +1,5 @@
 {
+  "critical": true,
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).",
   "ignoreMethods": ["canExecute", "getProposal", "proxiableUUID"],

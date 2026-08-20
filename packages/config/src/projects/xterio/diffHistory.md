@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x687d05dbf161c7adaf59e1b0ed605cc03f1b8ddf
+
+# Diff at Thu, 20 Aug 2026 06:21:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1745000255
+- current timestamp: 1745000255
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1745000255 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (eth:0x2AD84AbD52050956AcC9c490D024b821A59e3FB6) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0x5A0492D20D984eE904E46E6Ff24572bc755abb28) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.batcherHash:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x702dF90E92A6841c9013faE6D724ddFA8F141d5C) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A) [opstack/OptimismPortalAdminWithdraw] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. Forced transactions from Layer 1 are disabled.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xcbF423525a5471Fc5037a5397F99f6F09fe41379) [opstack/SuperchainConfigFake] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      critical:
++        true
+      fieldMeta:
++        {"paused":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xd487cc68b9e04c4f22380e3d44098f967060ebf2
 
 # Diff at Tue, 09 Jun 2026 12:43:41 GMT:

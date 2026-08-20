@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TaikoSP1Verifier",
+  "critical": true,
   "description": "Gating router contract to verify batches using SP1.",
   "category": "core",
   "fields": {

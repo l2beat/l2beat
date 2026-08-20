@@ -203,6 +203,7 @@
       ],
       "proxyType": "immutable",
       "description": "Deploys Uniswap v3 pools: anyone can create one pool per token pair and enabled fee tier, at a CREATE2 address deterministic in (token0, token1, fee). Immutable. Its owner holds exactly three powers: enable new fee tiers (irreversible), call setFeeProtocol/collectProtocol on pools, and transfer the owner role. It cannot modify, pause, or upgrade deployed pools.",
+      "critical": true,
       "ignoreInWatchMode": ["parameters"],
       "deployerAddress": "eth:0x6C9FC64A53c1b71FB3f9Af64d1ae3A4931A5f4E9",
       "sinceTimestamp": 1620156420,
@@ -490,6 +491,7 @@
       ],
       "proxyType": "immutable",
       "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on tick ranges; swap fees accrue to in-range positions. The factory owner can divert up to 1/4 of the swap fee per side as protocol fee. Also a TWAP oracle whose observation buffer anyone can grow.",
+      "critical": true,
       "ignoreInWatchMode": [
         "slot0",
         "liquidity",
@@ -544,6 +546,7 @@
       ],
       "proxyType": "immutable",
       "description": "Wraps pool positions into ERC721 NFTs: it is the pool-level owner of the wrapped positions and tracks each tokenId's range, liquidity, and fees, so NFT holders manage and collect through it. Immutable and unprivileged: no special rights in the pools, which can equally be used directly.",
+      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x6C9FC64A53c1b71FB3f9Af64d1ae3A4931A5f4E9",
       "sinceTimestamp": 1620156913,
@@ -578,6 +581,7 @@
       ],
       "proxyType": "immutable",
       "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on tick ranges; swap fees accrue to in-range positions. The factory owner can divert up to 1/4 of the swap fee per side as protocol fee. Also a TWAP oracle whose observation buffer anyone can grow.",
+      "critical": true,
       "ignoreInWatchMode": [
         "slot0",
         "liquidity",

@@ -367,6 +367,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.",
+      "critical": true,
       "deployerAddress": "eth:0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
       "sinceTimestamp": 1692341159,
       "sinceBlock": 17939980,
@@ -531,6 +532,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.",
+      "critical": true,
       "ignoreInWatchMode": [
         "l1ToL2MessageNonce",
         "stateBlockNumber",
@@ -682,7 +684,8 @@
         },
         "aggregatorHashMapped": {
           "description": "Human-readable label for the current Starknet aggregator program hash."
-        }
+        },
+        "operators": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640": "Proxy",

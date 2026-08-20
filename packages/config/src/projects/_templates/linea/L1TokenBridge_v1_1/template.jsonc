@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TokenBridge",
+  "critical": true,
   "description": "Contract used to bridge and escrow ERC-20 tokens.",
   "fields": {
     "accessControl": {
@@ -261,6 +262,8 @@
       ]
     },
     "remoteSender": {
+      "severity": "HIGH",
+      "description": "The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here.",
       "edit": ["format", "LineaAddress"]
     },
     "nonSecurityCouncilCooldownEnd": {

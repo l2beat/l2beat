@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Starknet",
+  "critical": true,
   "description": "Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.",
   "category": "core",
   "fields": {
@@ -64,6 +65,7 @@
     },
     // Responsible for updating the state
     "operators": {
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "operator",

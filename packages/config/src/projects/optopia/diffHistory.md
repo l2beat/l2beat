@@ -1,3 +1,65 @@
+Generated with discovered.json: 0xa9ebd2924d8e4a559df7d3a5689e9564fa45344a
+
+# Diff at Thu, 20 Aug 2026 06:21:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1768569941
+- current timestamp: 1768569941
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1768569941 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (eth:0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x03D5bc58E7b7E13ba785F67AFA2d2fC49cB2BdF3) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0x5e8d351FD046Aa0b3DDA24096751996C0c397C61) [opstack/SuperchainConfigFake] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      critical:
++        true
+      fieldMeta:
++        {"paused":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.batcherHash:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2OutputOracle (eth:0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5) [opstack/L2OutputOracle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0xf8a20af510619be4f74220c4d34b3065fcddc7ff
 
 # Diff at Tue, 09 Jun 2026 12:43:37 GMT:

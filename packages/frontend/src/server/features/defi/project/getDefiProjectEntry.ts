@@ -3,6 +3,7 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -62,20 +63,25 @@ export async function getDefiProjectEntry(
 
   const defaultChartRange = optionToRange('1y')
   const icon = manifest.getUrl(`/icons/${project.slug}.png`)
-  const [contractUtils, projectsChangeReport, dependencyProjectsById] =
-    await Promise.all([
-      getContractUtils(),
-      getProjectsChangeReport(),
-      getDefiDependencyProjectsById(project.externalDependencies),
-      project.tvsConfig !== undefined
-        ? helpers.queryClient.prefetchQuery(
-            helpers.trpc.tvs.chartByProjects.queryOptions({
-              projectIds: [project.id],
-              range: defaultChartRange,
-            }),
-          )
-        : undefined,
-    ])
+  const [
+    contractUtils,
+    projectsChangeReport,
+    dependencyProjectsById,
+    ossification,
+  ] = await Promise.all([
+    getContractUtils(),
+    getProjectsChangeReport(),
+    getDefiDependencyProjectsById(project.externalDependencies),
+    getProjectOssification(project.id),
+    project.tvsConfig !== undefined
+      ? helpers.queryClient.prefetchQuery(
+          helpers.trpc.tvs.chartByProjects.queryOptions({
+            projectIds: [project.id],
+            range: defaultChartRange,
+          }),
+        )
+      : undefined,
+  ])
 
   const isUnderReview = !!project.statuses.reviewStatus
   const permissionsSection = getPermissionsSection(
@@ -158,6 +164,17 @@ export async function getDefiProjectEntry(
           project.externalDependencies,
           dependencyProjectsById,
         ),
+      },
+    })
+  }
+
+  if (ossification) {
+    sections.push({
+      type: 'OssificationSection',
+      props: {
+        id: 'ossification',
+        title: 'Ossification',
+        ossification,
       },
     })
   }

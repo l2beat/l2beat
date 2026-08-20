@@ -51,6 +51,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Router managing token <–> gateway mapping on L2.",
+      "critical": true,
       "deployerAddress": "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1656313073,
       "sinceBlock": 12,
@@ -173,6 +174,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the Bridge on L1. Mints and burns WETH on L2.",
+      "critical": true,
       "deployerAddress": "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1656314863,
       "sinceBlock": 32,
@@ -224,6 +226,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -281,6 +284,7 @@
         ],
         "transactionFilteringPrecompile": "arb-nova:0x0000000000000000000000000000000000000074"
       },
+      "fieldMeta": { "executors": { "severity": "HIGH" } },
       "implementationNames": {
         "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482": "TransparentUpgradeableProxy",
         "arb-nova:0x3d745b8815F9be5BF053858165f8aB1F58c77932": "UpgradeExecutor"
@@ -467,6 +471,7 @@
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -589,6 +594,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.",
+      "critical": true,
       "ignoreInWatchMode": ["exitNum"],
       "deployerAddress": "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1656313079,
@@ -938,6 +944,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
+      "critical": true,
       "ignoreInWatchMode": [
         "batchCount",
         "totalDelayedMessagesRead",
@@ -1042,7 +1049,9 @@
       "fieldMeta": {
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
-        }
+        },
+        "batchPosters": { "severity": "HIGH" },
+        "dacKeyset": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b": "TransparentUpgradeableProxy",
@@ -1066,6 +1075,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.",
+      "critical": true,
       "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1656312893,
       "sinceBlock": 15033103,
@@ -1158,6 +1168,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
+      "critical": true,
       "deployerAddress": "eth:0x7Ec4758CCFBE66c45D35ea00e77e006Dc2E8C6EB",
       "sinceTimestamp": 1656050353,
       "sinceBlock": 15016829,
@@ -1247,6 +1258,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1331,6 +1343,7 @@
           "eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85"
         ]
       },
+      "fieldMeta": { "executors": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd": "TransparentUpgradeableProxy",
         "eth:0x3d745b8815F9be5BF053858165f8aB1F58c77932": "UpgradeExecutor"
@@ -1347,6 +1360,7 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
+      "critical": true,
       "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1734397931,
       "sinceBlock": 21418888,
@@ -1709,6 +1723,7 @@
           "eth:0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
         ]
       },
+      "fieldMeta": { "wards": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3": "L1Escrow"
       }
@@ -1793,6 +1808,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.",
+      "critical": true,
       "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1656312805,
       "sinceBlock": 15033100,
@@ -1933,6 +1949,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
+      "critical": true,
       "ignoreInWatchMode": [
         "delayedMessageCount",
         "sequencerMessageCount",
@@ -2082,6 +2099,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
+      "critical": true,
       "deployerAddress": "eth:0x7Ec4758CCFBE66c45D35ea00e77e006Dc2E8C6EB",
       "sinceTimestamp": 1656050353,
       "sinceBlock": 15016829,
@@ -2140,6 +2158,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.",
+      "critical": true,
       "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1656312748,
       "sinceBlock": 15033094,
@@ -2261,6 +2280,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
+      "critical": true,
       "deployerAddress": "eth:0x7Ec4758CCFBE66c45D35ea00e77e006Dc2E8C6EB",
       "sinceTimestamp": 1656050353,
       "sinceBlock": 15016829,
@@ -2428,6 +2448,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -6624,6 +6645,7 @@
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).",
+      "critical": true,
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -6691,6 +6713,7 @@
         "wasmModuleRoot": "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97"
       },
       "fieldMeta": {
+        "getValidators": { "severity": "HIGH" },
         "minimumAssertionPeriod": {
           "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
         },
@@ -6698,6 +6721,7 @@
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
         "wasmModuleRoot": {
+          "severity": "HIGH",
           "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
         },
         "arbOsFromWmRoot": {
@@ -6769,6 +6793,7 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -6997,6 +7022,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that implements the main challenge protocol logic of the fraud proof system.",
+      "critical": true,
       "deployerAddress": "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4",
       "sinceTimestamp": 1739368811,
       "sinceBlock": 21830860,

@@ -1,15 +1,18 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "description": "Custom Multisig implementation that has a general threshold of {{EIP1271_THRESHOLD}} but also specific thresholds for upgrade approvals ({{APPROVE_UPGRADE_SECURITY_COUNCIL_THRESHOLD}}) or soft freezes ({{softFreezeThreshold}}).",
   "ignoreMethods": ["members"],
   "fields": {
     "$members": {
+      "severity": "HIGH",
       "handler": {
         "type": "array",
         "method": "members"
       }
     },
     "$threshold": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "EIP1271_THRESHOLD",

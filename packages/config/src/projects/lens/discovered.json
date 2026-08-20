@@ -27,6 +27,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
+      "critical": true,
       "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1786713407,
       "sinceBlock": 25753516,
@@ -55,6 +56,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -220,6 +222,7 @@
       ],
       "proxyType": "immutable",
       "description": "A governance proxy that lets eth:0x4968A0E4b025eD7d095753E54058377969b41abC act through it.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -294,6 +297,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
+      "critical": true,
       "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1786713395,
       "sinceBlock": 25753515,
@@ -326,6 +330,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract that verifies that the validiums data was made available on Avail by querying the eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.",
+      "critical": true,
       "deployerAddress": "eth:0x8fc4cB81975cFE4652630b77E86EF0e4193Aa17e",
       "sinceTimestamp": 1743696419,
       "sinceBlock": 22189472,
@@ -376,6 +381,7 @@
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
+      "critical": true,
       "ignoreInWatchMode": [
         "getTotalPriorityTxs",
         "getTotalBlocksCommitted",
@@ -722,7 +728,8 @@
         "getVerifierParams": {
           "severity": "LOW",
           "description": "Verifier parameters used for proving batches."
-        }
+        },
+        "validators": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xc29d04A93F893700015138E3E334eB828dAC3cef": "DiamondProxy",
@@ -771,6 +778,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router contract for verifiers. Routes verification requests to eth:0x8470d6B3fd71B5fE3906B4ea04498d18F721eDe9 or eth:0x0DAAB2B7b38ab48712996E760152c569FA356DbF depending on the supplied proof type.",
+      "critical": true,
       "deployerAddress": "eth:0xF378708B88841Abb63e2316E4Fc8f29469beE885",
       "sinceTimestamp": 1786713431,
       "sinceBlock": 25753518,
@@ -818,6 +826,7 @@
         "0xed3ae20cf58c6035b0e9fce756c07e2f087a8044a1f78fb4fbedea5d7846df80"
       ],
       "proxyType": "EIP1967 proxy",
+      "critical": true,
       "deployerAddress": "eth:0x299174d47c243B5381c6062aBEFbfF915B601D85",
       "sinceTimestamp": 1734114251,
       "sinceBlock": 21395362,

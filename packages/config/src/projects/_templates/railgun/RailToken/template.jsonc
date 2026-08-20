@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "RailToken",
+  "critical": true,
   "description": "RAIL governance token contract with a capped ({{cap}} RAIL total supply) mint schedule and an early anti-bot transfer override.",
   "category": "gov",
   "fields": {

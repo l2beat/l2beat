@@ -1,4 +1,5 @@
 {
+  "critical": true,
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "An optimistic governance module. Standard proposals pass and can be executed unless {{minVetoPercent}}% of votable TAIKO veto them within {{governanceSettings_timelockPeriod_fmt}}. Emergency proposals can be executed without delay.",
   "ignoreMethods": [

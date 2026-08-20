@@ -15,7 +15,44 @@
   },
   "overrides": {
     "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD": {
+      // proposer, executor and canceller on the L2Timelock (0s delay) that owns the L2 ProxyAdmin upgrading the L2 TokenBridge and L2MessageService
+      "critical": true,
       "canActIndependently": true
+    },
+    // active PLONK verifiers referenced by LineaRollup.verifiers: a code change lets forged proofs finalize arbitrary state and drain the bridge
+    "eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77": {
+      "critical": true
+    },
+    "eth:0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc": {
+      "critical": true
+    },
+    // Security Council: full admin of LineaRollup/TokenBridge/YieldManager roles, proposer+executor on the 0s Timelock (upgrade path), indefinite pause
+    "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3": {
+      "critical": true
+    },
+    // Timelock (0s min delay) owning the L1 ProxyAdmin that upgrades LineaRollup, TokenBridge and YieldManager
+    "eth:0xd6B95c960779c72B8C6752119849318E5d550574": {
+      "critical": true
+    },
+    // ProxyAdmin for LineaRollup, TokenBridge and YieldManager
+    "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6": {
+      "critical": true
+    },
+    // beacon controlling the BridgedToken implementation of canonical bridged tokens on L1
+    "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB": {
+      "critical": true
+    },
+    // ProxyAdmin for the L2 TokenBridge and L2MessageService
+    "linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E": {
+      "critical": true
+    },
+    // L2 Timelock (0s min delay) owning the L2 ProxyAdmin
+    "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca": {
+      "critical": true
+    },
+    // beacon controlling the BridgedToken implementation of all canonical bridged tokens on Linea
+    "linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0": {
+      "critical": true
     }
   }
 }

@@ -47,12 +47,34 @@
     "eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": {
       "description": "Stores DAI deposited from the attached L1DAITokenBridge."
     },
+    // SuperchainProxyAdmin: can upgrade every core superchain contract (portal, bridges, DGF, SystemConfig, SuperchainConfig).
+    "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": {
+      "critical": true
+    },
+    // SuperchainProxyAdminOwner: 2-of-2 Safe (Security Council + Foundation Upgrade Safe) owning the SuperchainProxyAdmin.
+    "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": {
+      "critical": true
+    },
+    // OpFoundationUpgradeSafe: co-owner (2-of-2) of the SuperchainProxyAdminOwner, owner of SystemConfig, LivenessModule fallback owner.
+    "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92": {
+      "critical": true
+    },
+    // Optimism Guardian Multisig: SuperchainConfig guardian - can pause withdrawals, blacklist dispute games and switch the respected game type.
+    "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": {
+      "critical": true
+    },
+    // OpFoundationOperationsSafe: challenger of the PermissionedDisputeGame (sole defense of the fallback proof system).
+    "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": {
+      "critical": true
+    },
     // OPContractsManagerV2: Karst upgrade tooling. Ignored so discovery doesn't
     // follow it into bare implementations; authority is the SuperchainProxyAdminOwner.
     "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
       "ignoreDiscovery": true
     },
+    // Optimism Security Council: co-owner (2-of-2) of the SuperchainProxyAdminOwner and sole owner (1/1) of the Guardian Multisig.
     "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": {
+      "critical": true,
       "references": [
         {
           "text": "Security Council members - Optimism Collective Governance Forum",
@@ -85,6 +107,7 @@
     },
     "eth:0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f": {
       "description": "Custom escrow for SNX bridged via canonical messaging.",
+      "critical": true,
       "ignoreRelatives": ["owner"]
     },
     "eth:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC": {
@@ -129,6 +152,7 @@
     },
     "eth:0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": {
       "description": "Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.",
+      // holds the approval to pull DAI from the L1DAIEscrow. Maker/Sky-governed external escrow, outside the ossification perimeter.
       "ignoreRelatives": [
         "l1Token",
         "l2DAITokenBridge",
@@ -180,6 +204,7 @@
     "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290": {
       "fields": {
         "batcherHash": {
+          "severity": "HIGH",
           "handler": {
             "type": "call",
             "method": "function batcherHash() view returns (address)",
@@ -251,11 +276,25 @@
         }
       }
     },
+    // MintManagerOwner: 1/1 Safe (owned by SafeL2) that can swap the MintManager and thus the OP minting policy.
+    "oeth:0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26": {
+      "critical": true
+    },
+    // SafeL2 (Optimism Foundation L2 Safe): sole owner of the MintManagerOwner, controls the OP minting policy.
+    "oeth:0x3F3Cd78Ef9Bd85961C0729E6BbB11E94Ca6f61D2": {
+      "critical": true
+    },
+    // SaferSafes (L2 instance, untemplated): Safe module installed on the SafeL2 that controls the OP minting policy.
+    "oeth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a": {
+      "critical": true
+    },
     "oeth:0x4200000000000000000000000000000000000002": {
       "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade."
     },
     "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": {
       "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
+      // sole minter of OP, which is counted (natively minted) in the TVS.
+      "critical": true,
       "fields": {
         "owner": {
           "permissions": [
@@ -269,6 +308,8 @@
     },
     "oeth:0x4200000000000000000000000000000000000042": {
       "description": "The OP token contract. The minting policy is controlled by the {{ owner }}.",
+      // OP is counted (natively minted) in the TVS; a code change can mint or move user balances.
+      "critical": true,
       "ignoreMethods": ["getPastTotalSupply"],
       "ignoreInWatchMode": ["totalSupply"]
     }

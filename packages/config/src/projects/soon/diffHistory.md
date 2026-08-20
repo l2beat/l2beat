@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x2839259d1eda0ba7d89575bff78667423f7f73de
+
+# Diff at Thu, 20 Aug 2026 06:21:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1785450156
+- current timestamp: 1785450156
+
+## Description
+
+Classify critical contracts and trust-defining value severities for the ossification factor.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785450156 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448) [opstack/L2OutputOracle_soon] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SystemConfig (eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.batcherHash:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract OptimismPortal (eth:0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07) [opstack/OptimismPortal_soon] {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AddressManager (eth:0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd) [opstack/AddressManager] {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xbB138cE37870443d5b2B02a36619D3478738E0f6) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SuperchainConfig (eth:0xD02631b334FfDCD5674217e57fe524c44B341DD4) [opstack/SuperchainConfigFake] {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      critical:
++        true
+      fieldMeta:
++        {"paused":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract L1StandardBridge (eth:0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9) [opstack/L1StandardBridge_soon] {
+    +++ description: The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x7a4fb7de5de606f78eda69e66b0d883b3a9ac97f
 
 # Diff at Thu, 30 Jul 2026 22:24:05 GMT:

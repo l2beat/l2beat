@@ -18,6 +18,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "sinceTimestamp": 1689106799,
       "sinceBlock": 17672708,
       "values": {
@@ -311,6 +312,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1689106883,
       "sinceBlock": 17672715,
@@ -357,7 +359,8 @@
         },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "batcherHash": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9": "Proxy",
@@ -381,6 +384,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1689106835,
       "sinceBlock": 17672711,
@@ -456,6 +460,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
+      "critical": true,
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -519,6 +524,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
+      "critical": true,
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1689106847,
       "sinceBlock": 17672712,
@@ -638,6 +644,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+      "critical": true,
       "sinceTimestamp": 1689106811,
       "sinceBlock": 17672709,
       "values": {

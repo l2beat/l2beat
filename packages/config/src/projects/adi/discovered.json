@@ -34,6 +34,7 @@
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
+      "critical": true,
       "ignoreInWatchMode": [
         "getTotalPriorityTxs",
         "getTotalBlocksCommitted",
@@ -317,7 +318,8 @@
         "getVerifierParams": {
           "severity": "LOW",
           "description": "Verifier parameters used for proving batches."
-        }
+        },
+        "validators": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B": "DiamondProxy",
@@ -417,6 +419,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Canonical central asset escrow for all ZK stack chains.",
+      "critical": true,
       "deployerAddress": "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985",
       "sinceTimestamp": 1764060407,
       "sinceBlock": 23874722,
@@ -456,6 +459,7 @@
       ],
       "proxyType": "immutable",
       "description": "A governance proxy that lets eth:0xF50293Ac52f987122DcD67Eda0cFb34E9d7a0Cf9 act through it.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -522,6 +526,7 @@
       ],
       "proxyType": "immutable",
       "description": "A governance proxy that lets eth:0xB272B188855128c10a933Edb62CC64c22B1f3754 act through it.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -684,6 +689,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.",
+      "critical": true,
       "deployerAddress": "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985",
       "sinceTimestamp": 1764060407,
       "sinceBlock": 23874722,
@@ -788,6 +794,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.",
+      "critical": true,
       "ignoreInWatchMode": ["sharedTree", "getAggregatedRoot"],
       "deployerAddress": "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985",
       "sinceTimestamp": 1764060407,
@@ -829,6 +836,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "[FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. The main registry (hub) for chain contracts (supports more than ADI chain) and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.",
+      "critical": true,
       "deployerAddress": "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985",
       "sinceTimestamp": 1764060407,
       "sinceBlock": 23874722,
@@ -1103,6 +1111,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Specialized contract for managing chain assets, i.e. chain migrations.",
+      "critical": true,
       "deployerAddress": "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985",
       "sinceTimestamp": 1764060407,
       "sinceBlock": 23874722,
@@ -1365,6 +1374,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.",
+      "critical": true,
       "deployerAddress": "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985",
       "sinceTimestamp": 1764061739,
       "sinceBlock": 23874833,
@@ -1467,6 +1477,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Canonical central asset router for all ZK stack chains. Routes deposits and withdrawals to the respective asset handlers (like the L1NativeTokenVault); does not escrow funds itself.",
+      "critical": true,
       "deployerAddress": "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985",
       "sinceTimestamp": 1764060407,
       "sinceBlock": 23874722,
@@ -1562,6 +1573,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
+      "critical": true,
       "deployerAddress": "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985",
       "sinceTimestamp": 1768895027,
       "sinceBlock": 24274574,
@@ -1629,6 +1641,7 @@
       ],
       "proxyType": "immutable",
       "description": "DA verifier specifically for zksync OS chains. It keeps track of blob versioned hashes and checks if blob with particular hash was published.",
+      "critical": true,
       "deployerAddress": "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985",
       "sinceTimestamp": 1768895063,
       "sinceBlock": 24274577,
