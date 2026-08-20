@@ -89,6 +89,19 @@ describe(compareProject.name, () => {
     expect(message).not.toInclude('snapshots:generate')
   })
 
+  it('prints the paste-ready frozen entry when the domain renders one', () => {
+    const message = compareProject(
+      { ...domain, freezeSnippet: (e) => `SNIPPET ${e.id}` },
+      'proj',
+      [identity('a', 100)],
+      [identity('b', 100)],
+    )
+    if (message === null) throw new Error('expected a message')
+    expect(message).toInclude('to paste in front of the last element')
+    expect(message).toInclude('SNIPPET a')
+    expect(message).not.toInclude('SNIPPET b')
+  })
+
   it('reports a range change with its recipe', () => {
     const message = compareProject(
       domain,

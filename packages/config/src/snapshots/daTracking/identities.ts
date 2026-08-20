@@ -19,7 +19,7 @@ import type {
  */
 const FREEZE_RECIPE = [
   'Freeze the old configuration instead of letting it disappear:',
-  "1. In the project's .ts daTracking array, turn the old entry into literals: copy the values it had before the change (inbox, sequencers/topics, namespace, appIds, customerId, since) from git history - the pre-change discovered.json or project .ts; the snapshot line above tells you which entry it is - so it keeps producing exactly this id. If the entry is a helper call (getOpStackDaTracking / getOrbitStackDaTracking / getZkStackDaTracking), replace the call with the literal entry it used to produce.",
+  "1. In the project's .ts daTracking array, turn the old entry into literals so it keeps producing exactly this id - paste the frozen entry printed below in front of the last array element. If the old entry is a helper call (getOpStackDaTracking / getOrbitStackDaTracking / getZkStackDaTracking), the pasted literal replaces nothing - the helper now derives the new configuration and stays as the open entry.",
   "2. Close it with 'untilBlock' (or 'untilTimestamp' for eigen-da) at the last block the old configuration was live - verify the exact block on-chain. If you cannot, the current discovery run's usedBlockNumbers[<chain>] in discovered.json is a safe upper bound (the change had already happened by then).",
   "3. Add the new entry with the new values as the last array element, starting where the old one ended (sinceBlock = the old entry's untilBlock). For a template stack that is the helper call again - getOpStackDaTracking(discovery, { sinceBlock }) - so the next rotation is caught the same way. If you only bracketed the change, start it at the previous discovery run's usedBlockNumbers[<chain>] (from the pre-change discovered.json) - overlaps between entries are fine, holes are not.",
   '4. If the configuration really stopped being used (the project left the layer), close it as in step 2 and do not add a new entry - a deleted entry is gone for good, a closed one is kept.',
@@ -45,6 +45,7 @@ export const daTrackingDomain: SnapshotDomain = {
     'On deploy the backend WILL WIPE all DA data indexed under these configurations (ManagedMultiIndexer deletes configurations whose id disappears).',
   freezeRecipe: FREEZE_RECIPE,
   rangeChangeRecipe: RANGE_CHANGE_RECIPE,
+  freezeSnippet,
   generate: () => generateDaTrackingIdentities(getProjects()),
 }
 
@@ -66,6 +67,7 @@ function generateDaTrackingIdentities(projects: BaseProject[]): Snapshot {
       id: createDaTrackingId(config),
       label: createLabel(config),
       ...getRange(config),
+      config,
     })
   }
 
@@ -115,4 +117,60 @@ function createLabel(config: ProjectDaTrackingConfig): string {
     case 'eigen-da':
       return `eigen-da customer ${config.customerId} since ${config.sinceTimestamp}`
   }
+}
+
+/**
+ * A disappeared identity's config as a paste-ready array element for the
+ * project's daTracking list, closed with a TODO until (step 2 of the freeze
+ * recipe). Rendered from the snapshot's `config` field - after a rotation
+ * the snapshot is the only surviving copy of the old values.
+ */
+export function freezeSnippet(identity: SnapshotIdentity): string | undefined {
+  const config = identity.config as ProjectDaTrackingConfig | undefined
+  if (!config) {
+    return undefined
+  }
+  const address = (a: string) => `EthereumAddress('${a}')`
+  const strings = (values: string[]) => values.map((v) => `'${v}'`).join(', ')
+  const lines = [
+    '    {',
+    `      type: '${config.type}',`,
+    `      daLayer: ProjectId('${config.daLayer}'),`,
+  ]
+  const untilTodo = ' // TODO step 2: last point the old configuration was live'
+  if (config.type === 'eigen-da') {
+    lines.push(
+      `      customerId: '${config.customerId}',`,
+      `      sinceTimestamp: UnixTime(${config.sinceTimestamp}),`,
+      config.untilTimestamp !== undefined
+        ? `      untilTimestamp: UnixTime(${config.untilTimestamp}),`
+        : `      untilTimestamp: UnixTime(0),${untilTodo}`,
+    )
+  } else {
+    lines.push(
+      `      sinceBlock: ${config.sinceBlock},`,
+      config.untilBlock !== undefined
+        ? `      untilBlock: ${config.untilBlock},`
+        : `      untilBlock: 0,${untilTodo}`,
+    )
+    if (config.type === 'ethereum') {
+      lines.push(`      inbox: ${address(config.inbox)},`)
+      if (config.sequencers) {
+        lines.push(
+          '      sequencers: [',
+          ...config.sequencers.map((a) => `        ${address(a)},`),
+          '      ],',
+        )
+      }
+      if (config.topics) {
+        lines.push(`      topics: [${strings(config.topics)}],`)
+      }
+    } else if (config.type === 'celestia') {
+      lines.push(`      namespace: '${config.namespace}',`)
+    } else {
+      lines.push(`      appIds: [${strings(config.appIds)}],`)
+    }
+  }
+  lines.push('    },')
+  return lines.join('\n')
 }

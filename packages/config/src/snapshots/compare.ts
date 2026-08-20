@@ -95,7 +95,8 @@ function formatIdentity(identity: SnapshotIdentity): string {
 type Domain = Pick<
   SnapshotDomain,
   'name' | 'wipeWarning' | 'freezeRecipe' | 'rangeChangeRecipe'
->
+> &
+  Partial<Pick<SnapshotDomain, 'freezeSnippet'>>
 
 /**
  * The single per-project verdict of the guard: everything that differs
@@ -154,6 +155,15 @@ export function compareProject(
   }
   if (removed.length) {
     lines.push(domain.wipeWarning, domain.freezeRecipe)
+    const snippets = removed
+      .map((e) => domain.freezeSnippet?.(e))
+      .filter((s) => s !== undefined)
+    if (snippets.length) {
+      lines.push(
+        "Frozen version of the disappeared entry to paste in front of the last element of the project's daTracking array (fill the until, step 2):",
+        ...snippets,
+      )
+    }
   }
   if (rangeChanges.length) {
     lines.push(

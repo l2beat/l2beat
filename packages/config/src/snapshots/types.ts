@@ -12,6 +12,12 @@ export interface Range {
 export interface SnapshotIdentity extends Range {
   id: string
   label: string
+  /**
+   * The full configuration the identity was computed from, serialized as
+   * JSON. When the identity disappears this is the only surviving copy of
+   * its fields, so the freeze notice can print a paste-ready entry.
+   */
+  config?: unknown
 }
 
 /** Project id -> identities, sorted by key and id for stable diffs. */
@@ -42,5 +48,11 @@ export interface SnapshotDomain {
    * while its id stayed the same.
    */
   rangeChangeRecipe: string
+  /**
+   * Renders a disappeared identity's `config` as a paste-ready source
+   * literal for the freeze notice; undefined when the snapshot predates the
+   * config field.
+   */
+  freezeSnippet?: (identity: SnapshotIdentity) => string | undefined
   generate: () => Snapshot
 }
