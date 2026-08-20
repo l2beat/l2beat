@@ -210,7 +210,8 @@ shape):
    `discovered.json` - overlaps are fine, holes are not.
 4. If the configuration genuinely stopped being used, close it as in step 2
    and add nothing - a deleted entry is gone for good, a closed one is kept.
-5. Only then regenerate the snapshot and commit it as the sign-off.
+5. Only then regenerate the snapshot with `--overwrite` (see below) and
+   commit it as the sign-off.
 
 ### A range changed - pin it or accept it
 
@@ -232,4 +233,13 @@ diff against the committed snapshot) and resolving the guard as above:
 ```bash
 cd packages/config
 pnpm snapshots:generate
+```
+
+The plain command is **append-only**: it registers new identities but keeps
+every committed entry whose id disappeared or whose range moved, and prints
+how many it kept. Accepting a removal or a range move - the sign-off for a
+wipe/re-sync - has to be asked for explicitly:
+
+```bash
+pnpm snapshots:generate --overwrite
 ```

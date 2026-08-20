@@ -1,7 +1,11 @@
-import { writeFileSync } from 'fs'
+import { existsSync, readFileSync, writeFileSync } from 'fs'
+import { mergeSnapshots } from '../../src/snapshots/merge'
 import { SNAPSHOT_DOMAINS } from '../../src/snapshots/registry'
+import type { Snapshot } from '../../src/snapshots/types'
 
-const requested = process.argv.slice(2)
+const args = process.argv.slice(2)
+const overwrite = args.includes('--overwrite')
+const requested = args.filter((a) => a !== '--overwrite')
 const unknown = requested.filter(
   (name) => !SNAPSHOT_DOMAINS.some((d) => d.name === name),
 )
@@ -20,11 +24,24 @@ const domains =
     : SNAPSHOT_DOMAINS
 
 for (const domain of domains) {
-  const snapshot = domain.generate()
+  const fresh = domain.generate()
+  let snapshot = fresh
+  let preserved = 0
+  if (!overwrite && existsSync(domain.snapshotPath)) {
+    const committed: Snapshot = JSON.parse(
+      readFileSync(domain.snapshotPath, 'utf8'),
+    )
+    ;({ merged: snapshot, preserved } = mergeSnapshots(committed, fresh))
+  }
   writeFileSync(domain.snapshotPath, `${JSON.stringify(snapshot, null, 2)}\n`)
   const projectCount = Object.keys(snapshot).length
   const idCount = Object.values(snapshot).flat().length
   console.log(
     `${domain.name}: wrote ${idCount} identities for ${projectCount} projects`,
   )
+  if (preserved > 0) {
+    console.log(
+      `${domain.name}: kept ${preserved} committed ${preserved === 1 ? 'entry' : 'entries'} whose identity disappeared or whose range moved - this command only appends. If you know what you are doing and do not want to preserve that history, run 'pnpm snapshots:generate --overwrite'.`,
+    )
+  }
 }

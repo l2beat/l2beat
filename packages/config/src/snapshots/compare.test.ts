@@ -1,10 +1,9 @@
 import { expect } from 'earl'
 import {
   AI_GUARD_RAIL,
+  compareProject,
   diffSnapshots,
   findRangeChanges,
-  rangeChangeMessage,
-  removalMessage,
 } from './compare'
 import type { SnapshotIdentity } from './types'
 
@@ -60,28 +59,80 @@ describe(findRangeChanges.name, () => {
   })
 })
 
-describe(removalMessage.name, () => {
-  it('carries the wipe warning, the freeze recipe and the AI guard-rail', () => {
-    const message = removalMessage(domain, 'proj', [identity('a', 100, 200)])
-    expect(message).toInclude('test-domain identities disappeared for proj')
-    expect(message).toInclude('- a (label a) [100 -> 200]')
+describe(compareProject.name, () => {
+  it('returns null when nothing changed', () => {
+    const entries = [identity('a', 100), identity('b', 100, 200)]
+    expect(compareProject(domain, 'proj', entries, entries)).toEqual(null)
+  })
+
+  it('reports a rotation as one message with the freeze recipe', () => {
+    // The typical rotation: one id disappears, its successor appears.
+    const message = compareProject(
+      domain,
+      'proj',
+      [identity('a', 100)],
+      [identity('b', 100)],
+    )
+    if (message === null) throw new Error('expected a message')
+    expect(message).toInclude('test-domain identities changed for proj')
+    expect(message).toInclude('disappeared:')
+    expect(message).toInclude('- a (label a) [100 -> open]')
+    expect(message).toInclude(
+      'appeared (typically the new era of the same change):',
+    )
+    if (message === null) throw new Error('expected a message')
+    expect(message).toInclude('- b (label b) [100 -> open]')
     expect(message).toInclude('WIPE WARNING')
     expect(message).toInclude('FREEZE RECIPE')
     expect(message).toInclude(AI_GUARD_RAIL)
+    // The routine "just regenerate" advice must not appear next to a wipe.
+    expect(message).not.toInclude('snapshots:generate')
   })
-})
 
-describe(rangeChangeMessage.name, () => {
-  it('shows the old and the new range, the recipe and the AI guard-rail', () => {
-    const message = rangeChangeMessage(
+  it('reports a range change with its recipe', () => {
+    const message = compareProject(
       domain,
       'proj',
-      findRangeChanges([identity('a', 100)], [identity('a', 100, 200)]),
+      [identity('a', 100)],
+      [identity('a', 100, 200)],
     )
-    expect(message).toInclude('test-domain ranges changed for proj')
+    if (message === null) throw new Error('expected a message')
+    expect(message).toInclude('ranges changed:')
     expect(message).toInclude('- a (label a): 100 -> open => 100 -> 200')
     expect(message).toInclude('RANGE CHANGE RECIPE')
     expect(message).toInclude(AI_GUARD_RAIL)
+    expect(message).not.toInclude('FREEZE RECIPE')
+  })
+
+  it('combines a removal and a range change into one message', () => {
+    const message = compareProject(
+      domain,
+      'proj',
+      [identity('a', 100), identity('b', 100)],
+      [identity('b', 100, 200)],
+    )
+    if (message === null) throw new Error('expected a message')
+    expect(message).toInclude('disappeared:')
+    expect(message).toInclude('ranges changed:')
+    expect(message).toInclude('FREEZE RECIPE')
+    expect(message).toInclude('RANGE CHANGE RECIPE')
+  })
+
+  it('reports additions alone as routine, without the guard-rail', () => {
+    const message = compareProject(
+      domain,
+      'proj',
+      [identity('a', 100)],
+      [identity('a', 100), identity('b', 200)],
+    )
+    if (message === null) throw new Error('expected a message')
+    expect(message).toInclude(
+      'New test-domain identities are not yet in the snapshot for proj',
+    )
+    if (message === null) throw new Error('expected a message')
+    expect(message).toInclude('- b (label b) [200 -> open]')
+    expect(message).toInclude("run 'pnpm snapshots:generate'")
+    expect(message).not.toInclude(AI_GUARD_RAIL)
   })
 })
 

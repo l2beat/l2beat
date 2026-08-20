@@ -21,8 +21,9 @@ export type Snapshot = Record<string, SnapshotIdentity[]>
  * A guarded family of backend configuration identities. The committed
  * snapshot pins every identity together with its range; the guard test fails
  * when one disappears, when its range moves or when the snapshot is stale, so
- * every change is an explicit, reviewed decision (regenerate via
- * 'pnpm snapshots:generate').
+ * every change is an explicit, reviewed decision. 'pnpm snapshots:generate'
+ * appends new identities only; accepting a removal or a range move takes
+ * '--overwrite'.
  */
 export interface SnapshotDomain {
   /** Kebab-case name used in CLI args and test titles, e.g. 'da-tracking' */

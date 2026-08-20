@@ -17,8 +17,8 @@ export interface RangeChange {
 
 /**
  * Ranges that moved between the committed and the current identities. Ids
- * present on one side only are not reported here - the disappeared / not yet
- * in the snapshot checks own those.
+ * present on one side only are not reported here - they show up as
+ * disappeared / appeared instead.
  */
 export function findRangeChanges(
   committed: SnapshotIdentity[],
@@ -97,51 +97,72 @@ type Domain = Pick<
   'name' | 'wipeWarning' | 'freezeRecipe' | 'rangeChangeRecipe'
 >
 
-// Every message the guard can fail with lives here so the recipes can be
-// asserted on directly and stay in one place.
-
-export function removalMessage(
+/**
+ * The single per-project verdict of the guard: everything that differs
+ * between the committed and the current identities in one message, so a
+ * rotation (one id disappears, another appears) reads as one event with one
+ * resolution instead of two failing tests with conflicting advice.
+ *
+ * Returns null when nothing changed.
+ */
+export function compareProject(
   domain: Domain,
   projectId: string,
-  missing: SnapshotIdentity[],
-): string {
-  return [
-    `${domain.name} identities disappeared for ${projectId}:`,
-    ...missing.map(formatIdentity),
-    domain.wipeWarning,
-    domain.freezeRecipe,
-    AI_GUARD_RAIL,
-  ].join('\n')
-}
+  committed: SnapshotIdentity[],
+  current: SnapshotIdentity[],
+): string | null {
+  const committedIds = new Set(committed.map((e) => e.id))
+  const currentIds = new Set(current.map((e) => e.id))
+  const removed = committed.filter((e) => !currentIds.has(e.id))
+  const added = current.filter((e) => !committedIds.has(e.id))
+  const rangeChanges = findRangeChanges(committed, current)
 
-export function rangeChangeMessage(
-  domain: Domain,
-  projectId: string,
-  changes: RangeChange[],
-): string {
-  return [
-    `${domain.name} ranges changed for ${projectId}:`,
-    ...changes.map(
-      (c) =>
-        `- ${c.id} (${c.label}): ${formatRange(c.old)} => ${formatRange(c.new)}`,
-    ),
-    'On deploy the backend re-syncs the configuration to the new range and drops what it indexed outside it.',
-    domain.rangeChangeRecipe,
-    AI_GUARD_RAIL,
-  ].join('\n')
-}
+  if (!removed.length && !added.length && !rangeChanges.length) {
+    return null
+  }
 
-export function additionMessage(
-  domain: Domain,
-  projectId: string,
-  added: SnapshotIdentity[],
-): string {
-  return [
-    `New ${domain.name} identities are not yet in the snapshot for ${projectId}:`,
-    ...added.map(formatIdentity),
-    'This is usually not a problem - it means a new data tracking configuration was added for this project (or an existing one was re-keyed; if this error appears together with a "disappeared" error for the same project, resolve that one first).',
-    "To register the new identities, run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot.",
-  ].join('\n')
+  // Additions alone are the routine case - a new configuration was added and
+  // just has to be registered.
+  if (!removed.length && !rangeChanges.length) {
+    return [
+      `New ${domain.name} identities are not yet in the snapshot for ${projectId}:`,
+      ...added.map(formatIdentity),
+      "This is usually not a problem - it means a new data tracking configuration was added for this project. To register it, run 'pnpm snapshots:generate' in packages/config (append-only - it never drops or moves committed entries) and commit the updated snapshot.",
+    ].join('\n')
+  }
+
+  const lines = [`${domain.name} identities changed for ${projectId}:`]
+  if (removed.length) {
+    lines.push('disappeared:', ...removed.map(formatIdentity))
+  }
+  if (added.length) {
+    lines.push(
+      removed.length
+        ? 'appeared (typically the new era of the same change):'
+        : 'appeared:',
+      ...added.map(formatIdentity),
+    )
+  }
+  if (rangeChanges.length) {
+    lines.push(
+      'ranges changed:',
+      ...rangeChanges.map(
+        (c) =>
+          `- ${c.id} (${c.label}): ${formatRange(c.old)} => ${formatRange(c.new)}`,
+      ),
+    )
+  }
+  if (removed.length) {
+    lines.push(domain.wipeWarning, domain.freezeRecipe)
+  }
+  if (rangeChanges.length) {
+    lines.push(
+      'On deploy the backend re-syncs a configuration whose range moved to the new range and drops what it indexed outside it.',
+      domain.rangeChangeRecipe,
+    )
+  }
+  lines.push(AI_GUARD_RAIL)
+  return lines.join('\n')
 }
 
 export function duplicateIdsMessage(
