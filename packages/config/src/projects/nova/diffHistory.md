@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xc7807b15f6911733bc5817bc9d58580da80bae7b
+Generated with discovered.json: 0x4f34eb051d199f670aa040d03efc6ef44763ddd9
 
-# Diff at Thu, 20 Aug 2026 06:21:35 GMT:
+# Diff at Thu, 20 Aug 2026 07:54:07 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1787143520
+- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1787143520
 - current timestamp: 1787143520
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+Ossification perimeter: externally governed escrows (Maker/Sky DAI, Lido wstETH, Livepeer LPT) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
 
 ## Config/verification related changes
 
@@ -107,8 +107,8 @@ discovery. Values are for block 1787143520 (main branch discovery), not current.
 ```diff
     contract L1Escrow (eth:0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3) [maker/L1Escrow] {
     +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
-      critical:
-+        true
+      fieldMeta:
++        {"wards":{"severity":"HIGH"}}
     }
 ```
 

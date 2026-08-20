@@ -1,12 +1,12 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L1EscrowDAI",
-  "critical": true,
   "description": "Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.",
   "category": "bridge-external",
   "ignoreRelatives": ["wards", "dai"],
   "fields": {
     "wards": {
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "usr",

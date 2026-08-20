@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xc5b983adddf9954439041d2ae0ee28f1d2ecf567
+Generated with discovered.json: 0xb0393ed09844493df05ea1110833b4e2c4e11b78
 
-# Diff at Thu, 20 Aug 2026 06:21:31 GMT:
+# Diff at Thu, 20 Aug 2026 07:55:02 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1786966191
+- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1786966191
 - current timestamp: 1786966191
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+Ossification perimeter: externally governed escrows (Maker/Sky DAI, Lido wstETH, Livepeer LPT) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
 
 ## Config/verification related changes
 
@@ -47,14 +47,6 @@ discovery. Values are for block 1786966191 (main branch discovery), not current.
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
       fieldMeta.validators:
 +        {"severity":"HIGH"}
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract L1ERC20Bridge_wstETH (eth:0x41527B2d03844dB6b0945f25702cB958b6d55989) [N/A] {
-    +++ description: Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.
       critical:
 +        true
     }

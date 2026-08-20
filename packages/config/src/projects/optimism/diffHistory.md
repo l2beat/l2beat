@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xfa816c878d9fcd48698540cec1ddca050cf6bfb8
+Generated with discovered.json: 0x8b4917c80620ac87cd661ab31f151114df5d9b47
 
-# Diff at Thu, 20 Aug 2026 06:21:20 GMT:
+# Diff at Thu, 20 Aug 2026 07:57:23 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1784283055
+- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1784283055
 - current timestamp: 1784283055
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+Ossification perimeter: externally governed escrows (Maker/Sky DAI/USDS, Lido wstETH, Livepeer LPT) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
 
 ## Config/verification related changes
 
@@ -27,14 +27,6 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
 ```diff
     contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) [GnosisSafe] {
     +++ description: None
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract L1DAITokenBridge (eth:0x10E6593CDda8c58a1d0f14C5164B376352a55f2F) [N/A] {
-    +++ description: Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.
       critical:
 +        true
     }
@@ -109,8 +101,8 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
 ```diff
     contract L1DAIEscrow (eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) [maker/L1Escrow] {
     +++ description: Stores DAI deposited from the attached L1DAITokenBridge.
-      critical:
-+        true
+      fieldMeta:
++        {"wards":{"severity":"HIGH"}}
     }
 ```
 
@@ -133,14 +125,6 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
 ```diff
     contract SynthetixBridgeEscrow (eth:0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f) [N/A] {
     +++ description: Custom escrow for SNX bridged via canonical messaging.
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract wstETHEscrow (eth:0x76943C0D61395d8F2edF9060e1533529cAe05dE6) [lido/L1LidoTokensBridge] {
-    +++ description: Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.
       critical:
 +        true
     }

@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x065fca5abfdb394f104e4b353180b37c40cdb26e
+Generated with discovered.json: 0x4eeceb724e4591c32477f313fb251e419b1f535f
 
-# Diff at Thu, 20 Aug 2026 06:21:14 GMT:
+# Diff at Thu, 20 Aug 2026 07:53:17 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1787143507
+- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1787143507
 - current timestamp: 1787143507
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+Ossification perimeter: externally governed escrows (Maker/Sky DAI, Lido wstETH, Livepeer LPT) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
 
 ## Config/verification related changes
 
@@ -41,14 +41,6 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 ```
 
 ```diff
-    contract L2DAIGateway (arb1:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) [orbitstack/layer2/L2DAIGateway] {
-    +++ description: Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.
-      critical:
-+        true
-    }
-```
-
-```diff
     contract SecurityCouncilMemberElectionGovernor (arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C) [orbitstack/layer2/SecurityCouncilMemberElectionGovernor] {
     +++ description: Token governance contract for the Security Council member elections.
       critical:
@@ -67,14 +59,6 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 ```diff
     contract L2WethGateway (arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B) [orbitstack/layer2/L2WethGateway] {
     +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract L2LPTGateway (arb1:0x6D2457a4ad276000A615295f7A80F79E48CcD318) [orbitstack/layer2/L2LPTGateway] {
-    +++ description: Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.
       critical:
 +        true
     }
@@ -193,14 +177,6 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 ```
 
 ```diff
-    contract wstETHEscrow (eth:0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a) [N/A] {
-    +++ description: None
-      critical:
-+        true
-    }
-```
-
-```diff
     contract UpgradeableBeacon (eth:0x14797f5432f699Cb4d4dB04DF599B74952d78d7b) [N/A] {
     +++ description: None
       critical:
@@ -299,14 +275,6 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 ```
 
 ```diff
-    contract LPTL1Escrow (eth:0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A) [N/A] {
-    +++ description: None
-      critical:
-+        true
-    }
-```
-
-```diff
     contract GatewayRouter (eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef) [orbitstack/GatewayRouter] {
     +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
       critical:
@@ -349,8 +317,8 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 ```diff
     contract L1Escrow (eth:0xA10c7CE4b876998858b1a9E12b10092229539400) [maker/L1Escrow] {
     +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
-      critical:
-+        true
+      fieldMeta:
++        {"wards":{"severity":"HIGH"}}
     }
 ```
 
@@ -389,14 +357,6 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 ```diff
     contract L1CustomGateway (eth:0xcEe284F754E854890e311e3280b767F80797180d) [orbitstack/CustomGateway2] {
     +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract L1DaiGateway (eth:0xD3B5b60020504bc3489D6949d545893982BA3011) [orbitstack/L1DaiGateway] {
-    +++ description: Counterpart of the L2DaiGateway. Allows for bridging DAI from L1 to L2.
       critical:
 +        true
     }

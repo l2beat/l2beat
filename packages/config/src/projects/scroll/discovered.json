@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "timestamp": 1787147569,
-  "configHash": "0x048c00c6c13670542931457ee5c3aa6b1fd45a0eee541c4f04c0100a4c2436fe",
+  "configHash": "0xd3ce249b204fa893930b4129ca3fb329d3e21bc65cacc1eb8fe104a5431ad080",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -810,7 +810,6 @@
         "0xac66557322875099616e440b8badc7722d9fbdfb7a7738fba9afcf63f131af55"
       ],
       "proxyType": "EIP1967 proxy",
-      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696920503,
       "sinceBlock": 18318364,
@@ -859,7 +858,6 @@
         "0x9a784d1347c5dad729bc1e573063c4882a8bc3ea49fdcd79e03bed9c07dfa588"
       ],
       "proxyType": "EIP1967 proxy",
-      "critical": true,
       "deployerAddress": "eth:0x0A47CeC6657570831AE93db36367656e5597C310",
       "sinceTimestamp": 1696920095,
       "sinceBlock": 18318330,
@@ -4083,7 +4081,6 @@
         "0x1583f70e60e1903788d02e56c91360735b7f78376c4239c9be9b448e0180e84a"
       ],
       "proxyType": "EIP1967 proxy",
-      "critical": true,
       "deployerAddress": "scr:0xF9062b8a30e0d7722960e305049FA50b86ba6253",
       "sinceTimestamp": 1696920429,
       "sinceBlock": 143,
@@ -4913,12 +4910,85 @@
       "values": {
         "$immutable": true,
         "governor": "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
-        "PERCENT_DIVISOR": 10000
+        "PERCENT_DIVISOR": 10000,
+        "proposalTypes": {
+          "0": {
+            "quorum": 16,
+            "approvalThreshold": 5100,
+            "name": "Treasury transfers"
+          },
+          "1": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Governor changes"
+          },
+          "2": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Propose protocol upgrades"
+          },
+          "3": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Change token implementation"
+          },
+          "4": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Token emission & inflation"
+          },
+          "5": {
+            "quorum": 16,
+            "approvalThreshold": 5100,
+            "name": "Gov Docs & Committees"
+          },
+          "6": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Constitutional/Rights Amendments"
+          },
+          "7": {
+            "quorum": 16,
+            "approvalThreshold": 5100,
+            "name": "Treasury transfers - Approval Voting"
+          },
+          "8": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Governor changes - Approval Voting"
+          },
+          "9": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Propose protocol upgrades - Approval Voting"
+          },
+          "10": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Change token implementation - Approval Voting"
+          },
+          "11": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Token emission & inflation - Approval Voting"
+          },
+          "12": {
+            "quorum": 16,
+            "approvalThreshold": 5100,
+            "name": "Gov Docs & Committees - Approval Voting"
+          },
+          "13": {
+            "quorum": 16,
+            "approvalThreshold": 7600,
+            "name": "Constitutional/Rights Amendments - Approval Voting"
+          }
+        }
       },
+      "fieldMeta": { "proposalTypes": { "severity": "HIGH" } },
       "implementationNames": {
         "scr:0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E": "ProposalTypesConfigurator"
       },
-      "category": { "name": "Spam", "priority": -1 }
+      "category": { "name": "Governance", "priority": 3 }
     }
   ],
   "abis": {

@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xaa77a708c52705bf63544b3bd092fb767544e8c1
+Generated with discovered.json: 0x59042bfe3ef1223eb5f3e50201fec9a96e3d7cb3
 
-# Diff at Thu, 20 Aug 2026 06:21:36 GMT:
+# Diff at Thu, 20 Aug 2026 07:58:55 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1784283256
+- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1784283256
 - current timestamp: 1784283256
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+Ossification perimeter: externally governed escrows (Maker/Sky DAI/USDS, Lido wstETH, Livepeer LPT) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
 
 ## Config/verification related changes
 
@@ -35,14 +35,6 @@ discovery. Values are for block 1784283256 (main branch discovery), not current.
 ```diff
     contract LivenessGuard (eth:0x24424336F04440b1c28685a38303aC33C9D14a25) [gnosisSafeModules/LivenessGuard] {
     +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract L1ERC20TokenBridge (eth:0x2F543A7C9cc80Cc2427c892B96263098d23ee55a) [lido/L1LidoTokensBridge] {
-    +++ description: Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.
       critical:
 +        true
     }

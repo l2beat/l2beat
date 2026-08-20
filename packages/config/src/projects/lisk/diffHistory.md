@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xe9a617411690b13727bd8dcbe51f74da0cea4b9c
+Generated with discovered.json: 0x6eba31629a63f562309aaa4bef409e4c107666d3
 
-# Diff at Thu, 20 Aug 2026 06:21:35 GMT:
+# Diff at Thu, 20 Aug 2026 07:58:28 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1784282990
+- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1784282990
 - current timestamp: 1784282990
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+Ossification perimeter: externally governed escrows (Maker/Sky DAI/USDS, Lido wstETH, Livepeer LPT) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
 
 ## Config/verification related changes
 
@@ -117,14 +117,6 @@ discovery. Values are for block 1784282990 (main branch discovery), not current.
 ```diff
     contract AnchorStateRegistry (eth:0x7ad0d165B9607960AD850090DDd7B9eB381D9c1e) [opstack/AnchorStateRegistry] {
     +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract L1ERC20TokenBridge (eth:0x9348AF23B01F2B517AFE8f29B3183d2Bb7d69Fcf) [lido/L1ERC20TokenBridge] {
-    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
       critical:
 +        true
     }

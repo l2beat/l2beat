@@ -1,10 +1,10 @@
 {
-  "critical": true,
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
   "ignoreRelatives": ["wards", "dai"],
   "fields": {
     "wards": {
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "usr",

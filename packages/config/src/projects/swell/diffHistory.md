@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xdcce3b98250dcb61626c86acfc78c30f56ee6769
+Generated with discovered.json: 0xb0c30b3aaeaae31a59c03a65e8773a6fb09a49ac
 
-# Diff at Thu, 20 Aug 2026 06:21:37 GMT:
+# Diff at Thu, 20 Aug 2026 07:59:42 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1786359739
+- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1786359739
 - current timestamp: 1786359739
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+Ossification perimeter: externally governed escrows (Maker/Sky DAI/USDS, Lido wstETH, Livepeer LPT) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
 
 ## Config/verification related changes
 
@@ -149,14 +149,6 @@ discovery. Values are for block 1786359739 (main branch discovery), not current.
 ```diff
     contract L1CrossDomainMessenger (eth:0xe6a99Ef12995DeFC5ff47EC0e13252f0E6903759) [opstack/L1CrossDomainMessenger] {
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract L1ERC20TokenBridge (eth:0xecf3376512EDAcA4FBB63d2c67d12a0397d24121) [lido/L1ERC20TokenBridge] {
-    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
       critical:
 +        true
     }

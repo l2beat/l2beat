@@ -1,28 +1,20 @@
-Generated with discovered.json: 0xa478a734e4c860b5e166571a9cd0bf1d43cf77c8
+Generated with discovered.json: 0x5b94fc28dbb0d64cacacf0c0f78d6cec56b77f56
 
-# Diff at Thu, 20 Aug 2026 06:21:33 GMT:
+# Diff at Thu, 20 Aug 2026 07:57:54 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1783498944
+- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1783498944
 - current timestamp: 1783498944
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+Ossification perimeter: externally governed escrows (Maker/Sky DAI/USDS, Lido wstETH, Livepeer LPT) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1783498944 (main branch discovery), not current.
-
-```diff
-    contract L1ERC20TokenBridge (eth:0x091dF5E1284E49fA682407096aD34cfD42B95B72) [lido/L1ERC20TokenBridge] {
-    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
-      critical:
-+        true
-    }
-```
 
 ```diff
     contract PermissionedDisputeGame (eth:0x15F80920C8Fec136e2A804E04f26203FF8dAd19A) [opstack/PermissionedDisputeGame] {

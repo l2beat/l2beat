@@ -140,14 +140,14 @@
         "VERSION": 0
       },
       "fieldMeta": {
+        "batcherHash": { "severity": "HIGH" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        },
-        "batcherHash": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0x05f23282FFDCA8286E4738C1aF79079f3d843750": "Proxy",
@@ -1119,7 +1119,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.",
-      "critical": true,
       "deployerAddress": "eth:0xbfc03d7c2527dD6F45F63f0D71aDB36b8549FB58",
       "sinceTimestamp": 1737623423,
       "sinceBlock": 21686205,

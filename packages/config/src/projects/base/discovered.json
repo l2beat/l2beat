@@ -2664,7 +2664,6 @@
       ],
       "proxyType": "immutable",
       "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
-      "critical": true,
       "deployerAddress": "eth:0x54eAde20f7DD1A67624626A3DB9408185eD0039e",
       "sinceTimestamp": 1728571115,
       "sinceBlock": 20935859,
@@ -2672,6 +2671,7 @@
         "$immutable": true,
         "wards": ["eth:0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB"]
       },
+      "fieldMeta": { "wards": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3": "Escrow"
       }
@@ -3091,7 +3091,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.",
-      "critical": true,
       "deployerAddress": "eth:0xfa8123fE01e71ec5e749b66B71821B4Ee2BA4Ed2",
       "sinceTimestamp": 1695935315,
       "sinceBlock": 18236815,
@@ -3202,7 +3201,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Custom bridge for USDS and sUSDS managed by Sky governance.",
-      "critical": true,
       "deployerAddress": "eth:0x54eAde20f7DD1A67624626A3DB9408185eD0039e",
       "sinceTimestamp": 1728571151,
       "sinceBlock": 20935862,

@@ -110,10 +110,6 @@
     "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": {
       "critical": true
     },
-    // DAI escrow (maker/L1Escrow): holds the bridged DAI counted in TVS
-    "eth:0x0437465dfb5B79726e35F08559B0cBea55bb585C": {
-      "critical": true
-    },
     // Starkware Multisig 1: sole owner of the DelayedExecutor that can upgrade the Starknet core and the ETH/STRK escrows after 8d
     "eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988": {
       "critical": true

@@ -1,7 +1,7 @@
 {
   "name": "swell",
   "timestamp": 1786359739,
-  "configHash": "0x042be77b53e92280806c338d50987e40b3a96caed5f8eb228bb30d014c5ad56d",
+  "configHash": "0xdc98e044cafd31a51730dd7a8d239bddc311eb013ecfe26805b2b9b475d2ac58",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -1597,14 +1597,14 @@
         "VERSION": 0
       },
       "fieldMeta": {
+        "batcherHash": { "severity": "HIGH" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        },
-        "batcherHash": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4": "Proxy",
@@ -1785,7 +1785,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.",
-      "critical": true,
       "deployerAddress": "eth:0xaf994551f4f940224825F54F810ed5439651E5f9",
       "sinceTimestamp": 1734102575,
       "sinceBlock": 21394394,

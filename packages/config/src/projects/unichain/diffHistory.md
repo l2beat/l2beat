@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x4252fac9610dde1caeed12b04720efdd6634164b
+Generated with discovered.json: 0x7f422b55e8b2d6fe49e7da6a86fdf631d592b173
 
-# Diff at Thu, 20 Aug 2026 06:21:37 GMT:
+# Diff at Thu, 20 Aug 2026 08:23:13 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1783324564
+- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1783324564
 - current timestamp: 1783324564
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+Ossification perimeter: externally governed escrows (Maker/Sky DAI/USDS, Lido wstETH) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
 
 ## Config/verification related changes
 
@@ -51,8 +51,8 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
 ```diff
     contract Escrow (eth:0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A) [maker/L1Escrow] {
     +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
-      critical:
-+        true
+      fieldMeta:
++        {"wards":{"severity":"HIGH"}}
     }
 ```
 
@@ -115,14 +115,6 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
 ```diff
     contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499) [opstack/FaultDisputeGame] {
     +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract L1ERC20TokenBridge (eth:0x755610f5Be536Ad7afBAa7c10F3E938Ea3aa1877) [lido/L1LidoTokensBridge] {
-    +++ description: Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.
       critical:
 +        true
     }

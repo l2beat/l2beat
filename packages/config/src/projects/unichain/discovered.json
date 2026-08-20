@@ -293,7 +293,6 @@
       ],
       "proxyType": "immutable",
       "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
-      "critical": true,
       "deployerAddress": "eth:0x54eAde20f7DD1A67624626A3DB9408185eD0039e",
       "sinceTimestamp": 1745940647,
       "sinceBlock": 22375624,
@@ -301,6 +300,7 @@
         "$immutable": true,
         "wards": ["eth:0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB"]
       },
+      "fieldMeta": { "wards": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A": "Escrow"
       }
@@ -1256,7 +1256,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.",
-      "critical": true,
       "deployerAddress": "eth:0xfB276CBd830B69103588B651cA78dD6AC4EE665E",
       "sinceTimestamp": 1739519603,
       "sinceBlock": 21843337,

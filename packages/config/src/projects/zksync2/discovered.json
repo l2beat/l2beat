@@ -760,7 +760,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.",
-      "critical": true,
       "deployerAddress": "eth:0x61ce1F6514C651C39964961DB1948C6f70a4747a",
       "sinceTimestamp": 1698065351,
       "sinceBlock": 18413072,

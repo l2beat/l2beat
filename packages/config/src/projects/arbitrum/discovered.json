@@ -517,7 +517,6 @@
       ],
       "proxyType": "immutable",
       "description": "Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.",
-      "critical": true,
       "deployerAddress": "arb1:0x075da589886BA445d7c7e81c472059dE7AE65250",
       "sinceTimestamp": 1632133487,
       "sinceBlock": 1336834,
@@ -713,7 +712,6 @@
       ],
       "proxyType": "immutable",
       "description": "Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.",
-      "critical": true,
       "deployerAddress": "arb1:0xB5Af4138f0f33be0D6414Eb25271B9C2Dc245fb5",
       "sinceTimestamp": 1644595982,
       "sinceBlock": 5864786,
@@ -2870,7 +2868,6 @@
         "0x0fefec2c5552ab12224ba07be070505d17b5aa8a4e57e4806c5f5134ef814d99"
       ],
       "proxyType": "EIP1967 proxy",
-      "critical": true,
       "deployerAddress": "eth:0x2a61d3ba5030Ef471C74f612962c7367ECa3a62d",
       "sinceTimestamp": 1659608791,
       "sinceBlock": 15275328,
@@ -3711,7 +3708,6 @@
         "0x4f07cd3e0e2a2e8245a865324089db39bdb6d4831707d7dcee18af0545c716c3"
       ],
       "proxyType": "immutable",
-      "critical": true,
       "deployerAddress": "eth:0xB5Af4138f0f33be0D6414Eb25271B9C2Dc245fb5",
       "sinceTimestamp": 1644777090,
       "sinceBlock": 14199409,
@@ -4041,7 +4037,6 @@
       ],
       "proxyType": "immutable",
       "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
-      "critical": true,
       "deployerAddress": "eth:0x075da589886BA445d7c7e81c472059dE7AE65250",
       "sinceTimestamp": 1632133470,
       "sinceBlock": 13262081,
@@ -4052,6 +4047,7 @@
           "eth:0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
         ]
       },
+      "fieldMeta": { "wards": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xA10c7CE4b876998858b1a9E12b10092229539400": "L1Escrow"
       },
@@ -4362,7 +4358,6 @@
       ],
       "proxyType": "immutable",
       "description": "Counterpart of the L2DaiGateway. Allows for bridging DAI from L1 to L2.",
-      "critical": true,
       "deployerAddress": "eth:0x075da589886BA445d7c7e81c472059dE7AE65250",
       "sinceTimestamp": 1632133584,
       "sinceBlock": 13262087,

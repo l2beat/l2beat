@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x000d8ecc83e5b3a65dcdbdf6a5b332408dd4fc63
+Generated with discovered.json: 0x71df91d76ba47fad5f6d317ce65fb8c5e0f24250
 
-# Diff at Thu, 20 Aug 2026 06:21:37 GMT:
+# Diff at Thu, 20 Aug 2026 08:24:24 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1787133501
+- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1787133501
 - current timestamp: 1787133501
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+Ossification perimeter: externally governed escrows (Maker/Sky DAI/USDS, Lido wstETH) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
 
 ## Config/verification related changes
 
@@ -101,14 +101,6 @@ discovery. Values are for block 1787133501 (main branch discovery), not current.
 ```diff
     contract DelayedWETH (eth:0x798d82222eC87C6B76aeF659A490e1ab9f7f9162) [opstack/DelayedWETH] {
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract L1ERC20TokenBridge (eth:0x912C7271a6A3622dfb8B218eb46a6122aB046C79) [lido/L1ERC20TokenBridge] {
-    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
       critical:
 +        true
     }

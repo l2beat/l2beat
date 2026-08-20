@@ -1254,7 +1254,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.",
-      "critical": true,
       "deployerAddress": "eth:0xbeb4E7EE8961E54bfeA26114599674C30F6885Db",
       "sinceTimestamp": 1726591415,
       "sinceBlock": 20771597,

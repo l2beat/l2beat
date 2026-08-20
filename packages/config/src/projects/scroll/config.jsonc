@@ -119,15 +119,13 @@
       "fields": { "counterpart": { "edit": ["format", "ScrollAddress"] } }
     },
     "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515": {
-      // DaiEscrow: holds DAI counted in TVS, releases it on L2 withdrawal messages
-      "critical": true,
+      // DaiEscrow: holds DAI counted in TVS. Maker/Sky-governed external escrow, outside the ossification perimeter.
       "ignoreRelatives": ["counterpart"],
       "fields": { "counterpart": { "edit": ["format", "ScrollAddress"] } },
       "category": "bridge-external"
     },
     "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504": {
-      // wstETH escrow: holds wstETH counted in TVS, releases it on L2 withdrawal messages
-      "critical": true,
+      // wstETH escrow: holds wstETH counted in TVS. Lido-governed (owner is the Lido DAO Agent) external escrow, outside the ossification perimeter.
       "ignoreMethods": ["l1Token", "l2Token"],
       "ignoreRelatives": ["owner", "$admin"],
       "fields": { "counterpart": { "edit": ["format", "ScrollAddress"] } },
@@ -354,7 +352,18 @@
     "scr:0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E": {
       // ProposalTypesConfigurator: live-wired into AgoraGovernor (PROPOSAL_TYPES_CONFIGURATOR); defines quorum/approval thresholds, so a change lets near-zero votes pass proposals into the DEFAULT_ADMIN timelock of ScrollOwner (L2)
       "critical": true,
-      "category": "spam"
+      "category": "gov",
+      "fields": {
+        "proposalTypes": {
+          "severity": "HIGH",
+          "handler": {
+            "type": "event",
+            "select": ["quorum", "approvalThreshold", "name"],
+            "groupBy": "proposalTypeId",
+            "set": { "event": "ProposalTypeSet" }
+          }
+        }
+      }
     },
     "scr:0x0c67D8D067E349669dfEAB132A7c03A90594eE09": {
       "ignoreDiscovery": true
@@ -402,8 +411,7 @@
       "critical": true
     },
     "scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9": {
-      // L2LidoGateway: trusted counterpart of the wstETH escrow, can send withdrawal messages releasing it
-      "critical": true
+      // L2LidoGateway: trusted counterpart of the wstETH escrow, can send withdrawal messages releasing it. Lido-governed external bridge, outside the ossification perimeter.
     },
     "scr:0x33B60d5Dd260d453cAC3782b0bDC01ce84672142": {
       // L2USDCGateway: trusted counterpart of L1USDCGateway, burns/mints L2 USDC and can send withdrawal messages releasing the L1 USDC escrow

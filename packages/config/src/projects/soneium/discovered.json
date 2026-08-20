@@ -196,7 +196,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.",
-      "critical": true,
       "deployerAddress": "eth:0x64bAF7f4cA69672F46ff2661213C57B1F16c4273",
       "sinceTimestamp": 1737366215,
       "sinceBlock": 21664885,
@@ -1128,14 +1127,14 @@
         "VERSION": 0
       },
       "fieldMeta": {
+        "batcherHash": { "severity": "HIGH" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        },
-        "batcherHash": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3": "Proxy",

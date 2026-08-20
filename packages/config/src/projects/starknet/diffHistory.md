@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x46b87dfa117cec88d95fb31ba08cdaec6e396171
+Generated with discovered.json: 0xb6d847a89aefd32636c78f8e8907cb66d992a5da
 
-# Diff at Thu, 20 Aug 2026 06:21:29 GMT:
+# Diff at Thu, 20 Aug 2026 07:51:46 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1786612387
+- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1786612387
 - current timestamp: 1786612387
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+Ossification perimeter: externally governed escrows (Maker/Sky DAI, Lido wstETH, Livepeer LPT, LORDS) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
 
 ## Config/verification related changes
 
@@ -25,18 +25,10 @@ discovery. Values are for block 1786612387 (main branch discovery), not current.
 ```
 
 ```diff
-    contract LORDSBridge (eth:0x023A2aAc5d0fa69E3243994672822BA43E34E5C9) [starknet/LordsL1Bridge] {
-    +++ description: Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.
-      critical:
-+        true
-    }
-```
-
-```diff
     contract DAIBridge (eth:0x0437465dfb5B79726e35F08559B0cBea55bb585C) [maker/L1Escrow] {
     +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
-      critical:
-+        true
+      fieldMeta:
++        {"wards":{"severity":"HIGH"}}
     }
 ```
 
@@ -91,8 +83,8 @@ discovery. Values are for block 1786612387 (main branch discovery), not current.
 ```diff
     contract L1DaiGateway (eth:0x9F96fE0633eE838D0298E8b8980E6716bE81388d) [starknet/L1EscrowDAI] {
     +++ description: Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.
-      critical:
-+        true
+      fieldMeta:
++        {"wards":{"severity":"HIGH"}}
     }
 ```
 

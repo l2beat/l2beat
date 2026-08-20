@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xe1c880f348849889c714ad5d69127da79c80520c
+Generated with discovered.json: 0x25b1a3e89963e54cae3e4ecc027a833d4f43da24
 
-# Diff at Thu, 20 Aug 2026 06:21:15 GMT:
+# Diff at Thu, 20 Aug 2026 07:57:25 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1785226129
+- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1785226129
 - current timestamp: 1785226129
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+Ossification perimeter: externally governed escrows (Maker/Sky DAI/USDS, Lido wstETH, Livepeer LPT) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
 
 ## Config/verification related changes
 
@@ -221,8 +221,8 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 ```diff
     contract Escrow (eth:0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3) [maker/L1Escrow] {
     +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
-      critical:
-+        true
+      fieldMeta:
++        {"wards":{"severity":"HIGH"}}
     }
 ```
 
@@ -283,24 +283,8 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 ```
 
 ```diff
-    contract wstETHEscrow (eth:0x9de443AdC5A411E83F1878Ef24C3F52C61571e72) [lido/L1ERC20TokenBridge] {
-    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
-      critical:
-+        true
-    }
-```
-
-```diff
     contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
     +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract SkyLink Bridge (eth:0xA5874756416Fa632257eEA380CAbd2E87cED352A) [maker/SkyLinkBridge] {
-    +++ description: Custom bridge for USDS and sUSDS managed by Sky governance.
       critical:
 +        true
     }

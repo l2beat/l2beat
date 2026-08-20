@@ -43,6 +43,26 @@ Deliberate design decisions (do not re-litigate casually):
   equal weighting fallback. Exposure integrates the project-level daily TVS series
   (retained indefinitely; coverage spans every cohort clock). Uniswap v3 currently has
   no TVS record, so its score renders while exposure is n/a.
+- Externally governed escrows are NOT critical (2026-08-20) — escrows/gateways whose
+  code is governed by another protocol (Maker/Sky DAI & USDS/SkyLink, Lido wstETH,
+  Livepeer LPT, LORDS) are outside the host project's perimeter: their battle-testing
+  belongs to the external protocol, and e.g. Maker rotating a ward must not reset
+  Arbitrum's clock. The frontend's "TVS with additional trust assumptions" bucket
+  (custom-canonical + external sources) is the guide, but the deciding test is
+  *governance domain*, not TVS bucket: Starknet's StarkGate custom-canonical escrows
+  stay critical (Starkware-governed), and Linea's immutable LidoStVaultYieldProvider
+  stays critical (Linea's own code choice securing canonical ETH), while the Maker DAI
+  escrows stay out even where TVS counts them plain-canonical. Their `wards` fields
+  keep `severity: HIGH` as reviewer metadata. Removed from: maker/L1Escrow,
+  maker/SkyLinkBridge, lido/L1ERC20TokenBridge, lido/L1LidoTokensBridge,
+  starknet/L1EscrowDAI, starknet/LordsL1Bridge, orbitstack/L1DaiGateway,
+  orbitstack/layer2/{L2DAIGateway,L2LPTGateway} templates + config overrides in
+  arbitrum/optimism/zksync2/scroll/starknet, and scroll's backfilled L2WstETHToken.
+  Gotcha: colorize merges and never deletes color fields, and color-only config edits
+  do not change the tracked config hash — removing a materialized flag needs
+  `l2b discover <p> --dev`. zircuit (no working RPC on free plan) and unichain
+  (L2 RPC errors on 4 gas-oracle fields) were hand-edited in discovered.json with
+  the diffHistory hash regenerated via l2b's updateDiffHistory.
 - Shared modules can be merged into a project's perimeter via `includeProjects` in
   ossification.json (e.g. zksync2 includes shared-zk-stack): the included project's
   `critical: true` contracts join the perimeter fully (clock, unverified gate, events)
@@ -206,10 +226,24 @@ retain auditable timestamp/evidence links, and pass unit tests plus the cohort s
 1. **Phase 3 churn weighting**: weight upgrades by changed-lines/total-lines; needs a
    flat-source archive per historical implementation (backfill via `$pastUpgrades` impl
    addresses + Etherscan; the repo flattener is in packages/discovery).
-2. **Parked gaps**: shared-zk-stack project needs its own classification for Era's full
-   perimeter (cross-project references are not followed); zksync wstETH bridge proxy
-   admin is `ignoreDiscovery`; Maker DAI wards absent from starknet discovery; scroll
-   `ProposalTypesConfigurator` mis-categorized "spam" though live-wired into governance.
-3. **Validation before public launch**: backtest against the IEEE S&P 2023 DeFi attacks
-   dataset (181 incidents) — does the factor separate exploited from non-exploited
-   protocol-years; fit λ (2yr) and clustering window (24h) to our own event data.
+2. **Validation: DONE 2026-08-20** — incident backtest over 49 exploits (2021–2025),
+   30 with onchain-measured exploited-code age (`scripts/ossification-incidents.ts`
+   + `.data.json`; report artifact "Ossification Backtest",
+   https://claude.ai/code/artifact/8fac7e4b-9e7f-44b4-8a7c-cb47da2f5d99). Findings:
+   median exploited-code age 2.7mo; 90% of code-bug exploits (92% of their losses)
+   hit code ≤12mo old; exploit-age MLE mean 0.54y → keep λ=2y (median exploited
+   code would have scored 11/100; λ=1y would double that). Scope: code bugs are
+   43% of losses; keys/offchain (49%) are invisible to OF — say so in public copy.
+   Counterexamples to cite honestly: Curve/Vyper (20mo), Yearn yUSDT (38mo),
+   GMX v1 (46mo). 24h cluster window validated against the cohort's own gap
+   distribution (6h–72h valley). Remaining launch items: methodology write-up,
+   second-researcher review of critical flags, dedicated og-image.
+
+Formerly parked gaps, all resolved 2026-08-20: shared-zk-stack merged into zksync2
+via `includeProjects`; the zksync wstETH bridge and all other externally governed
+escrows were removed from the perimeter entirely (see design decisions); starknet
+Maker DAI wards were already discovered via Rely/Deny event handlers (verified
+onchain, `wards()` = 1 for all five) and are now severity HIGH; scroll's
+`ProposalTypesConfigurator` was recategorized spam→gov and its `proposalTypes`
+(quorum/approval thresholds, ~0.16% quorum) are now watched at severity HIGH via
+the ProposalTypeSet event.

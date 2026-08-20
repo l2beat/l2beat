@@ -113,7 +113,6 @@
       ],
       "proxyType": "immutable",
       "description": "Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.",
-      "critical": true,
       "deployerAddress": "eth:0x075da589886BA445d7c7e81c472059dE7AE65250",
       "sinceTimestamp": 1625675779,
       "sinceBlock": 12781431,
@@ -876,7 +875,6 @@
       ],
       "proxyType": "immutable",
       "description": "Stores DAI deposited from the attached L1DAITokenBridge.",
-      "critical": true,
       "deployerAddress": "eth:0x075da589886BA445d7c7e81c472059dE7AE65250",
       "sinceTimestamp": 1625675683,
       "sinceBlock": 12781427,
@@ -887,6 +885,7 @@
           "eth:0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
         ]
       },
+      "fieldMeta": { "wards": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": "L1Escrow"
       }
@@ -1393,7 +1392,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.",
-      "critical": true,
       "deployerAddress": "eth:0x2a61d3ba5030Ef471C74f612962c7367ECa3a62d",
       "sinceTimestamp": 1659687799,
       "sinceBlock": 15281202,

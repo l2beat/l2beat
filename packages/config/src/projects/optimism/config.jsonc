@@ -152,8 +152,7 @@
     },
     "eth:0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": {
       "description": "Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.",
-      // holds the approval to pull DAI from the L1DAIEscrow.
-      "critical": true,
+      // holds the approval to pull DAI from the L1DAIEscrow. Maker/Sky-governed external escrow, outside the ossification perimeter.
       "ignoreRelatives": [
         "l1Token",
         "l2DAITokenBridge",

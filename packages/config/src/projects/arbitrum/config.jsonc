@@ -167,8 +167,7 @@
       ]
     },
     "eth:0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a": {
-      // escrow holding TVS-counted wstETH for the Lido custom gateway.
-      "critical": true,
+      // escrow holding TVS-counted wstETH for the Lido custom gateway. Lido-governed (admin is the Lido DAO Agent), so it is an external escrow outside the ossification perimeter.
       "category": "bridge-external",
       "ignoreRelatives": ["l2Token", "l1Token"],
       "fields": { "accessControl": { "handler": { "type": "accessControl" } } }
@@ -180,13 +179,11 @@
       "ignoreDiscovery": true
     },
     "eth:0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A": {
-      // escrow holding TVS-counted LPT for the Livepeer gateway.
-      "critical": true,
+      // escrow holding TVS-counted LPT for the Livepeer gateway. Livepeer-governed external escrow, outside the ossification perimeter.
       "category": "bridge-external"
     },
     "eth:0xA10c7CE4b876998858b1a9E12b10092229539400": {
-      // MakerDAO escrow holding TVS-counted DAI, L1DaiGateway can pull from it.
-      "critical": true,
+      // MakerDAO escrow holding TVS-counted DAI, L1DaiGateway can pull from it. Maker/Sky-governed external escrow, outside the ossification perimeter.
       "category": "bridge-external"
     },
     // ProxyAdmin of the core system contracts (Bridge, RollupProxy, Inbox,

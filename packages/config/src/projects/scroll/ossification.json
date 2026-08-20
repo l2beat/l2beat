@@ -19,15 +19,6 @@
       "note": "Phantom entry: the L1WETHGateway address resolved on the scroll chain (unverified immutable contract, no values or permissions); nothing on either chain trusts the scroll-chain address, so its compromise reaches no funds; removed by the cross-chain discovery refactor."
     },
     {
-      "address": "scr:0xf610a9dfb7c89644979b4a0f27063e9e7d7cda32",
-      "name": "L2WstETHToken",
-      "critical": true,
-      "upgradeTimestamps": [1696920347, 1709625145],
-      "lastSeenAt": 1756131373,
-      "lastSeenCommit": "90dd8b76055bf0f493df8c45097d37e26f847015",
-      "note": "Bridged wstETH token minted by L2LidoGateway, ProxyAdmin-upgradeable: a malicious implementation mints unbacked L2 wstETH that withdraws through the gateway and drains the L1 Lido wstETH escrow (in scroll TVS, escrow flagged critical today)."
-    },
-    {
       "address": "eth:0x0d7e906bd9cafa154b048cfa766cc1e54e39af9b",
       "name": "L1MessageQueue",
       "critical": true,

@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "timestamp": 1786612387,
-  "configHash": "0x29720939f0a419df402fa2ac1641948018763f053240b1c078121c9a708e1b5a",
+  "configHash": "0x2134a73be7669fd6d4297e9360cb8d05d33d89ae8abea31070e7e2a69cbe5086",
   "entries": [
     {
       "name": "Starkware Multisig 2",
@@ -266,7 +266,6 @@
       ],
       "proxyType": "immutable",
       "description": "Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.",
-      "critical": true,
       "deployerAddress": "eth:0xe50EdeAf57E63dD4a93d1B075bd64395011Be96C",
       "sinceTimestamp": 1687524587,
       "sinceBlock": 17542373,
@@ -357,7 +356,6 @@
       ],
       "proxyType": "immutable",
       "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
-      "critical": true,
       "deployerAddress": "eth:0x7f06941997C7778E7B734fE55f7353f554B06d7d",
       "sinceTimestamp": 1652101038,
       "sinceBlock": 14742550,
@@ -369,6 +367,7 @@
           "eth:0xc238E3D63DfD677Fa0FA9985576f0945C581A266"
         ]
       },
+      "fieldMeta": { "wards": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x0437465dfb5B79726e35F08559B0cBea55bb585C": "L1Escrow"
       }
@@ -1510,7 +1509,6 @@
       ],
       "proxyType": "immutable",
       "description": "Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.",
-      "critical": true,
       "deployerAddress": "eth:0x7f06941997C7778E7B734fE55f7353f554B06d7d",
       "sinceTimestamp": 1666446647,
       "sinceBlock": 15804056,
@@ -1529,6 +1527,7 @@
           "eth:0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
         ]
       },
+      "fieldMeta": { "wards": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x9F96fE0633eE838D0298E8b8980E6716bE81388d": "L1DAIBridge"
       },

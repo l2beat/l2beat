@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x4698226677e17cf82c5c9986f88dc82a00d8777a
+Generated with discovered.json: 0x93a1c60b1999cf25f50a2eed7dc6dd9d9a90ee8f
 
-# Diff at Thu, 20 Aug 2026 07:16:50 GMT:
+# Diff at Thu, 20 Aug 2026 08:18:25 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1787147569
+- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1787147569
 - current timestamp: 1787147569
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+Ossification perimeter: externally governed escrows (Maker/Sky DAI, Lido wstETH) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
 
 ## Config/verification related changes
 
@@ -69,22 +69,6 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
 ```diff
     contract L1MessageQueueV2 (eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a) [scroll/L1MessageQueue] {
     +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway.
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract wstETHescrowLido (eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504) [N/A] {
-    +++ description: None
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract DaiEscrow (eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515) [N/A] {
-    +++ description: None
       critical:
 +        true
     }
@@ -403,14 +387,6 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
 ```
 
 ```diff
-    contract L2LidoGateway (scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9) [N/A] {
-    +++ description: None
-      critical:
-+        true
-    }
-```
-
-```diff
     contract ProxyAdmin (scr:0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45) [global/ProxyAdmin] {
     +++ description: None
       critical:
@@ -509,8 +485,19 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
 ```diff
     contract ProposalTypesConfigurator (scr:0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E) [N/A] {
     +++ description: None
++++ severity: HIGH
+      values.proposalTypes:
++        {"0":{"quorum":16,"approvalThreshold":5100,"name":"Treasury transfers"},"1":{"quorum":16,"approvalThreshold":7600,"name":"Governor changes"},"2":{"quorum":16,"approvalThreshold":7600,"name":"Propose protocol upgrades"},"3":{"quorum":16,"approvalThreshold":7600,"name":"Change token implementation"},"4":{"quorum":16,"approvalThreshold":7600,"name":"Token emission & inflation"},"5":{"quorum":16,"approvalThreshold":5100,"name":"Gov Docs & Committees"},"6":{"quorum":16,"approvalThreshold":7600,"name":"Constitutional/Rights Amendments"},"7":{"quorum":16,"approvalThreshold":5100,"name":"Treasury transfers - Approval Voting"},"8":{"quorum":16,"approvalThreshold":7600,"name":"Governor changes - Approval Voting"},"9":{"quorum":16,"approvalThreshold":7600,"name":"Propose protocol upgrades - Approval Voting"},"10":{"quorum":16,"approvalThreshold":7600,"name":"Change token implementation - Approval Voting"},"11":{"quorum":16,"approvalThreshold":7600,"name":"Token emission & inflation - Approval Voting"},"12":{"quorum":16,"approvalThreshold":5100,"name":"Gov Docs & Committees - Approval Voting"},"13":{"quorum":16,"approvalThreshold":7600,"name":"Constitutional/Rights Amendments - Approval Voting"}}
+      category.name:
+-        "Spam"
++        "Governance"
+      category.priority:
+-        -1
++        3
       critical:
 +        true
+      fieldMeta:
++        {"proposalTypes":{"severity":"HIGH"}}
     }
 ```
 

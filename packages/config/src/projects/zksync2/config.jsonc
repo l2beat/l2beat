@@ -68,8 +68,7 @@
       "ignoreRelatives": ["l2Bridge", "l2TokenBeacon"]
     },
     "eth:0x41527B2d03844dB6b0945f25702cB958b6d55989": {
-      // L1ERC20Bridge_wstETH
-      "critical": true, // escrows wstETH counted in TVS and validates its withdrawals against the Diamond
+      // L1ERC20Bridge_wstETH: escrows wstETH counted in TVS, but Lido-governed (proxy admin is the Lido DAO Agent) — an external escrow outside the ossification perimeter.
       "category": "bridge-external",
       "description": "Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.",
       "ignoreRelatives": [
