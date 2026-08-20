@@ -13,13 +13,14 @@ import { getActivityCompareChartParams } from './activityCompareMetric'
 
 export function ActivityCompareChart({
   projects,
+  queryProjects,
   config,
   chartRange,
 }: CompareMetricChartProps) {
   const trpc = useTRPC()
   const { data, isLoading } = useQuery(
     trpc.activity.detailedChartWithProjectsRanges.queryOptions(
-      getActivityCompareChartParams(projects, chartRange),
+      getActivityCompareChartParams(queryProjects, chartRange),
     ),
   )
   const unit = config.activityUnit

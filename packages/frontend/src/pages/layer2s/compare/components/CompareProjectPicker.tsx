@@ -178,6 +178,16 @@ export function CompareProjectPicker({
         <PlusIcon className="size-4" />
         Add project
       </DashedButton>
+      {!isDefaultSelection && (
+        // Clearing the explicit selection falls back to the top-N defaults,
+        // the same state as a fresh visit.
+        <DashedButton
+          onClick={() => onChange([])}
+          className="h-7 rounded-lg px-2.5"
+        >
+          Reset
+        </DashedButton>
+      )}
       {isDefaultSelection && (
         <p className="w-full font-medium text-2xs text-secondary">
           Showing top projects by default. Add or remove projects to build your

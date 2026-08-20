@@ -17,6 +17,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { useCopyToClipboard } from '~/hooks/useCopyToClipboard'
+import { useDebouncedValue } from '~/hooks/useDebouncedValue'
 import { useIsClient } from '~/hooks/useIsClient'
 import { useTimeout } from '~/hooks/useTimeout'
 import { useUrlStateSync } from '~/hooks/useUrlStateSync'
@@ -87,6 +88,10 @@ export function L2CompareCharts({
       .map((slug) => bySlug.get(slug))
       .filter((project) => project !== undefined)
   }, [state.projects, allProjects, defaultProjectSlugs])
+  // Selecting projects one by one would fire a backend query per click;
+  // charts query for this debounced selection instead. The initial value
+  // matches the SSR-prefetched query input, so first paint reuses it.
+  const queryProjects = useDebouncedValue(selectedProjects, 400)
 
   const displayedMetrics = useMemo(() => {
     const unique = new Map<CompareMetricId, CompareMetric>()
@@ -179,6 +184,7 @@ export function L2CompareCharts({
               config={config}
               chartRange={state.chartRange}
               projects={selectedProjects}
+              queryProjects={queryProjects}
               setConfig={setChartConfig(index)}
               isHovered={
                 hoveredChartId === undefined || hoveredChartId === index
@@ -208,6 +214,7 @@ function CompareChartCard({
   config,
   chartRange,
   projects,
+  queryProjects,
   setConfig,
   isHovered,
   onHoverChange,
@@ -217,6 +224,7 @@ function CompareChartCard({
   config: CompareChartConfig
   chartRange: ChartRange
   projects: CompareProjectEntry[]
+  queryProjects: CompareProjectEntry[]
   setConfig: Dispatch<SetStateAction<CompareChartConfig>>
   /** False while another card is hovered, so this card's tooltip hides. */
   isHovered: boolean
@@ -255,6 +263,7 @@ function CompareChartCard({
         >
           <metric.Chart
             projects={projects}
+            queryProjects={queryProjects}
             config={config}
             chartRange={chartRange}
           />
