@@ -1,7 +1,7 @@
 {
   "name": "ccip",
   "timestamp": 1787129183,
-  "configHash": "0xdd381e65aa1ba2ba4c8fecdd7c3b2ec65f93a5f1c84965cd146c286c2ddf2e5e",
+  "configHash": "0x91f44a2ed5297e28196db6d3b27986e1100f6cd628044a1c13da6e8b22c3e91b",
   "entries": [
     {
       "name": "ArbitrumOffRamp_v1_6",
@@ -6547,11 +6547,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61",
       "type": "EOA",
       "proxyType": "EOA",
@@ -10130,11 +10125,6 @@
       "implementationNames": {
         "eth:0x5Fd81cF5734498467634Ed9432aad298022e15Ff": "CommitStore"
       }
-    },
-    {
-      "address": "eth:0x606dC57cd166643760E049609bfd1D8a698D3bAc",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "CommitStore",
@@ -37415,57 +37405,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "AaveRiskCouncil",
-      "address": "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
-      ],
-      "proxyType": "gnosis safe",
-      "description": "Aave Risk Council Safe authorized to update GHO bridge and rate limits through the GhoCcipSteward, subject to the steward-enforced delay and per-update bounds.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39",
-          "description": "update inbound and outbound GHO rate-limit capacities and refill rates after more than 1d since the prior rate-limit update; each numeric change is bounded to 100% of its current value.",
-          "role": ".RISK_COUNCIL"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39",
-          "description": "update the GHO bridge limit through the GhoCcipSteward after more than 1d since the prior bridge-limit update; each change is bounded to 100% of the current limit.",
-          "role": ".RISK_COUNCIL"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "deployerAddress": "eth:0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4",
-      "sinceTimestamp": 1711093967,
-      "sinceBlock": 19488798,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "eth:0xCAC616Fffb687cBDDD250b2aE6F672449462985C",
-          "eth:0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4",
-          "eth:0xb647055A9915bF9c8021a684E175A353525b9890",
-          "eth:0x606dC57cd166643760E049609bfd1D8a698D3bAc"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0x94c3a68d6795fd3a2913391c5d7147eaa10473faaace1455aff7bd702f166a92",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 166,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60": "GnosisSafeProxy",
-        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
-    },
-    {
       "address": "eth:0x8569de6e68F22937e69b7338E47Ee751aCcFb266",
       "type": "EOA",
       "proxyType": "EOA"
@@ -51963,11 +51902,6 @@
       ]
     },
     {
-      "address": "eth:0xb647055A9915bF9c8021a684E175A353525b9890",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "CommitStore",
       "address": "eth:0xb86C91861A7043fffC26C7740C3678eE09599234",
       "type": "Contract",
@@ -53340,61 +53274,7 @@
       }
     },
     {
-      "name": "GhoCcipSteward",
-      "address": "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39",
-      "type": "Contract",
-      "template": "ccip/GhoCcipSteward",
-      "sourceHashes": [
-        "0xc6405b4381c2ea9fd594928e9d7f3967ff430a2669feb531936a405ce4571407"
-      ],
-      "proxyType": "immutable",
-      "description": "Aave GHO CCIP steward. The Aave Risk Council can use it to update bridge and rate limits for the GHO Ethereum token pool after more than 1d since the previous update of that type. Each numeric limit can change by at most its current value per update.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x06179f7C1be40863405f374E7f5F8806c728660A",
-          "description": "change bridge limits and current bridged amount accepted by this token pool.",
-          "role": ".getBridgeLimitAdmin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x06179f7C1be40863405f374E7f5F8806c728660A",
-          "description": "change inbound and outbound rate limits for this token pool.",
-          "role": ".getRateLimitAdmin"
-        }
-      ],
-      "deployerAddress": "eth:0x26D595DdDbAd81Bf976eF6f24686a12A800b141F",
-      "sinceTimestamp": 1736359979,
-      "sinceBlock": 21581474,
-      "values": {
-        "$immutable": true,
-        "BRIDGE_LIMIT_ENABLED": true,
-        "getCcipTimelocks": {
-          "bridgeLimitLastUpdate": 1747858451,
-          "rateLimitLastUpdate": 1747858451
-        },
-        "GHO_TOKEN": "eth:0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
-        "GHO_TOKEN_POOL": "eth:0x06179f7C1be40863405f374E7f5F8806c728660A",
-        "MINIMUM_DELAY": 86400,
-        "minimumDelayFmt": "1d",
-        "RISK_COUNCIL": "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60"
-      },
-      "fieldMeta": {
-        "minimumDelayFmt": {
-          "description": "Minimum debounce interval between updates of the same type. Bridge-limit and rate-limit updates use independent timestamps."
-        }
-      },
-      "implementationNames": {
-        "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39": "GhoCcipSteward"
-      }
-    },
-    {
       "address": "eth:0xC6fA4C71F42dD1881E29DDe853FA5CcD18A59624",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xCAC616Fffb687cBDDD250b2aE6F672449462985C",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -66146,54 +66026,6 @@
       "function transferOwnership(address to)",
       "function typeAndVersion() view returns (string)"
     ],
-    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
-      "constructor()",
-      "event AddedOwner(address indexed owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address indexed handler)",
-      "event ChangedGuard(address indexed guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address indexed module)",
-      "event EnabledModule(address indexed module)",
-      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
-      "event RemovedOwner(address indexed owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
     "eth:0x42e83F35E8f32056884311C07CB195547785Efa9": [
       "error CallReverted(bytes error)",
       "error GroupTreeNotWellFormed()",
@@ -67475,9 +67307,6 @@
       "function typeAndVersion() view returns (string)",
       "function unpause()",
       "function verify(bytes32[] hashedLeaves, bytes32[] proofs, uint256 proofFlagBits) view returns (uint256 timestamp)"
-    ],
-    "eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60": [
-      "constructor(address _singleton)"
     ],
     "eth:0x8705F734b7ac1FC0bb2d16F60c6eFac5Ed646159": [
       "constructor(tuple(uint64 chainSelector, uint64 sourceChainSelector, address onRamp, address rmnProxy) staticConfig)",
@@ -68872,17 +68701,6 @@
       "function unpause()",
       "function verify(bytes32[] hashedLeaves, bytes32[] proofs, uint256 proofFlagBits) view returns (uint256 timestamp)"
     ],
-    "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39": [
-      "constructor(address ghoToken, address ghoTokenPool, address riskCouncil, bool bridgeLimitEnabled)",
-      "function BRIDGE_LIMIT_ENABLED() view returns (bool)",
-      "function GHO_TOKEN() view returns (address)",
-      "function GHO_TOKEN_POOL() view returns (address)",
-      "function MINIMUM_DELAY() view returns (uint256)",
-      "function RISK_COUNCIL() view returns (address)",
-      "function getCcipTimelocks() view returns (tuple(uint40 bridgeLimitLastUpdate, uint40 rateLimitLastUpdate))",
-      "function updateBridgeLimit(uint256 newBridgeLimit)",
-      "function updateRateLimit(uint64 remoteChainSelector, bool outboundEnabled, uint128 outboundCapacity, uint128 outboundRate, bool inboundEnabled, uint128 inboundCapacity, uint128 inboundRate)"
-    ],
     "eth:0xd079265E929C845707e816E3855721D055d40235": [
       "constructor(tuple(uint64 chainSelector, uint64 sourceChainSelector, address onRamp, address rmnProxy) staticConfig)",
       "error ConfigDigestMismatch(bytes32 expected, bytes32 actual)",
@@ -69986,7 +69804,6 @@
     ]
   },
   "usedTemplates": {
-    "ccip/GhoCcipSteward": "0xc3822e32c6f70b8a80b50d25d77f168120bb660f12df892b2fa4ed34bd4f6269",
     "ccip/NonceManager": "0x827f6bace108f4a7fc4caa635b4ceb6ccc121acfd161c89ad34438c0b5b3459b",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "transporter/ARMProxy": "0x0d78981b088695fa8edd067139f44a81159efbe8e385b468e8b111de70c9eacc",
@@ -70012,5 +69829,5 @@
     "optimism": 155765203,
     "polygonpos": 92282770
   },
-  "permissionsConfigHash": "0x20f1b5d6ccc11f9615688b250c2493b33ce74a0815f6c685eb88d17ff84fb213"
+  "permissionsConfigHash": "0x1f0422a451d87ab9f351fd4ea95f17aaa4d87446671bdaf78e716fdd0b6332a4"
 }

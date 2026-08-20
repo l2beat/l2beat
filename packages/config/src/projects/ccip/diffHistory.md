@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xd4e6649f771fa324b515b98b2541608c0e416a21
+Generated with discovered.json: 0xd24f7589422be538c3c26b69ae3dcdd61fadb6dd
 
-# Diff at Wed, 19 Aug 2026 10:09:59 GMT:
+# Diff at Thu, 20 Aug 2026 09:18:17 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@3cab028bb9f69972736ffaeabfdd862996779763 block: 1786528176
@@ -12,7 +12,6 @@ Generated with discovered.json: 0xd4e6649f771fa324b515b98b2541608c0e416a21
 - Removed one signer from each RMN governance tree without changing their computed minimum signature counts or root quorums. RMN_Multisig1 moved from 41 to 40 signers, RMN_Multisig2 from 70 to 69, and RMN_Multisig3 from 41 to 40. The affected leaf groups moved from 2-of-17 to 2-of-16, 2-of-41 to 2-of-40, and 2-of-17 to 2-of-16, respectively.
 - Added Mova (chain selector `4215185756725900654`) to CCIPHome with separate 16-node commit and execution configurations, each using F=5, and enabled both Ethereum-to-Mova and Mova-to-Ethereum routes. RMN verification is disabled for inbound Mova roots on the Ethereum OffRamp, so its OCR commit quorum is the root signer gate.
 - Rotated one TON commit/execution oracle tuple, including its p2p identity, signer and transmitter keys, offchain public key, peer ID and shared-secret encryption material. The TON commit and execution config digests and versions changed accordingly, and the same old p2p identity was replaced in the TON and Aptos reader sets.
-- Expanded discovery coverage for the existing GHO control path: the 3-of-4 Aave Risk Council Safe can update bridge and inbound/outbound rate limits through the GhoCcipSteward, subject to its one-day delay and source-enforced 100% per-update bounds; the steward is the live bridge-limit and rate-limit admin of the GHO Ethereum token pool. This is a discovery/config correction, not a newly deployed onchain permission.
 - Added dynamic permissions for the OnRamp and OffRamp callers that advance shared nonce state and for per-token TokenAdminRegistry administrators, and completed the owner permissions and chain-neutral descriptions of the v1.6 ramp/router templates. No contract implementation, proxy, source or ABI changed in this refresh.
 
 ## Watched changes
@@ -1402,18 +1401,6 @@ discovery. Values are for block 1786528176 (main branch discovery), not current.
       usedTypes.0.arg.4215185756725900654:
 +        "mova"
     }
-```
-
-```diff
-+   Status: CREATED
-    contract AaveRiskCouncil (eth:0x8513e6F37dBc52De87b166980Fa3F50639694B60) [GnosisSafe]
-    +++ description: Aave Risk Council Safe authorized to update GHO bridge and rate limits through the GhoCcipSteward, subject to the steward-enforced delay and per-update bounds.
-```
-
-```diff
-+   Status: CREATED
-    contract GhoCcipSteward (eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39) [ccip/GhoCcipSteward]
-    +++ description: Aave GHO CCIP steward. The Aave Risk Council can use it to update bridge and rate limits for the GHO Ethereum token pool after more than 1d since the previous update of that type. Each numeric limit can change by at most its current value per update.
 ```
 
 Generated with discovered.json: 0xff0d3daa4b909a3b13afc03159db2527bf0bfd36

@@ -1,22 +1,17 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Aave GHO CCIP steward. The Aave Risk Council can use it to update bridge and rate limits for the GHO Ethereum token pool after more than {{minimumDelayFmt}} since the previous update of that type. Each numeric limit can change by at most its current value per update.",
+  "description": "Aave GHO CCIP steward. It can update bridge and rate limits for the GHO Ethereum token pool only when called by the Aave Risk Council.",
   "ignoreRelatives": ["GHO_TOKEN", "GHO_TOKEN_POOL", "RISK_COUNCIL"],
   "fields": {
-    "minimumDelayFmt": {
-      "description": "Minimum debounce interval between updates of the same type. Bridge-limit and rate-limit updates use independent timestamps.",
-      "copy": "MINIMUM_DELAY",
-      "edit": ["format", "FormatSeconds"]
-    },
     "RISK_COUNCIL": {
       "permissions": [
         {
           "type": "interact",
-          "description": "update the GHO bridge limit through the GhoCcipSteward after more than {{minimumDelayFmt}} since the prior bridge-limit update; each change is bounded to 100% of the current limit."
+          "description": "update the GHO bridge limit through the GhoCcipSteward, subject to the steward delay and bounds."
         },
         {
           "type": "interact",
-          "description": "update inbound and outbound GHO rate-limit capacities and refill rates after more than {{minimumDelayFmt}} since the prior rate-limit update; each numeric change is bounded to 100% of its current value."
+          "description": "update inbound and outbound GHO rate limits through the GhoCcipSteward, subject to the steward delay and bounds."
         }
       ]
     }
