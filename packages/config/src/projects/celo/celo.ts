@@ -1,5 +1,4 @@
 import {
-  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -9,7 +8,11 @@ import { CONTRACTS, DA_LAYERS } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { EIGENDA_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
+import {
+  EIGENDA_DA_PROVIDER,
+  getOpStackDaTracking,
+  opStackL2,
+} from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('celo')
 const chainId = 42220
@@ -233,20 +236,8 @@ export const celo: ScalingProject = opStackL2({
     startBlock: 31060842,
     adjustCount: { type: 'SubtractOne' },
   },
-  nonTemplateDaTracking: [
-    {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
-      inbox: ChainSpecificAddress.address(
-        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
-      ),
-      sequencers: [
-        ChainSpecificAddress.address(
-          discovery.getContractValue('SystemConfig', 'batcherHash'),
-        ),
-      ],
-    },
+  daTracking: [
+    getOpStackDaTracking(discovery, { sinceBlock: 22038831 }),
     {
       type: 'eigen-da',
       customerId: '0xecf08b0a4f196e06e9aece95d5dd724bc121f09c',

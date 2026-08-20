@@ -25,9 +25,15 @@ import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 interface Props extends AppLayoutProps {
   entry: ProjectPrivacyEntry
   queryState: DehydratedState
+  selectedUpdateId?: string
 }
 
-export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
+export function PrivacyProjectPage({
+  entry,
+  queryState,
+  selectedUpdateId,
+  ...props
+}: Props) {
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
   const isNavigationEmpty = navigationSections.length === 0
 
@@ -47,7 +53,10 @@ export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
                 <div className="pt-6 max-md:px-4 lg:pt-4">
-                  <ProjectHeader project={entry} />
+                  <ProjectHeader
+                    project={entry}
+                    recentUpdatesCount={entry.recentUpdatesCount}
+                  />
                   <ProjectSummaryBars
                     project={{
                       underReviewStatus: entry.isUnderReview
@@ -133,7 +142,10 @@ export function PrivacyProjectPage({ entry, queryState, ...props }: Props) {
                       </div>
                     </PrimaryCard>
 
-                    <ProjectDetails items={entry.sections} />
+                    <ProjectDetails
+                      items={entry.sections}
+                      selectedUpdateId={selectedUpdateId}
+                    />
                   </HighlightableLinkContextProvider>
                 </div>
 

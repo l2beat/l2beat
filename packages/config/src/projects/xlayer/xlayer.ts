@@ -280,7 +280,7 @@ export const xlayer: ScalingProject = agglayer({
       },
     },
   ],
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
