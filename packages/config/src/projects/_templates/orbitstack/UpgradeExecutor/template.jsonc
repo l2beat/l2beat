@@ -11,7 +11,7 @@
       }
     },
     "executors": {
-      "severity": "HIGH",
+      "severity": "LOW",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "EXECUTOR_ROLE"

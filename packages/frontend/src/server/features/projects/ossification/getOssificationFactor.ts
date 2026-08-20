@@ -28,8 +28,11 @@ export interface OssificationEntry {
   /** Deployment timestamp */
   sinceTimestamp?: number
   /** One timestamp per $pastUpgrades transaction, sorted ascending. The first
-   *  one is the initial implementation setting, not a change. */
+   *  one is normally the initial implementation setting. */
   upgradeTimestamps: number[]
+  /** False when historical storage evidence proves that the implementation was
+   *  already nonzero before the first recognized upgrade event. */
+  firstUpgradeIsInitialization?: boolean
 }
 
 export interface OssificationContractBreakdown {
@@ -49,6 +52,21 @@ export type OssificationChangeType = 'code' | 'state'
 export interface OssificationCriticalUpdate {
   id: string
   type: OssificationChangeType
+}
+
+/** Reviewed event that cannot be reconstructed reliably from the current
+ * discovery metadata. Keep these exceptional and evidence-backed in the
+ * project's ossification.json. */
+export interface OssificationCriticalEvent {
+  timestamp: number
+  type: OssificationChangeType
+  /** Discovery update card receiving the same critical code/state tag. */
+  updateId?: string
+  /** Current or historical contract receiving the per-contract count. Omit
+   * only for a security-mechanism change stored on an excluded actor shell. */
+  contract?: string
+  /** Events on removed contracts affect history, but never the current clock. */
+  historical?: boolean
 }
 
 export interface OssificationFactor {
@@ -91,6 +109,7 @@ export function getOssificationFactor(
   updates: DiscoveryUpdate[],
   now: number = UnixTime.now(),
   historical: OssificationHistoricalEntry[] = [],
+  criticalEvents: OssificationCriticalEvent[] = [],
 ): OssificationFactor | undefined {
   if (entries.length === 0) {
     return undefined
@@ -98,13 +117,19 @@ export function getOssificationFactor(
 
   const records = new Map<string, ContractRecord>()
   const byAddress = new Map<string, ContractRecord>()
-  const index = (record: ContractRecord) => {
+  const currentByAddress = new Map<string, ContractRecord>()
+  const historicalByAddress = new Map<string, ContractRecord>()
+  const index = (
+    record: ContractRecord,
+    target: Map<string, ContractRecord>,
+    overwrite = true,
+  ) => {
     const key = record.entry.address.toLowerCase()
-    byAddress.set(key, record)
+    if (overwrite || !target.has(key)) target.set(key, record)
     // Entries before the chain-prefix migration reference bare addresses
     const bareAddress = key.split(':').at(-1)
-    if (bareAddress) {
-      byAddress.set(bareAddress, record)
+    if (bareAddress && (overwrite || !target.has(bareAddress))) {
+      target.set(bareAddress, record)
     }
   }
   for (const entry of entries) {
@@ -112,7 +137,8 @@ export function getOssificationFactor(
     if (records.has(key)) continue
     const record: ContractRecord = { entry, diffEvents: [] }
     records.set(key, record)
-    index(record)
+    index(record, currentByAddress)
+    index(record, byAddress)
   }
 
   const historicalRecords: ContractRecord[] = historical
@@ -122,30 +148,45 @@ export function getOssificationFactor(
       diffEvents: [],
     }))
   for (const record of historicalRecords) {
-    index(record)
+    index(record, historicalByAddress)
+    // A current entry wins if an old entry happens to share a bare address.
+    index(record, byAddress, false)
   }
 
   const criticalUpdates = collectDiffEvents(updates, byAddress)
+  const reviewedEvents = collectCriticalEvents(
+    criticalEvents,
+    currentByAddress,
+    historicalByAddress,
+  )
+  mergeCriticalUpdates(criticalUpdates, reviewedEvents.counted)
 
   const breakdowns: OssificationContractBreakdown[] = []
-  const changeEvents: number[] = []
+  const changeEvents: number[] = [
+    ...reviewedEvents.standaloneCurrent,
+    ...reviewedEvents.standaloneHistorical,
+  ]
   for (const record of records.values()) {
     const breakdown = getContractBreakdown(record, now)
     breakdowns.push(breakdown)
     changeEvents.push(
-      ...record.entry.upgradeTimestamps.slice(1),
+      ...getCodeChangeTimestamps(record.entry),
       ...record.diffEvents.map((event) => event.timestamp),
     )
   }
   for (const record of historicalRecords) {
     changeEvents.push(
-      ...record.entry.upgradeTimestamps.slice(1),
+      ...getCodeChangeTimestamps(record.entry),
       ...record.diffEvents.map((event) => event.timestamp),
     )
   }
 
-  const projectClockStart = getProjectClockStart(breakdowns)
-  if (projectClockStart === null) return undefined
+  const contractClockStart = getProjectClockStart(breakdowns)
+  if (contractClockStart === null) return undefined
+  const projectClockStart = Math.max(
+    contractClockStart,
+    reviewedEvents.standaloneCurrent.at(-1) ?? Number.NEGATIVE_INFINITY,
+  )
 
   const projectAgeSeconds = Math.max(0, now - projectClockStart)
   const hasUnverifiedContract = breakdowns.some(
@@ -161,10 +202,10 @@ export function getOssificationFactor(
   changeEvents.sort((a, b) => a - b)
   const clusters = clusterEvents(changeEvents)
 
-  const observationStart = getObservationStart([
-    ...records.values(),
-    ...historicalRecords,
-  ])
+  const observationStart = getObservationStart(
+    [...records.values(), ...historicalRecords],
+    reviewedEvents.counted,
+  )
   const windowFrom = Math.max(
     now - RATE_WINDOW_SECONDS,
     observationStart ?? now - RATE_WINDOW_SECONDS,
@@ -192,6 +233,82 @@ export function getOssificationFactor(
     contracts: breakdowns,
     criticalUpdates,
   }
+}
+
+function mergeCriticalUpdates(
+  updates: OssificationCriticalUpdate[],
+  events: OssificationCriticalEvent[],
+): void {
+  const byId = new Map(updates.map((update) => [update.id, update]))
+  for (const event of events) {
+    if (!event.updateId) continue
+    const existing = byId.get(event.updateId)
+    if (existing) {
+      // A mixed code-and-state update is classified as code.
+      if (event.type === 'code') existing.type = 'code'
+      continue
+    }
+    const update = { id: event.updateId, type: event.type }
+    updates.push(update)
+    byId.set(update.id, update)
+  }
+}
+
+function collectCriticalEvents(
+  events: OssificationCriticalEvent[],
+  currentByAddress: Map<string, ContractRecord>,
+  historicalByAddress: Map<string, ContractRecord>,
+): {
+  standaloneCurrent: number[]
+  standaloneHistorical: number[]
+  counted: OssificationCriticalEvent[]
+} {
+  const standalone = {
+    standaloneCurrent: [] as number[],
+    standaloneHistorical: [] as number[],
+    counted: [] as OssificationCriticalEvent[],
+  }
+
+  for (const event of events) {
+    const target = event.historical ? historicalByAddress : currentByAddress
+    const record = event.contract
+      ? target.get(event.contract.toLowerCase())
+      : undefined
+
+    if (event.contract && !record) {
+      // Attributed events remain gated by current/historical perimeter
+      // membership. A mechanism change stored on an excluded actor shell is
+      // deliberately represented without a contract instead.
+      continue
+    }
+
+    standalone.counted.push(event)
+    if (record) {
+      if (
+        !record.diffEvents.some(
+          (existing) =>
+            existing.timestamp === event.timestamp &&
+            existing.type === event.type,
+        )
+      ) {
+        record.diffEvents.push({ timestamp: event.timestamp, type: event.type })
+      }
+    } else {
+      standalone[
+        event.historical ? 'standaloneHistorical' : 'standaloneCurrent'
+      ].push(event.timestamp)
+    }
+  }
+
+  for (const record of [
+    ...new Set(currentByAddress.values()),
+    ...new Set(historicalByAddress.values()),
+  ]) {
+    record.diffEvents.sort((a, b) => a.timestamp - b.timestamp)
+  }
+  standalone.standaloneCurrent.sort((a, b) => a - b)
+  standalone.standaloneHistorical.sort((a, b) => a - b)
+  return standalone
 }
 
 function collectDiffEvents(
@@ -279,11 +396,17 @@ function getContractBreakdown(
     clockStart,
     ageSeconds: clockStart !== null ? Math.max(0, now - clockStart) : null,
     codeChangeCount:
-      Math.max(0, entry.upgradeTimestamps.length - 1) +
+      getCodeChangeTimestamps(entry).length +
       diffEvents.filter((event) => event.type === 'code').length,
     stateChangeCount: diffEvents.filter((event) => event.type === 'state')
       .length,
   }
+}
+
+function getCodeChangeTimestamps(entry: OssificationEntry): number[] {
+  return entry.upgradeTimestamps.slice(
+    entry.firstUpgradeIsInitialization === false ? 0 : 1,
+  )
 }
 
 function clusterEvents(sortedEvents: number[]): number[] {
@@ -300,7 +423,10 @@ function clusterEvents(sortedEvents: number[]): number[] {
   return clusterStarts
 }
 
-function getObservationStart(records: ContractRecord[]): number | null {
+function getObservationStart(
+  records: ContractRecord[],
+  criticalEvents: OssificationCriticalEvent[],
+): number | null {
   let start: number | null = null
   for (const record of records) {
     const candidates = [
@@ -312,6 +438,11 @@ function getObservationStart(records: ContractRecord[]): number | null {
       if (start === null || candidate < start) {
         start = candidate
       }
+    }
+  }
+  for (const event of criticalEvents) {
+    if (start === null || event.timestamp < start) {
+      start = event.timestamp
     }
   }
   return start

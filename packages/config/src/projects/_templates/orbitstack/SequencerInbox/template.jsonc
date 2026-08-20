@@ -42,7 +42,7 @@
       ]
     },
     "batchPosters": {
-      "severity": "HIGH",
+      "severity": "LOW",
       "permissions": [
         {
           "type": "interact",

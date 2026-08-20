@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x4eeceb724e4591c32477f313fb251e419b1f535f
+Generated with discovered.json: 0x1b1c8ea1fe70fa8a70d9f7ec4ac185d3ad4207a9
 
-# Diff at Thu, 20 Aug 2026 07:53:17 GMT:
+# Diff at Thu, 20 Aug 2026 15:32:04 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1787143507
+- comparing to: main@490d1ebdb014748d72479deb28674a95e7cdbfb3 block: 1787143507
 - current timestamp: 1787143507
 
 ## Description
 
-Ossification perimeter: externally governed escrows (Maker/Sky DAI, Lido wstETH, Livepeer LPT) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
+Ossification review: keep external escrows and Safe actor shells outside the critical perimeter, include canonical security mechanisms, and classify routine validator, batch-poster, and executor roster changes as LOW.
 
 ## Config/verification related changes
 
@@ -33,10 +33,26 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 ```
 
 ```diff
-    contract L2SecurityCouncilEmergency (arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) [orbitstack/layer2/L2SecurityCouncilEmergency] {
+    contract StandardArbERC20 (arb1:0x3f770Ac673856F105b586bb393d122721265aD46) [N/A] {
     +++ description: None
       critical:
 +        true
+    }
+```
+
+```diff
+    contract BeaconProxyFactory (arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) [orbitstack/layer2/L2SecurityCouncilEmergency] {
+    +++ description: None
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1","role":"admin","via":[{"address":"arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
     }
 ```
 
@@ -107,16 +123,10 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 ```diff
     contract L2SecurityCouncilPropose (arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) [orbitstack/layer2/L2SecurityCouncilPropose] {
     +++ description: None
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract GnosisSafeL2 (arb1:0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C) [GnosisSafe] {
-    +++ description: None
-      critical:
-+        true
+      receivedPermissions.21:
++        {"permission":"upgrade","from":"eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27","role":"admin","via":[{"address":"eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.23:
++        {"permission":"upgrade","from":"eth:0xd92023E9d9911199a6711321D1277285e6d4e2db","role":"admin","via":[{"address":"eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
     }
 ```
 
@@ -147,6 +157,8 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 ```diff
     contract L2GatewaysProxyAdmin (arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) [global/ProxyAdmin] {
     +++ description: None
+      directlyReceivedPermissions.3:
++        {"permission":"upgrade","from":"arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1","role":"admin"}
       critical:
 +        true
     }
@@ -161,10 +173,30 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CoreGovernor (arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) [orbitstack/layer2/CoreGovernor] {
-    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals). Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds).
+    contract UpgradeableBeacon (arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333) [N/A] {
+    +++ description: None
       critical:
 +        true
+    }
+```
+
+```diff
+    contract CoreGovernor (arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) [orbitstack/layer2/CoreGovernor] {
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals). Uses DVP-based quorum (percentage of Delegated Voting Power with floor and ceiling bounds).
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27","role":"admin","via":[{"address":"eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      receivedPermissions.20:
++        {"permission":"upgrade","from":"eth:0xd92023E9d9911199a6711321D1277285e6d4e2db","role":"admin","via":[{"address":"eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      critical:
++        true
+    }
+```
+
+```diff
+    EOA L1Timelock_l2alias (arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1","role":"admin","via":[{"address":"arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
     }
 ```
 
@@ -188,7 +220,7 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
     contract SequencerInbox (eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
@@ -210,7 +242,7 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -236,7 +268,7 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.getValidators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       critical:
 +        true
     }
@@ -253,6 +285,8 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 ```diff
     contract UpgradeExecutorAdmin (eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) [global/ProxyAdmin] {
     +++ description: None
+      directlyReceivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27","role":"admin"}
       critical:
 +        true
     }
@@ -301,6 +335,8 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 ```diff
     contract GatewaysAdmin (eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa) [global/ProxyAdmin] {
     +++ description: None
+      directlyReceivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0xd92023E9d9911199a6711321D1277285e6d4e2db","role":"admin"}
       critical:
 +        true
     }
@@ -355,14 +391,6 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 ```
 
 ```diff
-    contract L1CustomGateway (eth:0xcEe284F754E854890e311e3280b767F80797180d) [orbitstack/CustomGateway2] {
-    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
-      critical:
-+        true
-    }
-```
-
-```diff
     contract OneStepProverMemory (eth:0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b) [orbitstack/OneStepProverMemory] {
     +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
       critical:
@@ -381,9 +409,29 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 ```diff
     contract Arbitrum Security Council (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) [orbitstack/SecurityCouncil] {
     +++ description: None
-      critical:
-+        true
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27","role":"admin","via":[{"address":"eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"eth:0xd92023E9d9911199a6711321D1277285e6d4e2db","role":"admin","via":[{"address":"eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
     }
+```
+
+```diff
++   Status: CREATED
+    contract L2WETH (arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1) [N/A]
+    +++ description: Canonical upgradeable WETH token burned by L2WethGateway when withdrawing against the L1 WETH escrow.
+```
+
+```diff
++   Status: CREATED
+    contract L1ARBGateway (eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27) [N/A]
+    +++ description: Canonical reverse gateway for ARB transfers between Ethereum and Arbitrum One.
+```
+
+```diff
++   Status: CREATED
+    contract L1WethGateway (eth:0xd92023E9d9911199a6711321D1277285e6d4e2db) [N/A]
+    +++ description: Canonical WETH gateway escrowing L1 WETH and releasing it for withdrawals proven through the Arbitrum bridge.
 ```
 
 Generated with discovered.json: 0xee242bcd6242117c5a88cde0dc7b95e1ea130f5e

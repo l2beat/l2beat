@@ -28,7 +28,7 @@
       ]
     },
     "validators": {
-      "severity": "HIGH",
+      "severity": "LOW",
       "permissions": [
         {
           "type": "interact",

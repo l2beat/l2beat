@@ -128,6 +128,96 @@ describe(getOssificationFactor.name, () => {
     expect(result?.clusteredEventCount).toEqual(1)
   })
 
+  it('counts the first upgrade when it changed an initialized proxy', () => {
+    const result = getOssificationFactor(
+      [
+        entry({
+          upgradeTimestamps: [NOW - 2 * YEAR],
+          firstUpgradeIsInitialization: false,
+        }),
+      ],
+      [],
+      NOW,
+    )
+
+    expect(result?.lastCriticalChange).toEqual(NOW - 2 * YEAR)
+    expect(result?.contracts[0]?.codeChangeCount).toEqual(1)
+    expect(result?.clusteredEventCount).toEqual(1)
+  })
+
+  it('counts a reviewed event missing from discovery history', () => {
+    const result = getOssificationFactor(
+      [entry({ sinceTimestamp: NOW - 4 * YEAR })],
+      [],
+      NOW,
+      [],
+      [
+        {
+          timestamp: NOW - 30 * DAY,
+          type: 'state',
+          contract: ADDRESS_A,
+          updateId: 'reviewed-update',
+        },
+      ],
+    )
+
+    expect(result?.projectClockStart).toEqual(NOW - 30 * DAY)
+    expect(result?.lastCriticalChange).toEqual(NOW - 30 * DAY)
+    expect(result?.contracts[0]?.stateChangeCount).toEqual(1)
+    expect(result?.clusteredEventCount).toEqual(1)
+    expect(result?.criticalUpdates).toEqual([
+      { id: 'reviewed-update', type: 'state' },
+    ])
+  })
+
+  it('keeps a reviewed historical event out of the current clock', () => {
+    const result = getOssificationFactor(
+      [entry({ sinceTimestamp: NOW - YEAR })],
+      [],
+      NOW,
+      [
+        {
+          address: ADDRESS_B,
+          name: 'Old implementation',
+          upgradeTimestamps: [],
+        },
+      ],
+      [
+        {
+          timestamp: NOW - 30 * DAY,
+          type: 'state',
+          contract: ADDRESS_B,
+          historical: true,
+        },
+      ],
+    )
+
+    expect(result?.projectClockStart).toEqual(NOW - YEAR)
+    expect(result?.lastCriticalChange).toEqual(NOW - 30 * DAY)
+    expect(result?.clusteredEventCount).toEqual(1)
+  })
+
+  it('ignores an attributed reviewed event outside the perimeter', () => {
+    const result = getOssificationFactor(
+      [entry({ sinceTimestamp: NOW - YEAR })],
+      [],
+      NOW,
+      [],
+      [
+        {
+          timestamp: NOW - 30 * DAY,
+          type: 'state',
+          contract: ADDRESS_B,
+          updateId: 'outside-perimeter',
+        },
+      ],
+    )
+
+    expect(result?.projectClockStart).toEqual(NOW - YEAR)
+    expect(result?.lastCriticalChange).toEqual(null)
+    expect(result?.criticalUpdates).toEqual([])
+  })
+
   it('uses a deployment newer than the initial implementation event', () => {
     const result = getOssificationFactor(
       [

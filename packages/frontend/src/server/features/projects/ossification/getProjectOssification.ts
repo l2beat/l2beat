@@ -9,6 +9,7 @@ import {
 } from '../recent-changes/getDiscoveryUpdates'
 import {
   getOssificationFactor,
+  type OssificationCriticalEvent,
   type OssificationEntry,
   type OssificationFactor,
 } from './getOssificationFactor'
@@ -39,6 +40,14 @@ export interface ProjectOssification extends OssificationFactor {
  *  stored; only `critical: true` ones are consumed. */
 interface OssificationJson {
   includeProjects?: string[]
+  /** Contracts whose first recognized upgrade event changed an implementation
+   *  that was already initialized. */
+  firstUpgradeIsChange?: string[]
+  /** Reviewed events missing from mechanical discovery history. */
+  criticalEvents?: (OssificationCriticalEvent & {
+    source?: string
+    reason?: string
+  })[]
   historicalContracts?: {
     address?: string
     name?: string
@@ -105,11 +114,17 @@ export async function getProjectOssification(
       ),
     }))
 
+  const firstUpgradeIsChange = new Set(
+    (ossificationJson.firstUpgradeIsChange ?? []).map((address) =>
+      address.toLowerCase(),
+    ),
+  )
   const factor = getOssificationFactor(
-    critical.map(toOssificationEntry),
+    critical.map((entry) => toOssificationEntry(entry, firstUpgradeIsChange)),
     updates,
     UnixTime.now(),
     historical,
+    ossificationJson.criticalEvents ?? [],
   )
   if (factor === undefined) {
     return undefined
@@ -120,6 +135,7 @@ export async function getProjectOssification(
 
 function toOssificationEntry(
   entry: DiscoveredEntryLite & { address: string },
+  firstUpgradeIsChange: Set<string>,
 ): OssificationEntry {
   return {
     address: entry.address,
@@ -127,6 +143,9 @@ function toOssificationEntry(
     isVerified: entry.unverified !== true,
     sinceTimestamp: entry.sinceTimestamp,
     upgradeTimestamps: parseUpgradeTimestamps(entry.values?.$pastUpgrades),
+    firstUpgradeIsInitialization: !firstUpgradeIsChange.has(
+      entry.address.toLowerCase(),
+    ),
   }
 }
 
