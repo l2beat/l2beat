@@ -26,12 +26,12 @@ const domains =
 for (const domain of domains) {
   const fresh = domain.generate()
   let snapshot = fresh
-  let preserved = 0
+  let skipped: string[] = []
   if (!overwrite && existsSync(domain.snapshotPath)) {
     const committed: Snapshot = JSON.parse(
       readFileSync(domain.snapshotPath, 'utf8'),
     )
-    ;({ merged: snapshot, preserved } = mergeSnapshots(committed, fresh))
+    ;({ merged: snapshot, skipped } = mergeSnapshots(committed, fresh))
   }
   writeFileSync(domain.snapshotPath, `${JSON.stringify(snapshot, null, 2)}\n`)
   const projectCount = Object.keys(snapshot).length
@@ -39,9 +39,9 @@ for (const domain of domains) {
   console.log(
     `${domain.name}: wrote ${idCount} identities for ${projectCount} projects`,
   )
-  if (preserved > 0) {
+  if (skipped.length > 0) {
     console.log(
-      `${domain.name}: kept ${preserved} committed ${preserved === 1 ? 'entry' : 'entries'} whose identity disappeared or whose range moved - this command only appends. If you know what you are doing and do not want to preserve that history, run 'pnpm snapshots:generate --overwrite'.`,
+      `${domain.name}: left ${skipped.length} ${skipped.length === 1 ? 'project' : 'projects'} unchanged (${skipped.join(', ')}) - an identity disappeared or a range moved there, and this command only appends new configs. If you know what you are doing and do not want to preserve history, run 'pnpm snapshots:generate --overwrite'.`,
     )
   }
 }

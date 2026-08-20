@@ -238,10 +238,13 @@ cd packages/config
 pnpm snapshots:generate
 ```
 
-The plain command is **append-only**: it registers new identities but keeps
-every committed entry whose id disappeared or whose range moved, and prints
-how many it kept. Accepting a removal or a range move - the sign-off for a
-wipe/re-sync - has to be asked for explicitly:
+The plain command is **append-only**: it registers new identities for
+projects that only gained configs, and leaves a project completely untouched
+when one of its committed identities disappeared or a range moved - it does
+not append the re-keyed identity either, since the snapshot would then show
+two configs where the project file has one. It prints which projects it left
+alone. Accepting a removal or a range move - the sign-off for a wipe/re-sync
+- has to be asked for explicitly:
 
 ```bash
 pnpm snapshots:generate --overwrite

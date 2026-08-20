@@ -1,55 +1,54 @@
-import type { Snapshot, SnapshotIdentity } from './types'
+import type { Snapshot } from './types'
 
 export interface MergeResult {
   merged: Snapshot
-  /** Committed entries kept as-is because the fresh snapshot dropped or moved them. */
-  preserved: number
+  /** Projects whose fresh state was ignored because it drops or moves a committed entry. */
+  skipped: string[]
 }
 
 /**
- * Append-only view of a regenerated snapshot: new identities from `fresh`
- * are taken in, but a committed entry whose id disappeared or whose range
- * moved is kept exactly as committed. Dropping or moving a committed entry
- * is the sign-off that accepts a wipe/re-sync, so it has to be asked for
- * explicitly ('pnpm snapshots:generate --overwrite').
+ * Append-only view of a regenerated snapshot: a project whose fresh state
+ * only adds identities gets them registered; a project where a committed
+ * identity disappeared or a range moved is left exactly as committed -
+ * including NOT appending the re-keyed identity, which would fabricate a
+ * two-config state no project file describes. Accepting such a change is the
+ * sign-off for a wipe/re-sync and has to be asked for explicitly
+ * ('pnpm snapshots:generate --overwrite').
  */
 export function mergeSnapshots(
   committed: Snapshot,
   fresh: Snapshot,
 ): MergeResult {
   const merged: Snapshot = {}
-  let preserved = 0
+  const skipped: string[] = []
 
   const projectIds = new Set([...Object.keys(committed), ...Object.keys(fresh)])
   for (const projectId of projectIds) {
     const committedEntries = committed[projectId] ?? []
     const freshById = new Map((fresh[projectId] ?? []).map((e) => [e.id, e]))
 
-    const entries: SnapshotIdentity[] = []
-    for (const old of committedEntries) {
+    const clean = committedEntries.every((old) => {
       const now = freshById.get(old.id)
-      if (now && old.since === now.since && old.until === now.until) {
-        entries.push(now)
-      } else {
-        // Disappeared or moved - keep the committed entry, label included.
-        entries.push(old)
-        preserved++
-      }
-      freshById.delete(old.id)
+      return now && old.since === now.since && old.until === now.until
+    })
+    if (clean) {
+      merged[projectId] = fresh[projectId] ?? []
+    } else {
+      merged[projectId] = committedEntries
+      skipped.push(projectId)
     }
-    entries.push(...freshById.values())
-    merged[projectId] = entries
   }
 
   return {
     merged: Object.fromEntries(
       Object.entries(merged)
+        .filter(([, identities]) => identities.length > 0)
         .sort(([a], [b]) => a.localeCompare(b))
         .map(([projectId, identities]) => [
           projectId,
-          identities.sort((a, b) => a.id.localeCompare(b.id)),
+          [...identities].sort((a, b) => a.id.localeCompare(b.id)),
         ]),
     ),
-    preserved,
+    skipped: skipped.sort(),
   }
 }
