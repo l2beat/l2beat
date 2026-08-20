@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "GovernorBravoDelegator",
+  "critical": true,
   "description": "Upgradeable Governor Bravo governance proxy. Holders with more than the current proposal threshold of {{ proposalThresholdFmt }} {{ votingTokenSymbol }} can create proposals. Voting begins {{ votingDelayFmt }} blocks after proposal creation and lasts {{ votingPeriodFmt }} blocks; success requires more for-votes than against-votes and at least {{ quorumVotesFmt }} {{ votingTokenSymbol }} voting for. Successful proposals are queued in the configured timelock. The proxy admin can replace the implementation or nominate a new admin.",
   "ignoreInWatchMode": ["proposalCount"],
   "fields": {
@@ -67,7 +68,8 @@
         "method": "function votingDelay() view returns (uint256)",
         "args": []
       },
-      "description": "Blocks between proposal submission and voting start."
+      "description": "Blocks between proposal submission and voting start.",
+      "severity": "HIGH"
     },
     "votingPeriod": {
       "handler": {
@@ -75,7 +77,8 @@
         "method": "function votingPeriod() view returns (uint256)",
         "args": []
       },
-      "description": "Voting duration in blocks."
+      "description": "Voting duration in blocks.",
+      "severity": "HIGH"
     },
     "proposalThreshold": {
       "handler": {
@@ -83,7 +86,8 @@
         "method": "function proposalThreshold() view returns (uint256)",
         "args": []
       },
-      "description": "Delegated voting tokens required to submit a proposal."
+      "description": "Delegated voting tokens required to submit a proposal.",
+      "severity": "HIGH"
     },
     "quorumVotes": {
       "handler": {

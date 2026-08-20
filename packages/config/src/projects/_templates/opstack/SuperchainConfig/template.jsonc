@@ -8,6 +8,7 @@
       "severity": "HIGH"
     },
     "guardian": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

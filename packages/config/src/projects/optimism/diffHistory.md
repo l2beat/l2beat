@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x8b4917c80620ac87cd661ab31f151114df5d9b47
+Generated with discovered.json: 0x51c95e88f6046c3e4bf3e3b917bbc3ccd91fe740
 
-# Diff at Thu, 20 Aug 2026 07:57:23 GMT:
+# Diff at Thu, 20 Aug 2026 16:17:07 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1784283055
+- comparing to: main@818dfc77af5b305593af519ac4219d83b48fe20d block: 1784283055
 - current timestamp: 1784283055
 
 ## Description
 
-Ossification perimeter: externally governed escrows (Maker/Sky DAI/USDS, Lido wstETH, Livepeer LPT) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
+Align ossification perimeter and critical state fields with the reviewer contract.
 
 ## Config/verification related changes
 
@@ -25,18 +25,12 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) [GnosisSafe] {
-    +++ description: None
-      critical:
-+        true
-    }
-```
-
-```diff
     contract DelayedWETH (eth:0x1B6DBF05EaF22d4E70dC993e8a19dd9F3dcb3162) [opstack/DelayedWETH] {
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -51,7 +45,11 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
 ```diff
     contract SystemConfig (eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
       fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
 +        true
@@ -61,6 +59,8 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
 ```diff
     contract AnchorStateRegistry (eth:0x23B2C62946350F4246f9f9D027e071f0264FD113) [opstack/AnchorStateRegistry_post20] {
     +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -79,6 +79,8 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -95,6 +97,8 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
     +++ description: A simple escrow contract storing ETH for the canonical bridge.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -111,22 +115,17 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
-    }
-```
-
-```diff
-    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe] {
-    +++ description: None
-      critical:
-+        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract SynthetixBridgeEscrow (eth:0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f) [N/A] {
-    +++ description: Custom escrow for SNX bridged via canonical messaging.
-      critical:
-+        true
+    +++ description: Synthetix-governed custom escrow for SNX bridged via canonical messaging. Its additional trust assumptions put it outside the ossification perimeter.
+      description:
+-        "Custom escrow for SNX bridged via canonical messaging."
++        "Synthetix-governed custom escrow for SNX bridged via canonical messaging. Its additional trust assumptions put it outside the ossification perimeter."
     }
 ```
 
@@ -139,16 +138,12 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
 ```
 
 ```diff
-    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
-    +++ description: None
-      critical:
-+        true
-    }
-```
-
-```diff
     contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) [opstack/SuperchainConfig_expiry] {
     +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.guardian:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -159,14 +154,8 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
       critical:
 +        true
-    }
-```
-
-```diff
-    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) [GnosisSafe] {
-    +++ description: None
-      critical:
-+        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -189,14 +178,8 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
 ```diff
     contract OptimismPortal2 (eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) [opstack/OptimismPortal2] {
     +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe] {
-    +++ description: None
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -207,6 +190,8 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"},"Proxy__OVM_L1CrossDomainMessenger":{"severity":"HIGH"},"Proxy__OVM_L1StandardBridge":{"severity":"HIGH"}}
     }
 ```
 
@@ -221,22 +206,14 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
 ```diff
     contract DisputeGameFactory (eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9) [opstack/DisputeGameFactory_v2] {
     +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract MintManagerOwner (oeth:0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26) [GnosisSafe] {
-    +++ description: None
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract SafeL2 (oeth:0x3F3Cd78Ef9Bd85961C0729E6BbB11E94Ca6f61D2) [GnosisSafe] {
-    +++ description: None
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.game8Vm:
++        {"severity":"HIGH"}
+      fieldMeta.wethFromDGF:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -247,6 +224,8 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
     +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -255,6 +234,8 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
     +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -263,6 +244,8 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
     +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -271,6 +254,8 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
     +++ description: Administration contract for the L2 predeploy proxies. Adds upgradePredeploys(address), which can only be called by the system depositor account and delegatecalls an L2ContractsManager to upgrade every predeploy in a single network upgrade transaction.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -279,6 +264,8 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
     +++ description: The OP token contract. The minting policy is controlled by the oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -287,6 +274,8 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
     +++ description: Controls the OP inflation rate, which is currently hardcoded to 2% annually.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 

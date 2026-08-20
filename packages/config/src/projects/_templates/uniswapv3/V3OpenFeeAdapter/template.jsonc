@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "V3OpenFeeAdapter",
+  "critical": true,
   "description": "Adapter for administering a configured Uniswap v3 factory. While it holds the factory owner role, anyone can ask it to apply configured protocol fees to pools or collect accrued fees to its fixed recipient. The fee setter controls global, per-tier, and per-pool fee settings; the owner can replace the fee setter, enable factory fee tiers, or transfer factory ownership.",
   "fields": {
     "owner": {
@@ -23,7 +24,8 @@
       "severity": "HIGH"
     },
     "defaultFee": {
-      "description": "Stored global protocol-fee fallback. The sentinel value represents an explicitly disabled fee; other nonzero values pack the token0 and token1 denominators into two 4-bit nibbles."
+      "description": "Stored global protocol-fee fallback. The sentinel value represents an explicitly disabled fee; other nonzero values pack the token0 and token1 denominators into two 4-bit nibbles.",
+      "severity": "HIGH"
     },
     "tier03DefaultFee": {
       "handler": {
@@ -31,7 +33,46 @@
         "method": "function defaultFees(uint24 feeTier) view returns (uint8)",
         "args": [3000]
       },
-      "description": "Resolved configured protocol fee for the 0.3% tier before any per-pool override."
+      "description": "Resolved configured protocol fee for the 0.3% tier before any per-pool override.",
+      "severity": "HIGH"
+    },
+    "feeTierDefaultUpdates": {
+      "description": "History of per-tier protocol-fee settings. A new entry changes the share of LP fees that can be diverted for pools in that tier.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["feeTier", "feeValue"],
+        "add": { "event": "FeeTierDefaultUpdated" }
+      }
+    },
+    "feeTierDefaultClears": {
+      "description": "Fee tiers whose explicit protocol-fee setting has been cleared in favor of the global default.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "feeTier",
+        "add": { "event": "FeeTierDefaultCleared" }
+      }
+    },
+    "poolOverrideUpdates": {
+      "description": "History of pool-specific protocol-fee settings.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": ["pool", "feeValue"],
+        "ignoreRelative": true,
+        "add": { "event": "PoolOverrideUpdated" }
+      }
+    },
+    "poolOverrideClears": {
+      "description": "Pools whose explicit protocol-fee setting has been cleared in favor of their tier or the global default.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "pool",
+        "ignoreRelative": true,
+        "add": { "event": "PoolOverrideCleared" }
+      }
     }
   }
 }

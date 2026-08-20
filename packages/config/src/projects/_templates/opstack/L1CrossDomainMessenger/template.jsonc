@@ -6,5 +6,10 @@
   "ignoreMethods": ["xDomainMessageSender"],
   "ignoreRelatives": ["OTHER_MESSENGER", "otherMessenger"],
   "ignoreInWatchMode": ["messageNonce"],
+  "fields": {
+    "$admin": {
+      "severity": "HIGH"
+    }
+  },
   "category": "bridge-canonical"
 }

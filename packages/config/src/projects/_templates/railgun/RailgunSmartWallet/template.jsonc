@@ -54,8 +54,7 @@
       ]
     },
     "treasury": {
-      "description": "Treasury contract that receives shield and unshield fees.",
-      "severity": "HIGH"
+      "description": "Treasury contract that receives shield and unshield fees. Changing the recipient does not change the fees charged to users."
     },
     "shieldFee": {
       "description": "Basis-point fee charged on shield operations.",
@@ -82,6 +81,95 @@
         "ignoreRelative": true,
         "add": { "event": "AddToBlocklist" },
         "remove": { "event": "RemoveFromBlocklist" }
+      }
+    },
+    "paused": {
+      "description": "Whether the smart wallet proxy currently blocks all calls to its implementation.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "storage",
+        "slot": "0x8dea8703c3cf94703383ce38a9c894669dccd4ca8e65ddb43267aa0248711450",
+        "returnType": "uint8"
+      }
+    },
+    "proxyOwnershipChangeCount": {
+      "description": "Number of proxy ownership transfers, including changes later reverted.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0xab1e9974b911ffe4a29b0d786b57a5f5defde2e77960d0e9f954b053e7de3259"
+        ]
+      }
+    },
+    "proxyPauseCount": {
+      "description": "Number of times the proxy has been paused.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0xa51641ae9e6ff3082f83f718f043efc36fa8eb06274cd78c3e7251af263ebb6f"
+        ]
+      }
+    },
+    "proxyUnpauseCount": {
+      "description": "Number of times the proxy has been unpaused.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0x5b5349b254d5540f4586f24c7afd4c990fc8a991b611d7f2c00a020a67f2f292"
+        ]
+      }
+    },
+    "logicOwnershipChangeCount": {
+      "description": "Number of logic ownership transfers, including changes later reverted.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+        ]
+      }
+    },
+    "feeChangeCount": {
+      "description": "Number of fee schedule changes, including changes later reverted.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0x472cfc031d19bcc54db01976ce486cc12dc3d489e6adced1eb5a782cd55cfdf2"
+        ]
+      }
+    },
+    "blocklistAdditionCount": {
+      "description": "Number of token blocklist additions, including additions later reverted.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0x46742f555939247f80b50a8ca895a561933c48bc9a06ccb0c812e97ac723d33f"
+        ]
+      }
+    },
+    "blocklistRemovalCount": {
+      "description": "Number of token blocklist removals, including removals later reverted.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0x2ef13bd1aff17b0f9c85afaf228e84266c8394d9d381735e83fe23f607113e2e"
+        ]
+      }
+    },
+    "verificationKeyChangeCount": {
+      "description": "Number of SNARK verification key changes, including keys later replaced or restored.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          "0x3d09e10d1c966d01c4a2c14d0ac9af253486aa5e99b6cffe9019c4d43eb1fb23"
+        ]
       }
     },
     "ZERO_VALUE": {

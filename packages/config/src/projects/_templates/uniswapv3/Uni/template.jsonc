@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Uni",
+  "critical": true,
   "description": "ERC20 governance token with checkpoint voting. Its constructor mints a fixed initial supply; the minter can mint at most {{ mintCap }}% of supply per mint, with a minimum interval of {{ minimumTimeBetweenMintsFormatted }}. Votes count only when delegated.",
   "ignoreInWatchMode": ["totalSupply"],
   "fields": {

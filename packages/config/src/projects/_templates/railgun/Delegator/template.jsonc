@@ -20,7 +20,6 @@
     },
     "$delegatedPermissionsRaw": {
       "description": "Internal raw delegated permission map keyed by caller, reconstructed from GrantPermission and RevokePermission events before filtering out callers with no remaining permissions.",
-      "severity": "HIGH",
       "type": "PERMISSION",
       "handler": {
         "type": "event",
@@ -32,7 +31,6 @@
     },
     "delegatedPermissions": {
       "description": "Current non-owner delegated call permissions as active [caller, permissions[]] pairs, filtered to callers that still retain at least one delegated permission.",
-      "severity": "HIGH",
       "type": "PERMISSION",
       "copy": "$delegatedPermissionsRaw",
       "edit": [
@@ -43,7 +41,6 @@
     },
     "delegatedCallers": {
       "description": "Addresses that currently retain at least one delegated permission through the Delegator.",
-      "severity": "HIGH",
       "type": "PERMISSION",
       "copy": "$delegatedPermissionsRaw",
       "edit": [
@@ -53,9 +50,106 @@
         ["map", ["get", 0]]
       ]
     },
+    "$criticalDelegatedPermissionsRaw": {
+      "description": "Internal permission map restricted to critical Railgun targets and wildcard permissions.",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "groupBy": "caller",
+        "select": ["contractAddress", "selector"],
+        "add": {
+          "event": "GrantPermission",
+          "where": [
+            "not",
+            [
+              "and",
+              [
+                "!=",
+                "#contractAddress",
+                "eth:0x0000000000000000000000000000000000000000"
+              ],
+              [
+                "!=",
+                "#contractAddress",
+                "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8"
+              ],
+              [
+                "!=",
+                "#contractAddress",
+                "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D"
+              ],
+              [
+                "!=",
+                "#contractAddress",
+                "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598"
+              ],
+              [
+                "!=",
+                "#contractAddress",
+                "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46"
+              ],
+              [
+                "!=",
+                "#contractAddress",
+                "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9"
+              ]
+            ]
+          ]
+        },
+        "remove": {
+          "event": "RevokePermission",
+          "where": [
+            "not",
+            [
+              "and",
+              [
+                "!=",
+                "#contractAddress",
+                "eth:0x0000000000000000000000000000000000000000"
+              ],
+              [
+                "!=",
+                "#contractAddress",
+                "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8"
+              ],
+              [
+                "!=",
+                "#contractAddress",
+                "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D"
+              ],
+              [
+                "!=",
+                "#contractAddress",
+                "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598"
+              ],
+              [
+                "!=",
+                "#contractAddress",
+                "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46"
+              ],
+              [
+                "!=",
+                "#contractAddress",
+                "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9"
+              ]
+            ]
+          ]
+        }
+      }
+    },
+    "criticalDelegatedPermissions": {
+      "description": "Active delegated permissions targeting a critical Railgun contract, including wildcard permissions.",
+      "severity": "HIGH",
+      "type": "PERMISSION",
+      "copy": "$criticalDelegatedPermissionsRaw",
+      "edit": [
+        "pipe",
+        ["to_entries"],
+        ["filter", ["!=", 0, ["pipe", ["get", 1], ["length"]]]]
+      ]
+    },
     "verificationKeyDelegates": {
       "description": "Delegated callers currently allowed to update Railgun smart wallet SNARK verification keys through the Delegator.",
-      "severity": "HIGH",
       "type": "PERMISSION",
       "copy": "$delegatedPermissionsRaw",
       "edit": [

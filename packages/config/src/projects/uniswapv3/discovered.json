@@ -77,6 +77,7 @@
       ],
       "proxyType": "immutable",
       "description": "Compound-style timelock. Its admin can queue, cancel, and execute transactions. A queued transaction becomes executable after 2d and remains executable for a 14d grace period. The delay can be changed only through the timelock itself and must remain between 2d and 1mo. After the one-time admin initialization path has been used, changing the admin requires a timelocked self-call; there is no emergency bypass.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -150,6 +151,10 @@
       },
       "fieldMeta": {
         "admin": { "severity": "HIGH" },
+        "pendingAdmin": {
+          "severity": "HIGH",
+          "description": "Address nominated to become timelock admin. It can accept the role without another action by the current admin."
+        },
         "delay": {
           "severity": "HIGH",
           "description": "Seconds every queued transaction must wait before execution."
@@ -169,6 +174,7 @@
       ],
       "proxyType": "immutable",
       "description": "ERC20 governance token with checkpoint voting. Its constructor mints a fixed initial supply; the minter can mint at most 2% of supply per mint, with a minimum interval of 1y. Votes count only when delegated.",
+      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x41653c7d61609D856f29355E404F310Ec4142Cfb",
       "sinceTimestamp": 1600107086,
@@ -243,6 +249,7 @@
       ],
       "proxyType": "call implementation proxy",
       "description": "Upgradeable Governor Bravo governance proxy. Holders with more than the current proposal threshold of 1,000,000 UNI can create proposals. Voting begins 13,140 blocks after proposal creation and lasts 40,320 blocks; success requires more for-votes than against-votes and at least 40,000,000 UNI voting for. Successful proposals are queued in the configured timelock. The proxy admin can replace the implementation or nominate a new admin.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -408,10 +415,15 @@
           "description": "Address nominated to become proxy admin. It can accept the role without another action by the current admin."
         },
         "votingDelay": {
+          "severity": "HIGH",
           "description": "Blocks between proposal submission and voting start."
         },
-        "votingPeriod": { "description": "Voting duration in blocks." },
+        "votingPeriod": {
+          "severity": "HIGH",
+          "description": "Voting duration in blocks."
+        },
         "proposalThreshold": {
+          "severity": "HIGH",
           "description": "Delegated voting tokens required to submit a proposal."
         },
         "quorumVotes": {
@@ -658,6 +670,7 @@
       ],
       "proxyType": "immutable",
       "description": "Adapter for administering a configured Uniswap v3 factory. While it holds the factory owner role, anyone can ask it to apply configured protocol fees to pools or collect accrued fees to its fixed recipient. The fee setter controls global, per-tier, and per-pool fee settings; the owner can replace the fee setter, enable factory fee tiers, or transfer factory ownership.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -674,8 +687,17 @@
         "defaultFee": 68,
         "FACTORY": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
         "feeSetter": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+        "feeTierDefaultClears": [],
+        "feeTierDefaultUpdates": [
+          { "feeTier": 100, "feeValue": 68 },
+          { "feeTier": 500, "feeValue": 68 },
+          { "feeTier": 3000, "feeValue": 102 },
+          { "feeTier": 10000, "feeValue": 102 }
+        ],
         "feeTiers": [100, 500, 3000, 10000],
         "owner": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+        "poolOverrideClears": [],
+        "poolOverrideUpdates": [],
         "tier03DefaultFee": 102,
         "TOKEN_JAR": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85",
         "ZERO_FEE_SENTINEL": 255
@@ -684,10 +706,28 @@
         "owner": { "severity": "HIGH" },
         "feeSetter": { "severity": "HIGH" },
         "defaultFee": {
+          "severity": "HIGH",
           "description": "Stored global protocol-fee fallback. The sentinel value represents an explicitly disabled fee; other nonzero values pack the token0 and token1 denominators into two 4-bit nibbles."
         },
         "tier03DefaultFee": {
+          "severity": "HIGH",
           "description": "Resolved configured protocol fee for the 0.3% tier before any per-pool override."
+        },
+        "feeTierDefaultUpdates": {
+          "severity": "HIGH",
+          "description": "History of per-tier protocol-fee settings. A new entry changes the share of LP fees that can be diverted for pools in that tier."
+        },
+        "feeTierDefaultClears": {
+          "severity": "HIGH",
+          "description": "Fee tiers whose explicit protocol-fee setting has been cleared in favor of the global default."
+        },
+        "poolOverrideUpdates": {
+          "severity": "HIGH",
+          "description": "History of pool-specific protocol-fee settings."
+        },
+        "poolOverrideClears": {
+          "severity": "HIGH",
+          "description": "Pools whose explicit protocol-fee setting has been cleared in favor of their tier or the global default."
         }
       },
       "implementationNames": {
@@ -1210,13 +1250,13 @@
     "uniswapv3/Permit2": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "uniswapv3/SwapRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "uniswapv3/SwapRouter02": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "uniswapv3/Timelock": "0x652fc9e6608bc27d2068eecbf83b1f8bbcd89efeb5c71c1388cff293b918cf91",
+    "uniswapv3/Timelock": "0x1af830301f6824613ae3ac5bc1428e6ec237408b962a514f16babc65c102702a",
     "uniswapv3/TokenJar": "0x4e5cdb5291d4fadb56003b4d078f44feb9eccfad71889bf91f3a931e6a042c03",
     "uniswapv3/Uni": "0x0552485ac57ab489375e7de7a08024b2601c9d94bf2db3e2f65878c444c1545f",
     "uniswapv3/UniswapV3Factory": "0x5e0c14e07a63feedadd8c50b27af35d0dbdaf5a8fa83bcdac52444324d2f8636",
     "uniswapv3/UniswapV3Pool": "0x20ec8823a2b1327c58cb7619ab4d308f7c8d4e2c65ead2d85358dbfe141f4031",
     "uniswapv3/UniversalRouter": "0xb38b0e27c2dad3559972735c0287a36cc053ec43cfdb7e72f84c76c7fc6cbc1d",
-    "uniswapv3/V3OpenFeeAdapter": "0x663a4d61a27c76fffa2178a403a1d500998b8922f9ad258ad0b509adecd838c3"
+    "uniswapv3/V3OpenFeeAdapter": "0xfacd2e561908ae18410c983606de37bd3a1f12dd9b911f25debdeedb42b3ad6b"
   },
   "usedBlockNumbers": { "ethereum": 25770096 },
   "permissionsConfigHash": "0xa221a7891d7ef42ba2d32756bf84e8da45e8e9226a73845a6cefc8bece66ff9e"

@@ -28,6 +28,12 @@
     }
   },
   "fields": {
+    "$admin": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH"
+    },
     "game1337": {
       "severity": "HIGH",
       "handler": {
@@ -130,6 +136,7 @@
     // Type-8 game's VM (MIPS64): impl returns vm()=0, so read from game args
     // (prestate(32) | vm(20) -> offset 32).
     "game8Vm": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",
@@ -157,6 +164,7 @@
       "edit": ["format", "ChallengerFromArgs"]
     },
     "wethFromDGF": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",

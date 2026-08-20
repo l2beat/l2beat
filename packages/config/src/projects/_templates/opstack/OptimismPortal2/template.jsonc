@@ -18,6 +18,9 @@
     }
   },
   "fields": {
+    "$admin": {
+      "severity": "HIGH"
+    },
     "respectedGameType": {
       "severity": "HIGH"
     },

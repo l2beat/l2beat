@@ -24,6 +24,9 @@
     }
   },
   "fields": {
+    "owner": {
+      "severity": "HIGH"
+    },
     "gameImpls": {
       "severity": "HIGH",
       "handler": {
@@ -95,6 +98,7 @@
       "edit": ["format", "ChallengerFromArgs"]
     },
     "wethFromDGF": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "function gameArgs(uint32) view returns (bytes)",

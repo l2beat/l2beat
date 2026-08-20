@@ -55,11 +55,11 @@ export async function detectEip1967Proxy(
   if (implementation === ChainSpecificAddress.ZERO(provider.chain)) {
     return
   }
-  const pastUpgrades = await getPastUpgradesSingleEvent(
-    provider,
-    address,
+  const pastUpgrades = await getPastUpgradesSingleEvent(provider, address, [
     'event Upgraded(address indexed implementation)',
-  )
+    // Used by Railgun's PausableUpgradableProxy.
+    'event ProxyUpgrade(address previousImplementation, address implementation)',
+  ])
   let admin = await getAdmin(provider, address)
   // TODO: (sz-piotr) potential for errors
   if (admin === ChainSpecificAddress.ZERO(provider.chain)) {

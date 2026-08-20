@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "timestamp": 1784283055,
-  "configHash": "0xfe81ba444aceeed92364c19412f1c5485d0ea8be854345febd66faada50b90ad",
+  "configHash": "0x53ce518fe537fcd00831ffbb310935581aa2f0ee34e3518bb06c57e4c06f2bb3",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -62,7 +62,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -172,6 +171,10 @@
         "systemConfig": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
         "totalSupply": "20415188000000000000",
         "version": "1.5.1"
+      },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x1B6DBF05EaF22d4E70dC993e8a19dd9F3dcb3162": "Proxy",
@@ -387,11 +390,13 @@
         "VERSION": 0
       },
       "fieldMeta": {
-        "batcherHash": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "batcherHash": { "severity": "LOW" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "HIGH" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
@@ -472,6 +477,7 @@
         "version": "3.9.0"
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
         "respectedGameType": { "severity": "HIGH" },
         "retirementTimestamp": { "severity": "HIGH" },
         "disputeGameFinalityDelaySeconds": { "severity": "HIGH" }
@@ -665,6 +671,7 @@
         "TX_BASE_GAS": 21000,
         "version": "2.11.1"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1": "Lib_ResolvedDelegateProxy",
         "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0": "L1CrossDomainMessenger"
@@ -855,6 +862,7 @@
         "systemConfig": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
         "version": "1.3.1"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x322b47Ff1FA8D5611F761e3E275C45B71b294D43": "Proxy",
         "eth:0xb3A24DB07038b51962026329B62E7a965d56A6ad": "ETHLockbox"
@@ -988,6 +996,7 @@
         "isUpgrading": false,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "ProxyAdmin"
       }
@@ -1002,7 +1011,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1258,8 +1266,7 @@
         "0x7e15a2bf7710942237f53504e85d22680d445b01b383b5979b7c79003ea5a19a"
       ],
       "proxyType": "immutable",
-      "description": "Custom escrow for SNX bridged via canonical messaging.",
-      "critical": true,
+      "description": "Synthetix-governed custom escrow for SNX bridged via canonical messaging. Its additional trust assumptions put it outside the ossification perimeter.",
       "deployerAddress": "eth:0xDe910777C787903F78C89e7a0bf7F4C435cBB1Fe",
       "sinceTimestamp": 1620680982,
       "sinceBlock": 12409015,
@@ -1532,7 +1539,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1665,7 +1671,11 @@
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "version": "2.4.2"
       },
-      "fieldMeta": { "paused": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "paused": { "severity": "HIGH" },
+        "guardian": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C": "Proxy",
         "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550": "SuperchainConfig"
@@ -1705,6 +1715,7 @@
         "systemConfig": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
         "version": "2.8.2"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1": "L1ChugSplashProxy",
         "eth:0xB37a11AadF167B2F0b8dD85372De4bC66CD4A891": "L1StandardBridge"
@@ -1724,7 +1735,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x6B7C001F4af36A576babA2aF3b5251Fc326Ab09A",
       "sinceTimestamp": 1610850364,
@@ -1993,6 +2003,7 @@
         "version": "5.6.1"
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
         "respectedGameType": { "severity": "HIGH" },
         "paused": {
           "severity": "HIGH",
@@ -2032,7 +2043,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2122,6 +2132,11 @@
         "owner": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "Proxy__OVM_L1CrossDomainMessenger": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "Proxy__OVM_L1StandardBridge": "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "Proxy__OVM_L1CrossDomainMessenger": { "severity": "HIGH" },
+        "Proxy__OVM_L1StandardBridge": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "Lib_AddressManager"
@@ -2333,12 +2348,16 @@
         "wethFromDGF": "eth:0x1B6DBF05EaF22d4E70dC993e8a19dd9F3dcb3162"
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
         "game621": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" },
         "game0": { "severity": "HIGH" },
         "game1": { "severity": "HIGH" },
-        "game8": { "severity": "HIGH" }
+        "game8": { "severity": "HIGH" },
+        "game8Vm": { "severity": "HIGH" },
+        "wethFromDGF": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9": "Proxy",
@@ -2397,7 +2416,6 @@
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -2442,7 +2460,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2565,6 +2582,7 @@
         "TX_BASE_GAS": 21000,
         "version": "2.2.1"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "oeth:0x4200000000000000000000000000000000000007": "Proxy",
         "oeth:0x250AF3f400cf8Aac8D410c90f1ba3968dD87DF96": "L2CrossDomainMessenger"
@@ -2676,6 +2694,7 @@
         "proxyAdminOwner": "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
         "version": "1.13.2"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "oeth:0x4200000000000000000000000000000000000010": "Proxy",
         "oeth:0xAE9ed42f43a3ee45c3A9dEf8ae6B48cBb58Ed1a1": "L2StandardBridge"
@@ -2954,6 +2973,7 @@
         "MESSAGE_VERSION": 1,
         "version": "1.2.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "oeth:0x4200000000000000000000000000000000000016": "Proxy",
         "oeth:0x27E51B2254433A3284D9ba73Ea551C397DB2a124": "L2ToL1MessagePasser"
@@ -3124,6 +3144,10 @@
         "isUpgrading": false,
         "owner": "oeth:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
         "version": "1.0.0"
+      },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "oeth:0x4200000000000000000000000000000000000018": "Proxy",
@@ -3377,6 +3401,7 @@
         "symbol": "OP",
         "totalSupply": "4294963292498750113616177748"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "oeth:0x4200000000000000000000000000000000000042": "GovernanceToken"
       }
@@ -3408,6 +3433,7 @@
         "mintPermittedAfter": 1793220409,
         "owner": "oeth:0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": "MintManager"
       }
@@ -5744,13 +5770,13 @@
     "lido/L1LidoTokensBridge": "0xfbf3e83ab86a74d691bbceaf7d057f48ce1eb84928da555a82dee64747e5facc",
     "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post20": "0xa91dfce6b6f037bb47a826f76496e4a1cffe1bbcd4c14cf754c1ac91616737a7",
-    "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
+    "opstack/AnchorStateRegistry_post20": "0x805b91df95b1fb79ddf49cec451e59736ac01d914a10de73c3a947f58f572570",
+    "opstack/DelayedWETH": "0x2bb65b9dcbc119352d4c860b2c99ea1ab78770cfd36c559c5150dadfc1580c84",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory_v2": "0x20561644cde03f9ac8927ac7448ff435a4b253d7001fb36b0ed58fefc29c81ee",
-    "opstack/ETHLockbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/DisputeGameFactory_v2": "0x8846c3263ee16aaea65c3af20a2118d0c11aaf2a6fdd0487970b43a8d0e42123",
+    "opstack/ETHLockbox": "0x84d206c43cf8dcc115f08a2a0487ec907ecbc3908440fbfb8e57ee0601bb3c82",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
-    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1CrossDomainMessenger": "0xea24e2bfdb6536e3712d13097b867ff34904f65030f57e349694caa653cce8fa",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/Layer2/BaseFeeVault_karst": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
@@ -5759,22 +5785,22 @@
     "opstack/Layer2/L1Block": "0x285f931e841dfeccb9fd8de970781403669decd9880ffbed39a4c35bf5c15333",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L1FeeVault_karst": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
-    "opstack/Layer2/L2CrossDomainMessenger": "0xe22f4bc25e3233f9cbc95891feb31bb13e525003e5dac36ec019619b44a06b89",
+    "opstack/Layer2/L2CrossDomainMessenger": "0xea5dababc2d3c671bcdd37f0482105863487a55138d7c65cabe1044b4f4a7377",
     "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/Layer2/L2ProxyAdmin_karst": "0xd86564ec3c7e3195dd10abf37058aeeb801c6cb63d35c2b81df15ec0b67ea5ff",
-    "opstack/Layer2/L2StandardBridge": "0xa3a1bc50117017a509d0dbef8f13b9b8e3bae9146504b23939e69814c6f31060",
-    "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
+    "opstack/Layer2/L2ProxyAdmin_karst": "0xd17ccbdb69c74b77db075c57a47975770831cc65faa3846b8f44deff1f873590",
+    "opstack/Layer2/L2StandardBridge": "0x1d7a39d8907362465f31e3072eaa78f2f2c42ba8a5b83ee617f65daf0facff5b",
+    "opstack/Layer2/L2ToL1MessagePasser": "0x33582243789a634097d4b5a8ac5126e30db1101ff06552a2195e11a40cdf7d19",
     "opstack/Layer2/OperatorFeeVault": "0x044085f5049dce846d88feaa0007d7805521906a1025bb3acc0ee57c09befe47",
     "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x52ecd41211faad3599bd32ca82e2af9561910cce6d33f93242e9bf13a426018c",
+    "opstack/OptimismPortal2": "0x682bbe60219050ce4c99189dc9348a889db497a91eb4bb0cae6730171491f103",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
-    "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
-    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
+    "opstack/SuperchainConfig_expiry": "0xf341606524667d993372a51db6dbf9bba9b34f3705ed2a015fdaf0250d975b3e",
+    "opstack/SystemConfig": "0xa5ad1d7fe3bfc5d96d4166fbfb1e6ef0b1d5baaf568225c532428da4d84175c6"
   },
   "usedBlockNumbers": { "ethereum": 25551721, "optimism": 154342139 },
   "permissionsConfigHash": "0x18aded7cc450f3aed4000071c50d417eb8f3cd1e06808e21ed53a1190819c1f0"

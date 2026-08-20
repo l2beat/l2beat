@@ -7,7 +7,7 @@
   "ignoreMethods": ["getActions", "proposals", "proposalsLength"],
   "fields": {
     "proposalCount": {
-      "severity": "HIGH",
+      "description": "Number of governance proposals published. Proposals are updates, but do not change the system until executed.",
       "handler": {
         "type": "eventCount",
         "topics": [
