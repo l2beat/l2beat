@@ -8,6 +8,10 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import {
+  countRecentDiscoveryUpdates,
+  getDiscoveryUpdates,
+} from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -64,6 +68,7 @@ export interface ProjectPrivacyEntry {
     }
   }
   isUnderReview: boolean
+  recentUpdatesCount: number
   warnings: {
     yellow?: string
     red?: ProjectRedWarning
@@ -130,6 +135,7 @@ export async function getPrivacyProjectEntry(
   const hasTrackedAssets = details.assets.length > 0
   const discoveryHref =
     contractsSection || permissionsSection ? discoUi.href : undefined
+  const discoveryUpdates = getDiscoveryUpdates(details.id)
 
   const sections: ProjectDetailsSection[] = []
 
@@ -259,6 +265,17 @@ export async function getPrivacyProjectEntry(
     })
   }
 
+  if (discoveryUpdates.length > 0) {
+    sections.push({
+      type: 'UpdatesSection',
+      props: {
+        id: 'updates',
+        title: 'Updates',
+        updates: discoveryUpdates,
+      },
+    })
+  }
+
   if (permissionsSection) {
     sections.push({
       type: 'PermissionsSection',
@@ -312,6 +329,7 @@ export async function getPrivacyProjectEntry(
       deposits: details.summary.deposits,
     },
     isUnderReview: !!details.statuses.reviewStatus,
+    recentUpdatesCount: countRecentDiscoveryUpdates(discoveryUpdates),
     warnings: {
       yellow: details.statuses.yellowWarning,
       red: details.statuses.redWarning,
