@@ -1,7 +1,7 @@
 {
   "name": "sophon",
-  "timestamp": 1786966187,
-  "configHash": "0xf2e4e55652de287f26914a9ad50e3b40fd8622e2413d313194bfe5fc53495873",
+  "timestamp": 1787147637,
+  "configHash": "0x3f98f0f4c2a9ae655c216b369e91bf02b3ef6b88bae0e1852dc3b68724d9deb2",
   "entries": [
     {
       "name": "SophonTransactionFilterer",
@@ -246,8 +246,8 @@
           ]
         ],
         "$upgradeCount": 13,
-        "baseTokenGasPriceMultiplierDenominator": 19,
-        "baseTokenGasPriceMultiplierNominator": 10000000,
+        "baseTokenGasPriceMultiplierDenominator": 43,
+        "baseTokenGasPriceMultiplierNominator": 25000000,
         "facetAddresses": [
           "eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253",
           "eth:0x1666124221622eb6154306Ea9BA87043e8be88B2",
@@ -380,12 +380,12 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 39244,
-        "getTotalBatchesExecuted": 39243,
-        "getTotalBatchesVerified": 39244,
-        "getTotalBlocksCommitted": 39244,
-        "getTotalBlocksExecuted": 39243,
-        "getTotalBlocksVerified": 39244,
+        "getTotalBatchesCommitted": 39260,
+        "getTotalBatchesExecuted": 39259,
+        "getTotalBatchesVerified": 39260,
+        "getTotalBlocksCommitted": 39260,
+        "getTotalBlocksExecuted": 39259,
+        "getTotalBlocksVerified": 39260,
         "getTotalPriorityTxs": 10212,
         "getTransactionFilterer": "eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41",
         "getVerifier": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
@@ -580,11 +580,6 @@
         "eth:0x6086051f93412F550C0820e76f0fbE85F64C7ef8": "ValidatorTimelock"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
-      "address": "eth:0x2Ea9CcB15Ceb6c228786a3d4837B0bA3e9736D97",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "BridgeHub",
@@ -907,7 +902,6 @@
         "$members": [
           "eth:0x891F19CdefBce82e2F39f34C2322526c01E7A845",
           "eth:0x4BBBaCCbA75dbb482619722FFE68bBddC9CCc336",
-          "eth:0x2Ea9CcB15Ceb6c228786a3d4837B0bA3e9736D97",
           "eth:0x3b6036d410cA018661324766680674921a8b2d89",
           "eth:0x14574dfC6B7aF658c5033BA95673864947956521",
           "eth:0xbe6D418089AaFeD4f95e516F21b2F56027a2E263"
@@ -916,8 +910,8 @@
         "domainSeparator": "0x4ee440c593310d163ce5ee409e8b60941e58aa6b74d5cf7b249e342d0e5189fd",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 49,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 50,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1484,6 +1478,6 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6",
     "sophon/SophonTransactionFilterer": "0x5af79cc105e47429633fc735f1601adf54bbd92b355c622bdab306600a542b7c"
   },
-  "usedBlockNumbers": { "ethereum": 25774511 },
-  "permissionsConfigHash": "0xb1928a5241f4e9cb6d7226aef882c7f2bd8cf97c84d27dad31e6c525ad5d3fe0"
+  "usedBlockNumbers": { "ethereum": 25789580 },
+  "permissionsConfigHash": "0x7383ea2d416cadb94942b16accaef43d15da31450e235fd8809542c6e7f76615"
 }

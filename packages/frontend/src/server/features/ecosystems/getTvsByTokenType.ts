@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import type { SevenDayTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
+import type { SevenDayTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
 
 export interface TvsByTokenType {
   ether: number

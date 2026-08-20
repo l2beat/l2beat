@@ -4,7 +4,7 @@ import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapp
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { ChartTabs } from '~/pages/scaling/summary/components/ChartTabs'
+import { ChartTabs } from '~/pages/layer2s/summary/components/ChartTabs'
 import { useTRPC } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { PrivacyFlowChart } from '../../project/components/PrivacyFlowChart'
@@ -40,7 +40,10 @@ export function PrivacySummaryChartsSection({
     }),
   )
   const { data: tvlData, isLoading: isTvlLoading } = useQuery(
-    trpc.privacy.tvlChart.queryOptions({ projectIds: tvlProjectIds, range }),
+    trpc.tvs.chartByProjects.queryOptions({
+      projectIds: tvlProjectIds,
+      range,
+    }),
   )
 
   const flowChartTimeRange = useMemo(

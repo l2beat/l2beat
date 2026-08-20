@@ -1,9 +1,10 @@
+import { useId } from 'react'
 import { useCssSupports } from '~/hooks/useCssSupports'
-import { INTEROP_PAIR_SEPARATOR } from '~/server/features/scaling/interop/consts'
+import { INTEROP_PAIR_SEPARATOR } from '~/server/features/layer2s/interop/consts'
 import type {
   ChainData,
   Flow,
-} from '~/server/features/scaling/interop/getInteropFlows'
+} from '~/server/features/layer2s/interop/getInteropFlows'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
 import type { FlowsGraphLayout } from './utils/computeGraphLayout'
@@ -46,14 +47,21 @@ interface Props {
  * thread, and it halved the framerate of the whole page. The CSS equivalent
  * animates a transform instead and leaves layout untouched.
  *
- * Browsers that lack offset-path or linear() easing (the travel/idle split
- * depends on both) get the original SMIL markup instead — slower, but
+ * The path is referenced via offset-path: url(#...) pointing at an invisible
+ * <path> per flow, not inlined as path("..."): WebKit resolves path() px
+ * coordinates in zoomed CSS px while the SVG stays in user units, so with
+ * Safari page zoom ≠ 100% every particle drifted off its line. url()
+ * references keep the referenced element's user-unit geometry and render
+ * correctly at any zoom.
+ *
+ * Browsers that lack offset-path url() or linear() easing (the travel/idle
+ * split depends on both) get the original SMIL markup instead — slower, but
  * correct everywhere SVG works. useCssSupports is client-only, which is fine
  * here: this component never SSRs (FlowsGraphPanel renders it only after
  * ResizeObserver reports a size), so there is no hydration mismatch.
  */
 const CSS_MOTION_CONDITION =
-  '(offset-path: path("M 0 0")) and (animation-timing-function: linear(0 0%, 1 50%, 1 100%))'
+  '(offset-path: url("#a")) and (animation-timing-function: linear(0 0%, 1 50%, 1 100%))'
 export function ParticleLayer({
   flows,
   chainData,
@@ -67,6 +75,7 @@ export function ParticleLayer({
 }: Props) {
   const { highlightedChains } = useInteropFlows()
   const supportsCssMotion = useCssSupports(CSS_MOTION_CONDITION)
+  const pathIdPrefix = useId()
   const particleRadius = isSmallScreen ? 1.5 : 2
 
   const { flowsParticles } = useScaledParticleCounts(
@@ -124,8 +133,11 @@ export function ParticleLayer({
         // rest of the cycle — the equivalent of calcMode="discrete".
         const fadeEasing = `linear(0 0%, 0 ${travelPercent}%, 1 ${travelPercent}%, 1 100%)`
 
+        const pathId = `${pathIdPrefix}${flow.srcChain}-${flow.dstChain}`
+
         return (
           <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
+            {supportsCssMotion && <path id={pathId} d={path} fill="none" />}
             {Array.from({ length: count }, (_, i) => {
               // Positive delay, so a particle stays at its base opacity of 0
               // until its turn comes up in the first cycle.
@@ -163,7 +175,7 @@ export function ParticleLayer({
                   fill={color}
                   opacity={0}
                   style={{
-                    offsetPath: `path("${path}")`,
+                    offsetPath: `url("#${pathId}")`,
                     offsetRotate: '0deg',
                     animationName:
                       'interop-particle-move, interop-particle-fade',

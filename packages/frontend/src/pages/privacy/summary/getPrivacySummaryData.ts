@@ -93,7 +93,7 @@ async function getCachedData() {
       }),
     ),
     helpers.queryClient.prefetchQuery(
-      helpers.trpc.privacy.tvlChart.queryOptions({
+      helpers.trpc.tvs.chartByProjects.queryOptions({
         projectIds: tvlProjectIds,
         range: defaultChartRange,
       }),

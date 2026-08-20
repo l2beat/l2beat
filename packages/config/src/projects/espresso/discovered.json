@@ -1,7 +1,7 @@
 {
   "name": "espresso",
   "timestamp": 1785249458,
-  "configHash": "0xf904c3c7fec8f78ed732f68de2f60758d9773cd09494bb45b76faa3730e1dd6c",
+  "configHash": "0xae2889447026bd3a957b2909e0804d9bf0571d4fdccd7dd4a9bb1a93e8782ec3",
   "entries": [
     {
       "name": "PlonkVerifierV3",

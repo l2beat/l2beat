@@ -1,8 +1,8 @@
 import { formatInteger, formatSeconds } from '@l2beat/shared-pure'
 import { LiveIndicator } from '~/components/LiveIndicator'
 import { ChevronIcon } from '~/icons/Chevron'
-import { anomalySubtypeToLabel } from '~/pages/scaling/liveness/components/AnomalyIndicator'
-import type { OngoingAnomaliesOverview } from '~/server/features/scaling/liveness/getOngoingAnomaliesOverview'
+import { anomalySubtypeToLabel } from '~/pages/layer2s/liveness/components/AnomalyIndicator'
+import type { OngoingAnomaliesOverview } from '~/server/features/layer2s/liveness/getOngoingAnomaliesOverview'
 import { cn } from '~/utils/cn'
 import { HomeCard } from './HomeCard'
 
@@ -20,7 +20,7 @@ export function HomeAnomaliesTile({
   return (
     <HomeCard className={cn('overflow-hidden p-0 md:p-1', className)}>
       <a
-        href="/scaling/liveness"
+        href="/layer2s/liveness"
         className="group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-surface-secondary/50 md:rounded-sm md:px-7 md:py-5"
       >
         <div className="lg:hidden">

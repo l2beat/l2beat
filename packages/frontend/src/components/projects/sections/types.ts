@@ -4,6 +4,7 @@ import type { CostsSectionProps } from './costs/CostsSection'
 import type { DaRiskSummarySectionProps } from './DaRiskSummarySection'
 import type { DetailedDescriptionSectionProps } from './DetailedDescriptionSection'
 import type { DataPostedSectionProps } from './data-posted/DataPostedSection'
+import type { ExternalDependenciesSectionProps } from './ExternalDependenciesSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
 import type { InteropFlowsSectionProps } from './interop/InteropFlowsSection'
@@ -22,7 +23,6 @@ import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
 import type { PrivacyAssetsBreakdownSectionProps } from './privacy/PrivacyAssetsBreakdownSection'
 import type { PrivacyFlowsSectionProps } from './privacy/PrivacyFlowsSection'
-import type { PrivacyTvlSectionProps } from './privacy/PrivacyTvlSection'
 import type { ProgramHashesSectionProps } from './program-hashes/ProgramHashesSection'
 import type { RiskAnalysisSectionProps } from './RiskAnalysisSection'
 import type { RiskSummarySectionProps } from './RiskSummarySection'
@@ -33,7 +33,8 @@ import type { StateValidationSectionProps } from './state-validation/StateValida
 import type { TechnologyChoicesSectionProps } from './TechnologyChoicesSection'
 import type { TrustedSetupSectionProps } from './TrustedSetupsSection'
 import type { ThroughputSectionProps } from './throughput/ThroughputSection'
-import type { ScalingTvsSectionProps } from './tvs/ScalingTvsSection'
+import type { L2TvsSectionProps } from './tvs/L2TvsSection'
+import type { TvsValueSectionProps } from './tvs/TvsValueSection'
 import type { ZkCatalogTvsSectionProps } from './tvs/ZkCatalogTvsSection'
 import type { UpdatesSectionProps } from './UpdatesSection'
 import type { UpgradesAndGovernanceSectionProps } from './UpgradesAndGovernanceSection'
@@ -76,7 +77,9 @@ type SectionId =
   | 'privacy-tvl'
   | 'privacy-flows'
   | 'privacy-assets-breakdown'
+  | 'external-dependencies'
   | 'note-discovery'
+
 type GroupId = 'da-layer' | 'da-bridge'
 
 export type ProjectSectionId = SectionId | GroupId | `${GroupId}-${SectionId}`
@@ -103,9 +106,9 @@ interface ProjectDetailsThroughputSection {
   props: ProjectDetailsProps<ThroughputSectionProps>
 }
 
-interface ProjectDetailsScalingTvsSection {
-  type: 'ScalingTvsSection'
-  props: ProjectDetailsProps<ScalingTvsSectionProps>
+interface ProjectDetailsL2TvsSection {
+  type: 'L2TvsSection'
+  props: ProjectDetailsProps<L2TvsSectionProps>
 }
 
 interface ProjectDetailsActivitySection {
@@ -268,9 +271,9 @@ interface ProjectDetailsUpdatesSection {
   props: ProjectDetailsProps<UpdatesSectionProps>
 }
 
-interface ProjectDetailsPrivacyTvlSection {
-  type: 'PrivacyTvlSection'
-  props: ProjectDetailsProps<PrivacyTvlSectionProps>
+interface ProjectDetailsTvsValueSection {
+  type: 'TvsValueSection'
+  props: ProjectDetailsProps<TvsValueSectionProps>
 }
 
 interface ProjectDetailsPrivacyFlowsSection {
@@ -281,6 +284,11 @@ interface ProjectDetailsPrivacyFlowsSection {
 interface ProjectDetailsPrivacyAssetsBreakdownSection {
   type: 'PrivacyAssetsBreakdownSection'
   props: ProjectDetailsProps<PrivacyAssetsBreakdownSectionProps>
+}
+
+interface ProjectDetailsExternalDependenciesSection {
+  type: 'ExternalDependenciesSection'
+  props: ProjectDetailsProps<ExternalDependenciesSectionProps>
 }
 
 export type ProjectDetailsSection = {
@@ -307,7 +315,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsGroup
   | ProjectDetailsGrissiniRiskAnalysisSection
   | ProjectDetailsThroughputSection
-  | ProjectDetailsScalingTvsSection
+  | ProjectDetailsL2TvsSection
   | ProjectDetailsActivitySection
   | ProjectDetailsTrustedSetupSection
   | ProjectDetailsVerifiersSection
@@ -323,7 +331,8 @@ export type ProjectDetailsSection = {
   | ProjectDetailsInteropTokenTransfersSection
   | ProjectDetailsUpgradesAndGovernanceSection
   | ProjectDetailsUpdatesSection
-  | ProjectDetailsPrivacyTvlSection
+  | ProjectDetailsTvsValueSection
   | ProjectDetailsPrivacyFlowsSection
   | ProjectDetailsPrivacyAssetsBreakdownSection
+  | ProjectDetailsExternalDependenciesSection
 )

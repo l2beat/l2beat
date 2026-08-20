@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
-import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
+import { get7dTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
 import {
   type DiscoveryUpdate,
   getDiscoveryUpdates,
@@ -37,7 +37,7 @@ export async function getRecentChangesOverview(): Promise<RecentChangesOverview>
     }
 
     const projectHref = project.scalingInfo
-      ? `/scaling/projects/${project.slug}`
+      ? `/layer2s/projects/${project.slug}`
       : project.interopConfig
         ? `/interop/protocols/${project.slug}`
         : undefined

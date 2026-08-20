@@ -1,7 +1,7 @@
 {
   "name": "axelar",
   "timestamp": 1781603706,
-  "configHash": "0x74980aa887b4ee3a2aa84ed5dec0d12e7eff01227fe18cf4500ab927608f29af",
+  "configHash": "0xfe9fa51b75372142f1059d574cf3720b0b3554a29098e5d9e13ff28d1a0c44ef",
   "entries": [
     {
       "address": "eth:0x027c1882B975E2cd771AE068b0389FA38B9dda73",
