@@ -36,7 +36,7 @@ export function PrivacySummaryPage({
               .filter((e) => e.isTracked)
               .map((e) => ({ id: e.id, name: e.name }))}
             tvlProjects={entries
-              .filter((e) => e.isTracked && !e.tvlNotApplicable)
+              .filter((e) => e.isTracked && e.hasTvl)
               .map((e) => ({ id: e.id, name: e.name }))}
             defaultRange={defaultChartRange}
           />

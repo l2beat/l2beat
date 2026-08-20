@@ -123,7 +123,7 @@ const columns = [
     id: 'totalValueLockedUsd',
     header: 'TVL',
     cell: (ctx) => {
-      if (ctx.row.original.tvlNotApplicable) {
+      if (!ctx.row.original.hasTvl) {
         return <NotApplicableBadge />
       }
 

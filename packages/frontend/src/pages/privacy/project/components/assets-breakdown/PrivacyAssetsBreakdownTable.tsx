@@ -209,9 +209,10 @@ function formatBucketLabel(label: string) {
 
 function getTotals(assets: PrivacyAsset[]) {
   return {
-    totalValueUsd: assets.reduce(
-      (sum, asset) => sum + (asset.totalValueUsd ?? 0),
-      0,
+    totalValueUsd: assets.reduce<number | null>(
+      (sum, asset) =>
+        asset.totalValueUsd === null ? sum : (sum ?? 0) + asset.totalValueUsd,
+      null,
     ),
     deposits: {
       total: assets.reduce((sum, asset) => sum + asset.deposits.total, 0),

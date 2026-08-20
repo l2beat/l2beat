@@ -78,7 +78,7 @@ async function getCachedData() {
   const tvlProjectIds = projects
     .filter(
       (project) =>
-        !project.privacyInfo.tvlNotApplicable &&
+        project.tvsConfig !== undefined &&
         project.privacyInfo.tokens.some((token) => token.buckets.length > 0),
     )
     .map((e) => e.id)

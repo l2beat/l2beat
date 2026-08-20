@@ -104,7 +104,6 @@ export const umbra: BaseProject = {
   },
   privacyInfo: {
     tokens: privacyTokens,
-    tvlNotApplicable: true,
     summaryTrackedItemName: 'token',
     exitWindow: {
       value: 'Infinite',

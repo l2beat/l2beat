@@ -1,10 +1,11 @@
 import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 
 interface Props {
-  totalValueLockedUsd: number
-  tvlNotApplicable: boolean
+  totalValueLockedUsd: number | undefined
+  hasTvl: boolean
   assetsCount: number
   bucketsCount: number
   deposits: {
@@ -16,7 +17,7 @@ interface Props {
 
 export function PrivacyProjectStats({
   totalValueLockedUsd,
-  tvlNotApplicable,
+  hasTvl,
   assetsCount,
   bucketsCount,
   deposits,
@@ -48,8 +49,10 @@ export function PrivacyProjectStats({
         className="max-md:hidden"
         title="Total Value Locked"
         value={
-          tvlNotApplicable ? (
+          !hasTvl ? (
             <NotApplicableBadge />
+          ) : totalValueLockedUsd === undefined ? (
+            <NoDataBadge />
           ) : (
             <div className="flex flex-col md:gap-1">
               <span>{formatCurrency(totalValueLockedUsd, 'usd')}</span>
@@ -65,8 +68,10 @@ export function PrivacyProjectStats({
         className="md:hidden"
         title="TVL"
         value={
-          tvlNotApplicable ? (
+          !hasTvl ? (
             <NotApplicableBadge />
+          ) : totalValueLockedUsd === undefined ? (
+            <NoDataBadge />
           ) : (
             formatCurrency(totalValueLockedUsd, 'usd')
           )
