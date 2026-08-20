@@ -1,0 +1,23 @@
+{
+  "$schema": "../tvs-config-schema.json",
+  "projectId": "lido",
+  "tokens": [
+    {
+      "mode": "custom",
+      "id": "lido-stETH",
+      "priceId": "staked-ether",
+      "symbol": "stETH",
+      "name": "Liquid staked Ether 2.0",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+        "chain": "ethereum",
+        "decimals": 18,
+        "sinceTimestamp": 1608242396
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

@@ -31,6 +31,7 @@ import { hyperevm } from '../projects/hyperevm/hyperevm'
 import { hyperlaneHwr } from '../projects/hyperlane-hwr/hyperlane-hwr'
 import { intmaxprover } from '../projects/intmaxprover/intmaxprover'
 import { layerzero } from '../projects/layerzero/layerzero'
+import { lido } from '../projects/lido/lido'
 import { lifi } from '../projects/lifi/lifi'
 import { lighterprover } from '../projects/lighterprover/lighterprover'
 import { lineaprover } from '../projects/lineaprover/lineaprover'
@@ -133,6 +134,7 @@ export const refactored: BaseProject[] = [
   liquityv2,
   chainlink,
   uniswapv3,
+  lido,
   // privacy
   privacyPools,
   railgun,
