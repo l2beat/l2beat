@@ -2,13 +2,48 @@ import { createDaTrackingId } from '@l2beat/shared'
 import { join } from 'path'
 import { getProjects } from '../../processing/getProjects'
 import type { BaseProject, ProjectDaTrackingConfig } from '../../types'
-import type { Snapshot, SnapshotDomain, SnapshotIdentity } from '../types'
+import type {
+  Range,
+  Snapshot,
+  SnapshotDomain,
+  SnapshotIdentity,
+} from '../types'
+
+/**
+ * The id hashes the identity fields only (inbox, sequencers, topics,
+ * namespace, appIds, customerId), so a disappeared id means those fields
+ * changed - typically discovery picked up a sequencer/inbox rotation. Editing
+ * the entry in place loses everything indexed under the old id; the old entry
+ * has to be frozen instead. See projects/ink/ink.ts for the resulting shape.
+ */
+const FREEZE_RECIPE = [
+  'Freeze the old configuration instead of letting it disappear:',
+  "1. In the project's .ts, turn the old entry into literals: copy the values it had before the change (inbox, sequencers/topics, namespace, appIds, customerId, since) from git history - the pre-change discovered.json or project .ts; the snapshot line above tells you which entry it is - so it keeps producing exactly this id. If the entry came from a template, move it to nonTemplateDaTracking.",
+  "2. Close it with 'untilBlock' (or 'untilTimestamp' for eigen-da) at the last block the old configuration was live - verify the exact block on-chain. If you cannot, the current discovery run's usedBlockNumbers[<chain>] in discovered.json is a safe upper bound (the change had already happened by then).",
+  "3. Add the new entry with the new values, starting where the old one ended (sinceBlock = the old entry's untilBlock). If you only bracketed the change, start it at the previous discovery run's usedBlockNumbers[<chain>] (from the pre-change discovered.json) - overlaps between entries are fine, holes are not.",
+  '4. If the configuration really stopped being used (the project left the layer), close it as in step 2 and do not add a new entry - a deleted entry is gone for good, a closed one is kept.',
+  "5. Only then run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot as the sign-off. Regenerating it first 'fixes' CI and silently accepts the wipe.",
+].join('\n')
+
+/**
+ * Same id, moved window. The freeze recipe does not apply here - freezing the
+ * entry and re-adding it with the same identity fields yields two entries
+ * with the same id.
+ */
+const RANGE_CHANGE_RECIPE = [
+  'The id hashes the identity fields and NOT the range, so this is the same configuration with a moved window. On deploy the backend trims the indexed data to the new range: raising since or lowering/setting until deletes only the records outside it (plus up to an hour at the edited edge - records are hourly buckets); lowering since still wipes the configuration and re-indexes it from the new start. See "Editing sinceBlock / untilBlock" in docs/da-tracking.md.',
+  "- If you did not intend the move (usually discovery drift on a sinceBlock): pin the range by writing the snapshot's since/until into the project's .ts as literals instead of the discovered values, and leave the snapshot alone.",
+  "- If you intended it (you just closed an open entry with 'untilBlock' while freezing it, or you are deliberately correcting a range): run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot.",
+  'Do not resolve it by freezing the entry and adding a second one with the same identity fields - both would hash to the same id.',
+].join('\n')
 
 export const daTrackingDomain: SnapshotDomain = {
   name: 'da-tracking',
   snapshotPath: join(__dirname, 'snapshot.json'),
   wipeWarning:
     'On deploy the backend WILL WIPE all DA data indexed under these configurations (ManagedMultiIndexer deletes configurations whose id disappears).',
+  freezeRecipe: FREEZE_RECIPE,
+  rangeChangeRecipe: RANGE_CHANGE_RECIPE,
   generate: () => generateDaTrackingIdentities(getProjects()),
 }
 
@@ -16,11 +51,10 @@ export const daTrackingDomain: SnapshotDomain = {
  * Computes the backend DA indexer configuration identities for every project,
  * including sovereign projects tracked through a DA layer's
  * sovereignProjectsTrackingConfig. The ids are the exact values the backend
- * keys indexed DA data by - see createDaTrackingId in @l2beat/shared.
+ * keys indexed DA data by - see createDaTrackingId in @l2beat/shared - and the
+ * ranges are the exact values it syncs between.
  */
-export function generateDaTrackingIdentities(
-  projects: BaseProject[],
-): Snapshot {
+function generateDaTrackingIdentities(projects: BaseProject[]): Snapshot {
   const result: Record<string, SnapshotIdentity[]> = {}
 
   const add = (projectId: string, config: ProjectDaTrackingConfig) => {
@@ -30,6 +64,7 @@ export function generateDaTrackingIdentities(
     result[projectId].push({
       id: createDaTrackingId(config),
       label: createLabel(config),
+      ...getRange(config),
     })
   }
 
@@ -55,6 +90,13 @@ export function generateDaTrackingIdentities(
         identities.sort((a, b) => a.id.localeCompare(b.id)),
       ]),
   )
+}
+
+/** Blocks for the block-based layers, unix seconds for eigen-da. */
+function getRange(config: ProjectDaTrackingConfig): Range {
+  return config.type === 'eigen-da'
+    ? { since: config.sinceTimestamp, until: config.untilTimestamp }
+    : { since: config.sinceBlock, until: config.untilBlock }
 }
 
 function createLabel(config: ProjectDaTrackingConfig): string {

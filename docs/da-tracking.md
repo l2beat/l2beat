@@ -5,9 +5,9 @@ layer. Projects declare `daTracking` entries in `packages/config` (inbox +
 sequencers/topics for ethereum blobs, a namespace for celestia, appIds for
 avail, a customerId for eigen-da). The backend turns every entry into an
 indexer configuration identified by a hash of its identity fields
-(`createDaTrackingId` in `@l2beat/shared` - since/until are excluded so ranges
-can be edited in place) and stores hourly `DataAvailability` records per
-project, layer and configuration id.
+(`createDaTrackingId` in `@l2beat/shared` - the range is not part of the id;
+see the guard section below for what editing it costs) and stores hourly
+`DataAvailability` records per project, layer and configuration id.
 
 ## Previewing config changes locally
 
@@ -108,11 +108,70 @@ if the range is ever extended again, so nothing is lost for good).
 
 ## Guarding against silent data wipes
 
-The committed snapshot is enforced by
-`packages/config/src/snapshots/guard.test.ts`: it fails when an identity
-disappears or the snapshot is stale, so identity changes are always explicit.
-After verifying your change with `pnpm da:preview`, regenerate the snapshot to
-accept it:
+`packages/config/src/snapshots/daTracking/snapshot.json` pins, per project,
+every DA tracking configuration identity the backend will index - its `id`,
+a human-readable `label` and its range (`since`, `until` - blocks, or unix
+seconds for eigen-da) - including sovereign projects tracked through a DA
+layer's `sovereignProjectsTrackingConfig`. The guard tests in
+`packages/config/src/snapshots/` enforce it against the configs:
+
+- **no identity disappears** (`guard.test.ts`) - the backend deletes
+  configurations whose id is gone and wipes everything indexed under them;
+- **no range moves** (`guard.test.ts`) - the id hashes the identity fields
+  only, so a changed `sinceBlock`/`untilBlock`/`sinceTimestamp`/
+  `untilTimestamp` keeps the id while the backend re-syncs the configuration
+  to the new range: raising `since` or lowering/setting `until` trims the
+  out-of-range records (see the editing sections above for the exact
+  bucket-edge behaviour), lowering `since` wipes and re-indexes from the new
+  start. The guard makes every such move an explicit decision; the failure
+  prints the old and the new range;
+- the snapshot is up to date and no two configs hash to the same id.
+
+Every failure message says what the backend would do and how to resolve it.
+The resolutions are deliberately human work - the messages end with a
+guard-rail telling AI agents to hand the error over. The one thing **not** to
+do is regenerate the snapshot to make CI green: that is exactly the sign-off
+that accepts the wipe.
+
+### An identity disappeared - freeze it
+
+This is what a sequencer or inbox rotation picked up by discovery looks like:
+the old id vanishes and a new one appears for the same project. Editing the
+entry in place loses the old era, so freeze it instead (the two ethereum
+entries in `packages/config/src/projects/ink/ink.ts` are the resulting
+shape):
+
+1. In the project's `.ts`, turn the old entry into literals - copy the
+   pre-change values (inbox, sequencers/topics, namespace, appIds,
+   customerId, since) from git history so it keeps producing exactly the old
+   id. If it came from a template, move it to `nonTemplateDaTracking`.
+2. Close it with `untilBlock` (`untilTimestamp` for eigen-da) at the last
+   block the old configuration was live, verified on-chain. If you cannot
+   pin it down, the current discovery run's `usedBlockNumbers[<chain>]` in
+   `discovered.json` is a safe upper bound.
+3. Add the new entry with the new values, starting where the old one ended
+   (`sinceBlock` = the old entry's `untilBlock`). If you only bracketed the
+   change, start it at the previous discovery run's `usedBlockNumbers[<chain>]`
+   from the pre-change `discovered.json` - overlaps are fine, holes are not.
+4. If the configuration genuinely stopped being used, close it as in step 2
+   and add nothing - a deleted entry is gone for good, a closed one is kept.
+5. Only then regenerate the snapshot and commit it as the sign-off.
+
+### A range changed - pin it or accept it
+
+The id did not change, so do not freeze-and-re-add (both entries would hash
+to the same id). If the move is unintended - usually discovery drift on a
+`sinceBlock` - write the snapshot's `since`/`until` into the project's `.ts`
+as literals and leave the snapshot alone. If it is intended (you just closed
+an entry with `untilBlock` while freezing it, or you are deliberately
+correcting a range), regenerate the snapshot knowing what it costs: a raised
+`since` or lowered `until` trims the records outside the new range, a
+lowered `since` re-indexes the configuration from scratch.
+
+### Regenerating the snapshot
+
+After verifying your change with `pnpm da:preview` (it prints the identity
+diff against the committed snapshot) and resolving the guard as above:
 
 ```bash
 cd packages/config
