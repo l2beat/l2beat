@@ -1,3 +1,5 @@
+import { readFileSync } from 'fs'
+
 export interface Range {
   /**
    * Start of the tracked range, inclusive. Blocks or unix seconds depending
@@ -13,11 +15,11 @@ export interface SnapshotIdentity extends Range {
   id: string
   label: string
   /**
-   * The full configuration the identity was computed from, serialized as
-   * JSON. When the identity disappears this is the only surviving copy of
-   * its fields, so the freeze notice can print a paste-ready entry.
+   * The full configuration the identity was computed from. When the identity
+   * disappears this is the only surviving copy of its fields, so the freeze
+   * notice can print a paste-ready entry.
    */
-  config?: unknown
+  config: unknown
 }
 
 /** Project id -> identities, sorted by key and id for stable diffs. */
@@ -47,13 +49,28 @@ export function toStored(snapshot: Snapshot): StoredSnapshot {
   )
 }
 
+/** Reads a domain's committed snapshot file and derives the rest via hydrate. */
+export function readSnapshot(
+  domain: Pick<SnapshotDomain, 'snapshotPath' | 'hydrate'>,
+): Snapshot {
+  const stored: StoredSnapshot = JSON.parse(
+    readFileSync(domain.snapshotPath, 'utf8'),
+  )
+  return Object.fromEntries(
+    Object.entries(stored).map(([projectId, identities]) => [
+      projectId,
+      identities.map(domain.hydrate),
+    ]),
+  )
+}
+
 /**
  * A guarded family of backend configuration identities. The committed
  * snapshot pins every identity together with its range; the guard test fails
  * when one disappears, when its range moves or when the snapshot is stale, so
  * every change is an explicit, reviewed decision. 'pnpm snapshots:generate'
- * appends new identities only; accepting a removal or a range move takes
- * '--overwrite'.
+ * registers additions and range updates but never drops a committed identity
+ * - that takes '--overwrite'.
  */
 export interface SnapshotDomain {
   /** Kebab-case name used in CLI args and test titles, e.g. 'da-tracking' */
@@ -74,10 +91,9 @@ export interface SnapshotDomain {
   rangeChangeRecipe: string
   /**
    * Renders a disappeared identity's `config` as a paste-ready source
-   * literal for the freeze notice; undefined when the snapshot predates the
-   * config field.
+   * literal for the freeze notice.
    */
-  freezeSnippet?: (identity: SnapshotIdentity) => string | undefined
+  freezeSnippet?: (identity: SnapshotIdentity) => string
   /** Derives label and range from a stored identity's config. */
   hydrate: (stored: StoredIdentity) => SnapshotIdentity
   generate: () => Snapshot

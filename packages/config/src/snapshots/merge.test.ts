@@ -6,7 +6,13 @@ const identity = (
   id: string,
   since: number,
   until?: number,
-): SnapshotIdentity => ({ id, label: `label ${id}`, since, until })
+): SnapshotIdentity => ({
+  id,
+  label: `label ${id}`,
+  since,
+  until,
+  config: undefined,
+})
 
 describe(mergeSnapshots.name, () => {
   it('is the identity when nothing changed', () => {

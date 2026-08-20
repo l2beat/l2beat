@@ -138,11 +138,8 @@ function createLabel(config: ProjectDaTrackingConfig): string {
  * recipe). Rendered from the snapshot's `config` field - after a rotation
  * the snapshot is the only surviving copy of the old values.
  */
-export function freezeSnippet(identity: SnapshotIdentity): string | undefined {
-  const config = identity.config as ProjectDaTrackingConfig | undefined
-  if (!config) {
-    return undefined
-  }
+export function freezeSnippet(identity: SnapshotIdentity): string {
+  const config = identity.config as ProjectDaTrackingConfig
   const address = (a: string) => `EthereumAddress('${a}')`
   const strings = (values: string[]) => values.map((v) => `'${v}'`).join(', ')
   const lines = [

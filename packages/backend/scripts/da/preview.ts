@@ -6,12 +6,12 @@ import {
   type SnapshotDiff,
 } from '@l2beat/config/build/snapshots/compare'
 import { daTrackingDomain } from '@l2beat/config/build/snapshots/daTracking/identities'
+import { readSnapshot } from '@l2beat/config/build/snapshots/types'
 import { createDatabase, type DataAvailabilityRecord } from '@l2beat/database'
 import { HttpClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { command, option, optional, positional, run, string } from 'cmd-ts'
 import { config as dotenv } from 'dotenv'
-import * as fs from 'fs'
 import * as path from 'path'
 import { getDaTrackingConfig } from '../../src/config/features/da'
 import { BlobService } from '../../src/modules/data-availability/services/BlobService'
@@ -232,16 +232,11 @@ function initLogger(env: Env) {
 
 function printSnapshotDiff(logger: Logger): SnapshotDiff {
   const current = daTrackingDomain.generate()
-  const stored: Record<string, { id: string; config: unknown }[]> = JSON.parse(
-    fs.readFileSync(SNAPSHOT_PATH, 'utf-8'),
-  )
-  // The file stores only id + config; label and range are derived on load.
-  const committed = Object.fromEntries(
-    Object.entries(stored).map(([projectId, identities]) => [
-      projectId,
-      identities.map(daTrackingDomain.hydrate),
-    ]),
-  )
+  // The build does not ship snapshot.json, so point readSnapshot at src.
+  const committed = readSnapshot({
+    ...daTrackingDomain,
+    snapshotPath: SNAPSHOT_PATH,
+  })
   const diff = diffSnapshots(committed, current)
 
   for (const entry of diff.added) {

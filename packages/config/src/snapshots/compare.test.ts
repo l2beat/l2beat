@@ -11,7 +11,20 @@ const identity = (
   id: string,
   since: number,
   until?: number,
-): SnapshotIdentity => ({ id, label: `label ${id}`, since, until })
+): SnapshotIdentity => ({
+  id,
+  label: `label ${id}`,
+  since,
+  until,
+  config: undefined,
+})
+
+/** compareProject that must produce a message. */
+const compare = (...args: Parameters<typeof compareProject>): string => {
+  const message = compareProject(...args)
+  if (message === null) throw new Error('expected a message')
+  return message
+}
 
 const domain = {
   name: 'test-domain',
@@ -67,20 +80,18 @@ describe(compareProject.name, () => {
 
   it('reports a rotation as one message with the freeze recipe', () => {
     // The typical rotation: one id disappears, its successor appears.
-    const message = compareProject(
+    const message = compare(
       domain,
       'proj',
       [identity('a', 100)],
       [identity('b', 100)],
     )
-    if (message === null) throw new Error('expected a message')
     expect(message).toInclude('test-domain identities changed for proj')
     expect(message).toInclude('disappeared:')
     expect(message).toInclude('- a (label a) [100 -> open]')
     expect(message).toInclude(
       'appeared (typically the new era of the same change):',
     )
-    if (message === null) throw new Error('expected a message')
     expect(message).toInclude('- b (label b) [100 -> open]')
     expect(message).toInclude('WIPE WARNING')
     expect(message).toInclude('FREEZE RECIPE')
@@ -90,26 +101,24 @@ describe(compareProject.name, () => {
   })
 
   it('prints the paste-ready frozen entry when the domain renders one', () => {
-    const message = compareProject(
+    const message = compare(
       { ...domain, freezeSnippet: (e) => `SNIPPET ${e.id}` },
       'proj',
       [identity('a', 100)],
       [identity('b', 100)],
     )
-    if (message === null) throw new Error('expected a message')
     expect(message).toInclude('to paste in front of the last element')
     expect(message).toInclude('SNIPPET a')
     expect(message).not.toInclude('SNIPPET b')
   })
 
   it('reports a range change with its recipe', () => {
-    const message = compareProject(
+    const message = compare(
       domain,
       'proj',
       [identity('a', 100)],
       [identity('a', 100, 200)],
     )
-    if (message === null) throw new Error('expected a message')
     expect(message).toInclude('ranges changed:')
     expect(message).toInclude('- a (label a): 100 -> open => 100 -> 200')
     expect(message).toInclude('RANGE CHANGE RECIPE')
@@ -118,13 +127,12 @@ describe(compareProject.name, () => {
   })
 
   it('combines a removal and a range change into one message', () => {
-    const message = compareProject(
+    const message = compare(
       domain,
       'proj',
       [identity('a', 100), identity('b', 100)],
       [identity('b', 100, 200)],
     )
-    if (message === null) throw new Error('expected a message')
     expect(message).toInclude('disappeared:')
     expect(message).toInclude('ranges changed:')
     expect(message).toInclude('FREEZE RECIPE')
@@ -132,17 +140,15 @@ describe(compareProject.name, () => {
   })
 
   it('reports additions alone as routine, without the guard-rail', () => {
-    const message = compareProject(
+    const message = compare(
       domain,
       'proj',
       [identity('a', 100)],
       [identity('a', 100), identity('b', 200)],
     )
-    if (message === null) throw new Error('expected a message')
     expect(message).toInclude(
       'New test-domain identities are not yet in the snapshot for proj',
     )
-    if (message === null) throw new Error('expected a message')
     expect(message).toInclude('- b (label b) [200 -> open]')
     expect(message).toInclude("run 'pnpm snapshots:generate'")
     expect(message).not.toInclude(AI_GUARD_RAIL)

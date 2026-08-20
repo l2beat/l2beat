@@ -12,14 +12,14 @@ const TRACKED_DA_LAYERS = new Set(['ethereum', 'celestia', 'avail', 'eigenda'])
  * adding the config.
  */
 export const MISSING_DA_TRACKING: string[] = [
-  'cartesi-prt-honeypot-v2',
-  'deri',
-  'ethscriptions',
-  'facet',
-  'fluent',
-  'lightlink',
-  'roninnetwork',
-  'sxnetwork',
+  'cartesi-prt-honeypot-v2', // ethereum; Cartesi stack, inbox + sinceBlock never researched
+  'deri', // ethereum; never tracked before the explicit-array migration
+  'ethscriptions', // ethereum; calldata-inscription posting, identity fields never researched
+  'facet', // ethereum; calldata-inscription posting, identity fields never researched
+  'fluent', // ethereum; never tracked before the explicit-array migration
+  'lightlink', // celestia; namespace + sinceBlock never researched
+  'roninnetwork', // eigenda; customerId never researched
+  'sxnetwork', // ethereum; never tracked before the explicit-array migration
 ]
 
 /**

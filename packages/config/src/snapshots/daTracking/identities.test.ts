@@ -1,9 +1,10 @@
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { ProjectDaTrackingConfig } from '../../types'
 import type { SnapshotIdentity } from '../types'
 import { freezeSnippet } from './identities'
 
-const identity = (config?: ProjectDaTrackingConfig): SnapshotIdentity => ({
+const identity = (config: ProjectDaTrackingConfig): SnapshotIdentity => ({
   id: 'abc',
   label: 'label',
   since: 100,
@@ -11,20 +12,16 @@ const identity = (config?: ProjectDaTrackingConfig): SnapshotIdentity => ({
 })
 
 describe(freezeSnippet.name, () => {
-  it('returns undefined when the snapshot has no config (pre-config format)', () => {
-    expect(freezeSnippet(identity())).toEqual(undefined)
-  })
-
   it('renders an open ethereum entry with a TODO until', () => {
     expect(
       freezeSnippet(
         identity({
           type: 'ethereum',
-          daLayer: 'ethereum',
+          daLayer: ProjectId('ethereum'),
           sinceBlock: 100,
           inbox: '0xAA',
           sequencers: ['0xBB', '0xCC'],
-        } as ProjectDaTrackingConfig),
+        }),
       ),
     ).toEqual(
       [
@@ -48,12 +45,12 @@ describe(freezeSnippet.name, () => {
       freezeSnippet(
         identity({
           type: 'ethereum',
-          daLayer: 'ethereum',
+          daLayer: ProjectId('ethereum'),
           sinceBlock: 100,
           untilBlock: 200,
           inbox: '0xAA',
           topics: ['0xT1'],
-        } as ProjectDaTrackingConfig),
+        }),
       ),
     ).toEqual(
       [
@@ -71,30 +68,30 @@ describe(freezeSnippet.name, () => {
       freezeSnippet(
         identity({
           type: 'celestia',
-          daLayer: 'celestia',
+          daLayer: ProjectId('celestia'),
           sinceBlock: 5,
           namespace: 'AAAA=',
-        } as ProjectDaTrackingConfig),
-      ) ?? '',
+        }),
+      ),
     ).toInclude("      namespace: 'AAAA=',")
     expect(
       freezeSnippet(
         identity({
           type: 'avail',
-          daLayer: 'avail',
+          daLayer: ProjectId('avail'),
           sinceBlock: 5,
           appIds: ['17', '36'],
-        } as ProjectDaTrackingConfig),
-      ) ?? '',
+        }),
+      ),
     ).toInclude("      appIds: ['17', '36'],")
     expect(
       freezeSnippet(
         identity({
           type: 'eigen-da',
-          daLayer: 'eigenda',
+          daLayer: ProjectId('eigenda'),
           customerId: '0xdd',
-          sinceTimestamp: 1700000000,
-        } as ProjectDaTrackingConfig),
+          sinceTimestamp: UnixTime(1700000000),
+        }),
       ),
     ).toEqual(
       [
