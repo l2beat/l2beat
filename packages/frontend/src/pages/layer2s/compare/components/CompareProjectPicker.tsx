@@ -179,12 +179,13 @@ export function CompareProjectPicker({
         Add project
       </DashedButton>
       {!isDefaultSelection && (
-        <DashedButton
+        <button
+          type="button"
           onClick={() => onChange([])}
-          className="h-7 rounded-lg px-2.5"
+          className="h-7 cursor-pointer rounded-lg bg-surface-primary px-2.5 font-medium text-secondary text-sm leading-none hover:bg-surface-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
         >
           Reset
-        </DashedButton>
+        </button>
       )}
       {isDefaultSelection && (
         <p className="w-full font-medium text-2xs text-secondary">
