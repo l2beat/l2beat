@@ -182,7 +182,7 @@ export function CompareProjectPicker({
         <button
           type="button"
           onClick={() => onChange([])}
-          className="h-7 cursor-pointer rounded-lg bg-surface-primary px-2.5 font-medium text-secondary text-sm leading-none hover:bg-surface-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+          className="h-7 cursor-pointer px-1 font-medium text-secondary text-sm leading-none"
         >
           Reset
         </button>
