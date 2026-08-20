@@ -46,8 +46,11 @@ starting at the same block.
 
 ### New-project checklist
 
-No test can tell a project that simply has no DA tracking from one where it
-was forgotten, so this is a deliberate step when adding a project:
+Adding DA tracking is a deliberate step when adding a project. A test narrows
+the forgetting gap: a live scaling project whose DA row names a layer we have
+indexers for (ethereum, celestia, avail, eigenda) must declare a `daTracking`
+array or be allowlisted with a comment on `MISSING_DA_TRACKING` in
+`packages/config/src/snapshots/daTracking/missing.ts`.
 
 1. Find what the chain posts and where (ethereum blobs/calldata, celestia
    namespace, avail appIds, eigen-da customerId).
