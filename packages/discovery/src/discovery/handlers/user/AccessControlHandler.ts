@@ -40,26 +40,16 @@ export class AccessControlHandler implements Handler {
     abi: string[],
   ) {
     this.knownNames.set(DEFAULT_ADMIN_ROLE_BYTES, 'DEFAULT_ADMIN_ROLE')
-    const explicitlyNamedRoles = definition.includeEmptyRoles
-      ? new Set(Object.values(definition.roleNames ?? {}))
-      : undefined
     for (const [hash, name] of Object.entries(definition.roleNames ?? {})) {
       this.knownNames.set(hash, name)
     }
+    // Registered names (DEFAULT_ADMIN_ROLE, roleNames) win over ABI-derived hashes
+    const registeredNames = new Set(this.knownNames.values())
     for (const entry of abi) {
       const name = entry.match(/^function (\w+)_ROLE\(\)/)?.[1]
       if (name) {
         const fullName = name + '_ROLE'
-        // OpenZeppelin's AccessControl exposes a `DEFAULT_ADMIN_ROLE()` accessor whose
-        // value is bytes32(0), already registered above. Deriving
-        // keccak256("DEFAULT_ADMIN_ROLE") here would register a phantom hash under the
-        // same "DEFAULT_ADMIN_ROLE" display name; in `execute` the by-name mapping then
-        // collapses the two entries and the phantom (empty) one can overwrite the real
-        // zero-hash role's members.
-        if (fullName === 'DEFAULT_ADMIN_ROLE') {
-          continue
-        }
-        if (explicitlyNamedRoles?.has(fullName)) {
+        if (registeredNames.has(fullName)) {
           continue
         }
         const hash = utils.solidityKeccak256(['string'], [fullName])
