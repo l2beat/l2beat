@@ -4,6 +4,15 @@
   "description": "Deprecated first version of the minting hub with the same oracle-free, auction-policed design (fixed upfront fees instead of the leadrate-linked interest of V2). The official frontend no longer supports it, but it remains a registered minter forever and stays permissionlessly usable.",
   "ignoreMethods": ["challenges"],
   "fields": {
+    "constructorArgs": {
+      "description": "Deployment-time immutable dependencies: the Frankencoin token and the factory used to deploy positions.",
+      "handler": { "type": "constructorArgs", "nameArgs": true }
+    },
+    "POSITION_FACTORY": {
+      "description": "Immutable factory used by this hub to deploy original collateralized Position contracts and ERC-1167 clones.",
+      "copy": "constructorArgs",
+      "edit": ["get", "_factory"]
+    },
     "openedPositions": {
       "description": "All positions ever opened through this deprecated hub, from PositionOpened events. A new entry is unexpected and warrants review: new originals still pass a 3+ day veto window, but the hub is no longer curated by the Frankencoin frontend.",
       "handler": {

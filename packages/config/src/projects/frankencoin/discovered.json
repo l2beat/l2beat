@@ -4,6 +4,24 @@
   "configHash": "0xd40829085d971d8fe740f8f621ecf8e7e38766e7425722d1792601f3de999246",
   "entries": [
     {
+      "name": "PositionFactory",
+      "address": "eth:0x0CDE500e6940931ED190ded77bb48640c9486392",
+      "type": "Contract",
+      "template": "frankencoin/PositionFactory",
+      "sourceHashes": [
+        "0x2446f7dc85aff80505bb8dd8a63ea1ee0c38bf243a5c5960d7dfcf933188dcea"
+      ],
+      "proxyType": "immutable",
+      "description": "Stateless factory that deploys new Position contracts and ERC-1167 minimal proxies targeting the original contract of a supplied Position.",
+      "deployerAddress": "eth:0x58f13e67E465d302a733285488f868e917D99629",
+      "sinceTimestamp": 1698530339,
+      "sinceBlock": 18451526,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x0CDE500e6940931ED190ded77bb48640c9486392": "PositionFactory"
+      }
+    },
+    {
       "name": "Equity",
       "address": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
       "type": "Contract",
@@ -302,6 +320,65 @@
       }
     },
     {
+      "name": "Position",
+      "address": "eth:0x49C431454C40ecbf848096f2753B2ABC3A699a10",
+      "type": "Contract",
+      "template": "frankencoin/Position",
+      "sourceHashes": [
+        "0x01473bca111960fbdcd490928d45e2fdfacec05bf7ada0dc0d6e1b51617927ac"
+      ],
+      "proxyType": "immutable",
+      "description": "Collateralized debt position whose owner can mint the configured stablecoin against a fixed ERC20 collateral, subject to a declared liquidation price and fixed minimum collateral, risk premium, challenge period, and expiration. A full Position deployment tracks the minting limit for its clone family and acts as the implementation and immutable-parameter source for ERC-1167 child positions; the configured hub conducts challenges and forced collateral sales.",
+      "ignoreInWatchMode": [
+        "annualInterestPPM",
+        "availableForClones",
+        "availableForMinting",
+        "calculateCurrentFee",
+        "challengeData",
+        "challengedAmount",
+        "cooldown",
+        "isClosed",
+        "minted",
+        "owner",
+        "price"
+      ],
+      "deployerAddress": "eth:0x963eC454423CD543dB08bc38fC7B3036B425b301",
+      "sinceTimestamp": 1733946503,
+      "sinceBlock": 21381450,
+      "values": {
+        "$immutable": true,
+        "annualInterestPPM": 10000,
+        "availableForClones": "9508493467288823666646023",
+        "availableForMinting": "9508493467288823666646023",
+        "calculateCurrentFee": 12883,
+        "calculateFee": [],
+        "challengedAmount": 0,
+        "challengeData": {
+          "liqPrice": "1600000000000000000000",
+          "phase": 86400
+        },
+        "challengePeriod": 86400,
+        "collateral": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "cooldown": 1734378503,
+        "expiration": 1827690503,
+        "hub": "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557",
+        "isClosed": true,
+        "limit": "10000000000000000000000000",
+        "minimumCollateral": "2000000000000000000",
+        "minted": 0,
+        "original": "eth:0x49C431454C40ecbf848096f2753B2ABC3A699a10",
+        "owner": "eth:0x963eC454423CD543dB08bc38fC7B3036B425b301",
+        "price": "1600000000000000000000",
+        "reserveContribution": 250000,
+        "riskPremiumPPM": 0,
+        "start": 1734378503,
+        "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+      },
+      "implementationNames": {
+        "eth:0x49C431454C40ecbf848096f2753B2ABC3A699a10": "Position"
+      }
+    },
+    {
       "name": "LeadrateSender",
       "address": "eth:0x4d433780A16d425c5dB1F725A6d104233a8Ef28D",
       "type": "Contract",
@@ -351,6 +428,24 @@
       }
     },
     {
+      "name": "PositionFactory",
+      "address": "eth:0x728310FeaCa72dc46cD5BF7d739556D5668472BA",
+      "type": "Contract",
+      "template": "frankencoin/PositionFactory",
+      "sourceHashes": [
+        "0xacecbcc4d5d8a762e52be974d77d2cec17809ea93921b877bf19a4f899b86c45"
+      ],
+      "proxyType": "immutable",
+      "description": "Stateless factory that deploys new Position contracts and ERC-1167 minimal proxies targeting the original contract of a supplied Position.",
+      "deployerAddress": "eth:0x14A401702BdD9CF803ce8CB38c5F8723008FBD03",
+      "sinceTimestamp": 1732730087,
+      "sinceBlock": 21280706,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x728310FeaCa72dc46cD5BF7d739556D5668472BA": "PositionFactory"
+      }
+    },
+    {
       "name": "MintingHubV1",
       "address": "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
       "type": "Contract",
@@ -374,6 +469,10 @@
       "values": {
         "$immutable": true,
         "CHALLENGER_REWARD": 20000,
+        "constructorArgs": {
+          "_zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "_factory": "eth:0x0CDE500e6940931ED190ded77bb48640c9486392"
+        },
         "openedPositions": [
           "eth:0xf652C3Ce52933caBF07199887e64301C0705620E",
           "eth:0xc724701A14f15888205682c5A192B8baD78353eE",
@@ -433,9 +532,16 @@
           "eth:0xf35378277191C1F0d90869426f7177AA0393F77D"
         ],
         "OPENING_FEE": "1000000000000000000000",
+        "POSITION_FACTORY": "eth:0x0CDE500e6940931ED190ded77bb48640c9486392",
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
       "fieldMeta": {
+        "constructorArgs": {
+          "description": "Deployment-time immutable dependencies: the Frankencoin token and the factory used to deploy positions."
+        },
+        "POSITION_FACTORY": {
+          "description": "Immutable factory used by this hub to deploy original collateralized Position contracts and ERC-1167 clones."
+        },
         "openedPositions": {
           "description": "All positions ever opened through this deprecated hub, from PositionOpened events. A new entry is unexpected and warrants review: new originals still pass a 3+ day veto window, but the hub is no longer curated by the Frankencoin frontend."
         }
@@ -681,13 +787,30 @@
       "values": {
         "$immutable": true,
         "CHALLENGER_REWARD": 20000,
+        "constructorArgs": {
+          "_zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "_leadrate": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+          "_roller": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
+          "_factory": "eth:0x728310FeaCa72dc46cD5BF7d739556D5668472BA"
+        },
         "EXPIRED_PRICE_FACTOR": 10,
         "OPENING_FEE": "1000000000000000000000",
+        "POSITION_FACTORY": "eth:0x728310FeaCa72dc46cD5BF7d739556D5668472BA",
         "rate": "eth:0x3BF301B0e2003E75A3e86AB82bD1EFF6A9dFB2aE",
+        "representativePosition": "eth:0x49C431454C40ecbf848096f2753B2ABC3A699a10",
         "roller": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
       "fieldMeta": {
+        "constructorArgs": {
+          "description": "Deployment-time immutable dependencies: the Frankencoin token, leadrate contract, equity roller, and position factory."
+        },
+        "POSITION_FACTORY": {
+          "description": "Immutable factory used by this hub to deploy original collateralized Position contracts and ERC-1167 clones."
+        },
+        "representativePosition": {
+          "description": "The earliest PositionOpened event for which position equals original. It is followed as a stable representative of an original position opened through this hub."
+        },
         "rate": {
           "description": "The contract providing the leadrate, the base interest rate positions pay on minted ZCHF."
         }
@@ -796,6 +919,10 @@
     }
   ],
   "abis": {
+    "eth:0x0CDE500e6940931ED190ded77bb48640c9486392": [
+      "function clonePosition(address _existing) returns (address)",
+      "function createNewPosition(address _owner, address _zchf, address _collateral, uint256 _minCollateral, uint256 _initialLimit, uint256 _initPeriod, uint256 _duration, uint64 _challengePeriod, uint32 _annualInterestPPM, uint256 _liqPrice, uint32 _reserve) returns (address)"
+    ],
     "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2": [
       "constructor(address zchf_)",
       "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
@@ -987,6 +1114,68 @@
       "function payoutCredit(address target)",
       "function zchf() view returns (address)"
     ],
+    "eth:0x49C431454C40ecbf848096f2753B2ABC3A699a10": [
+      "constructor(address _owner, address _hub, address _zchf, address _collateral, uint256 _minCollateral, uint256 _initialLimit, uint40 _initPeriod, uint40 _duration, uint40 _challengePeriod, uint24 _riskPremiumPPM, uint256 _liqPrice, uint24 _reservePPM)",
+      "error Alive()",
+      "error AlreadyInitialized()",
+      "error ChallengeTooSmall()",
+      "error Challenged()",
+      "error Closed()",
+      "error Expired(uint40 time, uint40 expiration)",
+      "error Hot()",
+      "error InsufficientCollateral(uint256 needed, uint256 available)",
+      "error InvalidExpiration()",
+      "error LimitExceeded(uint256 tried, uint256 available)",
+      "error NotHub()",
+      "error NotOriginal()",
+      "error NotOwner()",
+      "error RepaidTooMuch(uint256 excess)",
+      "error TooLate()",
+      "event MintingUpdate(uint256 collateral, uint256 price, uint256 minted)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PositionDenied(address indexed sender, string message)",
+      "function adjust(uint256 newMinted, uint256 newCollateral, uint256 newPrice)",
+      "function adjustPrice(uint256 newPrice)",
+      "function annualInterestPPM() view returns (uint24)",
+      "function assertCloneable()",
+      "function availableForClones() view returns (uint256)",
+      "function availableForMinting() view returns (uint256)",
+      "function calculateCurrentFee() view returns (uint24)",
+      "function calculateFee(uint256 exp) view returns (uint24)",
+      "function challengeData() view returns (uint256 liqPrice, uint40 phase)",
+      "function challengePeriod() view returns (uint40)",
+      "function challengedAmount() view returns (uint256)",
+      "function collateral() view returns (address)",
+      "function cooldown() view returns (uint40)",
+      "function deny(address[] helpers, string message)",
+      "function expiration() view returns (uint40)",
+      "function forceSale(address buyer, uint256 collAmount, uint256 proceeds)",
+      "function getMintAmount(uint256 usableMint) view returns (uint256)",
+      "function getUsableMint(uint256 totalMint, bool afterFees) view returns (uint256)",
+      "function hub() view returns (address)",
+      "function initialize(address parent, uint40 _expiration)",
+      "function isClosed() view returns (bool)",
+      "function limit() view returns (uint256)",
+      "function minimumCollateral() view returns (uint256)",
+      "function mint(address target, uint256 amount)",
+      "function minted() view returns (uint256)",
+      "function notifyChallengeAverted(uint256 size)",
+      "function notifyChallengeStarted(uint256 size)",
+      "function notifyChallengeSucceeded(address _bidder, uint256 _size) returns (address, uint256, uint256, uint32)",
+      "function notifyMint(uint256 mint_)",
+      "function notifyRepaid(uint256 repaid_)",
+      "function original() view returns (address)",
+      "function owner() view returns (address)",
+      "function price() view returns (uint256)",
+      "function repay(uint256 amount) returns (uint256)",
+      "function reserveContribution() view returns (uint24)",
+      "function riskPremiumPPM() view returns (uint24)",
+      "function start() view returns (uint40)",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(address token, address target, uint256 amount)",
+      "function withdrawCollateral(address target, uint256 amount)",
+      "function zchf() view returns (address)"
+    ],
     "eth:0x4d433780A16d425c5dB1F725A6d104233a8Ef28D": [
       "constructor(address leadrate, address router, address linkToken)",
       "error InsufficientFeeTokenAllowance(address token, uint256 fee)",
@@ -1027,6 +1216,10 @@
       "function unwrapAndSell(uint256 amount)",
       "function withdrawTo(address account, uint256 amount) returns (bool)",
       "function wrap(uint256 amount)"
+    ],
+    "eth:0x728310FeaCa72dc46cD5BF7d739556D5668472BA": [
+      "function clonePosition(address _parent) returns (address)",
+      "function createNewPosition(address _owner, address _zchf, address _collateral, uint256 _minCollateral, uint256 _initialLimit, uint40 _initPeriod, uint40 _duration, uint40 _challengePeriod, uint24 _riskPremiumPPM, uint256 _liqPrice, uint24 _reserve) returns (address)"
     ],
     "eth:0x7546762fdb1a6d9146b33960545C3f6394265219": [
       "constructor(address _zchf, address _factory)",
@@ -1355,8 +1548,10 @@
     "frankencoin/Frankencoin": "0xfe332b99b095b6de78021eda41548eb9f10372c8386e89b9deef1dbf563d508b",
     "frankencoin/GovernanceSender": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "frankencoin/LeadrateSender": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "frankencoin/MintingHubV1": "0x9a085a8b4c057308396fc5592ce95d9a0c03fb20ec583d358d7f64bad2c08d49",
-    "frankencoin/MintingHubV2": "0x6082d5e2fab5553c272fd17c02362dd886ddc80a0afd83b5349cce4812df2f46",
+    "frankencoin/MintingHubV1": "0x4d775ac1ee8b1285a6dccdca0e26cb9a0dbd78dd5e441a2555ca25a5217ac919",
+    "frankencoin/MintingHubV2": "0xb54763d9f0fdcc3f917791e34a75f78c44b54612f3f7afac6bb9ab494034a10d",
+    "frankencoin/Position": "0x85de7a3deb12cb9b59045c4e24730e0aa56c28c6744f51dfbfc2ec963c544dd5",
+    "frankencoin/PositionFactory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "frankencoin/PositionRoller": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "frankencoin/Savings": "0x9f26fdf0e4510441ce68ba4715fb458cac0e7d1f30ee65b9febf07a067cf55b8",
     "frankencoin/SavingsV2": "0x9f26fdf0e4510441ce68ba4715fb458cac0e7d1f30ee65b9febf07a067cf55b8",
@@ -1366,5 +1561,5 @@
     "transporter/TokenPool": "0xd3e2593c0a667658845c680a3433d8a2252fb4839d2e1d16674d97e3081d856d"
   },
   "usedBlockNumbers": { "ethereum": 25782267 },
-  "permissionsConfigHash": "0x5260bbcbc303f13a6108c35d4e5855c8cbb3732266bfa1db610410152bf7261d"
+  "permissionsConfigHash": "0x2517751773de749e50f2a0a1d57fb96f94ea5f7f5a075aa9f835bf5aa16aa2f4"
 }

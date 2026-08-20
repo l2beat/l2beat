@@ -1,8 +1,8 @@
-Generated with discovered.json: 0x21779a0bc8be4d0edff5f14f95bd8d8463a7401a
+Generated with discovered.json: 0xca28b45a2c044c05db26ecefb789919423bd21c9
 
-# Diff at Tue, 18 Aug 2026 13:28:24 GMT:
+# Diff at Wed, 19 Aug 2026 10:23:03 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- author: Luca Donno (<donnoh99@gmail.com>)
 - current timestamp: 1787059635
 
 ## Description
@@ -10,6 +10,12 @@ Generated with discovered.json: 0x21779a0bc8be4d0edff5f14f95bd8d8463a7401a
 Initial discovery of Frankencoin, an oracle-free stablecoin protocol issuing ZCHF, minted against arbitrary collateral in auction-policed CDPs and 1:1 against whitelisted CHF stablecoins. All 18 contracts are immutable with no admin keys: ZCHF supply is controlled by 11 registered minter modules that anyone can propose and FPS pool share holders (2% of time-weighted votes) can veto during a public application period, after which a minter is irrevocable — the system's central trust assumption. All protocol income accrues to an equity reserve (FPS) that absorbs losses first; savers earn a governance-set rate directly or via the immutable svZCHF ERC4626 vault, and ZCHF expands to other chains through a rate-limited Chainlink CCIP token pool governed by the same FPS quorum.
 
 ## Initial discovery
+
+```diff
++   Status: CREATED
+    contract PositionFactory (eth:0x0CDE500e6940931ED190ded77bb48640c9486392) [frankencoin/PositionFactory]
+    +++ description: Stateless factory that deploys new Position contracts and ERC-1167 minimal proxies targeting the original contract of a supplied Position.
+```
 
 ```diff
 +   Status: CREATED
@@ -49,6 +55,12 @@ Initial discovery of Frankencoin, an oracle-free stablecoin protocol issuing ZCH
 
 ```diff
 +   Status: CREATED
+    contract Position (eth:0x49C431454C40ecbf848096f2753B2ABC3A699a10) [frankencoin/Position]
+    +++ description: Collateralized debt position whose owner can mint the configured stablecoin against a fixed ERC20 collateral, subject to a declared liquidation price and fixed minimum collateral, risk premium, challenge period, and expiration. A full Position deployment tracks the minting limit for its clone family and acts as the implementation and immutable-parameter source for ERC-1167 child positions; the configured hub conducts challenges and forced collateral sales.
+```
+
+```diff
++   Status: CREATED
     contract LeadrateSender (eth:0x4d433780A16d425c5dB1F725A6d104233a8Ef28D) [frankencoin/LeadrateSender]
     +++ description: Permissionless helper that pushes the Savings module's current interest rate to bridged savings modules on other chains via CCIP; anyone can trigger a push by paying the CCIP fee.
 ```
@@ -57,6 +69,12 @@ Initial discovery of Frankencoin, an oracle-free stablecoin protocol issuing ZCH
 +   Status: CREATED
     contract FPSWrapper (eth:0x5052D3Cc819f53116641e89b96Ff4cD1EE80B182) [frankencoin/FPSWrapper]
     +++ description: Wrapper token (WFPS) for FPS. Wrapped shares cannot vote individually and can be unwrapped or redeemed for ZCHF at any time, subject to the wrapper's collective holding duration.
+```
+
+```diff
++   Status: CREATED
+    contract PositionFactory (eth:0x728310FeaCa72dc46cD5BF7d739556D5668472BA) [frankencoin/PositionFactory]
+    +++ description: Stateless factory that deploys new Position contracts and ERC-1167 minimal proxies targeting the original contract of a supplied Position.
 ```
 
 ```diff
