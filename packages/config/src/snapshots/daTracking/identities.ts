@@ -24,7 +24,7 @@ const FREEZE_RECIPE = [
   "2. Close it with 'untilBlock' (or 'untilTimestamp' for eigen-da) at the last block the old configuration was live - verify the exact block on-chain. If you cannot, the current discovery run's usedBlockNumbers[<chain>] in discovered.json is a safe upper bound (the change had already happened by then).",
   "3. Add the new entry with the new values as the last array element, starting where the old one ended (sinceBlock = the old entry's untilBlock). For a template stack that is the helper call again - getOpStackDaTracking(discovery, { sinceBlock }) - so the next rotation is caught the same way. If you only bracketed the change, start it at the previous discovery run's usedBlockNumbers[<chain>] (from the pre-change discovered.json) - overlaps between entries are fine, holes are not.",
   '4. If the configuration really stopped being used (the project left the layer), close it as in step 2 and do not add a new entry - a deleted entry is gone for good, a closed one is kept.',
-  "5. Only then run 'pnpm snapshots:generate --overwrite' in packages/config and commit the updated snapshot as the sign-off (the plain command is append-only and keeps the old entry). Running --overwrite first 'fixes' CI and silently accepts the wipe.",
+  "5. Only then run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot as the sign-off. With the old entry frozen its id survives, so the plain command accepts the change; --overwrite (which drops disappeared identities) should never be needed here - reaching for it means step 1 went wrong.",
 ].join('\n')
 
 /**
@@ -35,7 +35,7 @@ const FREEZE_RECIPE = [
 const RANGE_CHANGE_RECIPE = [
   'The id hashes the identity fields and NOT the range, so this is the same configuration with a moved window. On deploy the backend trims the indexed data to the new range: raising since or lowering/setting until deletes only the records outside it (plus up to an hour at the edited edge - records are hourly buckets); lowering since still wipes the configuration and re-indexes it from the new start. See "Editing sinceBlock / untilBlock" in docs/da-tracking.md.',
   "- If you did not intend the move: ranges are literals in the project's .ts (also in the helper calls), so find the edit that changed since/until, restore the snapshot's values and leave the snapshot alone.",
-  "- If you intended it (you just closed an open entry with 'untilBlock' while freezing it, or you are deliberately correcting a range): run 'pnpm snapshots:generate --overwrite' in packages/config and commit the updated snapshot (the plain command is append-only and keeps the committed range).",
+  "- If you intended it (you just closed an open entry with 'untilBlock' while freezing it, or you are deliberately correcting a range): run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot.",
   'Do not resolve it by freezing the entry and adding a second one with the same identity fields - both would hash to the same id.',
 ].join('\n')
 

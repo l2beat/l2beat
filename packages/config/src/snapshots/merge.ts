@@ -2,17 +2,17 @@ import type { Snapshot } from './types'
 
 export interface MergeResult {
   merged: Snapshot
-  /** Projects whose fresh state was ignored because it drops or moves a committed entry. */
+  /** Projects whose fresh state was ignored because it drops a committed identity. */
   skipped: string[]
 }
 
 /**
- * Append-only view of a regenerated snapshot: a project whose fresh state
- * only adds identities gets them registered; a project where a committed
- * identity disappeared or a range moved is left exactly as committed -
- * including NOT appending the re-keyed identity, which would fabricate a
- * two-config state no project file describes. Accepting such a change is the
- * sign-off for a wipe/re-sync and has to be asked for explicitly
+ * Identity-preserving view of a regenerated snapshot: additions and range
+ * updates (closing an entry with untilBlock is the encouraged workflow) flow
+ * through, but a project where a committed identity DISAPPEARED is left
+ * exactly as committed - including NOT appending the re-keyed identity,
+ * which would fabricate a two-config state no project file describes.
+ * Dropping an identity wipes its data, so it has to be asked for explicitly
  * ('pnpm snapshots:generate --overwrite').
  */
 export function mergeSnapshots(
@@ -27,10 +27,7 @@ export function mergeSnapshots(
     const committedEntries = committed[projectId] ?? []
     const freshById = new Map((fresh[projectId] ?? []).map((e) => [e.id, e]))
 
-    const clean = committedEntries.every((old) => {
-      const now = freshById.get(old.id)
-      return now && old.since === now.since && old.until === now.until
-    })
+    const clean = committedEntries.every((old) => freshById.has(old.id))
     if (clean) {
       merged[projectId] = fresh[projectId] ?? []
     } else {

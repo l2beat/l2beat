@@ -217,8 +217,9 @@ shape):
    `discovered.json` - overlaps are fine, holes are not.
 4. If the configuration genuinely stopped being used, close it as in step 2
    and add nothing - a deleted entry is gone for good, a closed one is kept.
-5. Only then regenerate the snapshot with `--overwrite` (see below) and
-   commit it as the sign-off.
+5. Only then regenerate the snapshot and commit it as the sign-off. With
+   the old entry frozen its id survives, so no `--overwrite` is needed -
+   reaching for it means step 1 went wrong.
 
 ### A range changed - pin it or accept it
 
@@ -242,13 +243,14 @@ cd packages/config
 pnpm snapshots:generate
 ```
 
-The plain command is **append-only**: it registers new identities for
-projects that only gained configs, and leaves a project completely untouched
-when one of its committed identities disappeared or a range moved - it does
-not append the re-keyed identity either, since the snapshot would then show
-two configs where the project file has one. It prints which projects it left
-alone. Accepting a removal or a range move - the sign-off for a wipe/re-sync
-- has to be asked for explicitly:
+The plain command is **identity-preserving**: additions and range updates
+(closing an entry with `untilBlock` included) flow through, but a project
+where a committed identity disappeared is left completely untouched - it
+does not append the re-keyed identity either, since the snapshot would then
+show two configs where the project file has one. It prints which projects it
+left alone; the right fix there is freezing the old entry, not forcing the
+write. Dropping identities - the sign-off for a wipe - has to be asked for
+explicitly:
 
 ```bash
 pnpm snapshots:generate --overwrite

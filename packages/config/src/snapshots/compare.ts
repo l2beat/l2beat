@@ -128,7 +128,7 @@ export function compareProject(
     return [
       `New ${domain.name} identities are not yet in the snapshot for ${projectId}:`,
       ...added.map(formatIdentity),
-      "This is usually not a problem - it means a new data tracking configuration was added for this project. To register it, run 'pnpm snapshots:generate' in packages/config (append-only - it never drops or moves committed entries) and commit the updated snapshot.",
+      "This is usually not a problem - it means a new data tracking configuration was added for this project. To register it, run 'pnpm snapshots:generate' in packages/config (it never drops committed identities) and commit the updated snapshot.",
     ].join('\n')
   }
 

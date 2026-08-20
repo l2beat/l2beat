@@ -58,7 +58,7 @@ for (const domain of domains) {
   )
   if (skipped.length > 0) {
     console.log(
-      `${domain.name}: left ${skipped.length} ${skipped.length === 1 ? 'project' : 'projects'} unchanged (${skipped.join(', ')}) - an identity disappeared or a range moved there, and this command only appends new configs. If you know what you are doing and do not want to preserve history, run 'pnpm snapshots:generate --overwrite'.`,
+      `${domain.name}: left ${skipped.length} ${skipped.length === 1 ? 'project' : 'projects'} unchanged (${skipped.join(', ')}) - a committed identity disappeared there, and dropping it wipes its data. Freeze the old entry instead (the guard test prints the recipe and a paste-ready config). If you know what you are doing and do not want to preserve history, run 'pnpm snapshots:generate --overwrite'.`,
     )
   }
 }

@@ -43,14 +43,17 @@ describe(mergeSnapshots.name, () => {
     expect(skipped).toEqual(['proj'])
   })
 
-  it('leaves a project with a moved range untouched, additions included', () => {
-    // Closing an open entry is a range move too and needs --overwrite.
+  it('lets a range move through - closing an entry is the encouraged workflow', () => {
+    // The id survives, so nothing is dropped; the guard test still demands
+    // this exact regeneration as the sign-off for the re-sync.
     const { merged, skipped } = mergeSnapshots(
       { proj: [identity('a', 100)] },
       { proj: [identity('a', 100, 200), identity('b', 200)] },
     )
-    expect(merged).toEqual({ proj: [identity('a', 100)] })
-    expect(skipped).toEqual(['proj'])
+    expect(merged).toEqual({
+      proj: [identity('a', 100, 200), identity('b', 200)],
+    })
+    expect(skipped).toEqual([])
   })
 
   it('keeps a project the fresh snapshot dropped entirely', () => {
