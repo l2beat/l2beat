@@ -1,6 +1,6 @@
 {
   "name": "lighter",
-  "timestamp": 1786360025,
+  "timestamp": 1787230600,
   "configHash": "0x36b0856e7e96a22b55750bb85e9fb086c12d7ed3d08041b93b337ad509c38243",
   "entries": [
     {
@@ -86,8 +86,8 @@
           "depositCapTicks": "1152921504606846975",
           "minDepositTicks": 1000000
         },
-        "committedBatchesCount": 219781,
-        "committedPriorityRequestCount": 1904368,
+        "committedBatchesCount": 222661,
+        "committedPriorityRequestCount": 1912581,
         "createdMarketsPostSpot": [
           "ETH/USDC",
           "STABLE",
@@ -200,7 +200,14 @@
           "GEV",
           "ANSEM",
           "UNITREE",
-          "CASHCAT"
+          "CASHCAT",
+          "SOXS",
+          "WDC",
+          "AXTI",
+          "KIOXIA",
+          "KORU",
+          "US10Y",
+          "MRNA"
         ],
         "createdMarketsPreSpot": [
           "USELESS",
@@ -258,17 +265,17 @@
         ],
         "desertMode": false,
         "desertVerifier": "eth:0x866418061d4C1168e1c8E8f6facE79675395E008",
-        "executedBatchesCount": 219779,
-        "executedOnChainBatchesCount": 135820,
-        "executedPriorityRequestCount": 1904367,
+        "executedBatchesCount": 222655,
+        "executedOnChainBatchesCount": 137380,
+        "executedPriorityRequestCount": 1912569,
         "getMaster": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
         "getTarget": "eth:0x8D692294a4824d868e35B3CEcd734aCf41B2342e",
         "governance": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
         "insuranceFundOperator": "eth:0x9ccE444F8c60BD570986cd7D0ED7aEc29f127310",
-        "lastAccountIndex": 736844,
-        "lastVerifiedEndBlockNumber": 310769759,
-        "lastVerifiedStateRoot": "0xf0d3a3334caa29d448505ba6e3e9977d605fb1768afe42a11797a56fd964283c",
-        "lastVerifiedValidiumRoot": "0x39621749b98a37e441072ba16d1f2687f9f16af2fa204580a25d30431e5eda53",
+        "lastAccountIndex": 738814,
+        "lastVerifiedEndBlockNumber": 315372959,
+        "lastVerifiedStateRoot": "0xf201365c2b577bd6dbfdf921a342632a9de8dab5873ee51b7d29925bc5c4b868",
+        "lastVerifiedValidiumRoot": "0x5cbf3365436b7099955a6d5317036b5ed6d1a62627f1bd02497936f97579bd48",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_ASSET_INDEX": 62,
@@ -290,8 +297,8 @@
         "MIN_STAKING_SHARES_TO_MINT_OR_BURN": 1,
         "NATIVE_ASSET_INDEX": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
-        "openPriorityRequestCount": 2,
-        "pendingOnChainBatchesCount": 2,
+        "openPriorityRequestCount": 22,
+        "pendingOnChainBatchesCount": 5,
         "PRIORITY_EXPIRATION": 1209600,
         "registeredAssets": [
           {
@@ -329,15 +336,27 @@
           {
             "assetIndex": 10,
             "tokenAddress": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2"
+          },
+          {
+            "assetIndex": 11,
+            "tokenAddress": "eth:0x68749665FF8D2d112Fa859AA293F07A622782F38"
+          },
+          {
+            "assetIndex": 12,
+            "tokenAddress": "eth:0xE43A5b52e317dC57770ba96BcD33C2bd5dC97c5C"
+          },
+          {
+            "assetIndex": 13,
+            "tokenAddress": "eth:0x227fF9D1a9931db2585a45c41fC84e3b3f48B37b"
           }
         ],
-        "stateRoot": "0xf0d3a3334caa29d448505ba6e3e9977d605fb1768afe42a11797a56fd964283c",
+        "stateRoot": "0x6b2c64a1a5b5f19c95759505318be8fbede005e93dbeba3d6c2cb7d30a932acf",
         "stateRootUpgradeVerifier": "eth:0x0000000000000000000000000000000000000000",
         "treasury": "eth:0x3dD7c834EAa70c98e1C224808a3c62163b344daE",
         "USDC_ASSET_INDEX": 3,
-        "validiumRoot": "0x39621749b98a37e441072ba16d1f2687f9f16af2fa204580a25d30431e5eda53",
-        "verifiedBatchesCount": 219779,
-        "verifiedPriorityRequestCount": 1904367,
+        "validiumRoot": "0x925e153030020c3f841df4b449b4107bc43ea2ab633b3448a7eaf8904313dc25",
+        "verifiedBatchesCount": 222656,
+        "verifiedPriorityRequestCount": 1912570,
         "verifier": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA"
       },
       "fieldMeta": {
@@ -628,7 +647,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 174,
+        "nonce": 179,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1205,6 +1224,6 @@
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "lighter/ZkLighterWithSpot": "0xf2193f542c5b2dc29610085ddafb70c168d82e65ee4e03f27faf3e9eaa11ece2"
   },
-  "usedBlockNumbers": { "ethereum": 25724189 },
+  "usedBlockNumbers": { "ethereum": 25796470 },
   "permissionsConfigHash": "0x70cd8169dab4019aa0d9fa1fadd61b0a842fd1dfd45497a304a1403dfa80186d"
 }

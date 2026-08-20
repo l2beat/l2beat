@@ -1,6 +1,6 @@
 {
   "name": "debridge",
-  "timestamp": 1787035190,
+  "timestamp": 1787230295,
   "configHash": "0x3783704204960836142e8db17c79a9673aee68ef65a7465c02e3b6bf83524441",
   "entries": [
     {
@@ -64,10 +64,13 @@
       "proxyType": "EOA"
     },
     {
-      "name": "",
+      "name": "ProxyAdmin",
       "address": "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3",
       "type": "Contract",
-      "unverified": true,
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
       "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
@@ -81,10 +84,11 @@
       "sinceBlock": 23966953,
       "values": {
         "$immutable": true,
-        "owner": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444"
+        "owner": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
-        "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3": ""
+        "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3": "ProxyAdmin"
       }
     },
     {
@@ -221,7 +225,7 @@
         "GOVMONITORING_ROLE": "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1",
         "govMonitoringAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
         "lockedClaim": 1,
-        "nonce": 178043,
+        "nonce": 178259,
         "paused": false,
         "signatureVerifier": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
         "SUBMISSION_PREFIX": 1,
@@ -961,7 +965,7 @@
           }
         },
         "confirmationThreshold": 3,
-        "currentBlock": 25780237,
+        "currentBlock": 25796378,
         "debridgeAddress": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
@@ -1046,10 +1050,13 @@
       }
     },
     {
-      "name": "",
+      "name": "ProxyAdmin",
       "address": "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F",
       "type": "Contract",
-      "unverified": true,
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
       "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
@@ -1063,32 +1070,42 @@
       "sinceBlock": 23966985,
       "values": {
         "$immutable": true,
-        "owner": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444"
+        "owner": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
-        "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F": ""
+        "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F": "ProxyAdmin"
       }
     },
     {
       "name": "ExternalCallExecutor",
       "address": "eth:0xAE0361b1C3454b297129e01046057F1D294c7974",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x6c5aae59f2a5722455f7f6b27b17e514a918ab56299c83ae29aed90c2f8863b0"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified contract registered as the default executor in the ExternalCallAdapter: it executes external calldata attached to DLN orders.",
+      "description": "The default executor in the ExternalCallAdapter: it executes external calldata attached to DLN orders.",
       "deployerAddress": "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5",
       "sinceTimestamp": 1714248767,
       "sinceBlock": 19748972,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "ADAPTER_ROLE": "0xdbeb657137b1822b3d5418bea6fd641226d964b4c3871ef23546db2622258871",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      },
       "implementationNames": {
-        "eth:0xAE0361b1C3454b297129e01046057F1D294c7974": ""
+        "eth:0xAE0361b1C3454b297129e01046057F1D294c7974": "ExternalCallExecutor"
       }
     },
     {
-      "name": "",
+      "name": "ProxyAdmin",
       "address": "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816",
       "type": "Contract",
-      "unverified": true,
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
       "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
@@ -1102,10 +1119,11 @@
       "sinceBlock": 23625079,
       "values": {
         "$immutable": true,
-        "owner": "eth:0xd6dF82F60a2FE1e61aEc29679bc4954F33D8C1EC"
+        "owner": "eth:0xd6dF82F60a2FE1e61aEc29679bc4954F33D8C1EC",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
-        "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816": ""
+        "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816": "ProxyAdmin"
       }
     },
     {
@@ -1973,6 +1991,17 @@
       "function withdrawCollectedFees(address[] _tokens)",
       "function withdrawUnclaimedAffiliateFees(address[] _tokens, address _beneficiary)"
     ],
+    "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b": [
       "constructor(address admin)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
@@ -2246,6 +2275,51 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0xAE0361b1C3454b297129e01046057F1D294c7974": [
+      "constructor()",
+      "error AdapterBadRole()",
+      "error AdminBadRole()",
+      "error CallFailed()",
+      "error EthTransferFailed()",
+      "error NotEnoughTxGas()",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function ADAPTER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function isProhibitedSelector(bytes _data) pure returns (bool)",
+      "function onERC20Received(bytes32, address _token, uint256 _transferredAmount, address _fallbackAddress, bytes _payload) returns (bool callSucceeded, bytes callResult)",
+      "function onEtherReceived(bytes32, address _fallbackAddress, bytes _payload) payable returns (bool callSucceeded, bytes callResult)",
+      "function renounceRole(bytes32 role, address account)",
+      "function rescueFunds(address _token, address _recipient, uint256 _amount)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
+    "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "eth:0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8": [
@@ -2895,6 +2969,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25780241 },
-  "permissionsConfigHash": "0x53a3ea0230c305e9076e5a2370269af9364675175d6321bf69963a4ecdd87a34"
+  "usedBlockNumbers": { "ethereum": 25796445 },
+  "permissionsConfigHash": "0x059b071fef39bee6c621d912a14e7bdc9a1475990c4e2dd4b78d45a1fd23ba8a"
 }
