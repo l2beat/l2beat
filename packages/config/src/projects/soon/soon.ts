@@ -165,11 +165,11 @@ export const soon: ScalingProject = opStackL2({
   },
   genesisTimestamp: UnixTime(1696566432), // TODO: update
   isNodeAvailable: false,
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
-      sinceBlock: discovery.getContract('SystemConfig').sinceBlock ?? 0,
+      sinceBlock: 21541468, // SystemConfig deployment
       inbox: batchInbox,
       sequencers: [oldBatcher, batcher],
     },

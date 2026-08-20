@@ -2,13 +2,14 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('dbk')
 
 export const dbk: ScalingProject = opStackL2({
   addedAt: UnixTime(1726825120), // 2024-09-20T09:38:40Z
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 20015025 })],
   additionalBadges: [],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {

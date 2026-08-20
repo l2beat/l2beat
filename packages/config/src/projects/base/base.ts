@@ -2,7 +2,6 @@ import {
   ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
-  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
@@ -10,7 +9,11 @@ import { PROGRAM_HASHES } from '../../common/programHashes'
 import { getRollupStage } from '../../common/stages/getRollupStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { getSP1Verifiers, opStackL2 } from '../../templates/opStack'
+import {
+  getOpStackDaTracking,
+  getSP1Verifiers,
+  opStackL2,
+} from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('base')
 const genesisTimestamp = UnixTime(1686074603)
@@ -162,20 +165,10 @@ export const base: ScalingProject = opStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
   },
-  nonTemplateDaTracking: [
-    {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
+  daTracking: [
+    getOpStackDaTracking(discovery, {
       sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: ChainSpecificAddress.address(
-        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
-      ),
-      sequencers: [
-        ChainSpecificAddress.address(
-          discovery.getContractValue('SystemConfig', 'batcherHash'),
-        ),
-      ],
-    },
+    }),
   ],
   nonTemplateTrackedTxs: [
     {
