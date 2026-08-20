@@ -46,27 +46,6 @@
         "args": []
       },
       "edit": ["format", "FormatSeconds"]
-    },
-    "TEE_VERIFIER": {
-      "severity": "HIGH"
-    },
-    "ZK_VERIFIER": {
-      "severity": "HIGH"
-    },
-    "TEE_IMAGE_HASH": {
-      "severity": "HIGH"
-    },
-    "ZK_RANGE_HASH": {
-      "severity": "HIGH"
-    },
-    "ZK_AGGREGATE_HASH": {
-      "severity": "HIGH"
-    },
-    "PROOF_THRESHOLD": {
-      "severity": "HIGH"
-    },
-    "DELAYED_WETH": {
-      "severity": "HIGH"
     }
   }
 }

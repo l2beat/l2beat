@@ -125,7 +125,7 @@ For each project, leave four compact artifacts:
 | `discovered.json` contract | `type === "Contract"`, has an address, and `critical === true` | Joins the current security perimeter |
 | `includeProjects` | Listed in the root project's `ossification.json` | Adds that project's current critical contracts and discovery history to the same perimeter |
 | `sinceTimestamp` | Current critical contracts only | Deployment candidate for the contract clock; deployment resets maturity but is not a change-rate event |
-| `$pastUpgrades` | Current critical contracts; the first transaction is initialization unless audited in `firstUpgradeIsChange` | Latest transaction timestamp can reset the clock; every non-initialization transaction is a change-rate event. Multiple upgrade records from one transaction (for example upgrade, execute, restore) form one code change |
+| `$pastUpgrades` | Current critical contracts; the first transaction is initialization unless audited in `firstUpgradeIsChange`; audited later initialization/no-op transactions are listed per contract in `ignoredUpgradeTransactions` | Latest qualifying transaction timestamp can reset the clock; every non-initialization transaction is a change-rate event. Multiple upgrade records from one transaction (for example upgrade, execute, restore) form one code change |
 | Watched discovery diff | Address belongs to a current critical contract and the block is a non-implementation `severity: HIGH` change | Resets the clock and adds a change-rate event |
 | Implementation diff fallback | Address belongs to a current critical contract and that contract has no `$pastUpgrades` | Resets the clock and adds an event regardless of field severity |
 | `criticalEvents` | Reviewed, evidence-backed event that mechanical discovery history cannot reconstruct | Adds the specified code/state event. `historical: true` affects only history/rate; other entries also reset the current clock |
@@ -148,9 +148,11 @@ are the fallback and use the discovery review timestamp.
 Upgrade events are deduplicated by transaction hash. A successful transaction that
 temporarily installs code and restores the previous implementation still resets the
 clock, because the temporary implementation was live during execution, but it is one
-code change rather than two. A reverted EVM transaction produces no upgrade record
-and does not reset the clock. Historical entries that store only timestamps dedupe
-equal timestamps as the best available transaction identity.
+code change rather than two. Writing the already-active implementation without an
+initializer is a no-op and is listed in `ignoredUpgradeTransactions`. A reverted EVM
+transaction produces no upgrade record and does not reset the clock. Historical
+entries that store only timestamps dedupe equal timestamps as the best available
+transaction identity.
 
 Some legacy proxies were initialized before their first recognized `Upgraded` log.
 For these, `ossification.json:firstUpgradeIsChange` records the audited exception so
@@ -215,17 +217,17 @@ Use Node 22 through `fnm`. RPC and explorer credentials are in
 ## Current status
 
 - The 12-project cohort is classified and opted in.
-- Arbitrum has completed the reference validation pass. Its narrow current
-  perimeter contains 45 contracts: external/custom gateways and ordinary Safe
-  shells are excluded, while canonical gateway/token code and the contracts that
-  implement the governance/upgrade mechanism remain included. Security Council
-  and nominee-member rotations do not count.
-- Arbitrum's reviewed history now covers first-log exceptions, beacon code
-  upgrades, ProxyAdmin/beacon controller transfers, rollup wasm roots, timelock
-  and quorum changes, and the one Safe-threshold change. The current result is 67
-  code changes and 19 attributable state changes across live contracts, plus one
-  unattributed Security Council threshold event; 21 project events fall in the
-  trailing three-year window. ArbOS 61 on 2026-08-18 is the latest reset.
+- Validation is complete for arbitrum, base, linea, optimism, privacy-pools,
+  railgun, tornado-cash, and uniswapv3.
+- Base has 35 current critical contracts. Safes, external-trust escrows, NFT-only
+  bridge components, and paused verifier routes are excluded.
+- Linea has 18. Safes and the unused USDC bridge are excluded; the active verifier
+  routes, canonical bridges, native-yield path, Delay module, and public liveness
+  recovery path are included. AddressFilter remains out until forced transactions
+  are activated.
+- Privacy Pools has 17: all pools, the Entrypoint, and both verifiers; its Safe is
+  excluded. Tornado Cash has 21: 19 pools, the verifier, and MiMCHasher; governance,
+  mining, reward, and routing contracts are excluded.
 - Removed-contract backfill is complete for the cohort; runtime history remains
   limited by the caveat above for late-added HIGH value annotations.
 - The exploit-age backtest supports retaining the two-year maturity constant. The
@@ -235,6 +237,5 @@ Use Node 22 through `fnm`. RPC and explorer credentials are in
   Merged code-bug numbers (n=243): median exploited-code age 1.9mo, 78% ≤12mo,
   88% of $2.05B verified losses on ≤12mo code, median score at incident 8/100
   under λ=2y. Keys and offchain failures are outside this metric's scope.
-- Before public launch, the important remaining validation is an independent review
-  of critical flags, HIGH value coverage, upgrade-handler completeness, and any
-  historical value-change gaps discovered by that review.
+- Per-project validation remains for scroll, starknet, taiko, and zksync2
+  (including shared-zk-stack).

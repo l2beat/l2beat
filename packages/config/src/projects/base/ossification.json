@@ -1,14 +1,277 @@
 {
+  "criticalEvents": [
+    {
+      "timestamp": 1718312039,
+      "type": "state",
+      "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+      "source": "tx:0xc3b1a7d423e489ece7a68b0f36eb51192da79cb75a4b6bc69827ce16d5bed16a",
+      "reason": "Changed the verifier governance timelock delay from 1 second to 7 days."
+    },
+    {
+      "timestamp": 1725578195,
+      "type": "state",
+      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+      "source": "tx:0xa5c779b72eea174e4bab09d4f93e81ed88ef80c566cfcf4335a081fbd8e9fdfd",
+      "reason": "Added a proof-verifier route to the RISC Zero router."
+    },
+    {
+      "timestamp": 1726070915,
+      "type": "state",
+      "source": "tx:0x592e73fdf57e7cc2c51cfaafa891fe91164d125b7943aa26a15285276de27509",
+      "reason": "Replaced the Guardian Safe module that delegated Base pause authority."
+    },
+    {
+      "timestamp": 1734466367,
+      "type": "state",
+      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+      "source": "tx:0x872104a517c6dec89fc94a001377d008a00aa5492a20ff684a48814c655a7a11",
+      "reason": "Added a proof-verifier route to the RISC Zero router."
+    },
+    {
+      "timestamp": 1736355959,
+      "type": "state",
+      "contract": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
+      "updateId": "cb367f7b",
+      "source": "tx:0xb6fc07450001150de1d6edcda68e7b4de5725259bb55ca3e5c22d474c7127e9c",
+      "reason": "Replaced the permissioned and permissionless fault-dispute game implementations."
+    },
+    {
+      "timestamp": 1738195235,
+      "type": "state",
+      "contract": "eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7",
+      "historical": true,
+      "source": "tx:0x16e1ef94d8db7b7cd1dd2dd00751de55dfba9541df5b9186fbb293e78555e017",
+      "reason": "Permanently paused a verifier route that was then in the active RISC Zero router."
+    },
+    {
+      "timestamp": 1738702573,
+      "type": "state",
+      "contract": "base:0x4200000000000000000000000000000000000018",
+      "updateId": "b4fed2e0",
+      "source": "tx:0x54d61996fe28795556fe87e57fcecb7d38d35aa0c58fa7b7ae42709453c0ff2c",
+      "reason": "Transferred the L2 predeploy ProxyAdmin to Base's governance authority."
+    },
+    {
+      "timestamp": 1743607763,
+      "type": "state",
+      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+      "source": "tx:0xfed1709029ffb22168940560fe4e9b9d6c0d90bed3d3aa809a113149827f2113",
+      "reason": "Added a proof-verifier route to the RISC Zero router."
+    },
+    {
+      "timestamp": 1745512871,
+      "type": "state",
+      "contract": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
+      "updateId": "cc6df8c2",
+      "source": "tx:0xfd06079372fea0ef0c8907b71931fc6907cc88c39f0dc036d3ebf267686fb6da",
+      "reason": "Replaced the permissioned and permissionless fault-dispute game implementations."
+    },
+    {
+      "timestamp": 1745938967,
+      "type": "state",
+      "updateId": "7a28c604",
+      "source": "tx:0xfeff9bf53acee54f6f54a90140b893e07ab5e7e2b250b884b1caf2d2d3ea0b0f",
+      "reason": "Changed the Base Coordinator threshold while it participated in Base's upgrade authority."
+    },
+    {
+      "timestamp": 1746626291,
+      "type": "state",
+      "updateId": "c565c9d4",
+      "source": "tx:0x5580a50fd248f0d4034f5eb270636202e2d957b84a6975f7bd7b8c72ff541233",
+      "reason": "Enabled a module that delegated Base pause authority through the Operations Safe."
+    },
+    {
+      "timestamp": 1746643607,
+      "type": "state",
+      "contract": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
+      "updateId": "c565c9d4",
+      "source": "tx:0x3baaa485746af0bb3d0a054a44a37c997b49b5528e0b58d351f5be05eacc2718",
+      "reason": "Replaced the permissioned and permissionless fault-dispute game implementations."
+    },
+    {
+      "timestamp": 1748643227,
+      "type": "state",
+      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+      "source": "tx:0xe25f60afb7843bfdd0f3e0ef6206d6c1816a7d7ff9006b0a437562661dba6bd3",
+      "reason": "Added a proof-verifier route to the RISC Zero router."
+    },
+    {
+      "timestamp": 1750197707,
+      "type": "state",
+      "contract": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+      "source": "tx:0xe8413f9ba413292f8f0c8a930a5e3573298043246a9218bdff5cfcb1c979cf92",
+      "reason": "Reduced the verifier governance timelock delay from 7 days to 3 days."
+    },
+    {
+      "timestamp": 1750269611,
+      "type": "state",
+      "contract": "eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3",
+      "historical": true,
+      "source": "tx:0x50123d0c4e2ed56b0c370d104720e38a1fede5552f5d7f7b69a68b927e9171d4",
+      "reason": "Permanently paused a verifier route that was then in the active RISC Zero router."
+    },
+    {
+      "timestamp": 1751916443,
+      "type": "state",
+      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+      "source": "tx:0x247144a4a20a570ce13e5a3ff24bf341e0b8b800a7d891598075621a11b36380",
+      "reason": "Added a proof-verifier route to the RISC Zero router."
+    },
+    {
+      "timestamp": 1753378247,
+      "type": "state",
+      "updateId": "32570022",
+      "source": "tx:0x48a3f2ec90b240d052e7612f85669cd496336e113ca6e591bbc8e0b22781e565",
+      "reason": "Enabled the new DeputyPauseModule on the Guardian Safe that could pause Base."
+    },
+    {
+      "timestamp": 1753380539,
+      "type": "state",
+      "updateId": "32570022",
+      "source": "tx:0x7e5703b1ab5d09aa107aa1a5fb2c7808c32023bd76048c192139bdb9b5dda092",
+      "reason": "Disabled the former Base pause deputy on the Guardian Safe."
+    },
+    {
+      "timestamp": 1753380743,
+      "type": "state",
+      "updateId": "32570022",
+      "source": "tx:0xd770166ff63183dae868ca11852268115035d2f74574b55b8e1ecd552da80378",
+      "reason": "Removed the former Base pause deputy from the Operations Safe authority path."
+    },
+    {
+      "timestamp": 1754340995,
+      "type": "state",
+      "contract": "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1",
+      "historical": true,
+      "source": "tx:0xe15ae9b49419444e77b91f48b703d0dc717a4d87e96c5fe75d7680eb087bf4ad",
+      "reason": "Permanently paused a verifier route that was then in the active RISC Zero router."
+    },
+    {
+      "timestamp": 1755555779,
+      "type": "state",
+      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+      "source": "tx:0xf7bb19085a64d4cb1d7a01ef94e2dacee677ff4f445a508f043f9d80526fec01",
+      "reason": "Added a proof-verifier route to the RISC Zero router."
+    },
+    {
+      "timestamp": 1757106887,
+      "type": "state",
+      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+      "source": "tx:0x73d1b0bc059bf4a920e9017acd31695c2760a6e716b724aa760c893b312c218f",
+      "reason": "Added a proof-verifier route to the RISC Zero router."
+    },
+    {
+      "timestamp": 1762813583,
+      "type": "state",
+      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+      "source": "tx:0x4034a5ff890175a954f604129de7a6971ecf55183c8fd76aec3d20d597936f21",
+      "reason": "Permanently removed a proof-verifier route from the RISC Zero router."
+    },
+    {
+      "timestamp": 1762813655,
+      "type": "state",
+      "contract": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+      "source": "tx:0x17e31ee3b1308a5b30253935460e6dc8dd6f3e65eadc08893559b8d6e22a88a7",
+      "reason": "Permanently removed a proof-verifier route from the RISC Zero router."
+    },
+    {
+      "timestamp": 1769108699,
+      "type": "state",
+      "updateId": "a382381b",
+      "source": "tx:0xf1ae77bea001acd7f3355ce971fd992601f467ce0a2305a38b1a82da459b502c",
+      "reason": "Enabled the SaferSafes execution module on the Operations Safe while it governed Base."
+    },
+    {
+      "timestamp": 1769109083,
+      "type": "state",
+      "updateId": "a382381b",
+      "source": "tx:0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
+      "reason": "Enabled the SaferSafes execution module on the Upgrade Safe while it governed Base."
+    },
+    {
+      "timestamp": 1772558891,
+      "type": "state",
+      "updateId": "d482a40e",
+      "source": "tx:0x17d10687b8d9e0f7ce68b65e5cbc23bbceb7ac494a99746a6a2f979cd7206e4f",
+      "reason": "Changed the Base Coordinator threshold during the governance decoupling."
+    },
+    {
+      "timestamp": 1772559431,
+      "type": "state",
+      "updateId": "d482a40e",
+      "source": "tx:0x117b78c970396446c891ba82439351555c537f04d0d90222a9d523975bfe599b",
+      "reason": "Changed the Base Security Council threshold during the governance decoupling."
+    },
+    {
+      "timestamp": 1779312767,
+      "type": "state",
+      "contract": "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782",
+      "source": "tx:0x1360978cb43138bdcefbc4446c9a05c477398bbcde2c6bf681b9afdf0d7284df",
+      "reason": "Transferred control of an active verifier emergency stop to RISC Zero governance."
+    },
+    {
+      "timestamp": 1779312767,
+      "type": "state",
+      "contract": "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696",
+      "source": "tx:0x1360978cb43138bdcefbc4446c9a05c477398bbcde2c6bf681b9afdf0d7284df",
+      "reason": "Transferred control of an active verifier emergency stop to RISC Zero governance."
+    },
+    {
+      "timestamp": 1779312767,
+      "type": "state",
+      "contract": "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698",
+      "source": "tx:0x1360978cb43138bdcefbc4446c9a05c477398bbcde2c6bf681b9afdf0d7284df",
+      "reason": "Transferred control of an active verifier emergency stop to RISC Zero governance."
+    },
+    {
+      "timestamp": 1780160147,
+      "type": "state",
+      "contract": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
+      "updateId": "83f814fb",
+      "source": "tx:0x3ddfe6f96ea84cd60fc92aafa64bdee06d16593ebef3206ce16d64dc0a357893",
+      "reason": "Replaced the AggregateVerifier game implementation during Azul activation."
+    },
+    {
+      "timestamp": 1780423643,
+      "type": "state",
+      "contract": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
+      "updateId": "83f814fb",
+      "source": "tx:0xb7ad31567dc133740576aa5d128b15989de6769df327763011fc7464f72c0132",
+      "reason": "Replaced the AggregateVerifier game implementation during Azul activation."
+    },
+    {
+      "timestamp": 1785176507,
+      "type": "state",
+      "contract": "eth:0xdc32E228636273285Befa5F001dBB5142517C106",
+      "updateId": "839d28f5",
+      "source": "tx:0xa9ff84a22c4de540be566f561f4ee2a0c890732b19251871b90bfe8941d9be71",
+      "reason": "Replaced the active SP1 proof-verifier route."
+    }
+  ],
   "historicalContracts": [
     {
-      "address": "eth:0x847b5c174615b1b7fdf770882256e2d3e95b9d92",
-      "name": "OpFoundationUpgradeSafe",
+      "address": "eth:0x44c220f0598345195ce99ad6a57adffcb9ea33e7",
+      "name": "RiscZeroVerifierEmergencyStop",
       "critical": true,
       "upgradeTimestamps": [],
-      "diffEventCount": 1,
-      "lastSeenAt": 1772299542,
-      "lastSeenCommit": "bc5cbc9b04c6897ddc11b0f0225c2837cf57ef6a",
-      "note": "While in Base's perimeter it was foundationSafe of the DeputyPauseModule (can swap the pause deputy, giving a unilateral path to pause Base withdrawals via the shared SuperchainConfig), co-owner (2-of-2) of the SuperchainProxyAdminOwner that upgrades that SuperchainConfig, and LivenessModule fallback owner of the Security Council."
+      "diffEventCount": 0,
+      "note": "Former RISC Zero verifier route; permanently paused and no longer able to verify proofs."
+    },
+    {
+      "address": "eth:0x68dc2cb4e61774873971c499d9b239ec5ac540e3",
+      "name": "RiscZeroVerifierEmergencyStop",
+      "critical": true,
+      "upgradeTimestamps": [],
+      "diffEventCount": 0,
+      "note": "Former RISC Zero verifier route; permanently paused and no longer able to verify proofs."
+    },
+    {
+      "address": "eth:0xda8f3de6fbbdb261ac771b813a578a7abda6b2b1",
+      "name": "RiscZeroVerifierEmergencyStop",
+      "critical": true,
+      "upgradeTimestamps": [],
+      "diffEventCount": 0,
+      "note": "Former RISC Zero verifier route; permanently paused and no longer able to verify proofs."
     },
     {
       "address": "eth:0x95703e0982140d16f8eba6d158fccede42f04a4c",
@@ -21,16 +284,6 @@
       "lastSeenAt": 1772299542,
       "lastSeenCommit": "bc5cbc9b04c6897ddc11b0f0225c2837cf57ef6a",
       "note": "Shared Superchain pause switch used by Base while present: the guardian could pause Base withdrawals, blacklist dispute games, and switch the respected game type - direct freezing of project funds (opstack/SuperchainConfig template is critical today)."
-    },
-    {
-      "address": "eth:0x9ba6e03d8b90de867373db8cf1a58d2f7f006b3a",
-      "name": "OpFoundationOperationsSafe",
-      "critical": true,
-      "upgradeTimestamps": [],
-      "diffEventCount": 1,
-      "lastSeenAt": 1772299542,
-      "lastSeenCommit": "bc5cbc9b04c6897ddc11b0f0225c2837cf57ef6a",
-      "note": "In the L2OutputOracle era it was OP_SIGNER of Challenger1of2 and could unilaterally delete Base's output roots (indefinitely freezing withdrawals); later a 2-of-2 co-owner of the Base Governance Multisig that owns Base's L1 ProxyAdmin (upgrade of the whole system)."
     },
     {
       "address": "eth:0x3e8a0b63f57e975c268d610ece93da5f78c01321",

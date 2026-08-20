@@ -266,8 +266,11 @@
       "description": "The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here.",
       "edit": ["format", "LineaAddress"]
     },
-    "nonSecurityCouncilCooldownEnd": {
+    "messageService": {
       "severity": "HIGH",
+      "description": "The message service whose crosschain sender context authenticates bridge messages."
+    },
+    "nonSecurityCouncilCooldownEnd": {
       "description": "Timestamp until which non security council entities can't pause the rollup."
     }
   }

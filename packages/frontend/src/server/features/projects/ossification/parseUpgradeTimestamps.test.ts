@@ -23,6 +23,19 @@ describe(parseUpgradeTimestamps.name, () => {
 
     expect(result).toEqual([1776742007, 1776742007])
   })
+
+  it('ignores audited initialization or no-op transactions', () => {
+    const result = parseUpgradeTimestamps(
+      [
+        ['2026-04-20T00:00:00.000Z', '0xinitial', ['eth:0x111']],
+        ['2026-04-21T03:26:47.000Z', '0xnoop', ['eth:0x111']],
+        ['2026-04-22T00:00:00.000Z', '0xchange', ['eth:0x222']],
+      ],
+      new Set(['0xnoop']),
+    )
+
+    expect(result).toEqual([1776643200, 1776816000])
+  })
 })
 
 describe(deduplicateUpgradeTimestamps.name, () => {

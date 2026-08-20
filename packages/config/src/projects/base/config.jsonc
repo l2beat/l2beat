@@ -32,8 +32,8 @@
     "base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d": "Base Governance Multisig - L2 Alias"
   },
   "overrides": {
-    // active RISC Zero verification path for the TEE prover registration
-    // (shared deployment with taiko; estopped instances are not flagged)
+    // Active RISC Zero verification path for TEE prover registration.
+    // Permanently paused verifier routes are intentionally not flagged.
     "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": {
       "critical": true
     },
@@ -70,29 +70,13 @@
     "base:0x4200000000000000000000000000000000000018": {
       "critical": true
     },
-    // Base Governance Multisig: owner of both ProxyAdmins, SuperchainConfig guardian and SP1VerifierGateway owner.
-    "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c": {
-      "critical": true
-    },
-    // Base Multisig 1: SystemConfig owner (batcher/sequencer config) and SuperchainConfig INCIDENT_RESPONDER (can pause).
-    "eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056": {
-      "critical": true
-    },
-    // Base Coordinator Multisig: required signer (2-of-2) of the Base Governance Multisig; direct owner of TEEProverRegistry and NitroEnclaveVerifier.
-    "eth:0x9855054731540A48b28990B63DcF4f33d8AE46A1": {
-      "critical": true
-    },
     // RISC Zero governance timelock: owner of the RiscZeroVerifierRouter used to validate TEE signer registrations (add/remove verifiers).
     "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
       "critical": true
     },
-    // RISC Zero governance Safe: proposer/executor/canceller of the timelock and owner of the RiscZeroVerifierEmergencyStops.
-    "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609": {
-      "critical": true
-    },
-    // Base Security Council: required signer (2-of-2) of the Base Governance Multisig (upgrade + guardian authority).
+    // Safes are actor shells outside the contract perimeter. Their authority
+    // mechanism changes are reviewed as project-level critical events.
     "eth:0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd": {
-      "critical": true,
       "references": [
         {
           "text": "Security Council members - Base Docs",

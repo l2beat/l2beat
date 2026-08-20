@@ -1,7 +1,7 @@
 {
   "name": "privacy-pools",
   "timestamp": 1779964040,
-  "configHash": "0x9de70567c062bb5673c2209f0eedf81ed3b437f0346df713c776dbc3e7851c9e",
+  "configHash": "0x7051501e582ee197960b18e4686b109130977bb9a8da130b5b806e6bd3744174",
   "entries": [
     {
       "name": "WithdrawalVerifier",
@@ -347,12 +347,10 @@
           "description": "Current set of pool contracts registered in the Entrypoint, derived from PoolRegistered and PoolRemoved events."
         },
         "ownerRoleMembers": {
-          "severity": "HIGH",
           "description": "Addresses with OWNER_ROLE.",
           "type": "PERMISSION"
         },
         "aspPostmen": {
-          "severity": "HIGH",
           "description": "Addresses with ASP_POSTMAN.",
           "type": "PERMISSION"
         }
@@ -467,7 +465,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",

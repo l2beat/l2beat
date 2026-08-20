@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x9c71cd2476e1cd5e35b9a39285c16809ce2f19d8
+Generated with discovered.json: 0xb1c1500ff5de3664d4927aed68221c6e73c4766a
 
-# Diff at Thu, 20 Aug 2026 06:21:20 GMT:
+# Diff at Thu, 20 Aug 2026 17:08:38 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1779964040
+- comparing to: main@bd2a19ed47921b541d6d991c325212600c2751a9 block: 1779964040
 - current timestamp: 1779964040
 
 ## Description
@@ -69,6 +69,10 @@ discovery. Values are for block 1779964040 (main branch discovery), not current.
 ```diff
     contract PrivacyPoolsEntrypoint (eth:0x6818809EefCe719E480a7526D76bD3e561526b46) [privacy-pools/Entrypoint] {
     +++ description: Main hub for Privacy Pools. Entrypoint for deposits, relayed withdrawals, pool registry/configuration, ASP root updates, fee withdrawal, and wind-down management.
+      fieldMeta.ownerRoleMembers.severity:
+-        "HIGH"
+      fieldMeta.aspPostmen.severity:
+-        "HIGH"
       critical:
 +        true
     }
@@ -91,14 +95,6 @@ discovery. Values are for block 1779964040 (main branch discovery), not current.
 ```diff
     contract RagequitVerifier (eth:0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6) [privacy-pools/CommitmentVerifier] {
     +++ description: Stateless Groth16 verifier used by Privacy Pool contracts to verify ragequit proofs.
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract Privacy Pools Multisig (eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159) [GnosisSafe] {
-    +++ description: None
       critical:
 +        true
     }

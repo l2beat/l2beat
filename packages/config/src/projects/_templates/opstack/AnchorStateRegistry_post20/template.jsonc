@@ -34,9 +34,6 @@
     },
     "retirementTimestamp": {
       "severity": "HIGH"
-    },
-    "disputeGameFinalityDelaySeconds": {
-      "severity": "HIGH"
     }
   }
 }

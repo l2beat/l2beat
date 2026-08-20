@@ -3,6 +3,7 @@
   "description": "A verifier wrapper for the {{verifier}} that allows pausing (emergency stop) the verifier by its owner.",
   "fields": {
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

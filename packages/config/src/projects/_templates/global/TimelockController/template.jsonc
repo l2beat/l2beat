@@ -15,6 +15,9 @@
         }
       ]
     },
+    "getMinDelay": {
+      "severity": "HIGH"
+    },
     "getMinDelayFormatted": {
       "handler": {
         "type": "call",

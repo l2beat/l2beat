@@ -1,4 +1,7 @@
-export function parseUpgradeTimestamps(value: unknown): number[] {
+export function parseUpgradeTimestamps(
+  value: unknown,
+  ignoredTransactions: ReadonlySet<string> = new Set(),
+): number[] {
   if (!Array.isArray(value)) return []
 
   const seenTransactions = new Set<string>()
@@ -14,6 +17,7 @@ export function parseUpgradeTimestamps(value: unknown): number[] {
         ? upgrade[1].toLowerCase()
         : undefined
     if (transaction !== undefined) {
+      if (ignoredTransactions.has(transaction)) continue
       if (seenTransactions.has(transaction)) continue
       seenTransactions.add(transaction)
     }

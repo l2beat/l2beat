@@ -11,7 +11,6 @@
     },
     "operator": {
       "description": "Legacy operator role retained from the trusted-setup phase.",
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -22,6 +21,12 @@
           "description": "transfer the operator role and perform the one-time legacy state migration."
         }
       ]
+    },
+    "operatorRenounced": {
+      "description": "Whether verifier-upgrade and migration authority has been permanently renounced.",
+      "severity": "HIGH",
+      "copy": "operator",
+      "edit": ["=", "eth:0x0000000000000000000000000000000000000000"]
     },
     "verifier": {
       "description": "zkSNARK verifier used to authorize withdrawals from the pool.",

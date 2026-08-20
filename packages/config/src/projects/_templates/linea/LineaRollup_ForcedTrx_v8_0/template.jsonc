@@ -28,7 +28,6 @@
       "severity": "HIGH"
     },
     "livenessRecoveryOperator": {
-      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -113,7 +112,6 @@
       ]
     },
     "Operators": {
-      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "OPERATOR_ROLE"
@@ -271,7 +269,11 @@
       }
     },
     "limitInWei": {
+      "severity": "HIGH",
       "description": "The cap on the total amount of ether that can leave rollup contract via L2 -> L1 message claims per period given by periodInSeconds."
+    },
+    "periodInSeconds": {
+      "severity": "HIGH"
     },
     "pauseDuration_fmt": {
       "handler": {
@@ -296,7 +298,6 @@
       "description": "Smart contract that attests existence of blob commitments (shnarfs)."
     },
     "nonSecurityCouncilCooldownEnd": {
-      "severity": "HIGH",
       "description": "Timestamp until which non security council entities can't pause the rollup."
     }
   }

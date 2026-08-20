@@ -43,6 +43,8 @@ interface OssificationJson {
   /** Contracts whose first recognized upgrade event changed an implementation
    *  that was already initialized. */
   firstUpgradeIsChange?: string[]
+  /** Audited initialization/no-op upgrade transactions, keyed by contract. */
+  ignoredUpgradeTransactions?: Record<string, string[]>
   /** Reviewed events missing from mechanical discovery history. */
   criticalEvents?: (OssificationCriticalEvent & {
     source?: string
@@ -119,8 +121,22 @@ export async function getProjectOssification(
       address.toLowerCase(),
     ),
   )
+  const ignoredUpgradeTransactions = new Map(
+    Object.entries(ossificationJson.ignoredUpgradeTransactions ?? {}).map(
+      ([address, transactions]) => [
+        address.toLowerCase(),
+        new Set(transactions.map((transaction) => transaction.toLowerCase())),
+      ],
+    ),
+  )
   const factor = getOssificationFactor(
-    critical.map((entry) => toOssificationEntry(entry, firstUpgradeIsChange)),
+    critical.map((entry) =>
+      toOssificationEntry(
+        entry,
+        firstUpgradeIsChange,
+        ignoredUpgradeTransactions,
+      ),
+    ),
     updates,
     UnixTime.now(),
     historical,
@@ -136,13 +152,17 @@ export async function getProjectOssification(
 function toOssificationEntry(
   entry: DiscoveredEntryLite & { address: string },
   firstUpgradeIsChange: Set<string>,
+  ignoredUpgradeTransactions: Map<string, Set<string>>,
 ): OssificationEntry {
   return {
     address: entry.address,
     name: entry.name ?? entry.address,
     isVerified: entry.unverified !== true,
     sinceTimestamp: entry.sinceTimestamp,
-    upgradeTimestamps: parseUpgradeTimestamps(entry.values?.$pastUpgrades),
+    upgradeTimestamps: parseUpgradeTimestamps(
+      entry.values?.$pastUpgrades,
+      ignoredUpgradeTransactions.get(entry.address.toLowerCase()),
+    ),
     firstUpgradeIsInitialization: !firstUpgradeIsChange.has(
       entry.address.toLowerCase(),
     ),

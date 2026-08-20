@@ -11,8 +11,7 @@
     },
     "token": { "description": "ERC20 token accepted by this mixer instance." },
     "verifier": {
-      "description": "zkSNARK verifier used to authorize withdrawals from the pool.",
-      "severity": "HIGH"
+      "description": "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
     },
     "hasher": {
       "description": "Merkle-tree hasher used for commitments and root updates."

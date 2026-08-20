@@ -4,6 +4,15 @@
   "critical": true,
   "description": "ZK-based verifier of AWS Nitro Enclave attestation documents. Used by TEEProverRegistry to validate new enclave signer registrations against the AWS Nitro PKI.",
   "fields": {
+    "owner": {
+      "severity": "HIGH"
+    },
+    "rootCert": {
+      "severity": "HIGH"
+    },
+    "maxTimeDiff": {
+      "severity": "HIGH"
+    },
     "zkConfigRiscZero": {
       "handler": { "type": "call", "method": "getZkConfig", "args": [1] },
       "description": "RiscZero (ZkCoProcessorType=1) config: single-attestation verifier program ID, batch aggregator program ID, and the default ZK verifier contract used when no per-selector route override applies.",

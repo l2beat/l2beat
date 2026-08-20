@@ -3,6 +3,9 @@
   "displayName": "Timelock",
   "description": "A standard timelock with access control. The current minimum delay is {{minDelayFormatted}}.",
   "fields": {
+    "getMinDelay": {
+      "severity": "HIGH"
+    },
     "minDelayFormatted": {
       "handler": {
         "type": "call",

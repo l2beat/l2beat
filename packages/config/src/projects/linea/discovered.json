@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "timestamp": 1784543140,
-  "configHash": "0x8ce0042bb1293a809cb6b561c7f5a5c902d9cea7d55af0233c2f64a5cf4673c9",
+  "configHash": "0xb75eda42ee02aaf252dc6242739bd0484bd82b29740044874b33e1de5862c3f9",
   "entries": [
     {
       "name": "TokenBridge",
@@ -202,8 +202,11 @@
           "severity": "HIGH",
           "description": "The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here."
         },
-        "nonSecurityCouncilCooldownEnd": {
+        "messageService": {
           "severity": "HIGH",
+          "description": "The message service whose crosschain sender context authenticates bridge messages."
+        },
+        "nonSecurityCouncilCooldownEnd": {
           "description": "Timestamp until which non security council entities can't pause the rollup."
         }
       },
@@ -299,6 +302,7 @@
       ],
       "proxyType": "immutable",
       "description": "A public proxy contract forwarding calls to a predefined target contract (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F). Can be called by any address.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -383,6 +387,7 @@
         "$immutable": true,
         "owner": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5": "ProxyAdmin"
       }
@@ -539,6 +544,7 @@
       ],
       "proxyType": "gnosis safe zodiac module",
       "description": "A simple Safe module for that can queue and execute transactions as eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051 after a delay of currently 3mo, if registered as a module there.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -569,6 +575,14 @@
         ],
         "ZodiacModule_target": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "ZodiacModule_modules": { "severity": "HIGH" },
+        "target": { "severity": "HIGH" },
+        "guard": { "severity": "HIGH" },
+        "txCooldown": { "severity": "HIGH" },
+        "txExpiration": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436": "Delay"
       }
@@ -588,7 +602,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -917,6 +930,10 @@
         "$immutable": true,
         "implementation": "eth:0x36f274C1C197F277EA3C57859729398FCc8a3763",
         "owner": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      },
+      "fieldMeta": {
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB": "UpgradeableBeacon"
@@ -1340,12 +1357,10 @@
       },
       "fieldMeta": {
         "yieldManager": { "severity": "HIGH" },
-        "livenessRecoveryOperator": { "severity": "HIGH" },
         "verifiers": {
           "severity": "HIGH",
           "description": "Mapping of proof type to ZK Plonk Verifier contract."
         },
-        "Operators": { "severity": "HIGH" },
         "isPaused_GENERAL": { "severity": "HIGH" },
         "isPaused_L1_L2": { "severity": "HIGH" },
         "isPaused_L2_L1": { "severity": "HIGH" },
@@ -1358,8 +1373,10 @@
         "isPaused_NATIVE_YIELD_REPORTING": { "severity": "HIGH" },
         "isPaused_STATE_DATA_SUBMISSION": { "severity": "HIGH" },
         "limitInWei": {
+          "severity": "HIGH",
           "description": "The cap on the total amount of ether that can leave rollup contract via L2 -> L1 message claims per period given by periodInSeconds."
         },
+        "periodInSeconds": { "severity": "HIGH" },
         "pauseDuration_fmt": {
           "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
         },
@@ -1371,7 +1388,6 @@
           "description": "Smart contract that attests existence of blob commitments (shnarfs)."
         },
         "nonSecurityCouncilCooldownEnd": {
-          "severity": "HIGH",
           "description": "Timestamp until which non security council entities can't pause the rollup."
         }
       },
@@ -1490,6 +1506,7 @@
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": ["eth:0xd6B95c960779c72B8C6752119849318E5d550574"]
       },
+      "fieldMeta": { "getMinDelay": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xd6B95c960779c72B8C6752119849318E5d550574": "TimeLock"
       }
@@ -1669,30 +1686,30 @@
         ]
       },
       "fieldMeta": {
-        "accessControl": { "severity": "HIGH" },
         "yieldStakingOperatorAC": {
-          "severity": "HIGH",
           "description": "Logically this combines several roles: YIELD_PROVIDER_STAKING_ROLE, YIELD_PROVIDER_UNSTAKER_ROLE, YIELD_REPORTER_ROLE, STAKING_PAUSE_CONTROLLER_ROLE, OSSIFICATION_PROCESSOR_ROLE. Currently they are shared by the same two addresses, if this changes the permissions must be modified."
         },
         "yieldStakingManagerAC": {
-          "severity": "HIGH",
           "description": "Logically this combines several roles: SET_YIELD_PROVIDER_ROLE, SET_L2_YIELD_RECIPIENT_ROLE, WITHDRAWAL_RESERVE_SETTER_ROLE. Currently they are shared by the same address, if this changes the permissions must be modified."
         },
         "isWithdrawalReserveBelowMinimum": {
-          "severity": "HIGH",
           "description": "If true, no more ETH can be staked and users can permissionlessly withdraw staked ETH."
         },
-        "yieldProviderCount": { "severity": "HIGH" },
+        "yieldProviderByIndex": { "severity": "HIGH" },
         "minimumWithdrawalReserveAmount": {
+          "severity": "HIGH",
           "description": "Absolute value, part of the computation of minimal rollup ETH reserve."
         },
         "minimumWithdrawalReservePercentageBps": {
+          "severity": "HIGH",
           "description": "Value relative to TVS, part of the computation of minimal rollup ETH reserve."
         },
         "targetWithdrawalReserveAmount": {
+          "severity": "HIGH",
           "description": "Absolute value, part of the computation of target rollup ETH reserve."
         },
         "targetWithdrawalReservePercentageBps": {
+          "severity": "HIGH",
           "description": "Value relative to TVS, part of the computation of target rollup ETH reserve."
         }
       },
@@ -1735,6 +1752,7 @@
         "$immutable": true,
         "owner": "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6": "ProxyAdmin"
       }
@@ -1788,6 +1806,7 @@
         "$immutable": true,
         "owner": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E": "ProxyAdmin"
       }
@@ -2022,8 +2041,11 @@
           "severity": "HIGH",
           "description": "The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here."
         },
-        "nonSecurityCouncilCooldownEnd": {
+        "messageService": {
           "severity": "HIGH",
+          "description": "The message service whose crosschain sender context authenticates bridge messages."
+        },
+        "nonSecurityCouncilCooldownEnd": {
           "description": "Timestamp until which non security council entities can't pause the rollup."
         }
       },
@@ -2206,14 +2228,16 @@
         "USED_RATE_LIMIT_RESETTER_ROLE": "0x0cf0d2deb70d7bdac2fa48c4ac99bc558170be0ce5fcb994caefa4bf7b96edf9"
       },
       "fieldMeta": {
-        "l1l2MessageSetter": { "severity": "HIGH" },
+        "minimumFeeInWei": { "severity": "HIGH" },
         "sender": {
           "description": "Value used to identify the crosschain caller during a crosschain call. It defaults to a inaccessible address outside of calls."
         },
         "limitInWei": {
+          "severity": "HIGH",
           "description": "The cap on the total amount of ether that can leave the contract via L1 -> L2 message claims per period given by periodInSeconds."
         },
         "periodInSeconds": {
+          "severity": "HIGH",
           "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
         },
         "isPaused_GENERAL": { "severity": "HIGH" },
@@ -2228,7 +2252,6 @@
         "isPaused_NATIVE_YIELD_REPORTING": { "severity": "HIGH" },
         "isPaused_STATE_DATA_SUBMISSION": { "severity": "HIGH" },
         "nonSecurityCouncilCooldownEnd": {
-          "severity": "HIGH",
           "description": "Timestamp until which non security council entities can't pause the rollup."
         }
       },
@@ -2452,6 +2475,7 @@
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": ["linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca"]
       },
+      "fieldMeta": { "getMinDelay": { "severity": "HIGH" } },
       "implementationNames": {
         "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca": "TimeLock"
       }
@@ -2479,6 +2503,7 @@
         "$immutable": true,
         "owner": "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c": "ProxyAdmin"
       }
@@ -2575,6 +2600,10 @@
         "implementation": "linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF",
         "owner": "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"
       },
+      "fieldMeta": {
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0": "UpgradeableBeacon"
       }
@@ -2589,7 +2618,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -4019,21 +4047,21 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "global/Timelock": "0xadf6c9c4d77d92049a7365bc568182b2182a16c5c6e5e0e7ab6c15c6a1c76e3c",
-    "global/UpgradeableBeacon": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/Timelock": "0x6c0231bd5654cecb079066a1d727edf633bf4c7e74f0e6a9f5691b41a9bcde63",
+    "global/UpgradeableBeacon": "0x5131b8b980cf5a0a571c88590e4878fe796a0b46c9d9854db77dfdf4125f92c9",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "gnosisSafeModules/ZodiacDelay": "0x1cf1f83927c30dff78d2b2b635f9995b93db52502fcae1b9478e1dd4664540c5",
     "linea/AddressFilter": "0xf041beaf993cf44b777d84da4360f6df2e8b6689c93751aee22ab830d8c06d3d",
     "linea/BridgedToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/CallForwardingProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "linea/L1TokenBridge_v1_1": "0x20d3d6a56767ec58f82df2df933b95c3432f7171ad7624291d8860ab020a0719",
+    "linea/L1TokenBridge_v1_1": "0x2730ff578f17fb06fb6db3887d4e6f9cbf5ba2234bc66d5c0e8e14fe2d009053",
     "linea/L1USDCBridge": "0xccec7b3207d7988b8869cf749a88b90a47d5a9e6cd0dc62f99b2accc9a81df1f",
-    "linea/L2MessageService_v1_0": "0xaa6a49f15c42e763f232df26b0c23e0aede0af912ff884a6b4bb094a27e30601",
+    "linea/L2MessageService_v1_0": "0x6ce49291fdd8eb072f0295dc0f64f74c095763316783d9579fede3e9f4798cda",
     "linea/LidoStakingVaultYieldProvider": "0xc3f19fa44794b28bab13fe7e59ad3e8982927823f5cea3abf7c1cde603f2da71",
-    "linea/LineaRollup_ForcedTrx_v8_0": "0x279995736fc40c287094a5544bae88ea3c2b01e3ab2437f1080375bf22ac3b52",
+    "linea/LineaRollup_ForcedTrx_v8_0": "0x6cc5193e59cfacf65584116c7930c16d37e5e771d836e6c072342a25564a23c6",
     "linea/LineaVoyageXP": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
-    "linea/YieldManager": "0xd2e14da483a48105a5200c246ccaf5b00f9e781f312953ee46daabb7a9055b35"
+    "linea/YieldManager": "0xfa42f479f67e7ac26fb54a60733c021ce953d4d9d2706a7830201e9b380bc3d3"
   },
   "usedBlockNumbers": { "ethereum": 25573314, "linea": 31451677 },
   "permissionsConfigHash": "0xa1811486c6001b182a4ea4aeaf384b6c06c386c0406ac1055813ccf0d3e94830"

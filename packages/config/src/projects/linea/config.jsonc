@@ -15,8 +15,7 @@
   },
   "overrides": {
     "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD": {
-      // proposer, executor and canceller on the L2Timelock (0s delay) that owns the L2 ProxyAdmin upgrading the L2 TokenBridge and L2MessageService
-      "critical": true,
+      // Actor shell: proposer, executor and canceller on the L2Timelock.
       "canActIndependently": true
     },
     // active PLONK verifiers referenced by LineaRollup.verifiers: a code change lets forged proofs finalize arbitrary state and drain the bridge
@@ -26,8 +25,22 @@
     "eth:0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc": {
       "critical": true
     },
-    // Security Council: full admin of LineaRollup/TokenBridge/YieldManager roles, proposer+executor on the 0s Timelock (upgrade path), indefinite pause
-    "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3": {
+    // 90-day module on the secondary proposer Safe; its delay and authority
+    // path directly constrain L1 upgrades.
+    "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436": {
+      "critical": true,
+      "fields": {
+        "owner": { "severity": "HIGH" },
+        "target": { "severity": "HIGH" },
+        "guard": { "severity": "HIGH" },
+        "txCooldown": { "severity": "HIGH" },
+        "txExpiration": { "severity": "HIGH" },
+        "ZodiacModule_modules": { "severity": "HIGH" }
+      }
+    },
+    // Immutable public forwarding mechanism used for the six-month liveness
+    // recovery path in LineaRollup.
+    "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D": {
       "critical": true
     },
     // Timelock (0s min delay) owning the L1 ProxyAdmin that upgrades LineaRollup, TokenBridge and YieldManager

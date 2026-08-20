@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x25b1a3e89963e54cae3e4ecc027a833d4f43da24
+Generated with discovered.json: 0xc09cdd2d2b7f3954f06ada85fb618a15ed7dad1b
 
-# Diff at Thu, 20 Aug 2026 07:57:25 GMT:
+# Diff at Thu, 20 Aug 2026 17:45:50 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1785226129
+- comparing to: main@bd2a19ed47921b541d6d991c325212600c2751a9 block: 1785226129
 - current timestamp: 1785226129
 
 ## Description
@@ -21,6 +21,8 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -29,6 +31,8 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -37,6 +41,8 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -45,6 +51,8 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -61,6 +69,8 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -69,20 +79,20 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: A timelock with access control. The current minimum delay is 3d.
       critical:
 +        true
-    }
-```
-
-```diff
-    contract Base Multisig 1 (eth:0x14536667Cd30e52C0b458BaACcB9faDA7046E056) [GnosisSafe] {
-    +++ description: None
-      critical:
-+        true
+      fieldMeta:
++        {"getMinDelay":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract TEEProverRegistry (eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA) [base/TEEProverRegistry] {
     +++ description: Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.
+      fieldMeta.NITRO_VERIFIER:
+-        {"severity":"HIGH"}
+      fieldMeta.DISPUTE_GAME_FACTORY:
+-        {"severity":"HIGH"}
+      fieldMeta.getExpectedImageHash:
+-        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -91,6 +101,8 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 ```diff
     contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
     +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -107,14 +119,10 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 ```diff
     contract TEEVerifier (eth:0x1FbA0C57b07Af804A9717e51dec9CC27FBC12228) [base/TEEVerifier] {
     +++ description: Stateless verifier that validates AggregateVerifier TEE proofs by recovering an ECDSA signature over the journal and checking the recovered signer against TEEProverRegistry. Enforces PCR0 match by comparing the signer's registered image hash to the AggregateVerifier's TEE_IMAGE_HASH. Can be permanently nullified by a successful AggregateVerifier.nullify call.
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract Base Security Council (eth:0x20AcF55A3DCfe07fC4cecaCFa1628F788EC8A4Dd) [GnosisSafe] {
-    +++ description: None
+      fieldMeta.TEE_PROVER_REGISTRY:
+-        {"severity":"HIGH"}
+      fieldMeta.ANCHOR_STATE_REGISTRY:
+-        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -129,32 +137,44 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Safe (eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609) [GnosisSafe] {
-    +++ description: None
-      critical:
-+        true
-    }
-```
-
-```diff
     contract L1StandardBridge (eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35) [opstack/L1StandardBridge] {
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract DisputeGameFactory (eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e) [opstack/DisputeGameFactory_v2] {
     +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.game8Vm:
++        {"severity":"HIGH"}
+      fieldMeta.wethFromDGF:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
 ```
 
 ```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
     contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
     +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -189,6 +209,16 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
     }
 ```
 
@@ -203,16 +233,12 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 ```diff
     contract SystemConfig (eth:0x73a79Fab69143498Ed3712e519A88a918e1f4072) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
-      fieldMeta.batcherHash:
+      fieldMeta.$admin:
 +        {"severity":"HIGH"}
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract Base Governance Multisig (eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) [GnosisSafe] {
-    +++ description: None
+      fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -229,6 +255,12 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 ```diff
     contract NitroEnclaveVerifier (eth:0x7F3a16E1fe6Fda64c5AC4296E13ECB9F7B44F6fb) [base/NitroEnclaveVerifier] {
     +++ description: ZK-based verifier of AWS Nitro Enclave attestation documents. Used by TEEProverRegistry to validate new enclave signer registrations against the AWS Nitro PKI.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.rootCert:
++        {"severity":"HIGH"}
+      fieldMeta.maxTimeDiff:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -237,6 +269,8 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 ```diff
     contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop] {
     +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -247,12 +281,16 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
     +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      fieldMeta.owner:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -263,20 +301,18 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract AnchorStateRegistry (eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72) [opstack/AnchorStateRegistry_post20] {
     +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract Base Coordinator Multisig (eth:0x9855054731540A48b28990B63DcF4f33d8AE46A1) [GnosisSafe] {
-    +++ description: None
+      fieldMeta.disputeGameFinalityDelaySeconds:
+-        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -285,6 +321,8 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 ```diff
     contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
     +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -309,6 +347,10 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 ```diff
     contract ZkVerifier (eth:0xB88D95bDf6972508942d184866890c1834219B75) [base/ZkVerifier] {
     +++ description: Thin router that forwards SP1 ZK proof verification from the AggregateVerifier game to the SP1 verifier gateway. Can be permanently nullified by a successful AggregateVerifier.nullify call.
+      fieldMeta.SP1_VERIFIER:
+-        {"severity":"HIGH"}
+      fieldMeta.ANCHOR_STATE_REGISTRY:
+-        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -327,12 +369,26 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
     }
 ```
 
 ```diff
     contract SP1VerifierGateway (eth:0xdc32E228636273285Befa5F001dBB5142517C106) [succinct/SP1VerifierGateway] {
     +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      fieldMeta.activeVerifiers.severity:
++        "HIGH"
+      fieldMeta.owner:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -341,6 +397,8 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 ```diff
     contract AggregateVerifier (eth:0xeE303bA054c5F1E14A8EF87f1C7E285af45A1ba2) [opstack/AggregateVerifier] {
     +++ description: Game type implementation that combines a TEE attestation arm and a ZK proof arm. A single un-nullified proof of either type can resolve a game (PROOF_THRESHOLD = 1). When both arms commit, the finalization window collapses from SLOW_FINALIZATION_DELAY (5d) to FAST_FINALIZATION_DELAY (1d).
+      fieldMeta:
+-        {"TEE_VERIFIER":{"severity":"HIGH"},"ZK_VERIFIER":{"severity":"HIGH"},"TEE_IMAGE_HASH":{"severity":"HIGH"},"ZK_RANGE_HASH":{"severity":"HIGH"},"ZK_AGGREGATE_HASH":{"severity":"HIGH"},"PROOF_THRESHOLD":{"severity":"HIGH"},"DELAYED_WETH":{"severity":"HIGH"}}
       critical:
 +        true
     }

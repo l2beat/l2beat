@@ -40,7 +40,6 @@
     },
     "ownerRoleMembers": {
       "description": "Addresses with OWNER_ROLE.",
-      "severity": "HIGH",
       "type": "PERMISSION",
       "handler": {
         "type": "accessControl",
@@ -71,7 +70,6 @@
     },
     "aspPostmen": {
       "description": "Addresses with ASP_POSTMAN.",
-      "severity": "HIGH",
       "type": "PERMISSION",
       "handler": {
         "type": "accessControl",

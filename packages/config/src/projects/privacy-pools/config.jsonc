@@ -4,13 +4,6 @@
   "import": ["../globalConfig.jsonc"],
   "maxAddresses": 50,
   "initialAddresses": ["eth:0xF241d57C6DebAe225c0F2e6eA1529373C9A9C9fB"],
-  "overrides": {
-    "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159": {
-      // holds OWNER_ROLE (UUPS upgrade of the Entrypoint, pool registry, role admin)
-      // and ASP_POSTMAN (association-set roots gating all withdrawals) on the Entrypoint
-      "critical": true
-    }
-  },
   "names": {
     "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d": "WithdrawalVerifier",
     "eth:0x05e4DBD71B56861eeD2Aaa12d00A797F04B5D3c0": "PrivacyPoolUSDS",
