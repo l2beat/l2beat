@@ -6,11 +6,11 @@ UNI governance, acting through a {{timelockDelayDays}}-day timelock, has one pow
 
 - **One contract instead of pool contracts.** A pool is a storage entry in the PoolManager, identified by its two currencies, LP fee, tick spacing, and hook address - change any of these and it is a different pool.
 - **Flash accounting.** Every interaction runs inside a lock: the caller performs any number of swaps, liquidity changes, and donations across any pools, and only net balance deltas settle at the end; the transaction reverts unless all deltas reach zero. Multi-hop trades move no intermediate tokens.
-- **Pool creation is fully permissionless.** Any pair, any static LP fee from 0 to 100%, any tick spacing within code bounds. A pool can instead use a dynamic fee set by its hook, even per swap.
+- **Fee tiers are no longer governance-gated.** Creating a pool was already permissionless in v3, but its fee had to be one of the tiers governance had enabled, each with a fixed tick spacing. A v4 pool takes any static LP fee from 0 to 100% and any tick spacing within code bounds, or a dynamic fee its hook sets, even per swap.
 - **Hooks** (next section): optional per-pool contracts that customize behavior - the main new trust dimension.
 - **The oracle was dropped.** A v4 pool has a price oracle only if its hook implements one.
 - **The protocol fee flipped sides.** v3's fee switch took a share of LP fees; v4's fee is added on top of the LP fee on the swap's input.
-- **Convenience features:** balances can be held inside the PoolManager as transferable ERC-6909 claims, and pools use native ETH without wrapping.
+- **Token handling.** Balances can be held inside the PoolManager as transferable ERC-6909 claims, and pools use native ETH without wrapping.
 
 Concentrated liquidity itself is unchanged: providers commit capital to tick ranges and earn the pool's LP fee while the price is in range.
 
@@ -20,7 +20,7 @@ A hook is bound to its pool permanently at creation. Its capabilities are encode
 
 ### Providing liquidity
 
-Liquidity providers usually mint through the PositionManager, which represents each position as an ERC-721 NFT and pulls tokens through Permit2. It is not a chokepoint: positions can be managed directly against the PoolManager, so no periphery contract can freeze or take them. What can stand between an LP and their funds is the pool's hook - on pools whose hook intercepts liquidity operations, a withdrawal only succeeds if the hook lets it through.
+Liquidity providers usually mint through the PositionManager, which represents each position as an ERC-721 NFT and pulls tokens through Permit2. Positions can be managed directly against the PoolManager, so no periphery contract can freeze or take them. What can stand between an LP and their funds is the pool's hook - on pools whose hook intercepts liquidity operations, a withdrawal only succeeds if the hook lets it through.
 
 ### Swapping
 
