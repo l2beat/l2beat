@@ -163,10 +163,14 @@ if the range is ever extended again, so nothing is lost for good).
 ## Guarding against silent data wipes
 
 `packages/config/src/snapshots/daTracking/snapshot.json` pins, per project,
-every DA tracking configuration identity the backend will index - its `id`,
-a human-readable `label` and its range (`since`, `until` - blocks, or unix
-seconds for eigen-da) - including sovereign projects tracked through a DA
-layer's `sovereignProjectsTrackingConfig`. The guard tests in
+every DA tracking configuration identity the backend will index - its `id`
+and the full `config` it was computed from (label and range are derived from
+the config on load, so they cannot diverge; the id is stored so a change to
+the hash function itself still trips the guard) - including sovereign
+projects tracked through a DA layer's `sovereignProjectsTrackingConfig`.
+After a rotation the snapshot is the only surviving copy of the old
+configuration's fields, which is what lets the freeze notice print a
+paste-ready frozen entry. The guard tests in
 `packages/config/src/snapshots/` enforce it against the configs:
 
 - **no identity disappears** (`guard.test.ts`) - the backend deletes

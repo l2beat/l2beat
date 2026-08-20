@@ -232,7 +232,16 @@ function initLogger(env: Env) {
 
 function printSnapshotDiff(logger: Logger): SnapshotDiff {
   const current = daTrackingDomain.generate()
-  const committed = JSON.parse(fs.readFileSync(SNAPSHOT_PATH, 'utf-8'))
+  const stored: Record<string, { id: string; config: unknown }[]> = JSON.parse(
+    fs.readFileSync(SNAPSHOT_PATH, 'utf-8'),
+  )
+  // The file stores only id + config; label and range are derived on load.
+  const committed = Object.fromEntries(
+    Object.entries(stored).map(([projectId, identities]) => [
+      projectId,
+      identities.map(daTrackingDomain.hydrate),
+    ]),
+  )
   const diff = diffSnapshots(committed, current)
 
   for (const entry of diff.added) {

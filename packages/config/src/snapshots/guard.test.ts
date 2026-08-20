@@ -1,13 +1,19 @@
 import { readFileSync } from 'fs'
 import { compareProject, duplicateIdsMessage } from './compare'
 import { SNAPSHOT_DOMAINS } from './registry'
-import type { Snapshot } from './types'
+import type { Snapshot, StoredSnapshot } from './types'
 
 for (const domain of SNAPSHOT_DOMAINS) {
   describe(`${domain.name} identities`, () => {
     const current = domain.generate()
-    const snapshot: Snapshot = JSON.parse(
+    const stored: StoredSnapshot = JSON.parse(
       readFileSync(domain.snapshotPath, 'utf8'),
+    )
+    const snapshot: Snapshot = Object.fromEntries(
+      Object.entries(stored).map(([projectId, identities]) => [
+        projectId,
+        identities.map(domain.hydrate),
+      ]),
     )
 
     describe('match the committed snapshot', () => {

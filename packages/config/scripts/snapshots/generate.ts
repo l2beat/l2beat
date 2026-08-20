@@ -1,7 +1,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { mergeSnapshots } from '../../src/snapshots/merge'
 import { SNAPSHOT_DOMAINS } from '../../src/snapshots/registry'
-import type { Snapshot } from '../../src/snapshots/types'
+import { type StoredSnapshot, toStored } from '../../src/snapshots/types'
 
 const args = process.argv.slice(2)
 const overwrite = args.includes('--overwrite')
@@ -28,12 +28,21 @@ for (const domain of domains) {
   let snapshot = fresh
   let skipped: string[] = []
   if (!overwrite && existsSync(domain.snapshotPath)) {
-    const committed: Snapshot = JSON.parse(
+    const stored: StoredSnapshot = JSON.parse(
       readFileSync(domain.snapshotPath, 'utf8'),
+    )
+    const committed = Object.fromEntries(
+      Object.entries(stored).map(([projectId, identities]) => [
+        projectId,
+        identities.map(domain.hydrate),
+      ]),
     )
     ;({ merged: snapshot, skipped } = mergeSnapshots(committed, fresh))
   }
-  writeFileSync(domain.snapshotPath, `${JSON.stringify(snapshot, null, 2)}\n`)
+  writeFileSync(
+    domain.snapshotPath,
+    `${JSON.stringify(toStored(snapshot), null, 2)}\n`,
+  )
   const projectCount = Object.keys(snapshot).length
   const idCount = Object.values(snapshot).flat().length
   console.log(

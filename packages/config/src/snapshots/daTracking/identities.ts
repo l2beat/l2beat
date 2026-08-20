@@ -7,6 +7,7 @@ import type {
   Snapshot,
   SnapshotDomain,
   SnapshotIdentity,
+  StoredIdentity,
 } from '../types'
 
 /**
@@ -46,7 +47,19 @@ export const daTrackingDomain: SnapshotDomain = {
   freezeRecipe: FREEZE_RECIPE,
   rangeChangeRecipe: RANGE_CHANGE_RECIPE,
   freezeSnippet,
+  hydrate,
   generate: () => generateDaTrackingIdentities(getProjects()),
+}
+
+/** See StoredIdentity: label and range are derived, never stored. */
+function hydrate(stored: StoredIdentity): SnapshotIdentity {
+  const config = stored.config as ProjectDaTrackingConfig
+  return {
+    id: stored.id,
+    label: createLabel(config),
+    ...getRange(config),
+    config,
+  }
 }
 
 /**
