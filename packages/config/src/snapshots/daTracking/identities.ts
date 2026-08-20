@@ -31,7 +31,7 @@ const FREEZE_RECIPE = [
  * with the same id.
  */
 const RANGE_CHANGE_RECIPE = [
-  'The id hashes the identity fields and NOT the range, so this is the same configuration with a moved window. The DA indexers have no trimData support yet, so on deploy ANY range change - closing an entry with untilBlock included - wipes the configuration and re-indexes it from its since; that is slow and only lossless where the layer still serves the old data.',
+  'The id hashes the identity fields and NOT the range, so this is the same configuration with a moved window. On deploy the backend trims the indexed data to the new range: raising since or lowering/setting until deletes only the records outside it (plus up to an hour at the edited edge - records are hourly buckets); lowering since still wipes the configuration and re-indexes it from the new start. See "Editing sinceBlock / untilBlock" in docs/da-tracking.md.',
   "- If you did not intend the move (usually discovery drift on a sinceBlock): pin the range by writing the snapshot's since/until into the project's .ts as literals instead of the discovered values, and leave the snapshot alone.",
   "- If you intended it (you just closed an open entry with 'untilBlock' while freezing it, or you are deliberately correcting a range): run 'pnpm snapshots:generate' in packages/config and commit the updated snapshot.",
   'Do not resolve it by freezing the entry and adding a second one with the same identity fields - both would hash to the same id.',
@@ -54,9 +54,7 @@ export const daTrackingDomain: SnapshotDomain = {
  * keys indexed DA data by - see createDaTrackingId in @l2beat/shared - and the
  * ranges are the exact values it syncs between.
  */
-export function generateDaTrackingIdentities(
-  projects: BaseProject[],
-): Snapshot {
+function generateDaTrackingIdentities(projects: BaseProject[]): Snapshot {
   const result: Record<string, SnapshotIdentity[]> = {}
 
   const add = (projectId: string, config: ProjectDaTrackingConfig) => {
@@ -95,13 +93,13 @@ export function generateDaTrackingIdentities(
 }
 
 /** Blocks for the block-based layers, unix seconds for eigen-da. */
-export function getRange(config: ProjectDaTrackingConfig): Range {
+function getRange(config: ProjectDaTrackingConfig): Range {
   return config.type === 'eigen-da'
     ? { since: config.sinceTimestamp, until: config.untilTimestamp }
     : { since: config.sinceBlock, until: config.untilBlock }
 }
 
-export function createLabel(config: ProjectDaTrackingConfig): string {
+function createLabel(config: ProjectDaTrackingConfig): string {
   switch (config.type) {
     case 'ethereum': {
       const sequencers = config.sequencers

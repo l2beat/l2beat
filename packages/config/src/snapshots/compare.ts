@@ -1,4 +1,4 @@
-import type { Range, SnapshotDomain, SnapshotIdentity } from './types'
+import type { Range, Snapshot, SnapshotDomain, SnapshotIdentity } from './types'
 
 /**
  * Appended to every message that reports data loss: resolving it takes
@@ -39,6 +39,49 @@ export function findRangeChanges(
     })
   }
   return changes
+}
+
+export interface SnapshotDiff {
+  /** Not in the committed snapshot yet - the backend will sync them from scratch. */
+  added: (SnapshotIdentity & { projectId: string })[]
+  /** Committed ids that no longer exist - the backend wipes their data on deploy. */
+  missing: (SnapshotIdentity & { projectId: string })[]
+  /** Same id, moved window - the backend trims or re-indexes to the new range. */
+  rangeChanges: (RangeChange & { projectId: string })[]
+  unchanged: number
+}
+
+/** The one comparison both the guard test and 'da:preview' report from. */
+export function diffSnapshots(
+  committed: Snapshot,
+  current: Snapshot,
+): SnapshotDiff {
+  const diff: SnapshotDiff = {
+    added: [],
+    missing: [],
+    rangeChanges: [],
+    unchanged: 0,
+  }
+  for (const projectId of new Set([
+    ...Object.keys(committed),
+    ...Object.keys(current),
+  ])) {
+    const old = committed[projectId] ?? []
+    const now = current[projectId] ?? []
+    const oldIds = new Set(old.map((e) => e.id))
+    const nowIds = new Set(now.map((e) => e.id))
+    diff.missing.push(
+      ...old.filter((e) => !nowIds.has(e.id)).map((e) => ({ projectId, ...e })),
+    )
+    diff.added.push(
+      ...now.filter((e) => !oldIds.has(e.id)).map((e) => ({ projectId, ...e })),
+    )
+    diff.rangeChanges.push(
+      ...findRangeChanges(old, now).map((c) => ({ projectId, ...c })),
+    )
+    diff.unchanged += old.filter((e) => nowIds.has(e.id)).length
+  }
+  return diff
 }
 
 export function formatRange(range: Range): string {

@@ -1,8 +1,9 @@
 import { readFileSync } from 'fs'
+import groupBy from 'lodash/groupBy'
 import {
   additionMessage,
+  diffSnapshots,
   duplicateIdsMessage,
-  findRangeChanges,
   rangeChangeMessage,
   removalMessage,
 } from './compare'
@@ -15,44 +16,45 @@ for (const domain of SNAPSHOT_DOMAINS) {
     const snapshot: Snapshot = JSON.parse(
       readFileSync(domain.snapshotPath, 'utf8'),
     )
+    const diff = diffSnapshots(snapshot, current)
 
     describe('no previously known identity disappeared', () => {
-      for (const [projectId, identities] of Object.entries(snapshot)) {
+      const missing = groupBy(diff.missing, (e) => e.projectId)
+      for (const projectId of Object.keys(snapshot)) {
         it(projectId, () => {
-          const currentIds = new Set(
-            (current[projectId] ?? []).map((e) => e.id),
-          )
-          const missing = identities.filter((e) => !currentIds.has(e.id))
-          if (missing.length > 0) {
-            throw new Error(removalMessage(domain, projectId, missing))
+          if (missing[projectId]) {
+            throw new Error(
+              removalMessage(domain, projectId, missing[projectId]),
+            )
           }
         })
       }
     })
 
     describe('no previously known range changed', () => {
-      // A moved range is as destructive as a removed id: the backend re-syncs
-      // the configuration to the new range. Ranges are often discovery-driven,
-      // so this catches drift nobody typed by hand.
-      for (const [projectId, identities] of Object.entries(snapshot)) {
+      // A moved range is as destructive as a removed id: the backend trims or
+      // re-indexes the configuration to the new range. Ranges are often
+      // discovery-driven, so this catches drift nobody typed by hand.
+      const changed = groupBy(diff.rangeChanges, (e) => e.projectId)
+      for (const projectId of Object.keys(snapshot)) {
         it(projectId, () => {
-          const changes = findRangeChanges(identities, current[projectId] ?? [])
-          if (changes.length > 0) {
-            throw new Error(rangeChangeMessage(domain, projectId, changes))
+          if (changed[projectId]) {
+            throw new Error(
+              rangeChangeMessage(domain, projectId, changed[projectId]),
+            )
           }
         })
       }
     })
 
     describe('snapshot is up to date', () => {
-      for (const [projectId, identities] of Object.entries(current)) {
+      const added = groupBy(diff.added, (e) => e.projectId)
+      for (const projectId of Object.keys(current)) {
         it(projectId, () => {
-          const snapshotIds = new Set(
-            (snapshot[projectId] ?? []).map((e) => e.id),
-          )
-          const unknown = identities.filter((e) => !snapshotIds.has(e.id))
-          if (unknown.length > 0) {
-            throw new Error(additionMessage(domain, projectId, unknown))
+          if (added[projectId]) {
+            throw new Error(
+              additionMessage(domain, projectId, added[projectId]),
+            )
           }
         })
       }

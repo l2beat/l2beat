@@ -1,6 +1,7 @@
 import { expect } from 'earl'
 import {
   AI_GUARD_RAIL,
+  diffSnapshots,
   findRangeChanges,
   rangeChangeMessage,
   removalMessage,
@@ -81,5 +82,48 @@ describe(rangeChangeMessage.name, () => {
     expect(message).toInclude('- a (label a): 100 -> open => 100 -> 200')
     expect(message).toInclude('RANGE CHANGE RECIPE')
     expect(message).toInclude(AI_GUARD_RAIL)
+  })
+})
+
+describe(diffSnapshots.name, () => {
+  it('classifies added, missing, range-changed and unchanged identities', () => {
+    const diff = diffSnapshots(
+      {
+        alpha: [identity('kept', 100), identity('gone', 1, 50)],
+        beta: [identity('moved', 100)],
+      },
+      {
+        alpha: [identity('kept', 100), identity('new', 2)],
+        beta: [identity('moved', 100, 200)],
+        gamma: [identity('fresh', 5)],
+      },
+    )
+    expect(diff.missing).toEqual([
+      { projectId: 'alpha', ...identity('gone', 1, 50) },
+    ])
+    expect(diff.added).toEqual([
+      { projectId: 'alpha', ...identity('new', 2) },
+      { projectId: 'gamma', ...identity('fresh', 5) },
+    ])
+    expect(diff.rangeChanges).toEqual([
+      {
+        projectId: 'beta',
+        id: 'moved',
+        label: 'label moved',
+        old: { since: 100, until: undefined },
+        new: { since: 100, until: 200 },
+      },
+    ])
+    expect(diff.unchanged).toEqual(2)
+  })
+
+  it('reports nothing for identical snapshots', () => {
+    const snapshot = { alpha: [identity('a', 100, 200)] }
+    expect(diffSnapshots(snapshot, snapshot)).toEqual({
+      added: [],
+      missing: [],
+      rangeChanges: [],
+      unchanged: 1,
+    })
   })
 })

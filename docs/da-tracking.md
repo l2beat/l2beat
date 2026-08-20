@@ -119,12 +119,12 @@ layer's `sovereignProjectsTrackingConfig`. The guard tests in
   configurations whose id is gone and wipes everything indexed under them;
 - **no range moves** (`guard.test.ts`) - the id hashes the identity fields
   only, so a changed `sinceBlock`/`untilBlock`/`sinceTimestamp`/
-  `untilTimestamp` keeps the id but makes the backend re-sync the
-  configuration to the new range. Without `trimData` support (the DA indexers
-  today) any range change - closing an entry with `untilBlock` included - is
-  a full wipe and re-index from `since`: slow, and only lossless where the
-  layer still serves the old data. The failure prints the old and the new
-  range;
+  `untilTimestamp` keeps the id while the backend re-syncs the configuration
+  to the new range: raising `since` or lowering/setting `until` trims the
+  out-of-range records (see the editing sections above for the exact
+  bucket-edge behaviour), lowering `since` wipes and re-indexes from the new
+  start. The guard makes every such move an explicit decision; the failure
+  prints the old and the new range;
 - the snapshot is up to date and no two configs hash to the same id.
 
 Every failure message says what the backend would do and how to resolve it.
@@ -164,7 +164,9 @@ to the same id). If the move is unintended - usually discovery drift on a
 `sinceBlock` - write the snapshot's `since`/`until` into the project's `.ts`
 as literals and leave the snapshot alone. If it is intended (you just closed
 an entry with `untilBlock` while freezing it, or you are deliberately
-correcting a range), regenerate the snapshot.
+correcting a range), regenerate the snapshot knowing what it costs: a raised
+`since` or lowered `until` trims the records outside the new range, a
+lowered `since` re-indexes the configuration from scratch.
 
 ### Regenerating the snapshot
 
