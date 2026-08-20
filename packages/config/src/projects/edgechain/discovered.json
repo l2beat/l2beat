@@ -1,7 +1,7 @@
 {
   "name": "edgechain",
   "timestamp": 1781176973,
-  "configHash": "0x65361a4bf4af796701b00747defda098131dcf72710ed5183c0839274546170b",
+  "configHash": "0x9d5e0956cad453735f42805941d45201a65de43395c0518f05c5f07f414aa32f",
   "entries": [
     {
       "address": "arb1:0x001271c57AeC639952B5201D052767c316755512",

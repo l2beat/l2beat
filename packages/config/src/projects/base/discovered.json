@@ -1,7 +1,7 @@
 {
   "name": "base",
   "timestamp": 1785226129,
-  "configHash": "0x3c7d911b31eed3f54dcb4ea48c72f855af021822c67644fb80d4c7510879613b",
+  "configHash": "0xc50c3da8ae27ada487838c2252a3b1065d0b2a7299911425bda1d4022d438cd0",
   "entries": [
     {
       "name": "FeeDisburser",

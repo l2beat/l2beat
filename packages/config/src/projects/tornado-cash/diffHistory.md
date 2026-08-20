@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x0f121e3aa3dacec00502a316de3c7471a442d50e
+Generated with discovered.json: 0x18b510d0f14e51af3d86c8f3d31aeedcf19536f0
 
-# Diff at Wed, 19 Aug 2026 09:29:14 GMT:
+# Diff at Thu, 20 Aug 2026 06:21:37 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1783068981
+- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1783068981
 - current timestamp: 1783068981
 
 ## Description
 
-Classify Tornado Cash critical contracts for the ossification factor: pool templates, withdraw Verifier, and MiMCHasher are flagged critical.
+Classify critical contracts and trust-defining value severities for the ossification factor.
 
 ## Config/verification related changes
 
@@ -205,7 +205,7 @@ discovery. Values are for block 1783068981 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x80b6786b458bb7d7e4ce214aa98baa2fd3882b24
+Generated with discovered.json: 0x20c0960a1fae73c6cf95e435cb22b97b777ef4e3
 
 # Diff at Thu, 30 Jul 2026 14:13:58 GMT:
 

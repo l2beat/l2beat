@@ -1,7 +1,7 @@
 {
   "name": "educhain",
   "timestamp": 1785409703,
-  "configHash": "0x5d04e5f10c6092328e7836a79c6dcdfd732f44182e86912b72fddca3beb3bcac",
+  "configHash": "0xf27c8026758915086aac6f66ba6b7d637c5e4e51cbab4e63bee07e30697b33cd",
   "entries": [
     {
       "name": "ChallengeManager",

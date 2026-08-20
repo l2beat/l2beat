@@ -34,7 +34,7 @@ export async function getOssificationEntries(): Promise<OssificationEntry[]> {
       name: project.name,
       icon: manifest.getUrl(`/icons/${project.slug}.png`),
       href: project.scalingInfo
-        ? `/scaling/projects/${project.slug}#ossification`
+        ? `/layer2s/projects/${project.slug}#ossification`
         : project.privacyInfo
           ? `/privacy/projects/${project.slug}#ossification`
           : undefined,

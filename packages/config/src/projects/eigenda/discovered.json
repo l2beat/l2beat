@@ -1,7 +1,7 @@
 {
   "name": "eigenda",
   "timestamp": 1784811471,
-  "configHash": "0x9b6ee882d4c6d331bebd11aab856a441743aba4a7d311a15dcabe8c32c3724a4",
+  "configHash": "0x4d38e2ed74b1c2cd3c26e18cea88385fa993421c4991a531fe80463fa490aaf2",
   "entries": [
     {
       "name": "EigenDAOperationsMultisig",

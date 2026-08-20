@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xb81990064060a8bd8cf5be90705a7eab71fa3ac5
+Generated with discovered.json: 0x5fa56b423f00a74f868dd257e903ba1c77ed0a95
 
-# Diff at Wed, 19 Aug 2026 10:01:59 GMT:
+# Diff at Thu, 20 Aug 2026 06:21:37 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1782911432
+- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1782911432
 - current timestamp: 1782911432
 
 ## Description
@@ -98,7 +98,7 @@ discovery. Values are for block 1782911432 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xfd12a9dfa4800f26565a667e831f8ce158e917dd
+Generated with discovered.json: 0x09688631f71786263bf5c638c2caea3d2fec91f5
 
 # Diff at Thu, 30 Jul 2026 11:25:55 GMT:
 

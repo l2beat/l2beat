@@ -1,20 +1,20 @@
-Generated with discovered.json: 0x59d709bf0106fbf5a25389605fc5a09c16b14d69
+Generated with discovered.json: 0xcfd2849c589234783d086a780b83215ebea8d4a7
 
-# Diff at Wed, 19 Aug 2026 10:21:33 GMT:
+# Diff at Thu, 20 Aug 2026 06:21:27 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1782469580
-- current timestamp: 1782469580
+- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1787147569
+- current timestamp: 1787147569
 
 ## Description
 
-Refresh after ossification criticality classification (critical flags + trust-defining severities).
+Classify critical contracts and trust-defining value severities for the ossification factor.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1782469580 (main branch discovery), not current.
+discovery. Values are for block 1787147569 (main branch discovery), not current.
 
 ```diff
     contract TimelockSCEmergency (eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44) [scroll/L1Timelock] {
@@ -167,6 +167,12 @@ discovery. Values are for block 1782469580 (main branch discovery), not current.
 ```diff
     contract PlonkVerifierFeynmanV2 (eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C) [N/A] {
     +++ description: None
+      sourceHashes:
+-        ["0x0ffd802e46395eb0f9e68316cd3afa259549980515f4922777333fc64f675834"]
+      references:
+-        [{"text":"Source Code","href":"https://l2beat.com/zk-catalog/openvmprover#verifiers"}]
+      unverified:
++        true
       critical:
 +        true
     }
@@ -511,6 +517,36 @@ discovery. Values are for block 1782469580 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
+    }
+```
+
+Generated with discovered.json: 0xb1db2f4ba97b6494ae9c4c3d33448cbe238e13c9
+
+# Diff at Wed, 19 Aug 2026 12:34:33 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a370e767776b076bdee7fe699dbe0b6597849e65 block: 1782469580
+- current timestamp: 1782469580
+
+## Description
+
+Marked verifier contract as source-verified since its bytecode was successfully reproduced in zk catalog.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782469580 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierFeynmanV2 (eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C) [N/A] {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes:
++        ["0x0ffd802e46395eb0f9e68316cd3afa259549980515f4922777333fc64f675834"]
+      references:
++        [{"text":"Source Code","href":"https://l2beat.com/zk-catalog/openvmprover#verifiers"}]
     }
 ```
 

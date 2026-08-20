@@ -1,11 +1,11 @@
 import compact from 'lodash/compact'
-import type { ScalingSummaryEntry } from '../scaling/summary/getScalingSummaryEntries'
-import type { SevenDayTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
-import type { TvsTableData } from '../scaling/tvs/getTvsTableData'
-import { getAssociatedTokenWarning } from '../scaling/tvs/utils/getAssociatedTokenWarning'
+import type { L2SummaryEntry } from '../layer2s/summary/getL2SummaryEntries'
+import type { SevenDayTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
+import type { TvsTableData } from '../layer2s/tvs/getTvsTableData'
+import { getAssociatedTokenWarning } from '../layer2s/tvs/utils/getAssociatedTokenWarning'
 
 export function getHomeTopChainsTvsData(
-  entries: ScalingSummaryEntry[],
+  entries: L2SummaryEntry[],
   breakdown: SevenDayTvsBreakdown,
 ): TvsTableData {
   const result: TvsTableData = {}

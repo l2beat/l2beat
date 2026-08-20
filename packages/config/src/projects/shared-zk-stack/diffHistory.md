@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xf42f9db9b8e5a7b4d6e1091c0845d40fd87a939a
+Generated with discovered.json: 0x8f0234758f29ab2df161f4744bfb6b85997e5a68
 
-# Diff at Wed, 19 Aug 2026 13:41:36 GMT:
+# Diff at Thu, 20 Aug 2026 06:21:28 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@4731bd788a7ae14974e59d028525e3b4a6e768b2 block: 1786965974
+- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1786965974
 - current timestamp: 1786965974
 
 ## Description
 
-Refresh after shared-zk-stack ossification curation.
+Classify critical contracts and trust-defining value severities for the ossification factor.
 
 ## Config/verification related changes
 
@@ -182,7 +182,7 @@ discovery. Values are for block 1786965974 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xc7b577a4e26ac485096318793ca1b23305fd7c1b
+Generated with discovered.json: 0xd51bf50387101057fc637ed55e3ce41632dfab79
 
 # Diff at Mon, 17 Aug 2026 11:27:19 GMT:
 

@@ -91,10 +91,11 @@ Deliberate design decisions (do not re-litigate casually):
   for classification. `scripts/ossification-smoke.ts` — cohort score/bounty table
   (`--perimeter` lists contract names; positional project ids limit the cohort).
 - UI: `components/projects/sections/OssificationSection.tsx`, wired in
-  `getScalingProjectEntry.ts` and `getPrivacyProjectEntry.ts`.
-- Comparison page: `/scaling/risk/ossification` (mirrors the sequencing risk page) —
-  `pages/scaling/risk/ossification/*` + `getOssificationEntries.ts` (spans scaling,
-  privacy, and DeFi projects; wired in ScalingRouter, pageLoaders, pagePaths,
+  `getL2ProjectEntry.ts` and `getPrivacyProjectEntry.ts` (the frontend renamed
+  "scaling" to "layer2s" across pages/features/URLs in #12538).
+- Comparison page: `/layer2s/risk/ossification` (mirrors the sequencing risk page) —
+  `pages/layer2s/risk/ossification/*` + `getOssificationEntries.ts` (spans scaling,
+  privacy, and DeFi projects; wired in L2Router, pageLoaders, pagePaths,
   navGroups, searchBarPages).
 - Discovery support for the flag: `ColorConfig.ts`, `colorize.ts`, `toDiscoveryOutput.ts`
   (`sortEntry` whitelists keys — new entry fields must be added there), `output/types.ts`.

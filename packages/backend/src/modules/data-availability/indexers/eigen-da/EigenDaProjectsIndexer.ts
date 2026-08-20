@@ -8,6 +8,7 @@ import { ManagedMultiIndexer } from '../../../../tools/uif/multi/ManagedMultiInd
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
+  TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../../tools/uif/multi/types'
 import { mapEigenProjectData } from './mapEigenProjectData'
@@ -42,10 +43,18 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
     )
   }
 
+  /**
+   * The active `configurations` are intentionally unused: the daily file
+   * fetched at 02:00 holds the PREVIOUS day, so "active at this height" is the
+   * wrong window for it. Ranges are enforced per record in getByProjectData
+   * instead. ManagedMultiIndexer is still worth it for the per-configuration
+   * lifecycle: backfill of a new configuration from its since, wipe on removal,
+   * trim / re-index on range edits.
+   */
   override async multiUpdate(
     from: number,
     to: number,
-    configurations: Configuration<TimestampDaIndexedConfig>[],
+    _configurations: Configuration<TimestampDaIndexedConfig>[],
   ) {
     const adjustedFrom = UnixTime.toStartOf(from, 'hour')
     const adjustedTo = Math.min(adjustedFrom + UnixTime.HOUR, to)
@@ -92,7 +101,6 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
       this.logger.info('Saved DA metrics into DB', {
         from,
         to: adjustedTo,
-        configurations: configurations.length,
         records: projectData.length,
       })
 
@@ -136,6 +144,34 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
         configurations: configurations.length,
         deletedRecords,
       })
+    }
+  }
+
+  override async trimData(
+    configurations: TrimRemovalConfiguration[],
+  ): Promise<void> {
+    for (const configuration of configurations) {
+      // Records are hourly buckets, so cut at full hours: keep the bucket holding
+      // the new sinceTimestamp (range ends at since - 1; nothing re-indexes it),
+      // drop the bucket holding the new untilTimestamp (range starts at until + 1;
+      // it is re-fetched if the range grows again). Same rule as DaIndexer.
+      const from = UnixTime.toStartOf(configuration.range[0], 'hour')
+      const to = UnixTime.toStartOf(configuration.range[1] + 1, 'hour') - 1
+      const deletedRecords =
+        await this.$.db.dataAvailability.deleteByConfigInTimeRange(
+          configuration.id,
+          from,
+          to,
+        )
+
+      if (deletedRecords > 0) {
+        this.logger.info('Trimmed DA records for configuration', {
+          id: configuration.id,
+          from,
+          to,
+          deletedRecords,
+        })
+      }
     }
   }
 

@@ -101,7 +101,18 @@ function scanProject(projectId: string): HistoricalContract[] {
   >()
 
   for (const snapshot of listSnapshots(projectId)) {
-    let parsed: any
+    interface SnapshotContract {
+      type?: string
+      address?: unknown
+      name?: string
+      sinceTimestamp?: number
+      values?: { $pastUpgrades?: unknown }
+    }
+    let parsed: {
+      chain?: string
+      entries?: SnapshotContract[]
+      contracts?: SnapshotContract[]
+    }
     try {
       parsed = JSON.parse(git(['show', `${snapshot.commit}:${snapshot.path}`]))
     } catch {
@@ -111,8 +122,8 @@ function scanProject(projectId: string): HistoricalContract[] {
     const chainDir = path.basename(path.dirname(snapshot.path))
     const longChain =
       parsed.chain ?? (chainDir === projectId ? 'ethereum' : chainDir)
-    const contracts: any[] =
-      parsed.entries?.filter((e: any) => e.type === 'Contract') ??
+    const contracts: SnapshotContract[] =
+      parsed.entries?.filter((e) => e.type === 'Contract') ??
       parsed.contracts ??
       []
 
@@ -159,7 +170,11 @@ function scanProject(projectId: string): HistoricalContract[] {
     'discovered.json',
   )
   const current = new Set(
-    (JSON.parse(readFileSync(currentPath, 'utf-8')).entries as any[])
+    (
+      JSON.parse(readFileSync(currentPath, 'utf-8')).entries as {
+        address?: unknown
+      }[]
+    )
       .filter((e) => typeof e.address === 'string')
       .map((e) => (e.address as string).toLowerCase()),
   )

@@ -37,12 +37,16 @@ const CurrencyObject = v.object({
     .optional(),
 })
 
+const NullableString = v
+  .union([v.string(), v.null()])
+  .transform((value) => value ?? undefined)
+
 const AppFee = v.object({
-  recipient: v.string().optional(),
-  bps: v.string().optional(),
-  amount: v.string().optional(),
-  amountUsd: v.string().optional(),
-  amountUsdCurrent: v.string().optional(),
+  recipient: NullableString.optional(),
+  bps: NullableString.optional(),
+  amount: NullableString.optional(),
+  amountUsd: NullableString.optional(),
+  amountUsdCurrent: NullableString.optional(),
 })
 
 const CurrencyInOut = v.object({

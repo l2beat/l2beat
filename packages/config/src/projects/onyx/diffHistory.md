@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf0f9b8b9e35a287b8f0e6ce0b4b3ee9a59198ab5
+Generated with discovered.json: 0x91ae999e93f42e15050ec28e1e8d26d175d24205
 
-# Diff at Wed, 19 Aug 2026 10:01:56 GMT:
+# Diff at Thu, 20 Aug 2026 06:21:35 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1783603061
-- current timestamp: 1783603061
+- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1787132849
+- current timestamp: 1787132849
 
 ## Description
 
@@ -14,7 +14,7 @@ Classify critical contracts and trust-defining value severities for the ossifica
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1783603061 (main branch discovery), not current.
+discovery. Values are for block 1787132849 (main branch discovery), not current.
 
 ```diff
     contract RollupEventInbox (base:0x0961428Ce999C15f5E2624d0bEbd9729387e8185) [orbitstack/RollupEventInbox] {
@@ -143,6 +143,45 @@ discovery. Values are for block 1783603061 (main branch discovery), not current.
 +        true
       fieldMeta:
 +        {"executors":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0xa7fc7c224104050207dc265804ec6f148e1c2fb8
+
+# Diff at Wed, 19 Aug 2026 12:45:20 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@0ba95775cb09bf7f5dc60188c1169153757538d5 block: 1783603061
+- current timestamp: 1787132849
+
+## Description
+
+RollupProxy: `stakerCount` 1 → 0. The sole whitelisted validator withdrew its stake on 2026-08-14 (`returnOldDeposit`, then `withdrawStakerFunds`) after posting its last assertion on 2026-08-13; the last sequencer batch was on 2026-08-12. No staked validator remains to propose or confirm assertions.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      values.stakerCount:
+-        1
++        0
+      usedTypes.0.arg.0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97:
+-        "ArbOS v61 wasmModuleRoot"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783603061 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      usedTypes.0.arg.0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97:
++        "ArbOS v61 wasmModuleRoot"
     }
 ```
 

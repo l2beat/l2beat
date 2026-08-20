@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x7b8fef323a3a70d2eaab84521ffbb581d577c7a3
+Generated with discovered.json: 0x6bd33253801c71c7d8b214fe92429bd454f198a7
 
-# Diff at Wed, 19 Aug 2026 10:01:58 GMT:
+# Diff at Thu, 20 Aug 2026 06:21:36 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@9bb32d7619dc25d8b4bf714418c55dc200c814d8 block: 1786966187
-- current timestamp: 1786966187
+- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1787147637
+- current timestamp: 1787147637
 
 ## Description
 
@@ -14,7 +14,7 @@ Classify critical contracts and trust-defining value severities for the ossifica
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1786966187 (main branch discovery), not current.
+discovery. Values are for block 1787147637 (main branch discovery), not current.
 
 ```diff
     contract Diamond (eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) [shared-zk-stack/Diamond] {
@@ -79,6 +79,31 @@ discovery. Values are for block 1786966187 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
+    }
+```
+
+Generated with discovered.json: 0x5b79bc173dabb06508ae2956c0cef714ae350a43
+
+# Diff at Wed, 19 Aug 2026 10:53:27 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a370e767776b076bdee7fe699dbe0b6597849e65 block: 1786966187
+- current timestamp: 1787136744
+
+## Description
+
+Removed 1 member of sophon ms.
+
+## Watched changes
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x2Ea9CcB15Ceb6c228786a3d4837B0bA3e9736D97"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
     }
 ```
 

@@ -1,7 +1,7 @@
 {
   "name": "zkcandy",
   "timestamp": 1786615292,
-  "configHash": "0xa8c0e14da1e5597e07b1525c3d86ad0d69019025999328a679b1f773335f29c0",
+  "configHash": "0xac1273be990de8aacd6f9797bc0864027455c80c1fed7f7c64b4ba3ba07cdeb0",
   "entries": [
     {
       "name": "ValidatorTimelock",
