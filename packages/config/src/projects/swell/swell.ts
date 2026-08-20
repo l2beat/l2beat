@@ -34,7 +34,7 @@ export const swell = opStackL2({
   archivedAt: UnixTime(1785940019), // 2026-08-05T14:26:59Z
   discovery,
   genesisTimestamp,
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),

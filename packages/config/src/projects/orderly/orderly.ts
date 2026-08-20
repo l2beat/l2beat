@@ -134,10 +134,14 @@ export const orderly: ScalingProject = opStackL2({
     ],
   },
   genesisTimestamp: UnixTime(1696566432),
-  celestiaDa: {
-    sinceBlock: 0, // Edge Case: config added @ DA Module start
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABYTLU4hLOUU=',
-  },
+  daTracking: [
+    {
+      type: 'celestia',
+      daLayer: ProjectId('celestia'),
+      sinceBlock: 0, // Edge Case: config added @ DA Module start
+      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABYTLU4hLOUU=',
+    },
+  ],
   isNodeAvailable: false,
   milestones: [
     {

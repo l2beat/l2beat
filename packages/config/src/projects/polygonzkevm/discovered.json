@@ -1,7 +1,7 @@
 {
   "name": "polygonzkevm",
   "timestamp": 1767608184,
-  "configHash": "0x087d0d46863c58353642f5c3a4e4a4fbe2f91c739a06f0c1c5f57aa587e85ba1",
+  "configHash": "0x7b0820f3e81914fee65e0434dd9568cd41b65db98707947820aa0244f8b5c71b",
   "entries": [
     {
       "name": "AgglayerGateway",

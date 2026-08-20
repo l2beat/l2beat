@@ -1,7 +1,7 @@
 {
   "name": "penchain",
   "timestamp": 1777962030,
-  "configHash": "0xdc8e49f326b2907312b7a1e3fcb353d383e2f1a0bb4f6156a8b79c2f7d3f6b26",
+  "configHash": "0x7be2f5697cd8789bb389e253c0cf1cb351aebbdfcee045060faf98923f635e3a",
   "entries": [
     {
       "name": "AgglayerGateway",

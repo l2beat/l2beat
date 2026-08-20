@@ -103,6 +103,10 @@ const mainPages: MainPage[] = [
     title: 'Summary',
   },
   {
+    type: 'defi',
+    title: 'Summary',
+  },
+  {
     title: 'ZK Catalog',
   },
   {

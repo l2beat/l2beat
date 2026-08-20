@@ -1,7 +1,7 @@
 {
   "name": "ethereal",
   "timestamp": 1783426843,
-  "configHash": "0xba8f8978f4790b0eeb2eec7328f631dddceaae928dea8639d615ba5fb1df33a2",
+  "configHash": "0xe8c4faf4f5d0e4ad4b62055708756836926dbd16e9c9961cdc03681c4f19ba22",
   "entries": [
     {
       "name": "SequencerInbox",

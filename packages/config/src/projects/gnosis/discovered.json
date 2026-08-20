@@ -1,7 +1,7 @@
 {
   "name": "gnosis",
   "timestamp": 1784814886,
-  "configHash": "0x06988e7a709b8ccfa128bce502190c656212826342721cd1fbb7ce9031a00736",
+  "configHash": "0x7ab3b29a938d98485abe4a6ff516dd65df1f389827a732b2149aa7ca200dadf4",
   "entries": [
     {
       "address": "eth:0x10DD75875a2a8a284529Ae7223B1aCE410d606bd",

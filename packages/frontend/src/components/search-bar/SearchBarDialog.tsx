@@ -204,7 +204,7 @@ export function SearchBarDialog({ recentlyAdded }: Props) {
                           </div>
                         )}
                         {item.type === 'token' && item.issuer && (
-                          <div className="font-medium text-2xs text-secondary uppercase leading-none tracking-[-1%]">
+                          <div className="font-medium text-2xs text-secondary capitalize leading-none tracking-[-1%]">
                             {item.issuer}
                           </div>
                         )}
@@ -290,6 +290,8 @@ function entryToLabel(entry: AnySearchBarEntry) {
       return 'Ecosystem'
     case 'privacy':
       return 'Privacy'
+    case 'defi':
+      return 'DeFi'
     default:
       assertUnreachable(entry.kind)
   }

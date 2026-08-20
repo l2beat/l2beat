@@ -209,7 +209,13 @@ export async function getL2ProjectEntry(
     }),
     ps.getProjects({
       select: ['display'],
-      optional: ['daBridge', 'scalingInfo', 'daLayer', 'privacyInfo'],
+      optional: [
+        'daBridge',
+        'scalingInfo',
+        'daLayer',
+        'privacyInfo',
+        'defiInfo',
+      ],
     }),
     ps.getProjects({
       select: ['interopConfig'],

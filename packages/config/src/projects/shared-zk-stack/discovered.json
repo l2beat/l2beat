@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "timestamp": 1786965974,
-  "configHash": "0x3cfbef9b419550ca818702997dd476035cf856077dc776dc57bf78ae7be2c697",
+  "configHash": "0x8a4f9ac5e6407af9df77fa182485066ac1fedddf3ea14636b4c213ee5458af1f",
   "entries": [
     {
       "name": "GnosisSafe",

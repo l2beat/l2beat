@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "timestamp": 1786955407,
-  "configHash": "0x4dd5f115c5a69c164ccdcf66d5c02ba417f4bbf018d42049bbba582efb82b51f",
+  "configHash": "0x5818477a5d3509fe254dafba7775a97c0d82d4b7976e53c79e566e533af3f5ef",
   "entries": [
     {
       "name": "PEMCertChainLib",

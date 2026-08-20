@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "timestamp": 1786966191,
-  "configHash": "0x320135d7c7306490d61d9055bcc0b2a24d9d8ec53d52cf67b138f0abe4539f91",
+  "configHash": "0xd1f121dd4bec2ddd9818bfc5c4d30a51c25907f5903b6a9dd25486d8da45eaf8",
   "entries": [
     {
       "name": "ProxyAdmin",

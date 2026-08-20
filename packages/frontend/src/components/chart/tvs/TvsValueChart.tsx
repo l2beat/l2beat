@@ -22,13 +22,13 @@ import {
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 
-interface PrivacyTvlChartDataPoint {
+interface TvsValueChartDataPoint {
   timestamp: number
   value: number
 }
 
 interface Props {
-  data: PrivacyTvlChartDataPoint[] | undefined
+  data: TvsValueChartDataPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
   project?: ChartProject
@@ -42,7 +42,7 @@ const chartMeta = {
   },
 } satisfies ChartMeta
 
-export function PrivacyTvlChart({
+export function TvsValueChart({
   data,
   syncedUntil,
   isLoading,
@@ -57,18 +57,18 @@ export function PrivacyTvlChart({
     >
       <AreaChart responsive data={data} margin={{ top: 20 }}>
         <defs>
-          <PinkFillGradientDef id="privacy-tvl-fill" />
-          <PinkStrokeGradientDef id="privacy-tvl-stroke" />
+          <PinkFillGradientDef id="tvs-value-fill" />
+          <PinkStrokeGradientDef id="tvs-value-stroke" />
         </defs>
         <Area
           dataKey="value"
-          fill="url(#privacy-tvl-fill)"
+          fill="url(#tvs-value-fill)"
           fillOpacity={1}
-          stroke="url(#privacy-tvl-stroke)"
+          stroke="url(#tvs-value-stroke)"
           strokeWidth={2}
           isAnimationActive={false}
         />
-        <ChartTooltip filterNull={false} content={<PrivacyTvlChartTooltip />} />
+        <ChartTooltip filterNull={false} content={<TvsValueChartTooltip />} />
         <ChartCommonComponents
           data={data}
           isLoading={isLoading}
@@ -84,7 +84,7 @@ export function PrivacyTvlChart({
   )
 }
 
-function PrivacyTvlChartTooltip({ payload, label }: CustomChartTooltipProps) {
+function TvsValueChartTooltip({ payload, label }: CustomChartTooltipProps) {
   const { meta } = useChart()
   if (!payload || typeof label !== 'number') return null
 

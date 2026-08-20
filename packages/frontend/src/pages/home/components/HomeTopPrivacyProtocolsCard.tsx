@@ -3,6 +3,7 @@ import { formatCurrency } from '@l2beat/shared-pure'
 import { createColumnHelper, getCoreRowModel } from '@tanstack/react-table'
 import type { ReactNode } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import {
   Tooltip,
   TooltipContent,
@@ -109,6 +110,10 @@ const columns = [
   columnHelper.accessor('totalValueLockedUsd', {
     header: 'TVL',
     cell: (ctx) => {
+      if (!ctx.row.original.hasTvl) {
+        return <NotApplicableBadge />
+      }
+
       const value = ctx.getValue()
       if (value === undefined) {
         return <NoDataBadge />

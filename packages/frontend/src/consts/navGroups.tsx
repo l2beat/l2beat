@@ -4,6 +4,7 @@ import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
+import { DefiIcon } from '~/icons/pages/Defi'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { HomeIcon } from '~/icons/pages/Home'
 import { L2Icon } from '~/icons/pages/L2'
@@ -112,6 +113,15 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     href: '/privacy',
     icon: (
       <PrivacyIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+    ),
+  },
+  env.CLIENT_SIDE_DEFI_ENABLED && {
+    type: 'single',
+    title: 'DeFi',
+    match: 'defi',
+    href: '/defi',
+    icon: (
+      <DefiIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
   },
   {

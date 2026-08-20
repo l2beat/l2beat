@@ -1,7 +1,7 @@
 {
   "name": "intmax",
-  "timestamp": 1778583067,
-  "configHash": "0x896819c68f5ee105b574c3dbedf3b48242f0c22f6287a493c2f7e4bb0bf644e9",
+  "timestamp": 1787230588,
+  "configHash": "0x45c983d5190fbba1a826b81a1cfe035ababfbfb1c6b4780d49fecf08a593491e",
   "entries": [
     {
       "address": "eth:0x110b66ea6F97c0391eEfFDd19CD0cFd73e9871fA",
@@ -161,7 +161,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 46,
+        "getCurrentPeriod": 60,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -189,12 +189,15 @@
       ]
     },
     {
-      "name": "",
+      "name": "ProxyAdmin",
       "address": "eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601",
       "type": "Contract",
-      "unverified": true,
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2",
@@ -204,9 +207,13 @@
       "deployerAddress": "eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371",
       "sinceTimestamp": 1735344335,
       "sinceBlock": 21497263,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
       "implementationNames": {
-        "eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601": ""
+        "eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601": "ProxyAdmin"
       }
     },
     {
@@ -224,6 +231,21 @@
           "permission": "interact",
           "from": "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2",
           "description": "can add and remove permissioned operators, deregister regular operators, register new policies, override existing policies, and in general manage the AVS (e.g. thresholds, strategies) and the connection to EigenLayer.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601",
           "role": ".owner"
         }
       ],
@@ -245,7 +267,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 16,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -734,7 +756,7 @@
           "numPhases": 7,
           "phase0Period": 16
         },
-        "getCurrentPeriod": 325,
+        "getCurrentPeriod": 425,
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
         "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
@@ -784,7 +806,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 46,
+        "getCurrentPeriod": 60,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -1141,6 +1163,17 @@
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "eth:0x7FC138988d13deD38FA22aBc4e15e855c92b092E": [
       "error ECDSAInvalidSignature()",
@@ -1764,6 +1797,7 @@
   },
   "usedTemplates": {
     "eigenlayer/PredicateServiceManager": "0xcd86cf671cd3a2752f83bbda6131c455658841f9daef6307544da099dd4baf39",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "intmax/Claim": "0x96ba300a18f4cb6ac05e9c5f4fcc8b3916daca44ae2a839e88592b0a700c1638",
     "intmax/Contribution": "0x5b054bae35b8a718a705f49eb6b59b86926069d57f1a3a7b698ea12aad64e991",
@@ -1773,6 +1807,6 @@
     "intmax/Rollup": "0x9efdc4c4aebfdd09e6ab16141180d3f9fa8e1bfe833622003535a1d9b98836c6",
     "intmax/Withdrawal": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7"
   },
-  "usedBlockNumbers": { "ethereum": 25078552, "scroll": 33674374 },
-  "permissionsConfigHash": "0xd42e2d06b9670b1d4b25855253402da785780e684dde4bce9708d7b27c5c50f7"
+  "usedBlockNumbers": { "ethereum": 25796469, "scroll": 34702306 },
+  "permissionsConfigHash": "0xf364179f384cc4975d46116b9d70e228523420c5157dc1cf55b672bdb80021ef"
 }

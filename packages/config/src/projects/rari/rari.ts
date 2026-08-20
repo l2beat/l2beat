@@ -1,4 +1,4 @@
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ESPRESSO } from '../../common/sequencing'
@@ -37,10 +37,14 @@ export const rari: ScalingProject = orbitStackL3({
       ],
     },
   },
-  celestiaDa: {
-    sinceBlock: 0, // Edge Case: config added @ DA Module start
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
-  },
+  daTracking: [
+    {
+      type: 'celestia',
+      daLayer: ProjectId('celestia'),
+      sinceBlock: 0, // Edge Case: config added @ DA Module start
+      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
+    },
+  ],
   customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

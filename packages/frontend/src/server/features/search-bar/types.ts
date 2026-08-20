@@ -16,6 +16,7 @@ export type SearchBarProjectEntry = SearchBarEntry & {
     | 'zkCatalog'
     | 'ecosystem'
     | 'privacy'
+    | 'defi'
   l2Category?: ProjectScalingCategory
   filePrepared?: Fuzzysort.Prepared
   projectAddresses?: EthereumAddress[]
