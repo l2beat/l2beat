@@ -1,3 +1,60 @@
+Generated with discovered.json: 0xd51bf50387101057fc637ed55e3ce41632dfab79
+
+# Diff at Mon, 17 Aug 2026 11:27:19 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@9b7337c108d300967ecea6d6606607859d1de669 block: 1786358175
+- current timestamp: 1786965974
+
+## Description
+
+- Registered protocol version v0.30.1 (new chain creation params and `initialCutHash`) on the ChainTypeManager via this emergency proposal: https://tools.l2beat.com/decoder-new/?hash=0x3a9911af580e4ebf84c7f75919e410116e4db91c4184f64d7b82dfbbdf33df1e&data=AwA. The diff to v0.30.0 is the boojum verifier (dual verifier `0xcef0218c0c6db0768e48debee26e41b8dade7081`, called `EraDualVerifier` now), which is already deployed and in use by zksync era and 3 more chains. Two other emergency upgrades are standard pre- and post-upgrade actions (pausing/unpausing migrations): https://tools.l2beat.com/decoder-new/?hash=0xc2510737692fefcb29ddf0a1cef787902cdae933e653da49a8a17ed5aa94276d&data=AwA, https://tools.l2beat.com/decoder-new/?hash=0xb5b9c800a5df2db38d237f6ce4ee144b2079fdfcc1ea717566f80094e5a439dd&data=AwA.
+- A new (non-executable) governance advisory proposal was created on ZkGovOpsGovernor.
+
+## Watched changes
+
+```diff
+    contract ChainTypeManager (eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) [shared-zk-stack/ChainTypeManager] {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,1.
+      description:
+-        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,0."
++        "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,30,1."
+      values.getSemverProtocolVersion.2:
+-        0
++        1
+      values.initialCutHash:
+-        "0xf07174741aabf0e70c64822a1e72400ac7686c001b41fdd917e0a5d577daa0be"
++        "0x655b8c1f90ae993c79348e61a3376e85c5f15c7cfb00f3afbfd6290160f24c89"
+      values.protocolVersion:
+-        128849018880
++        128849018881
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) [shared-zk-stack/ProtocolUpgradeHandler] {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.17:
++        "0xbff51b5d2dd05fdf9d274087e42bb3d98b3ff192cc869c6fc6bf59054989210a"
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.18:
++        "0xeec819f2b758182b9270a85fb1bdea469d69e48fdb90f2c7177500b6fa1bf5e3"
++++ severity: HIGH
+      values.emergencyUpgradesExecuted.19:
++        "0xb1660380be18f4cf30cb1a253d3e91da3e584ca7ae82d7d6fd9675a722d6da5e"
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        2
++        3
+    }
+```
+
 Generated with discovered.json: 0xb6b6e724050569d7c0745dc3f090209c99346c40
 
 # Diff at Mon, 10 Aug 2026 13:10:42 GMT:

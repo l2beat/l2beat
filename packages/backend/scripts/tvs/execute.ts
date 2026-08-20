@@ -1,6 +1,11 @@
 import { type Env, getEnv, Logger, type LogLevel } from '@l2beat/backend-tools'
 import { ProjectService, type TvsToken } from '@l2beat/config'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  formatNumberWithCommas,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   boolean,
   command,
@@ -25,6 +30,11 @@ import type {
 // we have disabled TVS for some projects using feature flags on HEROKU
 // as this script will be phased out soon we decided to hardcode it here
 const DISABLED_PROJECTS = ['kroma', 'treasure', 'real']
+
+const fixedTwoDecimals = {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+}
 
 const args = {
   project: positional({
@@ -322,18 +332,26 @@ function calculateBreakdown(
             assert(tokenConfig, `${t.tokenId} config not found`)
             return {
               symbol: tokenConfig.symbol,
-              amount: formatNumberWithCommas(t.amount),
-              value: '$' + formatNumberWithCommas(t.value),
+              amount: formatNumberWithCommas(t.amount, fixedTwoDecimals),
+              value: '$' + formatNumberWithCommas(t.value, fixedTwoDecimals),
               ...(t.valueForProject !== t.value
                 ? {
                     valueForProject:
-                      '$' + formatNumberWithCommas(t.valueForProject),
+                      '$' +
+                      formatNumberWithCommas(
+                        t.valueForProject,
+                        fixedTwoDecimals,
+                      ),
                   }
                 : {}),
               ...(t.valueForSummary !== t.valueForProject
                 ? {
                     valueForSummary:
-                      '$' + formatNumberWithCommas(t.valueForSummary),
+                      '$' +
+                      formatNumberWithCommas(
+                        t.valueForSummary,
+                        fixedTwoDecimals,
+                      ),
                   }
                 : {}),
             }
@@ -348,18 +366,26 @@ function calculateBreakdown(
             assert(tokenConfig, `${t.tokenId} config not found`)
             return {
               symbol: tokenConfig.symbol,
-              amount: formatNumberWithCommas(t.amount),
-              value: '$' + formatNumberWithCommas(t.value),
+              amount: formatNumberWithCommas(t.amount, fixedTwoDecimals),
+              value: '$' + formatNumberWithCommas(t.value, fixedTwoDecimals),
               ...(t.valueForProject !== t.value
                 ? {
                     valueForProject:
-                      '$' + formatNumberWithCommas(t.valueForProject),
+                      '$' +
+                      formatNumberWithCommas(
+                        t.valueForProject,
+                        fixedTwoDecimals,
+                      ),
                   }
                 : {}),
               ...(t.valueForSummary !== t.valueForProject
                 ? {
                     valueForSummary:
-                      '$' + formatNumberWithCommas(t.valueForSummary),
+                      '$' +
+                      formatNumberWithCommas(
+                        t.valueForSummary,
+                        fixedTwoDecimals,
+                      ),
                   }
                 : {}),
             }
@@ -374,18 +400,26 @@ function calculateBreakdown(
             assert(tokenConfig, `${t.tokenId} config not found`)
             return {
               symbol: tokenConfig.symbol,
-              amount: formatNumberWithCommas(t.amount),
-              value: '$' + formatNumberWithCommas(t.value),
+              amount: formatNumberWithCommas(t.amount, fixedTwoDecimals),
+              value: '$' + formatNumberWithCommas(t.value, fixedTwoDecimals),
               ...(t.valueForProject !== t.value
                 ? {
                     valueForProject:
-                      '$' + formatNumberWithCommas(t.valueForProject),
+                      '$' +
+                      formatNumberWithCommas(
+                        t.valueForProject,
+                        fixedTwoDecimals,
+                      ),
                   }
                 : {}),
               ...(t.valueForSummary !== t.valueForProject
                 ? {
                     valueForSummary:
-                      '$' + formatNumberWithCommas(t.valueForSummary),
+                      '$' +
+                      formatNumberWithCommas(
+                        t.valueForSummary,
+                        fixedTwoDecimals,
+                      ),
                   }
                 : {}),
             }
@@ -461,13 +495,4 @@ function toDollarString(value: number) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })}`
-}
-
-export function formatNumberWithCommas(value: number, precision = 2): string {
-  const formattedNumber = value.toLocaleString('en-US', {
-    minimumFractionDigits: precision,
-    maximumFractionDigits: precision,
-  })
-
-  return formattedNumber
 }

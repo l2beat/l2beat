@@ -70,6 +70,7 @@ describe(TokenIngestionProcessor.name, () => {
         comment: null,
         decimals: 6,
         deploymentTimestamp: UnixTime(1),
+        ignored: false,
         metadata: null,
       }
 
@@ -139,6 +140,7 @@ describe(TokenIngestionProcessor.name, () => {
                 comment: null,
                 decimals: 6,
                 deploymentTimestamp: UnixTime(1),
+                ignored: false,
                 metadata: null,
               },
             ]),
@@ -212,6 +214,7 @@ describe(TokenIngestionProcessor.name, () => {
                 comment: null,
                 decimals: 6,
                 deploymentTimestamp: UnixTime(1),
+                ignored: false,
                 metadata: null,
               },
             ]),
@@ -289,6 +292,7 @@ describe(TokenIngestionProcessor.name, () => {
               comment: null,
               decimals: 18,
               deploymentTimestamp: UnixTime(1),
+              ignored: false,
               metadata: null,
             }),
             getByPrimaryKeys: mockFn().resolvesTo([
@@ -299,6 +303,7 @@ describe(TokenIngestionProcessor.name, () => {
                 comment: null,
                 decimals: 6,
                 deploymentTimestamp: UnixTime(1),
+                ignored: false,
                 metadata: null,
               },
             ]),
@@ -342,6 +347,7 @@ describe(TokenIngestionProcessor.name, () => {
         comment: null,
         decimals: 6,
         deploymentTimestamp: UnixTime(1),
+        ignored: false,
         metadata: null,
       }
       const findByTransferId = mockFn().resolvesTo(
@@ -365,6 +371,7 @@ describe(TokenIngestionProcessor.name, () => {
                 comment: null,
                 decimals: 6,
                 deploymentTimestamp: UnixTime(1),
+                ignored: false,
                 metadata: null,
               },
             ]),
@@ -415,6 +422,7 @@ describe(TokenIngestionProcessor.name, () => {
               comment: null,
               decimals: 6,
               deploymentTimestamp: UnixTime(1),
+              ignored: false,
               metadata: null,
             }),
             getByPrimaryKeys: mockFn().resolvesTo([
@@ -425,6 +433,7 @@ describe(TokenIngestionProcessor.name, () => {
                 comment: null,
                 decimals: 6,
                 deploymentTimestamp: UnixTime(1),
+                ignored: false,
                 metadata: null,
               },
             ]),
@@ -593,6 +602,7 @@ describe(TokenIngestionProcessor.name, () => {
             decimals: 6,
             deploymentTimestamp: UnixTime(1),
             comment: null,
+            ignored: false,
             metadata: null,
             abstractTokenAssignmentProof: { kind: 'coingecko' },
           },
@@ -1258,6 +1268,7 @@ describe(TokenIngestionProcessor.name, () => {
         decimals: 18,
         deploymentTimestamp: UnixTime(1),
         comment: null,
+        ignored: false,
         metadata: null,
       }
 
@@ -1383,6 +1394,7 @@ describe(TokenIngestionProcessor.name, () => {
               decimals: 6,
               deploymentTimestamp: UnixTime(1),
               comment: null,
+              ignored: false,
               metadata: null,
               abstractTokenAssignmentProof: { kind: 'coingecko' },
             },

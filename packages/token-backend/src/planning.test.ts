@@ -222,6 +222,31 @@ describe('planning proof stamping', () => {
       ])
     })
 
+    it('includes ignored changes in the generated plan', async () => {
+      const existing = deployedRecord('ethereum', '0xaaa', 'USDC01')
+      const db = mockDb({ existingDeployed: existing })
+
+      const result = await generatePlan(
+        db,
+        {
+          type: 'UpdateDeployedTokenIntent',
+          pk: { chain: existing.chain, address: existing.address },
+          update: { ignored: true },
+        },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'UpdateDeployedTokenCommand',
+          pk: { chain: existing.chain, address: existing.address },
+          existing,
+          update: { ignored: true },
+        },
+      ])
+    })
+
     it('does not re-stamp the proof when abstractTokenId is the same as existing', async () => {
       const existing = deployedRecord('ethereum', '0xaaa', 'USDC01')
       const db = mockDb({ existingDeployed: existing })
@@ -606,6 +631,7 @@ function deployedRecord(
     decimals: 6,
     deploymentTimestamp: UnixTime(1),
     comment: null,
+    ignored: false,
     metadata: null,
   }
 }

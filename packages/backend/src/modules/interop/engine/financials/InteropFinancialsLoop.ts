@@ -429,16 +429,7 @@ export async function getTokenInfos(
 
     const { deployedToken, abstractToken } = tokenData
 
-    if (!abstractToken) {
-      logger.info('Missing abstract token', { deployedTokenId: d })
-      continue
-    }
-
-    if (!abstractToken.coingeckoId) {
-      logger.info('Missing coingeckoId', {
-        deployedTokenId: d,
-        abstractToken,
-      })
+    if (deployedToken.ignored || !abstractToken || !abstractToken.coingeckoId) {
       continue
     }
 

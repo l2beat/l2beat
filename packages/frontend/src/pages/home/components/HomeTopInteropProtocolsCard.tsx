@@ -14,7 +14,7 @@ import { TopNBadge } from '~/pages/interop/summary/components/TopNBadge'
 import {
   pickTopProtocolEntries,
   TOP_PROTOCOLS_LIMIT,
-} from '~/server/features/scaling/interop/utils/pickTopProtocolEntries'
+} from '~/server/features/layer2s/interop/utils/pickTopProtocolEntries'
 import { useTRPC } from '~/trpc/React'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
@@ -74,13 +74,13 @@ export function HomeTopInteropProtocolsCard({
         href="/interop/summary"
         linkLabel="View all"
       />
-      <div className="mt-3 min-w-0 flex-1">
+      <div className="mt-2 min-w-0 flex-1">
         {isLoading ? (
           <Skeleton className="h-[220px] w-full rounded-sm" />
         ) : showEmpty ? (
           <NoResultsInfo />
         ) : (
-          <BasicTable table={table} tableWrapperClassName="pb-0" />
+          <BasicTable table={table} tableWrapperClassName="pb-0" compact />
         )}
       </div>
     </HomeCard>

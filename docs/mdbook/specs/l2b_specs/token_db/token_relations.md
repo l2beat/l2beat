@@ -407,6 +407,12 @@ node visuals stop growing beyond 2x zoom so additional zoom creates useful
 space between them. Above 2.5x zoom, each edge shows its relation plugin name at
 its midpoint.
 
+An `ignored` deployed token and every relation touching it are omitted when the
+graph payload is built. This is only a graph read-time interpretation: relation
+ingestion and storage remain unchanged, and the ordinary relation endpoints
+continue to return the observations. Removing the flag makes the node and its
+stored edges visible again.
+
 Before drawing, the UI treats every connected component as a cluster and
 sorts the clusters by endpoint count (largest first, with a stable id
 tie-break). Each cluster gets its own force simulation, which is run to

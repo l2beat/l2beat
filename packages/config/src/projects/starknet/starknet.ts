@@ -1,7 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
-  formatLargeNumber,
+  formatNumber,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -93,7 +93,7 @@ function formatMaxTotalBalanceString(
   ) {
     return 'There is no bridge cap.'
   }
-  return `The current bridge cap is ${formatLargeNumber(
+  return `The current bridge cap is ${formatNumber(
     maxTotalBalance / 10 ** decimals,
   )} ${ticker}.`
 }

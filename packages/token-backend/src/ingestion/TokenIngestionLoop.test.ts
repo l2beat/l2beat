@@ -1144,6 +1144,7 @@ function deployedToken(
     decimals: 6,
     deploymentTimestamp: UnixTime(1),
     metadata: null,
+    ignored: false,
     ...overrides,
   }
 }

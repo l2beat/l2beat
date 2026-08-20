@@ -20,18 +20,31 @@ export function extractDiffBlockSpans(body: string): DiffBlockSpan[] {
 }
 
 export function countDiffChanges(body: string): number {
+  return extractDiffBlockSpans(body)
+    .map(({ content }) => countChangesInDiff(content.split('\n')))
+    .reduce((sum, count) => sum + count, 0)
+}
+
+function countChangesInDiff(lines: string[]): number {
   let count = 0
-  for (const { content } of extractDiffBlockSpans(body)) {
-    for (const line of content.split('\n')) {
-      if (line.startsWith('+++') || line.startsWith('---')) {
-        continue
-      }
-      if (/^\s*[+-]\s/.test(line)) {
-        count++
-      }
+  let previousWasChange = false
+
+  for (const line of lines) {
+    const isChange = isChangeLine(line)
+    if (isChange && !previousWasChange) {
+      count++
     }
+    previousWasChange = isChange
   }
+
   return count
+}
+
+function isChangeLine(line: string): boolean {
+  if (line.startsWith('+++') || line.startsWith('---')) {
+    return false
+  }
+  return /^\s*[+-]\s/.test(line)
 }
 
 export function isHighSeverityDiffBody(body: string): boolean {

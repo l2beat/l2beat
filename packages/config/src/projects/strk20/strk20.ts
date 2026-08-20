@@ -146,6 +146,13 @@ export const strk20: BaseProject = {
       description:
         'All private actions include auditor-encrypted metadata, so whoever controls the auditor private key can decrypt user activity retroactively. Users can not know whether their privacy was violated. Compliance is facilitated by this mandatory auditor-encrypted metadata.',
     },
+    noteDiscovery: {
+      description:
+        "STRK-20 stores notes onchain in encrypted channels organized by recipient, sender, and token. Instead of scanning all pool activity, the wallet currently sends its Starknet account address and private viewing key to a [discovery service](https://github.com/starkware-libs/starknet-privacy/blob/main/crates/discovery-service/README.md), which reads the relevant contract storage, decrypts channels and notes, checks public nullifiers, and returns the user's unspent notes.\n\nA third-party discovery operator therefore receives the private viewing key and can see the user's counterparties, tokens, amounts, note history, and which notes remain unspent, together with sync timing and normally the user's IP address. Oblivious HTTP can separate the IP address from the request content unless the relay and operator collude, but it does not hide note data from the operator. The discovery service is open source, so users can avoid this disclosure by running it themselves against their own or a trusted Starknet RPC node.",
+      risks: [
+        "A third-party discovery service retains the supplied viewing key or decrypted results, revealing the user's private transfer history and unspent notes.",
+      ],
+    },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
       PRIVACY_ATTRIBUTES.transfers,

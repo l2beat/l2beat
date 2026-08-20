@@ -1,5 +1,5 @@
-import type { IntentBridgesData } from '~/server/features/scaling/interop/getIntentBridgesData'
-import type { TokenData } from '~/server/features/scaling/interop/types'
+import type { IntentBridgesData } from '~/server/features/layer2s/interop/getIntentBridgesData'
+import type { TokenData } from '~/server/features/layer2s/interop/types'
 import type { InteropTokenRowData } from '../../../components/InteropTokenRow'
 import {
   InteropTopTokensWidget,

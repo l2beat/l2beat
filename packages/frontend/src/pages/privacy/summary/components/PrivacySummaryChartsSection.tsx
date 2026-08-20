@@ -4,7 +4,7 @@ import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapp
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { ChartTabs } from '~/pages/scaling/summary/components/ChartTabs'
+import { ChartTabs } from '~/pages/layer2s/summary/components/ChartTabs'
 import { useTRPC } from '~/trpc/React'
 import type { ChartRange } from '~/utils/range/range'
 import { PrivacyFlowChart } from '../../project/components/PrivacyFlowChart'
@@ -21,11 +21,25 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
   const projectIds = useMemo(() => projects.map((p) => p.id).sort(), [projects])
+  const tvlProjects = useMemo(
+    () => projects.filter((p) => p.hasTvl),
+    [projects],
+  )
+  const tvlProjectIds = useMemo(
+    () => tvlProjects.map((p) => p.id).sort(),
+    [tvlProjects],
+  )
   const { data: flowsData, isLoading: isFlowsLoading } = useQuery(
-    trpc.privacy.flowsChart.queryOptions({ projectIds, range }),
+    trpc.privacy.flowsChart.queryOptions({
+      projectIds,
+      range,
+    }),
   )
   const { data: tvlData, isLoading: isTvlLoading } = useQuery(
-    trpc.privacy.tvlChart.queryOptions({ projectIds, range }),
+    trpc.tvs.chartByProjects.queryOptions({
+      projectIds: tvlProjectIds,
+      range,
+    }),
   )
 
   const flowChartTimeRange = useMemo(
@@ -69,7 +83,7 @@ export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
       </div>
       <PrivacyTvlBreakdownChart
         data={tvlData?.chart}
-        projects={projects}
+        projects={tvlProjects}
         syncedUntil={tvlData?.syncedUntil}
         isLoading={isTvlLoading}
       />

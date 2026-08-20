@@ -29,6 +29,12 @@ RUN --mount=type=secret,id=TURBO_TOKEN,env=TURBO_TOKEN \
   --mount=type=secret,id=TURBO_API,env=TURBO_API \
   pnpm build:token-backend
 
+# Replace node_modules with production dependencies only. Switching dev -> prod
+# in place does not garbage-collect the virtual store, so purge and reinstall
+# offline from the local store (cached native builds are reused).
+RUN rm -rf node_modules packages/*/node_modules && \
+  CI=true pnpm install --prod --frozen-lockfile --offline
+
 RUN mkdir /dist/ && \
   cd /dist/ && \
   wget -q https://github.com/Wilfred/difftastic/releases/download/0.57.0/difft-$ARCH-unknown-linux-gnu.tar.gz && \

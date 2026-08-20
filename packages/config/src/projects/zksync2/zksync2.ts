@@ -1,7 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
-  formatLargeNumber,
+  formatNumber,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -110,10 +110,10 @@ const proposalThresholdM =
 const quorumM =
   discovery.getContractValueBigInt('ZkProtocolGovernor', 'currentQuorum') /
   1000000000000000000000000n // result: M of tokens
-const zkMaxSupply = formatLargeNumber(
+const zkMaxSupply = formatNumber(
   Number(discovery.getContractValueBigInt('ZkToken', 'maxSupply') / 10n ** 18n),
 )
-const zkTotalSupply = formatLargeNumber(
+const zkTotalSupply = formatNumber(
   Number(
     discovery.getContractValueBigInt('ZkToken', 'totalSupply') / 10n ** 18n,
   ),
@@ -259,7 +259,7 @@ export const zksync2: ScalingProject = zkStackL2({
     id: ProjectId('the-elastic-network'),
   },
   // validatorTimelockOnGateway: discovery.getContract('ZKsyncValidatorTimelock'),
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       // tracks old Era DA on ethereum
       type: 'ethereum',
@@ -359,7 +359,6 @@ export const zksync2: ScalingProject = zkStackL2({
         'Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.',
     }),
   ],
-  usesEthereumBlobs: true,
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],

@@ -1,5 +1,5 @@
 import type { ProjectInclusionDelayChartStakeDistribution } from '@l2beat/config'
-import { formatAsAsciiTable } from '@l2beat/shared-pure'
+import { formatAsAsciiTable, formatNumberWithCommas } from '@l2beat/shared-pure'
 import fs from 'fs/promises'
 import fetch from 'node-fetch'
 import path from 'path'
@@ -90,8 +90,9 @@ export class StakeDistributionFetcher {
     for (const dataset of datasets) {
       console.log(`\n${dataset.displayName}`)
       console.log(
-        `Total stake: ${formatInteger(
+        `Total stake: ${formatNumberWithCommas(
           toTokenAmount(dataset.totalStakeBaseUnits, dataset.stakeDecimals),
+          { maximumFractionDigits: 0 },
         )} ${dataset.stakeToken}`,
       )
       console.log(this.createConsoleTable(dataset))
@@ -146,8 +147,9 @@ export class StakeDistributionFetcher {
 
         return [
           entity.name,
-          formatInteger(
+          formatNumberWithCommas(
             toRoundedTokenAmount(entity.stakeBaseUnits, dataset.stakeDecimals),
+            { maximumFractionDigits: 0 },
           ),
           formatPercentage(entity.stakeBaseUnits, dataset.totalStakeBaseUnits),
           formatPercentage(cumulativeStake, dataset.totalStakeBaseUnits),
@@ -389,12 +391,6 @@ function toRoundedTokenAmount(
   decimals: number,
 ): number {
   return Math.round(toTokenAmount(stakeBaseUnits, decimals))
-}
-
-function formatInteger(value: number): string {
-  return new Intl.NumberFormat('en-US', {
-    maximumFractionDigits: 0,
-  }).format(value)
 }
 
 function formatPercentage(value: number, total: number): string {

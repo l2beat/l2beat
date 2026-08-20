@@ -20,6 +20,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
   getNitroGovernance,
+  getOrbitStackDaTracking,
   orbitStackL2,
   WASMVM_OTHER_CONSIDERATIONS,
 } from '../../templates/orbitStack'
@@ -144,6 +145,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
     BADGES.Other.Governance,
   ],
   discovery,
+  daTracking: [getOrbitStackDaTracking(discovery, { sinceBlock: 15411056 })],
   hasAtLeastFiveExternalChallengers: true,
   associatedTokens: ['ARB'],
   bridge: discovery.getContract('Bridge'),

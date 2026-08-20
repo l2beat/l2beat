@@ -174,6 +174,9 @@ export const sp1turbo: BaseProject = {
       {
         projectId: ProjectId('phala'),
         sinceTimestamp: UnixTime(1736290800),
+        // Switched back to a standard OP Stack PermissionedDisputeGame
+        // deployment, no longer uses SP1.
+        untilTimestamp: UnixTime(1773378287),
       },
       {
         projectId: ProjectId('mantle'),

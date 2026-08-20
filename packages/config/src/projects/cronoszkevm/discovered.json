@@ -1,7 +1,7 @@
 {
   "name": "cronoszkevm",
-  "timestamp": 1786357730,
-  "configHash": "0xcb8a779081a81d39657a71a891a6fe28ea839df2fefa6a3e35683a6d2166e8d2",
+  "timestamp": 1786966360,
+  "configHash": "0xd4e75e828ff3ac8ec85e06ff9f3ac1119d87bae7bc0f16ed7cfa1c8d4dccfe9c",
   "entries": [
     {
       "address": "eth:0x149f3850AcfC5caa3ecF31dCF922A75eD2944a5e",
@@ -77,16 +77,24 @@
       "name": "L1VerifierPlonk",
       "address": "eth:0x35CD3865199F2D9c574f34DD72520B19842d440c",
       "type": "Contract",
+      "template": "shared-zk-stack/L1VerifierPlonk",
       "sourceHashes": [
         "0x583dc7da886d67e3dccd8e65e4db1d4d6aad3dd47fd9cc2f75cdce2d42cb7b76"
       ],
       "proxyType": "immutable",
+      "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
       "deployerAddress": "eth:0xD742604A657A114ca6d59b4B0eA541ced7Bd9413",
       "sinceTimestamp": 1786128023,
       "sinceBlock": 25704941,
       "values": {
         "$immutable": true,
         "verificationKeyHash": "0xcde2e1dc7800da93384e5b2e0bb1f195ed3eb4aed0ad01a877588a890f8bd970"
+      },
+      "fieldMeta": {
+        "verificationKeyHash": {
+          "severity": "HIGH",
+          "description": "keccak256 hash of the verification keys."
+        }
       },
       "implementationNames": {
         "eth:0x35CD3865199F2D9c574f34DD72520B19842d440c": "L1VerifierPlonk"
@@ -96,16 +104,24 @@
       "name": "L1VerifierFflonk",
       "address": "eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66",
       "type": "Contract",
+      "template": "shared-zk-stack/L1VerifierFflonk",
       "sourceHashes": [
         "0x76903ca2142e2ecb41c2c6841519fa473d84c0bf219342d90a39b57b1a374b09"
       ],
       "proxyType": "immutable",
+      "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
       "deployerAddress": "eth:0xD742604A657A114ca6d59b4B0eA541ced7Bd9413",
       "sinceTimestamp": 1786128011,
       "sinceBlock": 25704940,
       "values": {
         "$immutable": true,
         "verificationKeyHash": "0x95d735ed04680e0f7777f1d2016f3b6e2f507726b32e2d8b47a37fd8355fd47a"
+      },
+      "fieldMeta": {
+        "verificationKeyHash": {
+          "severity": "HIGH",
+          "description": "keccak256 hash of the verification keys."
+        }
       },
       "implementationNames": {
         "eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66": "L1VerifierFflonk"
@@ -529,7 +545,7 @@
           "eth:0x907b30407249949521Bf0c89A43558dae200146A",
           "eth:0xFa30EAe30351A83809657299F6Cad9557c232e8C"
         ],
-        "getFirstUnprocessedPriorityTx": 4841,
+        "getFirstUnprocessedPriorityTx": 4842,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -538,7 +554,7 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x6efa121f4031df88847299c58e6e140d0ba86bb92f04eaca4d4d5052b52a66bd",
+        "getPriorityTreeRoot": "0xda55141afa71d35611c472ec4678528325cba2f7981815b3c4783274d1e9ad80",
         "getPriorityTreeStartIndex": 4234,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018880,
@@ -546,13 +562,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 0],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 911,
-        "getTotalBatchesExecuted": 909,
-        "getTotalBatchesVerified": 911,
-        "getTotalBlocksCommitted": 911,
-        "getTotalBlocksExecuted": 909,
-        "getTotalBlocksVerified": 911,
-        "getTotalPriorityTxs": 4841,
+        "getTotalBatchesCommitted": 918,
+        "getTotalBatchesExecuted": 918,
+        "getTotalBatchesVerified": 918,
+        "getTotalBlocksCommitted": 918,
+        "getTotalBlocksExecuted": 918,
+        "getTotalBlocksVerified": 918,
+        "getTotalPriorityTxs": 4842,
         "getTransactionFilterer": "eth:0xA8998F231a660Eca365B382943c71ad9b7619139",
         "getVerifier": "eth:0xC47D355402E78b886B628914B3b129F236fEe3cc",
         "getVerifierParams": {
@@ -1283,9 +1299,11 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
+    "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
+    "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25724000 },
+  "usedBlockNumbers": { "ethereum": 25774525 },
   "permissionsConfigHash": "0xffe0fd1c013790f8ab8a0ca5ba19d6d647c757daca58c5290a1255e41196aa50"
 }

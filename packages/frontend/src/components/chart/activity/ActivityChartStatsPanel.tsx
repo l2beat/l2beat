@@ -5,8 +5,8 @@ import {
 } from '@l2beat/shared-pure'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
-import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
-import type { ActivityProjectChartStats } from '~/server/features/scaling/activity/buildActivityProjectChartStats'
+import type { ActivityMetric } from '~/pages/layer2s/activity/components/ActivityMetricContext'
+import type { ActivityProjectChartStats } from '~/server/features/layer2s/activity/buildActivityProjectChartStats'
 import { formatTimestamp } from '~/utils/dates'
 
 interface Props {

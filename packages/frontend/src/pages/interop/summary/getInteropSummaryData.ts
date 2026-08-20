@@ -1,7 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
+import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -25,19 +25,17 @@ export async function getInteropSummaryData(
   const interopChains = getInteropChains()
   const interopChainsIds = interopChains.map((chain) => chain.id)
 
-  const scalingProjects = await ps.getProjects({
+  const l2Projects = await ps.getProjects({
     select: ['scalingInfo'],
   })
-  const scalingProjectSlugById = new Map(
-    scalingProjects.map((p) => [p.id, p.slug]),
-  )
+  const l2ProjectSlugById = new Map(l2Projects.map((p) => [p.id, p.slug]))
 
   const interopChainsWithIcons = mapInteropChainsToWithIcons(
     manifest,
     interopChains,
   ).map((chain) => ({
     ...chain,
-    href: getInteropChainHref(chain.id, scalingProjectSlugById),
+    href: getInteropChainHref(chain.id, l2ProjectSlugById),
   }))
 
   const activeInteropChains = interopChainsWithIcons.filter(

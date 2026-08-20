@@ -21,7 +21,7 @@
       "description": "Variable protocol fee in basis points deducted from the order's give amount (no upper bound check; admin changes apply to new orders immediately)."
     },
     "intentManagerRights": {
-      "description": "Immutable allowlist contract: addresses it validates can create orders with custom or zero protocol fees (createSaltedOrderForIntent)."
+      "description": "Immutable allowlist contract: addresses it validates can create orders with custom or zero protocol fees and can designate an arbitrary address as the order maker (createSaltedOrderForIntent)."
     },
     "accessControl": { "handler": { "type": "accessControl" } },
     "defaultAdminAC": {

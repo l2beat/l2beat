@@ -27,6 +27,12 @@ RUN --mount=type=secret,id=TURBO_TOKEN,env=TURBO_TOKEN \
   --mount=type=secret,id=TURBO_API,env=TURBO_API \
   pnpm build:tools-api
 
+# Replace node_modules with production dependencies only. Switching dev -> prod
+# in place does not garbage-collect the virtual store, so purge and reinstall
+# offline from the local store (cached native builds are reused).
+RUN rm -rf node_modules packages/*/node_modules && \
+  CI=true pnpm install --prod --frozen-lockfile --offline
+
 FROM node:22.22.0-slim AS release
 
 # Install curl for healthcheck and create non-root user

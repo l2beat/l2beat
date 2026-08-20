@@ -1,7 +1,7 @@
 {
   "name": "debridge",
-  "timestamp": 1786706330,
-  "configHash": "0xa478bf69a017360a017d482f72632c1f1779d733899c361fc0c3820a041206ec",
+  "timestamp": 1787230295,
+  "configHash": "0x30959a30486a2b20ebfe121ac4252c57434c75215c91b6e43b764ae8ad6e40a6",
   "entries": [
     {
       "address": "eth:0x0746e7e4d15F30885616B4ac3D274393354E80c0",
@@ -64,10 +64,13 @@
       "proxyType": "EOA"
     },
     {
-      "name": "",
+      "name": "ProxyAdmin",
       "address": "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3",
       "type": "Contract",
-      "unverified": true,
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
       "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
@@ -81,10 +84,11 @@
       "sinceBlock": 23966953,
       "values": {
         "$immutable": true,
-        "owner": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444"
+        "owner": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
-        "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3": ""
+        "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3": "ProxyAdmin"
       }
     },
     {
@@ -221,7 +225,7 @@
         "GOVMONITORING_ROLE": "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1",
         "govMonitoringAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
         "lockedClaim": 1,
-        "nonce": 177776,
+        "nonce": 178259,
         "paused": false,
         "signatureVerifier": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
         "SUBMISSION_PREFIX": 1,
@@ -320,7 +324,7 @@
       "template": "debridge/ExternalCallAdapter",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0x9e1d6978ce2fd4ad04aa5969d3bcef97fd54b2ded7c0d62599131196aec314dc"
+        "0x18bbebb819a937958472cbe9848d10adb1983dbffea723e7ba5e79e2ac6a50f2"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow and dispatcher for external calls attached to DLN orders: it receives the taker's funds of orders that carry calldata and releases them when the calldata is executed by the registered executor, or refunds the order authority on cancellation.",
@@ -329,7 +333,7 @@
       "sinceBlock": 18083710,
       "values": {
         "$admin": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b",
-        "$implementation": "eth:0x7EA200f06c17cB9f64A3c8973a76DD8359fd68FA",
+        "$implementation": "eth:0xE143DbAEC892cEf2Af836dB49870A0Bcf9d5E6A1",
         "$pastUpgrades": [
           [
             "2023-09-07T09:39:11.000Z",
@@ -345,9 +349,14 @@
             "2025-07-16T10:55:35.000Z",
             "0x2891ca2643f9cb857b006952744b633088f22b57a8a04495abec7b79a500f1e3",
             ["eth:0x7EA200f06c17cB9f64A3c8973a76DD8359fd68FA"]
+          ],
+          [
+            "2026-08-17T10:20:35.000Z",
+            "0x30e7e8dac55cb6f8ac7b7cc81c9132f01acb5fbb87ed1f44b568183518670fbb",
+            ["eth:0xE143DbAEC892cEf2Af836dB49870A0Bcf9d5E6A1"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -359,7 +368,7 @@
         "defaultExecutor": "eth:0xAE0361b1C3454b297129e01046057F1D294c7974",
         "dlnDestination": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
         "paused": false,
-        "version": "1.1.0"
+        "version": "1.2.0"
       },
       "fieldMeta": {
         "defaultExecutor": {
@@ -368,7 +377,7 @@
       },
       "implementationNames": {
         "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9": "TransparentUpgradeableProxy",
-        "eth:0x7EA200f06c17cB9f64A3c8973a76DD8359fd68FA": "DlnExternalCallAdapter"
+        "eth:0xE143DbAEC892cEf2Af836dB49870A0Bcf9d5E6A1": "DlnExternalCallAdapter"
       }
     },
     {
@@ -391,16 +400,16 @@
       "template": "debridge/DeBridgeRouter",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0xfbd0e32e74cd0871ed9aaf242684ccae1423b67493f683b6c31d4282d6813a6a"
+        "0xbb3368874361b195a217b8488d3a15b0b0f5a6e5a1189b88964a97715889bbc8"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Optional periphery router that can swap input tokens via whitelisted DEX routers and forward the proceeds into the DLN contracts in a single transaction. It does not custody funds across transactions and is not part of the DLN critical path.",
+      "description": "Optional periphery router that can swap input tokens via whitelisted DEX routers and forward the proceeds into the DLN contracts (order creation, or order fulfillment on the hardcoded DlnDestination via fillCrossChain) in a single transaction. It does not custody funds across transactions and is not part of the DLN critical path.",
       "deployerAddress": "eth:0xFD830dd9B446c9b880b32A03FB9A750AaE4A68aa",
       "sinceTimestamp": 1647386234,
       "sinceBlock": 14394078,
       "values": {
         "$admin": "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130",
-        "$implementation": "eth:0x3c857eD51c8a2747EE8c6F30EdDA5ea0D487CC64",
+        "$implementation": "eth:0xCe56012E880851baa234cD092aF516A0fcA9CFe3",
         "$pastUpgrades": [
           [
             "2022-03-15T23:17:14.000Z",
@@ -451,9 +460,14 @@
             "2025-07-16T10:55:35.000Z",
             "0x2891ca2643f9cb857b006952744b633088f22b57a8a04495abec7b79a500f1e3",
             ["eth:0x3c857eD51c8a2747EE8c6F30EdDA5ea0D487CC64"]
+          ],
+          [
+            "2026-08-17T10:20:35.000Z",
+            "0x30e7e8dac55cb6f8ac7b7cc81c9132f01acb5fbb87ed1f44b568183518670fbb",
+            ["eth:0xCe56012E880851baa234cD092aF516A0fcA9CFe3"]
           ]
         ],
-        "$upgradeCount": 10,
+        "$upgradeCount": 11,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -463,10 +477,11 @@
         "BPS_DENOMINATOR": 10000,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
+        "dlnDestination": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
         "feeTreasury": "eth:0x391276932b5105C2DB8eE928dfd8872564d6d246",
         "NATIVE_TOKEN": "eth:0x0000000000000000000000000000000000000000",
         "swapVariableFeeBps": 8,
-        "version": 310
+        "version": 320
       },
       "fieldMeta": {
         "swapVariableFeeBps": {
@@ -478,7 +493,7 @@
       },
       "implementationNames": {
         "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251": "TransparentUpgradeableProxy",
-        "eth:0x3c857eD51c8a2747EE8c6F30EdDA5ea0D487CC64": "DeBridgeRouter"
+        "eth:0xCe56012E880851baa234cD092aF516A0fcA9CFe3": "DeBridgeRouter"
       }
     },
     {
@@ -670,7 +685,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 73,
+        "nonce": 74,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -950,7 +965,7 @@
           }
         },
         "confirmationThreshold": 3,
-        "currentBlock": 25752912,
+        "currentBlock": 25796378,
         "debridgeAddress": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"],
@@ -1035,10 +1050,13 @@
       }
     },
     {
-      "name": "",
+      "name": "ProxyAdmin",
       "address": "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F",
       "type": "Contract",
-      "unverified": true,
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
       "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
@@ -1052,32 +1070,42 @@
       "sinceBlock": 23966985,
       "values": {
         "$immutable": true,
-        "owner": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444"
+        "owner": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
-        "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F": ""
+        "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F": "ProxyAdmin"
       }
     },
     {
       "name": "ExternalCallExecutor",
       "address": "eth:0xAE0361b1C3454b297129e01046057F1D294c7974",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x6c5aae59f2a5722455f7f6b27b17e514a918ab56299c83ae29aed90c2f8863b0"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified contract registered as the default executor in the ExternalCallAdapter: it executes external calldata attached to DLN orders.",
+      "description": "The default executor in the ExternalCallAdapter: it executes external calldata attached to DLN orders.",
       "deployerAddress": "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5",
       "sinceTimestamp": 1714248767,
       "sinceBlock": 19748972,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "ADAPTER_ROLE": "0xdbeb657137b1822b3d5418bea6fd641226d964b4c3871ef23546db2622258871",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      },
       "implementationNames": {
-        "eth:0xAE0361b1C3454b297129e01046057F1D294c7974": ""
+        "eth:0xAE0361b1C3454b297129e01046057F1D294c7974": "ExternalCallExecutor"
       }
     },
     {
-      "name": "",
+      "name": "ProxyAdmin",
       "address": "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816",
       "type": "Contract",
-      "unverified": true,
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
       "proxyType": "immutable",
       "directlyReceivedPermissions": [
         {
@@ -1091,10 +1119,11 @@
       "sinceBlock": 23625079,
       "values": {
         "$immutable": true,
-        "owner": "eth:0xd6dF82F60a2FE1e61aEc29679bc4954F33D8C1EC"
+        "owner": "eth:0xd6dF82F60a2FE1e61aEc29679bc4954F33D8C1EC",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
-        "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816": ""
+        "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816": "ProxyAdmin"
       }
     },
     {
@@ -1498,7 +1527,7 @@
       "template": "debridge/DlnDestination",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0x925d0cfe1e1388a72765060d6905fa5bfd29e5a50bf4dcd11c2747a9d3097825"
+        "0xcca702480efa62cd07a9ea9b50d25bd2fec07bdb974ed969b52461235e056c6b"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Destination side of the deBridge Liquidity Network (DLN) intent protocol: takers fulfill orders here permissionlessly by paying the 'take' amount, which is forwarded to the order recipient in the same transaction (this contract holds no user funds). The taker then sends an unlock message back to the source chain's DlnSource through the deBridge messaging protocol to claim the escrowed maker funds.",
@@ -1507,7 +1536,7 @@
       "sinceBlock": 16169208,
       "values": {
         "$admin": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b",
-        "$implementation": "eth:0xE540eb6BfEE129d28d47E26Ad33a138d66FD78f5",
+        "$implementation": "eth:0xD9b4f9CacFFB59F2B982ad3c45096e3AA4B4020e",
         "$pastUpgrades": [
           [
             "2022-12-12T14:25:23.000Z",
@@ -1533,9 +1562,14 @@
             "2026-02-13T12:08:35.000Z",
             "0xf187915dcb7b435138135f96d4a9bf6f606255d5247b00f0282afd2516bc02d2",
             ["eth:0xE540eb6BfEE129d28d47E26Ad33a138d66FD78f5"]
+          ],
+          [
+            "2026-08-17T10:20:35.000Z",
+            "0x30e7e8dac55cb6f8ac7b7cc81c9132f01acb5fbb87ed1f44b568183518670fbb",
+            ["eth:0xD9b4f9CacFFB59F2B982ad3c45096e3AA4B4020e"]
           ]
         ],
-        "$upgradeCount": 5,
+        "$upgradeCount": 6,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1602,7 +1636,7 @@
         "paused": false,
         "SOLANA_ADDRESS_LENGTH": 32,
         "subscriptionId": 0,
-        "version": "1.7.0"
+        "version": "1.7.1"
       },
       "fieldMeta": {
         "dlnSourceAddressesMap": {
@@ -1617,7 +1651,7 @@
       },
       "implementationNames": {
         "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f": "TransparentUpgradeableProxy",
-        "eth:0xE540eb6BfEE129d28d47E26Ad33a138d66FD78f5": "DlnDestination"
+        "eth:0xD9b4f9CacFFB59F2B982ad3c45096e3AA4B4020e": "DlnDestination"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1646,7 +1680,7 @@
       "template": "debridge/DlnSource",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0x1ee6b36758f7c1cb71e4ed6d4e731d42a09413cdfeaf71a16c0554633c6047c9"
+        "0x1a65dd672c1d690b7748bf1c367c91be2553be1610e4efa604279e7855978cb5"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Source-side escrow of the deBridge Liquidity Network (DLN) intent protocol: users lock the 'give' funds of a cross-chain order directly in this contract. Funds are released to the taker (claimUnlock) or refunded to the maker (claimCancel) only on a message from the DlnDestination configured for the order's destination chain, authenticated via the CallProxy of the deBridge messaging protocol (i.e. ultimately by deBridge validator signatures).",
@@ -1655,7 +1689,7 @@
       "sinceBlock": 16169201,
       "values": {
         "$admin": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b",
-        "$implementation": "eth:0x322B481088143d9Ff74e4169Fb7f12F7808690DF",
+        "$implementation": "eth:0x2b426a0Ac391490e88d15B304436e7a84Df78611",
         "$pastUpgrades": [
           [
             "2022-12-12T14:23:59.000Z",
@@ -1681,9 +1715,14 @@
             "2025-12-08T14:40:11.000Z",
             "0x25b20353a5814918c4c569e1f9e8fede74138c9b7ab2043428a60f1c632d0ce6",
             ["eth:0x322B481088143d9Ff74e4169Fb7f12F7808690DF"]
+          ],
+          [
+            "2026-08-17T10:20:35.000Z",
+            "0x30e7e8dac55cb6f8ac7b7cc81c9132f01acb5fbb87ed1f44b568183518670fbb",
+            ["eth:0x2b426a0Ac391490e88d15B304436e7a84Df78611"]
           ]
         ],
-        "$upgradeCount": 5,
+        "$upgradeCount": 6,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1750,7 +1789,7 @@
         "paused": false,
         "SOLANA_ADDRESS_LENGTH": 32,
         "subscriptionId": 0,
-        "version": "1.7.1"
+        "version": "1.8.0"
       },
       "fieldMeta": {
         "dlnDestinationAddressesMap": {
@@ -1763,12 +1802,12 @@
           "description": "Variable protocol fee in basis points deducted from the order's give amount (no upper bound check; admin changes apply to new orders immediately)."
         },
         "intentManagerRights": {
-          "description": "Immutable allowlist contract: addresses it validates can create orders with custom or zero protocol fees (createSaltedOrderForIntent)."
+          "description": "Immutable allowlist contract: addresses it validates can create orders with custom or zero protocol fees and can designate an arbitrary address as the order maker (createSaltedOrderForIntent)."
         }
       },
       "implementationNames": {
         "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66": "TransparentUpgradeableProxy",
-        "eth:0x322B481088143d9Ff74e4169Fb7f12F7808690DF": "DlnSource"
+        "eth:0x2b426a0Ac391490e88d15B304436e7a84Df78611": "DlnSource"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1854,7 +1893,7 @@
       "function updateSalt(uint96 prefix)",
       "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) userOp, bytes32 userOpHash, uint256 missingAccountFunds) returns (uint256 validationData)"
     ],
-    "eth:0x322B481088143d9Ff74e4169Fb7f12F7808690DF": [
+    "eth:0x2b426a0Ac391490e88d15B304436e7a84Df78611": [
       "constructor(address _intentManager, address _intentManagerRights, address _deBridgeGate, uint32 _subscriptionId)",
       "error AdminBadRole()",
       "error CallProxyBadRole()",
@@ -1917,6 +1956,7 @@
       "function createOrder(tuple(address giveTokenAddress, uint256 giveAmount, bytes takeTokenAddress, uint256 takeAmount, uint256 takeChainId, bytes receiverDst, address givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes externalCall, bytes allowedCancelBeneficiarySrc) _orderCreation, bytes _affiliateFee, uint32 _referralCode, bytes _permitEnvelope) payable returns (bytes32)",
       "function createSaltedOrder(tuple(address giveTokenAddress, uint256 giveAmount, bytes takeTokenAddress, uint256 takeAmount, uint256 takeChainId, bytes receiverDst, address givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes externalCall, bytes allowedCancelBeneficiarySrc) _orderCreation, uint64 _salt, bytes _affiliateFee, uint32 _referralCode, bytes _permitEnvelope, bytes _metadata) payable returns (bytes32)",
       "function createSaltedOrderForIntent(tuple(address giveTokenAddress, uint256 giveAmount, bytes takeTokenAddress, uint256 takeAmount, uint256 takeChainId, bytes receiverDst, address givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes externalCall, bytes allowedCancelBeneficiarySrc) _orderCreation, uint64 _salt, uint32 _referralCode, uint256 _giveTokenFeeAmount, bytes _metadata) payable returns (bytes32)",
+      "function createSaltedOrderForIntent(tuple(address giveTokenAddress, uint256 giveAmount, bytes takeTokenAddress, uint256 takeAmount, uint256 takeChainId, bytes receiverDst, address givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes externalCall, bytes allowedCancelBeneficiarySrc) _orderCreation, address _maker, uint64 _salt, uint32 _referralCode, uint256 _giveTokenFeeAmount, bytes _metadata) payable returns (bytes32)",
       "function deBridgeGate() view returns (address)",
       "function dlnDestinationAddresses(uint256) view returns (bytes)",
       "function getChainId() view returns (uint256 cid)",
@@ -1951,60 +1991,16 @@
       "function withdrawCollectedFees(address[] _tokens)",
       "function withdrawUnclaimedAffiliateFees(address[] _tokens, address _beneficiary)"
     ],
-    "eth:0x3c857eD51c8a2747EE8c6F30EdDA5ea0D487CC64": [
-      "error AdminBadRole()",
-      "error CallCausedBalanceDiscrepancy(address target, address token, uint256 expectedBalance, uint256 actualBalance)",
-      "error CallFailed(address target, bytes data)",
-      "error EthTransferFailed()",
-      "error ExcessiveMsgValue(uint256 requiredAmount, uint256 providedAmount)",
-      "error InvalidAffiliateFeeData(uint16 bps, address recipient)",
-      "error InvalidAffiliateFeeDataLength(uint256 length)",
-      "error InvalidSwapVariableFeeBps()",
-      "error NotEnoughSrcFundsIn(uint256 amount)",
-      "error NotSupportedRouter()",
-      "error SignatureInvalidV()",
-      "error SwapEmptyResult(address srcTokenOut)",
-      "error SwapFailed(address srcRouter)",
-      "error SwapOutcomeTooLow(address tokenOut, uint256 amountOut, uint256 actualAmountOut, uint256 expectedAmountOut)",
-      "error SwapToSameToken()",
-      "error WrongArgumentLength()",
-      "error ZeroFeeTreasuryAddress()",
-      "event AffiliateFeePaid(address token, uint256 amount, address recipient, uint32 referralCode)",
-      "event AllowanceAggregatorUpdated(address router, address allowanceAggregator)",
-      "event CollectedFee(address token, uint256 amount)",
-      "event FeeTreasuryUpdated(address feeTreasury)",
-      "event Initialized(uint8 version)",
-      "event Refund(address token, uint256 amount, address recipient)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event SameChainSwapExecuted(address sender, address recipient, address tokenIn, uint256 amountIn, address tokenOut, uint256 amountOut, uint256 fee, uint256 affiliateFee, uint32 referralCode)",
-      "event SupportedRouter(address srcSwapRouter, bool isSupported)",
-      "event SwapExecuted(address router, address tokenIn, uint256 amountIn, address tokenOut, uint256 amountOut)",
-      "event SwapVariableFeeBpsUpdated(uint16 swapVariableFeeBps)",
-      "function BPS_DENOMINATOR() view returns (uint256)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function NATIVE_TOKEN() view returns (address)",
-      "function feeTreasury() view returns (address)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(address _feeTreasury, uint16 _swapVariableFeeBps)",
-      "function renounceRole(bytes32 role, address account)",
-      "function rescueFunds(address token, address recipient, uint256 amount)",
-      "function revokeRole(bytes32 role, address account)",
-      "function simulateSwap(address _srcTokenIn, uint256 _srcAmountIn, address _srcSwapRouter, bytes _srcSwapCalldata, address _srcTokenOut) payable returns (uint256 srcAmountOut)",
-      "function strictlySwapAndCall(address _srcTokenIn, uint256 _srcAmountIn, bytes _srcTokenInPermitEnvelope, address _srcSwapRouter, bytes _srcSwapCalldata, address _srcTokenOut, uint256 _srcTokenExpectedAmountOut, address _srcTokenRefundRecipient, address _target, bytes _targetData) payable",
-      "function strictlySwapAndCallDln(address _srcTokenIn, uint256 _srcAmountIn, bytes _srcTokenInPermitEnvelope, tuple(address swapRouter, bytes swapCalldata, address tokenOut, uint256 tokenOutMinAmount, address tokenOutRefundRecipient) _swapDetails, address _target, bytes _targetData, bytes32 _orderId) payable",
-      "function supportedRouters(address) view returns (bool isSupported, address allowanceAggregator)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function swap(address _tokenIn, uint256 _amountIn, bytes _tokenInPermitEnvelope, tuple(address allowanceAggregator, address swapRouter, bytes swapCalldata, address tokenOut, uint256 tokenOutMinAmount, uint16 surplusShareBps, bytes affiliateFeeEnvelope, address recipient) _swapDetails, uint32 _referralCode) payable returns (uint256 actualAmountOut)",
-      "function swapVariableFeeBps() view returns (uint16)",
-      "function updateAllowanceAggregator(address _router, address _allowanceAggregator)",
-      "function updateFeeTreasury(address _feeTreasury)",
-      "function updateSupportedRouter(address _srcSwapRouter, bool _isSupported)",
-      "function updateSwapVariableFeeBps(uint16 _swapVariableFeeBps)",
-      "function version() pure returns (uint256)"
+    "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b": [
       "constructor(address admin)",
@@ -2208,50 +2204,6 @@
       "function wethGate() view returns (address)",
       "function withdrawFee(bytes32 _debridgeId)"
     ],
-    "eth:0x7EA200f06c17cB9f64A3c8973a76DD8359fd68FA": [
-      "constructor()",
-      "error AdminBadRole()",
-      "error BadRole()",
-      "error DisabledDelayedExecution()",
-      "error DlnBadRole()",
-      "error EthTransferFailed()",
-      "error FailedExecuteExternalCall(bytes32 orderId, address target, bytes callResult)",
-      "error IncorrectExecutionFee(uint256 amount, uint256 executionFee)",
-      "error InvalideAmount()",
-      "error InvalideState()",
-      "error UnknownEnvelopeVersion(uint8 version)",
-      "event ExecutorUpdated(address oldExecutor, address newExecutor)",
-      "event ExternalCallCancelled(bytes32 callId, bytes32 orderId, address cancelBeneficiary, address tokenAddress, uint256 amount)",
-      "event ExternalCallExecuted(bytes32 orderId, bool callSucceeded)",
-      "event ExternalCallFailed(bytes32 orderId, bytes callResult)",
-      "event ExternallCallRegistered(bytes32 callId, bytes32 orderId, address callAuthority, address tokenAddress, uint256 amount, bytes externalCall)",
-      "event Initialized(uint8 version)",
-      "event Paused(address account)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event Unpaused(address account)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function cancelCall(bytes32 _orderId, address _callAuthority, address _tokenAddress, uint256 _tokenAmount, address _recipient, bytes32 _externalCallHash)",
-      "function defaultExecutor() view returns (address)",
-      "function dlnDestination() view returns (address)",
-      "function executeCall(bytes32 _orderId, address _callAuthority, address _tokenAddress, uint256 _tokenAmount, bytes _externalCall, address _rewardBeneficiary)",
-      "function externalCallStatus(bytes32) view returns (uint8)",
-      "function getCallId(bytes32 _orderId, address _callAuthority, address _tokenAddress, uint256 _transferredAmount, bytes32 _externalCallHash) pure returns (bytes32)",
-      "function getCallId(bytes32 _orderId, address _callAuthority, address _tokenAddress, uint256 _transferredAmount, bytes _externalCall) pure returns (bytes32)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(address _dlnDestination, address _executor)",
-      "function paused() view returns (bool)",
-      "function receiveCall(bytes32 _orderId, address _callAuthority, address _tokenAddress, uint256 _transferredAmount, bytes _externalCall, address _externalCallRewardBeneficiary)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function tokenBalanceHistory(address) view returns (uint256)",
-      "function updateExecutor(address _newExecutor)",
-      "function version() pure returns (string)"
-    ],
     "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2323,6 +2275,51 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0xAE0361b1C3454b297129e01046057F1D294c7974": [
+      "constructor()",
+      "error AdapterBadRole()",
+      "error AdminBadRole()",
+      "error CallFailed()",
+      "error EthTransferFailed()",
+      "error NotEnoughTxGas()",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function ADAPTER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function isProhibitedSelector(bytes _data) pure returns (bool)",
+      "function onERC20Received(bytes32, address _token, uint256 _transferredAmount, address _fallbackAddress, bytes _payload) returns (bool callSucceeded, bytes callResult)",
+      "function onEtherReceived(bytes32, address _fallbackAddress, bytes _payload) payable returns (bool callSucceeded, bytes callResult)",
+      "function renounceRole(bytes32 role, address account)",
+      "function rescueFunds(address _token, address _recipient, uint256 _amount)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
+    "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "eth:0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8": [
@@ -2416,6 +2413,66 @@
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
       "function unpause()",
       "function updateName(string _newName, string _newSymbol)"
+    ],
+    "eth:0xCe56012E880851baa234cD092aF516A0fcA9CFe3": [
+      "constructor(address _dlnDestination)",
+      "error AdminBadRole()",
+      "error CallCausedBalanceDiscrepancy(address target, address token, uint256 expectedBalance, uint256 actualBalance)",
+      "error CallFailed(address target, bytes data)",
+      "error EthTransferFailed()",
+      "error ExcessiveMsgValue(uint256 requiredAmount, uint256 providedAmount)",
+      "error InvalidAffiliateFeeData(uint16 bps, address recipient)",
+      "error InvalidAffiliateFeeDataLength(uint256 length)",
+      "error InvalidSwapVariableFeeBps()",
+      "error NotEnoughSrcFundsIn(uint256 amount)",
+      "error NotSupportedRouter()",
+      "error SignatureInvalidV()",
+      "error SwapEmptyResult(address srcTokenOut)",
+      "error SwapFailed(address srcRouter)",
+      "error SwapOutcomeTooLow(address tokenOut, uint256 amountOut, uint256 actualAmountOut, uint256 expectedAmountOut)",
+      "error SwapToSameToken()",
+      "error WrongArgument()",
+      "error WrongArgumentLength()",
+      "error ZeroDlnDestinationAddress()",
+      "error ZeroFeeTreasuryAddress()",
+      "event AffiliateFeePaid(address token, uint256 amount, address recipient, uint32 referralCode)",
+      "event AllowanceAggregatorUpdated(address router, address allowanceAggregator)",
+      "event CollectedFee(address token, uint256 amount)",
+      "event FeeTreasuryUpdated(address feeTreasury)",
+      "event Initialized(uint8 version)",
+      "event Refund(address token, uint256 amount, address recipient)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SameChainSwapExecuted(address sender, address recipient, address tokenIn, uint256 amountIn, address tokenOut, uint256 amountOut, uint256 fee, uint256 affiliateFee, uint32 referralCode)",
+      "event SupportedRouter(address srcSwapRouter, bool isSupported)",
+      "event SwapExecuted(address router, address tokenIn, uint256 amountIn, address tokenOut, uint256 amountOut)",
+      "event SwapVariableFeeBpsUpdated(uint16 swapVariableFeeBps)",
+      "function BPS_DENOMINATOR() view returns (uint256)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function NATIVE_TOKEN() view returns (address)",
+      "function dlnDestination() view returns (address)",
+      "function feeTreasury() view returns (address)",
+      "function fillCrossChain(address _tokenIn, uint256 _amountIn, tuple(address swapRouter, bytes swapCalldata, address tokenOut, uint256 tokenOutMinAmount, address tokenOutRefundRecipient) _swapDetails, bytes _dlnDestinationCalldata, uint256 _maxDlnFulfillAmount) payable",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _feeTreasury, uint16 _swapVariableFeeBps)",
+      "function renounceRole(bytes32 role, address account)",
+      "function rescueFunds(address token, address recipient, uint256 amount)",
+      "function revokeRole(bytes32 role, address account)",
+      "function simulateSwap(address _srcTokenIn, uint256 _srcAmountIn, address _srcSwapRouter, bytes _srcSwapCalldata, address _srcTokenOut) payable returns (uint256 srcAmountOut)",
+      "function strictlySwapAndCall(address _srcTokenIn, uint256 _srcAmountIn, bytes _srcTokenInPermitEnvelope, address _srcSwapRouter, bytes _srcSwapCalldata, address _srcTokenOut, uint256 _srcTokenExpectedAmountOut, address _srcTokenRefundRecipient, address _target, bytes _targetData) payable",
+      "function strictlySwapAndCallDln(address _srcTokenIn, uint256 _srcAmountIn, bytes _srcTokenInPermitEnvelope, tuple(address swapRouter, bytes swapCalldata, address tokenOut, uint256 tokenOutMinAmount, address tokenOutRefundRecipient) _swapDetails, address _target, bytes _targetData, bytes32 _orderId) payable",
+      "function supportedRouters(address) view returns (bool isSupported, address allowanceAggregator)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function swap(address _tokenIn, uint256 _amountIn, bytes _tokenInPermitEnvelope, tuple(address allowanceAggregator, address swapRouter, bytes swapCalldata, address tokenOut, uint256 tokenOutMinAmount, uint16 surplusShareBps, bytes affiliateFeeEnvelope, address recipient) _swapDetails, uint32 _referralCode) payable returns (uint256 actualAmountOut)",
+      "function swapVariableFeeBps() view returns (uint16)",
+      "function updateAllowanceAggregator(address _router, address _allowanceAggregator)",
+      "function updateFeeTreasury(address _feeTreasury)",
+      "function updateSupportedRouter(address _srcSwapRouter, bool _isSupported)",
+      "function updateSwapVariableFeeBps(uint16 _swapVariableFeeBps)",
+      "function version() pure returns (uint256)"
     ],
     "eth:0xcfa67cDc75FFaac55bbf92f012cC75f47f479c35": [
       "constructor(address _permit2, address _allowanceHolder, address _dlnSource, address _feeTreasury, uint32 _subscriptionId)",
@@ -2590,6 +2647,92 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0xD9b4f9CacFFB59F2B982ad3c45096e3AA4B4020e": [
+      "constructor(uint256 divider, address _deBridgeGate, uint32 _subscriptionId)",
+      "error AdminBadRole()",
+      "error AllowOnlyForBeneficiary(bytes expectedBeneficiary)",
+      "error AttemptToCancelWithoutBeneficiary()",
+      "error CallProxyBadRole()",
+      "error EthTransferFailed()",
+      "error EthTransferFailed()",
+      "error GovMonitoringBadRole()",
+      "error IncorrectOrderStatus()",
+      "error InsufficientActualFulfillAmount(uint256 actualAmount, uint256 requiredAmount)",
+      "error InsufficientTakerAmount()",
+      "error MismatchGiveChainId()",
+      "error MismatchNativeFulfillAmount()",
+      "error MismatchedOrderId()",
+      "error MismatchedTransferAmount()",
+      "error NativeSenderBadRole(bytes nativeSender, uint256 chainIdFrom)",
+      "error NotSupportedDstChain()",
+      "error PermitFailure()",
+      "error SignatureInvalidV()",
+      "error TransferAmountNotCoverFees()",
+      "error Unauthorized()",
+      "error UnexpectedBatchSize()",
+      "error UnknownEngine()",
+      "error WrongAddressLength()",
+      "error WrongArgument()",
+      "error WrongArgumentLength()",
+      "error WrongChain()",
+      "error WrongExternalCallHash()",
+      "error WrongToken()",
+      "error ZeroAddress()",
+      "event ExternalCallAdapterUpdated(address oldAdapter, address newAdapter)",
+      "event FulfilledOrder(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) order, bytes32 orderId, uint256 actualFulfillAmount, address sender, address unlockAuthority)",
+      "event Initialized(uint8 version)",
+      "event MaxOrderCountPerBatchEvmUnlockChanged(uint256 oldValue, uint256 newValue)",
+      "event MaxOrderCountPerBatchSolanaUnlockChanged(uint256 oldValue, uint256 newValue)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SentOrderCancel(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) order, bytes32 orderId, bytes cancelBeneficiary, bytes32 submissionId)",
+      "event SentOrderUnlock(bytes32 orderId, bytes beneficiary, bytes32 submissionId)",
+      "event SetDlnSourceAddress(uint256 chainIdFrom, bytes dlnSourceAddress, uint8 chainEngine)",
+      "event Unpaused(address account)",
+      "function BPS_DENOMINATOR() view returns (uint256)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EVM_ADDRESS_LENGTH() view returns (uint256)",
+      "function GOVERNANCE_DELEGATED_ORDER_CANCEL_ROLE() view returns (bytes32)",
+      "function GOVMONITORING_ROLE() view returns (bytes32)",
+      "function MAX_ADDRESS_LENGTH() view returns (uint256)",
+      "function NATIVE_AMOUNT_DIVIDER_FOR_TRANSFER_TO_SOLANA() view returns (uint256)",
+      "function SOLANA_ADDRESS_LENGTH() view returns (uint256)",
+      "function chainEngines(uint256) view returns (uint8)",
+      "function deBridgeGate() view returns (address)",
+      "function dlnSourceAddresses(uint256) view returns (bytes)",
+      "function externalCallAdapter() view returns (address)",
+      "function fulfillOrder(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order, uint256 _fulFillAmount, bytes32 _orderId, bytes _permitEnvelope, address _unlockAuthority, address _externalCallRewardBeneficiary) payable",
+      "function fulfillOrder(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order, uint256 _fulFillAmount, bytes32 _orderId, bytes _permitEnvelope, address _unlockAuthority) payable",
+      "function getChainId() view returns (uint256 cid)",
+      "function getOrderId(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order) pure returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize()",
+      "function maxOrderCountPerBatchEvmUnlock() view returns (uint256)",
+      "function maxOrderCountPerBatchSolanaUnlock() view returns (uint256)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function sendBatchEvmUnlock(bytes32[] _orderIds, address _beneficiary, uint256 _executionFee) payable",
+      "function sendBatchSolanaUnlock(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall)[] _orders, bytes32 _beneficiary, uint256 _executionFee, uint64 _initWalletIfNeededInstructionReward, uint64 _claimUnlockInstructionReward) payable",
+      "function sendEvmOrderCancel(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order, address _cancelBeneficiary, uint256 _executionFee) payable",
+      "function sendEvmUnlock(bytes32 _orderId, address _beneficiary, uint256 _executionFee) payable",
+      "function sendSolanaOrderCancel(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order, bytes32 _cancelBeneficiary, uint256 _executionFee, uint64 _initWalletIfNeededInstructionReward, uint64 _claimCancelInstructionReward) payable",
+      "function sendSolanaUnlock(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order, bytes32 _beneficiary, uint256 _executionFee, uint64 _initWalletIfNeededInstructionReward, uint64 _claimUnlockInstructionReward) payable",
+      "function setDlnSourceAddress(uint256 _chainIdFrom, bytes _dlnSourceAddress, uint8 _chainEngine)",
+      "function setExternalCallAdapter(address _externalCallAdapter)",
+      "function setMaxOrderCountsPerBatch(uint256 _newEvmCount, uint256 _newSolanaCount)",
+      "function subscriptionId() view returns (uint32)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function takeOrders(bytes32) view returns (uint8 status, address takerAddress, uint32 giveChainId, uint256 bigGiveChainId)",
+      "function takePatches(bytes32) view returns (uint256)",
+      "function unpause()",
+      "function version() pure returns (string)"
+    ],
     "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -2682,6 +2825,49 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
+    "eth:0xE143DbAEC892cEf2Af836dB49870A0Bcf9d5E6A1": [
+      "constructor()",
+      "error AdminBadRole()",
+      "error BadRole()",
+      "error DisabledDelayedExecution()",
+      "error DlnBadRole()",
+      "error EthTransferFailed()",
+      "error EthTransferFailed()",
+      "error FailedExecuteExternalCall(bytes32 orderId, address target, bytes callResult)",
+      "error IncorrectExecutionFee(uint256 amount, uint256 executionFee)",
+      "error InvalidState()",
+      "error UnknownEnvelopeVersion(uint8 version)",
+      "event ExecutorUpdated(address oldExecutor, address newExecutor)",
+      "event ExternalCallCancelled(bytes32 callId, bytes32 orderId, address cancelBeneficiary, address tokenAddress, uint256 amount)",
+      "event ExternalCallExecuted(bytes32 orderId, bool callSucceeded)",
+      "event ExternalCallFailed(bytes32 orderId, bytes callResult)",
+      "event ExternalCallRegistered(bytes32 callId, bytes32 orderId, address callAuthority, address tokenAddress, uint256 amount, bytes externalCall)",
+      "event Initialized(uint8 version)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Unpaused(address account)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function cancelCall(bytes32 _orderId, address _callAuthority, address _tokenAddress, uint256 _tokenAmount, address _recipient, bytes32 _externalCallHash)",
+      "function defaultExecutor() view returns (address)",
+      "function dlnDestination() view returns (address)",
+      "function executeCall(bytes32 _orderId, address _callAuthority, address _tokenAddress, uint256 _tokenAmount, bytes _externalCall, address _rewardBeneficiary)",
+      "function externalCallStatus(bytes32) view returns (uint8)",
+      "function getCallId(bytes32 _orderId, address _callAuthority, address _tokenAddress, uint256 _transferredAmount, bytes32 _externalCallHash) pure returns (bytes32)",
+      "function getCallId(bytes32 _orderId, address _callAuthority, address _tokenAddress, uint256 _transferredAmount, bytes _externalCall) pure returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _dlnDestination, address _executor)",
+      "function paused() view returns (bool)",
+      "function receiveCall(bytes32 _orderId, address _callAuthority, address _tokenAddress, uint256 _transferredAmount, bytes _externalCall, address _externalCallRewardBeneficiary)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateExecutor(address _newExecutor)",
+      "function version() pure returns (string)"
+    ],
     "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -2692,91 +2878,6 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "eth:0xE540eb6BfEE129d28d47E26Ad33a138d66FD78f5": [
-      "constructor(uint256 divider, address _deBridgeGate, uint32 _subscriptionId)",
-      "error AdminBadRole()",
-      "error AllowOnlyForBeneficiary(bytes expectedBeneficiary)",
-      "error AttemptToCancelWithoutBeneficiary()",
-      "error CallProxyBadRole()",
-      "error EthTransferFailed()",
-      "error EthTransferFailed()",
-      "error GovMonitoringBadRole()",
-      "error IncorrectOrderStatus()",
-      "error InsufficientTakerAmount()",
-      "error MismatchGiveChainId()",
-      "error MismatchNativeFulfillAmount()",
-      "error MismatchedOrderId()",
-      "error MismatchedTransferAmount()",
-      "error NativeSenderBadRole(bytes nativeSender, uint256 chainIdFrom)",
-      "error NotSupportedDstChain()",
-      "error PermitFailure()",
-      "error SignatureInvalidV()",
-      "error TransferAmountNotCoverFees()",
-      "error Unauthorized()",
-      "error UnexpectedBatchSize()",
-      "error UnknownEngine()",
-      "error WrongAddressLength()",
-      "error WrongArgument()",
-      "error WrongArgumentLength()",
-      "error WrongChain()",
-      "error WrongExternalCallHash()",
-      "error WrongToken()",
-      "error ZeroAddress()",
-      "event ExternalCallAdapterUpdated(address oldAdapter, address newAdapter)",
-      "event FulfilledOrder(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) order, bytes32 orderId, uint256 actualFulfillAmount, address sender, address unlockAuthority)",
-      "event Initialized(uint8 version)",
-      "event MaxOrderCountPerBatchEvmUnlockChanged(uint256 oldValue, uint256 newValue)",
-      "event MaxOrderCountPerBatchSolanaUnlockChanged(uint256 oldValue, uint256 newValue)",
-      "event Paused(address account)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event SentOrderCancel(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) order, bytes32 orderId, bytes cancelBeneficiary, bytes32 submissionId)",
-      "event SentOrderUnlock(bytes32 orderId, bytes beneficiary, bytes32 submissionId)",
-      "event SetDlnSourceAddress(uint256 chainIdFrom, bytes dlnSourceAddress, uint8 chainEngine)",
-      "event Unpaused(address account)",
-      "function BPS_DENOMINATOR() view returns (uint256)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function EVM_ADDRESS_LENGTH() view returns (uint256)",
-      "function GOVERNANCE_DELEGATED_ORDER_CANCEL_ROLE() view returns (bytes32)",
-      "function GOVMONITORING_ROLE() view returns (bytes32)",
-      "function MAX_ADDRESS_LENGTH() view returns (uint256)",
-      "function NATIVE_AMOUNT_DIVIDER_FOR_TRANSFER_TO_SOLANA() view returns (uint256)",
-      "function SOLANA_ADDRESS_LENGTH() view returns (uint256)",
-      "function chainEngines(uint256) view returns (uint8)",
-      "function deBridgeGate() view returns (address)",
-      "function dlnSourceAddresses(uint256) view returns (bytes)",
-      "function externalCallAdapter() view returns (address)",
-      "function fulfillOrder(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order, uint256 _fulFillAmount, bytes32 _orderId, bytes _permitEnvelope, address _unlockAuthority, address _externalCallRewardBeneficiary) payable",
-      "function fulfillOrder(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order, uint256 _fulFillAmount, bytes32 _orderId, bytes _permitEnvelope, address _unlockAuthority) payable",
-      "function getChainId() view returns (uint256 cid)",
-      "function getOrderId(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order) pure returns (bytes32)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize()",
-      "function maxOrderCountPerBatchEvmUnlock() view returns (uint256)",
-      "function maxOrderCountPerBatchSolanaUnlock() view returns (uint256)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function sendBatchEvmUnlock(bytes32[] _orderIds, address _beneficiary, uint256 _executionFee) payable",
-      "function sendBatchSolanaUnlock(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall)[] _orders, bytes32 _beneficiary, uint256 _executionFee, uint64 _initWalletIfNeededInstructionReward, uint64 _claimUnlockInstructionReward) payable",
-      "function sendEvmOrderCancel(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order, address _cancelBeneficiary, uint256 _executionFee) payable",
-      "function sendEvmUnlock(bytes32 _orderId, address _beneficiary, uint256 _executionFee) payable",
-      "function sendSolanaOrderCancel(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order, bytes32 _cancelBeneficiary, uint256 _executionFee, uint64 _initWalletIfNeededInstructionReward, uint64 _claimCancelInstructionReward) payable",
-      "function sendSolanaUnlock(tuple(uint64 makerOrderNonce, bytes makerSrc, uint256 giveChainId, bytes giveTokenAddress, uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externalCall) _order, bytes32 _beneficiary, uint256 _executionFee, uint64 _initWalletIfNeededInstructionReward, uint64 _claimUnlockInstructionReward) payable",
-      "function setDlnSourceAddress(uint256 _chainIdFrom, bytes _dlnSourceAddress, uint8 _chainEngine)",
-      "function setExternalCallAdapter(address _externalCallAdapter)",
-      "function setMaxOrderCountsPerBatch(uint256 _newEvmCount, uint256 _newSolanaCount)",
-      "function subscriptionId() view returns (uint32)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function takeOrders(bytes32) view returns (uint8 status, address takerAddress, uint32 giveChainId, uint256 bigGiveChainId)",
-      "function takePatches(bytes32) view returns (uint256)",
-      "function unpause()",
-      "function version() pure returns (string)"
     ],
     "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -2868,6 +2969,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25752929 },
-  "permissionsConfigHash": "0x53a3ea0230c305e9076e5a2370269af9364675175d6321bf69963a4ecdd87a34"
+  "usedBlockNumbers": { "ethereum": 25796445 },
+  "permissionsConfigHash": "0x059b071fef39bee6c621d912a14e7bdc9a1475990c4e2dd4b78d45a1fd23ba8a"
 }

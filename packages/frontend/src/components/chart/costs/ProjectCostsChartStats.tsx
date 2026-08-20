@@ -1,8 +1,8 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
-import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
-import type { ProjectCostsChartResponse } from '~/server/features/scaling/costs/getProjectCostsChart'
-import type { CostsUnit } from '~/server/features/scaling/costs/types'
+import { formatCostValue } from '~/pages/layer2s/costs/utils/formatCostValue'
+import type { ProjectCostsChartResponse } from '~/server/features/layer2s/costs/getProjectCostsChart'
+import type { CostsUnit } from '~/server/features/layer2s/costs/types'
 
 export function ProjectCostsChartStats({
   unit,
