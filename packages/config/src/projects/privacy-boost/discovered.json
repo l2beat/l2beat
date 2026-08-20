@@ -1,7 +1,7 @@
 {
   "name": "privacy-boost",
   "timestamp": 1786976781,
-  "configHash": "0xfcad90424a23dfb4083cac1ef89f84952973865c1a58e76329f6cf680d6b3af0",
+  "configHash": "0x01bb1315fee557ecd6c10c455d3a2ccff6bfabe1d58d2a1812f31a966578c073",
   "entries": [
     {
       "address": "oeth:0x0000000000000000000000000000000000000000",

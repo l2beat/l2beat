@@ -135,11 +135,11 @@ export const refactored: BaseProject[] = [
   chainlink,
   uniswapv3,
   // privacy
-  privacyBoost,
   privacyPools,
   railgun,
   strk20,
   tornadoCash,
   umbra,
   zamaCw,
+  privacyBoost,
 ]
