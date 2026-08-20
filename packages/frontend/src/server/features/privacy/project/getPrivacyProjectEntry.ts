@@ -49,13 +49,14 @@ export interface ProjectPrivacyEntry {
   }
   bucketCount: number
   assetsCount: number
+  hasTvl: boolean
   attributes: PrivacyAttribute[]
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacySummaryValue
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
   summary: {
-    totalValueLockedUsd: number
+    totalValueLockedUsd: number | undefined
     deposits: {
       total: number
       last7d: number
@@ -167,16 +168,18 @@ export async function getPrivacyProjectEntry(
       iconUrl: icon,
     }
 
-    sections.push({
-      type: 'TvsValueSection',
-      props: {
-        id: 'privacy-tvl',
-        title: 'Value Locked',
-        defaultRange: defaultChartRange,
-        rangeControls: 'privacy',
-        project: chartProject,
-      },
-    })
+    if (details.hasTvl) {
+      sections.push({
+        type: 'TvsValueSection',
+        props: {
+          id: 'privacy-tvl',
+          title: 'Value Locked',
+          defaultRange: defaultChartRange,
+          rangeControls: 'privacy',
+          project: chartProject,
+        },
+      })
+    }
 
     sections.push({
       type: 'PrivacyFlowsSection',
@@ -194,6 +197,7 @@ export async function getPrivacyProjectEntry(
         id: 'privacy-assets-breakdown',
         title: 'Assets Breakdown',
         assets: details.assets,
+        showTvl: details.hasTvl,
       },
     })
   }
@@ -295,6 +299,7 @@ export async function getPrivacyProjectEntry(
     discoUi,
     bucketCount: details.summary.bucketCount,
     assetsCount: details.assets.length,
+    hasTvl: details.hasTvl,
     attributes: details.attributes,
     exitWindow: details.exitWindow,
     trustedSetup: toTrustedSetupSummaryValue(
@@ -320,9 +325,21 @@ async function getTotalValueLockedUsd(
   details: PrivacyProjectDetails,
   helpers: SsrHelpers,
   range: ChartRange,
-): Promise<number> {
+): Promise<number | undefined> {
   if (details.assets.length === 0) {
-    return 0
+    return undefined
+  }
+
+  const flowsPrefetch = helpers.queryClient.prefetchQuery(
+    helpers.trpc.privacy.flowsChart.queryOptions({
+      projectIds: [details.id],
+      range,
+    }),
+  )
+
+  if (!details.hasTvl) {
+    await flowsPrefetch
+    return undefined
   }
 
   // The flows chart prefetch rides along so both charts are dehydrated for the client
@@ -333,13 +350,8 @@ async function getTotalValueLockedUsd(
         range,
       }),
     ),
-    helpers.queryClient.prefetchQuery(
-      helpers.trpc.privacy.flowsChart.queryOptions({
-        projectIds: [details.id],
-        range,
-      }),
-    ),
+    flowsPrefetch,
   ])
 
-  return tvlChart.chart.at(-1)?.[1][details.id] ?? 0
+  return tvlChart.chart.at(-1)?.[1][details.id] ?? undefined
 }

@@ -69,9 +69,17 @@ async function getCachedData() {
     })
   ).sort((a, b) => a.slug.localeCompare(b.slug))
 
-  const projectIds = projects
+  const flowProjectIds = projects
     .filter((project) =>
       project.privacyInfo.tokens.some((token) => token.buckets.length > 0),
+    )
+    .map((e) => e.id)
+    .sort()
+  const tvlProjectIds = projects
+    .filter(
+      (project) =>
+        project.tvsConfig !== undefined &&
+        project.privacyInfo.tokens.some((token) => token.buckets.length > 0),
     )
     .map((e) => e.id)
     .sort()
@@ -80,13 +88,13 @@ async function getCachedData() {
     getPrivacySummaryEntries(projects),
     helpers.queryClient.prefetchQuery(
       helpers.trpc.privacy.flowsChart.queryOptions({
-        projectIds,
+        projectIds: flowProjectIds,
         range: defaultChartRange,
       }),
     ),
     helpers.queryClient.prefetchQuery(
       helpers.trpc.tvs.chartByProjects.queryOptions({
-        projectIds,
+        projectIds: tvlProjectIds,
         range: defaultChartRange,
       }),
     ),
