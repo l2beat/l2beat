@@ -1,3 +1,42 @@
+Generated with discovered.json: 0xa7fc7c224104050207dc265804ec6f148e1c2fb8
+
+# Diff at Wed, 19 Aug 2026 12:45:20 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@0ba95775cb09bf7f5dc60188c1169153757538d5 block: 1783603061
+- current timestamp: 1787132849
+
+## Description
+
+RollupProxy: `stakerCount` 1 → 0. The sole whitelisted validator withdrew its stake on 2026-08-14 (`returnOldDeposit`, then `withdrawStakerFunds`) after posting its last assertion on 2026-08-13; the last sequencer batch was on 2026-08-12. No staked validator remains to propose or confirm assertions.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      values.stakerCount:
+-        1
++        0
+      usedTypes.0.arg.0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97:
+-        "ArbOS v61 wasmModuleRoot"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783603061 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      usedTypes.0.arg.0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97:
++        "ArbOS v61 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0xf430d4347896d284fabb28525f3ecd16711deaa7
 
 # Diff at Thu, 11 Jun 2026 11:27:07 GMT:

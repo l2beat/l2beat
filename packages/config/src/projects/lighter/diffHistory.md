@@ -1,4 +1,30 @@
-Generated with discovered.json: 0xdfae3b2d96702444ac182910368f75fa04d0d777
+Generated with discovered.json: 0x809e6b2b75c50f63cf22dc848187963a797bbdfe
+
+# Diff at Thu, 20 Aug 2026 12:57:43 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@00219f808cbf3466c6d2af96ddc96440efc3714c block: 1786360025
+- current timestamp: 1787230600
+
+## Description
+
+Registered 3 new tokens: tether gold, S&P 500 tracker and QQQ tracker.
+
+## Watched changes
+
+```diff
+    contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7) [lighter/ZkLighterWithSpot] {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
+      values.registeredAssets.9:
++        {"assetIndex":11,"tokenAddress":"eth:0x68749665FF8D2d112Fa859AA293F07A622782F38"}
+      values.registeredAssets.10:
++        {"assetIndex":12,"tokenAddress":"eth:0xE43A5b52e317dC57770ba96BcD33C2bd5dC97c5C"}
+      values.registeredAssets.11:
++        {"assetIndex":13,"tokenAddress":"eth:0x227fF9D1a9931db2585a45c41fC84e3b3f48B37b"}
+    }
+```
+
+Generated with discovered.json: 0x7ad0edd5a16bd029274886e4282da0dc8b713581
 
 # Diff at Mon, 10 Aug 2026 11:16:21 GMT:
 

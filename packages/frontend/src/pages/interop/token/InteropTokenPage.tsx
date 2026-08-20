@@ -112,7 +112,13 @@ function Content({
           slug: token.slug,
           icon: token.iconUrl,
         }}
-        secondLine={token.issuer ? `Issued by ${token.issuer}` : undefined}
+        secondLine={
+          token.issuer ? (
+            <>
+              Issued by <span className="capitalize">{token.issuer}</span>
+            </>
+          ) : undefined
+        }
       />
       <HorizontalSeparator className="my-4 md:hidden" />
     </>
