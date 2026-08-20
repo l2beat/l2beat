@@ -13,21 +13,17 @@ import type { PrivacyTvlBreakdownProject } from './PrivacyTvlBreakdownChart'
 import { PrivacyTvlBreakdownChart } from './PrivacyTvlBreakdownChart'
 
 interface Props {
-  flowProjects: PrivacyTvlBreakdownProject[]
-  tvlProjects: PrivacyTvlBreakdownProject[]
+  projects: PrivacyTvlBreakdownProject[]
   defaultRange: ChartRange
 }
 
-export function PrivacySummaryChartsSection({
-  flowProjects,
-  tvlProjects,
-  defaultRange,
-}: Props) {
+export function PrivacySummaryChartsSection({ projects, defaultRange }: Props) {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(defaultRange)
-  const flowProjectIds = useMemo(
-    () => flowProjects.map((p) => p.id).sort(),
-    [flowProjects],
+  const projectIds = useMemo(() => projects.map((p) => p.id).sort(), [projects])
+  const tvlProjects = useMemo(
+    () => projects.filter((p) => p.hasTvl),
+    [projects],
   )
   const tvlProjectIds = useMemo(
     () => tvlProjects.map((p) => p.id).sort(),
@@ -35,7 +31,7 @@ export function PrivacySummaryChartsSection({
   )
   const { data: flowsData, isLoading: isFlowsLoading } = useQuery(
     trpc.privacy.flowsChart.queryOptions({
-      projectIds: flowProjectIds,
+      projectIds,
       range,
     }),
   )
