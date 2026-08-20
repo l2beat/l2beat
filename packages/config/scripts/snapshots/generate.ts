@@ -1,3 +1,4 @@
+import { execFileSync } from 'child_process'
 import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { mergeSnapshots } from '../../src/snapshots/merge'
 import { SNAPSHOT_DOMAINS } from '../../src/snapshots/registry'
@@ -43,6 +44,13 @@ for (const domain of domains) {
     domain.snapshotPath,
     `${JSON.stringify(toStored(snapshot), null, 2)}\n`,
   )
+  execFileSync('pnpm', [
+    'exec',
+    'biome',
+    'format',
+    '--write',
+    domain.snapshotPath,
+  ])
   const projectCount = Object.keys(snapshot).length
   const idCount = Object.values(snapshot).flat().length
   console.log(
