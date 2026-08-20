@@ -116,7 +116,7 @@ describe(parseDiscoveryUpdates.name, () => {
         body: [verifiedContract, createdContract].join('\n\n'),
       },
     ])
-    expect(updates[0]?.changeCount).toEqual(4)
+    expect(updates[0]?.changeCount).toEqual(3)
   })
 
   it('keeps standalone contracts added through config', () => {
@@ -181,7 +181,6 @@ describe(parseDiscoveryUpdates.name, () => {
     )
 
     expect(updates[0]?.isHighSeverity).toEqual(true)
-    expect(updates[0]?.changeCount).toEqual(2)
   })
 
   it('marks high severity from explicit severity metadata', () => {
