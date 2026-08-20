@@ -11,7 +11,7 @@ interface Props {
   entries: OssificationEntry[]
 }
 
-export function L2RiskOssificationTable({ entries }: Props) {
+export function OssificationTable({ entries }: Props) {
   const { sorting, setSorting } = useTableSorting()
   const table = useTable({
     data: entries,

@@ -113,10 +113,9 @@ Deliberate design decisions (do not re-litigate casually):
 - UI: `components/projects/sections/OssificationSection.tsx`, wired in
   `getL2ProjectEntry.ts` and `getPrivacyProjectEntry.ts` (the frontend renamed
   "scaling" to "layer2s" across pages/features/URLs in #12538).
-- Comparison page: `/layer2s/risk/ossification` (mirrors the sequencing risk page) —
-  `pages/layer2s/risk/ossification/*` + `getOssificationEntries.ts` (spans scaling,
-  privacy, and DeFi projects; wired in L2Router, pageLoaders, pagePaths,
-  navGroups, searchBarPages).
+- Comparison page: `/security` — `pages/security/*` +
+  `getOssificationEntries.ts` (spans Layer 2, privacy, and DeFi projects; wired in
+  SecurityRouter, pageLoaders, pagePaths, navGroups, and searchBarPages).
 - Discovery support for the flag: `ColorConfig.ts`, `colorize.ts`, `toDiscoveryOutput.ts`
   (`sortEntry` whitelists keys — new entry fields must be added there), `output/types.ts`.
 
@@ -232,7 +231,13 @@ retain auditable timestamp/evidence links, and pass unit tests plus the cohort s
    https://claude.ai/code/artifact/8fac7e4b-9e7f-44b4-8a7c-cb47da2f5d99). Findings:
    median exploited-code age 2.7mo; 90% of code-bug exploits (92% of their losses)
    hit code ≤12mo old; exploit-age MLE mean 0.54y → keep λ=2y (median exploited
-   code would have scored 11/100; λ=1y would double that). Scope: code bugs are
+   code would have scored 11/100; λ=1y would double that). Expanded sample:
+   261 further exploits extracted from DeFiHackLabs @KeyInfo headers
+   (`scripts/ossification-incidents.registry.json` + `-batch.ts`, results cached
+   in `.batch-results.json`; only rows with USD loss + attack tx + victim
+   contract verified onchain; attacker-deployed "victims" auto-excluded) —
+   independently reproduces the front-loading: median 1.9mo, 41% ≤1mo,
+   75% ≤12mo (fatter >2y tail since root causes aren't classified there). Scope: code bugs are
    43% of losses; keys/offchain (49%) are invisible to OF — say so in public copy.
    Counterexamples to cite honestly: Curve/Vyper (20mo), Yearn yUSDT (38mo),
    GMX v1 (46mo). 24h cluster window validated against the cohort's own gap

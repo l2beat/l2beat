@@ -7,7 +7,6 @@ export interface OssificationEntry {
   name: string
   icon: string
   href: string | undefined
-  type: 'Scaling' | 'Privacy' | 'DeFi'
   score: number
   exposure: number | null
   projectAgeSeconds: number | null
@@ -16,43 +15,41 @@ export interface OssificationEntry {
   contractCount: number
 }
 
-/** Every project that opted into the ossification factor, across project
- *  types — the comparison page deliberately spans scaling, privacy, and
- *  DeFi so immutable anchors like Tornado Cash sit next to rollups. */
+/** Every project that opted into the ossification factor. The comparison
+ *  deliberately spans all project types tracked by L2BEAT. */
 export async function getOssificationEntries(): Promise<OssificationEntry[]> {
   const projects = await ps.getProjects({
     optional: ['scalingInfo', 'privacyInfo', 'defiInfo'],
     whereNot: ['archivedAt'],
   })
 
-  const entries: OssificationEntry[] = []
-  for (const project of projects) {
-    const ossification = await getProjectOssification(project.id)
-    if (!ossification) continue
-    entries.push({
-      slug: project.slug,
-      name: project.name,
-      icon: manifest.getUrl(`/icons/${project.slug}.png`),
-      href: project.scalingInfo
-        ? `/layer2s/projects/${project.slug}#ossification`
-        : project.privacyInfo
-          ? `/privacy/projects/${project.slug}#ossification`
-          : undefined,
-      type: project.scalingInfo
-        ? 'Scaling'
-        : project.privacyInfo
-          ? 'Privacy'
-          : 'DeFi',
-      score: ossification.score,
-      exposure: ossification.exposure,
-      projectAgeSeconds: ossification.projectAgeSeconds,
-      criticalChangesPerYear: ossification.criticalChangesPerYear,
-      clusteredEventCount: ossification.clusteredEventCount,
-      contractCount: ossification.contracts.length,
-    })
-  }
+  const entries = await Promise.all(
+    projects.map(async (project): Promise<OssificationEntry | undefined> => {
+      const ossification = await getProjectOssification(project.id)
+      if (!ossification) return undefined
 
-  return entries.sort(
-    (a, b) => b.score - a.score || (b.exposure ?? 0) - (a.exposure ?? 0),
+      return {
+        slug: project.slug,
+        name: project.name,
+        icon: manifest.getUrl(`/icons/${project.slug}.png`),
+        href: project.scalingInfo
+          ? `/layer2s/projects/${project.slug}#ossification`
+          : project.privacyInfo
+            ? `/privacy/projects/${project.slug}#ossification`
+            : project.defiInfo
+              ? `/defi/projects/${project.slug}#ossification`
+              : undefined,
+        score: ossification.score,
+        exposure: ossification.exposure,
+        projectAgeSeconds: ossification.projectAgeSeconds,
+        criticalChangesPerYear: ossification.criticalChangesPerYear,
+        clusteredEventCount: ossification.clusteredEventCount,
+        contractCount: ossification.contracts.length,
+      }
+    }),
   )
+
+  return entries
+    .filter((entry): entry is OssificationEntry => entry !== undefined)
+    .sort((a, b) => b.score - a.score || (b.exposure ?? 0) - (a.exposure ?? 0))
 }

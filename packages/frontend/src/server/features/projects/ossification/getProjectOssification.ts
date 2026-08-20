@@ -19,6 +19,11 @@ const SECONDS_PER_YEAR = 365 * 24 * 60 * 60
 
 const fileCache = new Map<string, { mtimeMs: number; parsed: unknown }>()
 
+export interface ProjectOssification extends OssificationFactor {
+  /** Project TVS integrated over the current unchanged period, in USD·years. */
+  exposure: number | null
+}
+
 /** Committed judgment file — the opt-in marker for the ossification factor.
  *  `includeProjects`: discovery projects whose critical contracts and change
  *  history count as part of this project's perimeter (tightly integrated
@@ -47,7 +52,7 @@ interface OssificationJson {
  */
 export async function getProjectOssification(
   projectId: string,
-): Promise<OssificationFactor | undefined> {
+): Promise<ProjectOssification | undefined> {
   if (!PROJECT_ID_RE.test(projectId)) {
     return undefined
   }
@@ -59,10 +64,12 @@ export async function getProjectOssification(
   }
 
   const projectIds = [
-    projectId,
-    ...(ossificationJson.includeProjects ?? []).filter((id) =>
-      PROJECT_ID_RE.test(id),
-    ),
+    ...new Set([
+      projectId,
+      ...(ossificationJson.includeProjects ?? []).filter((id) =>
+        PROJECT_ID_RE.test(id),
+      ),
+    ]),
   ]
   const critical: (DiscoveredEntryLite & { address: string })[] = []
   const updates: DiscoveryUpdate[] = []

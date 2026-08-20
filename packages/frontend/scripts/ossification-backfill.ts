@@ -14,15 +14,13 @@ import { readFileSync } from 'fs'
 import path from 'path'
 import { getDiscoveryUpdates } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import {
+  extractDiffBlockAddress,
   extractDiffBlockSpans,
   isHighSeverityDiffBody,
   isImplementationChangeDiffBody,
 } from '~/utils/diffHistory/diffHistoryMarkdown'
 
 const REPO_ROOT = path.join(process.cwd(), '../..')
-const DIFF_BLOCK_ADDRESS_RE =
-  /^\s*(?:contract\s+.*?|EOA\s*)\(((?:\w+:)?0x[0-9a-fA-F]{40})\)/m
-
 interface HistoricalContract {
   address: string
   name: string
@@ -223,7 +221,7 @@ function countDiffEvents(
     for (const section of update.sections) {
       if (section.kind !== 'watched-changes') continue
       for (const { content } of extractDiffBlockSpans(section.body)) {
-        const match = DIFF_BLOCK_ADDRESS_RE.exec(content)?.[1]?.toLowerCase()
+        const match = extractDiffBlockAddress(content)
         const address = match && byAddress.get(match)
         if (!address) continue
         if (isImplementationChangeDiffBody(content)) {

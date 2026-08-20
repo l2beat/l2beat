@@ -21,9 +21,8 @@ export const pageLoaders = {
   L2RiskSequencingPage: async () =>
     (await import('./layer2s/risk/sequencing/L2RiskSequencingPage'))
       .L2RiskSequencingPage,
-  L2RiskOssificationPage: async () =>
-    (await import('./layer2s/risk/ossification/L2RiskOssificationPage'))
-      .L2RiskOssificationPage,
+  SecurityPage: async () =>
+    (await import('./security/SecurityPage')).SecurityPage,
   L2LivenessPage: async () =>
     (await import('./layer2s/liveness/L2LivenessPage')).L2LivenessPage,
   L2CostsPage: async () =>

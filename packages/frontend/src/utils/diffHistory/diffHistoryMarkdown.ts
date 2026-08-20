@@ -1,4 +1,6 @@
 const DIFF_BLOCK_RE = /```diff\n([\s\S]*?)```/g
+const DIFF_BLOCK_ADDRESS_RE =
+  /^\s*(?:contract\s+.*?|EOA\s*)\(((?:[a-z0-9-]+:)?0x[0-9a-f]{40})\)/im
 
 export interface DiffBlockSpan {
   content: string
@@ -17,6 +19,10 @@ export function extractDiffBlockSpans(body: string): DiffBlockSpan[] {
     })
   }
   return spans
+}
+
+export function extractDiffBlockAddress(body: string): string | undefined {
+  return DIFF_BLOCK_ADDRESS_RE.exec(body)?.[1]?.toLowerCase()
 }
 
 export function countDiffChanges(body: string): number {

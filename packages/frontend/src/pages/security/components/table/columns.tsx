@@ -18,12 +18,6 @@ export const ossificationColumns = [
     ),
     enableHiding: false,
   }),
-  columnHelper.accessor('type', {
-    header: 'Type',
-    cell: (ctx) => (
-      <span className="text-secondary text-xs">{ctx.getValue()}</span>
-    ),
-  }),
   columnHelper.accessor('score', {
     header: 'Ossification',
     cell: (ctx) => (

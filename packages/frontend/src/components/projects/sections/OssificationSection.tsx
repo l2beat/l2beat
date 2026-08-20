@@ -2,16 +2,14 @@ import { formatCurrency, formatSeconds } from '@l2beat/shared-pure'
 import { Badge } from '~/components/badge/Badge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
-import type {
-  OssificationContractBreakdown,
-  OssificationFactor,
-} from '~/server/features/projects/ossification/getOssificationFactor'
+import type { OssificationContractBreakdown } from '~/server/features/projects/ossification/getOssificationFactor'
+import type { ProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import { formatTimestamp } from '~/utils/dates'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
 
 export interface OssificationSectionProps extends ProjectSectionProps {
-  ossification: OssificationFactor
+  ossification: ProjectOssification
 }
 
 export function OssificationSection({

@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import {
+  extractDiffBlockAddress,
   extractDiffBlockSpans,
   isHighSeverityDiffBody,
   isImplementationChangeDiffBody,
@@ -17,9 +18,6 @@ export const EVENT_CLUSTER_WINDOW_SECONDS = 24 * 60 * 60
 const RATE_WINDOW_SECONDS = 3 * 365 * 24 * 60 * 60
 const MIN_RATE_WINDOW_SECONDS = 30 * 24 * 60 * 60
 const SECONDS_PER_YEAR = 365 * 24 * 60 * 60
-
-const DIFF_BLOCK_ADDRESS_RE =
-  /^\s*(?:contract\s+.*?|EOA\s*)\(((?:\w+:)?0x[0-9a-fA-F]{40})\)/m
 
 /** A contract in the ossification perimeter, extracted from discovered.json */
 export interface OssificationEntry {
@@ -51,11 +49,6 @@ export interface OssificationFactor {
   score: number
   /** 0..1 maturity of the project-wide critical perimeter */
   maturity: number
-  /** Battle-tested exposure in USD·years: project TVS integrated over the
-   *  time since the last critical change — the accumulated implicit bug
-   *  bounty the unchanged perimeter has withstood. Filled by the loader
-   *  (needs the TVS series); null when TVS data is unavailable. */
-  exposure: number | null
   /** The project clock starts at the most recent deployment or critical
    *  change anywhere in the critical perimeter. */
   projectClockStart: number | null
@@ -177,7 +170,6 @@ export function getOssificationFactor(
   return {
     score: Math.round(maturity * 100),
     maturity,
-    exposure: null,
     projectClockStart,
     projectAgeSeconds,
     lastCriticalChange,
@@ -202,7 +194,7 @@ function collectDiffEvents(
     for (const section of update.sections) {
       if (section.kind !== 'watched-changes') continue
       for (const { content } of extractDiffBlockSpans(section.body)) {
-        const address = DIFF_BLOCK_ADDRESS_RE.exec(content)?.[1]?.toLowerCase()
+        const address = extractDiffBlockAddress(content)
         if (!address) continue
         const record = byAddress.get(address)
         if (!record) continue
@@ -229,14 +221,13 @@ function getContractBreakdown(
 ): OssificationContractBreakdown {
   const { entry, diffEventTimestamps } = record
   const lastReset = Math.max(
+    entry.sinceTimestamp ?? Number.NEGATIVE_INFINITY,
     entry.upgradeTimestamps.at(-1) ?? Number.NEGATIVE_INFINITY,
     diffEventTimestamps.at(-1) ?? Number.NEGATIVE_INFINITY,
   )
   const hasChanged =
     entry.upgradeTimestamps.length > 1 || diffEventTimestamps.length > 0
-  const clockStart = Number.isFinite(lastReset)
-    ? lastReset
-    : (entry.sinceTimestamp ?? null)
+  const clockStart = Number.isFinite(lastReset) ? lastReset : null
 
   return {
     name: entry.name,

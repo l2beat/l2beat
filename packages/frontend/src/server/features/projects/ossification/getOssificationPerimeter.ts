@@ -41,11 +41,9 @@ export function deriveOssificationPerimeter(
   seedAddresses: string[],
 ): Set<string> | null {
   const contractByKey = new Map<string, DiscoveredEntryLite>()
-  const entryTypeByKey = new Map<string, string>()
   for (const entry of entries) {
     if (!entry.address) continue
     const key = entry.address.toLowerCase()
-    entryTypeByKey.set(key, entry.type ?? '')
     if (entry.type === 'Contract') {
       contractByKey.set(key, entry)
     }

@@ -12,7 +12,6 @@ import { getL2ProjectData } from './project/getL2ProjectData'
 import { getL2ProjectTvsBreakdownData } from './project/tvs-breakdown/getL2ProjectTvsBreakdownData'
 import { getL2RiskDataAvailabilityData } from './risk/data-availability/getL2RiskDataAvailabilityData'
 import { getL2RiskData } from './risk/getL2RiskData'
-import { getL2RiskOssificationData } from './risk/ossification/getL2RiskOssificationData'
 import { getL2RiskSequencingData } from './risk/sequencing/getL2RiskSequencingData'
 import { getL2RiskStateValidationData } from './risk/state-validation/getL2RiskStateValidationData'
 import { getL2SummaryData } from './summary/getL2SummaryData'
@@ -61,12 +60,6 @@ export function createL2Router(
 
   router.get('/layer2s/risk/sequencing', async (req, res) => {
     const data = await getL2RiskSequencingData(req, manifest, cache)
-    const html = await render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
-
-  router.get('/layer2s/risk/ossification', async (req, res) => {
-    const data = await getL2RiskOssificationData(req, manifest, cache)
     const html = await render(data, req.originalUrl)
     res.status(200).send(html)
   })

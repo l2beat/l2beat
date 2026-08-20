@@ -9,6 +9,7 @@ import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { HomeIcon } from '~/icons/pages/Home'
 import { L2Icon } from '~/icons/pages/L2'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
+import { SecurityIcon } from '~/icons/pages/Security'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { createOrderedSort } from '~/utils/sort'
 
@@ -57,10 +58,6 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
             title: 'Sequencing',
             href: '/layer2s/risk/sequencing',
           },
-          {
-            title: 'Ossification',
-            href: '/layer2s/risk/ossification',
-          },
         ],
       },
       {
@@ -87,6 +84,15 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
         href: '/layer2s/archived',
       },
     ],
+  },
+  {
+    type: 'single',
+    title: 'Security',
+    match: 'security',
+    href: '/security',
+    icon: (
+      <SecurityIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+    ),
   },
   {
     type: 'multiple',

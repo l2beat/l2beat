@@ -22,6 +22,7 @@ import { createMultisigReportRouter } from './multisig-report/MutlisigReportRout
 import { createNativeRollupsRouter } from './native-rollups/NativeRollupsRouter'
 import { createPrivacyRouter } from './privacy/PrivacyRouter'
 import { createPublicationsRouter } from './publications/PublicationsRouter'
+import { createSecurityRouter } from './security/SecurityRouter'
 import { createStagesRouter } from './stages/StagesRouter'
 import { createTermsOfServiceRouter } from './terms-of-service/TermsOfServiceRouter'
 import { createZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
@@ -57,6 +58,7 @@ export function createServerPageRouter(
   const routers = [
     ...(env.CLIENT_SIDE_HOME_PAGE ? [createHomeRouter] : []),
     createL2Router,
+    createSecurityRouter,
     createInteropRouter,
     createDataAvailabilityRouter,
     createZkCatalogRouter,

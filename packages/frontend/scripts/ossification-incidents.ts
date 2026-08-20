@@ -213,7 +213,8 @@ async function measure(incident: Incident): Promise<Result> {
 
   const incidentBlock = await blockAtTime(incident.chain, incidentTs)
   const topic =
-    EVENT_TOPICS[incident.upgradeEventOverride?.event ?? 'Upgraded(address)']
+    EVENT_TOPICS[incident.upgradeEventOverride?.event ?? 'Upgraded(address)'] ??
+    UPGRADED_TOPIC
   const upgrades = await upgradeTimestamps(
     incident.chain,
     incident.contract,

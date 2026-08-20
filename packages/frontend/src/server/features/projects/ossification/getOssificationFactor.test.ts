@@ -113,6 +113,21 @@ describe(getOssificationFactor.name, () => {
     expect(result?.clusteredEventCount).toEqual(1)
   })
 
+  it('uses a deployment newer than the initial implementation event', () => {
+    const result = getOssificationFactor(
+      [
+        entry({
+          sinceTimestamp: NOW - YEAR,
+          upgradeTimestamps: [NOW - 2 * YEAR],
+        }),
+      ],
+      [],
+      NOW,
+    )
+    expect(result?.projectClockStart).toEqual(NOW - YEAR)
+    expect(result?.contracts[0]?.hasChanged).toEqual(false)
+  })
+
   it('counts a high-severity value change from diff history', () => {
     const result = getOssificationFactor(
       [entry({ sinceTimestamp: NOW - 4 * YEAR })],
@@ -176,6 +191,16 @@ describe(getOssificationFactor.name, () => {
     expect(result?.contracts[0]?.criticalChangeCount).toEqual(1)
   })
 
+  it('matches chain prefixes containing hyphens', () => {
+    const address = ADDRESS_A.replace('eth:', 'arb-nova:')
+    const result = getOssificationFactor(
+      [entry({ address, sinceTimestamp: NOW - 4 * YEAR })],
+      [update(NOW - 30 * DAY, highSeverityBlock(address))],
+      NOW,
+    )
+    expect(result?.contracts[0]?.criticalChangeCount).toEqual(1)
+  })
+
   it('scores the whole perimeter as zero when a critical contract is unverified', () => {
     const result = getOssificationFactor(
       [
@@ -227,16 +252,6 @@ describe(getOssificationFactor.name, () => {
     expect(result?.projectClockStart).toEqual(NOW - 30 * DAY)
     expect(result?.projectAgeSeconds).toEqual(30 * DAY)
     expect(result?.score ?? 100).toBeLessThan(10)
-  })
-
-  it('leaves exposure to the loader', () => {
-    const result = getOssificationFactor(
-      [entry({ sinceTimestamp: NOW - 4 * YEAR })],
-      [],
-      NOW,
-    )
-    expect(result?.maturity).toEqual(1 - Math.exp(-2))
-    expect(result?.exposure).toEqual(null)
   })
 
   it('does not score a perimeter with an unknown contract clock', () => {
