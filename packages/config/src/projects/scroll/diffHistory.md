@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xcfd2849c589234783d086a780b83215ebea8d4a7
+Generated with discovered.json: 0x4698226677e17cf82c5c9986f88dc82a00d8777a
 
-# Diff at Thu, 20 Aug 2026 06:21:27 GMT:
+# Diff at Thu, 20 Aug 2026 07:16:50 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1787147569
@@ -167,12 +167,6 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
 ```diff
     contract PlonkVerifierFeynmanV2 (eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C) [N/A] {
     +++ description: None
-      sourceHashes:
--        ["0x0ffd802e46395eb0f9e68316cd3afa259549980515f4922777333fc64f675834"]
-      references:
--        [{"text":"Source Code","href":"https://l2beat.com/zk-catalog/openvmprover#verifiers"}]
-      unverified:
-+        true
       critical:
 +        true
     }

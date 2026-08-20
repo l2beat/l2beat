@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "timestamp": 1787147569,
-  "configHash": "0x5c5c3e53a820a71a569361ba3ca6c40e8fec35578f31f6c53db1988cc1ce1c35",
+  "configHash": "0x048c00c6c13670542931457ee5c3aa6b1fd45a0eee541c4f04c0100a4c2436fe",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -1671,7 +1671,9 @@
       "name": "PlonkVerifierFeynmanV2",
       "address": "eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x0ffd802e46395eb0f9e68316cd3afa259549980515f4922777333fc64f675834"
+      ],
       "proxyType": "immutable",
       "critical": true,
       "deployerAddress": "eth:0xFF78606A67582974bBe3Cfc5d5afB56485671CdA",
@@ -1680,7 +1682,13 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C": ""
-      }
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://l2beat.com/zk-catalog/openvmprover#verifiers"
+        }
+      ]
     },
     {
       "name": "pufETHEscrow",

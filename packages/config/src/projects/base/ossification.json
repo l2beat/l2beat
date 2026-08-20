@@ -14,7 +14,9 @@
       "address": "eth:0x95703e0982140d16f8eba6d158fccede42f04a4c",
       "name": "SuperchainConfig",
       "critical": true,
-      "upgradeTimestamps": [1705954799, 1718044163, 1718044163, 1743612623, 1753379243, 1764092795],
+      "upgradeTimestamps": [
+        1705954799, 1718044163, 1718044163, 1743612623, 1753379243, 1764092795
+      ],
       "diffEventCount": 0,
       "lastSeenAt": 1772299542,
       "lastSeenCommit": "bc5cbc9b04c6897ddc11b0f0225c2837cf57ef6a",
