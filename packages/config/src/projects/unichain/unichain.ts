@@ -20,7 +20,19 @@ export const unichain: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1739318400), // 2025-02-11T00:00:00Z
   discovery,
-  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 21116363 })],
+  daTracking: [
+    {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 21116363,
+      untilBlock: 0, // TODO step 2: last point the old configuration was live
+      inbox: EthereumAddress('0xFf00000000000000000000000000000000000130'),
+      sequencers: [
+        EthereumAddress('0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd'),
+      ],
+    },
+    getOpStackDaTracking(discovery, { sinceBlock: 21116363 }),
+  ],
   additionalPurposes: ['Exchange'],
   display: {
     name: 'Unichain',
