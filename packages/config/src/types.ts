@@ -962,7 +962,11 @@ export interface TrustedSetup {
 
 // #region defi data
 
-export type ProjectDefiCategory = 'DEX' | 'Oracle' | 'Stablecoin'
+export type ProjectDefiCategory =
+  | 'DEX'
+  | 'Oracle'
+  | 'Stablecoin'
+  | 'Liquid Staking'
 
 export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
