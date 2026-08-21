@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Permissionless helper that pushes FPS voting-power snapshots to bridged governance contracts on other chains via CCIP; anyone can trigger a sync by paying the CCIP fee."
+}
