@@ -6,6 +6,10 @@
         {
           "type": "interact",
           "description": "can register arbitrary tokens with an arbitrary administrator."
+        },
+        {
+          "type": "interact",
+          "description": "add or remove registry modules that can propose administrators for unregistered tokens."
         }
       ]
     },
@@ -37,14 +41,20 @@
       ]
     },
     "administrators": {
-      "description": "Per-token administrator address: the only account that can call setPool() for that token and thereby re-route it to a different TokenPool. Replayed from AdministratorTransferred events; tokens that have been proposed but never had acceptAdminRole called are absent. Latest administrator per token wins.",
+      "description": "Per-token administrator address: the only account that can set or remove that token's pool and initiate a transfer of its administrator role. Replayed from AdministratorTransferred events; tokens that have been proposed but never had acceptAdminRole called are absent. Latest administrator per token wins.",
       "handler": {
         "type": "event",
         "select": "newAdmin",
         "set": { "event": "AdministratorTransferred" },
         "groupBy": "token",
         "ignoreRelative": true
-      }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set or remove the TokenPool for an administered token and initiate transfer of that token's administrator role."
+        }
+      ]
     }
   },
   "ignoreRelatives": ["administrators", "poolsMap"],

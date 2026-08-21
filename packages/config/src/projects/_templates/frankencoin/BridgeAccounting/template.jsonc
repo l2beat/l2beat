@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Books profit/loss settlements from bridged Frankencoin deployments on other chains into the mainnet reserve (it is a registered minter). Accepts CCIP messages only from the ZCHF token contracts registered in the token pool."
+}
