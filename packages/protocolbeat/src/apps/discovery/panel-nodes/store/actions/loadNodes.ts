@@ -1,17 +1,12 @@
 import { stackAutoLayout } from '../../controls/StackLayoutButton'
 import type { Node, State } from '../State'
-import {
-  BOTTOM_PADDING,
-  FIELD_HEIGHT,
-  HEADER_HEIGHT,
-  HIDDEN_FIELDS_FOOTER_HEIGHT,
-  NODE_WIDTH,
-} from '../utils/constants'
+import { NODE_WIDTH } from '../utils/constants'
 import {
   getGraphProjection,
   hideItems,
   mapGraphItems,
 } from '../utils/graphProjection'
+import { reconcileCompressedRows } from '../utils/rows'
 import {
   type NodeLocations,
   recallNodeLayout,
@@ -19,7 +14,10 @@ import {
   type StoredGroup,
   type StoredNodeLayout,
 } from '../utils/storage'
-import { updateNodePositions } from '../utils/updateNodePositions'
+import {
+  getNodeHeight,
+  updateNodePositions,
+} from '../utils/updateNodePositions'
 import { makeGroupNode } from './group'
 import { layout } from './other'
 
@@ -54,7 +52,17 @@ export function loadNodes(
       ...node.hiddenFields,
       ...newDefaults,
     ])
-    return { ...newNode, box: node.box, color: node.color, hiddenFields }
+    const compressedRows = reconcileCompressedRows(
+      newNode.fields,
+      node.compressedRows,
+    )
+    return {
+      ...newNode,
+      box: node.box,
+      color: node.color,
+      hiddenFields,
+      compressedRows,
+    }
   })
   const knownIds = new Set([...toAddRaw, ...existingRaw].map((node) => node.id))
   const dropDanglingFields = (node: Node): Node => ({
@@ -68,22 +76,15 @@ export function loadNodes(
   const nodesWithoutSavedLayout = new Set<string>()
   const added = toAdd.map((node) => {
     const hiddenFields = combinedHiddenFields(node, saved)
+    const compressedRows = reconcileCompressedRows(
+      node.fields,
+      saved?.compressedRows?.[node.id] ?? [],
+    )
 
     const box = saved?.locations[node.id]
     const x = box?.x ?? 0
     const y = box?.y ?? 0
     const width = box?.width ?? NODE_WIDTH
-    const hiddenFieldsHeight =
-      hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
-    const visibleFieldsCount = Math.max(
-      0,
-      node.fields.length - hiddenFields.length,
-    )
-    const height =
-      HEADER_HEIGHT +
-      visibleFieldsCount * FIELD_HEIGHT +
-      BOTTOM_PADDING +
-      hiddenFieldsHeight
     const savedColor = saved?.colors?.[node.id]
     const color = savedColor ?? node.color
 
@@ -91,12 +92,14 @@ export function loadNodes(
       nodesWithoutSavedLayout.add(node.id)
     }
 
-    return {
+    const placed = {
       ...node,
       color,
       hiddenFields,
-      box: { x, y, width, height: height },
+      compressedRows,
+      box: { x, y, width, height: 0 },
     }
+    return { ...placed, box: { ...placed.box, height: getNodeHeight(placed) } }
   })
 
   const flatNodes = existing.concat(added)

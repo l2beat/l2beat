@@ -173,6 +173,7 @@ export function makeGroupNode(
     name: group.name,
     fields: collectOutgoingFields(members),
     hiddenFields: [],
+    compressedRows: [],
     box: {
       x: group.box.x,
       y: group.box.y,
