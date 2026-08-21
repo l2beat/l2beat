@@ -20,21 +20,18 @@ export function OssificationDetails({
       <h3 className="text-heading-20">Ossification</h3>
       <div className="flex flex-col gap-4">
         <p className="text-secondary text-sm leading-relaxed">
-          Ossification measures how battle-tested the code securing this project
-          is. Contracts classified as critical by our research team form one
-          project-wide perimeter. Deploying or critically changing any of them
-          counts as a change to the project; changes within 24 hours count as
-          one event. Code changes are implementation upgrades, while state
-          changes are high-severity value changes. A mixed update counts as a
-          code change. Ossification N means the unchanged perimeter has outlived
-          the code age of N% of the recorded code-bug exploits in our published
-          incident dataset (v2026-08, n=243, ages verified onchain). The
-          battle-tested exposure is the value secured summed up over that
-          unchanged period — the implicit bug bounty the code has withstood.
+          Contracts classified as critical by our research team form one
+          project-wide perimeter; deploying or critically changing any of them
+          resets its clock (changes within 24 hours count as one event).
+          Ossification N means the unchanged perimeter has outlived the code age
+          of N% of recorded code-bug exploits in our published, onchain-verified
+          incident dataset. Battle-tested exposure is the value secured summed
+          over that unchanged period — the implicit bug bounty the code has
+          withstood.
         </p>
         <ChartStats className="md:grid-cols-2 lg:grid-cols-4">
-          <ChartStatsItem label="Ossification" className="max-md:h-7">
-            <span className="tabular-nums">{ossification.score} / 100</span>
+          <ChartStatsItem label="Ossification %" className="max-md:h-7">
+            <span className="tabular-nums">{ossification.score}</span>
           </ChartStatsItem>
           <ChartStatsItem label="Battle-tested exposure" className="max-md:h-7">
             {ossification.exposure !== null ? (

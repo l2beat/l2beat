@@ -54,7 +54,7 @@ export const ossificationColumns = [
     },
     meta: {
       tooltip:
-        'Ossification N: the project-wide critical perimeter has stayed unchanged longer than the exploited code in N% of recorded code-bug exploits (published incident dataset, ages verified onchain). Below 50 the perimeter is younger than the median exploited code; 80+ means it outlived ~80% of recorded exploits (roughly one year unchanged).',
+        'The critical perimeter has stayed unchanged longer than the exploited code in N% of recorded code-bug exploits. Below 50: younger than the median exploited code. 80+: about a year unchanged.',
     },
     sortDescFirst: true,
   }),
