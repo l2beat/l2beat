@@ -61,7 +61,13 @@ async function getContractUsageMap() {
     ps.getProjects({ where: ['daLayer'] }),
     ps.getProjects({
       select: ['contracts'],
-      optional: ['permissions', 'scalingInfo', 'daBridge', 'privacyInfo'],
+      optional: [
+        'permissions',
+        'scalingInfo',
+        'daBridge',
+        'privacyInfo',
+        'defiInfo',
+      ],
       whereNot: ['archivedAt'],
     }),
   ])

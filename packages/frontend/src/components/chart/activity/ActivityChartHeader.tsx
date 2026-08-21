@@ -1,6 +1,6 @@
 import { InfoIcon } from '~/icons/Info'
-import { useActivityMetricContext } from '~/pages/scaling/activity/components/ActivityMetricContext'
-import { ActivityMetricControls } from '~/pages/scaling/activity/components/ActivityMetricControls'
+import { useActivityMetricContext } from '~/pages/layer2s/activity/components/ActivityMetricContext'
+import { ActivityMetricControls } from '~/pages/layer2s/activity/components/ActivityMetricControls'
 import {
   Tooltip,
   TooltipContent,

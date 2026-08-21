@@ -84,7 +84,11 @@
         "openPriorityRequestCount",
         "pendingOnChainBatchesCount",
         "verifiedBatchesCount",
-        "verifiedPriorityRequestCount"
+        "verifiedPriorityRequestCount",
+        "validiumRoot",
+        "stateRoot",
+        "lastVerifiedStateRoot",
+        "lastVerifiedValidiumRoot"
       ]
     },
     "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7": {

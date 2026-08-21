@@ -120,6 +120,20 @@ describe(AvailDaProvider.name, () => {
       ])
     })
   })
+
+  describe(AvailDaProvider.prototype.getBlockTimestamp.name, () => {
+    it('returns the same timestamp the blobs of that block carry', async () => {
+      const provider = new AvailDaProvider(
+        mockObject<PolkadotRpcClient>(),
+        'avail',
+      )
+
+      const timestamp = await provider.getBlockTimestamp(291)
+
+      // the blobs of block 291 above carry this timestamp
+      expect(timestamp).toEqual(UnixTime(1720092420))
+    })
+  })
 })
 
 function mockBlockResponse(appIds: number[], extrinsics?: string[]): any {

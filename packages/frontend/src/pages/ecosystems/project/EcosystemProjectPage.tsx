@@ -82,7 +82,7 @@ export function EcosystemProjectPage({
                     id={ecosystem.id}
                     name={ecosystem.name}
                     entries={ecosystem.liveProjects}
-                    allScalingProjectsTvs={ecosystem.allScalingProjects.tvs}
+                    allL2ProjectsTvs={ecosystem.allL2Projects.tvs}
                     ecosystemMilestones={ecosystem.ecosystemMilestones}
                     className="col-span-12 md:col-span-6"
                   />
@@ -90,7 +90,7 @@ export function EcosystemProjectPage({
                     id={ecosystem.id}
                     name={ecosystem.name}
                     entries={ecosystem.liveProjects}
-                    allScalingProjectsUops={ecosystem.allScalingProjects.uops}
+                    allL2ProjectsUops={ecosystem.allL2Projects.uops}
                     ecosystemMilestones={ecosystem.ecosystemMilestones}
                     className="col-span-12 md:col-span-6"
                   />

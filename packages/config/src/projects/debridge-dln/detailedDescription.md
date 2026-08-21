@@ -24,7 +24,7 @@ A newer intent-manager stack automates order creation: users sign an EIP-712 *in
 
 # Upgradeability and governance
 
-`DlnSource` (which escrows all in-flight maker funds), `DlnDestination` and the `ExternalCallAdapter` are upgradeable by the same {{multisigStats}} deBridge multisig that governs the messaging protocol, with no timelock or exit window. The multisig also holds the `DEFAULT_ADMIN_ROLE` on both DLN contracts, controlling the trusted cross-chain routing addresses, fees, the external call adapter, and unpausing. The intent-manager stack has a weaker setup: on Ethereum, a single EOA is simultaneously the admin of `DeBridgeIntentManager` and `DeBridgeAllowanceHolder` and the owner of the ProxyAdmin that can upgrade the intent manager — an upgrade there could abuse the allowance holder's spender role to drain all outstanding user approvals. Several satellite contracts (including the `ExternalCallExecutor`) have unverified source code.
+`DlnSource` (which escrows all in-flight maker funds), `DlnDestination` and the `ExternalCallAdapter` are upgradeable by the same {{multisigStats}} deBridge multisig that governs the messaging protocol, with no timelock or exit window. The multisig also holds the `DEFAULT_ADMIN_ROLE` on both DLN contracts, controlling the trusted cross-chain routing addresses, fees, the external call adapter, and unpausing. The intent-manager stack has a weaker setup: on Ethereum, a single EOA is simultaneously the admin of `DeBridgeIntentManager` and `DeBridgeAllowanceHolder` and the owner of the ProxyAdmin that can upgrade the intent manager — an upgrade there could abuse the allowance holder's spender role to drain all outstanding user approvals. Several satellite contracts have unverified source code.
 
 # Monitoring
 

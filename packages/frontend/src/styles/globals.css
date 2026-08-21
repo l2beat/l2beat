@@ -790,3 +790,27 @@
     width: 100%;
   }
 }
+
+/*
+ * Interop flows particles. Both keyframes are shared by every particle on the
+ * graph — the per-flow travel/idle split lives in the animation-timing-function
+ * (a linear() easing) rather than in the keyframe percentages, so hundreds of
+ * particles need only these two rules. See ParticleLayer.tsx.
+ */
+@keyframes interop-particle-move {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes interop-particle-fade {
+  from {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 0;
+  }
+}

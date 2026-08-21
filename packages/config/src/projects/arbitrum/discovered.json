@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
-  "timestamp": 1786617413,
-  "configHash": "0x4b67b416ec7ef8446f8f49e4a109106ea6c0aa5fcb151963b78f1a6c4ae5b32f",
+  "timestamp": 1787143507,
+  "configHash": "0x3c6950ee02ddb896621a8a1051bc0d27705b9ea1c14aef3ede0123e742b56d10",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000001",
@@ -88,7 +88,7 @@
         "beaconProxyFactory": "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "arb1:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 44809,
+        "exitNum": 45099,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -977,7 +977,7 @@
         "$upgradeCount": 2,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x81e28e6f37e32d4756bbeaf3c057b82178ac53398af819adfc680fad31b2ecd5",
-        "getTotalDelegation": "5337361327944334427032388134",
+        "getTotalDelegation": "5334317315539748242839150857",
         "l1Address": "arb1:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
         "MIN_MINT_INTERVAL": 31536000,
         "MINT_CAP_DENOMINATOR": 10000,
@@ -1697,7 +1697,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "arb1:0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2372,
+        "exitNum": 2373,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -2990,7 +2990,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 1313954,
+        "batchCount": 1317109,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
@@ -3003,9 +3003,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 25745386,
+          "prevBlockNumber": 25789113,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 25745465
+          "prevSequencedBlockNumber": 25789181
         },
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -3031,7 +3031,7 @@
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 2533793,
+        "totalDelayedMessagesRead": 2538677,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -3387,7 +3387,7 @@
         ],
         "$upgradeCount": 1,
         "anyTrustFastConfirmer": "eth:0x0000000000000000000000000000000000000000",
-        "arbOsFromWmRoot": "ArbOS v51 wasmModuleRoot",
+        "arbOsFromWmRoot": "ArbOS v61 wasmModuleRoot",
         "baseStake": "3600000000000000000000",
         "bridge": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "chainId": 42161,
@@ -3399,7 +3399,7 @@
         "getValidators": [],
         "inbox": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isPostBoLD": true,
-        "latestConfirmed": "0x4d748b9c69e2ca68f66d351cf112d8e0891d7e2c371b96190418cf9da3aa25d8",
+        "latestConfirmed": "0xff00bf589a538bd1c8eeb91b83ac1f75d71a8d45080e969a9192f20957614432",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -3414,7 +3414,7 @@
         "validatorAfkBlocks": 201600,
         "validatorWalletCreator": "eth:0x960953f7c69cd2BC2322Db9223A815C680ccc7ea",
         "validatorWhitelistDisabled": true,
-        "wasmModuleRoot": "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499"
+        "wasmModuleRoot": "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97"
       },
       "fieldMeta": {
         "minimumAssertionPeriod": {
@@ -3466,6 +3466,7 @@
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
             "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c": "ArbOS v51.1 wasmModuleRoot",
+            "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97": "ArbOS v61 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -3870,7 +3871,7 @@
           "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 2533802,
+        "delayedMessageCount": 2538683,
         "inboxHistory": [
           "eth:0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -3884,8 +3885,8 @@
         ],
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 1313954,
-        "sequencerReportedSubMessageCount": 471873850
+        "sequencerMessageCount": 1317109,
+        "sequencerReportedSubMessageCount": 473963756
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -8287,6 +8288,112 @@
               "data": "0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000a4bca8c7b5000000000000000000000000912ce59144191c1204e64559fe8253a0e49e654800000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000024ec20b526ffffffffffffffffffffffffffffffffffffffffffd5ad352eec3ec51bda416e0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
               "delay": 259200
             }
+          },
+          {
+            "id": "0xf60ffd47f050d5cd5ed97b0225a01845d0bca8471dc0dc0e07f9968a4cf88901",
+            "decoded": {
+              "chain": "ethereum",
+              "contractName": "SetWasmModuleRootAction",
+              "function": "perform",
+              "inputs": [],
+              "address": "eth:0x114637D5cB4BaE22c94F822c984F5cA6013284Da",
+              "calldata": "0xb147f40c",
+              "executor": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+            },
+            "raw": {
+              "target": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
+              "value": 0,
+              "data": "0x1cff79cd000000000000000000000000114637d5cb4bae22c94f822c984f5ca6013284da00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000",
+              "delay": 259200
+            }
+          },
+          {
+            "id": "0xf60ffd47f050d5cd5ed97b0225a01845d0bca8471dc0dc0e07f9968a4cf88901",
+            "decoded": {
+              "chain": "ethereum",
+              "contractName": "SetWasmModuleRootAction",
+              "function": "perform",
+              "inputs": [],
+              "address": "eth:0x36E3BbEF91D182b47DAb09E8AC3a4EA9C524fBab",
+              "calldata": "0xb147f40c",
+              "executor": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+            },
+            "raw": {
+              "target": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
+              "value": 0,
+              "data": "0x1cff79cd00000000000000000000000036e3bbef91d182b47dab09e8ac3a4ea9c524fbab00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000",
+              "delay": 259200
+            }
+          },
+          {
+            "id": "0xf60ffd47f050d5cd5ed97b0225a01845d0bca8471dc0dc0e07f9968a4cf88901",
+            "decoded": {
+              "chain": "arbitrum",
+              "contractName": "UpgradeArbOSVersionAtTimestampAction",
+              "function": "perform",
+              "inputs": [],
+              "address": "arb1:0xF93353c1Fe24225B6C82B284b2B6DBB924690515",
+              "calldata": "0xb147f40c",
+              "executor": "eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+              "inboxOnEthereum": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
+            },
+            "raw": {
+              "target": "eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
+              "value": 0,
+              "data": "0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd000000000000000000000000f93353c1fe24225b6c82b284b2b6dbb92469051500000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "delay": 259200
+            }
+          },
+          {
+            "id": "0xf60ffd47f050d5cd5ed97b0225a01845d0bca8471dc0dc0e07f9968a4cf88901",
+            "decoded": {
+              "chain": "nova",
+              "address": "eth:0x6bE7bA57Dd831A7D0AeDA1fB87C3c206C38098fF",
+              "calldata": "0xb147f40c",
+              "executor": "eth:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
+              "inboxOnEthereum": "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949"
+            },
+            "raw": {
+              "target": "eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
+              "value": 0,
+              "data": "0x000000000000000000000000c4448b71118c9071bcb9734a0eac55d18a15394900000000000000000000000086a02dd71363c440b21f4c0e5b2ad01ffe1a748200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000006be7ba57dd831a7d0aeda1fb87c3c206c38098ff00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "delay": 259200
+            }
+          },
+          {
+            "id": "0xf60ffd47f050d5cd5ed97b0225a01845d0bca8471dc0dc0e07f9968a4cf88901",
+            "decoded": {
+              "chain": "arbitrum",
+              "contractName": "ArbOS61SettingsAction",
+              "function": "perform",
+              "inputs": [],
+              "address": "arb1:0x9625eE87a85cF1D5EE31f0883df27A5c8770312E",
+              "calldata": "0xb147f40c",
+              "executor": "eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+              "inboxOnEthereum": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
+            },
+            "raw": {
+              "target": "eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
+              "value": 0,
+              "data": "0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000009625ee87a85cf1d5ee31f0883df27a5c8770312e00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "delay": 259200
+            }
+          },
+          {
+            "id": "0xf60ffd47f050d5cd5ed97b0225a01845d0bca8471dc0dc0e07f9968a4cf88901",
+            "decoded": {
+              "chain": "nova",
+              "address": "eth:0xd489C8512e3E82060873950c835f5ed1f06aBF84",
+              "calldata": "0xb147f40c",
+              "executor": "eth:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
+              "inboxOnEthereum": "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949"
+            },
+            "raw": {
+              "target": "eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
+              "value": 0,
+              "data": "0x000000000000000000000000c4448b71118c9071bcb9734a0eac55d18a15394900000000000000000000000086a02dd71363c440b21f4c0e5b2ad01ffe1a748200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd000000000000000000000000d489c8512e3e82060873950c835f5ed1f06abf8400000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+              "delay": 259200
+            }
           }
         ],
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
@@ -10736,6 +10843,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 494082155, "ethereum": 25745541 },
+  "usedBlockNumbers": { "arbitrum": 496172058, "ethereum": 25789238 },
   "permissionsConfigHash": "0x999ad08277b30eae00ab284ad0dce56d7257a6407bf49e171d8f105d90f2a788"
 }

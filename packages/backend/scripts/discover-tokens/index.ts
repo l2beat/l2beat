@@ -2,7 +2,11 @@ import { getEnv, Logger, RateLimiter } from '@l2beat/backend-tools'
 import { type ChainConfig, ProjectService } from '@l2beat/config'
 import { RateLimitedProvider } from '@l2beat/discovery'
 import { BlockIndexerClient, CoingeckoClient, HttpClient } from '@l2beat/shared'
-import { assert, ChainConverter } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainConverter,
+  formatNumberWithCommas,
+} from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { providers, utils } from 'ethers'
 import { writeFileSync } from 'fs'
@@ -10,7 +14,6 @@ import chunk from 'lodash/chunk'
 import groupBy from 'lodash/groupBy'
 import { getLegacyConfig } from '../../src/modules/tvs/tools/legacyConfig/getLegacyConfig'
 import {
-  formatNumberWithCommas,
   getEscrowKey,
   loadExistingTokens,
   loadProcessedEscrows,
@@ -327,11 +330,20 @@ async function main() {
     })
     .map((token) => ({
       ...token,
-      marketCap: formatNumberWithCommas(token.marketCap),
-      missingValue: formatNumberWithCommas(token.missingValue),
+      marketCap: formatNumberWithCommas(token.marketCap, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }),
+      missingValue: formatNumberWithCommas(token.missingValue, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }),
       escrows: token.escrows.map((escrow) => ({
         ...escrow,
-        value: formatNumberWithCommas(escrow.value),
+        value: formatNumberWithCommas(escrow.value, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }),
       })),
     }))
 

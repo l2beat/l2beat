@@ -3,7 +3,7 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import type { ProtocolEntry } from '~/server/features/scaling/interop/types'
+import type { ProtocolEntry } from '~/server/features/layer2s/interop/types'
 import { useInteropSelectedChains } from '../../utils/InteropSelectedChainsContext'
 import { getAllProtocolsColumns, type ProtocolRow } from './columns'
 

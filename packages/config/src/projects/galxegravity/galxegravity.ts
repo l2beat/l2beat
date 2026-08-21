@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -44,10 +44,14 @@ export const galxegravity: ScalingProject = orbitStackL2({
     adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
-  celestiaDa: {
-    sinceBlock: 5169794,
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABH1QsY4w6WU=',
-  },
+  daTracking: [
+    {
+      type: 'celestia',
+      daLayer: ProjectId('celestia'),
+      sinceBlock: 5169794,
+      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABH1QsY4w6WU=',
+    },
+  ],
   chainConfig: {
     name: 'galxegravity',
     coingeckoPlatform: 'gravity-alpha',

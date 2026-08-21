@@ -1,7 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
-  formatLargeNumber,
+  formatNumber,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -176,7 +176,7 @@ const v5ActivationTimestamp = UnixTime(1784060567) // 14 July 2026 20:22:47 UTC
 const v5ActivationBlock = 25533241 // https://etherscan.io/tx/0xff2db4e4bba583f2451478bfe4703e16afc79f0b463fb60615ebe3494142437b
 
 function formatAztecAmount(amount: bigint): string {
-  return `${formatLargeNumber(Number(amount / 10n ** 18n))} AZTEC`
+  return `${formatNumber(Number(amount / 10n ** 18n))} AZTEC`
 }
 
 function formatPercentage(value: string): string {
@@ -288,6 +288,8 @@ export const aztecnetwork: ScalingProject = {
     description:
       'Aztec Network is a privacy-preserving ZK rollup that uses the AztecVM and Noir to support private and public smart contracts on Ethereum.',
     purposes: ['Universal', 'Privacy'],
+    warning:
+      'Aztec v5 has a [known critical proving-system vulnerability](https://aztec.network/blog/alpha-v5-proving-system-vulnerability) that puts funds, applications, and contract state at risk. A fix is planned for v6.',
     links: {
       websites: ['https://aztec.network/', 'https://aztec.network/noir'],
       documentation: ['https://docs.aztec.network/'],
@@ -773,6 +775,14 @@ export const aztecnetwork: ScalingProject = {
   },
   discoveryInfo: getDiscoveryInfo([discovery]),
   milestones: [
+    {
+      title: 'v5 Proving System Vulnerability',
+      url: 'https://aztec.network/blog/alpha-v5-proving-system-vulnerability',
+      date: '2026-08-07T00:00:00Z',
+      description:
+        'Aztec discloses a critical proving-system vulnerability that can allow invalid state transitions.',
+      type: 'incident',
+    },
     {
       title: 'Aztec v5 Upgrade',
       url: 'https://etherscan.io/tx/0xff2db4e4bba583f2451478bfe4703e16afc79f0b463fb60615ebe3494142437b',
