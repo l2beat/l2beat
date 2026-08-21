@@ -1,8 +1,18 @@
 {
   "name": "frankencoin",
-  "timestamp": 1787059635,
-  "configHash": "0xd40829085d971d8fe740f8f621ecf8e7e38766e7425722d1792601f3de999246",
+  "timestamp": 1787300652,
+  "configHash": "0x4f8f2a12e539e3546b7b62cd88b1ac8282772bce2d7a63f85914d747f8fdf0c7",
   "entries": [
+    {
+      "address": "eth:0x000000000000000000000000000000000000dEaD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x008C28DA422010B6b8A47Fdf0B4640297BfEB85B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "PositionFactory",
       "address": "eth:0x0CDE500e6940931ED190ded77bb48640c9486392",
@@ -19,6 +29,124 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x0CDE500e6940931ED190ded77bb48640c9486392": "PositionFactory"
+      }
+    },
+    {
+      "name": "Firepit",
+      "address": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
+      "type": "Contract",
+      "template": "uniswapv3/Firepit",
+      "sourceHashes": [
+        "0x8717751f1e512d53b1cec568eec3ba69162bbef39f780e3c9c6ce788ffa1f509"
+      ],
+      "proxyType": "immutable",
+      "description": "Burn-and-release contract: anyone can transfer the configured threshold (currently 4,000 UNI) to a fixed burn address and release selected balances from its token jar to a chosen recipient. The threshold setter can change the threshold, including to zero, and the owner can replace the threshold setter.",
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0x2CF8e5b175aa29C1fDf0e9fe572735C78eacCE43",
+      "sinceTimestamp": 1765924727,
+      "sinceBlock": 24028203,
+      "values": {
+        "$immutable": true,
+        "MAX_RELEASE_LENGTH": 20,
+        "nonce": 1201,
+        "owner": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+        "RESOURCE": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        "RESOURCE_RECIPIENT": "eth:0x000000000000000000000000000000000000dEaD",
+        "threshold": "4,000",
+        "thresholdSetter": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+        "TOKEN_JAR": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "threshold": {
+          "severity": "LOW",
+          "description": "Amount of the configured burn token transferred to the burn address per release call."
+        },
+        "thresholdSetter": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721": "Firepit"
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
+    },
+    {
+      "name": "Timelock",
+      "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+      "type": "Contract",
+      "template": "uniswapv3/Timelock",
+      "sourceHashes": [
+        "0xc3a519884c2c5eb5c8fa33e1f7c27bf1576088eddc2d9dd478bd1889a4f7c649"
+      ],
+      "proxyType": "immutable",
+      "description": "Compound-style timelock. Its admin can queue, cancel, and execute transactions. A queued transaction becomes executable after 2d and remains executable for a 14d grace period. The delay can be changed only through the timelock itself and must remain between 2d and 1mo. After the one-time admin initialization path has been used, changing the admin requires a timelocked self-call; there is no emergency bypass.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
+          "description": "can change the burn-token amount required per token-jar release.",
+          "role": ".thresholdSetter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
+          "description": "can replace the thresholdSetter.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+          "description": "can mint up to 2% of the token supply per mint after the minimum 1y interval, and set a new minter.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
+          "description": "can enable new fee tiers, change the feeSetter, and transfer UniswapV3Factory ownership to a new contract.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
+          "description": "sets the protocol fee schedule (global default, per-tier defaults, per-pool overrides) that anyone can then apply to pools.",
+          "role": ".feeSetter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85",
+          "description": "can replace the releaser and thereby redirect all held and future token balances.",
+          "role": ".owner"
+        }
+      ],
+      "deployerAddress": "eth:0x41653c7d61609D856f29355E404F310Ec4142Cfb",
+      "sinceTimestamp": 1600107105,
+      "sinceBlock": 10861678,
+      "values": {
+        "$immutable": true,
+        "admin": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+        "delay": 172800,
+        "delayFormatted": "2d",
+        "GRACE_PERIOD": 1209600,
+        "gracePeriodFormatted": "14d",
+        "MAXIMUM_DELAY": 2592000,
+        "maximumDelayFormatted": "1mo",
+        "MINIMUM_DELAY": 172800,
+        "minimumDelayFormatted": "2d",
+        "pendingAdmin": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "admin": { "severity": "HIGH" },
+        "delay": {
+          "severity": "HIGH",
+          "description": "Seconds every queued transaction must wait before execution."
+        }
+      },
+      "implementationNames": {
+        "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": "Timelock"
       }
     },
     {
@@ -82,15 +210,87 @@
         "DOMAIN_SEPARATOR": "0xb0fe1d8373263d2b320b24a4303f6902da9771e5e1a5f379a68082aad9e4c527",
         "MIN_HOLDING_DURATION": 8153726976000,
         "name": "Frankencoin Pool Share",
-        "price": "1316133241561395638099",
+        "price": "1316327013381959744996",
         "symbol": "FPS",
         "totalSupply": "8673295955082447425800",
-        "totalVotes": "267789510346887205198570208766691679",
+        "totalVotes": "269981493244121357435679362132707679",
         "VALUATION_FACTOR": 3,
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
       "implementationNames": {
         "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2": "Equity"
+      }
+    },
+    {
+      "name": "Uniswap Token",
+      "address": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+      "type": "Contract",
+      "template": "uniswapv3/Uni",
+      "sourceHashes": [
+        "0x005d41450e7da29f6913ff9dc83738d960ae222989af4adec6bf24ccdb87aaad"
+      ],
+      "proxyType": "immutable",
+      "description": "ERC20 governance token with checkpoint voting. Its constructor mints a fixed initial supply; the minter can mint at most 2% of supply per mint, with a minimum interval of 1y. Votes count only when delegated.",
+      "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "eth:0x41653c7d61609D856f29355E404F310Ec4142Cfb",
+      "sinceTimestamp": 1600107086,
+      "sinceBlock": 10861674,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "DELEGATION_TYPEHASH": "0xe48329057bfd03d55e49b547132e39cffd9c1820ad7b9d4c5307691425d15adf",
+        "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
+        "minimumTimeBetweenMints": 31536000,
+        "minimumTimeBetweenMintsFormatted": "1y",
+        "mintCap": 2,
+        "minter": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+        "mintingAllowedAfter": 1704067200,
+        "name": "Uniswap",
+        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
+        "symbol": "UNI",
+        "totalSupply": "1000000000000000000000000000"
+      },
+      "fieldMeta": { "minter": { "severity": "HIGH" } },
+      "implementationNames": {
+        "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": "Uni"
+      }
+    },
+    {
+      "name": "UniswapV3Factory",
+      "address": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+      "type": "Contract",
+      "template": "uniswapv3/UniswapV3Factory",
+      "sourceHashes": [
+        "0x6e923d5480eaaba4682ea16d891e5906295deeb4c0c09e6495bbcd341d8ca3c5"
+      ],
+      "proxyType": "immutable",
+      "description": "Deploys Uniswap v3 pools: anyone can create one pool per token pair and enabled fee tier, at a CREATE2 address deterministic in (token0, token1, fee). Immutable. Its owner holds exactly three powers: enable new fee tiers (irreversible), call setFeeProtocol/collectProtocol on pools, and transfer the owner role. It cannot modify, pause, or upgrade deployed pools.",
+      "ignoreInWatchMode": ["parameters"],
+      "deployerAddress": "eth:0x6C9FC64A53c1b71FB3f9Af64d1ae3A4931A5f4E9",
+      "sinceTimestamp": 1620156420,
+      "sinceBlock": 12369621,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
+        "parameters": {
+          "factory": "eth:0x0000000000000000000000000000000000000000",
+          "token0": "eth:0x0000000000000000000000000000000000000000",
+          "token1": "eth:0x0000000000000000000000000000000000000000",
+          "fee": 0,
+          "tickSpacing": 0
+        }
+      },
+      "fieldMeta": {
+        "owner": {
+          "severity": "HIGH",
+          "description": "Address authorized to exercise the factory owner actions."
+        },
+        "parameters": {
+          "description": "Transient slot used to pass constructor parameters to pools during CREATE2 deployment; zero outside of a pool deployment."
+        }
+      },
+      "implementationNames": {
+        "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984": "UniswapV3Factory"
       }
     },
     {
@@ -149,6 +349,11 @@
       }
     },
     {
+      "address": "eth:0x25bB61643e4881147E6aabb65e6DD45CF2904155",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Savings",
       "address": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
       "type": "Contract",
@@ -173,7 +378,7 @@
       "values": {
         "$immutable": true,
         "currentRatePPM": 35000,
-        "currentTicks": 1319888700000,
+        "currentTicks": 1328324400000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
         "nextChange": 1774551239,
@@ -258,7 +463,7 @@
       "values": {
         "$immutable": true,
         "currentRatePPM": 10000,
-        "currentTicks": 1289912340000,
+        "currentTicks": 1292322540000,
         "equity": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "INTEREST_DELAY": 259200,
         "nextChange": 1770717611,
@@ -298,7 +503,7 @@
         "horizon": 1807188455,
         "isExpired": false,
         "limit": "10000000000000000000000000",
-        "minted": "660595411021000000000000",
+        "minted": "680069817396000000000000",
         "zchf": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
       },
       "fieldMeta": {
@@ -318,6 +523,133 @@
       "implementationNames": {
         "eth:0x3e445ff4ddDf0ff8aE7458c9746eD80bD664F6C1": "StablecoinBridge"
       }
+    },
+    {
+      "name": "GovernorBravoDelegator",
+      "address": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x9b0c0aedbb7ad7e39f09ed2d4779ec65307b918837b10c2b5e6800c1e9c4ece7"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
+          "description": "can change the burn-token amount required per token-jar release.",
+          "role": ".thresholdSetter",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
+          "description": "can replace the thresholdSetter.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+          "description": "can queue, cancel, and execute timelocked transactions, and change the delay or admin (through the timelock itself).",
+          "role": ".admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+          "description": "can mint up to 2% of the token supply per mint after the minimum 1y interval, and set a new minter.",
+          "role": ".minter",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+          "description": "can enable new fee tiers, set the protocol fee share (up to 1/4 of LP fees per side) on any pool, collect accrued protocol fees, and transfer factory ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A" },
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
+          "description": "can enable new fee tiers, change the feeSetter, and transfer UniswapV3Factory ownership to a new contract.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
+          "description": "sets the protocol fee schedule (global default, per-tier defaults, per-pool overrides) that anyone can then apply to pools.",
+          "role": ".feeSetter",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85",
+          "description": "can replace the releaser and thereby redirect all held and future token balances.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+          "delay": 172800,
+          "role": ".admin"
+        }
+      ],
+      "deployerAddress": "eth:0xCf2a39493f5193e8eE0D0e8DBf78a92a4EF293c4",
+      "sinceTimestamp": 1629421922,
+      "sinceBlock": 13059157,
+      "values": {
+        "$immutable": true,
+        "admin": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+        "implementation": "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026",
+        "pendingAdmin": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": "GovernorBravoDelegator"
+      }
+    },
+    {
+      "address": "eth:0x4096a34E582664F969753b34dA6E72D55b3C85C1",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Position",
@@ -348,9 +680,9 @@
       "values": {
         "$immutable": true,
         "annualInterestPPM": 10000,
-        "availableForClones": "9508493467288823666646023",
-        "availableForMinting": "9508493467288823666646023",
-        "calculateCurrentFee": 12883,
+        "availableForClones": "9509693467288823666646023",
+        "availableForMinting": "9509693467288823666646023",
+        "calculateCurrentFee": 12807,
         "calculateFee": [],
         "challengedAmount": 0,
         "challengeData": {
@@ -402,6 +734,11 @@
       }
     },
     {
+      "address": "eth:0x4D915Dd2c56814BD3Db51a1dA35b302BCC9c8973",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "FPSWrapper",
       "address": "eth:0x5052D3Cc819f53116641e89b96Ff4cD1EE80B182",
       "type": "Contract",
@@ -426,6 +763,124 @@
       "implementationNames": {
         "eth:0x5052D3Cc819f53116641e89b96Ff4cD1EE80B182": "FPSWrapper"
       }
+    },
+    {
+      "name": "GovernorBravoDelegate",
+      "address": "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x47d52273d1b62818c961667bfcabfaa75dee85fee5fe69d22153049d8dce45fe"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0xCf2a39493f5193e8eE0D0e8DBf78a92a4EF293c4",
+      "sinceTimestamp": 1629421093,
+      "sinceBlock": 13059103,
+      "values": {
+        "$immutable": true,
+        "admin": "eth:0x0000000000000000000000000000000000000000",
+        "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
+        "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
+        "getActions": [
+          [[], [], [], []],
+          [[], [], [], []],
+          [[], [], [], []],
+          [[], [], [], []],
+          [[], [], [], []]
+        ],
+        "implementation": "eth:0x0000000000000000000000000000000000000000",
+        "initialProposalId": 0,
+        "MAX_PROPOSAL_THRESHOLD": "10000000000000000000000000",
+        "MAX_VOTING_DELAY": 40320,
+        "MAX_VOTING_PERIOD": 80640,
+        "MIN_PROPOSAL_THRESHOLD": "1000000000000000000000000",
+        "MIN_VOTING_DELAY": 1,
+        "MIN_VOTING_PERIOD": 5760,
+        "name": "Uniswap Governor Bravo",
+        "pendingAdmin": "eth:0x0000000000000000000000000000000000000000",
+        "proposalCount": 0,
+        "proposalMaxOperations": 10,
+        "proposals": [
+          [
+            0,
+            "eth:0x0000000000000000000000000000000000000000",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            false,
+            false
+          ],
+          [
+            0,
+            "eth:0x0000000000000000000000000000000000000000",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            false,
+            false
+          ],
+          [
+            0,
+            "eth:0x0000000000000000000000000000000000000000",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            false,
+            false
+          ],
+          [
+            0,
+            "eth:0x0000000000000000000000000000000000000000",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            false,
+            false
+          ],
+          [
+            0,
+            "eth:0x0000000000000000000000000000000000000000",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            false,
+            false
+          ]
+        ],
+        "proposalThreshold": 0,
+        "quorumVotes": "40000000000000000000000000",
+        "state": [],
+        "timelock": "eth:0x0000000000000000000000000000000000000000",
+        "uni": "eth:0x0000000000000000000000000000000000000000",
+        "votingDelay": 0,
+        "votingPeriod": 0
+      },
+      "errors": {
+        "getActions": "Processing error occurred.",
+        "proposals": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026": "GovernorBravoDelegate"
+      }
+    },
+    {
+      "address": "eth:0x61D5a4d5Bd270e59E9320243e574288e2a199fED",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "PositionFactory",
@@ -600,6 +1055,29 @@
       }
     },
     {
+      "name": "AmplifiedPosition",
+      "address": "eth:0x8746159D385f84CB550ab5aE015c0dDf6909b8f2",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xbdad5a19c2d556c132cc9a72086acc8f9352d55b731a38cb1628f31c2ff1a469"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x32Ad7fC7DE54e63971F85F25c691927c87F1A5d9",
+      "sinceTimestamp": 1787219507,
+      "sinceBlock": 25795552,
+      "values": {
+        "$immutable": true,
+        "borrowed": 0,
+        "owner": "eth:0x0000000000000000000000000000000000000000",
+        "tickHigh": 0,
+        "tickLow": 0,
+        "totalLiquidity": 0
+      },
+      "implementationNames": {
+        "eth:0x8746159D385f84CB550ab5aE015c0dDf6909b8f2": "AmplifiedPosition"
+      }
+    },
+    {
       "name": "BridgeAccounting",
       "address": "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
       "type": "Contract",
@@ -628,6 +1106,60 @@
       },
       "implementationNames": {
         "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16": "BridgeAccounting"
+      }
+    },
+    {
+      "name": "UniswapV3Pool",
+      "address": "eth:0x8E4318E2cb1ae291254B187001a59a1f8ac78cEF",
+      "type": "Contract",
+      "template": "uniswapv3/UniswapV3Pool",
+      "sourceHashes": [
+        "0x6884399b8c1127ed38bae4ae3af37927bb408b3a61a1b00f69a81f27d876bb82"
+      ],
+      "proxyType": "immutable",
+      "description": "A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on tick ranges; swap fees accrue to in-range positions. The factory owner can divert up to 1/4 of the swap fee per side as protocol fee. Also a TWAP oracle whose observation buffer anyone can grow.",
+      "ignoreInWatchMode": [
+        "slot0",
+        "liquidity",
+        "feeGrowthGlobal0X128",
+        "feeGrowthGlobal1X128",
+        "protocolFees"
+      ],
+      "deployerAddress": "eth:0x2D89f8cC2C8b2FaBcd9afa773400a37F51D74561",
+      "sinceTimestamp": 1706659703,
+      "sinceBlock": 19122801,
+      "values": {
+        "$immutable": true,
+        "factory": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+        "fee": 100,
+        "feeGrowthGlobal0X128": "191006527871104955762660002936921578513868",
+        "feeGrowthGlobal1X128": "291195297532388321024662911297",
+        "liquidity": "5066621175382182213",
+        "maxLiquidityPerTick": "191757530477355301479181766273477",
+        "protocolFees": { "token0": "14391396998584741565", "token1": 5147 },
+        "slot0": {
+          "sqrtPriceX96": "88667830767183760364805",
+          "tick": -274073,
+          "observationIndex": 0,
+          "observationCardinality": 1,
+          "observationCardinalityNext": 1,
+          "feeProtocol": 68,
+          "unlocked": true
+        },
+        "tickSpacing": 1,
+        "token0": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+        "token1": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      },
+      "fieldMeta": {
+        "slot0": {
+          "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
+        },
+        "protocolFees": {
+          "description": "Protocol fees accrued and not yet collected by the factory owner."
+        }
+      },
+      "implementationNames": {
+        "eth:0x8E4318E2cb1ae291254B187001a59a1f8ac78cEF": "UniswapV3Pool"
       }
     },
     {
@@ -683,6 +1215,55 @@
       }
     },
     {
+      "name": "UniswapAmplifier",
+      "address": "eth:0xa1304E5Aaf83CDB7c2b367F50B99Bb0647ED8C58",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xa893eed24feb835fcbc7f9d875f6a4a6009403bf8c9c638bc39cae7d7037e8b1"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+          "description": "mint and burn ZCHF without restriction, transfer ZCHF from any account (minters have unlimited allowance), and book profits and losses against the reserve held in the Equity contract.",
+          "role": ".minters"
+        }
+      ],
+      "deployerAddress": "eth:0x32Ad7fC7DE54e63971F85F25c691927c87F1A5d9",
+      "sinceTimestamp": 1787219507,
+      "sinceBlock": 25795552,
+      "values": {
+        "$immutable": true,
+        "EXPIRATION": 1806537599,
+        "exploitableAt": "468323724451429889",
+        "getMinimumDollars": [0, 0, 0, 0, 0],
+        "getPrice": "99232191729076861",
+        "LIMIT": "2500000000000000000000000",
+        "MAX_DOLLAR_APPRECIATION_TICKS": 1000,
+        "MAX_DOLLAR_DEPRECIATION_TICKS": 1500,
+        "MAXIMUM_TICK": -272573,
+        "MINIMUM_TICK": -275073,
+        "positionImplementation": "eth:0x8746159D385f84CB550ab5aE015c0dDf6909b8f2",
+        "PRICE_ANCHOR_X96": "99231442269731262",
+        "totalBorrowed": 0,
+        "UNISWAP_POOL": "eth:0x8E4318E2cb1ae291254B187001a59a1f8ac78cEF",
+        "USD": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "ZCHF": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
+        "ZCHF_IS_TOKEN0": true,
+        "ZCHF_MINTER": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB"
+      },
+      "errors": { "getMinimumDollars": "Processing error occurred." },
+      "implementationNames": {
+        "eth:0xa1304E5Aaf83CDB7c2b367F50B99Bb0647ED8C58": "UniswapAmplifier"
+      }
+    },
+    {
+      "address": "eth:0xAC3B242E2E561da9F4cE34746E67d004E6341FA0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PositionRoller",
       "address": "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6",
       "type": "Contract",
@@ -726,10 +1307,10 @@
         "$immutable": true,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x0030eba518c077921487bde9523478fa8ba39b881d0372fd1cb104a3080bfcb0",
-        "equity": "3805071040128000823285101",
+        "equity": "3805631253577170033337092",
         "MIN_APPLICATION_PERIOD": 1209600,
         "MIN_FEE": "1000000000000000000000",
-        "minterReserve": "8626260624449616410628789",
+        "minterReserve": "8630636482357216860953194",
         "minters": [
           "eth:0x7546762fdb1a6d9146b33960545C3f6394265219",
           "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF",
@@ -741,12 +1322,13 @@
           "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916",
           "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79",
           "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16",
-          "eth:0x3e445ff4ddDf0ff8aE7458c9746eD80bD664F6C1"
+          "eth:0x3e445ff4ddDf0ff8aE7458c9746eD80bD664F6C1",
+          "eth:0xa1304E5Aaf83CDB7c2b367F50B99Bb0647ED8C58"
         ],
         "name": "Frankencoin",
         "reserve": "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2",
         "symbol": "ZCHF",
-        "totalSupply": "30194021654671133167490161"
+        "totalSupply": "30292426881734023825533033"
       },
       "fieldMeta": {
         "MIN_APPLICATION_PERIOD": {
@@ -761,6 +1343,139 @@
       },
       "implementationNames": {
         "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB": "Frankencoin"
+      }
+    },
+    {
+      "name": "MultiSigWallet",
+      "address": "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xf716f94059215d0e4c8d8edf41e5a65e741bce5005c2afee04eaafcf5c210d20"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x008C28DA422010B6b8A47Fdf0B4640297BfEB85B",
+      "sinceTimestamp": 1505129111,
+      "sinceBlock": 4262126,
+      "values": {
+        "$immutable": true,
+        "getConfirmationCount": [0, 0, 0, 0, 0],
+        "getConfirmations": [[], [], [], [], []],
+        "getOwners": [
+          "eth:0xAC3B242E2E561da9F4cE34746E67d004E6341FA0",
+          "eth:0xEe5207d3c88562fc814496Af0845B34CFD4afc8c",
+          "eth:0x61D5a4d5Bd270e59E9320243e574288e2a199fED",
+          "eth:0x25bB61643e4881147E6aabb65e6DD45CF2904155",
+          "eth:0x4096a34E582664F969753b34dA6E72D55b3C85C1",
+          "eth:0x4D915Dd2c56814BD3Db51a1dA35b302BCC9c8973"
+        ],
+        "isConfirmed": [false, false, false, false, false],
+        "MAX_OWNER_COUNT": 50,
+        "owners": [
+          "eth:0xAC3B242E2E561da9F4cE34746E67d004E6341FA0",
+          "eth:0xEe5207d3c88562fc814496Af0845B34CFD4afc8c",
+          "eth:0x61D5a4d5Bd270e59E9320243e574288e2a199fED",
+          "eth:0x25bB61643e4881147E6aabb65e6DD45CF2904155",
+          "eth:0x4096a34E582664F969753b34dA6E72D55b3C85C1"
+        ],
+        "required": 3,
+        "transactionCount": 5649,
+        "transactions": [
+          [
+            "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828",
+            0,
+            "0x7065cb48000000000000000000000000008c28da422010b6b8a47fdf0b4640297bfeb85b",
+            false
+          ],
+          ["eth:0x008C28DA422010B6b8A47Fdf0B4640297BfEB85B", 0, "0x", true],
+          [
+            "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828",
+            0,
+            "0x7065cb4800000000000000000000000036928500bc1dcd7af6a2b4008875cc336b927d57",
+            true
+          ],
+          [
+            "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828",
+            0,
+            "0xcc872b6600000000000000000000000000000000000000000000000000000002540be400",
+            true
+          ],
+          [
+            "eth:0xd697A61D5FB4e076125e0bE647f902b02bb3A0F1",
+            0,
+            "0xcc872b6600000000000000000000000000000000000000000000000000000002540be400",
+            true
+          ]
+        ]
+      },
+      "errors": {
+        "getConfirmationCount": "Processing error occurred.",
+        "getConfirmations": "Processing error occurred.",
+        "isConfirmed": "Processing error occurred.",
+        "owners": "Processing error occurred.",
+        "transactions": "Processing error occurred."
+      },
+      "implementationNames": {
+        "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828": "MultiSigWallet"
+      }
+    },
+    {
+      "name": "TetherToken",
+      "address": "eth:0xd697A61D5FB4e076125e0bE647f902b02bb3A0F1",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe27266e93907f1beeb47a349fa38e879f1bdc54d7a5d4ebbbca862d0bf3faf06"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x00FA31De69C545877E6e54828Bed58a6f5219614",
+      "sinceTimestamp": 1505309109,
+      "sinceBlock": 4269627,
+      "values": {
+        "_totalSupply": 110000000000,
+        "$immutable": true,
+        "basisPointsRate": 0,
+        "decimals": 6,
+        "deprecated": false,
+        "maximumFee": 0,
+        "name": "Tether USD",
+        "owner": "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828",
+        "paused": false,
+        "symbol": "TT$",
+        "totalSupply": 110000000000,
+        "upgradedAddress": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0xd697A61D5FB4e076125e0bE647f902b02bb3A0F1": "TetherToken"
+      }
+    },
+    {
+      "name": "Tether USD Token",
+      "address": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xdebc6fed6ac6635cb30246bcceb611aa5a9b969e30d5a45e8b0483727e63141a"
+      ],
+      "proxyType": "immutable",
+      "deployerAddress": "eth:0x36928500Bc1dCd7af6a2B4008875CC336b927D57",
+      "sinceTimestamp": 1511829681,
+      "sinceBlock": 4634748,
+      "values": {
+        "_totalSupply": "90306400739085274",
+        "$immutable": true,
+        "basisPointsRate": 0,
+        "decimals": 6,
+        "deprecated": false,
+        "getOwner": "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828",
+        "MAX_UINT": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maximumFee": 0,
+        "name": "Tether USD",
+        "owner": "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828",
+        "paused": false,
+        "symbol": "USDT",
+        "totalSupply": "90306400739085274",
+        "upgradedAddress": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": "TetherToken"
       }
     },
     {
@@ -844,23 +1559,103 @@
         "asset": "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB",
         "decimals": 18,
         "info": {
-          "saved": "24090709456314188396666",
-          "ticks": 1324782094673,
+          "saved": "31075302421235983177620",
+          "ticks": 1327052817238,
           "referrer": "eth:0x0000000000000000000000000000000000000000",
           "referralFeePPM": 0
         },
         "name": "SavingsVault ZCHF",
         "owner": "eth:0x0000000000000000000000000000000000000000",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "price": "1021224347557687760",
+        "price": "1021273427074482877",
         "savings": "eth:0x27d9AD987BdE08a0d083ef7e0e4043C857A17B38",
         "symbol": "svZCHF",
-        "totalAssets": "24090709456314188396666",
-        "totalClaimed": "6737071241256864040",
-        "totalSupply": "23590026534256061308364"
+        "totalAssets": "31076555427923032281467",
+        "totalClaimed": "6965144026218726160",
+        "totalSupply": "30429221601255445462621"
       },
       "implementationNames": {
         "eth:0xE5F130253fF137f9917C0107659A4c5262abf6b0": "SavingsVaultZCHF_2"
+      }
+    },
+    {
+      "address": "eth:0xEe5207d3c88562fc814496Af0845B34CFD4afc8c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "V3OpenFeeAdapter",
+      "address": "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A",
+      "type": "Contract",
+      "template": "uniswapv3/V3OpenFeeAdapter",
+      "sourceHashes": [
+        "0x2ff0ab152bed841e9cb41f2042cefa8031579b9d096ff597b6e6d467cdde34ba"
+      ],
+      "proxyType": "immutable",
+      "description": "Adapter for administering a configured Uniswap v3 factory. While it holds the factory owner role, anyone can ask it to apply configured protocol fees to pools or collect accrued fees to its fixed recipient. The fee setter controls global, per-tier, and per-pool fee settings; the owner can replace the fee setter, enable factory fee tiers, or transfer factory ownership.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+          "description": "can enable new fee tiers, set the protocol fee share (up to 1/4 of LP fees per side) on any pool, collect accrued protocol fees, and transfer factory ownership.",
+          "role": ".owner"
+        }
+      ],
+      "deployerAddress": "eth:0x2CF8e5b175aa29C1fDf0e9fe572735C78eacCE43",
+      "sinceTimestamp": 1771859579,
+      "sinceBlock": 24520406,
+      "values": {
+        "$immutable": true,
+        "defaultFee": 68,
+        "FACTORY": "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984",
+        "feeSetter": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+        "feeTiers": [100, 500, 3000, 10000],
+        "owner": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+        "tier03DefaultFee": 102,
+        "TOKEN_JAR": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85",
+        "ZERO_FEE_SENTINEL": 255
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "feeSetter": { "severity": "HIGH" },
+        "defaultFee": {
+          "description": "Stored global protocol-fee fallback. The sentinel value represents an explicitly disabled fee; other nonzero values pack the token0 and token1 denominators into two 4-bit nibbles."
+        },
+        "tier03DefaultFee": {
+          "description": "Resolved configured protocol fee for the 0.3% tier before any per-pool override."
+        }
+      },
+      "implementationNames": {
+        "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A": "V3OpenFeeAdapter"
+      }
+    },
+    {
+      "name": "TokenJar",
+      "address": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85",
+      "type": "Contract",
+      "template": "uniswapv3/TokenJar",
+      "sourceHashes": [
+        "0x4400e790cf4908c2aaf6705f909ecee02c546bc2e8998fd638ccf895cd7c6911"
+      ],
+      "proxyType": "immutable",
+      "description": "Token escrow whose releaser can transfer held balances. The owner can replace the releaser, changing who controls accumulated and future deposits.",
+      "deployerAddress": "eth:0x2CF8e5b175aa29C1fDf0e9fe572735C78eacCE43",
+      "sinceTimestamp": 1765924727,
+      "sinceBlock": 24028203,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+        "releaser": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "releaser": {
+          "severity": "HIGH",
+          "description": "The only address authorized to move held tokens out."
+        }
+      },
+      "implementationNames": {
+        "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85": "TokenJar"
       }
     },
     {
@@ -923,6 +1718,48 @@
       "function clonePosition(address _existing) returns (address)",
       "function createNewPosition(address _owner, address _zchf, address _collateral, uint256 _minCollateral, uint256 _initialLimit, uint256 _initPeriod, uint256 _duration, uint64 _challengePeriod, uint32 _annualInterestPPM, uint256 _liqPrice, uint32 _reserve) returns (address)"
     ],
+    "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721": [
+      "constructor(address _resource, uint256 _threshold, address _tokenJar)",
+      "error InvalidNonce()",
+      "error TooManyAssets()",
+      "error Unauthorized()",
+      "event OwnershipTransferred(address indexed user, address indexed newOwner)",
+      "event Released(uint256 indexed nonce, address indexed recipient, address[] assets)",
+      "function MAX_RELEASE_LENGTH() view returns (uint256)",
+      "function RESOURCE() view returns (address)",
+      "function RESOURCE_RECIPIENT() view returns (address)",
+      "function TOKEN_JAR() view returns (address)",
+      "function nonce() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function release(uint256 _nonce, address[] assets, address recipient)",
+      "function setThreshold(uint256 _threshold)",
+      "function setThresholdSetter(address _thresholdSetter)",
+      "function threshold() view returns (uint256)",
+      "function thresholdSetter() view returns (address)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": [
+      "constructor(address admin_, uint256 delay_)",
+      "event CancelTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
+      "event ExecuteTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
+      "event NewAdmin(address indexed newAdmin)",
+      "event NewDelay(uint256 indexed newDelay)",
+      "event NewPendingAdmin(address indexed newPendingAdmin)",
+      "event QueueTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
+      "function GRACE_PERIOD() view returns (uint256)",
+      "function MAXIMUM_DELAY() view returns (uint256)",
+      "function MINIMUM_DELAY() view returns (uint256)",
+      "function acceptAdmin()",
+      "function admin() view returns (address)",
+      "function cancelTransaction(address target, uint256 value, string signature, bytes data, uint256 eta)",
+      "function delay() view returns (uint256)",
+      "function executeTransaction(address target, uint256 value, string signature, bytes data, uint256 eta) payable returns (bytes)",
+      "function pendingAdmin() view returns (address)",
+      "function queueTransaction(address target, uint256 value, string signature, bytes data, uint256 eta) returns (bytes32)",
+      "function queuedTransactions(bytes32) view returns (bool)",
+      "function setDelay(uint256 delay_)",
+      "function setPendingAdmin(address pendingAdmin_)"
+    ],
     "eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2": [
       "constructor(address zchf_)",
       "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
@@ -965,6 +1802,54 @@
       "function votes(address holder) view returns (uint256)",
       "function votesDelegated(address sender, address[] helpers) view returns (uint256)",
       "function zchf() view returns (address)"
+    ],
+    "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984": [
+      "constructor(address account, address minter_, uint256 mintingAllowedAfter_)",
+      "event Approval(address indexed owner, address indexed spender, uint256 amount)",
+      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
+      "event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance)",
+      "event MinterChanged(address minter, address newMinter)",
+      "event Transfer(address indexed from, address indexed to, uint256 amount)",
+      "function DELEGATION_TYPEHASH() view returns (bytes32)",
+      "function DOMAIN_TYPEHASH() view returns (bytes32)",
+      "function PERMIT_TYPEHASH() view returns (bytes32)",
+      "function allowance(address account, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 rawAmount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function checkpoints(address, uint32) view returns (uint32 fromBlock, uint96 votes)",
+      "function decimals() view returns (uint8)",
+      "function delegate(address delegatee)",
+      "function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
+      "function delegates(address) view returns (address)",
+      "function getCurrentVotes(address account) view returns (uint96)",
+      "function getPriorVotes(address account, uint256 blockNumber) view returns (uint96)",
+      "function minimumTimeBetweenMints() view returns (uint32)",
+      "function mint(address dst, uint256 rawAmount)",
+      "function mintCap() view returns (uint8)",
+      "function minter() view returns (address)",
+      "function mintingAllowedAfter() view returns (uint256)",
+      "function name() view returns (string)",
+      "function nonces(address) view returns (uint256)",
+      "function numCheckpoints(address) view returns (uint32)",
+      "function permit(address owner, address spender, uint256 rawAmount, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function setMinter(address minter_)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address dst, uint256 rawAmount) returns (bool)",
+      "function transferFrom(address src, address dst, uint256 rawAmount) returns (bool)"
+    ],
+    "eth:0x1F98431c8aD98523631AE4a59f267346ea31F984": [
+      "constructor()",
+      "event FeeAmountEnabled(uint24 indexed fee, int24 indexed tickSpacing)",
+      "event OwnerChanged(address indexed oldOwner, address indexed newOwner)",
+      "event PoolCreated(address indexed token0, address indexed token1, uint24 indexed fee, int24 tickSpacing, address pool)",
+      "function createPool(address tokenA, address tokenB, uint24 fee) returns (address pool)",
+      "function enableFeeAmount(uint24 fee, int24 tickSpacing)",
+      "function feeAmountTickSpacing(uint24) view returns (int24)",
+      "function getPool(address, address, uint24) view returns (address)",
+      "function owner() view returns (address)",
+      "function parameters() view returns (address factory, address token0, address token1, uint24 fee, int24 tickSpacing)",
+      "function setOwner(address _owner)"
     ],
     "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8": [
       "constructor(address tokenAdminRegistry, address zchf)",
@@ -1114,6 +1999,24 @@
       "function payoutCredit(address target)",
       "function zchf() view returns (address)"
     ],
+    "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": [
+      "constructor(address timelock_, address uni_, address admin_, address implementation_, uint256 votingPeriod_, uint256 votingDelay_, uint256 proposalThreshold_)",
+      "event NewAdmin(address oldAdmin, address newAdmin)",
+      "event NewImplementation(address oldImplementation, address newImplementation)",
+      "event NewPendingAdmin(address oldPendingAdmin, address newPendingAdmin)",
+      "event ProposalCanceled(uint256 id)",
+      "event ProposalCreated(uint256 id, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, uint256 startBlock, uint256 endBlock, string description)",
+      "event ProposalExecuted(uint256 id)",
+      "event ProposalQueued(uint256 id, uint256 eta)",
+      "event ProposalThresholdSet(uint256 oldProposalThreshold, uint256 newProposalThreshold)",
+      "event VoteCast(address indexed voter, uint256 proposalId, uint8 support, uint256 votes, string reason)",
+      "event VotingDelaySet(uint256 oldVotingDelay, uint256 newVotingDelay)",
+      "event VotingPeriodSet(uint256 oldVotingPeriod, uint256 newVotingPeriod)",
+      "function _setImplementation(address implementation_)",
+      "function admin() view returns (address)",
+      "function implementation() view returns (address)",
+      "function pendingAdmin() view returns (address)"
+    ],
     "eth:0x49C431454C40ecbf848096f2753B2ABC3A699a10": [
       "constructor(address _owner, address _hub, address _zchf, address _collateral, uint256 _minCollateral, uint256 _initialLimit, uint40 _initPeriod, uint40 _duration, uint40 _challengePeriod, uint24 _riskPremiumPPM, uint256 _liqPrice, uint24 _reservePPM)",
       "error Alive()",
@@ -1217,6 +2120,59 @@
       "function withdrawTo(address account, uint256 amount) returns (bool)",
       "function wrap(uint256 amount)"
     ],
+    "eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026": [
+      "event NewAdmin(address oldAdmin, address newAdmin)",
+      "event NewImplementation(address oldImplementation, address newImplementation)",
+      "event NewPendingAdmin(address oldPendingAdmin, address newPendingAdmin)",
+      "event ProposalCanceled(uint256 id)",
+      "event ProposalCreated(uint256 id, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, uint256 startBlock, uint256 endBlock, string description)",
+      "event ProposalExecuted(uint256 id)",
+      "event ProposalQueued(uint256 id, uint256 eta)",
+      "event ProposalThresholdSet(uint256 oldProposalThreshold, uint256 newProposalThreshold)",
+      "event VoteCast(address indexed voter, uint256 proposalId, uint8 support, uint256 votes, string reason)",
+      "event VotingDelaySet(uint256 oldVotingDelay, uint256 newVotingDelay)",
+      "event VotingPeriodSet(uint256 oldVotingPeriod, uint256 newVotingPeriod)",
+      "function BALLOT_TYPEHASH() view returns (bytes32)",
+      "function DOMAIN_TYPEHASH() view returns (bytes32)",
+      "function MAX_PROPOSAL_THRESHOLD() view returns (uint256)",
+      "function MAX_VOTING_DELAY() view returns (uint256)",
+      "function MAX_VOTING_PERIOD() view returns (uint256)",
+      "function MIN_PROPOSAL_THRESHOLD() view returns (uint256)",
+      "function MIN_VOTING_DELAY() view returns (uint256)",
+      "function MIN_VOTING_PERIOD() view returns (uint256)",
+      "function _acceptAdmin()",
+      "function _initiate(uint256 proposalCount)",
+      "function _setPendingAdmin(address newPendingAdmin)",
+      "function _setProposalThreshold(uint256 newProposalThreshold)",
+      "function _setVotingDelay(uint256 newVotingDelay)",
+      "function _setVotingPeriod(uint256 newVotingPeriod)",
+      "function admin() view returns (address)",
+      "function cancel(uint256 proposalId)",
+      "function castVote(uint256 proposalId, uint8 support)",
+      "function castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s)",
+      "function castVoteWithReason(uint256 proposalId, uint8 support, string reason)",
+      "function execute(uint256 proposalId) payable",
+      "function getActions(uint256 proposalId) view returns (address[] targets, uint256[] values, string[] signatures, bytes[] calldatas)",
+      "function getReceipt(uint256 proposalId, address voter) view returns (tuple(bool hasVoted, uint8 support, uint96 votes))",
+      "function implementation() view returns (address)",
+      "function initialProposalId() view returns (uint256)",
+      "function initialize(address timelock_, address uni_, uint256 votingPeriod_, uint256 votingDelay_, uint256 proposalThreshold_)",
+      "function latestProposalIds(address) view returns (uint256)",
+      "function name() view returns (string)",
+      "function pendingAdmin() view returns (address)",
+      "function proposalCount() view returns (uint256)",
+      "function proposalMaxOperations() view returns (uint256)",
+      "function proposalThreshold() view returns (uint256)",
+      "function proposals(uint256) view returns (uint256 id, address proposer, uint256 eta, uint256 startBlock, uint256 endBlock, uint256 forVotes, uint256 againstVotes, uint256 abstainVotes, bool canceled, bool executed)",
+      "function propose(address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, string description) returns (uint256)",
+      "function queue(uint256 proposalId)",
+      "function quorumVotes() view returns (uint256)",
+      "function state(uint256 proposalId) view returns (uint8)",
+      "function timelock() view returns (address)",
+      "function uni() view returns (address)",
+      "function votingDelay() view returns (uint256)",
+      "function votingPeriod() view returns (uint256)"
+    ],
     "eth:0x728310FeaCa72dc46cD5BF7d739556D5668472BA": [
       "function clonePosition(address _parent) returns (address)",
       "function createNewPosition(address _owner, address _zchf, address _collateral, uint256 _minCollateral, uint256 _initialLimit, uint40 _initPeriod, uint40 _duration, uint40 _challengePeriod, uint24 _riskPremiumPPM, uint256 _liqPrice, uint24 _reserve) returns (address)"
@@ -1258,6 +2214,26 @@
       "function minted() view returns (uint256)",
       "function zchf() view returns (address)"
     ],
+    "eth:0x8746159D385f84CB550ab5aE015c0dDf6909b8f2": [
+      "constructor(address parent)",
+      "error AccessDenied(address sender)",
+      "error NotExpired()",
+      "error NotOwner()",
+      "event Burn(uint128 liquidityRemoved, uint256 token0, uint256 token1, uint256 repaid)",
+      "event Mint(uint128 liquidityAdded, uint256 token0, uint256 token1, uint256 borrowed)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function borrowed() view returns (uint256)",
+      "function burn(uint128 burnedLiquidity, uint256 expectedPriceX96) returns (uint256, uint256)",
+      "function expiredPublicBurn(uint128 burnedLiquidity, uint256 expectedPriceX96) returns (uint256, uint256)",
+      "function initialize(address owner_, int24 tickLow_, int24 tickHigh_)",
+      "function mint(uint128 amount, uint256 expectedPriceX96)",
+      "function owner() view returns (address)",
+      "function tickHigh() view returns (int24)",
+      "function tickLow() view returns (int24)",
+      "function totalLiquidity() view returns (uint128 liquidity)",
+      "function transferOwnership(address newOwner)",
+      "function uniswapV3MintCallback(uint256 amount0Owed, uint256 amount1Owed, bytes)"
+    ],
     "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16": [
       "constructor(address zchf, address registry, address router)",
       "error InvalidRouter(address router)",
@@ -1270,6 +2246,44 @@
       "function ccipReceive(tuple(bytes32 messageId, uint64 sourceChainSelector, bytes sender, bytes data, tuple(address token, uint256 amount)[] destTokenAmounts) message)",
       "function getRouter() view returns (address)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
+    "eth:0x8E4318E2cb1ae291254B187001a59a1f8ac78cEF": [
+      "constructor()",
+      "event Burn(address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event Collect(address indexed owner, address recipient, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount0, uint128 amount1)",
+      "event CollectProtocol(address indexed sender, address indexed recipient, uint128 amount0, uint128 amount1)",
+      "event Flash(address indexed sender, address indexed recipient, uint256 amount0, uint256 amount1, uint256 paid0, uint256 paid1)",
+      "event IncreaseObservationCardinalityNext(uint16 observationCardinalityNextOld, uint16 observationCardinalityNextNew)",
+      "event Initialize(uint160 sqrtPriceX96, int24 tick)",
+      "event Mint(address sender, address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)",
+      "event SetFeeProtocol(uint8 feeProtocol0Old, uint8 feeProtocol1Old, uint8 feeProtocol0New, uint8 feeProtocol1New)",
+      "event Swap(address indexed sender, address indexed recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick)",
+      "function burn(int24 tickLower, int24 tickUpper, uint128 amount) returns (uint256 amount0, uint256 amount1)",
+      "function collect(address recipient, int24 tickLower, int24 tickUpper, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function collectProtocol(address recipient, uint128 amount0Requested, uint128 amount1Requested) returns (uint128 amount0, uint128 amount1)",
+      "function factory() view returns (address)",
+      "function fee() view returns (uint24)",
+      "function feeGrowthGlobal0X128() view returns (uint256)",
+      "function feeGrowthGlobal1X128() view returns (uint256)",
+      "function flash(address recipient, uint256 amount0, uint256 amount1, bytes data)",
+      "function increaseObservationCardinalityNext(uint16 observationCardinalityNext)",
+      "function initialize(uint160 sqrtPriceX96)",
+      "function liquidity() view returns (uint128)",
+      "function maxLiquidityPerTick() view returns (uint128)",
+      "function mint(address recipient, int24 tickLower, int24 tickUpper, uint128 amount, bytes data) returns (uint256 amount0, uint256 amount1)",
+      "function observations(uint256) view returns (uint32 blockTimestamp, int56 tickCumulative, uint160 secondsPerLiquidityCumulativeX128, bool initialized)",
+      "function observe(uint32[] secondsAgos) view returns (int56[] tickCumulatives, uint160[] secondsPerLiquidityCumulativeX128s)",
+      "function positions(bytes32) view returns (uint128 liquidity, uint256 feeGrowthInside0LastX128, uint256 feeGrowthInside1LastX128, uint128 tokensOwed0, uint128 tokensOwed1)",
+      "function protocolFees() view returns (uint128 token0, uint128 token1)",
+      "function setFeeProtocol(uint8 feeProtocol0, uint8 feeProtocol1)",
+      "function slot0() view returns (uint160 sqrtPriceX96, int24 tick, uint16 observationIndex, uint16 observationCardinality, uint16 observationCardinalityNext, uint8 feeProtocol, bool unlocked)",
+      "function snapshotCumulativesInside(int24 tickLower, int24 tickUpper) view returns (int56 tickCumulativeInside, uint160 secondsPerLiquidityInsideX128, uint32 secondsInside)",
+      "function swap(address recipient, bool zeroForOne, int256 amountSpecified, uint160 sqrtPriceLimitX96, bytes data) returns (int256 amount0, int256 amount1)",
+      "function tickBitmap(int16) view returns (uint256)",
+      "function tickSpacing() view returns (int24)",
+      "function ticks(int24) view returns (uint128 liquidityGross, int128 liquidityNet, uint256 feeGrowthOutside0X128, uint256 feeGrowthOutside1X128, int56 tickCumulativeOutside, uint160 secondsPerLiquidityOutsideX128, uint32 secondsOutside, bool initialized)",
+      "function token0() view returns (address)",
+      "function token1() view returns (address)"
     ],
     "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79": [
       "constructor(address token, uint8 localTokenDecimals, address[] allowlist, address rmnProxy, address router)",
@@ -1350,6 +2364,43 @@
       "function transferOwnership(address to)",
       "function typeAndVersion() view returns (string)"
     ],
+    "eth:0xa1304E5Aaf83CDB7c2b367F50B99Bb0647ED8C58": [
+      "constructor(address uniswapPool_, address zchf_, address zchfMinter_, uint40 expiration, uint256 borrowingLimit)",
+      "error AccessDenied()",
+      "error AmplifierExpired()",
+      "error InsufficientDollarsInRange(uint256 requiredMinimum, uint256 actuallyFoundInProvidedRange)",
+      "error InvalidTick(int24 min, int24 found, int24 max)",
+      "error InvalidUniswapPool()",
+      "error LimitExceeded(uint256 newValue, uint256 limit)",
+      "error PriceChangedTooMuch(uint256 found, uint256 expected)",
+      "error SafeERC20FailedOperation(address token)",
+      "event AmplifiedPositionCreated(address position)",
+      "event Borrowed(uint256 borrowed, uint256 totalBorrowed)",
+      "event Repaid(uint256 amount, uint256 totalBorrowed)",
+      "function EXPIRATION() view returns (uint40)",
+      "function LIMIT() view returns (uint256)",
+      "function MAXIMUM_TICK() view returns (int24)",
+      "function MAX_DOLLAR_APPRECIATION_TICKS() view returns (int24)",
+      "function MAX_DOLLAR_DEPRECIATION_TICKS() view returns (int24)",
+      "function MINIMUM_TICK() view returns (int24)",
+      "function PRICE_ANCHOR_X96() view returns (uint256)",
+      "function UNISWAP_POOL() view returns (address)",
+      "function USD() view returns (address)",
+      "function ZCHF() view returns (address)",
+      "function ZCHF_IS_TOKEN0() view returns (bool)",
+      "function ZCHF_MINTER() view returns (address)",
+      "function borrowIntoPool(address owner, uint256 token0Amount, uint256 token1Amount) returns (uint256)",
+      "function checkPrice(uint256 expectedPriceX96) view",
+      "function checkTicks(int24 ticksLow, int24 ticksHigh) view",
+      "function createAmplifiedPosition(int24 tickLow, int24 tickHigh) returns (address)",
+      "function exploitableAt() view returns (uint256)",
+      "function getMinimumDollars(uint256 zchfAmount) view returns (uint256)",
+      "function getPrice() view returns (uint256)",
+      "function positionCreationDate(address) view returns (uint256)",
+      "function positionImplementation() view returns (address)",
+      "function repay(address owner, uint256 borrowed, uint128 returnedPart, uint128 total) returns (uint256)",
+      "function totalBorrowed() view returns (uint256)"
+    ],
     "eth:0xAD0107D3Da540Fd54b1931735b65110C909ea6B6": [
       "constructor(address zchf_)",
       "error Log(uint256, uint256, uint256)",
@@ -1412,6 +2463,119 @@
       "function totalSupply() view returns (uint256)",
       "function transfer(address recipient, uint256 amount) returns (bool)",
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
+    ],
+    "eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828": [
+      "function owners(uint256) view returns (address)",
+      "function removeOwner(address owner)",
+      "function revokeConfirmation(uint256 transactionId)",
+      "function isOwner(address) view returns (bool)",
+      "function confirmations(uint256, address) view returns (bool)",
+      "function getTransactionCount(bool pending, bool executed) view returns (uint256 count)",
+      "function addOwner(address owner)",
+      "function isConfirmed(uint256 transactionId) view returns (bool)",
+      "function getConfirmationCount(uint256 transactionId) view returns (uint256 count)",
+      "function transactions(uint256) view returns (address destination, uint256 value, bytes data, bool executed)",
+      "function getOwners() view returns (address[])",
+      "function getTransactionIds(uint256 from, uint256 to, bool pending, bool executed) view returns (uint256[] _transactionIds)",
+      "function getConfirmations(uint256 transactionId) view returns (address[] _confirmations)",
+      "function transactionCount() view returns (uint256)",
+      "function changeRequirement(uint256 _required)",
+      "function confirmTransaction(uint256 transactionId)",
+      "function submitTransaction(address destination, uint256 value, bytes data) returns (uint256 transactionId)",
+      "function MAX_OWNER_COUNT() view returns (uint256)",
+      "function required() view returns (uint256)",
+      "function replaceOwner(address owner, address newOwner)",
+      "function executeTransaction(uint256 transactionId)",
+      "constructor(address[] _owners, uint256 _required)",
+      "event Confirmation(address indexed sender, uint256 indexed transactionId)",
+      "event Revocation(address indexed sender, uint256 indexed transactionId)",
+      "event Submission(uint256 indexed transactionId)",
+      "event Execution(uint256 indexed transactionId)",
+      "event ExecutionFailure(uint256 indexed transactionId)",
+      "event Deposit(address indexed sender, uint256 value)",
+      "event OwnerAddition(address indexed owner)",
+      "event OwnerRemoval(address indexed owner)",
+      "event RequirementChange(uint256 required)"
+    ],
+    "eth:0xd697A61D5FB4e076125e0bE647f902b02bb3A0F1": [
+      "function name() view returns (string)",
+      "function deprecate(address _upgradedAddress)",
+      "function approve(address _spender, uint256 _value)",
+      "function deprecated() view returns (bool)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address _from, address _to, uint256 _value)",
+      "function upgradedAddress() view returns (address)",
+      "function decimals() view returns (uint256)",
+      "function maximumFee() view returns (uint256)",
+      "function _totalSupply() view returns (uint256)",
+      "function unpause() returns (bool)",
+      "function paused() view returns (bool)",
+      "function balanceOf(address who) view returns (uint256)",
+      "function pause() returns (bool)",
+      "function owner() view returns (address)",
+      "function symbol() view returns (string)",
+      "function transfer(address _to, uint256 _value)",
+      "function setParams(uint256 newBasisPoints, uint256 newMaxFee)",
+      "function issue(uint256 amount)",
+      "function redeem(uint256 amount)",
+      "function allowance(address _owner, address _spender) view returns (uint256 remaining)",
+      "function basisPointsRate() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "constructor(uint256 _initialSupply, string _name, string _symbol, uint256 _decimals)",
+      "event Issue(uint256 amount)",
+      "event Redeem(uint256 amount)",
+      "event Deprecate(address newAddress)",
+      "event Params(uint256 feeBasisPoints, uint256 maxFee)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Pause()",
+      "event Unpause()"
+    ],
+    "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7": [
+      "function name() view returns (string)",
+      "function deprecate(address _upgradedAddress)",
+      "function approve(address _spender, uint256 _value)",
+      "function deprecated() view returns (bool)",
+      "function addBlackList(address _evilUser)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address _from, address _to, uint256 _value)",
+      "function upgradedAddress() view returns (address)",
+      "function balances(address) view returns (uint256)",
+      "function decimals() view returns (uint256)",
+      "function maximumFee() view returns (uint256)",
+      "function _totalSupply() view returns (uint256)",
+      "function unpause()",
+      "function getBlackListStatus(address _maker) view returns (bool)",
+      "function allowed(address, address) view returns (uint256)",
+      "function paused() view returns (bool)",
+      "function balanceOf(address who) view returns (uint256)",
+      "function pause()",
+      "function getOwner() view returns (address)",
+      "function owner() view returns (address)",
+      "function symbol() view returns (string)",
+      "function transfer(address _to, uint256 _value)",
+      "function setParams(uint256 newBasisPoints, uint256 newMaxFee)",
+      "function issue(uint256 amount)",
+      "function redeem(uint256 amount)",
+      "function allowance(address _owner, address _spender) view returns (uint256 remaining)",
+      "function basisPointsRate() view returns (uint256)",
+      "function isBlackListed(address) view returns (bool)",
+      "function removeBlackList(address _clearedUser)",
+      "function MAX_UINT() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function destroyBlackFunds(address _blackListedUser)",
+      "constructor(uint256 _initialSupply, string _name, string _symbol, uint256 _decimals)",
+      "event Issue(uint256 amount)",
+      "event Redeem(uint256 amount)",
+      "event Deprecate(address newAddress)",
+      "event Params(uint256 feeBasisPoints, uint256 maxFee)",
+      "event DestroyedBlackFunds(address _blackListedUser, uint256 _balance)",
+      "event AddedBlackList(address _user)",
+      "event RemovedBlackList(address _user)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Pause()",
+      "event Unpause()"
     ],
     "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557": [
       "constructor(address _zchf, address _leadrate, address _roller, address _factory)",
@@ -1502,6 +2666,58 @@
       "function transferOwnership(address newOwner)",
       "function withdraw(uint256 assets, address receiver, address owner) returns (uint256)"
     ],
+    "eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A": [
+      "constructor(address _factory, address _tokenJar)",
+      "error InvalidFeeTier()",
+      "error InvalidFeeValue()",
+      "error TierAlreadyStored()",
+      "error Unauthorized()",
+      "event DefaultFeeUpdated(uint8 feeValue)",
+      "event FeeSetterUpdated(address indexed oldFeeSetter, address indexed newFeeSetter)",
+      "event FeeTierDefaultCleared(uint24 indexed feeTier)",
+      "event FeeTierDefaultUpdated(uint24 indexed feeTier, uint8 feeValue)",
+      "event FeeUpdateTriggered(address indexed caller, address indexed pool, uint8 feeValue)",
+      "event OwnershipTransferred(address indexed user, address indexed newOwner)",
+      "event PoolOverrideCleared(address indexed pool)",
+      "event PoolOverrideUpdated(address indexed pool, uint8 feeValue)",
+      "function FACTORY() view returns (address)",
+      "function TOKEN_JAR() view returns (address)",
+      "function ZERO_FEE_SENTINEL() view returns (uint8)",
+      "function batchTriggerFeeUpdate(tuple(address token0, address token1)[] pairs)",
+      "function batchTriggerFeeUpdateByPool(address[] pools)",
+      "function clearFeeTierDefault(uint24 feeTier)",
+      "function clearPoolOverride(address pool)",
+      "function collect(tuple(address pool, uint128 amount0Requested, uint128 amount1Requested)[] collectParams) returns (tuple(uint128 amount0Collected, uint128 amount1Collected)[] amountsCollected)",
+      "function defaultFee() view returns (uint8)",
+      "function defaultFees(uint24 feeTier) view returns (uint8)",
+      "function enableFeeAmount(uint24 fee, int24 tickSpacing)",
+      "function feeSetter() view returns (address)",
+      "function feeTierDefaults(uint24 feeTier) view returns (uint8 feeValue)",
+      "function feeTiers(uint256) view returns (uint24)",
+      "function getFee(address pool) view returns (uint8 fee)",
+      "function owner() view returns (address)",
+      "function poolOverrides(address pool) view returns (uint8 feeValue)",
+      "function setDefaultFee(uint8 feeValue)",
+      "function setDefaultFeeByFeeTier(uint24 feeTier, uint8 defaultFeeValue)",
+      "function setFactoryOwner(address newOwner)",
+      "function setFeeSetter(address newFeeSetter)",
+      "function setFeeTierDefault(uint24 feeTier, uint8 feeValue)",
+      "function setPoolOverride(address pool, uint8 feeValue)",
+      "function storeFeeTier(uint24 feeTier)",
+      "function transferOwnership(address newOwner)",
+      "function triggerFeeUpdate(address pool)",
+      "function triggerFeeUpdate(address token0, address token1)"
+    ],
+    "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85": [
+      "constructor()",
+      "error Unauthorized()",
+      "event OwnershipTransferred(address indexed user, address indexed newOwner)",
+      "function owner() view returns (address)",
+      "function release(address[] assets, address recipient)",
+      "function releaser() view returns (address)",
+      "function setReleaser(address _releaser)",
+      "function transferOwnership(address newOwner)"
+    ],
     "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916": [
       "constructor(address token, address router, address link)",
       "error InfiniteAllowanceRequired(address owner, address spender)",
@@ -1558,8 +2774,15 @@
     "frankencoin/SavingsVault": "0x8bd9f28462675ae9a17fb327d790d1b63978145d534932b03d99ed0f69b96487",
     "frankencoin/StablecoinBridge": "0xa6068262eb7719f21984a390129b5eb7ebd108545849623453769920772d084a",
     "frankencoin/TransferReference": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "transporter/TokenPool": "0xd3e2593c0a667658845c680a3433d8a2252fb4839d2e1d16674d97e3081d856d"
+    "transporter/TokenPool": "0xd3e2593c0a667658845c680a3433d8a2252fb4839d2e1d16674d97e3081d856d",
+    "uniswapv3/Firepit": "0x703007707cf394ab3f48090fd6cd3adedcb5be8fcbef542951bb894deb4bb6bb",
+    "uniswapv3/Timelock": "0x652fc9e6608bc27d2068eecbf83b1f8bbcd89efeb5c71c1388cff293b918cf91",
+    "uniswapv3/TokenJar": "0x4e5cdb5291d4fadb56003b4d078f44feb9eccfad71889bf91f3a931e6a042c03",
+    "uniswapv3/Uni": "0x0552485ac57ab489375e7de7a08024b2601c9d94bf2db3e2f65878c444c1545f",
+    "uniswapv3/UniswapV3Factory": "0x5e0c14e07a63feedadd8c50b27af35d0dbdaf5a8fa83bcdac52444324d2f8636",
+    "uniswapv3/UniswapV3Pool": "0x20ec8823a2b1327c58cb7619ab4d308f7c8d4e2c65ead2d85358dbfe141f4031",
+    "uniswapv3/V3OpenFeeAdapter": "0x663a4d61a27c76fffa2178a403a1d500998b8922f9ad258ad0b509adecd838c3"
   },
-  "usedBlockNumbers": { "ethereum": 25782267 },
-  "permissionsConfigHash": "0x2517751773de749e50f2a0a1d57fb96f94ea5f7f5a075aa9f835bf5aa16aa2f4"
+  "usedBlockNumbers": { "ethereum": 25802292 },
+  "permissionsConfigHash": "0x1d162f75db7faba64431cf1a5611478ebf902e22420e62714426a3b44fb8e4f2"
 }

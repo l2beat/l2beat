@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xca28b45a2c044c05db26ecefb789919423bd21c9
+Generated with discovered.json: 0xee0e3587edf37a09c233c84dd86cbb095cdddb07
 
-# Diff at Wed, 19 Aug 2026 10:23:03 GMT:
+# Diff at Fri, 21 Aug 2026 08:25:37 GMT:
 
-- author: Luca Donno (<donnoh99@gmail.com>)
-- current timestamp: 1787059635
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- current timestamp: 1787300652
 
 ## Description
 
@@ -19,8 +19,32 @@ Initial discovery of Frankencoin, an oracle-free stablecoin protocol issuing ZCH
 
 ```diff
 +   Status: CREATED
+    contract Firepit (eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721) [uniswapv3/Firepit]
+    +++ description: Burn-and-release contract: anyone can transfer the configured threshold (currently 4,000 UNI) to a fixed burn address and release selected balances from its token jar to a chosen recipient. The threshold setter can change the threshold, including to zero, and the owner can replace the threshold setter.
+```
+
+```diff
++   Status: CREATED
+    contract Timelock (eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC) [uniswapv3/Timelock]
+    +++ description: Compound-style timelock. Its admin can queue, cancel, and execute transactions. A queued transaction becomes executable after 2d and remains executable for a 14d grace period. The delay can be changed only through the timelock itself and must remain between 2d and 1mo. After the one-time admin initialization path has been used, changing the admin requires a timelocked self-call; there is no emergency bypass.
+```
+
+```diff
++   Status: CREATED
     contract Equity (eth:0x1bA26788dfDe592fec8bcB0Eaff472a42BE341B2) [frankencoin/Equity]
     +++ description: Reserve of the Frankencoin system and its governance token (FPS): holds all ZCHF reserves and absorbs losses before ZCHF holders do. FPS is minted and redeemed permissionlessly against ZCHF at a formula price (3x underlying equity, 90-day minimum holding before redemption). Votes equal FPS balance times holding time; 2% of total votes qualifies an address (with delegates) for all veto and proposal rights in the system. There is no admin.
+```
+
+```diff
++   Status: CREATED
+    contract Uniswap Token (eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984) [uniswapv3/Uni]
+    +++ description: ERC20 governance token with checkpoint voting. Its constructor mints a fixed initial supply; the minter can mint at most 2% of supply per mint, with a minimum interval of 1y. Votes count only when delegated.
+```
+
+```diff
++   Status: CREATED
+    contract UniswapV3Factory (eth:0x1F98431c8aD98523631AE4a59f267346ea31F984) [uniswapv3/UniswapV3Factory]
+    +++ description: Deploys Uniswap v3 pools: anyone can create one pool per token pair and enabled fee tier, at a CREATE2 address deterministic in (token0, token1, fee). Immutable. Its owner holds exactly three powers: enable new fee tiers (irreversible), call setFeeProtocol/collectProtocol on pools, and transfer the owner role. It cannot modify, pause, or upgrade deployed pools.
 ```
 
 ```diff
@@ -55,6 +79,12 @@ Initial discovery of Frankencoin, an oracle-free stablecoin protocol issuing ZCH
 
 ```diff
 +   Status: CREATED
+    contract GovernorBravoDelegator (eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract Position (eth:0x49C431454C40ecbf848096f2753B2ABC3A699a10) [frankencoin/Position]
     +++ description: Collateralized debt position whose owner can mint the configured stablecoin against a fixed ERC20 collateral, subject to a declared liquidation price and fixed minimum collateral, risk premium, challenge period, and expiration. A full Position deployment tracks the minting limit for its clone family and acts as the implementation and immutable-parameter source for ERC-1167 child positions; the configured hub conducts challenges and forced collateral sales.
 ```
@@ -69,6 +99,12 @@ Initial discovery of Frankencoin, an oracle-free stablecoin protocol issuing ZCH
 +   Status: CREATED
     contract FPSWrapper (eth:0x5052D3Cc819f53116641e89b96Ff4cD1EE80B182) [frankencoin/FPSWrapper]
     +++ description: Wrapper token (WFPS) for FPS. Wrapped shares cannot vote individually and can be unwrapped or redeemed for ZCHF at any time, subject to the wrapper's collective holding duration.
+```
+
+```diff
++   Status: CREATED
+    contract GovernorBravoDelegate (eth:0x53a328F4086d7C0F1Fa19e594c9b842125263026) [N/A]
+    +++ description: None
 ```
 
 ```diff
@@ -91,13 +127,31 @@ Initial discovery of Frankencoin, an oracle-free stablecoin protocol issuing ZCH
 
 ```diff
 +   Status: CREATED
+    contract AmplifiedPosition (eth:0x8746159D385f84CB550ab5aE015c0dDf6909b8f2) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract BridgeAccounting (eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16) [frankencoin/BridgeAccounting]
     +++ description: Books profit/loss settlements from bridged Frankencoin deployments on other chains into the mainnet reserve (it is a registered minter). Accepts CCIP messages only from the ZCHF token contracts registered in the token pool.
 ```
 
 ```diff
 +   Status: CREATED
+    contract UniswapV3Pool (eth:0x8E4318E2cb1ae291254B187001a59a1f8ac78cEF) [uniswapv3/UniswapV3Pool]
+    +++ description: A concentrated-liquidity AMM pool for one token pair at one fee tier, deployed by the factory and fully immutable: no owner, no pause, no upgrade path. LPs provide liquidity on tick ranges; swap fees accrue to in-range positions. The factory owner can divert up to 1/4 of the swap fee per side as protocol fee. Also a TWAP oracle whose observation buffer anyone can grow.
+```
+
+```diff
++   Status: CREATED
     contract BurnMintTokenPool (eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79) [transporter/TokenPool]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UniswapAmplifier (eth:0xa1304E5Aaf83CDB7c2b367F50B99Bb0647ED8C58) [N/A]
     +++ description: None
 ```
 
@@ -115,6 +169,24 @@ Initial discovery of Frankencoin, an oracle-free stablecoin protocol issuing ZCH
 
 ```diff
 +   Status: CREATED
+    contract MultiSigWallet (eth:0xC6CDE7C39eB2f0F0095F41570af89eFC2C1Ea828) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TetherToken (eth:0xd697A61D5FB4e076125e0bE647f902b02bb3A0F1) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Tether USD Token (eth:0xdAC17F958D2ee523a2206206994597C13D831ec7) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract MintingHubV2 (eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557) [frankencoin/MintingHubV2]
     +++ description: Permissionless factory for collateralized ZCHF minting positions: anyone can open a position with any ERC20 collateral and a self-declared liquidation price for a 1,000 ZCHF fee, or clone an approved one for free. No price oracle is used; anyone can challenge an overpriced position in a collateral auction (2% challenger reward) and qualified FPS holders (2% of votes) can veto new positions during their initialization period. Positions prepay interest (leadrate plus a fixed risk premium) at minting for the term to expiration and are individually registered as minters (not listed here).
 ```
@@ -123,6 +195,18 @@ Initial discovery of Frankencoin, an oracle-free stablecoin protocol issuing ZCH
 +   Status: CREATED
     contract SavingsVault (eth:0xE5F130253fF137f9917C0107659A4c5262abf6b0) [frankencoin/SavingsVault]
     +++ description: ERC4626 vault (svZCHF) over the Savings module: deposited ZCHF is forwarded there and interest auto-compounds into the share price. Ownership has been renounced, so its only privileged function (activating a referral-fee skim of up to 25% of interest) is permanently disabled and the vault is fully immutable.
+```
+
+```diff
++   Status: CREATED
+    contract V3OpenFeeAdapter (eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A) [uniswapv3/V3OpenFeeAdapter]
+    +++ description: Adapter for administering a configured Uniswap v3 factory. While it holds the factory owner role, anyone can ask it to apply configured protocol fees to pools or collect accrued fees to its fixed recipient. The fee setter controls global, per-tier, and per-pool fee settings; the owner can replace the fee setter, enable factory fee tiers, or transfer factory ownership.
+```
+
+```diff
++   Status: CREATED
+    contract TokenJar (eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85) [uniswapv3/TokenJar]
+    +++ description: Token escrow whose releaser can transfer held balances. The owner can replace the releaser, changing who controls accumulated and future deposits.
 ```
 
 ```diff
