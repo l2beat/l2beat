@@ -13,8 +13,8 @@ declare module '@tanstack/react-table' {
     hideIfNull?: boolean
     tooltip?: ReactNode
     /**
-     * Marks a column as a hidden companion used only to sort by percentage
-     * change. These columns are never shown in the table or column picker.
+     * Sort-only companion for percentage change. Not rendered in the table;
+     * excluded from the column picker via enableHiding: false.
      */
     isChangeSortColumn?: boolean
     /**

@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-import type { ColumnDef, ColumnHelper } from '@tanstack/react-table'
+import type { ColumnDef, ColumnHelper, Header } from '@tanstack/react-table'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 
 const CHANGE_SORT_HEADERS: Record<PercentageChangePeriod, string> = {
@@ -10,8 +10,9 @@ const CHANGE_SORT_HEADERS: Record<PercentageChangePeriod, string> = {
 }
 
 /**
- * Pairs a visible value column with a hidden companion that sorts by
- * percentage change. BasicTable renders both sort controls on the value header.
+ * Pairs a value column with a companion used only to sort by percentage
+ * change. The companion is not a table column: BasicTable never renders it,
+ * and enableHiding: false keeps it out of the column picker.
  */
 export function withChangeSort<TData, TValue>(
   columnHelper: ColumnHelper<TData>,
@@ -46,30 +47,18 @@ export function withChangeSort<TData, TValue>(
   ]
 }
 
-interface ChangeSortColumnDef {
-  id?: string
-  meta?: {
-    isChangeSortColumn?: boolean
-  }
-  columns?: ChangeSortColumnDef[]
+export function isChangeSortColumn(column: {
+  columnDef: { meta?: { isChangeSortColumn?: boolean } }
+}): boolean {
+  return column.columnDef.meta?.isChangeSortColumn === true
 }
 
-export function getChangeSortColumnVisibility(
-  columns: ChangeSortColumnDef[],
-): Record<string, false> {
-  const visibility: Record<string, false> = {}
-
-  function visit(cols: ChangeSortColumnDef[]) {
-    for (const column of cols) {
-      if (column.columns) {
-        visit(column.columns)
-      }
-      if (column.meta?.isChangeSortColumn && column.id) {
-        visibility[column.id] = false
-      }
-    }
-  }
-
-  visit(columns)
-  return visibility
+/** Leaf count for layout, excluding sort-only companion columns. */
+export function getChangeSortAwareColSpan<TData, TValue>(
+  header: Header<TData, TValue>,
+): number {
+  return header.column
+    .getLeafColumns()
+    .filter((column) => column.getIsVisible() && !isChangeSortColumn(column))
+    .length
 }
