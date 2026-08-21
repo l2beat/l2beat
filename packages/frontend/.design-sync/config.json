@@ -1,0 +1,74 @@
+{
+  "projectId": "2e9ba8dd-7b2b-471b-a396-8cd343add461",
+  "shape": "package",
+  "pkg": "@l2beat/frontend",
+  "globalName": "L2beat",
+  "srcDir": "src",
+  "tsconfig": "tsconfig.json",
+  "cssEntry": ".design-sync/.cache/compiled.css",
+  "extraFonts": [".design-sync/fonts.css"],
+  "componentSrcMap": {
+    "Accordion": "src/components/core/Accordion.tsx",
+    "Button": "src/components/core/Button.tsx",
+    "Calendar": "src/components/core/Calendar.tsx",
+    "Carousel": "src/components/core/Carousel.tsx",
+    "Checkbox": "src/components/core/Checkbox.tsx",
+    "Collapsible": "src/components/core/Collapsible.tsx",
+    "Command": "src/components/core/Command.tsx",
+    "Dialog": "src/components/core/Dialog.tsx",
+    "DirectoryTabs": "src/components/core/DirectoryTabs.tsx",
+    "Drawer": "src/components/core/Drawer.tsx",
+    "HorizontalSeparator": "src/components/core/HorizontalSeparator.tsx",
+    "NavigationMenu": "src/components/core/NavigationMenu.tsx",
+    "OverflowWrapper": "src/components/core/OverflowWrapper.tsx",
+    "Popover": "src/components/core/Popover.tsx",
+    "RadioGroup": "src/components/core/RadioGroup.tsx",
+    "Select": "src/components/core/Select.tsx",
+    "Sheet": "src/components/core/Sheet.tsx",
+    "Sidebar": "src/components/core/Sidebar.tsx",
+    "Skeleton": "src/components/core/Skeleton.tsx",
+    "Switch": "src/components/core/Switch.tsx",
+    "Tabs": "src/components/core/Tabs.tsx",
+    "Tooltip": "src/components/core/tooltip/Tooltip.tsx",
+    "VerticalSeparator": "src/components/core/VerticalSeparator.tsx"
+  },
+  "overrides": {
+    "Dialog": {
+      "cardMode": "single",
+      "viewport": "760x460"
+    },
+    "Popover": {
+      "cardMode": "single",
+      "viewport": "620x360"
+    },
+    "Tooltip": {
+      "cardMode": "single",
+      "primaryStory": "Open",
+      "viewport": "620x360"
+    },
+    "Sheet": {
+      "cardMode": "column",
+      "viewport": "760x420"
+    },
+    "Command": {
+      "cardMode": "column"
+    },
+    "Select": {
+      "cardMode": "single",
+      "primaryStory": "OpenMenu",
+      "viewport": "620x360"
+    },
+    "Drawer": {
+      "cardMode": "single",
+      "viewport": "760x460"
+    },
+    "Sidebar": {
+      "cardMode": "single",
+      "viewport": "1280x560"
+    },
+    "Tabs": {
+      "cardMode": "column"
+    }
+  },
+  "readmeHeader": ".design-sync/conventions.md"
+}

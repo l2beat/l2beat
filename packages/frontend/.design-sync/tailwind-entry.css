@@ -1,0 +1,67 @@
+/* Tailwind entry for /design-sync. Compiles the app stylesheet plus an explicit
+   safelist so utilities the design agent writes resolve even when the app itself
+   never used them. Regenerate with the snippet in .design-sync/NOTES.md. */
+@import "../src/styles/globals.css";
+
+@source "../src/**/*.{ts,tsx}";
+@source "../.design-sync/previews/*.tsx";
+
+@source inline("{hover:,focus:,dark:,dark:hover:,}{bg,text,border,fill,stroke,ring,outline,divide,decoration}-{brand-red,brand-red-dark,brand-black,pure-white,pure-black,white,black,neutral-700,neutral-800,neutral-900,zinc-100,zinc-300,zinc-400,zinc-500,zinc-700,zinc-800,zinc-900,n-zinc-300,gray-50,gray-100,gray-200,gray-250,gray-300,gray-400,gray-450,gray-500,gray-550,gray-600,gray-650,gray-700,gray-750,gray-800,gray-850,gray-900,gray-950,yellow-100,yellow-200,yellow-250,yellow-300,yellow-500,yellow-700,yellow-800,n-yellow-700,orange-400,orange-500,orange-600,purple-50,purple-100,purple-300,purple-450,purple-500,purple-700,purple-800,pink-100,pink-200,pink-750,pink-800,pink-900,n-pink-350,n-pink-400,green-200,green-300,green-400,green-450,green-500,green-600,green-700,green-800,green-900,n-green-450,n-green-700,red-100,red-200,red-300,red-350,red-400,red-500,red-550,red-600,red-700,red-800,red-900,red-950,blue-300,blue-400,blue-450,blue-500,blue-550,blue-600,blue-700,blue-900,blue-950,n-blue-400,n-blue-700,slate-600,rose-500,rose-700,teal-400,teal-500,sky-500,sky-550,sky-600,n-sky-300,n-sky-500,fuchsia-700,n-cyan-600,lime-650,n-stone-200,n-stone-900,non-minting,lock-and-mint,burn-and-mint,primary,primary-invert,secondary,positive,warning,negative,brand,background,surface-primary,surface-primary-hover,surface-secondary,surface-tertiary,surface-info,surface-warning,surface-negative,header-secondary,header-primary,icon-secondary,overlay,divider,link,link-stroke,chart-ethereum,chart-fuchsia,chart-lime,chart-sky,chart-teal,chart-orange,chart-yellow-lime,chart-stacked-blue,chart-stacked-yellow,chart-stacked-pink,chart-stacked-purple,branding-primary,branding-secondary}");
+@source inline("{bg,text,border,fill,ring}-{primary,primary-invert,secondary,brand,positive,warning,negative,background,surface-primary,surface-secondary,surface-tertiary,surface-info,surface-warning,surface-negative,divider,link,icon-secondary,header-primary,header-secondary,black,white,pure-black,pure-white,overlay}/{5,10,20,25,30,40,50,60,70,75,80,90,95}");
+@source inline("{p,px,py,pt,pr,pb,pl,m,mx,my,mt,mr,mb,ml,gap,gap-x,gap-y,space-x,space-y,w,h,min-w,min-h,max-w,max-h,top,right,bottom,left,inset,inset-x,inset-y,size,scroll-m,scroll-p}-{0,px,0.5,1,1.5,2,2.5,3,3.5,4,5,6,7,8,9,10,11,12,14,16,20,24,28,32,36,40,48,56,64,72,80,96}");
+@source inline("{sm:,md:,lg:,xl:,}{p,px,py,pt,pb,gap,gap-x,gap-y,m,mx,my,mt,mb,w,h,max-w,size}-{0,px,0.5,1,1.5,2,2.5,3,3.5,4,5,6,7,8,9,10,11,12,14,16,20,24,28,32,36,40,48,56,64,72,80,96}");
+@source inline("{w,h,min-w,min-h,max-w,max-h,size}-{full,screen,auto,fit,min,max,dvh,svh,px}");
+@source inline("max-w-{xs,sm,md,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl,prose,none}");
+@source inline("w-{1,2,3,4,5,6,7,8,9,10,11}/12");
+@source inline("{w,h}-{1,2,3}/{2,3,4}");
+@source inline("{m,mx,my,mt,mr,mb,ml}-auto");
+@source inline("{sm:,md:,lg:,xl:,}text-{3xs,2xs,xs,sm,base,lg,xl,2xl,3xl,4xl,5xl,6xl,heading-64,heading-48,heading-44,heading-40,heading-36,heading-32,heading-28,heading-24,heading-20,heading-18,heading-16,subtitle-14,subtitle-12,subtitle-11,subtitle-10,label-value-24,label-value-20,label-value-18,label-value-16,label-value-15,label-value-14,label-value-13,label-value-12,paragraph-18,paragraph-16,paragraph-15,paragraph-14,paragraph-13,paragraph-12}");
+@source inline("font-{roboto,roboto-serif,roboto-serif-ext,lora,mono,weight-thin,weight-extralight,weight-light,weight-normal,weight-medium,weight-semibold,weight-bold,weight-black}");
+@source inline("font-{thin,extralight,light,normal,medium,semibold,bold,extrabold,black}");
+@source inline("{,sm:,md:,lg:,xl:}{block,inline-block,inline,flex,inline-flex,grid,inline-grid,hidden,table,contents,flow-root}");
+@source inline("{,sm:,md:,lg:,xl:}flex-{row,row-reverse,col,col-reverse,wrap,nowrap,wrap-reverse,1,auto,initial,none}");
+@source inline("{items,self}-{start,end,center,baseline,stretch}");
+@source inline("{justify,content,place-content,place-items}-{start,end,center,between,around,evenly,stretch}");
+@source inline("{,sm:,md:,lg:,xl:}grid-cols-{1,2,3,4,5,6,7,8,9,10,11,12}");
+@source inline("{,sm:,md:,lg:,xl:}col-span-{1,2,3,4,5,6,7,8,9,10,11,12,full}");
+@source inline("grid-rows-{1,2,3,4,5,6}");
+@source inline("row-span-{1,2,3,4,5,6,full}");
+@source inline("order-{1,2,3,4,5,6,7,8,9,10,11,12,first,last,none}");
+@source inline("basis-{0,auto,full,1/2,1/3,2/3,1/4,3/4}");
+@source inline("{shrink,grow}{,-0}");
+@source inline("rounded{,-t,-b,-l,-r,-tl,-tr,-bl,-br}-{none,sm,md,lg,xl,2xl,3xl,full}");
+@source inline("rounded{,-t,-b,-l,-r}");
+@source inline("border{,-t,-r,-b,-l,-x,-y}{,-0,-2,-4,-8}");
+@source inline("{static,relative,absolute,fixed,sticky}");
+@source inline("z-{0,10,20,30,40,50,999,auto}");
+@source inline("overflow-{auto,hidden,visible,scroll,clip}");
+@source inline("overflow-{x,y}-{auto,hidden,visible,scroll,clip}");
+@source inline("text-{left,center,right,justify,start,end}");
+@source inline("{uppercase,lowercase,capitalize,normal-case,truncate,italic,not-italic}");
+@source inline("{underline,no-underline,line-through,overline}");
+@source inline("whitespace-{normal,nowrap,pre,pre-wrap,pre-line,break-spaces}");
+@source inline("{break-words,break-all,break-normal,text-wrap,text-nowrap,text-balance,text-pretty}");
+@source inline("leading-{none,tight,snug,normal,relaxed,loose,3,4,5,6,7,8,9,10}");
+@source inline("tracking-{tighter,tight,normal,wide,wider,widest}");
+@source inline("opacity-{0,5,10,20,25,30,40,50,60,70,75,80,90,95,100}");
+@source inline("shadow-{2xs,xs,sm,md,lg,xl,2xl,none,inner}");
+@source inline("shadow");
+@source inline("cursor-{pointer,default,not-allowed,wait,text,move,grab,help}");
+@source inline("transition{,-all,-colors,-opacity,-transform,-shadow,-none}");
+@source inline("duration-{75,100,150,200,300,500,700,1000}");
+@source inline("ease-{linear,in,out,in-out}");
+@source inline("{animate-none,animate-spin,animate-pulse,animate-bounce}");
+@source inline("select-{none,text,all,auto}");
+@source inline("pointer-events-{none,auto}");
+@source inline("object-{contain,cover,fill,none,scale-down}");
+@source inline("object-{top,bottom,left,right,center}");
+@source inline("aspect-{auto,square,video}");
+@source inline("{sr-only,not-sr-only}");
+@source inline("list-{none,disc,decimal,inside,outside}");
+@source inline("align-{baseline,top,middle,bottom,text-top,text-bottom}");
+@source inline("divide-{x,y}{,-0,-2,-4}");
+@source inline("{isolate,isolation-auto}");
+@source inline("{visible,invisible,collapse}");
+@source inline("{outline-none,outline,outline-0,outline-1,outline-2,outline-4,outline-offset-1,outline-offset-2,outline-offset-4}");
+@source inline("ring{,-0,-1,-2,-4,-8,-inset}");
+@source inline("{backdrop-blur-sm,backdrop-blur,backdrop-blur-md,backdrop-blur-lg,blur-sm,blur,blur-md,blur-lg,blur-none}");

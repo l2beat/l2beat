@@ -1,0 +1,208 @@
+/* Generated from src/ssr/head/fonts.ts by /design-sync. Regenerate if fonts.ts changes. */
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url("../static/fonts/roboto/roboto-v48-latin-100.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url("../static/fonts/roboto/roboto-v48-latin-200.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("../static/fonts/roboto/roboto-v48-latin-300.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../static/fonts/roboto/roboto-v48-latin-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../static/fonts/roboto/roboto-v48-latin-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../static/fonts/roboto/roboto-v48-latin-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../static/fonts/roboto/roboto-v48-latin-700.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("../static/fonts/roboto/roboto-v48-latin-900.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Serif";
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url("../static/fonts/roboto-serif/roboto-serif-v16-latin-100.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Serif";
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url("../static/fonts/roboto-serif/roboto-serif-v16-latin-200.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Serif";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("../static/fonts/roboto-serif/roboto-serif-v16-latin-300.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Serif";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../static/fonts/roboto-serif/roboto-serif-v16-latin-400.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Serif";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../static/fonts/roboto-serif/roboto-serif-v16-latin-500.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Serif";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../static/fonts/roboto-serif/roboto-serif-v16-latin-600.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Serif";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../static/fonts/roboto-serif/roboto-serif-v16-latin-700.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Serif";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("../static/fonts/roboto-serif/roboto-serif-v16-latin-800.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Serif";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("../static/fonts/roboto-serif/roboto-serif-v16-latin-900.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Serif Ext";
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url("../static/fonts/roboto-serif-ext/roboto-serif-v16-latin_latin-ext-100.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Serif Ext";
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url("../static/fonts/roboto-serif-ext/roboto-serif-v16-latin_latin-ext-200.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Serif Ext";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("../static/fonts/roboto-serif-ext/roboto-serif-v16-latin_latin-ext-300.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Serif Ext";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../static/fonts/roboto-serif-ext/roboto-serif-v16-latin_latin-ext-400.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Serif Ext";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../static/fonts/roboto-serif-ext/roboto-serif-v16-latin_latin-ext-500.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Serif Ext";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../static/fonts/roboto-serif-ext/roboto-serif-v16-latin_latin-ext-600.woff2")
+    format("woff2");
+}
+
+@font-face {
+  font-family: "Roboto Serif Ext";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../static/fonts/roboto-serif-ext/roboto-serif-v16-latin_latin-ext-700.woff2")
+    format("woff2");
+}
