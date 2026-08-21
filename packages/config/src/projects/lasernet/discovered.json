@@ -1,6 +1,6 @@
 {
   "name": "lasernet",
-  "timestamp": 1781177084,
+  "timestamp": 1787224815,
   "configHash": "0x818b5e90e5470ec30f18dbf8180481a4c3eaa493634f81aafd69f7846f55b4a2",
   "entries": [
     {
@@ -125,7 +125,7 @@
           "eth:0xb343522e5663E0cE1060dd50EF04b12820F84890"
         ],
         "allowedOutboxList": ["eth:0xDb5abc57397530DddC1e33BC023F2ef73Db6A86A"],
-        "delayedMessageCount": 437,
+        "delayedMessageCount": 484,
         "inboxHistory": [
           "eth:0xa2809b5f031bf91d2408B3e2464774A28B0F4949",
           "eth:0xb343522e5663E0cE1060dd50EF04b12820F84890"
@@ -135,8 +135,8 @@
         "outboxHistory": ["eth:0xDb5abc57397530DddC1e33BC023F2ef73Db6A86A"],
         "rollup": "eth:0x769b70b6b1fA281ab5c99e9C5A284BE4117e4783",
         "sequencerInbox": "eth:0x661b39a5EB200dFcbb436d98453BdBf88Da02AA1",
-        "sequencerMessageCount": 10952,
-        "sequencerReportedSubMessageCount": 28400544
+        "sequencerMessageCount": 14936,
+        "sequencerReportedSubMessageCount": 41813186
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -321,7 +321,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 277,
+        "nonce": 302,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -388,7 +388,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 10952,
+        "batchCount": 14936,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x17F187D978664C96ffD655996a45e085c403AD8b",
@@ -438,7 +438,7 @@
         "rollup": "eth:0x769b70b6b1fA281ab5c99e9C5A284BE4117e4783",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 437,
+        "totalDelayedMessagesRead": 484,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -538,7 +538,7 @@
         "getValidators": ["eth:0x8fbEf9f7554aec9CCf62b88D86aE1C91F1599F7C"],
         "inbox": "eth:0xa2809b5f031bf91d2408B3e2464774A28B0F4949",
         "isPostBoLD": true,
-        "latestConfirmed": "0xf05eb01a8baca34a1b6c6e496f25675b18f919c3f40cbefc3e307808e69724ae",
+        "latestConfirmed": "0x36f71c3eedd6276ed18cdfa6010456e62dad8738d6b30fe7142ea092070ed5e3",
         "loserStakeEscrow": "eth:0x8fbEf9f7554aec9CCf62b88D86aE1C91F1599F7C",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xDb5abc57397530DddC1e33BC023F2ef73Db6A86A",
@@ -605,6 +605,7 @@
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
             "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c": "ArbOS v51.1 wasmModuleRoot",
+            "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97": "ArbOS v61 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -1727,6 +1728,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 25293899 },
+  "usedBlockNumbers": { "ethereum": 25795990 },
   "permissionsConfigHash": "0x795bc9ccd135b8ad2b98940d65d65b27c699254aae4b15d00c8e88ec5b488d90"
 }
