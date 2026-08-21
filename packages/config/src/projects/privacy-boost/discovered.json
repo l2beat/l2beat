@@ -1,7 +1,7 @@
 {
   "name": "privacy-boost",
-  "timestamp": 1786976781,
-  "configHash": "0x01bb1315fee557ecd6c10c455d3a2ccff6bfabe1d58d2a1812f31a966578c073",
+  "timestamp": 1787302421,
+  "configHash": "0x60336af145f53acb240c8cf8e9345a7fc84b53db5c2909b9cfe81635da0c7c11",
   "entries": [
     {
       "address": "oeth:0x0000000000000000000000000000000000000000",
@@ -77,13 +77,13 @@
         "authTreeDepth": 20,
         "currentAuthTreeNumber": 0,
         "getAllAuthTreeRoots": [
-          "5398227354879575023860008932715422015413994674660928590378430081318556491740"
+          "5269434864617919747963585947378810921462586358398721453493391533247122942927"
         ],
         "MAX_AUTH_TREE_NUMBER": 32767,
         "operator": "oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B",
         "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
         "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
-        "registryRoot": "5398227354879575023860008932715422015413994674660928590378430081318556491740"
+        "registryRoot": "5269434864617919747963585947378810921462586358398721453493391533247122942927"
       },
       "fieldMeta": {
         "allowedRelays": {
@@ -127,6 +127,12 @@
         },
         {
           "permission": "interact",
+          "from": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
+          "description": "manage the list of registered auditors and set the auditLogger address of the AuditGateway.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "oeth:0xC829061276e95D11aF92E678DE2B767AcFB4e924",
           "description": "register and replace the Groth16 verification keys used to validate deposit proofs.",
           "role": ".owner"
@@ -161,6 +167,14 @@
         },
         {
           "permission": "upgrade",
+          "from": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
+          "role": "admin",
+          "via": [
+            { "address": "oeth:0x96f3E5551E1330f31974597217019812667544c8" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "oeth:0xca689828854a422CF1f778be03CA80549408F620",
           "role": "admin",
           "via": [
@@ -172,6 +186,11 @@
         {
           "permission": "act",
           "from": "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "oeth:0x96f3E5551E1330f31974597217019812667544c8",
           "role": ".owner"
         },
         {
@@ -376,6 +395,35 @@
       "proxyType": "EOA"
     },
     {
+      "name": "AuditGatewayProxyAdmin",
+      "address": "oeth:0x96f3E5551E1330f31974597217019812667544c8",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "description": "Admin contract of the AuditGateway proxy.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
+          "role": "admin"
+        }
+      ],
+      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
+      "sinceTimestamp": 1776188259,
+      "sinceBlock": 150294741,
+      "values": {
+        "$immutable": true,
+        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "oeth:0x96f3E5551E1330f31974597217019812667544c8": "ProxyAdmin"
+      }
+    },
+    {
       "name": "PrivacyBoostProxyAdmin",
       "address": "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2",
       "type": "Contract",
@@ -402,6 +450,53 @@
       },
       "implementationNames": {
         "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "AuditGateway",
+      "address": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
+      "type": "Contract",
+      "template": "privacy-boost/AuditGateway",
+      "sourceHashes": [
+        "0x5602ef2b7c3f0923390230bb9b68b465168c9832cef744e3db0274a74d44014a",
+        "0xdf1ae73b1ff7ef4ef2f92ce7dbf73f0c1d2e37495ea44414dfb3334fa5cafb23"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Manages the list of auditors authorized to query private user data through the Audit API of the TEE, and stores an onchain log of every audit access so that users can publicly verify whether and when their private data was disclosed.",
+      "deployerAddress": "oeth:0xf60E491683e27921410f9A9B7fec8F7591ab05C4",
+      "sinceTimestamp": 1776188259,
+      "sinceBlock": 150294741,
+      "values": {
+        "$admin": "oeth:0x96f3E5551E1330f31974597217019812667544c8",
+        "$implementation": "oeth:0xfEfb6bD314680BDbc1B00FE2eA5A038655Bb4478",
+        "$pastUpgrades": [
+          [
+            "2026-04-14T17:37:39.000Z",
+            "0x28dd62c9d8f9ca9dfc48db609c540d5269aaa33a4b4067a401ddec3ea65f2909",
+            ["oeth:0xfEfb6bD314680BDbc1B00FE2eA5A038655Bb4478"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "auditLogCount": 0,
+        "auditLogger": "oeth:0xE7F9E649b5406bf0751EA242CAc712151e1c73eB",
+        "getAllAuditors": [],
+        "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
+        "pendingOwner": "oeth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "auditLogger": {
+          "description": "Address (TEE server wallet) that records every Audit API access on-chain by calling the AuditGateway."
+        },
+        "getAllAuditors": {
+          "description": "Auditors authorized to fetch the balance and transaction history of any address through the Audit API of the TEE. Every such access is logged onchain."
+        },
+        "auditLogCount": {
+          "description": "Total number of audit accesses logged onchain."
+        }
+      },
+      "implementationNames": {
+        "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118": "TransparentUpgradeableProxy",
+        "oeth:0xfEfb6bD314680BDbc1B00FE2eA5A038655Bb4478": "AuditGateway"
       }
     },
     {
@@ -523,7 +618,7 @@
         "epochVerifier": "oeth:0x67b1bD839203223870fBF51e4CDf2104E3Ca966b",
         "forcedVerifier": "oeth:0xF023c61C5c745Be40fd30B0d48C0929839Ec3C67",
         "forcedWithdrawalDelay": 129600,
-        "latestSnapshotRound": 5189627,
+        "latestSnapshotRound": 5195055,
         "maxBatchSize": 100,
         "maxFeeTokens": 4,
         "maxForcedInputs": 8,
@@ -588,6 +683,19 @@
         "oeth:0xca689828854a422CF1f778be03CA80549408F620": "TransparentUpgradeableProxy",
         "oeth:0x0b9B98d3B95D74487C481e7830ab440896aE62E5": "PrivacyBoost"
       }
+    },
+    {
+      "address": "oeth:0xE7F9E649b5406bf0751EA242CAc712151e1c73eB",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
+          "description": "log audit queries performed by registered auditors on the AuditGateway.",
+          "role": ".auditLogger"
+        }
+      ]
     },
     {
       "name": "Groth16ForcedVerifier",
@@ -944,6 +1052,17 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
+    "oeth:0x96f3E5551E1330f31974597217019812667544c8": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
@@ -954,6 +1073,17 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
     ],
     "oeth:0xc82018cbC82A50064e3DdEF79EAdC319710Ffc5e": [
       "constructor(address _singleton)"
@@ -1106,11 +1236,44 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "oeth:0xfEfb6bD314680BDbc1B00FE2eA5A038655Bb4478": [
+      "constructor()",
+      "error AlreadyAuditor()",
+      "error InvalidInitialization()",
+      "error NotAuditor()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ZeroAddress()",
+      "event AuditLogCreated(address indexed auditor, string accountId, string action, string metadata, uint256 timestamp)",
+      "event AuditLoggerUpdated(address indexed oldLogger, address indexed newLogger)",
+      "event AuditorAdded(address indexed auditor)",
+      "event AuditorRemoved(address indexed auditor)",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function acceptOwnership()",
+      "function addAuditor(address auditor)",
+      "function auditLogger() view returns (address)",
+      "function auditors(address) view returns (bool)",
+      "function getAllAuditors() view returns (address[])",
+      "function getAuditorCount() view returns (uint256)",
+      "function initialize(address initialOwner)",
+      "function isAuditor(address addr) view returns (bool)",
+      "function logAudit(address auditor, string accountId, string action, string metadata)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function removeAuditor(address auditor)",
+      "function renounceOwnership()",
+      "function setAuditLogger(address logger)",
+      "function transferOwnership(address newOwner)"
     ]
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "privacy-boost/AuditGateway": "0x736b1fea161ec2e3bb2e403a7cb80e050608e462210cabe62839948466f1755f",
     "privacy-boost/AuthRegistry": "0x70a3f6b0d6c04afea3fb7f8fa8ed9a082701416a6e1d617f1c0f3d602d6d9225",
     "privacy-boost/Groth16DepositVerifier": "0x84c9fd274b17cea210f3ec8c383bb80ca0383bb0610c163a56fa234731c4668f",
     "privacy-boost/Groth16EpochVerifier": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
@@ -1118,6 +1281,6 @@
     "privacy-boost/PrivacyBoost": "0x29fd1405b85859db665cd9dd919883bb59034f8a0aef5eaa972ec54f898bca76",
     "privacy-boost/TokenRegistry": "0x5862dbcfbe28cca245e3f2a7d1bca8c58fc6b6b8e2d77666a7042529cac6a5e4"
   },
-  "usedBlockNumbers": { "optimism": 155689002 },
-  "permissionsConfigHash": "0x7c7c66ee0b650dcaeda6f69ccc70ffffcce5f888b45542d504661af5f874f645"
+  "usedBlockNumbers": { "optimism": 155851822 },
+  "permissionsConfigHash": "0xa70b0a3a95dc2b47eba5d9f3ef81b42fd0846297128492b2dc8c4293cadfee7f"
 }

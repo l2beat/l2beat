@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xac627cb03f255cda06cb7d4781f563c545609493
+Generated with discovered.json: 0x76f4f60eacb72b49045c6c21b940e66929e930ca
 
-# Diff at Thu, 20 Aug 2026 16:18:33 GMT:
+# Diff at Fri, 21 Aug 2026 08:54:45 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- current timestamp: 1786976781
+- current timestamp: 1787302421
 
 ## Description
 
@@ -49,8 +49,20 @@ Initial discovery of privacy boost.
 
 ```diff
 +   Status: CREATED
+    contract AuditGatewayProxyAdmin (oeth:0x96f3E5551E1330f31974597217019812667544c8) [global/ProxyAdmin]
+    +++ description: Admin contract of the AuditGateway proxy.
+```
+
+```diff
++   Status: CREATED
     contract PrivacyBoostProxyAdmin (oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2) [global/ProxyAdmin]
     +++ description: Admin contract of the PrivacyBoost proxy.
+```
+
+```diff
++   Status: CREATED
+    contract AuditGateway (oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118) [privacy-boost/AuditGateway]
+    +++ description: Manages the list of auditors authorized to query private user data through the Audit API of the TEE, and stores an onchain log of every audit access so that users can publicly verify whether and when their private data was disclosed.
 ```
 
 ```diff

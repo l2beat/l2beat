@@ -215,9 +215,9 @@ export const privacyBoost: BaseProject = {
     },
     reproducibility: {
       value: 'Reproducible',
-      sentiment: 'good',
+      sentiment: 'warning',
       description:
-        'The contracts, the Go circuits and the ceremony tooling are published under Apache 2.0, and the proving keys are downloadable from the ceremony bundle, so a user can generate a forced withdrawal proof locally without the operator.',
+        'ZK circuits guaranteeing user fund security are published and reproduced, however the TEE sources guaranteeing privacy are not yet published. TEE logic could not be verified for correctness.',
     },
     privacy: {
       value: 'Auditable admin API',
