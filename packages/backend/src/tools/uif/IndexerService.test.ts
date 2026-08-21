@@ -216,6 +216,34 @@ describe(IndexerService.name, () => {
     },
   )
 
+  it(
+    IndexerService.prototype.updateConfigurationsCurrentHeightByIds.name,
+    async () => {
+      const indexerConfigurationsRepository = mockObject<
+        Database['indexerConfiguration']
+      >({
+        updateCurrentHeightsByIds: async () => undefined,
+      })
+
+      const indexerService = new IndexerService(
+        mockDatabase({
+          indexerState: mockObject(),
+          indexerConfiguration: indexerConfigurationsRepository,
+        }),
+      )
+
+      await indexerService.updateConfigurationsCurrentHeightByIds(
+        'indexer',
+        ['a', 'b'],
+        123,
+      )
+
+      expect(
+        indexerConfigurationsRepository.updateCurrentHeightsByIds,
+      ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'], 123)
+    },
+  )
+
   it(IndexerService.prototype.deleteConfigurations.name, async () => {
     const indexerConfigurationsRepository = mockObject<
       Database['indexerConfiguration']
