@@ -41,6 +41,12 @@ export const PRIVACY_ATTRIBUTES = {
     description:
       'Transfer amounts are private, while sender and recipient addresses remain public.',
   },
+  tee: {
+    id: 'tee',
+    label: 'TEE',
+    description:
+      'Privacy assumptions of this project are secured by trusted hardware.',
+  },
   stealthAddresses: {
     id: 'stealthAddresses',
     label: 'Stealth addresses',

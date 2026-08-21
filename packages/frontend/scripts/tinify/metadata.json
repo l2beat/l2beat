@@ -1610,5 +1610,8 @@
   "static/meta-images/defi/projects/chainlink/opengraph-image.png": "a0fe4a358f1bdf3013d242aa5198c799",
   "static/meta-images/defi/projects/liquityv2/opengraph-image.png": "8824e5cddaf5cb1d5b43dec10105d7d9",
   "static/meta-images/defi/projects/uniswapv3/opengraph-image.png": "91d3e36146d9d5c0729c70ec25ab28f8",
-  "static/meta-images/defi/summary/opengraph-image.png": "bd424fff91abdfef251690a6ad89620f"
+  "static/meta-images/defi/summary/opengraph-image.png": "bd424fff91abdfef251690a6ad89620f",
+  "static/icons/privacy-boost.png": "ec41e5d3649879a71823ac83aeeaf098",
+  "static/meta-images/privacy/projects/privacy-boost/opengraph-image.png": "880f6292f63b5256cae18d5737fb6582",
+  "static/meta-images/zk-catalog/projects/privacy-boost/opengraph-image.png": "3846e8359ecef180a9482a573c9a69fe"
 }
