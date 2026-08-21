@@ -94,6 +94,7 @@ function ChartContainer<T extends { timestamp: number }>({
   size = 'regular',
   interactiveLegend,
   project,
+  noDataSourceMessage,
 }: {
   meta: ChartMeta
   children: React.ReactNode
@@ -109,6 +110,8 @@ function ChartContainer<T extends { timestamp: number }>({
   isLoading?: boolean
   project?: ChartProject
   size?: 'regular' | 'small'
+  /** Overrides the "Please select at least one data source" prompt. */
+  noDataSourceMessage?: string
 }) {
   const ref = React.useRef<HTMLDivElement>(null)
   const isClient = useIsClient()
@@ -146,9 +149,13 @@ function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
-        {!hasData && !isLoading && <ChartNoDataState size={size} />}
+        {/* An empty selection triggers both states; the select-a-source
+            prompt is the actionable one, so it wins over "No data". */}
+        {!hasData && !isLoading && !(noDataSourcesSelected && isClient) && (
+          <ChartNoDataState size={size} />
+        )}
         {noDataSourcesSelected && !isLoading && isClient && (
-          <ChartNoDataSourceState />
+          <ChartNoDataSourceState message={noDataSourceMessage} />
         )}
         {isClient && size !== 'small' && (
           <Logo

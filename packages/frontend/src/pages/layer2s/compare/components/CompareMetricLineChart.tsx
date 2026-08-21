@@ -102,7 +102,12 @@ export function CompareMetricLineChart({
       <div className="mt-3 mb-2">
         <ChartTimeRange timeRange={timeRange} />
       </div>
-      <ChartContainer data={data} meta={chartMeta} isLoading={isLoading}>
+      <ChartContainer
+        data={data}
+        meta={chartMeta}
+        isLoading={isLoading}
+        noDataSourceMessage="Please select at least one project"
+      >
         {/* Without right:1 the chart last point is not hoverable for some reason */}
         {/* syncMethod "value" matches by timestamp, so charts whose data
             starts at different times still line up under a synced hover. */}
