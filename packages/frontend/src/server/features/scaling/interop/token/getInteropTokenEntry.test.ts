@@ -20,11 +20,7 @@ describe(getInteropTokenEntry.name, () => {
           id: 'alpha',
           interopName: 'Alpha bridge',
           plugins: [
-            {
-              plugin: 'ccip',
-              bridgeType: 'burnAndMint',
-              transferType: 'ccip.Transfer',
-            },
+            { plugin: 'ccip', bridgeType: 'burnAndMint' },
             { plugin: 'cctp-v2', bridgeType: 'burnAndMint' },
           ],
         }),
@@ -54,7 +50,7 @@ describe(getInteropTokenEntry.name, () => {
 
     const minters = section.props.deployments[0]?.minters
     assert(minters)
-    expect(minters).toEqualUnsorted([
+    expect(minters).toEqual([
       {
         id: ProjectId('alpha'),
         name: 'Alpha bridge',

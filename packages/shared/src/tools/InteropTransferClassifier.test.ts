@@ -5,7 +5,6 @@ interface TestTransfer {
   id: string
   plugin: string
   bridgeType: 'lockAndMint' | 'burnAndMint' | 'nonMinting' | undefined
-  type: string
   srcChain: string
   dstChain: string
   srcEventId: string | undefined
@@ -43,13 +42,6 @@ describe(InteropTransferClassifier.name, () => {
         id: 't3',
         plugin: 'plugin-b',
         bridgeType: 'nonMinting',
-        type: 'deposit',
-      }),
-      transfer({
-        id: 't4',
-        plugin: 'plugin-b',
-        bridgeType: 'nonMinting',
-        type: 'withdraw',
       }),
     ]
 
@@ -63,7 +55,6 @@ describe(InteropTransferClassifier.name, () => {
       {
         plugin: 'plugin-b',
         bridgeType: 'nonMinting',
-        transferType: 'deposit',
       },
     ])
 
@@ -109,23 +100,28 @@ describe(InteropTransferClassifier.name, () => {
     expect(result.unknown).toEqual([])
   })
 
-  it('matches plugin identity without requiring transferType', () => {
+  it('applies the chain and abstractTokenId qualifiers to observations on either side', () => {
     const matches = classifier.createPluginMatcher([
       {
-        plugin: 'axelar',
-        bridgeType: 'burnAndMint',
-        transferType: 'axelar.Transfer',
+        plugin: 'opstack',
+        bridgeType: 'lockAndMint',
+        chain: 'base',
+        abstractTokenId: 'circle-usdc',
       },
     ])
+    const observation = {
+      plugin: 'opstack',
+      bridgeType: 'lockAndMint' as const,
+      srcChain: 'ethereum',
+      dstChain: 'base',
+      srcAbstractTokenId: 'circle-usdc',
+    }
 
+    expect(matches(observation)).toEqual(true)
+    expect(matches({ ...observation, dstChain: 'optimism' })).toEqual(false)
     expect(
-      matches({
-        plugin: 'axelar',
-        bridgeType: 'burnAndMint',
-        srcChain: 'ethereum',
-        dstChain: 'arbitrum',
-      }),
-    ).toEqual(true)
+      matches({ ...observation, srcAbstractTokenId: 'tether-usdt' }),
+    ).toEqual(false)
   })
 
   it('only bypasses plugin bridge type matching for one-sided transfers with unknown bridge type', () => {
@@ -208,7 +204,6 @@ function transfer(override: Partial<TestTransfer>): TestTransfer {
     id: 'default',
     plugin: 'plugin-a',
     bridgeType: 'nonMinting',
-    type: 'transfer',
     srcChain: 'ethereum',
     dstChain: 'arbitrum',
     srcEventId: 'src-event',

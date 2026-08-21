@@ -378,9 +378,10 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
         await repository.insert(relation)
       }
 
-      expect(
-        await repository.getMintingPluginsFor(arbitrumToken),
-      ).toEqualUnsorted(['canonicalbridge', 'superbridge'])
+      expect(await repository.getMintingPluginsFor(arbitrumToken)).toEqual([
+        'canonicalbridge',
+        'superbridge',
+      ])
     })
 
     it('finds the minted token on either endpoint slot', async () => {
@@ -405,9 +406,10 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
       await repository.insert(mintedAtA)
       await repository.insert(mintedAtB)
 
-      expect(
-        await repository.getMintingPluginsFor(arbitrumToken),
-      ).toEqualUnsorted(['slot-a-bridge', 'slot-b-bridge'])
+      expect(await repository.getMintingPluginsFor(arbitrumToken)).toEqual([
+        'slot-a-bridge',
+        'slot-b-bridge',
+      ])
     })
 
     it('returns each plugin once even when several of its relations qualify', async () => {

@@ -156,17 +156,6 @@ function toRow(record: TokenRelationRecord): Insertable<TokenRelation> {
 // overflowing both the Kysely query compiler and the Postgres parser stack.
 const BATCH_SIZE = 1000
 
-function tokenKey(token: DeployedTokenPrimaryKey): string {
-  return `${token.chain}|${token.address.toLowerCase()}`
-}
-
-function mintingPluginKey(
-  record: DeployedTokenPrimaryKey &
-    Pick<MintingPluginRecord, 'plugin' | 'bridgeType' | 'relatedChain'>,
-): string {
-  return `${tokenKey(record)}|${record.plugin}|${record.bridgeType}|${record.relatedChain}`
-}
-
 export class TokenRelationRepository extends BaseRepository {
   async insert(record: TokenRelationRecord): Promise<void> {
     await this.db.insertInto('TokenRelation').values(toRow(record)).execute()
@@ -332,90 +321,93 @@ export class TokenRelationRepository extends BaseRepository {
   async getMintingPluginsFor(
     token: DeployedTokenPrimaryKey,
   ): Promise<string[]> {
-    return [
-      ...new Set(
-        (await this.getMintingPluginsForMany([token])).map(
-          (record) => record.plugin,
-        ),
-      ),
-    ]
+    const address = token.address.toLowerCase()
+    const rows = await this.db
+      .selectFrom('TokenRelation')
+      .select('plugin')
+      .distinct()
+      .where((eb) =>
+        eb.or([
+          eb.and([
+            eb('tokenAChain', '=', token.chain),
+            eb('tokenAAddress', '=', address),
+            this.mintedAtEndpoint(eb, 'A'),
+          ]),
+          eb.and([
+            eb('tokenBChain', '=', token.chain),
+            eb('tokenBAddress', '=', address),
+            this.mintedAtEndpoint(eb, 'B'),
+          ]),
+        ]),
+      )
+      .orderBy('plugin')
+      .execute()
+
+    return rows.map((row) => row.plugin)
   }
 
   /**
-   * Batch variant of {@link getMintingPluginsFor}: one distinct
-   * (token, plugin, bridgeType, relatedChain) record per qualifying relation
-   * in which this token is minted. `relatedChain` is the other endpoint of
-   * that relation, used with this token's chain as plugin chain qualifiers.
-   *
-   * Input addresses are matched case-insensitively; returned addresses are
-   * as stored, lowercase — group results by lowercased address, not by
-   * comparing against the input.
+   * Distinct records, in no particular order. Input addresses are matched
+   * case-insensitively; returned addresses are as stored (lowercase), so
+   * group results by lowercased address, not by comparing against the input.
    */
   async getMintingPluginsForMany(
     tokens: DeployedTokenPrimaryKey[],
   ): Promise<MintingPluginRecord[]> {
-    const result = new Map<string, MintingPluginRecord>()
+    // The UNION dedupes rows within a query, so deduping the input is all it
+    // takes for the result to be distinct overall.
+    const uniqueTokens = [
+      ...new Map(
+        tokens.map((token) => {
+          const normalized = {
+            chain: token.chain,
+            address: token.address.toLowerCase(),
+          }
+          return [`${normalized.chain}|${normalized.address}`, normalized]
+        }),
+      ).values(),
+    ]
 
-    await this.batch(tokens, BATCH_SIZE, async (batch) => {
-      const normalizedTokens = batch.map((token) => ({
-        chain: token.chain,
-        address: token.address.toLowerCase(),
-      }))
-      const mintedAtA = this.db
-        .selectFrom('TokenRelation')
-        .select([
-          'tokenAChain as chain',
-          'tokenAAddress as address',
-          'tokenBChain as relatedChain',
-          'plugin',
-          'bridgeType',
-        ])
-        .where((eb) =>
-          eb(
-            eb.refTuple('tokenAChain', 'tokenAAddress'),
-            'in',
-            normalizedTokens.map((token) =>
-              eb.tuple(token.chain, token.address),
+    const result: MintingPluginRecord[] = []
+    await this.batch(uniqueTokens, BATCH_SIZE, async (batch) => {
+      const mintedAt = (slot: 'A' | 'B') => {
+        const otherSlot = slot === 'A' ? 'B' : 'A'
+        return this.db
+          .selectFrom('TokenRelation')
+          .select([
+            `token${slot}Chain as chain` as const,
+            `token${slot}Address as address` as const,
+            `token${otherSlot}Chain as relatedChain` as const,
+            'plugin',
+            'bridgeType',
+          ])
+          .where((eb) =>
+            eb(
+              eb.refTuple(`token${slot}Chain`, `token${slot}Address`),
+              'in',
+              batch.map((token) => eb.tuple(token.chain, token.address)),
             ),
-          ),
-        )
-        .where((eb) => this.mintedAtEndpoint(eb, 'A'))
-      const mintedAtB = this.db
-        .selectFrom('TokenRelation')
-        .select([
-          'tokenBChain as chain',
-          'tokenBAddress as address',
-          'tokenAChain as relatedChain',
-          'plugin',
-          'bridgeType',
-        ])
-        .where((eb) =>
-          eb(
-            eb.refTuple('tokenBChain', 'tokenBAddress'),
-            'in',
-            normalizedTokens.map((token) =>
-              eb.tuple(token.chain, token.address),
-            ),
-          ),
-        )
-        .where((eb) => this.mintedAtEndpoint(eb, 'B'))
+          )
+          .where((eb) => this.mintedAtEndpoint(eb, slot))
+      }
 
-      const rows = await mintedAtA.union(mintedAtB).execute()
+      const rows = await mintedAt('A').union(mintedAt('B')).execute()
       for (const row of rows) {
-        const record: MintingPluginRecord = {
+        result.push({
           chain: row.chain,
           address: row.address,
           plugin: row.plugin,
           bridgeType: row.bridgeType as KnownInteropBridgeType,
           relatedChain: row.relatedChain,
-        }
-        result.set(mintingPluginKey(record), record)
+        })
       }
     })
 
-    return [...result.values()]
+    return result
   }
 
+  // The relation's `slot` endpoint is minted there: a burnAndMint pair mints
+  // on both endpoints, a lockAndMint pair on the one opposite the locked one.
   private mintedAtEndpoint(
     eb: ExpressionBuilder<DB, 'TokenRelation'>,
     slot: 'A' | 'B',

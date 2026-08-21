@@ -1,4 +1,3 @@
-import type { Project } from '@l2beat/config'
 import { unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
@@ -44,17 +43,6 @@ export async function getInteropTokenData(
   const interopProjects = await ps.getProjects({
     select: ['interopConfig'],
   })
-  return getInteropTokenDataWithProjects(params, interopProjects)
-}
-
-export async function getInteropTokenDataWithProjects(
-  params: InteropTokenParams,
-  interopProjects: Project<'interopConfig'>[],
-): Promise<InteropTokenDashboardData | null> {
-  if (env.MOCK) {
-    return getMockInteropTokenData(params)
-  }
-
   const selection = getTokenDataSelection(params)
 
   const { records, snapshotTimestamp } =

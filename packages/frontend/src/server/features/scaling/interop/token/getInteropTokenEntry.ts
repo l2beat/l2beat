@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import { unique } from '@l2beat/shared-pure'
 import type { InteropTokenOnchainDeploymentsRow } from '~/components/projects/sections/interop/onchain-deployments/InteropTokenOnchainDeploymentsSection'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
@@ -78,47 +79,41 @@ function resolveMinters(
   abstractTokenId: string,
   resolveProjects: ReturnType<typeof createInteropProjectResolver>,
 ): InteropTokenOnchainDeploymentsRow['minters'] {
-  const minters = new Map<
-    string,
-    InteropTokenOnchainDeploymentsRow['minters'][number]
-  >()
-
-  for (const {
-    plugin,
-    bridgeType,
-    relatedChain,
-  } of deployment.mintingPlugins) {
-    const projects = resolveProjects({
-      plugin,
-      bridgeType,
-      srcChain: deployment.chain,
-      dstChain: relatedChain,
-      srcAbstractTokenId: abstractTokenId,
-      dstAbstractTokenId: abstractTokenId,
-    })
-
-    if (projects.length === 0) {
-      logger.warn('Could not resolve minting plugin to an interop project', {
+  const projects = deployment.mintingPlugins.flatMap(
+    ({ plugin, bridgeType, relatedChain }) => {
+      // Sides are arbitrary — the matcher is symmetric. A relation records
+      // only the minted endpoint's abstract token, hence no dstAbstractTokenId.
+      const matched = resolveProjects({
         plugin,
         bridgeType,
         srcChain: deployment.chain,
         dstChain: relatedChain,
-        address: deployment.address,
-        abstractTokenId,
+        srcAbstractTokenId: abstractTokenId,
       })
-    }
 
-    for (const project of projects) {
-      minters.set(project.id, {
-        id: project.id,
-        name: project.interopConfig.name ?? project.name,
-        iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-        href: `/interop/protocols/${project.slug}`,
-      })
-    }
-  }
+      if (matched.length === 0) {
+        logger.warn('Could not resolve minting plugin to an interop project', {
+          plugin,
+          bridgeType,
+          chain: deployment.chain,
+          relatedChain,
+          address: deployment.address,
+          abstractTokenId,
+        })
+      }
 
-  return [...minters.values()]
+      return matched
+    },
+  )
+
+  return unique(projects, (project) => project.id)
+    .map((project) => ({
+      id: project.id,
+      name: project.interopConfig.name ?? project.name,
+      iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+      href: `/interop/protocols/${project.slug}`,
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name))
 }
 
 function toDeploymentRow(
