@@ -12,10 +12,6 @@ import React from 'react'
 import { useHighlightedTableRowContext } from '~/components/table/HighlightedTableRowContext'
 import { cn } from '~/utils/cn'
 import { Skeleton } from '../core/Skeleton'
-import {
-  getChangeSortAwareColSpan,
-  isChangeSortColumn,
-} from './sorting/changeSortColumn'
 import { ValueAndChangeSortingHeader } from './sorting/ValueAndChangeSortingHeader'
 import {
   Table,
@@ -39,6 +35,11 @@ import { getBasicTableAdditionalRowIndex } from './utils/getBasicTableAdditional
 import { getBasicTableGroupParams } from './utils/getBasicTableGroupParams'
 import { getBasicTableHeaderSections } from './utils/getBasicTableHeaderSections'
 import { getBasicTableRowSpanDenominator } from './utils/getBasicTableRowSpanDenominator'
+import {
+  getRenderedCells,
+  getRenderedColSpan,
+  getRenderedHeaders,
+} from './utils/renderedTableColumns'
 import {
   getRowClassNames,
   getRowClassNamesWithoutOpacity,
@@ -156,7 +157,7 @@ function BasicTableGroupedHeaderRow<T>({
           return (
             <React.Fragment key={header.id}>
               <th
-                colSpan={getChangeSortAwareColSpan(header)}
+                colSpan={getRenderedColSpan(header)}
                 className={getBasicTableGroupedHeaderCellClassName({
                   isPlaceholder: header.isPlaceholder,
                   hasHeader: !!header.column.columnDef.header,
@@ -198,7 +199,7 @@ function BasicTableActualHeaderRow<T>({
           return (
             <React.Fragment key={`${actualHeader.id}-${header.id}`}>
               <TableHead
-                colSpan={getChangeSortAwareColSpan(header)}
+                colSpan={getRenderedColSpan(header)}
                 className={getBasicTableHeaderCellClassName({
                   groupParams,
                   isPinned: header.column.getIsPinned() !== false,
@@ -375,11 +376,7 @@ export function BasicTableRow<T extends BasicTableRow>({
         <tr className="border-divider border-b">
           {/* 2nd row is a custom 1 cell row */}
           <td
-            colSpan={
-              row
-                .getVisibleCells()
-                .filter((cell) => !isChangeSortColumn(cell.column)).length
-            }
+            colSpan={getRenderedCells(row.getVisibleCells()).length}
             className="max-w-0"
           >
             {renderedSubComponent}
@@ -393,10 +390,8 @@ export function BasicTableRow<T extends BasicTableRow>({
 function prepareBasicTableVisibleCells<T extends BasicTableRow>(
   row: Row<T>,
 ): { cells: BasicTableVisibleCellData<T>[]; denominator: number } {
-  const preparedCells = row
-    .getVisibleCells()
-    .filter((cell) => !isChangeSortColumn(cell.column))
-    .map((cell, index) => {
+  const preparedCells = getRenderedCells(row.getVisibleCells()).map(
+    (cell, index) => {
       const { meta } = cell.column.columnDef
       const context = cell.getContext()
       const additionalRows = meta?.additionalRows?.(context)
@@ -411,7 +406,8 @@ function prepareBasicTableVisibleCells<T extends BasicTableRow>(
         meta,
         rowSpan: rowCount,
       }
-    })
+    },
+  )
 
   const uniqueRowsCount = unique(preparedCells.map((cell) => cell.rowSpan))
   const denominator = getBasicTableRowSpanDenominator(uniqueRowsCount)
@@ -433,7 +429,7 @@ function ColGroup<T, V>(props: { headers: Header<T, V>[] }) {
         <colgroup
           className={cn(!header.isPlaceholder && 'bg-header-secondary')}
         >
-          {range(getChangeSortAwareColSpan(header)).map((i) => (
+          {range(getRenderedColSpan(header)).map((i) => (
             <col key={`${header.id}-${i}`} />
           ))}
         </colgroup>
@@ -453,7 +449,7 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
         return (
           <React.Fragment key={header.id}>
             <td
-              colSpan={getChangeSortAwareColSpan(header)}
+              colSpan={getRenderedColSpan(header)}
               className={cn(
                 'h-4',
                 !header.isPlaceholder && 'rounded-b-lg',
@@ -488,8 +484,4 @@ function BasicTableColumnFiller({
       colSpan={colSpan}
     />
   )
-}
-
-function getRenderedHeaders<T, V>(headers: Header<T, V>[]) {
-  return headers.filter((header) => getChangeSortAwareColSpan(header) > 0)
 }

@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-import type { ColumnDef, ColumnHelper, Header } from '@tanstack/react-table'
+import type { ColumnDef, ColumnHelper } from '@tanstack/react-table'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 
 const CHANGE_SORT_HEADERS: Record<PercentageChangePeriod, string> = {
@@ -10,9 +10,9 @@ const CHANGE_SORT_HEADERS: Record<PercentageChangePeriod, string> = {
 }
 
 /**
- * Pairs a value column with a companion used only to sort by percentage
- * change. The companion is not a table column: BasicTable never renders it,
- * and enableHiding: false keeps it out of the column picker.
+ * Pairs a value column with a TanStack companion used only to sort by
+ * percentage change. BasicTable does not render the companion;
+ * enableHiding: false keeps it out of the column picker.
  */
 export function withChangeSort<TData, TValue>(
   columnHelper: ColumnHelper<TData>,
@@ -45,20 +45,4 @@ export function withChangeSort<TData, TValue>(
       },
     }),
   ]
-}
-
-export function isChangeSortColumn(column: {
-  columnDef: { meta?: { isChangeSortColumn?: boolean } }
-}): boolean {
-  return column.columnDef.meta?.isChangeSortColumn === true
-}
-
-/** Leaf count for layout, excluding sort-only companion columns. */
-export function getChangeSortAwareColSpan<TData, TValue>(
-  header: Header<TData, TValue>,
-): number {
-  return header.column
-    .getLeafColumns()
-    .filter((column) => column.getIsVisible() && !isChangeSortColumn(column))
-    .length
 }
