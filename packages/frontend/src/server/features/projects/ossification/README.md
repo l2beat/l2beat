@@ -21,101 +21,72 @@ The score is project-wide. One new or changed critical contract resets the whole
 perimeter. If any current critical contract is unverified, maturity is zero.
 The Security summary shows the exit window as context; it is not a metric input.
 
-## Critical upgrade definition
+## Definitions
 
-> A critical upgrade is any deployment or change to executable code,
-> verification logic, or mutable configuration in a project's critical contract
-> perimeter—or to the security mechanism governing that perimeter—that can alter
-> the conditions under which user assets or protected state may be controlled,
-> validated, finalized, frozen, censored, lost, created, or disclosed.
+Three terms carry the whole metric. Every reviewer decision reduces to them.
 
-The definition is consequence-based and applies across project types: state
-validity, finality, sequencing, data availability, bridges, and forced exits for
-Layer 2s; custody, accounting, pricing, liquidation, minting, and withdrawals for
-DeFi; and proof verification, nullifiers, anonymity guarantees, encryption/viewing
-authority, and private withdrawals for Privacy projects. For other systems, apply
-the same test to their asset, state-integrity, availability, and confidentiality
-boundaries.
+**Critical contract** (`critical: true`) — a contract whose code or
+configuration change can materially change whether protected assets, state,
+availability, or privacy remain secure.
 
-## Reviewer contract
+- Include: custody, verification, core protocol, and escape/pause contracts,
+  plus the contracts implementing their upgrade or governance mechanism
+  (ProxyAdmins, upgrade executors, timelocks, governors, modules, guards).
+- Exclude: actor containers (Safes/multisigs/EOAs) — members name who holds a
+  trusted role; the container is not the mechanism. Exclude externally governed
+  escrows and gateways (additional-trust assets); project-governed canonical
+  bridges stay in.
 
-Use these rules in order. If a decision cannot be supported by evidence, record it
-as unresolved.
+**Critical code change** — any implementation change to a critical contract, or
+the deployment of a new critical contract. Always counts; needs no severity
+annotation.
 
-### 1. Select the contract perimeter
+**Critical state change** — a change to a non-implementation value marked
+`severity: "HIGH"` on a critical contract. Mark a value HIGH exactly when
+changing it can alter the conditions under which user assets or protected state
+may be controlled, validated, finalized, frozen, censored, lost, created, or
+disclosed. In practice:
 
-A contract is `critical: true` when changing its code or configuration can
-materially change whether protected assets, state, availability, or privacy remain
-secure.
+- HIGH: a role's powers or scope, threshold, delay, controller, modules, guard,
+  authority path, verifier/vkey, custody or accounting rule.
+- Not HIGH: identity churn inside an unchanged role (multisig members,
+  sequencers, batch posters, validators, operators, signers, committee members)
+  while powers and trust model stay the same.
+- Classify a field as a whole; every change to a HIGH field counts. Split broad
+  fields whose values differ in security consequence.
 
-- Include canonical custody, verification, core protocol, and escape/pause
-  contracts, plus the contracts that implement their upgrade or governance
-  mechanism (for example ProxyAdmins, upgrade executors, timelocks, governors,
-  modules, and guards).
-- Exclude ordinary actor containers such as Safes/multisigs and EOAs. Their members
-  identify who occupies a trusted role; the container does not itself define the
-  protocol mechanism.
-- Exclude externally governed escrows and gateways whose assets have additional
-  trust assumptions. Project-governed canonical bridges remain in scope.
+The consequence test is the same across verticals — apply it to each system's
+asset, state-integrity, availability, and confidentiality boundaries (for L2s:
+state validity, finality, sequencing, DA, bridges, forced exits; for DeFi:
+custody, accounting, pricing, liquidation, minting, withdrawals; for Privacy:
+proof verification, nullifiers, anonymity, viewing authority).
 
-### 2. Classify changes
+## Reviewer procedure
 
-There is one classification shared by discovery and ossification:
+If a decision cannot be supported by evidence, record it as unresolved.
 
-- Every implementation change to a critical contract is a critical **code**
-  change. It does not need a severity annotation.
-- Deploying a new critical component is a critical code change.
-- A mutable non-implementation value is `severity: "HIGH"` exactly when changing
-  it meets the critical-upgrade definition. A HIGH change on a critical contract
-  is a critical **state** change.
-- Routine identity churn inside an unchanged role is not HIGH. This includes
-  multisig or Security Council members, sequencers, batch posters, validators,
-  operators, signers, and committee members when their powers and trust model do
-  not change.
-- Changes to a role's powers or scope, threshold, delay, controller, modules,
-  guard, authority path, verifier/vkey, custody/accounting rule, or equivalent
-  security mechanism are HIGH.
-- Classify a discovered field as a whole. Every change to a HIGH field counts.
-  Split broad fields into focused fields when their values have different
-  security consequences.
+1. **Perimeter**: flag critical contracts per the definition; give a short
+   reason for non-obvious inclusions/exclusions.
+2. **Severities**: set HIGH per the definition; classify each contract
+   independently. A 24h cluster mixing code and state changes counts as a code
+   change.
+3. **Initialization**: deployment and setup before a component first acquires
+   security authority start its age but are not change-rate events; any later
+   change counts, however soon. Never call the first recorded upgrade
+   "initialization" merely because it is first — require a zero implementation
+   slot, constructor trace, or equivalent evidence, and record exceptions in
+   `firstUpgradeIsChange`.
+4. **Evidence**: prefer a transaction hash and onchain timestamp. Where
+   mechanical history is incomplete, add a `criticalEvents` entry with a
+   one-sentence security consequence (and `updateId` when a matching update card
+   exists). An event may omit `contract` only for a security-mechanism change
+   stored on an intentionally excluded actor shell (e.g. a Security Council
+   Safe's signing threshold).
 
-In short: `critical: true` selects the contracts, implementation changes always
-count, and HIGH selects the state changes that count.
-
-Classify each contract independently in the per-contract breakdown. At the update
-and 24-hour-cluster level, call a mixed event a code change if any constituent
-contract had a code change.
-
-### 3. Contract initialization
-
-Initial deployment and setup before a component first acquires security authority
-start its age but are not change-rate events. Any later change counts, even if it
-happens soon after deployment. Do not treat the first recorded upgrade as
-initialization merely because it is first: require a zero implementation slot,
-constructor trace, or equivalent historical evidence. Record exceptions in
-`firstUpgradeIsChange`.
-
-### 4. Use auditable evidence
-
-Prefer a transaction hash and onchain timestamp. If mechanical discovery history
-is incomplete, add a `criticalEvents` entry with a one-sentence security consequence
-and an `updateId` when a matching update card exists.
-
-An event may omit `contract` only when a critical threshold, module, guard, or
-similar setting is stored on an excluded Safe or multisig. For example, Arbitrum's
-Security Council Safe is outside the contract perimeter, but changing its signing
-threshold still counts.
-
-### Review output
-
-For each project, leave four compact artifacts:
-
-1. Included and excluded perimeter contracts, with a short reason for non-obvious
-   decisions.
-2. Mutable values whose severity was added, removed, or changed.
-3. Upgrade-history gaps, initialization exceptions, and reviewed
-   `criticalEvents`.
-4. Lint/smoke output and an explanation of any unexpected clock reset or omission.
+Review output per project: (1) included/excluded contracts with reasons,
+(2) severity changes made, (3) history gaps, initialization exceptions, and
+reviewed `criticalEvents`, (4) lint/smoke output with any unexpected clock reset
+explained.
 
 ## Exact runtime inputs
 
@@ -133,53 +104,36 @@ For each project, leave four compact artifacts:
 | `historicalContracts` | Entry has `critical: true` and is no longer in the current perimeter | Its upgrades, attributable HIGH diff events, and reviewed events affect only change history/rate, never the current clock or unverified gate |
 | Project `TokenValue` series | Root project only | Supplies battle-tested exposure; it does not affect score or change rate |
 
-## Important history caveat
+## History semantics
 
-The runtime does not inspect today's `fieldMeta` and reconstruct old value changes.
-It reads the committed `diffHistory.md`, where severity was copied from the field
-metadata that existed when each diff was generated. Changing severity today does
-not retroactively reclassify older diff blocks.
+- State-change history is a snapshot ledger: the runtime reads committed
+  `diffHistory.md`, whose severity was copied from the field metadata in force
+  when each diff was generated. Changing severity today does not reclassify old
+  diff blocks — late-added HIGH fields need an auditable `criticalEvents`
+  backfill if their older changes matter.
+- Implementation history is mechanical: `$pastUpgrades` carries onchain
+  timestamps for every recognized upgrade. When present, implementation diff
+  blocks are ignored (no double counting); without it, implementation diffs are
+  the fallback at the discovery review timestamp.
+- Upgrade events dedupe by transaction hash: one transaction with several
+  upgrade records (upgrade/execute/restore) is one code change; a temporary
+  install-and-restore still resets the clock (the code was live). Re-writing the
+  already-active implementation without an initializer is a no-op, listed in
+  `ignoredUpgradeTransactions`. A reverted transaction produces nothing.
+  Timestamp-only historical entries dedupe equal timestamps.
+- `firstUpgradeIsChange` records the audited exception for legacy proxies
+  initialized before their first recognized `Upgraded` log (evidence bar: a
+  nonzero implementation slot immediately before the event, or equivalent).
+- `criticalEvents` is an exception ledger, never a duplicate channel: omit an
+  entry when `$pastUpgrades` or a contemporaneous HIGH diff already supplies the
+  event. Attributed events must match a current or historical perimeter
+  contract; `historical: true` events feed the rate only and never reset today's
+  clock.
 
-Implementation history is stronger: `$pastUpgrades` supplies onchain timestamps and
-all recognized upgrades mechanically. When `$pastUpgrades` exists, implementation
-diff blocks are ignored to avoid double counting. Without it, implementation diffs
-are the fallback and use the discovery review timestamp.
-
-Upgrade events are deduplicated by transaction hash. A successful transaction that
-temporarily installs code and restores the previous implementation still resets the
-clock, because the temporary implementation was live during execution, but it is one
-code change rather than two. Writing the already-active implementation without an
-initializer is a no-op and is listed in `ignoredUpgradeTransactions`. A reverted EVM
-transaction produces no upgrade record and does not reset the clock. Historical
-entries that store only timestamps dedupe equal timestamps as the best available
-transaction identity.
-
-Some legacy proxies were initialized before their first recognized `Upgraded` log.
-For these, `ossification.json:firstUpgradeIsChange` records the audited exception so
-the first event is not silently discarded. The judgment must be backed by a nonzero
-implementation slot immediately before the event (or equivalent constructor/history
-evidence); it is not inferred from event position or deployment proximity.
-
-`criticalEvents` is an exception ledger. Each entry must identify its evidence
-and consequence, and must be omitted when
-`$pastUpgrades` or a contemporaneous HIGH diff already supplies the event. An
-optional `updateId` applies the same critical code/state tag to its discovery update
-card. An attributed event is ignored unless its contract belongs to the matching
-current or historical perimeter; omit `contract` only for an unattributed
-security-mechanism change on an intentionally excluded actor shell. Events
-attributed to `historicalContracts` use `historical: true`; they contribute to the
-rate but cannot reset today's perimeter clock. This lets validation repair known
-history gaps without asking an agent to classify every ordinary proxy upgrade.
-
-Consequences for validation:
-
-- Validate that every critical proxy/upgrade mechanism produces a complete
-  `$pastUpgrades`; missing handler coverage is a data-quality issue.
-- For HIGH non-implementation fields added late, inspect old discovery/git history.
-  If older critical changes matter, the current schema needs an auditable historical
-  event backfill; changing today's severity alone is insufficient.
-- Removed contracts require contract-level classification in `historicalContracts`.
-  Their retained upgrades are still counted mechanically.
+Validation consequences: every critical proxy needs complete `$pastUpgrades`
+(missing handler coverage is a data-quality bug); late-added HIGH fields need
+their old history inspected and, if material, backfilled; removed contracts need
+contract-level classification in `historicalContracts`.
 
 ## Project validation pass
 
