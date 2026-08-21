@@ -1,7 +1,12 @@
 import { formatCurrency, formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
+import { ExitWindowCell } from '~/components/table/cells/ExitWindowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
+import {
+  adjustTableValue,
+  sortTableValues,
+} from '~/components/table/sorting/sortTableValues'
 import { TableLink } from '~/components/table/TableLink'
 import type { OssificationSummaryEntry } from '~/server/features/projects/ossification/getOssificationEntries'
 
@@ -89,5 +94,22 @@ export const ossificationColumns = [
         'Number of contracts in the critical perimeter, as classified by our research team.',
     },
     sortDescFirst: true,
+  }),
+  columnHelper.accessor((entry) => adjustTableValue(entry.exitWindow), {
+    id: 'exitWindow',
+    header: 'Exit\nwindow',
+    cell: (ctx) => {
+      const exitWindow = ctx.row.original.exitWindow
+      if (!exitWindow) return <NotApplicableBadge />
+      return <ExitWindowCell value={exitWindow} />
+    },
+    meta: {
+      tooltip:
+        'Context only: how much time users have to exit before a permitted critical change takes effect. This does not affect ossification.',
+    },
+    sortDescFirst: true,
+    sortUndefined: 'last',
+    sortingFn: (a, b) =>
+      sortTableValues(a.original.exitWindow, b.original.exitWindow),
   }),
 ]

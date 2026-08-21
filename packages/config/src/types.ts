@@ -967,6 +967,8 @@ export type ProjectDefiCategory = 'DEX' | 'Oracle' | 'Stablecoin'
 export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
   category: ProjectDefiCategory
+  /** Time users have to exit before a governance-controlled critical change. */
+  exitWindow?: ExitWindowRisk
 }
 
 export type ProjectExternalDependency =

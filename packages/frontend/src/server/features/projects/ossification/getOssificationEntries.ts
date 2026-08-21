@@ -1,3 +1,4 @@
+import type { ExitWindowRisk } from '@l2beat/config'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
 import { getProjectOssification } from './getProjectOssification'
@@ -13,6 +14,7 @@ export interface OssificationSummaryEntry {
   criticalChangesPerYear: number
   clusteredEventCount: number
   contractCount: number
+  exitWindow: ExitWindowRisk | undefined
 }
 
 /** Every project that opted into the ossification factor. The comparison
@@ -21,7 +23,7 @@ export async function getOssificationEntries(): Promise<
   OssificationSummaryEntry[]
 > {
   const projects = await ps.getProjects({
-    optional: ['scalingInfo', 'privacyInfo', 'defiInfo'],
+    optional: ['scalingInfo', 'scalingRisks', 'privacyInfo', 'defiInfo'],
     whereNot: ['archivedAt'],
   })
 
@@ -48,6 +50,10 @@ export async function getOssificationEntries(): Promise<
           criticalChangesPerYear: ossification.criticalChangesPerYear,
           clusteredEventCount: ossification.clusteredEventCount,
           contractCount: ossification.contracts.length,
+          exitWindow: project.scalingRisks
+            ? (project.scalingRisks.stacked ?? project.scalingRisks.self)
+                .exitWindow
+            : (project.privacyInfo?.exitWindow ?? project.defiInfo?.exitWindow),
         }
       },
     ),

@@ -19,6 +19,7 @@ has remained unchanged.
 
 The score is project-wide. One new or changed critical contract resets the whole
 perimeter. If any current critical contract is unverified, maturity is zero.
+The Security summary shows the exit window as context; it is not a metric input.
 
 ## Critical upgrade definition
 
