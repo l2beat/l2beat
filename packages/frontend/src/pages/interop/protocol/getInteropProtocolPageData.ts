@@ -64,7 +64,7 @@ async function getCachedData(slug: string, manifest: Manifest) {
   const project = await ps.getProject({
     slug,
     select: ['interopConfig'],
-    optional: ['statuses', 'display', 'discoveryInfo'],
+    optional: ['statuses', 'display'],
   })
   if (!project) return undefined
 

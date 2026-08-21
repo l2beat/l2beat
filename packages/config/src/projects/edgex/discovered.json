@@ -1,7 +1,7 @@
 {
   "name": "edgex",
   "timestamp": 1786964851,
-  "configHash": "0x7b612ee90a3e5afdcce8adbc1d609340a4a06b887724d5027611d9d830fd306d",
+  "configHash": "0xd507e4d1b74d013f5d0143e053d8e584a6547ca9aea28f89b77ecb50ff3f8b95",
   "entries": [
     {
       "address": "eth:0x085F09cc1e8cfedc40F257891EeA6c572c9EAe8d",

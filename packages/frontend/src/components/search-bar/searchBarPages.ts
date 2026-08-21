@@ -148,6 +148,16 @@ export const searchBarPages = withIndex([
     href: '/zk-catalog',
     tags: ['pages', 'zk', 'catalog'],
   },
+  ...(env.CLIENT_SIDE_DEFI_ENABLED
+    ? [
+        {
+          category: 'defi' as const,
+          name: 'DeFi',
+          href: '/defi/summary',
+          tags: ['pages', 'defi'],
+        },
+      ]
+    : []),
   {
     category: 'other',
     name: 'Donate',

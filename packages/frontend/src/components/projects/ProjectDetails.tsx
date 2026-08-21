@@ -5,6 +5,7 @@ import { CostsSection } from './sections/costs/CostsSection'
 import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
 import { DetailedDescriptionSection } from './sections/DetailedDescriptionSection'
 import { DataPostedSection } from './sections/data-posted/DataPostedSection'
+import { ExternalDependenciesSection } from './sections/ExternalDependenciesSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
 import { GroupSection } from './sections/GroupSection'
 import { InteropFlowsSection } from './sections/interop/InteropFlowsSection'
@@ -22,7 +23,6 @@ import { MilestonesAndIncidentsSection } from './sections/MilestonesAndIncidents
 import { PermissionsSection } from './sections/permissions/PermissionsSection'
 import { PrivacyAssetsBreakdownSection } from './sections/privacy/PrivacyAssetsBreakdownSection'
 import { PrivacyFlowsSection } from './sections/privacy/PrivacyFlowsSection'
-import { PrivacyTvlSection } from './sections/privacy/PrivacyTvlSection'
 import { ProgramHashesSection } from './sections/program-hashes/ProgramHashesSection'
 import { RiskAnalysisSection } from './sections/RiskAnalysisSection'
 import { RiskSummarySection } from './sections/RiskSummarySection'
@@ -34,6 +34,7 @@ import { TechnologyChoicesSection } from './sections/TechnologyChoicesSection'
 import { TrustedSetupSection } from './sections/TrustedSetupsSection'
 import { ThroughputSection } from './sections/throughput/ThroughputSection'
 import { L2TvsSection } from './sections/tvs/L2TvsSection'
+import { TvsValueSection } from './sections/tvs/TvsValueSection'
 import { ZkCatalogTvsSection } from './sections/tvs/ZkCatalogTvsSection'
 import type { ProjectDetailsSection } from './sections/types'
 import { UpdatesSection } from './sections/UpdatesSection'
@@ -346,9 +347,9 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 selectedUpdateId={props.selectedUpdateId}
               />
             )
-          case 'PrivacyTvlSection':
+          case 'TvsValueSection':
             return (
-              <PrivacyTvlSection
+              <TvsValueSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
@@ -365,6 +366,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'PrivacyAssetsBreakdownSection':
             return (
               <PrivacyAssetsBreakdownSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'ExternalDependenciesSection':
+            return (
+              <ExternalDependenciesSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

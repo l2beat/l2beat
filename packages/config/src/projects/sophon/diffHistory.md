@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x5b79bc173dabb06508ae2956c0cef714ae350a43
+
+# Diff at Wed, 19 Aug 2026 10:53:27 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a370e767776b076bdee7fe699dbe0b6597849e65 block: 1786966187
+- current timestamp: 1787136744
+
+## Description
+
+Removed 1 member of sophon ms.
+
+## Watched changes
+
+```diff
+    contract SophonChainAdminMultisig (eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1) [GnosisSafe] {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x2Ea9CcB15Ceb6c228786a3d4837B0bA3e9736D97"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0xf566015ba9c731c165597868894811075630ffe9
 
 # Diff at Mon, 17 Aug 2026 11:30:50 GMT:

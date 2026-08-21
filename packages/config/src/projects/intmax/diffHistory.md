@@ -1,4 +1,58 @@
-Generated with discovered.json: 0x3854cd9ba207ac9c8629b306dca56305e6ebdc00
+Generated with discovered.json: 0xef242f26ba4839a7bb9c78376db815641b22e803
+
+# Diff at Thu, 20 Aug 2026 12:57:36 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@00219f808cbf3466c6d2af96ddc96440efc3714c block: 1778583067
+- current timestamp: 1787230588
+
+## Description
+
+Verified the sources of a proxy admin contract, permissions auto resolved for its Safe owner.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1778583067 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601) [global/ProxyAdmin] {
+    +++ description: None
+      name:
+-        ""
++        "ProxyAdmin"
+      unverified:
+-        true
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2","role":"admin"}]
+      values.owner:
++        "eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE"
+      values.UPGRADE_INTERFACE_VERSION:
++        "5.0.0"
+      implementationNames.eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601:
+-        ""
++        "ProxyAdmin"
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2","role":"admin"}]
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x8A3c2193521Cf895D77c8Dedb290fC5E19126fdE) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2","role":"admin","via":[{"address":"eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601"}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601","role":".owner"}]
+    }
+```
+
+Generated with discovered.json: 0x1c9a8f50563d244d7dece929a5a0e1ddb74d1ca2
 
 # Diff at Fri, 12 Jun 2026 10:18:51 GMT:
 

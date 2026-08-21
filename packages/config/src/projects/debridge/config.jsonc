@@ -54,52 +54,13 @@
       ]
     },
     "eth:0xAE0361b1C3454b297129e01046057F1D294c7974": {
-      "description": "Unverified contract registered as the default executor in the ExternalCallAdapter: it executes external calldata attached to DLN orders."
+      "description": "The default executor in the ExternalCallAdapter: it executes external calldata attached to DLN orders."
     },
     "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc": {
       "description": "Unverified proxy referenced as the feeTreasury of the DeBridgeIntentManager."
     },
     "eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07": {
       "description": "Unverified proxy holding the INTENT_MANAGER_ROLE on the IntentManagerValidator, allowing it to create DLN orders with custom or zero protocol fees."
-    },
-    // The following three contracts are unverified ProxyAdmin-style contracts
-    // ($admin of the intent manager stack proxies). They expose owner(), which
-    // is defined manually here so the upgrade permission forwards correctly.
-    "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F": {
-      "fields": {
-        "owner": {
-          "handler": {
-            "type": "call",
-            "method": "function owner() view returns (address)",
-            "args": []
-          },
-          "permissions": [{ "type": "act" }]
-        }
-      }
-    },
-    "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3": {
-      "fields": {
-        "owner": {
-          "handler": {
-            "type": "call",
-            "method": "function owner() view returns (address)",
-            "args": []
-          },
-          "permissions": [{ "type": "act" }]
-        }
-      }
-    },
-    "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816": {
-      "fields": {
-        "owner": {
-          "handler": {
-            "type": "call",
-            "method": "function owner() view returns (address)",
-            "args": []
-          },
-          "permissions": [{ "type": "act" }]
-        }
-      }
     }
   }
 }

@@ -69,11 +69,12 @@ export const STATIC_PAGES: PageToVerify[] = [
     'interop.intentBridges',
     'interop.intentBridges',
   ]),
-  page('/privacy/summary', ['privacy.flowsChart', 'privacy.tvlChart']),
+  page('/privacy/summary', ['privacy.flowsChart', 'tvs.chartByProjects']),
   page('/privacy/projects/tornado-cash', [
     'privacy.flowsChart',
-    'privacy.tvlChart',
+    'tvs.chartByProjects',
   ]),
+  page('/defi/projects/liquityv2', ['tvs.chartByProjects']),
 ]
 
 export const DYNAMIC_PAGES: DynamicPageToVerify[] = [
@@ -96,7 +97,7 @@ export const DYNAMIC_PAGES: DynamicPageToVerify[] = [
       return privacyProject
         ? page(`/privacy/projects/${privacyProject.slug}`, [
             'privacy.flowsChart',
-            'privacy.tvlChart',
+            'tvs.chartByProjects',
           ])
         : undefined
     },

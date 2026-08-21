@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xcd88c164b465017734a52e9426c4a394593da472
+
+# Diff at Wed, 19 Aug 2026 10:26:56 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@de933fa9a1759053ca93b617a3305b5cd8938884 block: 1786961539
+- current timestamp: 1787135135
+
+## Description
+
+New railgun proposal created: https://tools.l2beat.com/decoder-new/?hash=0xb0f02fe28a805756fbd58c90a0704c26be69882460b1bd8885ca9fe93dd77718&data=AwA. It sweeps most tokens from railgun treasury (excluding WETH, RAIL which have most value) to 0xA4f2eA0a81179362558eBC1d2Bc817c9a0134ee3. Also triggers an action on arbitrum deployment.
+
+IPFS-published proposal description: "This proposal will gather tokens that are not part of the biweekly security staker rewards and use them to issue a research grant. The previous research funding ended earlier this year, so this would be a new and separate funding. All slightly significant tokens on Arbitrum will be collected. Most tokens not related to RAIL Security Rewards on Ethereum treasury will be collected.\n\nThe sum for this will be to fund the further development on the following (but not limited to): \n\n- RAILGUN-reloaded SDK, \n- RAILGUN v3,\n- Hardware Support \n- Post-Quantum Research \n- Multisig Support \n- and incentivise researchers and ecosystem.\n\nPlease do your own security review & vote YES to support this grant."
+
+Looks legit.
+
+## Watched changes
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ severity: HIGH
+      values.proposalCount:
+-        26
++        27
+    }
+```
+
 Generated with discovered.json: 0x684ef9c4e26669601d84b8db86cababa1e76c968
 
 # Diff at Mon, 17 Aug 2026 10:15:56 GMT:

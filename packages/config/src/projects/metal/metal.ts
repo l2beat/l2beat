@@ -4,7 +4,7 @@ import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('metal')
 
@@ -15,6 +15,7 @@ export const metal: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1711670400), // 2024-03-29T00:00:00Z
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 19527368 })],
   associatedTokens: ['MTL'],
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],

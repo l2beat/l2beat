@@ -3,7 +3,7 @@ import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('superseed')
 const genesisTimestamp = UnixTime(1726179683)
@@ -64,6 +64,7 @@ export const superseed: ScalingProject = opStackL2({
     startBlock: 1,
   },
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 20737483 })],
   genesisTimestamp,
   milestones: [
     {

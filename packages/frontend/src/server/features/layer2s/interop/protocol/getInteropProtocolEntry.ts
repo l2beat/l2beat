@@ -46,15 +46,13 @@ export interface InteropProtocolEntry {
 }
 
 export async function getInteropProtocolEntry(
-  project: Project<'interopConfig', 'display' | 'statuses' | 'discoveryInfo'>,
+  project: Project<'interopConfig', 'display' | 'statuses'>,
   apiSelection: InteropSelection,
   interopChains: InteropChainWithIcon[],
   data: InteropProtocolDashboardData,
 ): Promise<InteropProtocolEntry> {
   const isUnderReview = !!project.statuses?.reviewStatus
-  const discoveryUpdates = project.discoveryInfo?.hasDiscoUi
-    ? getDiscoveryUpdates(project.id)
-    : []
+  const discoveryUpdates = getDiscoveryUpdates(project.id)
 
   const header: InteropProtocolEntry['header'] = {
     description: project.interopConfig.description,

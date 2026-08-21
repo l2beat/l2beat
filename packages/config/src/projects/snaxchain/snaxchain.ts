@@ -3,7 +3,7 @@ import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('snaxchain')
 const genesisTimestamp = UnixTime(1723562231)
@@ -52,5 +52,6 @@ export const snaxchain: ScalingProject = opStackL2({
     adjustCount: { type: 'SubtractOne' },
   },
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 20520549 })],
   genesisTimestamp,
 })

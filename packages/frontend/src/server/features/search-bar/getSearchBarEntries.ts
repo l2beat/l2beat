@@ -38,6 +38,7 @@ export async function getSearchBarEntries(search: string) {
         'interopConfig',
         'zkCatalogInfo',
         'privacyInfo',
+        'defiInfo',
         'contracts',
         'permissions',
         'aliases',
