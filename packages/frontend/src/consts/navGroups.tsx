@@ -29,55 +29,55 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     icon: (
       <L2Icon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
-    links: compact<NavLink>([
-      {
-        title: 'Summary',
-        href: '/layer2s/summary',
-      },
-      {
-        title: 'Risk Analysis',
-        shortTitle: 'Risks',
-        href: '/layer2s/risk',
-        subLinks: [
-          {
-            title: 'Overview',
-            href: '/layer2s/risk',
-            exactMatch: true,
-          },
-          {
-            title: 'State Validation',
-            href: '/layer2s/risk/state-validation',
-          },
-          {
-            title: 'Data Availability',
-            shortTitle: 'DA',
-            href: '/layer2s/risk/data-availability',
-          },
-          {
-            title: 'Sequencing',
-            href: '/layer2s/risk/sequencing',
-          },
-        ],
-      },
-      {
-        title: 'Value Secured',
-        shortTitle: 'Value',
-        href: '/layer2s/tvs',
-      },
-      {
-        title: 'Activity',
-        href: '/layer2s/activity',
-      },
-      {
-        title: 'Liveness',
-        href: '/layer2s/liveness',
-      },
-      {
-        title: 'Costs',
-        href: '/layer2s/costs',
-      },
-    ]),
-    secondaryLinks: compact<NavLink[]>([
+    links: compact<NavLink[]>([
+      [
+        {
+          title: 'Summary',
+          href: '/layer2s/summary',
+        },
+        {
+          title: 'Risk Analysis',
+          shortTitle: 'Risks',
+          href: '/layer2s/risk',
+          subLinks: [
+            {
+              title: 'Overview',
+              href: '/layer2s/risk',
+              exactMatch: true,
+            },
+            {
+              title: 'State Validation',
+              href: '/layer2s/risk/state-validation',
+            },
+            {
+              title: 'Data Availability',
+              shortTitle: 'DA',
+              href: '/layer2s/risk/data-availability',
+            },
+            {
+              title: 'Sequencing',
+              href: '/layer2s/risk/sequencing',
+            },
+          ],
+        },
+        {
+          title: 'Value Secured',
+          shortTitle: 'Value',
+          href: '/layer2s/tvs',
+        },
+        {
+          title: 'Activity',
+          href: '/layer2s/activity',
+        },
+        {
+          title: 'Liveness',
+          href: '/layer2s/liveness',
+        },
+        {
+          title: 'Costs',
+          href: '/layer2s/costs',
+        },
+      ],
       [
         {
           title: 'Archived',
@@ -100,18 +100,20 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
       <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
     links: [
-      {
-        title: 'Summary',
-        href: '/interop/summary',
-      },
-      {
-        title: 'Token frameworks',
-        href: '/interop/token-frameworks',
-      },
-      {
-        title: 'Intent bridges',
-        href: '/interop/intent-bridges',
-      },
+      [
+        {
+          title: 'Summary',
+          href: '/interop/summary',
+        },
+        {
+          title: 'Token frameworks',
+          href: '/interop/token-frameworks',
+        },
+        {
+          title: 'Intent bridges',
+          href: '/interop/intent-bridges',
+        },
+      ],
     ],
   },
   {
@@ -140,27 +142,27 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
       <DataAvailabilityIcon className="transition-colors duration-300 group-data-[active=true]:fill-brand" />
     ),
     links: [
-      {
-        title: 'Summary',
-        href: '/data-availability/summary',
-      },
-      {
-        title: 'Risk Analysis',
-        shortTitle: 'Risks',
-        href: '/data-availability/risk',
-      },
-      {
-        title: 'Throughput',
-        shortTitle: 'Throughput',
-        href: '/data-availability/throughput',
-      },
-      {
-        title: 'Liveness',
-        shortTitle: 'Liveness',
-        href: '/data-availability/liveness',
-      },
-    ],
-    secondaryLinks: [
+      [
+        {
+          title: 'Summary',
+          href: '/data-availability/summary',
+        },
+        {
+          title: 'Risk Analysis',
+          shortTitle: 'Risks',
+          href: '/data-availability/risk',
+        },
+        {
+          title: 'Throughput',
+          shortTitle: 'Throughput',
+          href: '/data-availability/throughput',
+        },
+        {
+          title: 'Liveness',
+          shortTitle: 'Liveness',
+          href: '/data-availability/liveness',
+        },
+      ],
       [
         {
           title: 'Archived',
@@ -187,27 +189,29 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
       <EcosystemsIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
     links: [
-      {
-        name: 'Agglayer',
-        slug: 'agglayer',
-      },
-      {
-        name: 'Arbitrum Orbit',
-        slug: 'arbitrum-orbit',
-      },
-      {
-        name: 'Superchain',
-        slug: 'superchain',
-      },
-      {
-        name: 'The Elastic Network',
-        slug: 'the-elastic-network',
-      },
-    ]
-      .sort(createOrderedSort(PARTNERS_ORDER, (item) => item.slug))
-      .map((ecosystem) => ({
-        title: ecosystem.name,
-        href: `/ecosystems/${ecosystem.slug}`,
-      })),
+      [
+        {
+          name: 'Agglayer',
+          slug: 'agglayer',
+        },
+        {
+          name: 'Arbitrum Orbit',
+          slug: 'arbitrum-orbit',
+        },
+        {
+          name: 'Superchain',
+          slug: 'superchain',
+        },
+        {
+          name: 'The Elastic Network',
+          slug: 'the-elastic-network',
+        },
+      ]
+        .sort(createOrderedSort(PARTNERS_ORDER, (item) => item.slug))
+        .map((ecosystem) => ({
+          title: ecosystem.name,
+          href: `/ecosystems/${ecosystem.slug}`,
+        })),
+    ],
   },
 ])
