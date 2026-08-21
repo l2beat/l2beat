@@ -3,11 +3,11 @@ import { TableSortingProvider } from '~/components/table/sorting/TableSortingCon
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { OssificationEntry } from '~/server/features/projects/ossification/getOssificationEntries'
+import type { OssificationSummaryEntry } from '~/server/features/projects/ossification/getOssificationEntries'
 import { OssificationTable } from './components/table/OssificationTable'
 
 interface Props extends AppLayoutProps {
-  entries: OssificationEntry[]
+  entries: OssificationSummaryEntry[]
 }
 
 export function SecurityPage({ entries, ...props }: Props) {

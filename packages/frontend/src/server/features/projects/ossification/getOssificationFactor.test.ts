@@ -3,7 +3,7 @@ import { expect } from 'earl'
 import type { DiscoveryUpdate } from '../recent-changes/getDiscoveryUpdates'
 import {
   getOssificationFactor,
-  type OssificationEntry,
+  type OssificationContractInput,
 } from './getOssificationFactor'
 import {
   collectEscrowSeeds,
@@ -21,7 +21,9 @@ const ADDRESS_C = 'eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261'
 const ADDRESS_D = 'eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f'
 const ADDRESS_E = 'eth:0x64523f2580f4E7038a121D55b220a9C12C1E8f01'
 
-function entry(overrides: Partial<OssificationEntry> = {}): OssificationEntry {
+function entry(
+  overrides: Partial<OssificationContractInput> = {},
+): OssificationContractInput {
   return {
     address: ADDRESS_A,
     name: 'Example',
@@ -155,6 +157,8 @@ describe(getOssificationFactor.name, () => {
         {
           timestamp: NOW - 30 * DAY,
           type: 'state',
+          source: 'tx:0xreviewed',
+          reason: 'Changed a security-critical setting.',
           contract: ADDRESS_A,
           updateId: 'reviewed-update',
         },
@@ -186,6 +190,8 @@ describe(getOssificationFactor.name, () => {
         {
           timestamp: NOW - 30 * DAY,
           type: 'state',
+          source: 'tx:0xhistorical',
+          reason: 'Changed a historical security-critical setting.',
           contract: ADDRESS_B,
           historical: true,
         },
@@ -207,6 +213,8 @@ describe(getOssificationFactor.name, () => {
         {
           timestamp: NOW - 30 * DAY,
           type: 'state',
+          source: 'tx:0xoutside',
+          reason: 'Changed a setting outside the perimeter.',
           contract: ADDRESS_B,
           updateId: 'outside-perimeter',
         },

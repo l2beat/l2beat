@@ -3,9 +3,9 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
-import type { OssificationEntry } from '~/server/features/projects/ossification/getOssificationEntries'
+import type { OssificationSummaryEntry } from '~/server/features/projects/ossification/getOssificationEntries'
 
-const columnHelper = createColumnHelper<OssificationEntry>()
+const columnHelper = createColumnHelper<OssificationSummaryEntry>()
 
 export const ossificationColumns = [
   ...getCommonProjectColumns(columnHelper, (entry) => entry.href),

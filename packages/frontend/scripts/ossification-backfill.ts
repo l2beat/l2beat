@@ -4,6 +4,9 @@
  * contract that once existed in discovery but is absent today — the
  * candidates for the `historicalContracts` judgment list in ossification.json.
  *
+ * Contracts that remain in discovery after leaving the active security path
+ * are outside this scanner and must be identified during perimeter review.
+ *
  * Mechanical evidence only; criticality is classified by researchers/agents.
  * Usage: npx tsx scripts/ossification-backfill.ts <projectId> [...] [--json]
  */

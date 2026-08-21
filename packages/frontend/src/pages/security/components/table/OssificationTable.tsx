@@ -4,11 +4,11 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { ColumnsControls } from '~/components/table/controls/ColumnsControls'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
-import type { OssificationEntry } from '~/server/features/projects/ossification/getOssificationEntries'
+import type { OssificationSummaryEntry } from '~/server/features/projects/ossification/getOssificationEntries'
 import { ossificationColumns } from './columns'
 
 interface Props {
-  entries: OssificationEntry[]
+  entries: OssificationSummaryEntry[]
 }
 
 export function OssificationTable({ entries }: Props) {

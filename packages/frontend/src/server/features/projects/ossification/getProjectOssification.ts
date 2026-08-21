@@ -7,10 +7,11 @@ import {
   type DiscoveryUpdate,
   getDiscoveryUpdates,
 } from '../recent-changes/getDiscoveryUpdates'
+import { calculateBattleTestedExposure } from './calculateBattleTestedExposure'
 import {
   getOssificationFactor,
+  type OssificationContractInput,
   type OssificationCriticalEvent,
-  type OssificationEntry,
   type OssificationFactor,
 } from './getOssificationFactor'
 import type { DiscoveredEntryLite } from './getOssificationPerimeter'
@@ -20,7 +21,6 @@ import {
 } from './parseUpgradeTimestamps'
 
 const PROJECT_ID_RE = /^[a-z0-9-]+$/i
-const SECONDS_PER_YEAR = 365 * 24 * 60 * 60
 
 const fileCache = new Map<string, { mtimeMs: number; parsed: unknown }>()
 
@@ -34,10 +34,11 @@ export interface ProjectOssification extends OssificationFactor {
  *  history count as part of this project's perimeter (tightly integrated
  *  shared modules, e.g. zksync2 <- shared-zk-stack). Their events are
  *  clustered together with the project's own.
- *  `historicalContracts`: contracts that once were critical but have been
- *  removed from discovery, classified by the research team (see
- *  scripts/ossification-backfill.ts). Only entries with countable events are
- *  stored; only `critical: true` ones are consumed. */
+ *  `historicalContracts`: contracts that once were critical but have left the
+ *  current perimeter, classified by the research team. The backfill script
+ *  finds contracts removed from discovery; inactive contracts still present
+ *  in discovery can also appear here. Only `critical: true` entries with
+ *  mechanical or reviewed events are stored and consumed. */
 interface OssificationJson {
   includeProjects?: string[]
   /** Contracts whose first recognized upgrade event changed an implementation
@@ -46,10 +47,7 @@ interface OssificationJson {
   /** Audited initialization/no-op upgrade transactions, keyed by contract. */
   ignoredUpgradeTransactions?: Record<string, string[]>
   /** Reviewed events missing from mechanical discovery history. */
-  criticalEvents?: (OssificationCriticalEvent & {
-    source?: string
-    reason?: string
-  })[]
+  criticalEvents?: OssificationCriticalEvent[]
   historicalContracts?: {
     address?: string
     name?: string
@@ -106,15 +104,20 @@ export async function getProjectOssification(
     return undefined
   }
 
-  const historical = (ossificationJson.historicalContracts ?? [])
-    .filter((contract) => contract.critical === true && contract.address)
-    .map((contract) => ({
-      address: contract.address as string,
-      name: contract.name ?? (contract.address as string),
-      upgradeTimestamps: deduplicateUpgradeTimestamps(
-        contract.upgradeTimestamps ?? [],
-      ),
-    }))
+  const historical = (ossificationJson.historicalContracts ?? []).flatMap(
+    (contract) => {
+      if (contract.critical !== true || !contract.address) return []
+      return [
+        {
+          address: contract.address,
+          name: contract.name ?? contract.address,
+          upgradeTimestamps: deduplicateUpgradeTimestamps(
+            contract.upgradeTimestamps ?? [],
+          ),
+        },
+      ]
+    },
+  )
 
   const firstUpgradeIsChange = new Set(
     (ossificationJson.firstUpgradeIsChange ?? []).map((address) =>
@@ -131,7 +134,7 @@ export async function getProjectOssification(
   )
   const factor = getOssificationFactor(
     critical.map((entry) =>
-      toOssificationEntry(
+      toOssificationContractInput(
         entry,
         firstUpgradeIsChange,
         ignoredUpgradeTransactions,
@@ -149,11 +152,11 @@ export async function getProjectOssification(
   return { ...factor, exposure: await getExposure(projectId, factor) }
 }
 
-function toOssificationEntry(
+function toOssificationContractInput(
   entry: DiscoveredEntryLite & { address: string },
   firstUpgradeIsChange: Set<string>,
   ignoredUpgradeTransactions: Map<string, Set<string>>,
-): OssificationEntry {
+): OssificationContractInput {
   return {
     address: entry.address,
     name: entry.name ?? entry.address,
@@ -169,20 +172,27 @@ function toOssificationEntry(
   }
 }
 
-/** ∫ TVS dt from the project clock start to now (trapezoid over the daily
- *  series, flat-extended to now), in USD·years. Shares the unverified gate
- *  with the score: an unverified perimeter accumulates nothing. */
+/** ∫ TVS dt from the project clock start to now, in USD·years. Shares the
+ * unverified gate with the score: an unverified perimeter accumulates
+ * nothing. */
 async function getExposure(
   projectId: string,
   factor: OssificationFactor,
 ): Promise<number | null> {
-  if (env.MOCK || factor.projectClockStart === null) return null
+  const clockStart = factor.projectClockStart
+  if (env.MOCK || clockStart === null) return null
   if (factor.maturity === 0) return 0
 
   const now = UnixTime.now()
-  const series = await getDb().tvsTokenValue.getSummedByTimestampByProjects(
+  const repository = getDb().tvsTokenValue
+  const precedingTimestamp =
+    await repository.getMaxTimestampAtOrBeforeForProjects(
+      UnixTime(clockStart),
+      [projectId],
+    )
+  const series = await repository.getSummedByTimestampByProjects(
     [projectId],
-    UnixTime(factor.projectClockStart),
+    precedingTimestamp ?? UnixTime(clockStart),
     UnixTime(now),
     {
       forSummary: false,
@@ -190,24 +200,14 @@ async function getExposure(
       excludeRwaRestrictedTokens: false,
     },
   )
-  const points = series
-    .map((row) => ({ t: Number(row.timestamp), v: Number(row.value) }))
-    .filter((point) => Number.isFinite(point.v))
-    .sort((a, b) => a.t - b.t)
-  if (points.length === 0) return null
-
-  let integral = 0
-  for (let i = 1; i < points.length; i++) {
-    const a = points[i - 1]
-    const b = points[i]
-    if (!a || !b) continue
-    integral += ((a.v + b.v) / 2) * (b.t - a.t)
-  }
-  const last = points.at(-1)
-  if (last && now > last.t) {
-    integral += last.v * (now - last.t)
-  }
-  return integral / SECONDS_PER_YEAR
+  return calculateBattleTestedExposure(
+    series.map((row) => ({
+      timestamp: Number(row.timestamp),
+      value: Number(row.value),
+    })),
+    clockStart,
+    now,
+  )
 }
 
 function readProjectJson(projectId: string, file: string): unknown | undefined {
@@ -227,11 +227,7 @@ function readProjectJson(projectId: string, file: string): unknown | undefined {
     return cached.parsed
   }
 
-  try {
-    const parsed: unknown = JSON.parse(readFileSync(filePath, 'utf-8'))
-    fileCache.set(filePath, { mtimeMs, parsed })
-    return parsed
-  } catch {
-    return undefined
-  }
+  const parsed: unknown = JSON.parse(readFileSync(filePath, 'utf-8'))
+  fileCache.set(filePath, { mtimeMs, parsed })
+  return parsed
 }

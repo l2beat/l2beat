@@ -38,9 +38,8 @@ export const _ColorContract = {
   displayName: v.string().optional(),
   categories: v.record(v.string(), DiscoveryCategory).optional(),
   category: v.string().optional(),
-  /** A change to this contract's code can cause loss, freezing, or
-   *  unauthorized withdrawal of user funds, directly or via permissions
-   *  it holds. Used by the ossification factor. */
+  /** A code or HIGH-severity state change can alter the security of protected
+   * assets, state, availability, or privacy. Used by the ossification factor. */
   critical: v.boolean().optional(),
   description: v.string().optional(),
   references: v.array(ExternalReference).optional(),

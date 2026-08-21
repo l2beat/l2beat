@@ -20,7 +20,7 @@ const MIN_RATE_WINDOW_SECONDS = 30 * 24 * 60 * 60
 const SECONDS_PER_YEAR = 365 * 24 * 60 * 60
 
 /** A contract in the ossification perimeter, extracted from discovered.json */
-export interface OssificationEntry {
+export interface OssificationContractInput {
   /** Chain-specific address (eth:0x...) */
   address: string
   name: string
@@ -60,6 +60,10 @@ export interface OssificationCriticalUpdate {
 export interface OssificationCriticalEvent {
   timestamp: number
   type: OssificationChangeType
+  /** Auditable onchain or repository evidence. */
+  source: string
+  /** One-sentence security consequence. */
+  reason: string
   /** Discovery update card receiving the same critical code/state tag. */
   updateId?: string
   /** Current or historical contract receiving the per-contract count. Omit
@@ -89,26 +93,25 @@ export interface OssificationFactor {
   criticalUpdates: OssificationCriticalUpdate[]
 }
 
-/** A contract that once was in the critical perimeter but has since been
- *  removed from discovery (classified in ossification.json). Contributes
- *  its change events to the rate and history — never to the project clock
- *  or the unverified gate, since it no longer secures funds. */
-export interface OssificationHistoricalEntry {
+/** A contract that once belonged to the critical perimeter but no longer does.
+ * Contributes its change events to the rate and history—never to the current
+ * project clock or unverified gate. */
+export interface OssificationHistoricalContract {
   address: string
   name: string
   upgradeTimestamps: number[]
 }
 
 interface ContractRecord {
-  entry: OssificationEntry
+  entry: OssificationContractInput
   diffEvents: { timestamp: number; type: OssificationChangeType }[]
 }
 
 export function getOssificationFactor(
-  entries: OssificationEntry[],
+  entries: OssificationContractInput[],
   updates: DiscoveryUpdate[],
   now: number = UnixTime.now(),
-  historical: OssificationHistoricalEntry[] = [],
+  historical: OssificationHistoricalContract[] = [],
   criticalEvents: OssificationCriticalEvent[] = [],
 ): OssificationFactor | undefined {
   if (entries.length === 0) {
@@ -403,7 +406,7 @@ function getContractBreakdown(
   }
 }
 
-function getCodeChangeTimestamps(entry: OssificationEntry): number[] {
+function getCodeChangeTimestamps(entry: OssificationContractInput): number[] {
   return entry.upgradeTimestamps.slice(
     entry.firstUpgradeIsInitialization === false ? 0 : 1,
   )

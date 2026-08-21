@@ -1,6 +1,6 @@
 # Ossification
 
-Current as of 2026-08-20. This document defines the metric, its runtime inputs,
+Current as of 2026-08-21. This document defines the metric, its runtime inputs,
 and how to validate project classifications.
 
 ## Metric semantics
@@ -17,9 +17,8 @@ has remained unchanged.
 - **Critical changes / year:** qualifying events in the trailing 36 months,
   clustered into 24-hour windows. The observation denominator is at least 30 days.
 
-The score is project-wide. One new or
-changed critical contract resets the whole perimeter. If any current critical
-contract is unverified, maturity is zero.
+The score is project-wide. One new or changed critical contract resets the whole
+perimeter. If any current critical contract is unverified, maturity is zero.
 
 ## Critical upgrade definition
 
@@ -75,9 +74,9 @@ There is one classification shared by discovery and ossification:
 - Changes to a role's powers or scope, threshold, delay, controller, modules,
   guard, authority path, verifier/vkey, custody/accounting rule, or equivalent
   security mechanism are HIGH.
-- Classify a discovered field as a whole. Every change to a HIGH field counts,
-  even when the field contains several values. For example, every `dacKeyset`
-  change counts while that field is HIGH. This also means that you should create new focused fields (e.g. using `edit` if necessary; see the discovery readme)
+- Classify a discovered field as a whole. Every change to a HIGH field counts.
+  Split broad fields into focused fields when their values have different
+  security consequences.
 
 In short: `critical: true` selects the contracts, implementation changes always
 count, and HIGH selects the state changes that count.
@@ -130,7 +129,7 @@ For each project, leave four compact artifacts:
 | Implementation diff fallback | Address belongs to a current critical contract and that contract has no `$pastUpgrades` | Resets the clock and adds an event regardless of field severity |
 | `criticalEvents` | Reviewed, evidence-backed event that mechanical discovery history cannot reconstruct | Adds the specified code/state event. `historical: true` affects only history/rate; other entries also reset the current clock |
 | `unverified` | Any current critical contract | Gates maturity, score, and exposure to zero |
-| `historicalContracts` | Entry has `critical: true` and is no longer live | Its upgrades and attributable HIGH diff events affect only change history/rate, never the current clock or unverified gate |
+| `historicalContracts` | Entry has `critical: true` and is no longer in the current perimeter | Its upgrades, attributable HIGH diff events, and reviewed events affect only change history/rate, never the current clock or unverified gate |
 | Project `TokenValue` series | Root project only | Supplies battle-tested exposure; it does not affect score or change rate |
 
 ## Important history caveat
@@ -160,8 +159,8 @@ the first event is not silently discarded. The judgment must be backed by a nonz
 implementation slot immediately before the event (or equivalent constructor/history
 evidence); it is not inferred from event position or deployment proximity.
 
-`criticalEvents` is an exception ledger. Each
-entry must identify its evidence and consequence, and must be omitted when
+`criticalEvents` is an exception ledger. Each entry must identify its evidence
+and consequence, and must be omitted when
 `$pastUpgrades` or a contemporaneous HIGH diff already supplies the event. An
 optional `updateId` applies the same critical code/state tag to its discovery update
 card. An attributed event is ignored unless its contract belongs to the matching
@@ -237,10 +236,12 @@ Use Node 22 through `fnm`. RPC and explorer credentials are in
   are excluded; two direct Matter Labs Safe threshold changes are explicit events.
 - Removed-contract backfill is complete for the cohort; runtime history remains
   limited by the caveat above for late-added HIGH value annotations.
-- The exploit-age backtest supports retaining the two-year maturity constant. The
-  two sources are now merged into one classified corpus: 308 exploits 2017–2026,
-  282 with onchain-measured code age, every registry row root-cause-classified
-  with an evidence sentence (see `scripts/ossification-incidents.registry.json`).
-  Merged code-bug numbers (n=243): median exploited-code age 1.9mo, 78% ≤12mo,
-  88% of $2.05B verified losses on ≤12mo code, median score at incident 8/100
-  under λ=2y. Keys and offchain failures are outside this metric's scope.
+
+## Suggested integration order
+
+1. Discovery schema and transaction-aware proxy upgrade history.
+2. Metric calculation, project-page integration, and `/security` summary UI.
+3. Reviewed project classifications and their generated discovery artifacts.
+
+Keep the incident backtest scripts and datasets separate from the product change;
+they support the two-year constant but are not runtime dependencies.
