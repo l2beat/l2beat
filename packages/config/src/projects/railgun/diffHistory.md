@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xeb92c7221649da73ad67ce15309d6353e63c36f9
+
+# Diff at Fri, 21 Aug 2026 11:19:42 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@97be884924a799765834458d955d84040bed3cfb block: 1787147547
+- current timestamp: 1787311119
+
+## Description
+
+New proposal on Railgun DAO: "Base deployment of RAILGUN Privacy System". 
+
+Onchain execution of this proposal sends tasks to OPStackSender contract: https://tools.l2beat.com/decoder-new/?hash=0xfd5860b22fad6d5bf81cd4e9c809b2016ed08971b0fbf96aaf033fdbf87b52ec&data=AwA. These tasks initialize verification keys for all railgun circuits on the main Railgun contract on Base (`base:0x0047d1F97674614189E80566575FB615788AcF25`).
+
+Railgun smart contracts on Base are already deployed, with bytecode matching the deployment on Ethereum.
+
+The proposal doesn't look malicious.
+
+## Watched changes
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ severity: HIGH
+      values.proposalCount:
+-        27
++        28
+    }
+```
+
 Generated with discovered.json: 0xcd88c164b465017734a52e9426c4a394593da472
 
 # Diff at Wed, 19 Aug 2026 10:26:56 GMT:
