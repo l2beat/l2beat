@@ -12,6 +12,7 @@ describe(migrateLayout.name, () => {
       locations: { a: { x: 1, y: 2 } },
       colors: { a: 3 },
       hiddenFields: { a: ['f'] },
+      compressedRows: { a: ['$members'] },
       hiddenNodes: ['b'],
       groups: [
         {
