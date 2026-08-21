@@ -14,9 +14,9 @@ export function ActivityCompareControls({
   }
   return (
     <ActivityMetricControls<CompareActivityUnit>
-      value={config.activityUnit}
-      onValueChange={(activityUnit) =>
-        setConfig((prev) => ({ ...prev, activityUnit }))
+      value={config.activity.unit}
+      onValueChange={(unit) =>
+        setConfig((prev) => ({ ...prev, activity: { ...prev.activity, unit } }))
       }
       projectChart
       className="h-9"

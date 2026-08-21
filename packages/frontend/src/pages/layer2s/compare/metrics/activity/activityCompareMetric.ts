@@ -14,15 +14,17 @@ export const activityCompareMetric: CompareMetricDef = {
   noDataLabel: 'No activity data',
   urlControls: {
     parse: (fields) => ({
-      activityUnit: parseOneOf(
-        fields.unit,
-        COMPARE_ACTIVITY_UNITS,
-        DEFAULT_COMPARE_ACTIVITY_UNIT,
-      ),
+      activity: {
+        unit: parseOneOf(
+          fields.unit,
+          COMPARE_ACTIVITY_UNITS,
+          DEFAULT_COMPARE_ACTIVITY_UNIT,
+        ),
+      },
     }),
-    serialize: (controls): CompareUrlFields =>
-      controls.activityUnit !== DEFAULT_COMPARE_ACTIVITY_UNIT
-        ? { unit: controls.activityUnit }
+    serialize: ({ activity }): CompareUrlFields =>
+      activity.unit !== DEFAULT_COMPARE_ACTIVITY_UNIT
+        ? { unit: activity.unit }
         : {},
   },
   prefetch: async (helpers, projects, _config, chartRange) => {

@@ -26,7 +26,7 @@ export function CostsCompareChart({
       getCostsCompareChartParams(queryProjects, chartRange),
     ),
   )
-  const unit = config.costsUnit
+  const unit = config.costs.unit
 
   const chartData = useMemo(
     () =>

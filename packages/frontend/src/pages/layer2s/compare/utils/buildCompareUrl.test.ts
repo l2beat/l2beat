@@ -8,14 +8,31 @@ import {
 
 const PATH = '/layer2s/compare'
 
+interface ChartOverrides {
+  metric?: CompareChartConfig['metric']
+  activity?: Partial<CompareChartConfig['activity']>
+  tvs?: Partial<CompareChartConfig['tvs']>
+  costs?: Partial<CompareChartConfig['costs']>
+}
+
+function chart(overrides: ChartOverrides = {}): CompareChartConfig {
+  const base = createDefaultChartConfig(overrides.metric)
+  return {
+    ...base,
+    activity: { ...base.activity, ...overrides.activity },
+    tvs: { ...base.tvs, ...overrides.tvs },
+    costs: { ...base.costs, ...overrides.costs },
+  }
+}
+
 function state(
   overrides: Partial<CompareChartState> = {},
-  chartOverrides: Partial<CompareChartConfig> = {},
+  chartOverrides: ChartOverrides = {},
 ): CompareChartState {
   return {
-    projects: [],
+    projects: undefined,
     range: '1y',
-    charts: [{ ...createDefaultChartConfig(), ...chartOverrides }],
+    charts: [chart(chartOverrides)],
     ...overrides,
   }
 }
@@ -31,6 +48,12 @@ describe(buildCompareUrl.name, () => {
     const url = buildCompareUrl(PATH, state({ projects: ['arbitrum', 'base'] }))
 
     expect(url).toEqual('/layer2s/compare?projects=arbitrum,base')
+  })
+
+  it('serializes an explicitly emptied selection as an empty param', () => {
+    const url = buildCompareUrl(PATH, state({ projects: [] }))
+
+    expect(url).toEqual('/layer2s/compare?projects=')
   })
 
   it('omits defaults and serializes a non-default range', () => {
@@ -54,7 +77,7 @@ describe(buildCompareUrl.name, () => {
   it('serializes a non-default metric with its non-default unit', () => {
     const url = buildCompareUrl(
       PATH,
-      state({}, { metric: 'activity', activityUnit: 'tps' }),
+      state({}, { metric: 'activity', activity: { unit: 'tps' } }),
     )
 
     expect(url).toEqual('/layer2s/compare?charts=activity:unit=tps')
@@ -67,7 +90,7 @@ describe(buildCompareUrl.name, () => {
   })
 
   it('omits the activity unit for other metrics', () => {
-    const url = buildCompareUrl(PATH, state({}, { activityUnit: 'tps' }))
+    const url = buildCompareUrl(PATH, state({}, { activity: { unit: 'tps' } }))
 
     expect(url).toEqual(PATH)
   })
@@ -75,7 +98,7 @@ describe(buildCompareUrl.name, () => {
   it('serializes the costs metric with its non-default unit', () => {
     const url = buildCompareUrl(
       PATH,
-      state({}, { metric: 'costs', costsUnit: 'gas' }),
+      state({}, { metric: 'costs', costs: { unit: 'gas' } }),
     )
 
     expect(url).toEqual('/layer2s/compare?charts=costs:unit=gas')
@@ -88,9 +111,9 @@ describe(buildCompareUrl.name, () => {
         {},
         {
           metric: 'data-posted',
-          activityUnit: 'tps',
-          tvsUnit: 'eth',
-          costsUnit: 'gas',
+          activity: { unit: 'tps' },
+          tvs: { unit: 'eth' },
+          costs: { unit: 'gas' },
         },
       ),
     )
@@ -104,9 +127,11 @@ describe(buildCompareUrl.name, () => {
       state(
         {},
         {
-          tvsUnit: 'eth',
-          excludeAssociatedTokens: true,
-          excludeRwaRestrictedTokens: false,
+          tvs: {
+            unit: 'eth',
+            excludeAssociatedTokens: true,
+            excludeRwaRestrictedTokens: false,
+          },
         },
       ),
     )
@@ -117,7 +142,10 @@ describe(buildCompareUrl.name, () => {
   })
 
   it('serializes the non-default tvs filter', () => {
-    const url = buildCompareUrl(PATH, state({}, { tvsFilter: 'stablecoin' }))
+    const url = buildCompareUrl(
+      PATH,
+      state({}, { tvs: { filter: 'stablecoin' } }),
+    )
 
     expect(url).toEqual('/layer2s/compare?charts=tvs:filter=stablecoin')
   })
@@ -127,7 +155,7 @@ describe(buildCompareUrl.name, () => {
       PATH,
       state(
         {},
-        { tvsFilter: 'rwaRestricted', excludeRwaRestrictedTokens: false },
+        { tvs: { filter: 'rwaRestricted', excludeRwaRestrictedTokens: false } },
       ),
     )
 
@@ -141,10 +169,12 @@ describe(buildCompareUrl.name, () => {
         {},
         {
           metric: 'activity',
-          tvsUnit: 'eth',
-          tvsFilter: 'native',
-          excludeAssociatedTokens: true,
-          excludeRwaRestrictedTokens: false,
+          tvs: {
+            unit: 'eth',
+            filter: 'native',
+            excludeAssociatedTokens: true,
+            excludeRwaRestrictedTokens: false,
+          },
         },
       ),
     )
@@ -158,8 +188,8 @@ describe(buildCompareUrl.name, () => {
       state({
         projects: ['arbitrum'],
         charts: [
-          createDefaultChartConfig('tvs'),
-          { ...createDefaultChartConfig('activity'), activityUnit: 'tps' },
+          chart(),
+          chart({ metric: 'activity', activity: { unit: 'tps' } }),
         ],
       }),
     )
@@ -173,10 +203,7 @@ describe(buildCompareUrl.name, () => {
     const url = buildCompareUrl(
       PATH,
       state({
-        charts: [
-          createDefaultChartConfig('tvs'),
-          { ...createDefaultChartConfig('tvs'), tvsFilter: 'stablecoin' },
-        ],
+        charts: [chart(), chart({ tvs: { filter: 'stablecoin' } })],
       }),
     )
 
@@ -187,10 +214,7 @@ describe(buildCompareUrl.name, () => {
     const url = buildCompareUrl(
       PATH,
       state({
-        charts: [
-          createDefaultChartConfig('tvs'),
-          createDefaultChartConfig('data-posted'),
-        ],
+        charts: [chart(), chart({ metric: 'data-posted' })],
       }),
     )
 

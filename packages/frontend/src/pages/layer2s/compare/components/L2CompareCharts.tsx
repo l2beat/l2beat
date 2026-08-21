@@ -82,8 +82,7 @@ export function L2CompareCharts({
     const bySlug = new Map(
       allProjects.map((project) => [project.slug, project]),
     )
-    const slugs =
-      state.projects.length > 0 ? state.projects : defaultProjectSlugs
+    const slugs = state.projects ?? defaultProjectSlugs
     return slugs
       .map((slug) => bySlug.get(slug))
       .filter((project) => project !== undefined)
@@ -142,7 +141,7 @@ export function L2CompareCharts({
             allProjects={allProjects}
             metrics={displayedMetrics}
             selectedProjects={selectedProjects}
-            isDefaultSelection={state.projects.length === 0}
+            isDefaultSelection={state.projects === undefined}
             onChange={(projects) => setState((prev) => ({ ...prev, projects }))}
           />
           <div className="flex flex-wrap items-center justify-between gap-2">

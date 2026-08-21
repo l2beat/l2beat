@@ -20,7 +20,9 @@ export function buildCompareUrl(
   state: CompareChartState,
 ): string {
   const params = new URLSearchParams()
-  if (state.projects.length > 0) {
+  // An empty array still emits `projects=`: it is an explicitly emptied
+  // selection, distinct from the absent param that shows the defaults.
+  if (state.projects !== undefined) {
     params.set('projects', state.projects.join(','))
   }
   if (typeof state.range !== 'string') {

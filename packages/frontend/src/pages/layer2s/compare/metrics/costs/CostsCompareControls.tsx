@@ -15,9 +15,12 @@ export function CostsCompareControls({
   return (
     <RadioGroup
       name="compareCostsUnit"
-      value={config.costsUnit}
+      value={config.costs.unit}
       onValueChange={(value) =>
-        setConfig((prev) => ({ ...prev, costsUnit: value as CompareCostsUnit }))
+        setConfig((prev) => ({
+          ...prev,
+          costs: { ...prev.costs, unit: value as CompareCostsUnit },
+        }))
       }
       variant="highlighted"
       className="h-9"

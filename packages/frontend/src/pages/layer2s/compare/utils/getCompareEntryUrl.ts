@@ -16,7 +16,7 @@ export function getCompareEntryUrl({
   projectSlug?: string
 } = {}): string {
   return buildCompareUrl(COMPARE_PAGE_PATH, {
-    projects: projectSlug ? [projectSlug] : [],
+    projects: projectSlug ? [projectSlug] : undefined,
     range: DEFAULT_COMPARE_RANGE,
     charts: [createDefaultChartConfig(metric)],
   })

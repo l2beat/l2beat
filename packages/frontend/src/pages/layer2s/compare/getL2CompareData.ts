@@ -88,10 +88,13 @@ async function getCompareData(originalUrl: string, cache: InMemoryCache) {
   }
 
   // The resolved range is cached together with the dehydrated queries so
-  // the client's seeded query input always matches the prefetched one.
+  // the client's seeded query input always matches the prefetched one. The
+  // default slugs are part of the key: the project entries are cached
+  // separately, so when a ranking change moves the top N, a stale chart
+  // entry must not be served against the new chips.
   const chartData = await cache.get(
     {
-      key: ['layer2s', 'compare', 'data', 'default'],
+      key: ['layer2s', 'compare', 'data', 'default', ...defaultProjectSlugs],
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },

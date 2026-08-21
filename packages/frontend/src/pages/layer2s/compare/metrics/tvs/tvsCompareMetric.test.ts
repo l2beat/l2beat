@@ -3,7 +3,8 @@ import type { ChartRange } from '~/utils/range/range'
 import { getTvsCompareChartParams } from './tvsCompareMetric'
 
 const CHART_RANGE: ChartRange = [1700000000, 1710000000]
-const BASE_CONFIG = {
+const BASE_TVS = {
+  unit: 'usd' as const,
   excludeAssociatedTokens: false,
   excludeRwaRestrictedTokens: true,
 }
@@ -12,7 +13,7 @@ describe(getTvsCompareChartParams.name, () => {
   it('passes the exclusion toggles through', () => {
     const params = getTvsCompareChartParams(
       [],
-      { ...BASE_CONFIG, tvsFilter: 'canonical' },
+      { tvs: { ...BASE_TVS, filter: 'canonical' } },
       CHART_RANGE,
     )
 
@@ -24,7 +25,7 @@ describe(getTvsCompareChartParams.name, () => {
     // all-zero restricted RWA component for every project.
     const params = getTvsCompareChartParams(
       [],
-      { ...BASE_CONFIG, tvsFilter: 'rwaRestricted' },
+      { tvs: { ...BASE_TVS, filter: 'rwaRestricted' } },
       CHART_RANGE,
     )
 

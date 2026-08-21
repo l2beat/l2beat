@@ -67,21 +67,22 @@ export type CompareRangeOption = (typeof COMPARE_RANGE_OPTIONS)[number]
 export type CompareRange = CompareRangeOption | { from: number; to: number }
 
 /**
- * The configuration of a single chart card: its metric plus every per-metric
- * control. Controls of inactive metrics are kept so switching a card's
+ * The configuration of a single chart card: its metric plus every metric's
+ * controls. Controls of inactive metrics are kept so switching a card's
  * metric back and forth preserves its settings; only the active metric's
  * controls are encoded in the URL, by that metric's `urlControls` codec in
  * `COMPARE_METRIC_DEFS`.
  */
 export interface CompareChartConfig {
   metric: CompareMetricId
-  /** Per-metric control of the activity metric; ignored elsewhere. */
-  activityUnit: CompareActivityUnit
-  /** Per-metric controls of the TVS metric; ignored elsewhere. */
-  tvsUnit: CompareTvsUnit
-  tvsFilter: CompareTvsFilter
-  /** Per-metric control of the costs metric; ignored elsewhere. */
-  costsUnit: CompareCostsUnit
+  activity: { unit: CompareActivityUnit }
+  tvs: CompareTvsControls
+  costs: { unit: CompareCostsUnit }
+}
+
+export interface CompareTvsControls {
+  unit: CompareTvsUnit
+  filter: CompareTvsFilter
   excludeAssociatedTokens: boolean
   excludeRwaRestrictedTokens: boolean
 }
@@ -90,8 +91,13 @@ export interface CompareChartConfig {
 export type CompareChartControls = Omit<CompareChartConfig, 'metric'>
 
 export interface CompareChartState {
-  /** Project slugs in selection order, shared by every chart. */
-  projects: string[]
+  /**
+   * Project slugs in selection order, shared by every chart. `undefined`
+   * when the user has not touched the selection (the top-N defaults are
+   * shown); an empty array is a deliberate "compare nothing" and stays
+   * empty instead of falling back to the defaults.
+   */
+  projects: string[] | undefined
   /** Time range shared by every chart, so synced hovers line up. */
   range: CompareRange
   /** One entry per chart card, in display order. Never empty. */
@@ -139,12 +145,14 @@ export function createDefaultChartConfig(
 ): CompareChartConfig {
   return {
     metric,
-    activityUnit: DEFAULT_COMPARE_ACTIVITY_UNIT,
-    tvsUnit: DEFAULT_COMPARE_TVS_UNIT,
-    tvsFilter: DEFAULT_COMPARE_TVS_FILTER,
-    costsUnit: DEFAULT_COMPARE_COSTS_UNIT,
-    excludeAssociatedTokens: DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS,
-    excludeRwaRestrictedTokens: DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS,
+    activity: { unit: DEFAULT_COMPARE_ACTIVITY_UNIT },
+    tvs: {
+      unit: DEFAULT_COMPARE_TVS_UNIT,
+      filter: DEFAULT_COMPARE_TVS_FILTER,
+      excludeAssociatedTokens: DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS,
+      excludeRwaRestrictedTokens: DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS,
+    },
+    costs: { unit: DEFAULT_COMPARE_COSTS_UNIT },
   }
 }
 

@@ -23,7 +23,7 @@ export function ActivityCompareChart({
       getActivityCompareChartParams(queryProjects, chartRange),
     ),
   )
-  const unit = config.activityUnit
+  const unit = config.activity.unit
 
   const chartData = useMemo(
     () =>

@@ -41,7 +41,11 @@ interface Props {
   selectedProjects: CompareProjectEntry[]
   /** True when the chips show the top-N defaults instead of a user selection. */
   isDefaultSelection: boolean
-  onChange: (slugs: string[]) => void
+  /**
+   * `undefined` restores the default selection; an empty array is a
+   * deliberately emptied one and stays empty.
+   */
+  onChange: (slugs: string[] | undefined) => void
   className?: string
 }
 
@@ -181,7 +185,7 @@ export function CompareProjectPicker({
       {!isDefaultSelection && (
         <button
           type="button"
-          onClick={() => onChange([])}
+          onClick={() => onChange(undefined)}
           className="h-7 cursor-pointer px-1 font-medium text-secondary text-sm leading-none"
         >
           Reset

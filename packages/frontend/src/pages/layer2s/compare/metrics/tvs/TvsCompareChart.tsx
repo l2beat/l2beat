@@ -1,29 +1,15 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
+import { PROJECT_TVS_CHART_VALUE_KEYS } from '~/server/features/layer2s/tvs/projectTvsChartValues'
 import { useTRPC } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import {
   CompareMetricLineChart,
   toCompareChartPoints,
 } from '../../components/CompareMetricLineChart'
-import type { CompareTvsFilter } from '../../utils/compareChartState'
 import type { CompareMetricChartProps } from '../types'
 import { getTvsCompareChartParams } from './tvsCompareMetric'
-
-/** Indices into `ProjectTvsChartDataPoint` for each TVS filter. */
-const TVS_FILTER_VALUE_INDEX: Record<CompareTvsFilter, number> = {
-  all: 0,
-  canonical: 1,
-  external: 2,
-  native: 3,
-  ether: 4,
-  stablecoin: 5,
-  btc: 6,
-  rwaRestricted: 7,
-  rwaPublic: 8,
-  other: 9,
-}
 
 export function TvsCompareChart({
   projects,
@@ -37,8 +23,13 @@ export function TvsCompareChart({
       getTvsCompareChartParams(queryProjects, config, chartRange),
     ),
   )
-  const unit = config.tvsUnit
-  const valueIndex = TVS_FILTER_VALUE_INDEX[config.tvsFilter]
+  const unit = config.tvs.unit
+  // Index into `ProjectTvsChartDataPoint`, derived from the shared key order
+  // so it can't drift from the server's serialization. Every filter except
+  // "all" is itself a value key; "all" compares the total, stored as `value`.
+  const valueIndex = PROJECT_TVS_CHART_VALUE_KEYS.indexOf(
+    config.tvs.filter === 'all' ? 'value' : config.tvs.filter,
+  )
 
   const chartData = useMemo(
     () =>

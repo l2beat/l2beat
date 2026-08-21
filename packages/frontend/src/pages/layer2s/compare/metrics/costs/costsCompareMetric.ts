@@ -14,16 +14,16 @@ export const costsCompareMetric: CompareMetricDef = {
   noDataLabel: 'No costs data',
   urlControls: {
     parse: (fields) => ({
-      costsUnit: parseOneOf(
-        fields.unit,
-        COMPARE_COSTS_UNITS,
-        DEFAULT_COMPARE_COSTS_UNIT,
-      ),
+      costs: {
+        unit: parseOneOf(
+          fields.unit,
+          COMPARE_COSTS_UNITS,
+          DEFAULT_COMPARE_COSTS_UNIT,
+        ),
+      },
     }),
-    serialize: (controls): CompareUrlFields =>
-      controls.costsUnit !== DEFAULT_COMPARE_COSTS_UNIT
-        ? { unit: controls.costsUnit }
-        : {},
+    serialize: ({ costs }): CompareUrlFields =>
+      costs.unit !== DEFAULT_COMPARE_COSTS_UNIT ? { unit: costs.unit } : {},
   },
   prefetch: async (helpers, projects, _config, chartRange) => {
     await helpers.queryClient.prefetchQuery(

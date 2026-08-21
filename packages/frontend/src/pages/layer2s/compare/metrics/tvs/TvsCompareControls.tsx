@@ -47,14 +47,17 @@ export function TvsCompareControls({
   if (!isClient) {
     return <Skeleton className="h-9 w-[264px]" />
   }
-  const restrictedRwaFilterActive = config.tvsFilter === 'rwaRestricted'
+  const restrictedRwaFilterActive = config.tvs.filter === 'rwaRestricted'
   return (
     <div className="flex flex-wrap items-center gap-1">
       <RadioGroup
         name="compareTvsUnit"
-        value={config.tvsUnit}
+        value={config.tvs.unit}
         onValueChange={(value) =>
-          setConfig((prev) => ({ ...prev, tvsUnit: value as CompareTvsUnit }))
+          setConfig((prev) => ({
+            ...prev,
+            tvs: { ...prev.tvs, unit: value as CompareTvsUnit },
+          }))
         }
         variant="highlighted"
         className="h-9"
@@ -67,11 +70,11 @@ export function TvsCompareControls({
         </RadioGroupItem>
       </RadioGroup>
       <Select
-        value={config.tvsFilter}
+        value={config.tvs.filter}
         onValueChange={(value) =>
           setConfig((prev) => ({
             ...prev,
-            tvsFilter: value as CompareTvsFilter,
+            tvs: { ...prev.tvs, filter: value as CompareTvsFilter },
           }))
         }
       >
@@ -115,23 +118,29 @@ export function TvsCompareControls({
         // Show the effective value: the toggle is overridden to false while
         // the Restricted RWAs filter is active, because excluding restricted
         // RWAs while comparing them would zero the chart.
-        checked={effectiveExcludeRwaRestrictedTokens(config)}
+        checked={effectiveExcludeRwaRestrictedTokens(config.tvs)}
         disabledReason={
           restrictedRwaFilterActive
             ? 'Unavailable while comparing restricted RWAs - it would exclude the very tokens being compared.'
             : undefined
         }
         onCheckedChange={(excludeRwaRestrictedTokens) =>
-          setConfig((prev) => ({ ...prev, excludeRwaRestrictedTokens }))
+          setConfig((prev) => ({
+            ...prev,
+            tvs: { ...prev.tvs, excludeRwaRestrictedTokens },
+          }))
         }
       />
       <DisplayOptionCheckbox
         optionKey="excludeAssociatedTokens"
         name="compareTvs-excludeAssociatedTokens"
         className="h-9"
-        checked={config.excludeAssociatedTokens}
+        checked={config.tvs.excludeAssociatedTokens}
         onCheckedChange={(excludeAssociatedTokens) =>
-          setConfig((prev) => ({ ...prev, excludeAssociatedTokens }))
+          setConfig((prev) => ({
+            ...prev,
+            tvs: { ...prev.tvs, excludeAssociatedTokens },
+          }))
         }
       />
     </div>

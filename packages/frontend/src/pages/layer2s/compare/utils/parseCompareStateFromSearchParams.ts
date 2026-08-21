@@ -60,8 +60,14 @@ function parseChartToken(token: string): CompareChartConfig | undefined {
   }
 }
 
-function parseProjects(value: string | null, validSlugs: string[]): string[] {
-  if (!value) return []
+function parseProjects(
+  value: string | null,
+  validSlugs: string[],
+): string[] | undefined {
+  // An absent param means the default selection; a present-but-empty one is
+  // a deliberately emptied selection and must not fall back to the defaults.
+  if (value === null) return undefined
+  if (value === '') return []
   const slugSet = new Set(validSlugs)
   const unique = [...new Set(value.split(','))]
   return unique.filter((slug) => slugSet.has(slug))

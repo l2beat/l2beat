@@ -20,47 +20,49 @@ export const tvsCompareMetric: CompareMetricDef = {
   noDataLabel: 'No TVS data',
   urlControls: {
     parse: (fields) => ({
-      tvsUnit: parseOneOf(
-        fields.unit,
-        COMPARE_TVS_UNITS,
-        DEFAULT_COMPARE_TVS_UNIT,
-      ),
-      tvsFilter: parseOneOf(
-        fields.filter,
-        COMPARE_TVS_FILTERS,
-        DEFAULT_COMPARE_TVS_FILTER,
-      ),
-      excludeAssociatedTokens: parseBoolean(
-        fields.excludeAssociated,
-        DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS,
-      ),
-      excludeRwaRestrictedTokens: parseBoolean(
-        fields.excludeRwa,
-        DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS,
-      ),
+      tvs: {
+        unit: parseOneOf(
+          fields.unit,
+          COMPARE_TVS_UNITS,
+          DEFAULT_COMPARE_TVS_UNIT,
+        ),
+        filter: parseOneOf(
+          fields.filter,
+          COMPARE_TVS_FILTERS,
+          DEFAULT_COMPARE_TVS_FILTER,
+        ),
+        excludeAssociatedTokens: parseBoolean(
+          fields.excludeAssociated,
+          DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS,
+        ),
+        excludeRwaRestrictedTokens: parseBoolean(
+          fields.excludeRwa,
+          DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS,
+        ),
+      },
     }),
-    serialize: (controls) => {
+    serialize: ({ tvs }) => {
       const fields: CompareUrlFields = {}
-      if (controls.tvsUnit !== DEFAULT_COMPARE_TVS_UNIT) {
-        fields.unit = controls.tvsUnit
+      if (tvs.unit !== DEFAULT_COMPARE_TVS_UNIT) {
+        fields.unit = tvs.unit
       }
-      if (controls.tvsFilter !== DEFAULT_COMPARE_TVS_FILTER) {
-        fields.filter = controls.tvsFilter
+      if (tvs.filter !== DEFAULT_COMPARE_TVS_FILTER) {
+        fields.filter = tvs.filter
       }
       if (
-        controls.excludeAssociatedTokens !==
+        tvs.excludeAssociatedTokens !==
         DEFAULT_COMPARE_EXCLUDE_ASSOCIATED_TOKENS
       ) {
-        fields.excludeAssociated = String(controls.excludeAssociatedTokens)
+        fields.excludeAssociated = String(tvs.excludeAssociatedTokens)
       }
       // The exclude-restricted-RWA toggle is disabled and overridden while
       // the Restricted RWAs filter is active, so its value is not encoded.
       if (
-        controls.tvsFilter !== 'rwaRestricted' &&
-        controls.excludeRwaRestrictedTokens !==
+        tvs.filter !== 'rwaRestricted' &&
+        tvs.excludeRwaRestrictedTokens !==
           DEFAULT_COMPARE_EXCLUDE_RWA_RESTRICTED_TOKENS
       ) {
-        fields.excludeRwa = String(controls.excludeRwaRestrictedTokens)
+        fields.excludeRwa = String(tvs.excludeRwaRestrictedTokens)
       }
       return fields
     },
@@ -92,16 +94,13 @@ export function hasTvsData(
  */
 export function getTvsCompareChartParams(
   projects: CompareProjectEntry[],
-  config: Pick<
-    CompareChartConfig,
-    'tvsFilter' | 'excludeAssociatedTokens' | 'excludeRwaRestrictedTokens'
-  >,
+  { tvs }: Pick<CompareChartConfig, 'tvs'>,
   chartRange: ChartRange,
 ) {
   return {
     range: chartRange,
-    excludeAssociatedTokens: config.excludeAssociatedTokens,
-    excludeRwaRestrictedTokens: effectiveExcludeRwaRestrictedTokens(config),
+    excludeAssociatedTokens: tvs.excludeAssociatedTokens,
+    excludeRwaRestrictedTokens: effectiveExcludeRwaRestrictedTokens(tvs),
     projects: projects.filter(hasTvsData).map((project) => ({
       projectId: project.id,
       sinceTimestamp: project.tvsSinceTimestamp,
@@ -115,11 +114,9 @@ export function getTvsCompareChartParams(
  * active the toggle is disabled and overridden to false; the stored value is
  * kept so switching the filter away restores the user's choice.
  */
-export function effectiveExcludeRwaRestrictedTokens(config: {
-  tvsFilter: CompareTvsFilter
+export function effectiveExcludeRwaRestrictedTokens(tvs: {
+  filter: CompareTvsFilter
   excludeRwaRestrictedTokens: boolean
 }): boolean {
-  return config.tvsFilter === 'rwaRestricted'
-    ? false
-    : config.excludeRwaRestrictedTokens
+  return tvs.filter === 'rwaRestricted' ? false : tvs.excludeRwaRestrictedTokens
 }
