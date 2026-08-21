@@ -4,8 +4,12 @@
   "description": "A governance proxy that lets {{owner}} act through it.",
   "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
   "fields": {
-    "owner": { "permissions": [{ "type": "act" }] },
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [{ "type": "act" }]
+    },
     "tokenMultiplierSetter": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "timestamp": 1787147569,
-  "configHash": "0xd3ce249b204fa893930b4129ca3fb329d3e21bc65cacc1eb8fe104a5431ad080",
+  "configHash": "0x928f8570db069d866a36a3c55eeeae924bc019e19b0e9bd7416d96f1b9cc9e43",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -202,8 +202,9 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
         "Executor": {
-          "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -289,8 +290,9 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
         "Executor": {
-          "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -503,8 +505,9 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
         "Executor": {
-          "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -1510,8 +1513,9 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
         "Executor": {
-          "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -1567,6 +1571,11 @@
           "baseFeeScalar": 9700000000000
         },
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "enforcedBatchParameters": { "severity": "HIGH" },
+        "messageQueueParameters": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D": "TransparentUpgradeableProxy",
@@ -1699,7 +1708,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.",
-      "critical": true,
+      "critical": false,
       "deployerAddress": "eth:0xFDD744Be62CFf3a95D7C638aAf88551bd792eb4d",
       "sinceTimestamp": 1713173507,
       "sinceBlock": 19660037,
@@ -1736,7 +1745,7 @@
       "usedTypes": [
         { "typeCaster": "ChainPrefix", "arg": { "prefix": "scr" } }
       ],
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "ScrollChain",
@@ -1835,10 +1844,6 @@
         ],
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D",
         "verifier": "eth:0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F"
-      },
-      "fieldMeta": {
-        "sequencers": { "severity": "HIGH" },
-        "provers": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556": "TransparentUpgradeableProxy",
@@ -1949,6 +1954,10 @@
         "pauseCooldownPeriod": 2592000,
         "SCROLL_OWNER": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "pauseCooldownPeriod": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b": "TransparentUpgradeableProxy",
         "eth:0x57e26d997852e7e94915e250446C3bf43F41d98D": "PauseController"
@@ -2058,7 +2067,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2202,7 +2210,6 @@
       ],
       "proxyType": "gnosis safe",
       "description": "Multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.",
-      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2564,6 +2571,7 @@
         "$immutable": true,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xEB803eb3F501998126bf37bB823646Ed3D59d072": "ProxyAdmin"
       }
@@ -2583,7 +2591,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -3171,8 +3178,9 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
         "Executor": {
-          "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -3308,8 +3316,9 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
         "Executor": {
-          "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -3984,8 +3993,9 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
         "Executor": {
-          "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -4063,6 +4073,7 @@
         "$immutable": true,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "scr:0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81": "ProxyAdmin"
       }
@@ -4127,7 +4138,6 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
-      "critical": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -4142,6 +4152,7 @@
         "$immutable": true,
         "owner": "scr:0x0c67D8D067E349669dfEAB132A7c03A90594eE09"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "scr:0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45": "ProxyAdmin"
       }
@@ -4225,6 +4236,7 @@
         "$immutable": true,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "scr:0xA76acF000C890b0DD7AEEf57627d9899F955d026": "ProxyAdmin"
       }
@@ -4294,8 +4306,9 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
         "Executor": {
-          "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
         }
       },
@@ -4333,6 +4346,10 @@
         "PAUSE_CONTROLLER_ROLE": "0x906ae24cd9cf7cacfca327d94b093e52e6751face5c051d8ff21f5c1c3c2de23",
         "pauseCooldownPeriod": 2592000,
         "SCROLL_OWNER": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "pauseCooldownPeriod": { "severity": "HIGH" }
       },
       "implementationNames": {
         "scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd": "TransparentUpgradeableProxy",
@@ -4372,7 +4389,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -4482,7 +4498,6 @@
       ],
       "proxyType": "gnosis safe",
       "description": "L2 counterpart of ScrollAdminMultisig.",
-      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -4716,6 +4731,7 @@
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "scr:0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e": "ProxyAdmin"
       }
@@ -4780,7 +4796,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -7253,11 +7268,11 @@
     "scroll/L1USDCGateway": "0x0268dfcc7e4608b1b82280182004ae135e28bcb5c0ff8ade11d5f29a98b436d5",
     "scroll/L1WETHGateway": "0x2c64a4c320f500b832923b84ecefc7492ad8cb1a8cbf178924c774b75fd7ffe8",
     "scroll/MultipleVersionRollupVerifier": "0x12467348254718ddb1d7be2b7f101262147f9dc3ba171fa3d37fe21409f6d797",
-    "scroll/PauseController": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/PauseController": "0x18212865fd24da73b0aaef10e7169f61594995bc3ce3781a46b48c6d721c84c8",
     "scroll/ScrollChain": "0x047807130722fa3643ff477006ffca1906f79e3d9d198aee0e769485785f65b8",
     "scroll/ScrollOwner": "0x14d7a582f7d39f4ed732aa56a3c9031c8fc613fa58dfaf42f4f572f19fae54b3",
     "scroll/ScrollOwnerL2": "0x77eb1863ff595be1f6d216e4eb34cc75c37aae99c08c2cd56f8adaa13c218141",
-    "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "scroll/SystemConfig": "0x4445e6ed56e720f7012a666fd191c15d7509665193dbd3a87a2df9eb740cb4c9",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25789575, "scroll": 34684167 },

@@ -85,20 +85,8 @@
       // (template-level flag would also hit the deprecated controller 0xfC3C..., which holds no permissions)
       "critical": true
     },
-    "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e": {
-      // SP1VerifierGateway: sp1RemoteVerifier called by TaikoSP1Verifier to verify SP1 proofs
-      "critical": true
-    },
     "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
       // TimelockController (global template): manages RiscZeroVerifierRouter roles and can add/remove verifiers
-      "critical": true
-    },
-    "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609": {
-      // RISC Zero admin Safe: sole proposer/executor/canceller of the timelock and estop guardian of the RISC0 verifiers
-      "critical": true
-    },
-    "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F": {
-      // Taiko Multisig: can pause bridge and signal service (fund freeze), set withdrawal quotas, manage prover whitelist, register SGX instances
       "critical": true
     },
     // active RISC0 verifier fleet registered in the RiscZeroVerifierRouter (shared risc0/taiko groth16 templates, flagged per-project);

@@ -50,14 +50,6 @@
     "eth:0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0": { "category": "spam" },
     "eth:0xCe7a3dFcc35602155809920Ff65e093aa726f6cf": { "category": "spam" },
 
-    "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828": {
-      // Matter Labs Multisig: sole owner of the EraChainAdminProxy (Era's ChainAdmin) -> can set Era's DA validator pair / transaction filterer / validators on the Diamond (freeze) and holds the BridgeHub/CTM admin roles
-      "critical": true
-    },
-    "eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": {
-      // ZK Foundation Multisig: one of the three 3/3 signers of the EmergencyUpgradeBoard that can execute immediate, delay-free upgrades of all PUH-owned contracts incl. Era's Diamond and the shared escrows
-      "critical": true
-    },
     "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1": {
       // ProxyAdmin (owned by ProtocolUpgradeHandler): upgrade admin of BridgeHub, L1AssetRouter, L1NativeTokenVault, L1Nullifier, ChainAssetHandler, MessageRoot, CTM -> upgrading any of these steals/freezes Era's escrowed funds
       "critical": true
@@ -76,9 +68,19 @@
       "critical": true,
       "description": "Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least {{proposalThreshold_MTokens}}M ZK tokens are necessary to start a proposal and a {{currentQuorum_MTokens}}M quorum of voted tokens must be met to succeed."
     },
+    "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": {
+      // ZK token: its voting power controls the protocol governor, and its minter administration is controlled by token governance.
+      "critical": true
+    },
+    "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": {
+      // Upgrade admin of the ZK token proxy.
+      "critical": true
+    },
     "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746": {
+      "critical": true,
       "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least {{proposalThreshold_MTokens}}M ZK tokens are necessary to start a proposal (for delegates) and a {{currentQuorum_MTokens}}M quorum of voted tokens must be met to succeed.",
       "fields": {
+        "isProposeGuarded": { "severity": "HIGH" },
         "PROPOSE_GUARDIAN": {
           "permissions": [
             {
@@ -96,6 +98,10 @@
           ]
         }
       }
+    },
+    "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d": {
+      // Timelock that executes token-governance decisions, including control of token minters.
+      "critical": true
     },
     "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160": {
       "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least {{proposalThreshold_MTokens}}M ZK tokens are necessary to start a proposal and a {{currentQuorum_MTokens}}M quorum of voted tokens must be met to succeed.",

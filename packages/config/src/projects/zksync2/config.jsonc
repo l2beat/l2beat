@@ -35,7 +35,6 @@
       "fields": {
         "validatorVTL": {
           // giving the permission to the entire AC, because in practice the actor(s) have all roles
-          "severity": "HIGH", // who holds the validator roles (commit/prove/execute/revert) for Era
           "handler": {
             "type": "crossChainAccessControl",
             "pickChainAddress": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324"

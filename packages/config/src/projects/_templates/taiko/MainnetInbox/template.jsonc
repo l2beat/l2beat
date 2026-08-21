@@ -4,8 +4,8 @@
   "ignoreMethods": ["getProposalHash", "proxiableUUID"],
   "fields": {
     "paused": { "severity": "HIGH" },
-    "getCurrentForcedInclusionFee": { "severity": "HIGH" },
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

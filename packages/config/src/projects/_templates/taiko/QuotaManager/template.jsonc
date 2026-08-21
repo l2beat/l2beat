@@ -17,6 +17,7 @@
   },
   "fields": {
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -43,6 +44,7 @@
       ]
     },
     "quotaPeriod": {
+      "severity": "HIGH",
       "description": "Time in seconds for consumed quota to fully refill."
     },
     "tokenQuotas": {

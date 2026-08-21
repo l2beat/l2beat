@@ -1,3 +1,87 @@
+Generated with discovered.json: 0xc781db5f654dc8c01d37cd3d060531fa19aedc5d
+
+# Diff at Thu, 20 Aug 2026 20:07:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bd2a19ed47921b541d6d991c325212600c2751a9 block: 1783679422
+- current timestamp: 1783679422
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1783679422 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGatewayArb (arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      fieldMeta.activeVerifiers.severity:
++        "HIGH"
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayBase (base:0x3B6041173B80E77f038f3F2C0f9744f04837185e) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      fieldMeta.activeVerifiers.severity:
++        "HIGH"
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayOlder (eth:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      fieldMeta.activeVerifiers.severity:
++        "HIGH"
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      fieldMeta.activeVerifiers.severity:
++        "HIGH"
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.0.0).
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x1b2fbe1901419ad5717b1122016b381d45593460
 
 # Diff at Thu, 30 Jul 2026 14:34:13 GMT:

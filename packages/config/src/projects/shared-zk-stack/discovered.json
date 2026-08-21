@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "timestamp": 1786965974,
-  "configHash": "0x11bfd7d3be3d38f77d2bc4c118e1841d838f54042fb15e69f2bb591cc7b6eec0",
+  "configHash": "0x725a538d7285195f9f85eb4506e09970188b3c7538c4339009847e5c40310d45",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -112,6 +112,7 @@
         "owner": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": "ProxyAdmin"
       }
@@ -154,6 +155,7 @@
         "$immutable": true,
         "owner": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B": "ProxyAdmin"
       }
@@ -246,6 +248,8 @@
         ]
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "tokenMultiplierSetter": { "severity": "HIGH" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
@@ -476,6 +480,10 @@
         "sharedBridge": "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56"
       },
       "fieldMeta": {
+        "admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "paused": { "severity": "HIGH" },
+        "migrationPaused": { "severity": "HIGH" },
         "chainsCreated": {
           "description": "All new chains created go thorugh the central bridgehub and are stored here with their respective STMs."
         },
@@ -638,7 +646,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -874,14 +881,11 @@
         "unfreezeNonce": 0
       },
       "fieldMeta": {
-        "$members": { "severity": "HIGH" },
         "$threshold": { "severity": "HIGH" },
         "softFreezeNonce": {
-          "severity": "HIGH",
           "description": "Increments with each softFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for SOFT_FREEZE_PERIOD"
         },
         "hardFreezeNonce": {
-          "severity": "HIGH",
           "description": "Increments with each hardFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for HARD_FREEZE_PERIOD"
         }
       },
@@ -1012,10 +1016,7 @@
         "PROTOCOL_UPGRADE_HANDLER": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "ZKSYNC_ERA": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324"
       },
-      "fieldMeta": {
-        "$members": { "severity": "HIGH" },
-        "$threshold": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "$threshold": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8": "Guardians"
       },
@@ -1301,6 +1302,12 @@
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "paused": { "severity": "HIGH" },
+        "legacyBridge": { "severity": "HIGH" },
+        "nativeTokenVault": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56": "TransparentUpgradeableProxy",
         "eth:0x2386Bc2E26f39b72f0D4FDE0c07D68e4eEFfC725": "L1AssetRouter"
@@ -1484,7 +1491,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1572,6 +1578,11 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "WETH_TOKEN": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "paused": { "severity": "HIGH" },
+        "bridgedTokenBeacon": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6": "TransparentUpgradeableProxy",
         "eth:0x8E1C5A8c5d8C33ed0eC756d6f4006f2D875bA083": "L1NativeTokenVault"
@@ -1636,6 +1647,7 @@
         "$immutable": true,
         "owner": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1": "ProxyAdmin"
       }
@@ -1714,6 +1726,12 @@
         "storedBatchZero": "0x4e89e7408b8a0abb45917cb07d586b1b0affca0ba4e6fd450504bdea9dd079a1",
         "validatorTimelock": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
         "validatorTimelockPostV29": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "admin": { "severity": "HIGH" },
+        "validatorTimelock": { "severity": "HIGH" },
+        "validatorTimelockPostV29": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C": "TransparentUpgradeableProxy",
@@ -1882,6 +1900,12 @@
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "paused": { "severity": "HIGH" },
+        "l1AssetRouter": { "severity": "HIGH" },
+        "legacyBridge": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB": "TransparentUpgradeableProxy",
         "eth:0x71759C4eA628293F5a99aAB1585dF1c8dA4718e0": "L1Nullifier"
@@ -1921,6 +1945,7 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "migrationPaused": { "severity": "HIGH" },
         "paused": {
           "severity": "LOW",
@@ -2081,8 +2106,7 @@
         "protocolFrozenUntil": {
           "severity": "HIGH",
           "description": "Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)"
-        },
-        "emergencyUpgradesExecuted": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3": "TransparentUpgradeableProxy",
@@ -2482,6 +2506,7 @@
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": ["zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"]
       },
+      "fieldMeta": { "getMinDelay_formatted": { "severity": "HIGH" } },
       "implementationNames": {
         "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714": "TimelockController"
       }
@@ -2497,6 +2522,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.",
+      "critical": true,
       "ignoreInWatchMode": ["clock", "totalSupply"],
       "deployerAddress": "zksync:0x478A1eBE665396ce0F2F87aB0F057aC273451B92",
       "sinceTimestamp": 1716317326,
@@ -2724,6 +2750,13 @@
         "votingDelay": 259200,
         "votingPeriod": 604800
       },
+      "fieldMeta": {
+        "currentQuorum": { "severity": "HIGH" },
+        "proposalThreshold_MTokens": { "severity": "HIGH" },
+        "votingDelay": { "severity": "HIGH" },
+        "votingPeriod": { "severity": "HIGH" },
+        "lateQuorumVoteExtension": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "zksync:0x76705327e682F2d96943280D99464Ab61219e34f": "ZkProtocolGovernor"
       },
@@ -2740,6 +2773,7 @@
       ],
       "proxyType": "immutable",
       "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2837,6 +2871,14 @@
         "votingDelay": 259200,
         "votingPeriod": 604800
       },
+      "fieldMeta": {
+        "currentQuorum": { "severity": "HIGH" },
+        "proposalThreshold_MTokens": { "severity": "HIGH" },
+        "votingDelay": { "severity": "HIGH" },
+        "votingPeriod": { "severity": "HIGH" },
+        "lateQuorumVoteExtension": { "severity": "HIGH" },
+        "isProposeGuarded": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746": "ZkTokenGovernor"
       },
@@ -2901,6 +2943,7 @@
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": ["zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a"]
       },
+      "fieldMeta": { "getMinDelay_formatted": { "severity": "HIGH" } },
       "implementationNames": {
         "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a": "TimelockController"
       }
@@ -2928,6 +2971,7 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -2942,6 +2986,7 @@
         "$immutable": true,
         "owner": "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": "ProxyAdmin"
       }
@@ -2956,6 +3001,7 @@
       ],
       "proxyType": "immutable",
       "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 3d.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -3010,6 +3056,7 @@
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": ["zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"]
       },
+      "fieldMeta": { "getMinDelay_formatted": { "severity": "HIGH" } },
       "implementationNames": {
         "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d": "TimelockController"
       }
@@ -3106,6 +3153,13 @@
         "VETO_GUARDIAN": "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
         "votingDelay": 259200,
         "votingPeriod": 604800
+      },
+      "fieldMeta": {
+        "currentQuorum": { "severity": "HIGH" },
+        "proposalThreshold_MTokens": { "severity": "HIGH" },
+        "votingDelay": { "severity": "HIGH" },
+        "votingPeriod": { "severity": "HIGH" },
+        "lateQuorumVoteExtension": { "severity": "HIGH" }
       },
       "implementationNames": {
         "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160": "ZkGovOpsGovernor"
@@ -4533,17 +4587,17 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "shared-zk-stack/BridgeHub": "0xfd2849d6578c8e65be896397655debce2a55f8d0d0b3e3d12d69b926d4211260",
+    "shared-zk-stack/BridgeHub": "0x0ca129f2c9283d30f7901d57acacc97af4da37a93c6bd7f520d603d4b8676b2c",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/ChainAssetHandler": "0x8014df0d446cdb3c3b832daf6f52f4993f5315bacda2db187328db9c6a777312",
-    "shared-zk-stack/ChainTypeManager": "0xb7f925f4ec6667faaeff32265fbd70df37c380a287f8784541ddf3e7cc488598",
+    "shared-zk-stack/ChainTypeManager": "0x02d9f1f23d9ab85badca08caf6e170014e63af1bd7f8704f587cefdf0f1768cf",
     "shared-zk-stack/CTMDeploymentTracker": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
     "shared-zk-stack/EmergencyUpgradeBoard": "0xacd4df56d946492afa03616aa316816a98708b5748146311403dee1b08202d21",
     "shared-zk-stack/Guardians": "0x930c8157109c56bfeaf429f0178d7025d6b21175c4f0c9d57ad594991cc7076d",
-    "shared-zk-stack/L1AssetRouter": "0x4530b565b0dd64d0a259a829b0966d9bad2fa221c992d87478f69a5d1b62fb76",
+    "shared-zk-stack/L1AssetRouter": "0xb597793119e11f9fbaa496fc36287066fea595339e79f752b30faf484e03b720",
     "shared-zk-stack/L1GenesisUpgrade": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
-    "shared-zk-stack/L1NativeTokenVault": "0x9bb3e98b90b9d1e113cc71a85d4137492755be55071e020952622ae30a2ed397",
-    "shared-zk-stack/L1Nullifier": "0xffad2aec15a6d3fed0ca55cc600f9ee54a1148708bbb360b9b82a1a4c7c05416",
+    "shared-zk-stack/L1NativeTokenVault": "0xdbb34d948c77bf3d53fc312d8ad484a70d5bdc083eb97978bfb1dfcba4417627",
+    "shared-zk-stack/L1Nullifier": "0x614d522d7f6aed93c6d04fda3957344b9cc6c94fd8060c2c5b760b2d49e0a84a",
     "shared-zk-stack/MessageRoot": "0xbff1ea54952301b3b5c9dd16fcb265471a173687870eb62ec88bb5ad5eb68d0a",
     "shared-zk-stack/ProtocolUpgradeHandler": "0x099c2d60105ae44bb98820318a16c21effd1aef40bec6df6b8f7d7e10cbc7c63",
     "shared-zk-stack/RollupDAManager": "0xb3064b9a4b6b31c69ab9bb1337849fe653a6264b962bfb9ff611716631669310",
@@ -4551,7 +4605,7 @@
     "shared-zk-stack/SecurityCouncil": "0x0b8804832bc8dce16a070579f3ae7bd8a88ec36c613ed48e2ffc2d8fae340180",
     "shared-zk-stack/ServerNotifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/TimelockController": "0x88a31f2f805e380acd631322cde98aa81297a9600e66a23a68f7a0bcba65ff2e",
-    "shared-zk-stack/ZkGovernor": "0x0d0c5f1209dfd254e3b76edce6803b2c607f359320da39df8a032f146ab1c46c",
+    "shared-zk-stack/ZkGovernor": "0xa74519d22bf17c86980133d1db82f24ca03a2c6c1e6b34b371cd2191e5fb854c",
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
   "usedBlockNumbers": { "ethereum": 25774493, "zksync2": 71581214 },

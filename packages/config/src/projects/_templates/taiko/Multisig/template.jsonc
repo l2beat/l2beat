@@ -6,8 +6,7 @@
   "fields": {
     "multisigSettings": { "severity": "HIGH" },
     "proposalCount": {
-      "description": "total standard proposal count.",
-      "severity": "HIGH"
+      "description": "total standard proposal count."
     },
     "dao": {
       "permissions": [
@@ -18,6 +17,7 @@
       ]
     },
     "minApprovals": {
+      "severity": "HIGH",
       "copy": "multisigSettings",
       "edit": ["get", "minApprovals"]
     }

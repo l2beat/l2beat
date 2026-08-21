@@ -36,7 +36,6 @@
       "severity": "HIGH"
     },
     "emergencyUpgradesExecuted": {
-      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "_id",

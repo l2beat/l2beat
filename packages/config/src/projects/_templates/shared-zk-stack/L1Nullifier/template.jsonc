@@ -12,12 +12,16 @@
   "ignoreRelatives": ["legacyBridge"],
   "fields": {
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
           "description": "pause, unpause and set critical escrow address references."
         }
       ]
-    }
+    },
+    "paused": { "severity": "HIGH" },
+    "l1AssetRouter": { "severity": "HIGH" },
+    "legacyBridge": { "severity": "HIGH" }
   }
 }

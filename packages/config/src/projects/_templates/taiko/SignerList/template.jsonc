@@ -7,7 +7,6 @@
   "ignoreRelatives": ["settings"],
   "fields": {
     "multisigSigners": {
-      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "signers",

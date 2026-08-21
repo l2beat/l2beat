@@ -216,18 +216,25 @@ Use Node 22 through `fnm`. RPC and explorer credentials are in
 
 ## Current status
 
-- The 12-project cohort is classified and opted in.
-- Validation is complete for arbitrum, base, linea, optimism, privacy-pools,
-  railgun, tornado-cash, and uniswapv3.
-- Base has 35 current critical contracts. Safes, external-trust escrows, NFT-only
-  bridge components, and paused verifier routes are excluded.
-- Linea has 18. Safes and the unused USDC bridge are excluded; the active verifier
-  routes, canonical bridges, native-yield path, Delay module, and public liveness
-  recovery path are included. AddressFilter remains out until forced transactions
-  are activated.
-- Privacy Pools has 17: all pools, the Entrypoint, and both verifiers; its Safe is
-  excluded. Tornado Cash has 21: 19 pools, the verifier, and MiMCHasher; governance,
-  mining, reward, and routing contracts are excluded.
+- All 12 tracked projects have been validated: arbitrum, base, linea, optimism,
+  privacy-pools, railgun, scroll, starknet, taiko, tornado-cash, uniswapv3, and
+  zksync2.
+- Current perimeter sizes are: arbitrum 45, base 35, linea 18, optimism 26,
+  privacy-pools 17, railgun 8, scroll 50, starknet 49, taiko 36, tornado-cash 21,
+  uniswapv3 8, and zksync2 30. Shared dependencies are included in the Starknet,
+  Taiko, and ZKsync totals.
+- Scroll includes its project-controlled core, governance, active verifier, and
+  canonical bridge paths. Actor Safes, external-trust escrows, and retired
+  verifiers are excluded; two Safe threshold changes are explicit events.
+- Starknet includes its core plus the live shared SHARP verification chain.
+  Actor Safes and external-additional-trust bridges are excluded; operator and
+  deposit-status churn is not HIGH.
+- Taiko includes its core/governance path and active shared SP1 verifiers. Actor
+  Safes are excluded, with three direct protocol Safe threshold changes retained
+  as explicit events.
+- ZKsync Era includes its core bridge, proof, governance, and token-governance
+  paths from the project and shared stack. Actor Safes and external wstETH custody
+  are excluded; two direct Matter Labs Safe threshold changes are explicit events.
 - Removed-contract backfill is complete for the cohort; runtime history remains
   limited by the caveat above for late-added HIGH value annotations.
 - The exploit-age backtest supports retaining the two-year maturity constant. The
@@ -237,5 +244,3 @@ Use Node 22 through `fnm`. RPC and explorer credentials are in
   Merged code-bug numbers (n=243): median exploited-code age 1.9mo, 78% ≤12mo,
   88% of $2.05B verified losses on ≤12mo code, median score at incident 8/100
   under λ=2y. Keys and offchain failures are outside this metric's scope.
-- Per-project validation remains for scroll, starknet, taiko, and zksync2
-  (including shared-zk-stack).

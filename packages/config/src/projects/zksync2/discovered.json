@@ -27,6 +27,7 @@
         "$immutable": true,
         "owner": "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB": "ProxyAdmin"
       }
@@ -189,7 +190,6 @@
           }
         }
       },
-      "fieldMeta": { "validatorVTL": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": "TransparentUpgradeableProxy",
         "eth:0x6086051f93412F550C0820e76f0fbE85F64C7ef8": "ValidatorTimelock"
@@ -701,7 +701,6 @@
       },
       "fieldMeta": {
         "getAdmin": { "severity": "HIGH" },
-        "validators": { "severity": "HIGH" },
         "getTransactionFilterer": {
           "severity": "HIGH",
           "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
@@ -1193,7 +1192,8 @@
         "validatorTimelock": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776"
       },
       "fieldMeta": {
-        "multisigMembers": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "executionDelay_fmt": { "severity": "HIGH" },
         "threshold": { "severity": "HIGH" }
       },
       "implementationNames": {

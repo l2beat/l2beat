@@ -13,7 +13,6 @@
   "ignoreRelatives": ["messageQueueV1"], // deprecated
   "fields": {
     "sequencers": {
-      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "account",
@@ -28,7 +27,6 @@
       }
     },
     "provers": {
-      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "account",

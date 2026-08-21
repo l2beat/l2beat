@@ -65,7 +65,6 @@
     },
     // Responsible for updating the state
     "operators": {
-      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "operator",
@@ -81,7 +80,6 @@
     },
     "feeCollector": {
       "description": "Address receiving consumed L1 -> L2 message fees. Governance can change it even after application configuration is finalized; the zero address makes the submitting Operator the recipient.",
-      "severity": "HIGH",
       "type": "RISK_PARAMETER"
     },
     "programHash": {

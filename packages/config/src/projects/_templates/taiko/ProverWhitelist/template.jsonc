@@ -19,6 +19,7 @@
       ]
     },
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -27,7 +28,6 @@
       ]
     },
     "whitelisted": {
-      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "prover",

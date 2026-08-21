@@ -5,7 +5,6 @@
   "ignoreMethods": ["members"],
   "fields": {
     "$members": {
-      "severity": "HIGH",
       "handler": {
         "type": "array",
         "method": "members"
@@ -20,11 +19,9 @@
       }
     },
     "softFreezeNonce": {
-      "severity": "HIGH",
       "description": "Increments with each softFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for SOFT_FREEZE_PERIOD"
     },
     "hardFreezeNonce": {
-      "severity": "HIGH",
       "description": "Increments with each hardFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for HARD_FREEZE_PERIOD"
     }
   },

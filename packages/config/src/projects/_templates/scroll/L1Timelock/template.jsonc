@@ -18,6 +18,7 @@
       ]
     },
     "getMinDelayFormatted": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "getMinDelay",
@@ -26,6 +27,7 @@
       "edit": ["format", "FormatSeconds"]
     },
     "accessControl": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl"
       }
@@ -69,8 +71,7 @@
           "type": "interact",
           "description": "execute transactions that are ready."
         }
-      ],
-      "severity": "HIGH"
+      ]
     }
   }
 }

@@ -6,6 +6,7 @@
   "ignoreRelatives": ["accessControl"],
   "fields": {
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -14,6 +15,7 @@
       ]
     },
     "executionDelay_fmt": {
+      "severity": "HIGH",
       "handler": { "type": "call", "method": "executionDelay", "args": [] },
       "edit": ["format", "FormatSeconds"]
     },
@@ -40,8 +42,7 @@
           "event": "MultisigMemberChanged",
           "where": ["!=", "#isMember", true]
         }
-      },
-      "severity": "HIGH"
+      }
     },
     "$members": {
       "copy": "multisigMembers"

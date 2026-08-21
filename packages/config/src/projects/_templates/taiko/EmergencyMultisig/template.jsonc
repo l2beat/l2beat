@@ -5,8 +5,7 @@
   "ignoreMethods": ["canExecute", "getProposal", "proxiableUUID"],
   "fields": {
     "proposalCount": {
-      "description": "total count of encrypted emergency proposals created.",
-      "severity": "HIGH"
+      "description": "total count of encrypted emergency proposals created."
     },
     "multisigSettings": {
       "severity": "HIGH",
@@ -21,6 +20,7 @@
       ]
     },
     "minApprovals": {
+      "severity": "HIGH",
       "copy": "multisigSettings",
       "edit": ["get", "minApprovals"]
     }

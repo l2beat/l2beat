@@ -5,7 +5,6 @@
   "ignoreMethods": ["members"],
   "fields": {
     "$members": {
-      "severity": "HIGH",
       "handler": {
         "type": "array",
         "method": "members"

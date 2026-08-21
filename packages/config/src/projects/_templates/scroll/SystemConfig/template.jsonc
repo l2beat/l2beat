@@ -5,12 +5,19 @@
   "category": "core",
   "fields": {
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
           "description": "update the minimum delay message queue parameters and enforced mode parameters."
         }
       ]
+    },
+    "enforcedBatchParameters": {
+      "severity": "HIGH"
+    },
+    "messageQueueParameters": {
+      "severity": "HIGH"
     }
   }
 }

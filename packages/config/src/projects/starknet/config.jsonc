@@ -85,6 +85,7 @@
       }
     },
     "eth:0xA86b9b9c58d4f786F8ea89356c9c9Dde9432Ab10": {
+      "critical": false,
       "category": "non-critical",
       "ignoreRelatives": [
         "l2TokenContract",
@@ -95,6 +96,7 @@
       ]
     },
     "eth:0x96C8AE2AC9A5cd5fC354e375dB4d0ca75fc0685e": {
+      "critical": false,
       "category": "non-critical",
       "ignoreRelatives": [
         "l2TokenContract",
@@ -104,23 +106,11 @@
       ]
     },
     "eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5": {
+      "critical": false,
       "category": "non-critical"
-    },
-    // SHARP verifier call proxy that Starknet.updateStateInternal queries for fact validity: a code change can accept bogus facts and finalize arbitrary state
-    "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": {
-      "critical": true
-    },
-    // Starkware Multisig 1: sole owner of the DelayedExecutor that can upgrade the Starknet core and the ETH/STRK escrows after 8d
-    "eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988": {
-      "critical": true
-    },
-    // Starkware Multisig 2: proxy governor (upgrade) on all StarkGate escrows and StarkgateManager/Registry
-    "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": {
-      "critical": true
     },
     // Starkware Security Council: can upgrade the Starknet core, ETHBridge and STRKBridge and manage core governance (program/config hashes)
     "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": {
-      "critical": true,
       "references": [
         {
           "text": "Security Council - Starknet Docs",
@@ -132,7 +122,33 @@
       "ignoreDiscovery": true
     },
     "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4": {
+      "critical": false,
       "ignoreRelatives": ["cleareanceAddress"]
+    },
+    // Token-specific bridges carrying frontend additional trust assumptions are outside the Starknet perimeter.
+    "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605": {
+      "critical": false
+    },
+    "eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B": {
+      "critical": false
+    },
+    "eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2": {
+      "critical": false
+    },
+    "eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B": {
+      "critical": false
+    },
+    "eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb": {
+      "critical": false
+    },
+    "eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C": {
+      "critical": false
+    },
+    "eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8": {
+      "critical": false
+    },
+    "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb": {
+      "critical": false
     }
   }
 }

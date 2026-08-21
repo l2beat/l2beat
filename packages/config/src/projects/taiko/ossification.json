@@ -1,4 +1,25 @@
 {
+  "includeProjects": ["shared-sp1"],
+  "criticalEvents": [
+    {
+      "timestamp": 1747282823,
+      "type": "state",
+      "source": "tx:0xb2682b2e04c9976d3f632e8b78671fb3a588890845367ccf1f654b8e8e9ead09",
+      "reason": "Raised the operational Taiko Safe threshold from 3 to 4; the Safe shell itself is outside the contract perimeter."
+    },
+    {
+      "timestamp": 1755136523,
+      "type": "state",
+      "source": "tx:0x9888aa4ec088ca3558b16e7ef0a94f7ebcf6164f592969fdd40bd3cc2b8eb74c",
+      "reason": "Raised the operational Taiko Safe threshold from 4 to 5; the Safe shell itself is outside the contract perimeter."
+    },
+    {
+      "timestamp": 1770803603,
+      "type": "state",
+      "source": "tx:0x5cef6075a2b2ac1b0dffc0e0552aa79960344c358c660493e976de16cc78ba17",
+      "reason": "Reduced the operational Taiko Safe threshold from 5 to 4; the Safe shell itself is outside the contract perimeter."
+    }
+  ],
   "historicalContracts": [
     {
       "address": "eth:0x91f67118dd47d502b1f0c354d0611997b022f29e",

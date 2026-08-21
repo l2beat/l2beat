@@ -1,1 +1,32 @@
-{}
+{
+  "includeProjects": ["shared-sharp-verifier"],
+  "historicalContracts": [
+    {
+      "address": "eth:0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0",
+      "name": "TheLordsToken",
+      "critical": false,
+      "upgradeTimestamps": [],
+      "lastSeenAt": 1738842233,
+      "lastSeenCommit": "d0b7032a24ec8ad68bb9f32432681fd30dcd9f92",
+      "note": "External LORDS token reached only through an immutable custom bridge and never formed part of Starknet's canonical security perimeter."
+    },
+    {
+      "address": "eth:0x86fd9ca64014b465d17f1bfbbbcfbec7ebd8b1bd",
+      "name": "StarknetOpsMultisig",
+      "critical": false,
+      "upgradeTimestamps": [],
+      "lastSeenAt": 1738842233,
+      "lastSeenCommit": "d0b7032a24ec8ad68bb9f32432681fd30dcd9f92",
+      "note": "Excluded actor shell; operator identity changes do not alter the protocol mechanism."
+    },
+    {
+      "address": "eth:0x0a3f6849f78076aefadf113f5bed87720274ddc0",
+      "name": "MakerDAO Governance",
+      "critical": false,
+      "upgradeTimestamps": [],
+      "lastSeenAt": 1737970131,
+      "lastSeenCommit": "43cb526d71ed01f024dced9d5aea2a30cf306714",
+      "note": "External Maker governance for the DAI bridge's additional trust assumption, outside the Starknet perimeter."
+    }
+  ]
+}

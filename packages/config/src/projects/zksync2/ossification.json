@@ -1,5 +1,19 @@
 {
   "includeProjects": ["shared-zk-stack"],
+  "criticalEvents": [
+    {
+      "timestamp": 1741764383,
+      "type": "state",
+      "source": "tx:0x0a7e6ae7bdb680aef0261b21078159725b4cdb88146cf75a82838c0884c80e65",
+      "reason": "Raised the Matter Labs Safe threshold from 4-of-7 to 5-of-8; the Safe shell itself is outside the contract perimeter."
+    },
+    {
+      "timestamp": 1782830483,
+      "type": "state",
+      "source": "tx:0x7242d8cba18a9e6487e807d6f7833b96ac1c3a35519d242077c6c2483e84ea5d",
+      "reason": "Reduced the Matter Labs Safe threshold from 5-of-8 to 4-of-7; the Safe shell itself is outside the contract perimeter."
+    }
+  ],
   "historicalContracts": [
     {
       "address": "gateway:0x912b84eeeebeca74d307b9a2b09c68332aa5426c",

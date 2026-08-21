@@ -4,7 +4,6 @@
   "description": "Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.",
   "fields": {
     "operatorMapping": {
-      "severity": "HIGH",
       "handler": {
         "type": "array",
         "method": "operatorMapping",
@@ -22,6 +21,7 @@
       "severity": "HIGH"
     },
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

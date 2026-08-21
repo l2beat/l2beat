@@ -5,12 +5,15 @@
   "ignoreRelatives": ["WETH_TOKEN", "bridgedTokenBeacon"],
   "fields": {
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
           "description": "pause / unpause the bridge."
         }
       ]
-    }
+    },
+    "paused": { "severity": "HIGH" },
+    "bridgedTokenBeacon": { "severity": "HIGH" }
   }
 }

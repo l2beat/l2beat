@@ -5,6 +5,7 @@
   "fields": {
     "paused": { "severity": "HIGH" },
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -13,6 +14,7 @@
       ]
     },
     "pauser": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

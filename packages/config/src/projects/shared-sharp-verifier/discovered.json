@@ -1,7 +1,7 @@
 {
   "name": "shared-sharp-verifier",
   "timestamp": 1785756243,
-  "configHash": "0x86d37596916da4093fef81ab35f8711fac47c35333ec773f9d3d3b0132bdba63",
+  "configHash": "0x903a0a19375fe2029569daa3013f5270e700bb862ff7825084409315df0dd891",
   "entries": [
     {
       "name": "EcdsaPointsXColumn",
@@ -32,6 +32,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable Solidity verifier for one Cairo CPU layout. It checks the STARK proof using layout-specific constraint, OODS, Merkle, FRI, and periodic-column helper contracts. The SHARP verifier can select any configured layout by `cairoVerifierId`.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
@@ -264,6 +265,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable Solidity verifier for one Cairo CPU layout. It checks the STARK proof using layout-specific constraint, OODS, Merkle, FRI, and periodic-column helper contracts. The SHARP verifier can select any configured layout by `cairoVerifierId`.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
@@ -383,7 +385,6 @@
           "type": "RISK_PARAMETER"
         },
         "referralHasExpired": {
-          "severity": "HIGH",
           "description": "Once a referral to a verifier expires, its entry has to be removed from the all Starkware verifiers' zk catalog pages. Note that if an upstream verifier is already expired, then the current one is not reachable and could be ignored."
         }
       },
@@ -1688,6 +1689,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
@@ -1783,6 +1785,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
@@ -1888,6 +1891,7 @@
       ],
       "proxyType": "immutable",
       "description": "Stores the complete compiled Cairo outer bootloader used as the top-level program of a SHARP proof. The SHARP verifier copies these words into public memory, pinning this exact executable onchain independently of the separately committed simple, applicative, and recursive-verifier programs.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1768486895,
       "sinceBlock": 24240673,
@@ -3138,6 +3142,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable Solidity verifier for one Cairo CPU layout. It checks the STARK proof using layout-specific constraint, OODS, Merkle, FRI, and periodic-column helper contracts. The SHARP verifier can select any configured layout by `cairoVerifierId`.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
@@ -3261,6 +3266,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
@@ -3299,6 +3305,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
@@ -3318,6 +3325,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable Solidity verifier for one Cairo CPU layout. It checks the STARK proof using layout-specific constraint, OODS, Merkle, FRI, and periodic-column helper contracts. The SHARP verifier can select any configured layout by `cairoVerifierId`.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907591,
       "sinceBlock": 23531471,
@@ -3372,6 +3380,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
@@ -3410,6 +3419,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
@@ -3521,6 +3531,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
@@ -3635,6 +3646,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
@@ -3655,6 +3667,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Upgradeable call router through which Starknet and other applications access SHARP fact registries. It uses `call`, not `delegatecall`, so facts and immutable verifier configuration remain at each target registry. The explicit `isValid` entry point always queries the default target. Other calls handled by the fallback, principally proof submissions, can be routed per caller to a still-active registry in the default target's reference chain. The default target can be replaced by eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 after 8d.",
+      "critical": true,
       "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1635077695,
       "sinceBlock": 13480127,
@@ -3832,13 +3845,13 @@
           "severity": "HIGH",
           "description": "Can upgrade the proxy logic and replace the default SHARP fact registry after the configured delay. A malicious target can make arbitrary facts valid for callers routed to it."
         },
+        "upgradeActivationDelayFmt": { "severity": "HIGH" },
         "callProxyImplementation": {
           "severity": "HIGH",
           "description": "Default SHARP fact registry called by the proxy and the only registry queried directly by its explicit `isValid` entry point. Replacing it changes the complete proof-verification trust chain: outer bootloader, bootloader commitments, recursive verifier allowlist, Solidity CPU verifiers, and temporary reference registries.",
           "type": "CODE_CHANGE"
         },
         "customFactRegistryRoutes": {
-          "severity": "HIGH",
           "description": "Latest nonzero caller-to-registry fallback routes reconstructed from events. These are `call` targets, not delegatecall implementations. The stored route is usable only while the target is in the default registry's unexpired reference chain; otherwise the caller's fallback call reverts. This affects proof submissions but not the proxy's explicit `isValid`, which always queries the default target."
         }
       },
@@ -3915,6 +3928,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1782997607,
       "sinceBlock": 25445019,
@@ -3980,7 +3994,6 @@
           "type": "RISK_PARAMETER"
         },
         "referralHasExpired": {
-          "severity": "HIGH",
           "description": "Once a referral to a verifier expires, its entry has to be removed from the all Starkware verifiers' zk catalog pages. Note that if an upstream verifier is already expired, then the current one is not reachable and could be ignored."
         }
       },
@@ -4056,6 +4069,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
@@ -5007,7 +5021,6 @@
           "type": "RISK_PARAMETER"
         },
         "referralHasExpired": {
-          "severity": "HIGH",
           "description": "Once a referral to a verifier expires, its entry has to be removed from the all Starkware verifiers' zk catalog pages. Note that if an upstream verifier is already expired, then the current one is not reachable and could be ignored."
         }
       },
@@ -5909,6 +5922,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
@@ -5928,6 +5942,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable Solidity verifier for one Cairo CPU layout. It checks the STARK proof using layout-specific constraint, OODS, Merkle, FRI, and periodic-column helper contracts. The SHARP verifier can select any configured layout by `cairoVerifierId`.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
@@ -6056,6 +6071,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable Solidity verifier for one Cairo CPU layout. It checks the STARK proof using layout-specific constraint, OODS, Merkle, FRI, and periodic-column helper contracts. The SHARP verifier can select any configured layout by `cairoVerifierId`.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
@@ -6158,6 +6174,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907651,
       "sinceBlock": 23531476,
@@ -6242,7 +6259,6 @@
           "type": "RISK_PARAMETER"
         },
         "referralHasExpired": {
-          "severity": "HIGH",
           "description": "Once a referral to a verifier expires, its entry has to be removed from the all Starkware verifiers' zk catalog pages. Note that if an upstream verifier is already expired, then the current one is not reachable and could be ignored."
         }
       },
@@ -6389,6 +6405,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
@@ -6413,6 +6430,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
@@ -6432,6 +6450,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907591,
       "sinceBlock": 23531471,
@@ -6470,6 +6489,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
@@ -6597,7 +6617,6 @@
           "type": "RISK_PARAMETER"
         },
         "referralHasExpired": {
-          "severity": "HIGH",
           "description": "Once a referral to a verifier expires, its entry has to be removed from the all Starkware verifiers' zk catalog pages. Note that if an upstream verifier is already expired, then the current one is not reachable and could be ignored."
         }
       },
@@ -6616,6 +6635,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907591,
       "sinceBlock": 23531471,
@@ -6635,6 +6655,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
@@ -6654,6 +6675,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907591,
       "sinceBlock": 23531471,
@@ -6673,6 +6695,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907591,
       "sinceBlock": 23531471,
@@ -6855,6 +6878,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907603,
       "sinceBlock": 23531472,
@@ -6893,6 +6917,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
@@ -7746,6 +7771,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable Solidity verifier for one Cairo CPU layout. It checks the STARK proof using layout-specific constraint, OODS, Merkle, FRI, and periodic-column helper contracts. The SHARP verifier can select any configured layout by `cairoVerifierId`.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907651,
       "sinceBlock": 23531476,
@@ -7852,6 +7878,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
@@ -7909,6 +7936,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
@@ -7971,6 +7999,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907591,
       "sinceBlock": 23531471,
@@ -8178,6 +8207,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
@@ -8197,6 +8227,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907591,
       "sinceBlock": 23531471,
@@ -8235,6 +8266,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907591,
       "sinceBlock": 23531471,
@@ -9506,6 +9538,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
@@ -9603,6 +9636,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,
@@ -9641,6 +9675,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
@@ -9660,6 +9695,7 @@
       ],
       "proxyType": "immutable",
       "description": "Permissionless commitment calculator and registry used by the Solidity STARK verifiers. Anyone may submit a public-memory page and interaction elements; the contract computes its hash and cumulative product and registers the fact key committing to them, which the CPU verifier must bind to the proof. It is part of the proof verifier, not an application-level program registry. A malicious or nonconforming implementation can break public-memory soundness; binding to a different honest registry generally causes a liveness failure instead.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1721828687,
       "sinceBlock": 20376781,
@@ -9679,6 +9715,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907627,
       "sinceBlock": 23531474,
@@ -9763,7 +9800,6 @@
           "type": "RISK_PARAMETER"
         },
         "referralHasExpired": {
-          "severity": "HIGH",
           "description": "Once a referral to a verifier expires, its entry has to be removed from the all Starkware verifiers' zk catalog pages. Note that if an upstream verifier is already expired, then the current one is not reachable and could be ignored."
         }
       },
@@ -9830,6 +9866,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907651,
       "sinceBlock": 23531476,
@@ -9987,7 +10024,6 @@
           "type": "RISK_PARAMETER"
         },
         "referralHasExpired": {
-          "severity": "HIGH",
           "description": "Once a referral to a verifier expires, its entry has to be removed from the all Starkware verifiers' zk catalog pages. Note that if an upstream verifier is already expired, then the current one is not reachable and could be ignored."
         }
       },
@@ -10006,6 +10042,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable Solidity verifier for one Cairo CPU layout. It checks the STARK proof using layout-specific constraint, OODS, Merkle, FRI, and periodic-column helper contracts. The SHARP verifier can select any configured layout by `cairoVerifierId`.",
+      "critical": true,
       "deployerAddress": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "sinceTimestamp": 1759907615,
       "sinceBlock": 23531473,

@@ -4,5 +4,11 @@
   "description": "Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.",
   "category": "gov",
   "ignoreMethods": ["proxiableUUID"],
-  "fields": { "owner": { "permissions": [{ "type": "act" }] } }
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [{ "type": "act" }]
+    },
+    "paused": { "severity": "HIGH" }
+  }
 }

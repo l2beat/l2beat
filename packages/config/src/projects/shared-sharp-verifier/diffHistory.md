@@ -1,3 +1,427 @@
+Generated with discovered.json: 0x38acf94121ed6f9c626e6c6ebb610f6663261299
+
+# Diff at Thu, 20 Aug 2026 20:07:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bd2a19ed47921b541d6d991c325212600c2751a9 block: 1785756243
+- current timestamp: 1785756243
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785756243 (main branch discovery), not current.
+
+```diff
+    contract CpuVerifierAllSolidity_2026_13 (eth:0x015381651F240Ed6C44122dCba6Cf807c9442CD6) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: Immutable Solidity verifier for one Cairo CPU layout. It checks the STARK proof using layout-specific constraint, OODS, Merkle, FRI, and periodic-column helper contracts. The SHARP verifier can select any configured layout by `cairoVerifierId`.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuVerifierDex_2026_13 (eth:0x0cD0cDf0132c566db61B691BCEEBA2c4D8cA5CdC) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: Immutable Solidity verifier for one Cairo CPU layout. It checks the STARK proof using layout-specific constraint, OODS, Merkle, FRI, and periodic-column helper contracts. The SHARP verifier can select any configured layout by `cairoVerifierId`.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SHARPVerifier_2025_11 (eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      fieldMeta.referralHasExpired.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (eth:0x1BdE14B50e7dAeD71eE14F7e8defaa3d8A7D4420) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey0Column (eth:0x21578B24F86AdF6f59C406f641F693745C31Ea8F) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CairoBootloaderProgram (eth:0x24105e6697AdD9B4B1BDE04079a91BDFCCa24A47) [shared-sharp-verifier/CairoBootloaderProgram] {
+    +++ description: Stores the complete compiled Cairo outer bootloader used as the top-level program of a SHARP proof. The SHARP verifier copies these words into public memory, pinning this exact executable onchain independently of the separately committed simple, applicative, and recursive-verifier programs.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuVerifierRecursive_2026_13 (eth:0x2867A4509B0969531641A42a3D4A9B0A07109B6B) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: Immutable Solidity verifier for one Cairo CPU layout. It checks the STARK proof using layout-specific constraint, OODS, Merkle, FRI, and periodic-column helper contracts. The SHARP verifier can select any configured layout by `cairoVerifierId`.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (eth:0x2c9726B081305F314A74D570F0FED8dd9fab01A1) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract FriStatementContract (eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuVerifierSmall_2026_13 (eth:0x30F3AB988Cb00fe3Fb5ab891F50c13684770419b) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: Immutable Solidity verifier for one Cairo CPU layout. It checks the STARK proof using layout-specific constraint, OODS, Merkle, FRI, and periodic-column helper contracts. The SHARP verifier can select any configured layout by `cairoVerifierId`.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract MerkleStatementContract (eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuOods (eth:0x35e9F63Efc97E008f3f9097eA3293b540483e7Cb) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (eth:0x3E727f44Fd2c92bd960AAb86DaAcD1A831B16eba) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey2Column (eth:0x4576bA889ddCb27738c4D3b8dF2FF2616650BA0b) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SHARPVerifierCallProxy (eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) [shared-sharp-verifier/SHARPVerifierCallProxy] {
+    +++ description: Upgradeable call router through which Starknet and other applications access SHARP fact registries. It uses `call`, not `delegatecall`, so facts and immutable verifier configuration remain at each target registry. The explicit `isValid` entry point always queries the default target. Other calls handled by the fallback, principally proof submissions, can be routed per caller to a still-active registry in the default target's reference chain. The default target can be replaced by eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 after 8d.
+      fieldMeta.customFactRegistryRoutes.severity:
+-        "HIGH"
+      fieldMeta.upgradeActivationDelayFmt:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SHARPVerifier (eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      fieldMeta.referralHasExpired.severity:
+-        "HIGH"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PoseidonPoseidonPartialRoundKey0Column (eth:0x5318edCfEcAF84EB5A3A4D364C2dCFF06083953E) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SHARPVerifier_2026_13_1 (eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      fieldMeta.referralHasExpired.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey2Column (eth:0x69833933e59269aB062eAfDe074C059ce5DC7755) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuVerifierDexWithBitwise_2026_13 (eth:0x6a67796ee97700B5B5f5aFBCFFDCbc5F80803F11) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: Immutable Solidity verifier for one Cairo CPU layout. It checks the STARK proof using layout-specific constraint, OODS, Merkle, FRI, and periodic-column helper contracts. The SHARP verifier can select any configured layout by `cairoVerifierId`.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuVerifierStarknet_2026_13 (eth:0x71574057D12541ccDa98643aC56441838353A26D) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: Immutable Solidity verifier for one Cairo CPU layout. It checks the STARK proof using layout-specific constraint, OODS, Merkle, FRI, and periodic-column helper contracts. The SHARP verifier can select any configured layout by `cairoVerifierId`.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuOods (eth:0x7ca0201319f98b5494d90d0f8dA9427C64AF135e) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SHARPVerifier_2026_13_2 (eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      fieldMeta.referralHasExpired.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract CpuOods (eth:0x8f3af16cF4eB89f256cDebeaDd46e1b982dC4775) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuOods (eth:0x99480b7c32C4F8965fF1929a368Dd586C6DC3595) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (eth:0x9A62fa46D88697bBbEFAf5F9Ef1234E6502d31a9) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (eth:0x9Ddb8A6E3B23B33CE685e6d9f89f0ca25510AE6F) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SHARPVerifier_2024_10 (eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      fieldMeta.referralHasExpired.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract EcdsaPointsXColumn (eth:0xa3da166aef05dBa08d67EA5b442dD9574274b9Ce) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuOods (eth:0xa40115c39Dc257E5aAE39e2F311AF6a0247bb766) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuOods (eth:0xa4D0Bb20c708262155378C9D14A5A6A863E15Dd4) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PedersenHashPointsYColumn (eth:0xA55C0F91945958C40f7fa41EB650340245F4B6c2) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuOods (eth:0xaE325CE505AA13EDC30d48187B05c24A3BaC2707) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PoseidonPoseidonPartialRoundKey0Column (eth:0xb45b87Ba49C64F79df0EF81043a57999af5Ea7A0) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuVerifierRecursiveLargeOutput_2026_13 (eth:0xbe0F8F150Fd10798524B4de80eD75751658CAEF3) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: Immutable Solidity verifier for one Cairo CPU layout. It checks the STARK proof using layout-specific constraint, OODS, Merkle, FRI, and periodic-column helper contracts. The SHARP verifier can select any configured layout by `cairoVerifierId`.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PoseidonPoseidonPartialRoundKey1Column (eth:0xc1Cd710bB0d8A07A46Cc884a552091d1ED433Ccc) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (eth:0xC716C4E3f68ad6785524f65Df129fC090339dBD8) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract EcdsaPointsYColumn (eth:0xCaea5002758D5B977680Fe65164B7fE6a062C771) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuOods (eth:0xd67C6798df68b98f1ef10BEeF0f35De788014fAA) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (eth:0xd8e47340bdC4fB06D37056b1725c653836Cc81E5) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PedersenHashPointsXColumn (eth:0xDc596B881bD9e33d3A56AE86031417645d1d9E70) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey0Column (eth:0xdf10757de64811df030cf88bB700B8CC63bAB090) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (eth:0xE4937AC1Da4211c6E48cf41A7B298b74edA9B103) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey1Column (eth:0xe58327a05F21ab12AB33A4408003A87e571f810D) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract MemoryPageFactRegistry (eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460) [shared-sharp-verifier/MemoryPageFactRegistry] {
+    +++ description: Permissionless commitment calculator and registry used by the Solidity STARK verifiers. Anyone may submit a public-memory page and interaction elements; the contract computes its hash and cumulative product and registers the fact key committing to them, which the CPU verifier must bind to the proof. It is part of the proof verifier, not an application-level program registry. A malicious or nonconforming implementation can break public-memory soundness; binding to a different honest registry generally causes a liveness failure instead.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract PoseidonPoseidonFullRoundKey1Column (eth:0xE5AC9312f30623EB20D435533A4205790aF68Fd0) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SHARPVerifier_2026_13_3 (eth:0xE67515a751291445B85b2F176c1eCdf08e86b406) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      fieldMeta.referralHasExpired.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract PoseidonPoseidonPartialRoundKey1Column (eth:0xECc282Dc2571E43696d3259490faFa3b98790e20) [shared-sharp-verifier/ignoreComputeSpam] {
+    +++ description: Immutable arithmetic, constraint, Merkle/FRI, or periodic-column helper used by a Solidity Cairo CPU verifier. It is grouped as discovery noise, but its bytecode remains part of the onchain proof-verification trust chain.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SHARPVerifier_2025_12 (eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066) [shared-sharp-verifier/SHARPVerifier] {
+    +++ description: Immutable GPS statement verifier shared by Starknet and other StarkWare systems. It verifies a STARK proof of the exact Cairo bootloader stored onchain, forces the bootloader configuration into public memory, and registers a fact for every bootloader task. A fact is also considered valid when it exists in the time-limited reference fact registry.
+      fieldMeta.referralHasExpired.severity:
+-        "HIGH"
+    }
+```
+
+```diff
+    contract CpuVerifierPerpetual_2026_13 (eth:0xFFC7974cd74b95f631f454cd787AAc28F0476b44) [shared-sharp-verifier/CpuFrilessVerifier] {
+    +++ description: Immutable Solidity verifier for one Cairo CPU layout. It checks the STARK proof using layout-specific constraint, OODS, Merkle, FRI, and periodic-column helper contracts. The SHARP verifier can select any configured layout by `cairoVerifierId`.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x70b12a3c63a2daaf09f49332f18de24f6a0c8316
 
 # Diff at Mon, 03 Aug 2026 11:25:19 GMT:

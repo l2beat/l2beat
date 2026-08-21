@@ -1,4 +1,8 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "critical": true
+  "critical": true,
+  "fields": {
+    "owner": { "severity": "HIGH" },
+    "pauseCooldownPeriod": { "severity": "HIGH" }
+  }
 }

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x93a1c60b1999cf25f50a2eed7dc6dd9d9a90ee8f
+Generated with discovered.json: 0xbc58def2f01eac2a876d82f7581344208b6727e5
 
-# Diff at Thu, 20 Aug 2026 08:18:25 GMT:
+# Diff at Thu, 20 Aug 2026 20:12:03 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1787147569
+- comparing to: main@bd2a19ed47921b541d6d991c325212600c2751a9 block: 1787147569
 - current timestamp: 1787147569
 
 ## Description
@@ -19,6 +19,12 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
 ```diff
     contract TimelockSCEmergency (eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44) [scroll/L1Timelock] {
     +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
+-        "HIGH"
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -27,6 +33,12 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
 ```diff
     contract TimelockFast (eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4) [scroll/L1Timelock] {
     +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
+-        "HIGH"
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -43,6 +55,12 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
 ```diff
     contract TimelockSCSlow (eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd) [scroll/L1Timelock] {
     +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
+-        "HIGH"
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -135,6 +153,12 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
 ```diff
     contract TimelockEmergency (eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b) [scroll/L1Timelock] {
     +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
+-        "HIGH"
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -145,6 +169,8 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
     +++ description: System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"},"enforcedBatchParameters":{"severity":"HIGH"},"messageQueueParameters":{"severity":"HIGH"}}
     }
 ```
 
@@ -159,8 +185,14 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
 ```diff
     contract pufETHEscrow (eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a) [scroll/L1CustomERC20Gateway] {
     +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+      category.name:
+-        "Canonical Bridges"
++        "External Bridges"
+      category.priority:
+-        2
++        1
       critical:
-+        true
++        false
     }
 ```
 
@@ -169,8 +201,6 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
     +++ description: The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated.
       critical:
 +        true
-      fieldMeta:
-+        {"sequencers":{"severity":"HIGH"},"provers":{"severity":"HIGH"}}
     }
 ```
 
@@ -195,28 +225,14 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
-    }
-```
-
-```diff
-    contract Scroll Multisig 2 (eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) [GnosisSafe] {
-    +++ description: None
-      critical:
-+        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"},"pauseCooldownPeriod":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract ZkEvmVerifierPostEuclid-2 (eth:0xc084a6De8b0F2742396572d6f110eC87ca9329bA) [N/A] {
     +++ description: None
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract ScrollAdminMultisig (eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761) [GnosisSafe] {
-    +++ description: Multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.
       critical:
 +        true
     }
@@ -235,14 +251,8 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
-    }
-```
-
-```diff
-    contract Scroll Multisig 3 (eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) [GnosisSafe] {
-    +++ description: None
-      critical:
-+        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -285,6 +295,12 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
 ```diff
     contract TimelockSCEmergencyScroll (scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4) [scroll/L1Timelock] {
     +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
+-        "HIGH"
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -293,6 +309,12 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
 ```diff
     contract TimelockFast (scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376) [scroll/L1Timelock] {
     +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
+-        "HIGH"
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -373,6 +395,12 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
 ```diff
     contract TimelockSCSlow (scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14) [scroll/L1Timelock] {
     +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
+-        "HIGH"
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -383,14 +411,16 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract ProxyAdmin (scr:0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45) [global/ProxyAdmin] {
     +++ description: None
-      critical:
-+        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -399,12 +429,20 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract TimelockEmergency (scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f) [scroll/L1Timelock] {
     +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by anyone.
+      fieldMeta.Executor.severity:
+-        "HIGH"
+      fieldMeta.getMinDelayFormatted:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -415,6 +453,8 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"},"pauseCooldownPeriod":{"severity":"HIGH"}}
     }
 ```
 
@@ -427,24 +467,8 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Scroll Multisig 2 (scr:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) [GnosisSafe] {
-    +++ description: None
-      critical:
-+        true
-    }
-```
-
-```diff
     contract ScrollStandardERC20 (scr:0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69) [N/A] {
     +++ description: Contract of the ERC20 standard token used by the ERC20 factory.
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract ScrollAdminMultisig (scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761) [GnosisSafe] {
-    +++ description: L2 counterpart of ScrollAdminMultisig.
       critical:
 +        true
     }
@@ -463,20 +487,14 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract L2GatewayRouter (scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A) [N/A] {
     +++ description: Contract used to withdraw ERC20 tokens on L2 and finalize deposit the tokens from L1.
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract Scroll Multisig 3 (scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) [GnosisSafe] {
-    +++ description: None
       critical:
 +        true
     }

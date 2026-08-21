@@ -17,6 +17,7 @@
   "ignoreRelatives": ["getAllZKChains"],
   "fields": {
     "admin": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -25,6 +26,7 @@
       ]
     },
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -32,6 +34,8 @@
         }
       ]
     },
+    "paused": { "severity": "HIGH" },
+    "migrationPaused": { "severity": "HIGH" },
     "chainsCreated": {
       "description": "All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.",
       "handler": {

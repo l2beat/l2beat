@@ -27,6 +27,7 @@
       "edit": ["format", "FormatSeconds"]
     },
     "accessControl": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl"
       }

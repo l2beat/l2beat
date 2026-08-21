@@ -19,6 +19,7 @@
   ], // ignore validatorTimelock because it needs chain-specific config
   "fields": {
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -27,13 +28,16 @@
       ]
     },
     "admin": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
           "description": "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role)."
         }
       ]
-    }
+    },
+    "validatorTimelock": { "severity": "HIGH" },
+    "validatorTimelockPostV29": { "severity": "HIGH" }
   },
   "category": "shared"
 }

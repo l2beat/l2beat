@@ -1,4 +1,18 @@
 {
+  "criticalEvents": [
+    {
+      "timestamp": 1779270407,
+      "type": "state",
+      "source": "tx:0xe2e005c681f783fbd6d4c9c5bb5b40a554826434546377ce253e5dcd6f557461",
+      "reason": "Reduced the L1 ops-fast Safe threshold from 3-of-5 to 2-of-4; the Safe shell itself is outside the contract perimeter."
+    },
+    {
+      "timestamp": 1779270521,
+      "type": "state",
+      "source": "tx:0x88316f5cba9e68d6bcb54f52470e58c5a2270675c62ed4f0ca05f2b1dde173f7",
+      "reason": "Reduced the L2 ops-fast Safe threshold from 3-of-5 to 2-of-4; the Safe shell itself is outside the contract perimeter."
+    }
+  ],
   "historicalContracts": [
     {
       "address": "eth:0x1abaea1f7c830bd89acc67ec4af516284b1bc33c",
@@ -17,6 +31,15 @@
       "lastSeenAt": 1756131373,
       "lastSeenCommit": "90dd8b76055bf0f493df8c45097d37e26f847015",
       "note": "Phantom entry: the L1WETHGateway address resolved on the scroll chain (unverified immutable contract, no values or permissions); nothing on either chain trusts the scroll-chain address, so its compromise reaches no funds; removed by the cross-chain discovery refactor."
+    },
+    {
+      "address": "scr:0xf610a9dfb7c89644979b4a0f27063e9e7d7cda32",
+      "name": "L2WstETHToken",
+      "critical": false,
+      "upgradeTimestamps": [1708227027, 1714657169],
+      "lastSeenAt": 1745479453,
+      "lastSeenCommit": "f3ec8b7fe4d902b94844aa2f7ddfb2affe4f3f61",
+      "note": "Lido-governed L2 token for the external wstETH bridge, which carries additional trust assumptions and is outside the Scroll perimeter."
     },
     {
       "address": "eth:0x0d7e906bd9cafa154b048cfa766cc1e54e39af9b",

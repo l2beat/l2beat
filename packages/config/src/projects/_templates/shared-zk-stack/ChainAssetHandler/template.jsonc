@@ -4,6 +4,7 @@
   "description": "Specialized contract for managing chain assets, i.e. chain migrations.",
   "fields": {
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         { "type": "interact", "description": "pause, resume chain migrations." }
       ]

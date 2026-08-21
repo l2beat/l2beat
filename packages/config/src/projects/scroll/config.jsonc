@@ -90,7 +90,6 @@
     },
     "eth:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": {
       // proposer on TimelockSCEmergency/TimelockSCSlow: no-delay core upgrades, verifier updates, ScrollOwner role admin
-      "critical": true,
       "description": "Multisig of Scroll team operators that controls the rollup's upgrade and proof-system parameter paths.",
       "references": [
         {
@@ -105,7 +104,6 @@
     },
     "scr:0xcca54B0916Cee2186b47E9709BEdcb7041A8F761": {
       // proposer on L2 TimelockSCEmergencyScroll/TimelockSCSlow: no-delay upgrades of all L2 core contracts
-      "critical": true,
       "description": "L2 counterpart of ScrollAdminMultisig.",
       "references": [
         {
@@ -115,8 +113,11 @@
       ]
     },
     "eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": {
+      // pufETH escrow is governed by Puffer and has additional trust assumptions, so it is outside the Scroll perimeter.
+      "critical": false,
       "ignoreRelatives": ["owner", "$admin", "counterpart"],
-      "fields": { "counterpart": { "edit": ["format", "ScrollAddress"] } }
+      "fields": { "counterpart": { "edit": ["format", "ScrollAddress"] } },
+      "category": "bridge-external"
     },
     "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515": {
       // DaiEscrow: holds DAI counted in TVS. Maker/Sky-governed external escrow, outside the ossification perimeter.
@@ -382,10 +383,6 @@
       // ProxyAdmin of all L2 core proxies (L2ScrollMessenger, gateways, USDC)
       "critical": true
     },
-    "scr:0x8e34D07Eb348716a1f0a48A507A9de8a3A6DcE45": {
-      // ProxyAdmin of L2LidoGateway (counterpart of the wstETH escrow)
-      "critical": true
-    },
     "scr:0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e": {
       // ProxyAdmin of SCRToken (SCR counted in TVS; SCR is also governance voting power)
       "critical": true
@@ -393,25 +390,6 @@
     "scr:0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81": {
       // ProxyAdmin of AgoraGovernor, which is proposer on the DEFAULT_ADMIN timelock of ScrollOwner (L2)
       "critical": true
-    },
-    "eth:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": {
-      // proposer on TimelockEmergency (emergency-nodelay role): can pause ScrollChain/messenger/queue (freezing), remove sequencers/provers, revert unfinalized batches
-      "critical": true
-    },
-    "scr:0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc": {
-      // proposer on L2 TimelockEmergency (emergency-nodelay role): can pause L2ScrollMessenger via L2PauseController and pause the L2 USDC gateway (freezing)
-      "critical": true
-    },
-    "eth:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": {
-      // proposer on TimelockFast (ops-fast role): can set ERC20 gateway mappings in L1GatewayRouter and update token mappings in custom/NFT gateways (redirect deposits/withdrawals)
-      "critical": true
-    },
-    "scr:0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": {
-      // proposer on L2 TimelockFast (ops-fast role): can transfer ownership of Scroll USDC and MasterMinter (unauthorized minting against L1 escrow) and change L2 gateway/token mappings
-      "critical": true
-    },
-    "scr:0x8aE8f22226B9d789A36AC81474e633f8bE2856c9": {
-      // L2LidoGateway: trusted counterpart of the wstETH escrow, can send withdrawal messages releasing it. Lido-governed external bridge, outside the ossification perimeter.
     },
     "scr:0x33B60d5Dd260d453cAC3782b0bDC01ce84672142": {
       // L2USDCGateway: trusted counterpart of L1USDCGateway, burns/mints L2 USDC and can send withdrawal messages releasing the L1 USDC escrow

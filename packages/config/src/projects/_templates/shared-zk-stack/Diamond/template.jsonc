@@ -46,7 +46,6 @@
       ]
     },
     "validators": {
-      "severity": "HIGH",
       "handler": {
         "type": "zksynceraValidators"
       },
