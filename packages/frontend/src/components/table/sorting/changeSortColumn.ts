@@ -38,6 +38,7 @@ export function withChangeSort<TData, TValue>(
       header: CHANGE_SORT_HEADERS[opts.period],
       sortUndefined: 'last',
       sortDescFirst: true,
+      enableHiding: false,
       meta: {
         isChangeSortColumn: true,
       },

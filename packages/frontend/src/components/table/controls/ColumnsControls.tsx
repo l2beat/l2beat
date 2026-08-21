@@ -32,9 +32,8 @@ export function ColumnsControls<T>({ columns }: Props<T>) {
     column.columns.length > 0 ? column.columns : [column],
   )
 
-  const pickerColumns = columnsWithoutGroups.filter(
-    (column) =>
-      column.getCanHide() && !column.columnDef.meta?.isChangeSortColumn,
+  const pickerColumns = columnsWithoutGroups.filter((column) =>
+    column.getCanHide(),
   )
 
   return (
