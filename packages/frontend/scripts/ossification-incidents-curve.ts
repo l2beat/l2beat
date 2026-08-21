@@ -47,6 +47,7 @@ interface RegistryRow {
 interface BatchResult {
   status: string
   ageDays?: number
+  incidentTs?: number
   source: string
 }
 
@@ -80,7 +81,13 @@ function main() {
     ageSeconds.push((r.ageDays ?? 0) * 24 * 60 * 60)
   }
   const registryBySource = new Map(registry.map((r) => [r.source, r]))
-  for (const r of Object.values(batch)) {
+  // one observation per (chain, contract): repeated exploits of the same
+  // contract are not independent — the earliest measured incident wins
+  // (deterministic, insertion-order independent)
+  const batchRows = Object.values(batch).sort(
+    (a, b) => (a.incidentTs ?? 0) - (b.incidentTs ?? 0),
+  )
+  for (const r of batchRows) {
     const reg = registryBySource.get(r.source)
     if (!reg || r.status !== 'OK' || reg.category !== 'code-bug') continue
     const key = `${reg.chain}:${reg.contract.toLowerCase()}`
