@@ -6,11 +6,7 @@ import {
   isImplementationChangeDiffBody,
 } from '~/utils/diffHistory/diffHistoryMarkdown'
 import type { DiscoveryUpdate } from '../recent-changes/getDiscoveryUpdates'
-
-/** Maturity time constant: m(age) = 1 - exp(-age / lambda).
- *  Two years, per the slow decay of residual vulnerability rates in
- *  unchanged code (Ozment & Schechter 2006). */
-export const OSSIFICATION_LAMBDA_SECONDS = 2 * 365 * 24 * 60 * 60
+import { OSSIFICATION_CURVE } from './ossificationCurve'
 /** Critical changes within this window count as a single event, so the
  *  rate measures project decisions (one fork, one governance execution),
  *  not how many fields we annotated. */
@@ -74,9 +70,12 @@ export interface OssificationCriticalEvent {
 }
 
 export interface OssificationFactor {
-  /** 0-100 maturity of the project-wide critical perimeter */
+  /** 0-100: the share of recorded code-bug exploits (published, versioned
+   *  incident dataset — see ossificationCurve.ts) whose exploited code was
+   *  younger than this perimeter's age. 0 while any critical contract is
+   *  unverified. */
   score: number
-  /** 0..1 maturity of the project-wide critical perimeter */
+  /** score as a 0..1 fraction; 0 gates exposure when unverified */
   maturity: number
   /** The project clock starts at the most recent deployment or critical
    *  change anywhere in the critical perimeter. */
@@ -197,7 +196,7 @@ export function getOssificationFactor(
   )
   const maturity = hasUnverifiedContract
     ? 0
-    : 1 - Math.exp(-projectAgeSeconds / OSSIFICATION_LAMBDA_SECONDS)
+    : exploitAgePercentile(projectAgeSeconds)
 
   // youngest clock first
   breakdowns.sort((a, b) => (b.clockStart ?? 0) - (a.clockStart ?? 0))
@@ -449,6 +448,35 @@ function getObservationStart(
     }
   }
   return start
+}
+
+/** Interpolated percentile of `ageSeconds` within the published exploit-age
+ *  curve: the share of recorded code-bug exploits whose exploited code was
+ *  younger. Uses Weibull plotting positions p_i = (i+1)/(n+1), linear between
+ *  knots, so the score approaches (not fakes) 0 and 100 at the extremes. */
+export function exploitAgePercentile(ageSeconds: number): number {
+  const knots: readonly number[] = OSSIFICATION_CURVE.ageKnots
+  const n = knots.length
+  if (n === 0) return 0
+  const p = (index: number) => (index + 1) / (n + 1)
+  const first = knots[0] ?? 0
+  if (ageSeconds <= first) {
+    return first <= 0 ? p(0) : (ageSeconds / first) * p(0)
+  }
+  const last = knots[n - 1] ?? 0
+  if (ageSeconds >= last) return p(n - 1)
+  // binary search: last knot <= ageSeconds
+  let lo = 0
+  let hi = n - 1
+  while (lo + 1 < hi) {
+    const mid = (lo + hi) >> 1
+    if ((knots[mid] ?? 0) <= ageSeconds) lo = mid
+    else hi = mid
+  }
+  const a = knots[lo] ?? 0
+  const b = knots[hi] ?? a
+  const frac = b > a ? (ageSeconds - a) / (b - a) : 0
+  return p(lo) + frac * (p(hi) - p(lo))
 }
 
 function getProjectClockStart(

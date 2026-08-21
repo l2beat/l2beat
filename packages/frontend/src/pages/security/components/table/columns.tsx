@@ -30,7 +30,7 @@ export const ossificationColumns = [
     ),
     meta: {
       tooltip:
-        'Maturity of the project-wide critical perimeter: grows the longer all critical contracts stay unchanged, on a scale saturating over years.',
+        'Ossification N: the project-wide critical perimeter has stayed unchanged longer than the exploited code in N% of recorded code-bug exploits (published incident dataset, ages verified onchain).',
     },
     sortDescFirst: true,
   }),

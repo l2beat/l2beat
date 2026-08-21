@@ -347,22 +347,8 @@ async function main() {
         `<= ${(cut * 12).toFixed(0).padStart(2)}mo: ${(100 * frac).toFixed(0)}% of code-bug exploits`,
       )
     }
-    // exponential MLE on exploit ages: lambda_hat = mean age
     const mean = ages.reduce((a, b) => a + b, 0) / ages.length
-    console.log(
-      `\nexponential MLE on exploit ages: mean = ${mean.toFixed(2)}y (maturity λ should be >= this scale; current λ = 2y)`,
-    )
-    console.log('\n=== hypothetical ossification at incident, per λ ===')
-    for (const lambda of [1, 1.5, 2, 3]) {
-      const scores = ages.map((a) => 100 * (1 - Math.exp(-a / lambda)))
-      const s = [...scores].sort((x, y) => x - y)
-      const med = s[Math.floor(0.5 * (s.length - 1))] ?? 0
-      const below25 = scores.filter((x) => x < 25).length / scores.length
-      const below50 = scores.filter((x) => x < 50).length / scores.length
-      console.log(
-        `λ=${lambda}y: median score ${med.toFixed(0)}, <25: ${(100 * below25).toFixed(0)}%, <50: ${(100 * below50).toFixed(0)}% of exploited code`,
-      )
-    }
+    console.log(`\nexploit-age mean: ${mean.toFixed(2)}y`)
     const lossTotal = measured.reduce((a, r) => a + r.lossUsd, 0)
     const lossYoung = measured
       .filter((r) => (r.ageDays ?? 0) <= 365)

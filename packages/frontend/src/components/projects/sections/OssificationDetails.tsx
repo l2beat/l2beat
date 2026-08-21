@@ -26,10 +26,11 @@ export function OssificationDetails({
           counts as a change to the project; changes within 24 hours count as
           one event. Code changes are implementation upgrades, while state
           changes are high-severity value changes. A mixed update counts as a
-          code change. Ossification grows the longer the perimeter stays
-          unchanged. The battle-tested exposure is the value secured summed up
-          over that unchanged period — the implicit bug bounty the code has
-          withstood.
+          code change. Ossification N means the unchanged perimeter has outlived
+          the code age of N% of the recorded code-bug exploits in our published
+          incident dataset (v2026-08, n=243, ages verified onchain). The
+          battle-tested exposure is the value secured summed up over that
+          unchanged period — the implicit bug bounty the code has withstood.
         </p>
         <ChartStats className="md:grid-cols-2 lg:grid-cols-4">
           <ChartStatsItem label="Ossification" className="max-md:h-7">

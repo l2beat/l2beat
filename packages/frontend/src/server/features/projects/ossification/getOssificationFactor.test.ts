@@ -2,9 +2,14 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { DiscoveryUpdate } from '../recent-changes/getDiscoveryUpdates'
 import {
+  exploitAgePercentile,
   getOssificationFactor,
   type OssificationContractInput,
 } from './getOssificationFactor'
+
+const scoreAt = (ageSeconds: number) =>
+  Math.round(100 * exploitAgePercentile(ageSeconds))
+
 import {
   collectEscrowSeeds,
   type DiscoveredEntryLite,
@@ -107,8 +112,9 @@ describe(getOssificationFactor.name, () => {
       [],
       NOW,
     )
-    // m(4y) = 1 - e^-2 = 0.8647
-    expect(result?.score).toEqual(86)
+    // the empirical percentile of a 4y-old perimeter (dataset 2026-08)
+    expect(result?.score).toEqual(scoreAt(4 * YEAR))
+    expect(result?.score ?? 0).toBeGreaterThan(90)
     expect(result?.projectAgeSeconds).toEqual(4 * YEAR)
     expect(result?.lastCriticalChange).toEqual(null)
     expect(result?.criticalChangesPerYear).toEqual(0)
@@ -122,8 +128,7 @@ describe(getOssificationFactor.name, () => {
       [],
       NOW,
     )
-    // m(2y) = 1 - e^-1 = 0.632
-    expect(result?.score).toEqual(63)
+    expect(result?.score).toEqual(scoreAt(2 * YEAR))
     expect(result?.lastCriticalChange).toEqual(NOW - 2 * YEAR)
     expect(result?.contracts[0]?.codeChangeCount).toEqual(1)
     expect(result?.contracts[0]?.stateChangeCount).toEqual(0)
@@ -254,8 +259,9 @@ describe(getOssificationFactor.name, () => {
       { id: `update-${NOW - 30 * DAY}`, type: 'state' },
     ])
     expect(result?.projectAgeSeconds).toEqual(30 * DAY)
-    // m(30d) is tiny
-    expect(result?.score ?? 100).toBeLessThan(10)
+    expect(result?.score).toEqual(scoreAt(30 * DAY))
+    // a 30d-old perimeter is younger than most exploited code
+    expect(result?.score ?? 100).toBeLessThan(50)
   })
 
   it('ignores implementation-change diffs when $pastUpgrades covers them', () => {
@@ -417,7 +423,7 @@ describe(getOssificationFactor.name, () => {
     )
     expect(result?.projectClockStart).toEqual(NOW - 30 * DAY)
     expect(result?.projectAgeSeconds).toEqual(30 * DAY)
-    expect(result?.score ?? 100).toBeLessThan(10)
+    expect(result?.score).toEqual(scoreAt(30 * DAY))
   })
 
   it('does not score a perimeter with an unknown contract clock', () => {
@@ -448,7 +454,7 @@ describe(getOssificationFactor.name, () => {
     )
     // clock and score come from the live perimeter only
     expect(result?.projectAgeSeconds).toEqual(4 * YEAR)
-    expect(result?.score).toEqual(86)
+    expect(result?.score).toEqual(scoreAt(4 * YEAR))
     expect(result?.contracts.length ?? 0).toEqual(1)
     // events from the removed contract still count
     expect(result?.lastCriticalChange).toEqual(NOW - 1 * YEAR)
