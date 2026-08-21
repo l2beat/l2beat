@@ -15,6 +15,7 @@ import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { getL2CommonProjectColumns } from '~/components/table/common-project-columns/L2CommonProjectColumns'
+import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import { sortStages } from '~/components/table/sorting/sortStages'
 import { TableLink } from '~/components/table/TableLink'
 import {
@@ -88,77 +89,92 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
         sortUndefined: 'last',
       },
     ),
-    columnHelper.accessor(
-      (e) => {
-        return e.tvs?.breakdown?.total ?? 0
-      },
-      {
-        id: 'total',
-        header: 'Total value secured',
-        cell: (ctx) => {
-          if (opts?.isTvsLoading) {
-            return (
-              <div className="flex justify-end">
-                <Skeleton className="h-6 w-45" />
-              </div>
-            )
-          }
-          const value = ctx.row.original.tvs
+    ...withChangeSort(
+      columnHelper,
+      columnHelper.accessor(
+        (e) => {
+          return e.tvs?.breakdown?.total ?? 0
+        },
+        {
+          id: 'total',
+          header: 'Total value secured',
+          cell: (ctx) => {
+            if (opts?.isTvsLoading) {
+              return (
+                <div className="flex justify-end">
+                  <Skeleton className="h-6 w-45" />
+                </div>
+              )
+            }
+            const value = ctx.row.original.tvs
 
-          return (
-            <TotalCellWithTvsBreakdown
-              href={`/layer2s/tvs?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
-              associatedTokens={value.associatedTokens}
-              tvsWarnings={value.warnings}
-              breakdown={value.breakdown}
-              additionalTrustAssumptionsPercentage={
-                value.additionalTrustAssumptionsPercentage
-              }
-              change={value.change?.total}
-              changePeriod={value.changePeriod}
-              syncWarning={value.syncWarning}
-            />
-          )
+            return (
+              <TotalCellWithTvsBreakdown
+                href={`/layer2s/tvs?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+                associatedTokens={value.associatedTokens}
+                tvsWarnings={value.warnings}
+                breakdown={value.breakdown}
+                additionalTrustAssumptionsPercentage={
+                  value.additionalTrustAssumptionsPercentage
+                }
+                change={value.change?.total}
+                changePeriod={value.changePeriod}
+                syncWarning={value.syncWarning}
+              />
+            )
+          },
+          meta: {
+            align: 'right',
+            cellClassName: 'pl-3',
+            tooltip:
+              'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
+          },
         },
-        meta: {
-          align: 'right',
-          cellClassName: 'pl-3',
-          tooltip:
-            'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
-        },
+      ),
+      {
+        getChange: (row) => row.tvs?.change?.total,
+        period: '7D',
       },
     ),
-    columnHelper.accessor('activity.pastDayUops', {
-      header: 'Past day UOPS',
-      cell: (ctx) => {
-        const data = ctx.row.original.activity
-        if (!data) {
-          return <NoDataBadge />
-        }
+    ...withChangeSort(
+      columnHelper,
+      columnHelper.accessor('activity.pastDayUops', {
+        id: 'pastDayUops',
+        header: 'Past day UOPS',
+        cell: (ctx) => {
+          const data = ctx.row.original.activity
+          if (!data) {
+            return <NoDataBadge />
+          }
 
-        return (
-          <TableLink
-            href={`/layer2s/activity?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
-          >
-            <SyncStatusWrapper isSynced={data.isSynced}>
-              <ValueWithPercentageChange
-                change={data?.change}
-                changePeriod={data.changePeriod}
-                disabledOnMobile
-              >
-                {formatActivityCount(ctx.getValue())}
-              </ValueWithPercentageChange>
-            </SyncStatusWrapper>
-          </TableLink>
-        )
+          return (
+            <TableLink
+              href={`/layer2s/activity?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+            >
+              <SyncStatusWrapper isSynced={data.isSynced}>
+                <ValueWithPercentageChange
+                  change={data?.change}
+                  changePeriod={data.changePeriod}
+                  disabledOnMobile
+                >
+                  {formatActivityCount(ctx.getValue())}
+                </ValueWithPercentageChange>
+              </SyncStatusWrapper>
+            </TableLink>
+          )
+        },
+        sortUndefined: 'last',
+        meta: {
+          align: 'right',
+          tooltip:
+            'User operations per second averaged over the past day, shown together with a percentage change compared to 7D ago.',
+        },
+      }),
+      {
+        getChange: (row) => row.activity?.change,
+        period: '7D',
       },
-      sortUndefined: 'last',
-      meta: {
-        align: 'right',
-        tooltip:
-          'User operations per second averaged over the past day, shown together with a percentage change compared to 7D ago.',
-      },
-    }),
+    ),
   ]
 }
 

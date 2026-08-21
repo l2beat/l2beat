@@ -13,6 +13,16 @@ declare module '@tanstack/react-table' {
     hideIfNull?: boolean
     tooltip?: ReactNode
     /**
+     * TanStack column that BasicTable does not render. Used to sort by
+     * percentage change; excluded from the column picker via enableHiding: false.
+     */
+    isChangeSortColumn?: boolean
+    /**
+     * Id of the sort-only companion column that sorts this cell by percentage
+     * change. Renders a second sort control in the header.
+     */
+    changeSortColumnId?: string
+    /**
      * @see BasicDaTable
      * How many rows a cell should span across
      */

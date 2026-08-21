@@ -8,6 +8,7 @@ import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { getL2CommonProjectColumns } from '~/components/table/common-project-columns/L2CommonProjectColumns'
+import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import { TableLink } from '~/components/table/TableLink'
 import type { L2RiskDaEntry } from '~/server/features/layer2s/risks/data-availability/getL2RiskDaEntries'
 
@@ -19,36 +20,43 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
       columnHelper,
       (row) => `/layer2s/projects/${row.slug}`,
     ),
-    columnHelper.accessor((entry) => entry.dataPosted?.pastDay, {
-      id: 'dataPosted',
-      header: 'Past day data posted',
-      cell: (ctx) => {
-        const data = ctx.row.original.dataPosted
-        if (!data) {
-          return <NoDataBadge />
-        }
+    ...withChangeSort(
+      columnHelper,
+      columnHelper.accessor((entry) => entry.dataPosted?.pastDay, {
+        id: 'dataPosted',
+        header: 'Past day data posted',
+        cell: (ctx) => {
+          const data = ctx.row.original.dataPosted
+          if (!data) {
+            return <NoDataBadge />
+          }
 
-        return (
-          <TableLink
-            href={`/layer2s/projects/${ctx.row.original.slug}#data-posted`}
-          >
-            <ValueWithPercentageChange
-              change={data.change}
-              changePeriod={data.changePeriod}
-              className="font-medium text-xs md:text-sm"
+          return (
+            <TableLink
+              href={`/layer2s/projects/${ctx.row.original.slug}#data-posted`}
             >
-              {formatBytes(data.pastDay)}
-            </ValueWithPercentageChange>
-          </TableLink>
-        )
+              <ValueWithPercentageChange
+                change={data.change}
+                changePeriod={data.changePeriod}
+                className="font-medium text-xs md:text-sm"
+              >
+                {formatBytes(data.pastDay)}
+              </ValueWithPercentageChange>
+            </TableLink>
+          )
+        },
+        sortUndefined: 'last',
+        meta: {
+          align: 'right',
+          tooltip:
+            'The data posted by the project to the DA layer over the past day, together with a % change compared to 7D ago.',
+        },
+      }),
+      {
+        getChange: (row) => row.dataPosted?.change,
+        period: '7D',
       },
-      sortUndefined: 'last',
-      meta: {
-        align: 'right',
-        tooltip:
-          'The data posted by the project to the DA layer over the past day, together with a % change compared to 7D ago.',
-      },
-    }),
+    ),
     !hideProofSystem &&
       columnHelper.accessor('proofSystem', {
         header: 'Proof system',

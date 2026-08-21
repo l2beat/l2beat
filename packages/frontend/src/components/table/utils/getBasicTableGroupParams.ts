@@ -1,11 +1,12 @@
 import type { Column } from '@tanstack/react-table'
+import { isSortOnlyColumn } from './renderedTableColumns'
 
 export function getBasicTableGroupParams<T>(column: Column<T>) {
   if (!column.parent) return undefined
 
   const leafColumns = column.parent
     .getLeafColumns()
-    .filter((c) => c.getIsVisible())
+    .filter((c) => c.getIsVisible() && !isSortOnlyColumn(c))
   const index = leafColumns.findIndex((c) => c.id === column.id)
   return {
     headerTitle: column.parent.columnDef.header,
