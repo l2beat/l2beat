@@ -6,7 +6,8 @@ export type NavGroup =
       icon: React.ReactNode
       disableMobileTabs?: boolean
       links: NavLink[]
-      secondaryLinks?: NavLink[]
+      /** Link sections rendered after `links`, each preceded by a separator. */
+      secondaryLinks?: NavLink[][]
     }
   | ({
       type: 'single'

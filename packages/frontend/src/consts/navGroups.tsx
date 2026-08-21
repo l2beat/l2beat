@@ -1,5 +1,5 @@
 import compact from 'lodash/compact'
-import type { NavGroup } from '~/components/nav/types'
+import type { NavGroup, NavLink } from '~/components/nav/types'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/Bridges'
@@ -29,7 +29,7 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     icon: (
       <L2Icon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
-    links: [
+    links: compact<NavLink>([
       {
         title: 'Summary',
         href: '/layer2s/summary',
@@ -76,13 +76,21 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
         title: 'Costs',
         href: '/layer2s/costs',
       },
-    ],
-    secondaryLinks: [
-      {
-        title: 'Archived',
-        href: '/layer2s/archived',
-      },
-    ],
+    ]),
+    secondaryLinks: compact<NavLink[]>([
+      [
+        {
+          title: 'Archived',
+          href: '/layer2s/archived',
+        },
+      ],
+      env.CLIENT_SIDE_COMPARE_PROJECTS && [
+        {
+          title: 'Compare',
+          href: '/layer2s/compare',
+        },
+      ],
+    ]),
   },
   {
     type: 'multiple',
@@ -153,10 +161,12 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
       },
     ],
     secondaryLinks: [
-      {
-        title: 'Archived',
-        href: '/data-availability/archived',
-      },
+      [
+        {
+          title: 'Archived',
+          href: '/data-availability/archived',
+        },
+      ],
     ],
   },
   {

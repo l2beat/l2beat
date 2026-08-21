@@ -22,7 +22,10 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
     })
   if (!currentGroup) return null
 
-  const links = [...currentGroup.links, ...(currentGroup.secondaryLinks ?? [])]
+  const links = [
+    ...currentGroup.links,
+    ...(currentGroup.secondaryLinks ?? []).flat(),
+  ]
 
   // Do not display the tabs if the current group is not found,
   // or the current group does not have a link that matches the current path.
