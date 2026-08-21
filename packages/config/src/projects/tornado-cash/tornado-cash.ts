@@ -108,7 +108,7 @@ export const tornadoCash: BaseProject = {
   statuses: {
     yellowWarning: undefined,
     redWarning: {
-      text: 'The tornado.cash website linked from the official project GitHub is malicious. Using it will result in the loss of deposited funds.',
+      text: 'The tornado.cash website linked from the official project GitHub is malicious. Using it will result in the loss of deposited funds. Visit the official TORN DAO telegram channel for more info: https://t.me/TornadoCashOfficialDAO.',
     },
     emergencyWarning: undefined,
     reviewStatus: undefined,
@@ -123,6 +123,7 @@ export const tornadoCash: BaseProject = {
     ),
     links: {
       websites: ['https://app.ens.domains/tornadocash.eth?tab=records'],
+      socialMedia: ['https://t.me/TornadoCashOfficialDAO'],
     },
     badges: [],
   },

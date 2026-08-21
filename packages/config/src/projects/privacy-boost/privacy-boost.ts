@@ -221,7 +221,7 @@ export const privacyBoost: BaseProject = {
     },
     privacy: {
       value: 'Auditable admin API',
-      sentiment: 'warning',
+      sentiment: 'bad',
       description:
         "All private data lives as plaintext within a TEE server. Registered auditors can use the TEE's Audit API to fetch the balance and transaction history of any address, and the TEE produces an auditable onchain record on the AuditGateway smart contract.",
     },
