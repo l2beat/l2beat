@@ -9,6 +9,7 @@ import {
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { getDaCommonProjectColumns } from '~/components/table/common-project-columns/DaCommonProjectColumns'
+import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import { TableLink } from '~/components/table/TableLink'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
 import { formatTimestamp } from '~/utils/dates'
@@ -195,35 +196,43 @@ export const publicSystemsColumns = [
         'The project that has posted the largest amount of data over the past day.',
     },
   }),
-  columnHelper.accessor((e) => e.data?.pastDayData?.totalPosted, {
-    header: 'past day\ntotal data posted',
-    cell: (ctx) => {
-      const data = ctx.row.original.data?.pastDayData
-      if (!data?.totalPosted) {
+  ...withChangeSort(
+    columnHelper,
+    columnHelper.accessor((e) => e.data?.pastDayData?.totalPosted, {
+      id: 'totalPosted',
+      header: 'past day\ntotal data posted',
+      cell: (ctx) => {
+        const data = ctx.row.original.data?.pastDayData
+        if (!data?.totalPosted) {
+          return (
+            <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
+              <TableValueCell emptyMode="no-data" value={undefined} />
+            </SyncStatusWrapper>
+          )
+        }
+
         return (
           <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
-            <TableValueCell emptyMode="no-data" value={undefined} />
+            <ValueWithPercentageChange
+              change={data.change}
+              changePeriod={data.changePeriod}
+              className="font-medium text-xs md:text-sm"
+            >
+              {formatBytes(data.totalPosted)}
+            </ValueWithPercentageChange>
           </SyncStatusWrapper>
         )
-      }
-
-      return (
-        <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
-          <ValueWithPercentageChange
-            change={data.change}
-            changePeriod={data.changePeriod}
-            className="font-medium text-xs md:text-sm"
-          >
-            {formatBytes(data.totalPosted)}
-          </ValueWithPercentageChange>
-        </SyncStatusWrapper>
-      )
+      },
+      meta: {
+        tooltip:
+          'The total amount of data posted to the layer over the past day, displayed along with the percentage change compared to 1D ago.',
+      },
+    }),
+    {
+      getChange: (row) => row.data?.pastDayData?.change,
+      period: '1D',
     },
-    meta: {
-      tooltip:
-        'The total amount of data posted to the layer over the past day, displayed along with the percentage change compared to 1D ago.',
-    },
-  }),
+  ),
   columnHelper.display({
     header: 'Finality',
     cell: (ctx) => (

@@ -5,6 +5,7 @@ import { Badge } from '~/components/badge/Badge'
 import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { getL2CommonProjectColumns } from '~/components/table/common-project-columns/L2CommonProjectColumns'
+import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import { TotalCellWithTvsBreakdown } from '~/pages/layer2s/summary/components/table/TotalCellWithTvsBreakdown'
 import { TrustedSetupCell } from '~/pages/zk-catalog/v2/components/TrustedSetupCell'
 import { VerifiedCountWithDetails } from '~/pages/zk-catalog/v2/components/VerifiedCountWithDetails'
@@ -27,35 +28,42 @@ function defenderAdvantageLine(
   return `Favors attacker ${(1 / da.multiplier).toFixed(2)}×`
 }
 
-function getTvsColumn<T extends CommonL2Entry & { tvs: TvsData }>(
+function getTvsColumns<T extends CommonL2Entry & { tvs: TvsData }>(
   columnHelper: ColumnHelper<T>,
 ) {
-  return columnHelper.accessor((e) => e.tvs?.breakdown?.total ?? 0, {
-    id: 'total',
-    header: 'Total value secured',
-    cell: (ctx) => {
-      const value = ctx.row.original.tvs
-      return (
-        <TotalCellWithTvsBreakdown
-          href={`/layer2s/tvs?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
-          associatedTokens={value.associatedTokens}
-          tvsWarnings={value.warnings}
-          breakdown={value.breakdown}
-          additionalTrustAssumptionsPercentage={
-            value.additionalTrustAssumptionsPercentage
-          }
-          change={value.change?.total}
-          syncWarning={value.syncWarning}
-        />
-      )
+  return withChangeSort(
+    columnHelper,
+    columnHelper.accessor((e) => e.tvs?.breakdown?.total ?? 0, {
+      id: 'total',
+      header: 'Total value secured',
+      cell: (ctx) => {
+        const value = ctx.row.original.tvs
+        return (
+          <TotalCellWithTvsBreakdown
+            href={`/layer2s/tvs?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+            associatedTokens={value.associatedTokens}
+            tvsWarnings={value.warnings}
+            breakdown={value.breakdown}
+            additionalTrustAssumptionsPercentage={
+              value.additionalTrustAssumptionsPercentage
+            }
+            change={value.change?.total}
+            syncWarning={value.syncWarning}
+          />
+        )
+      },
+      meta: {
+        align: 'right' as const,
+        cellClassName: 'pl-3',
+        tooltip:
+          'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
+      },
+    }),
+    {
+      getChange: (row) => row.tvs.change?.total,
+      period: '7D',
     },
-    meta: {
-      align: 'right' as const,
-      cellClassName: 'pl-3',
-      tooltip:
-        'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
-    },
-  })
+  )
 }
 
 const validityColumnHelper =
@@ -160,7 +168,7 @@ export const l2RiskStateValidationValidityColumns = [
         'Trusted setup information for the proof system used by this project',
     },
   }),
-  getTvsColumn(validityColumnHelper),
+  ...getTvsColumns(validityColumnHelper),
 ]
 
 const optimisticColumnHelper =
@@ -246,7 +254,7 @@ export const l2RiskStateValidationOptimisticColumns = [
         "Minimum bond required to propose or challenge a state root. When shown, the line below indicates how the bond economy favors one side in a resource-exhaustion attack: 'Favors defender N×' means an attacker needs N times the defender's funds to outlast them; 'Favors attacker N×' means defenders need N times the attacker's funds to keep up; 'Favors defender (log)' is a tournament-style protocol where defender funds grow only logarithmically. The line is omitted for whitelist-gated systems (where the bond is not an open economic barrier) and for protocols whose resource ratio has not yet been analyzed.",
     },
   }),
-  getTvsColumn(optimisticColumnHelper),
+  ...getTvsColumns(optimisticColumnHelper),
 ]
 
 const noProofsColumnHelper =
@@ -266,5 +274,5 @@ export const l2RiskStateValidationNoProofsColumns = [
       </Badge>
     ),
   }),
-  getTvsColumn(noProofsColumnHelper),
+  ...getTvsColumns(noProofsColumnHelper),
 ]

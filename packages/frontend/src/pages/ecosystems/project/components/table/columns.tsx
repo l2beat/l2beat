@@ -9,6 +9,7 @@ import { ProofSystemCell } from '~/components/table/cells/ProofSystemCell'
 import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { getL2CommonProjectColumns } from '~/components/table/common-project-columns/L2CommonProjectColumns'
+import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import { sortStages } from '~/components/table/sorting/sortStages'
 import { TableLink } from '~/components/table/TableLink'
 import {
@@ -89,69 +90,84 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
           return <span className="font-medium">{gasTokens.join(', ')}</span>
         },
       }),
-    columnHelper.accessor(
-      (e) => {
-        return e.tvsData?.breakdown.total ?? 0
-      },
+    ...withChangeSort(
+      columnHelper,
+      columnHelper.accessor(
+        (e) => {
+          return e.tvsData?.breakdown.total ?? 0
+        },
+        {
+          id: 'total',
+          header: 'Total value secured',
+          cell: (ctx) => {
+            const value = ctx.row.original.tvs
+            const tvsData = ctx.row.original.tvsData
+
+            return (
+              <TotalCellWithTvsBreakdown
+                href={`/layer2s/tvs?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+                associatedTokens={value.associatedTokens}
+                additionalTrustAssumptionsPercentage={
+                  tvsData?.additionalTrustAssumptionsPercentage
+                }
+                tvsWarnings={value.warnings}
+                breakdown={tvsData?.breakdown}
+                change={tvsData?.change.total}
+                changePeriod={tvsData?.changePeriod}
+                syncWarning={ctx.row.original.tvsSyncWarning}
+              />
+            )
+          },
+          meta: {
+            align: 'right',
+            tooltip:
+              'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
+          },
+        },
+      ),
       {
-        id: 'total',
-        header: 'Total value secured',
+        getChange: (row) => row.tvsData?.change.total,
+        period: '7D',
+      },
+    ),
+    ...withChangeSort(
+      columnHelper,
+      columnHelper.accessor('activity.pastDayUops', {
+        id: 'pastDayUops',
+        header: 'Past day UOPS',
         cell: (ctx) => {
-          const value = ctx.row.original.tvs
-          const tvsData = ctx.row.original.tvsData
+          const data = ctx.row.original.activity
+          if (!data) {
+            return <NoDataBadge />
+          }
 
           return (
-            <TotalCellWithTvsBreakdown
-              href={`/layer2s/tvs?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
-              associatedTokens={value.associatedTokens}
-              additionalTrustAssumptionsPercentage={
-                tvsData?.additionalTrustAssumptionsPercentage
-              }
-              tvsWarnings={value.warnings}
-              breakdown={tvsData?.breakdown}
-              change={tvsData?.change.total}
-              changePeriod={tvsData?.changePeriod}
-              syncWarning={ctx.row.original.tvsSyncWarning}
-            />
+            <TableLink
+              href={`/layer2s/activity?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
+            >
+              <SyncStatusWrapper isSynced={data.isSynced}>
+                <ValueWithPercentageChange
+                  change={data?.change}
+                  changePeriod={data.changePeriod}
+                  disabledOnMobile
+                >
+                  {formatActivityCount(ctx.getValue())}
+                </ValueWithPercentageChange>
+              </SyncStatusWrapper>
+            </TableLink>
           )
         },
+        sortUndefined: 'last',
         meta: {
           align: 'right',
           tooltip:
-            'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
+            'User operations per second averaged over the past day, shown together with a percentage changed compared to 7D ago.',
         },
+      }),
+      {
+        getChange: (row) => row.activity?.change,
+        period: '7D',
       },
     ),
-    columnHelper.accessor('activity.pastDayUops', {
-      header: 'Past day UOPS',
-      cell: (ctx) => {
-        const data = ctx.row.original.activity
-        if (!data) {
-          return <NoDataBadge />
-        }
-
-        return (
-          <TableLink
-            href={`/layer2s/activity?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
-          >
-            <SyncStatusWrapper isSynced={data.isSynced}>
-              <ValueWithPercentageChange
-                change={data?.change}
-                changePeriod={data.changePeriod}
-                disabledOnMobile
-              >
-                {formatActivityCount(ctx.getValue())}
-              </ValueWithPercentageChange>
-            </SyncStatusWrapper>
-          </TableLink>
-        )
-      },
-      sortUndefined: 'last',
-      meta: {
-        align: 'right',
-        tooltip:
-          'User operations per second averaged over the past day, shown together with a percentage changed compared to 7D ago.',
-      },
-    }),
   ])
 }

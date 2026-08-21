@@ -1,12 +1,12 @@
 import type { TvsToken } from '@l2beat/config'
 import { createColumnHelper } from '@tanstack/react-table'
-import compact from 'lodash/compact'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { Skeleton } from '~/components/core/Skeleton'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import type { CommonProjectColumnsOptions } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { getL2CommonProjectColumns } from '~/components/table/common-project-columns/L2CommonProjectColumns'
 import { getFilterSearchParams } from '~/components/table/filters/utils/getFilterSearchParams'
+import { withChangeSort } from '~/components/table/sorting/changeSortColumn'
 import { categoryToLabel } from '~/pages/layer2s/project/tvs-breakdown/components/tables/categoryToLabel'
 import { sourceToLabel } from '~/server/features/layer2s/tvs/utils/sourceToLabel'
 import { getColumnHeaderUnderline } from '~/utils/table/getColumnHeaderUnderline'
@@ -32,7 +32,8 @@ export const getL2TvsColumns = (
   columnHelper.group({
     id: 'data',
     header: undefined,
-    columns: [
+    columns: withChangeSort(
+      columnHelper,
       columnHelper.accessor(
         (col) => {
           if (!col.tvs.data) {
@@ -104,27 +105,65 @@ export const getL2TvsColumns = (
           },
         },
       ),
-    ],
+      {
+        getChange: (row) => row.tvs.data?.change.total,
+        period: '7D',
+      },
+    ),
   }),
   ...(opts?.breakdownType === 'bridgeType'
     ? getTokenBridgeTypeColumns(opts)
     : getTokenAssetCategoryColumns(opts)),
 ]
 
-function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
-  return [
-    columnHelper.accessor('tvs.data.breakdown.canonical', {
-      id: 'canonical',
-      header: 'Canonically bridged',
+function tvsBreakdownColumn<
+  T extends
+    | TvsToken['category']
+    | Exclude<TvsToken['source'], 'custom-canonical'>,
+>(opts: {
+  id: string
+  header: string
+  dataKey: T
+  type: 'bridgingType' | 'category'
+  isTvsLoading?: boolean
+  meta: {
+    align: 'right'
+    cellClassName?: string
+    tooltip?: string
+    headClassName: string
+  }
+}) {
+  return withChangeSort(
+    columnHelper,
+    columnHelper.accessor((row) => row.tvs.data?.breakdown[opts.dataKey], {
+      id: opts.id,
+      header: opts.header,
       cell: (ctx) => (
         <BreakdownCell
           row={ctx.row.original}
-          dataKey="canonical"
-          type="bridgingType"
-          isTvsLoading={opts?.isTvsLoading}
+          dataKey={opts.dataKey}
+          type={opts.type}
+          isTvsLoading={opts.isTvsLoading}
         />
       ),
       sortUndefined: 'last',
+      meta: opts.meta,
+    }),
+    {
+      getChange: (row) => row.tvs.data?.change[opts.dataKey],
+      period: '7D',
+    },
+  )
+}
+
+function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
+  return [
+    ...tvsBreakdownColumn({
+      id: 'canonical',
+      header: 'Canonically bridged',
+      dataKey: 'canonical',
+      type: 'bridgingType',
+      isTvsLoading: opts.isTvsLoading,
       meta: {
         cellClassName: 'w-1/3',
         align: 'right',
@@ -135,18 +174,12 @@ function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
         ),
       },
     }),
-    columnHelper.accessor('tvs.data.breakdown.native', {
+    ...tvsBreakdownColumn({
       id: 'native',
       header: 'Natively minted',
-      cell: (ctx) => (
-        <BreakdownCell
-          row={ctx.row.original}
-          dataKey="native"
-          type="bridgingType"
-          isTvsLoading={opts?.isTvsLoading}
-        />
-      ),
-      sortUndefined: 'last',
+      dataKey: 'native',
+      type: 'bridgingType',
+      isTvsLoading: opts.isTvsLoading,
       meta: {
         cellClassName: 'w-1/3',
         align: 'right',
@@ -155,18 +188,12 @@ function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
         headClassName: getColumnHeaderUnderline('before:bg-chart-stacked-pink'),
       },
     }),
-    columnHelper.accessor('tvs.data.breakdown.external', {
+    ...tvsBreakdownColumn({
       id: 'external',
       header: 'Externally bridged',
-      cell: (ctx) => (
-        <BreakdownCell
-          row={ctx.row.original}
-          dataKey="external"
-          type="bridgingType"
-          isTvsLoading={opts?.isTvsLoading}
-        />
-      ),
-      sortUndefined: 'last',
+      dataKey: 'external',
+      type: 'bridgingType',
+      isTvsLoading: opts.isTvsLoading,
       meta: {
         cellClassName: 'w-1/3',
         align: 'right',
@@ -180,117 +207,83 @@ function getTokenBridgeTypeColumns(opts: { isTvsLoading?: boolean }) {
   ]
 }
 
-const getTokenAssetCategoryColumns = (opts: {
+function getTokenAssetCategoryColumns(opts: {
   excludeRwaRestrictedTokens?: boolean
   isTvsLoading?: boolean
-}) =>
-  compact([
-    columnHelper.accessor('tvs.data.breakdown.ether', {
+}) {
+  return [
+    ...tvsBreakdownColumn({
       id: 'ether',
       header: 'ETH & derivatives',
-      cell: (ctx) => (
-        <BreakdownCell
-          row={ctx.row.original}
-          dataKey="ether"
-          type="category"
-          isTvsLoading={opts?.isTvsLoading}
-        />
-      ),
-      sortUndefined: 'last',
+      dataKey: 'ether',
+      type: 'category',
+      isTvsLoading: opts.isTvsLoading,
       meta: {
         align: 'right',
         headClassName: getColumnHeaderUnderline('before:bg-chart-ethereum'),
       },
     }),
-    columnHelper.accessor('tvs.data.breakdown.stablecoin', {
+    ...tvsBreakdownColumn({
       id: 'stablecoins',
       header: 'Stablecoins',
-      cell: (ctx) => (
-        <BreakdownCell
-          row={ctx.row.original}
-          dataKey="stablecoin"
-          type="category"
-          isTvsLoading={opts?.isTvsLoading}
-        />
-      ),
-      sortUndefined: 'last',
+      dataKey: 'stablecoin',
+      type: 'category',
+      isTvsLoading: opts.isTvsLoading,
       meta: {
         align: 'right',
         headClassName: getColumnHeaderUnderline('before:bg-chart-teal'),
       },
     }),
-    columnHelper.accessor('tvs.data.breakdown.btc', {
+    ...tvsBreakdownColumn({
       id: 'btc',
       header: 'BTC & derivatives',
-      cell: (ctx) => (
-        <BreakdownCell
-          row={ctx.row.original}
-          dataKey="btc"
-          type="category"
-          isTvsLoading={opts?.isTvsLoading}
-        />
-      ),
-      sortUndefined: 'last',
+      dataKey: 'btc',
+      type: 'category',
+      isTvsLoading: opts.isTvsLoading,
       meta: {
         align: 'right',
         headClassName: getColumnHeaderUnderline('before:bg-chart-orange'),
       },
     }),
-    columnHelper.accessor('tvs.data.breakdown.other', {
+    ...tvsBreakdownColumn({
       id: 'other',
       header: 'Other',
-      cell: (ctx) => (
-        <BreakdownCell
-          row={ctx.row.original}
-          dataKey="other"
-          type="category"
-          isTvsLoading={opts?.isTvsLoading}
-        />
-      ),
-      sortUndefined: 'last',
+      dataKey: 'other',
+      type: 'category',
+      isTvsLoading: opts.isTvsLoading,
       meta: {
         align: 'right',
         headClassName: getColumnHeaderUnderline('before:bg-chart-yellow-lime'),
       },
     }),
-    columnHelper.accessor('tvs.data.breakdown.rwaPublic', {
+    ...tvsBreakdownColumn({
       id: 'rwaPublic',
       header: 'Public RWAs',
-      cell: (ctx) => (
-        <BreakdownCell
-          row={ctx.row.original}
-          dataKey="rwaPublic"
-          type="category"
-          isTvsLoading={opts?.isTvsLoading}
-        />
-      ),
-      sortUndefined: 'last',
+      dataKey: 'rwaPublic',
+      type: 'category',
+      isTvsLoading: opts.isTvsLoading,
       meta: {
         align: 'right',
         headClassName: getColumnHeaderUnderline('before:bg-lime-650 last:pr-3'),
       },
     }),
-    !opts.excludeRwaRestrictedTokens &&
-      columnHelper.accessor('tvs.data.breakdown.rwaRestricted', {
-        id: 'rwaRestricted',
-        header: 'Restricted RWAs',
-        cell: (ctx) => (
-          <BreakdownCell
-            row={ctx.row.original}
-            dataKey="rwaRestricted"
-            type="category"
-            isTvsLoading={opts?.isTvsLoading}
-          />
-        ),
-        sortUndefined: 'last',
-        meta: {
-          align: 'right',
-          headClassName: getColumnHeaderUnderline(
-            'before:bg-pink-750 last:pr-3',
-          ),
-        },
-      }),
-  ])
+    ...(!opts.excludeRwaRestrictedTokens
+      ? tvsBreakdownColumn({
+          id: 'rwaRestricted',
+          header: 'Restricted RWAs',
+          dataKey: 'rwaRestricted',
+          type: 'category',
+          isTvsLoading: opts.isTvsLoading,
+          meta: {
+            align: 'right',
+            headClassName: getColumnHeaderUnderline(
+              'before:bg-pink-750 last:pr-3',
+            ),
+          },
+        })
+      : []),
+  ]
+}
 
 function BreakdownCell({
   row,

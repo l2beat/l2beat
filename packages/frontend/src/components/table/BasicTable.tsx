@@ -12,7 +12,7 @@ import React from 'react'
 import { useHighlightedTableRowContext } from '~/components/table/HighlightedTableRowContext'
 import { cn } from '~/utils/cn'
 import { Skeleton } from '../core/Skeleton'
-import { SortingArrows } from './sorting/SortingArrows'
+import { ValueAndChangeSortingHeader } from './sorting/ValueAndChangeSortingHeader'
 import {
   Table,
   TableBody,
@@ -199,19 +199,8 @@ function BasicTableActualHeaderRow<T>({
               tooltip={header.column.columnDef.meta?.tooltip}
               style={getCommonPinningStyles(header.column)}
             >
-              {header.isPlaceholder ? null : header.column.getCanSort() ? (
-                <SortingArrows
-                  direction={header.column.getIsSorted()}
-                  nextDirection={header.column.getNextSortingOrder()}
-                  onClick={header.column.getToggleSortingHandler()}
-                >
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext(),
-                  )}
-                </SortingArrows>
-              ) : (
-                flexRender(header.column.columnDef.header, header.getContext())
+              {header.isPlaceholder ? null : (
+                <ValueAndChangeSortingHeader header={header} />
               )}
             </TableHead>
             {groupParams?.isLastInGroup && !isLast && (
