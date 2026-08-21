@@ -9,6 +9,9 @@ export interface OssificationSummaryEntry {
   icon: string
   href: string | undefined
   score: number
+  /** an unverified critical contract gates the score to zero; the summary
+   *  shows this without sentiment */
+  isUnverified: boolean
   exposure: number | null
   projectAgeSeconds: number | null
   criticalChangesPerYear: number
@@ -45,6 +48,9 @@ export async function getOssificationEntries(): Promise<
                 ? `/defi/projects/${project.slug}#ossification`
                 : undefined,
           score: ossification.score,
+          isUnverified: ossification.contracts.some(
+            (contract) => !contract.isVerified,
+          ),
           exposure: ossification.exposure,
           projectAgeSeconds: ossification.projectAgeSeconds,
           criticalChangesPerYear: ossification.criticalChangesPerYear,

@@ -1,6 +1,8 @@
+import type { Sentiment } from '@l2beat/config'
 import { formatCurrency, formatSeconds } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
+import { SentimentText } from '~/components/SentimentText'
 import { ExitWindowCell } from '~/components/table/cells/ExitWindowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import {
@@ -11,6 +13,16 @@ import { TableLink } from '~/components/table/TableLink'
 import type { OssificationSummaryEntry } from '~/server/features/projects/ossification/getOssificationEntries'
 
 const columnHelper = createColumnHelper<OssificationSummaryEntry>()
+
+/** Bands anchored in the score's own semantics: below 50 the perimeter is
+ *  younger than the median exploited code; 80 corresponds to roughly one year
+ *  unchanged, past which only ~1 in 5 recorded exploits landed. Percentile
+ *  calibration keeps these anchors meaningful across dataset releases. */
+function ossificationSentiment(score: number): Sentiment {
+  if (score >= 80) return 'good'
+  if (score >= 50) return 'warning'
+  return 'bad'
+}
 
 export const ossificationColumns = [
   ...getCommonProjectColumns(columnHelper, (entry) => entry.href),
@@ -24,13 +36,25 @@ export const ossificationColumns = [
     enableHiding: false,
   }),
   columnHelper.accessor('score', {
-    header: 'Ossification',
-    cell: (ctx) => (
-      <span className="font-medium tabular-nums">{ctx.getValue()} / 100</span>
-    ),
+    header: 'Ossification %',
+    cell: (ctx) => {
+      if (ctx.row.original.isUnverified) {
+        return (
+          <span className="font-medium tabular-nums">{ctx.getValue()}</span>
+        )
+      }
+      return (
+        <SentimentText
+          sentiment={ossificationSentiment(ctx.getValue())}
+          className="font-medium tabular-nums"
+        >
+          {`${ctx.getValue()}`}
+        </SentimentText>
+      )
+    },
     meta: {
       tooltip:
-        'Ossification N: the project-wide critical perimeter has stayed unchanged longer than the exploited code in N% of recorded code-bug exploits (published incident dataset, ages verified onchain).',
+        'Ossification N: the project-wide critical perimeter has stayed unchanged longer than the exploited code in N% of recorded code-bug exploits (published incident dataset, ages verified onchain). Below 50 the perimeter is younger than the median exploited code; 80+ means it outlived ~80% of recorded exploits (roughly one year unchanged).',
     },
     sortDescFirst: true,
   }),
