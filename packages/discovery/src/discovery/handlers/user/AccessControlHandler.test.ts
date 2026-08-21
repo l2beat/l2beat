@@ -290,7 +290,10 @@ describe(AccessControlHandler.name, () => {
     const provider = mockObject<IProvider>({
       chain: 'ethereum',
       async getLogs() {
-        return [RoleGranted(customRole, member), RoleGranted(derivedRole, other)]
+        return [
+          RoleGranted(customRole, member),
+          RoleGranted(derivedRole, other),
+        ]
       },
     })
 
