@@ -8,7 +8,7 @@ Generated with discovered.json: 0x90477c639b476cb8f78cf4be4b730804ffaeabe3
 
 ## Description
 
-RollupProxy: `currentRequiredStake` rose 0.1 → 0.2 ETH, the automatic escalation while the first unresolved node is past its deadline. `baseStake` is unchanged and assertions are still being created and confirmed.
+RollupProxy `currentRequiredStake` (computed: rises above `baseStake` while the first unresolved node is past its deadline) increased from `0.1 ETH` to `0.2 ETH`. Automatic on-chain reaction — `baseStake` unchanged.
 
 ## Watched changes
 
