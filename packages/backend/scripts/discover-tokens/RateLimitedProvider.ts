@@ -1,7 +1,6 @@
 import { RateLimiter } from '@l2beat/backend-tools'
 import type { providers } from 'ethers'
 
-// TODO: This class doesn't belong here! It's not used in discovery
 export class RateLimitedProvider {
   private readonly rateLimiter: RateLimiter
   call: providers.Provider['call']
