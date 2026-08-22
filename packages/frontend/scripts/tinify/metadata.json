@@ -1614,5 +1614,7 @@
   "static/meta-images/defi/projects/liquityv2/opengraph-image.png": "8824e5cddaf5cb1d5b43dec10105d7d9",
   "static/meta-images/defi/projects/uniswapv3/opengraph-image.png": "91d3e36146d9d5c0729c70ec25ab28f8",
   "static/meta-images/defi/summary/opengraph-image.png": "bd424fff91abdfef251690a6ad89620f",
-  "static/meta-images/defi/projects/frankencoin/opengraph-image.png": "c305797856053172f14c5169150d211a"
+  "static/meta-images/defi/projects/frankencoin/opengraph-image.png": "c305797856053172f14c5169150d211a",
+  "static/icons/cloaked.png": "d6b35a364c788135893b87774ea736ff",
+  "static/meta-images/privacy/projects/cloaked/opengraph-image.png": "ec087c9997e682cbc2accc568b290fc3"
 }
