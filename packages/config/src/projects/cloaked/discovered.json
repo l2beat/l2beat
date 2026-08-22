@@ -1,0 +1,88 @@
+{
+  "name": "cloaked",
+  "timestamp": 1787312501,
+  "configHash": "0x2df7970cd512a02a1f37562509ca934da9c1210b08b2abc2562817a5899f8acb",
+  "entries": [
+    {
+      "name": "OffchainResolver",
+      "address": "eth:0x77fEF66b77d6a44AeCcCCf911f9864c7b7ca392C",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x52653e2948499a80fbc61c906203d95ae671d650741d0095057a71240846c939"
+      ],
+      "proxyType": "immutable",
+      "description": "Immutable ENS CCIP-Read resolver used by Cloaked. Every query redirects to a configurable API gateway and accepts the returned ENS record if it is unexpired and signed by the configurable signer. It does not verify that a returned payment address was derived for the named recipient.",
+      "deployerAddress": "eth:0xDFc622F06EfDD0E830d82f30679A3C9302BC7940",
+      "sinceTimestamp": 1770652451,
+      "sinceBlock": 24420233,
+      "values": {
+        "$immutable": true,
+        "gateways": [
+          "https://api.clkd.xyz/ens/gateway/0x77fEF66b77d6a44AeCcCCf911f9864c7b7ca392C"
+        ],
+        "owner": "eth:0xDFc622F06EfDD0E830d82f30679A3C9302BC7940",
+        "signer": "eth:0xDFc622F06EfDD0E830d82f30679A3C9302BC7940"
+      },
+      "fieldMeta": {
+        "gateways": {
+          "description": "URLs used for offchain ENS resolution. The owner can replace the complete list immediately."
+        },
+        "owner": { "description": "Owner of the resolver." },
+        "signer": {
+          "description": "Address whose signatures authenticate offchain ENS answers."
+        }
+      },
+      "implementationNames": {
+        "eth:0x77fEF66b77d6a44AeCcCCf911f9864c7b7ca392C": "OffchainResolver"
+      }
+    },
+    {
+      "name": "Cloaked Resolver Owner",
+      "address": "eth:0xDFc622F06EfDD0E830d82f30679A3C9302BC7940",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x77fEF66b77d6a44AeCcCCf911f9864c7b7ca392C",
+          "description": "change the accepted signer and gateway URLs immediately, or transfer resolver ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x77fEF66b77d6a44AeCcCCf911f9864c7b7ca392C",
+          "description": "sign arbitrary offchain ENS answers, including payment addresses accepted by the resolver.",
+          "role": ".signer"
+        }
+      ]
+    }
+  ],
+  "abis": {
+    "eth:0x77fEF66b77d6a44AeCcCCf911f9864c7b7ca392C": [
+      "constructor(address signer_, string[] gateways_)",
+      "error CCIPReadExpired(uint64 expiry)",
+      "error CCIPReadUntrusted(address signed, address expected)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error OffchainLookup(address sender, string[] urls, bytes callData, bytes4 callbackFunction, bytes extraData)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function gateways() view returns (string[])",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function resolve(bytes, bytes) view returns (bytes)",
+      "function resolveCallback(bytes response, bytes request) view returns (bytes)",
+      "function setGateways(string[] gateways_)",
+      "function setSigner(address signer_)",
+      "function signer() view returns (address)",
+      "function supportsFeature(bytes4 featureId) pure returns (bool)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferOwnership(address newOwner)"
+    ]
+  },
+  "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 25803276 },
+  "permissionsConfigHash": "0x2e9e8c0b5e940553552c130e4cf734fc2c8aedd6ad63f2fc2de1963a46678277"
+}
