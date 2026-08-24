@@ -12,6 +12,7 @@ import {
   PaginationItem,
   PaginationLink,
 } from '~/components/Pagination'
+import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
 import { ProjectSection } from '../../ProjectSection'
@@ -31,6 +32,7 @@ export interface InteropTokenOnchainDeploymentsRow {
   address: string
   explorerUrl: string | undefined
   symbol: string
+  minters: ProjectIconListItem[]
   isSupported: boolean
   volume: number | null
   transferCount: number | null

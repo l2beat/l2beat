@@ -108,21 +108,26 @@ async function getCachedData({
 
   const apiSelection = initialSelection
 
-  const [tokenData, deployments, projectsWithChains] = await Promise.all([
-    getInteropTokenData({
-      tokenId: token.id,
-      ...apiSelection,
-    }),
-    getInteropTokenOnchainDeployments(token.id, activeInteropChainIds),
-    ps.getProjects({
-      select: ['chainConfig'],
-    }),
-  ])
+  const [tokenData, deployments, projectsWithChains, interopProjects] =
+    await Promise.all([
+      getInteropTokenData({
+        tokenId: token.id,
+        ...apiSelection,
+      }),
+      getInteropTokenOnchainDeployments(token.id, activeInteropChainIds),
+      ps.getProjects({
+        select: ['chainConfig'],
+      }),
+      ps.getProjects({
+        select: ['interopConfig'],
+      }),
+    ])
 
   const tokenEntry = getInteropTokenEntry(
     token.id,
     interopChainsWithIcons,
     projectsWithChains,
+    interopProjects,
     deployments,
   )
 
