@@ -8,6 +8,10 @@ import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getChartStartTimestamp } from '~/server/features/utils/getChartStartTimestamp'
 import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
 import { ChartRange, rangeToResolution } from '~/utils/range/range'
+import {
+  PROJECT_TVS_CHART_VALUE_KEYS,
+  type ProjectTvsChartDataPoint,
+} from './projectTvsChartValues'
 import { getEthPrices } from './utils/getEthPrices'
 import { isTvsSynced } from './utils/isTvsSynced'
 
@@ -28,18 +32,7 @@ export type TvsChartWithProjectsRangesDataParams = v.infer<
   typeof TvsChartWithProjectsRangesDataParams
 >
 
-export type ProjectTvsChartDataPoint = [
-  value: number,
-  canonical: number,
-  external: number,
-  native: number,
-  ether: number,
-  stablecoin: number,
-  btc: number,
-  rwaRestricted: number,
-  rwaPublic: number,
-  other: number,
-]
+export type { ProjectTvsChartDataPoint } from './projectTvsChartValues'
 
 export type DetailedTvsChartWithProjectRangesDataPoint = [
   timestamp: number,
@@ -283,9 +276,9 @@ function getMockDetailedTvsChartWithProjectsRangesData({
   }
 }
 
-const EMPTY_PROJECT_TVS: ProjectTvsChartDataPoint = [
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-]
+const EMPTY_PROJECT_TVS = PROJECT_TVS_CHART_VALUE_KEYS.map(
+  () => 0,
+) as ProjectTvsChartDataPoint
 
 type PerProjectTvsValuesRecord = {
   projectId: string
@@ -304,16 +297,8 @@ type PerProjectTvsValuesRecord = {
 }
 
 function mapValue(value: PerProjectTvsValuesRecord): ProjectTvsChartDataPoint {
-  return [
-    value.value,
-    value.canonical + value.customCanonical,
-    value.external,
-    value.native,
-    value.ether,
-    value.stablecoin,
-    value.btc,
-    value.rwaRestricted,
-    value.rwaPublic,
-    value.other,
-  ]
+  return PROJECT_TVS_CHART_VALUE_KEYS.map((key) =>
+    // customCanonical is stored separately but counts as canonical.
+    key === 'canonical' ? value.canonical + value.customCanonical : value[key],
+  ) as ProjectTvsChartDataPoint
 }

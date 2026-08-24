@@ -5,6 +5,10 @@ import {
 } from '~/server/features/layer2s/costs/getCostsChart'
 import { getCostsTable } from '~/server/features/layer2s/costs/getCostsTableData'
 import {
+  CostsChartWithProjectsRangesDataParams,
+  getDetailedCostsChartWithProjectsRanges,
+} from '~/server/features/layer2s/costs/getDetailedCostsChartWithProjectsRanges'
+import {
   getProjectCostsChart,
   ProjectCostsChartParams,
 } from '~/server/features/layer2s/costs/getProjectCostsChart'
@@ -15,6 +19,9 @@ export const costsRouter = router({
   chart: procedure
     .input(CostsChartParams)
     .query(async ({ input }) => getCostsChart(input)),
+  detailedChartWithProjectsRanges: procedure
+    .input(CostsChartWithProjectsRangesDataParams)
+    .query(({ input }) => getDetailedCostsChartWithProjectsRanges(input)),
   projectChart: procedure
     .input(ProjectCostsChartParams)
     .query(async ({ input }) => getProjectCostsChart(input)),

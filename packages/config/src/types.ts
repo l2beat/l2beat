@@ -1582,7 +1582,6 @@ export type InteropPlugin = {
   bridgeType: KnownInteropBridgeType
   chain?: string
   abstractTokenId?: string
-  transferType?: string
 }
 
 export type InteropDurationSplit = InteropDurationSplitEntry[]

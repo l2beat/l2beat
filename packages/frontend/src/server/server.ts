@@ -6,7 +6,7 @@ import type { NextFunction, Request, Response } from 'express'
 import express from 'express'
 import sirv from 'sirv'
 import type { ViteDevServer } from 'vite'
-import { rawEnv } from '~/env'
+import { CLIENT_ENV_KEYS, rawEnv } from '~/env'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
 import {
   CLIENT_ASSETS_OUTPUT_DIR,
@@ -178,18 +178,6 @@ function jsonForInlineScript(value: unknown): string {
 
 function getClientEnvData() {
   return Object.fromEntries(
-    Object.entries(rawEnv)
-      .map(([key, value]) => {
-        if (
-          !key.startsWith('CLIENT_SIDE_') &&
-          key !== 'NODE_ENV' &&
-          key !== 'DEPLOYMENT_ENV'
-        ) {
-          return undefined
-        }
-
-        return [key, value] as const
-      })
-      .filter((x) => x !== undefined),
+    Object.entries(rawEnv).filter(([key]) => CLIENT_ENV_KEYS.includes(key)),
   )
 }
