@@ -1,4 +1,4 @@
-Cloaked is a wallet service that separates incoming payments across fresh Ethereum addresses while presenting them as one account. During registration, a recipient can claim a free `username.clkd.eth` subdomain. They can also link an existing `.eth` name they control or request a payment address from the app or API. Funds are sent to a fresh address controlled by a private key that the recipient can derive locally.
+Cloaked is a wallet service that separates incoming payments across fresh Ethereum addresses while presenting them as one account. Whether requested through an ENS name, the app, or the API, each address is controlled by a private key that the recipient can derive locally.
 
 ### Stealth address generation
 
