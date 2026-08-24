@@ -17,12 +17,11 @@ interface ScaledParticleResult {
  * DOLLARS_PER_PARTICLE_OPTIONS, or beyond the last option a multiple of
  * DOLLARS_PER_PARTICLE_EXTENSION_STEP) where both constraints are satisfied:
  *   - no single flow exceeds MAX_PARTICLES_PER_FLOW
- *   - total across all flows does not exceed maxTotalParticles
+ *   - total across all flows does not exceed MAX_TOTAL_PARTICLES
  */
 export function getScaledParticleCounts(
   baseExactCounts: number[],
   baseDollarsPerParticle: number = DOLLARS_PER_PARTICLE,
-  maxTotalParticles: number = MAX_TOTAL_PARTICLES,
 ): ScaledParticleResult {
   if (baseExactCounts.length === 0)
     return { counts: [], dollarsPerParticle: baseDollarsPerParticle }
@@ -33,7 +32,7 @@ export function getScaledParticleCounts(
   const minDppForPerFlowCap =
     (maxBaseCount * baseDollarsPerParticle) / MAX_PARTICLES_PER_FLOW
   const minDppForTotalCap =
-    (totalBaseCount * baseDollarsPerParticle) / maxTotalParticles
+    (totalBaseCount * baseDollarsPerParticle) / MAX_TOTAL_PARTICLES
   const minRequiredDpp = Math.max(minDppForPerFlowCap, minDppForTotalCap)
 
   let dollarsPerParticle = Math.max(
@@ -48,7 +47,7 @@ export function getScaledParticleCounts(
   // rounding (e.g. total = 700.0000000003). Re-verify and bump one value if so.
   const maxCount = Math.max(...counts)
   const totalCount = counts.reduce((sum, c) => sum + c, 0)
-  if (maxCount > MAX_PARTICLES_PER_FLOW || totalCount > maxTotalParticles) {
+  if (maxCount > MAX_PARTICLES_PER_FLOW || totalCount > MAX_TOTAL_PARTICLES) {
     dollarsPerParticle = nextAllowedDppAbove(dollarsPerParticle)
     scale = baseDollarsPerParticle / dollarsPerParticle
     counts = baseExactCounts.map((c) => c * scale)

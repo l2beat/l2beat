@@ -1,12 +1,12 @@
 import { formatCurrency } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
-import { type ReactNode, useMemo } from 'react'
+import { type ReactNode, useMemo, useRef } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
 import { EM_DASH } from '~/consts/characters'
+import { useResizeObserver } from '~/hooks/useResizeObserver'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
-  HOME_MAX_TOTAL_PARTICLES,
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '~/pages/interop/components/flows/consts'
@@ -111,16 +111,40 @@ function HomeInteropCardContent({
 
   const statsLoading = isLoading && data === undefined
 
+  // Card-width breakpoints are measured with a ResizeObserver instead of CSS
+  // container queries: a container-type ancestor forces Blink to re-layout
+  // per SMIL particle per frame (style inside a size container can depend on
+  // its layout), which pegged the main thread on this card's flows graph.
+  const contentRef = useRef<HTMLDivElement>(null)
+  const { width } = useResizeObserver({ ref: contentRef })
+  const isWide = width !== undefined && width >= 800
+  const condenseTiles = width !== undefined && width >= 460 && width <= 620
+
   return (
-    <HomeCard className="@container flex h-full flex-col">
+    <HomeCard className="flex h-full flex-col">
       <HomeCardHeader
         title="Interop"
         href="/interop/summary"
         timeframe="Last 24h"
       />
-      <div className="@min-[800px]:mt-4 flex @min-[800px]:grid min-h-0 flex-1 @min-[800px]:grid-cols-[minmax(0,1fr)_240px] flex-col @min-[800px]:gap-4 max-sm:flex-col-reverse">
-        <div className="mt-2.5 grid @min-[800px]:hidden grid-cols-2 gap-2 sm:@min-[460px]:grid-cols-4">
+      <div
+        ref={contentRef}
+        className={cn(
+          'min-h-0 flex-1',
+          isWide
+            ? 'mt-4 grid grid-cols-[minmax(0,1fr)_240px] gap-4'
+            : 'flex flex-col max-sm:flex-col-reverse',
+        )}
+      >
+        <div
+          className={cn(
+            'mt-2.5 grid grid-cols-2 gap-2',
+            isWide && 'hidden',
+            width !== undefined && width >= 460 && 'sm:grid-cols-4',
+          )}
+        >
           <StatTile
+            condensed={condenseTiles}
             title="Volume"
             isLoading={statsLoading}
             emphasized
@@ -131,6 +155,7 @@ function HomeInteropCardContent({
             }
           />
           <StatTile
+            condensed={condenseTiles}
             title="Top chain"
             isLoading={statsLoading}
             href={topChainData?.href}
@@ -151,6 +176,7 @@ function HomeInteropCardContent({
             }
           />
           <StatTile
+            condensed={condenseTiles}
             title="Top token"
             isLoading={statsLoading}
             href={topToken ? getInteropTokenUrl(topToken) : undefined}
@@ -169,6 +195,7 @@ function HomeInteropCardContent({
             }
           />
           <StatTile
+            condensed={condenseTiles}
             title="Top chain"
             isLoading={statsLoading}
             href={
@@ -200,7 +227,12 @@ function HomeInteropCardContent({
             }
           />
         </div>
-        <div className="@min-[800px]:order-1 @min-[800px]:mt-0 mt-6 flex min-h-0 flex-1 flex-col">
+        <div
+          className={cn(
+            'flex min-h-0 flex-1 flex-col',
+            isWide ? 'order-1' : 'mt-6',
+          )}
+        >
           <div className="-mx-2 pointer-events-none flex min-h-0 min-w-0 flex-1 flex-col overflow-x-clip">
             <FlowsGraphPanel
               activeChains={activeChains}
@@ -208,19 +240,16 @@ function HomeInteropCardContent({
               hasEnoughChains={hasEnoughChains}
               hasEnoughProtocols={hasEnoughProtocols}
               isLoading={isLoading}
-              maxTotalParticles={HOME_MAX_TOTAL_PARTICLES}
               className="pb-2"
-              maxSizeClassName="max-w-[max(min(70dvh,calc(100dvh-20rem)),30rem)] @min-[800px]:h-full @min-[800px]:w-auto @min-[800px]:max-w-full"
+              maxSizeClassName={cn(
+                'max-w-[max(min(70dvh,calc(100dvh-20rem)),30rem)]',
+                isWide && 'h-full w-auto max-w-full',
+              )}
             />
           </div>
         </div>
-        <div className="@min-[800px]:order-3 @min-[800px]:block hidden h-full">
-          <FlowsGeneralStats
-            title=""
-            description=""
-            linkTopRouteToSummary
-            maxTotalParticles={HOME_MAX_TOTAL_PARTICLES}
-          />
+        <div className={cn('h-full', isWide ? 'order-3 block' : 'hidden')}>
+          <FlowsGeneralStats title="" description="" linkTopRouteToSummary />
         </div>
       </div>
     </HomeCard>
@@ -235,6 +264,7 @@ function StatTile({
   isLoading,
   emphasized,
   href,
+  condensed,
   className,
 }: {
   title: string
@@ -244,6 +274,11 @@ function StatTile({
   isLoading: boolean
   emphasized?: boolean
   href?: string
+  /**
+   * Four tiles in a row on a ~460-620px card leave ~90px of text per tile,
+   * so trade side padding for value width before it truncates.
+   */
+  condensed?: boolean
   className?: string
 }) {
   const ValueWrapper = href ? 'a' : 'div'
@@ -251,9 +286,7 @@ function StatTile({
     <div
       className={cn(
         'flex flex-col items-center gap-1 rounded-lg border border-divider bg-surface-primary px-3 py-2 text-center',
-        // Four tiles in a row on a ~460-620px card leaves ~90px of text per
-        // tile, so trade side padding for value width before it truncates.
-        'sm:@min-[460px]:@max-[620px]:px-2',
+        condensed && 'sm:px-2',
         className,
       )}
     >

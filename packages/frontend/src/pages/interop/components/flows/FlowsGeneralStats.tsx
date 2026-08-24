@@ -21,7 +21,6 @@ export function FlowsGeneralStats({
   description = 'For past 24h between the selected chains and protocols',
   className,
   linkTopRouteToSummary = false,
-  maxTotalParticles,
 }: {
   title?: string
   description?: string
@@ -31,8 +30,6 @@ export function FlowsGeneralStats({
    * instead of highlighting it on the local graph. Used on the home page.
    */
   linkTopRouteToSummary?: boolean
-  /** Must match the cap passed to the graph, or the $-per-particle label drifts */
-  maxTotalParticles?: number
 }) {
   const trpc = useTRPC()
   const [isTokensDialogOpen, setIsTokensDialogOpen] = useState(false)
@@ -62,8 +59,6 @@ export function FlowsGeneralStats({
     selectedChains,
     data?.chainData,
     data?.flows,
-    undefined,
-    maxTotalParticles,
   )
 
   const topRoute = data?.stats.topRoute

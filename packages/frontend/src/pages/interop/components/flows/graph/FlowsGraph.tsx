@@ -14,7 +14,6 @@ interface FlowsGraphProps {
   size: number
   isSmallScreen: boolean
   baseDollarsPerParticle?: number
-  maxTotalParticles?: number
   topChainId?: string
 }
 
@@ -25,7 +24,6 @@ export function FlowsGraph({
   size,
   isSmallScreen,
   baseDollarsPerParticle,
-  maxTotalParticles,
   topChainId,
 }: FlowsGraphProps) {
   const layout = useMemo(
@@ -70,7 +68,6 @@ export function FlowsGraph({
         centerY={center}
         isSmallScreen={isSmallScreen}
         baseDollarsPerParticle={baseDollarsPerParticle}
-        maxTotalParticles={maxTotalParticles}
       />
       <ChainBubblesLayer
         interopChains={interopChains}
