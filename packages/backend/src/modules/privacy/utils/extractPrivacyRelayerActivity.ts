@@ -80,5 +80,5 @@ function toRelayerActivity(
     return undefined
   }
 
-  return { relayerAddress, recipientAddress }
+  return { relayerAddress }
 }

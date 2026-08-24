@@ -141,7 +141,10 @@ export function createPrivacyModule({
     }
 
     if (starknetFlowConfigs.length > 0) {
-      assert(priceIndexer, 'Starknet privacy flow configs require a price indexer')
+      assert(
+        priceIndexer,
+        'Starknet privacy flow configs require a price indexer',
+      )
       indexers.push(
         new StarknetPrivacyFlowIndexer(
           {

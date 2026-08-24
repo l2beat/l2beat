@@ -9,9 +9,32 @@ const env = new Env({})
 
 describe(getPrivacyConfig.name, () => {
   it('returns false if enabled privacy projects have no tracked buckets', async () => {
-    const flags = new FeatureFlags('privacy,!privacy.*,privacy.strk20')
+    const project = await ps.getProject({
+      slug: 'privacy-pools',
+      select: ['privacyInfo'],
+    })
+    if (!project) throw new Error('Privacy Pools project not found')
 
-    const config = await getPrivacyConfig(ps, env, flags)
+    const untrackedProject = {
+      ...project,
+      privacyInfo: {
+        ...project.privacyInfo,
+        relayerTracking: undefined,
+        tokens: project.privacyInfo.tokens.map((token) => ({
+          ...token,
+          buckets: [],
+        })),
+      },
+    }
+    const projectService = mockObject<ProjectService>({
+      getProjects: mockFn().resolvesToOnce([untrackedProject]),
+    })
+
+    const config = await getPrivacyConfig(
+      projectService,
+      env,
+      new FeatureFlags('privacy'),
+    )
 
     expect(config).toEqual(false)
   })

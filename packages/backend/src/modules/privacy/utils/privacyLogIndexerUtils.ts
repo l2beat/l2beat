@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import type { BlockProvider } from '@l2beat/shared'
+import type { BlockProvider, LogsProvider } from '@l2beat/shared'
 import {
   assert,
   type EthereumAddress,
@@ -15,7 +15,66 @@ interface PrivacyLogIndexerConfig {
   event: string
 }
 
-export async function resolvePrivacyBlockRange(
+export interface PrivacyLogMatch<T extends PrivacyLogIndexerConfig> {
+  log: Log
+  timestamp: UnixTime
+  configuration: Configuration<T>
+}
+
+export async function fetchPrivacyLogMatches<T extends PrivacyLogIndexerConfig>(
+  configurations: Configuration<T>[],
+  deps: {
+    chain: string
+    from: number
+    to: number
+    privacyBlockTimestamp: Database['privacyBlockTimestamp']
+    logsProvider: LogsProvider
+    blockProvider: BlockProvider
+    logger: Logger
+  },
+): Promise<PrivacyLogMatch<T>[]> {
+  if (configurations.length === 0) return []
+
+  const { blockFrom, blockTo } = await resolvePrivacyBlockRange(
+    deps.privacyBlockTimestamp,
+    deps.chain,
+    deps.from,
+    deps.to,
+  )
+
+  const { addresses, events } = buildPrivacyLogFilter(configurations)
+  const logs = await deps.logsProvider.getLogs(
+    blockFrom,
+    blockTo,
+    addresses,
+    events,
+  )
+
+  const blockTimestampLookup = await buildPrivacyBlockTimestampLookup(
+    logs,
+    deps.blockProvider,
+    deps.logger,
+  )
+  const configMap = buildPrivacyLogConfigMap(configurations)
+  const matches: PrivacyLogMatch<T>[] = []
+
+  for (const log of logs) {
+    const key = getPrivacyLogConfigKey(log.address, log.topics[0])
+    const matching = configMap.get(key) ?? []
+    if (matching.length === 0) continue
+
+    const timestamp = blockTimestampLookup.get(log.blockNumber)
+    assert(timestamp, `Missing block timestamp for block ${log.blockNumber}`)
+
+    for (const configuration of matching) {
+      matches.push({ log, timestamp, configuration })
+    }
+  }
+
+  return matches
+}
+
+async function resolvePrivacyBlockRange(
   repository: Database['privacyBlockTimestamp'],
   chain: string,
   from: number,
@@ -40,7 +99,7 @@ export async function resolvePrivacyBlockRange(
   return { blockFrom, blockTo }
 }
 
-export async function buildPrivacyBlockTimestampLookup(
+async function buildPrivacyBlockTimestampLookup(
   logs: Log[],
   blockProvider: BlockProvider,
   logger: Logger,
@@ -78,7 +137,7 @@ export async function buildPrivacyBlockTimestampLookup(
   return lookup
 }
 
-export function buildPrivacyLogFilter<T extends PrivacyLogIndexerConfig>(
+function buildPrivacyLogFilter<T extends PrivacyLogIndexerConfig>(
   configurations: Configuration<T>[],
 ): { addresses: string[]; events: string[] } {
   const addresses = Array.from(
@@ -91,7 +150,7 @@ export function buildPrivacyLogFilter<T extends PrivacyLogIndexerConfig>(
   return { addresses, events }
 }
 
-export function buildPrivacyLogConfigMap<T extends PrivacyLogIndexerConfig>(
+function buildPrivacyLogConfigMap<T extends PrivacyLogIndexerConfig>(
   configurations: Configuration<T>[],
 ): Map<string, Configuration<T>[]> {
   const configMap = new Map<string, Configuration<T>[]>()
@@ -109,7 +168,7 @@ export function buildPrivacyLogConfigMap<T extends PrivacyLogIndexerConfig>(
   return configMap
 }
 
-export function getPrivacyLogConfigKey(
+function getPrivacyLogConfigKey(
   address: string,
   event: string | undefined,
 ): string {

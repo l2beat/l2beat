@@ -13,7 +13,6 @@ export interface PrivacyRelayerActivityRecord {
   txHash: string
   logIndex: number
   relayerAddress: EthereumAddress
-  recipientAddress: EthereumAddress
 }
 
 function toRecord(
@@ -23,7 +22,6 @@ function toRecord(
     ...row,
     timestamp: UnixTime.fromDate(row.timestamp),
     relayerAddress: EthereumAddress(row.relayerAddress),
-    recipientAddress: EthereumAddress(row.recipientAddress),
   }
 }
 
@@ -34,7 +32,6 @@ function toRow(
     ...record,
     timestamp: UnixTime.toDate(record.timestamp),
     relayerAddress: record.relayerAddress.toString(),
-    recipientAddress: record.recipientAddress.toString(),
   }
 }
 
@@ -56,7 +53,6 @@ export class PrivacyRelayerActivityRepository extends BaseRepository {
               timestamp: eb.ref('excluded.timestamp'),
               blockNumber: eb.ref('excluded.blockNumber'),
               relayerAddress: eb.ref('excluded.relayerAddress'),
-              recipientAddress: eb.ref('excluded.recipientAddress'),
             })),
         )
         .execute()

@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, PrivacyRelayerActivityRecord } from '@l2beat/database'
 import type { BlockProvider, LogsProvider } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { createPrivacyConfigurationId } from '../../../config/features/privacy'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
@@ -14,13 +14,7 @@ import type {
 } from '../../../tools/uif/multi/types'
 import type { PrivacyRelayerActivityIndexerConfig } from '../types'
 import { extractPrivacyRelayerActivity } from '../utils/extractPrivacyRelayerActivity'
-import {
-  buildPrivacyBlockTimestampLookup,
-  buildPrivacyLogConfigMap,
-  buildPrivacyLogFilter,
-  getPrivacyLogConfigKey,
-  resolvePrivacyBlockRange,
-} from '../utils/privacyLogIndexerUtils'
+import { fetchPrivacyLogMatches } from '../utils/privacyLogIndexerUtils'
 
 interface PrivacyRelayerActivityIndexerDeps
   extends Omit<
@@ -129,60 +123,34 @@ export class PrivacyRelayerActivityIndexer extends ManagedMultiIndexer<PrivacyRe
     from: number,
     to: number,
   ): Promise<PrivacyRelayerActivityRecord[]> {
-    if (configurations.length === 0) return []
-
-    const { blockFrom, blockTo } = await resolvePrivacyBlockRange(
-      this.$.db.privacyBlockTimestamp,
-      this.$.chain,
+    const matches = await fetchPrivacyLogMatches(configurations, {
+      chain: this.$.chain,
       from,
       to,
-    )
+      privacyBlockTimestamp: this.$.db.privacyBlockTimestamp,
+      logsProvider: this.$.logsProvider,
+      blockProvider: this.$.blockProvider,
+      logger: this.logger,
+    })
 
-    const { addresses, events } = buildPrivacyLogFilter(configurations)
-    const logs = await this.$.logsProvider.getLogs(
-      blockFrom,
-      blockTo,
-      addresses,
-      events,
-    )
-
-    const blockTimestampLookup = await buildPrivacyBlockTimestampLookup(
-      logs,
-      this.$.blockProvider,
-      this.logger,
-    )
-    const configMap = buildPrivacyLogConfigMap(configurations)
     const records: PrivacyRelayerActivityRecord[] = []
+    for (const { log, timestamp, configuration } of matches) {
+      const activity = extractPrivacyRelayerActivity(
+        configuration.properties,
+        log,
+      )
+      if (!activity) continue
 
-    for (const log of logs) {
-      const key = getPrivacyLogConfigKey(log.address, log.topics[0])
-      const matching = configMap.get(key) ?? []
-
-      for (const configuration of matching) {
-        const activity = extractPrivacyRelayerActivity(
-          configuration.properties,
-          log,
-        )
-        if (!activity) continue
-
-        const timestamp = blockTimestampLookup.get(log.blockNumber)
-        assert(
-          timestamp,
-          `Missing block timestamp for block ${log.blockNumber}`,
-        )
-
-        records.push({
-          configurationId: configuration.id,
-          projectId: configuration.properties.projectId,
-          chain: configuration.properties.chain,
-          timestamp,
-          blockNumber: log.blockNumber,
-          txHash: log.transactionHash,
-          logIndex: log.logIndex,
-          relayerAddress: activity.relayerAddress,
-          recipientAddress: activity.recipientAddress,
-        })
-      }
+      records.push({
+        configurationId: configuration.id,
+        projectId: configuration.properties.projectId,
+        chain: configuration.properties.chain,
+        timestamp,
+        blockNumber: log.blockNumber,
+        txHash: log.transactionHash,
+        logIndex: log.logIndex,
+        relayerAddress: activity.relayerAddress,
+      })
     }
 
     return records

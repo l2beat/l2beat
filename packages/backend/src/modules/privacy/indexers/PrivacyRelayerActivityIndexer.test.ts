@@ -102,7 +102,6 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
         txHash: '0xtx',
         logIndex: 4,
         relayerAddress: RELAYER,
-        recipientAddress: RECIPIENT,
       },
     ])
     expect(safeHeight).toEqual(to)
