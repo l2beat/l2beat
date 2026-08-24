@@ -18,4 +18,4 @@ export const MAX_PARTICLES_PER_FLOW = 60
 // Global upper bound — if exceeded, all counts are scaled down proportionally
 export const MAX_TOTAL_PARTICLES = 700
 // Lower bound for the home page, where the graph competes with other content
-export const HOME_MAX_TOTAL_PARTICLES = 400
+export const HOME_MAX_TOTAL_PARTICLES = 150
