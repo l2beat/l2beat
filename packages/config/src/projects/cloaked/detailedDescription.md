@@ -8,9 +8,9 @@ For each payment nonce, the service derives an ephemeral private key, combines i
 
 The derivation SDK, API schema, and standalone recovery client are published. The recovery client can derive exportable stealth private keys without using the Cloaked API.
 
-The hosted frontend is not required to hold or use spending keys. A locally run client can create an account and perform payment-address, quote, local derivation and signing, and submission flows against the hosted API. In this setup, the spending key and derived stealth private keys remain local; Cloaked receives the scoped viewing capability and signed authorizations. Assuming the client verifies the data it signs, bypassing the hosted frontend removes it as a spending-key exfiltration risk.
-
 The production web wallet itself is closed source, has no published reproducible build, and cannot be self-hosted. Users who rely on it must trust the remotely served application to preserve the client-side spending-key boundary. The API, ENS gateway, indexer, and relay are also hosted and closed source, so the complete wallet service cannot be self-hosted.
+
+The hosted frontend is not required to hold or use spending keys. A locally run client can create an account and perform payment-address, quote, local derivation and signing, and submission flows against the hosted API. In this setup, the spending key and derived stealth private keys remain local; Cloaked receives the scoped viewing capability and signed authorizations. Assuming the client verifies the data it signs, bypassing the hosted frontend removes it as a spending-key exfiltration risk.
 
 This differs from the usual sender-driven ERC-5564 flow. The payer does not derive the address from public recipient metadata and publish an announcement. Cloaked's service performs the derivation, keeps the address-to-account mapping, and indexes the resulting balances.
 
