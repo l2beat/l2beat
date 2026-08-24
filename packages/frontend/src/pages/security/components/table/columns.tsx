@@ -11,6 +11,7 @@ import {
 } from '~/components/table/sorting/sortTableValues'
 import { TableLink } from '~/components/table/TableLink'
 import type { OssificationSummaryEntry } from '~/server/features/projects/ossification/getOssificationEntries'
+import { OssificationTimelineCell } from './OssificationTimelineCell'
 
 const columnHelper = createColumnHelper<OssificationSummaryEntry>()
 
@@ -77,6 +78,22 @@ export const ossificationColumns = [
     },
     sortDescFirst: true,
     sortUndefined: 'last',
+  }),
+  columnHelper.display({
+    id: 'timeline',
+    header: 'TVS &\nchanges (12m)',
+    cell: (ctx) => (
+      <OssificationTimelineCell
+        timeline={ctx.row.original.timeline}
+        projectName={ctx.row.original.name}
+      />
+    ),
+    meta: {
+      tooltip:
+        'TVS over the last 12 months. The highlighted part is the unchanged period — its area is the battle-tested exposure. Ticks below the baseline are earlier perimeter resets: a critical change or a newly deployed critical contract. Heights are per-project, so shapes compare but sizes do not.',
+      cellClassName: 'py-0',
+    },
+    enableSorting: false,
   }),
   columnHelper.accessor((entry) => entry.projectAgeSeconds ?? undefined, {
     id: 'lastChange',

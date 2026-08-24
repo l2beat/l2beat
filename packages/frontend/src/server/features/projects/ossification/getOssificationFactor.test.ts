@@ -353,6 +353,42 @@ describe(getOssificationFactor.name, () => {
     expect(result?.clusteredEventCount).toEqual(2)
   })
 
+  it('marks a newly deployed critical contract as a perimeter reset', () => {
+    const result = getOssificationFactor(
+      [
+        entry({ sinceTimestamp: NOW - 4 * YEAR }),
+        entry({
+          address: ADDRESS_B,
+          name: 'Other',
+          sinceTimestamp: NOW - 30 * DAY,
+        }),
+      ],
+      [],
+      NOW,
+    )
+    // The deployment moved the clock, so the timeline has to show it, but it is
+    // not a change and never counts toward the rate.
+    expect(result?.projectClockStart).toEqual(NOW - 30 * DAY)
+    expect(result?.clusteredEventCount).toEqual(0)
+    expect(result?.perimeterResets).toEqual([NOW - 4 * YEAR, NOW - 30 * DAY])
+  })
+
+  it('clusters a deployment and a change on the same day into one reset', () => {
+    const result = getOssificationFactor(
+      [
+        entry({ sinceTimestamp: NOW - 4 * YEAR }),
+        entry({
+          address: ADDRESS_B,
+          name: 'Other',
+          sinceTimestamp: NOW - 30 * DAY,
+        }),
+      ],
+      [update(NOW - 30 * DAY + 60 * 60, highSeverityBlock(ADDRESS_A))],
+      NOW,
+    )
+    expect(result?.perimeterResets).toEqual([NOW - 4 * YEAR, NOW - 30 * DAY])
+  })
+
   it('matches legacy diff entries with bare addresses', () => {
     const bareAddress = ADDRESS_A.split(':')[1] ?? ''
     const result = getOssificationFactor(

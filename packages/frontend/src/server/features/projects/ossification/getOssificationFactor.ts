@@ -88,6 +88,11 @@ export interface OssificationFactor {
   criticalChangesPerYear: number
   clusteredEventCount: number
   windowSeconds: number
+  /** 24h-clustered timestamps of every perimeter reset, ascending: critical
+   *  changes plus deployments of critical contracts. Deployments never count
+   *  toward the change rate, but they do move the clock, so a timeline that
+   *  omitted them would contradict `projectClockStart`. */
+  perimeterResets: number[]
   contracts: OssificationContractBreakdown[]
   criticalUpdates: OssificationCriticalUpdate[]
 }
@@ -203,6 +208,12 @@ export function getOssificationFactor(
 
   changeEvents.sort((a, b) => a - b)
   const clusters = clusterEvents(changeEvents)
+  const deployments = [...records.values(), ...historicalRecords].flatMap(
+    (record) => record.entry.sinceTimestamp ?? [],
+  )
+  const perimeterResets = clusterEvents(
+    [...changeEvents, ...deployments].sort((a, b) => a - b),
+  )
 
   const observationStart = getObservationStart(
     [...records.values(), ...historicalRecords],
@@ -232,6 +243,7 @@ export function getOssificationFactor(
       clusteredEventCount / (windowSeconds / SECONDS_PER_YEAR),
     clusteredEventCount,
     windowSeconds,
+    perimeterResets,
     contracts: breakdowns,
     criticalUpdates,
   }
