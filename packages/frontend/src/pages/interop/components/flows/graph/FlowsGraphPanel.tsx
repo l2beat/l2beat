@@ -17,6 +17,7 @@ interface FlowsGraphPanelProps {
   hasEnoughProtocols: boolean
   isLoading: boolean
   baseDollarsPerParticle?: number
+  maxTotalParticles?: number
   topChainId?: string
   className?: string
   maxSizeClassName?: string
@@ -29,6 +30,7 @@ export function FlowsGraphPanel({
   hasEnoughProtocols,
   isLoading,
   baseDollarsPerParticle,
+  maxTotalParticles,
   topChainId,
   className,
   maxSizeClassName = 'max-w-[max(min(70svh,calc(100svh-20rem)),30rem)]',
@@ -76,6 +78,7 @@ export function FlowsGraphPanel({
               size={size}
               isSmallScreen={isSmallScreen}
               baseDollarsPerParticle={baseDollarsPerParticle}
+              maxTotalParticles={maxTotalParticles}
               topChainId={topChainId}
             />
           )}

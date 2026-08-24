@@ -6,6 +6,7 @@ import { EM_DASH } from '~/consts/characters'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
 import {
+  HOME_MAX_TOTAL_PARTICLES,
   MIN_SELECTED_CHAINS,
   MIN_SELECTED_PROTOCOLS,
 } from '~/pages/interop/components/flows/consts'
@@ -207,13 +208,19 @@ function HomeInteropCardContent({
               hasEnoughChains={hasEnoughChains}
               hasEnoughProtocols={hasEnoughProtocols}
               isLoading={isLoading}
+              maxTotalParticles={HOME_MAX_TOTAL_PARTICLES}
               className="pb-2"
               maxSizeClassName="max-w-[max(min(70dvh,calc(100dvh-20rem)),30rem)] @min-[800px]:h-full @min-[800px]:w-auto @min-[800px]:max-w-full"
             />
           </div>
         </div>
         <div className="@min-[800px]:order-3 @min-[800px]:block hidden h-full">
-          <FlowsGeneralStats title="" description="" linkTopRouteToSummary />
+          <FlowsGeneralStats
+            title=""
+            description=""
+            linkTopRouteToSummary
+            maxTotalParticles={HOME_MAX_TOTAL_PARTICLES}
+          />
         </div>
       </div>
     </HomeCard>
