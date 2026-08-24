@@ -27,8 +27,7 @@ describe(TotalSupplyProvider.name, () => {
             data: Bytes.fromNumber(654_321),
           },
           {
-            success: false,
-            reverted: false,
+            success: true,
             data: Bytes.fromHex('0x'),
           },
         ]),
@@ -100,9 +99,9 @@ describe(TotalSupplyProvider.name, () => {
       const rpc = mockObject<RpcClient>({
         isMulticallDeployed: () => true,
         multicall: mockFn().resolvesToOnce([
-          { success: true, reverted: false, data: Bytes.fromNumber(123_456) },
-          { success: false, reverted: true, data: Bytes.fromHex('0x') },
-          { success: true, reverted: false, data: Bytes.fromNumber(654_321) },
+          { success: true, data: Bytes.fromNumber(123_456) },
+          { success: false, data: Bytes.fromHex('0x') },
+          { success: true, data: Bytes.fromNumber(654_321) },
         ]),
         chain: CHAIN,
       })

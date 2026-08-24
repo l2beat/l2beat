@@ -49,8 +49,7 @@ describe(BalanceProvider.name, () => {
             data: Bytes.fromNumber(654_321),
           },
           {
-            success: false,
-            reverted: false,
+            success: true,
             data: Bytes.fromHex('0x'),
           },
         ]),
@@ -122,7 +121,7 @@ describe(BalanceProvider.name, () => {
       expect(result).toEqual([123_456n, 654_321n, 0n])
     })
 
-    it('throws when multicall fails for a native balance', async () => {
+    it('throws when multicall returns empty data for a native balance', async () => {
       const multicallClient = mockObject<MulticallV3Client>({
         encodeGetEthBalance: () => ({
           to: EthereumAddress.ZERO,
@@ -133,9 +132,9 @@ describe(BalanceProvider.name, () => {
         isMulticallDeployed: () => true,
         multicallClient: multicallClient,
         multicall: mockFn().resolvesToOnce([
-          { success: false, reverted: false, data: Bytes.fromHex('0x') },
-          { success: true, reverted: false, data: Bytes.fromNumber(654_321) },
-          { success: true, reverted: false, data: Bytes.fromNumber(123_456) },
+          { success: true, data: Bytes.fromHex('0x') },
+          { success: true, data: Bytes.fromNumber(654_321) },
+          { success: true, data: Bytes.fromNumber(123_456) },
         ]),
         chain: CHAIN,
       })
@@ -158,9 +157,9 @@ describe(BalanceProvider.name, () => {
         isMulticallDeployed: () => true,
         multicallClient: multicallClient,
         multicall: mockFn().resolvesToOnce([
-          { success: true, reverted: false, data: Bytes.fromNumber(123_456) },
-          { success: false, reverted: true, data: Bytes.fromHex('0x') },
-          { success: true, reverted: false, data: Bytes.fromNumber(654_321) },
+          { success: true, data: Bytes.fromNumber(123_456) },
+          { success: false, data: Bytes.fromHex('0x') },
+          { success: true, data: Bytes.fromNumber(654_321) },
         ]),
         chain: CHAIN,
       })

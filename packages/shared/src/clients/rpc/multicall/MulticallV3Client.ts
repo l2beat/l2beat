@@ -3,10 +3,9 @@ import { utils } from 'ethers'
 import type { CallParameters } from '../types'
 
 export interface MulticallV3Response {
+  // raw tryAggregate flag: false = the call reverted. A successful call can
+  // still return empty data, e.g. target not deployed at the queried block
   success: boolean
-  // distinguishes a revert from a successful call with empty returndata
-  // (e.g. target not deployed at the queried block) - both have success=false
-  reverted: boolean
   data: Bytes
 }
 
@@ -48,11 +47,9 @@ export class MulticallV3Client {
     )
     const values = decoded[0] as [boolean, string][]
     return values.map(([success, data]): MulticallV3Response => {
-      const bytes = Bytes.fromHex(data)
       return {
-        success: success && bytes.length !== 0,
-        reverted: !success,
-        data: bytes,
+        success,
+        data: Bytes.fromHex(data),
       }
     })
   }

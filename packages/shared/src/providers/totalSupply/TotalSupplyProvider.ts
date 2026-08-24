@@ -27,14 +27,14 @@ export class TotalSupplyProvider {
         if (client.isMulticallDeployed(blockNumber)) {
           const res = await client.multicall(calls, blockNumber)
           return res.map((r, i) => {
-            if (r.success === false) {
-              // empty returndata for a not-yet-deployed token is a
-              // legitimate 0, a revert is not
-              if (r.reverted) {
-                throw new Error(
-                  `Failed to fetch totalSupply of ${tokens[i]} at block ${blockNumber}`,
-                )
-              }
+            // a revert gives no number - throw instead of storing a poisoned 0
+            if (!r.success) {
+              throw new Error(
+                `Failed to fetch totalSupply of ${tokens[i]} at block ${blockNumber}`,
+              )
+            }
+            if (r.data.length === 0) {
+              // token not deployed at this block
               this.logger
                 .tag({ chain })
                 .warn('Issue with totalSupply fetching', {
