@@ -10,6 +10,9 @@ export interface PrivacyRelayerSampleRecord {
   chain: string
   timestamp: UnixTime
   relayerCount: number
+  messagesReceived: number
+  messagesParsed: number
+  messagesAccepted: number
 }
 
 function toRecord(
@@ -44,6 +47,9 @@ export class PrivacyRelayerSampleRepository extends BaseRepository {
             projectId: eb.ref('excluded.projectId'),
             chain: eb.ref('excluded.chain'),
             relayerCount: eb.ref('excluded.relayerCount'),
+            messagesReceived: eb.ref('excluded.messagesReceived'),
+            messagesParsed: eb.ref('excluded.messagesParsed'),
+            messagesAccepted: eb.ref('excluded.messagesAccepted'),
           })),
         )
         .execute()

@@ -99,6 +99,9 @@ export class PrivacyRelayerSampleIndexer extends ManagedMultiIndexer<PrivacyRela
         chain,
         timestamp: day,
         relayerCount: observation.uniqueRelayers,
+        messagesReceived: observation.messagesReceived,
+        messagesParsed: observation.messagesParsed,
+        messagesAccepted: observation.messagesAccepted,
       }
     })
 

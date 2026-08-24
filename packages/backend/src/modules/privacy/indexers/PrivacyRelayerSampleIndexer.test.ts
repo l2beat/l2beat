@@ -59,6 +59,9 @@ describe(PrivacyRelayerSampleIndexer.name, () => {
         chain: 'ethereum',
         timestamp: TODAY,
         relayerCount: 46,
+        messagesReceived: 1000,
+        messagesParsed: 995,
+        messagesAccepted: 990,
       },
     ])
   })
@@ -201,6 +204,9 @@ describe(PrivacyRelayerSampleIndexer.name, () => {
         chain: 'ethereum',
         timestamp: TODAY,
         relayerCount: 0,
+        messagesReceived: 10,
+        messagesParsed: 10,
+        messagesAccepted: 0,
       },
     ])
   })
@@ -246,6 +252,9 @@ describe(PrivacyRelayerSampleIndexer.name, () => {
         chain: 'ethereum',
         timestamp: TODAY,
         relayerCount: 10,
+        messagesReceived: 1,
+        messagesParsed: 1,
+        messagesAccepted: 1,
       },
       {
         configurationId: 'config-137',
@@ -253,6 +262,9 @@ describe(PrivacyRelayerSampleIndexer.name, () => {
         chain: 'polygonpos',
         timestamp: TODAY,
         relayerCount: 5,
+        messagesReceived: 1,
+        messagesParsed: 1,
+        messagesAccepted: 1,
       },
     ])
   })

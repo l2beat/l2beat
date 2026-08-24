@@ -148,6 +148,9 @@ describeDatabase(PrivacyRelayerSampleRepository.name, (db) => {
       chain: 'ethereum',
       timestamp: day(dayOffset),
       relayerCount,
+      messagesReceived: 10,
+      messagesParsed: 10,
+      messagesAccepted: 10,
     }
   }
 })
