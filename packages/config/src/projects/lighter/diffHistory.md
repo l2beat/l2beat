@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x3a03bfae34aee447d1cf23f1429df1acf946a8cb
+
+# Diff at Mon, 24 Aug 2026 11:19:02 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@2a46bd4322e5006deef913ce76a8462980544454 block: 1787230600
+- current timestamp: 1787570248
+
+## Description
+
+New verifier deployed (no sources published yet).
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.
+      values.versionId:
+-        64
++        66
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0x3bf884449870657809fb4cf5310746aa4313a80425fbc69bfc45706017c63607"
++        "0xb74e656664c529e0a1c04288f9e2e470923d276a463dcdb7e85e47c2c95336c8"
+      values.$implementation:
+-        "eth:0xf7b964eD0C05a7aA12fdC54865295531C9D2AEC1"
++        "eth:0x9Ca512d2F131134972EB95515325F69812395332"
+      values.getTarget:
+-        "eth:0xf7b964eD0C05a7aA12fdC54865295531C9D2AEC1"
++        "eth:0x9Ca512d2F131134972EB95515325F69812395332"
+      implementationNames.eth:0xf7b964eD0C05a7aA12fdC54865295531C9D2AEC1:
+-        "ZkLighterVerifier"
+      implementationNames.eth:0x9Ca512d2F131134972EB95515325F69812395332:
++        "ZkLighterVerifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ZkLighterVerifier/ZkLighterVerifier.sol                       | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
+
 Generated with discovered.json: 0x809e6b2b75c50f63cf22dc848187963a797bbdfe
 
 # Diff at Thu, 20 Aug 2026 12:57:43 GMT:
