@@ -47,21 +47,30 @@ interface Props {
  * thread, and it halved the framerate of the whole page. The CSS equivalent
  * animates a transform instead and leaves layout untouched.
  *
- * The path is referenced via offset-path: url(#...) pointing at an invisible
- * <path> per flow, not inlined as path("..."): WebKit resolves path() px
- * coordinates in zoomed CSS px while the SVG stays in user units, so with
- * Safari page zoom ≠ 100% every particle drifted off its line. url()
+ * On WebKit only, the path is referenced via offset-path: url(#...) pointing
+ * at an invisible <path> per flow, not inlined as path("..."): WebKit resolves
+ * path() px coordinates in zoomed CSS px while the SVG stays in user units, so
+ * with Safari page zoom ≠ 100% every particle drifted off its line. url()
  * references keep the referenced element's user-unit geometry and render
  * correctly at any zoom.
  *
- * Browsers that lack offset-path url() or linear() easing (the travel/idle
- * split depends on both) get the original SMIL markup instead — slower, but
- * correct everywhere SVG works. useCssSupports is client-only, which is fine
- * here: this component never SSRs (FlowsGraphPanel renders it only after
- * ResizeObserver reports a size), so there is no hydration mismatch.
+ * Everything else gets inline path(): Gecko refuses to run any offset-path
+ * url() animation on the compositor (the reference can't be resolved off the
+ * main thread — KeyframeEffect::ShouldBlockAsyncTransformAnimations), so with
+ * url() every particle is main-thread work on every frame and Firefox visibly
+ * lags; path() animates on the compositor from a cached path.
+ *
+ * Browsers that lack the offset-path form we'd use or linear() easing (the
+ * travel/idle split depends on it) get the original SMIL markup instead —
+ * slower, but correct everywhere SVG works. useCssSupports is client-only,
+ * which is fine here: this component never SSRs (FlowsGraphPanel renders it
+ * only after ResizeObserver reports a size), so there is no hydration
+ * mismatch.
  */
-const CSS_MOTION_CONDITION =
-  '(offset-path: url("#a")) and (animation-timing-function: linear(0 0%, 1 50%, 1 100%))'
+const IS_WEBKIT =
+  typeof navigator !== 'undefined' &&
+  navigator.vendor === 'Apple Computer, Inc.'
+const CSS_MOTION_CONDITION = `(offset-path: ${IS_WEBKIT ? 'url("#a")' : 'path("M 0 0 H 1")'}) and (animation-timing-function: linear(0 0%, 1 50%, 1 100%))`
 export function ParticleLayer({
   flows,
   chainData,
@@ -137,7 +146,9 @@ export function ParticleLayer({
 
         return (
           <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
-            {supportsCssMotion && <path id={pathId} d={path} fill="none" />}
+            {supportsCssMotion && IS_WEBKIT && (
+              <path id={pathId} d={path} fill="none" />
+            )}
             {Array.from({ length: count }, (_, i) => {
               // Positive delay, so a particle stays at its base opacity of 0
               // until its turn comes up in the first cycle.
@@ -175,7 +186,9 @@ export function ParticleLayer({
                   fill={color}
                   opacity={0}
                   style={{
-                    offsetPath: `url("#${pathId}")`,
+                    offsetPath: IS_WEBKIT
+                      ? `url("#${pathId}")`
+                      : `path("${path}")`,
                     offsetRotate: '0deg',
                     animationName:
                       'interop-particle-move, interop-particle-fade',
