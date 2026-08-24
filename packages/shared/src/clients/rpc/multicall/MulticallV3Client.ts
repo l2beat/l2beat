@@ -4,6 +4,9 @@ import type { CallParameters } from '../types'
 
 export interface MulticallV3Response {
   success: boolean
+  // distinguishes a revert from a successful call with empty returndata
+  // (e.g. target not deployed at the queried block) - both have success=false
+  reverted: boolean
   data: Bytes
 }
 
@@ -48,6 +51,7 @@ export class MulticallV3Client {
       const bytes = Bytes.fromHex(data)
       return {
         success: success && bytes.length !== 0,
+        reverted: !success,
         data: bytes,
       }
     })

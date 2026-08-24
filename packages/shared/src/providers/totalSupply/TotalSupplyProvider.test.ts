@@ -28,6 +28,7 @@ describe(TotalSupplyProvider.name, () => {
           },
           {
             success: false,
+            reverted: false,
             data: Bytes.fromHex('0x'),
           },
         ]),
@@ -93,6 +94,24 @@ describe(TotalSupplyProvider.name, () => {
         BLOCK,
       )
       expect(result).toEqual([123_456n, 654_321n, 0n])
+    })
+
+    it('throws when a totalSupply call reverts', async () => {
+      const rpc = mockObject<RpcClient>({
+        isMulticallDeployed: () => true,
+        multicall: mockFn().resolvesToOnce([
+          { success: true, reverted: false, data: Bytes.fromNumber(123_456) },
+          { success: false, reverted: true, data: Bytes.fromHex('0x') },
+          { success: true, reverted: false, data: Bytes.fromNumber(654_321) },
+        ]),
+        chain: CHAIN,
+      })
+
+      const totalSupplyProvider = new TotalSupplyProvider([rpc], Logger.SILENT)
+
+      await expect(
+        totalSupplyProvider.getTotalSupplies(TOKENS, BLOCK, CHAIN),
+      ).toBeRejectedWith('Failed to fetch totalSupply')
     })
 
     it('tries next RPC client if a single call fails', async () => {

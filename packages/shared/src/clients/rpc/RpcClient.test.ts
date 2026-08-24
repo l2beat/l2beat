@@ -596,10 +596,12 @@ describe(RpcClient.name, () => {
 
       const decodeMock = mockFn()
         .returnsOnce([
-          { success: true, data: Bytes.fromHex('0x111') },
-          { success: true, data: Bytes.fromHex('0x222') },
+          { success: true, reverted: false, data: Bytes.fromHex('0x111') },
+          { success: true, reverted: false, data: Bytes.fromHex('0x222') },
         ])
-        .returnsOnce([{ success: true, data: Bytes.fromHex('0x333') }])
+        .returnsOnce([
+          { success: true, reverted: false, data: Bytes.fromHex('0x333') },
+        ])
       multicallClient.decode = decodeMock
 
       const http = mockObject<HttpClient>({
@@ -644,9 +646,9 @@ describe(RpcClient.name, () => {
       expect(decodeMock).toHaveBeenNthCalledWith(2, Bytes.fromHex('0x654321'))
 
       expect(result).toEqual([
-        { success: true, data: Bytes.fromHex('0x111') },
-        { success: true, data: Bytes.fromHex('0x222') },
-        { success: true, data: Bytes.fromHex('0x333') },
+        { success: true, reverted: false, data: Bytes.fromHex('0x111') },
+        { success: true, reverted: false, data: Bytes.fromHex('0x222') },
+        { success: true, reverted: false, data: Bytes.fromHex('0x333') },
       ])
     })
   })

@@ -50,6 +50,7 @@ describe(BalanceProvider.name, () => {
           },
           {
             success: false,
+            reverted: false,
             data: Bytes.fromHex('0x'),
           },
         ]),
@@ -132,9 +133,9 @@ describe(BalanceProvider.name, () => {
         isMulticallDeployed: () => true,
         multicallClient: multicallClient,
         multicall: mockFn().resolvesToOnce([
-          { success: false, data: Bytes.fromHex('0x') },
-          { success: true, data: Bytes.fromNumber(654_321) },
-          { success: true, data: Bytes.fromNumber(123_456) },
+          { success: false, reverted: false, data: Bytes.fromHex('0x') },
+          { success: true, reverted: false, data: Bytes.fromNumber(654_321) },
+          { success: true, reverted: false, data: Bytes.fromNumber(123_456) },
         ]),
         chain: CHAIN,
       })
@@ -143,7 +144,32 @@ describe(BalanceProvider.name, () => {
 
       await expect(
         balanceProvider.getBalances(QUERIES, BLOCK, CHAIN),
-      ).toBeRejectedWith('Failed to fetch native balance')
+      ).toBeRejectedWith('Failed to fetch balance')
+    })
+
+    it('throws when an ERC20 balance call reverts', async () => {
+      const multicallClient = mockObject<MulticallV3Client>({
+        encodeGetEthBalance: () => ({
+          to: EthereumAddress.ZERO,
+          input: Bytes.fromHex('0x'),
+        }),
+      })
+      const rpc = mockObject<RpcClient>({
+        isMulticallDeployed: () => true,
+        multicallClient: multicallClient,
+        multicall: mockFn().resolvesToOnce([
+          { success: true, reverted: false, data: Bytes.fromNumber(123_456) },
+          { success: false, reverted: true, data: Bytes.fromHex('0x') },
+          { success: true, reverted: false, data: Bytes.fromNumber(654_321) },
+        ]),
+        chain: CHAIN,
+      })
+
+      const balanceProvider = new BalanceProvider([rpc], Logger.SILENT)
+
+      await expect(
+        balanceProvider.getBalances(QUERIES, BLOCK, CHAIN),
+      ).toBeRejectedWith('Failed to fetch balance')
     })
 
     it('tries next RPC client if a single call fails', async () => {

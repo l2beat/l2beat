@@ -123,12 +123,14 @@ describe(MulticallV3Client.name, () => {
       expect(result).toEqual([
         {
           success: true,
+          reverted: false,
           data: Bytes.fromHex(
             '0x000000000000000000000000000000000000000000000000000000000001e240',
           ),
         },
         {
           success: true,
+          reverted: false,
           data: Bytes.fromHex(
             '0x00000000000000000000000000000000000000000000000000000000000f4240',
           ),
@@ -153,9 +155,10 @@ describe(MulticallV3Client.name, () => {
       const result = client.decode(Bytes.fromHex(mockResponseData))
 
       expect(result).toEqual([
-        { success: false, data: Bytes.fromHex('0x') },
+        { success: false, reverted: true, data: Bytes.fromHex('0x') },
         {
           success: true,
+          reverted: false,
           data: Bytes.fromHex(
             '0x00000000000000000000000000000000000000000000000000000000000f4240',
           ),
@@ -175,7 +178,9 @@ describe(MulticallV3Client.name, () => {
 
       const result = client.decode(Bytes.fromHex(mockResponseData))
 
-      expect(result).toEqual([{ success: false, data: Bytes.fromHex('0x') }])
+      expect(result).toEqual([
+        { success: false, reverted: false, data: Bytes.fromHex('0x') },
+      ])
     })
   })
 
