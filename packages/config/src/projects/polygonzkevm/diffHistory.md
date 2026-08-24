@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x60de2eb7a9dd353caa39bbb8a756682ce38f1864
+
+# Diff at Mon, 24 Aug 2026 10:07:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8f37e0d5e19e879c5a1eeddad7a3666cb36b83ec block: 1767608184
+- current timestamp: 1767608184
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1767608184 (main branch discovery), not current.
+
+```diff
+    reference PolygonAdminMultisig (eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987","description":"set the trusted sequencer address.","role":".admin"},{"permission":"interact","from":"eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987","description":"sole address that can force batches.","role":".forceBatchAddress"}]
+    }
+```
+
+```diff
+    reference AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987","role":"admin"}]
+    }
+```
+
 Generated with discovered.json: 0xe32b1612725d8c8f386c6b2da20f4aa22a6f6c65
 
 # Diff at Fri, 08 May 2026 07:51:48 GMT:

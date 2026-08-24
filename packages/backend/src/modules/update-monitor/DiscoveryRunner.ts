@@ -9,8 +9,8 @@ import {
   type DiscoveryOutput,
   DiscoveryRegistry,
   flattenDiscoveredSources,
-  getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
+  loadDiscoveriesForModelling,
   modelPermissions,
   type TemplateService,
   toRawDiscoveryOutput,
@@ -54,27 +54,17 @@ export class DiscoveryRunner {
 
     const discoveryPaths = getDiscoveryPaths()
     configReader ??= new ConfigReader(discoveryPaths.discovery)
-    const rawConfig = configReader.readRawConfig(projectName)
-
-    let toDiscover: string[] = []
-    if (rawConfig.modelCrossChainPermissions) {
-      logger.info('Discovering dependencies for cross-chain modelling')
-      toDiscover = getDependenciesToDiscoverForProject(
-        projectName,
-        configReader,
-      )
-      logger.info('Dependent project:', toDiscover)
-    } else {
-      logger.info('Discovering only current project - no cross-chain modelling')
-      toDiscover.push(projectName)
-    }
 
     const discoveries = await this.discoverMany(
-      toDiscover,
+      [projectName],
       discoveryTimestamp,
       configReader,
       logger,
     )
+    // Projects reached through an entrypoint are deliberately not
+    // rediscovered: modelling runs against their committed discovery, and
+    // keeping the two sides in sync is handled through Update Monitor.
+    addReferencedDiscoveries(discoveries, projectName, configReader, logger)
 
     const permissionsOutput = await modelPermissions(
       projectName,
@@ -170,6 +160,35 @@ export class DiscoveryRunner {
       )
       throw err
     }
+  }
+}
+
+// The freshly discovered project stays authoritative, everything it references
+// is filled in from disk.
+function addReferencedDiscoveries(
+  discoveries: DiscoveryRegistry,
+  projectName: string,
+  configReader: ConfigReader,
+  logger: Logger,
+): void {
+  let referenced: DiscoveryRegistry
+  try {
+    referenced = loadDiscoveriesForModelling(projectName, configReader)
+  } catch (error) {
+    // One broken reference must not take down the whole update loop.
+    logger.error(
+      `Could not read referenced discoveries of ${projectName}`,
+      error,
+    )
+    return
+  }
+
+  for (const project of referenced.getSortedProjects()) {
+    if (project === projectName) {
+      continue
+    }
+    logger.info(`Modelling against referenced project ${project}`)
+    discoveries.set(project, referenced.get(project).discoveryOutput)
   }
 }
 

@@ -4,6 +4,7 @@ import {
   getDiscoveryPaths,
 } from '@l2beat/discovery'
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { expect } from 'earl'
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
 
@@ -119,6 +120,71 @@ describe('discovery config.jsonc', () => {
           )
         }
       }
+    }
+  })
+
+  it('gives every referenced permission to an address of a referenced project', () => {
+    for (const c of configs) {
+      const discovery = getDiscovery(c.name)
+      const referenced = configReader
+        .readDiscoveryWithReferences(c.name)
+        .slice(1)
+        .flatMap((d) => d.entries)
+        .filter((e) => e.type !== 'Reference')
+        .map((e) => e.address)
+      const owned = new Set(referenced)
+
+      for (const address of Object.keys(
+        discovery.referencedPermissions ?? {},
+      )) {
+        assert(
+          owned.has(ChainSpecificAddress(address)),
+          [
+            `Project ${c.name} gives a referenced permission to ${address},`,
+            'but no project it references discovered that address.',
+          ].join(' '),
+        )
+      }
+    }
+  })
+
+  // Otherwise a consumer would carry a copy of the shared module's own
+  // permission graph, which belongs to the shared module.
+  it('only stores referenced permissions given by its own contracts', () => {
+    for (const c of configs) {
+      const discovery = getDiscovery(c.name)
+      const own = new Set(
+        discovery.entries
+          .filter((e) => e.type !== 'Reference')
+          .map((e) => e.address),
+      )
+
+      for (const [address, permissions] of Object.entries(
+        discovery.referencedPermissions ?? {},
+      )) {
+        const givers = [
+          ...(permissions.receivedPermissions ?? []),
+          ...(permissions.directlyReceivedPermissions ?? []),
+        ].map((p) => p.from)
+        for (const giver of givers) {
+          assert(
+            own.has(giver),
+            [
+              `Project ${c.name} stores a permission over ${giver} held by`,
+              `${address}, but ${giver} is not one of its own contracts.`,
+            ].join(' '),
+          )
+        }
+      }
+    }
+  })
+
+  it('sorts referenced permissions by address', () => {
+    for (const c of configs) {
+      const addresses = Object.keys(
+        getDiscovery(c.name).referencedPermissions ?? {},
+      )
+      expect(addresses).toEqual([...addresses].sort())
     }
   })
 

@@ -10,10 +10,11 @@ import {
   combinePermissionsIntoDiscovery,
   type DiscoveryDiff,
   type DiscoveryOutput,
-  DiscoveryRegistry,
   diffDiscovery,
   discoveryDiffToMarkdown,
+  entriesForDiff,
   getDiscoveryPaths,
+  loadDiscoveriesForModelling,
   modelPermissions,
   TemplateService,
 } from '@l2beat/discovery'
@@ -102,20 +103,20 @@ export async function updateDiffHistoryForChain(
     codeDiff = rerun.codeDiff
 
     diff = diffDiscovery(
-      rerun.prevDiscovery?.entries ?? [],
-      curDiscovery.entries,
+      entriesForDiff(rerun.prevDiscovery),
+      entriesForDiff(curDiscovery),
     )
     configRelatedDiff = diffDiscovery(
-      discoveryFromMainBranch?.entries ?? [],
-      rerun.prevDiscovery?.entries ?? [],
+      entriesForDiff(discoveryFromMainBranch),
+      entriesForDiff(rerun.prevDiscovery),
     )
   } else {
     logger.info(
       'Discovery was run on the same block as main branch, skipping rerun.',
     )
     configRelatedDiff = diffDiscovery(
-      discoveryFromMainBranch?.entries ?? [],
-      curDiscovery?.entries ?? [],
+      entriesForDiff(discoveryFromMainBranch),
+      entriesForDiff(curDiscovery),
     )
   }
 
@@ -215,7 +216,6 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
     return { prevDiscovery: undefined, codeDiff: undefined }
   }
 
-  const discoveries = new DiscoveryRegistry()
   // We rediscover on the past block number, but with current configs and dependencies
   const prevStructure = await rediscoverStructureOnBlock(
     projectName,
@@ -226,6 +226,10 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
     saveSources,
     overwriteCache,
   )
+  // Referenced projects are not rediscovered, their committed discovery is
+  // read instead - the same state the current side was modelled against, so
+  // cross-boundary permissions do not show up as phantom diffs.
+  const discoveries = loadDiscoveriesForModelling(projectName, configReader)
   discoveries.set(prevStructure.name, prevStructure)
 
   const discoveryPaths = getDiscoveryPaths()

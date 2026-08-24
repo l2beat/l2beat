@@ -852,7 +852,12 @@
       ],
       "proxyType": "immutable",
       "description": "A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734",
+          "role": ".owner"
+        },
         {
           "permission": "interact",
           "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
@@ -864,21 +869,6 @@
           "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
           "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734",
-          "role": ".owner"
         }
       ],
       "deployerAddress": "eth:0x58551793BEeDca08a861c394258E0457e48A2FCc",
@@ -1502,5 +1492,67 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 24419160, "gateway": 158294 },
-  "permissionsConfigHash": "0x3779501a3abcde6cd064bb001e37109b009060d57f85434ce8a72c31a140da79"
+  "permissionsConfigHash": "0xbb0a903fbcce51501d6e54cc8afc4a0d36a5e0f256647abebf78c203b5a146ae",
+  "referencedPermissions": {
+    "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
+          "description": "manage filter lists.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "role": ".getAdmin",
+          "via": [
+            { "address": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734" },
+            { "address": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        }
+      ]
+    }
+  }
 }

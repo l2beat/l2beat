@@ -362,5 +362,16 @@
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
   "usedBlockNumbers": { "ethereum": 23695838 },
-  "permissionsConfigHash": "0x3f6a7e0b8446d98dd5a03f381b6b8a47d2fa2e4a3a4c242b35fc93b2832c6843"
+  "permissionsConfigHash": "0x6c07f76d43762762cab70cbc407ecdeb36a164644b34b3d3539993e273e1f2ba",
+  "referencedPermissions": {
+    "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

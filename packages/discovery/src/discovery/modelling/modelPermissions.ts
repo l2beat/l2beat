@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import { assert, Hash256 } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { readFileSync, writeFileSync } from 'fs'
@@ -30,6 +31,7 @@ export class DiscoveryRegistry {
       analysis?: Analysis[]
     }
   } = {}
+  private insertionOrder: string[] = []
 
   get(project: string) {
     assert(this.discoveries[project], `Discovery for ${project} is not set.`)
@@ -41,6 +43,9 @@ export class DiscoveryRegistry {
     discoveryOutput: DiscoveryOutput,
     analysis?: Analysis[],
   ) {
+    if (this.discoveries[project] === undefined) {
+      this.insertionOrder.push(project)
+    }
     this.discoveries[project] = { discoveryOutput, analysis }
   }
 
@@ -52,6 +57,28 @@ export class DiscoveryRegistry {
     }
     return result
   }
+
+  // Names in the order they were registered: the modelled project first, then
+  // the projects it references. Naming precedence depends on this order.
+  getProjectsInPriorityOrder(): string[] {
+    return [...this.insertionOrder]
+  }
+}
+
+// Reads the project and every project it transitively references through
+// entrypoints. Referenced projects are never re-discovered, their committed
+// discovery is what the project is modelled against.
+export function loadDiscoveriesForModelling(
+  project: string,
+  configReader: ConfigReader,
+  logger: Logger = Logger.SILENT,
+): DiscoveryRegistry {
+  const discoveries = new DiscoveryRegistry()
+  for (const discovery of configReader.readDiscoveryWithReferences(project)) {
+    logger.info(` - ${discovery.name}`)
+    discoveries.set(discovery.name, discovery)
+  }
+  return discoveries
 }
 
 export async function modelPermissions(
@@ -122,13 +149,13 @@ export async function modelPermissionFactsUsingClingo(
     debug: boolean
   },
 ) {
-  const clingoForProject = generateClingoForDiscoveries(
+  const clingo = generateClingoForDiscoveries(
     discoveries,
     configReader,
     templateService,
   )
   const modelPermissionsClingoFile = readModelPermissionsClingoFile(paths)
-  const combinedClingo = clingoForProject + '\n' + modelPermissionsClingoFile
+  const combinedClingo = clingo.combined + '\n' + modelPermissionsClingoFile
 
   const projectPath = configReader.getProjectPath(project)
   const inputFilePath = join(projectPath, 'clingo.input.lp')
@@ -146,7 +173,9 @@ export async function modelPermissionFactsUsingClingo(
 
   const result = facts.map(parseClingoFact)
 
-  const permissionsConfigHash = generatePermissionConfigHash(clingoForProject)
+  const ownClingo = clingo.byProject[project]
+  assert(ownClingo !== undefined, `No clingo generated for ${project}.`)
+  const permissionsConfigHash = generatePermissionConfigHash(ownClingo)
   return {
     permissionsConfigHash,
     permissionFacts: result,
@@ -163,26 +192,50 @@ export function generatePermissionConfigHash(clingoInput: string) {
   return Hash256('0x' + hash)
 }
 
+export interface GeneratedClingo {
+  // Every project of the cluster, this is what gets solved.
+  combined: string
+  // Per project, so the hash of a project stays independent of what the
+  // projects it references contain.
+  byProject: Record<string, string>
+}
+
 export function generateClingoForDiscoveries(
   discoveries: DiscoveryRegistry,
   configReader: ConfigReader,
   templateService: TemplateService,
-): string {
-  const generatedClingo: string[] = []
+): GeneratedClingo {
+  const addressToNameMap = buildClusterAddressToNameMap(discoveries)
+  const byProject: Record<string, string> = {}
 
   for (const project of discoveries.getSortedProjects()) {
     const discovery = discoveries.get(project).discoveryOutput
     const config = configReader.readConfig(project)
-    const permissionsInClingo = generateClingoForProjectOnChain(
+    byProject[project] = generateClingoForProjectOnChain(
       config.permission,
       configReader,
       discovery,
       templateService,
+      addressToNameMap,
     )
-    generatedClingo.push(permissionsInClingo)
   }
 
-  return generatedClingo.join('\n')
+  return {
+    combined: Object.values(byProject).join('\n'),
+    byProject,
+  }
+}
+
+// One map for the whole cluster: a permission whose target is missing from it
+// is dropped when building the model, which is what used to cut every
+// permission crossing an entrypoint boundary.
+export function buildClusterAddressToNameMap(
+  discoveries: DiscoveryRegistry,
+): Record<string, string> {
+  const entries = discoveries
+    .getProjectsInPriorityOrder()
+    .flatMap((project) => discoveries.get(project).discoveryOutput.entries)
+  return buildAddressToNameMap(entries)
 }
 
 export function generateClingoForProjectOnChain(
@@ -190,10 +243,9 @@ export function generateClingoForProjectOnChain(
   configReader: ConfigReader,
   discovery: DiscoveryOutput,
   templateService: TemplateService,
+  addressToNameMap: Record<string, string>,
 ) {
   const generatedClingo: string[] = []
-
-  const addressToNameMap = buildAddressToNameMap(discovery.entries)
 
   const projectSpecificModelLp = getProjectSpecificModelLp(
     discovery.name,
@@ -226,11 +278,4 @@ export function generateClingoForProjectOnChain(
     })
 
   return generatedClingo.join('\n')
-}
-
-export function getDependenciesToDiscoverForProject(
-  project: string,
-  _configReader: ConfigReader,
-): string[] {
-  return [project]
 }

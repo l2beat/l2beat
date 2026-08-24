@@ -2527,5 +2527,16 @@
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225"
   },
   "usedBlockNumbers": { "ethereum": 25437874 },
-  "permissionsConfigHash": "0x44508de8da43a58c4015bd6cbb454255778d91efe03419386f02f22f4f387c1f"
+  "permissionsConfigHash": "0xc8f56e935d5f4686af1f7780cdc523f7430ff6cc223e29c99bc5d42f08171ea4",
+  "referencedPermissions": {
+    "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

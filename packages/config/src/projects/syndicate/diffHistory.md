@@ -1,3 +1,111 @@
+Generated with discovered.json: 0xdb97f2fee6e26f2412973082d46f3a5d6e36b2eb
+
+# Diff at Mon, 24 Aug 2026 10:07:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8f37e0d5e19e879c5a1eeddad7a3666cb36b83ec block: 1781595301
+- current timestamp: 1781595301
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1781595301 (main branch discovery), not current.
+
+```diff
+    contract PauserRegistry (eth:0x0c431C66F4dE941d089625E5B423D00707977060) [eigenlayer/EigenDAPauserRegistry] {
+    +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry"}]
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry"}]
+    }
+```
+
+```diff
+    reference EigenLayerOwningMultisig (eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x0c431C66F4dE941d089625E5B423D00707977060","role":".pausers"}]
+    }
+```
+
+```diff
+    reference EigenLayerPauserMultisig (eth:0x5050389572f2d220ad927CcbeA0D406831012390) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x0c431C66F4dE941d089625E5B423D00707977060","role":".pausers"}]
+    }
+```
+
+```diff
+    reference EigenLayerOperationsMultisig (eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry","via":[{"address":"eth:0x0c431C66F4dE941d089625E5B423D00707977060"}]},{"permission":"interact","from":"eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can pause the DA bridge","role":".pauserRegistry","via":[{"address":"eth:0x0c431C66F4dE941d089625E5B423D00707977060"},{"address":"eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x0c431C66F4dE941d089625E5B423D00707977060","role":".pausers"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x2E158da11961426E2A1Cc9e79f40244486b6845C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x347660a632B0Aac5B70dCd5e6C3444a7C933a137)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x45dcD05251F3327EcCd4766a9264DBDAab3A4065)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x57af860e3a1C16641CDDDa92898266D2df7Dfa71)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x7474E1D80E844e6EdB430841DeEF702a6B747863)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0x9b2C61521AF4AB9f4BE25297838F72a56462B578)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0xFEA47018D632A77bA579846c840d5706705Dc598)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0xfD636E8EB3839cE82A58936b795043Da7DB0c734)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x0e861f87dbbefd3e8272206bc4078c69dab04367
 
 # Diff at Tue, 16 Jun 2026 07:37:01 GMT:

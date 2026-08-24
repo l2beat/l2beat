@@ -7156,5 +7156,16 @@
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
   "usedBlockNumbers": { "ethereum": 25595838, "katana": 38071826 },
-  "permissionsConfigHash": "0x2271c21269cde6506e316d06a048104d7cfae0bbd229856f4a7ec6376e227b3d"
+  "permissionsConfigHash": "0x04deaa2181b316e6766bbc0b5181aad5cfa0503d8e9b2a0afbc35cbcd4318d53",
+  "referencedPermissions": {
+    "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

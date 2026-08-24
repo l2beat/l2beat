@@ -1109,5 +1109,29 @@
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25745364 },
-  "permissionsConfigHash": "0xdbb0414836269c7148e8131006c35f413f7a3e78624ec731cdf1b91ef42252db"
+  "permissionsConfigHash": "0xa9def0312117902265da6ad7d1d3e5447020d978e55a9ee6757292ddf89b8eb5",
+  "referencedPermissions": {
+    "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        }
+      ]
+    }
+  }
 }

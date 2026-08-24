@@ -36,6 +36,7 @@ import { Minters } from './Minters'
 import { ModelPermissions } from './ModelPermissions'
 import { OPConfigs } from './OPConfigs'
 import { DetectProxy } from './Proxy'
+import { RefreshCluster } from './RefreshCluster'
 import { RefreshDiscovery } from './RefreshDiscovery'
 import { RegenerateShapeHashes } from './RegenerateShapeHashes'
 import { ScanKintoAm } from './ScanKintoAm'
@@ -89,6 +90,7 @@ export function getSubcommands() {
     Minters,
     ModelPermissions,
     OPConfigs,
+    RefreshCluster,
     RefreshDiscovery,
     RegenerateShapeHashes,
     ScanKintoAm,

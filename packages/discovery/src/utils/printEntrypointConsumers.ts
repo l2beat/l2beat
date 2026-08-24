@@ -59,4 +59,7 @@ export function printEntrypointConsumers(
       `    - ${chalk.green(project)} ${chalk.gray(`(${addressCount} ${suffix})`)}`,
     )
   }
+  logger.info(
+    `\nRun ${chalk.cyan('l2b refresh-cluster <project>')} to bring them up to date.`,
+  )
 }

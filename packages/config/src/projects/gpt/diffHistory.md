@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x98bfd5a8b5fa8d88fe5cc55235276718ee38d311
+
+# Diff at Mon, 24 Aug 2026 10:07:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8f37e0d5e19e879c5a1eeddad7a3666cb36b83ec block: 1762264385
+- current timestamp: 1762264385
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1762264385 (main branch discovery), not current.
+
+```diff
+    reference AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","from":"eth:0xC4E903D3Af4c3d2e437492d602adcC9d9b536858","role":"admin"}]
+    }
+```
+
 Generated with discovered.json: 0xd4f2eb6d7d73fea9c5d59865393ad09b17730b2c
 
 # Diff at Wed, 29 Jul 2026 09:59:44 GMT:

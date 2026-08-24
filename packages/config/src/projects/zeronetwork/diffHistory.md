@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x5928dc5d50da126d56fa3fadfad91c4ce142d537
+
+# Diff at Mon, 24 Aug 2026 10:07:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8f37e0d5e19e879c5a1eeddad7a3666cb36b83ec block: 1786615271
+- current timestamp: 1786615271
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786615271 (main branch discovery), not current.
+
+```diff
+    reference ProxyAdmin (eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776","role":"admin"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xae1c51696ee4bc410291d12998b16491af067376
 
 # Diff at Thu, 13 Aug 2026 10:02:14 GMT:
