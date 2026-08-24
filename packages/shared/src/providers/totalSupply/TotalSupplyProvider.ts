@@ -28,7 +28,6 @@ export class TotalSupplyProvider {
           const res = await client.multicall(calls, blockNumber)
           return res.map((r, i) => {
             if (r.success === false) {
-              // empty returndata - token not deployed at this block
               this.logger
                 .tag({ chain })
                 .warn('Issue with totalSupply fetching', {
