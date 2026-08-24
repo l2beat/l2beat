@@ -2,6 +2,7 @@ import type {
   PrivacyExitWindow,
   PrivacySummaryValue,
   PrivacyWalkawayTest,
+  TrustedSetup,
 } from '@l2beat/config'
 import {
   Tooltip,
@@ -20,7 +21,7 @@ import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { sentimentToRiskDot } from '../../sentimentToRiskDot'
 
 interface Props {
-  trustedSetup: PrivacySummaryValue
+  trustedSetup: PrivacySummaryValue & { risk: TrustedSetup['risk'] }
   exitWindow: PrivacyExitWindow
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
@@ -39,7 +40,7 @@ export function PrivacyProjectRiskProfile({
       <ProjectSummaryStat
         title="Trusted setup"
         tooltip="Trusted setup used by the project's proving system and its risk."
-        value={<RiskValue value={trustedSetup} />}
+        value={<RiskValue value={trustedSetup} dotRisk={trustedSetup.risk} />}
       />
       <ProjectSummaryStat
         title="Exit window"
@@ -67,9 +68,11 @@ export function PrivacyProjectRiskProfile({
 
 function RiskValue({
   value,
+  dotRisk,
   walkawayTest,
 }: {
   value: PrivacyExitWindow | PrivacySummaryValue
+  dotRisk?: TrustedSetup['risk']
   walkawayTest?: PrivacyWalkawayTest
 }) {
   return (
@@ -79,7 +82,7 @@ function RiskValue({
         aria-label={value.value}
       >
         <TrustedSetupRiskDot
-          risk={sentimentToRiskDot(value.sentiment)}
+          risk={dotRisk ?? sentimentToRiskDot(value.sentiment)}
           size="md"
           className="shrink-0"
         />

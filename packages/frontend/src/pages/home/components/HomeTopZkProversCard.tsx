@@ -132,7 +132,7 @@ const columns = [
   }),
 ]
 
-const RISK_ORDER = ['red', 'yellow', 'green', 'N/A'] as const
+const RISK_ORDER = ['red', 'yellow', 'green', 'N/A', 'None'] as const
 
 function TrustedSetupsSummaryCell({
   trustedSetupsByProofSystem,

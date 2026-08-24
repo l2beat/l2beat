@@ -68,7 +68,7 @@ export function TrustedSetupCell({
 }
 
 function pickWorstRisk(trustedSetups: TrustedSetup[]): TrustedSetup['risk'] {
-  const riskHierarchy = ['red', 'yellow', 'green', 'N/A'] as const
+  const riskHierarchy = ['red', 'yellow', 'green', 'N/A', 'None'] as const
 
   for (const risk of riskHierarchy) {
     if (trustedSetups.some((ts) => ts.risk === risk)) {

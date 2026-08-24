@@ -22,6 +22,7 @@ import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { PrivacyAsset, PrivacyBucket, PrivacyProject } from './types'
+import { resolvePrivacyTrustedSetups } from './utils/resolvePrivacyTrustedSetups'
 
 interface PrivacyProjectFlowData {
   totals: PrivacyFlowBucketTotalRecord[]
@@ -39,6 +40,7 @@ export interface PrivacyProjectDetails {
   permissions?: Record<string, ProjectPermissions>
   statuses: ProjectStatuses
   zkCatalogInfo?: ProjectZkCatalogInfo
+  trustedSetups: ProjectZkCatalogInfo['trustedSetups']
   exitWindow: PrivacyExitWindow
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
@@ -83,6 +85,7 @@ export async function getPrivacyProjectDetails(
   }
 
   const projectId = project.id
+  const trustedSetups = await resolvePrivacyTrustedSetups(project)
 
   const now = UnixTime.now()
   const currentDay = UnixTime.toStartOf(now, 'day')
@@ -257,6 +260,7 @@ export async function getPrivacyProjectDetails(
     permissions: project.permissions,
     statuses: project.statuses,
     zkCatalogInfo: project.zkCatalogInfo,
+    trustedSetups,
     exitWindow: project.privacyInfo.exitWindow,
     privacy: project.privacyInfo.privacy,
     reproducibility: project.privacyInfo.reproducibility,

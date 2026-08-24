@@ -13,25 +13,28 @@ const TRUSTED_SETUP_RISK_TO_SENTIMENT = {
   yellow: 'warning',
   red: 'bad',
   'N/A': 'neutral',
+  None: 'neutral',
 } as const satisfies Record<
   TrustedSetup['risk'],
   NonNullable<PrivacySummaryValue['sentiment']>
 >
 
+const NO_SETUP: TrustedSetup = {
+  id: 'NoSetup',
+  name: 'No setup',
+  risk: 'None',
+  shortDescription:
+    'This project does not have a ZK system and thus no setup-related trust assumptions.',
+  longDescription:
+    'This project does not have a ZK system and thus no setup-related trust assumptions.',
+}
+
 export function getPrivacyTrustedSetup(
-  zkCatalogInfo?: ProjectZkCatalogInfo,
+  trustedSetups: ProjectZkCatalogInfo['trustedSetups'],
 ): TrustedSetup {
-  const trustedSetup = zkCatalogInfo?.trustedSetups[0]
+  const trustedSetup = trustedSetups[0]
   if (!trustedSetup) {
-    return {
-      id: 'TransparentSetup',
-      name: 'Transparent setup',
-      risk: 'N/A',
-      shortDescription:
-        'No trusted setup and no additional setup-related trust assumptions.',
-      longDescription:
-        'Transparent proving systems require no trusted setups and have no additional setup-related trust assumptions.',
-    }
+    return NO_SETUP
   }
 
   const { proofSystem: _proofSystem, ...result } = trustedSetup
@@ -52,19 +55,18 @@ export function toTrustedSetupSummaryValue(
 }
 
 export function getPrivacyTrustedSetupsSection(
-  zkCatalogInfo?: ProjectZkCatalogInfo,
+  trustedSetups: ProjectZkCatalogInfo['trustedSetups'],
 ): Omit<TrustedSetupSectionProps, keyof ProjectSectionProps> {
-  if (zkCatalogInfo && zkCatalogInfo.trustedSetups.length > 0) {
-    return getTrustedSetupsSectionFromTrustedSetups(zkCatalogInfo.trustedSetups)
+  if (trustedSetups.length > 0) {
+    return getTrustedSetupsSectionFromTrustedSetups(trustedSetups)
   }
 
-  const trustedSetup = getPrivacyTrustedSetup(zkCatalogInfo)
   return {
     trustedSetups: [
       {
-        name: trustedSetup.name,
-        risk: trustedSetup.risk,
-        description: trustedSetup.longDescription,
+        name: NO_SETUP.name,
+        risk: NO_SETUP.risk,
+        description: NO_SETUP.longDescription,
         proofSystems: [],
       },
     ],
