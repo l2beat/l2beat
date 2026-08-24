@@ -32,6 +32,11 @@ export interface DiscoveryOutput {
   usedTemplates: Record<string, Hash256>
   usedBlockNumbers: Record<string, number>
   permissionsConfigHash?: Hash256
+  // Permissions over this project's contracts that ended up in the hands of an
+  // address living in a referenced project. Such an address has no entry here
+  // (the crawl stopped at the entrypoint), so the result is keyed by address
+  // and merged onto the referenced discovery when it is read.
+  referencedPermissions?: Record<ChainSpecificAddress, PermissionEntry>
 }
 
 export interface DiscoveryCustomType {

@@ -1,7 +1,7 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type {
   DiscoveryOutput,
-  EntryParameters,
+  PermissionEntry,
   PermissionsOutput,
   ReceivedPermission,
 } from '../output/types'
@@ -14,60 +14,155 @@ export function combinePermissionsIntoDiscovery(
   discovery: DiscoveryOutput,
   permissionsOutput: PermissionsOutput,
 ) {
-  const updateRelevantField = (
-    entry: EntryParameters,
-    field: keyof EntryParameters,
-    value: ReceivedPermission[] | undefined,
-  ) => {
-    if (field === 'receivedPermissions') {
-      entry.receivedPermissions = value
-    } else if (field === 'directlyReceivedPermissions') {
-      entry.directlyReceivedPermissions = value
-    } else {
-      throw new Error(`Not a permission field: ${field}`)
-    }
-  }
-
   discovery.permissionsConfigHash = permissionsOutput.permissionsConfigHash
 
   const allAddresses = new Set(
     discovery.entries.map((e) => e.address.toLowerCase()),
   )
+  const ownAddresses = new Set(
+    discovery.entries
+      .filter((e) => e.type !== 'Reference')
+      .map((e) => e.address),
+  )
+
+  const byReceiver = groupByReceiver(permissionsOutput.permissions)
 
   for (const entry of discovery.entries) {
-    const permissionKeys: (keyof EntryParameters)[] = [
-      'receivedPermissions',
-      'directlyReceivedPermissions',
-    ]
-    for (const key of permissionKeys) {
-      const ultimatePermissionsForEntry = permissionsOutput.permissions.filter(
-        (p) =>
-          p.receiver.startsWith(entry.address) &&
-          (key === 'receivedPermissions' ? p.isFinal : !p.isFinal),
-      )
-      const permissions =
-        ultimatePermissionsForEntry.length === 0
-          ? undefined
-          : reverseVia(
-              sortReceivedPermissions(
-                ultimatePermissionsForEntry.map((p) => {
-                  // Remove some fields for backwards compatibility
-                  const { receiver: _, isFinal: __, ...rest } = p
-                  return rest
-                }),
-              ),
-            )
-      updateRelevantField(entry, key, permissions)
-    }
-
-    entry.eoaWithUpgradePermissions =
-      permissionsOutput.eoasWithUpgradePermissions?.includes(entry.address) &&
-      !isZeroAddress(entry.address) &&
-      !isAlias(entry.address, allAddresses) &&
-      upgradesCriticalContract(entry, discovery)
-        ? true
-        : undefined
+    // A Reference entry is a stub for an address owned by another project, so
+    // it is handled like any other foreign receiver below.
+    const forEntry =
+      entry.type === 'Reference' ? [] : (byReceiver.get(entry.address) ?? [])
+    const permissionEntry = buildPermissionEntry(
+      entry.address,
+      forEntry,
+      permissionsOutput,
+      discovery,
+      allAddresses,
+    )
+    entry.receivedPermissions = permissionEntry.receivedPermissions
+    entry.directlyReceivedPermissions =
+      permissionEntry.directlyReceivedPermissions
+    entry.eoaWithUpgradePermissions = permissionEntry.eoaWithUpgradePermissions
   }
+
+  discovery.referencedPermissions = buildReferencedPermissions(
+    byReceiver,
+    permissionsOutput,
+    discovery,
+    ownAddresses,
+    allAddresses,
+  )
+}
+
+function groupByReceiver(
+  permissions: PermissionsOutput['permissions'],
+): Map<ChainSpecificAddress, PermissionsOutput['permissions']> {
+  const result = new Map<
+    ChainSpecificAddress,
+    PermissionsOutput['permissions']
+  >()
+  for (const permission of permissions) {
+    const bucket = result.get(permission.receiver)
+    if (bucket === undefined) {
+      result.set(permission.receiver, [permission])
+    } else {
+      bucket.push(permission)
+    }
+  }
+  return result
+}
+
+// Everything the modelling found for one receiver, in the shape an entry
+// stores it.
+function buildPermissionEntry(
+  receiver: ChainSpecificAddress,
+  permissionsForReceiver: PermissionsOutput['permissions'],
+  permissionsOutput: PermissionsOutput,
+  discovery: DiscoveryOutput,
+  allAddresses: Set<string>,
+): PermissionEntry {
+  const pick = (isFinal: boolean) => {
+    const picked = permissionsForReceiver.filter((p) => p.isFinal === isFinal)
+    if (picked.length === 0) {
+      return undefined
+    }
+    return reverseVia(
+      sortReceivedPermissions(
+        picked.map((p) => {
+          // Remove some fields for backwards compatibility
+          const { receiver: _, isFinal: __, ...rest } = p
+          return rest
+        }),
+      ),
+    )
+  }
+
+  const receivedPermissions = pick(true)
+  const isEoaWithUpgradePermissions =
+    permissionsOutput.eoasWithUpgradePermissions?.includes(receiver) &&
+    !isZeroAddress(receiver) &&
+    !isAlias(receiver, allAddresses) &&
+    upgradesCriticalContract(receivedPermissions, discovery)
+
+  return {
+    receivedPermissions,
+    directlyReceivedPermissions: pick(false),
+    eoaWithUpgradePermissions: isEoaWithUpgradePermissions ? true : undefined,
+  }
+}
+
+// A permission can end up in the hands of an address that this project never
+// discovered, because the crawl stops at the entrypoint of the project that
+// owns it. Keyed by address so the read side can merge it onto the referenced
+// discovery. Only permissions given by this project's own contracts are kept,
+// otherwise every consumer would carry a copy of the shared module's internal
+// permission graph.
+function buildReferencedPermissions(
+  byReceiver: Map<ChainSpecificAddress, PermissionsOutput['permissions']>,
+  permissionsOutput: PermissionsOutput,
+  discovery: DiscoveryOutput,
+  ownAddresses: Set<ChainSpecificAddress>,
+  allAddresses: Set<string>,
+): Record<ChainSpecificAddress, PermissionEntry> | undefined {
+  const result: Record<ChainSpecificAddress, PermissionEntry> = {}
+
+  const foreignReceivers = [...byReceiver.keys()]
+    .filter((receiver) => !ownAddresses.has(receiver))
+    .sort()
+
+  for (const receiver of foreignReceivers) {
+    const permissions = (byReceiver.get(receiver) ?? []).filter((p) =>
+      ownAddresses.has(p.from),
+    )
+    if (permissions.length === 0) {
+      continue
+    }
+    result[receiver] = withoutUndefined(
+      buildPermissionEntry(
+        receiver,
+        permissions,
+        permissionsOutput,
+        discovery,
+        allAddresses,
+      ),
+    )
+  }
+
+  return Object.keys(result).length === 0 ? undefined : result
+}
+
+function withoutUndefined(entry: PermissionEntry): PermissionEntry {
+  const result: PermissionEntry = {}
+  if (entry.receivedPermissions !== undefined) {
+    result.receivedPermissions = entry.receivedPermissions
+  }
+  if (entry.directlyReceivedPermissions !== undefined) {
+    result.directlyReceivedPermissions = entry.directlyReceivedPermissions
+  }
+  if (entry.eoaWithUpgradePermissions !== undefined) {
+    result.eoaWithUpgradePermissions = entry.eoaWithUpgradePermissions
+  }
+  return result
 }
 
 // Renounced admin slots point at the zero address, which the modelling
@@ -123,11 +218,11 @@ function isAlias(
 }
 
 function upgradesCriticalContract(
-  entry: EntryParameters,
+  receivedPermissions: ReceivedPermission[] | undefined,
   discovery: DiscoveryOutput,
 ): boolean {
   const upgradeTargets =
-    entry.receivedPermissions
+    receivedPermissions
       ?.filter((p) => p.permission === 'upgrade')
       .map((p) => p.from) ?? []
   return upgradeTargets.some((target) => {

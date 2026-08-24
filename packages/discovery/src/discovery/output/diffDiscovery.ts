@@ -1,7 +1,7 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
 import { diffContracts, type FieldDiff } from './diffContracts'
-import type { EntryParameters, StructureEntry } from './types'
+import type { DiscoveryOutput, EntryParameters, StructureEntry } from './types'
 
 export interface DiscoveryDiff {
   name?: string
@@ -11,6 +11,38 @@ export interface DiscoveryDiff {
   template?: string
   diff?: FieldDiff[]
   type?: 'created' | 'deleted'
+}
+
+// Permissions held by addresses of a referenced project are stored outside
+// `entries`, so folding them in is what makes a shared module change visible
+// in a consumer's diff. The stub of an entrypoint is already an entry, so the
+// two are merged rather than listed twice - a duplicated address would confuse
+// the address lookups below.
+export function entriesForDiff(
+  discovery: DiscoveryOutput | undefined,
+): EntryParameters[] {
+  if (discovery === undefined) {
+    return []
+  }
+  const referenced = Object.entries(discovery.referencedPermissions ?? {})
+  if (referenced.length === 0) {
+    return discovery.entries
+  }
+
+  const result = discovery.entries.map((entry) => ({ ...entry }))
+  const byAddress = new Map(result.map((entry) => [entry.address, entry]))
+
+  for (const [rawAddress, permissions] of referenced) {
+    const address = rawAddress as ChainSpecificAddress
+    const existing = byAddress.get(address)
+    if (existing === undefined) {
+      result.push({ type: 'Reference', address, ...permissions })
+    } else {
+      Object.assign(existing, permissions)
+    }
+  }
+
+  return result
 }
 
 export function diffDiscovery(

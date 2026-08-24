@@ -2,8 +2,9 @@ import {
   type ConfigReader,
   ConfigRegistry,
   type DiscoveryConfig,
+  type DiscoveryOutput,
 } from '@l2beat/discovery'
-import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { contractStub, discoveredJsonStub } from '../test/stubs/discoveredJson'
 import { ProjectDiscovery } from './ProjectDiscovery'
@@ -272,6 +273,83 @@ describe(ProjectDiscovery.name, () => {
       expect(arbGroup?.name).toEqual('MultiSigMember2')
       expect(arbGroup?.id).toEqual('MultiSigMember2')
     })
+  })
+})
+
+describe(`${ProjectDiscovery.name} referenced permissions`, () => {
+  const timelock = ChainSpecificAddress(
+    'eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776',
+  )
+  const proxyAdmin = ChainSpecificAddress(
+    'eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1',
+  )
+  const board = ChainSpecificAddress(
+    'eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111',
+  )
+
+  // The consuming project stops at the entrypoint, so the actor that ends up
+  // holding the permission is only ever an entry of the shared module.
+  function makeDiscovery() {
+    const consumer: DiscoveryOutput = {
+      name: 'consumer',
+      timestamp: 0,
+      abis: {},
+      configHash: Hash256.random(),
+      usedTemplates: {},
+      usedBlockNumbers: {},
+      entries: [
+        {
+          type: 'Contract',
+          name: 'ValidatorTimelock',
+          address: timelock,
+          values: { $admin: proxyAdmin.toString() },
+        },
+        { type: 'Reference', address: proxyAdmin, targetProject: 'shared' },
+      ],
+      referencedPermissions: {
+        [board]: {
+          receivedPermissions: [{ permission: 'upgrade', from: timelock }],
+        },
+      },
+    }
+    const sharedModule: DiscoveryOutput = {
+      name: 'shared',
+      timestamp: 0,
+      abis: {},
+      configHash: Hash256.random(),
+      usedTemplates: {},
+      usedBlockNumbers: {},
+      entries: [
+        { type: 'Contract', name: 'ProxyAdmin', address: proxyAdmin },
+        {
+          type: 'Contract',
+          name: 'EmergencyUpgradeBoard',
+          address: board,
+          values: { admin: proxyAdmin.toString() },
+        },
+      ],
+    }
+    return new ProjectDiscovery(
+      'consumer',
+      mockObject<ConfigReader>({
+        readConfig: (name: string) => mockConfig(name),
+        readDiscoveryWithReferences: () => [consumer, sharedModule],
+      }),
+    )
+  }
+
+  it('joins the permission onto the entry of the shared module', () => {
+    const board = makeDiscovery().getContract('EmergencyUpgradeBoard')
+
+    expect(board.receivedPermissions).toEqual([
+      { permission: 'upgrade', from: timelock },
+    ])
+  })
+
+  it('makes the holder reachable from the project', () => {
+    const discovery = makeDiscovery()
+
+    expect(discovery.isReachable(board)).toEqual(true)
   })
 })
 

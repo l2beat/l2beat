@@ -8,6 +8,7 @@ import {
   ConfigReader,
   getDiscoveryPaths,
   getReachableEntries,
+  mergeReferencedPermissions,
 } from '@l2beat/discovery'
 import {
   assert,
@@ -73,6 +74,12 @@ export class ProjectDiscovery {
     const entrypoints = [...(this.discoveries.at(0)?.entries ?? [])].map(
       (e) => e.address,
     )
+
+    // Permissions crossing an entrypoint boundary are modelled by the
+    // consuming project and stored aside, so join them back onto the entries
+    // of the project that owns those addresses. Must run before reachability:
+    // it is these permissions that make the shared module's actors reachable.
+    mergeReferencedPermissions(this.discoveries)
 
     // Removing Reference entries because otherwise we get duplicates
     // and incomplete data.

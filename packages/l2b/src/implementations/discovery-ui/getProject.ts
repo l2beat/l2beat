@@ -8,6 +8,7 @@ import {
   getShapeFromOutputEntry,
   makeEntryColorConfig,
   makeEntryStructureConfig,
+  mergeReferencedPermissions,
   type TemplateService,
 } from '@l2beat/discovery'
 import type { ColorContract } from '@l2beat/discovery/dist/discovery/config/ColorConfig'
@@ -45,6 +46,10 @@ export function getProject(
     discovery,
     config: configReader.readConfig(discovery.name),
   }))
+
+  // Same as ProjectDiscovery: permissions modelled across an entrypoint
+  // boundary live on the consuming project and are joined back here.
+  mergeReferencedPermissions(discoveries)
 
   const ownedEntries = resolveEntryOwnership(discoveries)
 

@@ -6,6 +6,8 @@ import {
   type DiscoveryDiff,
   type DiscoveryOutput,
   diffDiscovery,
+  entriesForDiff,
+  findClusterConsumers,
   generateStructureHash,
 } from '@l2beat/discovery'
 import { hashJson, sortObjectByKeys } from '@l2beat/shared'
@@ -20,7 +22,6 @@ import type { DiscoveryRunner } from './DiscoveryRunner'
 import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 import type { UpdateDiffer } from './UpdateDiffer'
 import type { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
-import { findDependents } from './utils/findDependents'
 import { findUnknownEntries } from './utils/findUnknownEntries'
 
 export class UpdateMonitor {
@@ -142,7 +143,10 @@ export class UpdateMonitor {
 
       const committed = this.configReader.readDiscovery(projectConfig.name)
 
-      const diff = diffDiscovery(committed.entries, discovery.entries)
+      const diff = diffDiscovery(
+        entriesForDiff(committed),
+        entriesForDiff(discovery),
+      )
       const severityCounts = countSeverities(diff)
 
       if (diff.length > 0) {
@@ -224,8 +228,8 @@ export class UpdateMonitor {
       const sanitizedDiscovery = sanitizeDiscoveryOutput(discovery)
 
       const diff = diffDiscovery(
-        prevSanitizedDiscovery.entries,
-        sanitizedDiscovery.entries,
+        entriesForDiff(prevSanitizedDiscovery),
+        entriesForDiff(sanitizedDiscovery),
         unverifiedEntries,
       )
 
@@ -349,7 +353,11 @@ export class UpdateMonitor {
       return
     }
 
-    const dependents = findDependents(projectConfig.name, this.configReader)
+    // Transitive: a project can reach this one through another shared module.
+    const dependents = findClusterConsumers(
+      this.configReader,
+      projectConfig.name,
+    )
     const unknownEntries = findUnknownEntries(
       discovery.name,
       discovery.entries,

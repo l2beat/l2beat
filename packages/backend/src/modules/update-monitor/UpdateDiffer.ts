@@ -6,6 +6,7 @@ import {
   type DiscoveryOutput,
   diffDiscovery,
   type EntryParameters,
+  entriesForDiff,
 } from '@l2beat/discovery'
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
@@ -100,7 +101,10 @@ export class UpdateDiffer {
       return undefined
     }
 
-    const diff = diffDiscovery(discovery.entries, latestDiscovery.entries)
+    const diff = diffDiscovery(
+      entriesForDiff(discovery),
+      entriesForDiff(latestDiscovery),
+    )
 
     return this.getUpdateDiffs(
       diff,

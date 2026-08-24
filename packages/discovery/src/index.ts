@@ -59,11 +59,12 @@ export {
 export { combinePermissionsIntoDiscovery } from './discovery/modelling/combinePermissionsIntoDiscovery'
 export { KnowledgeBase } from './discovery/modelling/KnowledgeBase'
 export { ModelIdRegistry } from './discovery/modelling/ModelIdRegistry'
+export { mergeReferencedPermissions } from './discovery/modelling/mergeReferencedPermissions'
 export {
   DiscoveryRegistry,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
-  getDependenciesToDiscoverForProject,
+  loadDiscoveriesForModelling,
   modelPermissions,
 } from './discovery/modelling/modelPermissions'
 export { type Difference, diff } from './discovery/output/diff'
@@ -71,6 +72,7 @@ export { diffContracts, type FieldDiff } from './discovery/output/diffContracts'
 export {
   type DiscoveryDiff,
   diffDiscovery,
+  entriesForDiff,
 } from './discovery/output/diffDiscovery'
 export {
   contractDiffToMarkdown,
@@ -117,6 +119,7 @@ export {
   get$Implementations,
   toAddressArray,
 } from './discovery/utils/extractors'
+export { findClusterConsumers } from './discovery/utils/findClusterConsumers'
 export { getContractField } from './discovery/utils/metaGetters'
 export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath'
 export { getReachableEntries } from './discovery/utils/reachable'
