@@ -36,14 +36,15 @@ export class BalanceProvider {
           const res = await client.multicall(calls, blockNumber)
           return res.map((r, i) => {
             if (r.success === false) {
-              // getEthBalance cannot fail on-chain, so this is an RPC issue
-              // and returning 0 would poison stored amounts
+              // success=false means revert or empty returndata: for ERC20
+              // that's "token not deployed at this block" so 0 is correct;
+              // getEthBalance can do neither, so for native it's an RPC
+              // fault - throw instead of storing a poisoned 0
               if (queries[i].token === 'native') {
                 throw new Error(
                   `Failed to fetch native balance of ${queries[i].holder} at block ${blockNumber}`,
                 )
               }
-              // empty returndata - token not deployed at this block
               this.logger.tag({ chain }).warn('Issue with balance fetching', {
                 token: queries[i].token,
                 blockNumber,
