@@ -17,6 +17,7 @@ import { cctpv2 } from '../projects/cctpv2/cctpv2'
 import { celestia } from '../projects/celestia/celestia'
 import { chainlink } from '../projects/chainlink/chainlink'
 import { circlegateway } from '../projects/circlegateway/circlegateway'
+import { cloaked } from '../projects/cloaked/cloaked'
 import { debridge } from '../projects/debridge/debridge'
 import { debridgeDln } from '../projects/debridge-dln/debridge-dln'
 import { eigenda } from '../projects/eigenda/eigenda'
@@ -139,6 +140,7 @@ export const refactored: BaseProject[] = [
   uniswapv3,
   uniswapv4,
   // privacy
+  cloaked,
   privacyPools,
   railgun,
   strk20,
