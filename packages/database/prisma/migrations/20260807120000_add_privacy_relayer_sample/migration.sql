@@ -5,6 +5,9 @@ CREATE TABLE "PrivacyRelayerSample" (
     "chain" VARCHAR(32) NOT NULL,
     "timestamp" TIMESTAMP(6) NOT NULL,
     "relayerCount" INTEGER NOT NULL,
+    "messagesReceived" INTEGER NOT NULL,
+    "messagesParsed" INTEGER NOT NULL,
+    "messagesAccepted" INTEGER NOT NULL,
 
     CONSTRAINT "PrivacyRelayerSample_pkey" PRIMARY KEY ("configurationId", "timestamp")
 );
