@@ -38,6 +38,13 @@ interface Props {
  * for the remainder of the cycle. This way the visible density is
  * exactly 2.5 on average and the emission rate is exactly R/s —
  * two flows with slightly different volumes are always visually distinct.
+ *
+ * Only <animateMotion> is used — no SMIL animation of a CSS property such as
+ * opacity. Those are applied through style per element per sample, and when
+ * the graph sits inside a CSS size container (the home card) every one of
+ * those style updates forces a layout, so hundreds of particles meant
+ * thousands of layouts per frame. Instead, idle particles hold at the path
+ * end, which is the destination bubble's center, hidden under its icon.
  */
 export function ParticleLayer({
   flows,
@@ -97,34 +104,26 @@ export function ParticleLayer({
         const particleInterval = cycleDuration / count
         const initialOffset = Math.random() * particleInterval
 
-        // fraction of each cycle spent traveling (rest is idle / hidden)
+        // fraction of each cycle spent traveling (rest is parked at the end)
         const t = exactCount / count
 
         return (
           <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
             {Array.from({ length: count }, (_, i) => {
-              // Positive delay, so a particle stays at its base opacity of 0
-              // until its turn comes up in the first cycle.
-              const delay = `${initialOffset + i * particleInterval}s`
+              // Negative begin: each particle starts mid-cycle, so the graph
+              // is in steady state at load and nothing ever sits un-animated
+              // at the SVG origin waiting for its turn.
+              const begin = `-${initialOffset + i * particleInterval}s`
 
               return (
-                <circle key={i} r={particleRadius} fill={color} opacity={0}>
+                <circle key={i} r={particleRadius} fill={color} opacity={0.8}>
                   <animateMotion
                     path={path}
                     dur={`${cycleDuration}s`}
                     keyPoints="0;1;1"
                     keyTimes={`0;${t};1`}
                     calcMode="linear"
-                    begin={delay}
-                    repeatCount="indefinite"
-                  />
-                  <animate
-                    attributeName="opacity"
-                    dur={`${cycleDuration}s`}
-                    begin={delay}
-                    calcMode="discrete"
-                    values={'0.8;0'}
-                    keyTimes={`0;${t}`}
+                    begin={begin}
                     repeatCount="indefinite"
                   />
                 </circle>
