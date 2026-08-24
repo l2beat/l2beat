@@ -2,9 +2,9 @@ Cloaked is a wallet service that separates incoming payments across fresh Ethere
 
 ### Stealth address generation
 
-Under Cloaked's published key model, the client deterministically derives separate viewing and spending capabilities from a passkey secret or a wallet signature combined with a PIN. A scoped child viewing private node and the public spending key are shared with the Cloaked service, while the private spending key remains client-side.
+Under Cloaked's published key model, the client deterministically derives separate viewing and spending keys from a passkey secret or a wallet signature combined with a PIN. It shares the viewing key and public spending key with Cloaked so the service can generate and monitor payment addresses, but keeps the private spending key locally.
 
-For each payment nonce, the service derives an ephemeral private key, combines it with the recipient's public spending key, and returns the resulting one-time address. The client can recreate the same ephemeral key and combine its public key with the private spending key to derive the private key controlling that address. Under this model, the service can generate and monitor addresses without being able to spend from correctly derived addresses.
+For each payment nonce, the service derives an ephemeral private key, combines it with the recipient's public spending key, and returns the resulting one-time address. The client can recreate the same ephemeral key and combine its public key with the private spending key to derive the private key controlling that address. Under this model, only the client can derive the private key needed to spend from a correctly generated address.
 
 The derivation SDK, API schema, and standalone recovery client are published. The recovery client can derive exportable stealth private keys without using the Cloaked API.
 
