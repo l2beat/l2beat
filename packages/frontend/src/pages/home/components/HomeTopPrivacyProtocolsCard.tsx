@@ -3,6 +3,7 @@ import { formatCurrency } from '@l2beat/shared-pure'
 import { createColumnHelper, getCoreRowModel } from '@tanstack/react-table'
 import type { ReactNode } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import {
   Tooltip,
   TooltipContent,
@@ -46,8 +47,8 @@ export function HomeTopPrivacyProtocolsCard({ entries }: Props) {
         href="/privacy"
         linkLabel="View all"
       />
-      <div className="mt-3 flex-1">
-        <BasicTable table={table} />
+      <div className="mt-2 flex-1">
+        <BasicTable table={table} compact />
       </div>
     </HomeCard>
   )
@@ -93,6 +94,7 @@ const columns = [
     },
     meta: {
       cellClassName: 'lg:pl-2.5',
+      headClassName: 'lg:pl-2.5',
     },
   }),
   columnHelper.display({
@@ -108,6 +110,10 @@ const columns = [
   columnHelper.accessor('totalValueLockedUsd', {
     header: 'TVL',
     cell: (ctx) => {
+      if (!ctx.row.original.hasTvl) {
+        return <NotApplicableBadge />
+      }
+
       const value = ctx.getValue()
       if (value === undefined) {
         return <NoDataBadge />

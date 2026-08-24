@@ -7,6 +7,31 @@ export interface StarknetCallParameters {
   calldata: string[]
 }
 
+export interface StarknetEvent {
+  block_number: number
+  transaction_hash: string
+  event_index: number
+  keys: string[]
+  data: string[]
+}
+
+export const StarknetGetEventsResponse = v.object({
+  jsonrpc: v.literal('2.0'),
+  id: v.number().check(Number.isInteger),
+  result: v.object({
+    events: v.array(
+      v.object({
+        block_number: v.number().check(Number.isInteger),
+        transaction_hash: v.string(),
+        event_index: v.number().check(Number.isInteger).optional(),
+        keys: v.array(v.string().check((v) => HEX_REGEX.test(v))),
+        data: v.array(v.string().check((v) => HEX_REGEX.test(v))),
+      }),
+    ),
+    continuation_token: v.union([v.string(), v.null()]).optional(),
+  }),
+})
+
 export type StarknetGetBlockResponse = v.infer<typeof StarknetGetBlockResponse>
 export const StarknetGetBlockResponse = v.object({
   jsonrpc: v.literal('2.0'),

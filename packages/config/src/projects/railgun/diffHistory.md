@@ -1,3 +1,106 @@
+Generated with discovered.json: 0xeb92c7221649da73ad67ce15309d6353e63c36f9
+
+# Diff at Fri, 21 Aug 2026 11:19:42 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@97be884924a799765834458d955d84040bed3cfb block: 1787147547
+- current timestamp: 1787311119
+
+## Description
+
+New proposal on Railgun DAO: "Base deployment of RAILGUN Privacy System". 
+
+Onchain execution of this proposal sends tasks to OPStackSender contract: https://tools.l2beat.com/decoder-new/?hash=0xfd5860b22fad6d5bf81cd4e9c809b2016ed08971b0fbf96aaf033fdbf87b52ec&data=AwA. These tasks initialize verification keys for all railgun circuits on the main Railgun contract on Base (`base:0x0047d1F97674614189E80566575FB615788AcF25`).
+
+Railgun smart contracts on Base are already deployed, with bytecode matching the deployment on Ethereum.
+
+The proposal doesn't look malicious.
+
+## Watched changes
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ severity: HIGH
+      values.proposalCount:
+-        27
++        28
+    }
+```
+
+Generated with discovered.json: 0xcd88c164b465017734a52e9426c4a394593da472
+
+# Diff at Wed, 19 Aug 2026 10:26:56 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@de933fa9a1759053ca93b617a3305b5cd8938884 block: 1786961539
+- current timestamp: 1787135135
+
+## Description
+
+New railgun proposal created: https://tools.l2beat.com/decoder-new/?hash=0xb0f02fe28a805756fbd58c90a0704c26be69882460b1bd8885ca9fe93dd77718&data=AwA. It sweeps most tokens from railgun treasury (excluding WETH, RAIL which have most value) to 0xA4f2eA0a81179362558eBC1d2Bc817c9a0134ee3. Also triggers an action on arbitrum deployment.
+
+IPFS-published proposal description: "This proposal will gather tokens that are not part of the biweekly security staker rewards and use them to issue a research grant. The previous research funding ended earlier this year, so this would be a new and separate funding. All slightly significant tokens on Arbitrum will be collected. Most tokens not related to RAIL Security Rewards on Ethereum treasury will be collected.\n\nThe sum for this will be to fund the further development on the following (but not limited to): \n\n- RAILGUN-reloaded SDK, \n- RAILGUN v3,\n- Hardware Support \n- Post-Quantum Research \n- Multisig Support \n- and incentivise researchers and ecosystem.\n\nPlease do your own security review & vote YES to support this grant."
+
+Looks legit.
+
+## Watched changes
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ severity: HIGH
+      values.proposalCount:
+-        26
++        27
+    }
+```
+
+Generated with discovered.json: 0x684ef9c4e26669601d84b8db86cababa1e76c968
+
+# Diff at Mon, 17 Aug 2026 10:15:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9b7337c108d300967ecea6d6606607859d1de669 block: 1785404669
+- current timestamp: 1786961539
+
+## Description
+
+The RailgunSmartWallet implementation upgrade proposed and reviewed in the entry below (2026-07-30) has now been executed by governance. The new implementation (https://disco.l2beat.com/diff/eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b/eth:0xd662c4b1f22aceb0beacdf3a493de6f478686a0c):
+
+- adds an `Action` event (caller + per-transaction nullifier/commitment counts, unshield flag, and boundParamsHash) emitted in `shield()` and `transact()` as an anchoring point for wallets/indexers to decode batched and nested Railgun transactions,
+- changes `Verifier.verify()` and `validateTransaction()` return signatures to also return the boundParamsHash for the new event (validation logic unchanged),
+- moves the token blocklist check from `validateCommitmentPreimage()` (now pure) directly into `shield()` (same effective behavior: blocked tokens still cannot be shielded).
+
+No permission, fee, or escrow logic changes.
+
+## Watched changes
+
+```diff
+    contract RailgunSmartWallet (eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9) [railgun/RailgunSmartWallet] {
+    +++ description: Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.
+      sourceHashes.1:
+-        "0x0ad85e59396caf20dd30307894a735a097dbd0d914bc1851af97c04cc874ad3b"
++        "0xb6d8961a0f486e51d0c52fe1292f627928dba2087f6e643379207033c0966965"
++++ description: Current Railgun smart wallet implementation.
++++ severity: HIGH
+      values.$implementation:
+-        "eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b"
++        "eth:0xD662C4B1F22AcEb0BEaCdf3A493De6f478686A0C"
+      implementationNames.eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b:
+-        "RailgunSmartWallet"
+      implementationNames.eth:0xD662C4B1F22AcEb0BEaCdf3A493De6f478686A0C:
++        "RailgunSmartWallet"
+    }
+```
+
+## Source code changes
+
+```diff
+.../RailgunSmartWallet/RailgunSmartWallet.sol      | 132 +++++++++++++++++----
+ 1 file changed, 109 insertions(+), 23 deletions(-)
+```
+
 Generated with discovered.json: 0xdc5ee3658590f256c693fe0f1a3df0ef79d5592f
 
 # Diff at Thu, 30 Jul 2026 15:18:34 GMT:

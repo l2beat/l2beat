@@ -1,7 +1,7 @@
 {
   "name": "reya",
-  "timestamp": 1785996153,
-  "configHash": "0x756682de6e729913abb516b05ad6407a287d1c7ce6a3dd03c49b4b17eba14deb",
+  "timestamp": 1786359806,
+  "configHash": "0x1791bfaca56b9da5cfd0a00beefc231661597f8552ab078d9d3be18bbef8d06a",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -197,7 +197,7 @@
           "eth:0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
         ],
         "allowedOutboxList": ["eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"],
-        "delayedMessageCount": 108192,
+        "delayedMessageCount": 109446,
         "inboxHistory": [
           "eth:0x672109752635177ebcb17F2C7e04575A709014BD",
           "eth:0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
@@ -205,8 +205,8 @@
         "outboxHistory": ["eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"],
         "rollup": "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerInbox": "eth:0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d",
-        "sequencerMessageCount": 106330,
-        "sequencerReportedSubMessageCount": 199891064
+        "sequencerMessageCount": 107575,
+        "sequencerReportedSubMessageCount": 203462785
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -341,12 +341,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 3058,
+        "firstUnresolvedNode": 3067,
         "inbox": "eth:0x672109752635177ebcb17F2C7e04575A709014BD",
         "isERC20Enabled": false,
         "isPostBoLD": false,
-        "lastStakeBlock": 21894997,
-        "latestConfirmed": 3057,
+        "lastStakeBlock": 25694255,
+        "latestConfirmed": 3066,
         "latestNodeCreated": 3091,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 10,
@@ -357,7 +357,7 @@
         "rollupEventInbox": "eth:0xFd9f59554351122b231F832a0e0A1aBb0604D7fd",
         "sequencerInbox": "eth:0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d",
         "setValidatorCount": 5,
-        "stakerCount": 2,
+        "stakerCount": 3,
         "stakeToken": "eth:0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
@@ -656,7 +656,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 106330,
+        "batchCount": 107575,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0x312F51C032ea949b824381acb7B3f2C712593802"],
         "bridge": "eth:0x383c03c4EfF819E73409DbC690755a9992393814",
@@ -686,7 +686,7 @@
         "rollup": "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 5,
-        "totalDelayedMessagesRead": 108190,
+        "totalDelayedMessagesRead": 109443,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1620,6 +1620,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25693981 },
+  "usedBlockNumbers": { "ethereum": 25724171 },
   "permissionsConfigHash": "0x94cd5549d615d1bd0000305d4622d40f3b6a6ee224a92e1ca07705a9dc7c74a9"
 }

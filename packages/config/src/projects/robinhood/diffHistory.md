@@ -1,3 +1,46 @@
+Generated with discovered.json: 0xc5244324694475bfa66bbff62c0ac74f82a0f54a
+
+# Diff at Mon, 10 Aug 2026 11:04:49 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b69b5b6595d9041cb4e6d7872e95451210cc7bd7 block: 1785409713
+- current timestamp: 1786359815
+
+## Description
+
+ArbFilteredTransactionsManager: 3 more transactions were added to the filter list. Remaining entries are config-driven permission updates, not onchain changes.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      values.filteredTransactionsAdded:
+-        6088
++        6091
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785409713 (main branch discovery), not current.
+
+```diff
+    contract SafeL2 (robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5"
++        null
+      implementationNames.robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C:
+-        "SafeProxy"
++        ""
+      unverified:
++        true
+    }
+```
+
 Generated with discovered.json: 0x42fa4f0e7945fbc3fb9b29ef18420c73bad7da58
 
 # Diff at Thu, 30 Jul 2026 11:09:48 GMT:

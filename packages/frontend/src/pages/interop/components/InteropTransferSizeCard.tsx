@@ -1,5 +1,5 @@
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import type { TransferSizeDataPoint } from '~/server/features/scaling/interop/utils/getTransferSizeChartData'
+import type { TransferSizeDataPoint } from '~/server/features/layer2s/interop/utils/getTransferSizeChartData'
 import { cn } from '~/utils/cn'
 import { TransferSizeChart } from '../summary/components/charts/TransferSizeChart'
 import { Last24HoursBadge } from './Last24HoursBadge'

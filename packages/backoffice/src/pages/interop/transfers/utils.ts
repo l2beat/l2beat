@@ -1,8 +1,4 @@
-import {
-  Address32,
-  formatLargeNumber,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { Address32, formatNumber, formatSeconds } from '@l2beat/shared-pure'
 import type { TransferDetailsInput } from './types'
 
 export function buildTransferDetailsPath(filters: TransferDetailsInput) {
@@ -75,7 +71,7 @@ export function formatDollars(
   const num = typeof value === 'string' ? Number.parseFloat(value) : value
   if (Number.isNaN(num)) return '-'
 
-  return `$${formatLargeNumber(num)}`
+  return `$${formatNumber(num)}`
 }
 
 export function shortenHash(hash: string, prefixLength = 10, suffixLength = 8) {

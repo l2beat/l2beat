@@ -662,6 +662,7 @@ export interface ProjectScalingDa {
 
 export interface ProjectGovernanceInfo {
   securityCouncil?: Record<string, string>
+  guardians?: Record<string, string>
   upgrades?: Record<string, string>
   tokenGovernance?: Record<string, string>
 }
@@ -996,6 +997,7 @@ export interface ProjectPrivacyInfo {
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
   privacy: PrivacySummaryValue
+  noteDiscovery?: PrivacyNoteDiscovery
   attributes?: PrivacyAttribute[]
   /**
    * Privacy-specific quantum-resistance flag. Distinct in meaning from
@@ -1004,6 +1006,11 @@ export interface ProjectPrivacyInfo {
   quantumResistant?: true
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
+}
+
+export interface PrivacyNoteDiscovery {
+  description: string
+  risks?: string[]
 }
 
 export interface PrivacyExitWindow extends ExitWindowRisk {
@@ -1027,7 +1034,7 @@ export interface PrivacyAttribute {
 
 export interface ProjectPrivacyToken {
   token: {
-    address: EthereumAddress
+    address: string
     iconUrl: string | undefined
     symbol: string
     decimals: number
@@ -1041,12 +1048,21 @@ export interface ProjectPrivacyBucket {
   id: string
   type: 'pool' | 'denomination'
   label: string
-  address: ChainSpecificAddress
+  address: PrivacyBucketAddress
   sinceTimestamp: UnixTime
   denomination?: string
   deposit: PrivacyFlowSource
   withdrawal: PrivacyFlowSource
 }
+
+/**
+ * Privacy pools can live on non-EVM chains. Keep EVM addresses in their
+ * existing ERC-3770 representation and use an explicit chain/address pair
+ * where an ERC-3770 address is not applicable.
+ */
+export type PrivacyBucketAddress =
+  | ChainSpecificAddress
+  | { chain: string; address: string }
 
 export type PrivacyFlowSource = {
   event: string
@@ -1089,6 +1105,18 @@ export type PrivacyFlowExtractorConfig =
       extractor: 'zamaUnwrap'
       params: {
         rate: string
+      }
+    }
+  | {
+      extractor: 'strk20Deposit'
+      params: {
+        tokenAddress: string
+      }
+    }
+  | {
+      extractor: 'strk20Withdrawal'
+      params: {
+        tokenAddress: string
       }
     }
 
@@ -1649,6 +1677,19 @@ export const StarknetTotalSupplyAmountFormulaSchema = v.object({
   decimals: v.number(),
 })
 
+export type StarknetBalanceOfAmountFormula = v.infer<
+  typeof StarknetBalanceOfAmountFormulaSchema
+>
+export const StarknetBalanceOfAmountFormulaSchema = v.object({
+  type: v.literal('starknetBalanceOf'),
+  chain: v.string(),
+  sinceTimestamp: v.number(),
+  untilTimestamp: v.number().optional(),
+  address: v.string(),
+  escrowAddress: v.string(),
+  decimals: v.number(),
+})
+
 export type CirculatingSupplyAmountFormula = v.infer<
   typeof CirculatingSupplyAmountFormulaSchema
 >
@@ -1678,6 +1719,7 @@ export const AmountFormulaSchema = v.union([
   CirculatingSupplyAmountFormulaSchema,
   ConstAmountFormulaSchema,
   StarknetTotalSupplyAmountFormulaSchema,
+  StarknetBalanceOfAmountFormulaSchema,
 ])
 
 export type Formula = CalculationFormula | ValueFormula | AmountFormula
@@ -1689,6 +1731,7 @@ export type OnchainAmountFormula =
   | BalanceOfEscrowAmountFormula
   | TotalSupplyAmountFormula
   | StarknetTotalSupplyAmountFormula
+  | StarknetBalanceOfAmountFormula
 
 export function isOnchainAmountFormula(
   formula: Formula,
@@ -1696,7 +1739,8 @@ export function isOnchainAmountFormula(
   return (
     formula.type === 'totalSupply' ||
     formula.type === 'balanceOfEscrow' ||
-    formula.type === 'starknetTotalSupply'
+    formula.type === 'starknetTotalSupply' ||
+    formula.type === 'starknetBalanceOf'
   )
 }
 

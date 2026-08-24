@@ -1,0 +1,186 @@
+import type { InteropTransferRecord } from '@l2beat/database'
+import { InteropTransferClassifier } from '@l2beat/shared'
+import { ProjectId } from '@l2beat/shared-pure'
+import { env } from '~/env'
+import { getInteropTokenUrl } from '~/pages/interop/utils/getInteropTokenUrl'
+import { ps } from '~/server/projects'
+import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import type {
+  InteropProtocolTransferDetailsItem,
+  InteropProtocolTransfersParams,
+  InteropProtocolTransfersResponse,
+  InteropTransferBridge,
+} from './types'
+import {
+  buildTokensDetailsMap,
+  type TokensDetailsMap,
+} from './utils/buildTokensDetailsMap'
+import { createTransferBridgeResolver } from './utils/createTransferBridgeResolver'
+import { getAbstractTokenIds } from './utils/getAbstractTokenIds'
+import { getFilteredInteropTransfersPage } from './utils/getFilteredInteropTransfersPage'
+import { getMockInteropTransfers } from './utils/getMockInteropTransfers'
+import {
+  INTEROP_CHAIN_DETAILS,
+  type InteropChainDetails,
+} from './utils/interopChainDetails'
+
+const UNKNOWN_TOKEN_SYMBOL = 'Unknown'
+
+export async function getInteropProtocolTransfers({
+  scope,
+  from,
+  to,
+  type,
+  tokenId,
+  snapshotTimestamp,
+  limit,
+  cursor,
+}: InteropProtocolTransfersParams): Promise<InteropProtocolTransfersResponse> {
+  const empty: InteropProtocolTransfersResponse = {
+    items: [],
+    nextCursor: undefined,
+  }
+
+  if (from.length === 0 || to.length === 0) return empty
+
+  if (env.MOCK) {
+    return getMockInteropTransfers({ from, to })
+  }
+
+  const ids =
+    scope.type === 'project'
+      ? [scope.projectId]
+      : scope.protocolIds.map((value) => ProjectId(value))
+  if (ids.length === 0) return empty
+  const anchorChain = scope.type === 'selection' ? scope.anchorChain : undefined
+
+  const interopProjects = await ps.getProjects({
+    ids,
+    select: ['interopConfig'],
+  })
+  const plugins = interopProjects
+    .flatMap((project) => project.interopConfig.plugins)
+    .filter((plugin) => !type || plugin.bridgeType === type)
+  if (plugins.length === 0) return empty
+
+  const classifier = new InteropTransferClassifier()
+  const matcher = classifier.createMatcher<InteropTransferRecord>(plugins)
+  const pluginIds = [...new Set(plugins.map((plugin) => plugin.plugin))]
+  const result = await getFilteredInteropTransfersPage({
+    tokenId,
+    snapshotTimestamp,
+    sourceChains: from,
+    destinationChains: to,
+    anchorChain,
+    pluginIds,
+    matcher,
+    limit,
+    cursor,
+  })
+  const tokensDetailsMap = await buildTokensDetailsMap(
+    getAbstractTokenIds(result.items),
+  )
+  const resolveTransferBridge = createTransferBridgeResolver(interopProjects)
+  return {
+    items: result.items.map((transfer) =>
+      toInteropProtocolTransferDetailsItem(
+        transfer,
+        INTEROP_CHAIN_DETAILS,
+        tokensDetailsMap,
+        resolveTransferBridge(transfer),
+      ),
+    ),
+    nextCursor: result.nextCursor,
+  }
+}
+
+export function toInteropProtocolTransferDetailsItem(
+  transfer: InteropTransferRecord,
+  chainDetailsById: Map<string, InteropChainDetails>,
+  tokensDetailsMap: TokensDetailsMap,
+  bridge: InteropTransferBridge,
+): InteropProtocolTransferDetailsItem {
+  const srcDetails = chainDetailsById.get(transfer.srcChain)
+  const dstDetails = chainDetailsById.get(transfer.dstChain)
+  const srcTxHashHref = getTxHashHref(
+    srcDetails?.explorerUrl,
+    transfer.srcTxHash,
+  )
+  const dstTxHashHref = getTxHashHref(
+    dstDetails?.explorerUrl,
+    transfer.dstTxHash,
+  )
+
+  const srcSymbol = transfer.srcSymbol ?? UNKNOWN_TOKEN_SYMBOL
+  const dstSymbol = transfer.dstSymbol ?? UNKNOWN_TOKEN_SYMBOL
+
+  return {
+    transferId: transfer.transferId,
+    timestamp: transfer.timestamp,
+    srcAmount: transfer.srcAmount,
+    srcSymbol,
+    srcTokenHref: getTokenHref(transfer.srcAbstractTokenId, tokensDetailsMap),
+    srcTokenIconUrl: getTokenIconUrl(
+      transfer.srcAbstractTokenId,
+      tokensDetailsMap,
+    ),
+    dstAmount: transfer.dstAmount,
+    dstSymbol,
+    dstTokenHref: getTokenHref(transfer.dstAbstractTokenId, tokensDetailsMap),
+    dstTokenIconUrl: getTokenIconUrl(
+      transfer.dstAbstractTokenId,
+      tokensDetailsMap,
+    ),
+    valueUsd: transfer.srcValueUsd ?? transfer.dstValueUsd,
+    bridge,
+    duration: transfer.duration,
+    srcChain: srcDetails?.name ?? transfer.srcChain,
+    srcChainIconUrl: srcDetails?.iconUrl,
+    srcTxHash: transfer.srcTxHash,
+    srcTxHashHref,
+    dstChain: dstDetails?.name ?? transfer.dstChain,
+    dstChainIconUrl: dstDetails?.iconUrl,
+    dstTxHash: transfer.dstTxHash,
+    dstTxHashHref,
+  }
+}
+
+function getTokenHref(
+  abstractTokenId: string | undefined,
+  tokensDetailsMap: TokensDetailsMap,
+): string | undefined {
+  if (!abstractTokenId) return undefined
+
+  // A transfer can carry an abstract token id we have no record for. There is
+  // no token page to link to in that case, so it stays unlinked - as does the
+  // shared "unknown" token, which getInteropTokenUrl rejects.
+  const details = tokensDetailsMap.get(abstractTokenId)
+  if (!details) return undefined
+
+  return getInteropTokenUrl({
+    id: abstractTokenId,
+    symbol: details.symbol,
+    issuer: details.issuer,
+  })
+}
+
+function getTokenIconUrl(
+  abstractTokenId: string | undefined,
+  tokensDetailsMap: TokensDetailsMap,
+): string {
+  if (!abstractTokenId) return TOKEN_PLACEHOLDER_ICON_URL
+  return (
+    tokensDetailsMap.get(abstractTokenId)?.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL
+  )
+}
+
+function getTxHashHref(
+  explorerUrl: string | undefined,
+  txHash: string | undefined,
+): string | undefined {
+  if (!txHash || !explorerUrl) {
+    return undefined
+  }
+
+  return `${explorerUrl}/tx/${txHash}`
+}

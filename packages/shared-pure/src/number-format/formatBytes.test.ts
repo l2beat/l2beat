@@ -29,7 +29,17 @@ describe(formatBytes.name, () => {
     it('gibibytes range', () => {
       expect(formatBytes(1024 * 1024 * 1024)).toEqual('1.00 GiB')
       expect(formatBytes(1024 * 1024 * 1024 * 5)).toEqual('5.00 GiB')
-      expect(formatBytes(1024 * 1024 * 1024 * 1024)).toEqual('1024.00 GiB')
+      expect(formatBytes(1024 ** 4 - 1)).toEqual('1024.00 GiB')
+    })
+
+    it('tebibytes range', () => {
+      expect(formatBytes(1024 ** 4)).toEqual('1.00 TiB')
+      expect(formatBytes(1024 ** 5)).toEqual('1024.00 TiB')
+    })
+
+    it('handles bigint input', () => {
+      expect(formatBytes(1024n)).toEqual('1.00 KiB')
+      expect(formatBytes(1024n ** 4n)).toEqual('1.00 TiB')
     })
 
     it('custom decimal precision', () => {

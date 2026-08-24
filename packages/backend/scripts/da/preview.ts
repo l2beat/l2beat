@@ -1,12 +1,17 @@
 import { type Env, getEnv, Logger, type LogLevel } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
+import {
+  diffSnapshots,
+  formatRange,
+  type SnapshotDiff,
+} from '@l2beat/config/build/snapshots/compare'
 import { daTrackingDomain } from '@l2beat/config/build/snapshots/daTracking/identities'
+import { readSnapshot } from '@l2beat/config/build/snapshots/types'
 import { createDatabase, type DataAvailabilityRecord } from '@l2beat/database'
 import { HttpClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { command, option, optional, positional, run, string } from 'cmd-ts'
 import { config as dotenv } from 'dotenv'
-import * as fs from 'fs'
 import * as path from 'path'
 import { getDaTrackingConfig } from '../../src/config/features/da'
 import { BlobService } from '../../src/modules/data-availability/services/BlobService'
@@ -17,7 +22,6 @@ import {
 import { type BlobCache, createBlobSource } from './blobSource'
 import { previewBlockLayer } from './blockPreview'
 import { createPreviewClients } from './clients'
-import { diffSnapshots, type SnapshotDiff } from './diffSnapshot'
 import { previewEigen } from './eigenPreview'
 import { type ExpectedCoverage, findRecordGaps } from './gaps'
 import { summarizeGaps, summarizeRecords, writePreviewJson } from './output'
@@ -228,22 +232,35 @@ function initLogger(env: Env) {
 
 function printSnapshotDiff(logger: Logger): SnapshotDiff {
   const current = daTrackingDomain.generate()
-  const committed = JSON.parse(fs.readFileSync(SNAPSHOT_PATH, 'utf-8'))
-  const diff = diffSnapshots(current, committed)
+  // The build does not ship snapshot.json, so point readSnapshot at src.
+  const committed = readSnapshot({
+    ...daTrackingDomain,
+    snapshotPath: SNAPSHOT_PATH,
+  })
+  const diff = diffSnapshots(committed, current)
 
   for (const entry of diff.added) {
     logger.info(`+ ${entry.projectId}: ${entry.label} (${entry.id})`)
   }
-  for (const entry of diff.removed) {
+  for (const entry of diff.missing) {
     logger.warn(`- ${entry.projectId}: ${entry.label} (${entry.id})`)
   }
-  if (diff.removed.length > 0) {
+  if (diff.missing.length > 0) {
     logger.warn(daTrackingDomain.wipeWarning)
   }
+  for (const change of diff.rangeChanges) {
+    logger.warn(
+      `~ ${change.projectId}: ${change.label} (${change.id}) ${formatRange(change.old)} => ${formatRange(change.new)}`,
+    )
+  }
   logger.info(
-    `Identity diff vs committed snapshot: ${diff.added.length} added, ${diff.removed.length} removed, ${diff.unchanged} unchanged`,
+    `Identity diff vs committed snapshot: ${diff.added.length} added, ${diff.missing.length} removed, ${diff.rangeChanges.length} range changes, ${diff.unchanged} unchanged`,
   )
-  if (diff.added.length > 0 || diff.removed.length > 0) {
+  if (
+    diff.added.length > 0 ||
+    diff.missing.length > 0 ||
+    diff.rangeChanges.length > 0
+  ) {
     logger.info(
       "Run 'pnpm snapshots:generate' in packages/config to accept these changes",
     )

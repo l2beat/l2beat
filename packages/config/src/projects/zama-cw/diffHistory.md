@@ -1,3 +1,615 @@
+Generated with discovered.json: 0x3cda5fd8197379092f8e08a01d89186879f3d6cc
+
+# Diff at Wed, 12 Aug 2026 12:58:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe520bd4ade03975f1066b4ec47ec40ba7f6e27f block: 1786107356
+- current timestamp: 1786539392
+
+## Description
+
+Zama FHEVM host-chain upgrade (the Ethereum-side counterpart of the 2026-08-07 Gateway upgrade that moved KMS management off the Gateway): ZamaGovMultisigB executed a DAO (ACL owner) proposal that upgraded four host contracts and initialized two new ones in a single transaction. Governance is unchanged — everything below remains controlled by the Aragon DAO without a timelock.
+
+- KMSVerifier v0.2.0 -> v0.3.0 ([implementation diff](https://disco.l2beat.com/diff/eth:0xd0d0C7E1bc1E2F6Cd00E3b4B1083DdD9969155FD/eth:0x390683dEa46a61786f4F0807bf3559038Cf43Fa4)): all KMS context management (signer sets, thresholds, context create/destroy) is removed from the verifier and moved to the new ProtocolConfig contract. The KMSVerifier is now a stateless proof checker whose signer- and threshold-reads delegate to ProtocolConfig. Public decryption proofs can still select any non-destroyed context via extraData v1.
+- New ProtocolConfig v0.1.0 (proxy eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4, impl eth:0x25c76298Fb4d15bFADce4798519a7B37ac0076E7): ACL-owner-governed registry of KMS nodes (signer + tx-sender + metadata) and contexts, now with four separate per-context thresholds: publicDecryption (7), userDecryption (9), kmsGen and mpc. exactly one context is live. the ACL owner can now retune the thresholds of any live context — including the current one — in place, mirroring GatewayConfig v0.6.0 on the Gateway.
+- New KMSGeneration v0.1.0 (proxy eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa, impl eth:0x5DD95e97287672b5d86dd3a427E855099E5AC940): FHE key- and CRS-generation is now orchestrated onchain on Ethereum (previously not orchestrated onchain at all after being removed from the Gateway KMSGeneration v0.5.0). The ACL owner triggers keygen/crsgen and can abort them; KMS nodes respond with EIP-712 signatures that reach consensus at the ProtocolConfig kmsGen threshold.
+- ACL v0.3.0 -> v0.4.0 ([implementation diff](https://disco.l2beat.com/diff/eth:0x3F6D970d30E1FFE9657aa8072C82dA10eef1c3D6/eth:0x9A017e0ba4c19A325D5a89f5dd2112e605E85418)): adds wildcard user-decryption delegation — a user can delegate user decryption of their handles across all app contracts at once
+- FHEVMExecutor v0.3.0 -> v0.4.0 ([implementation diff](https://disco.l2beat.com/diff/eth:0xC38aAfCBB73Fd4bd6f995275079C4Add9C1687E5/eth:0xf444B2B5e45cD07F1E735122F53A2d70A8c81dB5)): adds two n-ary encrypted operations, `fheSum` (sum over up to 100/60 ciphertexts depending on width) and `fheIsIn` (encrypted set membership), with per-element ACL checks on inputs.
+- HCULimit v0.2.0 -> v0.3.0 ([implementation diff](https://disco.l2beat.com/diff/eth:0x0F2B7e8F19ADc874F21e27ADAA4B22FC00a0B442/eth:0x69A91389006443448d8E90Fd84B6bDF5ae253837)): adds HCU pricing for the new fheSum/fheIsIn operations and a guard reserving the zero transient-storage slot for the per-transaction HCU accumulator (a handle of 0x0 can no longer read/write it). Limits themselves are unchanged (empty reinitializer).
+
+## Watched changes
+
+```diff
+    contract HCULimit (eth:0x3b4da65e45Fda2CAa0285A735ab4361a44F171E2) [zama/ZamaHCULimit_v0_3_0] {
+    +++ description: Tracks and enforces per-transaction and per-block homomorphic computation unit limits for FHEVM operation requests. v0.3.0 adds pricing for the fheSum and fheIsIn operations.
+      template:
+-        "zama/ZamaHCULimit_v0_2_0"
++        "zama/ZamaHCULimit_v0_3_0"
+      sourceHashes.1:
+-        "0xc52e1b93c97602e6da1f1925e14fc5454426a778875655ec17910be5e217b98e"
++        "0x7ca7880da7a551111a41d9a1673890e2a6c1dd27c3cdf51a82f893b410b2d038"
+      description:
+-        "Tracks and enforces per-transaction and per-block homomorphic computation unit limits for FHEVM operation requests."
++        "Tracks and enforces per-transaction and per-block homomorphic computation unit limits for FHEVM operation requests. v0.3.0 adds pricing for the fheSum and fheIsIn operations."
+      values.$implementation:
+-        "eth:0x0F2B7e8F19ADc874F21e27ADAA4B22FC00a0B442"
++        "eth:0x69A91389006443448d8E90Fd84B6bDF5ae253837"
+      values.$pastUpgrades.3:
++        ["2026-08-10T11:50:47.000Z","0x3a73cbfe82d45d522aafa83acbc4a44dd89a2b409530e3a52d0076009a036c78",["eth:0x69A91389006443448d8E90Fd84B6bDF5ae253837"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.getVersion:
+-        "HCULimit v0.2.0"
++        "HCULimit v0.3.0"
+      implementationNames.eth:0x0F2B7e8F19ADc874F21e27ADAA4B22FC00a0B442:
+-        "HCULimit"
+      implementationNames.eth:0x69A91389006443448d8E90Fd84B6bDF5ae253837:
++        "HCULimit"
+    }
+```
+
+```diff
+    EOA  (eth:0x41b19EB4585450db79ac03ba9503106EC7895905) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign public decryption results accepted by the KMSVerifier."
++        "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration."
+      receivedPermissions.0.from:
+-        "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03"
++        "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+    }
+```
+
+```diff
+    EOA  (eth:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign public decryption results accepted by the KMSVerifier."
++        "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration."
+      receivedPermissions.0.from:
+-        "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03"
++        "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+    }
+```
+
+```diff
+    EOA  (eth:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign public decryption results accepted by the KMSVerifier."
++        "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration."
+      receivedPermissions.0.from:
+-        "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03"
++        "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+    }
+```
+
+```diff
+    EOA  (eth:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign public decryption results accepted by the KMSVerifier."
++        "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration."
+      receivedPermissions.0.from:
+-        "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03"
++        "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+    }
+```
+
+```diff
+    contract KMSVerifier (eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03) [zama/ZamaKMSVerifier_v0_3_0] {
+    +++ description: Ethereum host-chain verifier for public decryption results produced through the Zama Gateway Decryption contract. Since v0.3.0 it is a stateless proof checker: KMS signer sets and thresholds are read from the ProtocolConfig contract, and confidential token wrappers accept a decrypted value when it is signed by the threshold of the current or any explicitly selected non-destroyed KMS context.
+      template:
+-        "zama/ZamaKMSVerifier_v0_2_0"
++        "zama/ZamaKMSVerifier_v0_3_0"
+      sourceHashes.1:
+-        "0xa40292fe461810a065f80e305f6b85ab3ca2cfd416dc965d4791a111554cf638"
++        "0x83222b4971c6b79adbd52cb7d500d84b7d2d59886f828b6a1cdc128dcd2bb9d1"
+      description:
+-        "Ethereum host-chain verifier for public decryption results produced through the Zama Gateway Decryption contract. Confidential token wrappers accept a decrypted value when it is signed by the threshold of the current or any retained non-destroyed KMS context."
++        "Ethereum host-chain verifier for public decryption results produced through the Zama Gateway Decryption contract. Since v0.3.0 it is a stateless proof checker: KMS signer sets and thresholds are read from the ProtocolConfig contract, and confidential token wrappers accept a decrypted value when it is signed by the threshold of the current or any explicitly selected non-destroyed KMS context."
+      values.$implementation:
+-        "eth:0xd0d0C7E1bc1E2F6Cd00E3b4B1083DdD9969155FD"
++        "eth:0x390683dEa46a61786f4F0807bf3559038Cf43Fa4"
+      values.$pastUpgrades.3:
++        ["2026-08-10T11:50:47.000Z","0x3a73cbfe82d45d522aafa83acbc4a44dd89a2b409530e3a52d0076009a036c78",["eth:0x390683dEa46a61786f4F0807bf3559038Cf43Fa4"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.createdKmsContexts:
+-        []
+      values.getVersion:
+-        "KMSVerifier v0.2.0"
++        "KMSVerifier v0.3.0"
+      values.initialKmsContextId:
+-        "3166189940082864718613269121331309980362851143201109172953918312716374638593"
+      values.initialKmsContextSigners:
+-        ["eth:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f","eth:0xdC472efa1642D5afB684aAaa546E22FB24AAB965","eth:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3","eth:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f","eth:0x41b19EB4585450db79ac03ba9503106EC7895905","eth:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921","eth:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D","eth:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8","eth:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f","eth:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58","eth:0x7C17BE232e5968BDa9516478B798b9E90D013fCC","eth:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385","eth:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb"]
++++ description: ProtocolConfig contract that stores the KMS contexts (signer sets and thresholds) this verifier reads during proof verification. Referenced as a compile-time constant without a getter.
+      values.protocolConfig:
++        "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+      fieldMeta.aclOwner.severity:
+-        "HIGH"
+      fieldMeta.aclOwner.description:
+-        "Owner of the Zama ACL contract. This account can create a new KMS signer context that immediately becomes the default verifier authority, and can destroy any non-current context."
++        "Owner of the Zama ACL contract. This account is authorized by onlyACLOwner for KMSVerifier upgrades. Context and threshold management moved to ProtocolConfig in v0.3.0."
+      fieldMeta.getKmsSigners.severity:
+-        "HIGH"
+      fieldMeta.getKmsSigners.description:
+-        "KMS signers in the current context. Permission coverage is also indexed through initialKmsContextSigners and createdKmsContexts so superseded contexts remain visible."
++        "KMS signers in the current context, read through from ProtocolConfig where they are indexed for permissions and monitoring."
+      fieldMeta.initialKmsContextId:
+-        {"severity":"HIGH","description":"Identifier of the first v0.2 KMS context created from the source-defined context counter during initialization or migration.","type":"RISK_PARAMETER"}
+      fieldMeta.initialKmsContextSigners:
+-        {"severity":"HIGH","description":"Signers in the first v0.2 KMS context. This code-defined context remains authorized for public decryption proofs after later rotations unless the ACL owner explicitly destroys it.","type":"PERMISSION"}
+      fieldMeta.createdKmsContexts:
+-        {"severity":"HIGH","description":"Non-destroyed KMS contexts created after the v0.2 migration, reconstructed from context creation and destruction events. Each context is an immutable signer and threshold snapshot that can attest results for any ciphertext handle; it is not scoped to ciphertext age or key ID.","type":"PERMISSION"}
+      fieldMeta.getThreshold.severity:
+-        "HIGH"
+      fieldMeta.getThreshold.description:
+-        "Minimum number of KMS signatures from the current context required to accept a public decryption result. Retained contexts keep their own immutable thresholds."
++        "Minimum number of unique valid KMS signatures required to accept a public decryption result, read through from the ProtocolConfig public-decryption threshold of the current context."
+      fieldMeta.getCurrentKmsContextId.severity:
+-        "HIGH"
+      fieldMeta.getCurrentKmsContextId.description:
+-        "Identifier of the context used when proof extraData is empty or starts with version 0. Version 1 extraData can explicitly select any non-destroyed historical context, including for ciphertexts created after that context was superseded."
++        "Identifier of the context used when proof extraData is empty or starts with version 0. Version 1 extraData can explicitly select any non-destroyed context, including for ciphertexts created after that context was superseded."
+      fieldMeta.protocolConfig:
++        {"description":"ProtocolConfig contract that stores the KMS contexts (signer sets and thresholds) this verifier reads during proof verification. Referenced as a compile-time constant without a getter.","type":"EXTERNAL"}
+      implementationNames.eth:0xd0d0C7E1bc1E2F6Cd00E3b4B1083DdD9969155FD:
+-        "KMSVerifier"
+      implementationNames.eth:0x390683dEa46a61786f4F0807bf3559038Cf43Fa4:
++        "KMSVerifier"
+    }
+```
+
+```diff
+    EOA  (eth:0x7C17BE232e5968BDa9516478B798b9E90D013fCC) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign public decryption results accepted by the KMSVerifier."
++        "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration."
+      receivedPermissions.0.from:
+-        "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03"
++        "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+    }
+```
+
+```diff
+    EOA  (eth:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign public decryption results accepted by the KMSVerifier."
++        "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration."
+      receivedPermissions.0.from:
+-        "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03"
++        "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+    }
+```
+
+```diff
+    EOA  (eth:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign public decryption results accepted by the KMSVerifier."
++        "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration."
+      receivedPermissions.0.from:
+-        "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03"
++        "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+    }
+```
+
+```diff
+    EOA  (eth:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign public decryption results accepted by the KMSVerifier."
++        "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration."
+      receivedPermissions.0.from:
+-        "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03"
++        "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+    }
+```
+
+```diff
+    contract DAO (eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3) [zama/ZamaDAO] {
+    +++ description: Aragon DAO that stores governance state and executes proposal action batches.
+      directlyReceivedPermissions.5:
+-        {"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"create KMS signer contexts with arbitrary signer sets and thresholds, and destroy non-current contexts. A malicious context can attest an inflated unwrap amount and drain pooled wrapper backing.","role":".aclOwner"}
+      directlyReceivedPermissions.15.description:
+-        "transfer ACL ownership, unpause the ACL, block or unblock accounts, manage PauserSet membership, and create or destroy KMSVerifier signer contexts."
++        "transfer ACL ownership, unpause the ACL, block or unblock accounts, and manage PauserSet membership."
+      directlyReceivedPermissions.16:
++        {"permission":"interact","from":"eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4","description":"create KMS contexts with arbitrary node sets and thresholds that immediately become the default verifier authority, destroy non-current contexts, and retune the per-context thresholds (public decryption, user decryption, key generation, MPC) of any live context including the current one. A malicious context or lowered threshold can attest an inflated unwrap amount and drain pooled wrapper backing.","role":".aclOwner"}
+      directlyReceivedPermissions.22:
++        {"permission":"interact","from":"eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa","description":"trigger and abort FHE key and CRS generation rounds executed by the KMS nodes.","role":".aclOwner"}
+      directlyReceivedPermissions.36:
++        {"permission":"upgrade","from":"eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4","description":"upgrade the ProtocolConfig implementation.","role":".aclOwner"}
+      directlyReceivedPermissions.42:
++        {"permission":"upgrade","from":"eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa","description":"upgrade the KMSGeneration implementation.","role":".aclOwner"}
+    }
+```
+
+```diff
+    EOA  (eth:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign public decryption results accepted by the KMSVerifier."
++        "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration."
+      receivedPermissions.0.from:
+-        "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03"
++        "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+    }
+```
+
+```diff
+    contract ZamaGovMultisigB (eth:0xBc860b6a4C860C5424B84A056E53ACFb2C99a38F) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
+      receivedPermissions.5:
+-        {"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"create KMS signer contexts with arbitrary signer sets and thresholds, and destroy non-current contexts. A malicious context can attest an inflated unwrap amount and drain pooled wrapper backing.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.17.description:
+-        "transfer ACL ownership, unpause the ACL, block or unblock accounts, manage PauserSet membership, and create or destroy KMSVerifier signer contexts."
++        "transfer ACL ownership, unpause the ACL, block or unblock accounts, and manage PauserSet membership."
+      receivedPermissions.18:
++        {"permission":"interact","from":"eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4","description":"create KMS contexts with arbitrary node sets and thresholds that immediately become the default verifier authority, destroy non-current contexts, and retune the per-context thresholds (public decryption, user decryption, key generation, MPC) of any live context including the current one. A malicious context or lowered threshold can attest an inflated unwrap amount and drain pooled wrapper backing.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.24:
++        {"permission":"interact","from":"eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa","description":"trigger and abort FHE key and CRS generation rounds executed by the KMS nodes.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.38:
++        {"permission":"upgrade","from":"eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4","description":"upgrade the ProtocolConfig implementation.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.44:
++        {"permission":"upgrade","from":"eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa","description":"upgrade the KMSGeneration implementation.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+    }
+```
+
+```diff
+    EOA  (eth:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign public decryption results accepted by the KMSVerifier."
++        "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration."
+      receivedPermissions.0.from:
+-        "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03"
++        "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+    }
+```
+
+```diff
+    contract ACL (eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6) [zama/ZamaACL_v0_4_0] {
+    +++ description: Ethereum host-chain access-control registry for encrypted handles, storing handle allowances and delegation state for ciphertext references. Its public-decryption and user-delegation events are mirrored into the Gateway MultichainACL by coprocessor consensus. Since v0.4.0 users can delegate user decryption of their handles across all app contracts at once via a wildcard delegation.
+      template:
+-        "zama/ZamaACL_v0_3_0"
++        "zama/ZamaACL_v0_4_0"
+      sourceHashes.1:
+-        "0x47f47986a3024b31fa3caee357720f4fba4ea3fae419ff53eebe1a66e87d69ef"
++        "0xa69c606dd333427d22d0b664b3c7b39118934dd95a2b7b37c737e37b39bba7e5"
+      description:
+-        "Ethereum host-chain access-control registry for encrypted handles, storing handle allowances and delegation state for ciphertext references. Its public-decryption and user-delegation events are mirrored into the Gateway MultichainACL by coprocessor consensus."
++        "Ethereum host-chain access-control registry for encrypted handles, storing handle allowances and delegation state for ciphertext references. Its public-decryption and user-delegation events are mirrored into the Gateway MultichainACL by coprocessor consensus. Since v0.4.0 users can delegate user decryption of their handles across all app contracts at once via a wildcard delegation."
+      values.$implementation:
+-        "eth:0x3F6D970d30E1FFE9657aa8072C82dA10eef1c3D6"
++        "eth:0x9A017e0ba4c19A325D5a89f5dd2112e605E85418"
+      values.$pastUpgrades.4:
++        ["2026-08-10T11:50:47.000Z","0x3a73cbfe82d45d522aafa83acbc4a44dd89a2b409530e3a52d0076009a036c78",["eth:0x9A017e0ba4c19A325D5a89f5dd2112e605E85418"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.getVersion:
+-        "ACL v0.3.0"
++        "ACL v0.4.0"
++++ description: Sentinel contract address that a user can pass to delegateForUserDecryption to delegate user decryption of their handles across all app contracts at once. The wildcard does not bypass per-handle allowances.
+      values.WILDCARD_DELEGATION_ADDRESS:
++        "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
+      fieldMeta.owner.description:
+-        "Owner of the ACL and host-contract owner checked by onlyACLOwner in the Zama verifier and helper contracts."
++        "Owner of the ACL and host-contract owner checked by onlyACLOwner in the Zama verifier and helper contracts, including ProtocolConfig and KMSGeneration."
+      fieldMeta.WILDCARD_DELEGATION_ADDRESS:
++        {"description":"Sentinel contract address that a user can pass to delegateForUserDecryption to delegate user decryption of their handles across all app contracts at once. The wildcard does not bypass per-handle allowances."}
+      implementationNames.eth:0x3F6D970d30E1FFE9657aa8072C82dA10eef1c3D6:
+-        "ACL"
+      implementationNames.eth:0x9A017e0ba4c19A325D5a89f5dd2112e605E85418:
++        "ACL"
+    }
+```
+
+```diff
+    contract ProtocolConfig (eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4) [zama/ZamaProtocolConfig] {
+    +++ description: Ethereum host-chain registry of KMS node sets, per-context thresholds, and context lifecycle, introduced in the v0.3.0 KMSVerifier upgrade. A KMS context snapshots node transaction senders and signers; the four per-context thresholds (public decryption, user decryption, key generation, MPC) can be retuned by the ACL owner for any live context, including the current one. A newly created context becomes current immediately; older contexts remain selectable for public decryption proofs until destroyed.
+      name:
+-        "EmptyUUPSProxy"
++        "ProtocolConfig"
+      sourceHashes.1:
+-        "0xc71891567f1a766aa3a25d1830c5362e3bcf7682574b11b20a51401acb718db4"
++        "0x3ded50e4089de288e1a23ff043bc49ad1ab743d9c4d68dff679355192bc0edbd"
+      values.$implementation:
+-        "eth:0xC94790325C61A7D98e90d835ea89777d64b17492"
++        "eth:0x25c76298Fb4d15bFADce4798519a7B37ac0076E7"
+      values.$pastUpgrades.1:
++        ["2026-08-10T11:50:47.000Z","0x3a73cbfe82d45d522aafa83acbc4a44dd89a2b409530e3a52d0076009a036c78",["eth:0x25c76298Fb4d15bFADce4798519a7B37ac0076E7"]]
+      values.$upgradeCount:
+-        1
++        2
++++ description: Owner of the Zama ACL contract. This account is authorized by onlyACLOwner for all ProtocolConfig administration.
++++ severity: HIGH
+      values.aclOwner:
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
++++ description: KMS contexts created after the ProtocolConfig migration, reconstructed from NewKmsContext and KmsContextDestroyed events with their node sets and creation thresholds. The context created by initializeFromMigration does not emit this event and is indexed through the live getters and project overrides. Thresholds can be retuned per context after creation.
++++ severity: HIGH
+      values.createdKmsContexts:
++        []
++++ description: KMS signers from contexts created after the ProtocolConfig migration. They remain authorized for public decryption proofs that select their context until the ACL owner destroys that context.
++++ severity: HIGH
+      values.createdKmsContextSigners:
++        []
++++ description: KMS transaction senders from contexts created after the ProtocolConfig migration. They remain authorized to submit key- and CRS-generation responses for their context until the ACL owner destroys that context.
+      values.createdKmsContextTxSenders:
++        []
++++ description: KMS node transaction-sender addresses in the current context. These accounts submit key- and CRS-generation responses to the Ethereum KMSGeneration contract.
+      values.currentKmsTxSenders:
++        ["eth:0x711EBE8aA590f9C9904ff279239E89dB2eFbC890","eth:0xB4CE988D382425F64c99A352375F72A5f1cf6FFB","eth:0x4eC7200E392B97913cbD6d8160B011406EB019F1","eth:0xEd1D622bd59d657580aBAc65312b40B4B2dA6236","eth:0x74a1E2e87a4026b7B8b5252c747E514159515e9a","eth:0x0e25B8DB74c754C8275C0B219ba2A6CD7c59E31D","eth:0x577Fd21e4BC7D644A4177C4B89146e1Ab394De04","eth:0xbaac6F9DD84bFB303F05B4DE45A88Eec86855BD0","eth:0x43e4c21cf9d24Dc5b4e00031349EC213A2ba8340","eth:0xC105B5933446658D226582f7A112F49a70b54364","eth:0xbcF4943A856497FB2345409D35f4d1eae9A0363E","eth:0xD227C4B573800EdA3bAdA6DAC872E9134E012e6D","eth:0x487e41623b7FeB464ff79F7326DCa791c9a1c5EC"]
++++ description: KMS contexts destroyed by the ACL owner. Destroyed contexts are invalid: their per-context getters revert and public decryption proofs can no longer select them.
++++ severity: HIGH
+      values.destroyedKmsContexts:
++        []
++++ description: Identifier of the current KMS context, used by verifiers when a proof does not explicitly select a historical context.
+      values.getCurrentKmsContextId:
++        "3166189940082864718613269121331309980362851143201109172953918312716374638593"
++++ description: Minimum number of KMS responses from the current context required to reach consensus on key- and CRS-generation results in KMSGeneration.
+      values.getKmsGenThreshold:
++        7
++++ description: KMS signer addresses in the current context. Their signatures are accepted by the Ethereum KMSVerifier for public decryption results and by KMSGeneration for key- and CRS-generation responses. Signers from other live contexts remain authorized for proofs that select their context until that context is destroyed.
++++ severity: HIGH
+      values.getKmsSigners:
++        ["eth:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f","eth:0xdC472efa1642D5afB684aAaa546E22FB24AAB965","eth:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3","eth:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f","eth:0x41b19EB4585450db79ac03ba9503106EC7895905","eth:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921","eth:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D","eth:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8","eth:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f","eth:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58","eth:0x7C17BE232e5968BDa9516478B798b9E90D013fCC","eth:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385","eth:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb"]
++++ description: MPC threshold recorded for the current context. The KMS SDK derives its effective MPC threshold from the nodes it knows about instead of reading this value.
+      values.getMpcThreshold:
++        4
++++ description: Minimum number of KMS signatures from the current context required to accept a public decryption result. Retunable in place by the ACL owner without rotating the context.
++++ severity: HIGH
+      values.getPublicDecryptionThreshold:
++        7
++++ description: Minimum number of KMS signatures from the current context required for user decryption verification. Retunable in place by the ACL owner without rotating the context.
++++ severity: HIGH
+      values.getUserDecryptionThreshold:
++        9
+      values.getVersion:
++        "ProtocolConfig v0.1.0"
++++ description: Live public-decryption threshold of the migrated context, retunable in place by the ACL owner. It remains security-critical after future rotations while the context is live. This call reverts once the context is destroyed; remove the field then.
++++ severity: HIGH
+      values.migratedKmsContextPublicDecryptionThreshold:
++        7
++++ description: Live KMS signer set of the migrated context. Node membership is immutable, so these signers remain authorized for proofs selecting this context after future rotations. This call reverts once the context is destroyed; remove the field then.
++++ severity: HIGH
+      values.migratedKmsContextSigners:
++        ["eth:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f","eth:0xdC472efa1642D5afB684aAaa546E22FB24AAB965","eth:0xbf05c17BEB0BF2F2c78Cd491A53a148e035279C3","eth:0x915055c5F05C0d88BCdf1e3DfBA18aBD2a18350f","eth:0x41b19EB4585450db79ac03ba9503106EC7895905","eth:0x6e5f02Cd4B33f0Cf4ED5326ac9eE25e5aA8c4921","eth:0x966188a1f697F6A1B5cfA51495DD8A8A7b5CdB8D","eth:0x5d0e7033774dD43eE546D49b72Bd0B561E52f7C8","eth:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f","eth:0x7C5Eeb4D8CED0101799B8Cc212eE874097364F58","eth:0x7C17BE232e5968BDa9516478B798b9E90D013fCC","eth:0x6016DCA5e91e62826e3FEA1Fb0a763602dc1E385","eth:0xB7978e602D2AF68258dA614AF949E014BF0DE0eb"]
++++ description: Live user-decryption threshold of the migrated context, retunable in place by the ACL owner. This call reverts once the context is destroyed; remove the field then.
+      values.migratedKmsContextUserDecryptionThreshold:
++        9
+      errors:
+-        {"migratedKmsContextPublicDecryptionThreshold":"Processing error occurred.","migratedKmsContextSigners":"Processing error occurred.","migratedKmsContextUserDecryptionThreshold":"Processing error occurred.","proxiableUUID":"Processing error occurred."}
+      fieldMeta.aclOwner:
++        {"severity":"HIGH","description":"Owner of the Zama ACL contract. This account is authorized by onlyACLOwner for all ProtocolConfig administration.","type":"PERMISSION"}
+      fieldMeta.getKmsSigners:
++        {"severity":"HIGH","description":"KMS signer addresses in the current context. Their signatures are accepted by the Ethereum KMSVerifier for public decryption results and by KMSGeneration for key- and CRS-generation responses. Signers from other live contexts remain authorized for proofs that select their context until that context is destroyed.","type":"PERMISSION"}
+      fieldMeta.currentKmsTxSenders:
++        {"description":"KMS node transaction-sender addresses in the current context. These accounts submit key- and CRS-generation responses to the Ethereum KMSGeneration contract.","type":"PERMISSION"}
+      fieldMeta.getPublicDecryptionThreshold:
++        {"severity":"HIGH","description":"Minimum number of KMS signatures from the current context required to accept a public decryption result. Retunable in place by the ACL owner without rotating the context.","type":"RISK_PARAMETER"}
+      fieldMeta.getUserDecryptionThreshold:
++        {"severity":"HIGH","description":"Minimum number of KMS signatures from the current context required for user decryption verification. Retunable in place by the ACL owner without rotating the context.","type":"RISK_PARAMETER"}
+      fieldMeta.getKmsGenThreshold:
++        {"description":"Minimum number of KMS responses from the current context required to reach consensus on key- and CRS-generation results in KMSGeneration.","type":"RISK_PARAMETER"}
+      fieldMeta.getMpcThreshold:
++        {"description":"MPC threshold recorded for the current context. The KMS SDK derives its effective MPC threshold from the nodes it knows about instead of reading this value.","type":"RISK_PARAMETER"}
+      fieldMeta.getCurrentKmsContextId:
++        {"description":"Identifier of the current KMS context, used by verifiers when a proof does not explicitly select a historical context.","type":"RISK_PARAMETER"}
+      fieldMeta.createdKmsContexts:
++        {"severity":"HIGH","description":"KMS contexts created after the ProtocolConfig migration, reconstructed from NewKmsContext and KmsContextDestroyed events with their node sets and creation thresholds. The context created by initializeFromMigration does not emit this event and is indexed through the live getters and project overrides. Thresholds can be retuned per context after creation.","type":"RISK_PARAMETER"}
+      fieldMeta.createdKmsContextSigners:
++        {"severity":"HIGH","description":"KMS signers from contexts created after the ProtocolConfig migration. They remain authorized for public decryption proofs that select their context until the ACL owner destroys that context.","type":"PERMISSION"}
+      fieldMeta.createdKmsContextTxSenders:
++        {"description":"KMS transaction senders from contexts created after the ProtocolConfig migration. They remain authorized to submit key- and CRS-generation responses for their context until the ACL owner destroys that context.","type":"PERMISSION"}
+      fieldMeta.destroyedKmsContexts:
++        {"severity":"HIGH","description":"KMS contexts destroyed by the ACL owner. Destroyed contexts are invalid: their per-context getters revert and public decryption proofs can no longer select them.","type":"RISK_PARAMETER"}
+      implementationNames.eth:0xC94790325C61A7D98e90d835ea89777d64b17492:
+-        "EmptyUUPSProxy"
+      implementationNames.eth:0x25c76298Fb4d15bFADce4798519a7B37ac0076E7:
++        "ProtocolConfig"
+      template:
++        "zama/ZamaProtocolConfig"
+      description:
++        "Ethereum host-chain registry of KMS node sets, per-context thresholds, and context lifecycle, introduced in the v0.3.0 KMSVerifier upgrade. A KMS context snapshots node transaction senders and signers; the four per-context thresholds (public decryption, user decryption, key generation, MPC) can be retuned by the ACL owner for any live context, including the current one. A newly created context becomes current immediately; older contexts remain selectable for public decryption proofs until destroyed."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract FHEVMExecutor (eth:0xD82385dADa1ae3E969447f20A3164F6213100e75) [zama/ZamaFHEVMExecutor_v0_4_0] {
+    +++ description: FHEVM executor that accepts encrypted operation requests, accounts for computation usage, and stores ciphertext handles for operation results. v0.4.0 adds the n-ary encrypted operations fheSum and fheIsIn (encrypted set membership) over bounded ciphertext collections.
+      template:
+-        "zama/ZamaFHEVMExecutor_v0_3_0"
++        "zama/ZamaFHEVMExecutor_v0_4_0"
+      sourceHashes.1:
+-        "0xf475718e9125acfc2f69d3c9cca8cedb9a15c644da7490f7f5fe0ae2690a77cc"
++        "0x8521799e0a57218bcbd587c2f46222a266bbcbe2f27780cc0bf6ed66eb9cda1f"
+      description:
+-        "FHEVM executor that accepts encrypted operation requests, accounts for computation usage, and stores ciphertext handles for operation results."
++        "FHEVM executor that accepts encrypted operation requests, accounts for computation usage, and stores ciphertext handles for operation results. v0.4.0 adds the n-ary encrypted operations fheSum and fheIsIn (encrypted set membership) over bounded ciphertext collections."
+      values.$implementation:
+-        "eth:0xC38aAfCBB73Fd4bd6f995275079C4Add9C1687E5"
++        "eth:0xf444B2B5e45cD07F1E735122F53A2d70A8c81dB5"
+      values.$pastUpgrades.4:
++        ["2026-08-10T11:50:47.000Z","0x3a73cbfe82d45d522aafa83acbc4a44dd89a2b409530e3a52d0076009a036c78",["eth:0xf444B2B5e45cD07F1E735122F53A2d70A8c81dB5"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.getVersion:
+-        "FHEVMExecutor v0.3.0"
++        "FHEVMExecutor v0.4.0"
+      implementationNames.eth:0xC38aAfCBB73Fd4bd6f995275079C4Add9C1687E5:
+-        "FHEVMExecutor"
+      implementationNames.eth:0xf444B2B5e45cD07F1E735122F53A2d70A8c81dB5:
++        "FHEVMExecutor"
+    }
+```
+
+```diff
+    EOA  (eth:0xdC472efa1642D5afB684aAaa546E22FB24AAB965) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign public decryption results accepted by the KMSVerifier."
++        "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration."
+      receivedPermissions.0.from:
+-        "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03"
++        "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+    }
+```
+
+```diff
+    EOA  (eth:0xDFc9Dcb3D206AA164770874f36a4B5AD2EE5194f) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign public decryption results accepted by the KMSVerifier."
++        "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration."
+      receivedPermissions.0.from:
+-        "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03"
++        "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+    }
+```
+
+```diff
+    contract ZamaGovMultisigA (eth:0xE43c73aAb2b6aBBad6d0461997ce1cfea5ABe66f) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
+      receivedPermissions.5:
+-        {"permission":"interact","from":"eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03","description":"create KMS signer contexts with arbitrary signer sets and thresholds, and destroy non-current contexts. A malicious context can attest an inflated unwrap amount and drain pooled wrapper backing.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.17.description:
+-        "transfer ACL ownership, unpause the ACL, block or unblock accounts, manage PauserSet membership, and create or destroy KMSVerifier signer contexts."
++        "transfer ACL ownership, unpause the ACL, block or unblock accounts, and manage PauserSet membership."
+      receivedPermissions.18:
++        {"permission":"interact","from":"eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4","description":"create KMS contexts with arbitrary node sets and thresholds that immediately become the default verifier authority, destroy non-current contexts, and retune the per-context thresholds (public decryption, user decryption, key generation, MPC) of any live context including the current one. A malicious context or lowered threshold can attest an inflated unwrap amount and drain pooled wrapper backing.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.24:
++        {"permission":"interact","from":"eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa","description":"trigger and abort FHE key and CRS generation rounds executed by the KMS nodes.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.38:
++        {"permission":"upgrade","from":"eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4","description":"upgrade the ProtocolConfig implementation.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+      receivedPermissions.44:
++        {"permission":"upgrade","from":"eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa","description":"upgrade the KMSGeneration implementation.","role":".aclOwner","via":[{"address":"eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"}]}
+    }
+```
+
+```diff
+    EOA  (eth:0xe9f7ecfF21a2e0Ca58eA26ae869FEF38ab49ed6f) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "sign public decryption results accepted by the KMSVerifier."
++        "sign public decryption results accepted by the KMSVerifier and key- and CRS-generation responses accepted by KMSGeneration."
+      receivedPermissions.0.from:
+-        "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03"
++        "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+    }
+```
+
+```diff
+    contract KMSGeneration (eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa) [zama/ZamaKMSGeneration] {
+    +++ description: Orchestrates FHE key and CRS generation on the Ethereum host chain, taking over the workflows removed from the Gateway KMSGeneration in v0.5.0. The ACL owner triggers and aborts generations; KMS node transaction senders registered in ProtocolConfig submit EIP-712-signed responses that activate a key or CRS once the ProtocolConfig key-generation threshold is reached.
+      name:
+-        "EmptyUUPSProxy"
++        "KMSGeneration"
+      sourceHashes.1:
+-        "0xc71891567f1a766aa3a25d1830c5362e3bcf7682574b11b20a51401acb718db4"
++        "0x265ec46d9bb4498caf973d6a60d3cbbe1f3ceff12597fcd3140bdff9e6322f76"
+      values.$implementation:
+-        "eth:0xC94790325C61A7D98e90d835ea89777d64b17492"
++        "eth:0x5DD95e97287672b5d86dd3a427E855099E5AC940"
+      values.$pastUpgrades.1:
++        ["2026-08-10T11:50:47.000Z","0x3a73cbfe82d45d522aafa83acbc4a44dd89a2b409530e3a52d0076009a036c78",["eth:0x5DD95e97287672b5d86dd3a427E855099E5AC940"]]
+      values.$upgradeCount:
+-        1
++        2
++++ description: Owner of the Zama ACL contract. This account is authorized by onlyACLOwner for KMSGeneration administration.
+      values.aclOwner:
++        "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3"
++++ description: EIP-712 domain against which KMS key- and CRS-generation response signatures are verified.
+      values.eip712Domain:
++        {"fields":"0x0f","name":"KMSGeneration","version":"1","chainId":1,"verifyingContract":"eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]}
++++ description: Identifier of the currently active CRS generated through this contract.
+      values.getActiveCrsId:
++        "2261564242916331941866620800950935700259179388000792266395655937654553313281"
++++ description: Identifier of the currently active FHE key generated through this contract.
+      values.getActiveKeyId:
++        "1809251394333065553493296640760748560207343510400633813116524750123642650625"
+      values.getCrsCounter:
++        "2261564242916331941866620800950935700259179388000792266395655937654553313281"
+      values.getKeyCounter:
++        "1809251394333065553493296640760748560207343510400633813116524750123642650625"
+      values.getVersion:
++        "KMSGeneration v0.1.0"
++++ description: ProtocolConfig contract providing the KMS node set and the key-generation consensus threshold. Referenced as a compile-time constant without a getter.
+      values.protocolConfig:
++        "eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4"
+      errors:
+-        {"proxiableUUID":"Processing error occurred."}
+      implementationNames.eth:0xC94790325C61A7D98e90d835ea89777d64b17492:
+-        "EmptyUUPSProxy"
+      implementationNames.eth:0x5DD95e97287672b5d86dd3a427E855099E5AC940:
++        "KMSGeneration"
+      template:
++        "zama/ZamaKMSGeneration"
+      description:
++        "Orchestrates FHE key and CRS generation on the Ethereum host chain, taking over the workflows removed from the Gateway KMSGeneration in v0.5.0. The ACL owner triggers and aborts generations; KMS node transaction senders registered in ProtocolConfig submit EIP-712-signed responses that activate a key or CRS once the ProtocolConfig key-generation threshold is reached."
+      fieldMeta:
++        {"protocolConfig":{"description":"ProtocolConfig contract providing the KMS node set and the key-generation consensus threshold. Referenced as a compile-time constant without a getter.","type":"EXTERNAL"},"aclOwner":{"description":"Owner of the Zama ACL contract. This account is authorized by onlyACLOwner for KMSGeneration administration.","type":"PERMISSION"},"getActiveKeyId":{"description":"Identifier of the currently active FHE key generated through this contract."},"getActiveCrsId":{"description":"Identifier of the currently active CRS generated through this contract."},"eip712Domain":{"description":"EIP-712 domain against which KMS key- and CRS-generation response signatures are verified."}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@1786107356 => .flat}/ACL/ACL.sol        |   93 +-
+ .../EmptyUUPSProxy.sol => /dev/null                | 1172 -----
+ .../EmptyUUPSProxy.sol => /dev/null                | 1172 -----
+ .../FHEVMExecutor/FHEVMExecutor.sol                |  657 ++-
+ .../HCULimit/HCULimit.sol                          |  237 +-
+ .../ERC1967Proxy.p.sol                             |    0
+ .../KMSGeneration.sol                              | 5465 ++++++++++++++++++++
+ .../ERC1967Proxy.p.sol                             |    0
+ .../KMSGeneration.sol                              |    0
+ .../KMSVerifier/KMSVerifier.sol                    |  569 +-
+ .../ProtocolConfig}/ERC1967Proxy.p.sol             |    0
+ .../.flat/ProtocolConfig/ProtocolConfig.sol        | 3956 ++++++++++++++
+ 12 files changed, 10548 insertions(+), 2773 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786107356 (main branch discovery), not current.
+
+```diff
+    contract KMSVerifier (eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03) [zama/ZamaKMSVerifier_v0_2_0] {
+    +++ description: Ethereum host-chain verifier for public decryption results produced through the Zama Gateway Decryption contract. Confidential token wrappers accept a decrypted value when it is signed by the threshold of the current or any retained non-destroyed KMS context.
+      values.initialKmsContextThreshold:
+-        7
+      fieldMeta.initialKmsContextThreshold:
+-        {"severity":"HIGH","description":"Immutable public-decryption threshold assigned to initialKmsContextId during the v0.2 migration. It remains security-critical after rotation while initialKmsContextSigners is non-empty; an empty signer list means the context was destroyed.","type":"RISK_PARAMETER"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EmptyUUPSProxy (eth:0xD8236B57394f90726b26aB25D38CeAC776E1a7C4) [N/A]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EmptyUUPSProxy (eth:0xf102cC9A9D2174630c394f5b7B7D63104E348daa) [N/A]
+    +++ description: None
+```
+
 Generated with discovered.json: 0x55d44c4022a34a2b451603062a4b613f2b96a88c
 
 # Diff at Fri, 07 Aug 2026 12:57:23 GMT:

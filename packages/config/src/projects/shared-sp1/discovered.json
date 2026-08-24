@@ -1,7 +1,7 @@
 {
   "name": "shared-sp1",
   "timestamp": 1783679422,
-  "configHash": "0x498f0936e2410b4d3b7405a414e09eb84091eaedf3d17352c6e956724ea64122",
+  "configHash": "0x33a477941ca8b8ef66e8470300a4cd45399a91c4a8ad1c7230fd63835588920c",
   "entries": [
     {
       "name": "SP1Verifier",

@@ -36,6 +36,19 @@ describe(drawRelationGraph.name, () => {
     ])
   })
 
+  it('does not draw token or chain labels at overview zoom', () => {
+    const node = sceneNode('unichain', '0xaaa')
+    node.x = 50
+    node.y = 50
+    const drawnText: { text: string; x: number; y: number }[] = []
+    const view = viewState()
+    view.camera.k = 0.5
+
+    drawRelationGraph(recordingContext(drawnText), sceneWith(node), view)
+
+    expect(drawnText).toEqual([])
+  })
+
   it('keeps the cluster heading above a focused symbol when zoomed out', () => {
     const node = sceneNode('unichain', '0xaaa')
     node.x = 50

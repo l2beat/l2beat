@@ -85,6 +85,7 @@ export const edgex: ScalingProject = {
   id: ProjectId('edgex'),
   capability: 'appchain',
   addedAt: UnixTime.fromDate(new Date('2025-10-13')),
+  archivedAt: UnixTime(1786716095), // 2026-08-14T14:01:35Z, StarkPerpetual contract frozen
   badges: [
     BADGES.VM.CairoVM,
     BADGES.DA.DAC,
@@ -92,11 +93,13 @@ export const edgex: ScalingProject = {
     BADGES.Infra.SHARP,
   ],
   display: {
-    name: 'EdgeX',
+    name: 'edgeX v1',
     slug: 'edgex',
     stacks: ['SN Stack', 'StarkEx'],
+    headerWarning:
+      'The edgeX v1 StarkPerpetual contract was frozen on 14th August 2026. It can no longer process trades, deposits or state updates. Remaining funds can only be recovered via the escape hatch.',
     description:
-      "EdgeX is a high-performance on-chain trading platform, build as an L2 on Starknet's StarkEx tech.",
+      "edgeX v1 was a high-performance on-chain trading platform, built as an L2 on Starknet's StarkEx tech.",
     purposes: ['Exchange'],
     links: {
       websites: ['https://edgex.exchange'],
@@ -228,6 +231,30 @@ export const edgex: ScalingProject = {
       description:
         'edgeX, a non-custodial decentralized exchange powered by StarkeX, is now live on Mainnet.',
       type: 'general',
+    },
+    {
+      title: 'EDGE Chain announced',
+      date: '2026-03-10T00:00:00Z',
+      url: 'https://blog.arbitrum.io/edgex-announces-edge-chain-on-arbitrum/',
+      description:
+        'edgeX announces EDGE Chain, an app-specific rollup on Arbitrum, as the execution layer for edgeX v2.',
+      type: 'general',
+    },
+    {
+      title: 'edgeX v2 live on EDGE Chain',
+      date: '2026-05-26T00:00:00Z',
+      url: 'https://x.com/edgeX_exchange/status/2059258266006479101',
+      description:
+        'edgeX v2 goes live, moving all trading from the StarkEx-based v1 to EDGE Chain.',
+      type: 'general',
+    },
+    {
+      title: 'edgeX v1 stops operating',
+      date: '2026-08-14T00:00:00Z',
+      url: 'https://etherscan.io/tx/0xf67c799e5f555a6b65d48f4c96ae94e391c38e522d4724c49ec3614ceeac511c',
+      description:
+        'Following an unprocessed forced withdrawal on L1, edgeX v1 contract freezes.',
+      type: 'incident',
     },
   ],
   customDa: StarkexDAC({

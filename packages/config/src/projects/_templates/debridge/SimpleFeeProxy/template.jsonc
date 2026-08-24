@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The only contract allowed to withdraw protocol fees accrued in the DeBridgeGate. Fees are paid out directly to the caller of withdrawFees(), so the effective fee destination is whoever holds the FEE_COLLECTOR_ROLE.",
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "feeCollectorAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "FEE_COLLECTOR_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw all protocol fees accrued in the DeBridgeGate to itself."
+        }
+      ]
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant/revoke the FEE_COLLECTOR_ROLE that receives all deBridge protocol fees, pause fee withdrawals, and change the referenced gate contract."
+        }
+      ]
+    }
+  }
+}

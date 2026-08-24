@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "canActIndependently": false,
-  "description": "Its OCR commit reports publish Merkle roots for source messages; execution is possible only for leaves under roots that are both committed here and blessed by RMN through the ARM proxy.",
+  "description": "Its OCR commit reports publish Merkle roots for messages from the configured source chain. verify() accepts a leaf only under a committed root for which the configured RMN proxy's legacy isBlessed() check returns true; the additional assurance supplied by that check depends on the active RMN implementation.",
   "ignoreMethods": ["getTransmitters"],
   "ignoreRelatives": ["getDynamicConfig", "getStaticConfig", "owner"],
   "ignoreInWatchMode": [
@@ -42,18 +42,18 @@
       ]
     },
     "getStaticConfig": {
-      "description": "Immutable commit lane config: Ethereum destination selector, Arbitrum source selector, trusted Arbitrum OnRamp, and ARM/RMN proxy used for blessing checks.",
+      "description": "Immutable commit-lane config: destination and source chain selectors, the trusted source-chain OnRamp, and the RMN proxy used for route-curse and legacy root-blessing checks.",
       "edit": [
         "pick",
         "chainSelector",
         "sourceChainSelector",
         "onRamp",
-        "armProxy"
+        "rmnProxy"
       ],
       "permissions": [
         {
           "type": "interact",
-          "description": "define the trusted source OnRamp and ARM/RMN safety gate for commits accepted by this CommitStore."
+          "description": "be trusted by this CommitStore either as the source OnRamp whose address is accepted in commit reports, or as the RMN proxy supplying route-curse and legacy root-blessing results."
         }
       ]
     },

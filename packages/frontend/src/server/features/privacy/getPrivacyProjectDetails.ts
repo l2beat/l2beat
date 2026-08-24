@@ -1,6 +1,7 @@
 import type {
   PrivacyAttribute,
   PrivacyExitWindow,
+  PrivacyNoteDiscovery,
   PrivacySummaryValue,
   ProjectContracts,
   ProjectDisplay,
@@ -41,6 +42,8 @@ export interface PrivacyProjectDetails {
   exitWindow: PrivacyExitWindow
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
+  hasTvl: boolean
+  noteDiscovery?: PrivacyNoteDiscovery
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   attributes: PrivacyAttribute[]
@@ -257,6 +260,8 @@ export async function getPrivacyProjectDetails(
     exitWindow: project.privacyInfo.exitWindow,
     privacy: project.privacyInfo.privacy,
     reproducibility: project.privacyInfo.reproducibility,
+    hasTvl: project.tvsConfig !== undefined,
+    noteDiscovery: project.privacyInfo.noteDiscovery,
     riskSummary: project.privacyInfo.riskSummary,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
     attributes: project.privacyInfo.attributes ?? [],

@@ -7,6 +7,9 @@ export function HomeCard({
   ...props
 }: ComponentProps<typeof PrimaryCard>) {
   return (
-    <PrimaryCard className={cn('p-4 md:px-6 md:py-4', className)} {...props} />
+    <PrimaryCard
+      className={cn('p-4 md:rounded-lg md:px-6 md:py-4', className)}
+      {...props}
+    />
   )
 }

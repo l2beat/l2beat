@@ -12,7 +12,7 @@ describe(searchEntries.name, () => {
       projectEntry({
         name: 'Ethereal',
         tags: ['ethereal', 'Ethereal'],
-        category: 'scaling',
+        category: 'l2',
       }),
       projectEntry({
         name: 'Ethereum with Enshrined Bridge',
@@ -22,7 +22,7 @@ describe(searchEntries.name, () => {
       projectEntry({
         name: 'Jetstream',
         tags: ['jetstreamchain', 'Jetstream'],
-        category: 'scaling',
+        category: 'l2',
       }),
     ]
 
@@ -84,7 +84,7 @@ describe(groupSearchResults.name, () => {
         projectEntry({
           name: 'Ethereal',
           tags: ['ethereal', 'Ethereal'],
-          category: 'scaling',
+          category: 'l2',
         }),
         projectEntry({
           name: 'Ethereum with Enshrined Bridge',
@@ -94,26 +94,41 @@ describe(groupSearchResults.name, () => {
         projectEntry({
           name: 'Jetstream',
           tags: ['jetstreamchain', 'Jetstream'],
-          category: 'scaling',
+          category: 'l2',
         }),
       ]),
     )
 
-    expect(grouped.map(([category]) => category)).toEqual(['scaling', 'da'])
+    expect(grouped.map(([category]) => category)).toEqual(['l2', 'da'])
     expect(
       grouped.flatMap(([, entries]) => entries.map((entry) => entry.name)),
     ).toEqual(['Ethereal', 'Ethereum with Enshrined Bridge'])
+  })
+
+  it('places tokens as the last shown group', () => {
+    const grouped = groupSearchResults(
+      searchEntries('eth', [
+        tokenEntry({ name: 'ETH' }),
+        projectEntry({
+          name: 'Ethereal',
+          tags: ['ethereal', 'Ethereal'],
+          category: 'l2',
+        }),
+      ]),
+    )
+
+    expect(grouped.map(([category]) => category)).toEqual(['l2', 'tokens'])
   })
 })
 
 function projectEntry({
   name,
   tags,
-  category = 'scaling',
+  category = 'l2',
 }: {
   name: string
   tags: string[]
-  category?: 'scaling' | 'da'
+  category?: 'l2' | 'da'
 }) {
   return {
     type: 'project' as const,
@@ -121,6 +136,15 @@ function projectEntry({
     name,
     tags,
     href: `/${name.toLowerCase()}`,
+  }
+}
+
+function tokenEntry({ name }: { name: string }) {
+  return {
+    type: 'token' as const,
+    category: 'tokens' as const,
+    name,
+    href: `/interop/tokens/${name.toLowerCase()}`,
   }
 }
 

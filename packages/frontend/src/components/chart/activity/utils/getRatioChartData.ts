@@ -1,4 +1,4 @@
-import type { RecategorisedActivityChartData } from '~/server/features/scaling/activity/getRecategorisedActivityChart'
+import type { RecategorisedActivityChartData } from '~/server/features/layer2s/activity/getRecategorisedActivityChart'
 
 export function getRatioChartData(
   data: RecategorisedActivityChartData | undefined,

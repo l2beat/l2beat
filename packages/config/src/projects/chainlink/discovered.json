@@ -1,7 +1,7 @@
 {
   "name": "chainlink",
-  "timestamp": 1785754257,
-  "configHash": "0x02cf74604fca179f45be09bf25e0c818200e496cfdd7863e7b8745736ab0c6ff",
+  "timestamp": 1786960649,
+  "configHash": "0x2b86a003b09a0d3103f1aed20373ea845cea7cf4de8e98609e38190318586c89",
   "entries": [
     {
       "address": "eth:0x05724B9C8C1dDE1b2f659d7c0676ff63f6d5E781",
@@ -314,7 +314,15 @@
         "0xf42960f0c75309d8d7eeb913a74aa31fbb2e07cfa48c7ebad54152a7194d2425"
       ],
       "proxyType": "gnosis safe",
-      "description": "The Gnosis Safe that Chainlink uses to administer these three price feeds. It owns both the feed proxies and their aggregators, so it can swap the aggregator behind any feed and replace the set of oracle signers and how many of them must sign a price. In effect it can set the ETH, stETH, and rETH prices these feeds report, or push a feed into a stale, zero, or reverting state, which makes it their single point of control, held by Chainlink.",
+      "description": "The Gnosis Safe that Chainlink uses to administer these price feeds and the Feed Registry. It owns the feed proxies, their aggregators, and the registry, so it can swap the aggregator behind any feed or registry pair and replace the set of oracle signers and how many of them must sign a price. In effect it can set the ETH, stETH, and rETH prices these feeds report, or push a feed into a stale, zero, or reverting state, which makes it their single point of control, held by Chainlink.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf",
+          "description": "replace the aggregator behind any base/quote pair in the Feed Registry, controlling all prices it reports to consumers.",
+          "role": ".owner"
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -432,6 +440,7 @@
       ],
       "proxyType": "immutable",
       "description": "A Chainlink OCR2 aggregator producing a price feed. Each update is the median of a report signed by a quorum (f+1) of its signers and relayed onchain by one of its transmitters, accepted only within a fixed min/max band. A colluding signer quorum can move the reported price anywhere within that band, while a transmitter only relays an already-signed report. Its owner sets the signer and transmitter sets and the quorum size, so it controls who can report the price.",
+      "ignoreInWatchMode": ["latestConfigDigestAndEpoch.epoch"],
       "deployerAddress": "eth:0xD436f206292591a5f823AccBa76DE2e9C14C8e8f",
       "sinceTimestamp": 1720564379,
       "sinceBlock": 20271940,
@@ -484,7 +493,7 @@
         "latestConfigDigestAndEpoch": {
           "scanLogs": false,
           "configDigest": "0x00015fb1bf262779af44a451aaa926c8e0f02c1f012c0cd445ef41c0b50b818e",
-          "epoch": 7805
+          "epoch": 14507
         },
         "linkAvailableForPayment": 0,
         "maxAnswer": "95780971304118053647396689196894323976171195136475135",
@@ -583,6 +592,17 @@
         "0x3c9ed9082dc3030e40991223d0644d2e7f61036e500c90e6d7f1c118ca79c377"
       ],
       "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf",
+          "description": "replace the aggregator behind any base/quote pair in the Feed Registry, controlling all prices it reports to consumers.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA" }
+          ]
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -795,6 +815,28 @@
       "address": "eth:0x47A1dD4E277530fffb5B5f70A43CCbD542F54e17",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "FeedRegistry",
+      "address": "eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x460508ce5dbf69a351162d28b4906e195b722ac90c428b52ba7853ed256ce522"
+      ],
+      "proxyType": "immutable",
+      "description": "Chainlink's canonical feed registry that maps base/quote asset pairs to their current price feed aggregators. Consumers like the Lido OracleRouter source token prices through it.",
+      "deployerAddress": "eth:0x71C05a4eA5E9d5b1Ac87Bf962a043f5265d4Bdc8",
+      "sinceTimestamp": 1626793299,
+      "sinceBlock": 12864088,
+      "values": {
+        "$immutable": true,
+        "getAccessController": "eth:0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA",
+        "typeAndVersion": "FeedRegistry 1.0.0"
+      },
+      "implementationNames": {
+        "eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf": "FeedRegistry"
+      }
     },
     {
       "address": "eth:0x480496c0884D61F2f56707Adb11697F8018898c2",
@@ -1433,6 +1475,7 @@
       ],
       "proxyType": "immutable",
       "description": "A Chainlink OCR2 aggregator producing a price feed. Each update is the median of a report signed by a quorum (f+1) of its signers and relayed onchain by one of its transmitters, accepted only within a fixed min/max band. A colluding signer quorum can move the reported price anywhere within that band, while a transmitter only relays an already-signed report. Its owner sets the signer and transmitter sets and the quorum size, so it controls who can report the price.",
+      "ignoreInWatchMode": ["latestConfigDigestAndEpoch.epoch"],
       "deployerAddress": "eth:0xD436f206292591a5f823AccBa76DE2e9C14C8e8f",
       "sinceTimestamp": 1726613267,
       "sinceBlock": 20773402,
@@ -1497,7 +1540,7 @@
         "latestConfigDigestAndEpoch": {
           "scanLogs": false,
           "configDigest": "0x0001e754045b2e3624f54e63b92d76f6f94eda08059db3ae9ed57b8b245f1750",
-          "epoch": 7826
+          "epoch": 14521
         },
         "linkAvailableForPayment": 0,
         "maxAnswer": "95780971304118053647396689196894323976171195136475135",
@@ -2039,6 +2082,7 @@
       ],
       "proxyType": "immutable",
       "description": "A Chainlink OCR2 aggregator producing a price feed. Each update is the median of a report signed by a quorum (f+1) of its signers and relayed onchain by one of its transmitters, accepted only within a fixed min/max band. A colluding signer quorum can move the reported price anywhere within that band, while a transmitter only relays an already-signed report. Its owner sets the signer and transmitter sets and the quorum size, so it controls who can report the price.",
+      "ignoreInWatchMode": ["latestConfigDigestAndEpoch.epoch"],
       "deployerAddress": "eth:0xD436f206292591a5f823AccBa76DE2e9C14C8e8f",
       "sinceTimestamp": 1720487843,
       "sinceBlock": 20265601,
@@ -2088,7 +2132,7 @@
         "latestConfigDigestAndEpoch": {
           "scanLogs": false,
           "configDigest": "0x00019e55be9064246f399af0a3d969ce600228fc619c23c923eb8c0468d1834c",
-          "epoch": 244560
+          "epoch": 251285
         },
         "linkAvailableForPayment": 0,
         "maxAnswer": "95780971304118053647396689196894323976171195136475135",
@@ -3125,6 +3169,43 @@
       "function transferOwnershipWithMessage(address to, bytes message)",
       "function typeAndVersion() view returns (string)"
     ],
+    "eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf": [
+      "event AccessControllerSet(address indexed accessController, address indexed sender)",
+      "event FeedConfirmed(address indexed asset, address indexed denomination, address indexed latestAggregator, address previousAggregator, uint16 nextPhaseId, address sender)",
+      "event FeedProposed(address indexed asset, address indexed denomination, address indexed proposedAggregator, address currentAggregator, address sender)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "function acceptOwnership()",
+      "function confirmFeed(address base, address quote, address aggregator)",
+      "function decimals(address base, address quote) view returns (uint8)",
+      "function description(address base, address quote) view returns (string)",
+      "function getAccessController() view returns (address)",
+      "function getAnswer(address base, address quote, uint256 roundId) view returns (int256 answer)",
+      "function getCurrentPhaseId(address base, address quote) view returns (uint16 currentPhaseId)",
+      "function getFeed(address base, address quote) view returns (address aggregator)",
+      "function getNextRoundId(address base, address quote, uint80 roundId) view returns (uint80 nextRoundId)",
+      "function getPhase(address base, address quote, uint16 phaseId) view returns (tuple(uint16 phaseId, uint80 startingAggregatorRoundId, uint80 endingAggregatorRoundId) phase)",
+      "function getPhaseFeed(address base, address quote, uint16 phaseId) view returns (address aggregator)",
+      "function getPhaseRange(address base, address quote, uint16 phaseId) view returns (uint80 startingRoundId, uint80 endingRoundId)",
+      "function getPreviousRoundId(address base, address quote, uint80 roundId) view returns (uint80 previousRoundId)",
+      "function getProposedFeed(address base, address quote) view returns (address proposedAggregator)",
+      "function getRoundData(address base, address quote, uint80 _roundId) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function getRoundFeed(address base, address quote, uint80 roundId) view returns (address aggregator)",
+      "function getTimestamp(address base, address quote, uint256 roundId) view returns (uint256 timestamp)",
+      "function isFeedEnabled(address aggregator) view returns (bool)",
+      "function latestAnswer(address base, address quote) view returns (int256 answer)",
+      "function latestRound(address base, address quote) view returns (uint256 roundId)",
+      "function latestRoundData(address base, address quote) view returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function latestTimestamp(address base, address quote) view returns (uint256 timestamp)",
+      "function owner() view returns (address)",
+      "function proposeFeed(address base, address quote, address aggregator)",
+      "function proposedGetRoundData(address base, address quote, uint80 roundId) view returns (uint80 id, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function proposedLatestRoundData(address base, address quote) view returns (uint80 id, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)",
+      "function setAccessController(address _accessController)",
+      "function transferOwnership(address to)",
+      "function typeAndVersion() pure returns (string)",
+      "function version(address base, address quote) view returns (uint256)"
+    ],
     "eth:0x4CB67cfee180B6B73B70c7B3fC162E5FCF6532f1": [
       "constructor(address link, address owner, address recipient, bytes message)",
       "event AuthorizedSendersChanged(address[] senders, address changedBy)",
@@ -3891,9 +3972,9 @@
   "usedTemplates": {
     "ChainlinkAggregatorProxy": "0x207973a461bebf07ad950cbd3aec0199f0a795fb2a4934c233c182ae717f7858",
     "ChainlinkAuthorizedForwarder": "0x377fe7f8b6f44b5a1f23058bd836e2f89cb1f103e392319492612cabc9931d74",
-    "ChainlinkOCR2Aggregator": "0x466b4e23ea14db0b076a3713268b79f35f65746ceb9ff64850b2bc7b93af3def",
+    "ChainlinkOCR2Aggregator": "0x0ceda58eb8c7016c3e902557f785bc5e4145b201e64548d164ee996a7cf9e701",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25673882 },
-  "permissionsConfigHash": "0x8d59d6b7f788efdf0510042a533c5d3899b589064c5e7c5fcc219d497cd9110c"
+  "usedBlockNumbers": { "ethereum": 25774050 },
+  "permissionsConfigHash": "0x2bd8a0e2c2bc539e58348fb5b2a4a2f530b378ee04b8d1033394f33edea58180"
 }

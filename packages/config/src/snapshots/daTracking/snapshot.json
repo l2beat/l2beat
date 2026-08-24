@@ -2,1141 +2,2405 @@
   "170889": [
     {
       "id": "dc83c4b90647",
-      "label": "avail appIds [18] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["18"]
+      }
     }
   ],
   "0x84e96bb748abb8a16c28ecc": [
     {
       "id": "318cb6ce5b8b",
-      "label": "avail appIds [10] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["10"]
+      }
     }
   ],
   "527d69c3": [
     {
       "id": "ba28e866fe8e",
-      "label": "avail appIds [25] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["25"]
+      }
     }
   ],
   "abstract": [
     {
       "id": "277c1f08ed30",
-      "label": "ethereum inbox 0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[4] since 21809364"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 21809364,
+        "untilBlock": 23671537,
+        "inbox": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+        "sequencers": [
+          "0x11805594be0229EF08429D775AF0c55f7c4535dE",
+          "0x54aB716D465be3D5EEca64E63ac0048D7a81659a",
+          "0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
+          "0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
+        ]
+      }
     },
     {
       "id": "86008db656ff",
-      "label": "ethereum inbox 0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83 sequencers[2] since 25424362"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 25424362,
+        "inbox": "0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83",
+        "sequencers": [
+          "0x6be789605b13Edb78749824633b9933D44B582ba",
+          "0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
+        ]
+      }
     },
     {
       "id": "900f9962e673",
-      "label": "ethereum inbox 0x2e5110cF18678Ec99818bFAa849B8C881744b776 sequencers[4] since 23671537"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 23671537,
+        "untilBlock": 25424362,
+        "inbox": "0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+        "sequencers": [
+          "0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
+          "0x4b2d036D2c27192549ad5A2F2D9875E1843833De",
+          "0x6be789605b13Edb78749824633b9933D44B582ba",
+          "0xD85618da9E4A86DCC29180E0E683D3EA5412A0F8"
+        ]
+      }
     }
   ],
   "adi": [
     {
       "id": "a8d364734186",
-      "label": "ethereum inbox 0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186 sequencers[4] since 23874833"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 23874833,
+        "inbox": "0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186",
+        "sequencers": [
+          "0xF8fF3e62E94807a5C687f418Fe36942dD3a24524",
+          "0x6090e365149d005517e2013926cD18d767f04Aa1",
+          "0x0b6f2116323C12EE731de6818e41861561bcd44C",
+          "0x37eEE7f0472F0740EAf152A3f5e888f7C5f62e51"
+        ]
+      }
     }
   ],
   "aevo": [
     {
       "id": "22bdf46cb00a",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8= since 0"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=",
+        "sinceBlock": 0,
+        "untilBlock": 3538077
+      }
     },
     {
       "id": "50220521c4e9",
-      "label": "ethereum inbox 0x253887577420Cb7e7418cD4d50147743c8041b28 sequencers[1] since 16858818"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x253887577420Cb7e7418cD4d50147743c8041b28",
+        "sequencers": ["0x889e21d7BA3d6dD62e75d4980A4Ad1349c61599d"],
+        "sinceBlock": 16858818
+      }
     },
     {
       "id": "c7f9dcc291d2",
-      "label": "eigen-da customer 0x2dc71dbd1cf713e70f939346317bf93a2e62cfee since 1753437600"
+      "config": {
+        "type": "eigen-da",
+        "customerId": "0x2dc71dbd1cf713e70f939346317bf93a2e62cfee",
+        "daLayer": "eigenda",
+        "sinceTimestamp": 1753437600
+      }
     }
   ],
   "alchemy-production": [
     {
       "id": "f8bd5e57d72c",
-      "label": "eigen-da customer 0x3ba8c28a0209dea4d0502031f83d09a17a389fb0 since 1753833600"
+      "config": {
+        "daLayer": "eigenda",
+        "type": "eigen-da",
+        "sinceTimestamp": 1753833600,
+        "customerId": "0x3ba8c28a0209dea4d0502031f83d09a17a389fb0"
+      }
     }
   ],
   "altlayer": [
     {
       "id": "c7e0fd43ca7f",
-      "label": "eigen-da customer 0x4fdbd273b8d2c1c429a7e3078063c49528aa8264 since 0"
+      "config": {
+        "daLayer": "eigenda",
+        "type": "eigen-da",
+        "sinceTimestamp": 0,
+        "customerId": "0x4fdbd273b8d2c1c429a7e3078063c49528aa8264"
+      }
     }
   ],
   "altlayer-2": [
     {
       "id": "42fe3a8bc92f",
-      "label": "eigen-da customer 0x1359fbd4b9bc9441a90436719426157526742c9a since 0"
+      "config": {
+        "daLayer": "eigenda",
+        "type": "eigen-da",
+        "sinceTimestamp": 0,
+        "customerId": "0x1359fbd4b9bc9441a90436719426157526742c9a"
+      }
     }
   ],
   "altlayer-cyber": [
     {
       "id": "3f3602df41c1",
-      "label": "eigen-da customer 35.167.254.127 since 0"
+      "config": {
+        "daLayer": "eigenda",
+        "type": "eigen-da",
+        "sinceTimestamp": 0,
+        "customerId": "35.167.254.127"
+      }
     }
   ],
   "ancient": [
     {
       "id": "a3be402c9fca",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAADE4vVvVyRsg= since 0"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 0,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAADE4vVvVyRsg="
+      }
     }
   ],
   "antonio": [
     {
       "id": "7bfa73ca443c",
-      "label": "avail appIds [23] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["23"]
+      }
     }
   ],
   "arbitrum": [
     {
       "id": "f2eb27779e5d",
-      "label": "ethereum inbox 0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6 sequencers[3] since 15411056"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
+        "sequencers": [
+          "0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
+          "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
+          "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"
+        ],
+        "sinceBlock": 15411056
+      }
     }
   ],
   "arenaz": [
     {
       "id": "5f18f8f53116",
-      "label": "ethereum inbox 0x00f9BCEe08DCe4F0e7906c1f6cFb10c77802EEd0 sequencers[1] since 24776391"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 24776391,
+        "untilBlock": 25228892,
+        "inbox": "0x00f9BCEe08DCe4F0e7906c1f6cFb10c77802EEd0",
+        "sequencers": ["0x47827645bA78EB18c3d64Fe2146EfdE66F74894B"]
+      }
     },
     {
       "id": "f21be91c0dea",
-      "label": "ethereum inbox 0x00f9BCEe08DCe4F0e7906c1f6cFb10c77802EEd0 sequencers[1] since 21169100"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 21169100,
+        "untilBlock": 24776391,
+        "inbox": "0x00f9BCEe08DCe4F0e7906c1f6cFb10c77802EEd0",
+        "sequencers": ["0x2b8733E8c60A928b19BB7db1D79b918e8E09AC8c"]
+      }
     }
   ],
   "art-peace": [
     {
       "id": "4f301127be05",
-      "label": "avail appIds [35] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["35"]
+      }
     }
   ],
   "avail-main": [
     {
       "id": "cfc04769ab1c",
-      "label": "avail appIds [0] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["0"]
+      }
     }
   ],
   "azeazeqsdhfgkjkk": [
     {
       "id": "be2895d872d6",
-      "label": "avail appIds [14] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["14"]
+      }
     }
   ],
   "aztecnetwork": [
     {
       "id": "7926e2fc5a89",
-      "label": "ethereum inbox 0x0000000000000000000000000000000000000000 since 25533241"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 25533241,
+        "inbox": "0x0000000000000000000000000000000000000000",
+        "topics": [
+          "0x6ff492bf2b4ca1b93a175167d14b3e46085b935cab3f39ca94013000799b93a0"
+        ]
+      }
     }
   ],
   "b3": [
     {
       "id": "c1602abf682d",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqMAivUaAM= since 0"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 0,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqMAivUaAM="
+      }
     }
   ],
   "base": [
     {
       "id": "6d60c3b4b32e",
-      "label": "ethereum inbox 0xFf00000000000000000000000000000000008453 sequencers[1] since 0"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xFf00000000000000000000000000000000008453",
+        "sequencers": ["0x5050F69a9786F081509234F1a7F4684b5E5b76C9"],
+        "sinceBlock": 0
+      }
     }
   ],
   "battle-for-blockchain": [
     {
       "id": "f93c143823f1",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAKzFLTn1xOipecg= since 5047670"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 5047670,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAKzFLTn1xOipecg="
+      }
     }
   ],
   "blast": [
     {
       "id": "576440a9a827",
-      "label": "ethereum inbox 0xFf00000000000000000000000000000000081457 sequencers[1] since 19300387"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xFf00000000000000000000000000000000081457",
+        "sequencers": ["0x415c8893D514F9BC5211d36eEDA4183226b84AA7"],
+        "sinceBlock": 19300387
+      }
     }
   ],
   "bling": [
     {
       "id": "92c6fe63c620",
-      "label": "avail appIds [12] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["12"]
+      }
     }
   ],
   "bob": [
     {
       "id": "67159dd176aa",
-      "label": "ethereum inbox 0x3A75346f81302aAc0333FB5DCDD407e12A6CfA83 sequencers[1] since 19634330"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x3A75346f81302aAc0333FB5DCDD407e12A6CfA83",
+        "sequencers": ["0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11"],
+        "sinceBlock": 19634330
+      }
     }
   ],
   "bobanetwork": [
     {
       "id": "85bcc630ded4",
-      "label": "ethereum inbox 0xfFF0000000000000000000000000000000000288 sequencers[1] since 22790097"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xfFF0000000000000000000000000000000000288",
+        "sequencers": ["0xA4eD58737Fc5C4861C33410c29ECb1E2AF29d960"],
+        "sinceBlock": 22790097
+      }
     },
     {
       "id": "e541e8f08f5f",
-      "label": "ethereum inbox 0xfFF0000000000000000000000000000000000288 sequencers[1] since 19671339"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 19671339,
+        "untilBlock": 22790097,
+        "inbox": "0xfFF0000000000000000000000000000000000288",
+        "sequencers": ["0xe1B64045351B0B6e9821F19b39f81bc4711D2230"]
+      }
     }
   ],
   "bullet": [
     {
       "id": "10fa01449fd7",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAGJsdGJhdGNoLXQ= since 10183821"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 10183821,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAGJsdGJhdGNoLXQ="
+      }
     },
     {
       "id": "5c366a7c0a51",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAGJsdGJhdGNoLWw= since 10168980"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 10168980,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAGJsdGJhdGNoLWw="
+      }
     },
     {
       "id": "b1411081b4fa",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAGJsdGJhdGNoLXo= since 10456208"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 10456208,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAGJsdGJhdGNoLXo="
+      }
     }
   ],
   "camp": [
     {
       "id": "00be395010a6",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAAAAeQ= since 6459709"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 6459709,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAB7AAAAAAAAAeQ="
+      }
     }
   ],
   "celo": [
     {
       "id": "7c329e9319ea",
-      "label": "ethereum inbox 0xff00000000000000000000000000000000042220 sequencers[1] since 22038831"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xff00000000000000000000000000000000042220",
+        "sequencers": ["0x0cd08c7f7A96AA9635f761b49216B9eA74C5cA60"],
+        "sinceBlock": 22038831
+      }
     },
     {
       "id": "d7534d04c245",
-      "label": "eigen-da customer 0xecf08b0a4f196e06e9aece95d5dd724bc121f09c since 1741806000"
+      "config": {
+        "type": "eigen-da",
+        "customerId": "0xecf08b0a4f196e06e9aece95d5dd724bc121f09c",
+        "daLayer": "eigenda",
+        "sinceTimestamp": 1741806000
+      }
     }
   ],
   "civitia": [
     {
       "id": "73be28c3fbaa",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAEwLOhV+kOUlUq4= since 4492300"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 4492300,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAEwLOhV+kOUlUq4="
+      }
     }
   ],
   "clique": [
     {
       "id": "d6028e9615e0",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAAARQV7t6sd4A= since 3161819"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 3161819,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAARQV7t6sd4A="
+      }
     }
   ],
   "codex": [
     {
       "id": "29bbe6e797bd",
-      "label": "ethereum inbox 0x8c12f051c161c2cda736f3b3fa1c4bdd35b7922c sequencers[1] since 20953494"
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x8c12f051c161c2cda736f3b3fa1c4bdd35b7922c",
+        "sequencers": ["0xb5bd290ef8ef3840cb866c7a8b7cc9e45fde3ab9"],
+        "sinceBlock": 20953494
+      }
     }
   ],
   "conduit": [
     {
       "id": "0e12a4598e33",
-      "label": "eigen-da customer 0x8dc6f0bd2ce3c40d633f5541e21e7574598f7c75 since 0"
+      "config": {
+        "daLayer": "eigenda",
+        "type": "eigen-da",
+        "sinceTimestamp": 0,
+        "customerId": "0x8dc6f0bd2ce3c40d633f5541e21e7574598f7c75"
+      }
     }
   ],
   "conduit-2": [
     {
       "id": "9b293cd2e4d8",
-      "label": "eigen-da customer 34.145.120.220 since 1719266400"
+      "config": {
+        "daLayer": "eigenda",
+        "type": "eigen-da",
+        "sinceTimestamp": 1719266400,
+        "customerId": "34.145.120.220"
+      }
     }
   ],
   "conduit-3": [
     {
       "id": "c988d5341c99",
-      "label": "eigen-da customer 34.168.104.248 since 1719262800"
+      "config": {
+        "daLayer": "eigenda",
+        "type": "eigen-da",
+        "sinceTimestamp": 1719262800,
+        "customerId": "34.168.104.248"
+      }
     }
   ],
   "creator": [
     {
       "id": "54f3f96071b1",
-      "label": "ethereum inbox 0x18cc381705761aa2d2e8ea62888a4029a0fad3ab sequencers[2] since 23869474"
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x18cc381705761aa2d2e8ea62888a4029a0fad3ab",
+        "sequencers": [
+          "0x9f915dd047b9d64a94e62aa141da3c7425c9431f",
+          "0x0bf4b30e680cc7cbab1c2436275851bcc9d35dc1"
+        ],
+        "sinceBlock": 23869474
+      }
     }
   ],
   "crestal": [
     {
       "id": "21dc3b98a724",
-      "label": "avail appIds [16] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["16"]
+      }
     },
     {
       "id": "89d8398a1ace",
-      "label": "eigen-da customer 0x2659d4555e482ec4131a493def0770a922c75de3 since 1728399600"
+      "config": {
+        "daLayer": "eigenda",
+        "type": "eigen-da",
+        "sinceTimestamp": 1728399600,
+        "customerId": "0x2659d4555e482ec4131a493def0770a922c75de3"
+      }
     }
   ],
   "dans-awesome-app": [
     {
       "id": "258ece60d579",
-      "label": "avail appIds [29] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["29"]
+      }
     }
   ],
   "dbk": [
     {
       "id": "0be222b43a67",
-      "label": "ethereum inbox 0xFF00000000000000000000000000000020240603 sequencers[1] since 20015025"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xFF00000000000000000000000000000020240603",
+        "sequencers": ["0x7aB7da0C3117D7Dfe0ABfAA8d8D33883f8477C74"],
+        "sinceBlock": 20015025
+      }
     }
   ],
   "dragonft": [
     {
       "id": "3d11dac766ac",
-      "label": "avail appIds [21] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["21"]
+      }
     }
   ],
   "echelon": [
     {
       "id": "601354221be6",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAItyY42OaTC/skE= since 5659637"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 5659637,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAItyY42OaTC/skE="
+      }
     }
   ],
   "echos": [
     {
       "id": "c4682102bddf",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAAA/cZMN1XLG8= since 3161819"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 3161819,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA/cZMN1XLG8="
+      }
     }
   ],
   "eclipse": [
     {
       "id": "630dbcf6c9c5",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAAAGVjbGlwc2U= since 0"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 0,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAGVjbGlwc2U="
+      }
     }
   ],
   "eden": [
     {
       "id": "62eb20f5e97e",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAoxK5AW18ozObY= since 9413424"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 9413424,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAoxK5AW18ozObY="
+      }
     },
     {
       "id": "fcb367b41b8e",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAORr5sRrVhwIjmU= since 9409947"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 9409947,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAORr5sRrVhwIjmU="
+      }
     }
   ],
   "embr-fun": [
     {
       "id": "86f0b7d8e667",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAMbONmnisjTDz4I= since 5954601"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 5954601,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAMbONmnisjTDz4I="
+      }
     }
   ],
   "ethernity": [
     {
       "id": "69534074e040",
-      "label": "ethereum inbox 0xfF00000000000000000000000000000000000183 sequencers[1] since 20519438"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xfF00000000000000000000000000000000000183",
+        "sequencers": ["0x43Ca061Ea80FBB4A2b5515F4be4e953b191147aF"],
+        "sinceBlock": 20519438
+      }
     }
   ],
   "flame": [
     {
       "id": "9090bf154b79",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAL2dxfeNrJ+tg6Y= since 3161819"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 3161819,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAL2dxfeNrJ+tg6Y="
+      }
     }
   ],
   "flynet": [
     {
       "id": "ef648acaf8f9",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAACyPE7Ql9zwA= since 5188001"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 5188001,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAACyPE7Ql9zwA="
+      }
     }
   ],
   "forknet": [
     {
       "id": "fa508c38e45a",
-      "label": "ethereum inbox 0x003FBC27c32dBE174A7BB1EfdD49da79C6Ea1774 sequencers[1] since 23281847"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 23281847,
+        "inbox": "0x003FBC27c32dBE174A7BB1EfdD49da79C6Ea1774",
+        "sequencers": ["0x8839E742fd56ebC0d31d11DD5A2cA25aA61c54DA"]
+      }
     }
   ],
   "form": [
     {
       "id": "70a7244f9daf",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpR3bjJQT0= since 2943925"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 2943925,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpR3bjJQT0="
+      }
     }
   ],
   "forma": [
     {
       "id": "c27254593410",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAKKnitomrCy/HoY= since 3161819"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 3161819,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAKKnitomrCy/HoY="
+      }
     }
   ],
   "foundation-network": [
     {
       "id": "27a6c76de4df",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAN/xAxpagCrjLVQ= since 3667737"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 3667737,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAN/xAxpagCrjLVQ="
+      }
     }
   ],
   "fuel": [
     {
       "id": "0e8ec8be6a50",
-      "label": "eigen-da customer 0xea0337efc12e98ab118948da570c07691e8e4b37 since 1751526000"
+      "config": {
+        "type": "eigen-da",
+        "customerId": "0xea0337efc12e98ab118948da570c07691e8e4b37",
+        "daLayer": "eigenda",
+        "sinceTimestamp": 1751526000
+      }
     },
     {
       "id": "9f8a5f377b9d",
-      "label": "ethereum inbox 0xEA0337EFC12e98AB118948dA570C07691E8E4b37 sequencers[1] since 20915271"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 20915271,
+        "inbox": "0xEA0337EFC12e98AB118948dA570C07691E8E4b37",
+        "sequencers": ["0xEA0337EFC12e98AB118948dA570C07691E8E4b37"],
+        "untilBlock": 22837254
+      }
     }
   ],
   "fuse-l2": [
     {
       "id": "c14af5db5ed3",
-      "label": "avail appIds [22] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["22"]
+      }
     }
   ],
   "galxegravity": [
     {
       "id": "2b42cc2008b7",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAABH1QsY4w6WU= since 5169794"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 5169794,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAABH1QsY4w6WU="
+      }
     }
   ],
   "ham": [
     {
       "id": "b82f9418c0a1",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpeLVvrm6k= since 0"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 0,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpeLVvrm6k="
+      }
     }
   ],
   "hashkey": [
     {
       "id": "11c7a388565a",
-      "label": "ethereum inbox 0x0004cb44C80b6Fbf8ceb1d80AF688C9f7C0b2aB5 sequencers[1] since 24582182"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x0004cb44C80b6Fbf8ceb1d80AF688C9f7C0b2aB5",
+        "sequencers": ["0x5e70713222FaF60c9e9fB69240D06ae6D688563A"],
+        "sinceBlock": 24582182
+      }
     },
     {
       "id": "374bf6c1c013",
-      "label": "ethereum inbox 0x0004cb44C80b6Fbf8ceb1d80AF688C9f7C0b2aB5 sequencers[1] since 22237008"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 22237008,
+        "untilBlock": 24324263,
+        "inbox": "0x0004cb44C80b6Fbf8ceb1d80AF688C9f7C0b2aB5",
+        "sequencers": ["0xf09ebb62b5ba0cf402b77aBA61691cBCf005206f"]
+      }
     },
     {
       "id": "bcad13fb47dc",
-      "label": "ethereum inbox 0x0004cb44C80b6Fbf8ceb1d80AF688C9f7C0b2aB5 sequencers[1] since 24324263"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 24324263,
+        "untilBlock": 24582182,
+        "inbox": "0x0004cb44C80b6Fbf8ceb1d80AF688C9f7C0b2aB5",
+        "sequencers": ["0xFa35501cab42175918093F40C317642919F45165"]
+      }
     },
     {
       "id": "e11269b4d577",
-      "label": "ethereum inbox 0x0004cb44C80b6Fbf8ceb1d80AF688C9f7C0b2aB5 sequencers[1] since 21414884"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 21414884,
+        "untilBlock": 22237008,
+        "inbox": "0x0004cb44C80b6Fbf8ceb1d80AF688C9f7C0b2aB5",
+        "sequencers": ["0x9391791f7CB74F8BFDA65edc0749efd964311b55"]
+      }
     }
   ],
   "hello-world": [
     {
       "id": "03cb1ce906bd",
-      "label": "avail appIds [13] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["13"]
+      }
     }
   ],
   "hemi": [
     {
       "id": "58512485ccc1",
-      "label": "ethereum inbox 0xfF00000000000000000000000000000000043111 sequencers[1] since 20711665"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xfF00000000000000000000000000000000043111",
+        "sequencers": ["0x65115C6D23274E0A29A63B69130eFe901Aa52e7A"],
+        "sinceBlock": 20711665
+      }
     }
   ],
   "hibachi": [
     {
       "id": "7bbe2b7034e0",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAABoaWJhY2hpLXM= since 5979823"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 5979823,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAABoaWJhY2hpLXM="
+      }
     },
     {
       "id": "dfefb8bddfee",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAAAGhpYmFjaGk= since 5981133"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 5981133,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAGhpYmFjaGk="
+      }
     }
   ],
   "hypr": [
     {
       "id": "44b9bc7dd0a3",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAABqVjuNvNnoE= since 0"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 0,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAABqVjuNvNnoE="
+      }
     }
   ],
   "inertia": [
     {
       "id": "ad5b898564ce",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAEg2If2QGyq4ZRQ= since 5941532"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 5941532,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAEg2If2QGyq4ZRQ="
+      }
     }
   ],
   "ing": [
     {
       "id": "a48ebe34cd2d",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAALdhUSKgKHU0Zx0= since 5945453"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 5945453,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAALdhUSKgKHU0Zx0="
+      }
     }
   ],
   "ink": [
     {
       "id": "43b77e5a5d4a",
-      "label": "ethereum inbox 0x005969bf0EcbF6eDB6C47E5e94693b1C3651Be97 sequencers[1] since 21344310"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 21344310,
+        "untilBlock": 25631821,
+        "inbox": "0x005969bf0EcbF6eDB6C47E5e94693b1C3651Be97",
+        "sequencers": ["0x500d7Ea63CF2E501dadaA5feeC1FC19FE2Aa72Ac"]
+      }
     },
     {
       "id": "7a3586c4d204",
-      "label": "ethereum inbox 0x005969bf0EcbF6eDB6C47E5e94693b1C3651Be97 sequencers[1] since 25631821"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x005969bf0EcbF6eDB6C47E5e94693b1C3651Be97",
+        "sequencers": ["0x6db6161fC5662450E801398Bad62dD9921216B98"],
+        "sinceBlock": 25631821
+      }
     }
   ],
   "intergaze": [
     {
       "id": "ed77885c2e6e",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAIoZCJNLh1XvOZA= since 5748411"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 5748411,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAIoZCJNLh1XvOZA="
+      }
     }
   ],
   "jjjtkekznfnxkeke": [
     {
       "id": "f07735e6b99a",
-      "label": "avail appIds [15] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["15"]
+      }
     }
   ],
   "karak": [
     {
       "id": "58ba5e59c8fb",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJBA= since 0"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 0,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJBA="
+      }
     }
   ],
   "katana": [
     {
       "id": "fd1ddbe839bf",
-      "label": "ethereum inbox 0x000d4411cdeb152378626B5C5E33fd5D6808939a sequencers[1] since 22441925"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 22441925,
+        "inbox": "0x000d4411cdeb152378626B5C5E33fd5D6808939a",
+        "sequencers": ["0x1FFDA89C755f6D4Af069897D77CcAbb580Fd412a"]
+      }
     }
   ],
   "kayabey": [
     {
       "id": "7962eb892835",
-      "label": "avail appIds [27] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["27"]
+      }
     }
   ],
   "kinto": [
     {
       "id": "1f217b82174a",
-      "label": "ethereum inbox 0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a sequencers[1] since 18788587"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
+        "sequencers": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
+        "sinceBlock": 18788587
+      }
     }
   ],
   "kms": [
     {
       "id": "1706339c8d6d",
-      "label": "avail appIds [28] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["28"]
+      }
     }
   ],
   "kroma": [
     {
       "id": "dc4f182670c4",
-      "label": "ethereum inbox 0xfF00000000000000000000000000000000000255 sequencers[1] since 0"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 0,
+        "inbox": "0xfF00000000000000000000000000000000000255",
+        "sequencers": ["0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12"]
+      }
     }
   ],
   "lachain": [
     {
       "id": "3456bae137ed",
-      "label": "ethereum inbox 0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[2] since 21809364"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+        "sequencers": [
+          "0xB66d4AF4E96bF96026454A6A150EDD2CE55E9E67",
+          "0xDAC936134633C309BA831239e5e25Cfe5094b229"
+        ],
+        "sinceBlock": 21809364
+      }
     }
   ],
   "lambda": [
     {
       "id": "4047ae19698a",
-      "label": "ethereum inbox 0xfF00000000000000000000000000000000056026 sequencers[1] since 19674409"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xfF00000000000000000000000000000000056026",
+        "sequencers": ["0xDeC273BF31AD79ad00D619c52662f724176A12Fb"],
+        "sinceBlock": 19674409
+      }
     }
   ],
   "layer-n": [
     {
       "id": "39a00a57a183",
-      "label": "eigen-da customer 0xd697219f32129f4544a554be015386fac9445507 since 0"
+      "config": {
+        "daLayer": "eigenda",
+        "type": "eigen-da",
+        "sinceTimestamp": 0,
+        "customerId": "0xd697219f32129f4544a554be015386fac9445507"
+      }
     }
   ],
   "lc85p": [
     {
       "id": "b3b69706b7f9",
-      "label": "avail appIds [20] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["20"]
+      }
     }
   ],
   "lens": [
     {
       "id": "146173cd630d",
-      "label": "avail appIds [26] since 1180000"
+      "config": {
+        "type": "avail",
+        "daLayer": "avail",
+        "sinceBlock": 1180000,
+        "appIds": ["26"]
+      }
     }
   ],
   "lens-historical-data": [
     {
       "id": "c47e42af271b",
-      "label": "avail appIds [39] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["39"]
+      }
     }
   ],
   "leouarz-test-app": [
     {
       "id": "2a12c49274e4",
-      "label": "avail appIds [11] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["11"]
+      }
     }
   ],
   "lighter": [
     {
       "id": "87b58a09f9ee",
-      "label": "ethereum inbox 0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7 sequencers[3] since 24040917"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 24040917,
+        "inbox": "0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+        "sequencers": [
+          "0x191fF0EC830F83916A427d169a234c33e48aA79f",
+          "0x750bdb90AC72A78308d21eAC78999bBAE31cd63d",
+          "0xC0D2853e06F1E145177D5ef08Ab065a76e14354C"
+        ]
+      }
     },
     {
       "id": "8807413fc5a2",
-      "label": "ethereum inbox 0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7 sequencers[4] since 21642011"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 21642011,
+        "untilBlock": 24040916,
+        "inbox": "0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+        "sequencers": [
+          "0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
+          "0xFBC0dcd6c3518cB529bC1B585dB992A7d40005fa",
+          "0xfcB73F6405F6B9be91013d9477d81833a69C9c0D",
+          "0x1c0F4f6daf0E0f32C5482672fa5342784915df21"
+        ]
+      }
     }
   ],
   "linea": [
     {
       "id": "23d543f999eb",
-      "label": "ethereum inbox 0xd19d4B5d358258f05D7B411E21A1460D11B0876F sequencers[2] since 0"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 0,
+        "inbox": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+        "sequencers": [
+          "0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
+          "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
+        ]
+      }
     }
   ],
   "lisk": [
     {
       "id": "b6ec941353c5",
-      "label": "ethereum inbox 0xFf00000000000000000000000000000000001135 sequencers[1] since 19788851"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xFf00000000000000000000000000000000001135",
+        "sequencers": ["0xa6Ea2f3299b63c53143c993d2d5E60A69Cd6Fe24"],
+        "sinceBlock": 19788851
+      }
     }
   ],
   "loopring": [
     {
       "id": "684a783ef5e7",
-      "label": "ethereum inbox 0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512 sequencers[13] since 0"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 0,
+        "inbox": "0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512",
+        "sequencers": [
+          "0x2b263f55Bf2125159Ce8Ec2Bb575C649f822ab46",
+          "0x4774d954D20DB98492B0487BC9F91dc401dBA3aE",
+          "0x53dD53dAf8F112BcA64332eA97398EfbC8a0E234",
+          "0x212e75BF264C4FB3133fA5ef6f47A34367020A1A",
+          "0x238b649E62a0C383b54060b1625516b489183843",
+          "0x3243Ed9fdCDE2345890DDEAf6b083CA4cF0F68f2",
+          "0xbfCc986cA6E6729c1D191cC0179ef060b87a7C42",
+          "0xA921aF7e4dd279e1325399E4E3Bf13d0E57f48Fc",
+          "0xeadb3d065f8d15cc05e92594523516aD36d1c834",
+          "0xB1a6BF349c947A540a5fe6f1e89992ACDad836AB",
+          "0xeDEE915Ae45Cc4B2FDd1Ce12a2f70dCa0B2AD9e5",
+          "0xE6b0cf8ed864F9bfEBa1b03bac785B5aC82cf095",
+          "0x487e8Be2BaD383b5B62fC5fb46005A8Fac10E341"
+        ]
+      }
     }
   ],
   "lyra": [
     {
       "id": "43f8068a2801",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAACLkdk+ILapw= since 0"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 0,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAACLkdk+ILapw="
+      }
     }
   ],
   "mantapacific": [
     {
       "id": "b90581385a42",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAIZiad33fbxA7Z0= since 0"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 0,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAIZiad33fbxA7Z0="
+      }
     }
   ],
   "mantle": [
     {
       "id": "77d7ad49a27a",
-      "label": "ethereum inbox 0xFFEEDDCcBbAA0000000000000000000000000000 sequencers[1] since 19434945"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xFFEEDDCcBbAA0000000000000000000000000000",
+        "sequencers": ["0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749"],
+        "sinceBlock": 19434945
+      }
     },
     {
       "id": "7f14496fac2c",
-      "label": "eigen-da customer 0x24f0a3716805e8973bf48eb908d6d4a2f34af785 since 1738821600"
+      "config": {
+        "type": "eigen-da",
+        "customerId": "0x24f0a3716805e8973bf48eb908d6d4a2f34af785",
+        "daLayer": "eigenda",
+        "sinceTimestamp": 1738821600,
+        "untilTimestamp": 1776322715
+      }
     }
   ],
   "mantle-testnet": [
     {
       "id": "312cd499f594",
-      "label": "eigen-da customer 0xc16267ecb2297f8a98fce214686e80697da91198 since 0"
+      "config": {
+        "daLayer": "eigenda",
+        "type": "eigen-da",
+        "sinceTimestamp": 0,
+        "customerId": "0xc16267ecb2297f8a98fce214686e80697da91198"
+      }
     }
   ],
   "matter-labs-wonderfi": [
     {
       "id": "bf74be61c3cc",
-      "label": "eigen-da customer 0xdaf4b26d608d58f53ab6f0758a12de01296ce5bf since 0"
+      "config": {
+        "daLayer": "eigenda",
+        "type": "eigen-da",
+        "sinceTimestamp": 0,
+        "customerId": "0xdaf4b26d608d58f53ab6f0758a12de01296ce5bf"
+      }
     }
   ],
   "megaeth": [
     {
       "id": "5e5ebd8a4160",
-      "label": "eigen-da customer 0x42b5ea5238752cc6f70d93fa4249feae480a0b39 since 1762995600"
+      "config": {
+        "type": "eigen-da",
+        "daLayer": "eigenda",
+        "sinceTimestamp": 1762995600,
+        "customerId": "0x42b5ea5238752cc6f70d93fa4249feae480a0b39"
+      }
     }
   ],
   "metal": [
     {
       "id": "48bc4168451b",
-      "label": "ethereum inbox 0xc83f7D9F2D4A76E81145849381ABA02602373723 sequencers[1] since 19527368"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xc83f7D9F2D4A76E81145849381ABA02602373723",
+        "sequencers": ["0xC94C243f8fb37223F3EB2f7961F7072602A51B8B"],
+        "sinceBlock": 19527368
+      }
     }
   ],
   "metis": [
     {
       "id": "bc9b76a87f54",
-      "label": "ethereum inbox 0xFf00000000000000000000000000000000001088 sequencers[1] since 22472728"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 22472728,
+        "inbox": "0xFf00000000000000000000000000000000001088",
+        "sequencers": ["0xaE4d46bD9117Cb017C5185844699c51107cB28a9"]
+      }
     }
   ],
   "milkyway": [
     {
       "id": "758d445f83b3",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAB2AZsEwLd1LLHk= since 5298640"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 5298640,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAB2AZsEwLd1LLHk="
+      }
     }
   ],
   "mint": [
     {
       "id": "3476c2371021",
-      "label": "ethereum inbox 0x4e31448a098393727b786e25B54E59DcA1b77FE1 sequencers[1] since 23979599"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 23979599,
+        "untilBlock": 24824990,
+        "inbox": "0x4e31448a098393727b786e25B54E59DcA1b77FE1",
+        "sequencers": ["0x560aFA9cF6B39D8C83938C77036E80807a56Da16"]
+      }
     },
     {
       "id": "641172c76c99",
-      "label": "ethereum inbox 0x4e31448a098393727b786e25B54E59DcA1b77FE1 sequencers[1] since 19862462"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 19862462,
+        "untilBlock": 23979599,
+        "inbox": "0x4e31448a098393727b786e25B54E59DcA1b77FE1",
+        "sequencers": ["0x68bdFecE01535090c8f3C27ec3b1AE97E83fA4aA"]
+      }
     }
   ],
   "mode": [
     {
       "id": "11444cd0f545",
-      "label": "ethereum inbox 0x24E59d9d3Bd73ccC28Dc54062AF7EF7bFF58Bd67 sequencers[1] since 18586931"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x24E59d9d3Bd73ccC28Dc54062AF7EF7bFF58Bd67",
+        "sequencers": ["0x99199a22125034c808ff20f377d91187E8050F2E"],
+        "sinceBlock": 18586931
+      }
     }
   ],
   "molten": [
     {
       "id": "b5fc73ce5c1f",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpNR57blEA= since 5305699"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 5305699,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpNR57blEA="
+      }
     }
   ],
   "morph": [
     {
       "id": "0ec705a4c807",
-      "label": "ethereum inbox 0x759894Ced0e6af42c26668076Ffa84d02E3CeF60 sequencers[5] since 22744284"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 22744284,
+        "inbox": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+        "sequencers": [
+          "0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
+          "0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80",
+          "0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796",
+          "0xf0e11a8EA095Cc915f5a7e420928d396ed1Bb7e4",
+          "0x76F91869161dC4348230D5F60883Dd17462035f4"
+        ]
+      }
     },
     {
       "id": "f634e6308d3b",
-      "label": "ethereum inbox 0x759894Ced0e6af42c26668076Ffa84d02E3CeF60 sequencers[7] since 21013218"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 21013218,
+        "untilBlock": 22744283,
+        "inbox": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+        "sequencers": [
+          "0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796",
+          "0x61F2945d4bc9E40B66a6376d1094a50438f613e2",
+          "0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
+          "0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65",
+          "0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7",
+          "0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80",
+          "0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23"
+        ]
+      }
     }
   ],
   "nillion": [
     {
       "id": "01b093f1c953",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBOFuc8Ges= since 8976650"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 8976650,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBOFuc8Ges="
+      }
     }
   ],
   "ody-playground": [
     {
       "id": "217cd407d2a3",
-      "label": "avail appIds [40] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["40"]
+      }
     }
   ],
   "odysphere": [
     {
       "id": "902083415953",
-      "label": "avail appIds [32] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["32"]
+      }
     }
   ],
   "onchain": [
     {
       "id": "c3984a860980",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAABNfLrOLSCTY= since 3161819"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 3161819,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAABNfLrOLSCTY="
+      }
     }
   ],
   "openledger": [
     {
       "id": "cd44aefc747e",
-      "label": "eigen-da customer 0xe16fabeb99a6c098e4d7b4d442df0c827d5a6d26 since 1752044400"
+      "config": {
+        "daLayer": "eigenda",
+        "type": "eigen-da",
+        "sinceTimestamp": 1752044400,
+        "customerId": "0xe16fabeb99a6c098e4d7b4d442df0c827d5a6d26"
+      }
     }
   ],
   "openzk": [
     {
       "id": "598c74e2e574",
-      "label": "ethereum inbox 0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[1] since 21712806"
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+        "sequencers": ["0x1c841ed065149e32e4c43e3b10ecd71f1fed1db7"],
+        "sinceBlock": 21712806
+      }
     }
   ],
   "optimism": [
     {
       "id": "0c9493d06a93",
-      "label": "ethereum inbox 0xFF00000000000000000000000000000000000010 sequencers[1] since 0"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xFF00000000000000000000000000000000000010",
+        "sequencers": ["0x6887246668a3b87F54DeB3b94Ba47a6f63F32985"],
+        "sinceBlock": 0
+      }
     }
   ],
   "optopia": [
     {
       "id": "f456b748e6f7",
-      "label": "ethereum inbox 0xfF00000000000000000000000000000000062050 sequencers[1] since 19838884"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xfF00000000000000000000000000000000062050",
+        "sequencers": ["0x3D0Bf26E60a689a7Da5EA3ddAD7371F27f7671a5"],
+        "sinceBlock": 19838884
+      }
     }
   ],
   "orderly": [
     {
       "id": "89362db2d62d",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAABYTLU4hLOUU= since 0"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 0,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAABYTLU4hLOUU="
+      }
     }
   ],
   "paradex": [
     {
       "id": "ea3ee1247c59",
-      "label": "ethereum inbox 0xF338cad020D506e8e3d9B4854986E0EcE6C23640 sequencers[1] since 0"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 0,
+        "inbox": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+        "sequencers": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"]
+      }
     }
   ],
   "pepeunchained": [
     {
       "id": "465561f40619",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAADzZzvipmzP4= since 21314461"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 21314461,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAADzZzvipmzP4="
+      }
     }
   ],
   "perennial": [
     {
       "id": "168ea0a4f7bc",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAAAaToZYrE0tA= since 3886561"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 3886561,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAaToZYrE0tA="
+      }
     }
   ],
   "phala": [
     {
       "id": "db0bcd35e1a3",
-      "label": "ethereum inbox 0x5A2a0698355D06cd5c4e3872D2Bc6B9f6a89d39B sequencers[1] since 21418009"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x5A2a0698355D06cd5c4e3872D2Bc6B9f6a89d39B",
+        "sequencers": ["0x9Fb23129982c993743Eb9bB156af8CC8Fa2aC761"],
+        "sinceBlock": 21418009
+      }
     }
   ],
   "plumenetwork": [
     {
       "id": "248db65e169b",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAADQSAB6M6v+s= since 5757261"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 5757261,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAADQSAB6M6v+s="
+      }
     }
   ],
   "polymer": [
     {
       "id": "3bf339aeaac4",
-      "label": "eigen-da customer 0xf33f8cfea5857ebf248520cf6bc33640680ff83b since 1731974400"
+      "config": {
+        "daLayer": "eigenda",
+        "type": "eigen-da",
+        "sinceTimestamp": 1731974400,
+        "customerId": "0xf33f8cfea5857ebf248520cf6bc33640680ff83b"
+      }
     }
   ],
   "polynomial": [
     {
       "id": "1c2186c0a255",
-      "label": "ethereum inbox 0x0bd57e83B5E0f9eCD84d559bB58e1EcFEEdD2565 sequencers[1] since 20062740"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x0bd57e83B5E0f9eCD84d559bB58e1EcFEEdD2565",
+        "sequencers": ["0x67a44CE38627F46F20b1293960559eD85Dd194F1"],
+        "sinceBlock": 20062740
+      }
     }
   ],
   "powerloom": [
     {
       "id": "2db7784e7e83",
-      "label": "eigen-da customer 0x00efb491755397ab8727ab45c4aef5fdcd3ecef8 since 1754438400"
+      "config": {
+        "daLayer": "eigenda",
+        "type": "eigen-da",
+        "sinceTimestamp": 1754438400,
+        "customerId": "0x00efb491755397ab8727ab45c4aef5fdcd3ecef8"
+      }
     }
   ],
   "quarkchain": [
     {
       "id": "26db7f9cbd79",
-      "label": "ethereum inbox 0xa68295d77766d4e04854746e3c1873c891c1765e sequencers[1] since 23847277"
+      "config": {
+        "daLayer": "ethereum",
+        "type": "ethereum",
+        "inbox": "0xa68295d77766d4e04854746e3c1873c891c1765e",
+        "sequencers": ["0xf503a133df0c43b4814b12098604655ad9fe7e3b"],
+        "sinceBlock": 23847277
+      }
     }
   ],
   "r0ar": [
     {
       "id": "b005d8668b33",
-      "label": "ethereum inbox 0xFF00000000000000000000000000000000193939 sequencers[1] since 20912148"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xFF00000000000000000000000000000000193939",
+        "sequencers": ["0xF263a0AA8aFEaA7d516B596d49d7BA6C0FeB102c"],
+        "sinceBlock": 20912148
+      }
     }
   ],
   "race": [
     {
       "id": "d1005a41b958",
-      "label": "ethereum inbox 0xFF00000000000000000000000000000000006805 sequencers[1] since 20260607"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xFF00000000000000000000000000000000006805",
+        "sequencers": ["0x8CDa8351236199AF7532baD53D683Ddd9B275d89"],
+        "sinceBlock": 20260607
+      }
     }
   ],
   "rari": [
     {
       "id": "6de44962ca49",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U= since 0"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 0,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U="
+      }
     }
   ],
   "rave": [
     {
       "id": "96ddd600f43a",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAF45zaUciayEPXE= since 5645296"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 5645296,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAF45zaUciayEPXE="
+      }
     }
   ],
   "relay-chain": [
     {
       "id": "f33832f0dd62",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAHJlbGF5LWRhdGE= since 9272873"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 9272873,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAHJlbGF5LWRhdGE="
+      }
     }
   ],
   "rena": [
     {
       "id": "84e9db3e62d8",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAMxohfftlR5t59s= since 5775045"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 5775045,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAMxohfftlR5t59s="
+      }
     }
   ],
   "reserved-1": [
     {
       "id": "b7af7b5d509f",
-      "label": "avail appIds [1] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["1"]
+      }
     }
   ],
   "reserved-2": [
     {
       "id": "2eacac769cca",
-      "label": "avail appIds [2] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["2"]
+      }
     }
   ],
   "reserved-3": [
     {
       "id": "887a028ceedc",
-      "label": "avail appIds [3] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["3"]
+      }
     }
   ],
   "reserved-4": [
     {
       "id": "8f0ff8558503",
-      "label": "avail appIds [4] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["4"]
+      }
     }
   ],
   "reserved-5": [
     {
       "id": "679a241666af",
-      "label": "avail appIds [5] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["5"]
+      }
     }
   ],
   "reserved-6": [
     {
       "id": "9c461252000c",
-      "label": "avail appIds [6] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["6"]
+      }
     }
   ],
   "reserved-7": [
     {
       "id": "4946810739d0",
-      "label": "avail appIds [7] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["7"]
+      }
     }
   ],
   "reserved-8": [
     {
       "id": "9acb9ccb8d5b",
-      "label": "avail appIds [8] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["8"]
+      }
     }
   ],
   "reserved-9": [
     {
       "id": "e05f5c22c959",
-      "label": "avail appIds [9] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["9"]
+      }
     }
   ],
   "rise": [
     {
       "id": "2ad868bdc77b",
-      "label": "eigen-da customer 0x78d5974216f751eb328018f003067f77e8be2fc4 since 1767607200"
+      "config": {
+        "type": "eigen-da",
+        "daLayer": "eigenda",
+        "sinceTimestamp": 1767607200,
+        "customerId": "0x78d5974216f751eb328018f003067f77e8be2fc4"
+      }
     }
   ],
   "rivalz-network": [
     {
       "id": "f03e66278478",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAAAMJ/xGlNMdE= since 4932528"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 4932528,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAMJ/xGlNMdE="
+      }
     }
   ],
   "river": [
     {
       "id": "757f17e1aac0",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAMod4Sor8Q7yCoU= since 4071540"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 4071540,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAMod4Sor8Q7yCoU="
+      }
     }
   ],
   "robinhood": [
     {
       "id": "0fece1229ccf",
-      "label": "ethereum inbox 0xBd0D173EEb87D57A09521c24388a12789F33ba96 sequencers[1] since 24994238"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xBd0D173EEb87D57A09521c24388a12789F33ba96",
+        "sequencers": ["0xDaa526086787d9DEbE1D7F3FFdb1fE50cf8687F4"],
+        "sinceBlock": 24994238
+      }
     }
   ],
   "scroll": [
     {
       "id": "4f80ff49ada9",
-      "label": "ethereum inbox 0xa13BAF47339d63B743e7Da8741db5456DAc1E556 sequencers[2] since 0"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 0,
+        "inbox": "0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
+        "sequencers": [
+          "0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B",
+          "0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858"
+        ]
+      }
     }
   ],
   "se-avail": [
     {
       "id": "b1b4b5547ed6",
-      "label": "avail appIds [24] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["24"]
+      }
     }
   ],
   "settlus": [
     {
       "id": "21b59864e4d8",
-      "label": "ethereum inbox 0x003E40D3125591bD722aB1bB880c78e4D74d0977 sequencers[1] since 21890837"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 21890837,
+        "untilBlock": 24433367,
+        "inbox": "0x003E40D3125591bD722aB1bB880c78e4D74d0977",
+        "sequencers": ["0xD0b4c3aC8A50B6F1B3949ADaf55Cc9805620EB57"]
+      }
     },
     {
       "id": "f22125c047be",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFPs= since 9779673"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 9779673,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFPs="
+      }
     }
   ],
   "shape": [
     {
       "id": "d738b5415ae9",
-      "label": "ethereum inbox 0xfF00000000000000000000000000000000000360 sequencers[1] since 20369958"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xfF00000000000000000000000000000000000360",
+        "sequencers": ["0xF7ca543d652E38692fD12f989eb55b5327eC9A20"],
+        "sinceBlock": 20369958
+      }
     }
   ],
   "skate-mainnet": [
     {
       "id": "e59b45d74f29",
-      "label": "avail appIds [19] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["19"]
+      }
     }
   ],
   "snaxchain": [
     {
       "id": "73c0b40ef7c3",
-      "label": "ethereum inbox 0xFeC57BD3729a5F930d4Ee8ac5992Fdc8988426e4 sequencers[1] since 20520549"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xFeC57BD3729a5F930d4Ee8ac5992Fdc8988426e4",
+        "sequencers": ["0x060b915cA4904b56adA63565626b9c97F6CaD212"],
+        "sinceBlock": 20520549
+      }
     }
   ],
   "soneium": [
     {
       "id": "07ba7f196ff2",
-      "label": "ethereum inbox 0x008dC74CecC9dedA8595B2Fe210cE5979F0BfA8e sequencers[1] since 21314185"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x008dC74CecC9dedA8595B2Fe210cE5979F0BfA8e",
+        "sequencers": ["0x6776BE80dBAda6A02B5F2095cF13734ac303B8d1"],
+        "sinceBlock": 21314185
+      }
     }
   ],
   "soon": [
     {
       "id": "31905255c4ff",
-      "label": "eigen-da customer 0x52ebeea8a7dcaaa17ee398b9f9b01dfa64db63ae since 1735822800"
+      "config": {
+        "type": "eigen-da",
+        "customerId": "0x52ebeea8a7dcaaa17ee398b9f9b01dfa64db63ae",
+        "daLayer": "eigenda",
+        "sinceTimestamp": 1735822800
+      }
+    },
+    {
+      "id": "3718f22abb41",
+      "config": {
+        "type": "eigen-da",
+        "daLayer": "eigenda",
+        "sinceTimestamp": 1786951919,
+        "customerId": "0xcb3a6380c666ff97f474e11fd41519c320b7a276"
+      }
     },
     {
       "id": "3d7624c4d4f5",
-      "label": "ethereum inbox 0xfF000000000000000000000000000000000000FF sequencers[2] since 21541468"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 21541468,
+        "inbox": "0xfF000000000000000000000000000000000000FF",
+        "sequencers": [
+          "0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6",
+          "0x267576444F8504B23B98F2b3C0e31bB32eB6Eb7a"
+        ]
+      }
     },
     {
       "id": "aded832161bb",
-      "label": "eigen-da customer 0x420ad2641f22bf6f180c52d0b0566e7ec701c45a since 1753412400"
+      "config": {
+        "type": "eigen-da",
+        "daLayer": "eigenda",
+        "sinceTimestamp": 1753412400,
+        "customerId": "0x420ad2641f22bf6f180c52d0b0566e7ec701c45a"
+      }
     }
   ],
   "soon-base": [
     {
       "id": "2b950ea35981",
-      "label": "eigen-da customer 0xa11b7dea1592011c0055c62efb9566a845493003 since 1748934000"
+      "config": {
+        "daLayer": "eigenda",
+        "type": "eigen-da",
+        "sinceTimestamp": 1748934000,
+        "customerId": "0xa11b7dea1592011c0055c62efb9566a845493003"
+      }
     }
   ],
   "sophon": [
     {
       "id": "9186999c5d28",
-      "label": "avail appIds [17, 36, 37, 38] since 0"
+      "config": {
+        "type": "avail",
+        "daLayer": "avail",
+        "sinceBlock": 0,
+        "appIds": ["17", "36", "37", "38"]
+      }
     }
   ],
   "stack": [
     {
       "id": "54ab1a5e2265",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAADtb2kYRqm8M= since 0"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 0,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAADtb2kYRqm8M="
+      }
     }
   ],
   "starknet": [
     {
       "id": "31ce5d200bcf",
-      "label": "ethereum inbox 0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4 sequencers[2] since 0"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 0,
+        "inbox": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+        "sequencers": [
+          "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591",
+          "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7"
+        ]
+      }
     }
   ],
   "superlumio": [
     {
       "id": "092802b5eda0",
-      "label": "ethereum inbox 0xA12Cf34001e553dc254D131105364351f5174d75 sequencers[1] since 19314570"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xA12Cf34001e553dc254D131105364351f5174d75",
+        "sequencers": ["0x5c53f2fF1030C7fbC0616fD5B8fC6bE97aa27e00"],
+        "sinceBlock": 19314570
+      }
     }
   ],
   "superseed": [
     {
       "id": "a287bd78b215",
-      "label": "ethereum inbox 0x8612014a343089F1ddBACfD42baf4Afbf9133593 sequencers[1] since 20737483"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x8612014a343089F1ddBACfD42baf4Afbf9133593",
+        "sequencers": ["0xa9B074B27DE97f492F8F07fD7C213400E4ca5391"],
+        "sinceBlock": 20737483
+      }
     }
   ],
   "svmbnb-mainnet": [
     {
       "id": "e153ce6719c5",
-      "label": "avail appIds [31] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["31"]
+      }
     }
   ],
   "swan": [
     {
       "id": "62253f0fc2dd",
-      "label": "ethereum inbox 0xfF00000000000000000000000000000000000254 sequencers[1] since 20112981"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xfF00000000000000000000000000000000000254",
+        "sequencers": ["0xde794bEc196832474f2F218135bFd0f7cA7fb038"],
+        "sinceBlock": 20112981
+      }
     }
   ],
   "swell": [
     {
       "id": "4aa1aaee8130",
-      "label": "ethereum inbox 0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0 sequencers[1] since 21278355"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 21278355,
+        "untilBlock": 22204309,
+        "inbox": "0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0",
+        "sequencers": ["0xf854cd5B26bfd73d51236c0122798907Ed65B1f2"]
+      }
     },
     {
       "id": "770a0aae77ac",
-      "label": "ethereum inbox 0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0 sequencers[1] since 22204309"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 22204309,
+        "untilBlock": 25247844,
+        "inbox": "0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0",
+        "sequencers": ["0xeb18EA5dEDeE42e7af378991DFEb719D21c17b4C"]
+      }
     },
     {
       "id": "ae6db0223ff8",
-      "label": "ethereum inbox 0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0 sequencers[1] since 25247844"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 25247844,
+        "inbox": "0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0",
+        "sequencers": ["0x37804a4f63Ab1dCf96A48B1DCE8c03492f539fE9"]
+      }
     }
   ],
   "syndicate": [
     {
       "id": "b204430b499a",
-      "label": "ethereum inbox 0x12ad349e5d72B582856290736e0f13FE5fA57Aa4 sequencers[1] since 23026187"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x12ad349e5d72B582856290736e0f13FE5fA57Aa4",
+        "sequencers": ["0x54dD1659c232DEC31386C52507982a4983D9BCb8"],
+        "sinceBlock": 23026187
+      }
     }
   ],
   "taiko": [
     {
       "id": "54bc2e52b67f",
-      "label": "ethereum inbox 0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a sequencers[0] since 19945276"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 19945276,
+        "untilBlock": 24792175,
+        "inbox": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+        "sequencers": [],
+        "topics": [
+          "0xefe9c6c0b5cbd9c0eed2d1e9c00cfc1a010d6f1aff50f7facd665a639b622b26",
+          "0x9eb7fc80523943f28950bbb71ed6d584effe3e1e02ca4ddc8c86e5ee1558c096"
+        ]
+      }
     },
     {
       "id": "a250938b2846",
-      "label": "ethereum inbox 0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f sequencers[0] since 24792175"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 24792175,
+        "inbox": "0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f",
+        "sequencers": [],
+        "topics": [
+          "0x7c4c4523e17533e451df15762a093e0693a2cd8b279fe54c6cd3777ed5771213"
+        ]
+      }
     }
   ],
   "thebinaryholdings": [
     {
       "id": "d0276630c6a1",
-      "label": "ethereum inbox 0xFF00000000000000000000000000000000000624 sequencers[1] since 21394748"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 21394748,
+        "untilBlock": 22594787,
+        "inbox": "0xFF00000000000000000000000000000000000624",
+        "sequencers": ["0x68d5BBf3a01ECbB47CE38Cf64a7d6C0eA618040f"]
+      }
     },
     {
       "id": "ef8681c6492f",
-      "label": "ethereum inbox 0xFF00000000000000000000000000000000000624 sequencers[1] since 20175709"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 20175709,
+        "untilBlock": 21394748,
+        "inbox": "0xFF00000000000000000000000000000000000624",
+        "sequencers": ["0x7f9D9c1BCE1062E1077845eA39a0303429600a06"]
+      }
     }
   ],
   "treasure": [
     {
       "id": "5ccf265ea913",
-      "label": "ethereum inbox 0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E sequencers[2] since 21272191"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 21272191,
+        "untilBlock": 22126211,
+        "inbox": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+        "sequencers": [
+          "0x2572835e02b59078711aa0800490e80975e4169d",
+          "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"
+        ]
+      }
     },
     {
       "id": "60f76c4af34f",
-      "label": "ethereum inbox 0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[2] since 22126211"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 22126211,
+        "untilBlock": 22925013,
+        "inbox": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+        "sequencers": [
+          "0x2572835e02b59078711aa0800490e80975e4169d",
+          "0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283"
+        ]
+      }
     },
     {
       "id": "cfd04b0ba930",
-      "label": "eigen-da customer 0x96561d11f55f99f7cda780b77e524195bde1dcde since 0"
+      "config": {
+        "daLayer": "eigenda",
+        "type": "eigen-da",
+        "sinceTimestamp": 0,
+        "customerId": "0x96561d11f55f99f7cda780b77e524195bde1dcde"
+      }
     }
   ],
   "unichain": [
     {
       "id": "46816d81ce9b",
-      "label": "ethereum inbox 0xFf00000000000000000000000000000000000130 sequencers[1] since 21116363"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xFf00000000000000000000000000000000000130",
+        "sequencers": ["0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd"],
+        "sinceBlock": 21116363
+      }
     }
   ],
   "up-or-down": [
     {
       "id": "dfd6b67b572b",
-      "label": "avail appIds [30] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["30"]
+      }
     }
   ],
   "uwu": [
     {
       "id": "542a6578450b",
-      "label": "avail appIds [33] since 0"
+      "config": {
+        "daLayer": "avail",
+        "type": "avail",
+        "sinceBlock": 0,
+        "appIds": ["33"]
+      }
     }
   ],
   "winr": [
     {
       "id": "a86b5a735710",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAAAACFo9Sza5FZw= since 5390709"
+      "config": {
+        "type": "celestia",
+        "daLayer": "celestia",
+        "sinceBlock": 5390709,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAACFo9Sza5FZw="
+      }
     }
   ],
   "worldchain": [
     {
       "id": "06cfc1cc1368",
-      "label": "ethereum inbox 0xff00000000000000000000000000000000000480 sequencers[1] since 20178207"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0xff00000000000000000000000000000000000480",
+        "sequencers": ["0xdBBE3D8c2d2b22A2611c5A94A9a12C2fCD49Eb29"],
+        "sinceBlock": 20178207
+      }
     }
   ],
   "xlayer": [
     {
       "id": "d95f7e922060",
-      "label": "ethereum inbox 0x002bdE9b0c0857AEE2cFFDea6b8723eAF5989449 sequencers[1] since 24081293"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 24081293,
+        "inbox": "0x002bdE9b0c0857AEE2cFFDea6b8723eAF5989449",
+        "sequencers": ["0x98245d0ADF4595C66F0a9Db8E13c44CBFF6be459"]
+      }
     },
     {
       "id": "f12669f859b7",
-      "label": "ethereum inbox 0x002bdE9b0c0857AEE2cFFDea6b8723eAF5989449 sequencers[1] since 23668700"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 23668700,
+        "untilBlock": 24081293,
+        "inbox": "0x002bdE9b0c0857AEE2cFFDea6b8723eAF5989449",
+        "sequencers": ["0xdfd6C636Dcb5a013c2431316c4A0762B84e70a5d"]
+      }
     }
   ],
   "xo-market": [
     {
       "id": "20bfd13b336e",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAEjr00EdZDGvoMU= since 8383370"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 8383370,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAEjr00EdZDGvoMU="
+      }
     },
     {
       "id": "2d5b3ecce77e",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAACnGTcXcpKRnenc= since 8164261"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 8164261,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAACnGTcXcpKRnenc="
+      }
     }
   ],
   "yominet": [
     {
       "id": "56ff6827ca3f",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAFjh+OUc/ORU/0o= since 5966190"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 5966190,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAFjh+OUc/ORU/0o="
+      }
     }
   ],
   "zaar": [
     {
       "id": "362237198e44",
-      "label": "celestia namespace AAAAAAAAAAAAAAAAAAAAAAAAAM8NBxiaOQwFwQc= since 5587852"
+      "config": {
+        "daLayer": "celestia",
+        "type": "celestia",
+        "sinceBlock": 5587852,
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAM8NBxiaOQwFwQc="
+      }
     }
   ],
   "zeronetwork": [
     {
       "id": "a7118a5692fd",
-      "label": "ethereum inbox 0x2e5110cF18678Ec99818bFAa849B8C881744b776 sequencers[2] since 25482106"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+        "sequencers": [
+          "0xef854E09fa6e281268e1051D4d5465d8c92862ee",
+          "0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0"
+        ],
+        "sinceBlock": 25482106
+      }
     },
     {
       "id": "d7d7f8be0a85",
-      "label": "ethereum inbox 0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[4] since 21809364"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 21809364,
+        "untilBlock": 25482106,
+        "inbox": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+        "sequencers": [
+          "0x479B7c95b9509E1A834C994fc94e3581aA8A73B9",
+          "0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F",
+          "0xef854E09fa6e281268e1051D4d5465d8c92862ee",
+          "0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0"
+        ]
+      }
     }
   ],
   "zircuit": [
     {
+      "id": "198b3eb48085",
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 25682284,
+        "inbox": "0xFF00000000000000000000000000000000048900",
+        "sequencers": ["0xCf8225801DF6Ef90aD3bc86808F574403A309de8"]
+      }
+    },
+    {
       "id": "55ae2c32bf4d",
-      "label": "ethereum inbox 0xFF00000000000000000000000000000000048900 sequencers[1] since 20219939"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 20219939,
+        "untilBlock": 25682284,
+        "inbox": "0xFF00000000000000000000000000000000048900",
+        "sequencers": ["0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145"]
+      }
     }
   ],
   "zksync2": [
     {
       "id": "19c318b4d577",
-      "label": "ethereum inbox 0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[2] since 23016895"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 23016895,
+        "untilBlock": 23633924,
+        "inbox": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+        "sequencers": [
+          "0x14F19299476664665eDa17DBb7dA7e62E3253aa8",
+          "0x7d95f0B9D3383D58E39a75a67760aA2153D355A2"
+        ]
+      }
     },
     {
       "id": "695532d64024",
-      "label": "ethereum inbox 0x8c0Bfc04AdA21fd496c55B8C50331f904306F564 sequencers[2] since 21809364"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 21809364,
+        "untilBlock": 23016895,
+        "inbox": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+        "sequencers": [
+          "0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2",
+          "0x30066439887C0a509Cb38E45c9262E6924a29BbD"
+        ]
+      }
     },
     {
       "id": "ce85a5f14236",
-      "label": "ethereum inbox 0x2e5110cF18678Ec99818bFAa849B8C881744b776 sequencers[5] since 23633924"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 23633924,
+        "untilBlock": 24979735,
+        "inbox": "0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+        "sequencers": [
+          "0x14F19299476664665eDa17DBb7dA7e62E3253aa8",
+          "0x7d95f0B9D3383D58E39a75a67760aA2153D355A2",
+          "0xc75cDcBEef3aE3365ABF0217815748586F9047F1",
+          "0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7",
+          "0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"
+        ]
+      }
     },
     {
       "id": "e4153772de9c",
-      "label": "ethereum inbox 0xdC26B08F0335b68721F64001C38b05D0BC9B539d sequencers[4] since 24979735"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "sinceBlock": 24979735,
+        "inbox": "0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+        "sequencers": [
+          "0xa90c7CDB553332948E2943431436117eCFb1e781",
+          "0x28942E6870612893B96F77De0F485fcE3497AAA8",
+          "0xc75cDcBEef3aE3365ABF0217815748586F9047F1",
+          "0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd"
+        ]
+      }
     }
   ],
   "zora": [
     {
       "id": "f4e5da666fbd",
-      "label": "ethereum inbox 0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf sequencers[1] since 17473957"
+      "config": {
+        "type": "ethereum",
+        "daLayer": "ethereum",
+        "inbox": "0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf",
+        "sequencers": ["0x625726c858dBF78c0125436C943Bf4b4bE9d9033"],
+        "sinceBlock": 17473957
+      }
     }
   ]
 }

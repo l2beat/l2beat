@@ -3,7 +3,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('r0ar')
 const genesisTimestamp = UnixTime(1728285623)
@@ -48,6 +48,7 @@ export const r0ar: ScalingProject = opStackL2({
     adjustCount: { type: 'SubtractOne' },
   },
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 20912148 })],
   genesisTimestamp,
   isNodeAvailable: 'UnderReview',
 })

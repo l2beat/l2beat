@@ -11,6 +11,7 @@ import { getInteropLockAndMintData } from './lock-and-mint/getInteropLockAndMint
 import { getInteropNonMintingData } from './non-minting/getInteropNonMintingData'
 import { getInteropProtocolPageData } from './protocol/getInteropProtocolPageData'
 import { getInteropSummaryData } from './summary/getInteropSummaryData'
+import { getInteropTokenOgImage } from './token/getInteropTokenOgImage'
 import { getInteropTokenPageData } from './token/getInteropTokenPageData'
 import { getInteropTokenFrameworksData } from './token-frameworks/getInteropTokenFrameworksData'
 
@@ -113,7 +114,7 @@ export function createInteropRouter(
       if (project?.scalingInfo && project.interopConfig) {
         res.redirect(
           302,
-          `/scaling/projects/${project.slug}?protocols=${project.id}#interop-flows`,
+          `/layer2s/projects/${project.slug}?protocols=${project.id}#interop-flows`,
         )
         return
       }
@@ -129,7 +130,29 @@ export function createInteropRouter(
   )
 
   router.get(
-    '/interop/tokens/:slug',
+    '/interop/tokens/:slug/opengraph-image.png',
+    validateRoute({
+      params: v.object({ slug: v.string() }),
+    }),
+    async (req, res) => {
+      const image = await getInteropTokenOgImage(req.params.slug)
+      if (!image) {
+        res.status(404).send('Not found')
+        return
+      }
+      res.setHeader('Content-Type', 'image/png')
+      res.setHeader(
+        'Cache-Control',
+        'public, max-age=86400, stale-while-revalidate=604800',
+      )
+      res.send(image)
+    },
+  )
+
+  // The optional issuer and symbol segments only make the URL readable - the
+  // token is resolved by the slug (its id), so they are validated away here.
+  router.get(
+    '/interop/tokens/:slug{/:issuer}{/:symbol}',
     validateRoute({
       params: v.object({ slug: v.string() }),
       query: InteropQuery,

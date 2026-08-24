@@ -10,7 +10,39 @@ import { expect, mockFn, mockObject } from 'earl'
 import type { InteropTransferAnalyzer } from '../InteropTransferAnalyzer'
 import type { InteropNotifier } from '../notifications/InteropNotifier'
 import { DeployedTokenId } from './DeployedTokenId'
-import { InteropFinancialsLoop } from './InteropFinancialsLoop'
+import { getTokenInfos, InteropFinancialsLoop } from './InteropFinancialsLoop'
+
+describe(getTokenInfos.name, () => {
+  it('excludes ignored deployed tokens', async () => {
+    const id = DeployedTokenId.from('ethereum', EthereumAddress.random())
+    const tokenDb = mockObject<TokenDbClient>({
+      deployedTokens: {
+        getByChainAndAddress: {
+          query: mockFn().resolvesTo([
+            {
+              deployedToken: {
+                chain: 'ethereum',
+                address: DeployedTokenId.address(id),
+                symbol: 'TEST',
+                decimals: 18,
+                ignored: true,
+              },
+              abstractToken: {
+                id: 'abstract-id',
+                coingeckoId: 'test-token',
+                isPriceUnreliable: false,
+              },
+            },
+          ]),
+        },
+      },
+    } as any)
+
+    const result = await getTokenInfos([id], tokenDb, Logger.SILENT)
+
+    expect(result.size).toEqual(0)
+  })
+})
 
 describe(InteropFinancialsLoop.name, () => {
   describe(InteropFinancialsLoop.prototype.run.name, () => {

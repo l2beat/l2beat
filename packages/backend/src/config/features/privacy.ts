@@ -1,19 +1,26 @@
 import type { Env } from '@l2beat/backend-tools'
 import type {
+  PrivacyBucketAddress,
   ProjectPrivacyBucket,
   ProjectPrivacyToken,
   ProjectService,
 } from '@l2beat/config'
-import { ChainSpecificAddress, type UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  type UnixTime,
+} from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { PrivacyBlockTimestampIndexer } from '../../modules/privacy/indexers/PrivacyBlockTimestampIndexer'
 import { PrivacyFlowIndexer } from '../../modules/privacy/indexers/PrivacyFlowIndexer'
 import { PrivacyPriceIndexer } from '../../modules/privacy/indexers/PrivacyPriceIndexer'
+import { StarknetPrivacyFlowIndexer } from '../../modules/privacy/indexers/StarknetPrivacyFlowIndexer'
 import type {
   PrivacyBlockTimestampConfig,
   PrivacyConfig,
   PrivacyFlowIndexerConfig,
   PrivacyPriceIndexerConfig,
+  StarknetPrivacyFlowIndexerConfig,
 } from '../../modules/privacy/types'
 import type { FeatureFlags } from '../FeatureFlags'
 
@@ -43,10 +50,11 @@ export async function getPrivacyConfig(
   }
 
   const flowConfigs: PrivacyFlowIndexerConfig[] = []
+  const starknetFlowConfigs: StarknetPrivacyFlowIndexerConfig[] = []
   for (const project of projects) {
     for (const token of project.privacyInfo.tokens) {
       for (const bucket of token.buckets) {
-        flowConfigs.push(
+        const configs = [
           toFlowConfig(
             project.projectId,
             bucket,
@@ -61,7 +69,17 @@ export async function getPrivacyConfig(
             token.token,
             minTimestamp,
           ),
-        )
+        ]
+        for (const config of configs) {
+          if (
+            config.extractor === 'strk20Deposit' ||
+            config.extractor === 'strk20Withdrawal'
+          ) {
+            starknetFlowConfigs.push(config)
+          } else {
+            flowConfigs.push(config)
+          }
+        }
       }
     }
   }
@@ -92,12 +110,15 @@ export async function getPrivacyConfig(
     }
   })
 
-  const chains = Array.from(new Set(flowConfigs.map((config) => config.chain)))
+  const allFlowConfigs = [...flowConfigs, ...starknetFlowConfigs]
+  const chains = Array.from(
+    new Set(allFlowConfigs.map((config) => config.chain)),
+  )
 
   const blockTimestampConfigs: PrivacyBlockTimestampConfig[] = chains.map(
     (chain) => {
       const sinceTimestamp = Math.min(
-        ...flowConfigs
+        ...allFlowConfigs
           .filter((c) => c.chain === chain)
           .map((c) => c.sinceTimestamp),
       )
@@ -112,6 +133,7 @@ export async function getPrivacyConfig(
   return {
     projects,
     flowConfigs,
+    starknetFlowConfigs,
     priceConfigs,
     blockTimestampConfigs,
     chains,
@@ -128,21 +150,47 @@ function toFlowConfig(
   direction: 'deposit' | 'withdrawal',
   token: ProjectPrivacyToken['token'],
   minTimestamp: UnixTime,
-): PrivacyFlowIndexerConfig {
+): PrivacyFlowIndexerConfig | StarknetPrivacyFlowIndexerConfig {
   const source = bucket[direction]
+  const privacyAddress = getPrivacyBucketAddress(bucket.address)
   const base = {
     projectId,
     bucketId: bucket.id,
     direction,
-    chain: ChainSpecificAddress.longChain(bucket.address),
-    address: ChainSpecificAddress.address(bucket.address),
+    chain: privacyAddress.chain,
+    address: privacyAddress.address,
     sinceTimestamp: Math.max(bucket.sinceTimestamp, minTimestamp),
     priceId: token.priceId,
     decimals: token.decimals,
+  }
+  if (
+    source.extractor === 'strk20Deposit' ||
+    source.extractor === 'strk20Withdrawal'
+  ) {
+    const config = { ...base, ...source }
+    return {
+      id: StarknetPrivacyFlowIndexer.idToConfigurationId(config),
+      ...config,
+    }
+  }
+
+  const config = {
+    ...base,
+    address: EthereumAddress(privacyAddress.address),
     ...source,
   }
+  return { id: PrivacyFlowIndexer.idToConfigurationId(config), ...config }
+}
+
+function getPrivacyBucketAddress(address: PrivacyBucketAddress): {
+  chain: string
+  address: string
+} {
+  if (typeof address !== 'string') {
+    return address
+  }
   return {
-    id: PrivacyFlowIndexer.idToConfigurationId(base),
-    ...base,
+    chain: ChainSpecificAddress.longChain(address),
+    address: ChainSpecificAddress.address(address).toString(),
   }
 }

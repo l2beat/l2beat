@@ -157,6 +157,7 @@ export function initTvsModule({
         chain: chain,
         totalSupplyProvider: providers.totalSupply,
         starknetTotalSupplyProvider: providers.starknetTotalSupply,
+        starknetBalanceProvider: providers.starknetBalance,
         balanceProvider: providers.balance,
         parents: [blockTimestampIndexer],
         indexerService,
