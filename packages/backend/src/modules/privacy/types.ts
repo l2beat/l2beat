@@ -96,5 +96,4 @@ export interface PrivacyFlowExtractResult {
 
 export interface PrivacyRelayerActivityExtractResult {
   relayerAddress: EthereumAddress
-  recipientAddress: EthereumAddress
 }

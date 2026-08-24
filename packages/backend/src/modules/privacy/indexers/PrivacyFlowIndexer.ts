@@ -15,11 +15,8 @@ import type {
 import type { PrivacyFlowIndexerConfig } from '../types'
 import { extractPrivacyFlow } from '../utils/extractPrivacyFlow'
 import {
-  buildPrivacyBlockTimestampLookup,
-  buildPrivacyLogConfigMap,
-  buildPrivacyLogFilter,
-  getPrivacyLogConfigKey,
-  resolvePrivacyBlockRange,
+  fetchPrivacyLogMatches,
+  type PrivacyLogMatch,
 } from '../utils/privacyLogIndexerUtils'
 
 interface PrivacyFlowIndexerDeps
@@ -132,34 +129,16 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
     from: number,
     to: number,
   ): Promise<PrivacyFlowEventRecord[]> {
-    if (configurations.length === 0) return []
-
-    const { blockFrom, blockTo } = await resolvePrivacyBlockRange(
-      this.$.db.privacyBlockTimestamp,
-      this.$.chain,
+    const matches = await fetchPrivacyLogMatches(configurations, {
+      chain: this.$.chain,
       from,
       to,
-    )
-
-    const { addresses, events } = buildPrivacyLogFilter(configurations)
-    const logs = await this.$.logsProvider.getLogs(
-      blockFrom,
-      blockTo,
-      addresses,
-      events,
-    )
-
-    const blockTimestampLookup = await buildPrivacyBlockTimestampLookup(
-      logs,
-      this.$.blockProvider,
-      this.logger,
-    )
-    const configMap = buildPrivacyLogConfigMap(configurations)
-    const rawRecords = this.extractRawRecords(
-      logs,
-      configMap,
-      blockTimestampLookup,
-    )
+      privacyBlockTimestamp: this.$.db.privacyBlockTimestamp,
+      logsProvider: this.$.logsProvider,
+      blockProvider: this.$.blockProvider,
+      logger: this.logger,
+    })
+    const rawRecords = this.extractRawRecords(matches)
 
     if (rawRecords.length === 0) return []
 
@@ -168,37 +147,24 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
   }
 
   private extractRawRecords(
-    logs: Log[],
-    configMap: Map<string, Configuration<PrivacyFlowIndexerConfig>[]>,
-    blockTimestampLookup: Map<number, UnixTime>,
+    matches: PrivacyLogMatch<PrivacyFlowIndexerConfig>[],
   ): RawRecord[] {
     const rawRecords: RawRecord[] = []
 
-    for (const log of logs) {
-      const key = getPrivacyLogConfigKey(log.address, log.topics[0])
-      const matching = configMap.get(key) ?? []
+    for (const { log, timestamp, configuration } of matches) {
+      const result = extractPrivacyFlow(configuration.properties, log)
 
-      for (const configuration of matching) {
-        const result = extractPrivacyFlow(configuration.properties, log)
-
-        if (!result || (result.count === 0 && result.amount === 0n)) {
-          continue
-        }
-
-        const timestamp = blockTimestampLookup.get(log.blockNumber)
-        assert(
-          timestamp,
-          `Missing block timestamp for block ${log.blockNumber}`,
-        )
-
-        rawRecords.push({
-          configuration,
-          log,
-          count: result.count,
-          amount: result.amount,
-          timestamp,
-        })
+      if (!result || (result.count === 0 && result.amount === 0n)) {
+        continue
       }
+
+      rawRecords.push({
+        configuration,
+        log,
+        count: result.count,
+        amount: result.amount,
+        timestamp,
+      })
     }
 
     return rawRecords

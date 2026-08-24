@@ -21,7 +21,7 @@ describeDatabase(PrivacyRelayerActivityRepository.name, (db) => {
 
       const updated = {
         ...initial,
-        recipientAddress: EthereumAddress(
+        relayerAddress: EthereumAddress(
           '0x4444444444444444444444444444444444444444',
         ),
       }
@@ -133,8 +133,5 @@ function activity(
     txHash: `0x${id.toString(16).padStart(64, '0')}`,
     logIndex: 0,
     relayerAddress,
-    recipientAddress: EthereumAddress(
-      '0x3333333333333333333333333333333333333333',
-    ),
   }
 }

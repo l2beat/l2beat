@@ -32,7 +32,7 @@ describe(extractPrivacyRelayerActivity.name, () => {
     )
   })
 
-  it('extracts Privacy Pools relayer and recipient', () => {
+  it('extracts Privacy Pools relayer', () => {
     const log = encodeLog(privacyPoolsInterface, 'WithdrawalRelayed', [
       RELAYER,
       RECIPIENT,
@@ -48,11 +48,10 @@ describe(extractPrivacyRelayerActivity.name, () => {
 
     expect(result).toEqual({
       relayerAddress: RELAYER,
-      recipientAddress: RECIPIENT,
     })
   })
 
-  it('extracts Tornado Cash relayer and recipient', () => {
+  it('extracts Tornado Cash relayer', () => {
     const log = encodeLog(tornadoCashInterface, 'Withdrawal', [
       RECIPIENT,
       `0x${'11'.repeat(32)}`,
@@ -67,7 +66,6 @@ describe(extractPrivacyRelayerActivity.name, () => {
 
     expect(result).toEqual({
       relayerAddress: RELAYER,
-      recipientAddress: RECIPIENT,
     })
   })
 
