@@ -12,7 +12,7 @@
         "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
@@ -1782,5 +1782,87 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 25774511 },
-  "permissionsConfigHash": "0xfaac0bb0706ee85656a4f254262a3a4e5be1e5d130a8f1a302066e02ac8a43b5"
+  "permissionsConfigHash": "0xac0c407f70acd4255844a20da34438dcc834e1ea33fa8411e4fbaf085d6fe652",
+  "referencedPermissions": {
+    "eth:0x2cf3bD6a9056b39999F3883955E183F655345063": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "role": ".getAdmin"
+        }
+      ]
+    },
+    "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324",
+          "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "role": ".getAdmin",
+          "via": [
+            { "address": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "description": "change the members and threshold of the Validator Multisig and set the delay between batch commitment and execution.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        }
+      ]
+    }
+  }
 }

@@ -442,5 +442,16 @@
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23726375 },
-  "permissionsConfigHash": "0x106c71cc0e394810b64c76517dd5bc03f98b6ad3aca0dd0a6a82618fa0b329d3"
+  "permissionsConfigHash": "0xd72c51f77f2f1be514eb96f61b06f16876cfe6b5799aa50e37577e88fd592bca",
+  "referencedPermissions": {
+    "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

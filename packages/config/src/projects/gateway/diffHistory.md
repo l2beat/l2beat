@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xbdcb58d122146932675c7c8fbebd8ac950895a02
+
+# Diff at Mon, 24 Aug 2026 10:07:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8f37e0d5e19e879c5a1eeddad7a3666cb36b83ec block: 1770639543
+- current timestamp: 1770639543
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770639543 (main branch discovery), not current.
+
+```diff
+    reference Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x5540DE94485dB078025318428F813C5d88215823","description":"manage filter lists.","role":".owner","via":[{"address":"eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"}]},{"permission":"interact","from":"eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9","description":"administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).","role":".getAdmin","via":[{"address":"eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"}]},{"permission":"upgrade","from":"eth:0x5540DE94485dB078025318428F813C5d88215823","role":"admin","via":[{"address":"eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734"},{"address":"eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3","role":".owner"}]
+    }
+```
+
+```diff
+    reference ProxyAdmin (eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776","role":"admin"}]
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3) [shared-zk-stack/ChainAdmin] {
+    +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x5540DE94485dB078025318428F813C5d88215823","description":"manage filter lists.","role":".owner"},{"permission":"interact","from":"eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9","description":"administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).","role":".getAdmin"},{"permission":"upgrade","from":"eth:0x5540DE94485dB078025318428F813C5d88215823","role":"admin","via":[{"address":"eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734"}]}]
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0x5540DE94485dB078025318428F813C5d88215823","description":"manage filter lists.","role":".owner"}
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9","description":"administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).","role":".getAdmin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x7377b74ec0bb01a51a928031f9c540ac2c2a7afe
 
 # Diff at Mon, 27 Jul 2026 11:01:23 GMT:

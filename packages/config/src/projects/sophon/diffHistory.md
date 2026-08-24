@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xa7063ac3d848b4de20cb59b7e2330dffe539bcad
+
+# Diff at Mon, 24 Aug 2026 10:12:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8f37e0d5e19e879c5a1eeddad7a3666cb36b83ec block: 1787147637
+- current timestamp: 1787147637
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787147637 (main branch discovery), not current.
+
+```diff
+    reference ProxyAdmin (eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776","role":"admin"},{"permission":"upgrade","from":"eth:0xf553E6D903AA43420ED7e3bc2313bE9286A8F987","role":"admin"}]
+    }
+```
+
+```diff
+    reference ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x006ea4836b5C3EB8694AE6D1e08207610E1d5e41","description":"call requestL2Transaction() with any target/calldata (whitelisted superuser sender).","role":".superuserAC"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x5b79bc173dabb06508ae2956c0cef714ae350a43
 
 # Diff at Wed, 19 Aug 2026 10:53:27 GMT:

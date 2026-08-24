@@ -829,5 +829,32 @@
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
   "usedBlockNumbers": { "ethereum": 24167804 },
-  "permissionsConfigHash": "0xa6fa4fa5aefe06801cdc2e164b02aa44f6f78444ab8d06677a5fffd0121c9bba"
+  "permissionsConfigHash": "0x8d1e2f32b16d510bfec854889859ce71b884d2349512f2d1af8655dba8ec5c92",
+  "referencedPermissions": {
+    "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+          "description": "set the trusted sequencer address.",
+          "role": ".admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+          "description": "sole address that can force batches.",
+          "role": ".forceBatchAddress"
+        }
+      ]
+    },
+    "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

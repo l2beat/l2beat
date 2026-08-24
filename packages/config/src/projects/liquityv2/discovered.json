@@ -3355,5 +3355,277 @@
     "liquityv2/WSTETHPriceFeed": "0x2950a7e278e191e5814c929bfcb2492613a84ec4d4a443f43e2803988e695dcd"
   },
   "usedBlockNumbers": { "ethereum": 25739093 },
-  "permissionsConfigHash": "0x4f16b8fc60761b0cadf620b3e425a11f0254d81cc313ca17100bf0c3fe07e7ff"
+  "permissionsConfigHash": "0xcdf772103af39158f3c5da40dd51cd9e06b05533fbdad4ceed5bc0fb35c3f98b",
+  "referencedPermissions": {
+    "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".ethUsdOracle",
+          "via": [
+            { "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".rEthEthOracle",
+          "via": [
+            { "address": "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
+          "description": "Supplies the ETH price this PriceFeed reads.",
+          "role": ".ethUsdOracle",
+          "via": [
+            { "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
+          "description": "Supplies the rETH price this PriceFeed reads.",
+          "role": ".rEthEthOracle",
+          "via": [
+            { "address": "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".ethUsdOracle",
+          "via": [
+            { "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F",
+          "description": "Supplies the ETH price this PriceFeed reads.",
+          "role": ".ethUsdOracle",
+          "via": [
+            { "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".ethUsdOracle",
+          "via": [
+            { "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".stEthUsdOracle",
+          "via": [
+            { "address": "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
+          "description": "Supplies the ETH price this PriceFeed reads.",
+          "role": ".ethUsdOracle",
+          "via": [
+            { "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
+          "description": "Supplies the stETH price this PriceFeed reads.",
+          "role": ".stEthUsdOracle",
+          "via": [
+            { "address": "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8" }
+          ]
+        }
+      ]
+    },
+    "eth:0x2e1B5a40Edc922bCE489668b11749B8eAbd67f6b": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".ethUsdOracle",
+          "via": [
+            { "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419" },
+            { "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".rEthEthOracle",
+          "via": [
+            { "address": "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0" },
+            { "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
+          "description": "Supplies the ETH price this PriceFeed reads.",
+          "role": ".ethUsdOracle",
+          "via": [
+            { "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419" },
+            { "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
+          "description": "Supplies the rETH price this PriceFeed reads.",
+          "role": ".rEthEthOracle",
+          "via": [
+            { "address": "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0" },
+            { "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".ethUsdOracle",
+          "via": [
+            { "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419" },
+            { "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F",
+          "description": "Supplies the ETH price this PriceFeed reads.",
+          "role": ".ethUsdOracle",
+          "via": [
+            { "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419" },
+            { "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".ethUsdOracle",
+          "via": [
+            { "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419" },
+            { "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".stEthUsdOracle",
+          "via": [
+            { "address": "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8" },
+            { "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
+          "description": "Supplies the ETH price this PriceFeed reads.",
+          "role": ".ethUsdOracle",
+          "via": [
+            { "address": "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419" },
+            { "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
+          "description": "Supplies the stETH price this PriceFeed reads.",
+          "role": ".stEthUsdOracle",
+          "via": [
+            { "address": "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8" },
+            { "address": "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA" }
+          ]
+        }
+      ]
+    },
+    "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".rEthEthOracle"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
+          "description": "Supplies the rETH price this PriceFeed reads.",
+          "role": ".rEthEthOracle"
+        }
+      ]
+    },
+    "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".ethUsdOracle"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B",
+          "description": "Supplies the ETH price this PriceFeed reads.",
+          "role": ".ethUsdOracle"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".ethUsdOracle"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F",
+          "description": "Supplies the ETH price this PriceFeed reads.",
+          "role": ".ethUsdOracle"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".ethUsdOracle"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
+          "description": "Supplies the ETH price this PriceFeed reads.",
+          "role": ".ethUsdOracle"
+        }
+      ]
+    },
+    "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
+          "description": "Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.",
+          "role": ".stEthUsdOracle"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E",
+          "description": "Supplies the stETH price this PriceFeed reads.",
+          "role": ".stEthUsdOracle"
+        }
+      ]
+    }
+  }
 }

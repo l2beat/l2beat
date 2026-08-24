@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x24bb89b159f3a02baf770f4d14ebb142b36291a8
+
+# Diff at Mon, 24 Aug 2026 10:07:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8f37e0d5e19e879c5a1eeddad7a3666cb36b83ec block: 1786966191
+- current timestamp: 1786966191
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786966191 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB) [global/ProxyAdmin] {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","role":"admin"}]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","role":"admin"}]
+    }
+```
+
+```diff
+    reference EraChainAdminProxy (eth:0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x32400084C286CF3E17e7B677ea9583e60a000324","description":"administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).","role":".getAdmin"}]
+    }
+```
+
+```diff
+    reference Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x32400084C286CF3E17e7B677ea9583e60a000324","description":"administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).","role":".getAdmin","via":[{"address":"eth:0x2cf3bD6a9056b39999F3883955E183F655345063"}]},{"permission":"interact","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","description":"change the members and threshold of the Validator Multisig and set the delay between batch commitment and execution.","role":".owner"},{"permission":"upgrade","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","role":"admin","via":[{"address":"eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB","role":".owner"}]
+    }
+```
+
+```diff
+    reference ProxyAdmin (eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776","role":"admin"},{"permission":"upgrade","from":"eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063","role":"admin"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xabeca22f919b72f58a47ea849dcbb4a7aa19487a
 
 # Diff at Mon, 17 Aug 2026 11:30:53 GMT:

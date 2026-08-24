@@ -654,7 +654,7 @@
         "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "eth:0x0a14B696350546110a0D8acDb86226983af9D2a0",
@@ -1138,5 +1138,29 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25595172 },
-  "permissionsConfigHash": "0x28e548c32351604c6fcc421b5779c1173373afe1b91d778ca361092fe26a4a5c"
+  "permissionsConfigHash": "0xdc2e352afb006cd85515414a8b155967a5f132484f30fd3a3685913acb2beac0",
+  "referencedPermissions": {
+    "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xDc7009bCAabD4069391C0aa9445D58a759fE1c7d",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0a14B696350546110a0D8acDb86226983af9D2a0",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xDc7009bCAabD4069391C0aa9445D58a759fE1c7d" },
+            { "address": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        }
+      ]
+    }
+  }
 }

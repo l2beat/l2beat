@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x0e2f37faca12b2fb90440b71284e1edc39b1d6e8
+
+# Diff at Mon, 24 Aug 2026 10:07:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8f37e0d5e19e879c5a1eeddad7a3666cb36b83ec block: 1787310844
+- current timestamp: 1787310844
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787310844 (main branch discovery), not current.
+
+```diff
+    reference L1AssetRouter (eth:0x8829AD80E425C646DAB305381ff105169FeEcE56) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a","description":"address is part of the GRVTTransactionFilterer whitelist.","role":".whitelistedSender"}]
+    }
+```
+
+```diff
+    reference ProxyAdmin (eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776","role":"admin"}]
+    }
+```
+
+```diff
+    reference L1Nullifier (eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x3Cd52B238Ac856600b22756133eEb31ECb25109a","description":"address is part of the GRVTTransactionFilterer whitelist.","role":".whitelistedSender"}]
+    }
+```
+
+```diff
++   Status: CREATED
+    reference  (eth:0xF73a7dCfa68E52030ec39E41a23DCA51F3aAa111)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x1fd3102f7cb9befbd22422f5b4fe9cf12ecc7a16
 
 # Diff at Fri, 21 Aug 2026 11:15:07 GMT:
