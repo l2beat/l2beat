@@ -4,9 +4,6 @@ import type {
   TrustedSetup,
 } from '@l2beat/config'
 import { formatInteger } from '@l2beat/shared-pure'
-import type { TrustedSetupSectionProps } from '~/components/projects/sections/TrustedSetupsSection'
-import type { ProjectSectionProps } from '~/components/projects/sections/types'
-import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
 
 const TRUSTED_SETUP_RISK_TO_SENTIMENT = {
   green: 'good',
@@ -51,24 +48,5 @@ export function toTrustedSetupSummaryValue(
         : trustedSetup.name,
     sentiment: TRUSTED_SETUP_RISK_TO_SENTIMENT[trustedSetup.risk],
     description: `${trustedSetup.name}: ${trustedSetup.shortDescription}`,
-  }
-}
-
-export function getPrivacyTrustedSetupsSection(
-  trustedSetups: ProjectZkCatalogInfo['trustedSetups'],
-): Omit<TrustedSetupSectionProps, keyof ProjectSectionProps> {
-  if (trustedSetups.length > 0) {
-    return getTrustedSetupsSectionFromTrustedSetups(trustedSetups)
-  }
-
-  return {
-    trustedSetups: [
-      {
-        name: NO_SETUP.name,
-        risk: NO_SETUP.risk,
-        description: NO_SETUP.longDescription,
-        proofSystems: [],
-      },
-    ],
   }
 }

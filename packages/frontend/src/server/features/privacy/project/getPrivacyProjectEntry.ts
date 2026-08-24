@@ -21,6 +21,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/getC
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import {
@@ -31,7 +32,6 @@ import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getPr
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
 import {
   getPrivacyTrustedSetup,
-  getPrivacyTrustedSetupsSection,
   toTrustedSetupSummaryValue,
 } from '../utils/getPrivacyTrustedSetup'
 
@@ -235,14 +235,16 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  sections.push({
-    type: 'TrustedSetupSection',
-    props: {
-      id: 'trusted-setups',
-      title: 'Trusted setup',
-      ...getPrivacyTrustedSetupsSection(details.trustedSetups),
-    },
-  })
+  if (details.trustedSetups.length > 0) {
+    sections.push({
+      type: 'TrustedSetupSection',
+      props: {
+        id: 'trusted-setups',
+        title: 'Trusted setup',
+        ...getTrustedSetupsSectionFromTrustedSetups(details.trustedSetups),
+      },
+    })
+  }
 
   if (
     details.zkCatalogInfo?.verifierHashes &&
