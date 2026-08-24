@@ -38,7 +38,6 @@ export class StarknetBalanceProvider {
           )
           return decodeStarknetUint256(result)
         } catch (error) {
-          // returning 0 on failure would poison stored amounts
           this.logger.tag({ chain }).warn('Issue with balanceOf fetching', {
             token,
             holder,
