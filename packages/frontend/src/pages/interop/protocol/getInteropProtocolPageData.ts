@@ -1,9 +1,9 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getInteropProtocolData } from '~/server/features/scaling/interop/getInteropProtocolData'
-import { getInteropProtocolEntry } from '~/server/features/scaling/interop/protocol/getInteropProtocolEntry'
-import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
+import { getInteropProtocolData } from '~/server/features/layer2s/interop/getInteropProtocolData'
+import { getInteropProtocolEntry } from '~/server/features/layer2s/interop/protocol/getInteropProtocolEntry'
+import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -64,7 +64,7 @@ async function getCachedData(slug: string, manifest: Manifest) {
   const project = await ps.getProject({
     slug,
     select: ['interopConfig'],
-    optional: ['statuses', 'display', 'discoveryInfo'],
+    optional: ['statuses', 'display'],
   })
   if (!project) return undefined
 

@@ -3,7 +3,7 @@ import React from 'react'
 import { externalLinks } from '~/consts/externalLinks'
 import { CheckIcon } from '~/icons/Check'
 import { ChevronIcon } from '~/icons/Chevron'
-import type { ProjectToken } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
+import type { ProjectToken } from '~/server/features/layer2s/tvs/tokens/getTokensForProject'
 import { cn } from '~/utils/cn'
 import {
   Command,

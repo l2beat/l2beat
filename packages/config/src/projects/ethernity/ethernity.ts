@@ -3,7 +3,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('ethernity')
 
@@ -17,6 +17,7 @@ export const ethernity: ScalingProject = opStackL2({
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['AI'],
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 20519438 })],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   isPartOfSuperchain: true,
   display: {

@@ -1,4 +1,17 @@
-import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import {
+  getCoreRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+} from '@tanstack/react-table'
+import { useMemo } from 'react'
+import {
+  getPaginationItems,
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+} from '~/components/Pagination'
 import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
@@ -8,6 +21,8 @@ import {
   type DeploymentRow,
   interopTokenOnchainDeploymentsColumns,
 } from './columns'
+
+const DEPLOYMENTS_PER_PAGE = 8
 
 export interface InteropTokenOnchainDeploymentsRow {
   chain: {
@@ -38,6 +53,7 @@ export function InteropTokenOnchainDeploymentsSection({
     columns: interopTokenOnchainDeploymentsColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     initialState: {
       sorting: [
         {
@@ -45,12 +61,51 @@ export function InteropTokenOnchainDeploymentsSection({
           desc: true,
         },
       ],
+      pagination: {
+        pageSize: DEPLOYMENTS_PER_PAGE,
+        pageIndex: 0,
+      },
     },
   })
+
+  const pageCount = table.getPageCount()
+  const currentPage = table.getState().pagination.pageIndex
+  const paginationItems = useMemo(
+    () => getPaginationItems(pageCount, currentPage),
+    [pageCount, currentPage],
+  )
 
   return (
     <ProjectSection {...sectionProps}>
       <BasicTable table={table} tableWrapperClassName="pb-0" />
+      {pageCount > 1 && (
+        <div className="mt-4">
+          <Pagination className="min-w-full px-1">
+            <PaginationContent className="justify-center">
+              {paginationItems.map((item) =>
+                item.type === 'ellipsis' ? (
+                  <PaginationItem key={item.key}>
+                    <PaginationEllipsis className="text-secondary" />
+                  </PaginationItem>
+                ) : (
+                  <PaginationLink
+                    key={item.index}
+                    href="#onchain-deployments"
+                    size="sm"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      table.setPageIndex(item.index)
+                    }}
+                    isActive={currentPage === item.index}
+                  >
+                    {item.index + 1}
+                  </PaginationLink>
+                ),
+              )}
+            </PaginationContent>
+          </Pagination>
+        </div>
+      )}
     </ProjectSection>
   )
 }

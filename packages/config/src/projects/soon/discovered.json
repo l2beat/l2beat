@@ -1,7 +1,7 @@
 {
   "name": "soon",
-  "timestamp": 1785450156,
-  "configHash": "0xff8b17e7971c637e4311a2bfcb70bce47479c466d619699839754da789363bc8",
+  "timestamp": 1787239875,
+  "configHash": "0xee615288abb09aa38674e7b24a06d6679bbb0144f43dbb1cae028db890d05c87",
   "entries": [
     {
       "name": "L2OutputOracle",
@@ -56,10 +56,10 @@
         "finalizationPeriodSeconds": 259200,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 6711000,
-        "latestOutputIndex": 977,
-        "nextBlockNumber": 6714000,
-        "nextOutputIndex": 978,
+        "latestBlockNumber": 6858000,
+        "latestOutputIndex": 1026,
+        "nextBlockNumber": 6861000,
+        "nextOutputIndex": 1027,
         "proposer": "eth:0xF56334795629466E5c138B02Ace334EE46C9513b",
         "PROPOSER": "eth:0xF56334795629466E5c138B02Ace334EE46C9513b",
         "startingBlockNumber": 0,
@@ -150,7 +150,7 @@
         "opStackDA": {
           "isSequencerSendingBlobTx": false,
           "isUsingCelestia": false,
-          "isUsingEigenDA": false
+          "isUsingEigenDA": "v3"
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
         "OPTIMISM_PORTAL_SLOT": "0x4b6c74f9e688cb39801f2112c14a8c57232a3fc5202e1444126d4bce86eb19ac",
@@ -167,7 +167,7 @@
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
         "scalar": "452312848583266388373324160190187140051835877600158453279134670530344387928",
-        "sequencerInbox": "eth:0x0000000000000000000000000000000000000000",
+        "sequencerInbox": "eth:0xfF000000000000000000000000000000000000FF",
         "sequencerPubkeyInfos": [
           [
             0,
@@ -450,7 +450,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292669092",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292669096",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1143,6 +1143,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25648626 },
+  "usedBlockNumbers": { "ethereum": 25797241 },
   "permissionsConfigHash": "0x195eb0c24e90e72787a7fc8565d396411fe9eedead8ec0b9dfd1bd2a5073138e"
 }

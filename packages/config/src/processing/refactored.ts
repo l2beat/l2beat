@@ -23,6 +23,7 @@ import { eigenda } from '../projects/eigenda/eigenda'
 import { espresso } from '../projects/espresso/espresso'
 import { espressoprover } from '../projects/espressoprover/espressoprover'
 import { ethereum } from '../projects/ethereum/ethereum'
+import { frankencoin } from '../projects/frankencoin/frankencoin'
 import { freetunnel } from '../projects/freetunnel/freetunnel'
 import { fusionplus } from '../projects/fusionplus/fusionplus'
 import { gaszip } from '../projects/gaszip/gaszip'
@@ -130,6 +131,7 @@ export const refactored: BaseProject[] = [
   hyperevm,
   freetunnel,
   // defi
+  frankencoin,
   liquityv2,
   chainlink,
   uniswapv3,

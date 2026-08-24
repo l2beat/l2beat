@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 import { Checkbox } from '~/components/core/Checkbox'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
-import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
+import { useIncludeL2Only } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import { useTRPC } from '~/trpc/React'
 import {
   type ChartRange,
@@ -20,12 +20,12 @@ export function DaThroughputChart() {
   const trpc = useTRPC()
   const [range, setRange] = useState<ChartRange>(optionToRange('1y'))
   const [metric, setMetric] = useState<'percentage' | 'absolute'>('percentage')
-  const { includeScalingOnly, setIncludeScalingOnly } = useIncludeScalingOnly()
+  const { includeL2Only, setIncludeL2Only } = useIncludeL2Only()
 
   const { data: chartData, isLoading } = useQuery(
     trpc.da.chart.queryOptions({
       range,
-      includeScalingOnly,
+      includeL2Only,
     }),
   )
 
@@ -53,7 +53,7 @@ export function DaThroughputChart() {
         <DaPercentageThroughputChart
           data={chartData?.data}
           isLoading={isLoading}
-          includeScalingOnly={includeScalingOnly}
+          includeL2Only={includeL2Only}
           syncStatus={chartData?.syncStatus}
           resolution={resolution}
           range={range}
@@ -62,7 +62,7 @@ export function DaThroughputChart() {
         <DaAbsoluteThroughputChart
           data={chartData?.data}
           isLoading={isLoading}
-          includeScalingOnly={includeScalingOnly}
+          includeL2Only={includeL2Only}
           syncStatus={chartData?.syncStatus}
           resolution={resolution}
         />
@@ -79,11 +79,9 @@ export function DaThroughputChart() {
           </RadioGroup>
           <Checkbox
             name="include-scaling-only"
-            checked={includeScalingOnly}
+            checked={includeL2Only}
             onCheckedChange={(checked) =>
-              setIncludeScalingOnly(
-                checked === 'indeterminate' ? false : checked,
-              )
+              setIncludeL2Only(checked === 'indeterminate' ? false : checked)
             }
           >
             <span className="max-lg:hidden">

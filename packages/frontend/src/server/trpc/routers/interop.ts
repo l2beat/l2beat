@@ -1,14 +1,14 @@
-import { getIntentBridgesData } from '~/server/features/scaling/interop/getIntentBridgesData'
-import { getInteropBridgeSelectionData } from '~/server/features/scaling/interop/getInteropBridgeSelectionData'
-import { getInteropDashboardData } from '~/server/features/scaling/interop/getInteropDashboardData'
-import { getInteropFlows } from '~/server/features/scaling/interop/getInteropFlows'
-import { getInteropProtocolsByVolume } from '~/server/features/scaling/interop/getInteropProtocolsByVolume'
-import { getInteropProtocolTransfers } from '~/server/features/scaling/interop/getInteropProtocolTransfers'
-import { getInteropTokenData } from '~/server/features/scaling/interop/getInteropTokenData'
-import { getInteropTokensInfinite } from '~/server/features/scaling/interop/getInteropTokens'
-import { getInteropTokensPairsInfinite } from '~/server/features/scaling/interop/getInteropTokensPairs'
-import { getInteropTokenTransfers } from '~/server/features/scaling/interop/getInteropTokenTransfers'
-import { getTokenFrameworksData } from '~/server/features/scaling/interop/getTokenFrameworksData'
+import { getIntentBridgesData } from '~/server/features/layer2s/interop/getIntentBridgesData'
+import { getInteropBridgeSelectionData } from '~/server/features/layer2s/interop/getInteropBridgeSelectionData'
+import { getInteropDashboardData } from '~/server/features/layer2s/interop/getInteropDashboardData'
+import { getInteropFlows } from '~/server/features/layer2s/interop/getInteropFlows'
+import { getInteropProtocolsByVolume } from '~/server/features/layer2s/interop/getInteropProtocolsByVolume'
+import { getInteropProtocolTransfers } from '~/server/features/layer2s/interop/getInteropProtocolTransfers'
+import { getInteropTokenData } from '~/server/features/layer2s/interop/getInteropTokenData'
+import { getInteropTokensInfinite } from '~/server/features/layer2s/interop/getInteropTokens'
+import { getInteropTokensPairsInfinite } from '~/server/features/layer2s/interop/getInteropTokensPairs'
+import { getInteropTokenTransfers } from '~/server/features/layer2s/interop/getInteropTokenTransfers'
+import { getTokenFrameworksData } from '~/server/features/layer2s/interop/getTokenFrameworksData'
 import {
   InteropBridgeSelectionParams,
   InteropDashboardParams,
@@ -19,7 +19,7 @@ import {
   InteropTokenParams,
   InteropTokenTransfersParams,
   InteropTopItemsInfiniteParams,
-} from '~/server/features/scaling/interop/types'
+} from '~/server/features/layer2s/interop/types'
 import { procedure, router } from '../trpc'
 
 export const interopRouter = router({

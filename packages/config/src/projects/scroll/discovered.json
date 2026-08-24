@@ -1,7 +1,7 @@
 {
   "name": "scroll",
-  "timestamp": 1782469580,
-  "configHash": "0x464fd385b4967f51b32f4c33de719952c9d14dddcf73bd41e15198abfdc11367",
+  "timestamp": 1787147569,
+  "configHash": "0x614b0cbd94941e85646ff17bf9c32701daa181ae9f921e61d7c4e16c1f055e9a",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -689,11 +689,11 @@
         "$upgradeCount": 3,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1782469571,
+        "getFirstUnfinalizedMessageEnqueueTime": 1787147567,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 998479,
-        "nextUnfinalizedQueueIndex": 998479,
+        "nextCrossDomainMessageIndex": 998818,
+        "nextUnfinalizedQueueIndex": 998818,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -1651,7 +1651,9 @@
       "name": "PlonkVerifierFeynmanV2",
       "address": "eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x0ffd802e46395eb0f9e68316cd3afa259549980515f4922777333fc64f675834"
+      ],
       "proxyType": "immutable",
       "deployerAddress": "eth:0xFF78606A67582974bBe3Cfc5d5afB56485671CdA",
       "sinceTimestamp": 1781773979,
@@ -1659,7 +1661,13 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x96cbcC4333E172927fDa8B631C716d43E2FBA01C": ""
-      }
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://l2beat.com/zk-catalog/openvmprover#verifiers"
+        }
+      ]
     },
     {
       "name": "pufETHEscrow",
@@ -1773,14 +1781,14 @@
         "$upgradeCount": 8,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 518404,
+        "lastFinalizedBatchIndex": 519245,
         "layer2ChainId": 534352,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 518404,
-          "lastFinalizedBatchIndex": 518404,
-          "lastFinalizeTimestamp": 1782463487,
+          "lastCommittedBatchIndex": 519245,
+          "lastFinalizedBatchIndex": 519245,
+          "lastFinalizeTimestamp": 1787143739,
           "flags": 1,
           "reserved": 0
         },
@@ -2103,7 +2111,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 160,
+        "nonce": 161,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2670,7 +2678,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 7865658629484,
+        "totalBridgedUSDC": 5086098798550,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -3186,7 +3194,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 38,
+        "nonce": 39,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3505,9 +3513,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0xc82212125bc4efcdd3a1ccc41c5935ad4c716ddc78bd5c4033b209ab5d35b707",
+        "messageRoot": "0xaba2e2111575b70bf4f1fe6d3b72fa7c719d88acf8fcbed3de12d3aba6664fa7",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 323034,
+        "nextMessageIndex": 323334,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -4360,7 +4368,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 34,
+        "nonce": 35,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -7113,6 +7121,6 @@
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25401198, "scroll": 34195198 },
+  "usedBlockNumbers": { "ethereum": 25789575, "scroll": 34684167 },
   "permissionsConfigHash": "0x5c00e3bd898e45469c2dfc566376ad7f582537a5f8cbc7fa08a398f9f17ea570"
 }

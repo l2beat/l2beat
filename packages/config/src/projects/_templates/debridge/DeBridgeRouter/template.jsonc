@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Optional periphery router that can swap input tokens via whitelisted DEX routers and forward the proceeds into the DLN contracts in a single transaction. It does not custody funds across transactions and is not part of the DLN critical path.",
+  "description": "Optional periphery router that can swap input tokens via whitelisted DEX routers and forward the proceeds into the DLN contracts (order creation, or order fulfillment on the hardcoded DlnDestination via fillCrossChain) in a single transaction. It does not custody funds across transactions and is not part of the DLN critical path.",
   "fields": {
     "swapVariableFeeBps": {
       "description": "Service fee in basis points charged by the router on same-chain swaps (in addition to deBridge protocol fees)."

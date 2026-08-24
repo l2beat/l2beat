@@ -1,8 +1,11 @@
 import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 
 interface Props {
-  totalValueLockedUsd: number
+  totalValueLockedUsd: number | undefined
+  hasTvl: boolean
   assetsCount: number
   bucketsCount: number
   deposits: {
@@ -14,6 +17,7 @@ interface Props {
 
 export function PrivacyProjectStats({
   totalValueLockedUsd,
+  hasTvl,
   assetsCount,
   bucketsCount,
   deposits,
@@ -45,19 +49,33 @@ export function PrivacyProjectStats({
         className="max-md:hidden"
         title="Total Value Locked"
         value={
-          <div className="flex flex-col md:gap-1">
-            <span>{formatCurrency(totalValueLockedUsd, 'usd')}</span>
-            <span className="font-medium text-paragraph-12 text-secondary leading-normal">
-              across {formatInteger(assetsCount ?? 0)} assets and{' '}
-              {formatInteger(bucketsCount ?? 0)} buckets
-            </span>
-          </div>
+          !hasTvl ? (
+            <NotApplicableBadge />
+          ) : totalValueLockedUsd === undefined ? (
+            <NoDataBadge />
+          ) : (
+            <div className="flex flex-col md:gap-1">
+              <span>{formatCurrency(totalValueLockedUsd, 'usd')}</span>
+              <span className="font-medium text-paragraph-12 text-secondary leading-normal">
+                across {formatInteger(assetsCount ?? 0)} assets and{' '}
+                {formatInteger(bucketsCount ?? 0)} buckets
+              </span>
+            </div>
+          )
         }
       />
       <ProjectSummaryStat
         className="md:hidden"
         title="TVL"
-        value={formatCurrency(totalValueLockedUsd, 'usd')}
+        value={
+          !hasTvl ? (
+            <NotApplicableBadge />
+          ) : totalValueLockedUsd === undefined ? (
+            <NoDataBadge />
+          ) : (
+            formatCurrency(totalValueLockedUsd, 'usd')
+          )
+        }
       />
       <ProjectSummaryStat
         className="md:hidden"

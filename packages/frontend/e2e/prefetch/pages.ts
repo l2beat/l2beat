@@ -22,28 +22,28 @@ export interface DynamicPageToVerify {
  */
 export const STATIC_PAGES: PageToVerify[] = [
   page('/', ['interop.dashboard', 'interop.flows']),
-  page('/scaling/summary', [
+  page('/layer2s/summary', [
     'tvs.recategorisedChart',
     'activity.recategorisedChart',
     'tvs.table',
   ]),
-  page('/scaling/activity', [
+  page('/layer2s/activity', [
     'activity.recategorisedChart',
     'activity.chartStats',
   ]),
-  page('/scaling/costs', ['costs.chart']),
-  page('/scaling/tvs', ['tvs.detailedChart', 'tvs.table', 'tvs.chartStats']),
-  page('/scaling/projects/arbitrum', [
+  page('/layer2s/costs', ['costs.chart']),
+  page('/layer2s/tvs', ['tvs.detailedChart', 'tvs.table', 'tvs.chartStats']),
+  page('/layer2s/projects/arbitrum', [
     'activity.chart',
     'costs.projectChart',
-    'da.scalingProjectChart',
+    'da.l2ProjectChart',
     'interop.flows',
     'liveness.projectChart',
   ]),
-  page('/scaling/projects/base', [
+  page('/layer2s/projects/base', [
     'activity.chart',
     'costs.projectChart',
-    'da.scalingProjectChart',
+    'da.l2ProjectChart',
     'interop.flows',
     'liveness.projectChart',
   ]),
@@ -69,11 +69,12 @@ export const STATIC_PAGES: PageToVerify[] = [
     'interop.intentBridges',
     'interop.intentBridges',
   ]),
-  page('/privacy/summary', ['privacy.flowsChart', 'privacy.tvlChart']),
+  page('/privacy/summary', ['privacy.flowsChart', 'tvs.chartByProjects']),
   page('/privacy/projects/tornado-cash', [
     'privacy.flowsChart',
-    'privacy.tvlChart',
+    'tvs.chartByProjects',
   ]),
+  page('/defi/projects/liquityv2', ['tvs.chartByProjects']),
 ]
 
 export const DYNAMIC_PAGES: DynamicPageToVerify[] = [
@@ -96,7 +97,7 @@ export const DYNAMIC_PAGES: DynamicPageToVerify[] = [
       return privacyProject
         ? page(`/privacy/projects/${privacyProject.slug}`, [
             'privacy.flowsChart',
-            'privacy.tvlChart',
+            'tvs.chartByProjects',
           ])
         : undefined
     },

@@ -7,17 +7,17 @@ type PagePath = `/${string}`
 
 export const STATIC_PAGE_PATHS = [
   ...(env.CLIENT_SIDE_HOME_PAGE ? (['/'] as const) : []),
-  '/scaling/summary',
-  '/scaling/activity',
-  '/scaling/risk',
-  '/scaling/risk/state-validation',
-  '/scaling/risk/data-availability',
-  '/scaling/risk/sequencing',
-  '/scaling/tvs',
-  '/scaling/tvs/breakdown',
-  '/scaling/liveness',
-  '/scaling/costs',
-  '/scaling/archived',
+  '/layer2s/summary',
+  '/layer2s/activity',
+  '/layer2s/risk',
+  '/layer2s/risk/state-validation',
+  '/layer2s/risk/data-availability',
+  '/layer2s/risk/sequencing',
+  '/layer2s/tvs',
+  '/layer2s/tvs/breakdown',
+  '/layer2s/liveness',
+  '/layer2s/costs',
+  '/layer2s/archived',
   '/interop/summary',
   '/interop/non-minting',
   '/interop/lock-and-mint',
@@ -48,17 +48,26 @@ export const STATIC_PAGE_PATHS = [
 ] as const satisfies PagePath[]
 
 export async function getPagePaths(): Promise<PagePath[]> {
-  return [...STATIC_PAGE_PATHS, ...(await getDynamicPagePaths())]
+  const paths: PagePath[] = [...STATIC_PAGE_PATHS]
+  if (env.CLIENT_SIDE_COMPARE_PROJECTS) {
+    paths.push('/layer2s/compare')
+  }
+  if (env.CLIENT_SIDE_DEFI_ENABLED) {
+    paths.push('/defi/summary')
+  }
+  paths.push(...(await getDynamicPagePaths()))
+  return paths
 }
 
 async function getDynamicPagePaths(): Promise<PagePath[]> {
   const [
-    scalingProjects,
+    l2Projects,
     zkCatalogProjects,
     ecosystemProjects,
     daLayers,
     daBridges,
     privacyProjects,
+    defiProjects,
   ] = await Promise.all([
     ps.getProjects({
       where: ['scalingInfo'],
@@ -70,14 +79,17 @@ async function getDynamicPagePaths(): Promise<PagePath[]> {
     ps.getProjects({ select: ['daLayer'], whereNot: ['archivedAt'] }),
     ps.getProjects({ select: ['daBridge'] }),
     ps.getProjects({ where: ['privacyInfo'] }),
+    env.CLIENT_SIDE_DEFI_ENABLED
+      ? ps.getProjects({ where: ['defiInfo'] })
+      : Promise.resolve([]),
   ])
 
   const paths: PagePath[] = []
 
-  for (const project of scalingProjects) {
-    paths.push(`/scaling/projects/${project.slug}`)
+  for (const project of l2Projects) {
+    paths.push(`/layer2s/projects/${project.slug}`)
     if (project.tvsConfig) {
-      paths.push(`/scaling/projects/${project.slug}/tvs-breakdown`)
+      paths.push(`/layer2s/projects/${project.slug}/tvs-breakdown`)
     }
   }
 
@@ -91,6 +103,10 @@ async function getDynamicPagePaths(): Promise<PagePath[]> {
 
   for (const project of privacyProjects) {
     paths.push(`/privacy/projects/${project.slug}`)
+  }
+
+  for (const project of defiProjects) {
+    paths.push(`/defi/projects/${project.slug}`)
   }
 
   for (const layer of daLayers) {

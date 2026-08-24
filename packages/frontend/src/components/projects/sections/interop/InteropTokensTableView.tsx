@@ -19,7 +19,7 @@ import {
   type TokenRow,
 } from '~/pages/interop/components/tokens/columns'
 import type { InteropSelection } from '~/pages/interop/utils/types'
-import type { TokenData } from '~/server/features/scaling/interop/types'
+import type { TokenData } from '~/server/features/layer2s/interop/types'
 
 const TOKENS_PER_PAGE = 6
 
@@ -94,6 +94,7 @@ export function InteropTokensTableView({
                 ) : (
                   <PaginationLink
                     key={item.index}
+                    href="#interop-tokens"
                     size="sm"
                     onClick={(e) => {
                       e.preventDefault()

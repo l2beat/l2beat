@@ -1,3 +1,126 @@
+Generated with discovered.json: 0x327ef8377face447337c793243ac73890a8fe4bb
+
+# Diff at Fri, 21 Aug 2026 11:15:16 GMT:
+
+- author: Sergey Shemyakov (<serge.shemyakov@l2beat.com>)
+- comparing to: main@97be884924a799765834458d955d84040bed3cfb block: 1786966360
+- current timestamp: 1787310854
+
+## Description
+
+CronosZkEVMAdmin upgraded the boojum verifiers to version v0.30.1 (the same version as zksync era). The new verifiers are not yet reproduced.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (eth:0x35CD3865199F2D9c574f34DD72520B19842d440c) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+    contract Diamond (eth:0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$pastUpgrades.13:
++        ["2026-08-21T08:26:11.000Z","0xb77459936506ff9df19c5fd6fa15538dfd94241e02c616217a8c66d474e27754",["eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253","eth:0x1666124221622eb6154306Ea9BA87043e8be88B2","eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45","eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691"]]
+      values.$upgradeCount:
+-        13
++        14
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        128849018880
++        128849018881
+      values.getSemverProtocolVersion.2:
+-        0
++        1
+      values.getVerifier:
+-        "eth:0xC47D355402E78b886B628914B3b129F236fEe3cc"
++        "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (eth:0xC47D355402E78b886B628914B3b129F236fEe3cc) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66 or eth:0x35CD3865199F2D9c574f34DD72520B19842d440c depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract EraVerifierPlonk (eth:0x0DAAB2B7b38ab48712996E760152c569FA356DbF) [shared-zk-stack/L1VerifierPlonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract EraVerifierFflonk (eth:0x8470d6B3fd71B5fE3906B4ea04498d18F721eDe9) [shared-zk-stack/L1VerifierFflonk]
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract EraDualVerifier (eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081) [shared-zk-stack/DualVerifier]
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x8470d6B3fd71B5fE3906B4ea04498d18F721eDe9 or eth:0x0DAAB2B7b38ab48712996E760152c569FA356DbF depending on the supplied proof type.
+```
+
+## Source code changes
+
+```diff
+.../DualVerifier.sol => .flat/EraDualVerifier.sol} | 10 +++-
+ .../EraVerifierFflonk.sol}                         |  8 +--
+ .../EraVerifierPlonk.sol}                          | 68 +++++++++++-----------
+ 3 files changed, 46 insertions(+), 40 deletions(-)
+```
+
+Generated with discovered.json: 0xd7adc4911ee30d9ebd6a9ea706e749a35489c114
+
+# Diff at Mon, 17 Aug 2026 11:33:43 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@9b7337c108d300967ecea6d6606607859d1de669 block: 1786357730
+- current timestamp: 1786966360
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes: templatized the v30.0 boojum verifiers.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786357730 (main branch discovery), not current.
+
+```diff
+    contract L1VerifierPlonk (eth:0x35CD3865199F2D9c574f34DD72520B19842d440c) [shared-zk-stack/L1VerifierPlonk] {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      template:
++        "shared-zk-stack/L1VerifierPlonk"
+      description:
++        "Verifies a zk-SNARK proof using an implementation of the PlonK proof system."
+      fieldMeta:
++        {"verificationKeyHash":{"severity":"HIGH","description":"keccak256 hash of the verification keys."}}
+    }
+```
+
+```diff
+    contract L1VerifierFflonk (eth:0x4A34cE730052cb195d8a95e730623eEcc1CB8B66) [shared-zk-stack/L1VerifierFflonk] {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      template:
++        "shared-zk-stack/L1VerifierFflonk"
+      description:
++        "Verifies a zk-SNARK proof using an implementation of the fflonk proof system."
+      fieldMeta:
++        {"verificationKeyHash":{"severity":"HIGH","description":"keccak256 hash of the verification keys."}}
+    }
+```
+
 Generated with discovered.json: 0x52e3946a23d1f365ddfdf46938ee65312a3158f9
 
 # Diff at Mon, 10 Aug 2026 10:29:53 GMT:

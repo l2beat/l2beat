@@ -1,3 +1,4 @@
+import { formatNumberWithCommas } from '@l2beat/shared-pure'
 import { useQuery } from '@tanstack/react-query'
 import { RefreshCwIcon } from 'lucide-react'
 import { useState } from 'react'
@@ -28,15 +29,10 @@ import type { CoveragePieChart, CoveragePieSlice } from './types'
 
 const DEFAULT_COLLAPSE_THRESHOLD_PCT = 2
 
-const integerFormatter = new Intl.NumberFormat('en-US')
 const percentFormatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 })
-
-function formatInt(value: number): string {
-  return integerFormatter.format(value)
-}
 
 function formatPct(value: number): string {
   return `${percentFormatter.format(value)}%`
@@ -62,7 +58,8 @@ function CoveragePieTooltip(props: {
     <div className="max-w-64 rounded-lg border bg-background p-3 shadow-sm">
       <p className="font-medium text-sm">{slice.label}</p>
       <p className="mt-1 text-muted-foreground text-xs">
-        {formatInt(slice.count)} events • {formatPct(slice.pctOfTotal)}
+        {formatNumberWithCommas(slice.count)} events •{' '}
+        {formatPct(slice.pctOfTotal)}
       </p>
       <p className="mt-2 text-xs">
         {slice.isSupported ? 'Supported' : 'Unsupported'}
@@ -84,7 +81,7 @@ function renderCenterLabel(chart: CoveragePieChart) {
     return (
       <text x={cx} y={cy} textAnchor="middle">
         <tspan x={cx} y={cy} fontSize="24" fontWeight="600">
-          {formatInt(chart.totalCount)}
+          {formatNumberWithCommas(chart.totalCount)}
         </tspan>
         <tspan
           x={cx}
@@ -111,14 +108,14 @@ function CoveragePieCard(props: { chart: CoveragePieChart }) {
       <CardContent className="flex flex-col gap-4">
         <div className="flex flex-wrap gap-2">
           <Badge variant="secondary">
-            {formatInt(chart.totalCount)} events
+            {formatNumberWithCommas(chart.totalCount)} events
           </Badge>
           <Badge className="border-emerald-200 bg-emerald-50 text-emerald-700">
-            {formatInt(chart.supportedCount)} supported (
+            {formatNumberWithCommas(chart.supportedCount)} supported (
             {formatPct(chart.supportedPct)})
           </Badge>
           <Badge className="border-red-200 bg-red-50 text-red-700">
-            {formatInt(chart.unsupportedCount)} unsupported (
+            {formatNumberWithCommas(chart.unsupportedCount)} unsupported (
             {formatPct(chart.unsupportedPct)})
           </Badge>
         </div>
@@ -170,8 +167,8 @@ function CoveragePieCard(props: { chart: CoveragePieChart }) {
               <div className="min-w-0">
                 <p className="font-medium leading-5">{slice.label}</p>
                 <p className="text-muted-foreground text-xs leading-5">
-                  {formatPct(slice.pctOfTotal)} • {formatInt(slice.count)}{' '}
-                  events
+                  {formatPct(slice.pctOfTotal)} •{' '}
+                  {formatNumberWithCommas(slice.count)} events
                 </p>
               </div>
             </div>

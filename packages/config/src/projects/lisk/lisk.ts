@@ -3,7 +3,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('lisk')
 
@@ -14,6 +14,7 @@ export const lisk: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1731369600), // 2024-11-12T00:00:00Z
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 19788851 })],
   genesisTimestamp: UnixTime(1714728793),
   associatedTokens: ['LSK'],
   additionalBadges: [BADGES.RaaS.Gelato, BADGES.Other.MigratedFromL1],

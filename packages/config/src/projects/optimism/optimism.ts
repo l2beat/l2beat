@@ -8,7 +8,7 @@ import { DERIVATION, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('optimism')
 const genesisTimestamp = UnixTime(1636665399)
@@ -210,16 +210,10 @@ export const optimism: ScalingProject = opStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 105235064 },
   },
-  nonTemplateDaTracking: [
-    {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
+  daTracking: [
+    getOpStackDaTracking(discovery, {
       sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: EthereumAddress('0xFF00000000000000000000000000000000000010'),
-      sequencers: [
-        EthereumAddress('0x6887246668a3b87f54deb3b94ba47a6f63f32985'),
-      ],
-    },
+    }),
   ],
   nonTemplateTrackedTxs: [
     {

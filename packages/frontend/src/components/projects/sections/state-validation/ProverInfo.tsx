@@ -46,7 +46,7 @@ export function ProverInfo({ proverInfo }: { proverInfo: ProverInfoData }) {
       </div>
       <TrustedSetupsByProofSystemSection
         trustedSetupsByProofSystem={proverInfo.trustedSetups}
-        variant="scaling"
+        variant="l2"
       />
     </div>
   )

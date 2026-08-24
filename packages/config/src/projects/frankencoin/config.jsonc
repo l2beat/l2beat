@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "frankencoin",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 80,
+  "initialAddresses": [
+    "eth:0xB58E61C3098d85632Df34EecfB899A1Ed80921cB", // Frankencoin (ZCHF)
+    "eth:0xE5F130253fF137f9917C0107659A4c5262abf6b0", // SavingsVault (svZCHF)
+    "eth:0xDe12B620A8a714476A97EfD14E6F7180Ca653557", // MintingHubV2
+    "eth:0x7546762fdb1a6d9146b33960545C3f6394265219", // MintingHubV1
+    "eth:0x5052D3Cc819f53116641e89b96Ff4cD1EE80B182", // FPSWrapper (WFPS)
+    "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF", // StablecoinBridgeXCHF
+    "eth:0x3B71ba73299F925a837836160c3E1Fec74340403", // StablecoinBridgeVCHF
+    "eth:0x3e445ff4ddDf0ff8aE7458c9746eD80bD664F6C1", // StablecoinBridgeCHFAU
+    "eth:0xf98c221661F51578f5E5236B189a493E2a8a1916", // TransferReference
+    "eth:0x2527ec458c863073a303CF0a362Bf78aDD5dFEf8", // CCIPAdmin
+    "eth:0x9359cd75549DaE00Cdd8D22297BC9B13FbBe4B79", // CCIPTokenPool
+    "eth:0x88fd2ECD0B9250F203e99E80eb78b0C32B8AdB16", // BridgeAccounting
+    "eth:0xFD23272DfcB13Dc3Fabd8DB851fCD4827Af876EB", // GovernanceSender
+    "eth:0x4d433780A16d425c5dB1F725A6d104233a8Ef28D" // LeadrateSender
+  ],
+  "names": {
+    // the three bridges share the source name "StablecoinBridge"
+    "eth:0x7bbe8F18040aF0032f4C2435E7a76db6F1E346DF": "StablecoinBridgeXCHF",
+    "eth:0x3B71ba73299F925a837836160c3E1Fec74340403": "StablecoinBridgeVCHF",
+    "eth:0x3e445ff4ddDf0ff8aE7458c9746eD80bD664F6C1": "StablecoinBridgeCHFAU"
+  },
+  "overrides": {
+    // external tokens bridged 1:1 into ZCHF - do not discover
+    "eth:0xB4272071eCAdd69d933AdcD19cA99fe80664fc08": {
+      "ignoreDiscovery": true
+    }, // XCHF
+    "eth:0x79d4f0232A66c4c91b89c76362016A1707CFBF4f": {
+      "ignoreDiscovery": true
+    }, // VCHF
+    "eth:0xBD4DfC058eb95b8De5ceAF39966A1a70F5556F78": {
+      "ignoreDiscovery": true
+    }, // CHFAU
+    // Chainlink CCIP infrastructure - tracked in the ccip/transporter projects, out of scope here
+    "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D": {
+      "ignoreDiscovery": true
+    }, // CCIP Router
+    "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6": {
+      "ignoreDiscovery": true
+    }, // CCIP TokenAdminRegistry
+    "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81": {
+      "ignoreDiscovery": true
+    }, // CCIP RMNProxy
+    "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA": {
+      "ignoreDiscovery": true
+    } // LINK
+  }
+}

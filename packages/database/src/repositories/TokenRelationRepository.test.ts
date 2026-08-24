@@ -585,6 +585,7 @@ function deployedToken(pk: DeployedTokenPrimaryKey): DeployedTokenRecord {
     decimals: 18,
     deploymentTimestamp: UnixTime(1),
     comment: null,
+    ignored: false,
     metadata: null,
     abstractTokenAssignmentProof: null,
   }
