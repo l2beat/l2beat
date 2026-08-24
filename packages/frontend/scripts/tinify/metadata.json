@@ -1616,5 +1616,8 @@
   "static/meta-images/defi/projects/uniswapv3/opengraph-image.png": "91d3e36146d9d5c0729c70ec25ab28f8",
   "static/meta-images/defi/summary/opengraph-image.png": "bd424fff91abdfef251690a6ad89620f",
   "static/meta-images/defi/projects/frankencoin/opengraph-image.png": "c305797856053172f14c5169150d211a",
-  "static/meta-images/defi/projects/uniswapv4/opengraph-image.png": "a2a558d00bfb67a128decc62e5c1455d"
+  "static/meta-images/defi/projects/uniswapv4/opengraph-image.png": "a2a558d00bfb67a128decc62e5c1455d",
+  "static/icons/privacy-boost.png": "556d9480cba16abc6fe7fe04a0dce9bc",
+  "static/meta-images/privacy/projects/privacy-boost/opengraph-image.png": "880f6292f63b5256cae18d5737fb6582",
+  "static/meta-images/zk-catalog/projects/privacy-boost/opengraph-image.png": "3846e8359ecef180a9482a573c9a69fe"
 }

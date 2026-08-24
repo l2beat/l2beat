@@ -43,6 +43,7 @@ import { meson } from '../projects/meson/meson'
 import { monad } from '../projects/monad/monad'
 import { near } from '../projects/near/near-da'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
+import { privacyBoost } from '../projects/privacy-boost/privacy-boost'
 import { privacyPools } from '../projects/privacy-pools/privacy-pools'
 import { railgun } from '../projects/railgun/railgun'
 import { relay } from '../projects/relay/relay'
@@ -144,4 +145,5 @@ export const refactored: BaseProject[] = [
   tornadoCash,
   umbra,
   zamaCw,
+  privacyBoost,
 ]
