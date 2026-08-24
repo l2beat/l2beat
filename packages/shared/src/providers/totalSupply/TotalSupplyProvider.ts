@@ -28,6 +28,7 @@ export class TotalSupplyProvider {
           const res = await client.multicall(calls, blockNumber)
           return res.map((r, i) => {
             if (r.success === false) {
+              // empty returndata - token not deployed at this block
               this.logger
                 .tag({ chain })
                 .warn('Issue with totalSupply fetching', {
@@ -39,23 +40,16 @@ export class TotalSupplyProvider {
             return BigInt(r.data.toString())
           })
         }
-        return Promise.all(
-          calls.map(async (c, i) => {
-            try {
-              const res = await client.call(c, blockNumber)
-              return res.toString() === '0x' ? 0n : BigInt(res.toString())
-            } catch {
-              this.logger
-                .tag({ chain })
-                .warn('Issue with totalSupply fetching', {
-                  token: tokens[i],
-                  blockNumber,
-                })
-              return 0n
-            }
+        return await Promise.all(
+          calls.map(async (c) => {
+            const res = await client.call(c, blockNumber)
+            return res.toString() === '0x' ? 0n : BigInt(res.toString())
           }),
         )
       } catch (error) {
+        this.logger.tag({ chain }).warn('Total supply fetching failed', {
+          blockNumber,
+        })
         if (i === clients.length - 1) throw error
       }
     }
