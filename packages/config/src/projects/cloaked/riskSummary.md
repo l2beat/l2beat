@@ -1,5 +1,5 @@
 ## Funds can be stolen if
-1. a user relies on the hosted wallet and it is malicious or compromised and exfiltrates derived spending keys. The production wallet is closed source and has no published reproducible build, so users cannot inspect its source or verify the code being served. This frontend-specific risk can be removed by using an inspected local client that keeps spending keys local and verifies the data before signing.
+1. a user relies on the hosted wallet and it is malicious or compromised and exfiltrates derived spending keys. The production wallet is closed source and has no published reproducible build, so users cannot inspect its source or verify the code being served.
 2. the accepted ENS signer returns an attacker-controlled payment address for a Cloaked name. The resolver authenticates the answer but does not prove that the intended recipient controls it.
 <br>
 ## Funds can be lost if
