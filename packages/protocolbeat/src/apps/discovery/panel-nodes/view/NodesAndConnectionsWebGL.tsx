@@ -16,6 +16,7 @@ import {
   type GroupContainer,
   isFieldConnectionLive,
 } from '../store/utils/renderGraph'
+import { getRowLayout, type NodeRow } from '../store/utils/rows'
 import { topLevelByDescendant } from '../store/utils/subnodes'
 import { getColor } from './colors/colors'
 
@@ -122,6 +123,7 @@ interface RenderNode {
   z: number
   alpha: number
   visibleFields: VisibleField[]
+  rows: readonly NodeRow[]
   fullHeight: boolean
   corner: number
   headerH: number
@@ -1288,26 +1290,27 @@ class WebGLRenderer {
   private buildFieldText(renderNodes: readonly RenderNode[]): number {
     let maxChars = 0
     for (const rn of renderNodes) {
-      for (const { field } of rn.visibleFields) {
-        maxChars += (field.label ?? field.name).length
+      for (const row of rn.rows) {
+        maxChars += row.label.length
       }
     }
     if (maxChars === 0) return 0
     const buf = this.ensureText(maxChars)
     const atlas = this.fieldAtlas
     let n = 0
-    for (const { node, flags, z, alpha, visibleFields } of renderNodes) {
-      for (const { field, index, visibleRow } of visibleFields) {
-        const rowY = node.box.y + HEADER_HEIGHT + visibleRow * FIELD_HEIGHT
+    for (const rn of renderNodes) {
+      const { node, flags, z, alpha } = rn
+      for (let row = 0; row < rn.rows.length; row++) {
+        const rowY = node.box.y + HEADER_HEIGHT + row * FIELD_HEIGHT
         const baselineY = rowY + FIELD_HEIGHT / 2 + atlas.refSize / 2 - 2
-        const baseColor = flags.fieldHighlighted[index] ? BLACK : COFFEE_200
+        const baseColor = isRowHighlighted(rn, row) ? BLACK : COFFEE_200
         const color = flags.isGrayedOut
           ? desaturate(withAlpha(baseColor, alpha))
           : withAlpha(baseColor, alpha)
         n += writeStringInstances(
           buf,
           n,
-          field.label ?? field.name,
+          (rn.rows[row] as NodeRow).label,
           node.box.x + HEADER_PADDING,
           baselineY,
           atlas,
@@ -1639,6 +1642,7 @@ function buildRenderNodes(data: DrawData): RenderNode[] {
       z: 0,
       alpha: nodeAlpha(flags),
       visibleFields: getVisibleFields(node),
+      rows: getRowLayout(node).rows,
       fullHeight,
       corner: fullHeight
         ? FULL_HEIGHT_CORNER_RADIUS
@@ -2210,15 +2214,24 @@ function cssRgbToRgba(css: string): RGBA {
   return [r, g, b, 1]
 }
 
+function isRowHighlighted(rn: RenderNode, row: number): boolean {
+  for (const index of (rn.rows[row] as NodeRow).fieldIndices) {
+    if (rn.flags.fieldHighlighted[index] === 1) return true
+  }
+  return false
+}
+
+// Values keep their own entry, but a compressed row hands several of them the
+// same visible row, so their dots and links stack up on one anchor.
 function getVisibleFields(node: Node): VisibleField[] {
-  const hiddenFields =
-    node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
+  const { rows } = getRowLayout(node)
   const visibleFields: VisibleField[] = []
-  for (let i = 0; i < node.fields.length; i++) {
-    const field = node.fields[i]
-    if (!field) continue
-    if (hiddenFields?.has(field.name)) continue
-    visibleFields.push({ field, index: i, visibleRow: visibleFields.length })
+  for (let row = 0; row < rows.length; row++) {
+    for (const index of (rows[row] as NodeRow).fieldIndices) {
+      const field = node.fields[index]
+      if (!field) continue
+      visibleFields.push({ field, index, visibleRow: row })
+    }
   }
   return visibleFields
 }
