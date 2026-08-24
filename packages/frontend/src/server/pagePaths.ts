@@ -50,6 +50,9 @@ export const STATIC_PAGE_PATHS = [
 
 export async function getPagePaths(): Promise<PagePath[]> {
   const paths: PagePath[] = [...STATIC_PAGE_PATHS]
+  if (env.CLIENT_SIDE_COMPARE_PROJECTS) {
+    paths.push('/layer2s/compare')
+  }
   if (env.CLIENT_SIDE_DEFI_ENABLED) {
     paths.push('/defi/summary')
   }

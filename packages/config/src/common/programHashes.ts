@@ -208,6 +208,15 @@ const RAIKO2_V060_GUEST_DIGEST_OPTIONS = {
     'References: [Raiko2 v0.6.0 release](https://github.com/taikoxyz/raiko2/releases/tag/v0.6.0) and [Taiko Proposal0019 Unzen hardfork bundle](https://github.com/taikoxyz/taiko-mono/blob/9bd8e263065be0c553e41c6d4a82f978bdce80ed/packages/protocol/script/layer1/proposals/Proposal0019.md) from [taiko-mono#21935](https://github.com/taikoxyz/taiko-mono/pull/21935).',
 }
 
+const RAIKO2_V080RC1_COMMIT_HASH = '8b2147a0e74ba6387938cf35544797fb1b61cc07'
+
+const RAIKO2_V080RC1_GUEST_DIGEST_OPTIONS = {
+  enableDigestsFeature: true,
+  forceRebuild: true,
+  reference:
+    'Reference: [Raiko2 v0.8.0-rc1 release](https://github.com/taikoxyz/raiko2/releases/tag/v0.8.0-rc1), rolled out by Taiko multisig proposal `0xa3cd408eabf658ce08f25450f837679f09269742eabc672fbbf4479db59ec2cf`.',
+}
+
 const KAILUA_FP = (version: string, descAppendix = '') => ({
   title: `Kailua fault proof program ${version}`,
   description:
@@ -1079,6 +1088,62 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       RAIKO2_V060_GUEST_DIGEST_OPTIONS,
     ),
   },
+  '0x0025425c22e827507428a3d9c7b0f89635be5462f34bb6780563e3d6086be7c7': {
+    ...RAIKO2_PROPOSAL('v0.8.0-rc1'),
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.8.0-rc1/guests/sp1/src/shasta_proposal.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_proposal',
+      'vk_bn254',
+      'v0.8.0-rc1',
+      RAIKO2_V080RC1_COMMIT_HASH,
+      RAIKO2_V080RC1_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x12a12e113a09d41d05147b387b0f89632df2a3174d2ed9e00ac7c7ac086be7c7': {
+    ...RAIKO2_PROPOSAL('v0.8.0-rc1'),
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.8.0-rc1/guests/sp1/src/shasta_proposal.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_proposal',
+      'vk_hash_bytes',
+      'v0.8.0-rc1',
+      RAIKO2_V080RC1_COMMIT_HASH,
+      RAIKO2_V080RC1_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x0051ac1d9e8cfd4196e37f9cfefd08e9b0f7ce653bad4634cd1ee84b71ca3be6': {
+    ...RAIKO2_AGG('v0.8.0-rc1'),
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.8.0-rc1/guests/sp1/src/shasta_aggregation.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_aggregation',
+      'vk_bn254',
+      'v0.8.0-rc1',
+      RAIKO2_V080RC1_COMMIT_HASH,
+      RAIKO2_V080RC1_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0x28d60ecf233f50655c6ff39f6fd08e9b07be73296eb518d31a3dd09671ca3be6': {
+    ...RAIKO2_AGG('v0.8.0-rc1'),
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.8.0-rc1/guests/sp1/src/shasta_aggregation.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'sp1_shasta_aggregation',
+      'vk_hash_bytes',
+      'v0.8.0-rc1',
+      RAIKO2_V080RC1_COMMIT_HASH,
+      RAIKO2_V080RC1_GUEST_DIGEST_OPTIONS,
+    ),
+  },
   '0x0040b6021bbe547fc651492bcc4eea12eaaa9b0a60086439206e27495ec6d6c3': {
     ...RAIKO_AGG('v1.10.4'),
     proverSystemProject: ProjectId('sp1turbo'),
@@ -1479,6 +1544,34 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'v0.6.0',
       RAIKO2_V060_COMMIT_HASH,
       RAIKO2_V060_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0xd6ab71c22201c23ef512b706f2e2d720f6da1b559fb76834aa9d4e35276f6e10': {
+    ...RAIKO2_PROPOSAL('v0.8.0-rc1'),
+    proverSystemProject: ProjectId('risc0'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.8.0-rc1/guests/risc0/src/shasta_proposal.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'risc0_shasta_proposal',
+      'image_id',
+      'v0.8.0-rc1',
+      RAIKO2_V080RC1_COMMIT_HASH,
+      RAIKO2_V080RC1_GUEST_DIGEST_OPTIONS,
+    ),
+  },
+  '0xdd9b8abff96c409ae2418edfb51d893ea2bd10f4873a0226f17a6998c1afc1b7': {
+    ...RAIKO2_AGG('v0.8.0-rc1'),
+    proverSystemProject: ProjectId('risc0'),
+    programUrl:
+      'https://github.com/taikoxyz/raiko2/blob/v0.8.0-rc1/guests/risc0/src/shasta_aggregation.rs',
+    verificationStatus: 'successful',
+    verificationSteps: RAIKO2_GUEST_DIGEST_STEPS(
+      'risc0_shasta_aggregation',
+      'image_id',
+      'v0.8.0-rc1',
+      RAIKO2_V080RC1_COMMIT_HASH,
+      RAIKO2_V080RC1_GUEST_DIGEST_OPTIONS,
     ),
   },
   '0xcecc85819e15d173c2991577727525b136e820728f7aaaede612f1281cac2249': {

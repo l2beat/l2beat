@@ -130,7 +130,10 @@ const SelectLabel = ({
 }: React.ComponentProps<typeof SelectPrimitive.Label>) => (
   <SelectPrimitive.Label
     ref={ref}
-    className={cn('py-1.5 pr-2 pl-8 font-medium text-xs md:text-sm', className)}
+    className={cn(
+      'px-2.5 pt-2 pb-1 text-secondary text-subtitle-10 uppercase tracking-[0.04em] md:text-subtitle-11',
+      className,
+    )}
     {...props}
   />
 )
@@ -167,7 +170,7 @@ const SelectSeparator = ({
 }: React.ComponentProps<typeof SelectPrimitive.Separator>) => (
   <SelectPrimitive.Separator
     ref={ref}
-    className={cn('-mx-1 my-1 h-px bg-gray-200 dark:bg-zinc-700', className)}
+    className={cn('-mx-1 my-1 h-px bg-divider', className)}
     {...props}
   />
 )

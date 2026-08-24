@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Manages the list of auditors authorized to query private user data through the Audit API of the TEE, and stores an onchain log of every audit access so that users can publicly verify whether and when their private data was disclosed.",
+  "ignoreMethods": ["getAuditorCount"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the list of registered auditors and set the auditLogger address of the AuditGateway."
+        }
+      ]
+    },
+    "auditLogger": {
+      "description": "Address (TEE server wallet) that records every Audit API access on-chain by calling the AuditGateway.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "log audit queries performed by registered auditors on the AuditGateway."
+        }
+      ]
+    },
+    "getAllAuditors": {
+      "description": "Auditors authorized to fetch the balance and transaction history of any address through the Audit API of the TEE. Every such access is logged onchain."
+    },
+    "auditLogCount": {
+      "handler": {
+        "type": "eventCount",
+        "topics": [
+          // AuditLogCreated(address indexed auditor, string accountId, string action, string metadata, uint256 timestamp)
+          "0x6474b83bda9904bf11e3d2c9f2e46e3dfce8d4150d21d37c32cec7e55e2f9d93"
+        ]
+      },
+      "description": "Total number of audit accesses logged onchain."
+    }
+  }
+}

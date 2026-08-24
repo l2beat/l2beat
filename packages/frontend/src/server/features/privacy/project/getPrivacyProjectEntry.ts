@@ -8,6 +8,10 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import {
+  countRecentDiscoveryUpdates,
+  getDiscoveryUpdates,
+} from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { manifest } from '~/utils/Manifest'
@@ -23,7 +27,6 @@ import {
   get7dTvsBreakdown,
 } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { getProjectOssification } from '../../projects/ossification/getProjectOssification'
-import { getDiscoveryUpdates } from '../../projects/recent-changes/getDiscoveryUpdates'
 import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
 import {
@@ -51,13 +54,14 @@ export interface ProjectPrivacyEntry {
   }
   bucketCount: number
   assetsCount: number
+  hasTvl: boolean
   attributes: PrivacyAttribute[]
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacySummaryValue
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
   summary: {
-    totalValueLockedUsd: number
+    totalValueLockedUsd: number | undefined
     deposits: {
       total: number
       last7d: number
@@ -65,6 +69,7 @@ export interface ProjectPrivacyEntry {
     }
   }
   isUnderReview: boolean
+  recentUpdatesCount: number
   warnings: {
     yellow?: string
     red?: ProjectRedWarning
@@ -132,7 +137,7 @@ export async function getPrivacyProjectEntry(
   const hasTrackedAssets = details.assets.length > 0
   const discoveryHref =
     contractsSection || permissionsSection ? discoUi.href : undefined
-  const discoveryUpdates = ossification ? getDiscoveryUpdates(details.id) : []
+  const discoveryUpdates = getDiscoveryUpdates(details.id)
 
   const sections: ProjectDetailsSection[] = []
 
@@ -171,16 +176,18 @@ export async function getPrivacyProjectEntry(
       iconUrl: icon,
     }
 
-    sections.push({
-      type: 'TvsValueSection',
-      props: {
-        id: 'privacy-tvl',
-        title: 'Value Locked',
-        defaultRange: defaultChartRange,
-        rangeControls: 'privacy',
-        project: chartProject,
-      },
-    })
+    if (details.hasTvl) {
+      sections.push({
+        type: 'TvsValueSection',
+        props: {
+          id: 'privacy-tvl',
+          title: 'Value Locked',
+          defaultRange: defaultChartRange,
+          rangeControls: 'privacy',
+          project: chartProject,
+        },
+      })
+    }
 
     sections.push({
       type: 'PrivacyFlowsSection',
@@ -198,6 +205,7 @@ export async function getPrivacyProjectEntry(
         id: 'privacy-assets-breakdown',
         title: 'Assets Breakdown',
         assets: details.assets,
+        showTvl: details.hasTvl,
       },
     })
   }
@@ -259,7 +267,7 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  if (ossification) {
+  if (discoveryUpdates.length > 0 || ossification) {
     sections.push({
       type: 'UpdatesSection',
       props: {
@@ -311,6 +319,7 @@ export async function getPrivacyProjectEntry(
     discoUi,
     bucketCount: details.summary.bucketCount,
     assetsCount: details.assets.length,
+    hasTvl: details.hasTvl,
     attributes: details.attributes,
     exitWindow: details.exitWindow,
     trustedSetup: toTrustedSetupSummaryValue(
@@ -323,6 +332,7 @@ export async function getPrivacyProjectEntry(
       deposits: details.summary.deposits,
     },
     isUnderReview: !!details.statuses.reviewStatus,
+    recentUpdatesCount: countRecentDiscoveryUpdates(discoveryUpdates),
     warnings: {
       yellow: details.statuses.yellowWarning,
       red: details.statuses.redWarning,
@@ -336,9 +346,21 @@ async function getTotalValueLockedUsd(
   details: PrivacyProjectDetails,
   helpers: SsrHelpers,
   range: ChartRange,
-): Promise<number> {
+): Promise<number | undefined> {
   if (details.assets.length === 0) {
-    return 0
+    return undefined
+  }
+
+  const flowsPrefetch = helpers.queryClient.prefetchQuery(
+    helpers.trpc.privacy.flowsChart.queryOptions({
+      projectIds: [details.id],
+      range,
+    }),
+  )
+
+  if (!details.hasTvl) {
+    await flowsPrefetch
+    return undefined
   }
 
   // The flows chart prefetch rides along so both charts are dehydrated for the client
@@ -349,13 +371,8 @@ async function getTotalValueLockedUsd(
         range,
       }),
     ),
-    helpers.queryClient.prefetchQuery(
-      helpers.trpc.privacy.flowsChart.queryOptions({
-        projectIds: [details.id],
-        range,
-      }),
-    ),
+    flowsPrefetch,
   ])
 
-  return tvlChart.chart.at(-1)?.[1][details.id] ?? 0
+  return tvlChart.chart.at(-1)?.[1][details.id] ?? undefined
 }

@@ -19,6 +19,8 @@ import {
   WALK_AWAY_PASSED_PROJECTS,
 } from '~/consts/walkAwayProjects'
 import { env } from '~/env'
+import type { CompareMetricId } from '~/pages/layer2s/compare/utils/compareChartState'
+import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
 import { getProjectOssification } from '~/server/features/projects/ossification/getProjectOssification'
 import {
   countRecentDiscoveryUpdates,
@@ -408,6 +410,7 @@ export async function getL2ProjectEntry(
         id: 'tvs',
         title: 'Value Secured',
         tvsBreakdownUrl: `/layer2s/projects/${project.slug}/tvs-breakdown`,
+        compareUrl: getProjectCompareUrl(project, 'tvs'),
         milestones: sortedMilestones,
         tokens,
         tvsInfo: project.tvsInfo,
@@ -441,6 +444,7 @@ export async function getL2ProjectEntry(
         milestones: sortedMilestones,
         category: project.scalingInfo.type,
         project: projectWithIcon,
+        compareUrl: getProjectCompareUrl(project, 'activity'),
         ...activitySection,
       },
     })
@@ -454,6 +458,7 @@ export async function getL2ProjectEntry(
         title: 'Onchain costs',
         milestones: sortedMilestones,
         project: projectWithIcon,
+        compareUrl: getProjectCompareUrl(project, 'costs'),
         ...costsSection,
       },
     })
@@ -467,6 +472,7 @@ export async function getL2ProjectEntry(
         title: 'Data posted',
         milestones: sortedMilestones,
         project: projectWithIcon,
+        compareUrl: getProjectCompareUrl(project, 'data-posted'),
         ...dataPostedSection,
       },
     })
@@ -798,4 +804,16 @@ export async function getL2ProjectEntry(
   }
 
   return { ...common, sections }
+}
+
+/**
+ * Archived projects have no live data to compare. The feature flag is
+ * applied by `CompareProjectsLink` itself, like on every other entry point.
+ */
+function getProjectCompareUrl(
+  project: Project<never, 'archivedAt'>,
+  metric: CompareMetricId,
+): string | undefined {
+  if (project.archivedAt) return undefined
+  return getCompareEntryUrl({ metric, projectSlug: project.slug })
 }

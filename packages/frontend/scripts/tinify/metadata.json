@@ -297,6 +297,7 @@
   "static/icons/unichain.png": "fc4e30a8da9c1580a403a6de9990fcf6",
   "static/icons/uniswap.png": "cb31b3fadc3ad54d964f95761d6e0475",
   "static/icons/uniswapv3.png": "cb31b3fadc3ad54d964f95761d6e0475",
+  "static/icons/uniswapv4.png": "cb31b3fadc3ad54d964f95761d6e0475",
   "static/icons/unite.png": "aae6afd352e3ca337c12231e2ecc82eb",
   "static/icons/vector.png": "af0592ee3395c8cc13044d8da267f605",
   "static/icons/winr.png": "435fc41491bb57f9bdfa274398c2f047",
@@ -1605,10 +1606,18 @@
   "static/icons/butternetwork.png": "d703eb0a0ad7bd2e852192bdb4adc769",
   "static/meta-images/publications/privacy-page-banner-vertical.png": "b0565a6aa9fd6db2f5953ca73df015f1",
   "static/meta-images/publications/privacy-page-banner.png": "8711ef4e27f519d1257bc0e05fb8aca3",
+  "static/meta-images/layer2s/compare/opengraph-image.png": "9c12629096055ace093ecc4556d8babb",
+  "static/icons/frankencoin.png": "50dda344103d36973d7cb0a30c676ba6",
+  "static/icons/chfau.png": "b7cecee23cbe4a26a447753a1cce40e8",
   "static/images/architecture/liquityv2.png": "6457a9f33481c7cef97fa48977676e37",
   "static/images/architecture/uniswapv3.png": "8828339c8ae5ad448a72e4530d42d4fd",
   "static/meta-images/defi/projects/chainlink/opengraph-image.png": "a0fe4a358f1bdf3013d242aa5198c799",
   "static/meta-images/defi/projects/liquityv2/opengraph-image.png": "8824e5cddaf5cb1d5b43dec10105d7d9",
   "static/meta-images/defi/projects/uniswapv3/opengraph-image.png": "91d3e36146d9d5c0729c70ec25ab28f8",
-  "static/meta-images/defi/summary/opengraph-image.png": "bd424fff91abdfef251690a6ad89620f"
+  "static/meta-images/defi/summary/opengraph-image.png": "bd424fff91abdfef251690a6ad89620f",
+  "static/meta-images/defi/projects/frankencoin/opengraph-image.png": "c305797856053172f14c5169150d211a",
+  "static/meta-images/defi/projects/uniswapv4/opengraph-image.png": "a2a558d00bfb67a128decc62e5c1455d",
+  "static/icons/privacy-boost.png": "556d9480cba16abc6fe7fe04a0dce9bc",
+  "static/meta-images/privacy/projects/privacy-boost/opengraph-image.png": "880f6292f63b5256cae18d5737fb6582",
+  "static/meta-images/zk-catalog/projects/privacy-boost/opengraph-image.png": "3846e8359ecef180a9482a573c9a69fe"
 }

@@ -53,7 +53,10 @@ export function PrivacyProjectPage({
             <div className="relative z-0 max-md:bg-surface-primary">
               <div className="grid-cols-[minmax(0,_1fr)_180px] gap-x-6 lg:grid">
                 <div className="pt-6 max-md:px-4 lg:pt-4">
-                  <ProjectHeader project={entry} />
+                  <ProjectHeader
+                    project={entry}
+                    recentUpdatesCount={entry.recentUpdatesCount}
+                  />
                   <ProjectSummaryBars
                     project={{
                       underReviewStatus: entry.isUnderReview
@@ -97,6 +100,7 @@ export function PrivacyProjectPage({
                     >
                       <PrivacyProjectStats
                         totalValueLockedUsd={entry.summary.totalValueLockedUsd}
+                        hasTvl={entry.hasTvl}
                         assetsCount={entry.assetsCount}
                         bucketsCount={entry.bucketCount}
                         deposits={entry.summary.deposits}

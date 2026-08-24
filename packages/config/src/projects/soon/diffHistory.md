@@ -1,20 +1,20 @@
-Generated with discovered.json: 0x2839259d1eda0ba7d89575bff78667423f7f73de
+Generated with discovered.json: 0x4fd7d6bc80ccfdfe9bfab833ab7829bb661a91c0
 
-# Diff at Thu, 20 Aug 2026 06:21:28 GMT:
+# Diff at Mon, 24 Aug 2026 15:09:50 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1785450156
-- current timestamp: 1785450156
+- comparing to: main@13eb47c755f8f1545e987d7aa8482c1840bc9dfd block: 1787239875
+- current timestamp: 1787239875
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1785450156 (main branch discovery), not current.
+discovery. Values are for block 1787239875 (main branch discovery), not current.
 
 ```diff
     contract L2OutputOracle (eth:0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448) [opstack/L2OutputOracle_soon] {
@@ -27,7 +27,11 @@ discovery. Values are for block 1785450156 (main branch discovery), not current.
 ```diff
     contract SystemConfig (eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
       fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
 +        true
@@ -43,10 +47,20 @@ discovery. Values are for block 1785450156 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (eth:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract AddressManager (eth:0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd) [opstack/AddressManager] {
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -55,6 +69,8 @@ discovery. Values are for block 1785450156 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -73,6 +89,32 @@ discovery. Values are for block 1785450156 (main branch discovery), not current.
     +++ description: The main entry point to deposit ETH from host chain to this chain. This version (originally from SOON) is modified to support Solana addresses. It requires specifying the destination SOL address and removes support for ERC20 tokens.
       critical:
 +        true
+    }
+```
+
+Generated with discovered.json: 0x1ef69115d9475aa5b68ae29124a75d86d238509c
+
+# Diff at Thu, 20 Aug 2026 15:32:19 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@490d1ebdb014748d72479deb28674a95e7cdbfb3 block: 1785450156
+- current timestamp: 1787239875
+
+## Description
+
+The batcher resumed posting batches on 2026-08-17 after 37 days of inactivity, now publishing EigenDA v3 certificates to the batch inbox hourly through a new EigenDA on-demand payment account (`0xcB3a6380C666Ff97F474E11FD41519c320b7a276`).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
+-        false
++        "v3"
+      values.sequencerInbox:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0xfF000000000000000000000000000000000000FF"
     }
 ```
 

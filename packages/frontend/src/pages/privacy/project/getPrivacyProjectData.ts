@@ -1,5 +1,4 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
-import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
 import { getPrivacyProjectEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
@@ -10,17 +9,19 @@ import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getPrivacyProjectData(
-  req: Request<{ slug: string }, unknown, unknown, { update?: string }>,
   manifest: Manifest,
+  slug: string,
+  url: string,
   cache: InMemoryCache,
+  selectedUpdateId?: string,
 ): Promise<RenderData | undefined> {
   const data = await cache.get(
     {
-      key: ['privacy', 'projects', req.params.slug],
+      key: ['privacy', 'projects', slug],
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    () => getCachedData(manifest, req.params.slug, req.originalUrl),
+    () => getCachedData(manifest, slug, url),
   )
   if (!data) return undefined
 
@@ -30,7 +31,7 @@ export async function getPrivacyProjectData(
       page: 'PrivacyProjectPage',
       props: {
         ...data.props,
-        selectedUpdateId: req.query.update,
+        selectedUpdateId,
       },
     },
   }

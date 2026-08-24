@@ -1,20 +1,20 @@
-Generated with discovered.json: 0x592d45d0742bd7bf393e075a44ae130305edf58d
+Generated with discovered.json: 0x7839e54ce3dda2f3f26298bf6f4b1cc379c7d26b
 
-# Diff at Thu, 20 Aug 2026 16:54:53 GMT:
+# Diff at Mon, 24 Aug 2026 15:09:42 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bd2a19ed47921b541d6d991c325212600c2751a9 block: 1787147547
-- current timestamp: 1787147547
+- comparing to: main@13eb47c755f8f1545e987d7aa8482c1840bc9dfd block: 1787311119
+- current timestamp: 1787311119
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1787147547 (main branch discovery), not current.
+discovery. Values are for block 1787311119 (main branch discovery), not current.
 
 ```diff
     contract GovernorRewardsSweeper (eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B) [railgun/Sweeper] {
@@ -247,6 +247,36 @@ discovery. Values are for block 1787147547 (main branch discovery), not current.
     }
 ```
 
+Generated with discovered.json: 0xeb92c7221649da73ad67ce15309d6353e63c36f9
+
+# Diff at Fri, 21 Aug 2026 11:19:42 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@97be884924a799765834458d955d84040bed3cfb block: 1787147547
+- current timestamp: 1787311119
+
+## Description
+
+New proposal on Railgun DAO: "Base deployment of RAILGUN Privacy System". 
+
+Onchain execution of this proposal sends tasks to OPStackSender contract: https://tools.l2beat.com/decoder-new/?hash=0xfd5860b22fad6d5bf81cd4e9c809b2016ed08971b0fbf96aaf033fdbf87b52ec&data=AwA. These tasks initialize verification keys for all railgun circuits on the main Railgun contract on Base (`base:0x0047d1F97674614189E80566575FB615788AcF25`).
+
+Railgun smart contracts on Base are already deployed, with bytecode matching the deployment on Ethereum.
+
+The proposal doesn't look malicious.
+
+## Watched changes
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ severity: HIGH
+      values.proposalCount:
+-        27
++        28
+    }
+```
+
 Generated with discovered.json: 0xcd88c164b465017734a52e9426c4a394593da472
 
 # Diff at Wed, 19 Aug 2026 10:26:56 GMT:
@@ -268,6 +298,7 @@ Looks legit.
 ```diff
     contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
     +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ severity: HIGH
       values.proposalCount:
 -        26
 +        27
@@ -384,6 +415,7 @@ The newly deployed railgun contracts have poseidon hash libraries not verified, 
 ```diff
     contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
     +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ severity: HIGH
       values.proposalCount:
 -        25
 +        26
@@ -434,6 +466,7 @@ Executed a railgun proposal. It:
 ```diff
     contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
     +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ severity: HIGH
       values.proposalCount:
 -        23
 +        25

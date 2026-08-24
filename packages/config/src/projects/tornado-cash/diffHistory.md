@@ -1,20 +1,20 @@
-Generated with discovered.json: 0x8d36b8d95a5fadcc219306b6e768c0da99863d8f
+Generated with discovered.json: 0x14d4102243a7038cea912a4bf7ebb33c1117c204
 
-# Diff at Thu, 20 Aug 2026 17:17:52 GMT:
+# Diff at Mon, 24 Aug 2026 15:10:20 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bd2a19ed47921b541d6d991c325212600c2751a9 block: 1783068981
-- current timestamp: 1783068981
+- comparing to: main@13eb47c755f8f1545e987d7aa8482c1840bc9dfd block: 1787307944
+- current timestamp: 1787307944
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1783068981 (main branch discovery), not current.
+discovery. Values are for block 1787307944 (main branch discovery), not current.
 
 ```diff
     contract Pool_50K_cDAI (eth:0x03893a7c7463AE47D46bc7f091665f1893656003) [tornado-cash/cTornado] {
@@ -330,6 +330,31 @@ discovery. Values are for block 1783068981 (main branch discovery), not current.
 +        {"severity":"HIGH","description":"Whether verifier-upgrade authority has been permanently renounced."}
       critical:
 +        true
+    }
+```
+
+Generated with discovered.json: 0xf426051e3841a646f40813e480fae6579b24eea9
+
+# Diff at Fri, 21 Aug 2026 10:26:51 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@97be884924a799765834458d955d84040bed3cfb block: 1783068981
+- current timestamp: 1787307944
+
+## Description
+
+New proposal to update DAO-controled tornado cash frontend: https://github.com/tornado-dao/classic-ui/compare/e312df5a4f6caaa7e93f1b5960c603d8dd7ec67a...17c54dae9ad91bb3c6d62a7860df6cd365ab76d4. It replaces RPC queries with Graph queries, sources proposal states from the onchain data, changes source link from Codeberg to GitHub and adds a phishing website notice board for tornado.cash.
+
+Sol verified that the published CID matches the changes.
+
+## Watched changes
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
+      values.proposalCount:
+-        67
++        68
     }
 ```
 

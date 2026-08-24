@@ -7,6 +7,7 @@ import { boxContains, isResizable } from '../utils/containment'
 import { toViewCoordinates } from '../utils/coordinates'
 import { buildRenderGraph, headerAt } from '../utils/renderGraph'
 import { reverseIter } from '../utils/reverseIter'
+import { getRowLayout } from '../utils/rows'
 import { updateNodePositions } from '../utils/updateNodePositions'
 
 export function onMouseDown(
@@ -67,18 +68,15 @@ export function onMouseDown(
         let selected: readonly string[]
         let mouseUpAction: State['mouseUpAction']
         if (event.metaKey || event.altKey) {
-          selected = []
-
-          const hiddenFields =
-            node.hiddenFields.length > 0
-              ? new Set(node.hiddenFields)
-              : undefined
-          const field = node.fields.find(
-            (f) => !hiddenFields?.has(f.name) && boxContains(f.box, x, y),
-          )
-          if (field !== undefined) {
-            selected = [field.target]
-          }
+          // Clicking a row selects what it points at, which for a compressed
+          // row is every value fanning out of it.
+          const row = getRowLayout(node).rows.find((row) => {
+            const anchor = node.fields[row.fieldIndices[0] as number]
+            return anchor !== undefined && boxContains(anchor.box, x, y)
+          })
+          selected = (row?.fieldIndices ?? [])
+            .map((index) => node.fields[index]?.target)
+            .filter((target): target is string => target !== undefined)
         } else if (!event.shiftKey && !includes) {
           selected = [node.id]
         } else if (!event.shiftKey && includes) {

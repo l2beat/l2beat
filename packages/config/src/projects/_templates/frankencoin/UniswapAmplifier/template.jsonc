@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["getMinimumDollars"],
+  "ignoreRelatives": ["UNISWAP_POOL", "USD"],
+  "ignoreInWatchMode": ["getPrice"],
+  "description": "Allows to create uniswap positions with ZCHF borrowed from the protocol on one side and USDT supplied by the user on the other. There are multiple contraints on what kind of positions can be created."
+}

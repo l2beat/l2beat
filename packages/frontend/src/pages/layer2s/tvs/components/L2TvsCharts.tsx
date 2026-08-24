@@ -10,6 +10,8 @@ import type { ChartUnit } from '~/components/chart/types'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { getChartTimeRangeFromData } from '~/components/core/chart/utils/getChartTimeRangeFromData'
 import { useTvsDisplayControlsContext } from '~/components/table/display/contexts/TvsDisplayControlsContext'
+import { CompareProjectsLink } from '~/pages/layer2s/compare/components/CompareProjectsLink'
+import { getCompareEntryUrl } from '~/pages/layer2s/compare/utils/getCompareEntryUrl'
 import type { L2TvsEntry } from '~/server/features/layer2s/tvs/getL2TvsEntries'
 import type { TvsProjectFilter } from '~/server/features/layer2s/tvs/utils/projectFilterUtils'
 import { useTRPC } from '~/trpc/React'
@@ -90,7 +92,10 @@ export function L2TvsCharts({ entries, milestones }: Props) {
         charts={[byBridgeTypeChart, byAssetSourceChart]}
       />
       <ChartControlsWrapper>
-        <TvsChartUnitControls unit={unit} setUnit={setUnit} />
+        <div className="flex flex-wrap items-center gap-2">
+          <TvsChartUnitControls unit={unit} setUnit={setUnit} />
+          <CompareProjectsLink href={getCompareEntryUrl({ metric: 'tvs' })} />
+        </div>
         <TvsChartRangeControls range={range} setRange={setRange} />
       </ChartControlsWrapper>
     </div>

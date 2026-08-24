@@ -1,26 +1,28 @@
-Generated with discovered.json: 0x22be9f28a696e392d67069d006b66378bd7d74e9
+Generated with discovered.json: 0xeb7565a48a537bd7faa9b016914b1f1839cafe88
 
-# Diff at Thu, 20 Aug 2026 06:21:35 GMT:
+# Diff at Mon, 24 Aug 2026 15:09:30 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1761589819
-- current timestamp: 1761589819
+- comparing to: main@13eb47c755f8f1545e987d7aa8482c1840bc9dfd block: 1787230124
+- current timestamp: 1787230124
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1761589819 (main branch discovery), not current.
+discovery. Values are for block 1787230124 (main branch discovery), not current.
 
 ```diff
     contract AddressManager (eth:0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05) [opstack/AddressManager] {
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -29,6 +31,8 @@ discovery. Values are for block 1761589819 (main branch discovery), not current.
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -37,13 +41,19 @@ discovery. Values are for block 1761589819 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract SystemConfig (eth:0x895E00269A05848F3c9889EfA677D02fF7351a5D) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
       fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
 +        true
@@ -55,6 +65,112 @@ discovery. Values are for block 1761589819 (main branch discovery), not current.
     +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xa2DCa85BB892De55D8B262d1806114733106e8D1) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xab64A3Da57886cD4205176c72b8Be63C34E46366) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xeC638D2C7d0F07c0245ac94e51A51Bac427d8262) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0xa09437974b541882134ddedb3608619b985f6b8b
+
+# Diff at Thu, 20 Aug 2026 12:49:54 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@00219f808cbf3466c6d2af96ddc96440efc3714c block: 1761589819
+- current timestamp: 1787230124
+
+## Description
+
+Verified the sources of two proxy admin contracts, permissions auto resolved for their EOA owner.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761589819 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0xab64A3Da57886cD4205176c72b8Be63C34E46366) [global/ProxyAdmin] {
+    +++ description: None
+      name:
+-        ""
++        "ProxyAdmin"
+      unverified:
+-        true
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0xa80f2401c8AE7D95C7995295DC2c0D651F25FD60","role":"admin"}]
+      values.owner:
++        "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01"
+      values.UPGRADE_INTERFACE_VERSION:
++        "5.0.0"
+      implementationNames.eth:0xab64A3Da57886cD4205176c72b8Be63C34E46366:
+-        ""
++        "ProxyAdmin"
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0xa80f2401c8AE7D95C7995295DC2c0D651F25FD60","role":"admin"}]
+    }
+```
+
+```diff
+    EOA  (eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x8E132B3bD37f3f6E223cD23adD390111e674C94E","role":"admin","via":[{"address":"eth:0xeC638D2C7d0F07c0245ac94e51A51Bac427d8262"}]},{"permission":"upgrade","from":"eth:0xa80f2401c8AE7D95C7995295DC2c0D651F25FD60","role":"admin","via":[{"address":"eth:0xab64A3Da57886cD4205176c72b8Be63C34E46366"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xab64A3Da57886cD4205176c72b8Be63C34E46366","role":".owner"},{"permission":"act","from":"eth:0xeC638D2C7d0F07c0245ac94e51A51Bac427d8262","role":".owner"}]
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xeC638D2C7d0F07c0245ac94e51A51Bac427d8262) [global/ProxyAdmin] {
+    +++ description: None
+      name:
+-        ""
++        "ProxyAdmin"
+      unverified:
+-        true
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0x8E132B3bD37f3f6E223cD23adD390111e674C94E","role":"admin"}]
+      values.owner:
++        "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01"
+      values.UPGRADE_INTERFACE_VERSION:
++        "5.0.0"
+      implementationNames.eth:0xeC638D2C7d0F07c0245ac94e51A51Bac427d8262:
+-        ""
++        "ProxyAdmin"
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x8E132B3bD37f3f6E223cD23adD390111e674C94E","role":"admin"}]
     }
 ```
 

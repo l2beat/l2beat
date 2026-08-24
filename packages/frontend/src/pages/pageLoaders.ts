@@ -12,6 +12,8 @@ export const pageLoaders = {
       .L2TvsBreakdownPage,
   L2ActivityPage: async () =>
     (await import('./layer2s/activity/L2ActivityPage')).L2ActivityPage,
+  L2ComparePage: async () =>
+    (await import('./layer2s/compare/L2ComparePage')).L2ComparePage,
   L2RiskDataAvailabilityPage: async () =>
     (
       await import(
