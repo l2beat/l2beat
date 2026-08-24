@@ -202,7 +202,7 @@ function getShape(tvs: (number | null)[] | null) {
 function getUnchangedSentence(timeline: OssificationTimeline): string {
   const { to, clockStart, from } = timeline
   if (clockStart === null) {
-    return 'The age of the critical perimeter is unknown.'
+    return 'The age of the critical code perimeter is unknown.'
   }
   const age = formatSeconds(to - clockStart)
   const since = formatTimestamp(clockStart, { mode: 'date' })
@@ -214,9 +214,9 @@ function getUnchangedSentence(timeline: OssificationTimeline): string {
 function getResetSentence(timeline: OssificationTimeline): string {
   const count = timeline.resets.length
   if (count === 0) {
-    return 'No critical change or new critical contract in this window.'
+    return 'No critical upgrade in this window.'
   }
-  return `${count} perimeter ${count === 1 ? 'reset' : 'resets'} in this window — a critical change or a newly deployed critical contract, marked below the baseline.`
+  return `${count} critical ${count === 1 ? 'upgrade' : 'upgrades'} in this window, marked below the baseline.`
 }
 
 function getTvsSentence(tvs: (number | null)[]): string {
