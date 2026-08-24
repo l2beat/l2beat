@@ -8,7 +8,6 @@ CREATE TABLE "PrivacyRelayerActivity" (
     "txHash" VARCHAR(66) NOT NULL,
     "logIndex" INTEGER NOT NULL,
     "relayerAddress" VARCHAR(42) NOT NULL,
-    "recipientAddress" VARCHAR(42) NOT NULL,
 
     CONSTRAINT "PrivacyRelayerActivity_pkey" PRIMARY KEY ("configurationId", "txHash", "logIndex")
 );
