@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "VotingEscrowExitQueue",
+  "category": "gov",
+  "description": "Queue applying cooldowns and optional fees to withdrawals from VotingEscrow.",
+  "ignoreMethods": [
+    "calculateFee",
+    "canExit",
+    "getTimeBasedFee",
+    "isCool",
+    "proxiableUUID",
+    "queue",
+    "ticketHolder",
+    "timeToMinLock"
+  ],
+  "fields": {
+    "dao": {
+      "description": "Aragon DAO whose queue roles control fees, cooldowns, withdrawals and upgrades."
+    },
+    "escrow": {
+      "description": "VotingEscrow that creates and completes withdrawal requests."
+    },
+    "clock": { "description": "Epoch clock used for exit timing." },
+    "cooldown": {
+      "description": "Current base withdrawal cooldown.",
+      "type": "RISK_PARAMETER"
+    },
+    "minCooldown": {
+      "description": "Minimum configurable withdrawal cooldown.",
+      "type": "RISK_PARAMETER"
+    },
+    "minLock": {
+      "description": "Minimum lock duration required by the queue.",
+      "type": "RISK_PARAMETER"
+    },
+    "feePercent": {
+      "description": "Current withdrawal fee ratio.",
+      "type": "RISK_PARAMETER"
+    },
+    "minFeePercent": {
+      "description": "Minimum configurable withdrawal fee ratio.",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}
