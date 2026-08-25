@@ -35,12 +35,10 @@ export class BalanceProvider {
           })
           const res = await client.multicall(calls, blockNumber)
           return res.map((r, i) => {
-            const reverted = !r.success
-            const isDataEmpty = r.data.length === 0
             // a revert gives no number - throw instead of storing a
             // poisoned 0. getEthBalance always returns data, so empty
             // data for native is a fault too
-            if (reverted || (isDataEmpty && queries[i].token === 'native')) {
+            if (!success || (r.data.length === 0 && queries[i].token === 'native')) {
               throw new Error(
                 `Failed to fetch balance of ${queries[i].token} for ${queries[i].holder} at block ${blockNumber}`,
               )

@@ -3,8 +3,6 @@ import { utils } from 'ethers'
 import type { CallParameters } from '../types'
 
 export interface MulticallV3Response {
-  // raw tryAggregate flag: false = the call reverted. A successful call can
-  // still return empty data, e.g. target not deployed at the queried block
   success: boolean
   data: Bytes
 }

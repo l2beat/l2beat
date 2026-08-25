@@ -27,7 +27,6 @@ export class TotalSupplyProvider {
         if (client.isMulticallDeployed(blockNumber)) {
           const res = await client.multicall(calls, blockNumber)
           return res.map((r, i) => {
-            // a revert gives no number - throw instead of storing a poisoned 0
             if (!r.success) {
               throw new Error(
                 `Failed to fetch totalSupply of ${tokens[i]} at block ${blockNumber}`,
