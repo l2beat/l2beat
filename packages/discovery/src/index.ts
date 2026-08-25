@@ -114,6 +114,7 @@ export { deduplicateAbi } from './discovery/source/deduplicateAbi'
 export { SourceCodeService } from './discovery/source/SourceCodeService'
 export { asStructured } from './discovery/type-casters/asStructured'
 export {
+  get$Admins,
   get$Implementations,
   toAddressArray,
 } from './discovery/utils/extractors'
