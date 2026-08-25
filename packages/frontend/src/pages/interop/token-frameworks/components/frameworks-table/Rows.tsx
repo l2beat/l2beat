@@ -4,7 +4,7 @@ import { ArrowRightIcon } from '~/icons/ArrowRight'
 import type {
   FrameworkChainPathItem,
   TopTokenItem,
-} from '~/server/features/scaling/interop/getTokenFrameworksData'
+} from '~/server/features/layer2s/interop/getTokenFrameworksData'
 import { ChainIcon } from '../../../components/ChainIcon'
 import {
   type InteropTransferDefaults,

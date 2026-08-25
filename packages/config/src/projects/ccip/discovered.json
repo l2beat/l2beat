@@ -1,7 +1,7 @@
 {
   "name": "ccip",
-  "timestamp": 1786528176,
-  "configHash": "0xc2b3ff7dee34de23720eb7e2d53223eb6fe63a27e2d76a38a501b20cab8de2ba",
+  "timestamp": 1787129183,
+  "configHash": "0xbd2e8021f8591bc56327bc91defa026d7b4e32b81a1c7bdb56c95e693909dd67",
   "entries": [
     {
       "name": "ArbitrumOffRamp_v1_6",
@@ -400,6 +400,7 @@
             "17164792800244661392": "mint",
             "8481857512324358265": "monad",
             "18164309074156128038": "morph",
+            "4215185756725900654": "mova",
             "12657445206920369324": "henesys",
             "7801139999541420232": "pharos",
             "9335212494177455608": "plasma",
@@ -859,6 +860,7 @@
             "17164792800244661392": "mint",
             "8481857512324358265": "monad",
             "18164309074156128038": "morph",
+            "4215185756725900654": "mova",
             "12657445206920369324": "henesys",
             "7801139999541420232": "pharos",
             "9335212494177455608": "plasma",
@@ -1300,6 +1302,7 @@
             "17164792800244661392": "mint",
             "8481857512324358265": "monad",
             "18164309074156128038": "morph",
+            "4215185756725900654": "mova",
             "12657445206920369324": "henesys",
             "7801139999541420232": "pharos",
             "9335212494177455608": "plasma",
@@ -1363,7 +1366,7 @@
             "isDeprecated": false
           }
         ],
-        "getNextDONId": 57,
+        "getNextDONId": 58,
         "getNodeOperators": [
           {
             "admin": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
@@ -1732,7 +1735,7 @@
         "getAllowListEnabled": false,
         "getBridgeLimit": "200000000000000000000000000",
         "getBridgeLimitAdmin": "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39",
-        "getCurrentBridgedAmount": "129632676353160879841763898",
+        "getCurrentBridgedAmount": "131400011720225230309111097",
         "getRateLimitAdmin": "eth:0xC5BcC58BE6172769ca1a78B8A45752E3C5059c39",
         "getRebalancer": "eth:0x0000000000000000000000000000000000000000",
         "getRmnProxy": "eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81",
@@ -2312,6 +2315,7 @@
             "17164792800244661392": "mint",
             "8481857512324358265": "monad",
             "18164309074156128038": "morph",
+            "4215185756725900654": "mova",
             "12657445206920369324": "henesys",
             "7801139999541420232": "pharos",
             "9335212494177455608": "plasma",
@@ -2479,6 +2483,15 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers",
+          "via": [
+            { "address": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5" }
+          ]
+        },
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
@@ -2677,7 +2690,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1147,
+        "getExpectedNextSequenceNumber": 1154,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -2886,6 +2899,15 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers",
+          "via": [
+            { "address": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "description": "sign OCR commit reports that move crosschain merkle roots of messages and price updates into this OffRamp. F+1 of these required per report.",
           "role": ".ocrCommitSigners"
@@ -2944,7 +2966,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 144,
+        "getExpectedNextSequenceNumber": 145,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -3036,7 +3058,7 @@
         "0x0bfaa79275ffb76e161bfb96a564a2a4cd6e2ff1d915f2b667fb2698bce1cb80"
       ],
       "proxyType": "immutable",
-      "description": "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 8 signatures across 72 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 8-of-72 multisig and is strictly more constrained. Root: 3-of-3, childGroups=(1,4,5). [click for per-group breakdown: Group 1: 2-of-2, parent=0, childGroups=(2,3) | Group 2: 2-of-18, parent=1, signers=18 | Group 3: 2-of-18, parent=1, signers=18 | Group 4: 1-of-7, parent=0, signers=7 | Group 5: 3-of-16, parent=0, childGroups=(6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21) | Group 6: 1-of-2, parent=5, signers=2 | Group 7: 1-of-2, parent=5, signers=2 | Group 8: 1-of-2, parent=5, signers=2 | Group 9: 1-of-1, parent=5, signers=1 | Group 10: 1-of-2, parent=5, signers=2 | Group 11: 1-of-2, parent=5, signers=2 | Group 12: 1-of-4, parent=5, signers=4 | Group 13: 1-of-1, parent=5, signers=1 | Group 14: 1-of-1, parent=5, signers=1 | Group 15: 1-of-1, parent=5, signers=1 | Group 16: 1-of-1, parent=5, signers=1 | Group 17: 1-of-3, parent=5, signers=3 | Group 18: 1-of-1, parent=5, signers=1 | Group 19: 1-of-1, parent=5, signers=1 | Group 20: 1-of-3, parent=5, signers=3 | Group 21: 1-of-2, parent=5, signers=2]. The owner can rotate the entire signer tree.",
+      "description": "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 8 signatures across 69 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 8-of-69 multisig and is strictly more constrained. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17]. The owner can rotate the entire signer tree.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -3140,6 +3162,15 @@
         {
           "permission": "interact",
           "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "set or override the previous OnRamp and OffRamp used as the starting nonce source during a ramp migration.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
           "description": "update the list of authorized callers that can update the nonces.",
           "role": ".owner",
           "via": [
@@ -3149,7 +3180,7 @@
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "add a 'message interceptor' contract that can gate messages based on content.",
+          "description": "can add, disable, or reconfigure source-chain routes, including each route's Router, source OnRamp address, and whether commits call the configured RMN verifier.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449" }
@@ -3158,7 +3189,7 @@
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can arbitrarily update signers and transmitters set.",
+          "description": "can replace the OCR commit and execution configurations, including their digests, fault thresholds, signers, and transmitters.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449" }
@@ -3167,16 +3198,7 @@
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can disable source chains.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can toggle whether commits for a source route call the configured RMN verifier. Enabling this path is only live when that RMN implementation supports verify().",
+          "description": "can set a message-interceptor contract that gates execution based on message content.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449" }
@@ -3186,15 +3208,6 @@
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "description": "can update the fee quoter contract, where signers save new prices used for fee estimation.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can update the router contract used to relay messages on this chain from another chain. Each source chain has its own router configured.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449" }
@@ -3521,6 +3534,15 @@
         {
           "permission": "interact",
           "from": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
+          "description": "can add, disable, or reconfigure destination-chain routes and directly manage each route's sender allowlist.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "description": "can set a 'message interceptor' contract to gate messages based on content.",
           "role": ".owner",
           "via": [
@@ -3539,7 +3561,7 @@
         {
           "permission": "interact",
           "from": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
-          "description": "can update the FeeQuoter address used for fee estimations.",
+          "description": "can update the FeeQuoter used for fee estimation and the fee aggregator that receives withdrawn fee tokens.",
           "role": ".owner",
           "via": [
             { "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449" }
@@ -3710,8 +3732,26 @@
         {
           "permission": "interact",
           "from": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+          "description": "add or remove registry modules that can propose administrators for unregistered tokens.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
           "description": "can register arbitrary tokens with an arbitrary administrator.",
           "role": ".owner",
+          "via": [
+            { "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+          "description": "set or remove the TokenPool for an administered token and initiate transfer of that token's administrator role.",
+          "role": ".administrators",
           "via": [
             { "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449" }
           ]
@@ -3961,15 +4001,12 @@
           "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2",
           "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374",
           "eth:0x843742760078Df85609690D85827173A1A96D14a",
-          "eth:0x8569de6e68F22937e69b7338E47Ee751aCcFb266",
-          "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
           "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
           "eth:0x8AbFC1005bee7ec7ddd4Df69fAC70399B9dEFf61",
           "eth:0x9079410666ED02725ee9d148398Cee26397c2A36",
           "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79",
           "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D",
           "eth:0x957913184D083731770A15E4d401e4A8310Bb5F3",
-          "eth:0x97D0895BEd8acd240C32427191D96B18eB283748",
           "eth:0x9a2595b4482F463fc629fBf5900e6Fab6d4D5fD0",
           "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF",
           "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB",
@@ -3995,9 +4032,9 @@
         ],
         "$threshold": 8,
         "config": {
-          "summary": "Root: 3-of-3, childGroups=(1,4,5) | Group 1: 2-of-2, parent=0, childGroups=(2,3) | Group 2: 2-of-18, parent=1, signers=18 | Group 3: 2-of-18, parent=1, signers=18 | Group 4: 1-of-7, parent=0, signers=7 | Group 5: 3-of-16, parent=0, childGroups=(6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21) | Group 6: 1-of-2, parent=5, signers=2 | Group 7: 1-of-2, parent=5, signers=2 | Group 8: 1-of-2, parent=5, signers=2 | Group 9: 1-of-1, parent=5, signers=1 | Group 10: 1-of-2, parent=5, signers=2 | Group 11: 1-of-2, parent=5, signers=2 | Group 12: 1-of-4, parent=5, signers=4 | Group 13: 1-of-1, parent=5, signers=1 | Group 14: 1-of-1, parent=5, signers=1 | Group 15: 1-of-1, parent=5, signers=1 | Group 16: 1-of-1, parent=5, signers=1 | Group 17: 1-of-3, parent=5, signers=3 | Group 18: 1-of-1, parent=5, signers=1 | Group 19: 1-of-1, parent=5, signers=1 | Group 20: 1-of-3, parent=5, signers=3 | Group 21: 1-of-2, parent=5, signers=2",
-          "summaryRoot": "Root: 3-of-3, childGroups=(1,4,5)",
-          "summaryGroups": "Group 1: 2-of-2, parent=0, childGroups=(2,3) | Group 2: 2-of-18, parent=1, signers=18 | Group 3: 2-of-18, parent=1, signers=18 | Group 4: 1-of-7, parent=0, signers=7 | Group 5: 3-of-16, parent=0, childGroups=(6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21) | Group 6: 1-of-2, parent=5, signers=2 | Group 7: 1-of-2, parent=5, signers=2 | Group 8: 1-of-2, parent=5, signers=2 | Group 9: 1-of-1, parent=5, signers=1 | Group 10: 1-of-2, parent=5, signers=2 | Group 11: 1-of-2, parent=5, signers=2 | Group 12: 1-of-4, parent=5, signers=4 | Group 13: 1-of-1, parent=5, signers=1 | Group 14: 1-of-1, parent=5, signers=1 | Group 15: 1-of-1, parent=5, signers=1 | Group 16: 1-of-1, parent=5, signers=1 | Group 17: 1-of-3, parent=5, signers=3 | Group 18: 1-of-1, parent=5, signers=1 | Group 19: 1-of-1, parent=5, signers=1 | Group 20: 1-of-3, parent=5, signers=3 | Group 21: 1-of-2, parent=5, signers=2",
+          "summary": "Root: 3-of-3, childGroups=(1,18,19) | Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17",
+          "summaryRoot": "Root: 3-of-3, childGroups=(1,18,19)",
+          "summaryGroups": "Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17",
           "rootQuorum": 3,
           "minSigs": 8,
           "allMembers": [
@@ -4042,15 +4079,12 @@
             "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2",
             "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374",
             "eth:0x843742760078Df85609690D85827173A1A96D14a",
-            "eth:0x8569de6e68F22937e69b7338E47Ee751aCcFb266",
-            "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
             "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
             "eth:0x8AbFC1005bee7ec7ddd4Df69fAC70399B9dEFf61",
             "eth:0x9079410666ED02725ee9d148398Cee26397c2A36",
             "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79",
             "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D",
             "eth:0x957913184D083731770A15E4d401e4A8310Bb5F3",
-            "eth:0x97D0895BEd8acd240C32427191D96B18eB283748",
             "eth:0x9a2595b4482F463fc629fBf5900e6Fab6d4D5fD0",
             "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF",
             "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB",
@@ -4078,66 +4112,145 @@
             "root": {
               "quorum": 3,
               "parent": 0,
-              "childGroups": [1, 4, 5],
+              "childGroups": [1, 18, 19],
               "members": []
             },
             "group1": {
-              "quorum": 2,
+              "quorum": 3,
               "parent": 0,
-              "childGroups": [2, 3],
+              "childGroups": [
+                2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
+              ],
               "members": []
             },
             "group2": {
-              "quorum": 2,
+              "quorum": 1,
               "parent": 1,
               "childGroups": [],
               "members": [
-                "eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845",
-                "eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8",
-                "eth:0x41eAdbc688797a02bfaBE48472995833489ce69D",
-                "eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf",
-                "eth:0x532657dDd472E9f9061963a44955acCCeE318B1c",
-                "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C",
-                "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee",
-                "eth:0x843742760078Df85609690D85827173A1A96D14a",
-                "eth:0x8569de6e68F22937e69b7338E47Ee751aCcFb266",
-                "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
-                "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
-                "eth:0x957913184D083731770A15E4d401e4A8310Bb5F3",
-                "eth:0xa69dceB575892EFe06C90b4c79bE7DeC5112DE7B",
-                "eth:0xB2675C40d0E3B7466Cc419CcBdac289392618Ce8",
-                "eth:0xd107276078c6605bE0CEC43D765733291B7102aF",
-                "eth:0xE062e7D123AC8dF480C56147f911144F55C10f88",
-                "eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162",
-                "eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6"
+                "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374",
+                "eth:0xF721cEFDBD939Ba732E145817Dca810e6064c4b7"
               ]
             },
             "group3": {
-              "quorum": 2,
+              "quorum": 1,
               "parent": 1,
               "childGroups": [],
               "members": [
-                "eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0",
-                "eth:0x1BD478DB8E202A887440b2f89E854927651Ce142",
-                "eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887",
-                "eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253",
-                "eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6",
-                "eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0",
-                "eth:0x568DCF31bEE597CbcA90F6063123f48dF502532b",
-                "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6",
-                "eth:0x767EDF33E430E14C6611cb1A9Ea3108E2C6346C2",
-                "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2",
-                "eth:0x8AbFC1005bee7ec7ddd4Df69fAC70399B9dEFf61",
-                "eth:0x97D0895BEd8acd240C32427191D96B18eB283748",
-                "eth:0x9a2595b4482F463fc629fBf5900e6Fab6d4D5fD0",
-                "eth:0xADE26816Bb84a0c3CB8e468157Eb4dc13B006c44",
-                "eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C",
-                "eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6",
-                "eth:0xF3C4A0C49234c6f08ACf889522812d0647A8481b",
-                "eth:0xFccD1128fc823dD78e76240dc206a7A26494F271"
+                "eth:0x9079410666ED02725ee9d148398Cee26397c2A36",
+                "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
               ]
             },
             "group4": {
+              "quorum": 1,
+              "parent": 1,
+              "childGroups": [],
+              "members": [
+                "eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6",
+                "eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
+              ]
+            },
+            "group5": {
+              "quorum": 1,
+              "parent": 1,
+              "childGroups": [],
+              "members": ["eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"]
+            },
+            "group6": {
+              "quorum": 1,
+              "parent": 1,
+              "childGroups": [],
+              "members": [
+                "eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3",
+                "eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628"
+              ]
+            },
+            "group7": {
+              "quorum": 1,
+              "parent": 1,
+              "childGroups": [],
+              "members": [
+                "eth:0x266a433524AF2a471D381D8Ad4ad70DDAA5dC112",
+                "eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
+              ]
+            },
+            "group8": {
+              "quorum": 1,
+              "parent": 1,
+              "childGroups": [],
+              "members": [
+                "eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8",
+                "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB",
+                "eth:0xC6fA4C71F42dD1881E29DDe853FA5CcD18A59624",
+                "eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264"
+              ]
+            },
+            "group9": {
+              "quorum": 1,
+              "parent": 1,
+              "childGroups": [],
+              "members": ["eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"]
+            },
+            "group10": {
+              "quorum": 1,
+              "parent": 1,
+              "childGroups": [],
+              "members": ["eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"]
+            },
+            "group11": {
+              "quorum": 1,
+              "parent": 1,
+              "childGroups": [],
+              "members": ["eth:0x5BF2821B248e85439B5d7c5a2bcB055Eb54Ad29F"]
+            },
+            "group12": {
+              "quorum": 1,
+              "parent": 1,
+              "childGroups": [],
+              "members": ["eth:0x4e509C60b3e916644dE441298595FeD12C4AC926"]
+            },
+            "group13": {
+              "quorum": 1,
+              "parent": 1,
+              "childGroups": [],
+              "members": [
+                "eth:0x1620E85235C124303d03671b5de5ca12249a16BF",
+                "eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5",
+                "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
+              ]
+            },
+            "group14": {
+              "quorum": 1,
+              "parent": 1,
+              "childGroups": [],
+              "members": ["eth:0x43640F208956c7D49e04F40FF95dF818643B76aA"]
+            },
+            "group15": {
+              "quorum": 1,
+              "parent": 1,
+              "childGroups": [],
+              "members": ["eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0"]
+            },
+            "group16": {
+              "quorum": 1,
+              "parent": 1,
+              "childGroups": [],
+              "members": [
+                "eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60",
+                "eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae",
+                "eth:0xa85936633588Fc7a120061CA973e65cE83839F87"
+              ]
+            },
+            "group17": {
+              "quorum": 1,
+              "parent": 1,
+              "childGroups": [],
+              "members": [
+                "eth:0x4189a291cC7E497015B45D4bb046dC0A82580688",
+                "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
+              ]
+            },
+            "group18": {
               "quorum": 1,
               "parent": 0,
               "childGroups": [],
@@ -4151,139 +4264,57 @@
                 "eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29"
               ]
             },
-            "group5": {
-              "quorum": 3,
+            "group19": {
+              "quorum": 2,
               "parent": 0,
-              "childGroups": [
-                6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
-              ],
+              "childGroups": [20, 21],
               "members": []
             },
-            "group6": {
-              "quorum": 1,
-              "parent": 5,
-              "childGroups": [],
-              "members": [
-                "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374",
-                "eth:0xF721cEFDBD939Ba732E145817Dca810e6064c4b7"
-              ]
-            },
-            "group7": {
-              "quorum": 1,
-              "parent": 5,
-              "childGroups": [],
-              "members": [
-                "eth:0x9079410666ED02725ee9d148398Cee26397c2A36",
-                "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
-              ]
-            },
-            "group8": {
-              "quorum": 1,
-              "parent": 5,
-              "childGroups": [],
-              "members": [
-                "eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6",
-                "eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
-              ]
-            },
-            "group9": {
-              "quorum": 1,
-              "parent": 5,
-              "childGroups": [],
-              "members": ["eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"]
-            },
-            "group10": {
-              "quorum": 1,
-              "parent": 5,
-              "childGroups": [],
-              "members": [
-                "eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3",
-                "eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628"
-              ]
-            },
-            "group11": {
-              "quorum": 1,
-              "parent": 5,
-              "childGroups": [],
-              "members": [
-                "eth:0x266a433524AF2a471D381D8Ad4ad70DDAA5dC112",
-                "eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
-              ]
-            },
-            "group12": {
-              "quorum": 1,
-              "parent": 5,
-              "childGroups": [],
-              "members": [
-                "eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8",
-                "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB",
-                "eth:0xC6fA4C71F42dD1881E29DDe853FA5CcD18A59624",
-                "eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264"
-              ]
-            },
-            "group13": {
-              "quorum": 1,
-              "parent": 5,
-              "childGroups": [],
-              "members": ["eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"]
-            },
-            "group14": {
-              "quorum": 1,
-              "parent": 5,
-              "childGroups": [],
-              "members": ["eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"]
-            },
-            "group15": {
-              "quorum": 1,
-              "parent": 5,
-              "childGroups": [],
-              "members": ["eth:0x5BF2821B248e85439B5d7c5a2bcB055Eb54Ad29F"]
-            },
-            "group16": {
-              "quorum": 1,
-              "parent": 5,
-              "childGroups": [],
-              "members": ["eth:0x4e509C60b3e916644dE441298595FeD12C4AC926"]
-            },
-            "group17": {
-              "quorum": 1,
-              "parent": 5,
-              "childGroups": [],
-              "members": [
-                "eth:0x1620E85235C124303d03671b5de5ca12249a16BF",
-                "eth:0x70C2Ddc97c4fAea760027d45E5de4D1E2ad2b9A5",
-                "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
-              ]
-            },
-            "group18": {
-              "quorum": 1,
-              "parent": 5,
-              "childGroups": [],
-              "members": ["eth:0x43640F208956c7D49e04F40FF95dF818643B76aA"]
-            },
-            "group19": {
-              "quorum": 1,
-              "parent": 5,
-              "childGroups": [],
-              "members": ["eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0"]
-            },
             "group20": {
-              "quorum": 1,
-              "parent": 5,
+              "quorum": 2,
+              "parent": 19,
               "childGroups": [],
               "members": [
-                "eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60",
-                "eth:0x6B0f508B8cbeF970fAF9E8a28b9b4C6F1FD3afae",
-                "eth:0xa85936633588Fc7a120061CA973e65cE83839F87"
+                "eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845",
+                "eth:0x3Ce065c714810e0b2a85Ed71f1582038823c75d8",
+                "eth:0x41eAdbc688797a02bfaBE48472995833489ce69D",
+                "eth:0x4833c0fcE02C92fF8D92903BAB14827ff1cBD4bf",
+                "eth:0x532657dDd472E9f9061963a44955acCCeE318B1c",
+                "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C",
+                "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee",
+                "eth:0x843742760078Df85609690D85827173A1A96D14a",
+                "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
+                "eth:0x957913184D083731770A15E4d401e4A8310Bb5F3",
+                "eth:0xa69dceB575892EFe06C90b4c79bE7DeC5112DE7B",
+                "eth:0xB2675C40d0E3B7466Cc419CcBdac289392618Ce8",
+                "eth:0xd107276078c6605bE0CEC43D765733291B7102aF",
+                "eth:0xE062e7D123AC8dF480C56147f911144F55C10f88",
+                "eth:0xE3fe08c2Ac10a690284EdeBf20A3820479277162",
+                "eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6"
               ]
             },
             "group21": {
-              "quorum": 1,
-              "parent": 5,
+              "quorum": 2,
+              "parent": 19,
               "childGroups": [],
               "members": [
-                "eth:0x4189a291cC7E497015B45D4bb046dC0A82580688",
-                "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79"
+                "eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0",
+                "eth:0x1BD478DB8E202A887440b2f89E854927651Ce142",
+                "eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887",
+                "eth:0x4c29a3a0ECe46F27417953b925fA9cC01BF99253",
+                "eth:0x4D12E3BaE007227CA63d55a8e3c4ddc3EbBFA2b6",
+                "eth:0x54081602645704EE2B76FEe30E8B4d4F2D82d4E0",
+                "eth:0x568DCF31bEE597CbcA90F6063123f48dF502532b",
+                "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6",
+                "eth:0x767EDF33E430E14C6611cb1A9Ea3108E2C6346C2",
+                "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2",
+                "eth:0x8AbFC1005bee7ec7ddd4Df69fAC70399B9dEFf61",
+                "eth:0x9a2595b4482F463fc629fBf5900e6Fab6d4D5fD0",
+                "eth:0xADE26816Bb84a0c3CB8e468157Eb4dc13B006c44",
+                "eth:0xD924A8A91c1406afaF55Be2Ad3Ee24Cc09D8814C",
+                "eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6",
+                "eth:0xF3C4A0C49234c6f08ACf889522812d0647A8481b",
+                "eth:0xFccD1128fc823dD78e76240dc206a7A26494F271"
               ]
             }
           }
@@ -4300,13 +4331,13 @@
           "postOpCount": 67,
           "overridePreviousRoot": true
         },
-        "memberCount": 72,
+        "memberCount": 69,
         "minSigs": 8,
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "summary": "Root: 3-of-3, childGroups=(1,4,5) | Group 1: 2-of-2, parent=0, childGroups=(2,3) | Group 2: 2-of-18, parent=1, signers=18 | Group 3: 2-of-18, parent=1, signers=18 | Group 4: 1-of-7, parent=0, signers=7 | Group 5: 3-of-16, parent=0, childGroups=(6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21) | Group 6: 1-of-2, parent=5, signers=2 | Group 7: 1-of-2, parent=5, signers=2 | Group 8: 1-of-2, parent=5, signers=2 | Group 9: 1-of-1, parent=5, signers=1 | Group 10: 1-of-2, parent=5, signers=2 | Group 11: 1-of-2, parent=5, signers=2 | Group 12: 1-of-4, parent=5, signers=4 | Group 13: 1-of-1, parent=5, signers=1 | Group 14: 1-of-1, parent=5, signers=1 | Group 15: 1-of-1, parent=5, signers=1 | Group 16: 1-of-1, parent=5, signers=1 | Group 17: 1-of-3, parent=5, signers=3 | Group 18: 1-of-1, parent=5, signers=1 | Group 19: 1-of-1, parent=5, signers=1 | Group 20: 1-of-3, parent=5, signers=3 | Group 21: 1-of-2, parent=5, signers=2",
-        "summaryGroups": "Group 1: 2-of-2, parent=0, childGroups=(2,3) | Group 2: 2-of-18, parent=1, signers=18 | Group 3: 2-of-18, parent=1, signers=18 | Group 4: 1-of-7, parent=0, signers=7 | Group 5: 3-of-16, parent=0, childGroups=(6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21) | Group 6: 1-of-2, parent=5, signers=2 | Group 7: 1-of-2, parent=5, signers=2 | Group 8: 1-of-2, parent=5, signers=2 | Group 9: 1-of-1, parent=5, signers=1 | Group 10: 1-of-2, parent=5, signers=2 | Group 11: 1-of-2, parent=5, signers=2 | Group 12: 1-of-4, parent=5, signers=4 | Group 13: 1-of-1, parent=5, signers=1 | Group 14: 1-of-1, parent=5, signers=1 | Group 15: 1-of-1, parent=5, signers=1 | Group 16: 1-of-1, parent=5, signers=1 | Group 17: 1-of-3, parent=5, signers=3 | Group 18: 1-of-1, parent=5, signers=1 | Group 19: 1-of-1, parent=5, signers=1 | Group 20: 1-of-3, parent=5, signers=3 | Group 21: 1-of-2, parent=5, signers=2",
-        "summaryRoot": "Root: 3-of-3, childGroups=(1,4,5)"
+        "summary": "Root: 3-of-3, childGroups=(1,18,19) | Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17",
+        "summaryGroups": "Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17",
+        "summaryRoot": "Root: 3-of-3, childGroups=(1,18,19)"
       },
       "fieldMeta": {
         "config": {
@@ -4846,6 +4877,15 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers",
+          "via": [
+            { "address": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "description": "sign OCR commit reports that move crosschain merkle roots of messages and price updates into this OffRamp. F+1 of these required per report.",
           "role": ".ocrCommitSigners"
@@ -4877,7 +4917,7 @@
         "0x3e5b26bc92f667e2e323060ed8fe069149070f6ed966ff21385fa4ac22544303"
       ],
       "proxyType": "immutable",
-      "description": "Contract maintaining message nonces,  which are updated by the OnRamp and OffRamps.",
+      "description": "Shared nonce store used by the authorized OnRamp and OffRamp to preserve per-sender message ordering across CCIP lanes and ramp migrations.",
       "deployerAddress": "eth:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1744752959,
       "sinceBlock": 22277107,
@@ -4890,6 +4930,11 @@
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "NonceManager 1.6.0"
       },
+      "fieldMeta": {
+        "getAllAuthorizedCallers": {
+          "description": "Contracts allowed to increment outbound and inbound message nonces. These callers can advance nonce state for arbitrary chain selectors and senders, subject to the inbound expected-nonce check."
+        }
+      },
       "implementationNames": {
         "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52": "NonceManager"
       }
@@ -4899,6 +4944,15 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers",
+          "via": [
+            { "address": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5" }
+          ]
+        },
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
@@ -4937,8 +4991,14 @@
         "0x0cd580f4aedce3a2a8da2a7e6013b1b7de5c18db2e1a41549e880bccece5ed06"
       ],
       "proxyType": "immutable",
-      "description": "OffRamp used to receive messages on Ethereum from other chains. It stores the list and threshold of \"OCR\" signers that authorize the commitment of crosschain messages and the list of \"transmitters\", i.e. addresses can relay messages signed by the signers. Currently 16 signers are configured with F=5, so 5+1 signatures are required on every commit report. Committed message are usually executed by whitelisted \"execution transmitters\". If they are not executed within 1h, anyone can execute them.",
+      "description": "OffRamp used to receive messages on its local chain from other chains. It stores the list and threshold of OCR signers that authorize crosschain message commitments and the transmitters that can relay those reports. Currently 16 signers are configured with F=5, so 5+1 signatures are required on every commit report. Committed messages are usually executed by permissioned execution transmitters. After 1h, anyone can execute them.",
       "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers"
+        },
         {
           "permission": "interact",
           "from": "eth:0x93669Cf8EabE869687544De34B453063fb23Bb69",
@@ -5302,6 +5362,12 @@
             "isEnabled": true,
             "isRMNVerificationDisabled": true,
             "onRamp": "0x000000000000000000000000051665f2455116e929b9972c36d23070f5054ce0"
+          },
+          "mova": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "isEnabled": true,
+            "isRMNVerificationDisabled": true,
+            "onRamp": "0x0000000000000000000000009b04018b5285ff16f3967af108bdc72423d547cc"
           }
         },
         "typeAndVersion": "OffRamp 1.6.0"
@@ -5399,6 +5465,7 @@
             "17164792800244661392": "mint",
             "8481857512324358265": "monad",
             "18164309074156128038": "morph",
+            "4215185756725900654": "mova",
             "12657445206920369324": "henesys",
             "7801139999541420232": "pharos",
             "9335212494177455608": "plasma",
@@ -5586,6 +5653,15 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers",
+          "via": [
+            { "address": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5" }
+          ]
+        },
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
@@ -6477,6 +6553,15 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers",
+          "via": [
+            { "address": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "description": "sign OCR commit reports that move crosschain merkle roots of messages and price updates into this OffRamp. F+1 of these required per report.",
           "role": ".ocrCommitSigners"
@@ -6535,7 +6620,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 315,
+        "getExpectedNextSequenceNumber": 319,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -7773,43 +7858,37 @@
         {
           "permission": "interact",
           "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "set or override the previous OnRamp and OffRamp used as the starting nonce source during a ramp migration.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
           "description": "update the list of authorized callers that can update the nonces.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "add a 'message interceptor' contract that can gate messages based on content.",
+          "description": "can add, disable, or reconfigure source-chain routes, including each route's Router, source OnRamp address, and whether commits call the configured RMN verifier.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can arbitrarily update signers and transmitters set.",
+          "description": "can replace the OCR commit and execution configurations, including their digests, fault thresholds, signers, and transmitters.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can disable source chains.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can toggle whether commits for a source route call the configured RMN verifier. Enabling this path is only live when that RMN implementation supports verify().",
+          "description": "can set a message-interceptor contract that gates execution based on message content.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "description": "can update the fee quoter contract, where signers save new prices used for fee estimation.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can update the router contract used to relay messages on this chain from another chain. Each source chain has its own router configured.",
           "role": ".owner"
         },
         {
@@ -8019,6 +8098,12 @@
         {
           "permission": "interact",
           "from": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
+          "description": "can add, disable, or reconfigure destination-chain routes and directly manage each route's sender allowlist.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "description": "can set a 'message interceptor' contract to gate messages based on content.",
           "role": ".owner"
         },
@@ -8031,7 +8116,7 @@
         {
           "permission": "interact",
           "from": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
-          "description": "can update the FeeQuoter address used for fee estimations.",
+          "description": "can update the FeeQuoter used for fee estimation and the fee aggregator that receives withdrawn fee tokens.",
           "role": ".owner"
         },
         {
@@ -8145,8 +8230,20 @@
         {
           "permission": "interact",
           "from": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+          "description": "add or remove registry modules that can propose administrators for unregistered tokens.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
           "description": "can register arbitrary tokens with an arbitrary administrator.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+          "description": "set or remove the TokenPool for an administered token and initiate transfer of that token's administrator role.",
+          "role": ".administrators"
         },
         {
           "permission": "interact",
@@ -9309,7 +9406,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 3274,
+        "getExpectedNextSequenceNumber": 3283,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -10158,6 +10255,15 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers",
+          "via": [
+            { "address": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5" }
+          ]
+        },
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
@@ -11046,7 +11152,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1505,
+        "getExpectedNextSequenceNumber": 1517,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -11153,6 +11259,15 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers",
+          "via": [
+            { "address": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5" }
+          ]
+        },
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
@@ -11332,7 +11447,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 446,
+        "getExpectedNextSequenceNumber": 451,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -11575,7 +11690,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 467,
+        "getExpectedNextSequenceNumber": 476,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -11678,6 +11793,15 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers",
+          "via": [
+            { "address": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5" }
+          ]
+        },
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
@@ -12169,7 +12293,7 @@
               "0xbeee89b89b87a0bfac6ec49ff2362b4a3fb247b66735af73d67bafcb4ee1dbef",
               "0x1992722e4edb0f8b37adb79ae65eedb45a89b3de4692742f33c66a6dc08ab2c4",
               "0xaf637bef298e1350043f5ad5b4f7cff2662a0bec8584a2039e30e5e5937b7c7e",
-              "0x3c5491355f20c2c408722e1bd8bb3b73f577e169174597c0c3798477602c1b72",
+              "0x0048d5c8c2913a6b38875c34ed8a3bbdcf08d3ac3f78a1ecdd686346024d7ac2",
               "0xf105facc37666aabc8d3165b274c31acca9c4367405d89a14d971ff3d062a33b",
               "0x6af4c711648cc360d633cdc9dc71b192cbbf3adba5e70af98f86f5bc30bb9023",
               "0xc225cdfc84374213c422910c9b31ea1d669c48ea949e9b6247b14679a9b76510",
@@ -12829,7 +12953,7 @@
               "0xbeee89b89b87a0bfac6ec49ff2362b4a3fb247b66735af73d67bafcb4ee1dbef",
               "0x1992722e4edb0f8b37adb79ae65eedb45a89b3de4692742f33c66a6dc08ab2c4",
               "0xaf637bef298e1350043f5ad5b4f7cff2662a0bec8584a2039e30e5e5937b7c7e",
-              "0x3c5491355f20c2c408722e1bd8bb3b73f577e169174597c0c3798477602c1b72",
+              "0x0048d5c8c2913a6b38875c34ed8a3bbdcf08d3ac3f78a1ecdd686346024d7ac2",
               "0xf105facc37666aabc8d3165b274c31acca9c4367405d89a14d971ff3d062a33b",
               "0x6af4c711648cc360d633cdc9dc71b192cbbf3adba5e70af98f86f5bc30bb9023",
               "0xc225cdfc84374213c422910c9b31ea1d669c48ea949e9b6247b14679a9b76510",
@@ -12949,6 +13073,28 @@
             "config": "{\"gasPriceDeviationPPB\":\"4000000000\",\"daGasPriceDeviationPPB\":\"4000000000\",\"optimisticConfirmations\":1,\"chainFeeDeviationDisabled\":false}"
           },
           "arc": {
+            "readers": [
+              "0x7d35d97d8757a08a74e54144b841674ae6d7288c57c9a229ee528351a89d4459",
+              "0x2ea219639a1f1c923af8d90eef2d0168c5e887ac8fdb2ead5bd2820b100a4aeb",
+              "0x6f0264efca0ff8ee99abc85e8e37f33eccb0171305f44aeee031fdc9fd8dc991",
+              "0xdaf88e6b220a4e06bdacb2d2f4b8c71f0d9e9eebfb25ba4be12bddf159f94b3c",
+              "0x1751b597b1fd7571e61a00c84e220741bead10e87be968a039d05ba73129dc20",
+              "0xf3846c187bbe9414c1f170b09d3895dfd64aaa4de93fffa8ddd73d9269acfddf",
+              "0xbbcf1a40f0c1d3977118cde107afefb5b7e6409c5d7e72476b5d7c53fb0b930b",
+              "0x8efaa604f9cd2e145989b7a266ddd823b647b9ec4667f822146adf7fc8e26be9",
+              "0xbeee89b89b87a0bfac6ec49ff2362b4a3fb247b66735af73d67bafcb4ee1dbef",
+              "0x1992722e4edb0f8b37adb79ae65eedb45a89b3de4692742f33c66a6dc08ab2c4",
+              "0xaf637bef298e1350043f5ad5b4f7cff2662a0bec8584a2039e30e5e5937b7c7e",
+              "0x0048d5c8c2913a6b38875c34ed8a3bbdcf08d3ac3f78a1ecdd686346024d7ac2",
+              "0xf105facc37666aabc8d3165b274c31acca9c4367405d89a14d971ff3d062a33b",
+              "0x6af4c711648cc360d633cdc9dc71b192cbbf3adba5e70af98f86f5bc30bb9023",
+              "0xc225cdfc84374213c422910c9b31ea1d669c48ea949e9b6247b14679a9b76510",
+              "0x60488a420ce6a80be876f599bbcda37fde62547368f26e5deda0d61590da3a02"
+            ],
+            "fChain": 5,
+            "config": "{\"gasPriceDeviationPPB\":\"4000000000\",\"daGasPriceDeviationPPB\":\"4000000000\",\"optimisticConfirmations\":1,\"chainFeeDeviationDisabled\":false}"
+          },
+          "mova": {
             "readers": [
               "0x7d35d97d8757a08a74e54144b841674ae6d7288c57c9a229ee528351a89d4459",
               "0x2ea219639a1f1c923af8d90eef2d0168c5e887ac8fdb2ead5bd2820b100a4aeb",
@@ -22810,13 +22956,18 @@
             }
           },
           "ton": {
-            "configDigest": "0x000af93a652b04be48be8cc6bf2b655e021f9e5d4ea353dc03e53d2e97d810ac",
-            "version": 192,
+            "configDigest": "0x000a0f40d9e04035ed377312820cfc901b01071a0fcbbe5549254e3b3c9486d9",
+            "version": 346,
             "config": {
               "FRoleDON": 5,
               "offchainConfigVersion": 30,
               "rmnHomeAddress": "eth:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae",
               "nodes": [
+                {
+                  "p2pId": "0x0048d5c8c2913a6b38875c34ed8a3bbdcf08d3ac3f78a1ecdd686346024d7ac2",
+                  "signerKey": "0xc119ffc1f69977709b7945fbeef69df8df6f6fb79d7e7c08de8bfb022504e00b",
+                  "transmitterKey": "0x00000000bc2b0f909812b8827b8c65a307c3f6fb50231fdfcc6e7685e7b7dafd65ebdfd1"
+                },
                 {
                   "p2pId": "0x1751b597b1fd7571e61a00c84e220741bead10e87be968a039d05ba73129dc20",
                   "signerKey": "0xaad9479d37a448f00e8c92c69626ed5a2e308d104f2e11c79d65eb7c775d52ec",
@@ -22831,11 +22982,6 @@
                   "p2pId": "0x2ea219639a1f1c923af8d90eef2d0168c5e887ac8fdb2ead5bd2820b100a4aeb",
                   "signerKey": "0xadf7090868ce474aad91285e4f02b4cbbc5e489ea75853aa18fa5152fe43de1e",
                   "transmitterKey": "0x00000000cde86f08c9b43dea7a21f16088de835aac68c99487e96bfabd2932c2be4004a1"
-                },
-                {
-                  "p2pId": "0x3c5491355f20c2c408722e1bd8bb3b73f577e169174597c0c3798477602c1b72",
-                  "signerKey": "0x6707d32b4860aad5e674b3643727e854d607fbe37782f44ff51fa614e8e323a2",
-                  "transmitterKey": "0x00000000d1ac37870d7f945dcbb2a040bdf8266f56cd4332790b17136e8126fbde693345"
                 },
                 {
                   "p2pId": "0x60488a420ce6a80be876f599bbcda37fde62547368f26e5deda0d61590da3a02",
@@ -22907,10 +23053,10 @@
                 "rMax": 3,
                 "s": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                 "offchainPublicKeys": [
+                  "0x5a9f9e26bb64df202b3e9d1e2ff8df2d6d6bd3941b116a45fb10995de0f380f1",
                   "0xb31c0dd63f3580708e746e1da0000243976f1654a370721cca7deaa7edb79c42",
                   "0x983746bfcae7125797d8e8b153c91b7036a95d1db17b8cd03f01a667b539fa13",
                   "0xb322ae4f1854ef72275a9f3bed50755bf627f45aa4047ebdb15f60a6e3714f14",
-                  "0x5778a3d4444dc5a976bc5d8b21ea937e9d557f21befdc63e20aa4cdfbacbd6df",
                   "0x81769a3eb73115e0619dca4afb41541f464c289e3f6dd6cdd1884e0254ea2ae5",
                   "0xb7b453d1f91ddd6d5f0ed878d8c988f347377018ae6b8c8ac036640efa481dc9",
                   "0x13701696cde19229f3ae57fa809b9a64cda423ddee21acb8ee44661c036c1279",
@@ -22925,10 +23071,10 @@
                   "0xedd6f4e5348d28c4fa536591cc308c9107bf4d19881f44a107f329c435918f89"
                 ],
                 "peerIds": [
+                  "12D3KooW9qUardtUuncjU3YiJjuGzi7GUBgKs8ARhGgvbMEDW1Qd",
                   "12D3KooWBPPowA1Y9peoVtNjDwyeEX11VqitUnqoNb42EofniPA7",
                   "12D3KooWBYBsvj2Eb2WGSUCqishYN1JfJWssiMefkQYRkLdHV4Ys",
                   "12D3KooWCxQHSSNZyDQrHAavM1wgyc94rnZZDqgJgHqY9SrrUSQA",
-                  "12D3KooWDssRT47s9qQcKUEyH8bqUMSiRJBgPZV461NQfbwajiDP",
                   "12D3KooWGJDTnSjiuSWwKTbdZCAAQPWVMhyDutghgqLHTvVHsdLM",
                   "12D3KooWH1ssFxRpPRfq8PDAB519baCVk81FtZdBUMCxHcxG3s8e",
                   "12D3KooWHHhYKS4dUFfJUzQeXXmieBkjynyoEqpV38xdCUQYBsnx",
@@ -22990,10 +23136,10 @@
                   "diffieHellmanPoint": "0xa5ae75883d7a68467d9e6252453bea65ad287283490d5aa457971db28513f560",
                   "sharedSecretHash": "0x6487b28d1c294b9bc6d056e34c632b4bcbd230920d326a85eea8329c18b8ebc6",
                   "encryptions": [
+                    "0xddde1ec7fc37c3be04a72d7a62138845",
                     "0xd6e6d9cea5416f9e99618af8ed8ebb59",
                     "0xe1f9ab559d530cdfc1f36aea73e27649",
                     "0x187b066713d2057c43499721111cbf16",
-                    "0x1b6c81089bc27deac45c3ad6c3f2b1c3",
                     "0x9cab50e5ea9d0be2b7836761ad88c7cc",
                     "0x169a7337953e06839cd2d5ee178f7be5",
                     "0x3f7453dec2995a59fa83662c777603d6",
@@ -24220,6 +24366,210 @@
                   "sharedSecretHash": "0x6487b28d1c294b9bc6d056e34c632b4bcbd230920d326a85eea8329c18b8ebc6",
                   "encryptions": [
                     "0xe52376990b2712aa09158e606b6a91d2",
+                    "0x1fe7c9164c229d8dad451e05d6c9f859",
+                    "0x4bad67c26322b0414416e843062ed20b",
+                    "0xc7dcb07e2fda28b5d6bbea214b9871a2",
+                    "0x59f96b270a1d400bdc84bb78339267d9",
+                    "0x473df7cbbcc53314b527b09195b89dcc",
+                    "0xcb53721e3a28715fee62264d57e5226d",
+                    "0x4a9a907de304b93d7bb955a7828745b4",
+                    "0xc4fa5dacd383bf2107fccb332e07f37c",
+                    "0x056a10df3fee7c11e2efb2014fffbfd1",
+                    "0xfeea77c7d9e905223247796ffe12b0fd",
+                    "0xb2a949cf820920ba4721369e42fc5116",
+                    "0x6378e80b4f00b9b2f21b9b634387d456",
+                    "0x5fe7d069a37fa27c67252c70ed9c20c7",
+                    "0x5f8e6a62a590461acb19fe87f64464da",
+                    "0xae7ff26bfc5647cac859d199eee1d6cd"
+                  ]
+                },
+                "deltaInitialNanoseconds": 20000000000,
+                "deltaCertifiedCommitRequestNanoseconds": 10000000000
+              }
+            }
+          },
+          "mova": {
+            "configDigest": "0x000ac3f5740c94302051df562294ab8aa48f1cbc9786267dfc8c5a35f2135e70",
+            "version": 348,
+            "config": {
+              "FRoleDON": 5,
+              "offchainConfigVersion": 30,
+              "rmnHomeAddress": "eth:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae",
+              "nodes": [
+                {
+                  "p2pId": "0x0048d5c8c2913a6b38875c34ed8a3bbdcf08d3ac3f78a1ecdd686346024d7ac2",
+                  "signerKey": "eth:0x3c648E570C24614899A027aA4E05bbD8cA46bFa1",
+                  "transmitterKey": "eth:0xeAf0EAD17abb16D0487E30aBdE319d6b7D98A42b"
+                },
+                {
+                  "p2pId": "0x1751b597b1fd7571e61a00c84e220741bead10e87be968a039d05ba73129dc20",
+                  "signerKey": "eth:0x0dE127A00242D8b7B477Df58656Ffbb127835468",
+                  "transmitterKey": "eth:0x880B1Df432869A9F1f30222f853FD67c4CEC768C"
+                },
+                {
+                  "p2pId": "0x1992722e4edb0f8b37adb79ae65eedb45a89b3de4692742f33c66a6dc08ab2c4",
+                  "signerKey": "eth:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61",
+                  "transmitterKey": "eth:0xEFac7c183d989ae179C5f447fe5C3f99c8463246"
+                },
+                {
+                  "p2pId": "0x2ea219639a1f1c923af8d90eef2d0168c5e887ac8fdb2ead5bd2820b100a4aeb",
+                  "signerKey": "eth:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26",
+                  "transmitterKey": "eth:0x6e7d32098f2A9C8fD4BbA8b2D9064e599ed58e63"
+                },
+                {
+                  "p2pId": "0x60488a420ce6a80be876f599bbcda37fde62547368f26e5deda0d61590da3a02",
+                  "signerKey": "eth:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F",
+                  "transmitterKey": "eth:0xA1ca5E8A82A9E19A6E0817f97dBCaDc5dFf001a9"
+                },
+                {
+                  "p2pId": "0x6af4c711648cc360d633cdc9dc71b192cbbf3adba5e70af98f86f5bc30bb9023",
+                  "signerKey": "eth:0x7502128aF7a58E9906696EA6B60434f75d0026E0",
+                  "transmitterKey": "eth:0xA812cC719eAD7930fF937DDa36b75B40D21EF6A5"
+                },
+                {
+                  "p2pId": "0x6f0264efca0ff8ee99abc85e8e37f33eccb0171305f44aeee031fdc9fd8dc991",
+                  "signerKey": "eth:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB",
+                  "transmitterKey": "eth:0xF41ec6f3b99D5B6012b942c8C0696eb3986e3D94"
+                },
+                {
+                  "p2pId": "0x7d35d97d8757a08a74e54144b841674ae6d7288c57c9a229ee528351a89d4459",
+                  "signerKey": "eth:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B",
+                  "transmitterKey": "eth:0xd18dd1C5d28e89Fd068BcB6f0cF127cA6198E9aF"
+                },
+                {
+                  "p2pId": "0x8efaa604f9cd2e145989b7a266ddd823b647b9ec4667f822146adf7fc8e26be9",
+                  "signerKey": "eth:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF",
+                  "transmitterKey": "eth:0x30E29AF14FE2709CEd044Acd568537aE371d1f4f"
+                },
+                {
+                  "p2pId": "0xaf637bef298e1350043f5ad5b4f7cff2662a0bec8584a2039e30e5e5937b7c7e",
+                  "signerKey": "eth:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB",
+                  "transmitterKey": "eth:0x5D8E40a30125Ab368e4c889ED321AD5D8D92c885"
+                },
+                {
+                  "p2pId": "0xbbcf1a40f0c1d3977118cde107afefb5b7e6409c5d7e72476b5d7c53fb0b930b",
+                  "signerKey": "eth:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7",
+                  "transmitterKey": "eth:0xB4E11C67D6F7f2A8deFcA824a0343fE66c9ABb30"
+                },
+                {
+                  "p2pId": "0xbeee89b89b87a0bfac6ec49ff2362b4a3fb247b66735af73d67bafcb4ee1dbef",
+                  "signerKey": "eth:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83",
+                  "transmitterKey": "eth:0x42FAf61190491aBDae03Fc280F3d1D1E9Fa33E7e"
+                },
+                {
+                  "p2pId": "0xc225cdfc84374213c422910c9b31ea1d669c48ea949e9b6247b14679a9b76510",
+                  "signerKey": "eth:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D",
+                  "transmitterKey": "eth:0xC0078Be73b76cAE999AFE06CbBcA668fA2aa9F03"
+                },
+                {
+                  "p2pId": "0xdaf88e6b220a4e06bdacb2d2f4b8c71f0d9e9eebfb25ba4be12bddf159f94b3c",
+                  "signerKey": "eth:0x2D2251fAC6871Df405450337E327683822baFc52",
+                  "transmitterKey": "eth:0x0451128C68864bEfFf899D0b5Be23a84081370aF"
+                },
+                {
+                  "p2pId": "0xf105facc37666aabc8d3165b274c31acca9c4367405d89a14d971ff3d062a33b",
+                  "signerKey": "eth:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF",
+                  "transmitterKey": "eth:0xB69ceF57D6Dc5AB500a05b7a72b0a07DD12ebBC4"
+                },
+                {
+                  "p2pId": "0xf3846c187bbe9414c1f170b09d3895dfd64aaa4de93fffa8ddd73d9269acfddf",
+                  "signerKey": "eth:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0",
+                  "transmitterKey": "eth:0xA097f892FF0f5a23EfFea9Ce5A918C989E0e7499"
+                }
+              ],
+              "offchainConfig": {
+                "deltaProgressNanoseconds": 120000000000,
+                "deltaResendNanoseconds": 30000000000,
+                "deltaRoundNanoseconds": 2000000000,
+                "deltaGraceNanoseconds": 5000000000,
+                "deltaStageNanoseconds": 25000000000,
+                "rMax": 3,
+                "s": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                "offchainPublicKeys": [
+                  "0x6b0b2c975de547a6c2bb3298036f5fd74832460a91f2ba7d699ed957809aaa54",
+                  "0x4dc995d3a736c77557b9cc5eb16d10f9ebf51699409d6e57b464996679fe2393",
+                  "0x79b98157c2962b92f4610855b3d701648ac4698639e2f6042b816644aa29465e",
+                  "0x63ab8cf8928f35c08ab49266a4588d4fe02d9df8ebcdc21e9c1c5fa29c216a42",
+                  "0x05aa24287761d1a6044f550ed526075004cd1cbdb3ffd1e40aeedd3e90ac141e",
+                  "0xff9c481a65fd49be3872db125fd897219d69e9e1a5e202c53592ebf8b6819bf8",
+                  "0xf21a5d2d71882bf899430247d0340adb465fa7e36554faab6a075a4e50487c1e",
+                  "0x78eec62158a6e6c1fa7f936e1a647fdad4645fa87456bda7362f92d696377bbf",
+                  "0xf9d1281b5ec0703e693c03b611290c0642abb360664112dbf2b53f375e017f22",
+                  "0xd1e6773db69bacbbcef71e2cf1500c83556f6f175c33d738e8889c3c2e4b60dd",
+                  "0x709be8aee3b1336ce6b4b16051ee818346f3b72ac53d279c19761530c5d51fb2",
+                  "0x76bdfb7c4822aad961a19dafde8869b452ee6cb0585bdd0cb66f83c1bdbfc786",
+                  "0x3e87a2707f38db40091a647312c3f9a061537c88afff6a05606604ec35803d44",
+                  "0xa6e4256f6d96b5ba086672bbe49c28d0e58dff9a94bebb7a8f029833768e5557",
+                  "0x73a8bb8649abfa883a198898026fe5d0b24c656931c3fd73d040013ae3cf1b50",
+                  "0x6e2e6fab11695df75fb299404b3fe79a222e63d5059215586b4b046080eac75d"
+                ],
+                "peerIds": [
+                  "12D3KooW9qUardtUuncjU3YiJjuGzi7GUBgKs8ARhGgvbMEDW1Qd",
+                  "12D3KooWBPPowA1Y9peoVtNjDwyeEX11VqitUnqoNb42EofniPA7",
+                  "12D3KooWBYBsvj2Eb2WGSUCqishYN1JfJWssiMefkQYRkLdHV4Ys",
+                  "12D3KooWCxQHSSNZyDQrHAavM1wgyc94rnZZDqgJgHqY9SrrUSQA",
+                  "12D3KooWGJDTnSjiuSWwKTbdZCAAQPWVMhyDutghgqLHTvVHsdLM",
+                  "12D3KooWH1ssFxRpPRfq8PDAB519baCVk81FtZdBUMCxHcxG3s8e",
+                  "12D3KooWG2bDmRM5PmpkGqaMRhdJB4FsGSo6MquLa8h9PVqghqj1",
+                  "12D3KooWJF8knyvb1ZSWYaV1w3naL1wER8p3QKYGEHaUWU1KEFXn",
+                  "12D3KooWKSVjgYJBbNgxMqS35C4NpK5Rxg6TrjTDYDXQAH93bW4x",
+                  "12D3KooWMd1VxrBAPpaACezvnJ3GCdK7rYmeFGqUzdz7rwpcVC9s",
+                  "12D3KooWNTVa4ZMdqWHiaMmjpWqfeYgZ31s3fEX1fYZXdBu2mYfc",
+                  "12D3KooWNfgbVn1NjxktX3FEqhpFXBpXdnAu7YPRWBZiZvmzozZk",
+                  "12D3KooWNtEhNF2MySxPYimnDPtFxZJLU6QGjUUhfCCrC3Fdh5nF",
+                  "12D3KooWQZ8sVd2NdAe9bs5cFdZfAmnaUEbs6286YuJRGsci1fsZ",
+                  "12D3KooWS3DiGs5ZLn5pJP9GEgWuoH6EKVeMNs1Cy3Z6pThSNrRG",
+                  "12D3KooWSCxMW2pZDe7mxjA3qLaU18AKuYQtjSDu4MzKj5sgZBfk"
+                ],
+                "reportingPluginConfig": {
+                  "remoteGasPriceBatchWriteFrequency": "20m0s",
+                  "tokenPriceBatchWriteFrequency": "2h0m0s",
+                  "tokenInfo": {
+                    "eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40": {
+                      "aggregatorAddress": "eth:0x86E53CF1B870786351Da77A57575e79CB55812CB",
+                      "deviationPPB": "1000000000",
+                      "decimals": 18
+                    },
+                    "eth:0x911fcc80F48340864f5F94Ae9a73d6296d5C2115": {
+                      "aggregatorAddress": "eth:0x50834F3163758fcC1Df9973b6e91f0F0F0434aD3",
+                      "deviationPPB": "1000000000",
+                      "decimals": 18
+                    }
+                  },
+                  "tokenPriceChainSelector": 4949039107694360000,
+                  "newMsgScanBatchSize": 256,
+                  "maxReportTransmissionCheckAttempts": 10,
+                  "rmnSignaturesTimeout": 6900000000,
+                  "rmnEnabled": false,
+                  "maxTreeSize": 256,
+                  "signObservationPrefix": "chainlink ccip 1.6 rmn observation",
+                  "transmissionDelayMultiplier": 15000000000,
+                  "inflightPriceCheckRetries": 10,
+                  "merkleRootAsyncObserverDisabled": false,
+                  "merkleRootAsyncObserverSyncFreq": 4000000000,
+                  "merkleRootAsyncObserverSyncTimeout": 12000000000,
+                  "chainFeeAsyncObserverDisabled": true,
+                  "chainFeeAsyncObserverSyncFreq": 0,
+                  "chainFeeAsyncObserverSyncTimeout": 0,
+                  "tokenPriceAsyncObserverDisabled": true,
+                  "tokenPriceAsyncObserverSyncFreq": "0s",
+                  "tokenPriceAsyncObserverSyncTimeout": "0s",
+                  "donBreakingChangesVersion": 1,
+                  "maxRootsPerReport": 0,
+                  "maxPricesPerReport": 0,
+                  "multipleReports": false,
+                  "populateTxHashEnabled": false,
+                  "evmGasLimit": 0
+                },
+                "maxDurationQueryNanoseconds": 7000000000,
+                "maxDurationObservationNanoseconds": 13000000000,
+                "maxDurationShouldAcceptAttestedReportNanoseconds": 5000000000,
+                "maxDurationShouldTransmitAcceptedReportNanoseconds": 10000000000,
+                "sharedSecretEncryptions": {
+                  "diffieHellmanPoint": "0xa5ae75883d7a68467d9e6252453bea65ad287283490d5aa457971db28513f560",
+                  "sharedSecretHash": "0x6487b28d1c294b9bc6d056e34c632b4bcbd230920d326a85eea8329c18b8ebc6",
+                  "encryptions": [
+                    "0xf22b8b2837f19c268ffeba616ea7031c",
                     "0x1fe7c9164c229d8dad451e05d6c9f859",
                     "0x4bad67c26322b0414416e843062ed20b",
                     "0xc7dcb07e2fda28b5d6bbea214b9871a2",
@@ -33693,13 +34043,18 @@
             }
           },
           "ton": {
-            "configDigest": "0x000a4e54ab3a937beba2ac036076048c6d7a3392b3c6ba9ac5f0b074e5086609",
-            "version": 193,
+            "configDigest": "0x000a729be111fadb86b7b98d73de131e021d0f22e952ce439e0741438bada763",
+            "version": 347,
             "config": {
               "FRoleDON": 5,
               "offchainConfigVersion": 30,
               "rmnHomeAddress": "eth:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae",
               "nodes": [
+                {
+                  "p2pId": "0x0048d5c8c2913a6b38875c34ed8a3bbdcf08d3ac3f78a1ecdd686346024d7ac2",
+                  "signerKey": "0xc119ffc1f69977709b7945fbeef69df8df6f6fb79d7e7c08de8bfb022504e00b",
+                  "transmitterKey": "0x00000000bc2b0f909812b8827b8c65a307c3f6fb50231fdfcc6e7685e7b7dafd65ebdfd1"
+                },
                 {
                   "p2pId": "0x1751b597b1fd7571e61a00c84e220741bead10e87be968a039d05ba73129dc20",
                   "signerKey": "0xaad9479d37a448f00e8c92c69626ed5a2e308d104f2e11c79d65eb7c775d52ec",
@@ -33714,11 +34069,6 @@
                   "p2pId": "0x2ea219639a1f1c923af8d90eef2d0168c5e887ac8fdb2ead5bd2820b100a4aeb",
                   "signerKey": "0xadf7090868ce474aad91285e4f02b4cbbc5e489ea75853aa18fa5152fe43de1e",
                   "transmitterKey": "0x00000000cde86f08c9b43dea7a21f16088de835aac68c99487e96bfabd2932c2be4004a1"
-                },
-                {
-                  "p2pId": "0x3c5491355f20c2c408722e1bd8bb3b73f577e169174597c0c3798477602c1b72",
-                  "signerKey": "0x6707d32b4860aad5e674b3643727e854d607fbe37782f44ff51fa614e8e323a2",
-                  "transmitterKey": "0x00000000d1ac37870d7f945dcbb2a040bdf8266f56cd4332790b17136e8126fbde693345"
                 },
                 {
                   "p2pId": "0x60488a420ce6a80be876f599bbcda37fde62547368f26e5deda0d61590da3a02",
@@ -33790,10 +34140,10 @@
                 "rMax": 3,
                 "s": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                 "offchainPublicKeys": [
+                  "0x5a9f9e26bb64df202b3e9d1e2ff8df2d6d6bd3941b116a45fb10995de0f380f1",
                   "0xb31c0dd63f3580708e746e1da0000243976f1654a370721cca7deaa7edb79c42",
                   "0x983746bfcae7125797d8e8b153c91b7036a95d1db17b8cd03f01a667b539fa13",
                   "0xb322ae4f1854ef72275a9f3bed50755bf627f45aa4047ebdb15f60a6e3714f14",
-                  "0x5778a3d4444dc5a976bc5d8b21ea937e9d557f21befdc63e20aa4cdfbacbd6df",
                   "0x81769a3eb73115e0619dca4afb41541f464c289e3f6dd6cdd1884e0254ea2ae5",
                   "0xb7b453d1f91ddd6d5f0ed878d8c988f347377018ae6b8c8ac036640efa481dc9",
                   "0x13701696cde19229f3ae57fa809b9a64cda423ddee21acb8ee44661c036c1279",
@@ -33808,10 +34158,10 @@
                   "0xedd6f4e5348d28c4fa536591cc308c9107bf4d19881f44a107f329c435918f89"
                 ],
                 "peerIds": [
+                  "12D3KooW9qUardtUuncjU3YiJjuGzi7GUBgKs8ARhGgvbMEDW1Qd",
                   "12D3KooWBPPowA1Y9peoVtNjDwyeEX11VqitUnqoNb42EofniPA7",
                   "12D3KooWBYBsvj2Eb2WGSUCqishYN1JfJWssiMefkQYRkLdHV4Ys",
                   "12D3KooWCxQHSSNZyDQrHAavM1wgyc94rnZZDqgJgHqY9SrrUSQA",
-                  "12D3KooWDssRT47s9qQcKUEyH8bqUMSiRJBgPZV461NQfbwajiDP",
                   "12D3KooWGJDTnSjiuSWwKTbdZCAAQPWVMhyDutghgqLHTvVHsdLM",
                   "12D3KooWH1ssFxRpPRfq8PDAB519baCVk81FtZdBUMCxHcxG3s8e",
                   "12D3KooWHHhYKS4dUFfJUzQeXXmieBkjynyoEqpV38xdCUQYBsnx",
@@ -33846,10 +34196,10 @@
                   "diffieHellmanPoint": "0xa5ae75883d7a68467d9e6252453bea65ad287283490d5aa457971db28513f560",
                   "sharedSecretHash": "0x6487b28d1c294b9bc6d056e34c632b4bcbd230920d326a85eea8329c18b8ebc6",
                   "encryptions": [
+                    "0xddde1ec7fc37c3be04a72d7a62138845",
                     "0xd6e6d9cea5416f9e99618af8ed8ebb59",
                     "0xe1f9ab559d530cdfc1f36aea73e27649",
                     "0x187b066713d2057c43499721111cbf16",
-                    "0x1b6c81089bc27deac45c3ad6c3f2b1c3",
                     "0x9cab50e5ea9d0be2b7836761ad88c7cc",
                     "0x169a7337953e06839cd2d5ee178f7be5",
                     "0x3f7453dec2995a59fa83662c777603d6",
@@ -34930,10 +35280,187 @@
                 "deltaCertifiedCommitRequestNanoseconds": 10000000000
               }
             }
+          },
+          "mova": {
+            "configDigest": "0x000aa9670a1c39c79b97fc0a6d6605fdee247f6edb876017e8c04db762ca27c6",
+            "version": 349,
+            "config": {
+              "FRoleDON": 5,
+              "offchainConfigVersion": 30,
+              "rmnHomeAddress": "eth:0xee85aEfb15b9489563A6a29891ebe0750AA1A7Ae",
+              "nodes": [
+                {
+                  "p2pId": "0x0048d5c8c2913a6b38875c34ed8a3bbdcf08d3ac3f78a1ecdd686346024d7ac2",
+                  "signerKey": "eth:0x3c648E570C24614899A027aA4E05bbD8cA46bFa1",
+                  "transmitterKey": "eth:0xeAf0EAD17abb16D0487E30aBdE319d6b7D98A42b"
+                },
+                {
+                  "p2pId": "0x1751b597b1fd7571e61a00c84e220741bead10e87be968a039d05ba73129dc20",
+                  "signerKey": "eth:0x0dE127A00242D8b7B477Df58656Ffbb127835468",
+                  "transmitterKey": "eth:0x880B1Df432869A9F1f30222f853FD67c4CEC768C"
+                },
+                {
+                  "p2pId": "0x1992722e4edb0f8b37adb79ae65eedb45a89b3de4692742f33c66a6dc08ab2c4",
+                  "signerKey": "eth:0x376038C76D067eae5ceFa1042dD7fd382f9EBC61",
+                  "transmitterKey": "eth:0xEFac7c183d989ae179C5f447fe5C3f99c8463246"
+                },
+                {
+                  "p2pId": "0x2ea219639a1f1c923af8d90eef2d0168c5e887ac8fdb2ead5bd2820b100a4aeb",
+                  "signerKey": "eth:0x64eF6A50875B1d9824E8E51eC1CAd93c559E8E26",
+                  "transmitterKey": "eth:0x6e7d32098f2A9C8fD4BbA8b2D9064e599ed58e63"
+                },
+                {
+                  "p2pId": "0x60488a420ce6a80be876f599bbcda37fde62547368f26e5deda0d61590da3a02",
+                  "signerKey": "eth:0x1E78D24845a94dd27cc2c746fC920A3958eCA29F",
+                  "transmitterKey": "eth:0xA1ca5E8A82A9E19A6E0817f97dBCaDc5dFf001a9"
+                },
+                {
+                  "p2pId": "0x6af4c711648cc360d633cdc9dc71b192cbbf3adba5e70af98f86f5bc30bb9023",
+                  "signerKey": "eth:0x7502128aF7a58E9906696EA6B60434f75d0026E0",
+                  "transmitterKey": "eth:0xA812cC719eAD7930fF937DDa36b75B40D21EF6A5"
+                },
+                {
+                  "p2pId": "0x6f0264efca0ff8ee99abc85e8e37f33eccb0171305f44aeee031fdc9fd8dc991",
+                  "signerKey": "eth:0x8C8167ACfa0dc624E88054F5F4F92853ff0300cB",
+                  "transmitterKey": "eth:0xF41ec6f3b99D5B6012b942c8C0696eb3986e3D94"
+                },
+                {
+                  "p2pId": "0x7d35d97d8757a08a74e54144b841674ae6d7288c57c9a229ee528351a89d4459",
+                  "signerKey": "eth:0xc3CFA4fF2a4B4fE39cF7FfDCdd44584Ce57d244B",
+                  "transmitterKey": "eth:0xd18dd1C5d28e89Fd068BcB6f0cF127cA6198E9aF"
+                },
+                {
+                  "p2pId": "0x8efaa604f9cd2e145989b7a266ddd823b647b9ec4667f822146adf7fc8e26be9",
+                  "signerKey": "eth:0x21E0FD5bC82A8760abFB9faa3ceeDC5e7a77b6bF",
+                  "transmitterKey": "eth:0x30E29AF14FE2709CEd044Acd568537aE371d1f4f"
+                },
+                {
+                  "p2pId": "0xaf637bef298e1350043f5ad5b4f7cff2662a0bec8584a2039e30e5e5937b7c7e",
+                  "signerKey": "eth:0xf9f3d075011e77aDEf5424ecD53eA987771CFCAB",
+                  "transmitterKey": "eth:0x5D8E40a30125Ab368e4c889ED321AD5D8D92c885"
+                },
+                {
+                  "p2pId": "0xbbcf1a40f0c1d3977118cde107afefb5b7e6409c5d7e72476b5d7c53fb0b930b",
+                  "signerKey": "eth:0xa761C71063CBDD6bce3d83b6da19BbAc10aa23f7",
+                  "transmitterKey": "eth:0xB4E11C67D6F7f2A8deFcA824a0343fE66c9ABb30"
+                },
+                {
+                  "p2pId": "0xbeee89b89b87a0bfac6ec49ff2362b4a3fb247b66735af73d67bafcb4ee1dbef",
+                  "signerKey": "eth:0x8C027D245d800f9887ADB0A0BF23Fb0816Fc3D83",
+                  "transmitterKey": "eth:0x42FAf61190491aBDae03Fc280F3d1D1E9Fa33E7e"
+                },
+                {
+                  "p2pId": "0xc225cdfc84374213c422910c9b31ea1d669c48ea949e9b6247b14679a9b76510",
+                  "signerKey": "eth:0x6ec3B0c8604043f78F8FC425a5Ca47FcF4B3404D",
+                  "transmitterKey": "eth:0xC0078Be73b76cAE999AFE06CbBcA668fA2aa9F03"
+                },
+                {
+                  "p2pId": "0xdaf88e6b220a4e06bdacb2d2f4b8c71f0d9e9eebfb25ba4be12bddf159f94b3c",
+                  "signerKey": "eth:0x2D2251fAC6871Df405450337E327683822baFc52",
+                  "transmitterKey": "eth:0x0451128C68864bEfFf899D0b5Be23a84081370aF"
+                },
+                {
+                  "p2pId": "0xf105facc37666aabc8d3165b274c31acca9c4367405d89a14d971ff3d062a33b",
+                  "signerKey": "eth:0xD33e2ea7F20E734617DB6261105Fb392dfE5E3eF",
+                  "transmitterKey": "eth:0xB69ceF57D6Dc5AB500a05b7a72b0a07DD12ebBC4"
+                },
+                {
+                  "p2pId": "0xf3846c187bbe9414c1f170b09d3895dfd64aaa4de93fffa8ddd73d9269acfddf",
+                  "signerKey": "eth:0x0FAB8D0907D1349Bb9E21Af4c42BDfb52Ca03ce0",
+                  "transmitterKey": "eth:0xA097f892FF0f5a23EfFea9Ce5A918C989E0e7499"
+                }
+              ],
+              "offchainConfig": {
+                "deltaProgressNanoseconds": 120000000000,
+                "deltaResendNanoseconds": 30000000000,
+                "deltaRoundNanoseconds": 2000000000,
+                "deltaGraceNanoseconds": 5000000000,
+                "deltaStageNanoseconds": 25000000000,
+                "rMax": 3,
+                "s": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                "offchainPublicKeys": [
+                  "0x6b0b2c975de547a6c2bb3298036f5fd74832460a91f2ba7d699ed957809aaa54",
+                  "0x4dc995d3a736c77557b9cc5eb16d10f9ebf51699409d6e57b464996679fe2393",
+                  "0x79b98157c2962b92f4610855b3d701648ac4698639e2f6042b816644aa29465e",
+                  "0x63ab8cf8928f35c08ab49266a4588d4fe02d9df8ebcdc21e9c1c5fa29c216a42",
+                  "0x05aa24287761d1a6044f550ed526075004cd1cbdb3ffd1e40aeedd3e90ac141e",
+                  "0xff9c481a65fd49be3872db125fd897219d69e9e1a5e202c53592ebf8b6819bf8",
+                  "0xf21a5d2d71882bf899430247d0340adb465fa7e36554faab6a075a4e50487c1e",
+                  "0x78eec62158a6e6c1fa7f936e1a647fdad4645fa87456bda7362f92d696377bbf",
+                  "0xf9d1281b5ec0703e693c03b611290c0642abb360664112dbf2b53f375e017f22",
+                  "0xd1e6773db69bacbbcef71e2cf1500c83556f6f175c33d738e8889c3c2e4b60dd",
+                  "0x709be8aee3b1336ce6b4b16051ee818346f3b72ac53d279c19761530c5d51fb2",
+                  "0x76bdfb7c4822aad961a19dafde8869b452ee6cb0585bdd0cb66f83c1bdbfc786",
+                  "0x3e87a2707f38db40091a647312c3f9a061537c88afff6a05606604ec35803d44",
+                  "0xa6e4256f6d96b5ba086672bbe49c28d0e58dff9a94bebb7a8f029833768e5557",
+                  "0x73a8bb8649abfa883a198898026fe5d0b24c656931c3fd73d040013ae3cf1b50",
+                  "0x6e2e6fab11695df75fb299404b3fe79a222e63d5059215586b4b046080eac75d"
+                ],
+                "peerIds": [
+                  "12D3KooW9qUardtUuncjU3YiJjuGzi7GUBgKs8ARhGgvbMEDW1Qd",
+                  "12D3KooWBPPowA1Y9peoVtNjDwyeEX11VqitUnqoNb42EofniPA7",
+                  "12D3KooWBYBsvj2Eb2WGSUCqishYN1JfJWssiMefkQYRkLdHV4Ys",
+                  "12D3KooWCxQHSSNZyDQrHAavM1wgyc94rnZZDqgJgHqY9SrrUSQA",
+                  "12D3KooWGJDTnSjiuSWwKTbdZCAAQPWVMhyDutghgqLHTvVHsdLM",
+                  "12D3KooWH1ssFxRpPRfq8PDAB519baCVk81FtZdBUMCxHcxG3s8e",
+                  "12D3KooWG2bDmRM5PmpkGqaMRhdJB4FsGSo6MquLa8h9PVqghqj1",
+                  "12D3KooWJF8knyvb1ZSWYaV1w3naL1wER8p3QKYGEHaUWU1KEFXn",
+                  "12D3KooWKSVjgYJBbNgxMqS35C4NpK5Rxg6TrjTDYDXQAH93bW4x",
+                  "12D3KooWMd1VxrBAPpaACezvnJ3GCdK7rYmeFGqUzdz7rwpcVC9s",
+                  "12D3KooWNTVa4ZMdqWHiaMmjpWqfeYgZ31s3fEX1fYZXdBu2mYfc",
+                  "12D3KooWNfgbVn1NjxktX3FEqhpFXBpXdnAu7YPRWBZiZvmzozZk",
+                  "12D3KooWNtEhNF2MySxPYimnDPtFxZJLU6QGjUUhfCCrC3Fdh5nF",
+                  "12D3KooWQZ8sVd2NdAe9bs5cFdZfAmnaUEbs6286YuJRGsci1fsZ",
+                  "12D3KooWS3DiGs5ZLn5pJP9GEgWuoH6EKVeMNs1Cy3Z6pThSNrRG",
+                  "12D3KooWSCxMW2pZDe7mxjA3qLaU18AKuYQtjSDu4MzKj5sgZBfk"
+                ],
+                "reportingPluginConfig": {
+                  "batchGasLimit": 6500000,
+                  "inflightCacheExpiry": "1m0s",
+                  "rootSnoozeTime": "5m0s",
+                  "messageVisibilityInterval": "8h0m0s",
+                  "batchingStrategyID": 0,
+                  "transmissionDelayMultiplier": 15000000000,
+                  "maxReportMessages": 0,
+                  "maxSingleChainReports": 0,
+                  "maxCommitReportsToFetch": 250,
+                  "multipleReports": false,
+                  "populateTxHashEnabled": false
+                },
+                "maxDurationQueryNanoseconds": 100000000,
+                "maxDurationObservationNanoseconds": 13000000000,
+                "maxDurationShouldAcceptAttestedReportNanoseconds": 5000000000,
+                "maxDurationShouldTransmitAcceptedReportNanoseconds": 10000000000,
+                "sharedSecretEncryptions": {
+                  "diffieHellmanPoint": "0xa5ae75883d7a68467d9e6252453bea65ad287283490d5aa457971db28513f560",
+                  "sharedSecretHash": "0x6487b28d1c294b9bc6d056e34c632b4bcbd230920d326a85eea8329c18b8ebc6",
+                  "encryptions": [
+                    "0xf22b8b2837f19c268ffeba616ea7031c",
+                    "0x1fe7c9164c229d8dad451e05d6c9f859",
+                    "0x4bad67c26322b0414416e843062ed20b",
+                    "0xc7dcb07e2fda28b5d6bbea214b9871a2",
+                    "0x59f96b270a1d400bdc84bb78339267d9",
+                    "0x473df7cbbcc53314b527b09195b89dcc",
+                    "0xcb53721e3a28715fee62264d57e5226d",
+                    "0x4a9a907de304b93d7bb955a7828745b4",
+                    "0xc4fa5dacd383bf2107fccb332e07f37c",
+                    "0x056a10df3fee7c11e2efb2014fffbfd1",
+                    "0xfeea77c7d9e905223247796ffe12b0fd",
+                    "0xb2a949cf820920ba4721369e42fc5116",
+                    "0x6378e80b4f00b9b2f21b9b634387d456",
+                    "0x5fe7d069a37fa27c67252c70ed9c20c7",
+                    "0x5f8e6a62a590461acb19fe87f64464da",
+                    "0xae7ff26bfc5647cac859d199eee1d6cd"
+                  ]
+                },
+                "deltaInitialNanoseconds": 20000000000,
+                "deltaCertifiedCommitRequestNanoseconds": 10000000000
+              }
+            }
           }
         },
         "getCapabilityRegistry": "eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83",
-        "getNumChainConfigurations": 57,
+        "getNumChainConfigurations": 58,
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "CCIPHome 1.6.0"
       },
@@ -35012,6 +35539,7 @@
             "17164792800244661392": "mint",
             "8481857512324358265": "monad",
             "18164309074156128038": "morph",
+            "4215185756725900654": "mova",
             "12657445206920369324": "henesys",
             "7801139999541420232": "pharos",
             "9335212494177455608": "plasma",
@@ -35077,7 +35605,7 @@
         "0x625c5a942ae3dc2e829b38f52d2d20899bcbb177a8be3624ae47485ba139cfc5"
       ],
       "proxyType": "immutable",
-      "description": "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 41 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-41 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.",
+      "description": "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 40 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-40 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -35196,7 +35724,6 @@
           "eth:0x767EDF33E430E14C6611cb1A9Ea3108E2C6346C2",
           "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2",
           "eth:0x843742760078Df85609690D85827173A1A96D14a",
-          "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
           "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
           "eth:0x8AbFC1005bee7ec7ddd4Df69fAC70399B9dEFf61",
           "eth:0x957913184D083731770A15E4d401e4A8310Bb5F3",
@@ -35218,9 +35745,9 @@
         ],
         "$threshold": 4,
         "config": {
-          "summary": "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7",
+          "summary": "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7",
           "summaryRoot": "Root: 2-of-3, childGroups=(1,2,3)",
-          "summaryGroups": "Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7",
+          "summaryGroups": "Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7",
           "rootQuorum": 2,
           "minSigs": 4,
           "allMembers": [
@@ -35246,7 +35773,6 @@
             "eth:0x767EDF33E430E14C6611cb1A9Ea3108E2C6346C2",
             "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2",
             "eth:0x843742760078Df85609690D85827173A1A96D14a",
-            "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
             "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
             "eth:0x8AbFC1005bee7ec7ddd4Df69fAC70399B9dEFf61",
             "eth:0x957913184D083731770A15E4d401e4A8310Bb5F3",
@@ -35286,7 +35812,6 @@
                 "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C",
                 "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee",
                 "eth:0x843742760078Df85609690D85827173A1A96D14a",
-                "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
                 "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
                 "eth:0x957913184D083731770A15E4d401e4A8310Bb5F3",
                 "eth:0xa69dceB575892EFe06C90b4c79bE7DeC5112DE7B",
@@ -35337,24 +35862,24 @@
             }
           }
         },
-        "getOpCount": 16,
+        "getOpCount": 19,
         "getRoot": {
-          "root": "0x9bd873ca11f4b96a4c1c782cf734e765beda551445dbbc05000fc9238ba6a5f6",
-          "validUntil": 1786115093
+          "root": "0xce389aeb00da045cd9d587a7a688c88179c8a8f15ad50c01abbb40734a7b4f45",
+          "validUntil": 1787666961
         },
         "getRootMetadata": {
           "chainId": 1,
           "multiSig": "eth:0x79bC82F3931A7d017719146A822e4AD8152b157e",
-          "preOpCount": 15,
-          "postOpCount": 16,
-          "overridePreviousRoot": true
+          "preOpCount": 16,
+          "postOpCount": 19,
+          "overridePreviousRoot": false
         },
-        "memberCount": 41,
+        "memberCount": 40,
         "minSigs": 4,
         "owner": "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "summary": "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7",
-        "summaryGroups": "Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7",
+        "summary": "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7",
+        "summaryGroups": "Group 1: 2-of-16, parent=0, signers=16 | Group 2: 2-of-17, parent=0, signers=17 | Group 3: 2-of-7, parent=0, signers=7",
         "summaryRoot": "Root: 2-of-3, childGroups=(1,2,3)"
       },
       "fieldMeta": {
@@ -35958,7 +36483,7 @@
         "0x1e8e8f875d0575ef62e454568f565aea573ef5e086c95be2cc20920d2f8dd272"
       ],
       "proxyType": "immutable",
-      "description": "Ethereum CCIP Router for this route. Users call it to send and receive messages from other chains. It dispatches to the appropriate OnRamp or OffRamp based on source or destination chain.",
+      "description": "CCIP Router on the local chain. Users call it to send messages, while OffRamps call it to deliver received messages. It dispatches each call to the configured OnRamp or receiver based on the remote chain.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -36070,7 +36595,8 @@
           "creditcoin": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "robinhood": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "canton": "eth:0x2613cc57F3ac4a054D79a04618Fb62589b8a4b26",
-          "arc": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
+          "arc": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
+          "mova": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
         },
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "Router 1.2.0"
@@ -36153,6 +36679,7 @@
             "17164792800244661392": "mint",
             "8481857512324358265": "monad",
             "18164309074156128038": "morph",
+            "4215185756725900654": "mova",
             "12657445206920369324": "henesys",
             "7801139999541420232": "pharos",
             "9335212494177455608": "plasma",
@@ -36218,7 +36745,7 @@
         "0x625c5a942ae3dc2e829b38f52d2d20899bcbb177a8be3624ae47485ba139cfc5"
       ],
       "proxyType": "immutable",
-      "description": "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 2 signatures across 70 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 2-of-70 multisig and is strictly more constrained. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-41, parent=0, signers=41 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]. The owner can rotate the entire signer tree.",
+      "description": "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 2 signatures across 69 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 2-of-69 multisig and is strictly more constrained. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]. The owner can rotate the entire signer tree.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -36275,7 +36802,6 @@
           "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2",
           "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374",
           "eth:0x843742760078Df85609690D85827173A1A96D14a",
-          "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
           "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
           "eth:0x8AbFC1005bee7ec7ddd4Df69fAC70399B9dEFf61",
           "eth:0x9079410666ED02725ee9d148398Cee26397c2A36",
@@ -36307,9 +36833,9 @@
         ],
         "$threshold": 2,
         "config": {
-          "summary": "Root: 1-of-2, childGroups=(1,2) | Group 1: 2-of-41, parent=0, signers=41 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2",
+          "summary": "Root: 1-of-2, childGroups=(1,2) | Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2",
           "summaryRoot": "Root: 1-of-2, childGroups=(1,2)",
-          "summaryGroups": "Group 1: 2-of-41, parent=0, signers=41 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2",
+          "summaryGroups": "Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2",
           "rootQuorum": 1,
           "minSigs": 2,
           "allMembers": [
@@ -36354,7 +36880,6 @@
             "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2",
             "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374",
             "eth:0x843742760078Df85609690D85827173A1A96D14a",
-            "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
             "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
             "eth:0x8AbFC1005bee7ec7ddd4Df69fAC70399B9dEFf61",
             "eth:0x9079410666ED02725ee9d148398Cee26397c2A36",
@@ -36418,7 +36943,6 @@
                 "eth:0x767EDF33E430E14C6611cb1A9Ea3108E2C6346C2",
                 "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2",
                 "eth:0x843742760078Df85609690D85827173A1A96D14a",
-                "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
                 "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
                 "eth:0x8AbFC1005bee7ec7ddd4Df69fAC70399B9dEFf61",
                 "eth:0x957913184D083731770A15E4d401e4A8310Bb5F3",
@@ -36588,12 +37112,12 @@
           "postOpCount": 0,
           "overridePreviousRoot": false
         },
-        "memberCount": 70,
+        "memberCount": 69,
         "minSigs": 2,
         "owner": "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "summary": "Root: 1-of-2, childGroups=(1,2) | Group 1: 2-of-41, parent=0, signers=41 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2",
-        "summaryGroups": "Group 1: 2-of-41, parent=0, signers=41 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2",
+        "summary": "Root: 1-of-2, childGroups=(1,2) | Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2",
+        "summaryGroups": "Group 1: 2-of-40, parent=0, signers=40 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2",
         "summaryRoot": "Root: 1-of-2, childGroups=(1,2)"
       },
       "fieldMeta": {
@@ -36792,7 +37316,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1499,
+        "getExpectedNextSequenceNumber": 1518,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -37147,7 +37671,7 @@
         "0x625c5a942ae3dc2e829b38f52d2d20899bcbb177a8be3624ae47485ba139cfc5"
       ],
       "proxyType": "immutable",
-      "description": "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 5 signatures across 41 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 5-of-41 multisig and is strictly more constrained. Root: 2-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-17, parent=2, signers=17 | Group 4: 2-of-17, parent=2, signers=17]. The owner can rotate the entire signer tree.",
+      "description": "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 5 signatures across 40 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 5-of-40 multisig and is strictly more constrained. Root: 2-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17]. The owner can rotate the entire signer tree.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -37247,7 +37771,6 @@
           "eth:0x767EDF33E430E14C6611cb1A9Ea3108E2C6346C2",
           "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2",
           "eth:0x843742760078Df85609690D85827173A1A96D14a",
-          "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
           "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
           "eth:0x8AbFC1005bee7ec7ddd4Df69fAC70399B9dEFf61",
           "eth:0x957913184D083731770A15E4d401e4A8310Bb5F3",
@@ -37269,9 +37792,9 @@
         ],
         "$threshold": 5,
         "config": {
-          "summary": "Root: 2-of-2, childGroups=(1,2) | Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-17, parent=2, signers=17 | Group 4: 2-of-17, parent=2, signers=17",
+          "summary": "Root: 2-of-2, childGroups=(1,2) | Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17",
           "summaryRoot": "Root: 2-of-2, childGroups=(1,2)",
-          "summaryGroups": "Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-17, parent=2, signers=17 | Group 4: 2-of-17, parent=2, signers=17",
+          "summaryGroups": "Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17",
           "rootQuorum": 2,
           "minSigs": 5,
           "allMembers": [
@@ -37297,7 +37820,6 @@
             "eth:0x767EDF33E430E14C6611cb1A9Ea3108E2C6346C2",
             "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2",
             "eth:0x843742760078Df85609690D85827173A1A96D14a",
-            "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
             "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
             "eth:0x8AbFC1005bee7ec7ddd4Df69fAC70399B9dEFf61",
             "eth:0x957913184D083731770A15E4d401e4A8310Bb5F3",
@@ -37357,7 +37879,6 @@
                 "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C",
                 "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee",
                 "eth:0x843742760078Df85609690D85827173A1A96D14a",
-                "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
                 "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
                 "eth:0x957913184D083731770A15E4d401e4A8310Bb5F3",
                 "eth:0xa69dceB575892EFe06C90b4c79bE7DeC5112DE7B",
@@ -37406,12 +37927,12 @@
           "postOpCount": 14,
           "overridePreviousRoot": true
         },
-        "memberCount": 41,
+        "memberCount": 40,
         "minSigs": 5,
         "owner": "eth:0x6608920e3F6b591EC3Cf15CA1DDf66fBE117F56A",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "summary": "Root: 2-of-2, childGroups=(1,2) | Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-17, parent=2, signers=17 | Group 4: 2-of-17, parent=2, signers=17",
-        "summaryGroups": "Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-17, parent=2, signers=17 | Group 4: 2-of-17, parent=2, signers=17",
+        "summary": "Root: 2-of-2, childGroups=(1,2) | Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17",
+        "summaryGroups": "Group 1: 1-of-7, parent=0, signers=7 | Group 2: 2-of-2, parent=0, childGroups=(3,4) | Group 3: 2-of-16, parent=2, signers=16 | Group 4: 2-of-17, parent=2, signers=17",
         "summaryRoot": "Root: 2-of-2, childGroups=(1,2)"
       },
       "fieldMeta": {
@@ -37462,6 +37983,15 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers",
+          "via": [
+            { "address": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "description": "sign OCR commit reports that move crosschain merkle roots of messages and price updates into this OffRamp. F+1 of these required per report.",
           "role": ".ocrCommitSigners"
@@ -37489,6 +38019,15 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers",
+          "via": [
+            { "address": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5" }
+          ]
+        },
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
@@ -38636,7 +39175,15 @@
         "0x1757e77b205eb252357ac1e9e86066b85f791d14defc4a9ca0bb60e8f5d647d6"
       ],
       "proxyType": "immutable",
-      "description": "Contract used to send outgoing messages to other chains. It saves destination chain configs, storing the router that is allowed to call the OnRamp and whether a whitelist is enabled to send messages.",
+      "description": "OnRamp used to send messages from its local chain to other chains. It stores each destination route's authorized Router and optional sender allowlist, prices messages through the configured FeeQuoter, and advances outbound nonces through the NonceManager.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers"
+        }
+      ],
       "ignoreInWatchMode": ["getExpectedNextSequenceNumber"],
       "deployerAddress": "eth:0x062f05CD6c835677B05a8658A351969476861316",
       "sinceTimestamp": 1744752995,
@@ -38785,6 +39332,10 @@
           "arc": {
             "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
             "allowlistEnabled": false
+          },
+          "mova": {
+            "router": "eth:0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+            "allowlistEnabled": false
           }
         },
         "getDynamicConfig": {
@@ -38881,6 +39432,7 @@
             "17164792800244661392": "mint",
             "8481857512324358265": "monad",
             "18164309074156128038": "morph",
+            "4215185756725900654": "mova",
             "12657445206920369324": "henesys",
             "7801139999541420232": "pharos",
             "9335212494177455608": "plasma",
@@ -45307,6 +45859,7 @@
             "17164792800244661392": "mint",
             "8481857512324358265": "monad",
             "18164309074156128038": "morph",
+            "4215185756725900654": "mova",
             "12657445206920369324": "henesys",
             "7801139999541420232": "pharos",
             "9335212494177455608": "plasma",
@@ -46150,7 +46703,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 25379,
+        "getExpectedNextSequenceNumber": 25757,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -46648,7 +47201,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 460,
+        "getExpectedNextSequenceNumber": 463,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -46767,7 +47320,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 475,
+        "getExpectedNextSequenceNumber": 479,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -47778,7 +48331,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 203,
+        "getExpectedNextSequenceNumber": 204,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -48750,6 +49303,15 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers",
+          "via": [
+            { "address": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "description": "sign OCR commit reports that move crosschain merkle roots of messages and price updates into this OffRamp. F+1 of these required per report.",
           "role": ".ocrCommitSigners"
@@ -49311,8 +49873,8 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 7190,
-        "getLatestPriceEpochAndRound": 54064641,
+        "getExpectedNextSequenceNumber": 7270,
+        "getLatestPriceEpochAndRound": 54640387,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
           "sourceChainSelector": "6433500567565415381",
@@ -49403,7 +49965,7 @@
         "0x0bfaa79275ffb76e161bfb96a564a2a4cd6e2ff1d915f2b667fb2698bce1cb80"
       ],
       "proxyType": "immutable",
-      "description": "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 2 signatures across 72 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 2-of-72 multisig and is strictly more constrained. Root: 1-of-2, childGroups=(1,2). [click for per-group breakdown: Group 1: 2-of-43, parent=0, signers=43 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2]. The owner can rotate the entire signer tree.",
+      "description": "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 2 signatures across 69 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 2-of-69 multisig and is strictly more constrained. Root: 1-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2]. The owner can rotate the entire signer tree.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -49460,15 +50022,12 @@
           "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2",
           "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374",
           "eth:0x843742760078Df85609690D85827173A1A96D14a",
-          "eth:0x8569de6e68F22937e69b7338E47Ee751aCcFb266",
-          "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
           "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
           "eth:0x8AbFC1005bee7ec7ddd4Df69fAC70399B9dEFf61",
           "eth:0x9079410666ED02725ee9d148398Cee26397c2A36",
           "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79",
           "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D",
           "eth:0x957913184D083731770A15E4d401e4A8310Bb5F3",
-          "eth:0x97D0895BEd8acd240C32427191D96B18eB283748",
           "eth:0x9a2595b4482F463fc629fBf5900e6Fab6d4D5fD0",
           "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF",
           "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB",
@@ -49494,9 +50053,9 @@
         ],
         "$threshold": 2,
         "config": {
-          "summary": "Root: 1-of-2, childGroups=(1,2) | Group 1: 2-of-43, parent=0, signers=43 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2",
-          "summaryRoot": "Root: 1-of-2, childGroups=(1,2)",
-          "summaryGroups": "Group 1: 2-of-43, parent=0, signers=43 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2",
+          "summary": "Root: 1-of-3, childGroups=(1,2,3) | Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2",
+          "summaryRoot": "Root: 1-of-3, childGroups=(1,2,3)",
+          "summaryGroups": "Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2",
           "rootQuorum": 1,
           "minSigs": 2,
           "allMembers": [
@@ -49541,15 +50100,12 @@
             "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2",
             "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374",
             "eth:0x843742760078Df85609690D85827173A1A96D14a",
-            "eth:0x8569de6e68F22937e69b7338E47Ee751aCcFb266",
-            "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
             "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
             "eth:0x8AbFC1005bee7ec7ddd4Df69fAC70399B9dEFf61",
             "eth:0x9079410666ED02725ee9d148398Cee26397c2A36",
             "eth:0x925d7Ea0ADe586DBFd56a942bb297286cE428C79",
             "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D",
             "eth:0x957913184D083731770A15E4d401e4A8310Bb5F3",
-            "eth:0x97D0895BEd8acd240C32427191D96B18eB283748",
             "eth:0x9a2595b4482F463fc629fBf5900e6Fab6d4D5fD0",
             "eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF",
             "eth:0xa35B7219521134cAF52DccAD44d604335b64a4fB",
@@ -49577,18 +50133,15 @@
             "root": {
               "quorum": 1,
               "parent": 0,
-              "childGroups": [1, 2],
+              "childGroups": [1, 2, 3],
               "members": []
             },
             "group1": {
-              "quorum": 2,
+              "quorum": 4,
               "parent": 0,
               "childGroups": [],
               "members": [
-                "eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34",
-                "eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472",
                 "eth:0x15C50aAdC2ff201FA0545996528082c9fC551eB0",
-                "eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94",
                 "eth:0x1BD478DB8E202A887440b2f89E854927651Ce142",
                 "eth:0x1E2cDb5Fe0461C3688E090B879fd1156ed32a887",
                 "eth:0x29c5f7aCfDea3F48486b282aF0FA797b0F04D845",
@@ -49602,19 +50155,14 @@
                 "eth:0x568DCF31bEE597CbcA90F6063123f48dF502532b",
                 "eth:0x5AA4D76f0CD8ea04fB3C4C4b771A0B9E03dC776C",
                 "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee",
-                "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4",
                 "eth:0x70f498A0AD8a17fC853fcb8eDbE31Fbce71173E6",
                 "eth:0x767EDF33E430E14C6611cb1A9Ea3108E2C6346C2",
                 "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2",
                 "eth:0x843742760078Df85609690D85827173A1A96D14a",
-                "eth:0x8569de6e68F22937e69b7338E47Ee751aCcFb266",
-                "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
                 "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
                 "eth:0x8AbFC1005bee7ec7ddd4Df69fAC70399B9dEFf61",
                 "eth:0x957913184D083731770A15E4d401e4A8310Bb5F3",
-                "eth:0x97D0895BEd8acd240C32427191D96B18eB283748",
                 "eth:0x9a2595b4482F463fc629fBf5900e6Fab6d4D5fD0",
-                "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D",
                 "eth:0xa69dceB575892EFe06C90b4c79bE7DeC5112DE7B",
                 "eth:0xADE26816Bb84a0c3CB8e468157Eb4dc13B006c44",
                 "eth:0xB2675C40d0E3B7466Cc419CcBdac289392618Ce8",
@@ -49625,73 +50173,85 @@
                 "eth:0xEA6247A8565de25E7d1E31f3055911566A2Addc6",
                 "eth:0xF27805Fd4416cE6cB433c5a63A39B2bCc47a4BF6",
                 "eth:0xF3C4A0C49234c6f08ACf889522812d0647A8481b",
-                "eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028",
-                "eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29",
                 "eth:0xFccD1128fc823dD78e76240dc206a7A26494F271"
               ]
             },
             "group2": {
+              "quorum": 2,
+              "parent": 0,
+              "childGroups": [],
+              "members": [
+                "eth:0x013D4A675Fd02359c3c35Abc514dafd97B127e34",
+                "eth:0x0D2730AD6D62A49907Fb9273cD4a59D1092cb472",
+                "eth:0x1A1981c347Cd352CdF4882c343fC9C24C4796e94",
+                "eth:0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4",
+                "eth:0xa42c8570771240D1e2F3211064a7C7472Cc05b7D",
+                "eth:0xfBB1B9F0adFc8696e716CC8AD05a2fEbC1605028",
+                "eth:0xFc660abD73677bb4942f1bDDd1054a975D228d29"
+              ]
+            },
+            "group3": {
               "quorum": 6,
               "parent": 0,
               "childGroups": [
-                3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
+                4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
               ],
               "members": []
             },
-            "group3": {
+            "group4": {
               "quorum": 1,
-              "parent": 2,
+              "parent": 3,
               "childGroups": [],
               "members": [
                 "eth:0x7eFF312905DEdB38Bf8f07BEFaDfF96376154374",
                 "eth:0xF721cEFDBD939Ba732E145817Dca810e6064c4b7"
               ]
             },
-            "group4": {
+            "group5": {
               "quorum": 1,
-              "parent": 2,
+              "parent": 3,
               "childGroups": [],
               "members": [
                 "eth:0x9079410666ED02725ee9d148398Cee26397c2A36",
                 "eth:0xb122347811e8E9C89cdbfd761fBc9929F52090B9"
               ]
             },
-            "group5": {
+            "group6": {
               "quorum": 1,
-              "parent": 2,
+              "parent": 3,
               "childGroups": [],
               "members": [
                 "eth:0x5bD3a90E94bB8aA6fE6cCF494e292F5F707B92d6",
                 "eth:0x5C33Bf560f29e04dF8A666493aAD8E47eEa9B1c8"
               ]
             },
-            "group6": {
+            "group7": {
               "quorum": 1,
-              "parent": 2,
+              "parent": 3,
               "childGroups": [],
               "members": ["eth:0x6924E54339C7f28730dBB4B842a7FE86ED01Ecf7"]
             },
-            "group7": {
+            "group8": {
               "quorum": 1,
-              "parent": 2,
+              "parent": 3,
               "childGroups": [],
               "members": [
                 "eth:0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3",
                 "eth:0x48A094F7A354d8faD7263EA2a82391d105DF6628"
               ]
             },
-            "group8": {
+            "group9": {
               "quorum": 1,
-              "parent": 2,
+              "parent": 3,
               "childGroups": [],
               "members": [
                 "eth:0x266a433524AF2a471D381D8Ad4ad70DDAA5dC112",
                 "eth:0x570F41d83b1031d382F641B9a532A8D7CBd7a695"
               ]
             },
-            "group9": {
+            "group10": {
               "quorum": 1,
-              "parent": 2,
+              "parent": 3,
               "childGroups": [],
               "members": [
                 "eth:0x2b73763722378AB2013CB0877946f69fC3727Fd8",
@@ -49700,33 +50260,33 @@
                 "eth:0xd3094f770579AFd66711847cE9E9C42D10BA2264"
               ]
             },
-            "group10": {
+            "group11": {
               "quorum": 1,
-              "parent": 2,
+              "parent": 3,
               "childGroups": [],
               "members": ["eth:0xA3177f64efE98422E782bC17BE7971F01187B7cF"]
             },
-            "group11": {
+            "group12": {
               "quorum": 1,
-              "parent": 2,
+              "parent": 3,
               "childGroups": [],
               "members": ["eth:0x2bbB172cD88dCAD64CBE762dcC53E6f96a17d1D6"]
             },
-            "group12": {
+            "group13": {
               "quorum": 1,
-              "parent": 2,
+              "parent": 3,
               "childGroups": [],
               "members": ["eth:0x5BF2821B248e85439B5d7c5a2bcB055Eb54Ad29F"]
             },
-            "group13": {
+            "group14": {
               "quorum": 1,
-              "parent": 2,
+              "parent": 3,
               "childGroups": [],
               "members": ["eth:0x4e509C60b3e916644dE441298595FeD12C4AC926"]
             },
-            "group14": {
+            "group15": {
               "quorum": 1,
-              "parent": 2,
+              "parent": 3,
               "childGroups": [],
               "members": [
                 "eth:0x1620E85235C124303d03671b5de5ca12249a16BF",
@@ -49734,21 +50294,21 @@
                 "eth:0x9453E18f03A36E2A2c70598De520bD24434D2d1D"
               ]
             },
-            "group15": {
+            "group16": {
               "quorum": 1,
-              "parent": 2,
+              "parent": 3,
               "childGroups": [],
               "members": ["eth:0x43640F208956c7D49e04F40FF95dF818643B76aA"]
             },
-            "group16": {
+            "group17": {
               "quorum": 1,
-              "parent": 2,
+              "parent": 3,
               "childGroups": [],
               "members": ["eth:0x2B88575011C5E11389ddB50D28d31C7d06B352A0"]
             },
-            "group17": {
+            "group18": {
               "quorum": 1,
-              "parent": 2,
+              "parent": 3,
               "childGroups": [],
               "members": [
                 "eth:0x124BA7e2188074335A0e9b12B449AD5781A73D60",
@@ -49756,9 +50316,9 @@
                 "eth:0xa85936633588Fc7a120061CA973e65cE83839F87"
               ]
             },
-            "group18": {
+            "group19": {
               "quorum": 1,
-              "parent": 2,
+              "parent": 3,
               "childGroups": [],
               "members": [
                 "eth:0x4189a291cC7E497015B45D4bb046dC0A82580688",
@@ -49779,13 +50339,13 @@
           "postOpCount": 0,
           "overridePreviousRoot": true
         },
-        "memberCount": 72,
+        "memberCount": 69,
         "minSigs": 2,
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "summary": "Root: 1-of-2, childGroups=(1,2) | Group 1: 2-of-43, parent=0, signers=43 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2",
-        "summaryGroups": "Group 1: 2-of-43, parent=0, signers=43 | Group 2: 6-of-16, parent=0, childGroups=(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18) | Group 3: 1-of-2, parent=2, signers=2 | Group 4: 1-of-2, parent=2, signers=2 | Group 5: 1-of-2, parent=2, signers=2 | Group 6: 1-of-1, parent=2, signers=1 | Group 7: 1-of-2, parent=2, signers=2 | Group 8: 1-of-2, parent=2, signers=2 | Group 9: 1-of-4, parent=2, signers=4 | Group 10: 1-of-1, parent=2, signers=1 | Group 11: 1-of-1, parent=2, signers=1 | Group 12: 1-of-1, parent=2, signers=1 | Group 13: 1-of-1, parent=2, signers=1 | Group 14: 1-of-3, parent=2, signers=3 | Group 15: 1-of-1, parent=2, signers=1 | Group 16: 1-of-1, parent=2, signers=1 | Group 17: 1-of-3, parent=2, signers=3 | Group 18: 1-of-2, parent=2, signers=2",
-        "summaryRoot": "Root: 1-of-2, childGroups=(1,2)"
+        "summary": "Root: 1-of-3, childGroups=(1,2,3) | Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2",
+        "summaryGroups": "Group 1: 4-of-33, parent=0, signers=33 | Group 2: 2-of-7, parent=0, signers=7 | Group 3: 6-of-16, parent=0, childGroups=(4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19) | Group 4: 1-of-2, parent=3, signers=2 | Group 5: 1-of-2, parent=3, signers=2 | Group 6: 1-of-2, parent=3, signers=2 | Group 7: 1-of-1, parent=3, signers=1 | Group 8: 1-of-2, parent=3, signers=2 | Group 9: 1-of-2, parent=3, signers=2 | Group 10: 1-of-4, parent=3, signers=4 | Group 11: 1-of-1, parent=3, signers=1 | Group 12: 1-of-1, parent=3, signers=1 | Group 13: 1-of-1, parent=3, signers=1 | Group 14: 1-of-1, parent=3, signers=1 | Group 15: 1-of-3, parent=3, signers=3 | Group 16: 1-of-1, parent=3, signers=1 | Group 17: 1-of-1, parent=3, signers=1 | Group 18: 1-of-3, parent=3, signers=3 | Group 19: 1-of-2, parent=3, signers=2",
+        "summaryRoot": "Root: 1-of-3, childGroups=(1,2,3)"
       },
       "fieldMeta": {
         "config": {
@@ -50401,7 +50961,13 @@
           "eth:0xA39986F96B80d04e8d7AeAaF47175F47C23FD0f4": "eth:0xf25c404c101D40d88b5dCD64B82583dBC918Dd25",
           "eth:0x5904eBd0519028ca1550FBE96466B4b226f0C328": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
           "eth:0xCEa3dC21f79aa147b528F2D5AF02b4AC15261F32": "eth:0x2848118879c23cA97901BB9A5Ff7d9d483B238bf",
-          "eth:0x799Cd0771b996833cd0885C7D18FE7E0C4AE2255": "eth:0xf307bD7200F696b264A0eA14f9D1d0812faEaFd6"
+          "eth:0x799Cd0771b996833cd0885C7D18FE7E0C4AE2255": "eth:0xf307bD7200F696b264A0eA14f9D1d0812faEaFd6",
+          "eth:0xff9541008e4C8c8B10d54fcF830354D1C2B758fE": "eth:0x2F3d45EA2E14A384fb9f1314b65Daa05035c91FD",
+          "eth:0x1d83e6299Df9e7fE8Ac19aFC0B0B570d252e6B7B": "eth:0x3Cc4F0CA3476996815cb5D6F86B97e83aB74578d",
+          "eth:0x781C2bF5C5DdF06817f225EE3EA101627C0eE19E": "eth:0x3Cc4F0CA3476996815cb5D6F86B97e83aB74578d",
+          "eth:0xc9B0578b4Ede8473b42B75b0e0beC81a08E86370": "eth:0x3Cc4F0CA3476996815cb5D6F86B97e83aB74578d",
+          "eth:0x97F39bF6c9A9713f32c82583393e00468950DB8f": "eth:0x458b7946673CcCcFF1FaC2eaFA523c4E222B28f2",
+          "eth:0xC5Ca79cD42986D700670aD8aED49c2679E3519bA": "eth:0xeC94eC90A378197198863e84d2Ee1E3f8Cf730f6"
         },
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "poolsMap": {
@@ -50924,7 +51490,11 @@
           "eth:0x224e90591A2d63fb66E677D0561Ea4A6Ad1F098D": "eth:0xEFc9effeccD60326c63ea2F0C1dEeD5861661904",
           "eth:0xdDC0f880ff6e4e22E4B74632fBb43Ce4DF6cCC5a": "eth:0x37cAD86F09741D17A4124eb0c8dca7e2272f33e1",
           "eth:0x5904eBd0519028ca1550FBE96466B4b226f0C328": "eth:0x6eC2a0B3E92819A881f30e70478320BCEaAA4FF1",
-          "eth:0xA39986F96B80d04e8d7AeAaF47175F47C23FD0f4": "eth:0xaFB1D37876aE69DF052Eb6a46A648942b38E7779"
+          "eth:0xA39986F96B80d04e8d7AeAaF47175F47C23FD0f4": "eth:0xaFB1D37876aE69DF052Eb6a46A648942b38E7779",
+          "eth:0xff9541008e4C8c8B10d54fcF830354D1C2B758fE": "eth:0x6D2764E406B7C93D2fE55f843e3Ef66158c7Fd78",
+          "eth:0x1d83e6299Df9e7fE8Ac19aFC0B0B570d252e6B7B": "eth:0x504708e43261C483404D26582d117f380fD5510c",
+          "eth:0x781C2bF5C5DdF06817f225EE3EA101627C0eE19E": "eth:0x2ba361f872306aAfeF0257A6DFf45E05Df16A302",
+          "eth:0xc9B0578b4Ede8473b42B75b0e0beC81a08E86370": "eth:0x2EFBb6c8dC647911F77606e53D83433BD7F36c1b"
         },
         "registryModules": [
           "eth:0x13022e3e6C77524308BD56AEd716E88311b2E533",
@@ -50940,7 +51510,7 @@
           "description": "Accounts authorized to call proposeAdministrator(token, admin) on this registry. A registry module can claim administrator rights over any token that is not already registered. The owner can add or remove modules. Replayed from RegistryModuleAdded / RegistryModuleRemoved events."
         },
         "administrators": {
-          "description": "Per-token administrator address: the only account that can call setPool() for that token and thereby re-route it to a different TokenPool. Replayed from AdministratorTransferred events; tokens that have been proposed but never had acceptAdminRole called are absent. Latest administrator per token wins."
+          "description": "Per-token administrator address: the only account that can set or remove that token's pool and initiate a transfer of its administrator role. Replayed from AdministratorTransferred events; tokens that have been proposed but never had acceptAdminRole called are absent. Latest administrator per token wins."
         }
       },
       "implementationNames": {
@@ -51606,7 +52176,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2228854609654988236671092"
+        "totalSupply": "2207994668889611616153347"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -52017,6 +52587,15 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers",
+          "via": [
+            { "address": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "description": "sign OCR commit reports that move crosschain merkle roots of messages and price updates into this OffRamp. F+1 of these required per report.",
           "role": ".ocrCommitSigners"
@@ -52075,7 +52654,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 78,
+        "getExpectedNextSequenceNumber": 79,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -52163,6 +52742,15 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers",
+          "via": [
+            { "address": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5" }
+          ]
+        },
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
@@ -52602,7 +53190,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2890,
+        "getExpectedNextSequenceNumber": 2914,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -53646,7 +54234,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1755,
+        "getExpectedNextSequenceNumber": 1770,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -54120,6 +54708,15 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers",
+          "via": [
+            { "address": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "description": "sign OCR commit reports that move crosschain merkle roots of messages and price updates into this OffRamp. F+1 of these required per report.",
           "role": ".ocrCommitSigners"
@@ -54288,6 +54885,18 @@
         {
           "permission": "interact",
           "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "set or override the previous OnRamp and OffRamp used as the starting nonce source during a ramp migration.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
           "description": "update the list of authorized callers that can update the nonces.",
           "role": ".owner",
           "via": [
@@ -54300,7 +54909,7 @@
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "add a 'message interceptor' contract that can gate messages based on content.",
+          "description": "can add, disable, or reconfigure source-chain routes, including each route's Router, source OnRamp address, and whether commits call the configured RMN verifier.",
           "role": ".owner",
           "via": [
             {
@@ -54312,7 +54921,7 @@
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can arbitrarily update signers and transmitters set.",
+          "description": "can replace the OCR commit and execution configurations, including their digests, fault thresholds, signers, and transmitters.",
           "role": ".owner",
           "via": [
             {
@@ -54324,19 +54933,7 @@
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can disable source chains.",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-              "delay": 10800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can toggle whether commits for a source route call the configured RMN verifier. Enabling this path is only live when that RMN implementation supports verify().",
+          "description": "can set a message-interceptor contract that gates execution based on message content.",
           "role": ".owner",
           "via": [
             {
@@ -54349,18 +54946,6 @@
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "description": "can update the fee quoter contract, where signers save new prices used for fee estimation.",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-              "delay": 10800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can update the router contract used to relay messages on this chain from another chain. Each source chain has its own router configured.",
           "role": ".owner",
           "via": [
             {
@@ -54792,6 +55377,18 @@
         {
           "permission": "interact",
           "from": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
+          "description": "can add, disable, or reconfigure destination-chain routes and directly manage each route's sender allowlist.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "description": "can set a 'message interceptor' contract to gate messages based on content.",
           "role": ".owner",
           "via": [
@@ -54816,7 +55413,7 @@
         {
           "permission": "interact",
           "from": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
-          "description": "can update the FeeQuoter address used for fee estimations.",
+          "description": "can update the FeeQuoter used for fee estimation and the fee aggregator that receives withdrawn fee tokens.",
           "role": ".owner",
           "via": [
             {
@@ -55044,8 +55641,32 @@
         {
           "permission": "interact",
           "from": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+          "description": "add or remove registry modules that can propose administrators for unregistered tokens.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
           "description": "can register arbitrary tokens with an arbitrary administrator.",
           "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+          "description": "set or remove the TokenPool for an administered token and initiate transfer of that token's administrator role.",
+          "role": ".administrators",
           "via": [
             {
               "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
@@ -55860,7 +56481,7 @@
         "0x625c5a942ae3dc2e829b38f52d2d20899bcbb177a8be3624ae47485ba139cfc5"
       ],
       "proxyType": "immutable",
-      "description": "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 43 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-43 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-18, parent=0, signers=18 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.",
+      "description": "Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 42 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-42 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -55997,6 +56618,18 @@
         {
           "permission": "interact",
           "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "set or override the previous OnRamp and OffRamp used as the starting nonce source during a ramp migration.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
           "description": "update the list of authorized callers that can update the nonces.",
           "role": ".owner",
           "via": [
@@ -56009,7 +56642,7 @@
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "add a 'message interceptor' contract that can gate messages based on content.",
+          "description": "can add, disable, or reconfigure source-chain routes, including each route's Router, source OnRamp address, and whether commits call the configured RMN verifier.",
           "role": ".owner",
           "via": [
             {
@@ -56021,7 +56654,7 @@
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can arbitrarily update signers and transmitters set.",
+          "description": "can replace the OCR commit and execution configurations, including their digests, fault thresholds, signers, and transmitters.",
           "role": ".owner",
           "via": [
             {
@@ -56033,19 +56666,7 @@
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can disable source chains.",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-              "delay": 10800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can toggle whether commits for a source route call the configured RMN verifier. Enabling this path is only live when that RMN implementation supports verify().",
+          "description": "can set a message-interceptor contract that gates execution based on message content.",
           "role": ".owner",
           "via": [
             {
@@ -56058,18 +56679,6 @@
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "description": "can update the fee quoter contract, where signers save new prices used for fee estimation.",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-              "delay": 10800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can update the router contract used to relay messages on this chain from another chain. Each source chain has its own router configured.",
           "role": ".owner",
           "via": [
             {
@@ -56501,6 +57110,18 @@
         {
           "permission": "interact",
           "from": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
+          "description": "can add, disable, or reconfigure destination-chain routes and directly manage each route's sender allowlist.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "description": "can set a 'message interceptor' contract to gate messages based on content.",
           "role": ".owner",
           "via": [
@@ -56525,7 +57146,7 @@
         {
           "permission": "interact",
           "from": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
-          "description": "can update the FeeQuoter address used for fee estimations.",
+          "description": "can update the FeeQuoter used for fee estimation and the fee aggregator that receives withdrawn fee tokens.",
           "role": ".owner",
           "via": [
             {
@@ -56753,8 +57374,32 @@
         {
           "permission": "interact",
           "from": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+          "description": "add or remove registry modules that can propose administrators for unregistered tokens.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
           "description": "can register arbitrary tokens with an arbitrary administrator.",
           "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+          "description": "set or remove the TokenPool for an administered token and initiate transfer of that token's administrator role.",
+          "role": ".administrators",
           "via": [
             {
               "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
@@ -57053,7 +57698,6 @@
           "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2",
           "eth:0x843742760078Df85609690D85827173A1A96D14a",
           "eth:0x8569de6e68F22937e69b7338E47Ee751aCcFb266",
-          "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
           "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
           "eth:0x8AbFC1005bee7ec7ddd4Df69fAC70399B9dEFf61",
           "eth:0x957913184D083731770A15E4d401e4A8310Bb5F3",
@@ -57076,9 +57720,9 @@
         ],
         "$threshold": 4,
         "config": {
-          "summary": "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-18, parent=0, signers=18 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7",
+          "summary": "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7",
           "summaryRoot": "Root: 2-of-3, childGroups=(1,2,3)",
-          "summaryGroups": "Group 1: 2-of-18, parent=0, signers=18 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7",
+          "summaryGroups": "Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7",
           "rootQuorum": 2,
           "minSigs": 4,
           "allMembers": [
@@ -57105,7 +57749,6 @@
             "eth:0x7b404a74F7d78191F4359C6Cc75f895b5A44bdB2",
             "eth:0x843742760078Df85609690D85827173A1A96D14a",
             "eth:0x8569de6e68F22937e69b7338E47Ee751aCcFb266",
-            "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
             "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
             "eth:0x8AbFC1005bee7ec7ddd4Df69fAC70399B9dEFf61",
             "eth:0x957913184D083731770A15E4d401e4A8310Bb5F3",
@@ -57147,7 +57790,6 @@
                 "eth:0x615B9b28B754Afd1fD03EbaB2BAE8b14A6Dc94Ee",
                 "eth:0x843742760078Df85609690D85827173A1A96D14a",
                 "eth:0x8569de6e68F22937e69b7338E47Ee751aCcFb266",
-                "eth:0x893234a5EbE7Ae1D5089Fe5936a05c6cd6fBaDE7",
                 "eth:0x89810cb91a5fe67dDf3483182f08e1559A5699De",
                 "eth:0x957913184D083731770A15E4d401e4A8310Bb5F3",
                 "eth:0xa69dceB575892EFe06C90b4c79bE7DeC5112DE7B",
@@ -57199,24 +57841,24 @@
             }
           }
         },
-        "getOpCount": 1372,
+        "getOpCount": 1402,
         "getRoot": {
-          "root": "0xa255010c13aa884ba2c83fcec1e82130551c9c6fe10be8945f87da110cdc121f",
-          "validUntil": 1786736047
+          "root": "0x56a5d6b3c2eac671be20da170fe715dc422968c08d0e01cd8d2b1d02d76c7797",
+          "validUntil": 1787341217
         },
         "getRootMetadata": {
           "chainId": 1,
           "multiSig": "eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e",
-          "preOpCount": 1370,
-          "postOpCount": 1372,
+          "preOpCount": 1395,
+          "postOpCount": 1402,
           "overridePreviousRoot": false
         },
-        "memberCount": 43,
+        "memberCount": 42,
         "minSigs": 4,
         "owner": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "summary": "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-18, parent=0, signers=18 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7",
-        "summaryGroups": "Group 1: 2-of-18, parent=0, signers=18 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7",
+        "summary": "Root: 2-of-3, childGroups=(1,2,3) | Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7",
+        "summaryGroups": "Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7",
         "summaryRoot": "Root: 2-of-3, childGroups=(1,2,3)"
       },
       "fieldMeta": {
@@ -57750,7 +58392,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 338,
+        "getExpectedNextSequenceNumber": 343,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -58637,7 +59279,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 144020,
+        "getExpectedNextSequenceNumber": 144078,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -58866,6 +59508,18 @@
         {
           "permission": "interact",
           "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "set or override the previous OnRamp and OffRamp used as the starting nonce source during a ramp migration.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
           "description": "update the list of authorized callers that can update the nonces.",
           "role": ".owner",
           "via": [
@@ -58878,7 +59532,7 @@
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "add a 'message interceptor' contract that can gate messages based on content.",
+          "description": "can add, disable, or reconfigure source-chain routes, including each route's Router, source OnRamp address, and whether commits call the configured RMN verifier.",
           "role": ".owner",
           "via": [
             {
@@ -58890,7 +59544,7 @@
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can arbitrarily update signers and transmitters set.",
+          "description": "can replace the OCR commit and execution configurations, including their digests, fault thresholds, signers, and transmitters.",
           "role": ".owner",
           "via": [
             {
@@ -58902,19 +59556,7 @@
         {
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can disable source chains.",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-              "delay": 10800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can toggle whether commits for a source route call the configured RMN verifier. Enabling this path is only live when that RMN implementation supports verify().",
+          "description": "can set a message-interceptor contract that gates execution based on message content.",
           "role": ".owner",
           "via": [
             {
@@ -58927,18 +59569,6 @@
           "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "description": "can update the fee quoter contract, where signers save new prices used for fee estimation.",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
-              "delay": 10800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
-          "description": "can update the router contract used to relay messages on this chain from another chain. Each source chain has its own router configured.",
           "role": ".owner",
           "via": [
             {
@@ -59370,6 +60000,18 @@
         {
           "permission": "interact",
           "from": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
+          "description": "can add, disable, or reconfigure destination-chain routes and directly manage each route's sender allowlist.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
           "description": "can set a 'message interceptor' contract to gate messages based on content.",
           "role": ".owner",
           "via": [
@@ -59394,7 +60036,7 @@
         {
           "permission": "interact",
           "from": "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa",
-          "description": "can update the FeeQuoter address used for fee estimations.",
+          "description": "can update the FeeQuoter used for fee estimation and the fee aggregator that receives withdrawn fee tokens.",
           "role": ".owner",
           "via": [
             {
@@ -59622,8 +60264,32 @@
         {
           "permission": "interact",
           "from": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+          "description": "add or remove registry modules that can propose administrators for unregistered tokens.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
           "description": "can register arbitrary tokens with an arbitrary administrator.",
           "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+              "delay": 10800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xb22764f98dD05c789929716D677382Df22C05Cb6",
+          "description": "set or remove the TokenPool for an administered token and initiate transfer of that token's administrator role.",
+          "role": ".administrators",
           "via": [
             {
               "address": "eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
@@ -61685,6 +62351,15 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x1F128F883bb9f8FAcfEeE04674a35Fa96Fa3af52",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders.",
+          "role": ".getAllAuthorizedCallers",
+          "via": [
+            { "address": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5" }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "eth:0x26d3681DfC9E4c8C79cfbf461adec8A21d5d73C5",
           "description": "sign OCR commit reports that move crosschain merkle roots of messages and price updates into this OffRamp. F+1 of these required per report.",
           "role": ".ocrCommitSigners"
@@ -61743,7 +62418,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 595,
+        "getExpectedNextSequenceNumber": 598,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -61862,7 +62537,7 @@
         "getDynamicConfig": {
           "priceRegistry": "eth:0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 70,
+        "getExpectedNextSequenceNumber": 72,
         "getLatestPriceEpochAndRound": 0,
         "getStaticConfig": {
           "chainSelector": "5009297550715157269",
@@ -63511,6 +64186,7 @@
             "17164792800244661392": "mint",
             "8481857512324358265": "monad",
             "18164309074156128038": "morph",
+            "4215185756725900654": "mova",
             "12657445206920369324": "henesys",
             "7801139999541420232": "pharos",
             "9335212494177455608": "plasma",
@@ -63838,6 +64514,7 @@
             "17164792800244661392": "mint",
             "8481857512324358265": "monad",
             "18164309074156128038": "morph",
+            "4215185756725900654": "mova",
             "12657445206920369324": "henesys",
             "7801139999541420232": "pharos",
             "9335212494177455608": "plasma",
@@ -69127,7 +69804,7 @@
     ]
   },
   "usedTemplates": {
-    "ccip/NonceManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "ccip/NonceManager": "0x827f6bace108f4a7fc4caa635b4ceb6ccc121acfd161c89ad34438c0b5b3459b",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "transporter/ARMProxy": "0x0d78981b088695fa8edd067139f44a81159efbe8e385b468e8b111de70c9eacc",
     "transporter/CallProxyWithTargetSet": "0x1f7fe3ae93f97dd7ec53cdd0d543f12ccca2b0ac35f9134cb2c018ef994e4f20",
@@ -69145,12 +69822,12 @@
     "transporter/TokenPool": "0xd3e2593c0a667658845c680a3433d8a2252fb4839d2e1d16674d97e3081d856d"
   },
   "usedBlockNumbers": {
-    "arbitrum": 493727799,
-    "base": 49869414,
-    "bsc": 115483485,
-    "ethereum": 25738125,
-    "optimism": 155464699,
-    "polygonpos": 91882099
+    "arbitrum": 496115286,
+    "base": 50169918,
+    "bsc": 116818671,
+    "ethereum": 25788050,
+    "optimism": 155765203,
+    "polygonpos": 92282770
   },
-  "permissionsConfigHash": "0x66bd3182214a9d809607c996bdcd8d2ce6de5fb067ef6bdf8d81650d6169431c"
+  "permissionsConfigHash": "0x1f0422a451d87ab9f351fd4ea95f17aaa4d87446671bdaf78e716fdd0b6332a4"
 }

@@ -149,6 +149,7 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
         deploymentTimestamp: dateTimeInputToUnixTimestamp(
           values.deploymentTimestamp,
         ),
+        ignored: values.ignored,
         metadata: values.metadata ?? undefined,
       },
     })

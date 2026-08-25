@@ -6,7 +6,9 @@
   "initialAddresses": [
     "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
     "eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8",
-    "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0"
+    "eth:0x536218f9E9Eb48863970252233c8F271f554C2d0",
+    // Canonical Feed Registry, price source of the Lido OracleRouter.
+    "eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf"
   ],
   "names": {
     "eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419": "Chainlink_ETH_USD",
@@ -19,7 +21,20 @@
   },
   "overrides": {
     "eth:0x21f73D42Eb58Ba49dDB685dc29D3bF5c0f0373CA": {
-      "description": "The Gnosis Safe that Chainlink uses to administer these three price feeds. It owns both the feed proxies and their aggregators, so it can swap the aggregator behind any feed and replace the set of oracle signers and how many of them must sign a price. In effect it can set the ETH, stETH, and rETH prices these feeds report, or push a feed into a stale, zero, or reverting state, which makes it their single point of control, held by Chainlink."
+      "description": "The Gnosis Safe that Chainlink uses to administer these price feeds and the Feed Registry. It owns the feed proxies, their aggregators, and the registry, so it can swap the aggregator behind any feed or registry pair and replace the set of oracle signers and how many of them must sign a price. In effect it can set the ETH, stETH, and rETH prices these feeds report, or push a feed into a stale, zero, or reverting state, which makes it their single point of control, held by Chainlink."
+    },
+    "eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf": {
+      "description": "Chainlink's canonical feed registry that maps base/quote asset pairs to their current price feed aggregators. Consumers like the Lido OracleRouter source token prices through it.",
+      "fields": {
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "replace the aggregator behind any base/quote pair in the Feed Registry, controlling all prices it reports to consumers."
+            }
+          ]
+        }
+      }
     }
   }
 }

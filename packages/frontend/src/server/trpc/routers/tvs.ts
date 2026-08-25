@@ -1,37 +1,44 @@
 import {
   DetailedTvsChartDataParams,
   getDetailedTvsChart,
-} from '~/server/features/scaling/tvs/getDetailedTvsChart'
+} from '~/server/features/layer2s/tvs/getDetailedTvsChart'
 import {
   getDetailedTvsChartWithProjectsRanges,
   TvsChartWithProjectsRangesDataParams,
-} from '~/server/features/scaling/tvs/getDetailedTvsChartWithProjectsRanges'
+} from '~/server/features/layer2s/tvs/getDetailedTvsChartWithProjectsRanges'
 import {
   getRecategorisedTvsChart,
   RecategorisedTvsChartDataParams,
-} from '~/server/features/scaling/tvs/getRecategorisedTvsChartData'
+} from '~/server/features/layer2s/tvs/getRecategorisedTvsChartData'
 import {
   getTvsChart,
   TvsChartDataParams,
-} from '~/server/features/scaling/tvs/getTvsChartData'
+} from '~/server/features/layer2s/tvs/getTvsChartData'
 import {
   getTvsChartStats,
   TvsChartStatsParams,
-} from '~/server/features/scaling/tvs/getTvsChartStats'
+} from '~/server/features/layer2s/tvs/getTvsChartStats'
 import {
   getTvsTableData,
   TvsBreakdownProjectParams,
-} from '~/server/features/scaling/tvs/getTvsTableData'
+} from '~/server/features/layer2s/tvs/getTvsTableData'
 import {
   getTokenTvsChart,
   TokenTvsChartParams,
-} from '~/server/features/scaling/tvs/tokens/getTokenTvsChart'
+} from '~/server/features/layer2s/tvs/tokens/getTokenTvsChart'
+import {
+  getTvsChartByProjects,
+  TvsChartByProjectsParams,
+} from '~/server/features/tvs/getTvsChartByProjects'
 import { procedure, router } from '../trpc'
 
 export const tvsRouter = router({
   chart: procedure
     .input(TvsChartDataParams)
     .query(({ input }) => getTvsChart(input)),
+  chartByProjects: procedure
+    .input(TvsChartByProjectsParams)
+    .query(({ input }) => getTvsChartByProjects(input)),
   detailedChart: procedure
     .input(DetailedTvsChartDataParams)
     .query(({ input }) => getDetailedTvsChart(input)),

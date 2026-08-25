@@ -1,3 +1,4 @@
+import { formatSeconds } from '@l2beat/shared-pure'
 import { formatUnits } from 'viem'
 
 export function getFormatHint(name: string): string {
@@ -57,38 +58,10 @@ export function formatNumber(value: string, transform?: string) {
 }
 
 export function formatDuration(value: string): string {
-  let n = BigInt(value)
-
-  if (n < 0) {
-    return `- ${formatDuration(value)}`
-  }
-  const parts = []
-
-  const days = n / 86_400n
-  n -= days * 86_400n
-
-  if (days > 0) {
-    parts.push(`${formatDecimals(days.toString(), 0)} days`)
-  }
-
-  const hours = n / 3600n
-  n -= hours * 3600n
-  if (hours > 0) {
-    parts.push(`${hours} hours`)
-  }
-
-  const minutes = n / 60n
-  n -= minutes * 60n
-  if (minutes > 0) {
-    parts.push(`${minutes} minutes`)
-  }
-
-  const seconds = n
-  if (seconds > 0) {
-    parts.push(`${seconds} seconds`)
-  }
-
-  return parts.join(' ') || '0 seconds'
+  return formatSeconds(BigInt(value), {
+    fullUnit: true,
+    preventRoundingUp: true,
+  })
 }
 
 export function formatDecimals(value: string, decimals: number) {

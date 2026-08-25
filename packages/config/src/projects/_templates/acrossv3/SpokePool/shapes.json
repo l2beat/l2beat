@@ -19,5 +19,17 @@
     "address": "oeth:0x0966F5034261CC50926fB9D5C1603A5034Ffa81c",
     "chain": "optimism",
     "blockNumber": 152052153
+  },
+  "Ethereum_SpokePool_V5": {
+    "hash": "0x667fb3db67749e9488a6511b73f11c5acfa08bd66fa64944fe1d3064fa551c6e",
+    "address": "eth:0x456Ac26E5ec083EE9889eBa0d1a0A582502B8e84",
+    "chain": "ethereum",
+    "blockNumber": 25773732
+  },
+  "OP_SpokePool_V5": {
+    "hash": "0x63512362033eb12727887f57a9397e800b1fa1b98ff0fe2742abe67f53d493f1",
+    "address": "oeth:0x60674c53a4cC4ED350659C95fb8020B5AC61cA1D",
+    "chain": "optimism",
+    "blockNumber": 155679068
   }
 }

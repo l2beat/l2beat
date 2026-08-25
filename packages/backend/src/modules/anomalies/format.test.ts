@@ -19,7 +19,7 @@ describe(formatDuration.name, () => {
     ).toEqual(`${hours} hours ${minutes} minutes`)
 
     expect(formatDuration(minutes * 60 + seconds + 0.1234)).toEqual(
-      `${minutes} minutes`,
+      `${minutes} minutes ${seconds} seconds`,
     )
 
     expect(formatDuration(seconds + 0.1234)).toEqual(`${seconds} seconds`)

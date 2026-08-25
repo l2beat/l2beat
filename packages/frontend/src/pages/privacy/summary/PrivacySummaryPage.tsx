@@ -34,7 +34,7 @@ export function PrivacySummaryPage({
           <PrivacySummaryChartsSection
             projects={entries
               .filter((e) => e.isTracked)
-              .map((e) => ({ id: e.id, name: e.name }))}
+              .map((e) => ({ id: e.id, name: e.name, hasTvl: e.hasTvl }))}
             defaultRange={defaultChartRange}
           />
           <PrivacySummaryTable entries={entries} />

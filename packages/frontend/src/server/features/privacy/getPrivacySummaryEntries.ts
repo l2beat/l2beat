@@ -21,6 +21,7 @@ export interface PrivacySummaryEntry {
   href: string
   description: string
   isTracked: boolean
+  hasTvl: boolean
   totalValueLockedUsd?: number
   poolsTracked: number
   totalDeposits?: number
@@ -58,6 +59,9 @@ export async function getPrivacySummaryEntries(
 
   const db = getDb()
   const projectIds = projects.map((p) => p.id)
+  const tvlProjectIds = projects
+    .filter((project) => project.tvsConfig !== undefined)
+    .map((project) => project.id)
 
   const now = UnixTime.now()
   const currentDay = UnixTime.toStartOf(now, 'day')
@@ -70,7 +74,7 @@ export async function getPrivacySummaryEntries(
       last30dCutoff,
       currentDay,
     ),
-    db.tvsTokenValue.getLastNonZeroValueByProjects(now, projectIds),
+    db.tvsTokenValue.getLastNonZeroValueByProjects(now, tvlProjectIds),
   ])
 
   const totalsByProject = groupBy(totals, (t) => t.projectId)
@@ -81,9 +85,9 @@ export async function getPrivacySummaryEntries(
     const projectId = project.id
     const projectTotals = totalsByProject[projectId] ?? []
     const projectDaily = dailyByProject[projectId] ?? []
-    const tokenValues = tokenValuesByProject[projectId] ?? []
+    const tokenValues = tokenValuesByProject[projectId]
 
-    const totalValueLockedUsd = tokenValues.reduce(
+    const totalValueLockedUsd = tokenValues?.reduce(
       (sum, tv) => sum + tv.valueForProject,
       0,
     )
@@ -119,7 +123,10 @@ function getMockPrivacySummaryEntries(
         ...getPrivacySummaryBaseEntry(project),
         ...getTrackingMetrics({
           poolsTracked: getPoolsTracked(project),
-          totalValueLockedUsd: Math.random() * 1_000_000_000,
+          totalValueLockedUsd:
+            project.tvsConfig === undefined
+              ? undefined
+              : Math.random() * 1_000_000_000,
           totalDeposits: Math.round(Math.random() * 10_000),
           totalValueDeposited30dUsd: Math.random() * 100_000_000,
         }),
@@ -139,6 +146,7 @@ function getPrivacySummaryBaseEntry(
     icon: manifest.getUrl(`/icons/${project.slug}.png`),
     href: `/privacy/projects/${project.slug}`,
     description: project.display.description,
+    hasTvl: project.tvsConfig !== undefined,
     isUnderReview: !!project.statuses.reviewStatus,
     summaryTrackedItemName:
       project.privacyInfo.summaryTrackedItemName ?? 'pool',
@@ -180,6 +188,10 @@ function comparePrivacySummaryEntries(
 ): number {
   if (a.isTracked !== b.isTracked) {
     return a.isTracked ? -1 : 1
+  }
+
+  if (a.hasTvl !== b.hasTvl) {
+    return a.hasTvl ? -1 : 1
   }
 
   return (b.totalValueLockedUsd ?? 0) - (a.totalValueLockedUsd ?? 0)

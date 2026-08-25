@@ -724,6 +724,7 @@ export class TokenIngestionProcessor {
         decimals: facts.decimals,
         deploymentTimestamp: facts.deploymentTimestamp,
         comment: null,
+        ignored: false,
         metadata: null,
       },
     }

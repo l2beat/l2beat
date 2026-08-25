@@ -10,6 +10,7 @@ const ATTRIBUTE_CLASS_NAMES: Record<string, string> = {
   anyAmount: 'text-[#3F1E6D] bg-[#C7B8FF] border-[#8D78D9]',
   fixedAmounts: 'text-[#452576] bg-[#D8CEFF] border-[#9B86E6]',
   privateAmounts: 'text-[#0F3F3A] bg-[#BFEFE5] border-[#45B8A7]',
+  tee: 'text-[#5C3200] bg-[#FFC46B] border-[#D97E00]',
 }
 
 export function PrivacyAttributeTag({

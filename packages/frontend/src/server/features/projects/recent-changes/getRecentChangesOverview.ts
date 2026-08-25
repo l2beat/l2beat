@@ -1,7 +1,8 @@
+import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
-import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
+import { get7dTvsBreakdown } from '../../layer2s/tvs/get7dTvsBreakdown'
 import {
   type DiscoveryUpdate,
   getDiscoveryUpdates,
@@ -24,7 +25,7 @@ export interface RecentChangesOverview {
 
 export async function getRecentChangesOverview(): Promise<RecentChangesOverview> {
   const projects = await ps.getProjects({
-    optional: ['discoveryInfo', 'scalingInfo', 'interopConfig'],
+    optional: ['scalingInfo', 'interopConfig', 'privacyInfo'],
     whereNot: ['archivedAt'],
   })
 
@@ -32,15 +33,7 @@ export async function getRecentChangesOverview(): Promise<RecentChangesOverview>
 
   const grouped: { projectId: string; group: RecentChangesProjectGroup }[] = []
   for (const project of projects) {
-    if (!project.discoveryInfo?.hasDiscoUi) {
-      continue
-    }
-
-    const projectHref = project.scalingInfo
-      ? `/scaling/projects/${project.slug}`
-      : project.interopConfig
-        ? `/interop/protocols/${project.slug}`
-        : undefined
+    const projectHref = getProjectUpdatesHref(project)
     if (!projectHref) {
       continue
     }
@@ -81,6 +74,21 @@ export async function getRecentChangesOverview(): Promise<RecentChangesOverview>
   const count = groups.reduce((sum, group) => sum + group.updates.length, 0)
 
   return { count, groups }
+}
+
+function getProjectUpdatesHref(
+  project: Project<never, 'scalingInfo' | 'interopConfig' | 'privacyInfo'>,
+): string | undefined {
+  if (project.scalingInfo) {
+    return `/layer2s/projects/${project.slug}`
+  }
+  if (project.interopConfig) {
+    return `/interop/protocols/${project.slug}`
+  }
+  if (project.privacyInfo) {
+    return `/privacy/projects/${project.slug}`
+  }
+  return undefined
 }
 
 function projectTvs(

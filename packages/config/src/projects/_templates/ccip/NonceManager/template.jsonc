@@ -1,12 +1,25 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Contract maintaining message nonces,  which are updated by the OnRamp and OffRamps.",
+  "description": "Shared nonce store used by the authorized OnRamp and OffRamp to preserve per-sender message ordering across CCIP lanes and ramp migrations.",
   "fields": {
+    "getAllAuthorizedCallers": {
+      "description": "Contracts allowed to increment outbound and inbound message nonces. These callers can advance nonce state for arbitrary chain selectors and senders, subject to the inbound expected-nonce check.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "increment outbound and inbound message nonces for arbitrary chain selectors and senders."
+        }
+      ]
+    },
     "owner": {
       "permissions": [
         {
           "type": "interact",
           "description": "update the list of authorized callers that can update the nonces."
+        },
+        {
+          "type": "interact",
+          "description": "set or override the previous OnRamp and OffRamp used as the starting nonce source during a ramp migration."
         }
       ]
     }

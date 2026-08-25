@@ -5,6 +5,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { formatBasisPoints } from '../../common/formatBasisPoints'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
@@ -22,10 +23,6 @@ const PRIVACY_POOLS_DEPOSIT_EVENT =
   '0xe3b53cd1a44fbf11535e145d80b8ef1ed6d57a73bf5daa7e939b6b01657d6549'
 const PRIVACY_POOLS_WITHDRAWAL_EVENT =
   '0x75e161b3e824b114fc1a33274bd7091918dd4e639cede50b78b15a4eea956a21'
-
-function formatBasisPoints(value: number): string {
-  return `${Number((value / 100).toFixed(4))}%`
-}
 
 interface PrivacyPoolsAssetConfig {
   minimumDepositAmount: string | number
@@ -167,6 +164,10 @@ export const privacyPools: BaseProject = {
       sentiment: 'good',
       description:
         'Compliance is enforced through centralized association set providers, which can refuse deposits into the pool, sending them back to the sender.',
+    },
+    noteDiscovery: {
+      description:
+        'In privacy Pools UI, the user needs to provide the seed phrase, from which their nullifiers and secrets are derived deterministically. The private user balance is computed locally by scanning every `Deposited`, `Withdrawn`, and `Ragequit` event of every supported pool and matching the derived commitments against the ones in the events. Because every event is requested, the RPC provider learns neither which events belong to the user, nor into which pool the user has deposited from the queries alone.',
     },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.anyAmount],
     riskSummary: readProjectMarkdown('privacy-pools', 'riskSummary'),

@@ -4,7 +4,7 @@ ARG COREPACK_VERSION="^0.31.0"
 
 FROM node:22.22.0 AS pruner
 ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
+ENV PATH="$PNPM_HOME/bin:$PNPM_HOME:$PATH"
 ARG TURBO_TEAM
 ARG COREPACK_VERSION
 RUN npm i -g corepack@${COREPACK_VERSION} && corepack enable pnpm
@@ -26,6 +26,12 @@ COPY --from=pruner /src/out/full/ ./
 RUN --mount=type=secret,id=TURBO_TOKEN,env=TURBO_TOKEN \
   --mount=type=secret,id=TURBO_API,env=TURBO_API \
   pnpm build:frontend
+
+# Replace node_modules with production dependencies only. Switching dev -> prod
+# in place does not garbage-collect the virtual store, so purge and reinstall
+# offline from the local store (cached native builds are reused).
+RUN rm -rf node_modules packages/*/node_modules && \
+  CI=true pnpm install --prod --frozen-lockfile --offline
 
 FROM node:22.22.0-slim AS release
 

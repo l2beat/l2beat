@@ -136,6 +136,24 @@ export class DataAvailabilityRepository extends BaseRepository {
     return row?.timestamp ? UnixTime.fromDate(row.timestamp) : undefined
   }
 
+  async getFirstTimestampsByProjectIds(
+    projectIds: string[],
+  ): Promise<Record<string, UnixTime>> {
+    if (projectIds.length === 0) return {}
+    const rows = await this.db
+      .selectFrom('DataAvailability')
+      .select(['projectId', (eb) => eb.fn.min('timestamp').as('timestamp')])
+      .where('projectId', 'in', projectIds)
+      .groupBy('projectId')
+      .execute()
+
+    return Object.fromEntries(
+      rows
+        .filter((row) => row.timestamp !== null)
+        .map((row) => [row.projectId, UnixTime.fromDate(row.timestamp)]),
+    )
+  }
+
   // Mirrors the filter of getSummedProjectsByDaLayersAndTimeRange (sums the
   // projects of a DA layer, excluding the layer's own aggregate record).
   async getFirstTimestampOfSummedProjectsByDaLayers(
@@ -258,6 +276,20 @@ export class DataAvailabilityRepository extends BaseRepository {
     const result = await this.db
       .deleteFrom('DataAvailability')
       .where('configurationId', '=', configurationId)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  async deleteByConfigInTimeRange(
+    configurationId: string,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<number> {
+    const result = await this.db
+      .deleteFrom('DataAvailability')
+      .where('configurationId', '=', configurationId)
+      .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
+      .where('timestamp', '<=', UnixTime.toDate(toInclusive))
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

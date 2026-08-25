@@ -14,6 +14,7 @@ describe('opengraph images', () => {
         'zkCatalogInfo',
         'interopConfig',
         'privacyInfo',
+        'defiInfo',
       ],
     })
 

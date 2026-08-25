@@ -89,6 +89,7 @@ describe('abstractTokensRouter', () => {
           symbol: 'USDC',
           decimals: 6,
           comment: null,
+          ignored: false,
           abstractTokenId: 'TK0001',
           deploymentTimestamp: 0,
           metadata: {
@@ -107,6 +108,7 @@ describe('abstractTokensRouter', () => {
           symbol: 'USDC',
           decimals: 6,
           comment: null,
+          ignored: false,
           abstractTokenId: 'TK0001',
           deploymentTimestamp: 0,
           metadata: {
@@ -125,6 +127,7 @@ describe('abstractTokensRouter', () => {
           symbol: 'TOKEN',
           decimals: 18,
           comment: null,
+          ignored: false,
           abstractTokenId: null,
           deploymentTimestamp: 0,
           metadata: {
@@ -222,6 +225,7 @@ describe('abstractTokensRouter', () => {
           symbol: 'USDC',
           decimals: 6,
           comment: null,
+          ignored: false,
           abstractTokenId: 'TK0001',
           deploymentTimestamp: 0,
           metadata: {

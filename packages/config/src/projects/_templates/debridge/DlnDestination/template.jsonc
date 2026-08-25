@@ -1,0 +1,50 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Destination side of the deBridge Liquidity Network (DLN) intent protocol: takers fulfill orders here permissionlessly by paying the 'take' amount, which is forwarded to the order recipient in the same transaction (this contract holds no user funds). The taker then sends an unlock message back to the source chain's DlnSource through the deBridge messaging protocol to claim the escrowed maker funds.",
+  "ignoreMethods": ["chainEngines", "dlnSourceAddresses"],
+  "fields": {
+    "dlnSourceAddressesMap": {
+      "description": "The admin-configured DlnSource address per source chain ID, used as the receiver of outbound unlock/cancel messages.",
+      "handler": {
+        "type": "event",
+        "select": "dlnSourceAddress",
+        "groupBy": "chainIdFrom",
+        "set": { "event": "SetDlnSourceAddress" },
+        "ignoreRelative": true
+      }
+    },
+    "externalCallAdapter": {
+      "description": "Admin-settable contract that receives the taker's funds of orders carrying attached calldata before executing it (a malicious adapter could steal the funds of every such order)."
+    },
+    "maxOrderCountPerBatchEvmUnlock": {
+      "description": "Maximum number of orders that can be unlocked in a single batch message to an EVM source chain."
+    },
+    "accessControl": { "handler": { "type": "accessControl" } },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the trusted DlnSource address (message receiver) for each supported chain, replace the external call adapter that custodies funds of orders with attached calldata, unpause the contract, and grant/revoke all roles."
+        }
+      ]
+    },
+    "govCancelAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "GOVERNANCE_DELEGATED_ORDER_CANCEL_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "force-cancel any not-yet-fulfilled order that has a cancel beneficiary set by its maker (refunds can only go to that maker-designated address)."
+        }
+      ]
+    }
+  },
+  "ignoreRelatives": ["dlnSourceAddressesMap"]
+}
