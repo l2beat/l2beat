@@ -1,5 +1,5 @@
 import type { Sentiment } from '@l2beat/config'
-import { formatCurrency, formatSeconds } from '@l2beat/shared-pure'
+import { formatCurrency } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { SentimentText } from '~/components/SentimentText'
@@ -94,21 +94,6 @@ export const ossificationColumns = [
       cellClassName: 'py-0',
     },
     enableSorting: false,
-  }),
-  columnHelper.accessor((entry) => entry.projectAgeSeconds ?? undefined, {
-    id: 'lastChange',
-    header: 'Last\nchange',
-    cell: (ctx) => {
-      const age = ctx.row.original.projectAgeSeconds
-      if (age === null) return <NotApplicableBadge />
-      return <span className="tabular-nums">{formatSeconds(age)} ago</span>
-    },
-    meta: {
-      tooltip:
-        'Time since the most recent deployment or critical change anywhere in the critical perimeter.',
-    },
-    sortDescFirst: true,
-    sortUndefined: 'last',
   }),
   columnHelper.accessor('criticalChangesPerYear', {
     header: 'Critical\nchanges / year',

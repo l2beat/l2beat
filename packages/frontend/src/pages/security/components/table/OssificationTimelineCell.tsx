@@ -157,8 +157,7 @@ export function OssificationTimelineCell({ timeline, projectName }: Props) {
         <p className="mt-1 text-xs">{getResetSentence(timeline)}</p>
         {tvs && <p className="mt-1 text-xs">{getTvsSentence(tvs)}</p>}
         <p className="mt-2 text-secondary text-xs">
-          Height is scaled to each project's own peak, so the shapes compare but
-          the sizes do not.
+          Height is scaled to each project's own peak.
         </p>
       </TooltipContent>
     </Tooltip>

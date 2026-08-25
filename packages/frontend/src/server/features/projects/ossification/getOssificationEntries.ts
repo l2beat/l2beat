@@ -14,7 +14,6 @@ export interface OssificationSummaryEntry {
    *  shows this without sentiment */
   isUnverified: boolean
   exposure: number | null
-  projectAgeSeconds: number | null
   criticalChangesPerYear: number
   clusteredEventCount: number
   contractCount: number
@@ -54,7 +53,6 @@ export async function getOssificationEntries(): Promise<
             (contract) => !contract.isVerified,
           ),
           exposure: ossification.exposure,
-          projectAgeSeconds: ossification.projectAgeSeconds,
           criticalChangesPerYear: ossification.criticalChangesPerYear,
           clusteredEventCount: ossification.clusteredEventCount,
           contractCount: ossification.contracts.length,
