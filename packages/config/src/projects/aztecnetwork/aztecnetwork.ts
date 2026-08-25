@@ -811,49 +811,38 @@ export const aztecnetwork: ScalingProject = {
       sentiment: 'warning',
       points: [
         'Sequencing is permissionless with no single privileged actor.',
-        'The protocol cannot be paused and the exit window is infinite.',
+        'Decentralised sequencing and private execution environment provide excellent realtime, probabilistic CR.',
+        'Exit window is infinite due to immutable core contracts + Escape Hatch.',
       ],
       missing: [
-        'It lacks determinism: there is no L1 forced-transaction queue and no deterministic maximum inclusion delay, so inclusion is only probabilistic.',
+        'No deterministic CR: there are no forced transactions from L1.',
       ],
     },
     openSource: {
       sentiment: 'good',
       points: [
         'Apache 2.0 licensed.',
-        'The onchain verifier has been reproduced.',
-        'The rollup is even forkable onchain by design.',
-      ],
-      notReviewed: [
-        'Node build reproducibility, as distinct from the verifier.',
+        'Onchain verifier has been reproduced.',
+        'Rollup is forkable onchain by design.',
       ],
     },
     privacy: {
       sentiment: 'good',
       points: [
-        'Privacy is protocol-native: the AztecVM supports private and public smart contracts.',
-        'Balances and identities in private state are encrypted.',
-        'Each private transaction is proven client-side.',
+        'Programmable privacy: private state, private and public smart contracts are protocol-native.',
+        'Private transactions are proven client-side (private inputs do not leave the device).',
       ],
-      notReviewed: [
-        'Anonymity set size.',
-        'What becomes visible when a transaction touches public state.',
-      ],
+      missing: ['The complicated execution environment leaks some metadata.'],
     },
     security: {
       sentiment: 'warning',
       status: 'partiallyReviewed',
-      points: [
-        'State is validated with validity proofs and the v5 rollup is immutable.',
-      ],
+      points: ['All state is validated with validity proofs on Ethereum.'],
       missing: [
-        'The bridge was insecure until the very recent v5 upgrade (July 2026), leaving a migration risk and burden.',
+        'No multiproofs.',
+        'An exploit in the single proof system combined with private execution can be fatal for the protocol.',
       ],
-      notReviewed: [
-        'Quantum safety, which is currently unclear.',
-        'Multiproof.',
-        'Circuit breakers and rate limits.',
-      ],
+      notReviewed: ['Quantum safety.', 'Circuit breakers and rate limits.'],
     },
   },
 }
