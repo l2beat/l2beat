@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import { INTEROP_PAIR_SEPARATOR } from '~/server/features/layer2s/interop/consts'
 import type {
   ChainData,
@@ -45,9 +46,11 @@ interface Props {
  * those style updates forces a layout, so hundreds of particles meant
  * thousands of layouts per frame. Instead, particles are hidden by position:
  * the path is relative to the source and the flow group is translated there,
- * so a particle that hasn't started yet sits at the source bubble's center,
- * and an idle one holds at the path end, the destination bubble's center —
- * both under the bubble icons, which are drawn on top of this layer.
+ * so a particle that hasn't started yet sits at the source bubble's center
+ * and an idle one holds at the path end, the destination bubble's center.
+ * The whole layer is clipped to everything outside the bubble discs, so
+ * those parked particles never paint (icons with transparent middles would
+ * otherwise show them).
  */
 export function ParticleLayer({
   flows,
@@ -62,6 +65,18 @@ export function ParticleLayer({
 }: Props) {
   const { highlightedChains } = useInteropFlows()
   const particleRadius = isSmallScreen ? 1.5 : 2
+  const clipId = `particles-clip-${useId().replace(/\W/g, '')}`
+
+  // Even-odd: a huge rect with one circle subpath per bubble punched out
+  const bubbleHoles = visibleChainIds
+    .map((id) => layout.get(id))
+    .filter((node) => node !== undefined)
+    .map(
+      ({ x, y, radius: r }) =>
+        `M ${x - r} ${y} a ${r} ${r} 0 1 0 ${2 * r} 0 a ${r} ${r} 0 1 0 ${-2 * r} 0 Z`,
+    )
+    .join(' ')
+  const clipPathD = `M -1e4 -1e4 H 1e4 V 1e4 H -1e4 Z ${bubbleHoles}`
 
   const { flowsParticles } = useScaledParticleCounts(
     visibleChainIds,
@@ -71,7 +86,12 @@ export function ParticleLayer({
   )
 
   return (
-    <g pointerEvents="none" aria-hidden="true">
+    <g pointerEvents="none" aria-hidden="true" clipPath={`url(#${clipId})`}>
+      <defs>
+        <clipPath id={clipId}>
+          <path d={clipPathD} clipRule="evenodd" />
+        </clipPath>
+      </defs>
       {flows.map((flow) => {
         const src = layout.get(flow.srcChain)
         const dst = layout.get(flow.dstChain)
