@@ -227,48 +227,37 @@ export const tornadoCash: BaseProject = {
     censorshipResistance: {
       sentiment: 'good',
       points: [
-        'The immutable core has no admin, no pause and no upgrade path, so the exit window is infinite.',
-        'Selective censorship, blanket censorship and walkaway resistance are all solid.',
-        '26 active relayers over the last month, and users can always self-relay withdrawals.',
-      ],
-      missing: [
-        'The relayer set is the weakest link in an otherwise permissionless design.',
-      ],
-      notReviewed: [
-        'Whether the relayers form independent pools or one set with shared infrastructure.',
+        'Infinite exit window: the core contracts have no admin, no pause and no upgrade path.',
+        'CR based on Ethereum L1 inclusion.',
+        'Passes walkaway.',
+        'Multiple active relayers; users can self-relay withdrawals.',
       ],
     },
     openSource: {
       sentiment: 'good',
       points: [
-        'The core is GPL-3.0 licensed, so the right to run, modify and fork is granted outright.',
-        'The published source is reproducible: anyone can audit it and run it locally to participate.',
-      ],
-      notReviewed: [
-        'Reproducibility of the relayer software, which sits outside the core.',
+        'GPL-3.0 licensed, so the right to run, modify and fork is granted.',
+        'Reproducible from source: anyone can audit it and run it locally to participate.',
       ],
     },
     privacy: {
       sentiment: 'good',
       points: [
-        'Unstoppable user privacy, with no protocol-level compliance mechanism and no backdoor.',
-        'Strong, clearly defined anonymity set numbers per fixed-denomination pool.',
+        'Unconditional privacy.',
+        'Clearly defined anonymity set per fixed-denomination pool.',
       ],
+      missing: ['No mechanism to exclude bad actors.'],
     },
     security: {
       sentiment: 'good',
       status: 'partiallyReviewed',
-      points: [
-        'A simple, well-ossified design, audited extensively - plausibly including by malicious actors.',
-      ],
+      points: ['Simple, ossified design, audited extensively.'],
       missing: [
-        'It is not quantum-resistant, which may expose user privacy to harvest-now-decrypt-later attacks.',
+        'Not quantum-resistant, which may expose user privacy to harvest-now-decrypt-later attacks.',
         'Immutability means bugs cannot be patched.',
+        'Brittle onchain governance (token voting) controls the official frontend (ENS+IPFS).',
       ],
-      notReviewed: [
-        'Circuit breakers and rate limits.',
-        'Formal verification.',
-      ],
+      notReviewed: ['Formal verification.'],
     },
   },
   permissions: discovery.getDiscoveredPermissions(),
