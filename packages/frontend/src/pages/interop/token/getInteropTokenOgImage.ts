@@ -124,17 +124,29 @@ async function fetchIconDataUri(
       signal: AbortSignal.timeout(ICON_FETCH_TIMEOUT_MS),
     })
     if (!response.ok) return placeholderSrc
-    const mimeType = response.headers.get('content-type')?.split(';')[0]?.trim()
-    // resvg cannot rasterize every format coingecko may serve (e.g. webp)
-    if (mimeType !== 'image/png' && mimeType !== 'image/jpeg') {
-      return placeholderSrc
-    }
-    return toDataUri(mimeType, Buffer.from(await response.arrayBuffer()))
+    const data = Buffer.from(await response.arrayBuffer())
+    // coingecko mislabels icons (fxUSD is a png served as image/jpeg) and satori
+    // picks its decoder from the data uri, so the bytes decide the type
+    const mimeType = detectImageMimeType(data)
+    if (!mimeType) return placeholderSrc
+    return toDataUri(mimeType, data)
   } catch {
     return placeholderSrc
   }
 }
 
-function toDataUri(mimeType: string, data: Buffer): string {
+const PNG_MAGIC = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])
+const JPEG_MAGIC = Buffer.from([0xff, 0xd8, 0xff])
+
+function detectImageMimeType(data: Buffer): SupportedMimeType | undefined {
+  if (data.subarray(0, PNG_MAGIC.length).equals(PNG_MAGIC)) return 'image/png'
+  if (data.subarray(0, JPEG_MAGIC.length).equals(JPEG_MAGIC))
+    return 'image/jpeg'
+  return undefined
+}
+
+type SupportedMimeType = 'image/png' | 'image/jpeg'
+
+function toDataUri(mimeType: SupportedMimeType, data: Buffer): string {
   return `data:${mimeType};base64,${data.toString('base64')}`
 }
