@@ -19,10 +19,9 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import { getPrivacyProject } from './getPrivacyProjects'
 import type { PrivacyAsset, PrivacyBucket, PrivacyProject } from './types'
-import { resolvePrivacyTrustedSetups } from './utils/resolvePrivacyTrustedSetups'
 
 interface PrivacyProjectFlowData {
   totals: PrivacyFlowBucketTotalRecord[]
@@ -68,24 +67,12 @@ export interface PrivacyProjectDetails {
 export async function getPrivacyProjectDetails(
   slug: string,
 ): Promise<PrivacyProjectDetails | undefined> {
-  const project = await ps.getProject({
-    slug,
-    where: ['privacyInfo'],
-    select: ['display', 'privacyInfo', 'statuses'],
-    optional: [
-      'tvsConfig',
-      'contracts',
-      'permissions',
-      'discoveryInfo',
-      'zkCatalogInfo',
-    ],
-  })
+  const project = await getPrivacyProject(slug)
   if (!project) {
     return undefined
   }
 
   const projectId = project.id
-  const trustedSetups = await resolvePrivacyTrustedSetups(project)
 
   const now = UnixTime.now()
   const currentDay = UnixTime.toStartOf(now, 'day')
@@ -260,7 +247,7 @@ export async function getPrivacyProjectDetails(
     permissions: project.permissions,
     statuses: project.statuses,
     zkCatalogInfo: project.zkCatalogInfo,
-    trustedSetups,
+    trustedSetups: project.trustedSetups,
     exitWindow: project.privacyInfo.exitWindow,
     privacy: project.privacyInfo.privacy,
     reproducibility: project.privacyInfo.reproducibility,

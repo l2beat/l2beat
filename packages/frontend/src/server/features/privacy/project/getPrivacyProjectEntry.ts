@@ -3,7 +3,6 @@ import type {
   PrivacyExitWindow,
   PrivacySummaryValue,
   ProjectRedWarning,
-  TrustedSetup,
 } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ProjectLink } from '~/components/projects/links/types'
@@ -32,6 +31,7 @@ import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getPr
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
 import {
   getPrivacyTrustedSetup,
+  type PrivacyTrustedSetupSummary,
   toTrustedSetupSummaryValue,
 } from '../utils/getPrivacyTrustedSetup'
 
@@ -57,7 +57,7 @@ export interface ProjectPrivacyEntry {
   hasTvl: boolean
   attributes: PrivacyAttribute[]
   exitWindow: PrivacyExitWindow
-  trustedSetup: PrivacySummaryValue & { risk: TrustedSetup['risk'] }
+  trustedSetup: PrivacyTrustedSetupSummary
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
   summary: {
@@ -303,8 +303,6 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  const trustedSetup = getPrivacyTrustedSetup(details.trustedSetups)
-
   return {
     id: details.id,
     slug: details.slug,
@@ -324,10 +322,9 @@ export async function getPrivacyProjectEntry(
     hasTvl: details.hasTvl,
     attributes: details.attributes,
     exitWindow: details.exitWindow,
-    trustedSetup: {
-      ...toTrustedSetupSummaryValue(trustedSetup),
-      risk: trustedSetup.risk,
-    },
+    trustedSetup: toTrustedSetupSummaryValue(
+      getPrivacyTrustedSetup(details.trustedSetups),
+    ),
     privacy: details.privacy,
     reproducibility: details.reproducibility,
     summary: {
