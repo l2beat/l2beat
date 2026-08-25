@@ -16,6 +16,7 @@ import type { ConfigRegistry } from '../config/ConfigRegistry'
 import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import { removeSharedNesting } from '../source/removeSharedNesting'
 import { flattenDiscoveredSources } from './flattenDiscoveredSource'
+import { remapDiscoverySourceNames } from './remapDiscoverySourceNames'
 import { toDiscoveryOutput } from './toDiscoveryOutput'
 import type { DiscoveryOutput } from './types'
 
@@ -60,7 +61,7 @@ export async function saveDiscoveryResult(
   // TODO: Should not be here - drop it and use implementation name once it's ready
   // if somebody changes the name and decides to re-colorize
   // then .flat folder will be incorrect
-  const remappedResults = remapNames(results, discoveryOutput)
+  const remappedResults = remapDiscoverySourceNames(results, discoveryOutput)
 
   await saveDiscoveredJson(
     discoveryOutput,
@@ -199,30 +200,4 @@ function getImplementationFolder(i: number, sourcesCount: number): string {
     name = `/${name}`
   }
   return name
-}
-
-function remapNames(
-  results: Analysis[],
-  discoveryOutput: DiscoveryOutput,
-): Analysis[] {
-  return results.map((entry) => {
-    if (entry.type === 'EOA' || entry.type === 'Reference') {
-      return entry
-    }
-
-    const matchingEntry = discoveryOutput.entries.find(
-      (e) => e.address === entry.address,
-    )
-
-    if (!matchingEntry) {
-      return entry
-    }
-
-    const newName = matchingEntry.name ?? entry.name
-
-    return {
-      ...entry,
-      name: newName,
-    }
-  })
 }
