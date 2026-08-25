@@ -1,5 +1,6 @@
 import type { Env } from '@l2beat/backend-tools'
 import type {
+  ChainConfig,
   PrivacyBucketAddress,
   ProjectPrivacyBucket,
   ProjectPrivacyOnchainRelayerSource,
@@ -19,15 +20,15 @@ import { PrivacyBlockTimestampIndexer } from '../../modules/privacy/indexers/Pri
 import { PrivacyFlowIndexer } from '../../modules/privacy/indexers/PrivacyFlowIndexer'
 import { PrivacyPriceIndexer } from '../../modules/privacy/indexers/PrivacyPriceIndexer'
 import { PrivacyRelayerActivityIndexer } from '../../modules/privacy/indexers/PrivacyRelayerActivityIndexer'
-import { PrivacyRelayerSampleIndexer } from '../../modules/privacy/indexers/PrivacyRelayerSampleIndexer'
 import { StarknetPrivacyFlowIndexer } from '../../modules/privacy/indexers/StarknetPrivacyFlowIndexer'
+import { PrivacyRelayerSampler } from '../../modules/privacy/PrivacyRelayerSampler'
 import type {
   PrivacyBlockTimestampConfig,
   PrivacyConfig,
   PrivacyFlowIndexerConfig,
   PrivacyPriceIndexerConfig,
   PrivacyRelayerActivityIndexerConfig,
-  PrivacyRelayerSampleIndexerConfig,
+  PrivacyRelayerSampleConfig,
   StarknetPrivacyFlowIndexerConfig,
 } from '../../modules/privacy/types'
 import { getPrivacyRelayerExtractor } from '../../modules/privacy/utils/extractPrivacyRelayerActivity'
@@ -37,6 +38,7 @@ export async function getPrivacyConfig(
   ps: ProjectService,
   env: Env,
   flags: FeatureFlags,
+  chainConfigs: ChainConfig[],
 ): Promise<PrivacyConfig | false> {
   const minTimestamp = env.integer('PRIVACY_MIN_TIMESTAMP', 0)
 
@@ -60,17 +62,16 @@ export async function getPrivacyConfig(
     return false
   }
 
-  const chainNames = new Map(
-    (await ps.getProjects({ select: ['chainConfig'] })).map((project) => [
-      project.chainConfig.chainId,
-      project.chainConfig.name,
-    ]),
+  const chainNames: ReadonlyMap<number, string> = new Map(
+    chainConfigs.flatMap((chain) =>
+      chain.chainId === undefined ? [] : [[chain.chainId, chain.name] as const],
+    ),
   )
 
   const flowConfigs: PrivacyFlowIndexerConfig[] = []
   const starknetFlowConfigs: StarknetPrivacyFlowIndexerConfig[] = []
   const relayerConfigs: PrivacyRelayerActivityIndexerConfig[] = []
-  const relayerSampleConfigs: PrivacyRelayerSampleIndexerConfig[] = []
+  const relayerSampleConfigs: PrivacyRelayerSampleConfig[] = []
   for (const project of projects) {
     for (const token of project.privacyInfo.tokens) {
       for (const bucket of token.buckets) {
@@ -191,8 +192,8 @@ export async function getPrivacyConfig(
 function toRelayerSampleConfig(
   projectId: string,
   source: ProjectPrivacyRailgunWakuRelayerSource,
-  chainNames: Map<number | undefined, string>,
-): PrivacyRelayerSampleIndexerConfig {
+  chainNames: ReadonlyMap<number, string>,
+): PrivacyRelayerSampleConfig {
   const chain = chainNames.get(source.chainId)
   assert(chain, `No chain config for Railgun Waku chain id: ${source.chainId}`)
 
@@ -204,7 +205,7 @@ function toRelayerSampleConfig(
   }
 
   return {
-    id: PrivacyRelayerSampleIndexer.idToConfigurationId(base),
+    id: PrivacyRelayerSampler.idToConfigurationId(base),
     ...base,
   }
 }

@@ -78,10 +78,13 @@ export class PrivacyRelayerSampleRepository extends BaseRepository {
     projectId: string,
     fromInclusive: UnixTime,
     toExclusive: UnixTime,
-  ): Promise<number | undefined> {
+  ): Promise<{ average: number; observedDays: number } | undefined> {
     const row = await this.db
       .selectFrom('PrivacyRelayerSample')
-      .select(sql<number | null>`AVG("relayerCount")`.as('averageCount'))
+      .select([
+        sql<number | null>`AVG("relayerCount")`.as('averageCount'),
+        sql<number>`COUNT(*)`.as('observedDays'),
+      ])
       .where('projectId', '=', projectId)
       .where('timestamp', '>=', UnixTime.toDate(fromInclusive))
       .where('timestamp', '<', UnixTime.toDate(toExclusive))
@@ -91,7 +94,10 @@ export class PrivacyRelayerSampleRepository extends BaseRepository {
       return undefined
     }
 
-    return Number(row.averageCount)
+    return {
+      average: Number(row.averageCount),
+      observedDays: Number(row.observedDays),
+    }
   }
 
   async deleteByConfigInTimeRange(

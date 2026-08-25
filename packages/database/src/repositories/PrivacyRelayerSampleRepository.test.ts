@@ -73,7 +73,7 @@ describeDatabase(PrivacyRelayerSampleRepository.name, (db) => {
 
         expect(
           await repository.getAverageRelayerCount('project', START, day(3)),
-        ).toEqual(20)
+        ).toEqual({ average: 20, observedDays: 3 })
       })
 
       it('returns undefined when there are no samples', async () => {

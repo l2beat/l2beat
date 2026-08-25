@@ -1,7 +1,7 @@
 import { Env } from '@l2beat/backend-tools'
-import { ProjectService } from '@l2beat/config'
+import { type ChainConfig, ProjectService } from '@l2beat/config'
 import { expect, mockFn, mockObject } from 'earl'
-import { PrivacyRelayerSampleIndexer } from '../../modules/privacy/indexers/PrivacyRelayerSampleIndexer'
+import { PrivacyRelayerSampler } from '../../modules/privacy/PrivacyRelayerSampler'
 import { FeatureFlags } from '../FeatureFlags'
 import { getPrivacyConfig } from './privacy'
 
@@ -35,6 +35,7 @@ describe(getPrivacyConfig.name, () => {
       projectService,
       env,
       new FeatureFlags('privacy'),
+      [],
     )
 
     expect(config).toEqual(false)
@@ -58,15 +59,14 @@ describe(getPrivacyConfig.name, () => {
       },
     }
     const projectService = mockObject<ProjectService>({
-      getProjects: mockFn()
-        .resolvesToOnce([relayerOnlyProject])
-        .resolvesToOnce([]),
+      getProjects: mockFn().resolvesToOnce([relayerOnlyProject]),
     })
 
     const config = await getPrivacyConfig(
       projectService,
       env,
       new FeatureFlags('privacy'),
+      [],
     )
 
     if (!config) throw new Error('Privacy config not created')
@@ -95,15 +95,14 @@ describe(getPrivacyConfig.name, () => {
       },
     }
     const projectService = mockObject<ProjectService>({
-      getProjects: mockFn()
-        .resolvesToOnce([wakuOnlyProject])
-        .resolvesToOnce([{ chainConfig: { name: 'ethereum', chainId: 1 } }]),
+      getProjects: mockFn().resolvesToOnce([wakuOnlyProject]),
     })
 
     const config = await getPrivacyConfig(
       projectService,
       env,
       new FeatureFlags('privacy'),
+      [{ name: 'ethereum', chainId: 1, apis: [] } as ChainConfig],
     )
 
     if (!config) throw new Error('Privacy config not created')
@@ -113,7 +112,7 @@ describe(getPrivacyConfig.name, () => {
     }
     expect(config.relayerSampleConfigs).toEqual([
       {
-        id: PrivacyRelayerSampleIndexer.idToConfigurationId({
+        id: PrivacyRelayerSampler.idToConfigurationId({
           projectId: 'railgun',
           chain: 'ethereum',
           chainId: source.chainId,

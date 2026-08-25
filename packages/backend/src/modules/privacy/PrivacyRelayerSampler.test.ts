@@ -2,28 +2,19 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { mockDatabase } from '../../../test/database'
-import type { IndexerService } from '../../../tools/uif/IndexerService'
-import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import type { Configuration } from '../../../tools/uif/multi/types'
+import { mockDatabase } from '../../test/database'
+import type { Clock } from '../../tools/Clock'
+import { PrivacyRelayerSampler } from './PrivacyRelayerSampler'
 import type {
   RailgunBroadcasterProvider,
   RailgunObservationResult,
-} from '../railgun/RailgunBroadcasterProvider'
-import type { PrivacyRelayerSampleIndexerConfig } from '../types'
-import { PrivacyRelayerSampleIndexer } from './PrivacyRelayerSampleIndexer'
+} from './railgun/RailgunBroadcasterProvider'
+import type { PrivacyRelayerSampleConfig } from './types'
 
 const TODAY = UnixTime.toStartOf(UnixTime.now(), 'day')
 
-describe(PrivacyRelayerSampleIndexer.name, () => {
-  beforeEach(() => {
-    _TEST_ONLY_resetUniqueIds()
-  })
-
+describe(PrivacyRelayerSampler.name, () => {
   it('observes and saves a sample for the current day', async () => {
-    const from = UnixTime(TODAY - 2 * UnixTime.HOUR)
-    const to = UnixTime(TODAY + 2 * UnixTime.HOUR)
-
     const provider = mockObject<RailgunBroadcasterProvider>({
       observe: mockFn().resolvesToOnce(
         observations([
@@ -42,16 +33,13 @@ describe(PrivacyRelayerSampleIndexer.name, () => {
       upsertMany: mockFn().resolvesToOnce(1),
     })
 
-    const indexer = createIndexer(provider, privacyRelayerSample)
-
-    const save = await indexer.multiUpdate(from, to, [configuration()])
+    const sampler = createSampler(provider, privacyRelayerSample)
+    await sampler.sampleToday()
 
     expect(provider.observe).toHaveBeenOnlyCalledWith({
       chainIds: [1],
       durationMs: 10 * 60 * 1000,
     })
-    expect(privacyRelayerSample.upsertMany).not.toHaveBeenCalled()
-    expect(await save()).toEqual(to)
     expect(privacyRelayerSample.upsertMany).toHaveBeenOnlyCalledWith([
       {
         configurationId: 'config-1',
@@ -67,9 +55,6 @@ describe(PrivacyRelayerSampleIndexer.name, () => {
   })
 
   it('skips configurations that already have a sample for today', async () => {
-    const from = UnixTime(TODAY + UnixTime.HOUR)
-    const to = UnixTime(TODAY + 2 * UnixTime.HOUR)
-
     const provider = mockObject<RailgunBroadcasterProvider>({
       observe: mockFn(),
     })
@@ -78,19 +63,14 @@ describe(PrivacyRelayerSampleIndexer.name, () => {
       upsertMany: mockFn(),
     })
 
-    const indexer = createIndexer(provider, privacyRelayerSample)
-
-    const save = await indexer.multiUpdate(from, to, [configuration()])
+    const sampler = createSampler(provider, privacyRelayerSample)
+    await sampler.sampleToday()
 
     expect(provider.observe).not.toHaveBeenCalled()
     expect(privacyRelayerSample.upsertMany).not.toHaveBeenCalled()
-    expect(await save()).toEqual(to)
   })
 
-  it('never observes for a past day', async () => {
-    const from = UnixTime(TODAY - 26 * UnixTime.HOUR)
-    const to = UnixTime(TODAY - 2 * UnixTime.HOUR)
-
+  it('skips configurations that have not started yet', async () => {
     const provider = mockObject<RailgunBroadcasterProvider>({
       observe: mockFn(),
     })
@@ -99,21 +79,19 @@ describe(PrivacyRelayerSampleIndexer.name, () => {
       upsertMany: mockFn(),
     })
 
-    const indexer = createIndexer(provider, privacyRelayerSample)
-
-    const save = await indexer.multiUpdate(from, to, [configuration()])
+    const sampler = createSampler(provider, privacyRelayerSample, [
+      configuration({ sinceTimestamp: UnixTime(TODAY + UnixTime.DAY) }),
+    ])
+    await sampler.sampleToday()
 
     expect(
       privacyRelayerSample.getConfigurationIdsByTimestamp,
     ).not.toHaveBeenCalled()
     expect(provider.observe).not.toHaveBeenCalled()
-    expect(await save()).toEqual(to)
+    expect(privacyRelayerSample.upsertMany).not.toHaveBeenCalled()
   })
 
-  it('throws instead of saving when the observation saw no messages', async () => {
-    const from = UnixTime(TODAY - 2 * UnixTime.HOUR)
-    const to = UnixTime(TODAY + 2 * UnixTime.HOUR)
-
+  it('does not save when the observation saw no messages', async () => {
     const provider = mockObject<RailgunBroadcasterProvider>({
       observe: mockFn().resolvesToOnce(
         observations([
@@ -132,18 +110,13 @@ describe(PrivacyRelayerSampleIndexer.name, () => {
       upsertMany: mockFn(),
     })
 
-    const indexer = createIndexer(provider, privacyRelayerSample)
+    const sampler = createSampler(provider, privacyRelayerSample)
+    await sampler.sampleToday()
 
-    await expect(
-      indexer.multiUpdate(from, to, [configuration()]),
-    ).toBeRejectedWith('saw no fee messages')
     expect(privacyRelayerSample.upsertMany).not.toHaveBeenCalled()
   })
 
-  it('throws instead of saving when received messages cannot be parsed', async () => {
-    const from = UnixTime(TODAY - 2 * UnixTime.HOUR)
-    const to = UnixTime(TODAY + 2 * UnixTime.HOUR)
-
+  it('does not save when received messages cannot be parsed', async () => {
     const provider = mockObject<RailgunBroadcasterProvider>({
       observe: mockFn().resolvesToOnce(
         observations([
@@ -162,18 +135,28 @@ describe(PrivacyRelayerSampleIndexer.name, () => {
       upsertMany: mockFn(),
     })
 
-    const indexer = createIndexer(provider, privacyRelayerSample)
+    const sampler = createSampler(provider, privacyRelayerSample)
+    await sampler.sampleToday()
 
-    await expect(
-      indexer.multiUpdate(from, to, [configuration()]),
-    ).toBeRejectedWith('parsed no fee messages')
+    expect(privacyRelayerSample.upsertMany).not.toHaveBeenCalled()
+  })
+
+  it('does not save when observation transport fails', async () => {
+    const provider = mockObject<RailgunBroadcasterProvider>({
+      observe: mockFn().rejectsWithOnce(new Error('waku connect timeout')),
+    })
+    const privacyRelayerSample = mockObject<Database['privacyRelayerSample']>({
+      getConfigurationIdsByTimestamp: mockFn().resolvesToOnce([]),
+      upsertMany: mockFn(),
+    })
+
+    const sampler = createSampler(provider, privacyRelayerSample)
+    await sampler.sampleToday()
+
     expect(privacyRelayerSample.upsertMany).not.toHaveBeenCalled()
   })
 
   it('saves zero when valid messages contain no eligible relayers', async () => {
-    const from = UnixTime(TODAY - 2 * UnixTime.HOUR)
-    const to = UnixTime(TODAY + 2 * UnixTime.HOUR)
-
     const provider = mockObject<RailgunBroadcasterProvider>({
       observe: mockFn().resolvesToOnce(
         observations([
@@ -192,11 +175,9 @@ describe(PrivacyRelayerSampleIndexer.name, () => {
       upsertMany: mockFn().resolvesToOnce(1),
     })
 
-    const indexer = createIndexer(provider, privacyRelayerSample)
-    const save = await indexer.multiUpdate(from, to, [configuration()])
+    const sampler = createSampler(provider, privacyRelayerSample)
+    await sampler.sampleToday()
 
-    expect(privacyRelayerSample.upsertMany).not.toHaveBeenCalled()
-    expect(await save()).toEqual(to)
     expect(privacyRelayerSample.upsertMany).toHaveBeenOnlyCalledWith([
       {
         configurationId: 'config-1',
@@ -212,8 +193,6 @@ describe(PrivacyRelayerSampleIndexer.name, () => {
   })
 
   it('observes all chains together and saves every sample atomically', async () => {
-    const from = UnixTime(TODAY - 2 * UnixTime.HOUR)
-    const to = UnixTime(TODAY + 2 * UnixTime.HOUR)
     const configurations = [
       configuration(),
       configuration({
@@ -231,20 +210,18 @@ describe(PrivacyRelayerSampleIndexer.name, () => {
       getConfigurationIdsByTimestamp: mockFn().resolvesToOnce([]),
       upsertMany: mockFn().resolvesToOnce(2),
     })
-    const indexer = createIndexer(
+    const sampler = createSampler(
       provider,
       privacyRelayerSample,
       configurations,
     )
 
-    const save = await indexer.multiUpdate(from, to, configurations)
+    await sampler.sampleToday()
 
     expect(provider.observe).toHaveBeenOnlyCalledWith({
       chainIds: [1, 137],
       durationMs: 10 * 60 * 1000,
     })
-    expect(privacyRelayerSample.upsertMany).not.toHaveBeenCalled()
-    expect(await save()).toEqual(to)
     expect(privacyRelayerSample.upsertMany).toHaveBeenOnlyCalledWith([
       {
         configurationId: 'config-1',
@@ -269,9 +246,7 @@ describe(PrivacyRelayerSampleIndexer.name, () => {
     ])
   })
 
-  it('does not expose partial samples when any chain is unhealthy', async () => {
-    const from = UnixTime(TODAY - 2 * UnixTime.HOUR)
-    const to = UnixTime(TODAY + 2 * UnixTime.HOUR)
+  it('persists healthy chains and retries only the unhealthy one later', async () => {
     const configurations = [
       configuration(),
       configuration({ id: 'config-137', chain: 'polygonpos', chainId: 137 }),
@@ -294,62 +269,90 @@ describe(PrivacyRelayerSampleIndexer.name, () => {
     })
     const privacyRelayerSample = mockObject<Database['privacyRelayerSample']>({
       getConfigurationIdsByTimestamp: mockFn().resolvesToOnce([]),
-      upsertMany: mockFn(),
+      upsertMany: mockFn().resolvesToOnce(1),
     })
-    const indexer = createIndexer(
+    const sampler = createSampler(
       provider,
       privacyRelayerSample,
       configurations,
     )
 
-    await expect(
-      indexer.multiUpdate(from, to, configurations),
-    ).toBeRejectedWith('saw no fee messages for chainId 137')
-    expect(privacyRelayerSample.upsertMany).not.toHaveBeenCalled()
+    await sampler.sampleToday()
+
+    expect(privacyRelayerSample.upsertMany).toHaveBeenOnlyCalledWith([
+      {
+        configurationId: 'config-1',
+        projectId: 'railgun',
+        chain: 'ethereum',
+        timestamp: TODAY,
+        relayerCount: 10,
+        messagesReceived: 1,
+        messagesParsed: 1,
+        messagesAccepted: 1,
+      },
+    ])
   })
 
-  describe(PrivacyRelayerSampleIndexer.idToConfigurationId.name, () => {
+  it('samples on start and on each new hour', () => {
+    const clock = mockObject<Clock>({
+      onNewHour: mockFn().returnsOnce(() => {}),
+    })
+    const privacyRelayerSample = mockObject<Database['privacyRelayerSample']>({
+      getConfigurationIdsByTimestamp: mockFn().resolvesTo(['config-1']),
+      upsertMany: mockFn(),
+    })
+    const sampler = createSampler(
+      mockObject<RailgunBroadcasterProvider>({ observe: mockFn() }),
+      privacyRelayerSample,
+      [configuration()],
+      clock,
+    )
+
+    sampler.start()
+
+    expect(clock.onNewHour).toHaveBeenCalled()
+  })
+
+  describe(PrivacyRelayerSampler.idToConfigurationId.name, () => {
     it('is deterministic for the same input', () => {
       const properties = sampleProperties()
 
-      expect(
-        PrivacyRelayerSampleIndexer.idToConfigurationId(properties),
-      ).toEqual(PrivacyRelayerSampleIndexer.idToConfigurationId(properties))
+      expect(PrivacyRelayerSampler.idToConfigurationId(properties)).toEqual(
+        PrivacyRelayerSampler.idToConfigurationId(properties),
+      )
     })
 
     it('differs by chain id', () => {
       const properties = sampleProperties()
 
-      expect(
-        PrivacyRelayerSampleIndexer.idToConfigurationId(properties),
-      ).not.toEqual(
-        PrivacyRelayerSampleIndexer.idToConfigurationId({
+      expect(PrivacyRelayerSampler.idToConfigurationId(properties)).not.toEqual(
+        PrivacyRelayerSampler.idToConfigurationId({
           ...properties,
           chainId: 137,
         }),
       )
     })
   })
-
-  function createIndexer(
-    provider: RailgunBroadcasterProvider,
-    privacyRelayerSample: Database['privacyRelayerSample'],
-    configurations = [configuration()],
-  ) {
-    return new PrivacyRelayerSampleIndexer(
-      {
-        configurations,
-        provider,
-        db: mockDatabase({ privacyRelayerSample }),
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-      },
-      Logger.SILENT,
-    )
-  }
 })
 
-function sampleProperties(): Omit<PrivacyRelayerSampleIndexerConfig, 'id'> {
+function createSampler(
+  provider: RailgunBroadcasterProvider,
+  privacyRelayerSample: Database['privacyRelayerSample'],
+  configurations = [configuration()],
+  clock: Clock = mockObject<Clock>(),
+) {
+  return new PrivacyRelayerSampler(
+    {
+      clock,
+      configurations,
+      provider,
+      db: mockDatabase({ privacyRelayerSample }),
+    },
+    Logger.SILENT,
+  )
+}
+
+function sampleProperties(): Omit<PrivacyRelayerSampleConfig, 'id'> {
   return {
     projectId: 'railgun',
     chain: 'ethereum',
@@ -359,19 +362,12 @@ function sampleProperties(): Omit<PrivacyRelayerSampleIndexerConfig, 'id'> {
 }
 
 function configuration(
-  overrides: Partial<PrivacyRelayerSampleIndexerConfig> = {},
-): Configuration<PrivacyRelayerSampleIndexerConfig> {
-  const properties: PrivacyRelayerSampleIndexerConfig = {
+  overrides: Partial<PrivacyRelayerSampleConfig> = {},
+): PrivacyRelayerSampleConfig {
+  return {
     id: 'config-1',
     ...sampleProperties(),
     ...overrides,
-  }
-
-  return {
-    id: properties.id,
-    minHeight: properties.sinceTimestamp,
-    maxHeight: null,
-    properties,
   }
 }
 

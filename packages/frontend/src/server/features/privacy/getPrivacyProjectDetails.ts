@@ -6,7 +6,6 @@ import type {
   ProjectContracts,
   ProjectDisplay,
   ProjectPermissions,
-  ProjectPrivacyRelayerTracking,
   ProjectStatuses,
   ProjectUpgradesAndGovernance,
   ProjectZkCatalogInfo,
@@ -288,6 +287,8 @@ export async function getPrivacyProjectDetails(
   }
 }
 
+const MIN_OBSERVED_DAYS_FOR_AVERAGE = 7
+
 async function getRelayerStat(
   project: PrivacyProject,
   from: UnixTime,
@@ -298,40 +299,46 @@ async function getRelayerStat(
     return undefined
   }
 
-  const kind = relayerStatKind(tracking)
   if (env.MOCK) {
-    return { kind, value: Math.round(Math.random() * 20) }
-  }
-
-  if (kind === 'avgDailyRelayers') {
-    const average = await getDb().privacyRelayerSample.getAverageRelayerCount(
-      project.id,
-      from,
-      to,
-    )
-    // Hide the stat until the first sample exists instead of showing 0.
-    if (average === undefined) {
-      return undefined
+    switch (tracking.type) {
+      case 'onchainEvents':
+        return {
+          kind: 'activeRelayers',
+          value: Math.round(Math.random() * 20),
+        }
+      case 'railgunWaku':
+        return {
+          kind: 'avgDailyRelayers',
+          value: Math.round(Math.random() * 20),
+        }
+      default:
+        assertUnreachable(tracking)
     }
-    return { kind, value: Math.round(average) }
   }
 
-  const count = await getDb().privacyRelayerActivity.getActiveRelayerCount(
-    project.id,
-    from,
-    to,
-  )
-  return { kind, value: count }
-}
-
-function relayerStatKind(
-  tracking: ProjectPrivacyRelayerTracking,
-): PrivacyRelayerStat['kind'] {
   switch (tracking.type) {
-    case 'onchainEvents':
-      return 'activeRelayers'
-    case 'railgunWaku':
-      return 'avgDailyRelayers'
+    case 'onchainEvents': {
+      const count = await getDb().privacyRelayerActivity.getActiveRelayerCount(
+        project.id,
+        from,
+        to,
+      )
+      return { kind: 'activeRelayers', value: count }
+    }
+    case 'railgunWaku': {
+      const result = await getDb().privacyRelayerSample.getAverageRelayerCount(
+        project.id,
+        from,
+        to,
+      )
+      if (
+        result === undefined ||
+        result.observedDays < MIN_OBSERVED_DAYS_FOR_AVERAGE
+      ) {
+        return undefined
+      }
+      return { kind: 'avgDailyRelayers', value: Math.round(result.average) }
+    }
     default:
       assertUnreachable(tracking)
   }

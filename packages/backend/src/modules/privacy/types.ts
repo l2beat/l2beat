@@ -15,7 +15,7 @@ export interface PrivacyConfig {
   flowConfigs: PrivacyFlowIndexerConfig[]
   starknetFlowConfigs: StarknetPrivacyFlowIndexerConfig[]
   relayerConfigs: PrivacyRelayerActivityIndexerConfig[]
-  relayerSampleConfigs: PrivacyRelayerSampleIndexerConfig[]
+  relayerSampleConfigs: PrivacyRelayerSampleConfig[]
   priceConfigs: PrivacyPriceIndexerConfig[]
   blockTimestampConfigs: PrivacyBlockTimestampConfig[]
   chains: string[]
@@ -72,7 +72,7 @@ export type PrivacyRelayerActivityIndexerConfig = {
   extractor: ProjectPrivacyOnchainRelayerSource['extractor']
 }
 
-export type PrivacyRelayerSampleIndexerConfig = {
+export type PrivacyRelayerSampleConfig = {
   id: string
   projectId: string
   chain: string

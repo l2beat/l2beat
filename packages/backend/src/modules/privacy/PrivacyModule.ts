@@ -7,8 +7,8 @@ import { PrivacyBlockTimestampIndexer } from './indexers/PrivacyBlockTimestampIn
 import { PrivacyFlowIndexer } from './indexers/PrivacyFlowIndexer'
 import { PrivacyPriceIndexer } from './indexers/PrivacyPriceIndexer'
 import { PrivacyRelayerActivityIndexer } from './indexers/PrivacyRelayerActivityIndexer'
-import { PrivacyRelayerSampleIndexer } from './indexers/PrivacyRelayerSampleIndexer'
 import { StarknetPrivacyFlowIndexer } from './indexers/StarknetPrivacyFlowIndexer'
+import { PrivacyRelayerSampler } from './PrivacyRelayerSampler'
 import { RailgunBroadcasterProvider } from './railgun/RailgunBroadcasterProvider'
 import type {
   PrivacyFlowIndexerConfig,
@@ -193,26 +193,18 @@ export function createPrivacyModule({
     }
   }
 
-  if (config.privacy.relayerSampleConfigs.length > 0) {
-    const relayerSampleIndexer = new PrivacyRelayerSampleIndexer(
-      {
-        parents: [hourlyIndexer],
-        indexerService,
-        configurations: config.privacy.relayerSampleConfigs.map(
-          (sampleConfig) => ({
-            id: sampleConfig.id,
-            minHeight: sampleConfig.sinceTimestamp,
-            maxHeight: null,
-            properties: sampleConfig,
-          }),
-        ),
-        provider: new RailgunBroadcasterProvider(logger),
-        db,
-      },
-      logger,
-    )
-    indexers.push(relayerSampleIndexer)
-  }
+  const sampler =
+    config.privacy.relayerSampleConfigs.length > 0
+      ? new PrivacyRelayerSampler(
+          {
+            clock,
+            configurations: config.privacy.relayerSampleConfigs,
+            provider: new RailgunBroadcasterProvider(logger),
+            db,
+          },
+          logger,
+        )
+      : undefined
 
   logger.info('Privacy config loaded', {
     projects: config.privacy.projects.length,
@@ -224,15 +216,20 @@ export function createPrivacyModule({
     chains: config.privacy.chains.length,
   })
 
+  const hasOnchainIndexers = priceIndexer !== undefined || indexers.length > 0
+
   return {
     start: async () => {
       logger = logger.for('PrivacyModule')
       logger.info('Starting...')
-      await hourlyIndexer.start()
-      await priceIndexer?.start()
-      for (const indexer of indexers) {
-        await indexer.start()
+      if (hasOnchainIndexers) {
+        await hourlyIndexer.start()
+        await priceIndexer?.start()
+        for (const indexer of indexers) {
+          await indexer.start()
+        }
       }
+      sampler?.start()
     },
   }
 }

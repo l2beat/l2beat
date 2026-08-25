@@ -34,6 +34,7 @@ export interface RailgunObserveOptions {
   durationMs: number
 }
 
+// `@waku/sdk` is ESM - only, so it is loaded dynamically from this CJS build.
 export class RailgunBroadcasterProvider {
   constructor(private readonly logger: Logger) {
     this.logger = logger.for(this)
