@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xf9296765a9f5ce636e381ea605f863fb349421ed
+
+# Diff at Tue, 25 Aug 2026 08:16:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@19c383d3b8961aa173298f261cae4a76da50a99d block: 1784814637
+- current timestamp: 1787645431
+
+## Description
+
+New selected op succinct config.
+
+## Watched changes
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) [katana/AggchainFEP_post035] {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.selectedOpSuccinctConfig.aggregationVkey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x00d68eb096f4c731512562f7a06e6bba104dbcb959261edd3eb3ec542c200c89"
+      values.selectedOpSuccinctConfig.rangeVkeyCommitment:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x1f089f9d1cd3f727775788003d3e496037d3625e2e9de6e5005f1e9707ba3b8f"
+      values.selectedOpSuccinctConfig.rollupConfigHash:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x720a7d9b12c0a7fbbd1b2634eb9d17b5cc7720575c48736b1c40e9399f31de09"
++++ description: currently enforced OpSuccinctConfig. update the call handler for the full config if this changes.
++++ severity: HIGH
+      values.selectedOpSuccinctConfigName:
+-        "0xe3fbe1170998c9f380d29247864dd07f2f17367a23ae5e0fa409ebd371d97d6f"
++        "0x0f30c0b6846b034a146a47c5185fb9a4321df3569376773238ef30c831019190"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784814637 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) [katana/AggchainFEP_post035] {
+    +++ description: The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.
+      values.selectedOpSuccinctConfig.aggregationVkey:
+-        "0x0034587dfb1de8163284d39f3043f5fadfa92f9e03fb3e0315eb469c550fde40"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.selectedOpSuccinctConfig.rangeVkeyCommitment:
+-        "0x1b04822373ca65680026b5610c1edf424798421b032ef9117b2c264661de246f"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.selectedOpSuccinctConfig.rollupConfigHash:
+-        "Katana OP Succinct v3.10.0 rollup config (Kona v1.6.0)"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xc8268a1e433e78770d397ac13ebf33c495c4bff7
 
 # Diff at Wed, 29 Jul 2026 09:59:48 GMT:
