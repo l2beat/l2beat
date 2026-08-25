@@ -4,6 +4,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { SentimentText } from '~/components/SentimentText'
 import { ExitWindowCell } from '~/components/table/cells/ExitWindowCell'
+import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import {
   adjustTableValue,
@@ -97,27 +98,26 @@ export const ossificationColumns = [
   }),
   columnHelper.accessor('criticalChangesPerYear', {
     header: 'Critical\nchanges / year',
-    cell: (ctx) => (
-      <span className="tabular-nums">
-        {ctx.row.original.clusteredEventCount === 0
-          ? '0'
-          : ctx.getValue() >= 10
-            ? ctx.getValue().toFixed(0)
-            : ctx.getValue().toFixed(1)}
-      </span>
-    ),
-    meta: {
-      tooltip:
-        '24h-clustered critical change events per year over the trailing 36 months.',
+    cell: (ctx) => {
+      const contractCount = ctx.row.original.contractCount
+      return (
+        <TwoRowCell>
+          <TwoRowCell.First className="tabular-nums">
+            {ctx.row.original.clusteredEventCount === 0
+              ? '0'
+              : ctx.getValue() >= 10
+                ? ctx.getValue().toFixed(0)
+                : ctx.getValue().toFixed(1)}
+          </TwoRowCell.First>
+          <TwoRowCell.Second className="mt-0.5">
+            {`across ${contractCount} ${contractCount === 1 ? 'contract' : 'contracts'}`}
+          </TwoRowCell.Second>
+        </TwoRowCell>
+      )
     },
-    sortDescFirst: true,
-  }),
-  columnHelper.accessor('contractCount', {
-    header: 'Critical\ncontracts',
-    cell: (ctx) => <span className="tabular-nums">{ctx.getValue()}</span>,
     meta: {
       tooltip:
-        'Number of contracts in the critical perimeter, as classified by our research team.',
+        'Critical change events per year over the trailing 36 months, and the number of contracts in the critical perimeter as classified by our research team.',
     },
     sortDescFirst: true,
   }),
