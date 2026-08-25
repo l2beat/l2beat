@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { useTRPC } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
 import {
+  filterTokensWithoutRelations,
   getExistingRelationGraphSelection,
   NODE_COLORS,
   RELATION_COLORS,
@@ -12,6 +13,7 @@ import {
   type RelationGraphNode,
   type RelationGraphSelection,
   relationId,
+  type TokensWithoutRelationsDisplayMode,
 } from './relationGraphModel'
 import { TokenRelationsGraph } from './TokenRelationsGraph'
 import { TokenRelationsGraphDetailsPanel } from './TokenRelationsGraphDetailsPanel'
@@ -22,6 +24,22 @@ export function TokenRelationsGraphPage() {
   const [selection, setSelection] = useState<RelationGraphSelection>()
   const [zoomTarget, setZoomTarget] = useState<{ nodeId: string }>()
   const [highlightAnomalies, setHighlightAnomalies] = useState(false)
+  // Which tokens without relations are displayed. Unlike relation deletion,
+  // this filters the payload before the scene is built, so changing it
+  // re-runs the whole layout (and re-fits the camera) — hidden tokens must
+  // not distort the force simulation of the clusters they would belong to.
+  //
+  // The rebuild blocks the main thread for seconds, so it must not start in
+  // the frame that handles the click: the radio state updates instantly, a
+  // loading overlay covers the graph, and only after that paints (two
+  // animation frames) does the applied mode change and hand the graph its
+  // new payload. The radios stay disabled until the graph reports the
+  // layout done, so clicks cannot pile up faster than rebuilds finish.
+  const [withoutRelationsMode, setWithoutRelationsMode] =
+    useState<TokensWithoutRelationsDisplayMode>('supported')
+  const [appliedWithoutRelationsMode, setAppliedWithoutRelationsMode] =
+    useState<TokensWithoutRelationsDisplayMode>(withoutRelationsMode)
+  const [isRelayouting, setIsRelayouting] = useState(false)
   // Relations deleted while this page is open. The graph payload is not
   // refetched on deletion (see PlanConfirmationDialog) and the layout is not
   // re-run — the deleted edges are simply hidden everywhere they would show.
@@ -42,7 +60,18 @@ export function TokenRelationsGraphPage() {
     }),
   )
   const chainsQuery = useQuery(trpc.chains.getAll.queryOptions())
-  const graph = graphQuery.data
+  const fullGraph = graphQuery.data
+  const graph = useMemo(
+    () =>
+      fullGraph === undefined
+        ? undefined
+        : filterTokensWithoutRelations(fullGraph, appliedWithoutRelationsMode),
+    [fullGraph, appliedWithoutRelationsMode],
+  )
+  const hiddenNodeCount =
+    fullGraph !== undefined && graph !== undefined
+      ? fullGraph.nodes.length - graph.nodes.length
+      : 0
   const graphSelection =
     graph === undefined
       ? undefined
@@ -69,6 +98,35 @@ export function TokenRelationsGraphPage() {
     changeSelection(undefined)
   }
 
+  function changeWithoutRelationsMode(mode: TokensWithoutRelationsDisplayMode) {
+    setWithoutRelationsMode(mode)
+    if (graph === undefined || graph.nodes.length === 0) {
+      // No graph on screen, so no layout to rebuild — and no mounted graph
+      // that could report a rebuild done. Apply the mode directly.
+      setAppliedWithoutRelationsMode(mode)
+      return
+    }
+    setIsRelayouting(true)
+  }
+
+  // Applies the picked mode only after the switched radio and the loading
+  // overlay have painted: the first animation frame runs before that paint,
+  // the second after it, and only then may the payload change kick off the
+  // blocking layout rebuild.
+  useEffect(() => {
+    if (appliedWithoutRelationsMode === withoutRelationsMode) return
+    let innerFrame: number | undefined
+    const outerFrame = requestAnimationFrame(() => {
+      innerFrame = requestAnimationFrame(() =>
+        setAppliedWithoutRelationsMode(withoutRelationsMode),
+      )
+    })
+    return () => {
+      cancelAnimationFrame(outerFrame)
+      if (innerFrame !== undefined) cancelAnimationFrame(innerFrame)
+    }
+  }, [appliedWithoutRelationsMode, withoutRelationsMode])
+
   useEffect(() => {
     if (
       graph !== undefined &&
@@ -88,7 +146,7 @@ export function TokenRelationsGraphPage() {
             <h1 className="font-semibold text-xl">Token Relations Graph</h1>
             <div className="text-muted-foreground text-sm">
               {graph
-                ? graphSummary(graph, deletedRelationIds)
+                ? graphSummary(graph, deletedRelationIds, hiddenNodeCount)
                 : graphQuery.isError
                   ? 'Graph unavailable'
                   : 'Loading graph data'}
@@ -102,6 +160,11 @@ export function TokenRelationsGraphPage() {
               />
             )}
             <GraphLegend />
+            <TokensWithoutRelationsPicker
+              value={withoutRelationsMode}
+              disabled={isRelayouting}
+              onChange={changeWithoutRelationsMode}
+            />
             <AnomalySwitch
               checked={highlightAnomalies}
               onCheckedChange={setHighlightAnomalies}
@@ -120,14 +183,20 @@ export function TokenRelationsGraphPage() {
               No token relations.
             </div>
           ) : (
-            <TokenRelationsGraph
-              graph={graph}
-              selection={graphSelection}
-              zoomTarget={graphZoomTarget}
-              highlightAnomalies={highlightAnomalies}
-              deletedRelationIds={deletedRelationIds}
-              onSelectionChange={changeSelection}
-            />
+            <>
+              <TokenRelationsGraph
+                graph={graph}
+                selection={graphSelection}
+                zoomTarget={graphZoomTarget}
+                highlightAnomalies={highlightAnomalies}
+                deletedRelationIds={deletedRelationIds}
+                onSelectionChange={changeSelection}
+                onLayoutComplete={() => setIsRelayouting(false)}
+              />
+              {isRelayouting && (
+                <LoadingState className="absolute inset-0 z-10 h-full bg-background" />
+              )}
+            </>
           )}
           {graph && graphSelection && (
             <TokenRelationsGraphDetailsPanel
@@ -152,16 +221,30 @@ function GraphLegend() {
     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-muted-foreground">
       <LegendDot color={NODE_COLORS.deployed} label="Deployed" />
       <LegendDot color={NODE_COLORS.missing} label="Missing" />
+      <LegendDot color={NODE_COLORS.deployed} label="No relations" hollow />
       <LegendLine color={RELATION_COLORS.burnAndMint} label="Burn & Mint" />
       <LegendLine color={RELATION_COLORS.lockAndMint} label="Lock & Mint" />
     </div>
   )
 }
 
-function LegendDot({ color, label }: { color: string; label: string }) {
+function LegendDot({
+  color,
+  label,
+  hollow = false,
+}: {
+  color: string
+  label: string
+  hollow?: boolean
+}) {
   return (
     <span className="inline-flex items-center gap-1.5">
-      <span className="size-2 rounded-full" style={{ background: color }} />
+      <span
+        className="size-2 rounded-full"
+        style={
+          hollow ? { border: `1.5px solid ${color}` } : { background: color }
+        }
+      />
       {label}
     </span>
   )
@@ -173,6 +256,76 @@ function LegendLine({ color, label }: { color: string; label: string }) {
       <span className="h-0.5 w-5 rounded-full" style={{ background: color }} />
       {label}
     </span>
+  )
+}
+
+const TOKENS_WITHOUT_RELATIONS_MODES: {
+  value: TokensWithoutRelationsDisplayMode
+  label: string
+  title: string
+}[] = [
+  {
+    value: 'hide',
+    label: 'Hide',
+    title: 'Show no tokens without relations',
+  },
+  {
+    value: 'supported',
+    label: 'Show supported',
+    title:
+      'Show only tokens without relations on chains that appear in some relation — the chains interop transfers cover',
+  },
+  {
+    value: 'all',
+    label: 'Show all',
+    title: 'Show every token without relations',
+  },
+]
+
+/**
+ * Chooses which tokens without relations (abstract token assigned, no
+ * observed relations) the graph displays. Changing it rebuilds the layout,
+ * so the clusters settle without the hidden nodes; the radios are disabled
+ * while that rebuild runs.
+ */
+function TokensWithoutRelationsPicker({
+  value,
+  disabled,
+  onChange,
+}: {
+  value: TokensWithoutRelationsDisplayMode
+  disabled: boolean
+  onChange: (value: TokensWithoutRelationsDisplayMode) => void
+}) {
+  return (
+    <div
+      className={cn(
+        'flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md border bg-background px-2.5 py-1.5 font-medium',
+        disabled && 'opacity-60',
+      )}
+    >
+      <span className="text-muted-foreground">Tokens without relations:</span>
+      {TOKENS_WITHOUT_RELATIONS_MODES.map((mode) => (
+        <label
+          key={mode.value}
+          title={mode.title}
+          className={cn(
+            'inline-flex items-center gap-1.5',
+            disabled ? 'cursor-wait' : 'cursor-pointer',
+          )}
+        >
+          <input
+            type="radio"
+            name="tokens-without-relations-mode"
+            className="accent-primary"
+            disabled={disabled}
+            checked={value === mode.value}
+            onChange={() => onChange(mode.value)}
+          />
+          {mode.label}
+        </label>
+      ))}
+    </div>
   )
 }
 
@@ -212,8 +365,15 @@ function AnomalySwitch({
 function graphSummary(
   graph: RelationGraph,
   deletedRelationIds: ReadonlySet<string>,
+  hiddenNodeCount: number,
 ) {
+  // The graph is already filtered by the without-relations display mode, so
+  // these are displayed counts and change with the mode; the hidden count
+  // says how many nodes the mode removed.
   const deployed = graph.nodes.filter((node) => node.isDeployed).length
+  const withoutRelations = graph.nodes.filter(
+    (node) => !node.hasRelations,
+  ).length
   const missing = graph.nodes.length - deployed
   // Count by filtering rather than subtracting the deleted set's size: a
   // fresh payload no longer contains the deleted relations, and subtraction
@@ -221,5 +381,6 @@ function graphSummary(
   const relations = graph.relations.filter(
     (relation) => !deletedRelationIds.has(relationId(relation)),
   ).length
-  return `${deployed} deployed tokens, ${missing} missing endpoints, ${relations} relations`
+  const hidden = hiddenNodeCount > 0 ? `, ${hiddenNodeCount} hidden` : ''
+  return `${deployed} deployed tokens (${withoutRelations} without relations), ${missing} missing endpoints, ${relations} relations${hidden}`
 }

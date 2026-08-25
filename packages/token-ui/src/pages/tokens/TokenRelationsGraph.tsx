@@ -60,6 +60,7 @@ export function TokenRelationsGraph({
   highlightAnomalies,
   deletedRelationIds,
   onSelectionChange,
+  onLayoutComplete,
 }: {
   graph: RelationGraph
   selection: RelationGraphSelection | undefined
@@ -67,6 +68,8 @@ export function TokenRelationsGraph({
   highlightAnomalies: boolean
   deletedRelationIds: ReadonlySet<string>
   onSelectionChange: (selection: RelationGraphSelection | undefined) => void
+  /** Called after the blocking scene build whenever `graph` changes. */
+  onLayoutComplete?: () => void
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const tooltipRef = useRef<HTMLDivElement>(null)
@@ -90,9 +93,15 @@ export function TokenRelationsGraph({
     selection,
   })
 
+  const onLayoutCompleteRef = useRef(onLayoutComplete)
+
   useEffect(() => {
     onSelectionChangeRef.current = onSelectionChange
   }, [onSelectionChange])
+
+  useEffect(() => {
+    onLayoutCompleteRef.current = onLayoutComplete
+  }, [onLayoutComplete])
 
   useEffect(() => {
     styleStateRef.current = {
@@ -406,6 +415,10 @@ export function TokenRelationsGraph({
     })
     observer.observe(canvas)
 
+    // The scene build above is the multi-second blocking part; from here on
+    // the graph only waits for cheap resize/draw callbacks.
+    onLayoutCompleteRef.current?.()
+
     return () => {
       if (frame !== undefined) cancelAnimationFrame(frame)
       observer.disconnect()
@@ -464,7 +477,11 @@ function nodeTooltip(node: SceneNode) {
   return [
     `${node.label} on ${data.chain}`,
     data.address,
-    data.isDeployed ? 'Deployed token exists' : 'Missing deployed token',
+    !data.isDeployed
+      ? 'Missing deployed token'
+      : data.hasRelations
+        ? 'Deployed token exists'
+        : 'No observed relations — placed by its abstract token assignment',
   ].join('\n')
 }
 
