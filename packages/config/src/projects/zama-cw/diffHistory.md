@@ -1,4 +1,29 @@
-Generated with discovered.json: 0x67ce4a7ff1bc632b50576ab8e080b1748b9aaf00
+Generated with discovered.json: 0xdd6926b5de1bf6cee2ab80edba35ef3782a4c169
+
+# Diff at Tue, 25 Aug 2026 08:55:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@afee435bc99a79b6a7bbb46fd9865fb0e8b74e89 block: 1786539392
+- current timestamp: 1787648016
+
+## Description
+
+Add multisig signer.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
+    }
+```
+
+Generated with discovered.json: 0x3cda5fd8197379092f8e08a01d89186879f3d6cc
 
 # Diff at Wed, 12 Aug 2026 12:58:00 GMT:
 

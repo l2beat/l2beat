@@ -109,22 +109,12 @@ export interface ZkStackConfigCommon {
   reasonsForBeingOther?: ReasonForBeingInOther[]
   ecosystemInfo?: ProjectEcosystemInfo
   validatorTimelockOnGateway?: EntryParameters
-  /** Set to true if projects posts blobs to Ethereum */
-  usesEthereumBlobs?: boolean
-  /** Configure to enable DA metrics tracking for chain using Celestia DA */
-  celestiaDa?: {
-    namespace: string
-    /* IMPORTANT: Block number on Celestia Network */
-    sinceBlock: number
-  }
-  /** Configure to enable DA metrics tracking for chain using Avail DA */
-  availDa?: {
-    appIds: string[]
-    /* IMPORTANT: Block number on Avail Network */
-    sinceBlock: number
-  }
-  /** Configure to enable custom DA tracking e.g. project that switched DA */
-  nonTemplateDaTracking?: ProjectDaTrackingConfig[]
+  /**
+   * Explicit DA tracking history, oldest first. Closed entries are literals;
+   * the open (last) entry of a blob-posting chain is usually
+   * `getZkStackDaTracking(discovery, { sinceBlock })`. See docs/da-tracking.md.
+   */
+  daTracking?: ProjectDaTrackingConfig[]
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
   interopConfig?: InteropConfig
   // For Stage 1 requirement. In theory could also be determined from discovery and zk catalog
@@ -367,7 +357,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
           startBlock: 1,
         },
       ),
-      daTracking: getDaTracking(templateVars),
+      daTracking: templateVars.daTracking,
       trackedTxs: templateVars.nonTemplateTrackedTxs, // difficult to templatize as upgrades are not synced
     },
     chainConfig: templateVars.chainConfig && {
@@ -700,62 +690,31 @@ function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
   return TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
 }
 
-function getDaTracking(
-  templateVars: ZkStackConfigCommon,
-): ProjectDaTrackingConfig[] | undefined {
-  // Return non-template tracking if it exists
-  if (templateVars.nonTemplateDaTracking) {
-    return templateVars.nonTemplateDaTracking
+/**
+ * The open ethereum DA tracking entry of a ZK Stack chain. The identity fields
+ * (ValidatorTimelock, validators) come from discovery on purpose: a rotation
+ * changes the id, which fails the snapshot guard and forces the old entry to
+ * be frozen (see docs/da-tracking.md). The range is a literal so the indexed
+ * window never moves behind the project's back.
+ */
+export function getZkStackDaTracking(
+  discovery: ProjectDiscovery,
+  range: { sinceBlock: number; untilBlock?: number },
+): ProjectDaTrackingConfig {
+  const validatorTimelock = ChainSpecificAddress.address(
+    discovery.getContractDetails('ValidatorTimelock').address,
+  )
+  const validatorsVTL = discovery.getContractValue<ChainSpecificAddress[]>(
+    'ValidatorTimelock',
+    'validatorsVTL',
+  )
+  return {
+    type: 'ethereum',
+    daLayer: ProjectId('ethereum'),
+    inbox: validatorTimelock,
+    sequencers: validatorsVTL.map((a) => ChainSpecificAddress.address(a)),
+    ...range,
   }
-
-  if (templateVars.usesEthereumBlobs) {
-    const validatorTimelock = ChainSpecificAddress.address(
-      templateVars.discovery.getContractDetails('ValidatorTimelock').address,
-    )
-
-    const validatorsVTL = templateVars.discovery.getContractValue<
-      ChainSpecificAddress[]
-    >('ValidatorTimelock', 'validatorsVTL')
-
-    const inboxDeploymentBlockNumber =
-      templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
-
-    return [
-      {
-        type: 'ethereum',
-        daLayer: ProjectId('ethereum'),
-        sinceBlock: inboxDeploymentBlockNumber,
-        inbox: validatorTimelock,
-        sequencers: validatorsVTL.map((a) => ChainSpecificAddress.address(a)),
-      },
-    ]
-  }
-
-  if (templateVars.celestiaDa) {
-    return [
-      {
-        type: 'celestia',
-        daLayer: ProjectId('celestia'),
-        // TODO: update to value from discovery
-        sinceBlock: templateVars.celestiaDa.sinceBlock,
-        namespace: templateVars.celestiaDa.namespace,
-      },
-    ]
-  }
-
-  if (templateVars.availDa) {
-    return [
-      {
-        type: 'avail',
-        daLayer: ProjectId('avail'),
-        // TODO: update to value from discovery
-        sinceBlock: templateVars.availDa.sinceBlock,
-        appIds: templateVars.availDa.appIds,
-      },
-    ]
-  }
-
-  return undefined
 }
 
 function programHashesReproducible(l2BootloaderHash: string): boolean | null {
@@ -776,16 +735,20 @@ export function getZKStackVerifiers(
     // don't want to bother setting up archived projects
     return result
   }
-  if (discovery.hasContract('DualVerifier')) {
+  // since v30.1 the dual verifier of era-based chains is called EraDualVerifier
+  const dualVerifierName = ['DualVerifier', 'EraDualVerifier'].find((name) =>
+    discovery.hasContract(name),
+  )
+  if (dualVerifierName !== undefined) {
     result.push(
       discovery.getContractValue<ChainSpecificAddress>(
-        'DualVerifier',
+        dualVerifierName,
         'FFLONK_VERIFIER',
       ),
     )
     result.push(
       discovery.getContractValue<ChainSpecificAddress>(
-        'DualVerifier',
+        dualVerifierName,
         'PLONK_VERIFIER',
       ),
     )

@@ -9,6 +9,7 @@ import { ManagedMultiIndexer } from '../../../../tools/uif/multi/ManagedMultiInd
 import type {
   Configuration,
   ManagedMultiIndexerOptions,
+  TrimRemovalConfiguration,
   WipeRemovalConfiguration,
 } from '../../../../tools/uif/multi/types'
 
@@ -123,6 +124,34 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
         configurations: configurations.length,
         deletedRecords,
       })
+    }
+  }
+
+  override async trimData(
+    configurations: TrimRemovalConfiguration[],
+  ): Promise<void> {
+    for (const configuration of configurations) {
+      // Records are hourly buckets, so cut at full hours: keep the bucket holding
+      // the new sinceTimestamp (range ends at since - 1; nothing re-indexes it),
+      // drop the bucket holding the new untilTimestamp (range starts at until + 1;
+      // it is re-fetched if the range grows again). Same rule as DaIndexer.
+      const from = UnixTime.toStartOf(configuration.range[0], 'hour')
+      const to = UnixTime.toStartOf(configuration.range[1] + 1, 'hour') - 1
+      const deletedRecords =
+        await this.$.db.dataAvailability.deleteByConfigInTimeRange(
+          configuration.id,
+          from,
+          to,
+        )
+
+      if (deletedRecords > 0) {
+        this.logger.info('Trimmed DA records for configuration', {
+          id: configuration.id,
+          from,
+          to,
+          deletedRecords,
+        })
+      }
     }
   }
 

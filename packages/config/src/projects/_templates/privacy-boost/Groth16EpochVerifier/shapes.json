@@ -1,0 +1,8 @@
+{
+  "Groth16EpochVerifier": {
+    "hash": "0xf88413dfadb885db4a5441a0537ff2101b38b37d2c7e8e29adeb79cda91d6aef",
+    "address": "oeth:0x67b1bD839203223870fBF51e4CDf2104E3Ca966b",
+    "chain": "optimism",
+    "blockNumber": 155689002
+  }
+}

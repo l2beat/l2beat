@@ -1,3 +1,115 @@
+Generated with discovered.json: 0xa8b8ed61af7057d7a31013acf9bbbb844e171ca2
+
+# Diff at Mon, 24 Aug 2026 11:55:55 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@2a46bd4322e5006deef913ce76a8462980544454 block: 1787136754
+- current timestamp: 1787570584
+
+## Description
+
+New verifier deployed (no sources published yet).
+Also, upgraded Lighter contract to add `PricedOnly` asset margin mode (the same diff as this Lighter upgrade: https://disco.l2beat.com/diff/eth:0xE67606837D3d68a679B25B49b8abE5cB4B0Ae483/eth:0x8D692294a4824d868e35B3CEcd734aCf41B2342e).
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb.
+      values.versionId:
+-        4
++        5
+    }
+```
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7ce2f744c6d607ee57b68b69025659533ae352619bab2cea5c26e5cc9175d95d"
++        "0x3a35ceb50e1870902c0afbda8de806932d6a7168c2e27af00ca755fc5db60b93"
+      values.$implementation.0:
+-        "robinhood:0xE470e41Cacc197EA07f879577765A8c81234ED7B"
++        "robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90"
+      values.$implementation.1:
+-        "robinhood:0x1be72833f96e47366610CCFb9Bec081FE69EECf5"
++        "robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c"
+      values.additionalZkLighter:
+-        "robinhood:0x1be72833f96e47366610CCFb9Bec081FE69EECf5"
++        "robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c"
+      values.getTarget:
+-        "robinhood:0xE470e41Cacc197EA07f879577765A8c81234ED7B"
++        "robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90"
+      implementationNames.robinhood:0xE470e41Cacc197EA07f879577765A8c81234ED7B:
+-        "ZkLighter"
+      implementationNames.robinhood:0x1be72833f96e47366610CCFb9Bec081FE69EECf5:
+-        "AdditionalZkLighter"
+      implementationNames.robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90:
++        "ZkLighter"
+      implementationNames.robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c:
++        "AdditionalZkLighter"
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0x59e0ec2f0ddd3e5e201753df9c0d5acf7b63eaeffcef7037e926b825152d4278"
++        "0xe9918698c11cc35630c3cd99d564142087c3968ded02116451208d19007b069a"
+      values.$implementation:
+-        "robinhood:0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4"
++        "robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa"
+      values.getTarget:
+-        "robinhood:0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4"
++        "robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa"
+      implementationNames.robinhood:0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4:
+-        "ZkLighterVerifier"
+      implementationNames.robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa:
++        "ZkLighterVerifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Lighter/AdditionalZkLighter.2.sol                          | 10 ++++++----
+ .../{.flat@1787136754 => .flat}/Lighter/ZkLighter.1.sol        | 10 ++++++----
+ .../ZkLighterVerifier/ZkLighterVerifier.sol                    | 10 +++++-----
+ 3 files changed, 17 insertions(+), 13 deletions(-)
+```
+
+Generated with discovered.json: 0xffaeb84469796685d025db3187e5324c70bd9a86
+
+# Diff at Wed, 19 Aug 2026 12:10:28 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a370e767776b076bdee7fe699dbe0b6597849e65 block: 1786615810
+- current timestamp: 1787136754
+
+## Description
+
+Verified all contracts and removed spam.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786615810 (main branch discovery), not current.
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [N/A] {
+    +++ description: None
+      unverified:
+-        true
+      implementationNames.robinhood:0x1be72833f96e47366610CCFb9Bec081FE69EECf5:
+-        ""
++        "AdditionalZkLighter"
+      sourceHashes:
++        ["0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6","0x7ce2f744c6d607ee57b68b69025659533ae352619bab2cea5c26e5cc9175d95d"]
+    }
+```
+
 Generated with discovered.json: 0x762eefd9aa9099dd9504c8370f54e277a4717442
 
 # Diff at Thu, 13 Aug 2026 10:41:42 GMT:

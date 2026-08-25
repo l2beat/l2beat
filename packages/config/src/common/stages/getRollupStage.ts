@@ -19,21 +19,27 @@ interface GetRollupStageOptions {
 type Blueprint = ReturnType<typeof getBlueprint>
 type BlueprintChecklist = ChecklistTemplate<Blueprint>
 
+export const UPCOMING_STAGE_1_ITEMS = [
+  'noRedTrustedSetups',
+  'proverSourcePublished',
+  'verifierContractsReproducible',
+  'programHashesReproducible',
+]
+
 const UPCOMING_STAGE_REQUIREMENTS: UpcomingStageRequirements = {
   stage1: {
     expiresAt: PROJECT_COUNTDOWNS.stageChanges,
-    items: [
-      'noRedTrustedSetups',
-      'proverSourcePublished',
-      'verifierContractsReproducible',
-      'programHashesReproducible',
-    ],
+    items: UPCOMING_STAGE_1_ITEMS,
   },
 }
 
 export const getRollupStage = (
   blueprintChecklist: BlueprintChecklist,
   opts?: GetRollupStageOptions,
+  // Injectable so tests can pin the countdown instead of depending on the
+  // real PROJECT_COUNTDOWNS.stageChanges date, which would make them change
+  // behaviour the moment that deadline passes.
+  upcoming: UpcomingStageRequirements = UPCOMING_STAGE_REQUIREMENTS,
 ) => {
   const rollupNode = isSatisfied(
     blueprintChecklist.stage0.rollupNodeSourceAvailable,
@@ -45,10 +51,7 @@ export const getRollupStage = (
   const blueprint = getBlueprint(opts)
 
   return {
-    ...createGetStage(
-      blueprint,
-      UPCOMING_STAGE_REQUIREMENTS,
-    )(blueprintChecklist),
+    ...createGetStage(blueprint, upcoming)(blueprintChecklist),
     additionalConsiderations: opts?.additionalConsiderations,
     stage1PrincipleDescription: opts?.stage1PrincipleDescription,
   }

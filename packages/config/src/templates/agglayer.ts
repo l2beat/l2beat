@@ -117,15 +117,8 @@ interface AgglayerBaseConfig {
   architectureImage?: string
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
   usesEthereumBlobs?: boolean
-  celestiaDa?: {
-    namespace: string
-    sinceBlock: number
-  }
-  availDa?: {
-    appIds: string[]
-    sinceBlock: number
-  }
-  nonTemplateDaTracking?: ProjectDaTrackingConfig[]
+  /** Explicit DA tracking history, oldest first. See docs/da-tracking.md. */
+  daTracking?: ProjectDaTrackingConfig[]
 }
 
 interface AgglayerCdkErigonValidiumConfig extends AgglayerBaseConfig {
@@ -287,7 +280,7 @@ export function agglayer(templateInput: AgglayerConfigInput): ScalingProject {
         config.chainConfig,
         fallbackActivityConfig,
       ),
-      daTracking: config.nonTemplateDaTracking,
+      daTracking: config.daTracking,
       trackedTxs: config.nonTemplateTrackedTxs,
     },
     chainConfig: config.chainConfig && {

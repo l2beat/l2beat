@@ -15,7 +15,7 @@ export const thebinaryholdings: ScalingProject = opStackL2({
   addedAt: UnixTime(1726668186), // 2024-09-18T14:03:06Z
   archivedAt: UnixTime(1737676800), // 2025-01-24T00:00:00.000Z,
   discovery,
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),

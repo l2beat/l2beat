@@ -2,6 +2,7 @@ import type { Box, Field, Node } from '../State'
 import { FIELD_HEIGHT, HEADER_HEIGHT } from './constants'
 import { boxContains } from './containment'
 import { type GraphEdge, getGraphProjection } from './graphProjection'
+import { getRowLayout } from './rows'
 import { topLevelByDescendant } from './subnodes'
 import { processConnection } from './updateNodePositions'
 
@@ -183,24 +184,19 @@ function layoutFields(node: Node, boxById: Map<string, Box>): Node {
   if (node.fields.length === 0) {
     return node
   }
-  const hidden =
-    node.hiddenFields.length > 0 ? new Set(node.hiddenFields) : undefined
+  const { rowByField, anchorByField } = getRowLayout(node)
 
-  let row = 0
-  const fields = node.fields.map((field) => {
-    const r = row
-    if (!hidden?.has(field.name)) {
-      row++
-    }
+  const fields = node.fields.map((field, index) => {
+    const row = rowByField[index] as number
     const targetBox = boxById.get(field.target)
     const box: Box = {
       x: node.box.x,
-      y: node.box.y + HEADER_HEIGHT + r * FIELD_HEIGHT,
+      y: node.box.y + HEADER_HEIGHT + row * FIELD_HEIGHT,
       width: node.box.width,
       height: FIELD_HEIGHT,
     }
     const connection = targetBox
-      ? processConnection(r, node.box, targetBox)
+      ? processConnection(anchorByField[index] as number, node.box, targetBox)
       : field.connection
     return { ...field, box, connection }
   })

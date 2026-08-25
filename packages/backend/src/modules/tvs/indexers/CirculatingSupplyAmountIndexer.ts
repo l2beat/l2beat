@@ -94,6 +94,13 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
               )
               return []
             }
+            this.logger.error(
+              `Error fetching circulating supply for ${configuration.properties.apiId}`,
+              {
+                priceId: configuration.properties.apiId,
+                error,
+              },
+            )
 
             throw error
           }

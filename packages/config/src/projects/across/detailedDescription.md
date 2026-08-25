@@ -4,6 +4,10 @@ The user initiates a transfer (sometimes called an intent) by depositing into th
 
 Relayers fill a crosschain request by calling the destination chain's SpokePool. During the exclusivity window only the chosen relayer can fill; after it expires anyone can. No fill is accepted past the fill deadline. Funds go to the user and the relay hash is marked Filled in the SpokePool's fillStatuses mapping to prevent double-fills.
 
+# Across V5 Gateway executions
+
+Deposits tagged with a special message prefix commit to an execution in the new Gateway contract and can only be filled through it: regular fills and the slow-fill path are blocked for them, and unfilled V5 deposits are refunded on the origin chain after the fill deadline like any other deposit. A V5 user signs a Merkle tree of alternative execution paths (e.g. different destination chains or routes) instead of one fixed order. Any solver can then execute one of the committed paths through the Gateway, which pulls the user's funds via standing token approvals or signed permits (Permit2, EIP-3009, ERC-2612) and runs the committed steps, of which the bridge fill can be one among several (e.g. swaps). The destination SpokePool validates the fill against the user's committed bounds (recipient, output token, minimum output amount) and pulls the output tokens from the standing approvals of the solver, who is then repaid through the unchanged root bundle settlement. The Gateway can be upgraded without delay by a multisig, which puts standing token approvals to the Gateway (and, transitively, relayers' standing approvals to the SpokePools) at risk if it is compromised.
+
 # Relayer repayments
 
 When a crosschain transfer is fulfilled, the relayer specifies on which chain and to which address they want to be repaid. A whitelisted proposer periodically posts a "root bundle" to the HubPool containing how much the protocol owes to each relayer (relayer refunds) and the pool rebalances needed so that there is enough liquidity on each chain for the refunds to be paid. The correctness of these roots is crucial; otherwise relayers could lie about filling a transfer and capture user funds.

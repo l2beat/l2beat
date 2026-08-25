@@ -3,7 +3,7 @@
   "name": "across",
   "import": ["../globalConfig.jsonc"],
   "modelCrossChainPermissions": true,
-  "maxAddresses": 75,
+  "maxAddresses": 90,
   "initialAddresses": [
     "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda", // hubpool
     "eth:0x3B03509645713718B78951126E0A6de6f10043f5" // acrossconfigstore
@@ -23,7 +23,9 @@
     "eth:0xb47fD69FE25878F4E43aAF2F9ad7D0A3A0B22363": "Plasma_Adapter",
     "eth:0x4577980eBFCC6fC8ff516aC06dA9e729c40cA57c": "Tempo_Adapter",
     "eth:0xA1da1A70cc9F27F4aEDff1d515B1a0C47fb6c3Db": "Tron_Adapter",
-    "eth:0x1af659333172DC502bD71Cf5b889521C97751838": "Avalance_Adapter"
+    "eth:0x1af659333172DC502bD71Cf5b889521C97751838": "Avalance_Adapter",
+    "eth:0x4c45F70B1d9a7A6D1984daccAd74D0E973B73F01": "Across Gateway Multisig",
+    "oeth:0xd396CcB6770EAB84045c9Bce2939c478639E2A7F": "Across Gateway Multisig"
   },
   "overrides": {
     "eth:0xB524735356985D2f267FA010D681f061DfF03715": {

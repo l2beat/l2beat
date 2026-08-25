@@ -1,9 +1,9 @@
+import { formatNumber } from '@l2beat/shared-pure'
 import type { ReactElement } from 'react'
 import { DivContainer } from '../DivContainer'
 import { IndicatorContainer } from '../IndicatorContainer'
 import { ProjectName } from '../ProjectName'
 import type { DiscoLupeProject } from './model'
-import { formatNumber } from './utils'
 
 export type ColumnId = (typeof AVAILABLE_COLUMNS_RAW)[number]['id']
 

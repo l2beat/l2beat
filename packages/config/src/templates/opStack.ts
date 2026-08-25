@@ -245,20 +245,12 @@ interface OpStackConfigCommon {
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'>
   /** Set to true if projects posts blobs to Ethereum */
   usesEthereumBlobs?: boolean
-  /** Configure to enable DA metrics tracking for chain using Celestia DA */
-  celestiaDa?: {
-    namespace: string
-    /* IMPORTANT: Block number on Celestia Network */
-    sinceBlock: number
-  }
-  /** Configure to enable DA metrics tracking for chain using Avail DA */
-  availDa?: {
-    appIds: string[]
-    /* IMPORTANT: Block number on Avail Network */
-    sinceBlock: number
-  }
-  /** Configure to enable custom DA tracking e.g. project that switched DA */
-  nonTemplateDaTracking?: ProjectDaTrackingConfig[]
+  /**
+   * Explicit DA tracking history, oldest first. Closed entries are literals;
+   * the open (last) entry of a blob-posting chain is usually
+   * `getOpStackDaTracking(discovery, { sinceBlock })`. See docs/da-tracking.md.
+   */
+  daTracking?: ProjectDaTrackingConfig[]
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
   /**
    * Overrides the onchain check for superchain ecosystem
@@ -491,7 +483,7 @@ function opStackCommon(
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
-      daTracking: getDaTracking(templateVars),
+      daTracking: templateVars.daTracking,
     },
     ecosystemInfo: templateVars.ecosystemInfo,
     technology: getTechnology(templateVars, explorerUrl, daProvider),
@@ -519,76 +511,32 @@ function opStackCommon(
   }
 }
 
-function getDaTracking(
-  templateVars: OpStackConfigCommon,
-): ProjectDaTrackingConfig[] | undefined {
-  // Return non-template tracking if it exists
-  if (templateVars.nonTemplateDaTracking) {
-    return templateVars.nonTemplateDaTracking
+/**
+ * The open ethereum DA tracking entry of an OP Stack chain. The identity
+ * fields (inbox, batcher) come from discovery on purpose: a batcher or inbox
+ * rotation changes the id, which fails the snapshot guard and forces the old
+ * entry to be frozen (see docs/da-tracking.md). The range is a literal so the
+ * indexed window never moves behind the project's back.
+ */
+export function getOpStackDaTracking(
+  discovery: ProjectDiscovery,
+  range: { sinceBlock: number; untilBlock?: number },
+): ProjectDaTrackingConfig {
+  const sequencerInbox = discovery.getContractValue<ChainSpecificAddress>(
+    'SystemConfig',
+    'sequencerInbox',
+  )
+  const sequencer = discovery.getContractValue<ChainSpecificAddress>(
+    'SystemConfig',
+    'batcherHash',
+  )
+  return {
+    type: 'ethereum',
+    daLayer: ProjectId('ethereum'),
+    inbox: ChainSpecificAddress.address(sequencerInbox),
+    sequencers: [ChainSpecificAddress.address(sequencer)],
+    ...range,
   }
-
-  const discov = templateVars.discovery
-
-  const usesBlobs =
-    templateVars.usesEthereumBlobs ??
-    discov.getContractValue<{ isSequencerSendingBlobTx: boolean }>(
-      'SystemConfig',
-      'opStackDA',
-    ).isSequencerSendingBlobTx
-
-  if (usesBlobs) {
-    const sequencerInbox = discov.getContractValue<ChainSpecificAddress>(
-      'SystemConfig',
-      'sequencerInbox',
-    )
-
-    const inboxStartBlock =
-      discov.getContractValueOrUndefined<number>(
-        'SystemConfig',
-        'startBlock',
-      ) ?? 0
-
-    const sequencer = discov.getContractValue<ChainSpecificAddress>(
-      'SystemConfig',
-      'batcherHash',
-    )
-
-    return [
-      {
-        type: 'ethereum',
-        daLayer: ProjectId('ethereum'),
-        sinceBlock: inboxStartBlock,
-        inbox: ChainSpecificAddress.address(sequencerInbox),
-        sequencers: [ChainSpecificAddress.address(sequencer)],
-      },
-    ]
-  }
-
-  if (templateVars.celestiaDa) {
-    return [
-      {
-        type: 'celestia',
-        daLayer: ProjectId('celestia'),
-        // TODO: update to value from discovery
-        sinceBlock: templateVars.celestiaDa.sinceBlock,
-        namespace: templateVars.celestiaDa.namespace,
-      },
-    ]
-  }
-
-  if (templateVars.availDa) {
-    return [
-      {
-        type: 'avail',
-        daLayer: ProjectId('avail'),
-        // TODO: update to value from discovery
-        sinceBlock: templateVars.availDa.sinceBlock,
-        appIds: templateVars.availDa.appIds,
-      },
-    ]
-  }
-
-  return undefined
 }
 
 export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
@@ -2615,7 +2563,7 @@ function getOracleChallengePeriod(templateVars: OpStackConfigCommon): number {
         'AnchorStateRegistry',
         'challengePeriodFromOracle',
       )
-    if (fromAnchor !== undefined) return fromAnchor
+    if (typeof fromAnchor === 'number') return fromAnchor
   }
   return 86400
 }

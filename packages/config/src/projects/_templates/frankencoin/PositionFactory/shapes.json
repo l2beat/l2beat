@@ -1,0 +1,14 @@
+{
+  "PositionFactoryV1": {
+    "hash": "0x2446f7dc85aff80505bb8dd8a63ea1ee0c38bf243a5c5960d7dfcf933188dcea",
+    "address": "eth:0x0CDE500e6940931ED190ded77bb48640c9486392",
+    "chain": "ethereum",
+    "blockNumber": 25782267
+  },
+  "PositionFactoryV2": {
+    "hash": "0xacecbcc4d5d8a762e52be974d77d2cec17809ea93921b877bf19a4f899b86c45",
+    "address": "eth:0x728310FeaCa72dc46cD5BF7d739556D5668472BA",
+    "chain": "ethereum",
+    "blockNumber": 25782267
+  }
+}

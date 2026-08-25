@@ -1,0 +1,14 @@
+{
+  "DlnDestination.sol": {
+    "hash": "0x925d0cfe1e1388a72765060d6905fa5bfd29e5a50bf4dcd11c2747a9d3097825",
+    "address": "eth:0xE540eb6BfEE129d28d47E26Ad33a138d66FD78f5",
+    "chain": "ethereum",
+    "blockNumber": 25751894
+  },
+  "DlnDestination_v1.7.1.sol": {
+    "hash": "0xcca702480efa62cd07a9ea9b50d25bd2fec07bdb974ed969b52461235e056c6b",
+    "address": "eth:0xD9b4f9CacFFB59F2B982ad3c45096e3AA4B4020e",
+    "chain": "ethereum",
+    "blockNumber": 25780210
+  }
+}

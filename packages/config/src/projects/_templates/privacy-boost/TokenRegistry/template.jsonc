@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Registry mapping compact token IDs to the ERC-20 tokens accepted by the PrivacyBoost pool.",
+  "ignoreRelatives": ["tokens"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register new ERC-20 tokens to be accepted by the PrivacyBoost pool."
+        }
+      ]
+    },
+    "nextId": {
+      "description": "Latest token ID assigned; tokens are registered with IDs 1..nextId."
+    },
+    "tokens": {
+      "handler": {
+        "type": "array",
+        "method": "function tokenOf(uint16 tokenId) view returns (uint8 tokenType, address tokenAddress, uint256 tokenSubId)",
+        "startIndex": 1,
+        "length": "{{ nextId }}",
+        "ignoreRelative": true
+      },
+      "description": "Registered tokens (token type, token address, sub-id) by token ID."
+    }
+  }
+}

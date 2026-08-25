@@ -1,15 +1,15 @@
 import { v } from '@l2beat/validate'
 import express from 'express'
-import { ActivityProjectFilterType } from '~/server/features/scaling/activity/utils/projectFilterUtils'
-import { TvsProjectFilterType } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
+import { ActivityProjectFilterType } from '~/server/features/layer2s/activity/utils/projectFilterUtils'
+import { TvsProjectFilterType } from '~/server/features/layer2s/tvs/utils/projectFilterUtils'
 import { optionToRange } from '~/utils/range/range'
 import { validateRoute } from '~/utils/validateRoute'
-import { getScalingActivityApiData } from './getScalingActivityApiData'
-import { getScalingActivityProjectApiData } from './getScalingActivityProjectApiData'
-import { getScalingSummaryApiData } from './getScalingSummaryApiData'
-import { getScalingTvsApiData } from './getScalingTvsApiData'
-import { getScalingTvsProjectApiData } from './getScalingTvsProjectApiData'
-import { getScalingTvsProjectBreakdownApiData } from './getScalingTvsProjectBreakdownApiData'
+import { getL2ActivityApiData } from './getL2ActivityApiData'
+import { getL2ActivityProjectApiData } from './getL2ActivityProjectApiData'
+import { getL2SummaryApiData } from './getL2SummaryApiData'
+import { getL2TvsApiData } from './getL2TvsApiData'
+import { getL2TvsProjectApiData } from './getL2TvsProjectApiData'
+import { getL2TvsProjectBreakdownApiData } from './getL2TvsProjectBreakdownApiData'
 
 const TvsRangeSchema = v.enum(['7d', '30d', '90d', '180d', '1y', 'max'])
 const ActivityRangeSchema = v.enum(['30d', '90d', '180d', '1y', 'max'])
@@ -35,7 +35,7 @@ export function createPublicApiRouter() {
         })
       }
 
-      const data = await getScalingActivityApiData({
+      const data = await getL2ActivityApiData({
         range: optionToRange(range ?? '30d'),
         type: type ?? 'all',
         projectIds: projectIds?.split(',') ?? [],
@@ -55,7 +55,7 @@ export function createPublicApiRouter() {
       const { slug } = req.params
       const { range } = req.query
 
-      const data = await getScalingActivityProjectApiData({
+      const data = await getL2ActivityProjectApiData({
         slug,
         range: optionToRange(range ?? '30d'),
       })
@@ -83,7 +83,7 @@ export function createPublicApiRouter() {
         excludeRwaRestrictedTokens,
       } = req.query
 
-      const data = await getScalingTvsApiData({
+      const data = await getL2TvsApiData({
         range: optionToRange(range ?? '30d'),
         type: type ?? 'layer2',
         projectIds: projectIds?.split(',') ?? [],
@@ -109,7 +109,7 @@ export function createPublicApiRouter() {
       const { range, excludeAssociatedTokens, excludeRwaRestrictedTokens } =
         req.query
 
-      const data = await getScalingTvsProjectApiData({
+      const data = await getL2TvsProjectApiData({
         slug,
         range: optionToRange(range ?? '30d'),
         excludeAssociatedTokens: excludeAssociatedTokens === 'true',
@@ -125,13 +125,13 @@ export function createPublicApiRouter() {
       params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
-      const data = await getScalingTvsProjectBreakdownApiData(req.params.slug)
+      const data = await getL2TvsProjectBreakdownApiData(req.params.slug)
       res.json(data)
     },
   )
 
   router.get('/api/scaling/summary', async (_, res) => {
-    const data = await getScalingSummaryApiData()
+    const data = await getL2SummaryApiData()
     res.json(data)
   })
 

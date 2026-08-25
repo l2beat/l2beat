@@ -1,4 +1,4 @@
-import type { AverageDuration } from '~/server/features/scaling/interop/types'
+import type { AverageDuration } from '~/server/features/layer2s/interop/types'
 import { AvgDurationCell } from '../../table/AvgDurationCell'
 
 export function AvgDurationStatValue({

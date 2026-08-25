@@ -18,6 +18,9 @@
     "eth:0xa88f0329c2c4ce51ba3fc619bbf44efe7120dd0d",
     "eth:0xf95f069f9ad107938f6ba802a3da87892298610e"
   ],
+  "names": {
+    "eth:0xa02FC823cCE0D016bD7e17ac684c9abAb2d6D647": "TreasuryManagementCommittee"
+  },
   "overrides": {
     "eth:0x9dc70b5a4f4f5e4af9058c983d560564f031f1d7": {
       "ignoreMethods": ["getAllowedTargets"]
@@ -41,6 +44,10 @@
       "name": "WithdrawalRequests",
       "description": "EIP-7002 system contract that accepts execution-layer validator withdrawal requests.",
       "ignoreDiscovery": true
+    },
+    // 4/7 Safe listed as Treasury Management Committee in the Lido docs.
+    "eth:0xa02fc823cce0d016bd7e17ac684c9abab2d6d647": {
+      "description": "Multisig of the Lido DAO Treasury Management Committee."
     },
     // EIP-7702 delegated-code wallets reached only as Safe members.
     "eth:0x1115f1d81a4027f5655b0955deb55c8a1c7ba6bf": {

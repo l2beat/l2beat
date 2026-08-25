@@ -1,3 +1,164 @@
+Generated with discovered.json: 0xb5a51496b98e6a65fe90d29bc799a3985100ab2f
+
+# Diff at Tue, 25 Aug 2026 08:51:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@afee435bc99a79b6a7bbb46fd9865fb0e8b74e89 block: 1786957091
+- current timestamp: 1787647766
+
+## Description
+
+7702 auth removed.
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D) {
+    +++ description: None
+      sourceHashes:
+-        ["0x3e6b48b0583e724b7006fcec0d9a021abd698deb8f7699582cdfee96bd65db4f"]
+      proxyType:
+-        "EIP7702 EOA"
++        "EOA"
+      values:
+-        {"$implementation":"eth:0x69007702764179f14F51cdce752f4f775d74E139","accountId":"alchemy.sma-7702.1.0.0","entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getFallbackSignerData":["eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",false]}
+    }
+```
+
+Generated with discovered.json: 0x1c82e3d1a0bdceb709d78bf574f2eeedd1781e5e
+
+# Diff at Mon, 17 Aug 2026 09:13:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@64c56c9daca8f43c84f156c35fb3aee7704892c1 block: 1786537235
+- current timestamp: 1786957091
+
+## Description
+
+Across V5 upgrade: new Gateway contract and two new fill entrypoints for v5 deposits. In executor mode, the SpokePool pulls the output tokens from the Gateway's current solver using the relayer's standing approvals to the SpokePool.
+
+The Gateway executes user-signed intent 'paths': anyone can submit one, and the Gateway pulls the depositor's funds via standing allowances or signed permits (Permit2 witness, EIP-3009, ERC-2612, EIP-712 transferFrom auths). It is owned and upgradable (no delay) by a new 3/5 'Across Gateway Multisig'.
+
+## Watched changes
+
+```diff
+    contract Ethereum_SpokePool (eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) [acrossv3/SpokePool] {
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it.
+      sourceHashes.1:
+-        "0x7c82111265c69f8a894d8029e30766541164d55fb1e814bf29ddacecaeee12c1"
++        "0x667fb3db67749e9488a6511b73f11c5acfa08bd66fa64944fe1d3064fa551c6e"
+      values.$implementation:
+-        "eth:0x5E5B726C81f43B953a62AD87E2835C85c4D9Dd3B"
++        "eth:0x456Ac26E5ec083EE9889eBa0d1a0A582502B8e84"
+      values.$pastUpgrades.11:
++        ["2026-08-14T18:02:35.000Z","0x8149765132e15fb4f1dce1cab83f087ca099d778fee49191dff408069b734ad3",["eth:0x456Ac26E5ec083EE9889eBa0d1a0A582502B8e84"]]
+      values.$upgradeCount:
+-        11
++        12
+      values.gateway:
++        "eth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707"
+      values.V5_MAGIC_PREFIX:
++        "0x89ae4bc75915265a3f10e926c3894a29534f1d6362ee8959cb0e5be00f3527fd"
+      implementationNames.eth:0x5E5B726C81f43B953a62AD87E2835C85c4D9Dd3B:
+-        "Ethereum_SpokePool"
+      implementationNames.eth:0x456Ac26E5ec083EE9889eBa0d1a0A582502B8e84:
++        "Ethereum_SpokePool"
+    }
+```
+
+```diff
+    contract OP_SpokePool (oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281) [acrossv3/SpokePool] {
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it.
+      name:
+-        "Optimism_SpokePool"
++        "OP_SpokePool"
+      sourceHashes.1:
+-        "0xa7af88e42066dce1580a5c39e3bd045de8511f8a453056cd46140e3df8b96f19"
++        "0x63512362033eb12727887f57a9397e800b1fa1b98ff0fe2742abe67f53d493f1"
+      values.$implementation:
+-        "oeth:0x0966F5034261CC50926fB9D5C1603A5034Ffa81c"
++        "oeth:0x60674c53a4cC4ED350659C95fb8020B5AC61cA1D"
+      values.$pastUpgrades.15:
++        ["2026-08-14T17:51:57.000Z","0x5ef940d028891d65c1ab1383d1cf63e514e1906c1a4f7483c1bdb6e2b9ca39bd",["oeth:0x60674c53a4cC4ED350659C95fb8020B5AC61cA1D"]]
+      values.$upgradeCount:
+-        15
++        16
+      values.gateway:
++        "oeth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707"
+      values.V5_MAGIC_PREFIX:
++        "0x89ae4bc75915265a3f10e926c3894a29534f1d6362ee8959cb0e5be00f3527fd"
+      implementationNames.oeth:0x0966F5034261CC50926fB9D5C1603A5034Ffa81c:
+-        "Optimism_SpokePool"
+      implementationNames.oeth:0x60674c53a4cC4ED350659C95fb8020B5AC61cA1D:
++        "OP_SpokePool"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Across Gateway Multisig (eth:0x4c45F70B1d9a7A6D1984daccAd74D0E973B73F01) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Gateway (eth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707) [acrossv3/Gateway]
+    +++ description: Entry point for Across V5 intent executions. Anyone can submit a user-signed execution path: the Gateway pulls the depositor's funds via standing token approvals or signed permits (Permit2 witness permits, EIP-3009, ERC-2612, EIP-712 transfer authorizations), then calls the committed executor. While executing, it exposes the execution context (submitter, executor, step commitment) that the SpokePool trusts to authenticate V5 fills.
+```
+
+```diff
++   Status: CREATED
+    contract Gateway (oeth:0x998d7c178A1F9607b47eA3A8e22426451b3ce707) [acrossv3/Gateway]
+    +++ description: Entry point for Across V5 intent executions. Anyone can submit a user-signed execution path: the Gateway pulls the depositor's funds via standing token approvals or signed permits (Permit2 witness permits, EIP-3009, ERC-2612, EIP-712 transfer authorizations), then calls the committed executor. While executing, it exposes the execution context (submitter, executor, step commitment) that the SpokePool trusts to authenticate V5 fills.
+```
+
+```diff
++   Status: CREATED
+    contract Across Gateway Multisig (oeth:0xd396CcB6770EAB84045c9Bce2939c478639E2A7F) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Safe.sol                                       | 1216 ++++
+ .../SafeProxy.p.sol                                |   42 +
+ .../SafeL2.sol                                     | 1286 +++++
+ .../SafeProxy.p.sol                                |   42 +
+ .../Ethereum_SpokePool/Ethereum_SpokePool.sol      |  845 ++-
+ .../ERC1967Proxy.p.sol                             |  612 ++
+ .../Gateway.sol                                    | 5861 ++++++++++++++++++++
+ .../ERC1967Proxy.p.sol                             |  611 ++
+ .../Gateway.sol                                    | 5860 +++++++++++++++++++
+ .../OP_SpokePool}/ERC1967Proxy.p.sol               |    0
+ .../OP_SpokePool/OP_SpokePool.sol}                 |  908 ++-
+ 11 files changed, 17153 insertions(+), 130 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786537235 (main branch discovery), not current.
+
+```diff
+    contract Ethereum_SpokePool (eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) [acrossv3/SpokePool] {
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it.
+      description:
+-        "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers."
++        "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it."
+    }
+```
+
+```diff
+    contract Optimism_SpokePool (oeth:0x6f26Bf09B1C792e3228e5467807a900A503c0281) [acrossv3/SpokePool] {
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it.
+      description:
+-        "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers."
++        "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers. Since the V5 upgrade, deposits tagged with a special message prefix can only be filled through the Across V5 Gateway, which authenticates the fill and identifies the relayer paying for it."
+    }
+```
+
 Generated with discovered.json: 0x7fa8d630dfa3a740fbe0f7d813dfb4c51ad5cc38
 
 # Diff at Wed, 12 Aug 2026 12:22:05 GMT:
