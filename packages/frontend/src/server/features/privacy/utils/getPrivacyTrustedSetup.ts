@@ -4,34 +4,44 @@ import type {
   TrustedSetup,
 } from '@l2beat/config'
 import { formatInteger } from '@l2beat/shared-pure'
-import type { TrustedSetupSectionProps } from '~/components/projects/sections/TrustedSetupsSection'
-import type { ProjectSectionProps } from '~/components/projects/sections/types'
-import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
+import type { TrustedSetupRisk } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
+
+/** A trusted setup, or the 'None' placeholder for projects without a ZK system. */
+export type PrivacyTrustedSetup = Omit<TrustedSetup, 'risk'> & {
+  risk: TrustedSetupRisk
+}
+
+export type PrivacyTrustedSetupSummary = PrivacySummaryValue & {
+  risk: TrustedSetupRisk
+}
 
 const TRUSTED_SETUP_RISK_TO_SENTIMENT = {
   green: 'good',
   yellow: 'warning',
   red: 'bad',
   'N/A': 'neutral',
+  None: 'neutral',
 } as const satisfies Record<
-  TrustedSetup['risk'],
+  TrustedSetupRisk,
   NonNullable<PrivacySummaryValue['sentiment']>
 >
 
+const NO_SETUP: PrivacyTrustedSetup = {
+  id: 'NoSetup',
+  name: 'No setup',
+  risk: 'None',
+  shortDescription:
+    'This project does not have a ZK system and thus no setup-related trust assumptions.',
+  longDescription:
+    'This project does not have a ZK system and thus no setup-related trust assumptions.',
+}
+
 export function getPrivacyTrustedSetup(
-  zkCatalogInfo?: ProjectZkCatalogInfo,
-): TrustedSetup {
-  const trustedSetup = zkCatalogInfo?.trustedSetups[0]
+  trustedSetups: ProjectZkCatalogInfo['trustedSetups'],
+): PrivacyTrustedSetup {
+  const trustedSetup = trustedSetups[0]
   if (!trustedSetup) {
-    return {
-      id: 'TransparentSetup',
-      name: 'Transparent setup',
-      risk: 'N/A',
-      shortDescription:
-        'No trusted setup and no additional setup-related trust assumptions.',
-      longDescription:
-        'Transparent proving systems require no trusted setups and have no additional setup-related trust assumptions.',
-    }
+    return NO_SETUP
   }
 
   const { proofSystem: _proofSystem, ...result } = trustedSetup
@@ -39,8 +49,8 @@ export function getPrivacyTrustedSetup(
 }
 
 export function toTrustedSetupSummaryValue(
-  trustedSetup: TrustedSetup,
-): PrivacySummaryValue {
+  trustedSetup: PrivacyTrustedSetup,
+): PrivacyTrustedSetupSummary {
   return {
     value:
       trustedSetup.participantCount !== undefined
@@ -48,25 +58,6 @@ export function toTrustedSetupSummaryValue(
         : trustedSetup.name,
     sentiment: TRUSTED_SETUP_RISK_TO_SENTIMENT[trustedSetup.risk],
     description: `${trustedSetup.name}: ${trustedSetup.shortDescription}`,
-  }
-}
-
-export function getPrivacyTrustedSetupsSection(
-  zkCatalogInfo?: ProjectZkCatalogInfo,
-): Omit<TrustedSetupSectionProps, keyof ProjectSectionProps> {
-  if (zkCatalogInfo && zkCatalogInfo.trustedSetups.length > 0) {
-    return getTrustedSetupsSectionFromTrustedSetups(zkCatalogInfo.trustedSetups)
-  }
-
-  const trustedSetup = getPrivacyTrustedSetup(zkCatalogInfo)
-  return {
-    trustedSetups: [
-      {
-        name: trustedSetup.name,
-        risk: trustedSetup.risk,
-        description: trustedSetup.longDescription,
-        proofSystems: [],
-      },
-    ],
+    risk: trustedSetup.risk,
   }
 }

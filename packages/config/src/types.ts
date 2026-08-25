@@ -1006,6 +1006,8 @@ export interface ProjectPrivacyInfo {
   quantumResistant?: true
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
+  /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
+  zkCatalogId?: ProjectId
 }
 
 export interface PrivacyNoteDiscovery {

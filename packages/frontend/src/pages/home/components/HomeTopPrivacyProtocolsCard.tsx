@@ -1,4 +1,3 @@
-import type { TrustedSetup } from '@l2beat/config'
 import { formatCurrency } from '@l2beat/shared-pure'
 import { createColumnHelper, getCoreRowModel } from '@tanstack/react-table'
 import type { ReactNode } from 'react'
@@ -22,8 +21,12 @@ import { TopNBadge } from '~/pages/interop/summary/components/TopNBadge'
 import { PrivacyWalkawayTestTooltipContent } from '~/pages/privacy/PrivacyWalkawayTestIcon'
 import { PRIVACY_ASSESSMENT } from '~/pages/privacy/privacyAssessment'
 import { sentimentToRiskDot } from '~/pages/privacy/sentimentToRiskDot'
-import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
+import {
+  type TrustedSetupRisk,
+  TrustedSetupRiskDot,
+} from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
+import type { PrivacyTrustedSetup } from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
 import { HomeCard } from './HomeCard'
 import { HomeCardHeader } from './HomeCardHeader'
 
@@ -172,7 +175,7 @@ function PropertyDot({
   children,
 }: {
   label: string
-  risk: TrustedSetup['risk']
+  risk: TrustedSetupRisk
   children: ReactNode
 }) {
   return (
@@ -191,7 +194,7 @@ function PropertyDot({
 function TrustedSetupTooltipContent({
   trustedSetup,
 }: {
-  trustedSetup: TrustedSetup
+  trustedSetup: PrivacyTrustedSetup
 }) {
   return (
     <div className="space-y-2">
