@@ -38,12 +38,15 @@ export class BalanceProvider {
             // a revert gives no number - throw instead of storing a
             // poisoned 0. getEthBalance always returns data, so empty
             // data for native is a fault too
-            if (!success || (r.data.length === 0 && queries[i].token === 'native')) {
+            if (
+              !r.success ||
+              (r.data.length === 0 && queries[i].token === 'native')
+            ) {
               throw new Error(
                 `Failed to fetch balance of ${queries[i].token} for ${queries[i].holder} at block ${blockNumber}`,
               )
             }
-            if (isDataEmpty) {
+            if (r.data.length === 0) {
               // token not deployed at this block
               this.logger.tag({ chain }).warn('Issue with balance fetching', {
                 token: queries[i].token,
