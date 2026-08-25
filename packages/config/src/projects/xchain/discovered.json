@@ -1,6 +1,6 @@
 {
   "name": "xchain",
-  "timestamp": 1787225294,
+  "timestamp": 1781510867,
   "configHash": "0x57a02c496eb8992dc1b49ec45ee3480c656540e1474d47edc1642713d4b02650",
   "entries": [
     {
@@ -633,7 +633,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 302,
+        "nonce": 277,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1285,7 +1285,6 @@
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
             "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c": "ArbOS v51.1 wasmModuleRoot",
-            "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97": "ArbOS v61 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -1993,6 +1992,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25796029 },
+  "usedBlockNumbers": { "ethereum": 25321603 },
   "permissionsConfigHash": "0x8c48fd6224d0cfce8c52fd72b6d8a952ce32d5d5f57038a0697db8c078d0f143"
 }

@@ -1,30 +1,4 @@
-Generated with discovered.json: 0x68771b5ae153ddeb94a0f55c66d14badd18a97b1
-
-# Diff at Thu, 20 Aug 2026 11:26:44 GMT:
-
-- author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@cd4d6fcffd01944641c383054e9c451ae4e09adc block: 1779719548
-- current timestamp: 1787225049
-
-## Description
-
-Config-related: the shared wasmModuleRoot type map gained the ArbOS v61 label. No onchain changes.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1779719548 (main branch discovery), not current.
-
-```diff
-    contract RollupProxy (arb1:0xE383D432F039f4377CC9AA003FfaE4c814936864) [orbitstack/RollupProxyBoLD] {
-    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
-      usedTypes.0.arg.0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97:
-+        "ArbOS v61 wasmModuleRoot"
-    }
-```
-
-Generated with discovered.json: 0xf97af827ca4a69272adefcc039448c9745e883ed
+Generated with discovered.json: 0x1022c2e7ccb02b377b6414b9f275fc0259ae177b
 
 # Diff at Fri, 12 Jun 2026 10:18:56 GMT:
 

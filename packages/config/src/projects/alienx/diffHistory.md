@@ -1,25 +1,14 @@
-Generated with discovered.json: 0x90477c639b476cb8f78cf4be4b730804ffaeabe3
+Generated with discovered.json: 0xd7e96e3b2f892dd0af8394e12012ed67ce8c2b1d
 
-# Diff at Thu, 20 Aug 2026 11:17:23 GMT:
+# Diff at Tue, 25 Aug 2026 14:43:03 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@cd4d6fcffd01944641c383054e9c451ae4e09adc block: 1773160438
-- current timestamp: 1787224558
+- comparing to: main@bba6c9e66ca2dd99590b6f233fe8f6509dc767a0 block: 1773160438
+- current timestamp: 1787668918
 
 ## Description
 
-RollupProxy `currentRequiredStake` (computed: rises above `baseStake` while the first unresolved node is past its deadline) increased from `0.1 ETH` to `0.2 ETH`. Automatic on-chain reaction — `baseStake` unchanged.
-
-## Watched changes
-
-```diff
-    contract RollupProxy (eth:0x6fa8b24c85409A4fcb541c9964766862aA007f39) [orbitstack/RollupProxy_fastConfirm] {
-    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
-      values.currentRequiredStake:
--        "100000000000000000"
-+        "200000000000000000"
-    }
-```
+Config-related: the shared wasmModuleRoot type map gained the ArbOS v61 label. No onchain changes.
 
 ## Config/verification related changes
 
@@ -35,7 +24,7 @@ discovery. Values are for block 1773160438 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x6053196bf951750589c17934d2f210508a075061
+Generated with discovered.json: 0x87dcd327cbed5b8c7535e1afa81e9c158b28290b
 
 # Diff at Tue, 09 Jun 2026 12:43:31 GMT:
 

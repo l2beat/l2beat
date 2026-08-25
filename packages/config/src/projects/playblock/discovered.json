@@ -1,6 +1,6 @@
 {
   "name": "playblock",
-  "timestamp": 1787225164,
+  "timestamp": 1787668999,
   "configHash": "0xbd12ffc6e459bb8bb23fb78b233946ffc2c443832fb062dc0794562d044d030c",
   "entries": [
     {
@@ -205,13 +205,13 @@
         "confirmPeriodBlocks": 150,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 18413,
+        "firstUnresolvedNode": 18424,
         "inbox": "arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 25172077,
-        "latestConfirmed": 18412,
-        "latestNodeCreated": 18412,
+        "latestConfirmed": 18423,
+        "latestNodeCreated": 18423,
         "loserStakeEscrow": "arb-nova:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "arb-nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
@@ -786,8 +786,8 @@
         ],
         "rollup": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
         "sequencerInbox": "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
-        "sequencerMessageCount": 188830,
-        "sequencerReportedSubMessageCount": 265017133
+        "sequencerMessageCount": 188953,
+        "sequencerReportedSubMessageCount": 265824746
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -854,7 +854,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 188830,
+        "batchCount": 188953,
         "batchPosterManager": "arb-nova:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "arb-nova:0x28a60eFd283Dc7FC6aa959bA733B5612C9982458",
@@ -1621,6 +1621,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "nova": 85250641 },
+  "usedBlockNumbers": { "nova": 85261405 },
   "permissionsConfigHash": "0xf183374056600666bcdb39d2621f07d991345399b96dea572fd6c309f8e4c013"
 }

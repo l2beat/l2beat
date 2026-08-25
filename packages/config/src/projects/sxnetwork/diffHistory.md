@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xaa9ca7a799ecddf9d55d928abd38e4730476429e
+Generated with discovered.json: 0xe99014b3051aec76080bcd2abb66fb610ce53ddf
 
-# Diff at Thu, 20 Aug 2026 11:28:44 GMT:
+# Diff at Tue, 25 Aug 2026 14:44:45 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@cd4d6fcffd01944641c383054e9c451ae4e09adc block: 1779719759
-- current timestamp: 1787225246
+- comparing to: main@bba6c9e66ca2dd99590b6f233fe8f6509dc767a0 block: 1779719759
+- current timestamp: 1787669021
 
 ## Description
 
@@ -24,7 +24,7 @@ discovery. Values are for block 1779719759 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xdbd66f637826fae75ae01f72eb66558ff97f3ce4
+Generated with discovered.json: 0x9c46b3edd3625c80f58686995cb346ae5db7c601
 
 # Diff at Tue, 09 Jun 2026 12:43:39 GMT:
 

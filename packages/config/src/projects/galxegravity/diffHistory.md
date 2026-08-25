@@ -1,14 +1,27 @@
-Generated with discovered.json: 0xd9030255e7932749da35a13aa23820c0cd23e2b7
+Generated with discovered.json: 0x53ee12a08c1c3e698991d79e2ab0f1619d1cebe1
 
-# Diff at Thu, 20 Aug 2026 11:21:14 GMT:
+# Diff at Tue, 25 Aug 2026 14:44:01 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@cd4d6fcffd01944641c383054e9c451ae4e09adc block: 1781177053
-- current timestamp: 1787224792
+- comparing to: main@bba6c9e66ca2dd99590b6f233fe8f6509dc767a0 block: 1781177053
+- current timestamp: 1787668976
 
 ## Description
 
-Config-related: the shared wasmModuleRoot type map gained the ArbOS v61 label. No onchain changes.
+Conduit Multisig 1: member added; threshold 4/10 → 4/11. Also config-related: the shared wasmModuleRoot type map gained the ArbOS v61 label.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
+    }
+```
 
 ## Config/verification related changes
 
@@ -24,7 +37,7 @@ discovery. Values are for block 1781177053 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x02c4c70e2bcc5f38da0d233127077754930446d2
+Generated with discovered.json: 0xb9b1244786b453ca5343bbf70fe967edb3a1451e
 
 # Diff at Thu, 11 Jun 2026 11:25:43 GMT:
 
