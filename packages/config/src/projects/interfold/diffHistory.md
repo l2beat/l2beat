@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x88a98c9817c30a48c9fd00902ba96dfd16ac26a0
+Generated with discovered.json: 0xd3a4075ede581d3d9135e6069c8d7387c91fcb89
 
-# Diff at Tue, 25 Aug 2026 12:09:04 GMT:
+# Diff at Tue, 25 Aug 2026 12:24:41 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current timestamp: 1787653815
@@ -14,7 +14,7 @@ Interfold coordinates ephemeral encrypted computations on Ethereum using allowli
 ```diff
 +   Status: CREATED
     contract BondedVotes (eth:0x028deEA644258c78b1B5B2eacF469F5D781Fb43E) [interfold/BondedVotes]
-    +++ description: Immutable voting-power adapter used by PublicTokenVoting. It counts voting-escrow power, FOLD bonded to ciphernode operators, and eligible vesting-locked wallet FOLD while using FOLD total supply as the quorum denominator.
+    +++ description: Voting-power adapter used by PublicTokenVoting. It counts voting-escrow power, FOLD bonded to ciphernode operators, and eligible vesting-locked wallet FOLD while using FOLD total supply as the quorum denominator.
 ```
 
 ```diff
@@ -26,7 +26,7 @@ Interfold coordinates ephemeral encrypted computations on Ethereum using allowli
 ```diff
 +   Status: CREATED
     contract BondingRegistry (eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F) [interfold/BondingRegistry]
-    +++ description: Upgradeable collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond; the contract also enforces exits, committee obligations, bans and slashing debits.
+    +++ description: Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond; the contract also enforces exits, committee obligations, bans and slashing debits.
 ```
 
 ```diff
@@ -44,7 +44,7 @@ Interfold coordinates ephemeral encrypted computations on Ethereum using allowli
 ```diff
 +   Status: CREATED
     contract Interfold (eth:0x28cF63B459e6218C69EA97ea7D90541cf648c715) [interfold/Interfold]
-    +++ description: Upgradeable coordinator for ephemeral encrypted computations (E3s). It accepts requests for allowlisted programs, selects a ciphernode committee, snapshots the configured proof system, and verifies the encrypted result and threshold decryption before publishing plaintext output.
+    +++ description: Coordinator for Encrypted Execution Environments (E3s). It accepts requests for allowlisted programs, selects a ciphernode committee, snapshots the configured proof system, and verifies the encrypted result and threshold decryption before publishing plaintext output.
 ```
 
 ```diff
@@ -110,13 +110,13 @@ Interfold coordinates ephemeral encrypted computations on Ethereum using allowli
 ```diff
 +   Status: CREATED
     contract VotingEscrow (eth:0x71360F335e4Ec9c010e29bA7171bc62c9B4c1F12) [interfold/VotingEscrow]
-    +++ description: Upgradeable veFOLD escrow that custodies locked FOLD, issues lock NFTs and calculates the voting power consumed by BondedVotes through EscrowVotesAdapter.
+    +++ description: veFOLD escrow that custodies locked FOLD, issues lock NFTs and calculates the voting power consumed by BondedVotes through EscrowVotesAdapter.
 ```
 
 ```diff
 +   Status: CREATED
     contract VotingEscrowExitQueue (eth:0x8095C0B90Be4abCBF5CA7371f588fe1637E02b7f) [interfold/VotingEscrowExitQueue]
-    +++ description: Upgradeable queue applying cooldowns and optional fees to withdrawals from VotingEscrow.
+    +++ description: Queue applying cooldowns and optional fees to withdrawals from VotingEscrow.
 ```
 
 ```diff
@@ -158,7 +158,7 @@ Interfold coordinates ephemeral encrypted computations on Ethereum using allowli
 ```diff
 +   Status: CREATED
     contract SlashingManager (eth:0x974E865B1BB24AF2a9ef8204AdEA9251Cc7C5FD9) [interfold/SlashingManager]
-    +++ description: Non-upgradeable policy and evidence router for ciphernode penalties, appeals and bans. Slashing is effective only for reasons with an enabled policy and through a manager authorized by the BondingRegistry.
+    +++ description: Policy and evidence router for ciphernode penalties, appeals and bans. Slashing is effective only for reasons with an enabled policy and through a manager authorized by the BondingRegistry.
 ```
 
 ```diff
@@ -194,7 +194,7 @@ Interfold coordinates ephemeral encrypted computations on Ethereum using allowli
 ```diff
 +   Status: CREATED
     contract BfvPkVerifier (eth:0xBA1854fDA7A5c127606572e43Dc7B37b7A15bdFf) [interfold/BfvPkVerifier]
-    +++ description: Immutable BFV public-key proof wrapper. It binds the generated circuit verifier to the expected DKG-fold and C5 verification-key hashes.
+    +++ description: BFV public-key proof wrapper. It binds the generated circuit verifier to the expected DKG-fold and C5 verification-key hashes.
 ```
 
 ```diff
@@ -212,19 +212,19 @@ Interfold coordinates ephemeral encrypted computations on Ethereum using allowli
 ```diff
 +   Status: CREATED
     contract VotingEscrowClock (eth:0xc9707d36C07c3E0C4215a4574DB760b4e0E79166) [interfold/VotingEscrowClock]
-    +++ description: Upgradeable timestamp clock defining veFOLD epochs, checkpoint cadence and gauge-voting windows.
+    +++ description: Timestamp clock defining veFOLD epochs, checkpoint cadence and gauge-voting windows.
 ```
 
 ```diff
 +   Status: CREATED
     contract PublicProposalCondition (eth:0xD0C2A1f94f7c584f0BF5588a519E82AD71dC1EC2) [interfold/SPPRuleCondition]
-    +++ description: Non-upgradeable Aragon condition attached to the public CREATE_PROPOSAL permission. Its mutable rule program determines which callers and proposal calls qualify for the otherwise-public grant.
+    +++ description: Aragon condition attached to the public CREATE_PROPOSAL permission. Its mutable rule program determines which callers and proposal calls qualify for the otherwise-public grant.
 ```
 
 ```diff
 +   Status: CREATED
     contract BondedCheckpoints (eth:0xDbCaeec5B040A134314FfD43aA2ca0D16006f963) [interfold/BondedCheckpoints]
-    +++ description: Immutable voting-power checkpoint store updated exclusively by the BondingRegistry so FOLD bonded to ciphernode operators remains visible to governance snapshots.
+    +++ description: Voting-power checkpoint store updated exclusively by the BondingRegistry so FOLD bonded to ciphernode operators remains visible to governance snapshots.
 ```
 
 ```diff
@@ -254,13 +254,13 @@ Interfold coordinates ephemeral encrypted computations on Ethereum using allowli
 ```diff
 +   Status: CREATED
     contract VotingPowerCurve (eth:0xf023390C78CF95a77A8910187d5B09BBC05F37e9) [interfold/VotingPowerCurve]
-    +++ description: Upgradeable curve that converts veFOLD lock amount and duration into voting power.
+    +++ description: Curve that converts veFOLD lock amount and duration into voting power.
 ```
 
 ```diff
 +   Status: CREATED
     contract BfvDecryptionVerifier (eth:0xf143b969ea481Ccf251194D15F82007C67AABc53) [interfold/BfvDecryptionVerifier]
-    +++ description: Immutable threshold-decryption proof wrapper. It checks the generated circuit proof and binds its parties and public-key context to the committee recorded by CiphernodeRegistry.
+    +++ description: Threshold-decryption proof wrapper. It checks the generated circuit proof and binds its parties and public-key context to the committee recorded by CiphernodeRegistry.
 ```
 
 ```diff
@@ -278,7 +278,7 @@ Interfold coordinates ephemeral encrypted computations on Ethereum using allowli
 ```diff
 +   Status: CREATED
     contract VotingEscrowLockNFT (eth:0xF3eeE0f5E721b8c0073C8d85bf26A3d6EC293A0E) [interfold/VotingEscrowLockNFT]
-    +++ description: Upgradeable ERC-721 whose tokens represent individual veFOLD lock positions.
+    +++ description: ERC-721 whose tokens represent individual veFOLD lock positions.
 ```
 
 ```diff

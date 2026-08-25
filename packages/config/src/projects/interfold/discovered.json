@@ -12,7 +12,7 @@
         "0x652c9badf1bc0079bb5168226877cf7c70b74479fa19068d2fe42066fa4eb075"
       ],
       "proxyType": "immutable",
-      "description": "Immutable voting-power adapter used by PublicTokenVoting. It counts voting-escrow power, FOLD bonded to ciphernode operators, and eligible vesting-locked wallet FOLD while using FOLD total supply as the quorum denominator.",
+      "description": "Voting-power adapter used by PublicTokenVoting. It counts voting-escrow power, FOLD bonded to ciphernode operators, and eligible vesting-locked wallet FOLD while using FOLD total supply as the quorum denominator.",
       "ignoreInWatchMode": ["clock"],
       "deployerAddress": "eth:0x53bcFaEd43441C7bB6149563eC11f756739C9f6A",
       "sinceTimestamp": 1787141627,
@@ -178,7 +178,7 @@
         "0x2f4ffa441ee6931aaf10dc75ea17d88ac1e02780b5802234253f4732f19706ae"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond; the contract also enforces exits, committee obligations, bans and slashing debits.",
+      "description": "Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond; the contract also enforces exits, committee obligations, bans and slashing debits.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -502,7 +502,7 @@
         "0x25830faa7c9d8c4aecf3d78f04ce54c52aae87769713d3e9ad951ca08abd4277"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable coordinator for ephemeral encrypted computations (E3s). It accepts requests for allowlisted programs, selects a ciphernode committee, snapshots the configured proof system, and verifies the encrypted result and threshold decryption before publishing plaintext output.",
+      "description": "Coordinator for Encrypted Execution Environments (E3s). It accepts requests for allowlisted programs, selects a ciphernode committee, snapshots the configured proof system, and verifies the encrypted result and threshold decryption before publishing plaintext output.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1852,7 +1852,7 @@
         "0xbc6579b4c42accae5c7400219895c015a3d275afd13088b59e85b094038ba821"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable veFOLD escrow that custodies locked FOLD, issues lock NFTs and calculates the voting power consumed by BondedVotes through EscrowVotesAdapter.",
+      "description": "veFOLD escrow that custodies locked FOLD, issues lock NFTs and calculates the voting power consumed by BondedVotes through EscrowVotesAdapter.",
       "ignoreInWatchMode": [
         "currentExitingAmount",
         "lastLockId",
@@ -1947,7 +1947,7 @@
         "0xdf4efbc40c77de7dfb353dd7185741bdbf420c9381f9f561b47120d1ed0ffd97"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable queue applying cooldowns and optional fees to withdrawals from VotingEscrow.",
+      "description": "Queue applying cooldowns and optional fees to withdrawals from VotingEscrow.",
       "deployerAddress": "eth:0xe78baC4Ca761A57DD876cf6e24b52275F4cA7A41",
       "sinceTimestamp": 1787028983,
       "sinceBlock": 25779726,
@@ -2679,7 +2679,7 @@
         "0x6c22fa41562f0c1711c54cad35a5dc279f856b8cd1e3f329e8ede042eda17f1c"
       ],
       "proxyType": "immutable",
-      "description": "Non-upgradeable policy and evidence router for ciphernode penalties, appeals and bans. Slashing is effective only for reasons with an enabled policy and through a manager authorized by the BondingRegistry.",
+      "description": "Policy and evidence router for ciphernode penalties, appeals and bans. Slashing is effective only for reasons with an enabled policy and through a manager authorized by the BondingRegistry.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -3925,7 +3925,7 @@
         "0x13506be90fff7c3922e3b110f61dcfe0114bdaeda4e9e883448e30f4969cd771"
       ],
       "proxyType": "immutable",
-      "description": "Immutable BFV public-key proof wrapper. It binds the generated circuit verifier to the expected DKG-fold and C5 verification-key hashes.",
+      "description": "BFV public-key proof wrapper. It binds the generated circuit verifier to the expected DKG-fold and C5 verification-key hashes.",
       "deployerAddress": "eth:0x53bcFaEd43441C7bB6149563eC11f756739C9f6A",
       "sinceTimestamp": 1787109299,
       "sinceBlock": 25786398,
@@ -4117,7 +4117,7 @@
           "type": "PERMISSION"
         },
         "$members": {
-          "description": "Current registered ciphernode operator keys reconstructed from add and remove events. Distinct keys do not prove distinct owners or infrastructure. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.",
+          "description": "Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.",
           "type": "PERMISSION"
         },
         "$threshold": {
@@ -4159,7 +4159,7 @@
         "0x4a40c38873e8dd6be25ae82bbd232864c841271ce308509366c56987196b1c46"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable timestamp clock defining veFOLD epochs, checkpoint cadence and gauge-voting windows.",
+      "description": "Timestamp clock defining veFOLD epochs, checkpoint cadence and gauge-voting windows.",
       "ignoreInWatchMode": [
         "currentEpoch",
         "elapsedInEpoch",
@@ -4252,7 +4252,7 @@
         "0x820364f6b02461f786e2dfaa81e0059689349246f89bf5b49bf33424d05d117e"
       ],
       "proxyType": "EIP1167 proxy",
-      "description": "Non-upgradeable Aragon condition attached to the public CREATE_PROPOSAL permission. Its mutable rule program determines which callers and proposal calls qualify for the otherwise-public grant.",
+      "description": "Aragon condition attached to the public CREATE_PROPOSAL permission. Its mutable rule program determines which callers and proposal calls qualify for the otherwise-public grant.",
       "deployerAddress": "eth:0x732D5F9155A524C29fe7b17a45C794C4F48abb9e",
       "sinceTimestamp": 1787251955,
       "sinceBlock": 25798247,
@@ -4335,7 +4335,7 @@
         "0x8ad2ea77f39af5b32c176b962b813d16e18902db7133fb50165d1632c71997f3"
       ],
       "proxyType": "immutable",
-      "description": "Immutable voting-power checkpoint store updated exclusively by the BondingRegistry so FOLD bonded to ciphernode operators remains visible to governance snapshots.",
+      "description": "Voting-power checkpoint store updated exclusively by the BondingRegistry so FOLD bonded to ciphernode operators remains visible to governance snapshots.",
       "ignoreInWatchMode": ["clock"],
       "deployerAddress": "eth:0x53bcFaEd43441C7bB6149563eC11f756739C9f6A",
       "sinceTimestamp": 1787109215,
@@ -4803,7 +4803,7 @@
         "0x126b3fdbc9562d64b152d03a44f6a560539bbb3c9c35e4f58d91692a00d378e6"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable curve that converts veFOLD lock amount and duration into voting power.",
+      "description": "Curve that converts veFOLD lock amount and duration into voting power.",
       "ignoreInWatchMode": ["globalPointLatestIndex"],
       "deployerAddress": "eth:0xe78baC4Ca761A57DD876cf6e24b52275F4cA7A41",
       "sinceTimestamp": 1787028983,
@@ -4860,7 +4860,7 @@
         "0xf0eb04078f1d26488697d2fc81ac7d419765e655d6b38d23b5f8cab946146bee"
       ],
       "proxyType": "immutable",
-      "description": "Immutable threshold-decryption proof wrapper. It checks the generated circuit proof and binds its parties and public-key context to the committee recorded by CiphernodeRegistry.",
+      "description": "Threshold-decryption proof wrapper. It checks the generated circuit proof and binds its parties and public-key context to the committee recorded by CiphernodeRegistry.",
       "deployerAddress": "eth:0x53bcFaEd43441C7bB6149563eC11f756739C9f6A",
       "sinceTimestamp": 1787109323,
       "sinceBlock": 25786400,
@@ -5407,7 +5407,7 @@
         "0x424f4df711b03adc7fa8ac4d99ece4e185fec69f61ab6beac1b7047c52275678"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable ERC-721 whose tokens represent individual veFOLD lock positions.",
+      "description": "ERC-721 whose tokens represent individual veFOLD lock positions.",
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0xe78baC4Ca761A57DD876cf6e24b52275F4cA7A41",
       "sinceTimestamp": 1787028983,
