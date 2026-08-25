@@ -3,8 +3,15 @@ import path from 'node:path'
 import { Resvg } from '@resvg/resvg-js'
 import satori from 'satori'
 import { TokenOpengraphImage } from '~/components/opengraph-image/Token'
-import { getActiveInteropAbstractTokens } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
+import {
+  getActiveInteropAbstractTokens,
+  type InteropAbstractToken,
+} from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
+import {
+  detectImageMimeType,
+  type SupportedMimeType,
+} from './detectImageMimeType'
 
 const OG_IMAGE_SIZE = { width: 1200, height: 630 }
 const ICON_FETCH_TIMEOUT_MS = 5_000
@@ -37,7 +44,19 @@ async function renderInteropTokenOgImage(
     assets.placeholderIconSrc,
   )
 
-  const svg = await satori(
+  const svg = await renderTokenSvg(assets, token, iconSrc).catch((error) => {
+    if (iconSrc === assets.placeholderIconSrc) throw error
+    return renderTokenSvg(assets, token, assets.placeholderIconSrc)
+  })
+  return new Resvg(svg).render().asPng()
+}
+
+function renderTokenSvg(
+  assets: StaticAssets,
+  token: InteropAbstractToken,
+  iconSrc: string,
+): Promise<string> {
+  return satori(
     TokenOpengraphImage({
       backgroundSrc: assets.backgroundSrc,
       iconSrc,
@@ -63,7 +82,6 @@ async function renderInteropTokenOgImage(
       ],
     },
   )
-  return new Resvg(svg).render().asPng()
 }
 
 interface StaticAssets {
@@ -110,17 +128,17 @@ async function fetchIconDataUri(
       signal: AbortSignal.timeout(ICON_FETCH_TIMEOUT_MS),
     })
     if (!response.ok) return placeholderSrc
-    const mimeType = response.headers.get('content-type')?.split(';')[0]?.trim()
-    // resvg cannot rasterize every format coingecko may serve (e.g. webp)
-    if (mimeType !== 'image/png' && mimeType !== 'image/jpeg') {
-      return placeholderSrc
-    }
-    return toDataUri(mimeType, Buffer.from(await response.arrayBuffer()))
+    const data = Buffer.from(await response.arrayBuffer())
+    // coingecko mislabels icons (fxUSD is a png served as image/jpeg) and satori
+    // picks its decoder from the data uri, so the bytes decide the type
+    const mimeType = detectImageMimeType(data)
+    if (!mimeType) return placeholderSrc
+    return toDataUri(mimeType, data)
   } catch {
     return placeholderSrc
   }
 }
 
-function toDataUri(mimeType: string, data: Buffer): string {
+function toDataUri(mimeType: SupportedMimeType, data: Buffer): string {
   return `data:${mimeType};base64,${data.toString('base64')}`
 }

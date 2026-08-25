@@ -1,3 +1,4 @@
+import { mergeTransferTypeStats } from '@l2beat/database'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { INTEROP_PAIR_SEPARATOR } from '../consts'
 import type {
@@ -8,7 +9,6 @@ import type {
 import { accumulateChains, accumulateTokens } from './accumulate'
 import type { TokenInteropData } from './buildTokensDataMap'
 import { getInteropTransferRecordValue } from './getInteropTransferRecordValue'
-import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 
 export interface ProtocolDataByBridgeType {
   lockAndMint?: ProtocolDataByBridgeTypeCommon & CommonInteropData
