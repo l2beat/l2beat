@@ -101,7 +101,6 @@ export { MulticallClient } from './discovery/provider/multicall/MulticallClient'
 export { getMulticall3Config } from './discovery/provider/multicall/MulticallConfig'
 export type { MulticallConfig } from './discovery/provider/multicall/types'
 export { NoCache } from './discovery/provider/NoCache'
-export { RateLimitedProvider } from './discovery/provider/RateLimitedProvider'
 export { SQLiteCache } from './discovery/provider/SQLiteCache'
 export {
   type AllProviderStats,
