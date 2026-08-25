@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { HttpClient } from '@l2beat/shared'
+import { type HttpClient, sanitizeUrl } from '@l2beat/shared'
 import {
   assert,
   type EthereumAddress,
@@ -7,7 +7,9 @@ import {
   type UnixTime,
 } from '@l2beat/shared-pure'
 import { BlockscoutClient } from './BlockscoutClient'
+import { BlockscoutV2SourceClient } from './BlockscoutV2SourceClient'
 import { EtherscanClient } from './EtherscanClient'
+import { getErrorMessage } from './getErrorMessage'
 import type {
   ContractSource,
   ExplorerConfig,
@@ -18,7 +20,7 @@ import { RoutescanClient } from './RoutescanClient'
 import { SourcifyClient } from './SourcifyClient'
 
 export class CombiningEtherscanClient implements IEtherscanClient {
-  private clients: IEtherscanClient[]
+  private clients: { label: string; client: IEtherscanClient }[]
 
   constructor(
     httpClient: HttpClient,
@@ -28,44 +30,71 @@ export class CombiningEtherscanClient implements IEtherscanClient {
     assert(configs.length > 0, 'We need at least one explorer configured')
 
     this.clients = configs.map((config) => {
+      const label = getClientLabel(config)
       switch (config.type) {
         case 'etherscan-v1': {
-          return EtherscanClient.createForDiscovery(
-            httpClient,
-            logger,
-            config.url,
-            config.apiKey,
-            config.unsupported,
-          )
+          return {
+            label,
+            client: EtherscanClient.createForDiscovery(
+              httpClient,
+              logger,
+              config.url,
+              config.apiKey,
+              config.unsupported,
+            ),
+          }
         }
         case 'etherscan': {
-          return EtherscanClient.createForDiscovery(
-            httpClient,
-            logger,
-            config.url,
-            config.apiKey,
-            config.unsupported,
-            { chainId: config.chainId.toString() },
-          )
+          return {
+            label,
+            client: EtherscanClient.createForDiscovery(
+              httpClient,
+              logger,
+              config.url,
+              config.apiKey,
+              config.unsupported,
+              { chainId: config.chainId.toString() },
+            ),
+          }
         }
         case 'routescan': {
-          return RoutescanClient.createForDiscovery(
-            httpClient,
-            logger,
-            config.url,
-            '',
-            config.unsupported,
-          )
+          return {
+            label,
+            client: RoutescanClient.createForDiscovery(
+              httpClient,
+              logger,
+              config.url,
+              '',
+              config.unsupported,
+            ),
+          }
         }
         case 'blockscout': {
-          return new BlockscoutClient(
-            httpClient,
-            config.url,
-            config.unsupported,
-          )
+          return {
+            label,
+            client: new BlockscoutClient(
+              httpClient,
+              config.url,
+              config.unsupported,
+              logger,
+            ),
+          }
+        }
+        case 'blockscoutV2': {
+          return {
+            label,
+            client: new BlockscoutV2SourceClient(
+              httpClient,
+              config.url,
+              logger,
+            ),
+          }
         }
         case 'sourcify': {
-          return new SourcifyClient(httpClient, config.chainId)
+          return {
+            label,
+            client: new SourcifyClient(httpClient, config.chainId, logger),
+          }
         }
         default: {
           throw new Error('Unknown explorer type')
@@ -77,7 +106,7 @@ export class CombiningEtherscanClient implements IEtherscanClient {
   private async tryClients<T>(
     fn: (client: IEtherscanClient) => Promise<T | undefined>,
   ): Promise<T | undefined> {
-    for (const client of this.clients) {
+    for (const { client } of this.clients) {
       try {
         const result = await fn(client)
         if (result !== undefined) {
@@ -108,20 +137,32 @@ export class CombiningEtherscanClient implements IEtherscanClient {
 
   async getContractSource(address: EthereumAddress): Promise<ContractSource> {
     let lastUnverified: ContractSource | undefined
-    for (const client of this.clients) {
+    const errors: Error[] = []
+    for (const { label, client } of this.clients) {
       try {
         const source = await client.getContractSource(address)
         if (source.isVerified) {
           return source
         }
         lastUnverified = source
-      } catch {}
+      } catch (error) {
+        errors.push(
+          new Error(
+            `${label} failed to fetch contract source: ${getErrorMessage(error)}`,
+            { cause: error },
+          ),
+        )
+      }
     }
 
     if (lastUnverified !== undefined) {
       return lastUnverified
     }
-    throw new Error('No client could fetch contract source')
+
+    throw new AggregateError(
+      errors,
+      `All clients failed to fetch contract source for ${address.toString()}: ${errors.map((error) => error.message).join('; ')}`,
+    )
   }
 
   getContractDeploymentTx(
@@ -143,5 +184,19 @@ export class CombiningEtherscanClient implements IEtherscanClient {
     return this.tryClientsOrThrow('recent outgoing txs', (c) =>
       c.getAtMost10RecentOutgoingTxs(address, blockNumber),
     )
+  }
+}
+
+function getClientLabel(config: ExplorerConfig): string {
+  switch (config.type) {
+    case 'sourcify':
+      return `sourcify:${config.chainId}`
+    case 'etherscan':
+      return `etherscan:${config.chainId}`
+    case 'etherscan-v1':
+    case 'routescan':
+    case 'blockscout':
+    case 'blockscoutV2':
+      return `${config.type}:${sanitizeUrl(config.url)}`
   }
 }

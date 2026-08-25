@@ -72,7 +72,7 @@ export function getUpdateMonitorConfig(
   }
 }
 
-function getChainDiscoveryConfig(
+export function getChainDiscoveryConfig(
   env: Env,
   chain: string,
   chains: ChainConfig[],
@@ -98,6 +98,12 @@ function getChainDiscoveryConfig(
 
   for (const api of chainConfig.apis) {
     switch (api.type) {
+      case 'blockscoutV2':
+        explorer.push({
+          type: api.type,
+          url: api.url,
+        })
+        break
       case 'blockscout':
       case 'routescan':
         explorer.push({

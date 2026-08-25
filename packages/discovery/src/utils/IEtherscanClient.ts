@@ -31,6 +31,11 @@ interface BlockscoutExplorerConfig {
   unsupported?: EtherscanUnsupportedMethods
 }
 
+interface BlockscoutV2ExplorerConfig {
+  type: 'blockscoutV2'
+  url: string
+}
+
 interface RoutescanExplorerConfig {
   type: 'routescan'
   url: string
@@ -52,6 +57,7 @@ export type ExplorerConfig =
   | EtherscanExplorerConfig
   | EtherscanV1ExplorerConfig
   | BlockscoutExplorerConfig
+  | BlockscoutV2ExplorerConfig
   | RoutescanExplorerConfig
   | SourcifyExplorerConfig
 
