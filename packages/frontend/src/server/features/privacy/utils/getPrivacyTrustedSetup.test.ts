@@ -50,6 +50,7 @@ describe(toTrustedSetupSummaryValue.name, () => {
       value: '123 participants',
       sentiment: 'good',
       description: 'Trusted setup name: Trusted setup description.',
+      risk: 'green',
     })
   })
 

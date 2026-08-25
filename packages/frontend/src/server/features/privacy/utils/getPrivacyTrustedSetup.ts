@@ -4,6 +4,16 @@ import type {
   TrustedSetup,
 } from '@l2beat/config'
 import { formatInteger } from '@l2beat/shared-pure'
+import type { TrustedSetupRisk } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
+
+/** A trusted setup, or the 'None' placeholder for projects without a ZK system. */
+export type PrivacyTrustedSetup = Omit<TrustedSetup, 'risk'> & {
+  risk: TrustedSetupRisk
+}
+
+export type PrivacyTrustedSetupSummary = PrivacySummaryValue & {
+  risk: TrustedSetupRisk
+}
 
 const TRUSTED_SETUP_RISK_TO_SENTIMENT = {
   green: 'good',
@@ -12,11 +22,11 @@ const TRUSTED_SETUP_RISK_TO_SENTIMENT = {
   'N/A': 'neutral',
   None: 'neutral',
 } as const satisfies Record<
-  TrustedSetup['risk'],
+  TrustedSetupRisk,
   NonNullable<PrivacySummaryValue['sentiment']>
 >
 
-const NO_SETUP: TrustedSetup = {
+const NO_SETUP: PrivacyTrustedSetup = {
   id: 'NoSetup',
   name: 'No setup',
   risk: 'None',
@@ -28,7 +38,7 @@ const NO_SETUP: TrustedSetup = {
 
 export function getPrivacyTrustedSetup(
   trustedSetups: ProjectZkCatalogInfo['trustedSetups'],
-): TrustedSetup {
+): PrivacyTrustedSetup {
   const trustedSetup = trustedSetups[0]
   if (!trustedSetup) {
     return NO_SETUP
@@ -39,8 +49,8 @@ export function getPrivacyTrustedSetup(
 }
 
 export function toTrustedSetupSummaryValue(
-  trustedSetup: TrustedSetup,
-): PrivacySummaryValue {
+  trustedSetup: PrivacyTrustedSetup,
+): PrivacyTrustedSetupSummary {
   return {
     value:
       trustedSetup.participantCount !== undefined
@@ -48,5 +58,6 @@ export function toTrustedSetupSummaryValue(
         : trustedSetup.name,
     sentiment: TRUSTED_SETUP_RISK_TO_SENTIMENT[trustedSetup.risk],
     description: `${trustedSetup.name}: ${trustedSetup.shortDescription}`,
+    risk: trustedSetup.risk,
   }
 }

@@ -952,7 +952,7 @@ export interface ZkCatalogTag {
 export interface TrustedSetup {
   id: string
   name: string
-  risk: 'green' | 'yellow' | 'red' | 'N/A' | 'None'
+  risk: 'green' | 'yellow' | 'red' | 'N/A'
   shortDescription: string
   longDescription: string
   participantCount?: number
@@ -1006,11 +1006,8 @@ export interface ProjectPrivacyInfo {
   quantumResistant?: true
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
-  /**
-   * ZK catalog project whose proving system this privacy project uses.
-   * Its trusted setups are shown when this project has no own zkCatalogInfo.
-   */
-  zkCatalogProjectId?: ProjectId
+  /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
+  zkCatalogId?: ProjectId
 }
 
 export interface PrivacyNoteDiscovery {

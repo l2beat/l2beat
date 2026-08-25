@@ -1,3 +1,4 @@
+import type { TrustedSetup } from '@l2beat/config'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { CircleWithSlashIcon } from '~/icons/CircleWithSlash'
 import { CircleWithStarIcon } from '~/icons/CircleWithStar'
@@ -21,6 +22,9 @@ const riskDotVariants = cva('rounded-full', {
     size: 'md',
   },
 })
+
+/** 'None' is a privacy-only placeholder for projects without a ZK system. */
+export type TrustedSetupRisk = TrustedSetup['risk'] | 'None'
 
 export type TrustedSetupRiskDotSize = VariantProps<
   typeof riskDotVariants

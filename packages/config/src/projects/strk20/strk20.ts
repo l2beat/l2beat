@@ -122,7 +122,7 @@ export const strk20: BaseProject = {
   },
   privacyInfo: {
     tokens: getPrivacyTokens(),
-    zkCatalogProjectId: ProjectId('stwo'),
+    zkCatalogId: ProjectId('stwo'),
     exitWindow: {
       value: 'None',
       sentiment: 'bad',

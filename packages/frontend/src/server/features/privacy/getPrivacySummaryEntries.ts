@@ -2,7 +2,6 @@ import type {
   PrivacyAttribute,
   PrivacyExitWindow,
   PrivacySummaryValue,
-  TrustedSetup,
 } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
@@ -10,8 +9,10 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
 import type { PrivacyProject } from './types'
-import { getPrivacyTrustedSetup } from './utils/getPrivacyTrustedSetup'
-import { resolvePrivacyTrustedSetups } from './utils/resolvePrivacyTrustedSetups'
+import {
+  getPrivacyTrustedSetup,
+  type PrivacyTrustedSetup,
+} from './utils/getPrivacyTrustedSetup'
 
 export interface PrivacySummaryEntry {
   id: string
@@ -29,7 +30,7 @@ export interface PrivacySummaryEntry {
   totalValueDeposited30dUsd?: number
   isUnderReview: boolean
   summaryTrackedItemName: string
-  trustedSetup: TrustedSetup
+  trustedSetup: PrivacyTrustedSetup
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
   privacy: PrivacySummaryValue
@@ -54,10 +55,8 @@ type PrivacySummaryBaseEntry = Omit<
 export async function getPrivacySummaryEntries(
   projects: PrivacyProject[],
 ): Promise<PrivacySummaryEntry[]> {
-  const trustedSetups = await getTrustedSetupsByProject(projects)
-
   if (env.MOCK) {
-    return getMockPrivacySummaryEntries(projects, trustedSetups)
+    return getMockPrivacySummaryEntries(projects)
   }
 
   const db = getDb()
@@ -104,7 +103,7 @@ export async function getPrivacySummaryEntries(
     )
 
     return {
-      ...getPrivacySummaryBaseEntry(project, trustedSetups),
+      ...getPrivacySummaryBaseEntry(project),
       ...getTrackingMetrics({
         poolsTracked: getPoolsTracked(project),
         totalValueLockedUsd,
@@ -119,12 +118,11 @@ export async function getPrivacySummaryEntries(
 
 function getMockPrivacySummaryEntries(
   projects: PrivacyProject[],
-  trustedSetups: Map<string, TrustedSetup>,
 ): PrivacySummaryEntry[] {
   return projects
     .map((project): PrivacySummaryEntry => {
       return {
-        ...getPrivacySummaryBaseEntry(project, trustedSetups),
+        ...getPrivacySummaryBaseEntry(project),
         ...getTrackingMetrics({
           poolsTracked: getPoolsTracked(project),
           totalValueLockedUsd:
@@ -139,21 +137,8 @@ function getMockPrivacySummaryEntries(
     .sort(comparePrivacySummaryEntries)
 }
 
-async function getTrustedSetupsByProject(
-  projects: PrivacyProject[],
-): Promise<Map<string, TrustedSetup>> {
-  const entries = await Promise.all(
-    projects.map(async (project) => {
-      const trustedSetups = await resolvePrivacyTrustedSetups(project)
-      return [project.id, getPrivacyTrustedSetup(trustedSetups)] as const
-    }),
-  )
-  return new Map(entries)
-}
-
 function getPrivacySummaryBaseEntry(
   project: PrivacyProject,
-  trustedSetups: Map<string, TrustedSetup>,
 ): PrivacySummaryBaseEntry {
   return {
     id: project.id,
@@ -167,7 +152,7 @@ function getPrivacySummaryBaseEntry(
     isUnderReview: !!project.statuses.reviewStatus,
     summaryTrackedItemName:
       project.privacyInfo.summaryTrackedItemName ?? 'pool',
-    trustedSetup: trustedSetups.get(project.id) ?? getPrivacyTrustedSetup([]),
+    trustedSetup: getPrivacyTrustedSetup(project.trustedSetups),
     exitWindow: project.privacyInfo.exitWindow,
     reproducibility: project.privacyInfo.reproducibility,
     privacy: project.privacyInfo.privacy,
