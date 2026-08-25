@@ -4054,7 +4054,7 @@
         "0x181143fe8736537b7086ceca31a6731ebb34e2e2612a63c3ff66ef5c7f3816af"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Upgradeable registry of ciphernodes and per-E3 committees. It performs ticket-weighted committee sortition, records DKG proof anchors and the committee public key, and tracks committee viability.",
+      "description": "Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection, records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability.",
       "ignoreInWatchMode": ["ciphernodes", "root", "treeSize"],
       "deployerAddress": "eth:0x53bcFaEd43441C7bB6149563eC11f756739C9f6A",
       "sinceTimestamp": 1787109059,
@@ -4078,6 +4078,7 @@
             ["eth:0xB06Aaf9EF87984192490E947078D2f3563399b7B"]
           ]
         ],
+        "$threshold": 2,
         "$upgradeCount": 1,
         "ACCUSATION_VOTE_VALIDITY_TIMELOCK": 172800,
         "accusationVoteValidity": 1800,
@@ -4103,6 +4104,7 @@
         "pendingDkgFoldAttestationVerifierAt": 0,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "root": "21566062968715035133984466498059665708961681597209426751743703534648845223200",
+        "selectedCommitteeSize": 3,
         "slashingManager": "eth:0x974E865B1BB24AF2a9ef8204AdEA9251Cc7C5FD9",
         "sortitionSubmissionWindow": 600,
         "TREE_DEPTH": 20,
@@ -4115,8 +4117,15 @@
           "type": "PERMISSION"
         },
         "$members": {
-          "description": "Current registered ciphernode operator keys reconstructed from add and remove events. Distinct keys do not prove distinct owners or infrastructure.",
+          "description": "Current registered ciphernode operator keys reconstructed from add and remove events. Distinct keys do not prove distinct owners or infrastructure. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.",
           "type": "PERMISSION"
+        },
+        "$threshold": {
+          "description": "Decryption shares required within each newly selected minimum-size committee. This represents two of the selected three ciphernodes, not two of all registered $members."
+        },
+        "selectedCommitteeSize": {
+          "description": "Number of ciphernodes selected from $members for each minimum-size committee.",
+          "type": "RISK_PARAMETER"
         },
         "dkgFoldAttestationVerifier": {
           "description": "Verifier that authenticates each selected node's DKG-fold commitment before the aggregate DKG proof is accepted.",
@@ -8028,7 +8037,7 @@
     "interfold/BondedCheckpoints": "0xe6c229b46bf9c90035a806064d3363aa3d3d2f6da263ba7c7e536368afba4d98",
     "interfold/BondedVotes": "0xfac0485d490c70596b698b188666552d13f860f15af50deec8c76e68bfa161bd",
     "interfold/BondingRegistry": "0xb026ea753a46fead40a2ab06cfc90ec2736adfc3edf42d63f16469b962346f97",
-    "interfold/CiphernodeRegistry": "0x6df456d0c897010421578026694c651940c41650054b57567aaa0a947bfb0671",
+    "interfold/CiphernodeRegistry": "0x576e4859e27ec869c0f45315643a88670ed40d4429bb02701422d74c6bf4b67b",
     "interfold/DecryptionAggregatorVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "interfold/DkgAggregatorVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "interfold/DkgFoldAttestationVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",

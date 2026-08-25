@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x2a2539ed1ecdfd35765fdc2b7800a2bbc621df33
+Generated with discovered.json: 0x88a98c9817c30a48c9fd00902ba96dfd16ac26a0
 
-# Diff at Tue, 25 Aug 2026 10:45:17 GMT:
+# Diff at Tue, 25 Aug 2026 12:09:04 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current timestamp: 1787653815
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Interfold coordinates ephemeral encrypted computations on Ethereum using allowlisted application contracts and a ticket-selected committee of bonded ciphernodes (who do offchain execution). Users publish encrypted inputs, an offchain compute provider produces a proof-backed encrypted result, and a 2-of-3 committee of cyphernodes threshold-decrypts it into a publicly posted plaintext output. RISC Zero verifies the application-specific encrypted computation, while Honk proofs bind distributed key generation and threshold decryption to the selected committee and E3. New programs, verifiers and core configuration are DAO-controlled, and confidentiality depends on fewer than two selected committee members colluding. Protocol is paused atm.
 
 ## Initial discovery
 
@@ -206,7 +206,7 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract CiphernodeRegistry (eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7) [interfold/CiphernodeRegistry]
-    +++ description: Upgradeable registry of ciphernodes and per-E3 committees. It performs ticket-weighted committee sortition, records DKG proof anchors and the committee public key, and tracks committee viability.
+    +++ description: Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection, records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability.
 ```
 
 ```diff
