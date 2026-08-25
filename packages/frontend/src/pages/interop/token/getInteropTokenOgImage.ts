@@ -8,6 +8,10 @@ import {
   type InteropAbstractToken,
 } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
+import {
+  detectImageMimeType,
+  type SupportedMimeType,
+} from './detectImageMimeType'
 
 const OG_IMAGE_SIZE = { width: 1200, height: 630 }
 const ICON_FETCH_TIMEOUT_MS = 5_000
@@ -134,18 +138,6 @@ async function fetchIconDataUri(
     return placeholderSrc
   }
 }
-
-const PNG_MAGIC = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])
-const JPEG_MAGIC = Buffer.from([0xff, 0xd8, 0xff])
-
-function detectImageMimeType(data: Buffer): SupportedMimeType | undefined {
-  if (data.subarray(0, PNG_MAGIC.length).equals(PNG_MAGIC)) return 'image/png'
-  if (data.subarray(0, JPEG_MAGIC.length).equals(JPEG_MAGIC))
-    return 'image/jpeg'
-  return undefined
-}
-
-type SupportedMimeType = 'image/png' | 'image/jpeg'
 
 function toDataUri(mimeType: SupportedMimeType, data: Buffer): string {
   return `data:${mimeType};base64,${data.toString('base64')}`
