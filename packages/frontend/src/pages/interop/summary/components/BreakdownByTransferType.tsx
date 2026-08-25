@@ -1,4 +1,4 @@
-import { formatCurrency } from '@l2beat/shared-pure'
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { Breakdown } from '~/components/breakdown/Breakdown'
 import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
@@ -57,10 +57,7 @@ export function BreakdownByTransferType({ isLoading, breakdown }: Props) {
               (key) => ({
                 label: TRANSFER_TYPE_DISPLAY[key].label,
                 value: breakdown.transferCount[key],
-                formattedValue: formatCurrency(
-                  breakdown.transferCount[key],
-                  'usd',
-                ),
+                formattedValue: formatInteger(breakdown.transferCount[key]),
                 className: INTEROP_TYPE_TO_BG_COLOR[key],
               }),
             )}
