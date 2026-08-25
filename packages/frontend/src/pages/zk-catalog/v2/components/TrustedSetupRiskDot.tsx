@@ -7,7 +7,7 @@ const riskDotVariants = cva('rounded-full', {
   variants: {
     risk: {
       'N/A': 'fill-positive',
-      None: 'fill-secondary',
+      None: 'fill-positive',
       green: 'bg-positive',
       yellow: 'bg-surface-warning',
       red: 'bg-negative',
