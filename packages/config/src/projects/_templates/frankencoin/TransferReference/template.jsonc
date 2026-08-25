@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Convenience contract for ZCHF transfers with an attached payment reference, on Ethereum and cross-chain via CCIP. It is registered as a minter solely for the resulting unlimited allowance; its code only moves funds of the caller or of accounts that granted the caller an explicit infinite allowance."
+}

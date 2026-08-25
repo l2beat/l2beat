@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import { ProjectService } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
 import { RelayApiClient } from './RelayApiClient'
@@ -8,7 +9,7 @@ main().catch((error) => {
 })
 
 async function main() {
-  const client = new RelayApiClient(new HttpClient())
+  const client = new RelayApiClient(new HttpClient(), Logger.SILENT)
   const ps = new ProjectService()
   const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
     (p) => p.chainConfig,
@@ -27,8 +28,6 @@ async function main() {
     const res = await client.getAllRequests({
       limit: 50,
       startTimestamp: lastTime,
-      sortBy: 'updatedAt',
-      sortDirection: 'asc',
     })
 
     const successes = res.requests.filter((x) => x.status === 'success')

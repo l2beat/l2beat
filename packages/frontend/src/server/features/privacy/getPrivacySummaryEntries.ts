@@ -2,7 +2,6 @@ import type {
   PrivacyAttribute,
   PrivacyExitWindow,
   PrivacySummaryValue,
-  TrustedSetup,
 } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
@@ -10,7 +9,10 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
 import type { PrivacyProject } from './types'
-import { getPrivacyTrustedSetup } from './utils/getPrivacyTrustedSetup'
+import {
+  getPrivacyTrustedSetup,
+  type PrivacyTrustedSetup,
+} from './utils/getPrivacyTrustedSetup'
 
 export interface PrivacySummaryEntry {
   id: string
@@ -28,7 +30,7 @@ export interface PrivacySummaryEntry {
   totalValueDeposited30dUsd?: number
   isUnderReview: boolean
   summaryTrackedItemName: string
-  trustedSetup: TrustedSetup
+  trustedSetup: PrivacyTrustedSetup
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
   privacy: PrivacySummaryValue
@@ -150,7 +152,7 @@ function getPrivacySummaryBaseEntry(
     isUnderReview: !!project.statuses.reviewStatus,
     summaryTrackedItemName:
       project.privacyInfo.summaryTrackedItemName ?? 'pool',
-    trustedSetup: getPrivacyTrustedSetup(project.zkCatalogInfo),
+    trustedSetup: getPrivacyTrustedSetup(project.trustedSetups),
     exitWindow: project.privacyInfo.exitWindow,
     reproducibility: project.privacyInfo.reproducibility,
     privacy: project.privacyInfo.privacy,

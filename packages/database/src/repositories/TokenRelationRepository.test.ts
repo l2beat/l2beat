@@ -448,6 +448,89 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
     })
   })
 
+  describe(
+    TokenRelationRepository.prototype.getMintingPluginsForMany.name,
+    () => {
+      it('returns distinct plugins keyed by every requested minted token', async () => {
+        const canonical = tokenRelation({
+          endpoints: [ethereumToken, arbitrumToken],
+          plugin: 'canonicalbridge',
+          bridgeType: 'lockAndMint',
+          lockedToken: 'A',
+        })
+        const symmetric = tokenRelation({
+          endpoints: [arbitrumToken, optimismToken],
+          plugin: 'superbridge',
+          bridgeType: 'burnAndMint',
+        })
+        const duplicatePlugin = tokenRelation({
+          endpoints: [ethereumToken, arbitrumToken],
+          plugin: 'superbridge',
+          bridgeType: 'burnAndMint',
+        })
+        const lockedHere = tokenRelation({
+          endpoints: [arbitrumToken, optimismToken],
+          plugin: 'escrowbridge',
+          bridgeType: 'lockAndMint',
+          lockedToken: 'A',
+        })
+        for (const relation of [
+          canonical,
+          symmetric,
+          duplicatePlugin,
+          lockedHere,
+        ]) {
+          await repository.insert(relation)
+        }
+
+        expect(
+          await repository.getMintingPluginsForMany([
+            {
+              chain: arbitrumToken.chain,
+              address: arbitrumToken.address.toUpperCase(),
+            },
+            optimismToken,
+          ]),
+        ).toEqualUnsorted([
+          {
+            ...arbitrumToken,
+            plugin: 'canonicalbridge',
+            bridgeType: 'lockAndMint',
+            relatedChain: 'ethereum',
+          },
+          {
+            ...arbitrumToken,
+            plugin: 'superbridge',
+            bridgeType: 'burnAndMint',
+            relatedChain: 'ethereum',
+          },
+          {
+            ...arbitrumToken,
+            plugin: 'superbridge',
+            bridgeType: 'burnAndMint',
+            relatedChain: 'optimism',
+          },
+          {
+            ...optimismToken,
+            plugin: 'escrowbridge',
+            bridgeType: 'lockAndMint',
+            relatedChain: 'arbitrum',
+          },
+          {
+            ...optimismToken,
+            plugin: 'superbridge',
+            bridgeType: 'burnAndMint',
+            relatedChain: 'arbitrum',
+          },
+        ])
+      })
+
+      it('returns an empty list when no tokens are requested', async () => {
+        expect(await repository.getMintingPluginsForMany([])).toEqual([])
+      })
+    },
+  )
+
   describe(TokenRelationRepository.prototype.deleteByPrimaryKey.name, () => {
     it('deletes a single relation by its identity', async () => {
       const relation = tokenRelation({

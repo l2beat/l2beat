@@ -1,5 +1,4 @@
 import { useId } from 'react'
-import { useCssSupports } from '~/hooks/useCssSupports'
 import { INTEROP_PAIR_SEPARATOR } from '~/server/features/layer2s/interop/consts'
 import type {
   ChainData,
@@ -41,27 +40,18 @@ interface Props {
  * exactly 2.5 on average and the emission rate is exactly R/s —
  * two flows with slightly different volumes are always visually distinct.
  *
- * Motion is CSS (offset-path + offset-distance), not SMIL <animateMotion>.
- * SMIL drives SVG geometry, so every animated particle forces a full layout
- * on every frame: at ~270 particles that was ~15k layouts/s, 80%+ of the main
- * thread, and it halved the framerate of the whole page. The CSS equivalent
- * animates a transform instead and leaves layout untouched.
- *
- * The path is referenced via offset-path: url(#...) pointing at an invisible
- * <path> per flow, not inlined as path("..."): WebKit resolves path() px
- * coordinates in zoomed CSS px while the SVG stays in user units, so with
- * Safari page zoom ≠ 100% every particle drifted off its line. url()
- * references keep the referenced element's user-unit geometry and render
- * correctly at any zoom.
- *
- * Browsers that lack offset-path url() or linear() easing (the travel/idle
- * split depends on both) get the original SMIL markup instead — slower, but
- * correct everywhere SVG works. useCssSupports is client-only, which is fine
- * here: this component never SSRs (FlowsGraphPanel renders it only after
- * ResizeObserver reports a size), so there is no hydration mismatch.
+ * Only <animateMotion> is used — no SMIL animation of a CSS property such as
+ * opacity. Those are applied through style per element per sample, and when
+ * the graph sits inside a CSS size container (the home card) every one of
+ * those style updates forces a layout, so hundreds of particles meant
+ * thousands of layouts per frame. Instead, particles are hidden by position:
+ * the path is relative to the source and the flow group is translated there,
+ * so a particle that hasn't started yet sits at the source bubble's center
+ * and an idle one holds at the path end, the destination bubble's center.
+ * The whole layer is clipped to everything outside the bubble discs, so
+ * those parked particles never paint (icons with transparent middles would
+ * otherwise show them).
  */
-const CSS_MOTION_CONDITION =
-  '(offset-path: url("#a")) and (animation-timing-function: linear(0 0%, 1 50%, 1 100%))'
 export function ParticleLayer({
   flows,
   chainData,
@@ -74,9 +64,19 @@ export function ParticleLayer({
   baseDollarsPerParticle,
 }: Props) {
   const { highlightedChains } = useInteropFlows()
-  const supportsCssMotion = useCssSupports(CSS_MOTION_CONDITION)
-  const pathIdPrefix = useId()
   const particleRadius = isSmallScreen ? 1.5 : 2
+  const clipId = `particles-clip-${useId().replace(/\W/g, '')}`
+
+  // This exists to hide dots below the project bubbles
+  const bubbleHoles = visibleChainIds
+    .map((id) => layout.get(id))
+    .filter((node) => node !== undefined)
+    .map(
+      ({ x, y, radius: r }) =>
+        `M ${x - r} ${y} a ${r} ${r} 0 1 0 ${2 * r} 0 a ${r} ${r} 0 1 0 ${-2 * r} 0 Z`,
+    )
+    .join(' ')
+  const clipPathD = `M -1e4 -1e4 H 1e4 V 1e4 H -1e4 Z ${bubbleHoles}`
 
   const { flowsParticles } = useScaledParticleCounts(
     visibleChainIds,
@@ -86,7 +86,12 @@ export function ParticleLayer({
   )
 
   return (
-    <g pointerEvents="none" aria-hidden="true">
+    <g pointerEvents="none" aria-hidden="true" clipPath={`url(#${clipId})`}>
+      <defs>
+        <clipPath id={clipId}>
+          <path d={clipPathD} clipRule="evenodd" />
+        </clipPath>
+      </defs>
       {flows.map((flow) => {
         const src = layout.get(flow.srcChain)
         const dst = layout.get(flow.dstChain)
@@ -98,10 +103,10 @@ export function ParticleLayer({
         if (!particles || particles.exactCount <= 0) return null
 
         const path = getConnectionPath(
-          src,
-          dst,
-          centerX,
-          centerY,
+          { ...src, x: 0, y: 0 },
+          { ...dst, x: dst.x - src.x, y: dst.y - src.y },
+          centerX - src.x,
+          centerY - src.y,
           BIDIRECTIONAL_OFFSET,
         )
         const color = getChainColor(interopChains, flow.srcChain)
@@ -122,69 +127,32 @@ export function ParticleLayer({
         const particleInterval = cycleDuration / count
         const initialOffset = Math.random() * particleInterval
 
-        // fraction of each cycle spent traveling (rest is idle / hidden)
+        // fraction of each cycle spent traveling (rest is parked at the end)
         const t = exactCount / count
-        const travelPercent = +(t * 100).toFixed(4)
-
-        // Travel over the first `t` of the cycle, then hold at the path end —
-        // the linear() equivalent of SMIL keyPoints="0;1;1" keyTimes="0;t;1".
-        const moveEasing = `linear(0 0%, 1 ${travelPercent}%, 1 100%)`
-        // Fully opaque while traveling, then a discrete jump to hidden for the
-        // rest of the cycle — the equivalent of calcMode="discrete".
-        const fadeEasing = `linear(0 0%, 0 ${travelPercent}%, 1 ${travelPercent}%, 1 100%)`
-
-        const pathId = `${pathIdPrefix}${flow.srcChain}-${flow.dstChain}`
 
         return (
-          <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
-            {supportsCssMotion && <path id={pathId} d={path} fill="none" />}
+          <g
+            key={`${flow.srcChain}-${flow.dstChain}`}
+            opacity={groupOpacity}
+            transform={`translate(${src.x} ${src.y})`}
+          >
             {Array.from({ length: count }, (_, i) => {
-              // Positive delay, so a particle stays at its base opacity of 0
-              // until its turn comes up in the first cycle.
-              const delay = `${initialOffset + i * particleInterval}s`
-
-              if (!supportsCssMotion) {
-                return (
-                  <circle key={i} r={particleRadius} fill={color} opacity={0}>
-                    <animateMotion
-                      path={path}
-                      dur={`${cycleDuration}s`}
-                      keyPoints="0;1;1"
-                      keyTimes={`0;${t};1`}
-                      calcMode="linear"
-                      begin={delay}
-                      repeatCount="indefinite"
-                    />
-                    <animate
-                      attributeName="opacity"
-                      dur={`${cycleDuration}s`}
-                      begin={delay}
-                      calcMode="discrete"
-                      values={'0.8;0'}
-                      keyTimes={`0;${t}`}
-                      repeatCount="indefinite"
-                    />
-                  </circle>
-                )
-              }
+              // Positive delay, so particles emerge from the source one by
+              // one over the first cycle instead of appearing mid-path.
+              const begin = `${initialOffset + i * particleInterval}s`
 
               return (
-                <circle
-                  key={i}
-                  r={particleRadius}
-                  fill={color}
-                  opacity={0}
-                  style={{
-                    offsetPath: `url("#${pathId}")`,
-                    offsetRotate: '0deg',
-                    animationName:
-                      'interop-particle-move, interop-particle-fade',
-                    animationDuration: `${cycleDuration}s, ${cycleDuration}s`,
-                    animationDelay: `${delay}, ${delay}`,
-                    animationIterationCount: 'infinite, infinite',
-                    animationTimingFunction: `${moveEasing}, ${fadeEasing}`,
-                  }}
-                />
+                <circle key={i} r={particleRadius} fill={color} opacity={0.8}>
+                  <animateMotion
+                    path={path}
+                    dur={`${cycleDuration}s`}
+                    keyPoints="0;1;1"
+                    keyTimes={`0;${t};1`}
+                    calcMode="linear"
+                    begin={begin}
+                    repeatCount="indefinite"
+                  />
+                </circle>
               )
             })}
           </g>

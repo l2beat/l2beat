@@ -1,3 +1,762 @@
+Generated with discovered.json: 0x3f5b8243564c5c64e9b76cb3606e26ecfcb87233
+
+# Diff at Tue, 25 Aug 2026 08:54:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@afee435bc99a79b6a7bbb46fd9865fb0e8b74e89 block: 1787227248
+- current timestamp: 1787647851
+
+## Description
+
+Fee adjustment.
+
+## Watched changes
+
+```diff
+    contract Liquid staked Ether 2.0 Token (eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84) [lido/stETH] {
+    +++ description: The rebasing stETH token and Lido protocol accounting entrypoint. It accepts stake, accounts for consensus- and execution-layer balances, mints and burns shares, and applies oracle reports. Version 3 adds external stake-backed shares and balance-based validator accounting.
+      values.getFeeDistribution.treasuryFeeBasisPoints:
+-        3783
++        3793
+      values.getFeeDistribution.operatorsFeeBasisPoints:
+-        6216
++        6206
+    }
+```
+
+```diff
+    EOA  (eth:0xddD80BC94975C10A2f613511F80bd860FcB76818) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x1f44812af62d28f019e30e8eb2af596fb36c7db9d34576972c0405e110a6ef45"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0xddD80BC94975C10A2f613511F80bd860FcB76818","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0xadb55a1ae85f692b559ec1e9eb19d290078ad89f05860ae2056753b396978fa2","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+Generated with discovered.json: 0x79209b4bd7b3d1cb414987d7ff58ee103c750a08
+
+# Diff at Thu, 20 Aug 2026 12:02:26 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@87a85ccf740bd2f0afce19c2723802be5984edc7 block: 1786960746
+- current timestamp: 1787227248
+
+## Description
+
+Regenerated after fixing the `accessControl` discovery handler.
+
+## Watched changes
+
+```diff
+    contract Liquid staked Ether 2.0 Token (eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84) [lido/stETH] {
+    +++ description: The rebasing stETH token and Lido protocol accounting entrypoint. It accepts stake, accounts for consensus- and execution-layer balances, mints and burns shares, and applies oracle reports. Version 3 adds external stake-backed shares and balance-based validator accounting.
+      values.getFeeDistribution.treasuryFeeBasisPoints:
+-        3793
++        3783
+      values.getFeeDistribution.operatorsFeeBasisPoints:
+-        6206
++        6216
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786960746 (main branch discovery), not current.
+
+```diff
+    contract ValidatorsExitBusOracle (eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e) [lido/ValidatorsExitBusOracle] {
+    +++ description: Receives committee-consensus lists of validators that staking modules must exit and emits the exit requests. SRv3 accounts for the validators' effective-balance weights and key indices when applying per-report and replenishing exit limits.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract OracleReportSanityChecker (eth:0x147f8d3cf3004FAf9Bf94E88B54b6C06De507be9) [lido/OracleReportSanityChecker] {
+    +++ description: Validates AccountingOracle report values against configurable safety limits. The version 3 checker covers validator balance flows, consolidations, external pending balances, triggerable exits, and EIP-7251 balance weights.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract ConsolidationGateway (eth:0x17be979344f2c2cC806229a532D92f8742C10462) [lido/ConsolidationGateway] {
+    +++ description: Validates validator ownership proofs and submits EIP-7251 consolidation requests through the protocol consolidation-request predeploy. It rate-limits the amount consolidated and preserves its ETH balance across requests.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract VaultHub (eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709) [lido/VaultHub] {
+    +++ description: The central registry and lifecycle manager for stVaults connected to Lido. It enforces collateral and risk parameters, tracks vault reports and liabilities, mints and burns stETH shares, settles fees, rebalances unhealthy vaults, and manages bad debt.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract CuratedGate (eth:0x207798e6fD1aa7Ee8a63782A64c959cD6727b78C) [lido/CuratedGate] {
+    +++ description: Merkle-gated onboarding contract for a curated Community Staking Module cohort. An eligible address consumes its proof to create a node operator with this gate's configured bond curve and metadata group.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract Voting (eth:0x2e59A20f205bB85a89C53f1936454680651E618e) [lido/Voting] {
+    +++ description: Lido DAO's Aragon token voting application. LDO holders vote on executable DAO scripts, with configurable support, quorum, vote duration, and an objection phase.
+      receivedPermissions.22:
++        {"permission":"interact","from":"eth:0xF0211b7660680B49De1A7E9f25C65660F0a13Fea","description":"grant or revoke EasyTrack roles, change motion settings and executor, and add or remove allowed script factories.","role":".defaultAdmins"}
+    }
+```
+
+```diff
+    contract Accounting (eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6) [lido/Accounting] {
+    +++ description: Manages node-operator bonds for a permissionless staking module. It accepts ETH, stETH and wstETH bonds, applies bond curves, locks or penalizes bond, and lets eligible node-operator addresses claim rewards after the module's fee distribution.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract FeeDistributor (eth:0x367d23c756599c20DCc8D6943F4976E8F88D60d7) [lido/FeeDistributor] {
+    +++ description: Receives a staking module's stETH fee shares and distributes them to node operators according to a Merkle tree submitted by its FeeOracle. Claims are accounted in stETH shares.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract CuratedGate (eth:0x3BbBb175f7F07954DE00052b20E1c5572223F24D) [lido/CuratedGate] {
+    +++ description: Merkle-gated onboarding contract for a curated Community Staking Module cohort. An eligible address consumes its proof to create a node operator with this gate's configured bond curve and metadata group.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract Lido Dao Agent (eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) [lido/LidoDaoAgent] {
+    +++ description: The Lido DAO's Aragon execution and treasury agent. It can transfer assets, execute arbitrary calls or scripts, and validate signatures according to granular ACL permissions.
+      directlyReceivedPermissions.0:
++        {"permission":"interact","from":"eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e","description":"grant or revoke every ValidatorsExitBusOracle role.","role":".defaultAdmins"}
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0x147f8d3cf3004FAf9Bf94E88B54b6C06De507be9","description":"grant or revoke OracleReportSanityChecker roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"eth:0x17be979344f2c2cC806229a532D92f8742C10462","description":"grant or revoke ConsolidationGateway roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.3:
++        {"permission":"interact","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","description":"grant or revoke every VaultHub role.","role":".defaultAdmins"}
+      directlyReceivedPermissions.4:
++        {"permission":"interact","from":"eth:0x207798e6fD1aa7Ee8a63782A64c959cD6727b78C","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins"}
+      directlyReceivedPermissions.5:
++        {"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"grant or revoke Accounting roles, change the bond lock period and penalty recipient, and configure fee splits and custom rewards claimers.","role":".defaultAdmins"}
+      directlyReceivedPermissions.6:
++        {"permission":"interact","from":"eth:0x367d23c756599c20DCc8D6943F4976E8F88D60d7","description":"grant or revoke FeeDistributor roles and change the rebate recipient.","role":".defaultAdmins"}
+      directlyReceivedPermissions.7:
++        {"permission":"interact","from":"eth:0x3BbBb175f7F07954DE00052b20E1c5572223F24D","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins"}
+      directlyReceivedPermissions.10:
++        {"permission":"interact","from":"eth:0x3FC2C71579D80790Aaa3fc7Be8B66ac39dC57374","description":"grant or revoke TopUpGateway roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.11:
++        {"permission":"interact","from":"eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB","description":"grant or revoke every FeeOracle role.","role":".defaultAdmins"}
+      directlyReceivedPermissions.12:
++        {"permission":"interact","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","description":"grant or revoke Accounting roles, change the bond lock period and penalty recipient, and configure fee splits and custom rewards claimers.","role":".defaultAdmins"}
+      directlyReceivedPermissions.18:
++        {"permission":"interact","from":"eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c","description":"grant or revoke LazyOracle roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.21:
++        {"permission":"interact","from":"eth:0x6093EFA6B5E2FF3be54d1c895c9deA932805c49F","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins"}
+      directlyReceivedPermissions.22:
++        {"permission":"interact","from":"eth:0x610B517D380f287c239C93F8eF6FfBd567AA4bA5","description":"grant or revoke Ejector roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.24:
++        {"permission":"interact","from":"eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins"}
+      directlyReceivedPermissions.25:
++        {"permission":"interact","from":"eth:0x773933F9db8964A17d62fb808f2EC7A2de4247CC","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins"}
+      directlyReceivedPermissions.27:
++        {"permission":"interact","from":"eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins"}
+      directlyReceivedPermissions.28:
++        {"permission":"interact","from":"eth:0x852deD011285fe67063a08005c71a85690503Cee","description":"grant or revoke every AccountingOracle role.","role":".defaultAdmins"}
+      directlyReceivedPermissions.31:
++        {"permission":"interact","from":"eth:0x86A8d4E0db5938D21d98047544668FCCB1A9ADc8","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins"}
+      directlyReceivedPermissions.32:
++        {"permission":"interact","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","description":"grant or revoke every WithdrawalQueue role.","role":".defaultAdmins"}
+      directlyReceivedPermissions.33:
++        {"permission":"interact","from":"eth:0x8c002c6eE10cf8adb78D1F9EB2e134FdaF8A7C1a","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins"}
+      directlyReceivedPermissions.34:
++        {"permission":"interact","from":"eth:0x8EeFCdbD984c30E472BcbF545783D051CB5114e5","description":"grant or revoke every FeeOracle role.","role":".defaultAdmins"}
+      directlyReceivedPermissions.36:
++        {"permission":"interact","from":"eth:0x902D64c93F6595339aA46105627a085591051aFb","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins"}
+      directlyReceivedPermissions.39:
++        {"permission":"interact","from":"eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428","description":"grant or revoke ParametersRegistry roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.40:
++        {"permission":"interact","from":"eth:0x9Dc70b5A4f4F5E4AF9058C983D560564F031f1D7","description":"grant or revoke ConsolidationMigrator roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.41:
++        {"permission":"interact","from":"eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins"}
+      directlyReceivedPermissions.42:
++        {"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"grant or revoke MetaRegistry roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.43:
++        {"permission":"interact","from":"eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f","description":"grant or revoke ValidatorStrikes roles and change the Ejector used for poor-performing validators.","role":".defaultAdmins"}
+      directlyReceivedPermissions.53:
++        {"permission":"interact","from":"eth:0xB314D4A76C457c93150d308787939063F4Cc67E0","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins"}
+      directlyReceivedPermissions.54:
++        {"permission":"interact","from":"eth:0xb8cd8F059Ad7a5dB8CAfDe34aAb007317F7156C8","description":"grant or revoke asset-recovery and administrative roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.57:
++        {"permission":"interact","from":"eth:0xbf05A929c3D7885a6aeAd833a992dA6E5ac23b09","description":"grant or revoke OracleDaemonConfig roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.58:
++        {"permission":"interact","from":"eth:0xC392F457960f1B13Ebaf1aa6C065479dD507E1E3","description":"grant or revoke verifier pause and resume roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.59:
++        {"permission":"interact","from":"eth:0xC69685E89Cefc327b43B7234AC646451B27c544d","description":"grant or revoke OperatorGrid roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.61:
++        {"permission":"interact","from":"eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins"}
+      directlyReceivedPermissions.62:
++        {"permission":"interact","from":"eth:0xd907CE33B4Be423823d1CFFe80BD147E8b8554C8","description":"grant or revoke ConsolidationBus roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.63:
++        {"permission":"interact","from":"eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0","description":"grant or revoke FeeDistributor roles and change the rebate recipient.","role":".defaultAdmins"}
+      directlyReceivedPermissions.64:
++        {"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"grant or revoke Curated Staking Module roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.65:
++        {"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"grant or revoke Community Staking Module roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.67:
++        {"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"grant or revoke every TriggerableWithdrawalsGateway role.","role":".defaultAdmins"}
+      directlyReceivedPermissions.68:
++        {"permission":"interact","from":"eth:0xe181A377A2d2BDE9A83f1474BC3DB7A412de091E","description":"grant or revoke Ejector roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.69:
++        {"permission":"interact","from":"eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a","description":"grant or revoke Burner roles and enable migration of excess stETH.","role":".defaultAdmins"}
+      directlyReceivedPermissions.70:
++        {"permission":"interact","from":"eth:0xeF273Ca4A21Ba7B414Ae3C9f9b443038cb133F72","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins"}
+      directlyReceivedPermissions.71:
++        {"permission":"interact","from":"eth:0xf4618370a1fBf46905B16C10817c8CFaD924D6db","description":"grant or revoke ValidatorStrikes roles and change the Ejector used for poor-performing validators.","role":".defaultAdmins"}
+      directlyReceivedPermissions.72:
++        {"permission":"interact","from":"eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3","description":"grant or revoke PredepositGuarantee roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.75:
++        {"permission":"interact","from":"eth:0xfce7aB839e55de77730716D05b3553e45ab3A5Ba","description":"grant or revoke verifier pause and resume roles.","role":".defaultAdmins"}
+      directlyReceivedPermissions.77:
++        {"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"grant or revoke StakingRouter roles and administer the router's privileged operations.","role":".defaultAdmins"}
+      directlyReceivedPermissions.78:
++        {"permission":"interact","from":"eth:0xffC1C5d59CeAC6F6c27E701F04a70cb50474607C","description":"grant or revoke ParametersRegistry roles.","role":".defaultAdmins"}
+    }
+```
+
+```diff
+    contract TopUpGateway (eth:0x3FC2C71579D80790Aaa3fc7Be8B66ac39dC57374) [lido/TopUpGateway] {
+    +++ description: Validates consensus-layer proofs and submits EIP-7251 validator top-ups for staking modules. It limits top-up batch size, proof age, and call frequency.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract FeeOracle (eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB) [lido/FeeOracle] {
+    +++ description: Receives committee-consensus reports containing a staking module's reward-distribution Merkle root and forwards them to FeeDistributor and ValidatorStrikes.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract Accounting (eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da) [lido/Accounting] {
+    +++ description: Manages node-operator bonds for a permissionless staking module. It accepts ETH, stETH and wstETH bonds, applies bond curves, locks or penalizes bond, and lets eligible node-operator addresses claim rewards after the module's fee distribution.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract LazyOracle (eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c) [lido/LazyOracle] {
+    +++ description: Verifies cryptographic oracle reports for individual stVaults and forwards accepted total-value, fee, and liability updates to VaultHub. Reports outside configured rate, reward, or quarantine bounds are rejected or quarantined.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract CuratedGate (eth:0x6093EFA6B5E2FF3be54d1c895c9deA932805c49F) [lido/CuratedGate] {
+    +++ description: Merkle-gated onboarding contract for a curated Community Staking Module cohort. An eligible address consumes its proof to create a node operator with this gate's configured bond curve and metadata group.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract Ejector (eth:0x610B517D380f287c239C93F8eF6FfBd567AA4bA5) [lido/Ejector] {
+    +++ description: Submits triggerable full-withdrawal requests for validators. Node operators may voluntarily eject their own validators, while ValidatorStrikes can eject validators for poor performance.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4) [lido/HashConsensus] {
+    +++ description: Collects report hashes from an enumerable oracle committee and forwards a report to its processor once quorum agrees. It defines report frames, quorum, fast-lane members, and the report processor.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract CuratedGate (eth:0x773933F9db8964A17d62fb808f2EC7A2de4247CC) [lido/CuratedGate] {
+    +++ description: Merkle-gated onboarding contract for a curated Community Staking Module cohort. An eligible address consumes its proof to create a node operator with this gate's configured bond curve and metadata group.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a) [lido/HashConsensus] {
+    +++ description: Collects report hashes from an enumerable oracle committee and forwards a report to its processor once quorum agrees. It defines report frames, quorum, fast-lane members, and the report processor.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract AccountingOracle (eth:0x852deD011285fe67063a08005c71a85690503Cee) [lido/AccountingOracle] {
+    +++ description: Receives committee-consensus reports of Lido's Beacon Chain balances, validator state, withdrawals, and staking-module accounting data, then drives the stETH accounting rebase and related protocol updates.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract CuratedGate (eth:0x86A8d4E0db5938D21d98047544668FCCB1A9ADc8) [lido/CuratedGate] {
+    +++ description: Merkle-gated onboarding contract for a curated Community Staking Module cohort. An eligible address consumes its proof to create a node operator with this gate's configured bond curve and metadata group.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract WithdrawalQueueERC721 (eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1) [lido/WithdrawalQueueERC721] {
+    +++ description: Queues stETH and wstETH withdrawal requests as transferable NFTs. Oracle reports can enter bunker mode and finalize batches by supplying ETH and a maximum share rate, after which NFT owners claim ETH.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract CuratedGate (eth:0x8c002c6eE10cf8adb78D1F9EB2e134FdaF8A7C1a) [lido/CuratedGate] {
+    +++ description: Merkle-gated onboarding contract for a curated Community Staking Module cohort. An eligible address consumes its proof to create a node operator with this gate's configured bond curve and metadata group.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract FeeOracle (eth:0x8EeFCdbD984c30E472BcbF545783D051CB5114e5) [lido/FeeOracle] {
+    +++ description: Receives committee-consensus reports containing a staking module's reward-distribution Merkle root and forwards them to FeeDistributor and ValidatorStrikes.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0x902D64c93F6595339aA46105627a085591051aFb) [lido/HashConsensus] {
+    +++ description: Collects report hashes from an enumerable oracle committee and forwards a report to its processor once quorum agrees. It defines report frames, quorum, fast-lane members, and the report processor.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract ParametersRegistry (eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428) [lido/ParametersRegistry] {
+    +++ description: Stores configurable Community Staking Module parameters, including bond curves, operator rewards, penalties, key limits, queue policy, performance thresholds, and validator-exit rules.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract ConsolidationMigrator (eth:0x9Dc70b5A4f4F5E4AF9058C983D560564F031f1D7) [lido/ConsolidationMigrator] {
+    +++ description: Coordinates the one-time migration of eligible Curated Module v1 validators into Curated Module v2 through the delayed ConsolidationBus pipeline.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract VettedGate (eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8) [lido/VettedGate] {
+    +++ description: Merkle-gated node-operator onboarding contract. Eligible addresses can create an operator using the configured bond curve, or an existing operator owner can consume a proof to claim that curve.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract MetaRegistry (eth:0xA64b339eebD3dC3De848298B6a140955932901d8) [lido/MetaRegistry] {
+    +++ description: Stores metadata that groups permissionless staking-module node operators, describes their operators, and assigns bond-curve weights.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract ValidatorStrikes (eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f) [lido/ValidatorStrikes] {
+    +++ description: Stores the oracle-provided Merkle root of validator performance strikes. Proven strike data can cause a poor-performing validator to be ejected and penalized.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract VettedGate (eth:0xB314D4A76C457c93150d308787939063F4Cc67E0) [lido/VettedGate] {
+    +++ description: Merkle-gated node-operator onboarding contract. Eligible addresses can create an operator using the configured bond curve, or an existing operator owner can consume a proof to claim that curve.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract PermissionlessGate (eth:0xb8cd8F059Ad7a5dB8CAfDe34aAb007317F7156C8) [lido/PermissionlessGate] {
+    +++ description: Permissionless Community Staking Module onboarding contract. Any address can create a node operator using its fixed bond curve by depositing ETH, stETH or wstETH.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract OracleDaemonConfig (eth:0xbf05A929c3D7885a6aeAd833a992dA6E5ac23b09) [lido/OracleDaemonConfig] {
+    +++ description: Stores key-value configuration consumed by Lido's off-chain oracle daemon.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract Community Staking Module Verifier (eth:0xC392F457960f1B13Ebaf1aa6C065479dD507E1E3) [lido/CSVerifier] {
+    +++ description: Permissionless beacon-state proof verifier for a Community Staking Module. Valid proofs report validator balances, withdrawals and slashing to the connected module.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract OperatorGrid (eth:0xC69685E89Cefc327b43B7234AC646451B27c544d) [lido/OperatorGrid] {
+    +++ description: Registry of stVault node-operator groups and risk tiers. It defines per-tier share limits, reserve ratios, forced-rebalance thresholds and fees, coordinates two-party tier changes, and can jail vaults.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract EmergencyProtectedTimelock (eth:0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316) [lido/EmergencyProtectedTimelock] {
+    +++ description: Timelock used by Dual Governance. Governance submits and schedules batches, anyone may execute a ready batch, and time-bounded emergency committees can activate emergency mode and execute already submitted proposals without the ordinary schedule delay.
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e","description":"grant or revoke every ValidatorsExitBusOracle role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0x147f8d3cf3004FAf9Bf94E88B54b6C06De507be9","description":"grant or revoke OracleReportSanityChecker roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x17be979344f2c2cC806229a532D92f8742C10462","description":"grant or revoke ConsolidationGateway roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0x1d201BE093d847f6446530Efb0E8Fb426d176709","description":"grant or revoke every VaultHub role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0x207798e6fD1aa7Ee8a63782A64c959cD6727b78C","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.6:
++        {"permission":"interact","from":"eth:0x2F91e3A8C5d6593bf4F8403fCfeCcd62dF59f6F6","description":"grant or revoke Accounting roles, change the bond lock period and penalty recipient, and configure fee splits and custom rewards claimers.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.7:
++        {"permission":"interact","from":"eth:0x367d23c756599c20DCc8D6943F4976E8F88D60d7","description":"grant or revoke FeeDistributor roles and change the rebate recipient.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.8:
++        {"permission":"interact","from":"eth:0x3BbBb175f7F07954DE00052b20E1c5572223F24D","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.12:
++        {"permission":"interact","from":"eth:0x3FC2C71579D80790Aaa3fc7Be8B66ac39dC57374","description":"grant or revoke TopUpGateway roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.13:
++        {"permission":"interact","from":"eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB","description":"grant or revoke every FeeOracle role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.14:
++        {"permission":"interact","from":"eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da","description":"grant or revoke Accounting roles, change the bond lock period and penalty recipient, and configure fee splits and custom rewards claimers.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.20:
++        {"permission":"interact","from":"eth:0x5DB427080200c235F2Ae8Cd17A7be87921f7AD6c","description":"grant or revoke LazyOracle roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.23:
++        {"permission":"interact","from":"eth:0x6093EFA6B5E2FF3be54d1c895c9deA932805c49F","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.24:
++        {"permission":"interact","from":"eth:0x610B517D380f287c239C93F8eF6FfBd567AA4bA5","description":"grant or revoke Ejector roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.26:
++        {"permission":"interact","from":"eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.27:
++        {"permission":"interact","from":"eth:0x773933F9db8964A17d62fb808f2EC7A2de4247CC","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.29:
++        {"permission":"interact","from":"eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.30:
++        {"permission":"interact","from":"eth:0x852deD011285fe67063a08005c71a85690503Cee","description":"grant or revoke every AccountingOracle role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.33:
++        {"permission":"interact","from":"eth:0x86A8d4E0db5938D21d98047544668FCCB1A9ADc8","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.34:
++        {"permission":"interact","from":"eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1","description":"grant or revoke every WithdrawalQueue role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.35:
++        {"permission":"interact","from":"eth:0x8c002c6eE10cf8adb78D1F9EB2e134FdaF8A7C1a","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.36:
++        {"permission":"interact","from":"eth:0x8EeFCdbD984c30E472BcbF545783D051CB5114e5","description":"grant or revoke every FeeOracle role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.38:
++        {"permission":"interact","from":"eth:0x902D64c93F6595339aA46105627a085591051aFb","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.41:
++        {"permission":"interact","from":"eth:0x9D28ad303C90DF524BA960d7a2DAC56DcC31e428","description":"grant or revoke ParametersRegistry roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.42:
++        {"permission":"interact","from":"eth:0x9Dc70b5A4f4F5E4AF9058C983D560564F031f1D7","description":"grant or revoke ConsolidationMigrator roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.43:
++        {"permission":"interact","from":"eth:0xa12760721A72A7199aB38059DA6690b9Cd4ed7B8","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.44:
++        {"permission":"interact","from":"eth:0xA64b339eebD3dC3De848298B6a140955932901d8","description":"grant or revoke MetaRegistry roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.45:
++        {"permission":"interact","from":"eth:0xaa328816027F2D32B9F56d190BC9Fa4A5C07637f","description":"grant or revoke ValidatorStrikes roles and change the Ejector used for poor-performing validators.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.55:
++        {"permission":"interact","from":"eth:0xB314D4A76C457c93150d308787939063F4Cc67E0","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.56:
++        {"permission":"interact","from":"eth:0xb8cd8F059Ad7a5dB8CAfDe34aAb007317F7156C8","description":"grant or revoke asset-recovery and administrative roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.60:
++        {"permission":"interact","from":"eth:0xbf05A929c3D7885a6aeAd833a992dA6E5ac23b09","description":"grant or revoke OracleDaemonConfig roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.62:
++        {"permission":"interact","from":"eth:0xC392F457960f1B13Ebaf1aa6C065479dD507E1E3","description":"grant or revoke verifier pause and resume roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.63:
++        {"permission":"interact","from":"eth:0xC69685E89Cefc327b43B7234AC646451B27c544d","description":"grant or revoke OperatorGrid roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.66:
++        {"permission":"interact","from":"eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288","description":"grant or revoke every HashConsensus role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.67:
++        {"permission":"interact","from":"eth:0xd907CE33B4Be423823d1CFFe80BD147E8b8554C8","description":"grant or revoke ConsolidationBus roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.68:
++        {"permission":"interact","from":"eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0","description":"grant or revoke FeeDistributor roles and change the rebate recipient.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.69:
++        {"permission":"interact","from":"eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1","description":"grant or revoke Curated Staking Module roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.70:
++        {"permission":"interact","from":"eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F","description":"grant or revoke Community Staking Module roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.73:
++        {"permission":"interact","from":"eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B","description":"grant or revoke every TriggerableWithdrawalsGateway role.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.74:
++        {"permission":"interact","from":"eth:0xe181A377A2d2BDE9A83f1474BC3DB7A412de091E","description":"grant or revoke Ejector roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.75:
++        {"permission":"interact","from":"eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a","description":"grant or revoke Burner roles and enable migration of excess stETH.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.76:
++        {"permission":"interact","from":"eth:0xeF273Ca4A21Ba7B414Ae3C9f9b443038cb133F72","description":"grant or revoke gate roles and change the gate's display name.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.77:
++        {"permission":"interact","from":"eth:0xf4618370a1fBf46905B16C10817c8CFaD924D6db","description":"grant or revoke ValidatorStrikes roles and change the Ejector used for poor-performing validators.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.78:
++        {"permission":"interact","from":"eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3","description":"grant or revoke PredepositGuarantee roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.82:
++        {"permission":"interact","from":"eth:0xfce7aB839e55de77730716D05b3553e45ab3A5Ba","description":"grant or revoke verifier pause and resume roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.84:
++        {"permission":"interact","from":"eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999","description":"grant or revoke StakingRouter roles and administer the router's privileged operations.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+      receivedPermissions.85:
++        {"permission":"interact","from":"eth:0xffC1C5d59CeAC6F6c27E701F04a70cb50474607C","description":"grant or revoke ParametersRegistry roles.","role":".defaultAdmins","via":[{"address":"eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"},{"address":"eth:0x23E0B465633FF5178808F4A75186E2F2F9537021"}]}
+    }
+```
+
+```diff
+    contract HashConsensus (eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288) [lido/HashConsensus] {
+    +++ description: Collects report hashes from an enumerable oracle committee and forwards a report to its processor once quorum agrees. It defines report frames, quorum, fast-lane members, and the report processor.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract ConsolidationBus (eth:0xd907CE33B4Be423823d1CFFe80BD147E8b8554C8) [lido/ConsolidationBus] {
+    +++ description: Queues validator consolidation batches and, after an execution delay, forwards proven EIP-7251 requests to ConsolidationGateway.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract FeeDistributor (eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0) [lido/FeeDistributor] {
+    +++ description: Receives a staking module's stETH fee shares and distributes them to node operators according to a Merkle tree submitted by its FeeOracle. Claims are accounted in stETH shares.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract CuratedModule (eth:0xDa5F930cE326EB5205085D66c72A4E79d60cB8C1) [lido/CuratedModule] {
+    +++ description: The permissioned Curated Staking Module. It manages approved node operators and validator keys, accepts deposits and top-ups from the StakingRouter, and processes validator lifecycle reports and penalties.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract CSModule (eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) [lido/CSModule] {
+    +++ description: Lido's permissionless Community Staking Module. It manages node operators and validator keys, accepts router deposits and top-ups, processes validator exits, and applies bond-backed penalties.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract TriggerableWithdrawalsGateway (eth:0xDC00116a0D3E064427dA2600449cfD2566B3037B) [lido/TriggerableWithdrawalsGateway] {
+    +++ description: The permissioned entrypoint for full EIP-7002 validator withdrawals. It charges the current request fee, applies a replenishing global exit limit, forwards requests to WithdrawalVault, and notifies StakingRouter.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract Ejector (eth:0xe181A377A2d2BDE9A83f1474BC3DB7A412de091E) [lido/Ejector] {
+    +++ description: Submits triggerable full-withdrawal requests for validators. Node operators may voluntarily eject their own validators, while ValidatorStrikes can eject validators for poor performance.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract Burner (eth:0xE76c52750019b80B43E36DF30bf4060EB73F573a) [lido/Burner] {
+    +++ description: Escrows stETH shares requested for cover or non-cover burning and burns them during an oracle report. Excess stETH can be recovered into the Lido protocol during migration.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract CuratedGate (eth:0xeF273Ca4A21Ba7B414Ae3C9f9b443038cb133F72) [lido/CuratedGate] {
+    +++ description: Merkle-gated onboarding contract for a curated Community Staking Module cohort. An eligible address consumes its proof to create a node operator with this gate's configured bond curve and metadata group.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract EasyTrack (eth:0xF0211b7660680B49De1A7E9f25C65660F0a13Fea) [lido/EasyTrack] {
+    +++ description: Optimistic Lido DAO motion system. Approved factories restrict the target and selector of each motion; LDO holders can object, and an unobstructed motion is executed through the EVMScriptExecutor after its delay.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x2e59A20f205bB85a89C53f1936454680651E618e"
+      values.defaultAdmins.0:
++        "eth:0x2e59A20f205bB85a89C53f1936454680651E618e"
+    }
+```
+
+```diff
+    contract ValidatorStrikes (eth:0xf4618370a1fBf46905B16C10817c8CFaD924D6db) [lido/ValidatorStrikes] {
+    +++ description: Stores the oracle-provided Merkle root of validator performance strikes. Proven strike data can cause a poor-performing validator to be ejected and penalized.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract PredepositGuarantee (eth:0xF4bF42c6D6A0E38825785048124DBAD6c9eaaac3) [lido/PredepositGuarantee] {
+    +++ description: Protects StakingVault deposits by proving validator withdrawal credentials and requiring an initial predeposit before the remaining validator deposit is sent.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract Community Staking Module Verifier (eth:0xfce7aB839e55de77730716D05b3553e45ab3A5Ba) [lido/CSVerifier] {
+    +++ description: Permissionless beacon-state proof verifier for a Community Staking Module. Valid proofs report validator balances, withdrawals and slashing to the connected module.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract StakingRouter (eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999) [lido/StakingRouter] {
+    +++ description: Coordinates Lido staking modules, allocates deposits and top-ups, tracks validator balances and exit states, and distributes staking rewards. Version 3 uses validator balances instead of validator counts and supports EIP-7251 compounding validators.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+    contract ParametersRegistry (eth:0xffC1C5d59CeAC6F6c27E701F04a70cb50474607C) [lido/ParametersRegistry] {
+    +++ description: Stores configurable Community Staking Module parameters, including bond curves, operator rewards, penalties, key limits, queue policy, performance thresholds, and validator-exit rules.
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.defaultAdmins.0:
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
 Generated with discovered.json: 0x488e27099773f22e992af12f86cec7a114781c8b
 
 # Diff at Mon, 17 Aug 2026 10:06:36 GMT:
