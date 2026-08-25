@@ -67,7 +67,7 @@ export function ParticleLayer({
   const particleRadius = isSmallScreen ? 1.5 : 2
   const clipId = `particles-clip-${useId().replace(/\W/g, '')}`
 
-  // Even-odd: a huge rect with one circle subpath per bubble punched out
+  // This exists to hide dots below the project bubbles
   const bubbleHoles = visibleChainIds
     .map((id) => layout.get(id))
     .filter((node) => node !== undefined)
