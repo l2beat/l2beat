@@ -1,4 +1,4 @@
-import type { InteropTransferTypeStatsMap } from '@l2beat/database'
+import type { InteropTransferTypeStatsMap } from '../InteropTransferTypeStats'
 
 export function mergeTransferTypeStats(
   current: InteropTransferTypeStatsMap | undefined,
@@ -7,7 +7,6 @@ export function mergeTransferTypeStats(
   if (!next) return current
 
   const result = { ...current }
-
   for (const [transferType, stats] of Object.entries(next)) {
     const currentStats = result[transferType]
     result[transferType] = {
