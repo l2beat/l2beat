@@ -1,7 +1,7 @@
 {
   "name": "katana",
   "timestamp": 1787645431,
-  "configHash": "0x6c275fb0f69b0a98067a35a50179d9d9e0837577bccdf67bb8a9e876c6b632f4",
+  "configHash": "0x3a15fa6f8bd36d1b4fb3812f927aeaa359676754aa278564ada4b4f18f503790",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -136,7 +136,7 @@
         "selectedOpSuccinctConfig": {
           "aggregationVkey": "0x00d68eb096f4c731512562f7a06e6bba104dbcb959261edd3eb3ec542c200c89",
           "rangeVkeyCommitment": "0x1f089f9d1cd3f727775788003d3e496037d3625e2e9de6e5005f1e9707ba3b8f",
-          "rollupConfigHash": "0x720a7d9b12c0a7fbbd1b2634eb9d17b5cc7720575c48736b1c40e9399f31de09"
+          "rollupConfigHash": "Katana OP Succinct v3.12.0 rollup config (Kona v1.6.0)"
         },
         "selectedOpSuccinctConfigName": "0x0f30c0b6846b034a146a47c5185fb9a4321df3569376773238ef30c831019190",
         "startingBlockNumber": 4102088,
@@ -186,7 +186,8 @@
         {
           "typeCaster": "Mapping",
           "arg": {
-            "0xecdbb340ded82ca2e5baf5e40c90a3b0c1227c27f9be2962df93d2e061e9a5d4": "Katana OP Succinct v3.10.0 rollup config (Kona v1.6.0)"
+            "0xecdbb340ded82ca2e5baf5e40c90a3b0c1227c27f9be2962df93d2e061e9a5d4": "Katana OP Succinct v3.10.0 rollup config (Kona v1.6.0)",
+            "0x720a7d9b12c0a7fbbd1b2634eb9d17b5cc7720575c48736b1c40e9399f31de09": "Katana OP Succinct v3.12.0 rollup config (Kona v1.6.0)"
           }
         }
       ],

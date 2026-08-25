@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xf9296765a9f5ce636e381ea605f863fb349421ed
+Generated with discovered.json: 0x9ad98e02cc7fe4cba237408e366e72c1a065ee25
 
-# Diff at Tue, 25 Aug 2026 08:16:07 GMT:
+# Diff at Tue, 25 Aug 2026 08:59:35 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@19c383d3b8961aa173298f261cae4a76da50a99d block: 1784814637
+- comparing to: main@afee435bc99a79b6a7bbb46fd9865fb0e8b74e89 block: 1784814637
 - current timestamp: 1787645431
 
 ## Description
@@ -23,7 +23,7 @@ New selected op succinct config.
 +        "0x1f089f9d1cd3f727775788003d3e496037d3625e2e9de6e5005f1e9707ba3b8f"
       values.selectedOpSuccinctConfig.rollupConfigHash:
 -        "0x0000000000000000000000000000000000000000000000000000000000000000"
-+        "0x720a7d9b12c0a7fbbd1b2634eb9d17b5cc7720575c48736b1c40e9399f31de09"
++        "Katana OP Succinct v3.12.0 rollup config (Kona v1.6.0)"
 +++ description: currently enforced OpSuccinctConfig. update the call handler for the full config if this changes.
 +++ severity: HIGH
       values.selectedOpSuccinctConfigName:
@@ -61,6 +61,8 @@ discovery. Values are for block 1784814637 (main branch discovery), not current.
       values.selectedOpSuccinctConfig.rollupConfigHash:
 -        "Katana OP Succinct v3.10.0 rollup config (Kona v1.6.0)"
 +        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      usedTypes.0.arg.0x720a7d9b12c0a7fbbd1b2634eb9d17b5cc7720575c48736b1c40e9399f31de09:
++        "Katana OP Succinct v3.12.0 rollup config (Kona v1.6.0)"
     }
 ```
 
