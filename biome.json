@@ -188,7 +188,13 @@
                   "node:assert": "Use assert from @l2beat/shared-pure",
                   "lodash": "Use lodash/{module}",
                   "process": "Do not use process"
-                }
+                },
+                "patterns": [
+                  {
+                    "group": ["@l2beat/*/dist", "@l2beat/*/dist/**"],
+                    "message": "Import from the package's public entrypoint instead."
+                  }
+                ]
               }
             }
           },
