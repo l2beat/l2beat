@@ -43,8 +43,11 @@ interface Props {
  * opacity. Those are applied through style per element per sample, and when
  * the graph sits inside a CSS size container (the home card) every one of
  * those style updates forces a layout, so hundreds of particles meant
- * thousands of layouts per frame. Instead, idle particles hold at the path
- * end, which is the destination bubble's center, hidden under its icon.
+ * thousands of layouts per frame. Instead, particles are hidden by position:
+ * the path is relative to the source and the flow group is translated there,
+ * so a particle that hasn't started yet sits at the source bubble's center,
+ * and an idle one holds at the path end, the destination bubble's center —
+ * both under the bubble icons, which are drawn on top of this layer.
  */
 export function ParticleLayer({
   flows,
@@ -80,10 +83,10 @@ export function ParticleLayer({
         if (!particles || particles.exactCount <= 0) return null
 
         const path = getConnectionPath(
-          src,
-          dst,
-          centerX,
-          centerY,
+          { ...src, x: 0, y: 0 },
+          { ...dst, x: dst.x - src.x, y: dst.y - src.y },
+          centerX - src.x,
+          centerY - src.y,
           BIDIRECTIONAL_OFFSET,
         )
         const color = getChainColor(interopChains, flow.srcChain)
@@ -108,12 +111,15 @@ export function ParticleLayer({
         const t = exactCount / count
 
         return (
-          <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
+          <g
+            key={`${flow.srcChain}-${flow.dstChain}`}
+            opacity={groupOpacity}
+            transform={`translate(${src.x} ${src.y})`}
+          >
             {Array.from({ length: count }, (_, i) => {
-              // Negative begin: each particle starts mid-cycle, so the graph
-              // is in steady state at load and nothing ever sits un-animated
-              // at the SVG origin waiting for its turn.
-              const begin = `-${initialOffset + i * particleInterval}s`
+              // Positive delay, so particles emerge from the source one by
+              // one over the first cycle instead of appearing mid-path.
+              const begin = `${initialOffset + i * particleInterval}s`
 
               return (
                 <circle key={i} r={particleRadius} fill={color} opacity={0.8}>
