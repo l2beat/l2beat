@@ -55,7 +55,7 @@ export const ossificationColumns = [
     },
     meta: {
       tooltip:
-        'The critical perimeter has stayed unchanged longer than the exploited code in N% of recorded code-bug exploits. Below 50: younger than the median exploited code. 80+: about a year unchanged.',
+        "The project's critical smart contracts have stayed unchanged longer than the exploited code in N% of recorded incidents. Below 50: younger than the median exploited code. 80+: about a year unchanged.",
     },
     sortDescFirst: true,
   }),
@@ -74,14 +74,14 @@ export const ossificationColumns = [
     },
     meta: {
       tooltip:
-        'Value secured summed up over the unchanged period — the implicit bug bounty the code has withstood, in dollar-years.',
+        'Value secured summed up over the ossified period — the implicit bug bounty the code has withstood, in dollar-years (Example: 6 months of constant 10M TVS without critical code changes gives a value of 5M, 3 years give 30M).',
     },
     sortDescFirst: true,
     sortUndefined: 'last',
   }),
   columnHelper.display({
     id: 'timeline',
-    header: 'TVS &\nchanges (12m)',
+    header: 'TVS &\nchanges (1y)',
     cell: (ctx) => (
       <OssificationTimelineCell
         timeline={ctx.row.original.timeline}
@@ -90,7 +90,7 @@ export const ossificationColumns = [
     ),
     meta: {
       tooltip:
-        'TVS over the last 12 months. The highlighted part is the unchanged period — its area is the battle-tested exposure. Ticks below the baseline are earlier perimeter resets: a critical change or a newly deployed critical contract. Heights are per-project, so shapes compare but sizes do not.',
+        'TVS over one year. The highlighted part is the ossified period — its area is the battle-tested exposure. Ticks below the baseline are earlier critical changes to the smart contracts. Heights are normalized per-project.',
       cellClassName: 'py-0',
     },
     enableSorting: false,
@@ -123,7 +123,7 @@ export const ossificationColumns = [
     ),
     meta: {
       tooltip:
-        '24h-clustered critical change events per year over the trailing 36 months, including backfilled history of removed contracts.',
+        '24h-clustered critical change events per year over the trailing 36 months.',
     },
     sortDescFirst: true,
   }),
@@ -146,7 +146,7 @@ export const ossificationColumns = [
     },
     meta: {
       tooltip:
-        'Context only: how much time users have to exit before a permitted critical change takes effect. This does not affect ossification.',
+        'How much time users have to exit before a permitted critical change takes effect. This does not directly affect ossification.',
     },
     sortDescFirst: true,
     sortUndefined: 'last',
