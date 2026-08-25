@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import { v } from '@l2beat/validate'
 
@@ -22,6 +23,11 @@ interface GetRequestsOptions {
   sortBy?: 'createdAt' | 'updatedAt'
   sortDirection?: 'asc' | 'desc'
 }
+
+type GetAllRequestsOptions = Omit<
+  GetRequestsOptions,
+  'sortBy' | 'sortDirection'
+>
 
 const CurrencyObject = v.object({
   chainId: v.number().optional(),
@@ -172,7 +178,12 @@ export const GetRequestsResponse = v.object({
 })
 
 export class RelayApiClient {
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private logger: Logger,
+  ) {
+    this.logger = logger.for(this)
+  }
 
   async getRequests(options: GetRequestsOptions = {}) {
     const queryParams: Record<string, string> = {}
@@ -189,18 +200,34 @@ export class RelayApiClient {
     return GetRequestsResponse.parse(data)
   }
 
-  async getAllRequests(options: GetRequestsOptions = {}) {
+  async getAllRequests(options: GetAllRequestsOptions = {}) {
     let limit = options.limit ?? 50
     const result: GetRequestsResponse = {
       requests: [],
     }
     let continuation = options.continuation
     do {
-      const res = await this.getRequests({
-        ...options,
-        limit: Math.min(limit, 50),
-        continuation,
-      })
+      let res: GetRequestsResponse
+      try {
+        res = await this.getRequests({
+          ...options,
+          sortBy: 'updatedAt',
+          sortDirection: 'asc',
+          limit: Math.min(limit, 50),
+          continuation,
+        })
+      } catch (error) {
+        if (result.requests.length === 0) {
+          throw error
+        }
+        this.logger.warn('Returning partial requests', {
+          fetched: result.requests.length,
+          requested: options.limit ?? 50,
+          continuation,
+          error,
+        })
+        break
+      }
       for (const req of res.requests) {
         if (limit > 0) {
           limit -= 1
@@ -209,6 +236,7 @@ export class RelayApiClient {
       }
       continuation = res.continuation
     } while (continuation && limit > 0)
+    result.continuation = continuation
     return result
   }
 }
