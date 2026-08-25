@@ -1,6 +1,6 @@
 {
   "name": "forknet",
-  "timestamp": 1786696815,
+  "timestamp": 1787644642,
   "configHash": "0x8d2c97c477c7259808b8f37156ccc3e909178986442bbea90fe55c298187aecc",
   "entries": [
     {
@@ -450,6 +450,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2",
           "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
           "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
@@ -465,8 +466,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 302,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 304,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -830,6 +831,11 @@
           }
         }
       ]
+    },
+    {
+      "address": "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
@@ -2357,6 +2363,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
-  "usedBlockNumbers": { "ethereum": 25752136 },
-  "permissionsConfigHash": "0xfbfa71030bd634666d7e6b9e640f9c9629f23dec65274fa15311dd77cd3fe559"
+  "usedBlockNumbers": { "ethereum": 25830861 },
+  "permissionsConfigHash": "0x04a36233f3d49b61c361f1799d2cf8e3f1bd7e6f92799d4225bb7d2ba7e10a46"
 }
