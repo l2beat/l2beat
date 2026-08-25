@@ -839,7 +839,7 @@ export const aztecnetwork: ScalingProject = {
       status: 'partiallyReviewed',
       points: ['All state is validated with validity proofs on Ethereum.'],
       missing: [
-        'No multiproofs.',
+        'No multiproof system.',
         'An exploit in the single proof system combined with private execution can be fatal for the protocol.',
       ],
       notReviewed: ['Quantum safety.', 'Circuit breakers and rate limits.'],
