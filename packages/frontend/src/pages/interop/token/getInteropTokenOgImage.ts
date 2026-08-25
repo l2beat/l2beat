@@ -3,7 +3,10 @@ import path from 'node:path'
 import { Resvg } from '@resvg/resvg-js'
 import satori from 'satori'
 import { TokenOpengraphImage } from '~/components/opengraph-image/Token'
-import { getActiveInteropAbstractTokens } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
+import {
+  getActiveInteropAbstractTokens,
+  type InteropAbstractToken,
+} from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 
 const OG_IMAGE_SIZE = { width: 1200, height: 630 }
@@ -37,7 +40,19 @@ async function renderInteropTokenOgImage(
     assets.placeholderIconSrc,
   )
 
-  const svg = await satori(
+  const svg = await renderTokenSvg(assets, token, iconSrc).catch((error) => {
+    if (iconSrc === assets.placeholderIconSrc) throw error
+    return renderTokenSvg(assets, token, assets.placeholderIconSrc)
+  })
+  return new Resvg(svg).render().asPng()
+}
+
+function renderTokenSvg(
+  assets: StaticAssets,
+  token: InteropAbstractToken,
+  iconSrc: string,
+): Promise<string> {
+  return satori(
     TokenOpengraphImage({
       backgroundSrc: assets.backgroundSrc,
       iconSrc,
@@ -63,7 +78,6 @@ async function renderInteropTokenOgImage(
       ],
     },
   )
-  return new Resvg(svg).render().asPng()
 }
 
 interface StaticAssets {
