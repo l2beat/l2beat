@@ -114,8 +114,6 @@ export class RelayIndexer extends ManagedChildIndexer {
     const res = await this.relayApiClient.getAllRequests({
       limit: 500,
       startTimestamp: from,
-      sortBy: 'updatedAt',
-      sortDirection: 'asc',
     })
 
     const successes = res.requests.filter((x) => x.status === 'success')

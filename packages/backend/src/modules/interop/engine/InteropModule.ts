@@ -216,7 +216,7 @@ export function createInteropModule({
     },
   )
 
-  const relayApiClient = new RelayApiClient(new HttpClient())
+  const relayApiClient = new RelayApiClient(new HttpClient(), logger)
   const relayRootIndexer = new RelayRootIndexer(logger)
   const relayIndexer = new RelayIndexer(
     config.interop.config.chains,
