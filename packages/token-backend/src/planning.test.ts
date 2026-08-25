@@ -2,6 +2,7 @@ import type {
   AbstractTokenRecord,
   DeployedTokenRecord,
   TokenDatabase,
+  TokenRelationRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -303,6 +304,141 @@ describe('planning proof stamping', () => {
       ])
     })
 
+    it('rejects a relation with an unknown bridge type', async () => {
+      const relation = tokenRelation(
+        deployedRecord('ethereum', '0xaaa', 'USDC01'),
+        deployedRecord('arbitrum', '0xbbb', 'USDC01'),
+        { bridgeType: 'unknown' },
+      )
+
+      const result = await generatePlan(
+        mockDb({}),
+        { type: 'AddTokenRelationIntent', record: relation },
+        { user: USER, skipLogs: true },
+      )
+
+      expect(result).toEqual({
+        outcome: 'error',
+        error:
+          "A token relation cannot use bridge type 'unknown' — pick the mechanism the bridge uses",
+      })
+    })
+
+    it('rejects a locked token on a non-lockAndMint relation', async () => {
+      const relation = tokenRelation(
+        deployedRecord('ethereum', '0xaaa', 'USDC01'),
+        deployedRecord('arbitrum', '0xbbb', 'USDC01'),
+        { bridgeType: 'burnAndMint', lockedToken: 'A' },
+      )
+
+      const result = await generatePlan(
+        mockDb({}),
+        { type: 'AddTokenRelationIntent', record: relation },
+        { user: USER, skipLogs: true },
+      )
+
+      expect(result).toEqual({
+        outcome: 'error',
+        error:
+          'Only a lockAndMint relation has a locked token — a burnAndMint relation must not name one',
+      })
+    })
+
+    it('rejects a relation between a token and itself', async () => {
+      const token = deployedRecord('ethereum', '0xaaa', 'USDC01')
+      // Addresses are compared case-insensitively, like the table stores them.
+      const relation = tokenRelation(token, {
+        chain: token.chain,
+        address: token.address.toUpperCase(),
+      })
+
+      const result = await generatePlan(
+        mockDb({}),
+        { type: 'AddTokenRelationIntent', record: relation },
+        { user: USER, skipLogs: true },
+      )
+
+      expect(result).toEqual({
+        outcome: 'error',
+        error: 'A token relation must connect two different tokens',
+      })
+    })
+
+    it('stamps the plan-time user into manual relation evidence', async () => {
+      const ethereumToken = deployedRecord('ethereum', '0xaaa', 'ETH001')
+      const arbitrumToken = deployedRecord('arbitrum', '0xbbb', 'ETH001')
+      const bridge = {
+        name: 'WETH contract',
+        chain: 'ethereum',
+        address: '0xc02a',
+      }
+      const relation = tokenRelation(ethereumToken, arbitrumToken, {
+        plugin: 'manual',
+        bridgeType: 'lockAndMint',
+        lockedToken: 'A',
+        // A client-sent `user` is not trusted: the planner replaces it with
+        // the authenticated plan-time user.
+        transfer: {
+          kind: 'manual',
+          comment: 'WETH wraps ETH',
+          bridge,
+          user: 'forged@example.com',
+        },
+      })
+      const db = mockDb({
+        deployedByPk: {
+          [`${ethereumToken.chain}:${ethereumToken.address}`]: ethereumToken,
+          [`${arbitrumToken.chain}:${arbitrumToken.address}`]: arbitrumToken,
+        },
+      })
+
+      const result = await generatePlan(
+        db,
+        { type: 'AddTokenRelationIntent', record: relation },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'AddTokenRelationCommand',
+          // Endpoints are normalized (arbitrum sorts first), and the stated
+          // role moves with them.
+          record: tokenRelation(arbitrumToken, ethereumToken, {
+            plugin: 'manual',
+            bridgeType: 'lockAndMint',
+            lockedToken: 'B',
+            transfer: {
+              kind: 'manual',
+              comment: 'WETH wraps ETH',
+              bridge,
+              user: USER,
+            },
+          }),
+        },
+      ])
+    })
+
+    it('rejects a manual relation whose evidence is not a manual entry', async () => {
+      const ethereumToken = deployedRecord('ethereum', '0xaaa', 'ETH001')
+      const arbitrumToken = deployedRecord('arbitrum', '0xbbb', 'ETH001')
+      const relation = tokenRelation(ethereumToken, arbitrumToken, {
+        plugin: 'manual',
+      })
+
+      const result = await generatePlan(
+        mockDb({}),
+        { type: 'AddTokenRelationIntent', record: relation },
+        { user: USER, skipLogs: true },
+      )
+
+      expect(result).toEqual({
+        outcome: 'error',
+        error:
+          "A relation with plugin 'manual' must carry manual-entry evidence: { kind: 'manual', comment, bridge }",
+      })
+    })
+
     it('updates an existing token relation', async () => {
       const existing = tokenRelation(
         deployedRecord('ethereum', '0xaaa', 'USDC01'),
@@ -327,6 +463,75 @@ describe('planning proof stamping', () => {
           pk: relationPk(existing),
           existing,
           update: { transfer: { transferId: 'transfer-2' } },
+        },
+      ])
+    })
+
+    it('rejects a locked token update on a non-lockAndMint relation', async () => {
+      const existing = tokenRelation(
+        deployedRecord('ethereum', '0xaaa', 'USDC01'),
+        deployedRecord('arbitrum', '0xbbb', 'USDC01'),
+      )
+      const db = mockDb({ existingRelation: existing })
+
+      const result = await generatePlan(
+        db,
+        {
+          type: 'UpdateTokenRelationIntent',
+          pk: relationPk(existing),
+          update: { lockedToken: 'A' },
+        },
+        { user: USER, skipLogs: true },
+      )
+
+      expect(result).toEqual({
+        outcome: 'error',
+        error:
+          'Only a lockAndMint relation has a locked token — a burnAndMint relation must not name one',
+      })
+    })
+
+    it('stamps the plan-time user when updating manual relation evidence', async () => {
+      const existing = tokenRelation(
+        deployedRecord('ethereum', '0xaaa', 'ETH001'),
+        deployedRecord('arbitrum', '0xbbb', 'ETH001'),
+        {
+          plugin: 'manual',
+          transfer: { kind: 'manual', comment: null, bridge: null, user: USER },
+        },
+      )
+      const db = mockDb({ existingRelation: existing })
+
+      const result = await generatePlan(
+        db,
+        {
+          type: 'UpdateTokenRelationIntent',
+          pk: relationPk(existing),
+          update: {
+            transfer: {
+              kind: 'manual',
+              comment: 'Fixed comment',
+              bridge: null,
+            },
+          },
+        },
+        { user: USER, skipLogs: true },
+      )
+
+      assertSuccess(result)
+      expect(result.plan.commands).toEqual([
+        {
+          type: 'UpdateTokenRelationCommand',
+          pk: relationPk(existing),
+          existing,
+          update: {
+            transfer: {
+              kind: 'manual',
+              comment: 'Fixed comment',
+              bridge: null,
+              user: USER,
+            },
+          },
         },
       ])
     })
@@ -639,6 +844,12 @@ function deployedRecord(
 function tokenRelation(
   tokenA: Pick<DeployedTokenRecord, 'chain' | 'address'>,
   tokenB: Pick<DeployedTokenRecord, 'chain' | 'address'>,
+  overrides: Partial<
+    Pick<
+      TokenRelationRecord,
+      'plugin' | 'bridgeType' | 'lockedToken' | 'transfer'
+    >
+  > = {},
 ) {
   return {
     tokenAChain: tokenA.chain,
@@ -649,6 +860,7 @@ function tokenRelation(
     bridgeType: 'burnAndMint' as const,
     lockedToken: null,
     transfer: { transferId: 'transfer-1' },
+    ...overrides,
   }
 }
 

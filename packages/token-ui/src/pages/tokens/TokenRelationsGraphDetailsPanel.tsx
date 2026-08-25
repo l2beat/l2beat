@@ -18,6 +18,7 @@ import { ExplorerLink } from '~/components/ExplorerLink'
 import { LoadingState } from '~/components/LoadingState'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useTRPC } from '~/react-query/trpc'
+import { readManualRelationEvidence } from '~/utils/manualRelationEvidence'
 import {
   nodeLabel,
   RELATION_COLORS,
@@ -487,8 +488,8 @@ function GraphRelationDetails({
       <DetailsSection title="Delete relation">
         <p className="text-muted-foreground text-sm">
           Remove this relation if it was ingested from an incorrect interop
-          transfer. The graph keeps its current layout — refresh the page to see
-          the re-clustered graph.
+          transfer or added manually by mistake. The graph keeps its current
+          layout — refresh the page to see the re-clustered graph.
         </p>
         <ButtonWithSpinner
           variant="destructive"
@@ -547,6 +548,38 @@ function RelationEvidence({
   relation: RelationDetails
   chains: Chain[]
 }) {
+  const manualEvidence = readManualRelationEvidence(relation.transfer)
+  if (manualEvidence) {
+    return (
+      <DetailsSection title="Manual entry evidence">
+        <DetailRows>
+          {manualEvidence.user && (
+            <DetailRow label="Added by">{manualEvidence.user}</DetailRow>
+          )}
+          {manualEvidence.bridge?.name && (
+            <DetailRow label="Bridge">{manualEvidence.bridge.name}</DetailRow>
+          )}
+          {manualEvidence.bridge?.chain && manualEvidence.bridge.address && (
+            <DetailRow label="Bridge contract">
+              <AddressValue
+                chain={manualEvidence.bridge.chain}
+                address={manualEvidence.bridge.address}
+                explorerUrl={findExplorerUrl(
+                  chains,
+                  manualEvidence.bridge.chain,
+                )}
+              />
+            </DetailRow>
+          )}
+          {manualEvidence.comment && (
+            <DetailRow label="Comment">{manualEvidence.comment}</DetailRow>
+          )}
+        </DetailRows>
+        <JsonDetails label="Raw evidence" value={relation.transfer} />
+      </DetailsSection>
+    )
+  }
+
   const evidence = readTransferEvidence(relation.transfer)
 
   return (

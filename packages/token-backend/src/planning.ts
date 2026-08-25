@@ -1,9 +1,10 @@
 import {
   type DeployedTokenRecord,
+  type JsonValue,
   normalizeTokenRelation,
   type TokenDatabase,
 } from '@l2beat/database'
-import { assertUnreachable } from '@l2beat/shared-pure'
+import { assertUnreachable, MANUAL_RELATION_PLUGIN } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { Command } from './commands'
 import { manualProof } from './commitTokenChanges'
@@ -26,9 +27,11 @@ import type {
   CoingeckoEntry,
 } from './schemas/AbstractToken'
 import type { DeployedTokenUpdateable } from './schemas/DeployedToken'
-import type {
-  TokenRelationPrimaryKey,
-  TokenRelationRecord,
+import {
+  type ManualRelationEvidence,
+  ManualRelationEvidenceInput,
+  type TokenRelationPrimaryKey,
+  type TokenRelationRecord,
 } from './schemas/TokenRelation'
 
 export type Plan = v.infer<typeof Plan>
@@ -98,10 +101,10 @@ export async function generatePlan(
         commands = await planDeleteDeployedToken(db, intent)
         break
       case 'AddTokenRelationIntent':
-        commands = await planAddTokenRelation(db, intent)
+        commands = await planAddTokenRelation(db, intent, opts)
         break
       case 'UpdateTokenRelationIntent':
-        commands = await planUpdateTokenRelation(db, intent)
+        commands = await planUpdateTokenRelation(db, intent, opts)
         break
       case 'DeleteTokenRelationIntent':
         commands = await planDeleteTokenRelation(db, intent)
@@ -401,12 +404,39 @@ function extractAbstractTokenId(displayId: string): string {
 async function planAddTokenRelation(
   db: TokenDatabase,
   intent: AddTokenRelationIntent,
+  opts: PlanOptions,
 ): Promise<Command[]> {
-  await assertRelationEndpointsExist(db, intent.record)
+  // These mirror the table's CHECK constraints, so a violation surfaces here
+  // as a friendly planning error instead of failing the execute transaction.
+  if (intent.record.bridgeType === 'unknown') {
+    throw new PlanningError(
+      "A token relation cannot use bridge type 'unknown' — pick the mechanism the bridge uses",
+    )
+  }
+  if (
+    intent.record.lockedToken !== null &&
+    intent.record.bridgeType !== 'lockAndMint'
+  ) {
+    throw new PlanningError(
+      `Only a lockAndMint relation has a locked token — a ${intent.record.bridgeType} relation must not name one`,
+    )
+  }
 
   // A human names the two endpoints in whatever order they think of them; the
   // pair is unordered, so the stored order is derived rather than taken.
-  const record = normalizeTokenRelation(intent.record)
+  const record = normalizeTokenRelation({
+    ...intent.record,
+    transfer: stampManualRelationEvidence(intent.record, opts.user),
+  })
+  if (
+    record.tokenAChain === record.tokenBChain &&
+    record.tokenAAddress === record.tokenBAddress
+  ) {
+    throw new PlanningError(
+      'A token relation must connect two different tokens',
+    )
+  }
+  await assertRelationEndpointsExist(db, record)
   const existing = await db.tokenRelation.findByPrimaryKey(
     toTokenRelationPrimaryKey(record),
   )
@@ -427,7 +457,17 @@ async function planAddTokenRelation(
 async function planUpdateTokenRelation(
   db: TokenDatabase,
   intent: UpdateTokenRelationIntent,
+  opts: PlanOptions,
 ): Promise<Command[]> {
+  // Mirrors the table's CHECK constraint; see planAddTokenRelation.
+  if (
+    intent.update.lockedToken != null &&
+    intent.pk.bridgeType !== 'lockAndMint'
+  ) {
+    throw new PlanningError(
+      `Only a lockAndMint relation has a locked token — a ${intent.pk.bridgeType} relation must not name one`,
+    )
+  }
   const existing = await db.tokenRelation.findByPrimaryKey(intent.pk)
   if (existing === undefined) {
     throw new PlanningError(
@@ -435,14 +475,52 @@ async function planUpdateTokenRelation(
     )
   }
 
+  const update =
+    intent.update.transfer === undefined
+      ? intent.update
+      : {
+          ...intent.update,
+          transfer: stampManualRelationEvidence(
+            { plugin: intent.pk.plugin, transfer: intent.update.transfer },
+            opts.user,
+          ),
+        }
+
   return [
     {
       type: 'UpdateTokenRelationCommand',
       pk: intent.pk,
       existing,
-      update: intent.update,
+      update,
     },
   ]
+}
+
+/**
+ * The `transfer` evidence a relation write should store. For a relation whose
+ * plugin is the `manual` sentinel the evidence must be a manual entry, and its
+ * `user` is stamped here — at plan time, like deployed-token assignment
+ * proofs — so the confirmation diff already shows the record exactly as it
+ * will be stored, and the client never asserts who is writing. Evidence of
+ * relations with any other plugin passes through untouched.
+ *
+ * No timestamp is stamped: executePlan regenerates the plan and requires it
+ * to deep-equal the confirmed one, and the history row carries the time.
+ */
+function stampManualRelationEvidence(
+  relation: { plugin: string; transfer: JsonValue },
+  user: string,
+): JsonValue {
+  if (relation.plugin !== MANUAL_RELATION_PLUGIN) {
+    return relation.transfer
+  }
+  const evidence = ManualRelationEvidenceInput.safeParse(relation.transfer)
+  if (!evidence.success) {
+    throw new PlanningError(
+      `A relation with plugin '${MANUAL_RELATION_PLUGIN}' must carry manual-entry evidence: { kind: 'manual', comment, bridge }`,
+    )
+  }
+  return { ...evidence.data, user } satisfies ManualRelationEvidence
 }
 
 async function planDeleteTokenRelation(

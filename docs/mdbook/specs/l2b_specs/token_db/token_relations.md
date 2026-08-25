@@ -14,6 +14,7 @@
   - [Display implications](#display-implications)
   - [Relations graph](#relations-graph)
   - [Human edits](#human-edits)
+    - [Manually added relations](#manually-added-relations)
   - [Known limitations](#known-limitations)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -137,12 +138,24 @@ The remaining columns:
   |---|---|
   | `burnAndMint` | nothing is locked — the pair is symmetric, both sides burn and mint. A terminal value, not a gap. |
   | `lockAndMint` | no observation has identified the locked endpoint yet. Resolved as soon as one does. |
-- `transfer` holds one full sample interop transfer as evidence. It is
-  embedded (not referenced by id) because the interop transfer table is a
-  sliding ~7-day window — the same reasoning as the
-  `non-swapping-transfer` assignment proof on `DeployedToken`. The sample
-  keeps its own observed direction; read `srcChain`/`dstChain` from inside
-  the JSON when displaying it, never the relation's endpoint columns.
+- `transfer` holds the relation's evidence — *why we claim this relation
+  exists* — in one of two shapes, told apart inside the JSON by the presence
+  of a `kind` field and at the row level by `plugin` (see
+  [Manually added relations](#manually-added-relations)):
+  - For an ingested relation: one full sample interop transfer. It is
+    embedded (not referenced by id) because the interop transfer table is a
+    sliding ~7-day window — the same reasoning as the
+    `non-swapping-transfer` assignment proof on `DeployedToken`. The sample
+    keeps its own observed direction; read `srcChain`/`dstChain` from inside
+    the JSON when displaying it, never the relation's endpoint columns.
+  - For a manually added relation: a human attestation
+    `{ kind: 'manual', user, comment, bridge }`, where `bridge` optionally
+    names the mechanism (`{ name, chain, address }`, e.g. the WETH contract).
+    Sample transfers carry no `kind` field, so the discriminator is
+    unambiguous.
+
+  Either way the evidence is display-only: no read path derives roles,
+  direction, or identity from it.
 
 A pair of identical endpoints (same chain, same address) is not recorded: a
 token is trivially the same asset as itself, so the row would carry no
@@ -494,6 +507,58 @@ is unordered, so the stored order is derived rather than taken. `lockedToken`
 moves with the endpoints when they are swapped, so the role a human stated is
 preserved. The update intent can also set `lockedToken` directly, which is
 how a human corrects a role the flags got wrong.
+
+The add and update planners also mirror the table's `CHECK` constraints, so
+violations surface as friendly planning errors instead of failing the execute
+transaction: `bridgeType` must not be `unknown`, only a `lockAndMint` relation
+may name a `lockedToken`, and the two endpoints must differ (compared
+case-insensitively, like the table stores them).
+
+### Manually added relations
+
+Some relations no interop transfer can ever evidence — most prominently
+same-chain wrappers such as ETH ↔ WETH on ethereum, where WETH is minted by
+locking ETH in the WETH contract, but wrapping is not an interop transfer and
+no plugin observes it. Without the relation, both tokens look like "original"
+assets. The Relations tab of a deployed token in token-UI therefore has an
+*Add relation* flow that records such a relation manually through the
+standard add intent.
+
+A manual relation stores the sentinel plugin **`manual`**
+(`MANUAL_RELATION_PLUGIN` in `@l2beat/shared-pure`). `plugin` is part of the
+primary key, so it cannot be `NULL`, and the sentinel is what answers "which
+observer produced this observation" honestly: a human. It is a row-level
+marker — any reader can select or exclude manual relations on the `plugin`
+column alone, so future code that mines the sample-transfer evidence can
+filter manual rows without opening any JSON (`WHERE plugin != 'manual'`).
+Never name a real interop plugin `manual`. The bridge a human claims as the
+mechanism is deliberately *not* part of the plugin value: keeping free text
+out of the primary key keeps one manual row per `(pair, bridgeType)`, and the
+bridge description stays editable through the update intent instead of
+requiring delete + re-add.
+
+The evidence of a manual relation is the `{ kind: 'manual', ... }` attestation
+described in [The table](#the-table). Clients submit it without `user`; the
+planner validates the shape and stamps the authenticated plan-time user on it
+(replacing any client-sent value), exactly like deployed-token assignment
+proofs — so the confirmation diff already shows the record as it will be
+stored. No timestamp is stamped: `executePlan` regenerates the plan and
+requires it to deep-equal the confirmed one, and the history row carries the
+time. Relations with any other plugin pass their evidence through untouched —
+the backend deliberately keeps accepting arbitrary plugin values on the
+intent (it is an authenticated internal tool and every write lands in
+`TokenDbHistory`); only relations claiming the `manual` sentinel must carry
+manual-entry evidence.
+
+Manual relations are ordinary rows everywhere else: they render in the
+Relations tab and the graph (edge label `manual`), `getMintingPluginsFor`
+counts them, and the delete intent removes them. Same-chain pairs are legal —
+the endpoint-ordering constraint only rejects *identical* endpoints. One
+consequence to expect: `getMintingPluginsForMany` now returns `manual`
+records to the public frontend, which **skips them for now** when resolving
+minter projects (there is no interop project to link to), rather than warning
+about an unresolvable plugin. Displaying manual bridges on l2beat.com is a
+future decision.
 
 ## Known limitations
 
