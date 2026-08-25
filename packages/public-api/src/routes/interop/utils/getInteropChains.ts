@@ -1,4 +1,7 @@
-import type { AggregatedInteropTransferRecord } from '@l2beat/database'
+import {
+  type AggregatedInteropTransferRecord,
+  mergeTransferTypeStats,
+} from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import type { InteropChain } from '../types'
 import { chainMetadata } from './chainMetadata'
@@ -8,7 +11,6 @@ import {
   hasUnknownTransferTime,
   type ProjectMetadata,
 } from './getAverageTransferTime'
-import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 
 type ProtocolBreakdownAccumulator = {
   id: string

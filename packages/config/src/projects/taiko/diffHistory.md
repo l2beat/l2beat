@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xeb8204b46d9882056b1611fb4a4abd9915ec4187
+
+# Diff at Tue, 25 Aug 2026 08:45:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@afee435bc99a79b6a7bbb46fd9865fb0e8b74e89 block: 1786955407
+- current timestamp: 1787647451
+
+## Description
+
+Proposal 22: https://gist.github.com/sekuba/e325f390dbe8a73ebc53c1ad95e6c48d bringing proving efficiency.
+
+Proghashes are reproduced.
+
+## Watched changes
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
++++ description: total standard proposal count.
++++ severity: HIGH
+      values.proposalCount:
+-        22
++        23
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      values.operatorMapping.1:
+-        "eth:0x2267C7246523191b8bf7615B86b3bdEE612b7D9E"
++        "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06"
+    }
+```
+
 Generated with discovered.json: 0xa2899bfdb5071b6c3c99b069bd47a0bebc3bdd3c
 
 # Diff at Mon, 17 Aug 2026 08:31:35 GMT:

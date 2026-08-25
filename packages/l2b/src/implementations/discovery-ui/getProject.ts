@@ -1,4 +1,5 @@
 import {
+  type ColorContract,
   type ConfigReader,
   type ContractConfig,
   type DiscoveryOutput,
@@ -10,7 +11,6 @@ import {
   makeEntryStructureConfig,
   type TemplateService,
 } from '@l2beat/discovery'
-import type { ColorContract } from '@l2beat/discovery/dist/discovery/config/ColorConfig'
 import {
   assert,
   ChainSpecificAddress,

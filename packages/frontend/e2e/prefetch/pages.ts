@@ -90,9 +90,12 @@ export const DYNAMIC_PAGES: DynamicPageToVerify[] = [
   {
     name: 'representative privacy project page',
     async resolve() {
-      const [privacyProject] = await ps.getProjects({
-        where: ['privacyInfo'],
+      const privacyProjects = await ps.getProjects({
+        select: ['privacyInfo', 'tvsConfig'],
       })
+      const privacyProject = privacyProjects.find(
+        (project) => project.privacyInfo.tokens.length > 0,
+      )
 
       return privacyProject
         ? page(`/privacy/projects/${privacyProject.slug}`, [

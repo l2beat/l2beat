@@ -21,7 +21,7 @@ describe(StarknetBalanceProvider.name, () => {
         call: mockFn()
           .resolvesToOnce(['0x1'])
           .resolvesToOnce(['0x2', '0x1'])
-          .rejectsWithOnce('error'),
+          .resolvesToOnce([]),
         chain: CHAIN,
       })
       const balanceProvider = new StarknetBalanceProvider(
@@ -59,6 +59,24 @@ describe(StarknetBalanceProvider.name, () => {
         BLOCK,
       )
       expect(result).toEqual([1n, 2n + (1n << 128n), 0n])
+    })
+
+    it('throws if any call fails', async () => {
+      const client = mockObject<StarknetClient>({
+        call: mockFn()
+          .resolvesToOnce(['0x1'])
+          .resolvesToOnce(['0x2'])
+          .rejectsWithOnce(new Error('RPC failure')),
+        chain: CHAIN,
+      })
+      const balanceProvider = new StarknetBalanceProvider(
+        [client],
+        Logger.SILENT,
+      )
+
+      await expect(
+        balanceProvider.getBalances(BALANCES, BLOCK, CHAIN),
+      ).toBeRejectedWith('RPC failure')
     })
 
     it('throws if there is no client for the chain', () => {

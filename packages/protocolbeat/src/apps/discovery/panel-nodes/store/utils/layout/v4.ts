@@ -10,6 +10,7 @@ const NodeBox = v.object({
 const NodeLocations = v.record(v.string(), NodeBox)
 const NodeColors = v.record(v.string(), v.number())
 const NodeHiddenFields = v.record(v.string(), v.array(v.string()))
+const NodeCompressedRows = v.record(v.string(), v.array(v.string()))
 const HiddenNodes = v.array(v.string())
 
 // A user-created group. `members` lists the ids of its direct children, which
@@ -35,6 +36,10 @@ export const LayoutV4 = v.object({
   locations: NodeLocations,
   colors: NodeColors.optional(),
   hiddenFields: NodeHiddenFields.optional(),
+  // Field paths drawn as a single fanning row, per node id. Added after v4
+  // shipped: older builds parse the key away and show every value on its own
+  // row, which is exactly the pre-compression view.
+  compressedRows: NodeCompressedRows.optional(),
   hiddenNodes: HiddenNodes.optional(),
   groups: v.array(StoredGroup).optional(),
 })

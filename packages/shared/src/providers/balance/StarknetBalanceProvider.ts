@@ -37,13 +37,13 @@ export class StarknetBalanceProvider {
             blockNumber,
           )
           return decodeStarknetUint256(result)
-        } catch {
+        } catch (error) {
           this.logger.tag({ chain }).warn('Issue with balanceOf fetching', {
             token,
             holder,
             blockNumber,
           })
-          return 0n
+          throw error
         }
       }),
     )

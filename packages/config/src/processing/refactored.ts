@@ -17,6 +17,7 @@ import { cctpv2 } from '../projects/cctpv2/cctpv2'
 import { celestia } from '../projects/celestia/celestia'
 import { chainlink } from '../projects/chainlink/chainlink'
 import { circlegateway } from '../projects/circlegateway/circlegateway'
+import { cloaked } from '../projects/cloaked/cloaked'
 import { debridge } from '../projects/debridge/debridge'
 import { debridgeDln } from '../projects/debridge-dln/debridge-dln'
 import { eigenda } from '../projects/eigenda/eigenda'
@@ -43,6 +44,7 @@ import { meson } from '../projects/meson/meson'
 import { monad } from '../projects/monad/monad'
 import { near } from '../projects/near/near-da'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
+import { privacyBoost } from '../projects/privacy-boost/privacy-boost'
 import { privacyPools } from '../projects/privacy-pools/privacy-pools'
 import { railgun } from '../projects/railgun/railgun'
 import { relay } from '../projects/relay/relay'
@@ -58,6 +60,7 @@ import { tempo } from '../projects/tempo/tempo'
 import { tornadoCash } from '../projects/tornado-cash/tornado-cash'
 import { umbra } from '../projects/umbra/umbra'
 import { uniswapv3 } from '../projects/uniswapv3/uniswapv3'
+import { uniswapv4 } from '../projects/uniswapv4/uniswapv4'
 import { vector } from '../projects/vector/vector'
 import { wormholeNtt } from '../projects/wormhole-ntt/wormhole-ntt'
 import { wormholeWtt } from '../projects/wormhole-wtt/wormhole-wtt'
@@ -135,11 +138,14 @@ export const refactored: BaseProject[] = [
   liquityv2,
   chainlink,
   uniswapv3,
+  uniswapv4,
   // privacy
+  cloaked,
   privacyPools,
   railgun,
   strk20,
   tornadoCash,
   umbra,
   zamaCw,
+  privacyBoost,
 ]
