@@ -21,6 +21,10 @@ describe(getOpStackFullDisputeGameBondCost.name, () => {
 
     expect(Number(formatEther(fullPathCost)).toFixed(2)).toEqual('691.23')
   })
+
+  it('handles bonds that are small relative to the scale factor', () => {
+    expect(getOpStackFullDisputeGameBondCost(1_000, 73)).toEqual(8_600_000n)
+  })
 })
 
 describe(getOpStackMaxCumulativeClockExtension.name, () => {

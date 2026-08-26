@@ -112,19 +112,28 @@ interface ProjectInclusionDelayChartBase {
  * `l2b getstakedistrib`. Parsed at config load so malformed files fail
  * the build instead of rendering wrong data.
  */
-export const ProjectStakeDistributionSchema = v.object({
-  stakeToken: v.string(),
-  // 'snapshot' when the source reports its own data date,
-  // 'fetched' when only the fetch completion time is known.
-  dateType: v.union([v.literal('snapshot'), v.literal('fetched')]),
-  date: v.string(),
-  validatorCount: v.number().optional(),
-  totalStake: v.number(),
-  // Entity attribution. Omitted when the source only reports aggregate data.
-  entities: v
-    .array(v.object({ name: v.string(), stake: v.number() }))
-    .optional(),
-})
+export const ProjectStakeDistributionSchema = v
+  .object({
+    stakeToken: v.string(),
+    // 'snapshot' when the source reports its own data date,
+    // 'fetched' when only the fetch completion time is known.
+    dateType: v.union([v.literal('snapshot'), v.literal('fetched')]),
+    date: v.string(),
+    validatorCount: v.number().optional(),
+    totalStake: v.number(),
+    // Entity attribution. Omitted when the source only reports aggregate data.
+    entities: v
+      .array(v.object({ name: v.string(), stake: v.number() }))
+      .optional(),
+  })
+  .check(
+    (distribution) =>
+      distribution.dateType === 'snapshot'
+        ? /^\d{4}-\d{2}-\d{2}$/.test(distribution.date) &&
+          !Number.isNaN(Date.parse(`${distribution.date}T00:00:00Z`))
+        : !Number.isNaN(Date.parse(distribution.date)),
+    'date must be YYYY-MM-DD for snapshot or a parseable timestamp for fetched',
+  )
 
 export type ProjectInclusionDelayChartStakeDistribution = v.infer<
   typeof ProjectStakeDistributionSchema
