@@ -6,6 +6,7 @@ import type {
 } from '~/server/features/layer2s/interop/getInteropFlows'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
+import { BubbleHolesClip } from './BubbleHolesClip'
 import type { FlowsGraphLayout } from './utils/computeGraphLayout'
 import { getChainColor } from './utils/getChainColor'
 import {
@@ -67,17 +68,6 @@ export function ParticleLayer({
   const particleRadius = isSmallScreen ? 1.5 : 2
   const clipId = `particles-clip-${useId().replace(/\W/g, '')}`
 
-  // This exists to hide dots below the project bubbles
-  const bubbleHoles = visibleChainIds
-    .map((id) => layout.get(id))
-    .filter((node) => node !== undefined)
-    .map(
-      ({ x, y, radius: r }) =>
-        `M ${x - r} ${y} a ${r} ${r} 0 1 0 ${2 * r} 0 a ${r} ${r} 0 1 0 ${-2 * r} 0 Z`,
-    )
-    .join(' ')
-  const clipPathD = `M -1e4 -1e4 H 1e4 V 1e4 H -1e4 Z ${bubbleHoles}`
-
   const { flowsParticles } = useScaledParticleCounts(
     visibleChainIds,
     chainData,
@@ -87,11 +77,7 @@ export function ParticleLayer({
 
   return (
     <g pointerEvents="none" aria-hidden="true" clipPath={`url(#${clipId})`}>
-      <defs>
-        <clipPath id={clipId}>
-          <path d={clipPathD} clipRule="evenodd" />
-        </clipPath>
-      </defs>
+      <BubbleHolesClip id={clipId} chainIds={visibleChainIds} layout={layout} />
       {flows.map((flow) => {
         const src = layout.get(flow.srcChain)
         const dst = layout.get(flow.dstChain)
