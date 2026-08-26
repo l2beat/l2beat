@@ -1,0 +1,17 @@
+{
+  "description": "Recorded codex exec output for a 2x1 pair set (codex-cli 0.149.1, 2026-08-26)",
+  "entry": {
+    "pr": 0,
+    "title": "smoke",
+    "humanComments": [{ "id": 1, "body": "this loop is O(n^2), use a map" }],
+    "codexFindings": [
+      { "id": 10, "body": "Nested iteration over configs; build a lookup map" },
+      { "id": 11, "body": "Missing null check on user" }
+    ]
+  },
+  "rawOutput": "{\"verdicts\":[{\"finding_id\":10,\"human_comment_id\":1,\"match\":true,\"reason\":\"Both identify the nested-loop O(n²) performance issue and recommend replacing repeated iteration with a lookup map.\"},{\"finding_id\":11,\"human_comment_id\":1,\"match\":false,\"reason\":\"The human comment concerns algorithmic complexity and map-based lookup, while this finding concerns a missing null check.\"}]}",
+  "expected": [
+    { "findingId": 10, "humanCommentId": 1, "match": true },
+    { "findingId": 11, "humanCommentId": 1, "match": false }
+  ]
+}

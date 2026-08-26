@@ -1,0 +1,49 @@
+{
+  "description": "Recorded codex exec verdicts for PR #11474 (codex-cli 0.149.1, baseline run 2026-08-26T10-45-56-537Z)",
+  "entry": {
+    "pr": 11474,
+    "title": "Send less events to interop `capture`",
+    "humanComments": [
+      {
+        "id": 3045621294,
+        "path": "packages/backend/src/modules/interop/engine/sync/InteropEventSyncer.test.ts",
+        "body": "It doesn't reject or does it?"
+      }
+    ],
+    "codexFindings": [
+      {
+        "id": 3026757531,
+        "path": "packages/backend/src/modules/interop/engine/sync/InteropEventSyncer.ts",
+        "body": "**Defer log-query initialization until configs are loaded**\n\nAvoid calling `buildLogQuery()` in the syncer constructor: this runs every plugin’s `getDataRequests()` before runtime configs are loaded, but `InteropModule` starts syncers before `configStore.start()` (`InteropModule.ts`, start order around lines 206 and 217). For config-backed plugins (for example `AcrossPlugin`), that startup state can produce event requests with empty address lists, and `addPluginDataRequests()` throws on empty addresses, so syncer construction now fails and prevents the interop pipeline from starting."
+      },
+      {
+        "id": 3045461917,
+        "path": "packages/backend/src/modules/interop/engine/sync/InteropEventSyncer.ts",
+        "body": "**Enable log prefilter for production capture**\n\nThe new guard only filters logs when `configName !== 'Backend/Production'`, so production still sends every log to each plugin `capture` call. That means the high-volume environment gets none of the intended reduction and keeps the same CPU/load profile this change is trying to address."
+      },
+      {
+        "id": 3045461925,
+        "path": "packages/backend/src/modules/interop/engine/sync/InteropEventSyncer.ts",
+        "body": "**Keep empty-address data requests as hard failures**\n\nChanging empty address lists from `throw` to `continue` silently drops the request, so a transient config/plugin state that yields `[]` can make the cluster query empty and let catch-up advance synced ranges without fetching any logs. When addresses later appear, those skipped historical blocks are already marked synced and won’t be replayed, causing permanent event gaps."
+      }
+    ]
+  },
+  "rawOutput": "{\"verdicts\":[{\"finding_id\":3026757531,\"human_comment_id\":3045621294,\"match\":false,\"reason\":\"The finding concerns premature query initialization before configs load, while the human comment questions rejection behavior in the test.\"},{\"finding_id\":3045461917,\"human_comment_id\":3045621294,\"match\":false,\"reason\":\"The finding concerns production bypassing log prefiltering, unrelated to the test's questioned rejection behavior.\"},{\"finding_id\":3045461925,\"human_comment_id\":3045621294,\"match\":true,\"reason\":\"Both concern whether an empty-address data request should reject or instead be silently accepted and skipped.\"}]}",
+  "expected": [
+    {
+      "findingId": 3026757531,
+      "humanCommentId": 3045621294,
+      "match": false
+    },
+    {
+      "findingId": 3045461917,
+      "humanCommentId": 3045621294,
+      "match": false
+    },
+    {
+      "findingId": 3045461925,
+      "humanCommentId": 3045621294,
+      "match": true
+    }
+  ]
+}

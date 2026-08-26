@@ -14,7 +14,8 @@
     "typecheck": "tsc --noEmit",
     "gate": "tsx src/cli/gate.ts",
     "review": "tsx src/cli/review.ts",
-    "post": "tsx src/cli/post.ts"
+    "post": "tsx src/cli/post.ts",
+    "eval": "tsx src/eval/cli.ts"
   },
   "dependencies": {
     "@l2beat/validate": "workspace:*"
