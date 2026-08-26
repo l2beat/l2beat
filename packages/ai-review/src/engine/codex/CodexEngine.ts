@@ -124,14 +124,22 @@ function execute(
     timedOut: boolean
     code: number | null
   }>((resolve) => {
-    const child = spawn(binary, args, { cwd, stdio: ['pipe', 'pipe', 'pipe'] })
+    // Own process group so the timeout also kills probes Codex spawned.
+    const child = spawn(binary, args, {
+      cwd,
+      stdio: ['pipe', 'pipe', 'pipe'],
+      detached: true,
+    })
     let stdout = ''
     let stderr = ''
     let timedOut = false
     const timer = setTimeout(() => {
       timedOut = true
-      child.kill('SIGKILL')
+      killGroup(child.pid)
     }, timeoutMs)
+    child.on('error', (err) => {
+      stderr += String(err)
+    })
     child.stdout.on('data', (d) => {
       stdout += d
     })
@@ -145,4 +153,13 @@ function execute(
     })
     child.stdin.end(stdin)
   })
+}
+
+function killGroup(pid: number | undefined) {
+  if (pid === undefined) return
+  try {
+    process.kill(-pid, 'SIGKILL')
+  } catch {
+    process.kill(pid, 'SIGKILL')
+  }
 }

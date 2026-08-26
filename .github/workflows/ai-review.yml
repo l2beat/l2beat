@@ -162,6 +162,15 @@ jobs:
           REVIEW_OUTPUT_PATH: ${{ runner.temp }}/review.json
           PR_TITLE: ${{ needs.gate.outputs.pr_title }}
           PR_BODY: ${{ needs.gate.outputs.pr_body }}
+      # Probes can read auth.json; make sure nothing from it reaches the posted output.
+      - name: Check output for leaked credentials
+        if: env.ENGINE == 'codex'
+        run: |
+          jq -r '.. | strings' "$RUNNER_TEMP/codex-home/auth.json" | awk 'length >= 16' > "$RUNNER_TEMP/secrets.txt"
+          if grep -qF -f "$RUNNER_TEMP/secrets.txt" "$RUNNER_TEMP/review.json"; then
+            echo "::error::review output contains credential material"
+            exit 1
+          fi
       - uses: actions/upload-artifact@v7
         with:
           name: ai-review-output
