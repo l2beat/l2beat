@@ -1,10 +1,21 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatNumber,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { EthereumDaBridgeRisks, EthereumDaLayerRisks } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import stakeDistribution from './stake-distribution.json'
 
 const chainId = 1
+const ethereumBlockTimeSeconds = HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
+const ethereumEpochSeconds =
+  HARDCODED.ETHEREUM.SLOTS_PER_EPOCH * ethereumBlockTimeSeconds
 
 // Deployment of the first L2
 export const MIN_TIMESTAMP_FOR_TVL = UnixTime.fromDate(
@@ -49,6 +60,95 @@ export const ethereum: BaseProject = {
     },
     badges: [],
   },
+  scalingTechnology: {
+    sequencing: {
+      name: 'Transactions are ordered by Ethereum validators and builders',
+      description: readProjectMarkdown('ethereum', 'technologySequencing'),
+      sequencingSpec: {
+        type: 'sequencer-set',
+        blockTime: { value: `${ethereumBlockTimeSeconds} seconds` },
+        proposerRotationTime: {
+          value: `${ethereumBlockTimeSeconds} seconds`,
+          description:
+            'One validator index is selected for every slot with probability proportional to its effective balance. A missed proposal leaves the slot empty.',
+        },
+        sequencerCount: {
+          value: `${stakeDistribution.validatorCount.toLocaleString('en-US')} validator indices`,
+          secondLine: `${formatNumber(stakeDistribution.totalStake)} ${stakeDistribution.stakeToken}`,
+          description:
+            'This snapshot is generated from Dune validator-day summaries and curated staking attribution. Lido stake is split among its node operators. Validator indices are not independent operators, and compounding validators can have different effective balances.',
+        },
+        blockProductionAccess: {
+          value: 'Open',
+          sentiment: 'good',
+          description:
+            'Anyone can deposit the minimum stake and join the activation queue without governance approval. Activation remains subject to protocol churn limits.',
+        },
+        stakePerValidator: {
+          value: `${HARDCODED.ETHEREUM.MIN_ACTIVATION_BALANCE_ETH} ETH minimum, variable`,
+          description: `Compounding validators can have an effective balance of up to ${HARDCODED.ETHEREUM.MAX_EFFECTIVE_BALANCE_ETH.toLocaleString('en-US')} ETH. Proposal probability is weighted by effective balance.`,
+        },
+        rateLimit: {
+          value: `${HARDCODED.ETHEREUM.MAX_ACTIVATION_CHURN_ETH_PER_EPOCH} ETH per epoch`,
+          description: `Validator activation is limited by an effective-balance churn cap. An epoch contains ${HARDCODED.ETHEREUM.SLOTS_PER_EPOCH} slots and lasts ${formatSeconds(ethereumEpochSeconds)}.`,
+        },
+        deterministicCrGadget: {
+          value: 'No',
+          sentiment: 'warning',
+          description:
+            'Ethereum mainnet does not currently enforce a forced-transaction queue or inclusion list. Inclusion-list proposals such as FOCIL are not live on mainnet.',
+        },
+        additionalCrGadgets: {
+          value: 'Local block building, diverse operators',
+          sentiment: 'warning',
+          description:
+            'A proposer can build locally to include public-mempool transactions instead of accepting an external builder bid. This bypasses censoring builders and relays, but users cannot compel the proposer to use the fallback. Combining a highly decentralized operator set with per-slot proposer rotation results in short inclusion delays under selective censorship.',
+        },
+      },
+      inclusionDelayChart: {
+        type: 'ethereumlike',
+        validatorCount: stakeDistribution.validatorCount,
+        slotSeconds: ethereumBlockTimeSeconds,
+        target: 0.99,
+        maxCensorFraction: 0.5,
+        stakeDistribution,
+      },
+      inclusionDelayChartDescription:
+        'The chart models live-chain selective censorship as independent stake-weighted proposer opportunities. It assumes an honest proposer can include the transaction, whether through an external builder or local block production. It excludes validator and builder concentration, finality, validator-set changes, inactivity leaks, and a full halt.',
+      censorshipResistance: readProjectMarkdown(
+        'ethereum',
+        'censorshipResistance',
+      ),
+      references: [
+        {
+          title: 'Ethereum.org - Block proposal',
+          url: 'https://ethereum.org/developers/docs/consensus-mechanisms/pos/block-proposal/',
+        },
+        {
+          title: 'Ethereum consensus specifications - Electra',
+          url: 'https://ethereum.github.io/consensus-specs/electra/beacon-chain/',
+        },
+        {
+          title: 'EIP-7251 - Increase the MAX_EFFECTIVE_BALANCE',
+          url: 'https://eips.ethereum.org/EIPS/eip-7251',
+        },
+        {
+          title: 'MEV-Boost',
+          url: 'https://github.com/flashbots/mev-boost',
+        },
+        {
+          title: 'Ethereum.org - Proof-of-stake rewards and penalties',
+          url: 'https://ethereum.org/developers/docs/consensus-mechanisms/pos/rewards-and-penalties/',
+        },
+      ],
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'proposers or their selected builders keep excluding their transactions, or block production halts and requires social recovery.',
+        },
+      ],
+    },
+  },
   daLayer: {
     type: 'Public Blockchain',
     systemCategory: 'public',
@@ -69,40 +169,41 @@ export const ethereum: BaseProject = {
     consensusAlgorithm: {
       name: 'Gasper',
       description: readProjectMarkdown('ethereum', 'daLayerConsensusAlgorithm'),
-      blockTime: 12, // seconds per slot
-      consensusFinality: 768, // seconds, two epochs of 32 slots each
+      blockTime: ethereumBlockTimeSeconds,
+      consensusFinality:
+        ethereumBlockTimeSeconds * 2 * HARDCODED.ETHEREUM.SLOTS_PER_EPOCH,
       unbondingPeriod: 777600, // current value from validatorqueue.com. Technically it is the sum of 1) Exit Queue (variable) 2) fixed waiting time (27.3 hours), 3) Validator Sweep (variable).
     },
     throughput: [
       {
         size: 786432, // 0.75 MiB
         target: 393216, // 0.375 MiB
-        frequency: 12, // 12 seconds
+        frequency: ethereumBlockTimeSeconds,
         sinceTimestamp: 1710288000, // 2024-03-13
       },
       {
         // EIP-7691: Prague / Electra hard-fork – increased blob limits
         size: 1_179_648, // 1.125 MiB (max 9 blobs × 128 KiB)
         target: 786_432, // 0.75 MiB (target 6 blobs × 128 KiB)
-        frequency: 12, // unchanged: 12 s slot time
+        frequency: ethereumBlockTimeSeconds,
         sinceTimestamp: 1746612300, // 2025-05-07 10:05:00 UTC ≈ Pectra main-net epoch 364032
       },
       {
         // BPO1: Blob Parameter Only fork 1 (post-Fusaka PeerDAS)
         size: 1_966_080, // 1.875 MiB (max 15 blobs × 128 KiB)
         target: 1_310_720, // 1.25 MiB (target 10 blobs × 128 KiB)
-        frequency: 12, // unchanged: 12 s slot time
+        frequency: ethereumBlockTimeSeconds,
         sinceTimestamp: 1765290071, // 2025-12-09 14:21:11 UTC – epoch 412672
       },
       {
         // BPO2: Blob Parameter Only fork 2
         size: 2_752_512, // 2.625 MiB (max 21 blobs × 128 KiB)
         target: 1_835_008, // 1.75 MiB (target 14 blobs × 128 KiB)
-        frequency: 12, // unchanged: 12 s slot time
+        frequency: ethereumBlockTimeSeconds,
         sinceTimestamp: 1767747671, // 2026-01-07 01:01:11 UTC – epoch 419072
       },
     ],
-    finality: 768, // seconds
+    finality: ethereumBlockTimeSeconds * 2 * HARDCODED.ETHEREUM.SLOTS_PER_EPOCH,
     pruningWindow: 86400 * 18, // 18 days in seconds
     risks: {
       daLayer: EthereumDaLayerRisks.SelfVerify,

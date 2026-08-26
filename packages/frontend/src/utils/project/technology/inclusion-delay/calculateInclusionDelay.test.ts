@@ -130,6 +130,7 @@ describe('calculateInclusionDelay', () => {
         maxCensorFraction: 0.5,
         stakeDistribution: {
           stakeToken: 'TEST',
+          snapshotDate: '2026-08-03',
           totalStake: 100,
           entities: [
             { name: 'Second', stake: 15 },
@@ -168,6 +169,23 @@ describe('calculateInclusionDelay', () => {
       ])
     })
 
+    it('returns no entity markers when attribution is unavailable', () => {
+      const chart = {
+        type: 'ethereumlike',
+        validatorCount: 10,
+        slotSeconds: 10,
+        target: 0.99,
+        maxCensorFraction: 0.5,
+        stakeDistribution: {
+          stakeToken: 'TEST',
+          snapshotDate: '2026-08-03',
+          totalStake: 100,
+        },
+      } satisfies ProjectEthereumLikeInclusionDelayChart
+
+      expect(getInclusionDelayData(chart).entityLegendEntries).toEqual([])
+    })
+
     it('snaps entity stake fractions to the sampling step', () => {
       const chart = {
         type: 'ethereumlike',
@@ -177,6 +195,7 @@ describe('calculateInclusionDelay', () => {
         maxCensorFraction: 0.5,
         stakeDistribution: {
           stakeToken: 'TEST',
+          snapshotDate: '2026-08-03',
           totalStake: 800,
           // 123 / 800 = 0.15375, which rounds to the nearest 0.1% step.
           entities: [{ name: 'A', stake: 123 }],

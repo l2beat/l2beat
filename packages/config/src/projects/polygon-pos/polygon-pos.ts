@@ -2,6 +2,7 @@ import {
   assert,
   ChainSpecificAddress,
   EthereumAddress,
+  formatNumber,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -15,6 +16,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
@@ -59,8 +61,8 @@ assert(
   'The far-future replacement cooldown which effectively closed the vali set whenever it was at the cap has changed and the sequencer section and risk rosette should be adjusted if the set is now open+capped with a working replacement auction.',
 )
 
-const polygonSpanBlocks = 6400
-const polygonBlockSeconds = 2
+const polygonSpanBlocks = HARDCODED.POLYGON_POS.SPAN_BLOCKS
+const polygonBlockSeconds = HARDCODED.POLYGON_POS.BLOCK_TIME_SECONDS
 const polygonSpanTimeString = formatSeconds(
   polygonSpanBlocks * polygonBlockSeconds,
 )
@@ -286,13 +288,17 @@ export const polygonpos: ScalingProject = {
       description: readProjectMarkdown('polygon-pos', 'technologySequencing', {
         currentValidatorSetSize,
       }),
-      sequencerSetSpec: {
+      sequencingSpec: {
+        type: 'sequencer-set',
         blockTime: { value: formatSeconds(polygonBlockSeconds) },
         proposerRotationTime: {
           value: `${polygonSpanTimeString}`,
           description: `Randomly sampled validators delegate block production for the duration of a span: ${polygonSpanBlocks} blocks`,
         },
-        sequencerCount: { value: `${currentValidatorSetSize} validators` },
+        sequencerCount: {
+          value: `${currentValidatorSetSize} validators`,
+          secondLine: `${formatNumber(stakeDistribution.totalStake)} ${stakeDistribution.stakeToken}`,
+        },
         blockProductionAccess: {
           value: 'Closed and capped',
           sentiment: 'bad',

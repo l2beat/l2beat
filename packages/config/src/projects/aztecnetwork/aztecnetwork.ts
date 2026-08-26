@@ -56,6 +56,14 @@ const escapeHatchBond = discovery.getContractValueBigInt(
   'EscapeHatch',
   'getBondSize',
 )
+const escapeHatchWithdrawalTax = discovery.getContractValueBigInt(
+  'EscapeHatch',
+  'getWithdrawalTax',
+)
+const escapeHatchFailedPunishment = discovery.getContractValueBigInt(
+  'EscapeHatch',
+  'getFailedHatchPunishment',
+)
 const targetCommitteeSize = discovery.getContractValue<number>(
   'Rollup',
   'getTargetCommitteeSize',
@@ -206,6 +214,12 @@ function formatMonthYear(timestamp: number): string {
 
 const activationThresholdString = formatAztecAmount(activationThreshold)
 const escapeHatchBondString = formatAztecAmount(escapeHatchBond)
+const escapeHatchWithdrawalTaxString = formatAztecAmount(
+  escapeHatchWithdrawalTax,
+)
+const escapeHatchFailedPunishmentString = formatAztecAmount(
+  escapeHatchFailedPunishment,
+)
 const governanceLockAmount = BigInt(
   governanceConfiguration.proposeConfig.lockAmount,
 )
@@ -520,7 +534,8 @@ export const aztecnetwork: ScalingProject = {
         targetCommitteeSize,
         activeSequencerCount,
       }),
-      sequencerSetSpec: {
+      sequencingSpec: {
+        type: 'sequencer-set',
         blockTime: {
           value: `${formatSeconds(l2BlockTime)}`,
           description:
@@ -532,18 +547,23 @@ export const aztecnetwork: ScalingProject = {
           description:
             'A random committee is sampled from the sequencer set for each epoch, a random block producer is sampled from the committee for each slot in the epoch',
         },
-        sequencerCount: { value: `${activeSequencerCount} sequencers` },
+        sequencerCount: {
+          value: `${activeSequencerCount} sequencers`,
+          secondLine: `${formatNumber(stakeDistribution.totalStake)} ${stakeDistribution.stakeToken}`,
+        },
         blockProductionAccess: { value: 'Open', sentiment: 'good' },
         stakePerValidator: { value: activationThresholdString + ', constant' },
         rateLimit: {
-          value: `Up to ${entryQueueFlushSize} sequencers per epoch (current)`,
+          value: `${entryQueueFlushSize} sequencers / epoch`,
           description:
             'Can be changed by onchain Governance, but the contract requires nonzero minimum, divisor, and maximum queue-flush parameters.',
         },
         deterministicCrGadget: { value: 'No', sentiment: 'warning' },
         additionalCrGadgets: {
           value: 'Bonded escape hatch, private transactions',
+          secondLine: `${escapeHatchBondString}; every ${escapeHatchFrequencyString}`,
           sentiment: 'good',
+          description: `Escape hatch: ${escapeHatchBondString} bond to enter a set from which one proposer is periodically selected every ${escapeHatchFrequencyString} to bypass the regular committee, include transactions, and prove the resulting checkpoints. ${escapeHatchWithdrawalTaxString} proposal tax. Private transactions: allow users to cheaply resist censorship based on transaction content while the chain is live.`,
         },
       },
       inclusionDelayChart: {
@@ -562,7 +582,11 @@ export const aztecnetwork: ScalingProject = {
       censorshipResistance: readProjectMarkdown(
         'aztecnetwork',
         'censorshipResistance',
-        { escapeHatchBondString, escapeHatchFrequencyString },
+        {
+          escapeHatchBondString,
+          escapeHatchFailedPunishmentString,
+          escapeHatchFrequencyString,
+        },
       ),
       references: [
         {

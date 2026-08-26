@@ -1,6 +1,7 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
+  formatNumber,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -14,9 +15,11 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import stakeDistribution from './stake-distribution.json'
 
 const discovery = new ProjectDiscovery('gnosis')
 
@@ -46,8 +49,7 @@ const ambBridgeValidatorCount = discovery.getContractValue<number>(
   'validatorCount',
 )
 
-const gnosisValidatorSetSize = 100_000
-const gnosisSlotSeconds = 5
+const gnosisSlotSeconds = HARDCODED.GNOSIS.BLOCK_TIME_SECONDS
 
 export const gnosis: ScalingProject = {
   type: 'layer2',
@@ -71,8 +73,7 @@ export const gnosis: ScalingProject = {
     purposes: ['Universal'],
     description:
       "Gnosis Chain is a community-owned EVM-based sidechain operated by a proof-of-stake validator set aiming to be the first chain in the Ethereum Economic Zone (EEZ). Its canonical Ethereum bridge ('Gnosis Bridge') is validated by dedicated bridge validator multisigs (not the PoS validator set) and supports the yielding bridge for the chain's gas-token xDAI as well as token transfers and messaging. This page looks at both the PoS chain and the canonical bridge to Ethereum from an Ethereum-centric perspective.",
-    detailedDescription:
-      "Gnosis chain in its current form does not derive or benefit from Ethereum's decentralisation apart from being developed as a close fork to re-use Ethereum tooling and infrastructure. Its censorship resistance relies on an open validator set with over 100 thousand diverse validators, although the clustering and stake distribution among entities is intransparent. Users who are censored selectively on an otherwise live network benefit from the fast 5s block time and non-committee-gated, stake-weighted proposer rotation, resulting in an inclusion probability of 99% in less than a minute even if up to 50% of the Gnosis stake is censoring them. There are also a few thousand validators who run custom 'shutter network' nodes that support threshold-encrypted transactions. For a case of active blanket censorship (>50% stake) by all current validators, users have no way apart from a hardfork to get their transactions included or save the chain. In the operator walkaway scenario, new sequencers could stake and join the set permissionlessly.",
+    detailedDescription: `Gnosis chain in its current form does not derive or benefit from Ethereum's decentralisation apart from being developed as a close fork to re-use Ethereum tooling and infrastructure. Its censorship resistance relies on an open set of ${stakeDistribution.validatorCount.toLocaleString('en-US')} active validator indices, although the clustering and stake distribution among entities is intransparent. Users who are censored selectively on an otherwise live network benefit from the fast ${gnosisSlotSeconds}s block time and non-committee-gated, stake-weighted proposer rotation, resulting in an inclusion probability of 99% in less than a minute even if up to 50% of the Gnosis stake is censoring them. There are also a few thousand validators who run custom 'shutter network' nodes that support threshold-encrypted transactions. For a case of active blanket censorship (>50% stake) by all current validators, users have no way apart from a hardfork to get their transactions included or save the chain. In the operator walkaway scenario, new sequencers could stake and join the set permissionlessly.`,
     links: {
       websites: ['https://gnosis.io/chain'],
       explorers: ['https://gnosis.blockscout.com/'],
@@ -273,7 +274,8 @@ export const gnosis: ScalingProject = {
       name: 'Transactions are ordered by Gnosis Chain validators',
       description:
         'Gnosis Chain uses a permissionless proof-of-stake validator set with stake-weighted proposer rotation and a 5 second slot time. The Ethereum-like committee-free block production architecture combined with the short block time lead to fast theoretical inclusion times, even with high rates of censorship. In contrast to Ethereum, blocks on Gnosis chain are usually built *locally*, meaning that validators do not delegate block production to specialised builders. There is no public information on the decentralisation of the Gnosis validator set.',
-      sequencerSetSpec: {
+      sequencingSpec: {
+        type: 'sequencer-set',
         blockTime: { value: formatSeconds(gnosisSlotSeconds) },
         proposerRotationTime: {
           value: formatSeconds(gnosisSlotSeconds),
@@ -281,11 +283,14 @@ export const gnosis: ScalingProject = {
             'Block production is not committee-based, sequencers rotate every block (epochs do not affect sequencer rotation)',
         },
         sequencerCount: {
-          value: `${gnosisValidatorSetSize.toLocaleString('en-US')} validators`,
+          value: `${stakeDistribution.validatorCount.toLocaleString('en-US')} validator indices`,
+          secondLine: `${formatNumber(stakeDistribution.totalStake)} ${stakeDistribution.stakeToken}`,
+          description:
+            'The active-ongoing validator count and effective stake snapshot are generated from the corresponding Gnosis Analytics endpoints for the same date. Validator indices are not independent operators.',
         },
         blockProductionAccess: { value: 'Open', sentiment: 'good' },
         stakePerValidator: {
-          value: '1 GNO minimum, variable',
+          value: `${HARDCODED.GNOSIS.MIN_VALIDATOR_STAKE_GNO} GNO minimum, variable`,
           description: 'stake-weighted block production rights, no maximum',
         },
         rateLimit: {
@@ -300,10 +305,11 @@ export const gnosis: ScalingProject = {
       },
       inclusionDelayChart: {
         type: 'ethereumlike',
-        validatorCount: gnosisValidatorSetSize,
+        validatorCount: stakeDistribution.validatorCount,
         slotSeconds: gnosisSlotSeconds,
         target: 0.99,
         maxCensorFraction: 0.5,
+        stakeDistribution,
       },
       inclusionDelayChartDescription:
         'The chart uses the Ethereum-style single-proposer formula with Gnosis-specific constants. It excludes finality, inactivity leaks, validator-set changes, hard forks, and blanket-censorship resistance gadgets.',
