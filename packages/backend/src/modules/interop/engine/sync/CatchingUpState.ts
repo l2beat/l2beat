@@ -8,7 +8,6 @@ import {
   UpsertMap,
 } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import isNil from 'lodash/isNil'
 import type { Log as ViemLog } from 'viem'
 import {
   type InteropTransaction,
@@ -278,11 +277,8 @@ export class CatchingUpState implements TimeloopState {
   ): Promise<RangeData | undefined> {
     const syncedRange = await this.syncer.getLastSyncedRange()
 
-    const latestBlock = await this.syncer.getBlockByNumber(toBlockNumber)
-    assert(latestBlock && !isNil(latestBlock.number))
-
     if (forcedFromTimestamp === undefined) {
-      if ((syncedRange?.toBlock ?? -1) >= latestBlock.number) {
+      if ((syncedRange?.toBlock ?? -1) >= toBlockNumber) {
         return undefined // we're already at or after latest block
       }
     }
@@ -310,10 +306,6 @@ export class CatchingUpState implements TimeloopState {
       return undefined
     }
 
-    let nextTo: bigint
-    let fullTo: bigint
-    let fullToTimestamp: UnixTime
-
     const queryRange =
       LOG_QUERY_RANGE[this.syncer.chain] ?? LOG_QUERY_RANGE.DEFAULT
     const divider = this.syncer.logRangeDivider ?? 0
@@ -322,28 +314,23 @@ export class CatchingUpState implements TimeloopState {
     if (effectiveRange < 1n) {
       effectiveRange = 1n
     }
-    nextTo = nextFrom + effectiveRange - 1n
-    assert(nextTo >= nextFrom)
-    if (nextTo >= latestBlock.number) {
-      nextTo = latestBlock.number
-      fullTo = nextTo
-      fullToTimestamp = UnixTime(Number(latestBlock.timestamp))
-    } else {
-      const toBlock = await this.syncer.getBlockByNumber(nextTo)
-      assert(toBlock)
-      fullTo = nextTo
-      fullToTimestamp = UnixTime(Number(toBlock.timestamp))
-    }
+    const uncappedTo = nextFrom + effectiveRange - 1n
+    assert(uncappedTo >= nextFrom)
+    const nextTo = uncappedTo >= toBlockNumber ? toBlockNumber : uncappedTo
+
+    const toBlock = await this.syncer.getBlockByNumber(nextTo)
+    assert(toBlock)
+    const fullToTimestamp = UnixTime(Number(toBlock.timestamp))
 
     return {
       nextRange: { from: nextFrom, to: nextTo },
       fullRange: {
         fromBlock: fullFrom,
         fromTimestamp: fullFromTimestamp,
-        toBlock: fullTo,
+        toBlock: nextTo,
         toTimestamp: fullToTimestamp,
       },
-      latestBlockNumber: latestBlock.number,
+      latestBlockNumber: toBlockNumber,
     }
   }
 

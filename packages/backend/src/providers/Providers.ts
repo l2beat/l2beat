@@ -21,6 +21,7 @@ import {
 import { assert } from '@l2beat/shared-pure'
 import type { Config } from '../config'
 import { BlobPriceProvider } from '../modules/tracked-txs/modules/l2-costs/BlobPriceProvider'
+import { ActivityBlockCache } from './ActivityBlockCache'
 import { ActivityBlockProviders } from './ActivityBlockProviders'
 import { AztecBlockProviders } from './AztecBlockProviders'
 import { BlockProviders } from './BlockProviders'
@@ -33,6 +34,7 @@ import { UopsAnalyzers } from './UopsAnalyzers'
 export class Providers {
   block: BlockProviders
   activityBlock: ActivityBlockProviders
+  activityBlockCache: ActivityBlockCache
   logs: LogsProviders
   price: PriceProvider
   uops: UopsAnalyzers
@@ -77,10 +79,12 @@ export class Providers {
       ),
     )
     this.uops = new UopsAnalyzers(config.chainConfig)
+    this.activityBlockCache = new ActivityBlockCache()
     this.activityBlock = new ActivityBlockProviders(
       this.block,
       this.aztecBlock,
       this.uops,
+      this.activityBlockCache,
     )
     this.day = new DayProviders(config.chainConfig, {
       starkex: this.clients.starkex,

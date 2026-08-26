@@ -2,6 +2,7 @@ import type { AztecBlockProvider, BlockProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { UopsAnalyzer } from '../modules/activity/services/uops/types'
+import { ActivityBlockCache } from './ActivityBlockCache'
 import {
   ActivityBlockProviders,
   AztecActivityBlockProvider,
@@ -32,6 +33,7 @@ describe(ActivityBlockProviders.name, () => {
           mockObject<UopsAnalyzers>({
             getUopsAnalyzer: () => undefined,
           }),
+          new ActivityBlockCache(),
         ),
     ).toThrow('ActivityBlockProvider already exists: aztecnetwork')
   })
@@ -53,6 +55,7 @@ describe(StandardActivityBlockProvider.name, () => {
     const provider = new StandardActivityBlockProvider(
       blockProvider,
       uopsAnalyzer,
+      new ActivityBlockCache(),
     )
 
     const result = await provider.getBlocks(10, 10)

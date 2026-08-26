@@ -7,6 +7,9 @@ export interface BlockClient {
   /** Optional capability: batch-fetch block timestamps. Implementations are
    *  expected to chunk requests internally. */
   getBlockTimestamps?(blockNumbers: number[]): Promise<Map<number, number>>
+  /** Optional capability: fetch a single block timestamp without transaction
+   *  bodies. */
+  getBlockTimestamp?(blockNumber: number): Promise<number>
   chain: string
 }
 

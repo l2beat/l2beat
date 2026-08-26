@@ -76,6 +76,12 @@ export class RpcClient extends ClientCore implements IRpcClient {
     return await this.getBlock(blockNumber, true)
   }
 
+  /** Calls eth_getBlockByNumber on RPC, skips transaction bodies. */
+  async getBlockTimestamp(blockNumber: number): Promise<number> {
+    const block = await this.getBlock(blockNumber, false)
+    return block.timestamp
+  }
+
   async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
     const block = await this.getBlock(blockNumber, false)
 

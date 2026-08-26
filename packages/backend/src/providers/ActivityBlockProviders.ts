@@ -6,6 +6,7 @@ import type {
   ActivityBlockProvider,
 } from '../modules/activity/services/txs/types'
 import type { UopsAnalyzer } from '../modules/activity/services/uops/types'
+import type { ActivityBlockCache } from './ActivityBlockCache'
 import type { AztecBlockProviders } from './AztecBlockProviders'
 import type { BlockProviders } from './BlockProviders'
 import type { UopsAnalyzers } from './UopsAnalyzers'
@@ -17,12 +18,14 @@ export class ActivityBlockProviders {
     blockProviders: BlockProviders,
     aztecBlockProviders: AztecBlockProviders,
     uopsAnalyzers: UopsAnalyzers,
+    blockCache: ActivityBlockCache,
   ) {
     for (const provider of blockProviders.getAll()) {
       this.add(
         new StandardActivityBlockProvider(
           provider,
           uopsAnalyzers.getUopsAnalyzer(provider.chain),
+          blockCache,
         ),
       )
     }
@@ -50,6 +53,7 @@ export class StandardActivityBlockProvider implements ActivityBlockProvider {
   constructor(
     private readonly provider: BlockProvider,
     private readonly uopsAnalyzer: UopsAnalyzer | undefined,
+    private readonly blockCache: ActivityBlockCache,
   ) {}
 
   get chain(): string {
@@ -59,6 +63,11 @@ export class StandardActivityBlockProvider implements ActivityBlockProvider {
   async getBlocks(from: number, to: number): Promise<ActivityBlock[]> {
     return await Promise.all(
       range(from, to + 1).map(async (number) => {
+        const cached = this.blockCache.get(this.chain, number)
+        if (cached) {
+          return cached
+        }
+
         const block = await this.provider.getBlockWithTransactions(number)
         return {
           number: block.number,

@@ -1,5 +1,6 @@
 import { Env, getEnv } from '@l2beat/backend-tools'
 import type { Indexer } from '@l2beat/uif'
+import { ActivityBlockCacheProcessor } from '../../providers/ActivityBlockCache'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
 import { BlockIndexer } from './BlockIndexer'
@@ -32,8 +33,27 @@ export function createBlockSyncModule({
     'STOP_BLOCK_INDEXER_AT_TIMESTAMP_MS',
   )
 
+  const activityChains = new Set(
+    (config.activity ? config.activity.projects : [])
+      .filter((p) => p.activityConfig.type === 'block')
+      .map((p) => p.chainName),
+  )
+
   const indexers: Indexer[] = []
   for (const chain of chains) {
+    const chainProcessors = blockProcessors.filter((x) => x.chain === chain)
+    if (activityChains.has(chain)) {
+      providers.activityBlockCache.enable(chain)
+      chainProcessors.push(
+        new ActivityBlockCacheProcessor(
+          chain,
+          providers.activityBlockCache,
+          providers.uops.getUopsAnalyzer(chain),
+        ),
+      )
+      logger.info('Sharing synced blocks with activity', { chain })
+    }
+
     const blockNumberIndexer =
       chain === 'ethereum' && config.blockSync.ethereumWsUrl
         ? new WsBlockNumberIndexer(
@@ -52,7 +72,7 @@ export function createBlockSyncModule({
       {
         minHeight: 1,
         parents: [blockNumberIndexer],
-        blockProcessors: blockProcessors.filter((x) => x.chain === chain),
+        blockProcessors: chainProcessors,
         source: chain,
         blockProvider: providers.block.getBlockProvider(chain),
         logsProvider: providers.logs.getLogsProvider(chain),

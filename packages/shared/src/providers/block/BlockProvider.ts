@@ -65,6 +65,18 @@ export class BlockProvider {
     throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
   }
 
+  async getBlockTimestamp(blockNumber: number): Promise<UnixTime> {
+    for (const [index, client] of this.clients.entries()) {
+      try {
+        return UnixTime(await blockTimestamp(client, blockNumber))
+      } catch (error) {
+        if (index === this.clients.length - 1) throw error
+      }
+    }
+
+    throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
+  }
+
   async getBlockNumberAtOrBefore(
     timestamp: UnixTime,
     start = 1,
@@ -78,7 +90,9 @@ export class BlockProvider {
           timestamp,
           effectiveStart,
           end,
-          (number: number) => client.getBlockWithTransactions(number),
+          async (number: number) => ({
+            timestamp: await blockTimestamp(client, number),
+          }),
         )
       } catch (error) {
         if (index === this.clients.length - 1) throw error
@@ -87,4 +101,14 @@ export class BlockProvider {
 
     throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
   }
+}
+
+/** Timestamp lookups never need transaction bodies, so skip them when we can. */
+async function blockTimestamp(
+  client: BlockClient,
+  blockNumber: number,
+): Promise<number> {
+  return client.getBlockTimestamp
+    ? await client.getBlockTimestamp(blockNumber)
+    : (await client.getBlockWithTransactions(blockNumber)).timestamp
 }

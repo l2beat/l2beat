@@ -70,6 +70,11 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
     throw new ReplayError(key)
   }
 
+  async getBlockTimestamp(blockNumber: number): Promise<number> {
+    const block = await this.getBlock(blockNumber, false)
+    return block.timestamp
+  }
+
   getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
     const key = this.buildSnapshotKey([
       'blockParentBeaconRoot',
