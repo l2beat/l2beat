@@ -1,6 +1,7 @@
 {
   "stakeToken": "POL",
-  "fetchedAt": "2026-08-06T08:48:58.389Z",
+  "dateType": "fetched",
+  "date": "2026-08-06T08:48:58.389Z",
   "validatorCount": 105,
   "totalStake": 3568595994,
   "entities": [

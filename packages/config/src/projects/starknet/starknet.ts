@@ -17,6 +17,7 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
+  SEQUENCING_SPEC,
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -450,12 +451,10 @@ export const starknet: ScalingProject = {
           description: `StarkWare controls ${consensusSequencerCount} equal-weight, permissioned proposers selected in deterministic round-robin order. The deployment assumes no malicious validators and requires more than half of the voting weight (${consensusQuorum}/${consensusSequencerCount}). The replicas can tolerate process outages, but do not create independent operators or censorship resistance.`,
           orderHint: 1,
         },
-        realtimeCensorshipResistance: {
-          value: 'No',
-          sentiment: 'bad',
-          description:
+        realtimeCensorshipResistance:
+          SEQUENCING_SPEC.NO_REALTIME_CENSORSHIP_RESISTANCE(
             'The permissioned sequencer committee is controlled by one operator, StarkWare, which can censor transactions submitted through the normal L2 path.',
-        },
+          ),
         forcedInclusion: {
           value: 'Discretionary fallback',
           secondLine: 'Security Council minority',

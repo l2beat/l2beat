@@ -1,6 +1,7 @@
 {
   "stakeToken": "ETH",
-  "snapshotDate": "2026-08-05",
+  "dateType": "snapshot",
+  "date": "2026-08-05",
   "validatorCount": 895669,
   "totalStake": 41527609,
   "entities": [

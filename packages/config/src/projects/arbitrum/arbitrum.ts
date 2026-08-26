@@ -11,6 +11,7 @@ import {
   computeBoldDefenderAdvantage,
   OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
   RISK_VIEW,
+  SEQUENCING_SPEC,
   SOA,
   UPGRADE_MECHANISM,
 } from '../../common'
@@ -586,12 +587,8 @@ export const arbitrum: ScalingProject = orbitStackL2({
             'The Arbitrum operator controls the real-time sequencer feed. Their documented production HA architecture runs redundant sequencer replicas and selects one active instance through shared Redis state. This improves availability but is not BFT consensus and does not create independent operators or censorship resistance.',
           orderHint: 1,
         },
-        realtimeCensorshipResistance: {
-          value: 'No',
-          sentiment: 'bad',
-          description:
-            'The centralized sequencer can censor transactions submitted through the normal L2 path.',
-        },
+        realtimeCensorshipResistance:
+          SEQUENCING_SPEC.NO_REALTIME_CENSORSHIP_RESISTANCE(),
         forcedInclusion: {
           value: 'Permissionless call',
           secondLine: '2 L1 txs: enqueue + force',

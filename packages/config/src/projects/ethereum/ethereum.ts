@@ -1,16 +1,29 @@
 import {
+  assert,
   EthereumAddress,
   formatNumber,
   formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { EthereumDaBridgeRisks, EthereumDaLayerRisks } from '../../common'
+import {
+  EthereumDaBridgeRisks,
+  EthereumDaLayerRisks,
+  SEQUENCING_SPEC,
+} from '../../common'
 import { linkByDA } from '../../common/linkByDA'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import type { BaseProject } from '../../types'
+import { type BaseProject, ProjectStakeDistributionSchema } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
-import stakeDistribution from './stake-distribution.json'
+import stakeDistributionJson from './stake-distribution.json'
+
+const stakeDistribution = ProjectStakeDistributionSchema.parse(
+  stakeDistributionJson,
+)
+assert(
+  stakeDistribution.validatorCount !== undefined,
+  'Ethereum stake distribution must include validatorCount',
+)
 
 const chainId = 1
 const ethereumBlockTimeSeconds = HARDCODED.ETHEREUM.BLOCK_TIME_SECONDS
@@ -78,12 +91,9 @@ export const ethereum: BaseProject = {
           description:
             'This snapshot is generated from Dune validator-day summaries and curated staking attribution. Lido stake is split among its node operators. Validator indices are not independent operators, and compounding validators can have different effective balances.',
         },
-        blockProductionAccess: {
-          value: 'Open',
-          sentiment: 'good',
-          description:
-            'Anyone can deposit the minimum stake and join the activation queue without governance approval. Activation remains subject to protocol churn limits.',
-        },
+        blockProductionAccess: SEQUENCING_SPEC.OPEN_BLOCK_PRODUCTION(
+          'Anyone can deposit the minimum stake and join the activation queue without governance approval. Activation remains subject to protocol churn limits.',
+        ),
         stakePerValidator: {
           value: `${HARDCODED.ETHEREUM.MIN_ACTIVATION_BALANCE_ETH} ETH minimum, variable`,
           description: `Compounding validators can have an effective balance of up to ${HARDCODED.ETHEREUM.MAX_EFFECTIVE_BALANCE_ETH.toLocaleString('en-US')} ETH. Proposal probability is weighted by effective balance.`,
@@ -92,12 +102,9 @@ export const ethereum: BaseProject = {
           value: `${HARDCODED.ETHEREUM.MAX_ACTIVATION_CHURN_ETH_PER_EPOCH} ETH per epoch`,
           description: `Validator activation is limited by an effective-balance churn cap. An epoch contains ${HARDCODED.ETHEREUM.SLOTS_PER_EPOCH} slots and lasts ${formatSeconds(ethereumEpochSeconds)}.`,
         },
-        deterministicCrGadget: {
-          value: 'No',
-          sentiment: 'warning',
-          description:
-            'Ethereum mainnet does not currently enforce a forced-transaction queue or inclusion list. Inclusion-list proposals such as FOCIL are not live on mainnet.',
-        },
+        deterministicCrGadget: SEQUENCING_SPEC.NO_DETERMINISTIC_CR_GADGET(
+          'Ethereum mainnet does not currently enforce a forced-transaction queue or inclusion list. Inclusion-list proposals such as FOCIL are not live on mainnet.',
+        ),
         additionalCrGadgets: {
           value: 'Local block building, diverse operators',
           sentiment: 'warning',

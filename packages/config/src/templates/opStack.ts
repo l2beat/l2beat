@@ -19,6 +19,7 @@ import {
   pickWorseRisk,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
+  SEQUENCING_SPEC,
   stackExitWindowRisk,
   sumRisk,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -306,7 +307,10 @@ export function getOpStackCentralizedSequencingCommon({
   maxDepositCalldataBytes: number
   trustedPreconfirmationDescription: string
   sequencer: TableReadyValue
-}): Omit<ProjectCentralizedSequencingSpec, 'exitDelay' | 'exitEconomics'> {
+}): Omit<
+  ProjectCentralizedSequencingSpec,
+  'type' | 'exitDelay' | 'exitEconomics'
+> {
   const depositResourceLimit = discovery.getContractValue<{
     maxResourceLimit: number
   }>('SystemConfig', 'resourceConfig').maxResourceLimit
@@ -334,12 +338,8 @@ export function getOpStackCentralizedSequencingCommon({
       description: `For each ${flashblockIntervalMilliseconds} ms build loop, the centralized builder selects available transactions by priority fee. Transactions committed to an earlier Flashblock are not reordered when a higher-fee transaction arrives later, so arrival time also affects ordering. This policy is not enforced by the derivation rules.`,
     },
     sequencer,
-    realtimeCensorshipResistance: {
-      value: 'No',
-      sentiment: 'bad',
-      description:
-        'The centralized sequencer can censor transactions submitted through the normal L2 path.',
-    },
+    realtimeCensorshipResistance:
+      SEQUENCING_SPEC.NO_REALTIME_CENSORSHIP_RESISTANCE(),
     forcedInclusion: {
       value: 'Automatic derivation',
       secondLine: '1 L1 tx: portal deposit',

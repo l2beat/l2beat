@@ -13,6 +13,7 @@ import {
   EXITS,
   OPERATOR,
   RISK_VIEW,
+  SEQUENCING_SPEC,
   SOA,
   STATE_VALIDATION,
 } from '../../common'
@@ -25,8 +26,13 @@ import {
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { ProjectStakeDistributionSchema } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
-import stakeDistribution from './stake-distribution.json'
+import stakeDistributionJson from './stake-distribution.json'
+
+const stakeDistribution = ProjectStakeDistributionSchema.parse(
+  stakeDistributionJson,
+)
 
 const discovery = new ProjectDiscovery('aztecnetwork')
 
@@ -551,14 +557,14 @@ export const aztecnetwork: ScalingProject = {
           value: `${activeSequencerCount} sequencers`,
           secondLine: `${formatNumber(stakeDistribution.totalStake)} ${stakeDistribution.stakeToken}`,
         },
-        blockProductionAccess: { value: 'Open', sentiment: 'good' },
+        blockProductionAccess: SEQUENCING_SPEC.OPEN_BLOCK_PRODUCTION(),
         stakePerValidator: { value: activationThresholdString + ', constant' },
         rateLimit: {
           value: `${entryQueueFlushSize} sequencers / epoch`,
           description:
             'Can be changed by onchain Governance, but the contract requires nonzero minimum, divisor, and maximum queue-flush parameters.',
         },
-        deterministicCrGadget: { value: 'No', sentiment: 'warning' },
+        deterministicCrGadget: SEQUENCING_SPEC.NO_DETERMINISTIC_CR_GADGET(),
         additionalCrGadgets: {
           value: 'Bonded escape hatch, private transactions',
           secondLine: `${escapeHatchBondString}; every ${escapeHatchFrequencyString}`,

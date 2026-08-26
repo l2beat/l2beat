@@ -1,4 +1,5 @@
 import {
+  assert,
   ChainSpecificAddress,
   EthereumAddress,
   formatNumber,
@@ -12,14 +13,24 @@ import {
   DA_MODES,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
+  SEQUENCING_SPEC,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { ProjectStakeDistributionSchema } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
-import stakeDistribution from './stake-distribution.json'
+import stakeDistributionJson from './stake-distribution.json'
+
+const stakeDistribution = ProjectStakeDistributionSchema.parse(
+  stakeDistributionJson,
+)
+assert(
+  stakeDistribution.validatorCount !== undefined,
+  'Gnosis stake distribution must include validatorCount',
+)
 
 const discovery = new ProjectDiscovery('gnosis')
 
@@ -288,7 +299,7 @@ export const gnosis: ScalingProject = {
           description:
             'The active-ongoing validator count and effective stake snapshot are generated from the corresponding Gnosis Analytics endpoints for the same date. Validator indices are not independent operators.',
         },
-        blockProductionAccess: { value: 'Open', sentiment: 'good' },
+        blockProductionAccess: SEQUENCING_SPEC.OPEN_BLOCK_PRODUCTION(),
         stakePerValidator: {
           value: `${HARDCODED.GNOSIS.MIN_VALIDATOR_STAKE_GNO} GNO minimum, variable`,
           description: 'stake-weighted block production rights, no maximum',
@@ -297,7 +308,7 @@ export const gnosis: ScalingProject = {
           value: '~1-2 GNO per epoch',
           description: 'defined by the consensus clients',
         },
-        deterministicCrGadget: { value: 'No', sentiment: 'warning' },
+        deterministicCrGadget: SEQUENCING_SPEC.NO_DETERMINISTIC_CR_GADGET(),
         additionalCrGadgets: {
           value: 'Shutter encrypted mempool beta',
           sentiment: 'warning',

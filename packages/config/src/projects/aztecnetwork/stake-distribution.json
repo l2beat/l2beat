@@ -1,6 +1,7 @@
 {
   "stakeToken": "AZTEC",
-  "fetchedAt": "2026-08-06T08:48:58.509Z",
+  "dateType": "fetched",
+  "date": "2026-08-06T08:48:58.509Z",
   "totalStake": 586930000,
   "entities": [
     {
