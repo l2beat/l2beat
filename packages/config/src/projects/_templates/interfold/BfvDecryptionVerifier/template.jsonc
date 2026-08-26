@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "BfvDecryptionVerifier",
+  "category": "core",
+  "description": "Threshold-decryption proof wrapper. It checks the generated circuit proof and binds its parties and public-key context to the committee recorded by CiphernodeRegistry.",
+  "fields": {
+    "circuitVerifier": {
+      "description": "Generated onchain verifier for the BFV threshold-decryption proof.",
+      "type": "CODE_CHANGE"
+    },
+    "ciphernodeRegistry": {
+      "description": "Immutable committee and public-key source against which decryption proofs are checked."
+    },
+    "threshold": {
+      "description": "Immutable number of decryption shares required by this proof circuit.",
+      "type": "RISK_PARAMETER"
+    },
+    "expectedC6FoldKeyHash": {
+      "description": "Immutable hash binding the accepted C6-fold verification key.",
+      "type": "CODE_CHANGE"
+    },
+    "expectedC7KeyHash": {
+      "description": "Immutable hash binding the accepted C7 verification key.",
+      "type": "CODE_CHANGE"
+    }
+  }
+}

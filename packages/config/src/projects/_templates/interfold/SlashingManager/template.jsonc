@@ -1,0 +1,89 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "SlashingManager",
+  "category": "core",
+  "description": "Policy and evidence router for ciphernode penalties, appeals and bans. Slashing is effective only for reasons with an enabled policy and through a manager authorized by the BondingRegistry.",
+  "ignoreMethods": [
+    "getE3AccusationWindow",
+    "getE3Dependencies",
+    "getPendingSlashRoute",
+    "getSlashProposal"
+  ],
+  "ignoreInWatchMode": [
+    "activeBanCount",
+    "activeE3Assignments",
+    "totalProposals"
+  ],
+  "fields": {
+    "accessControl": {
+      "description": "Current role administrators and members.",
+      "handler": { "type": "accessControl" }
+    },
+    "defaultAdmins": {
+      "description": "Members of DEFAULT_ADMIN_ROLE.",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the coordinator, bonding registry, ciphernode registry and refund manager, and grant or revoke governance membership. A transfer of the default-admin role itself has the configured delay."
+        }
+      ]
+    },
+    "governanceMembers": {
+      "description": "Members of GOVERNANCE_ROLE.",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "GOVERNANCE_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "create or disable slash policies, grant or revoke evidence slashers, resolve appeals, close E3 assignments and propose, confirm or remove operator bans."
+        }
+      ]
+    },
+    "slashers": {
+      "description": "Members of SLASHER_ROLE.",
+      "type": "PERMISSION",
+      "handler": { "type": "accessControl", "pickRoleMembers": "SLASHER_ROLE" },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit evidence-based slash proposals for enabled non-proof policies."
+        }
+      ]
+    },
+    "slashPolicies": {
+      "description": "Latest configured slashing policy for each reason. An empty map means no ticket or FOLD penalty can currently be proposed through this manager.",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "groupBy": "reason",
+        "select": "policy",
+        "set": { "event": "SlashPolicyUpdated" },
+        "ignoreRelative": true
+      }
+    },
+    "bannedNodes": {
+      "description": "Currently banned operator keys reconstructed from ban-status events.",
+      "handler": {
+        "type": "event",
+        "select": "node",
+        "add": { "event": "NodeBanUpdated", "where": ["=", "#status", true] },
+        "remove": {
+          "event": "NodeBanUpdated",
+          "where": ["=", "#status", false]
+        }
+      }
+    },
+    "defaultAdminDelay": {
+      "description": "Delay for transferring DEFAULT_ADMIN_ROLE. It does not delay calls made by the current admin or governance-role members.",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}
