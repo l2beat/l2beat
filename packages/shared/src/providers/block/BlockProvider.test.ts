@@ -62,13 +62,123 @@ describe(BlockProvider.name, () => {
     })
   })
 
-  describe(BlockProvider.prototype.getBlockNumberAtOrBefore.name, () => {
-    it('finds the closest block number to given timestamp', async () => {
+  describe(BlockProvider.prototype.getBlockHeader.name, () => {
+    it('returns header from client', async () => {
       const client = mockObject<BlockClient>({
+        getBlockHeader: async (x) => header(x === 'latest' ? 1000 : x),
+      })
+      const provider = new BlockProvider('chain', [client])
+
+      expect(await provider.getBlockHeader(5)).toEqual(header(5))
+      expect(await provider.getBlockHeader('latest')).toEqual(header(1000))
+    })
+
+    it('falls back to full blocks for clients without header support', async () => {
+      const client = mockObject<BlockClient>({
+        getBlockHeader: undefined,
         getLatestBlockNumber: async () => 1000,
         getBlockWithTransactions: async (n: number) => block(n),
       })
+      const provider = new BlockProvider('chain', [client])
 
+      expect(await provider.getBlockHeader('latest')).toEqual(block(1000))
+      expect(await provider.getBlockHeader(5)).toEqual(block(5))
+      expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
+    })
+
+    it('rejects a header of a different block', async () => {
+      const client = mockObject<BlockClient>({
+        getBlockHeader: async () => header(7),
+      })
+      const provider = new BlockProvider('chain', [client])
+
+      await expect(provider.getBlockHeader(5)).toBeRejectedWith(
+        'expected block number 5, got 7',
+      )
+    })
+  })
+
+  describe(BlockProvider.prototype.getBlockNumberAtOrBefore.name, () => {
+    it('finds the closest block number to given timestamp', async () => {
+      const getBlockHeader = mockFn(async (x: number | 'latest') =>
+        header(x === 'latest' ? 1000 : x),
+      )
+      const client = mockObject<BlockClient>({ getBlockHeader })
+      const provider = new BlockProvider('chain', [client])
+
+      const blockNumber = await provider.getBlockNumberAtOrBefore(
+        UnixTime(800 * 100),
+      )
+
+      expect(blockNumber).toEqual(800)
+      expect(getBlockHeader).toHaveBeenCalledWith('latest')
+    })
+
+    it('returns the latest block when timestamp is not earlier', async () => {
+      const getBlockHeader = mockFn(async (x: number | 'latest') =>
+        header(x === 'latest' ? 1000 : x),
+      )
+      const client = mockObject<BlockClient>({ getBlockHeader })
+      const provider = new BlockProvider('chain', [client])
+
+      const blockNumber = await provider.getBlockNumberAtOrBefore(
+        UnixTime(1000 * 100 + 5),
+      )
+
+      expect(blockNumber).toEqual(1000)
+      expect(getBlockHeader).toHaveBeenOnlyCalledWith('latest')
+    })
+
+    it('starts the next search from the previous result', async () => {
+      const requested: (number | 'latest')[] = []
+      const client = mockObject<BlockClient>({
+        getBlockHeader: async (x) => {
+          requested.push(x)
+          return header(x === 'latest' ? 1000 : x)
+        },
+      })
+      const provider = new BlockProvider('chain', [client])
+
+      await provider.getBlockNumberAtOrBefore(UnixTime(500 * 100))
+      expect(requested).toInclude(1)
+
+      requested.length = 0
+      const blockNumber = await provider.getBlockNumberAtOrBefore(
+        UnixTime(600 * 100),
+      )
+
+      expect(blockNumber).toEqual(600)
+      const numbers = requested.filter((x) => typeof x === 'number')
+      expect(Math.min(...numbers)).toBeGreaterThanOrEqual(500)
+    })
+
+    it('does not reuse the previous result for an earlier timestamp', async () => {
+      const requested: (number | 'latest')[] = []
+      const client = mockObject<BlockClient>({
+        getBlockHeader: async (x) => {
+          requested.push(x)
+          return header(x === 'latest' ? 1000 : x)
+        },
+      })
+      const provider = new BlockProvider('chain', [client])
+
+      await provider.getBlockNumberAtOrBefore(UnixTime(600 * 100))
+
+      requested.length = 0
+      const blockNumber = await provider.getBlockNumberAtOrBefore(
+        UnixTime(300 * 100),
+      )
+
+      expect(blockNumber).toEqual(300)
+      expect(requested).toInclude(1)
+    })
+
+    it('uses full blocks for clients without header support', async () => {
+      const client = mockObject<BlockClient>({
+        getBlockHeader: undefined,
+        getLatestBlockNumber: async () => 1000,
+        getBlockWithTransactions: async (n: number) => block(n),
+      })
       const provider = new BlockProvider('chain', [client])
 
       const blockNumber = await provider.getBlockNumberAtOrBefore(
@@ -80,64 +190,42 @@ describe(BlockProvider.name, () => {
     })
 
     it('calls other client when there are errors', async () => {
-      const client = mockObject<BlockClient>({
-        getLatestBlockNumber: async () => 1000,
-        getBlockWithTransactions: mockFn().rejectsWith(new Error('error')),
-      })
-
-      const client2 = mockObject<BlockClient>({
-        getLatestBlockNumber: async () => 1000,
-        getBlockWithTransactions: async (n: number) => block(n),
-      })
-
-      const provider = new BlockProvider('chain', [client, client2])
+      const failing = mockFn().rejectsWith(new Error('error'))
+      const working = mockFn(async (x: number | 'latest') =>
+        header(x === 'latest' ? 1000 : x),
+      )
+      const provider = new BlockProvider('chain', [
+        mockObject<BlockClient>({ getBlockHeader: failing }),
+        mockObject<BlockClient>({ getBlockHeader: working }),
+      ])
 
       const blockNumber = await provider.getBlockNumberAtOrBefore(
         UnixTime(800 * 100),
       )
 
       expect(blockNumber).toEqual(800)
-      expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
-      expect(client2.getLatestBlockNumber).toHaveBeenCalledTimes(1)
-    })
-
-    it('falls back to 0 when start is above client latest', async () => {
-      const client = mockObject<BlockClient>({
-        getLatestBlockNumber: async () => 500,
-        getBlockWithTransactions: async (n: number) => block(n),
-      })
-
-      const provider = new BlockProvider('chain', [client])
-
-      const blockNumber = await provider.getBlockNumberAtOrBefore(
-        UnixTime(300 * 100),
-        800,
-      )
-
-      expect(blockNumber).toEqual(300)
-      expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
+      expect(failing).toHaveBeenCalledTimes(1)
+      expect(working).toHaveBeenCalledWith('latest')
     })
 
     it('throws error when run out of fallbacks', async () => {
-      const client = mockObject<BlockClient>({
-        getLatestBlockNumber: mockFn().rejectsWith(new Error('1')),
-      })
-      const client2 = mockObject<BlockClient>({
-        getLatestBlockNumber: mockFn().rejectsWith(new Error('2')),
-      })
-      const client3 = mockObject<BlockClient>({
-        getLatestBlockNumber: mockFn().rejectsWith(new Error('3')),
-      })
-
-      const provider = new BlockProvider('chain', [client, client2, client3])
+      const failing = [1, 2, 3].map((i) =>
+        mockFn().rejectsWith(new Error(i.toString())),
+      )
+      const provider = new BlockProvider(
+        'chain',
+        failing.map((getBlockHeader) =>
+          mockObject<BlockClient>({ getBlockHeader }),
+        ),
+      )
 
       await expect(
         async () => await provider.getBlockNumberAtOrBefore(UnixTime(800)),
       ).toBeRejectedWith('3')
 
-      expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
-      expect(client2.getLatestBlockNumber).toHaveBeenCalledTimes(1)
-      expect(client3.getLatestBlockNumber).toHaveBeenCalledTimes(1)
+      for (const getBlockHeader of failing) {
+        expect(getBlockHeader).toHaveBeenCalledTimes(1)
+      }
     })
   })
 })
@@ -148,6 +236,14 @@ function block(x: number) {
     transactions: [],
     hash: '0x' + x.toString(),
     logsBloom: `0x${'0'.repeat(512)}`,
+    timestamp: x * 100,
+  }
+}
+
+function header(x: number) {
+  return {
+    number: x,
+    hash: '0x' + x.toString(),
     timestamp: x * 100,
   }
 }

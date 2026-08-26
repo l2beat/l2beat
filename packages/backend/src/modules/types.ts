@@ -28,6 +28,8 @@ export interface ModuleDependencies {
   providers: Providers
   db: Database
   blockProcessors: BlockProcessor[]
+  /** Receive blocks of chains synced for blockProcessors without causing any chain to be synced */
+  blockObservers: BlockProcessor[]
 }
 
 export interface BlockProcessor {

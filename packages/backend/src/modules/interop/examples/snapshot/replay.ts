@@ -70,6 +70,10 @@ export class RpcReplay implements Omit<RpcClientCompat, 'ethRpcClient'> {
     throw new ReplayError(key)
   }
 
+  getBlockHeader(blockNumber: number | 'latest'): Promise<EVMBlock> {
+    return this.getBlock(blockNumber, false)
+  }
+
   getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
     const key = this.buildSnapshotKey([
       'blockParentBeaconRoot',

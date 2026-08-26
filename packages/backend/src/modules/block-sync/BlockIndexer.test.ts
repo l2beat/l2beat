@@ -106,6 +106,46 @@ describe(BlockIndexer.name, () => {
       expect(processBlock).toHaveBeenCalledWith(block2, [log2])
     })
 
+    it('passes consistent blocks to observers and survives their failures', async () => {
+      const block1 = makeBlock(10, 1_000)
+      const block2 = makeBlock(11, 2_000)
+      const observe = mockFn()
+        .rejectsWithOnce(new Error('observer error'))
+        .resolvesTo(undefined)
+      const processBlock = mockFn().resolvesTo(undefined)
+
+      const indexer = createIndexer({
+        blockProvider: mockObject<BlockProvider>({
+          getBlockWithTransactions: mockFn()
+            .resolvesToOnce(block1)
+            .resolvesToOnce(block2),
+        }),
+        logsProvider: mockObject<LogsProvider>({
+          getLogs: mockFn().resolvesTo([
+            makeLog(block1, 1),
+            makeLog(block2, 2),
+          ]),
+        }),
+        blockProcessors: [
+          mockObject<BlockProcessor>({ chain: 'ethereum', processBlock }),
+        ],
+        blockObservers: [
+          mockObject<BlockProcessor>({
+            chain: 'ethereum',
+            processBlock: observe,
+          }),
+        ],
+      })
+
+      const result = await indexer.update(10, 11)
+
+      expect(result).toEqual(11)
+      expect(observe).toHaveBeenCalledTimes(2)
+      expect(observe).toHaveBeenNthCalledWith(1, block1, [makeLog(block1, 1)])
+      expect(observe).toHaveBeenNthCalledWith(2, block2, [makeLog(block2, 2)])
+      expect(processBlock).toHaveBeenCalledTimes(2)
+    })
+
     it('throws without processing when first block exceeds configured timestamp', async () => {
       const block = makeBlock(10, 3_000)
       const log = makeLog(block, 1)
@@ -145,6 +185,7 @@ function createIndexer(overrides: Partial<BlockIndexerDeps> = {}) {
       getLogs: mockFn().resolvesTo([]),
     }),
     blockProcessors: [],
+    blockObservers: [],
     stopBlockIndexerAtTimestampMs: undefined,
     batchSize: 50,
     minHeight: 1,

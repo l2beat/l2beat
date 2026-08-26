@@ -1,11 +1,13 @@
 import type { AztecBlockProvider, BlockProvider } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
+import { assert, type Block } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 import type {
   ActivityBlock,
   ActivityBlockProvider,
 } from '../modules/activity/services/txs/types'
 import type { UopsAnalyzer } from '../modules/activity/services/uops/types'
+import type { BlockProcessor } from '../modules/types'
+import { ActivityBlockCache } from './ActivityBlockCache'
 import type { AztecBlockProviders } from './AztecBlockProviders'
 import type { BlockProviders } from './BlockProviders'
 import type { UopsAnalyzers } from './UopsAnalyzers'
@@ -47,10 +49,22 @@ export class ActivityBlockProviders {
 }
 
 export class StandardActivityBlockProvider implements ActivityBlockProvider {
+  private readonly cache = new ActivityBlockCache()
+  /** Blocks that block sync already fetched are summarized here instead of being fetched again */
+  readonly blockObserver: BlockProcessor
+
   constructor(
     private readonly provider: BlockProvider,
     private readonly uopsAnalyzer: UopsAnalyzer | undefined,
-  ) {}
+  ) {
+    this.blockObserver = {
+      chain: provider.chain,
+      processBlock: (block) => {
+        this.cache.set(this.toActivityBlock(block))
+        return Promise.resolve()
+      },
+    }
+  }
 
   get chain(): string {
     return this.provider.chain
@@ -58,16 +72,23 @@ export class StandardActivityBlockProvider implements ActivityBlockProvider {
 
   async getBlocks(from: number, to: number): Promise<ActivityBlock[]> {
     return await Promise.all(
-      range(from, to + 1).map(async (number) => {
-        const block = await this.provider.getBlockWithTransactions(number)
-        return {
-          number: block.number,
-          timestamp: block.timestamp,
-          txsCount: block.transactions.length,
-          uopsCount: this.uopsAnalyzer?.calculateUops(block) ?? null,
-        }
-      }),
+      range(from, to + 1).map(
+        async (number) =>
+          this.cache.get(number) ??
+          this.toActivityBlock(
+            await this.provider.getBlockWithTransactions(number),
+          ),
+      ),
     )
+  }
+
+  private toActivityBlock(block: Block): ActivityBlock {
+    return {
+      number: block.number,
+      timestamp: block.timestamp,
+      txsCount: block.transactions.length,
+      uopsCount: this.uopsAnalyzer?.calculateUops(block) ?? null,
+    }
   }
 }
 

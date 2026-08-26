@@ -1,5 +1,5 @@
 import type { AztecBlockProvider, BlockProvider } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { type Block, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { UopsAnalyzer } from '../modules/activity/services/uops/types'
 import {
@@ -66,6 +66,40 @@ describe(StandardActivityBlockProvider.name, () => {
       },
     ])
   })
+
+  it('serves blocks seen by the block observer without fetching them', async () => {
+    const blockProvider = mockObject<BlockProvider>({
+      chain: 'ethereum',
+      getBlockWithTransactions: mockFn().resolvesToOnce(block(11, 1)),
+    })
+    const uopsAnalyzer = mockObject<UopsAnalyzer>({
+      calculateUops: (block: Block) => block.transactions.length * 2,
+    })
+    const provider = new StandardActivityBlockProvider(
+      blockProvider,
+      uopsAnalyzer,
+    )
+
+    await provider.blockObserver.processBlock(block(10, 3), [])
+    const result = await provider.getBlocks(10, 11)
+
+    expect(provider.blockObserver.chain).toEqual('ethereum')
+    expect(blockProvider.getBlockWithTransactions).toHaveBeenOnlyCalledWith(11)
+    expect(result).toEqual([
+      {
+        number: 10,
+        timestamp: UnixTime(1_700_000_010),
+        txsCount: 3,
+        uopsCount: 6,
+      },
+      {
+        number: 11,
+        timestamp: UnixTime(1_700_000_011),
+        txsCount: 1,
+        uopsCount: 2,
+      },
+    ])
+  })
 })
 
 describe(AztecActivityBlockProvider.name, () => {
@@ -98,3 +132,13 @@ describe(AztecActivityBlockProvider.name, () => {
     ])
   })
 })
+
+function block(number: number, txsCount: number): Block {
+  return {
+    number,
+    hash: `0x${number}`,
+    logsBloom: '0x',
+    timestamp: UnixTime(1_700_000_000 + number),
+    transactions: Array.from({ length: txsCount }, () => ({})),
+  }
+}

@@ -12,6 +12,7 @@ export function createBlockSyncModule({
   db,
   providers,
   blockProcessors,
+  blockObservers,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (blockProcessors.length === 0) {
     // This module is special in that it is only created if other modules
@@ -53,6 +54,7 @@ export function createBlockSyncModule({
         minHeight: 1,
         parents: [blockNumberIndexer],
         blockProcessors: blockProcessors.filter((x) => x.chain === chain),
+        blockObservers: blockObservers.filter((x) => x.chain === chain),
         source: chain,
         blockProvider: providers.block.getBlockProvider(chain),
         logsProvider: providers.logs.getLogsProvider(chain),

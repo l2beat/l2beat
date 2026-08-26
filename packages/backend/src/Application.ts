@@ -48,6 +48,7 @@ export class Application {
       providers,
       db,
       blockProcessors: [],
+      blockObservers: [],
     }
 
     // Modules with TRPC
