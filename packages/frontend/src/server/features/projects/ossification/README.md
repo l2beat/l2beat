@@ -209,6 +209,27 @@ Use Node 22 through `fnm`. RPC and explorer credentials are in
 `discovered.json` may be ignored, so inspect them directly rather than relying only on
 `git ls-files`.
 
+## Merging main
+
+`discovered.json` and `diffHistory.md` are derived state; `config.jsonc` and
+templates are source. Merge source normally, take main for derived files, then
+re-derive with this branch's configs:
+
+1. One-time per clone: register a take-theirs merge driver
+   (`git config merge.takeTheirs.driver 'cp %B %A'`) and scope it in
+   `.git/info/attributes` to `packages/config/src/projects/**/discovered.json`
+   and `**/diffHistory.md`.
+2. Record the baseline (`ossification-smoke.ts` output), then `git merge main`.
+3. Rebuild tooling (`pnpm build:dependencies` in `packages/l2b` — stale schemas
+   fail silently), then `l2b refresh-discovery -m "reapply branch discovery
+   config after merging main"`: it detects every project whose committed
+   discovery no longer matches its config/template hashes and reruns exactly
+   those.
+4. Diff the smoke output against the baseline and run the lint audits; an
+   unexplained clock or event-count change means a branch-only watched entry
+   was dropped by the merge — recover it as an onchain-anchored
+   `criticalEvents` entry, never by hand-editing diff history.
+
 ## Current status
 
 - All 12 tracked projects have been validated (perimeter sizes: run
