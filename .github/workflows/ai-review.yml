@@ -163,20 +163,16 @@ jobs:
           PR_TITLE: ${{ needs.gate.outputs.pr_title }}
           PR_BODY: ${{ needs.gate.outputs.pr_body }}
       - uses: actions/upload-artifact@v7
-        if: always()
         with:
           name: ai-review-output
           path: |
             ${{ runner.temp }}/review.json
             ${{ runner.temp }}/diff.patch
-          if-no-files-found: ignore
 
   post:
     name: Post
     # ack is included so the final reaction is always written after the eyes.
     needs: [gate, ack, review]
-    # Runs even when review failed so the abort reason is posted and the reaction cleared.
-    if: always() && needs.gate.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -193,7 +189,6 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install --filter @l2beat/ai-review...
       - uses: actions/download-artifact@v7
-        continue-on-error: true
         with:
           name: ai-review-output
           path: ${{ runner.temp }}
@@ -207,8 +202,7 @@ jobs:
           RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
           HEAD_SHA: ${{ needs.gate.outputs.head_sha }}
           LESSONS_VERSION: none
-          ENGINE: ${{ needs.review.outputs.engine || 'none' }}
-          REVIEW_JOB_RESULT: ${{ needs.review.result }}
+          ENGINE: ${{ needs.review.outputs.engine }}
       - name: Post review
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
