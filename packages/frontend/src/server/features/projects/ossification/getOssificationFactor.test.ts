@@ -34,6 +34,8 @@ function entry(
     name: 'Example',
     isVerified: true,
     upgradeTimestamps: [],
+    // the field changed by highSeverityBlock(), HIGH in current metadata
+    highSeverityFields: ['trustedImages'],
     ...overrides,
   }
 }
@@ -497,15 +499,174 @@ describe(getOssificationFactor.name, () => {
     expect(result?.clusteredEventCount).toEqual(1)
   })
 
-  it('attributes diff history to backfilled historical addresses', () => {
+  it('never attaches diff history to historical contracts', () => {
+    // historical contracts are a closed reviewed ledger: upgrade timestamps
+    // plus reviewed events; annotated diff blocks on their addresses are inert
     const result = getOssificationFactor(
       [entry({ sinceTimestamp: NOW - 4 * YEAR })],
       [update(NOW - 30 * DAY, highSeverityBlock(ADDRESS_B))],
       NOW,
       [{ address: ADDRESS_B, name: 'OldVerifier', upgradeTimestamps: [] }],
     )
-    expect(result?.lastCriticalChange).toEqual(NOW - 30 * DAY)
+    expect(result?.lastCriticalChange).toEqual(null)
+    expect(result?.criticalUpdates).toEqual([])
     expect(result?.projectAgeSeconds).toEqual(4 * YEAR)
+  })
+
+  it('ignores an annotated-HIGH diff on a field no longer HIGH today', () => {
+    // the annotation is a frozen snapshot; the current judgment wins
+    const result = getOssificationFactor(
+      [entry({ sinceTimestamp: NOW - 4 * YEAR, highSeverityFields: [] })],
+      [update(NOW - 30 * DAY, highSeverityBlock(ADDRESS_A))],
+      NOW,
+    )
+    expect(result?.projectAgeSeconds).toEqual(4 * YEAR)
+    expect(result?.contracts[0]?.stateChangeCount).toEqual(0)
+    expect(result?.lastCriticalChange).toEqual(null)
+    expect(result?.criticalUpdates).toEqual([])
+  })
+
+  it('counts an unannotated diff on a field that is HIGH today', () => {
+    const unannotatedBlock = [
+      '```diff',
+      `    contract Example (${ADDRESS_A}) {`,
+      '    +++ description: test contract',
+      '      values.trustedImages.0:',
+      '-        "0xaa"',
+      '+        "0xbb"',
+      '    }',
+      '```',
+    ].join('\n')
+    const result = getOssificationFactor(
+      [entry({ sinceTimestamp: NOW - 4 * YEAR })],
+      [update(NOW - 30 * DAY, unannotatedBlock)],
+      NOW,
+    )
+    expect(result?.contracts[0]?.stateChangeCount).toEqual(1)
+    expect(result?.lastCriticalChange).toEqual(NOW - 30 * DAY)
+  })
+
+  it('evaluates a legacy upgradeability.admin diff against the $admin field', () => {
+    const legacyAdminBlock = [
+      '```diff',
+      `    contract Example (${ADDRESS_A}) {`,
+      '      upgradeability.admin:',
+      `-        "${ADDRESS_B}"`,
+      `+        "${ADDRESS_C}"`,
+      '    }',
+      '```',
+    ].join('\n')
+    const result = getOssificationFactor(
+      [
+        entry({
+          sinceTimestamp: NOW - 4 * YEAR,
+          highSeverityFields: ['$admin'],
+        }),
+      ],
+      [update(NOW - 30 * DAY, legacyAdminBlock)],
+      NOW,
+    )
+    expect(result?.contracts[0]?.stateChangeCount).toEqual(1)
+  })
+
+  it('dates state diffs at the onchain upgrade bundled in the same update', () => {
+    const onchainTimestamp = NOW - 32 * DAY
+    const iso = new Date(onchainTimestamp * 1000).toISOString()
+    const bundledUpgradeBlock = [
+      '```diff',
+      `    contract Other (${ADDRESS_B}) {`,
+      '      values.$pastUpgrades.3:',
+      `+        ["${iso}","0xabc",["eth:0x111"]]`,
+      '    }',
+      '```',
+    ].join('\n')
+    const result = getOssificationFactor(
+      [
+        entry({ sinceTimestamp: NOW - 4 * YEAR }),
+        entry({
+          address: ADDRESS_B,
+          name: 'Other',
+          sinceTimestamp: NOW - 4 * YEAR,
+          upgradeTimestamps: [NOW - 5 * YEAR, onchainTimestamp],
+        }),
+      ],
+      [
+        update(
+          NOW - 30 * DAY,
+          [bundledUpgradeBlock, highSeverityBlock(ADDRESS_A)].join('\n\n'),
+        ),
+      ],
+      NOW,
+    )
+    // the state change and the upgrade form one 24h cluster at onchain time
+    expect(result?.lastCriticalChange).toEqual(onchainTimestamp)
+    expect(result?.projectClockStart).toEqual(onchainTimestamp)
+    expect(result?.clusteredEventCount).toEqual(1)
+  })
+
+  it('keeps the review timestamp when an appended upgrade is a stale backfill', () => {
+    // pastUpgradeChangeBlock appends entries months before the update — a
+    // handler backfill, not a fresh observation
+    const result = getOssificationFactor(
+      [entry({ sinceTimestamp: NOW - 4 * YEAR })],
+      [
+        update(
+          NOW - 30 * DAY,
+          [
+            pastUpgradeChangeBlock(ADDRESS_B),
+            highSeverityBlock(ADDRESS_A),
+          ].join('\n\n'),
+        ),
+      ],
+      NOW,
+    )
+    expect(result?.lastCriticalChange).toEqual(NOW - 30 * DAY)
+  })
+
+  it('lets a reviewed event supersede its update for the same contract', () => {
+    const onchainTimestamp = NOW - 33 * DAY
+    const result = getOssificationFactor(
+      [entry({ sinceTimestamp: NOW - 4 * YEAR })],
+      [update(NOW - 30 * DAY, highSeverityBlock(ADDRESS_A))],
+      NOW,
+      [],
+      [
+        {
+          timestamp: onchainTimestamp,
+          type: 'state',
+          source: 'tx:0xreviewed',
+          reason: 'Changed trusted images.',
+          contract: ADDRESS_A,
+          updateId: `update-${NOW - 30 * DAY}`,
+        },
+      ],
+    )
+    // one event at the reviewed onchain time, not two (reviewed + review-time)
+    expect(result?.contracts[0]?.stateChangeCount).toEqual(1)
+    expect(result?.lastCriticalChange).toEqual(onchainTimestamp)
+    expect(result?.projectClockStart).toEqual(onchainTimestamp)
+    expect(result?.clusteredEventCount).toEqual(1)
+  })
+
+  it('ignores representation-only rewrites of a HIGH field', () => {
+    // chain-prefix migration: the value did not change onchain
+    const prefixMigrationBlock = [
+      '```diff',
+      `    contract Example (${ADDRESS_A}) {`,
+      '+++ severity: HIGH',
+      '      values.trustedImages.0:',
+      '-        "0xaAbB00000000000000000000000000000000CdEf"',
+      '+        "eth:0xaAbB00000000000000000000000000000000CdEf"',
+      '    }',
+      '```',
+    ].join('\n')
+    const result = getOssificationFactor(
+      [entry({ sinceTimestamp: NOW - 4 * YEAR })],
+      [update(NOW - 30 * DAY, prefixMigrationBlock)],
+      NOW,
+    )
+    expect(result?.contracts[0]?.stateChangeCount).toEqual(0)
+    expect(result?.lastCriticalChange).toEqual(null)
   })
 
   it('ignores historical entries that shadow a live contract', () => {

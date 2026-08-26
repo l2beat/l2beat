@@ -32,11 +32,18 @@ function main() {
   const release = readObject(RELEASE_PATH)
   const schema = readObject(SCHEMA_PATH)
   const ageKnots = readCanonicalAgeKnots(release, schema)
-  const revision = execFileSync(
-    'git',
-    ['-C', DATASET_ROOT, 'rev-parse', 'HEAD'],
-    { encoding: 'utf8' },
-  ).trim()
+  const head = execFileSync('git', ['-C', DATASET_ROOT, 'rev-parse', 'HEAD'], {
+    encoding: 'utf8',
+  }).trim()
+  // An uncommitted release must never masquerade as its parent commit —
+  // scores change only at deliberate dataset releases.
+  const dirty =
+    execFileSync(
+      'git',
+      ['-C', DATASET_ROOT, 'status', '--porcelain', '--', 'dist', 'schema'],
+      { encoding: 'utf8' },
+    ).trim().length > 0
+  const revision = dirty ? `${head}-dirty` : head
   const output = renderOutput(ageKnots, revision)
 
   if (check) {

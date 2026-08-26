@@ -33,5 +33,10 @@
       "lastSeenCommit": "27ba038f9f7ba9445c022a06ce91f646a6ce80b6",
       "note": "Era's own DiamondProxy (getChainId 324) on the Gateway settlement layer where Era batches were committed, proven and executed while it settled via Gateway: a malicious facet cut or verifier swap forges Era batches with fake L2->L1 withdrawal logs that relay to Ethereum and drain Era's L1 escrows."
     }
+  ],
+  "reviewedSeverityDowngrades": [
+    "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213#migrations",
+    "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3#emergencyUpgradesExecuted",
+    "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d#multisigMembers"
   ]
 }

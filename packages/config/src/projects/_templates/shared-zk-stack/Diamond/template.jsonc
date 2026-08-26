@@ -36,6 +36,10 @@
   ],
   "ignoreRelatives": ["getBaseToken", "getSettlementLayer"],
   "fields": {
+    "getSettlementLayer": {
+      "severity": "HIGH",
+      "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
+    },
     "getAdmin": {
       "severity": "HIGH",
       "permissions": [

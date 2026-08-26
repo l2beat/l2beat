@@ -1952,8 +1952,7 @@
           "description": "this 'paused' is unrelated to migrations and only used for initialization."
         },
         "migrations": {
-          "severity": "HIGH",
-          "description": "zk chain migrations that were started"
+          "description": "zk chain migrations that were started. Any chain's migration appears here; Era's own settlement moves are tracked as HIGH on its Diamond (getSettlementLayer)."
         }
       },
       "implementationNames": {

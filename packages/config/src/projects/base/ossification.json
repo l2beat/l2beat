@@ -240,6 +240,13 @@
       "reason": "Replaced the AggregateVerifier game implementation during Azul activation."
     },
     {
+      "timestamp": 1782229799,
+      "type": "state",
+      "contract": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
+      "source": "tx:0x0ced3a724fa360d47ab0ae493afd4725d23579a4a82d6a1d91dfc11aea8c69d4",
+      "reason": "Registered a new game type 621 (AggregateVerifier) dispute game implementation that verifies proposed state roots."
+    },
+    {
       "timestamp": 1785176507,
       "type": "state",
       "contract": "eth:0xdc32E228636273285Befa5F001dBB5142517C106",
@@ -315,5 +322,10 @@
       "lastSeenCommit": "af90cb7afd0641230b42ba4344181a5c5ae9d96e",
       "note": "Pre-fault-proof state root oracle: a fraudulent output root accepted here (via PROPOSER compromise or malicious upgrade) enables theft of all escrowed funds through OptimismPortal withdrawals after the 7d finalization window (opstack/L2OutputOracle template is critical today)."
     }
+  ],
+  "reviewedSeverityDowngrades": [
+    "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e#gameImpls",
+    "eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA#getRegisteredSigners",
+    "eth:0x1af2A7E537DE2eE795DE5B8BfbB1Ad0DD513A5aA#getExpectedImageHash"
   ]
 }

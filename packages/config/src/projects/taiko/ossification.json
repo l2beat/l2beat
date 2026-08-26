@@ -14,10 +14,54 @@
       "reason": "Raised the operational Taiko Safe threshold from 4 to 5; the Safe shell itself is outside the contract perimeter."
     },
     {
+      "timestamp": 1756261223,
+      "type": "state",
+      "contract": "eth:0xbee1040d0aab17ae19454384904525ae4a3602b9",
+      "source": "tx:0xc6aa14245e3b593f4e37ce6decef8719eae07bdd79d3099c48ea73fc85bc3290",
+      "reason": "Added trusted SP1 program hashes to the then-live SP1 verifier gateway; a trusted program defines which proofs finalize state roots.",
+      "historical": true
+    },
+    {
+      "timestamp": 1764814439,
+      "type": "state",
+      "contract": "eth:0xbee1040d0aab17ae19454384904525ae4a3602b9",
+      "updateId": "bb3bea08",
+      "source": "tx:0xbdd083f6c9905230ec66b00863175112f2dbad532a6bd34d5982752587d1c5dd",
+      "reason": "Added trusted SP1 program hashes to the then-live SP1 verifier gateway.",
+      "historical": true
+    },
+    {
       "timestamp": 1770803603,
       "type": "state",
       "source": "tx:0x5cef6075a2b2ac1b0dffc0e0552aa79960344c358c660493e976de16cc78ba17",
       "reason": "Reduced the operational Taiko Safe threshold from 5 to 4; the Safe shell itself is outside the contract perimeter."
+    },
+    {
+      "timestamp": 1774964687,
+      "type": "state",
+      "contract": "eth:0x96337327648dcfa22b014009cf10a2d5e2f305f6",
+      "updateId": "f3c1579e",
+      "source": "tx:0xb132692b255fb1ff670b37d162af03de5151fa1e77811bf009ba276e4a9a2f36",
+      "reason": "Added trusted SP1 program verification keys to the then-live SP1 gating router; a trusted vkey defines which proofs finalize state roots.",
+      "historical": true
+    },
+    {
+      "timestamp": 1775208959,
+      "type": "state",
+      "contract": "eth:0x96337327648dcfa22b014009cf10a2d5e2f305f6",
+      "updateId": "f3c1579e",
+      "source": "tx:0x8c1f0bfa4a492d1f78ff1a4dcd8886fa5476d8aa59531a6bd199de2fbad19948",
+      "reason": "Added trusted SP1 program verification keys to the then-live SP1 gating router; a trusted vkey defines which proofs finalize state roots.",
+      "historical": true
+    },
+    {
+      "timestamp": 1780627823,
+      "type": "state",
+      "contract": "eth:0x96337327648dcfa22b014009cf10a2d5e2f305f6",
+      "updateId": "f552f80c",
+      "source": "tx:0x5f25fce8314f9a98209b0787b5f457c71bee1c342fccf2e7a7a4bddf9c349393",
+      "reason": "Replaced trusted SP1 program verification keys on the then-live SP1 gating router.",
+      "historical": true
     }
   ],
   "historicalContracts": [
@@ -230,5 +274,10 @@
       "lastSeenCommit": "80133bc1176f8bfe90d061618817551845176f55",
       "note": "Top-tier verifier: guardian multisig proofs override all other tiers uncontested and it held the chain_watchdog pause; compromise finalizes arbitrary fake state (bridge drain) or pauses proving (freeze)."
     }
+  ],
+  "reviewedSeverityDowngrades": [
+    "eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd#proposalCount",
+    "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f#getCurrentForcedInclusionFee",
+    "eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321#proposalCount"
   ]
 }

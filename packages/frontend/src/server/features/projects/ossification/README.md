@@ -10,14 +10,13 @@ has remained unchanged.
 
 - **Ossification (0–100):** the interpolated percentile of the perimeter's age
   within the published exploit-age curve — the share of recorded code-bug
-  exploits whose exploited code was younger. The canonical curve is
-  `dist/latest/curve.json` in the standalone `ossification-dataset` repository,
-  using `schema/release-curve.schema.json` format 1. The current runtime
-  projection contains 311 age knots from dataset commit
-  `302fb9f864fc78f712ec092813cc13c17df6b8c9`; regenerate it with
-  `scripts/ossification-incidents-curve.ts` and verify it with `--check`. The
-  importer accepts only the canonical release schema. Scores change only at
-  deliberate dataset releases, never silently.
+  exploits whose exploited code was younger. Incident research and curve
+  construction live only in the standalone `ossification-dataset` repository
+  (`dist/latest/curve.json`, validated against
+  `schema/release-curve.schema.json`); `ossificationCurve.ts` is its generated
+  runtime projection, stamped with the source dataset commit. Regenerate with
+  `scripts/ossification-incidents-curve.ts`, verify with `--check`. Scores
+  change only at deliberate dataset releases, never silently.
 - **Last change:** age of the project clock. The clock starts at the newest
   deployment or qualifying change among all current critical contracts.
 - **Battle-tested exposure (USD·years):** project TVS integrated from the project
@@ -106,20 +105,38 @@ explained.
 | `includeProjects` | Listed in the root project's `ossification.json` | Adds that project's current critical contracts and discovery history to the same perimeter |
 | `sinceTimestamp` | Current critical contracts only | Deployment candidate for the contract clock; deployment resets maturity but is not a change-rate event |
 | `$pastUpgrades` | Current critical contracts; the first transaction is initialization unless audited in `firstUpgradeIsChange`; audited later initialization/no-op transactions are listed per contract in `ignoredUpgradeTransactions` | Latest qualifying transaction timestamp can reset the clock; every non-initialization transaction is a change-rate event. Multiple upgrade records from one transaction (for example upgrade, execute, restore) form one code change |
-| Watched discovery diff | Address belongs to a current critical contract and the block is a non-implementation `severity: HIGH` change | Resets the clock and adds a change-rate event |
+| Watched discovery diff | Address belongs to a current critical contract and the block changes a field whose CURRENT curated severity is HIGH (`fieldMeta` in discovered.json) | Resets the clock and adds a change-rate event |
 | Implementation diff fallback | Address belongs to a current critical contract and that contract has no `$pastUpgrades` | Resets the clock and adds an event regardless of field severity |
-| `criticalEvents` | Reviewed, evidence-backed event that mechanical discovery history cannot reconstruct | Adds the specified code/state event. `historical: true` affects only history/rate; other entries also reset the current clock |
+| `criticalEvents` | Reviewed, evidence-backed event that mechanical discovery history cannot reconstruct or dates imprecisely | Adds the specified code/state event; see History semantics for the supersede and `historical` rules |
 | `unverified` | Any current critical contract | Gates maturity, score, and exposure to zero |
-| `historicalContracts` | Entry has `critical: true` and is no longer in the current perimeter | Its upgrades, attributable HIGH diff events, and reviewed events affect only change history/rate, never the current clock or unverified gate |
+| `historicalContracts` | Entry has `critical: true` and is no longer in the current perimeter | Closed reviewed ledger (see History semantics); affects only change history/rate, never the current clock or unverified gate |
 | Project `TokenValue` series | Root project only | Supplies battle-tested exposure; it does not affect score or change rate |
 
 ## History semantics
 
-- State-change history is a snapshot ledger: the runtime reads committed
-  `diffHistory.md`, whose severity was copied from the field metadata in force
-  when each diff was generated. Changing severity today does not reclassify old
-  diff blocks — late-added HIGH fields need an auditable `criticalEvents`
-  backfill if their older changes matter.
+- State-change history is re-evaluated against current judgment: the runtime
+  reads committed `diffHistory.md` field by field and counts a state event iff
+  the changed field's CURRENT severity (discovered.json `fieldMeta`) is HIGH.
+  The `+++ severity` annotations frozen into old diff blocks are not
+  authoritative — re-classifying a field today reclassifies its whole recorded
+  history in both directions. Adding HIGH to a field automatically backfills
+  every recorded change; removing HIGH automatically silences them.
+  `scripts/ossification-lint.ts` prints every silenced annotated-HIGH event
+  until it is acknowledged in `reviewedSeverityDowngrades`
+  (`"<chain:address>#<field>"`), so downgrades stay auditable; a field RENAME
+  needs a `criticalEvents` backfill because the old name no longer resolves to
+  current metadata.
+- Historical contracts (`historicalContracts`) are a closed reviewed ledger,
+  fixed at the removal review: onchain `upgradeTimestamps` for code changes
+  plus reviewed `criticalEvents` for state changes, every entry anchored to a
+  transaction. Diff history is never consulted for them — the lint reports any
+  annotated-HIGH or implementation diff on a historical address that the
+  ledger does not represent, so the ledger stays provably complete.
+- State diffs are dated at the discovery-run timestamp, except when the same
+  update carries a freshly appended `$pastUpgrades` entry (within 14 days):
+  then all of the update's diff events snap to that onchain transaction time,
+  because governance actions routinely bundle an upgrade with state changes on
+  sibling contracts and the review can lag past the cluster window.
 - Implementation history is mechanical: `$pastUpgrades` carries onchain
   timestamps for every recognized upgrade. When present, implementation diff
   blocks are ignored (no double counting); without it, implementation diffs are
@@ -134,15 +151,23 @@ explained.
   initialized before their first recognized `Upgraded` log (evidence bar: a
   nonzero implementation slot immediately before the event, or equivalent).
 - `criticalEvents` is an exception ledger, never a duplicate channel: omit an
-  entry when `$pastUpgrades` or a contemporaneous HIGH diff already supplies the
-  event. Attributed events must match a current or historical perimeter
-  contract; `historical: true` events feed the rate only and never reset today's
-  clock.
+  entry when `$pastUpgrades` or a counted diff already supplies the event. An
+  entry that names both `updateId` and `contract` supersedes that update's
+  mechanical diff events for that contract — use this to replace a review-time
+  timestamp with the precise onchain one. Attributed events must match a
+  current or historical perimeter contract; `historical: true` events feed the
+  rate only and never reset today's clock.
+- For changes that predate diff coverage entirely,
+  `scripts/ossification-fetch-events.ts <chain:address> <eventSig>` fetches the
+  complete onchain log history of a mutation event and prints ready-to-review
+  `criticalEvents` entries with exact transaction timestamps.
 
 Validation consequences: every critical proxy needs complete `$pastUpgrades`
-(missing handler coverage is a data-quality bug); late-added HIGH fields need
-their old history inspected and, if material, backfilled; removed contracts need
-contract-level classification in `historicalContracts`.
+(missing handler coverage is a data-quality bug); severity re-classification is
+self-applying for recorded history, but renames and pre-coverage changes still
+need `criticalEvents`; a contract leaving the perimeter needs its complete
+onchain ledger written at the removal review, because diff history stops
+counting for it at that moment.
 
 ## Project validation pass
 
@@ -152,9 +177,10 @@ scroll, starknet, taiko, tornado-cash, uniswapv3, and zksync2. Zksync includes
 
 For every project, apply the reviewer contract using permissions, values, `.flat/`
 sources, templates, project overrides, and `diffHistory.md`. Check handler and
-`$pastUpgrades` coverage for each critical proxy, inspect older history when HIGH
-was added late, and use the backfill scanner for removed contracts. Finish by
-running lint and smoke and producing the four review artifacts above.
+`$pastUpgrades` coverage for each critical proxy, resolve every lint finding
+(silenced downgrades, historical ledger gaps), and use the backfill scanner for
+removed contracts. Finish by running lint and smoke and producing the four
+review artifacts above.
 
 ## Tools and code map
 
@@ -164,7 +190,11 @@ running lint and smoke and producing the four review artifacts above.
 - `getOssificationPerimeter.ts`: lint/research closure only; it never decides runtime
   membership.
 - `scripts/ossification-lint.ts <projectId>`: candidate worklist for missing/excess
-  flags; suggestions require judgment.
+  flags, the severity-history audit (silenced annotated-HIGH events), and the
+  historical-ledger closure check; suggestions require judgment.
+- `scripts/ossification-fetch-events.ts <chain:address> <eventSig>`: onchain log
+  history of a field's mutation event as ready-to-review `criticalEvents`
+  entries, for pre-coverage backfills.
 - `scripts/ossification-backfill.ts <projectId> [--json]`: removed-contract evidence
   from full git history.
 - `scripts/ossification-incidents-curve.ts [--check]`: project the checked-out
@@ -181,13 +211,8 @@ Use Node 22 through `fnm`. RPC and explorer credentials are in
 
 ## Current status
 
-- All 12 tracked projects have been validated: arbitrum, base, linea, optimism,
-  privacy-pools, railgun, scroll, starknet, taiko, tornado-cash, uniswapv3, and
-  zksync2.
-- Current perimeter sizes are: arbitrum 45, base 35, linea 18, optimism 26,
-  privacy-pools 17, railgun 8, scroll 50, starknet 49, taiko 36, tornado-cash 21,
-  uniswapv3 8, and zksync2 30. Shared dependencies are included in the Starknet,
-  Taiko, and ZKsync totals.
+- All 12 tracked projects have been validated (perimeter sizes: run
+  `ossification-smoke.ts`).
 - Scroll includes its project-controlled core, governance, active verifier, and
   canonical bridge paths. Actor Safes, external-trust escrows, and retired
   verifiers are excluded; two Safe threshold changes are explicit events.
@@ -200,16 +225,5 @@ Use Node 22 through `fnm`. RPC and explorer credentials are in
 - ZKsync Era includes its core bridge, proof, governance, and token-governance
   paths from the project and shared stack. Actor Safes and external wstETH custody
   are excluded; two direct Matter Labs Safe threshold changes are explicit events.
-- Removed-contract backfill is complete for the cohort; runtime history remains
-  limited by the caveat above for late-added HIGH value annotations.
-
-## Suggested integration order
-
-1. Discovery schema and transaction-aware proxy upgrade history.
-2. Metric calculation, project-page integration, and `/security` summary UI.
-3. Reviewed project classifications and their generated discovery artifacts.
-
-Incident research and curve release construction live only in the standalone
-`ossification-dataset` repository. This branch keeps no legacy incident inputs or
-alternate curve-schema parser; `ossificationCurve.ts` is only the generated
-runtime projection of the canonical release.
+- Removed-contract backfill is complete for the cohort; the lint's severity and
+  historical-ledger audits report clean across all 12 projects.

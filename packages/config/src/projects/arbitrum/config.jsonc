@@ -78,6 +78,35 @@
     "eth:0xc4940069140142236D4065b866018f7b2BeC77fD": "OutboxEntry"
   },
   "overrides": {
+    // Governance timelocks: the minimum delay defines the reaction window
+    // users have before a passed proposal executes — a delay change alters
+    // the security conditions of every governed contract.
+    "eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49": {
+      "fields": {
+        "getMinDelay": {
+          "severity": "HIGH",
+          "description": "Minimum timelock delay in seconds before a scheduled governance action can execute on L1."
+        }
+      }
+    },
+    "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0": {
+      "fields": {
+        "getMinDelay": {
+          "severity": "HIGH",
+          "description": "Minimum timelock delay in seconds before a scheduled governance action can execute on Arbitrum One."
+        }
+      }
+    },
+    // Changing the constitutional quorum changes the conditions under which
+    // core (upgrade-capable) proposals pass.
+    "arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9": {
+      "fields": {
+        "l2CoreQuorumPercent": {
+          "severity": "HIGH",
+          "description": "The percentage of total Delegated Voting Power (DVP) required to pass a constitutional proposal."
+        }
+      }
+    },
     "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": {
       "fields": {
         // Seeds the ArbOS 61 transaction-filtering precompile (0x..74) as a

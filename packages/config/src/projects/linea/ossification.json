@@ -343,5 +343,8 @@
       "source": "tx:0x4bcfe7ea1724555288f7cf4d7a0de608182483a41d670e3027b89c3e989240c9",
       "reason": "Changed the native-yield withdrawal reserve parameters."
     }
+  ],
+  "reviewedSeverityDowngrades": [
+    "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94#yieldProviderCount"
   ]
 }

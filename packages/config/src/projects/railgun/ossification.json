@@ -49,5 +49,8 @@
       "source": "tx:0x256b66eb07d1bc6f1e87375917077f4c607952f13b12f577021a14f9f1a22eca",
       "reason": "Completed a batch rollout of new smart wallet SNARK verification keys."
     }
+  ],
+  "reviewedSeverityDowngrades": [
+    "eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC#proposalCount"
   ]
 }

@@ -53,6 +53,121 @@ function isChangeLine(line: string): boolean {
   return /^\s*[+-]\s/.test(line)
 }
 
+export interface DiffBlockFieldChange {
+  /** Path as written in the diff block, without the `values.` prefix,
+   *  e.g. "latestVerifier.9.verifier" or "$admin". */
+  path: string
+  /** The severity-carrying unit: the first path segment, matching the key
+   *  used in discovered.json `fieldMeta`. Legacy `upgradeability.X` paths
+   *  map to their modern `$X` field names. */
+  field: string
+  /** Whether a `+++ severity: HIGH` annotation immediately preceded the
+   *  field line when the diff was committed. This is the judgment frozen at
+   *  review time — current metadata may since have changed. */
+  annotatedHigh: boolean
+  /** True when the removed and added values are equivalent after
+   *  normalization: representation-only rewrites (chain-prefix migrations,
+   *  reorderings) are not changes. */
+  unchanged: boolean
+}
+
+const FIELD_LINE_RE = /^\s*(values|upgradeability)\.(\S+):\s*$/
+
+/** Changed value fields in one diff block, with their frozen annotations. */
+export function extractDiffBlockFieldChanges(
+  body: string,
+): DiffBlockFieldChange[] {
+  const changes: DiffBlockFieldChange[] = []
+  let pendingHigh = false
+  let current: { removed: string[]; added: string[] } | undefined
+  const finalize = () => {
+    if (!current) return
+    const change = changes.at(-1)
+    if (change) {
+      change.unchanged =
+        current.removed.length > 0 &&
+        normalizeDiffValues(current.removed) ===
+          normalizeDiffValues(current.added)
+    }
+    current = undefined
+  }
+  for (const line of body.split('\n')) {
+    if (/^\+\+\+ severity: HIGH\b/.test(line)) {
+      pendingHigh = true
+      continue
+    }
+    // other +++ annotations (description, type) keep the pending severity
+    if (line.startsWith('+++')) continue
+
+    const match = FIELD_LINE_RE.exec(line)
+    if (match) {
+      finalize()
+      const path = match[2] ?? ''
+      const first = path.split('.')[0] ?? path
+      const field = match[1] === 'upgradeability' ? `$${first}` : first
+      changes.push({
+        path,
+        field,
+        annotatedHigh: pendingHigh,
+        unchanged: false,
+      })
+      current = { removed: [], added: [] }
+      pendingHigh = false
+      continue
+    }
+    // diff value lines and blanks belong to the preceding field
+    if (/^\s*-/.test(line)) {
+      current?.removed.push(line.replace(/^\s*-\s*/, ''))
+      continue
+    }
+    if (/^\s*\+/.test(line)) {
+      current?.added.push(line.replace(/^\s*\+\s*/, ''))
+      continue
+    }
+    if (line.trim() === '') continue
+    finalize()
+    pendingHigh = false
+  }
+  finalize()
+  return changes
+}
+
+/** Sorted, chain-prefix-stripped value lines: two sides that agree here
+ *  differ only in representation, not in substance. */
+function normalizeDiffValues(lines: string[]): string {
+  return lines
+    .map((line) => line.replace(/\b[a-z0-9-]+:(?=0x)/gi, '').trim())
+    .sort()
+    .join('\n')
+}
+
+const APPENDED_UPGRADE_RE = /^\+\s+\["(\d{4}-\d{2}-\d{2}T[0-9:.]+Z)"/
+
+/** Onchain timestamps of `$pastUpgrades` entries appended in this diff block.
+ *  A watched-changes append is a new onchain upgrade observed by discovery;
+ *  its embedded timestamp is the transaction time, which is more precise than
+ *  the discovery-run timestamp of the surrounding update. */
+export function extractAppendedUpgradeTimestamps(body: string): number[] {
+  const timestamps: number[] = []
+  const lines = body.split('\n')
+  for (let i = 0; i < lines.length; i++) {
+    if (!mentionsPastUpgradeEntry(lines[i] ?? '')) continue
+    for (let j = i + 1; j < lines.length; j++) {
+      const line = lines[j] ?? ''
+      if (line.trim() === '') continue
+      const match = APPENDED_UPGRADE_RE.exec(line)
+      if (match?.[1] !== undefined) {
+        const parsed = Date.parse(match[1])
+        if (Number.isFinite(parsed)) {
+          timestamps.push(Math.floor(parsed / 1000))
+        }
+      }
+      break
+    }
+  }
+  return timestamps
+}
+
 export function isHighSeverityDiffBody(body: string): boolean {
   if (/^\+\+\+ severity: HIGH\b/im.test(body)) {
     return true

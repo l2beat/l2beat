@@ -249,6 +249,10 @@
         "timelockAdminAC": ["arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"]
       },
       "fieldMeta": {
+        "getMinDelay": {
+          "severity": "HIGH",
+          "description": "Minimum timelock delay in seconds before a scheduled governance action can execute on Arbitrum One."
+        },
         "Executor": {
           "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
@@ -2707,6 +2711,7 @@
       },
       "fieldMeta": {
         "l2CoreQuorumPercent": {
+          "severity": "HIGH",
           "description": "The percentage of total Delegated Voting Power (DVP) required to pass a constitutional proposal."
         }
       },
@@ -8702,6 +8707,10 @@
         "timelockAdminAC": ["eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
       },
       "fieldMeta": {
+        "getMinDelay": {
+          "severity": "HIGH",
+          "description": "Minimum timelock delay in seconds before a scheduled governance action can execute on L1."
+        },
         "Executor": {
           "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"

@@ -1,1 +1,8 @@
-{ "includeProjects": ["shared-sharp-verifier"] }
+{
+  "includeProjects": ["shared-sharp-verifier"],
+  "reviewedSeverityDowngrades": [
+    "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60#customImplOperators",
+    "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60#customProxyImplementations",
+    "eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6#referralHasExpired"
+  ]
+}

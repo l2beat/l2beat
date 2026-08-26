@@ -76,6 +76,10 @@ interface OssificationJson {
   ignoredUpgradeTransactions?: Record<string, string[]>
   /** Reviewed events missing from mechanical discovery history. */
   criticalEvents?: OssificationCriticalEvent[]
+  /** "<chain:address>#<field>" acknowledgments: a reviewer confirmed the
+   *  field's HIGH-severity removal, so its silenced history needs no
+   *  backfill. Consumed by the lint audit only, never by the runtime. */
+  reviewedSeverityDowngrades?: string[]
   historicalContracts?: {
     address?: string
     name?: string
@@ -214,6 +218,9 @@ function toOssificationContractInput(
     ),
     firstUpgradeIsInitialization: !firstUpgradeIsChange.has(
       entry.address.toLowerCase(),
+    ),
+    highSeverityFields: Object.entries(entry.fieldMeta ?? {}).flatMap(
+      ([field, meta]) => (meta?.severity === 'HIGH' ? [field] : []),
     ),
   }
 }

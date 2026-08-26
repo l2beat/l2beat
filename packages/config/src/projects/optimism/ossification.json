@@ -91,6 +91,20 @@
       "reason": "Transferred control of SystemConfig to the Foundation Upgrade Safe."
     },
     {
+      "timestamp": 1720551167,
+      "type": "state",
+      "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+      "source": "tx:0x7abecacd8b1a54db8f0835a5c82edfab96ff922a41d2faa914c339e3e9319b43",
+      "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots."
+    },
+    {
+      "timestamp": 1726016099,
+      "type": "state",
+      "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+      "source": "tx:0x3bd2d811d0298313e6fb75f0e69fb54280c9b4f2e60f8f04472aaa166c285641",
+      "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots (Granite)."
+    },
+    {
       "timestamp": 1726070915,
       "type": "state",
       "updateId": "f50681e8",
@@ -98,11 +112,32 @@
       "reason": "Replaced the Guardian Safe module that delegated protocol pause authority."
     },
     {
+      "timestamp": 1736352527,
+      "type": "state",
+      "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+      "source": "tx:0x22ab07b0bb1bc8504256835d555307ff522b78651dca33c9cd5b05591ca5b4f7",
+      "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots (Holocene)."
+    },
+    {
+      "timestamp": 1745511383,
+      "type": "state",
+      "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+      "source": "tx:0xbe44244e352a9ffa67ad7f7133e9ed014b380e4b1bd789419e6d33aaad780d12",
+      "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots."
+    },
+    {
       "timestamp": 1746626291,
       "type": "state",
       "updateId": "2ec9fa35",
       "source": "tx:0x5580a50fd248f0d4034f5eb270636202e2d957b84a6975f7bd7b8c72ff541233",
       "reason": "Enabled a module that delegated protocol pause authority through the Operations Safe."
+    },
+    {
+      "timestamp": 1746628403,
+      "type": "state",
+      "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+      "source": "tx:0xc4a7089a92c96b83475a7c20e40b4c888a277a90208d649c81df243ecdceb587",
+      "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots."
     },
     {
       "timestamp": 1753378247,
@@ -192,11 +227,13 @@
       "address": "eth:0xdfe97868233d1aa22e815a266982f2cf17685a27",
       "name": "L2OutputOracle",
       "critical": true,
-      "upgradeTimestamps": [],
-      "diffEventCount": 2,
+      "upgradeTimestamps": [1686075851, 1708983851, 1712868599],
       "lastSeenAt": 1717598829,
       "lastSeenCommit": "69b4ffe7dba0b56aaa50bbb787cec30d93db8977",
       "note": "Pre-fault-proof state root oracle: a fraudulent output root accepted here (via PROPOSER compromise or malicious upgrade) enables theft of all escrowed funds through OptimismPortal withdrawals after the 7d finalization window (opstack/L2OutputOracle template is critical today)."
     }
+  ],
+  "reviewedSeverityDowngrades": [
+    "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9#gameImpls"
   ]
 }

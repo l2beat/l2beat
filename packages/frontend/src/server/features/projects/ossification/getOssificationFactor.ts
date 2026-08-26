@@ -1,8 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import {
+  extractAppendedUpgradeTimestamps,
   extractDiffBlockAddress,
+  extractDiffBlockFieldChanges,
   extractDiffBlockSpans,
-  isHighSeverityDiffBody,
   isImplementationChangeDiffBody,
 } from '~/utils/diffHistory/diffHistoryMarkdown'
 import type { DiscoveryUpdate } from '../recent-changes/getDiscoveryUpdates'
@@ -14,6 +15,21 @@ export const EVENT_CLUSTER_WINDOW_SECONDS = 24 * 60 * 60
 const RATE_WINDOW_SECONDS = 3 * 365 * 24 * 60 * 60
 const MIN_RATE_WINDOW_SECONDS = 30 * 24 * 60 * 60
 const SECONDS_PER_YEAR = 365 * 24 * 60 * 60
+/** A diff update carrying an appended $pastUpgrades entry is dated at that
+ *  onchain transaction instead of the discovery-run timestamp, as long as the
+ *  transaction falls inside this window before the run. Governance actions
+ *  routinely bundle an upgrade with state changes on sibling contracts; the
+ *  review can lag the transaction by more than the cluster window, which
+ *  would otherwise split one decision into two events. Older appends are
+ *  handler backfills, not fresh observations, and keep the run timestamp. */
+const UPGRADE_SNAP_WINDOW_SECONDS = 14 * 24 * 60 * 60
+/** Fields carrying the code channel: their diffs are covered by
+ *  $pastUpgrades / implementation detection and never count as state. */
+const CODE_CHANNEL_FIELDS = new Set([
+  '$implementation',
+  '$pastUpgrades',
+  '$upgradeCount',
+])
 
 /** A contract in the ossification perimeter, extracted from discovered.json */
 export interface OssificationContractInput {
@@ -29,6 +45,11 @@ export interface OssificationContractInput {
   /** False when historical storage evidence proves that the implementation was
    *  already nonzero before the first recognized upgrade event. */
   firstUpgradeIsInitialization?: boolean
+  /** Field names whose current curated severity is HIGH (discovered.json
+   *  fieldMeta). State diffs count against this set for the contract's whole
+   *  history: severity judgments apply retroactively in both directions, so a
+   *  re-classification today reclassifies past changes too. */
+  highSeverityFields?: string[]
 }
 
 export interface OssificationContractBreakdown {
@@ -98,8 +119,10 @@ export interface OssificationFactor {
 }
 
 /** A contract that once belonged to the critical perimeter but no longer does.
- * Contributes its change events to the rate and history—never to the current
- * project clock or unverified gate. */
+ * A closed, reviewed ledger: onchain upgrade timestamps here plus reviewed
+ * `criticalEvents` (historical: true) are its complete change history — diff
+ * history is never consulted for it. Contributes only to the rate and
+ * history, never to the current project clock or unverified gate. */
 export interface OssificationHistoricalContract {
   address: string
   name: string
@@ -109,6 +132,7 @@ export interface OssificationHistoricalContract {
 interface ContractRecord {
   entry: OssificationContractInput
   diffEvents: { timestamp: number; type: OssificationChangeType }[]
+  highFields: Set<string>
 }
 
 export function getOssificationFactor(
@@ -123,44 +147,48 @@ export function getOssificationFactor(
   }
 
   const records = new Map<string, ContractRecord>()
-  const byAddress = new Map<string, ContractRecord>()
   const currentByAddress = new Map<string, ContractRecord>()
   const historicalByAddress = new Map<string, ContractRecord>()
   const index = (
     record: ContractRecord,
     target: Map<string, ContractRecord>,
-    overwrite = true,
   ) => {
     const key = record.entry.address.toLowerCase()
-    if (overwrite || !target.has(key)) target.set(key, record)
+    target.set(key, record)
     // Entries before the chain-prefix migration reference bare addresses
     const bareAddress = key.split(':').at(-1)
-    if (bareAddress && (overwrite || !target.has(bareAddress))) {
-      target.set(bareAddress, record)
-    }
+    if (bareAddress) target.set(bareAddress, record)
   }
   for (const entry of entries) {
     const key = entry.address.toLowerCase()
     if (records.has(key)) continue
-    const record: ContractRecord = { entry, diffEvents: [] }
+    const record: ContractRecord = {
+      entry,
+      diffEvents: [],
+      highFields: new Set(entry.highSeverityFields ?? []),
+    }
     records.set(key, record)
     index(record, currentByAddress)
-    index(record, byAddress)
   }
 
+  // Historical contracts are a closed reviewed ledger (upgrade timestamps +
+  // reviewed events); diff history never attaches to them.
   const historicalRecords: ContractRecord[] = historical
     .filter((entry) => !records.has(entry.address.toLowerCase()))
     .map((entry) => ({
       entry: { ...entry, isVerified: true },
       diffEvents: [],
+      highFields: new Set<string>(),
     }))
   for (const record of historicalRecords) {
     index(record, historicalByAddress)
-    // A current entry wins if an old entry happens to share a bare address.
-    index(record, byAddress, false)
   }
 
-  const criticalUpdates = collectDiffEvents(updates, byAddress)
+  const criticalUpdates = collectDiffEvents(
+    updates,
+    currentByAddress,
+    getSupersededUpdates(criticalEvents),
+  )
   const reviewedEvents = collectCriticalEvents(
     criticalEvents,
     currentByAddress,
@@ -325,9 +353,30 @@ function collectCriticalEvents(
   return standalone
 }
 
+/** Update ids whose mechanical diff events are replaced by a reviewed
+ *  criticalEvents entry, per attributed contract (both address forms). The
+ *  reviewed event carries the precise onchain timestamp, so counting the
+ *  review-time diff as well would double the same decision. */
+function getSupersededUpdates(
+  events: OssificationCriticalEvent[],
+): Map<string, Set<string>> {
+  const superseded = new Map<string, Set<string>>()
+  for (const event of events) {
+    if (!event.updateId || !event.contract) continue
+    const contracts = superseded.get(event.updateId) ?? new Set<string>()
+    const key = event.contract.toLowerCase()
+    contracts.add(key)
+    const bareAddress = key.split(':').at(-1)
+    if (bareAddress) contracts.add(bareAddress)
+    superseded.set(event.updateId, contracts)
+  }
+  return superseded
+}
+
 function collectDiffEvents(
   updates: DiscoveryUpdate[],
   byAddress: Map<string, ContractRecord>,
+  supersededUpdates: Map<string, Set<string>>,
 ): OssificationCriticalUpdate[] {
   const criticalUpdates: OssificationCriticalUpdate[] = []
 
@@ -336,14 +385,25 @@ function collectDiffEvents(
       ContractRecord,
       { hasCodeChange: boolean; hasStateChange: boolean }
     >()
+    const appendedUpgradeTimestamps: number[] = []
+    const superseded = supersededUpdates.get(update.id)
 
     for (const section of update.sections) {
       if (section.kind !== 'watched-changes') continue
       for (const { content } of extractDiffBlockSpans(section.body)) {
+        appendedUpgradeTimestamps.push(
+          ...extractAppendedUpgradeTimestamps(content),
+        )
         const address = extractDiffBlockAddress(content)
         if (!address) continue
         const record = byAddress.get(address)
         if (!record) continue
+        if (
+          superseded?.has(record.entry.address.toLowerCase()) ||
+          superseded?.has(address)
+        ) {
+          continue
+        }
 
         const evidence = evidenceByRecord.get(record) ?? {
           hasCodeChange: false,
@@ -351,12 +411,17 @@ function collectDiffEvents(
         }
         if (isImplementationChangeDiffBody(content)) {
           evidence.hasCodeChange = true
-        } else if (isHighSeverityDiffBody(content)) {
+        } else if (isCriticalStateDiff(record, content)) {
           evidence.hasStateChange = true
         }
         evidenceByRecord.set(record, evidence)
       }
     }
+
+    const timestamp = getUpdateEventTimestamp(
+      update.timestamp,
+      appendedUpgradeTimestamps,
+    )
 
     let updateType: OssificationChangeType | undefined
     for (const [record, evidence] of evidenceByRecord) {
@@ -366,16 +431,13 @@ function collectDiffEvents(
         // for proxies whose upgrades emit no recognized event. A mixed
         // code-and-state update is classified as one code change.
         updateType = 'code'
-        if (
-          record.entry.upgradeTimestamps.length === 0 &&
-          update.timestamp !== null
-        ) {
-          record.diffEvents.push({ timestamp: update.timestamp, type: 'code' })
+        if (record.entry.upgradeTimestamps.length === 0 && timestamp !== null) {
+          record.diffEvents.push({ timestamp, type: 'code' })
         }
       } else if (evidence.hasStateChange) {
         updateType ??= 'state'
-        if (update.timestamp !== null) {
-          record.diffEvents.push({ timestamp: update.timestamp, type: 'state' })
+        if (timestamp !== null) {
+          record.diffEvents.push({ timestamp, type: 'state' })
         }
       }
     }
@@ -389,6 +451,37 @@ function collectDiffEvents(
     record.diffEvents.sort((a, b) => a.timestamp - b.timestamp)
   }
   return criticalUpdates
+}
+
+/** A state diff counts iff it touches a field whose CURRENT curated severity
+ *  is HIGH — the committed annotation is only a snapshot of the judgment in
+ *  force at review time, and judgments are reviewable. */
+function isCriticalStateDiff(record: ContractRecord, content: string): boolean {
+  return extractDiffBlockFieldChanges(content).some(
+    (change) =>
+      !change.unchanged &&
+      record.highFields.has(change.field) &&
+      !CODE_CHANNEL_FIELDS.has(change.field),
+  )
+}
+
+/** Events in an update carrying a fresh onchain $pastUpgrades append are
+ *  dated at that transaction (the newest one, staying conservative) instead
+ *  of the later discovery-run timestamp. */
+function getUpdateEventTimestamp(
+  updateTimestamp: number | null,
+  appendedUpgradeTimestamps: number[],
+): number | null {
+  if (updateTimestamp === null) return null
+  const onchain = appendedUpgradeTimestamps
+    .filter(
+      (timestamp) =>
+        timestamp <= updateTimestamp &&
+        updateTimestamp - timestamp <= UPGRADE_SNAP_WINDOW_SECONDS,
+    )
+    .sort((a, b) => a - b)
+    .at(-1)
+  return onchain ?? updateTimestamp
 }
 
 function getContractBreakdown(
