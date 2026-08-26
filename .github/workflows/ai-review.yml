@@ -48,6 +48,21 @@ jobs:
         env:
           PR_JSON_PATH: ${{ runner.temp }}/pr.json
 
+  ack:
+    name: Ack
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      pull-requests: write
+    steps:
+      - name: React with eyes on the trigger comment
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          comment-id: ${{ github.event.comment.id }}
+          reactions: eyes
+
   review:
     name: Review (no write token)
     needs: gate
@@ -106,6 +121,7 @@ jobs:
           LESSONS_VERSION: none
           ENGINE: stub
       - name: Post comment
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh pr comment "${{ needs.gate.outputs.pr_number }}" --repo "${{ github.repository }}" --body-file "$RUNNER_TEMP/comment.md"
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          issue-number: ${{ needs.gate.outputs.pr_number }}
+          body-path: ${{ runner.temp }}/comment.md
