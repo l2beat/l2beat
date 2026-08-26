@@ -95,7 +95,12 @@ const FAULT_PROOF_CUTOVER_TIMESTAMP = UnixTime(1785852695)
 export const zircuit: ScalingProject = {
   id: ProjectId('zircuit'),
   addedAt: UnixTime(1712559704), // 2024-04-08T07:01:44Z
-  badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs, BADGES.Stack.OPStack],
+  badges: [
+    BADGES.VM.EVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.OPStack,
+    BADGES.RaaS.Conduit,
+  ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   capability: 'universal',
   type: 'layer2',

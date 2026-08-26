@@ -60,14 +60,14 @@ export const lighterprover: BaseProject = {
     ],
     verifierHashes: [
       {
-        hash: '0x9209eb726c5ccddbc337163770320215d2495c43987eaae0ccdd37e9a4686eff',
+        hash: '0x32f44b5cbcd701d03206b427e62eae6f171d4b145c4f0717bd9ad004bc24993c',
         name: 'Lighter verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0x9Ca512d2F131134972EB95515325F69812395332',
+              '0xB1386c4266974D81256afB9908e104B00587112A',
             ),
           },
         ],
