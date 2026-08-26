@@ -1,10 +1,16 @@
 import { readFileSync } from 'node:fs'
+import { v } from '@l2beat/validate'
 import { CodexEngine } from '../engine/codex/CodexEngine.js'
 import { StubEngine } from '../engine/stub/StubEngine.js'
 import type { Engine } from '../engine/types.js'
 import { buildPrompt } from '../find/buildPrompt.js'
 import { runFind } from '../find/runFind.js'
 import { readJson, requireEnv, setOutput, writeText } from './io.js'
+
+const PrMeta = v.object({
+  title: v.string().optional(),
+  body: v.string().optional(),
+})
 
 const prompts = new URL('../../prompts/', import.meta.url)
 const engineName = process.env.ENGINE ?? 'stub'
@@ -18,10 +24,11 @@ const engine: Engine =
       })
     : new StubEngine({ intent: 'Stub review: no model engaged.', findings: [] })
 
+const prMeta = PrMeta.validate(JSON.parse(process.env.PR_META ?? '{}'))
 const prompt = buildPrompt({
   instructions: readFileSync(new URL('find.md', prompts), 'utf8'),
-  title: process.env.PR_TITLE ?? '',
-  body: process.env.PR_BODY ?? '',
+  title: prMeta.title ?? '',
+  body: prMeta.body ?? '',
   diff: readFileSync(requireEnv('DIFF_PATH'), 'utf8'),
   maxDiffChars: Number(process.env.MAX_DIFF_CHARS ?? 200_000),
 })

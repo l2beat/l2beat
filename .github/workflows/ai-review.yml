@@ -40,8 +40,7 @@ jobs:
       pr_number: ${{ steps.gate.outputs.pr_number }}
       head_sha: ${{ steps.gate.outputs.head_sha }}
       base_sha: ${{ steps.gate.outputs.base_sha }}
-      pr_title: ${{ steps.pr.outputs.title }}
-      pr_body: ${{ steps.pr.outputs.body }}
+      pr_meta: ${{ steps.pr.outputs.pr_meta }}
     steps:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v6
@@ -77,12 +76,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh api "repos/${{ github.repository }}/pulls/$(jq .issue.number "$RUNNER_TEMP/event.json")" > "$RUNNER_TEMP/pr.json"
-          echo "title=$(jq -r .title "$RUNNER_TEMP/pr.json")" >> "$GITHUB_OUTPUT"
-          {
-            echo "body<<AI_REVIEW_EOF"
-            jq -r '.body // ""' "$RUNNER_TEMP/pr.json"
-            echo "AI_REVIEW_EOF"
-          } >> "$GITHUB_OUTPUT"
+          # Single-line JSON: PR text must not be able to inject output-file syntax.
+          echo "pr_meta=$(jq -c '{title, body: (.body // "")}' "$RUNNER_TEMP/pr.json")" >> "$GITHUB_OUTPUT"
       - id: gate
         run: pnpm --filter @l2beat/ai-review gate
         env:
@@ -138,7 +133,7 @@ jobs:
       - run: pnpm --filter @l2beat/ai-review^... build
       - name: Install PR dependencies for agent probes
         working-directory: pr
-        run: pnpm install
+        run: pnpm install --ignore-scripts
       - name: Compute diff
         working-directory: pr
         run: git diff "${{ needs.gate.outputs.base_sha }}...${{ needs.gate.outputs.head_sha }}" > "$RUNNER_TEMP/diff.patch"
@@ -160,8 +155,7 @@ jobs:
           REVIEW_CWD: ${{ github.workspace }}/pr
           DIFF_PATH: ${{ runner.temp }}/diff.patch
           REVIEW_OUTPUT_PATH: ${{ runner.temp }}/review.json
-          PR_TITLE: ${{ needs.gate.outputs.pr_title }}
-          PR_BODY: ${{ needs.gate.outputs.pr_body }}
+          PR_META: ${{ needs.gate.outputs.pr_meta }}
       # Probes can read auth.json; make sure nothing from it reaches the posted output.
       - name: Check output for leaked credentials
         if: env.ENGINE == 'codex'
