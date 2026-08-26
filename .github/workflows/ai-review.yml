@@ -1,0 +1,111 @@
+name: AI Review
+
+on:
+  issue_comment:
+    types: [created]
+
+# Cheap pre-filter so non-member / non-command comments never spin a runner.
+# The authoritative gate (draft/fork/bot checks) is the unit-tested evaluateTrigger.
+concurrency:
+  group: ai-review-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  gate:
+    name: Gate
+    if: >
+      ${{
+        github.event.issue.pull_request != null &&
+        startsWith(github.event.comment.body, '/ai-review') &&
+        contains(fromJSON('["MEMBER","OWNER"]'), github.event.comment.author_association)
+      }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      run: ${{ steps.gate.outputs.run }}
+      pr_number: ${{ steps.gate.outputs.pr_number }}
+      head_sha: ${{ steps.gate.outputs.head_sha }}
+      base_sha: ${{ steps.gate.outputs.base_sha }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - run: pnpm install --filter @l2beat/ai-review...
+      - name: Fetch pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh api "repos/${{ github.repository }}/pulls/${{ github.event.issue.number }}" > "$RUNNER_TEMP/pr.json"
+      - id: gate
+        run: pnpm --filter @l2beat/ai-review gate
+        env:
+          PR_JSON_PATH: ${{ runner.temp }}/pr.json
+
+  review:
+    name: Review (no write token)
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.gate.outputs.head_sha }}
+          persist-credentials: false
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - run: pnpm install --filter @l2beat/ai-review...
+      - run: pnpm --filter @l2beat/ai-review review
+        env:
+          REVIEW_OUTPUT_PATH: ${{ runner.temp }}/review.json
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ai-review-output
+          path: ${{ runner.temp }}/review.json
+
+  post:
+    name: Post
+    needs: [gate, review]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - run: pnpm install --filter @l2beat/ai-review...
+      - uses: actions/download-artifact@v7
+        with:
+          name: ai-review-output
+          path: ${{ runner.temp }}
+      - name: Validate and render comment
+        run: pnpm --filter @l2beat/ai-review post
+        env:
+          REVIEW_OUTPUT_PATH: ${{ runner.temp }}/review.json
+          COMMENT_PATH: ${{ runner.temp }}/comment.md
+          RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+          LESSONS_VERSION: none
+          ENGINE: stub
+      - name: Post comment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr comment "${{ needs.gate.outputs.pr_number }}" --repo "${{ github.repository }}" --body-file "$RUNNER_TEMP/comment.md"
