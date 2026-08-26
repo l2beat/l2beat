@@ -142,6 +142,7 @@ jobs:
         with:
           name: ai-review-output
           path: ${{ runner.temp }}
+      - run: pnpm --filter @l2beat/ai-review^... build
       - name: Validate and render comment
         run: pnpm --filter @l2beat/ai-review post
         env:
