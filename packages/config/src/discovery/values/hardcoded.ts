@@ -23,6 +23,12 @@ export const HARDCODED = {
     // https://github.com/ethereum-optimism/optimism/blob/develop/op-deployer/pkg/deployer/state/deploy_config.go#L93
     // https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/packages/contracts-bedrock/deploy-config/mainnet.json#LL10C26-L10C30
     SEQUENCING_WINDOW_SECONDS: 3600 * 12, // blocks * blocktime
+    // These gas amounts are literals in FaultDisputeGame.getRequiredBond().
+    // Together with the discovered maxGameDepth, they define the per-depth
+    // multiplier used for dispute-game bonds.
+    // https://specs.optimism.io/fault-proof/stage-one/bond-incentives.html#bond-scaling
+    FAULT_PROOF_BASE_GAS_CHARGED: 400_000,
+    FAULT_PROOF_HIGH_GAS_CHARGED: 300_000_000,
   },
   PUBLICGOODSNETWORK: {
     // https://github.com/ethereum-optimism/optimism/pull/6261/files
