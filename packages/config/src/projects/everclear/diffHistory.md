@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xd892f59170518fac4a8b7c6b99c1efbeffeef392
+Generated with discovered.json: 0x81c3d694fbd74634cb4afb530066b88f156aeed3
 
-# Diff at Thu, 20 Aug 2026 06:21:34 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1779399692
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1779399692
 - current timestamp: 1779399692
 
 ## Description
@@ -49,6 +49,14 @@ discovery. Values are for block 1779399692 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (eth:0x305042e5A81424f2f824f93Ff2195b5712D7dE14) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract Outbox (eth:0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa) [orbitstack/Outbox] {
     +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
       critical:
@@ -68,7 +76,7 @@ discovery. Values are for block 1779399692 (main branch discovery), not current.
     contract SequencerInbox (eth:0x7B0517E0104dB60198f9d573C0aB8d480207827E) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
@@ -106,7 +114,7 @@ discovery. Values are for block 1779399692 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -116,7 +124,7 @@ discovery. Values are for block 1779399692 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.anyTrustFastConfirmer:
 +        {"severity":"HIGH"}
       critical:

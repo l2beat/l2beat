@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x2f78557582d17008eb607c2153461529f798ea02
+Generated with discovered.json: 0xf8231ca2329511a15c5c894ef0b8bb98a1cab596
 
-# Diff at Thu, 20 Aug 2026 06:21:35 GMT:
+# Diff at Wed, 26 Aug 2026 12:18:30 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1786966184
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1786966184
 - current timestamp: 1786966184
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -35,6 +35,10 @@ discovery. Values are for block 1786966184 (main branch discovery), not current.
 ```diff
     contract LensZkEvmAdmin (eth:0x6bd8d33551077Ed281Cb047835a2aE4033eEc433) [shared-zk-stack/ChainAdmin] {
     +++ description: A governance proxy that lets eth:0x4968A0E4b025eD7d095753E54058377969b41abC act through it.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.tokenMultiplierSetter:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -59,8 +63,8 @@ discovery. Values are for block 1786966184 (main branch discovery), not current.
 ```diff
     contract Diamond (eth:0xc29d04A93F893700015138E3E334eB828dAC3cef) [shared-zk-stack/Diamond] {
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
-      fieldMeta.validators:
-+        {"severity":"HIGH"}
+      fieldMeta.getSettlementLayer:
++        {"severity":"HIGH","description":"Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."}
       critical:
 +        true
     }

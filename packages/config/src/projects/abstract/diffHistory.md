@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x7bda6ede086c70c680e08953c23a7d76e168ea86
+Generated with discovered.json: 0x4bc4d035b5d706976fe30fd890353306aa595f50
 
-# Diff at Thu, 20 Aug 2026 06:21:32 GMT:
+# Diff at Wed, 26 Aug 2026 12:18:08 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1786966176
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1786966176
 - current timestamp: 1786966176
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -35,8 +35,8 @@ discovery. Values are for block 1786966176 (main branch discovery), not current.
 ```diff
     contract Diamond (eth:0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9) [shared-zk-stack/Diamond] {
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
-      fieldMeta.validators:
-+        {"severity":"HIGH"}
+      fieldMeta.getSettlementLayer:
++        {"severity":"HIGH","description":"Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."}
       critical:
 +        true
     }
@@ -51,8 +51,20 @@ discovery. Values are for block 1786966176 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract ChainAdmin (eth:0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661) [shared-zk-stack/ChainAdmin] {
     +++ description: A governance proxy that lets eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063 act through it.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.tokenMultiplierSetter:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -61,6 +73,12 @@ discovery. Values are for block 1786966176 (main branch discovery), not current.
 ```diff
     contract EraMultisigValidator (eth:0xC62BDE55caaB102714c6b9F7e29e05D9237EfD83) [shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable] {
     +++ description: A multisig wrapper around `ValidatorTimelock` that requires a threshold of approvals before batch execution can proceed, provides additional security through 2FA.
+      fieldMeta.multisigMembers:
+-        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.executionDelay_fmt:
++        {"severity":"HIGH"}
       critical:
 +        true
     }

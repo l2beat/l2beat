@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xcc16673907647a6622e1f55530a9b36698104cb1
+Generated with discovered.json: 0x251b088a556bb0ca7f6e97742d9d070b23f713e4
 
-# Diff at Thu, 20 Aug 2026 06:21:36 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1781177199
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1781177199
 - current timestamp: 1781177199
 
 ## Description
@@ -25,10 +25,26 @@ discovery. Values are for block 1781177199 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (eth:0x256bBeDabDBa636a9Cd17890841C941a28e9437e) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract OneStepProverMemory (eth:0x29efff3EfE3E01A3F69011a054C33410edFc2283) [orbitstack/OneStepProverMemory] {
     +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x2A7F4d60fE6dD63c4690Dd9f11C26D0BE53b3110) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -54,7 +70,7 @@ discovery. Values are for block 1781177199 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -86,7 +102,7 @@ discovery. Values are for block 1781177199 (main branch discovery), not current.
     contract SequencerInbox (eth:0x903Af716AA8C7C27Fd785F453D5a59C20E06bDeC) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
@@ -116,7 +132,7 @@ discovery. Values are for block 1781177199 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.getValidators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       critical:
 +        true
     }

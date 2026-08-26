@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xb2976193e3cfadc4579671ee87d1caeae16e5d2a
+
+# Diff at Wed, 26 Aug 2026 12:24:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1787566228
+- current timestamp: 1787566228
+
+## Description
+
+reapply branch discovery config after merging main
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787566228 (main branch discovery), not current.
+
+```diff
+    contract Timelock (eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC) [uniswapv3/Timelock] {
+    +++ description: Compound-style timelock. Its admin can queue, cancel, and execute transactions. A queued transaction becomes executable after 2d and remains executable for a 14d grace period. The delay can be changed only through the timelock itself and must remain between 2d and 1mo. After the one-time admin initialization path has been used, changing the admin requires a timelocked self-call; there is no emergency bypass.
+      fieldMeta.pendingAdmin:
++        {"severity":"HIGH","description":"Address nominated to become timelock admin. It can accept the role without another action by the current admin."}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract UNIToken (eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984) [uniswapv3/Uni] {
+    +++ description: ERC20 governance token with checkpoint voting. Its constructor mints a fixed initial supply; the minter can mint at most 2% of supply per mint, with a minimum interval of 1y. Votes count only when delegated.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract GovernorBravo (eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3) [uniswapv3/GovernorBravoDelegate] {
+    +++ description: Upgradeable Governor Bravo governance proxy. Holders with more than the current proposal threshold of 1,000,000 UNI can create proposals. Voting begins 13,140 blocks after proposal creation and lasts 40,320 blocks; success requires more for-votes than against-votes and at least 40,000,000 UNI voting for. Successful proposals are queued in the configured timelock. The proxy admin can replace the implementation or nominate a new admin.
+      fieldMeta.votingDelay.severity:
++        "HIGH"
+      fieldMeta.votingPeriod.severity:
++        "HIGH"
+      fieldMeta.proposalThreshold.severity:
++        "HIGH"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xbd123D5b1E148266154F5722C1d059D70059Cf93) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x838417a7f856cf128bbd08892bc91b7aa2d9c9a7
 
 # Diff at Mon, 24 Aug 2026 10:11:33 GMT:

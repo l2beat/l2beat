@@ -542,6 +542,7 @@
         "TX_BASE_GAS": 21000,
         "version": "2.6.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x6c10d7e5750b21729Eb863Cf89E5b48850E6d97D": "ResolvedDelegateProxy",
         "eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B": "L1CrossDomainMessenger"
@@ -702,7 +703,8 @@
         "paused": {
           "severity": "HIGH",
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
-        }
+        },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x9C93982cb4861311179aE216d1B7fD61232DE1f0": "Proxy",
@@ -740,6 +742,7 @@
         "$immutable": true,
         "owner": "eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x9cF613c19371eFf26c94c0d4F62197d2C0ab60bc": "AddressManager"
       },
@@ -832,6 +835,7 @@
         "isUpgrading": false,
         "owner": "eth:0x4380709Fc7fd626ad17a63A1819F39A82978E3BF"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9": "ProxyAdmin"
       }
@@ -866,6 +870,7 @@
         "isUpgrading": false,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5": "ProxyAdmin"
       }
@@ -971,6 +976,7 @@
         "superchainConfig": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
         "version": "2.3.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xdB5C6b73CB1c5875995a42D64C250BF8BC69a8bc": "L1ChugSplashProxy",
         "eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A": "L1StandardBridge"
@@ -1040,7 +1046,9 @@
         "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
         "game2000": { "severity": "HIGH" },
-        "game42": { "severity": "HIGH" }
+        "game42": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "wethFromDGF": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xEe136B6087070d35D98b1bb1B33C3a00D907F0c1": "Proxy",
@@ -1126,6 +1134,10 @@
         "symbol": "WETH",
         "totalSupply": 0,
         "version": "1.3.0"
+      },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xf8f9625a95b8fCbED76d1De537B71035997E44c8": "Proxy",
@@ -1258,7 +1270,9 @@
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         },
-        "batcherHash": { "severity": "HIGH" }
+        "batcherHash": { "severity": "LOW" },
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xFb252d6199AEfeE6938a1c57213AAd96ecD2650c": "Proxy",

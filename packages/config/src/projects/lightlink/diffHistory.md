@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xe7c0eb7e33e1ceb4d167419aba5ca016622ed58c
+Generated with discovered.json: 0xab9a96d64e1a1ef7bd380b370f5ddcd925354230
 
-# Diff at Thu, 20 Aug 2026 06:21:35 GMT:
+# Diff at Wed, 26 Aug 2026 12:18:34 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1743926099
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1743926099
 - current timestamp: 1743926099
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -21,6 +21,8 @@ discovery. Values are for block 1743926099 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -29,6 +31,8 @@ discovery. Values are for block 1743926099 (main branch discovery), not current.
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 

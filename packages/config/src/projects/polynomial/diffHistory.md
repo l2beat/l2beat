@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x04a14328bb179c75e17790501a1050fc7266fe16
+Generated with discovered.json: 0x5b1845773bb43dcedf031f73fa8520f8aacf1690
 
-# Diff at Thu, 20 Aug 2026 06:21:36 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1784563615
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1784563615
 - current timestamp: 1784563615
 
 ## Description
@@ -27,6 +27,8 @@ discovery. Values are for block 1784563615 (main branch discovery), not current.
 ```diff
     contract OptimismPortal2 (eth:0x034cbb620d1e0e4C2E29845229bEAc57083b04eC) [opstack/OptimismPortal2] {
     +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -61,6 +63,8 @@ discovery. Values are for block 1784563615 (main branch discovery), not current.
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -69,6 +73,8 @@ discovery. Values are for block 1784563615 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -77,6 +83,16 @@ discovery. Values are for block 1784563615 (main branch discovery), not current.
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x3c68b1d45f4faa4F028c3DC8910fA3247c7f0a1f) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -84,6 +100,10 @@ discovery. Values are for block 1784563615 (main branch discovery), not current.
     contract SystemConfig (eth:0x58b51fb9FeeD00DD846f91D265Eba3cdd855A413) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
       fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
 +        true
@@ -103,12 +123,26 @@ discovery. Values are for block 1784563615 (main branch discovery), not current.
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract DisputeGameFactory (eth:0xe9394679d0f0676E4a2dE99F8ed6B4aCb16c5f0f) [opstack/DisputeGameFactory] {
     +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.wethFromDGF:
++        {"severity":"HIGH"}
       critical:
 +        true
     }

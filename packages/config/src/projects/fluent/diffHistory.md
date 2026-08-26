@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x524d97da8d3d5064a3175fd791617cebb460bb89
+
+# Diff at Wed, 26 Aug 2026 12:18:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1784884231
+- current timestamp: 1784884231
+
+## Description
+
+reapply branch discovery config after merging main
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784884231 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0xdD283a04cc711aB9c08d79e665835821BEef710B) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x056fD0A3eD85c6ae1Ec1c398B33581951Ed4b090. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta:
++        {"implementation":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x2996eac49f580b11fbe2de42e52b69b13d3060f8
 
 # Diff at Thu, 30 Jul 2026 11:25:53 GMT:

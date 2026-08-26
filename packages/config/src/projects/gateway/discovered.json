@@ -256,6 +256,7 @@
         "$immutable": true,
         "owner": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734": "ProxyAdmin"
       }
@@ -566,7 +567,11 @@
           "severity": "LOW",
           "description": "Verifier parameters used for proving batches."
         },
-        "validators": { "severity": "HIGH" }
+        "validators": { "severity": "HIGH" },
+        "getSettlementLayer": {
+          "severity": "HIGH",
+          "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
+        }
       },
       "implementationNames": {
         "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9": "DiamondProxy",
@@ -907,7 +912,9 @@
       "fieldMeta": {
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
-        }
+        },
+        "owner": { "severity": "HIGH" },
+        "tokenMultiplierSetter": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3": "ChainAdminOwnable"

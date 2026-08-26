@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x0bf89f5848167f7e4cb3ce8185f99ca90ed21b6a
+Generated with discovered.json: 0xc5e57838ceee728f71a37958757a01d2bc3e3a04
 
-# Diff at Thu, 20 Aug 2026 06:21:36 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1765381225
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1765381225
 - current timestamp: 1765381225
 
 ## Description
@@ -17,10 +17,20 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1765381225 (main branch discovery), not current.
 
 ```diff
+    contract ProxyAdmin (base:0x25aBB510386A658c622280f488844BD3b485DC32) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract AddressManager (base:0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668) [opstack/AddressManager] {
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -28,6 +38,10 @@ discovery. Values are for block 1765381225 (main branch discovery), not current.
     contract SystemConfig (base:0x52c901666Cfc8AeE9b46A3b7C101688351529B37) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
       fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
 +        true
@@ -39,6 +53,8 @@ discovery. Values are for block 1765381225 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -55,6 +71,8 @@ discovery. Values are for block 1765381225 (main branch discovery), not current.
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 

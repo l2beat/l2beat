@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xe34f6d8ff00b85f2d4e1770b70012277b0624230
+Generated with discovered.json: 0xf335f3813603bcb47003d98f54dee1c44911b340
 
-# Diff at Thu, 20 Aug 2026 06:21:37 GMT:
+# Diff at Wed, 26 Aug 2026 12:57:00 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1781595301
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1781595301
 - current timestamp: 1781595301
 
 ## Description
@@ -65,6 +65,22 @@ discovery. Values are for block 1781595301 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (eth:0x817BE2d0f28b594D7023dAdf2b3Aa54327180c66) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8247EF5705d3345516286B72bFE6D690197C2E99) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract RollupEventInbox (eth:0x82E761873714cDe47C594aA6F23E6b1844CD98dB) [orbitstack/RollupEventInbox] {
     +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
       critical:
@@ -102,7 +118,7 @@ discovery. Values are for block 1781595301 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x6fa41b1f8fd8dfbe62659d765751772d737bc8d2
+Generated with discovered.json: 0xcf8f09420a2c1a942eaf293e9fd2d0cd8572ea8f
 
-# Diff at Thu, 20 Aug 2026 06:21:16 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1777390951
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1777390951
 - current timestamp: 1777390951
 
 ## Description
@@ -15,6 +15,14 @@ Classify critical contracts and trust-defining value severities for the ossifica
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1777390951 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x0bc380347A0B7aF5453492CAF20e1E38bc0Abc2f) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
 
 ```diff
     contract L2OutputOracle (eth:0x0eB331B615030819464225Ecd373e5FFBE502DC4) [opstack/L2OutputOracle] {
@@ -38,6 +46,10 @@ discovery. Values are for block 1777390951 (main branch discovery), not current.
     contract SystemConfig (eth:0x20c3035C92bdB4C461242571EeAc59EeD03Df931) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
       fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
 +        true
@@ -49,6 +61,8 @@ discovery. Values are for block 1777390951 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -57,6 +71,8 @@ discovery. Values are for block 1777390951 (main branch discovery), not current.
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -65,6 +81,8 @@ discovery. Values are for block 1777390951 (main branch discovery), not current.
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 

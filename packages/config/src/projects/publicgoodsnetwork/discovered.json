@@ -25,6 +25,7 @@
         "$immutable": true,
         "owner": "eth:0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e": "AddressManager"
       },
@@ -360,7 +361,9 @@
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         },
-        "batcherHash": { "severity": "HIGH" }
+        "batcherHash": { "severity": "LOW" },
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9": "Proxy",
@@ -420,6 +423,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x97BAf688E5d0465E149d1d5B497Ca99392a6760e": "ResolvedDelegateProxy",
         "eth:0x1d8180D739D01dC97e837478af8d494215C5EF5e": "L1CrossDomainMessenger"
@@ -629,6 +633,7 @@
         "isUpgrading": false,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4": "ProxyAdmin"
       }

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x3ef2e13377f59254702214ce96699dddf552a4c7
+Generated with discovered.json: 0x0e213e8c65cd26e088601b7c24385749bd3dccec
 
-# Diff at Thu, 20 Aug 2026 06:21:33 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1783433878
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1783433878
 - current timestamp: 1783433878
 
 ## Description
@@ -22,7 +22,7 @@ discovery. Values are for block 1783433878 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.getValidators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       critical:
 +        true
     }
@@ -56,7 +56,7 @@ discovery. Values are for block 1783433878 (main branch discovery), not current.
     contract SequencerInbox (eth:0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
@@ -94,7 +94,7 @@ discovery. Values are for block 1783433878 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -127,6 +127,14 @@ discovery. Values are for block 1783433878 (main branch discovery), not current.
     +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 

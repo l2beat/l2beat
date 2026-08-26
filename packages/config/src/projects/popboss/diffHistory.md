@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x5367b3a419ce63aea9228932085c720a6b8003e5
+Generated with discovered.json: 0xde1fd67a758b8014171da2674531da091b62f491
 
-# Diff at Thu, 20 Aug 2026 06:21:36 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1768984798
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1768984798
 - current timestamp: 1768984798
 
 ## Description
@@ -22,7 +22,7 @@ discovery. Values are for block 1768984798 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -32,7 +32,7 @@ discovery. Values are for block 1768984798 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.anyTrustFastConfirmer:
 +        {"severity":"HIGH"}
       critical:
@@ -49,6 +49,14 @@ discovery. Values are for block 1768984798 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (arb1:0x490C4c92Ea9FF02EE8277222C66afD80Bfb1b7c1) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract OneStepProver0 (arb1:0x54E0923782b701044444De5d8c3A45aC890b0881) [orbitstack/OneStepProver0] {
     +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
       critical:
@@ -60,7 +68,7 @@ discovery. Values are for block 1768984798 (main branch discovery), not current.
     contract SequencerInbox (arb1:0x6eE94AD8057Fd7Ba4d47bb6278a261c8a9FD4E3f) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:

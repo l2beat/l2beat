@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x27d7305e51974a219280daf4e54ca6e4b53d4278
+Generated with discovered.json: 0x4adb92fe2624d1e07925531b2fb651799ffb82e5
 
-# Diff at Thu, 20 Aug 2026 06:21:36 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1784563638
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1784563638
 - current timestamp: 1784563638
 
 ## Description
@@ -27,6 +27,10 @@ discovery. Values are for block 1784563638 (main branch discovery), not current.
 ```diff
     contract DisputeGameFactory (eth:0x0fD13C7f11d95070cE5CF31BAf1aCf9355BF4578) [opstack/DisputeGameFactory] {
     +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.wethFromDGF:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -61,12 +65,24 @@ discovery. Values are for block 1784563638 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x672B75103c0CbFdCC4A40737a80724f87a8A25D7) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract OptimismPortal2 (eth:0x936D881b4760D5e9b6D55b774f65c509236b4743) [opstack/OptimismPortal2] {
     +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -76,6 +92,10 @@ discovery. Values are for block 1784563638 (main branch discovery), not current.
     contract SystemConfig (eth:0x9c9B78f798F821C2f6398f603825fd175e2427f9) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
       fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
 +        true
@@ -87,6 +107,8 @@ discovery. Values are for block 1784563638 (main branch discovery), not current.
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -95,6 +117,16 @@ discovery. Values are for block 1784563638 (main branch discovery), not current.
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -103,6 +135,8 @@ discovery. Values are for block 1784563638 (main branch discovery), not current.
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 

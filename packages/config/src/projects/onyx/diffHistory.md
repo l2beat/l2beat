@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x91ae999e93f42e15050ec28e1e8d26d175d24205
+Generated with discovered.json: 0xb2cb21e8dd93cd8504487bb3616c927e0f202c2a
 
-# Diff at Thu, 20 Aug 2026 06:21:35 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1787132849
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1787132849
 - current timestamp: 1787132849
 
 ## Description
@@ -45,6 +45,14 @@ discovery. Values are for block 1787132849 (main branch discovery), not current.
     +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (base:0x615b81747e819e0dB25c13570D5DA45Ef9bc81B3) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -102,7 +110,7 @@ discovery. Values are for block 1787132849 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.getValidators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       critical:
 +        true
     }
@@ -128,7 +136,7 @@ discovery. Values are for block 1787132849 (main branch discovery), not current.
     contract SequencerInbox (base:0xdA2445f1cA60bC2C739A96298746aDBB6706f011) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
@@ -142,7 +150,7 @@ discovery. Values are for block 1787132849 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 

@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x159603f794d22851885376623b06d98f72299269
+Generated with discovered.json: 0xf1a7c716e71c928227639bf216d91b9d0468f29e
 
-# Diff at Thu, 20 Aug 2026 20:07:55 GMT:
+# Diff at Wed, 26 Aug 2026 12:34:16 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bd2a19ed47921b541d6d991c325212600c2751a9 block: 1786966191
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1786966191
 - current timestamp: 1786966191
 
 ## Description
 
-Ossification perimeter: externally governed escrows (Maker/Sky DAI, Lido wstETH, Livepeer LPT) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -45,6 +45,8 @@ discovery. Values are for block 1786966191 (main branch discovery), not current.
 ```diff
     contract Diamond (eth:0x32400084C286CF3E17e7B677ea9583e60a000324) [shared-zk-stack/Diamond] {
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      fieldMeta.getSettlementLayer:
++        {"severity":"HIGH","description":"Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."}
       critical:
 +        true
     }

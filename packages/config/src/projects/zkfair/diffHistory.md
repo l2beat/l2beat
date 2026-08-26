@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xd95f4d7098cb8dacfbdf5b7063c655f25e6b35c3
+
+# Diff at Wed, 26 Aug 2026 12:57:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1745306051
+- current timestamp: 1745306051
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1745306051 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x7b9c6f02cbab53e4b04adc086e2e21c54aca1362
 
 # Diff at Fri, 08 May 2026 07:52:53 GMT:

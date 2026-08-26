@@ -31,6 +31,7 @@
         "$immutable": true,
         "owner": "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd": "ProxyAdmin"
       }
@@ -296,14 +297,15 @@
         "VERSION": 0
       },
       "fieldMeta": {
+        "batcherHash": { "severity": "LOW" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2. Future `setGasLimit` calls are bounded by `maximumGasLimit()` (500,000,000 in this implementation); the currently stored value is a pre-Arsia configuration above that bound and is retained as-is in storage."
         },
+        "owner": { "severity": "HIGH" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        },
-        "batcherHash": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf": "Proxy",
@@ -570,6 +572,10 @@
         "Proposer": ["eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
       },
+      "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F": "TimelockController"
       }
@@ -643,6 +649,7 @@
         "ResolvedDelegateProxy_implementationName": "BVM_L1CrossDomainMessenger",
         "version": "1.5.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120": "Lib_ResolvedDelegateProxy",
         "eth:0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308": "L1CrossDomainMessenger"
@@ -667,6 +674,7 @@
         "$immutable": true,
         "owner": "eth:0xca35F8338054739D138884685e08b39EE2217794"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42": "Lib_AddressManager"
       },
@@ -704,6 +712,7 @@
         "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000010",
         "version": "1.1.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012": "L1ChugSplashProxy",
         "eth:0xb4133552BA49dFb60DA6eb5cA0102d0f94ce071f": "L1StandardBridge"
@@ -843,6 +852,7 @@
         "isUpgrading": false,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xca35F8338054739D138884685e08b39EE2217794": "ProxyAdmin"
       }
@@ -1329,10 +1339,10 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
+    "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1CrossDomainMessenger": "0xea24e2bfdb6536e3712d13097b867ff34904f65030f57e349694caa653cce8fa",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig_v1_4_0_mantle": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",

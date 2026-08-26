@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x82d5eebd15c9d7c41a7cfbfb05ee6192aa283dfa
+
+# Diff at Wed, 26 Aug 2026 12:20:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1786719775
+- current timestamp: 1786719775
+
+## Description
+
+reapply branch discovery config after merging main
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786719775 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x542675E90E269F20ecbb9e0095d4751ac155B530) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 0s.
+      fieldMeta:
++        {"getMinDelay":{"severity":"HIGH"},"accessControl":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x003edada5b67e194f29c53fe816585d5ed593637
 
 # Diff at Fri, 14 Aug 2026 15:04:21 GMT:

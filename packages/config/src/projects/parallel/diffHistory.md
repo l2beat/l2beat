@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x84b3f187dcbc18a544d98b607d8ca864d33d1c46
+Generated with discovered.json: 0x025def6f45e61f996d68cf3eba1a446b1204594a
 
-# Diff at Thu, 20 Aug 2026 06:21:35 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1746547031
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1746547031
 - current timestamp: 1746547031
 
 ## Description
@@ -78,9 +78,17 @@ discovery. Values are for block 1746547031 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -128,7 +136,7 @@ discovery. Values are for block 1746547031 (main branch discovery), not current.
     contract SequencerInbox (eth:0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
@@ -150,7 +158,7 @@ discovery. Values are for block 1746547031 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 

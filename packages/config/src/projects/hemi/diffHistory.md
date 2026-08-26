@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x8e632aba49e1119f80e2782e1dbe05579719d900
+Generated with discovered.json: 0x4c61ba8608597a3ed82fb11346157bf98eb51c2d
 
-# Diff at Thu, 20 Aug 2026 06:21:17 GMT:
+# Diff at Wed, 26 Aug 2026 12:18:21 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1767717347
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1767717347
 - current timestamp: 1767717347
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -37,7 +37,11 @@ discovery. Values are for block 1767717347 (main branch discovery), not current.
 ```diff
     contract SystemConfig (eth:0x5ae68684D9179A8053883f1Df599Ea7Fb35303c3) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
       fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
 +        true
@@ -65,6 +69,16 @@ discovery. Values are for block 1767717347 (main branch discovery), not current.
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xbE81A9D662422f667F634f3Fc301e2E360FeFB30) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -73,6 +87,8 @@ discovery. Values are for block 1767717347 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 

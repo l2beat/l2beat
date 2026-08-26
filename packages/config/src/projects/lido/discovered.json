@@ -3726,6 +3726,10 @@
         "implementation": "eth:0x06A56487494aa080deC7Bf69128EdA9225784553",
         "owner": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
       },
+      "fieldMeta": {
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789": "UpgradeableBeacon"
       }
@@ -19624,7 +19628,7 @@
   },
   "usedTemplates": {
     "global/DepositContract": "0xfc77f1d7412b523d27d6db22532ffaa54e0026a15c868272f2f454514cab5df5",
-    "global/UpgradeableBeacon": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/UpgradeableBeacon": "0x5131b8b980cf5a0a571c88590e4878fe796a0b46c9d9854db77dfdf4125f92c9",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "lido/Accounting": "0x39703583d247d25ec26e76020b303df585c21a5a50c9b4fe7217625297b09790",
     "lido/AccountingOracle": "0x108c9ce2b663ce5759f93df5c64c82bbee1bafb9eadbbb0088434792ed3921e0",

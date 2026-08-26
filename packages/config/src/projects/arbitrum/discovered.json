@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "timestamp": 1787143507,
-  "configHash": "0x3ddf651ec7f05c0b216e407f978314ee091a109412579f05058f06e513c22282",
+  "configHash": "0x85c3346409f7a03e76f67f3c7df147cea950578bf3008eede797204f59bb62fb",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000001",
@@ -249,13 +249,13 @@
         "timelockAdminAC": ["arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"]
       },
       "fieldMeta": {
-        "getMinDelay": {
-          "severity": "HIGH",
-          "description": "Minimum timelock delay in seconds before a scheduled governance action can execute on Arbitrum One."
-        },
         "Executor": {
           "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        },
+        "getMinDelay": {
+          "severity": "HIGH",
+          "description": "Minimum timelock delay in seconds before a scheduled governance action can execute on Arbitrum One."
         }
       },
       "implementationNames": {
@@ -2069,6 +2069,7 @@
         "$immutable": true,
         "owner": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86": "ProxyAdmin"
       }
@@ -2152,6 +2153,7 @@
         "$immutable": true,
         "owner": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e": "ProxyAdmin"
       }
@@ -3721,6 +3723,7 @@
         "$immutable": true,
         "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD": "ProxyAdmin"
       },
@@ -3760,6 +3763,7 @@
         "$immutable": true,
         "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": "ProxyAdmin"
       },
@@ -4163,6 +4167,7 @@
         "$immutable": true,
         "owner": "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa": "ProxyAdmin"
       },
@@ -8707,13 +8712,13 @@
         "timelockAdminAC": ["eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
       },
       "fieldMeta": {
-        "getMinDelay": {
-          "severity": "HIGH",
-          "description": "Minimum timelock delay in seconds before a scheduled governance action can execute on L1."
-        },
         "Executor": {
           "severity": "HIGH",
           "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        },
+        "getMinDelay": {
+          "severity": "HIGH",
+          "description": "Minimum timelock delay in seconds before a scheduled governance action can execute on L1."
         }
       },
       "implementationNames": {

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xf60bb446cc35f4485121661b7e3eff04b4eb7a44
+Generated with discovered.json: 0xfe7e8a0a2777d690ae85aa99ff255348c523b7b1
 
-# Diff at Thu, 20 Aug 2026 06:21:33 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1765381169
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1765381169
 - current timestamp: 1765381169
 
 ## Description
@@ -21,6 +21,8 @@ discovery. Values are for block 1765381169 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -29,6 +31,16 @@ discovery. Values are for block 1765381169 (main branch discovery), not current.
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (base:0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -44,6 +56,10 @@ discovery. Values are for block 1765381169 (main branch discovery), not current.
     contract SystemConfig (base:0xa096dD38362bd2cE3C696474329989960722A7Fd) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
       fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
 +        true
@@ -63,6 +79,8 @@ discovery. Values are for block 1765381169 (main branch discovery), not current.
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 

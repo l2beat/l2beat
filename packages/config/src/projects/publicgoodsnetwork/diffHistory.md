@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x02b8f70233bab36c24f0029a0f185e958ac24de4
+Generated with discovered.json: 0xdb60949c7215959c66ea56aa5b2bea380f9e49ac
 
-# Diff at Thu, 20 Aug 2026 06:21:36 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1768984467
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1768984467
 - current timestamp: 1768984467
 
 ## Description
@@ -21,6 +21,8 @@ discovery. Values are for block 1768984467 (main branch discovery), not current.
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -28,6 +30,10 @@ discovery. Values are for block 1768984467 (main branch discovery), not current.
     contract SystemConfig (eth:0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
       fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
 +        true
@@ -39,6 +45,8 @@ discovery. Values are for block 1768984467 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -55,6 +63,14 @@ discovery. Values are for block 1768984467 (main branch discovery), not current.
     +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x58bc59080de3c6820bdf7a891c6d3fcd3e106959
+Generated with discovered.json: 0x6b84ba7d1d8c06243e3e2334f863030facd4919f
 
-# Diff at Thu, 20 Aug 2026 06:21:34 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1734957965
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1734957965
 - current timestamp: 1734957965
 
 ## Description
@@ -33,12 +33,20 @@ discovery. Values are for block 1734957965 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (arb1:0x29994207C5AeDc83F27c5dc16E468f328832d42d) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract UpgradeExecutor (arb1:0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3) [orbitstack/UpgradeExecutor] {
     +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -104,7 +112,7 @@ discovery. Values are for block 1734957965 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       critical:
 +        true
     }
@@ -114,7 +122,7 @@ discovery. Values are for block 1734957965 (main branch discovery), not current.
     contract SequencerInbox (arb1:0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x2eaf1c8b47aab8e0fa8ee822c485c426243aba46
+Generated with discovered.json: 0x9bdc9369727c565a41367a8b9aae181d605a6ced
 
-# Diff at Thu, 20 Aug 2026 06:21:34 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1767971010
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1767971010
 - current timestamp: 1767971010
 
 ## Description
@@ -29,6 +29,14 @@ discovery. Values are for block 1767971010 (main branch discovery), not current.
     +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x4C5984E3841790335E6DC2e7ed92802FbF8a300F) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -62,7 +70,7 @@ discovery. Values are for block 1767971010 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -72,7 +80,7 @@ discovery. Values are for block 1767971010 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.anyTrustFastConfirmer:
 +        {"severity":"HIGH"}
       critical:
@@ -84,7 +92,7 @@ discovery. Values are for block 1767971010 (main branch discovery), not current.
     contract SequencerInbox (eth:0xaF5800ADF22301968613c37DA9C3C2a486eA915A) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:

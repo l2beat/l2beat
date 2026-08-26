@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x2a3e6272af1043ef808e1622e30d223f76f63df6
+Generated with discovered.json: 0x5c78861e9a4ee56f84cca2fa04b9159360472544
 
-# Diff at Thu, 20 Aug 2026 06:21:34 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1768217087
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1768217087
 - current timestamp: 1768217087
 
 ## Description
@@ -60,7 +60,7 @@ discovery. Values are for block 1768217087 (main branch discovery), not current.
     contract SequencerInbox (arb1:0x51a68C63669109BED585347B847c23DcA1cF9713) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
@@ -74,7 +74,7 @@ discovery. Values are for block 1768217087 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.anyTrustFastConfirmer:
 +        {"severity":"HIGH"}
       critical:
@@ -88,7 +88,7 @@ discovery. Values are for block 1768217087 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -129,6 +129,14 @@ discovery. Values are for block 1768217087 (main branch discovery), not current.
     +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0xDAa72c39422ad709DDd609e12E75A13267474347) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 

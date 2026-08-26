@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x0c1d68d00167d4704d1df72c381a60e1a913f8d4
+
+# Diff at Wed, 26 Aug 2026 12:56:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1769601454
+- current timestamp: 1769601454
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769601454 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGateway (eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      fieldMeta.activeVerifiers.severity:
++        "HIGH"
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xc80bf91720fe44c4504b870fa4d9ad52a985cc85
 
 # Diff at Tue, 09 Jun 2026 12:43:33 GMT:

@@ -303,6 +303,7 @@
         "$immutable": true,
         "owner": "base:0xfdFBECa29FFf84A5e1e31F8572509E2C36fF4B81"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "base:0x615b81747e819e0dB25c13570D5DA45Ef9bc81B3": "ProxyAdmin"
       }
@@ -738,7 +739,7 @@
         "challenges": {
           "description": "Emitted on createChallenge() in RollupUserLogic."
         },
-        "getValidators": { "severity": "HIGH" }
+        "getValidators": { "severity": "LOW" }
       },
       "implementationNames": {
         "base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC": "RollupProxy",
@@ -1004,7 +1005,7 @@
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         },
-        "batchPosters": { "severity": "HIGH" },
+        "batchPosters": { "severity": "LOW" },
         "dacKeyset": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -1099,7 +1100,7 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["base:0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104"]
       },
-      "fieldMeta": { "executors": { "severity": "HIGH" } },
+      "fieldMeta": { "executors": { "severity": "LOW" } },
       "implementationNames": {
         "base:0xfdFBECa29FFf84A5e1e31F8572509E2C36fF4B81": "TransparentUpgradeableProxy",
         "base:0x0064cE3e1a98E86e8d39715B9E448128a8bF2Aa6": "UpgradeExecutor"

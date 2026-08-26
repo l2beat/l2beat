@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x4f34eb051d199f670aa040d03efc6ef44763ddd9
+Generated with discovered.json: 0x15f2205dca40ca4601eac380e0ba610068d3d7ca
 
-# Diff at Thu, 20 Aug 2026 07:54:07 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1787143520
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1787143520
 - current timestamp: 1787143520
 
 ## Description
@@ -38,7 +38,15 @@ discovery. Values are for block 1787143520 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -59,10 +67,18 @@ discovery. Values are for block 1787143520 (main branch discovery), not current.
 ```
 
 ```diff
+    contract L2ProxyAdmin (arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract SequencerInbox (eth:0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
@@ -92,7 +108,7 @@ discovery. Values are for block 1787143520 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -105,6 +121,30 @@ discovery. Values are for block 1787143520 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin 2 (eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x71D78dC7cCC0e037e12de1E50f5470903ce37148) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8f6b82D007C0Ff4fd85fE84a5BFa89C00A4e6d2B) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract L1Escrow (eth:0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3) [maker/L1Escrow] {
     +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
       fieldMeta:
@@ -113,10 +153,42 @@ discovery. Values are for block 1787143520 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin 3 (eth:0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xAd3a14Fc16751d9E7FCa2A99aF85bf4d135e878d) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract ERC20Gateway (eth:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf) [orbitstack/ERC20Gateway] {
     +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb31407BCf91d54AbFC0B7ef61bFc71b8b71F0678) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb85e18C8F552c823CdA4DCd9056213bDc970f9AE) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -153,6 +225,14 @@ discovery. Values are for block 1787143520 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (eth:0xE4d0Ba69d082Fdf6f51b8fc8F92c19bF00B1a1B4) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
     +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
       critical:
@@ -166,7 +246,7 @@ discovery. Values are for block 1787143520 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.getValidators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       critical:
 +        true
     }
@@ -177,6 +257,14 @@ discovery. Values are for block 1787143520 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xF32e5B5Ad94c0c0F83E0023b0AC48A93A8a2a428) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 

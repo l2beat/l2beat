@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x1b1e95de42ab37fac225f2377886415e977f3f18
+Generated with discovered.json: 0x99701ab2746860f50fb6a5909665e9a513aafaac
 
-# Diff at Thu, 20 Aug 2026 06:21:35 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1782746641
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1782746641
 - current timestamp: 1782746641
 
 ## Description
@@ -22,7 +22,7 @@ discovery. Values are for block 1782746641 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.anyTrustFastConfirmer:
 +        {"severity":"HIGH"}
       critical:
@@ -34,7 +34,7 @@ discovery. Values are for block 1782746641 (main branch discovery), not current.
     contract SequencerInbox (arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) [orbitstack/SequencerInbox_Celestia_Espresso] {
     +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
@@ -99,12 +99,20 @@ discovery. Values are for block 1782746641 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract UpgradeExecutor (arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d) [orbitstack/UpgradeExecutor] {
     +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 

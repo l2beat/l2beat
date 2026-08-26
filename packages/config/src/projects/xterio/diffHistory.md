@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x687d05dbf161c7adaf59e1b0ed605cc03f1b8ddf
+Generated with discovered.json: 0xb55d06901efcd3ec83e3c8df478a6ebebef5ab19
 
-# Diff at Thu, 20 Aug 2026 06:21:37 GMT:
+# Diff at Wed, 26 Aug 2026 12:57:00 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1745000255
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1745000255
 - current timestamp: 1745000255
 
 ## Description
@@ -21,6 +21,8 @@ discovery. Values are for block 1745000255 (main branch discovery), not current.
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -36,6 +38,10 @@ discovery. Values are for block 1745000255 (main branch discovery), not current.
     contract SystemConfig (eth:0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
       fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
 +        true
@@ -47,6 +53,16 @@ discovery. Values are for block 1745000255 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x9e48d6bBca781c23392Ec459BfB3657C40a794A8) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -63,6 +79,8 @@ discovery. Values are for block 1745000255 (main branch discovery), not current.
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 

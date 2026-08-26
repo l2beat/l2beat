@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xc3dbda36d41e6914cf1f8642b47fd848858f4d05
+Generated with discovered.json: 0xb88b90f541fa1bf3240939b09bebf30b4a8c1fb8
 
-# Diff at Thu, 20 Aug 2026 06:21:37 GMT:
+# Diff at Wed, 26 Aug 2026 12:57:00 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1753944354
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1753944354
 - current timestamp: 1753944354
 
 ## Description
@@ -29,6 +29,8 @@ discovery. Values are for block 1753944354 (main branch discovery), not current.
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
       fieldMeta.validators:
 +        {"severity":"HIGH"}
+      fieldMeta.getSettlementLayer:
++        {"severity":"HIGH","description":"Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."}
       critical:
 +        true
     }
@@ -53,6 +55,10 @@ discovery. Values are for block 1753944354 (main branch discovery), not current.
 ```diff
     contract TreasureZkEvmAdmin (eth:0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871) [shared-zk-stack/ChainAdmin] {
     +++ description: A governance proxy that lets eth:0x282370D1e925ee897CB29Cb3beC13aAe0743067C act through it.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.tokenMultiplierSetter:
++        {"severity":"HIGH"}
       critical:
 +        true
     }

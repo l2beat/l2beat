@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x04e88e8d0b5d0dd121966933b3bd7a7e480fd57c
+Generated with discovered.json: 0x73f47e2d7ed6ea218c4084a756545b838cf3418a
 
-# Diff at Thu, 20 Aug 2026 06:21:33 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1765795407
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1765795407
 - current timestamp: 1765795407
 
 ## Description
@@ -30,7 +30,7 @@ discovery. Values are for block 1765795407 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.anyTrustFastConfirmer:
 +        {"severity":"HIGH"}
       critical:
@@ -87,12 +87,20 @@ discovery. Values are for block 1765795407 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (eth:0x80622fe04c5e1c3fbb3A9c62996dB27B53E9F77b) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract UpgradeExecutor (eth:0x830D41c5624EE982cddEd92Ba01DAB3a4856116f) [orbitstack/UpgradeExecutor] {
     +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -140,7 +148,7 @@ discovery. Values are for block 1765795407 (main branch discovery), not current.
     contract SequencerInbox (eth:0xF75206c49c1694594E3e69252E519434f1579876) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:

@@ -204,6 +204,7 @@
         "$immutable": true,
         "owner": "eth:0xc213d433802ea473e23623476b26FB12e9B4eFe6"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x48E84C45fE99859B1D72FA56Ce5D3c76FF2F7006": "ProxyAdmin"
       }
@@ -686,7 +687,7 @@
         "challenges": {
           "description": "Emitted on createChallenge() in RollupUserLogic."
         },
-        "validators": { "severity": "HIGH" },
+        "validators": { "severity": "LOW" },
         "anyTrustFastConfirmer": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -792,7 +793,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.",
-      "critical": true,
       "sinceTimestamp": 1711069259,
       "sinceBlock": 19486759,
       "values": {
@@ -860,6 +860,7 @@
         "$immutable": true,
         "owner": "eth:0xcB58d1142e53e37aDE44E1F125248FbfAc99352A"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xa5f13fbc57f14Bf322C900Cae0F67b4819364281": "ProxyAdmin"
       }
@@ -1063,7 +1064,7 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["eth:0x4dE424B0BDe70504Ad7b3c644EaAd052F4D993b4"]
       },
-      "fieldMeta": { "executors": { "severity": "HIGH" } },
+      "fieldMeta": { "executors": { "severity": "LOW" } },
       "implementationNames": {
         "eth:0xc213d433802ea473e23623476b26FB12e9B4eFe6": "TransparentUpgradeableProxy",
         "eth:0x6c21303F5986180B1394d2C89f3e883890E2867b": "UpgradeExecutor"
@@ -1328,7 +1329,7 @@
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         },
-        "batchPosters": { "severity": "HIGH" },
+        "batchPosters": { "severity": "LOW" },
         "dacKeyset": { "severity": "HIGH" }
       },
       "implementationNames": {

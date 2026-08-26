@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x95d8f467911330ecf580c51b34c648d439e0fc65
+Generated with discovered.json: 0xfa038bf9a41e7f7395ef5640c9fb3dacfa13c95d
 
-# Diff at Thu, 20 Aug 2026 06:21:33 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1768984373
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1768984373
 - current timestamp: 1768984373
 
 ## Description
@@ -20,7 +20,7 @@ discovery. Values are for block 1768984373 (main branch discovery), not current.
     contract SequencerInbox (eth:0x0D51c6664A773873971336850C51A5caE8e63e89) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
@@ -41,6 +41,14 @@ discovery. Values are for block 1768984373 (main branch discovery), not current.
     +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -90,7 +98,7 @@ discovery. Values are for block 1768984373 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       critical:
 +        true
     }
@@ -102,7 +110,7 @@ discovery. Values are for block 1768984373 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 

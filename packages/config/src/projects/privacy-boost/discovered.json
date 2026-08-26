@@ -33,6 +33,7 @@
         "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd": "ProxyAdmin"
       }
@@ -419,6 +420,7 @@
         "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "oeth:0x96f3E5551E1330f31974597217019812667544c8": "ProxyAdmin"
       }
@@ -448,6 +450,7 @@
         "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "oeth:0x9d3F3CcD3c7a084eE73C4584CE33e77CEdaEc7E2": "ProxyAdmin"
       }
@@ -759,6 +762,7 @@
         "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "oeth:0xfB66dfD80B9a96c2BF2bcfDC5E6715C48916eD6C": "ProxyAdmin"
       }

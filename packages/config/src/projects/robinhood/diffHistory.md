@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xe342663f2a59a298dfb8a40a474e98f878e52bc3
+Generated with discovered.json: 0x110f8fbd9d9f94a95724aecdb144e1892b07ff8c
 
-# Diff at Thu, 20 Aug 2026 06:21:36 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1786359815
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1786359815
 - current timestamp: 1786359815
 
 ## Description
@@ -15,6 +15,14 @@ Classify critical contracts and trust-defining value severities for the ossifica
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1786359815 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
 
 ```diff
     contract Inbox (eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D) [orbitstack/Inbox] {
@@ -30,7 +38,7 @@ discovery. Values are for block 1786359815 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.getValidators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       critical:
 +        true
     }
@@ -41,6 +49,14 @@ discovery. Values are for block 1786359815 (main branch discovery), not current.
     +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x4e393071053C5d95771b1B716857d65cdf5B1839) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -58,7 +74,7 @@ discovery. Values are for block 1786359815 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -106,7 +122,7 @@ discovery. Values are for block 1786359815 (main branch discovery), not current.
     contract SequencerInbox (eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
@@ -139,6 +155,14 @@ discovery. Values are for block 1786359815 (main branch discovery), not current.
 ```
 
 ```diff
+    contract TimelockController (eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 7d.
+      fieldMeta:
++        {"getMinDelay":{"severity":"HIGH"},"accessControl":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract Outbox (eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9) [orbitstack/Outbox] {
     +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
       critical:
@@ -152,7 +176,31 @@ discovery. Values are for block 1786359815 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
+    }
+```
+
+```diff
+    contract TimelockController (robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 7d.
+      fieldMeta:
++        {"getMinDelay":{"severity":"HIGH"},"accessControl":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (robinhood:0xa3Acd31AFb851B4eB9DAD00F5204c01D924267dF) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 

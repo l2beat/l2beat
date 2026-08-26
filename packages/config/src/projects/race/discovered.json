@@ -222,6 +222,7 @@
         "$immutable": true,
         "owner": "eth:0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x3d2BdE87466Cae97011702D2C305fd40EEBbbF0a": "AddressManager"
       },
@@ -381,6 +382,7 @@
         "superchainConfig": "eth:0xCB73B7348705a9F925643150Eb00350719380FF8",
         "version": "2.1.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x680969A6c58183987c8126ca4DE6b59C6540Cd2a": "L1ChugSplashProxy",
         "eth:0x4E40ee3E2f8ff7A915c23473D0C256ADc77fa03F": "L1StandardBridge"
@@ -566,6 +568,7 @@
         "isUpgrading": false,
         "owner": "eth:0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191": "ProxyAdmin"
       }
@@ -767,7 +770,9 @@
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         },
-        "batcherHash": { "severity": "HIGH" }
+        "batcherHash": { "severity": "LOW" },
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xCf6A32dB8b3313b3d439CE6909511c2c3415fa32": "Proxy",
@@ -822,6 +827,7 @@
         "superchainConfig": "eth:0xCB73B7348705a9F925643150Eb00350719380FF8",
         "version": "2.3.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xf54B2BAEF894cfF5511A5722Acaac0409F2F2d89": "ResolvedDelegateProxy",
         "eth:0x01Dae1EFfB0D0469fC4a9695866D5cc75190e385": "L1CrossDomainMessenger"

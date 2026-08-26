@@ -479,8 +479,7 @@
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
         "respectedGameType": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" },
-        "disputeGameFinalityDelaySeconds": { "severity": "HIGH" }
+        "retirementTimestamp": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x23B2C62946350F4246f9f9D027e071f0264FD113": "Proxy",
@@ -525,7 +524,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "1mo 25d",
+        "timeSinceLastL2beatInteraction": "2mo 1d",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -5770,7 +5769,7 @@
     "lido/L1LidoTokensBridge": "0xfbf3e83ab86a74d691bbceaf7d057f48ce1eb84928da555a82dee64747e5facc",
     "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post20": "0x805b91df95b1fb79ddf49cec451e59736ac01d914a10de73c3a947f58f572570",
+    "opstack/AnchorStateRegistry_post20": "0x6bf8916daf3b007503e2aa81cc8920469b22cdf5eb4501c85b8743633076e00e",
     "opstack/DelayedWETH": "0x2bb65b9dcbc119352d4c860b2c99ea1ab78770cfd36c559c5150dadfc1580c84",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
     "opstack/DisputeGameFactory_v2": "0x8846c3263ee16aaea65c3af20a2118d0c11aaf2a6fdd0487970b43a8d0e42123",

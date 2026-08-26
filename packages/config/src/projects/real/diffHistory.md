@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xa662f67b790224589efa9fea11b5ccdfd3aefc3d
+Generated with discovered.json: 0xe6bafcc022f3d3cbf4af4e167f2e142fd729e4a1
 
-# Diff at Thu, 20 Aug 2026 06:21:36 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1754054742
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1754054742
 - current timestamp: 1754054742
 
 ## Description
@@ -76,7 +76,7 @@ discovery. Values are for block 1754054742 (main branch discovery), not current.
     contract SequencerInbox (eth:0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
@@ -101,12 +101,20 @@ discovery. Values are for block 1754054742 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (eth:0xB032ff02cd6425e4b816137207AA8560932180f1) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract RollupProxy (eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a) [orbitstack/RollupProxy_fastConfirm] {
     +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.anyTrustFastConfirmer:
 +        {"severity":"HIGH"}
       critical:
@@ -128,7 +136,7 @@ discovery. Values are for block 1754054742 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 

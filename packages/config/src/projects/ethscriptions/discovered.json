@@ -84,11 +84,13 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
-          "description": "Verifiers that are routed to by their selector and not frozen."
+          "description": "Verifiers that are routed to by their selector and not frozen.",
+          "severity": "HIGH"
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1": "SP1VerifierGateway"

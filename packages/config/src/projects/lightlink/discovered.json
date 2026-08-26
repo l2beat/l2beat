@@ -510,6 +510,7 @@
         "RELAY_RESERVED_GAS": 40000,
         "version": "2.4.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38": "Proxy",
         "eth:0x38104856c02f83f4048c0FBA3D7613042FEAc988": "L1CrossDomainMessenger"
@@ -611,6 +612,7 @@
         "paused": false,
         "version": "2.2.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c": "Proxy",
         "eth:0xCE7Ab4b8471A3119aabB63101b7C7B999464Fc48": "L1StandardBridge"
@@ -1171,7 +1173,7 @@
     "lightlink/LightLinkPortal": "0xe0fcc9299776b8384b60df1e2908abb375fe01985e75e67684bd590a74bb49c0",
     "lightlink/Multisig": "0xbf0a261e6c43f7c32678e3ac3c8b3409a9336d211bf3c10d9e8d64da91d9a2de",
     "lightlink/SystemConfig": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1CrossDomainMessenger": "0xea24e2bfdb6536e3712d13097b867ff34904f65030f57e349694caa653cce8fa",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e"
   },
   "usedBlockNumbers": { "ethereum": 22208513 },

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xadd97832cb8d1af0b4b9c1faea33e1da3300bcff
+Generated with discovered.json: 0x6bbcfb7f0055c43a47a4db9b237bfeed841c525b
 
-# Diff at Thu, 20 Aug 2026 06:21:36 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1768984689
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1768984689
 - current timestamp: 1768984689
 
 ## Description
@@ -38,7 +38,7 @@ discovery. Values are for block 1768984689 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -56,7 +56,7 @@ discovery. Values are for block 1768984689 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.anyTrustFastConfirmer:
 +        {"severity":"HIGH"}
       critical:
@@ -68,7 +68,7 @@ discovery. Values are for block 1768984689 (main branch discovery), not current.
     contract SequencerInbox (arb1:0xa58F38102579dAE7C584850780dDA55744f67DF1) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
@@ -89,6 +89,14 @@ discovery. Values are for block 1768984689 (main branch discovery), not current.
     +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 

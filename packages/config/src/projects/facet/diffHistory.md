@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x6316c1a434c270a79f5615ffca3d9b60a54f1032
+Generated with discovered.json: 0x5038078df4503c6376b7696d6d64f64e26e8357a
 
-# Diff at Thu, 20 Aug 2026 06:21:34 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1780407005
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1780407005
 - current timestamp: 1780407005
 
 ## Description
@@ -17,10 +17,30 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1780407005 (main branch discovery), not current.
 
 ```diff
+    contract SP1VerifierGatewayDeprecated (eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      fieldMeta.activeVerifiers.severity:
++        "HIGH"
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
     contract L1ETHLockbox (eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909) [opstack/L1StandardBridge_facet] {
     +++ description: Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      fieldMeta.activeVerifiers.severity:
++        "HIGH"
+      fieldMeta.owner:
++        {"severity":"HIGH"}
     }
 ```
 

@@ -120,6 +120,7 @@
         "$immutable": true,
         "owner": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD": "ProxyAdmin"
       }
@@ -295,7 +296,7 @@
         "challenges": {
           "description": "Emitted on createChallenge() in RollupUserLogic."
         },
-        "getValidators": { "severity": "HIGH" }
+        "getValidators": { "severity": "LOW" }
       },
       "implementationNames": {
         "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94": "RollupProxy",
@@ -396,6 +397,7 @@
         "owner": "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x4e393071053C5d95771b1B716857d65cdf5B1839": "ProxyAdmin"
       }
@@ -510,7 +512,7 @@
           "eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465"
         ]
       },
-      "fieldMeta": { "executors": { "severity": "HIGH" } },
+      "fieldMeta": { "executors": { "severity": "LOW" } },
       "implementationNames": {
         "eth:0x552603b4bc1f5E896AF2854548D6380f45f1B4bf": "TransparentUpgradeableProxy",
         "eth:0x9149DF379237a935cf0658fE54D2325109493CBb": "UpgradeExecutor"
@@ -990,7 +992,7 @@
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         },
-        "batchPosters": { "severity": "HIGH" },
+        "batchPosters": { "severity": "LOW" },
         "dacKeyset": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -1437,6 +1439,10 @@
         "Proposer": ["eth:0xbFc2b53552513174A0B006D4799B39871fe0CA1d"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
       },
+      "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xE1e825D15192457d05a251715C3e2Cab0F8CF465": "TransparentUpgradeableProxy",
         "eth:0x145046bdd5c4bc72338f60dE5d9707BD73ff1843": "TimelockControllerUpgradeable"
@@ -1763,7 +1769,7 @@
           "robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173"
         ]
       },
-      "fieldMeta": { "executors": { "severity": "HIGH" } },
+      "fieldMeta": { "executors": { "severity": "LOW" } },
       "implementationNames": {
         "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09": "TransparentUpgradeableProxy",
         "robinhood:0x3c3E52bC8C181D06A76e2518bBc655C5BB3Ce7Cd": "UpgradeExtractor"
@@ -1968,6 +1974,10 @@
         "Proposer": ["robinhood:0x4C0360aFedD31e53718e4343F95E40b692402462"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
       },
+      "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "robinhood:0x560C81fe78FcC276e460524428f1a62057Ca8173": "TransparentUpgradeableProxy",
         "robinhood:0x145046bdd5c4bc72338f60dE5d9707BD73ff1843": "TimelockControllerUpgradeable"
@@ -2069,6 +2079,7 @@
         "owner": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF": "ProxyAdmin"
       }
@@ -2291,6 +2302,7 @@
         "$immutable": true,
         "owner": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "robinhood:0xa3Acd31AFb851B4eB9DAD00F5204c01D924267dF": "ProxyAdmin"
       }
@@ -3983,7 +3995,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
+    "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
     "orbitstack/EdgeChallengeManager": "0xd8e4b2504241a40841671a287c90ff46798a14ac1394c9f496ffb3d6b0495c08",

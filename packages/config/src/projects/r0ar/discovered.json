@@ -137,6 +137,10 @@
         "totalSupply": 0,
         "version": "1.0.0"
       },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x465833609d9ff2Cb9A070b0d71b700F318C97293": "Proxy",
         "eth:0x9Dc689620a87803378b3304776dd5AE9070730A8": "DelayedWETH"
@@ -190,6 +194,7 @@
         "systemConfig": "eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
         "version": "2.4.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x5b0e75a52862881b4077C865B244CC17cD2b531b": "ResolvedDelegateProxy",
         "eth:0x8bA829f040EB57668BDfb010472AEb0a16B2399C": "L1CrossDomainMessenger"
@@ -214,6 +219,7 @@
         "$immutable": true,
         "owner": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x66e58c9D0b42110E956F54aA850C0d629f4B56C5": "AddressManager"
       },
@@ -249,6 +255,7 @@
         "systemConfig": "eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
         "version": "2.2.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x683ca289a8418Cb090E42929A73a263d7b81DfC2": "L1ChugSplashProxy",
         "eth:0xBab69f0A56Aea1117C0298341ddE52F3DbAfe4D1": "L1StandardBridge"
@@ -332,11 +339,13 @@
         "VERSION": 0
       },
       "fieldMeta": {
-        "batcherHash": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "batcherHash": { "severity": "LOW" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "HIGH" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
@@ -547,6 +556,7 @@
         "isUpgrading": false,
         "owner": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA": "ProxyAdmin"
       }
@@ -987,10 +997,12 @@
         "wethFromDGF": "UNRESOLVED"
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
         "game2000": { "severity": "HIGH" },
-        "game42": { "severity": "HIGH" }
+        "game42": { "severity": "HIGH" },
+        "wethFromDGF": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xF014d8028A7028352baD6226A4894Ae596e2846c": "Proxy",
@@ -1918,10 +1930,10 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
-    "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0x46746381be2da0435ab1c70360c00f35d9759a505c3f99905e07476b72e8b79c",
+    "opstack/DelayedWETH": "0x2bb65b9dcbc119352d4c860b2c99ea1ab78770cfd36c559c5150dadfc1580c84",
+    "opstack/DisputeGameFactory": "0x3dc99a5b14ca02c3f89e29f2e34581869209bafcf299f20dec1ac9d3bb2001f4",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
-    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1CrossDomainMessenger": "0xea24e2bfdb6536e3712d13097b867ff34904f65030f57e349694caa653cce8fa",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/L2OutputOracle": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
@@ -1930,7 +1942,7 @@
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake": "0x159f809db0f23240c435b95879e5d69a807ac5f4bedb61ce4bdb57dcd4a92ccc",
-    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
+    "opstack/SystemConfig": "0xa5ad1d7fe3bfc5d96d4166fbfb1e6ef0b1d5baaf568225c532428da4d84175c6"
   },
   "usedBlockNumbers": { "ethereum": 23997239 },
   "permissionsConfigHash": "0xb9e10aacb96c957c73a8a6e85ce2295df4f416f36d44662c6e1b4ae7a7525d25"

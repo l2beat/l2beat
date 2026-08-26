@@ -75,6 +75,7 @@
         "isUpgrading": false,
         "owner": "base:0x184d44C2DfB6d17C60B9Ca329b7B8630aea325Ce"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "base:0x102e24084a003feEbe57B536a3B4E29eD6AC855A": "ProxyAdmin"
       }
@@ -276,6 +277,7 @@
         "systemConfig": "base:0xA9Bc65Ff5A3106351fa92B04C91d505BcCd92Cad",
         "version": "2.4.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "base:0x39d484F0FC1b3bfAed7D54934FF5C8e5d47A6867": "ResolvedDelegateProxy",
         "base:0xce1E945A3426f0521eB9D1Ccc63D6d204bC49D40": "L1CrossDomainMessenger"
@@ -477,6 +479,7 @@
         "systemConfig": "base:0xA9Bc65Ff5A3106351fa92B04C91d505BcCd92Cad",
         "version": "2.2.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "base:0x769547a723783FCA36BAaf1ECcf9dfdbF6d09F38": "L1ChugSplashProxy",
         "base:0x4bFC8d6bE2843626A1186bd6eEfAD1297650470a": "L1StandardBridge"
@@ -682,11 +685,13 @@
         "VERSION": 0
       },
       "fieldMeta": {
-        "batcherHash": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "batcherHash": { "severity": "LOW" },
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         },
+        "owner": { "severity": "HIGH" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
@@ -725,6 +730,7 @@
         "$immutable": true,
         "owner": "base:0x102e24084a003feEbe57B536a3B4E29eD6AC855A"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "base:0xd79005b0f06b2C518893d2Ba31f94429e555b6b1": "AddressManager"
       },
@@ -1197,14 +1203,14 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
+    "opstack/L1CrossDomainMessenger": "0xea24e2bfdb6536e3712d13097b867ff34904f65030f57e349694caa653cce8fa",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/L2OutputOracle": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SuperchainConfigFake": "0x159f809db0f23240c435b95879e5d69a807ac5f4bedb61ce4bdb57dcd4a92ccc",
-    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
+    "opstack/SystemConfig": "0xa5ad1d7fe3bfc5d96d4166fbfb1e6ef0b1d5baaf568225c532428da4d84175c6"
   },
   "usedBlockNumbers": { "base": 47978546 },
   "permissionsConfigHash": "0xc351e227f7d95ab1fc84bad9a2d4aadf8900899665bdc8a9dde2d11abd08d57d"

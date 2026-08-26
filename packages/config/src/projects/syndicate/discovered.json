@@ -1377,6 +1377,7 @@
         "$immutable": true,
         "owner": "eth:0x85C2AE9B88baDf751228e307Ae9ab76B74d84f5c"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x817BE2d0f28b594D7023dAdf2b3Aa54327180c66": "ProxyAdmin"
       }
@@ -1454,6 +1455,7 @@
         "$immutable": true,
         "owner": "eth:0x002721B4790d97dC140a049936aA710152Ba92D5"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99": "ProxyAdmin"
       }
@@ -2297,7 +2299,7 @@
           "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d"
         ]
       },
-      "fieldMeta": { "executors": { "severity": "HIGH" } },
+      "fieldMeta": { "executors": { "severity": "LOW" } },
       "implementationNames": {
         "eth:0xFA4d1D308f4B4f6E6F836Db2B77Db549606A460c": "",
         "eth:0x4231Dd9e6717aB9a9ABC5618d8a4Fcf1a432F698": "UpgradeExecutor"

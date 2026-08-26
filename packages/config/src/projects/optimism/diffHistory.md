@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x51c95e88f6046c3e4bf3e3b917bbc3ccd91fe740
+Generated with discovered.json: 0xf1a95ef6d3949b31a25d38cb77598867d786dd1a
 
-# Diff at Thu, 20 Aug 2026 16:17:07 GMT:
+# Diff at Wed, 26 Aug 2026 12:20:42 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@818dfc77af5b305593af519ac4219d83b48fe20d block: 1784283055
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1784283055
 - current timestamp: 1784283055
 
 ## Description
 
-Align ossification perimeter and critical state fields with the reviewer contract.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -59,6 +59,8 @@ discovery. Values are for block 1784283055 (main branch discovery), not current.
 ```diff
     contract AnchorStateRegistry (eth:0x23B2C62946350F4246f9f9D027e071f0264FD113) [opstack/AnchorStateRegistry_post20] {
     +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      fieldMeta.disputeGameFinalityDelaySeconds:
+-        {"severity":"HIGH"}
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
       critical:

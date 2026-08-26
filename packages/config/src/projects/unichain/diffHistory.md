@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x7f422b55e8b2d6fe49e7da6a86fdf631d592b173
+Generated with discovered.json: 0x7e4cf71111c7f0f6c9d83baead20ab7909eb2e27
 
-# Diff at Thu, 20 Aug 2026 08:23:13 GMT:
+# Diff at Wed, 26 Aug 2026 12:46:24 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@f3dde469ab689e7e92911197af2d5f9cb19cc30f block: 1783324564
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1783324564
 - current timestamp: 1783324564
 
 ## Description
 
-Ossification perimeter: externally governed escrows (Maker/Sky DAI/USDS, Lido wstETH) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -29,12 +29,16 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
     +++ description: A simple escrow contract storing ETH for the canonical bridge.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract OptimismPortal2 (eth:0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2) [opstack/OptimismPortal2] {
     +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -45,6 +49,8 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -83,8 +89,20 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
 ```diff
     contract DisputeGameFactory (eth:0x2F12d621a16e2d3285929C9996f478508951dFe4) [opstack/DisputeGameFactory] {
     +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.wethFromDGF:
++        {"severity":"HIGH"}
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -93,6 +111,14 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
     +++ description: used to remove members inactive for 2mo 10d while making sure that the threshold remains above 60%. If the number of members falls below 1, the eth:0x0000000000000000000000000000000000000000 takes ownership of the multisig
       critical:
 +        true
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -133,6 +159,8 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -141,12 +169,18 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) [opstack/SuperchainConfig_expiry] {
     +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.guardian:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -157,6 +191,8 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -171,7 +207,11 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
 ```diff
     contract SystemConfig (eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
       fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
 +        true
@@ -183,6 +223,8 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -191,6 +233,8 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -199,6 +243,44 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
     +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract GasPriceOracle (unichain:0x420000000000000000000000000000000000000F) [opstack/Layer2/GasPriceOracle] {
+    +++ description: Provides the current gas price for L2 transactions.
+      sourceHashes.1:
+-        "0x29ddf164485b42ede998cb6aa971e4178dffbc3247ff52a55177ef43123c2e70"
++        "0x9d9d5775e8986b650c9d59cae425f8bd6a1dc0e3b0ae21a3682630798e7b9445"
+      values.baseFee:
++        0
+      values.baseFeeScalar:
++        2000
+      values.decimals:
++        6
+      values.DECIMALS:
++        6
+      values.gasPrice:
++        0
+      values.isEcotone:
++        true
+      values.isFjord:
++        true
+      values.isIsthmus:
++        true
+      values.isJovian:
++        true
+      values.version:
++        "1.6.0"
+      implementationNames.unichain:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1:
+-        ""
++        "GasPriceOracle"
+      template:
++        "opstack/Layer2/GasPriceOracle"
+      description:
++        "Provides the current gas price for L2 transactions."
     }
 ```
 
@@ -207,6 +289,8 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
     +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -215,6 +299,8 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
     +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -223,6 +309,8 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
     +++ description: Administration contract for other contract proxies.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 

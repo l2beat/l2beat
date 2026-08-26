@@ -396,7 +396,9 @@
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         },
-        "batcherHash": { "severity": "HIGH" }
+        "batcherHash": { "severity": "LOW" },
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00": "Proxy",
@@ -476,6 +478,7 @@
         "isUpgrading": false,
         "owner": "eth:0x03eC1C43434E2f910A2fb984906cd2470fdb39c8"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x7617f4a55d62b9EE49578D9C90593e58E607415F": "ProxyAdmin"
       }
@@ -528,6 +531,7 @@
         "systemConfig": "eth:0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00",
         "version": "2.4.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x825C858149F1E775a0f4Aeb172037B970bE7B736": "ResolvedDelegateProxy",
         "eth:0xe691A05BE8323Ce70A30A7ef733962A0d3b238E2": "L1CrossDomainMessenger"
@@ -829,6 +833,7 @@
         "systemConfig": "eth:0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00",
         "version": "2.2.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xE639919b92AB6DD238aEACc6F2A8d6e355D17bd5": "L1ChugSplashProxy",
         "eth:0x5Bf18b3c88b0B04BDC2C8F0c55362D14aCFB2168": "L1StandardBridge"
@@ -853,6 +858,7 @@
         "$immutable": true,
         "owner": "eth:0x7617f4a55d62b9EE49578D9C90593e58E607415F"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xF1C911e0c1E6dd08c8a7C80c9890e2037e0504c6": "AddressManager"
       },

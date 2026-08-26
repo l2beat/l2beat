@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xd3ca5b4389bd256bf9dbb7d36ffedb39ed715e38
+Generated with discovered.json: 0x30a34260c756a9a4a78c23d268ba8e7b93dc1efb
 
-# Diff at Thu, 20 Aug 2026 06:21:36 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1779198937
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1779198937
 - current timestamp: 1779198937
 
 ## Description
@@ -28,7 +28,7 @@ discovery. Values are for block 1779198937 (main branch discovery), not current.
     contract SequencerInbox (arb1:0x24B68936C13A414cd91437aE7AA730321B9ff159) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
@@ -106,7 +106,7 @@ discovery. Values are for block 1779198937 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -124,7 +124,7 @@ discovery. Values are for block 1779198937 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.anyTrustFastConfirmer:
 +        {"severity":"HIGH"}
       critical:
@@ -137,6 +137,14 @@ discovery. Values are for block 1779198937 (main branch discovery), not current.
     +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0xd18b1C6376633000c85541F7c15c591Ffe5f9556) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 

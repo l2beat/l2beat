@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x3d474fe3b2cd13c1044d9287e1de41abf4031c6a
+Generated with discovered.json: 0x352a3549a2286b971f7d4f5484fc2f7448476afa
 
-# Diff at Thu, 20 Aug 2026 06:21:33 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1782746615
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1782746615
 - current timestamp: 1782746615
 
 ## Description
@@ -22,7 +22,7 @@ discovery. Values are for block 1782746615 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.anyTrustFastConfirmer:
 +        {"severity":"HIGH"}
       critical:
@@ -60,7 +60,7 @@ discovery. Values are for block 1782746615 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -97,6 +97,14 @@ discovery. Values are for block 1782746615 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (eth:0xCEe383Aa9287D349aa965DF9Ed6e0B582970B2c3) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract OneStepProverMath (eth:0xD3483861e9217E20eC766E3171B58b5202859aDF) [orbitstack/OneStepProverMath] {
     +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
       critical:
@@ -108,7 +116,7 @@ discovery. Values are for block 1782746615 (main branch discovery), not current.
     contract SequencerInbox (eth:0xdF41d94e28AA0bB35471225121BDBA710DdaF068) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:

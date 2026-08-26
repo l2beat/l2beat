@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x2fa3189aef2fd2e9fa78afcd9b4b1b901152c3d5
+Generated with discovered.json: 0x3f90a353a22ad7a12ca1725c9a9d78ca4fa84243
 
-# Diff at Thu, 20 Aug 2026 06:21:34 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1770639543
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1770639543
 - current timestamp: 1770639543
 
 ## Description
@@ -25,10 +25,20 @@ discovery. Values are for block 1770639543 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract Gateway (eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) [shared-zk-stack/Diamond] {
     +++ description: The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
       fieldMeta.validators:
 +        {"severity":"HIGH"}
+      fieldMeta.getSettlementLayer:
++        {"severity":"HIGH","description":"Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."}
       critical:
 +        true
     }
@@ -69,6 +79,10 @@ discovery. Values are for block 1770639543 (main branch discovery), not current.
 ```diff
     contract ChainAdminOwnable (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3) [shared-zk-stack/ChainAdmin] {
     +++ description: A governance proxy that lets eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828 act through it.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.tokenMultiplierSetter:
++        {"severity":"HIGH"}
       critical:
 +        true
     }

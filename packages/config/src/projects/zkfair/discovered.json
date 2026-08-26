@@ -477,6 +477,7 @@
         "$immutable": true,
         "owner": "eth:0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3": "ProxyAdmin"
       }

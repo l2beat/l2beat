@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x594164bbfe1bae04ad18736bae0a5391b9aec176
+Generated with discovered.json: 0xc7ecacb0620d2f3c579ed72b670b4b182c4deee1
 
-# Diff at Thu, 20 Aug 2026 06:21:34 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1775220597
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1775220597
 - current timestamp: 1775220597
 
 ## Description
@@ -29,6 +29,14 @@ discovery. Values are for block 1775220597 (main branch discovery), not current.
     +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -70,7 +78,7 @@ discovery. Values are for block 1775220597 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -94,7 +102,7 @@ discovery. Values are for block 1775220597 (main branch discovery), not current.
     contract SequencerInbox (eth:0xD04Cf183526aDC4a37B72D49bFe6eE19d9E19bd0) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
@@ -108,7 +116,7 @@ discovery. Values are for block 1775220597 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.anyTrustFastConfirmer:
 +        {"severity":"HIGH"}
       critical:

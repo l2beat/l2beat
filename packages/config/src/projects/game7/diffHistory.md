@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x797494c111a66fb3bf77a4fbe816b534b8afc18b
+Generated with discovered.json: 0x75011ba6bf8f95f5e45200fd307ca42f9f040ddd
 
-# Diff at Thu, 20 Aug 2026 06:21:34 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1768984632
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1768984632
 - current timestamp: 1768984632
 
 ## Description
@@ -49,6 +49,14 @@ discovery. Values are for block 1768984632 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (arb1:0x401eCb1D350407f13ba348573E5630B83638E30D) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract RollupEventInbox (arb1:0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1) [orbitstack/RollupEventInbox] {
     +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
       critical:
@@ -68,7 +76,7 @@ discovery. Values are for block 1768984632 (main branch discovery), not current.
     contract SequencerInbox (arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
@@ -82,7 +90,7 @@ discovery. Values are for block 1768984632 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.anyTrustFastConfirmer:
 +        {"severity":"HIGH"}
       critical:
@@ -112,7 +120,7 @@ discovery. Values are for block 1768984632 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -129,6 +137,14 @@ discovery. Values are for block 1768984632 (main branch discovery), not current.
     +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 

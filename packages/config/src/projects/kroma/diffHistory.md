@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xc478213d50beca6e58ab4372186f0b1a3b48404a
+Generated with discovered.json: 0x6ec2ec048941c89a620d608677f32a430553bd28
 
-# Diff at Thu, 20 Aug 2026 06:21:34 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1752575723
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1752575723
 - current timestamp: 1752575723
 
 ## Description
@@ -17,9 +17,21 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1752575723 (main branch discovery), not current.
 
 ```diff
+    contract Timelock (eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1) [global/Timelock] {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      fieldMeta:
++        {"getMinDelay":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract SystemConfig (eth:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
       fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
 +        true
@@ -31,6 +43,16 @@ discovery. Values are for block 1752575723 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -39,6 +61,8 @@ discovery. Values are for block 1752575723 (main branch discovery), not current.
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 

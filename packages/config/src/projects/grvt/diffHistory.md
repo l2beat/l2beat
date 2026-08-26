@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x61ab93765e32b70fd1fb8b47d08a98a99b1d4dcd
+Generated with discovered.json: 0x48fda52c0a92e6cb0ac1492c793548e1afb8c4d9
 
-# Diff at Mon, 24 Aug 2026 15:09:21 GMT:
+# Diff at Wed, 26 Aug 2026 12:18:20 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@13eb47c755f8f1545e987d7aa8482c1840bc9dfd block: 1787310844
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1787310844
 - current timestamp: 1787310844
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -71,6 +71,8 @@ discovery. Values are for block 1787310844 (main branch discovery), not current.
 ```diff
     contract Diamond (eth:0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) [shared-zk-stack/Diamond] {
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      fieldMeta.getSettlementLayer:
++        {"severity":"HIGH","description":"Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."}
       critical:
 +        true
     }

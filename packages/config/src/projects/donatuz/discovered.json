@@ -65,6 +65,7 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.1"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "base:0x4A2b7478B9646c06C3517E6f06e1232684143C00": "ResolvedDelegateProxy",
         "base:0x55b6A23e45611e5856beC4b97c433908Ef84d8c5": "L1CrossDomainMessenger"
@@ -93,6 +94,7 @@
         "$immutable": true,
         "owner": "base:0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "base:0x5416B7421c42B9218B29f688C47a46020c23cF0d": "AddressManager"
       },
@@ -230,6 +232,7 @@
         "isUpgrading": false,
         "owner": "base:0xb02b6c8e9970D7Fd54a000a95AC4fBAA3bb11288"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "base:0x85519ecD4E4c59E62B68dB2082dB1F5c75da1E15": "ProxyAdmin"
       }
@@ -370,7 +373,9 @@
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         },
-        "batcherHash": { "severity": "HIGH" }
+        "batcherHash": { "severity": "LOW" },
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "base:0xa096dD38362bd2cE3C696474329989960722A7Fd": "Proxy",
@@ -522,6 +527,7 @@
         "OTHER_BRIDGE": "base:0x4200000000000000000000000000000000000010",
         "version": "1.1.1"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "base:0xBbea8Cc549702F67cc082d2cAA9842Ba3767536B": "L1ChugSplashProxy",
         "base:0x5c94e4b101EF3bC8554890c7D33Fae938Be737c0": "L1StandardBridge"

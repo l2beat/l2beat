@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x64ad9e4a708771809ae894fb789f13da1fa12166
+Generated with discovered.json: 0x3e3c3d16db6bf9190531676c6c682c8240dcedc1
 
-# Diff at Thu, 20 Aug 2026 06:21:33 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1744201739
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1744201739
 - current timestamp: 1744201739
 
 ## Description
@@ -29,6 +29,14 @@ discovery. Values are for block 1744201739 (main branch discovery), not current.
     +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract OrbitProxyAdmin (eth:0x48E84C45fE99859B1D72FA56Ce5D3c76FF2F7006) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -70,7 +78,7 @@ discovery. Values are for block 1744201739 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.anyTrustFastConfirmer:
 +        {"severity":"HIGH"}
       critical:
@@ -91,6 +99,14 @@ discovery. Values are for block 1744201739 (main branch discovery), not current.
     +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract StrategiesProxyAdmin (eth:0xa5f13fbc57f14Bf322C900Cae0F67b4819364281) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -116,7 +132,7 @@ discovery. Values are for block 1744201739 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -148,7 +164,7 @@ discovery. Values are for block 1744201739 (main branch discovery), not current.
     contract SequencerInbox (eth:0xFfbf2b49524e09B1F1fBcA707B830e79c68c2086) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:

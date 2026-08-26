@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x1b1c8ea1fe70fa8a70d9f7ec4ac185d3ad4207a9
+Generated with discovered.json: 0x638461b3f324c4fe354e40e0e008155c08c613c5
 
-# Diff at Thu, 20 Aug 2026 15:32:04 GMT:
+# Diff at Wed, 26 Aug 2026 12:18:13 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@490d1ebdb014748d72479deb28674a95e7cdbfb3 block: 1787143507
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1787143507
 - current timestamp: 1787143507
 
 ## Description
 
-Ossification review: keep external escrows and Safe actor shells outside the critical perimeter, include canonical security mechanisms, and classify routine validator, batch-poster, and executor roster changes as LOW.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -27,6 +27,8 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 ```diff
     contract L2Timelock (arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) [orbitstack/layer2/L2Timelock] {
     +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH","description":"Minimum timelock delay in seconds before a scheduled governance action can execute on Arbitrum One."}
       critical:
 +        true
     }
@@ -161,6 +163,8 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 +        {"permission":"upgrade","from":"arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1","role":"admin"}
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -169,6 +173,8 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -187,6 +193,8 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 +        {"permission":"upgrade","from":"eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27","role":"admin","via":[{"address":"eth:0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
       receivedPermissions.20:
 +        {"permission":"upgrade","from":"eth:0xd92023E9d9911199a6711321D1277285e6d4e2db","role":"admin","via":[{"address":"eth:0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"},{"address":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"},{"address":"eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","delay":549816},{"address":"arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]}
+      fieldMeta.l2CoreQuorumPercent.severity:
++        "HIGH"
       critical:
 +        true
     }
@@ -279,6 +287,8 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -289,6 +299,8 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 +        {"permission":"upgrade","from":"eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27","role":"admin"}
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -339,6 +351,8 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 +        {"permission":"upgrade","from":"eth:0xd92023E9d9911199a6711321D1277285e6d4e2db","role":"admin"}
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -401,6 +415,8 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 ```diff
     contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
     +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH","description":"Minimum timelock delay in seconds before a scheduled governance action can execute on L1."}
       critical:
 +        true
     }

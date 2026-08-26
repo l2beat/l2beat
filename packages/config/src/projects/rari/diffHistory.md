@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x93158b22ea602ca6da7415daf58bcc92b8862ba1
+Generated with discovered.json: 0xe69f6466bf892b9f6f4a40975f3835251a2e2a95
 
-# Diff at Thu, 20 Aug 2026 06:21:36 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1782746888
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1782746888
 - current timestamp: 1782746888
 
 ## Description
@@ -17,12 +17,20 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1782746888 (main branch discovery), not current.
 
 ```diff
+    contract ProxyAdmin (arb1:0x003e70B041abb993006C03E56c8515622a02928C) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract UpgradeExecutor (arb1:0x139C5A235632EDdad741ff380112B3161d31a21C) [orbitstack/UpgradeExecutor] {
     +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -72,7 +80,7 @@ discovery. Values are for block 1782746888 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.anyTrustFastConfirmer:
 +        {"severity":"HIGH"}
       critical:
@@ -132,7 +140,7 @@ discovery. Values are for block 1782746888 (main branch discovery), not current.
     contract SequencerInbox (arb1:0xA436f1867adD490BF1530c636f2FB090758bB6B3) [orbitstack/SequencerInbox_Celestia_Espresso] {
     +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:

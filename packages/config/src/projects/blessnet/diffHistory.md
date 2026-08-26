@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xc4beec560ac95c86874208e416e6aa767772edc6
+Generated with discovered.json: 0x2b23a83fc49a9638e27f2a3852ff1ccb7d58bd3e
 
-# Diff at Thu, 20 Aug 2026 06:21:33 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1762880606
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1762880606
 - current timestamp: 1762880606
 
 ## Description
@@ -44,7 +44,7 @@ discovery. Values are for block 1762880606 (main branch discovery), not current.
     contract SequencerInbox (arb1:0x1e751242C9CE10E165969EeD91E5D98587904aad) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
@@ -98,7 +98,7 @@ discovery. Values are for block 1762880606 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -119,12 +119,20 @@ discovery. Values are for block 1762880606 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (arb1:0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract RollupProxy (arb1:0xF9327276c0E0d255543C095AC6D243B555e645D9) [orbitstack/RollupProxy_fastConfirm] {
     +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.anyTrustFastConfirmer:
 +        {"severity":"HIGH"}
       critical:

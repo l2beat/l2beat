@@ -289,6 +289,10 @@
         "validators": []
       },
       "fieldMeta": {
+        "getSettlementLayer": {
+          "severity": "HIGH",
+          "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
+        },
         "getAdmin": { "severity": "HIGH" },
         "getTransactionFilterer": {
           "severity": "HIGH",
@@ -318,8 +322,7 @@
         "getVerifierParams": {
           "severity": "LOW",
           "description": "Verifier parameters used for proving batches."
-        },
-        "validators": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B": "DiamondProxy",
@@ -444,6 +447,11 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "WETH_TOKEN": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "paused": { "severity": "HIGH" },
+        "bridgedTokenBeacon": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x0A0F8912162Ff83A036883dbaDA42efF647a3065": "TransparentUpgradeableProxy",
         "eth:0x2FC2a2dB562046C732d3aB0f4e1c1F62C3eE8e3E": "L1NativeTokenVault"
@@ -484,6 +492,8 @@
         ]
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "tokenMultiplierSetter": { "severity": "HIGH" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
@@ -557,6 +567,8 @@
         "upgradeTimestamps": []
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "tokenMultiplierSetter": { "severity": "HIGH" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
         }
@@ -594,6 +606,7 @@
         "$immutable": true,
         "owner": "eth:0x2d6E82F1f8fba89a67cc8d742B12633db4732Ca7"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x34f56Ba641aC59E897c6179ffeCAe9769fbfC90C": "ProxyAdmin"
       }
@@ -711,6 +724,12 @@
         "owner": "eth:0xdE4781a08Cc75D4E1b07fb3909840AE685960711",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "paused": { "severity": "HIGH" },
+        "l1AssetRouter": { "severity": "HIGH" },
+        "legacyBridge": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x5E5a72077dFB354Dfe61200b8f31fa491F9B9Cea": "TransparentUpgradeableProxy",
@@ -875,6 +894,10 @@
         "sharedBridge": "eth:0xf25227EFAD2046d19777A4CA540b5C016Df7fe7A"
       },
       "fieldMeta": {
+        "admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "paused": { "severity": "HIGH" },
+        "migrationPaused": { "severity": "HIGH" },
         "chainsCreated": {
           "description": "All new chains created go thorugh the central bridgehub and are stored here with their respective STMs."
         },
@@ -952,6 +975,7 @@
         "$immutable": true,
         "owner": "eth:0x8253F33026c49A430963FE3991441c02175bda95"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x8140aBB60c9AfB5241D90af948Cfa7644b2D3217": "ProxyAdmin"
       }
@@ -1133,14 +1157,14 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "migrationPaused": { "severity": "HIGH" },
         "paused": {
           "severity": "LOW",
           "description": "this 'paused' is unrelated to migrations and only used for initialization."
         },
         "migrations": {
-          "severity": "HIGH",
-          "description": "zk chain migrations that were started"
+          "description": "zk chain migrations that were started. Any chain's migration appears here; Era's own settlement moves are tracked as HIGH on its Diamond (getSettlementLayer)."
         }
       },
       "implementationNames": {
@@ -1503,6 +1527,12 @@
         "owner": "eth:0x8253F33026c49A430963FE3991441c02175bda95",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "paused": { "severity": "HIGH" },
+        "legacyBridge": { "severity": "HIGH" },
+        "nativeTokenVault": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xf25227EFAD2046d19777A4CA540b5C016Df7fe7A": "TransparentUpgradeableProxy",
@@ -2854,15 +2884,15 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/BlobsL1DAValidatorZKsyncOS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "shared-zk-stack/BridgeHub": "0xfd2849d6578c8e65be896397655debce2a55f8d0d0b3e3d12d69b926d4211260",
+    "shared-zk-stack/BridgeHub": "0x0ca129f2c9283d30f7901d57acacc97af4da37a93c6bd7f520d603d4b8676b2c",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/ChainAssetHandler": "0x8014df0d446cdb3c3b832daf6f52f4993f5315bacda2db187328db9c6a777312",
     "shared-zk-stack/CTMDeploymentTracker": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
-    "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
-    "shared-zk-stack/L1AssetRouter": "0x4530b565b0dd64d0a259a829b0966d9bad2fa221c992d87478f69a5d1b62fb76",
+    "shared-zk-stack/Diamond": "0x9991c4f086f60a5f0605a052766841a0735c442ad7547cfcd2f3b347fe8a3c5d",
+    "shared-zk-stack/L1AssetRouter": "0xb597793119e11f9fbaa496fc36287066fea595339e79f752b30faf484e03b720",
     "shared-zk-stack/L1GenesisUpgrade": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
-    "shared-zk-stack/L1NativeTokenVault": "0x9bb3e98b90b9d1e113cc71a85d4137492755be55071e020952622ae30a2ed397",
-    "shared-zk-stack/L1Nullifier": "0xffad2aec15a6d3fed0ca55cc600f9ee54a1148708bbb360b9b82a1a4c7c05416",
+    "shared-zk-stack/L1NativeTokenVault": "0xdbb34d948c77bf3d53fc312d8ad484a70d5bdc083eb97978bfb1dfcba4417627",
+    "shared-zk-stack/L1Nullifier": "0x614d522d7f6aed93c6d04fda3957344b9cc6c94fd8060c2c5b760b2d49e0a84a",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/MessageRoot": "0xbff1ea54952301b3b5c9dd16fcb265471a173687870eb62ec88bb5ad5eb68d0a",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"

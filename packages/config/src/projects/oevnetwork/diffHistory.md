@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x949a304d8e4c2cf4aeaa6c98172d3c6b4d13ab35
+Generated with discovered.json: 0x67e0e2870af522d3b599e7e9d10766d124a83f89
 
-# Diff at Thu, 20 Aug 2026 06:21:35 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1767971183
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1767971183
 - current timestamp: 1767971183
 
 ## Description
@@ -54,7 +54,7 @@ discovery. Values are for block 1767971183 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.anyTrustFastConfirmer:
 +        {"severity":"HIGH"}
       critical:
@@ -68,7 +68,7 @@ discovery. Values are for block 1767971183 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -105,10 +105,18 @@ discovery. Values are for block 1767971183 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (eth:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract SequencerInbox (eth:0xD5dD6114a5DC6d1352C0EE47Cbed6a1807F079c7) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:

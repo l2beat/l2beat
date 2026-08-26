@@ -305,6 +305,10 @@
         ],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
       },
+      "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700": "OpsTimelock"
       }
@@ -672,7 +676,7 @@
     ]
   },
   "usedTemplates": {
-    "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
+    "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25631964 },

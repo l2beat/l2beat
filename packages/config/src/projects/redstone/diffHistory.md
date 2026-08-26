@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x293b40d33f9a06ee771e5d33d1a05fc0d220a7b1
+Generated with discovered.json: 0x4627cc0818f3cddba59d7ea49a703f6783948fa5
 
-# Diff at Thu, 20 Aug 2026 06:21:36 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1743924215
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1743924215
 - current timestamp: 1743924215
 
 ## Description
@@ -31,6 +31,8 @@ discovery. Values are for block 1743924215 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -38,6 +40,10 @@ discovery. Values are for block 1743924215 (main branch discovery), not current.
     contract SystemConfig (eth:0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
       fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
 +        true
@@ -57,6 +63,8 @@ discovery. Values are for block 1743924215 (main branch discovery), not current.
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -69,10 +77,20 @@ discovery. Values are for block 1743924215 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (eth:0xCC53b447aFe07926423aB96D5496b1af30485ED2) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract AddressManager (eth:0xFe27f187A9E46104a932189dDF229871E06B22F8) [opstack/AddressManager] {
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 

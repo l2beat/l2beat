@@ -29,5 +29,11 @@
     "address": "ink:0x547d0fba434877D7237d511cF87FABe2ee26b152",
     "chain": "ink",
     "blockNumber": 50094988
+  },
+  "GasPriceOracle_v1_6_0": {
+    "hash": "0x9d9d5775e8986b650c9d59cae425f8bd6a1dc0e3b0ae21a3682630798e7b9445",
+    "address": "unichain:0x4f1db3c6AbD250ba86E0928471A8F7DB3AFd88F1",
+    "chain": "unichain",
+    "blockNumber": 56999765
   }
 }

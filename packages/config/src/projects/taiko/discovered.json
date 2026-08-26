@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "timestamp": 1787647451,
-  "configHash": "0x5818477a5d3509fe254dafba7775a97c0d82d4b7976e53c79e566e533af3f5ef",
+  "configHash": "0x17d807d623640c66669616efa2f3a374f8f9b068d5922a4f4ce4dde83dfadd41",
   "entries": [
     {
       "name": "PEMCertChainLib",
@@ -13,6 +13,7 @@
       ],
       "proxyType": "immutable",
       "description": "Library for managing PEM certificate chains.",
+      "critical": true,
       "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
       "sinceTimestamp": 1714550639,
       "sinceBlock": 19773966,
@@ -32,6 +33,7 @@
       ],
       "proxyType": "immutable",
       "description": "Gating router contract to verify batches using RISC Zero.",
+      "critical": true,
       "deployerAddress": "eth:0xe1ed3fE39ABF82d2e217539D0523C874492c38cF",
       "sinceTimestamp": 1772638115,
       "sinceBlock": 24584992,
@@ -47,6 +49,7 @@
         ]
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "trustedImages": {
           "severity": "HIGH",
           "description": "Taiko specific Image IDs (i.e. program digest) of Risc0 programs (block proving and aggregation program separately) trusted by this verifier gateway. Only proofs for these programs can be successfully verified. Note that proofs contains image ID data within them."
@@ -72,6 +75,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 3d.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -119,6 +123,10 @@
         "getMinDelayFormatted": "3d",
         "Proposer": ["eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+      },
+      "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": "TimelockController"
@@ -192,6 +200,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -682,6 +691,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.",
+      "critical": true,
       "deployerAddress": "eth:0x742dcFae3A8AD6e93Db29349E576dfb0e035Fbcf",
       "sinceTimestamp": 1747268759,
       "sinceBlock": 22484949,
@@ -722,6 +732,7 @@
         "sigVerifyLib": "eth:0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9"
       },
       "fieldMeta": {
+        "paused": { "severity": "HIGH" },
         "mrEnclaves": {
           "severity": "HIGH",
           "description": "Trusted SGX enclave measurements accepted by attestation verification."
@@ -729,7 +740,8 @@
         "mrSigners": {
           "severity": "HIGH",
           "description": "Trusted SGX signer measurements accepted by attestation verification."
-        }
+        },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261": "ERC1967Proxy",
@@ -752,6 +764,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.",
+      "critical": true,
       "ignoreInWatchMode": ["clock"],
       "deployerAddress": "eth:0x000001043b3b967d62657116fb4Ff349cBA08974",
       "sinceTimestamp": 1714033799,
@@ -829,6 +842,10 @@
         "TAIKO_FOUNDATION_TREASURY": "eth:0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da",
         "totalSupply": "1000000000000000000000000000"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "paused": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800": "ERC1967Proxy",
         "eth:0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106": "TaikoToken"
@@ -867,6 +884,7 @@
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1751494343,
       "sinceBlock": 22834443,
@@ -878,6 +896,7 @@
         "verifier": "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9"
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "paused": {
           "severity": "HIGH",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
@@ -977,6 +996,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1755283775,
       "sinceBlock": 23148334,
@@ -1004,6 +1024,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).",
+      "critical": true,
       "deployerAddress": "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
       "sinceTimestamp": 1746111707,
       "sinceBlock": 22389760,
@@ -1035,13 +1056,13 @@
       },
       "fieldMeta": {
         "proposalCount": {
-          "severity": "HIGH",
           "description": "total count of encrypted emergency proposals created."
         },
         "multisigSettings": {
           "severity": "HIGH",
           "description": "the threshold in the SignerList needs to be changed manually if it changes here"
-        }
+        },
+        "minApprovals": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd": "ERC1967Proxy",
@@ -1276,6 +1297,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SGX proven blocks. Registered SGX instances can sign accepted proofs until their instance expiry.",
+      "critical": true,
       "ignoreInWatchMode": ["nextInstanceId"],
       "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
       "sinceTimestamp": 1782357335,
@@ -1292,6 +1314,7 @@
         "taikoChainId": 167000
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "automataDcapAttestation": {
           "description": "Attestation contract used to verify DCAP quotes before registrar-submitted SGX instances are accepted."
         }
@@ -1372,6 +1395,7 @@
         "verifier": "eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C"
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "paused": {
           "severity": "HIGH",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
@@ -1409,6 +1433,7 @@
       ],
       "proxyType": "immutable",
       "description": "Library for verifying signatures.",
+      "critical": true,
       "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
       "sinceTimestamp": 1714550639,
       "sinceBlock": 19773966,
@@ -1428,6 +1453,7 @@
       ],
       "proxyType": "immutable",
       "description": "Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1756842743,
       "sinceBlock": 23277627,
@@ -1602,6 +1628,7 @@
         "verifier": "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97"
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "paused": {
           "severity": "HIGH",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
@@ -1622,6 +1649,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. Users can enqueue forced inclusions by publishing an L1 blob. Once an inclusion is due, subsequent proposals must process it, but proposing remains restricted by the configured proposer checker. If the configured prover whitelist is non-empty, proofs from non-whitelisted provers revert.",
+      "critical": true,
       "ignoreInWatchMode": ["getForcedInclusionState", "getCoreState"],
       "deployerAddress": "eth:0xe1ed3fE39ABF82d2e217539D0523C874492c38cF",
       "sinceTimestamp": 1772642207,
@@ -1691,7 +1719,7 @@
       },
       "fieldMeta": {
         "paused": { "severity": "HIGH" },
-        "getCurrentForcedInclusionFee": { "severity": "HIGH" }
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f": "ERC1967Proxy",
@@ -1719,6 +1747,7 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable verifier policy contract for Taiko mainnet. Every accepted proof contains exactly two ordered sub-proofs and at least one must be a ZK proof. Accepted pairs are SGX-GETH or SGX-RETH with RISC0-RETH or SP1-RETH, and RISC0-RETH with SP1-RETH. The SGX-GETH plus SGX-RETH pair is not accepted.",
+      "critical": true,
       "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
       "sinceTimestamp": 1783672091,
       "sinceBlock": 25500995,
@@ -1766,6 +1795,7 @@
       ],
       "proxyType": "immutable",
       "description": "Gating router contract to verify batches using SP1.",
+      "critical": true,
       "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
       "sinceTimestamp": 1782568835,
       "sinceBlock": 25409438,
@@ -1783,6 +1813,7 @@
         ]
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "trustedPrograms": {
           "severity": "HIGH",
           "description": "Taiko-specific SP1 program verification keys trusted by this verifier gateway. Only proofs for these programs can be successfully verified."
@@ -1809,6 +1840,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1961,6 +1993,10 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "resolver": "eth:0x0000000000000000000000000000000000000000"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "paused": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a": "ERC1967Proxy",
         "eth:0x4347df63bdC82b8835fC9FF47bC5a71a12cC0f06": "TaikoDAOController"
@@ -1988,6 +2024,7 @@
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1756842755,
       "sinceBlock": 23277628,
@@ -1999,6 +2036,7 @@
         "verifier": "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85"
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "paused": {
           "severity": "HIGH",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
@@ -2025,6 +2063,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.",
+      "critical": true,
       "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
       "sinceTimestamp": 1714550639,
       "sinceBlock": 19773966,
@@ -2077,6 +2116,7 @@
         "sigVerifyLib": "eth:0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9"
       },
       "fieldMeta": {
+        "paused": { "severity": "HIGH" },
         "mrEnclaves": {
           "severity": "HIGH",
           "description": "Trusted SGX enclave measurements accepted by attestation verification."
@@ -2084,7 +2124,8 @@
         "mrSigners": {
           "severity": "HIGH",
           "description": "Trusted SGX signer measurements accepted by attestation verification."
-        }
+        },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3": "ERC1967Proxy",
@@ -2101,6 +2142,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1718237375,
       "sinceBlock": 20079232,
@@ -2117,6 +2159,7 @@
         "verifier_f536085a": "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1"
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "verifier_310fe598": { "severity": "HIGH" },
         "verifier_9f39696c": { "severity": "HIGH" },
         "verifier_f536085a": { "severity": "HIGH" },
@@ -2142,6 +2185,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Maps chainId-name pairs to contract addresses. Bridge and vault contracts resolve their counterparties through this registry, so changes in this mapping effectively act as contract upgrades. The pause function is intentionally disabled in this implementation.",
+      "critical": true,
       "deployerAddress": "eth:0x742dcFae3A8AD6e93Db29349E576dfb0e035Fbcf",
       "sinceTimestamp": 1747268711,
       "sinceBlock": 22484945,
@@ -2209,6 +2253,10 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "resolver": "eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "namedAddresses": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e": "ERC1967Proxy",
         "eth:0xFca4F0Ab7B95EEf2e3A60EF2Bc0c42DdAA62E66D": "DefaultResolver"
@@ -2266,6 +2314,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.",
+      "critical": true,
       "deployerAddress": "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
       "sinceTimestamp": 1746111707,
       "sinceBlock": 22389760,
@@ -2347,6 +2396,7 @@
           "description": "this value /1000000 is the threshold ratio (relative to voting supply) to veto a proposal."
         },
         "governanceSettings": {
+          "severity": "HIGH",
           "description": "Governance parameters controlling veto threshold, minimum voting duration, post-vote timelock, L2 inactivity timeout, L2 veto aggregation grace period, and whether L2 voting power is ignored."
         }
       },
@@ -2367,6 +2417,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Shared vault for Taiko chains for bridged ERC20 tokens. Pausing stops token sends, message-triggered releases, and recalls. Released or minted tokens are subject to the configured quota manager.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2442,7 +2493,9 @@
       },
       "fieldMeta": {
         "paused": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
         "quotaManager": {
+          "severity": "HIGH",
           "description": "Quota manager that rate-limits ERC20 tokens released or minted by this vault."
         },
         "btokenDenylist": {
@@ -2548,6 +2601,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main contract and entrypoint of the Aragon-based DAO governance framework. Fine-grained DAO permissions, proposals, voting and thresholds are configured here.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -2826,9 +2880,11 @@
       },
       "fieldMeta": {
         "permsGranted": {
+          "severity": "HIGH",
           "description": "Granted permissions in the DAO. Need to be manually compared to the revoked ones and hardcoded permissions need to be adjusted on change. Use AI with L1 contract context."
         },
         "permsRevoked": {
+          "severity": "HIGH",
           "description": "Revoked permissions in the DAO. Need to be manually compared to the granted ones."
         }
       },
@@ -2848,6 +2904,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SGX proven blocks. Registered SGX instances can sign accepted proofs until their instance expiry.",
+      "critical": true,
       "ignoreInWatchMode": ["nextInstanceId"],
       "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
       "sinceTimestamp": 1782357335,
@@ -2864,6 +2921,7 @@
         "taikoChainId": 167000
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "automataDcapAttestation": {
           "description": "Attestation contract used to verify DCAP quotes before registrar-submitted SGX instances are accepted."
         }
@@ -2883,6 +2941,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates secure cross-chain message passing by storing signals and state-root checkpoints. Bridge escrows and other applications use it to prove that a specific L1<->L2 signal or checkpointed state transition occurred via Merkle proofs. Pausing disables signal proof verification.",
+      "critical": true,
       "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
@@ -2956,7 +3015,11 @@
         "resolver": "eth:0x0000000000000000000000000000000000000000",
         "VERSION": 1
       },
-      "fieldMeta": { "paused": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "paused": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "pauser": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C": "ERC1967Proxy",
         "eth:0x1A06832992785766a105838C95c1E13a0045AC85": "SignalService"
@@ -2972,6 +3035,7 @@
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1755283787,
       "sinceBlock": 23148335,
@@ -2983,6 +3047,7 @@
         "verifier": "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D"
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "paused": {
           "severity": "HIGH",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
@@ -3061,6 +3126,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1751494331,
       "sinceBlock": 22834442,
@@ -3177,6 +3243,7 @@
       ],
       "proxyType": "immutable",
       "description": "Defines withdrawal quotas for ETH and ERC20 releases from the shared bridge. A token quota of zero means unlimited withdrawals for that token.",
+      "critical": true,
       "deployerAddress": "eth:0x56706F118e42AE069F20c5636141B844D1324AE1",
       "sinceTimestamp": 1782357335,
       "sinceBlock": 25391886,
@@ -3197,6 +3264,7 @@
         "UNLIMITED_QUOTA": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "bridge": {
           "description": "Bridge contract allowed to consume ETH withdrawal quota."
         },
@@ -3204,6 +3272,7 @@
           "description": "ERC20 vault allowed to consume token withdrawal quota."
         },
         "quotaPeriod": {
+          "severity": "HIGH",
           "description": "Time in seconds for consumed quota to fully refill."
         },
         "tokenQuotas": {
@@ -3320,6 +3389,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Shared bridge escrow for Taiko chains for bridged ETH and arbitrary bridge messages. Pausing stops sending, processing, recalling, retrying, and failing messages. ETH released from the bridge is subject to the configured quota manager.",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -3420,10 +3490,14 @@
       },
       "fieldMeta": {
         "paused": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "pauser": { "severity": "HIGH" },
         "quotaManager": {
+          "severity": "HIGH",
           "description": "Quota manager that rate-limits ETH released by processed or recalled bridge messages."
         },
         "signalService": {
+          "severity": "HIGH",
           "description": "Signal service used to prove cross-chain message delivery and failure signals."
         }
       },
@@ -3444,6 +3518,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).",
+      "critical": true,
       "deployerAddress": "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
       "sinceTimestamp": 1746111707,
       "sinceBlock": 22389760,
@@ -3476,10 +3551,8 @@
       },
       "fieldMeta": {
         "multisigSettings": { "severity": "HIGH" },
-        "proposalCount": {
-          "severity": "HIGH",
-          "description": "total standard proposal count."
-        }
+        "proposalCount": { "description": "total standard proposal count." },
+        "minApprovals": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321": "ERC1967Proxy",
@@ -3512,6 +3585,7 @@
         "verifier": "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF"
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "paused": {
           "severity": "HIGH",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
@@ -3563,6 +3637,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Defines the prover whitelist queried by the inbox before accepting proofs. If the inbox is configured with this contract and the whitelist is non-empty, only whitelisted provers can prove proposals.",
+      "critical": true,
       "ignoreInWatchMode": ["whitelisted"],
       "deployerAddress": "eth:0xe1ed3fE39ABF82d2e217539D0523C874492c38cF",
       "sinceTimestamp": 1772641607,
@@ -3591,6 +3666,7 @@
           "eth:0x91982D80b132a422Ba85D192E927f16E09D120f9"
         ]
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae": "ERC1967Proxy",
         "eth:0xebb393746A4Eee84Ad14EDFf3764c3F839D1034b": "ProverWhitelist"
@@ -3746,6 +3822,10 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "resolver": "eth:0x0000000000000000000000000000000000000000"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "paused": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3": "ERC1967Proxy",
         "eth:0xd1934807041B168f383870A0d8F565aDe2DF9D7D": "TaikoDAOController"
@@ -3763,6 +3843,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.",
+      "critical": true,
       "ignoreInWatchMode": [
         "getOperatorForCurrentEpoch",
         "getOperatorForNextEpoch",
@@ -3820,7 +3901,10 @@
         "RANDOMNESS_DELAY": 2,
         "resolver": "eth:0x0000000000000000000000000000000000000000"
       },
-      "fieldMeta": { "paused": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "paused": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xFD019460881e6EeC632258222393d5821029b2ac": "ERC1967Proxy",
         "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149": "PreconfWhitelist"
@@ -5398,16 +5482,16 @@
     ]
   },
   "usedTemplates": {
-    "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
+    "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "risc0/RiscZeroSetVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "risc0/RiscZeroVerifierEmergencyStop": "0x51834983916be3dbcb2599e427fff7336cf176a2a5839ac470883eb1d9703763",
     "risc0/RiscZeroVerifierRouter": "0xb74ea20385c8afa507c773dd57793a9fbf10ce64ed9c17b58dff13665aff9f7a",
-    "taiko/AutomataDcapV3Attestation": "0xc94a2c7d4ef9c322e01a6da5facff05a1b6389e69360c642587aa3c98d59677d",
+    "taiko/AutomataDcapV3Attestation": "0xc00adc87e12abaf9fde2f950e1bcd50613af2dced58818a9cd355e2824f5107b",
     "taiko/DAO": "0x6844d4d70a1ee3095eca887823d6910d52637f7c9c7a9b5b46c45c4ef7f44979",
     "taiko/DefaultResolver": "0x3bdd61dc56b5feb822640d65e897e9c53937d6e553d599231f9ad0adb7a205ec",
     "taiko/EmergencyMultisig": "0x32024d72f27237360077fce58c58072f6c193c9101b4fd14933dbaac56982d71",
-    "taiko/MainnetInbox": "0x6a4d893b48c0d55e9095068167987cc4ddb72fa261c5606105bd2f128e19179e",
+    "taiko/MainnetInbox": "0xc206c4c754481eee92f2a6445d61887849e580eca93e19067da6ae81bd371cbd",
     "taiko/Multisig": "0x32024d72f27237360077fce58c58072f6c193c9101b4fd14933dbaac56982d71",
     "taiko/OptimisticTokenVotingPlugin": "0x43e2ff8d543873d60fb20183b097ca645ae67edc2fd29c5ad5e15fbcc194c3b8",
     "taiko/PEMCertChainLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
@@ -5424,8 +5508,8 @@
     "taiko/SigVerifyLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/SP1Verifier": "0x5e5fb7ef03dc67c452b9f784ef02535bd98581d2128b214b9b5947e0933ecee2",
     "taiko/TaikoBridge": "0x8259bc64b5e1811b50ae0c34ba9239e281099e6192827c12571f01491926fcac",
-    "taiko/TaikoDAOController": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
-    "taiko/TaikoToken": "0x715f0fe61aa0d583fd8574521dfa81827a944339f94c46c74a6a058c47089804",
+    "taiko/TaikoDAOController": "0xb300a71e27dca1e2393f452651ac4f0c03e73922f562e181b4ea26a9b08e3ec0",
+    "taiko/TaikoToken": "0x6f6120e97dbad882541b7df16a6aeb6072a0e44a1578b94a462e24d736083d26",
     "taiko/ZkRequiredVerifier": "0x215cf223af5b47bf8dab2909a0722a0465a0fc6dc7d60fffd22c4ec5e9018c67"
   },
   "usedBlockNumbers": { "ethereum": 25831095 },

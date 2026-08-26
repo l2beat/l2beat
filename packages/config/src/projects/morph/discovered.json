@@ -250,6 +250,7 @@
         "$immutable": true,
         "owner": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0": "ProxyAdmin"
       }
@@ -511,6 +512,10 @@
         "getMinDelayFormatted": "0s",
         "Proposer": ["eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+      },
+      "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530": "TransparentUpgradeableProxy",
@@ -886,6 +891,7 @@
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17": "ProxyAdmin"
       }
@@ -2210,7 +2216,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
+    "global/TimelockController": "0xf7b496cbc7bea640fbf8eb44125f62bb1be686e7172cfd296168d642c8cea881",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "morph/EnforcedTxGateway": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "morph/L1CrossDomainMessenger": "0xe6eb973e1da6d70fff6409b261940b9e4415bd0bb740942fef25bb8778aa4e37",

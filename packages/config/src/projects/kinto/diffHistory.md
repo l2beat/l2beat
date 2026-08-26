@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xa22e4e9bba6b3c9f07dc74b180d10098bfe9af57
+Generated with discovered.json: 0xb94afedc8c15abc179795cfbcd2309165cc073c1
 
-# Diff at Thu, 20 Aug 2026 06:21:34 GMT:
+# Diff at Wed, 26 Aug 2026 12:56:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1756898514
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1756898514
 - current timestamp: 1756898514
 
 ## Description
@@ -30,7 +30,7 @@ discovery. Values are for block 1756898514 (main branch discovery), not current.
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.validators:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.anyTrustFastConfirmer:
 +        {"severity":"HIGH"}
       critical:
@@ -60,7 +60,7 @@ discovery. Values are for block 1756898514 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"HIGH"}}
++        {"executors":{"severity":"LOW"}}
     }
 ```
 
@@ -77,6 +77,14 @@ discovery. Values are for block 1756898514 (main branch discovery), not current.
     +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -140,11 +148,19 @@ discovery. Values are for block 1756898514 (main branch discovery), not current.
     contract SequencerInbox (eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
       fieldMeta.batchPosters:
-+        {"severity":"HIGH"}
++        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
       critical:
 +        true
+    }
+```
+
+```diff
+    contract BeaconKintoWallet (kinto:0x87f0eE85bF3198654900a422832157abBba30828) [global/UpgradeableBeacon] {
+    +++ description: Beacon proxy for the KintoWallet smartwallet implementation that is used for all users.
+      fieldMeta:
++        {"implementation":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
     }
 ```
 

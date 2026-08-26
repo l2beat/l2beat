@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x0c984c4f115a42fa4ec6de945538f8d305e8cf30
+Generated with discovered.json: 0xca951ac706a5dd9840c4165a47a33faa50cf0290
 
-# Diff at Thu, 20 Aug 2026 06:21:29 GMT:
+# Diff at Wed, 26 Aug 2026 12:24:46 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1722265907
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1722265907
 - current timestamp: 1722265907
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -21,6 +21,8 @@ discovery. Values are for block 1722265907 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 
@@ -35,7 +37,11 @@ discovery. Values are for block 1722265907 (main branch discovery), not current.
 ```diff
     contract SystemConfig (eth:0x504D56cf68f791B45E3A2e895B0e1562f3431328) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
       fieldMeta.batcherHash:
++        {"severity":"LOW"}
+      fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
 +        true
@@ -47,6 +53,8 @@ discovery. Values are for block 1722265907 (main branch discovery), not current.
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -69,10 +77,20 @@ discovery. Values are for block 1722265907 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ProxyAdmin (eth:0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract L1StandardBridge (eth:0xed7525946A09056C6AaE29941b8323017382050e) [opstack/L1StandardBridge] {
     +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
       critical:
 +        true
+      fieldMeta:
++        {"$admin":{"severity":"HIGH"}}
     }
 ```
 

@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x5acf0f011b928cc9f3196063157885b4d03ae72e
+Generated with discovered.json: 0x54ff4dfe2958b26f78c0b75249af5ff9bcc3125a
 
-# Diff at Thu, 20 Aug 2026 06:21:32 GMT:
+# Diff at Wed, 26 Aug 2026 12:18:09 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1780586199
+- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1780586199
 - current timestamp: 1780586199
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -19,8 +19,8 @@ discovery. Values are for block 1780586199 (main branch discovery), not current.
 ```diff
     contract Diamond (eth:0x0583Ef2B6416cb7B287406438B940E4d99680C5B) [shared-zk-stack/Diamond] {
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
-      fieldMeta.validators:
-+        {"severity":"HIGH"}
+      fieldMeta.getSettlementLayer:
++        {"severity":"HIGH","description":"Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."}
       critical:
 +        true
     }
@@ -31,12 +31,18 @@ discovery. Values are for block 1780586199 (main branch discovery), not current.
     +++ description: Canonical central asset escrow for all ZK stack chains.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"},"paused":{"severity":"HIGH"},"bridgedTokenBeacon":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract ChainAdminOwnable (eth:0x0a8a2473cc5731575a94f58F470851Bc6695B5B8) [shared-zk-stack/ChainAdmin] {
     +++ description: A governance proxy that lets eth:0xF50293Ac52f987122DcD67Eda0cFb34E9d7a0Cf9 act through it.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.tokenMultiplierSetter:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -45,8 +51,20 @@ discovery. Values are for block 1780586199 (main branch discovery), not current.
 ```diff
     contract ChainAdminOwnable (eth:0x2d6E82F1f8fba89a67cc8d742B12633db4732Ca7) [shared-zk-stack/ChainAdmin] {
     +++ description: A governance proxy that lets eth:0xB272B188855128c10a933Edb62CC64c22B1f3754 act through it.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.tokenMultiplierSetter:
++        {"severity":"HIGH"}
       critical:
 +        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x34f56Ba641aC59E897c6179ffeCAe9769fbfC90C) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -55,6 +73,8 @@ discovery. Values are for block 1780586199 (main branch discovery), not current.
     +++ description: Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"},"paused":{"severity":"HIGH"},"l1AssetRouter":{"severity":"HIGH"},"legacyBridge":{"severity":"HIGH"}}
     }
 ```
 
@@ -69,14 +89,37 @@ discovery. Values are for block 1780586199 (main branch discovery), not current.
 ```diff
     contract BridgeHub (eth:0x7a38c18a229Ef8a0AE7104Ba272A46280f2d59Cb) [shared-zk-stack/BridgeHub] {
     +++ description: [FORK] This contract is not the standard hub contract from the Elastic network but a local fork for ADI chain. The main registry (hub) for chain contracts (supports more than ADI chain) and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+      fieldMeta.admin:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.paused:
++        {"severity":"HIGH"}
+      fieldMeta.migrationPaused:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
 ```
 
 ```diff
+    contract ProxyAdmin (eth:0x8140aBB60c9AfB5241D90af948Cfa7644b2D3217) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
     contract L1ChainAssetHandler (eth:0x924E0145347243a94C5C69e372Ca52c77f8e6CF1) [shared-zk-stack/ChainAssetHandler] {
     +++ description: Specialized contract for managing chain assets, i.e. chain migrations.
+      fieldMeta.migrations.severity:
+-        "HIGH"
+      fieldMeta.migrations.description:
+-        "zk chain migrations that were started"
++        "zk chain migrations that were started. Any chain's migration appears here; Era's own settlement moves are tracked as HIGH on its Diamond (getSettlementLayer)."
+      fieldMeta.owner:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -95,6 +138,8 @@ discovery. Values are for block 1780586199 (main branch discovery), not current.
     +++ description: Canonical central asset router for all ZK stack chains. Routes deposits and withdrawals to the respective asset handlers (like the L1NativeTokenVault); does not escrow funds itself.
       critical:
 +        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"},"paused":{"severity":"HIGH"},"legacyBridge":{"severity":"HIGH"},"nativeTokenVault":{"severity":"HIGH"}}
     }
 ```
 
