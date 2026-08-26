@@ -2,7 +2,7 @@ import { evaluateTrigger } from '../gate/evaluateTrigger.js'
 import type { CommentEvent, PullRequest } from '../gate/types.js'
 import { readJson, requireEnv, setOutput } from './io.js'
 
-const event = readJson(requireEnv('GITHUB_EVENT_PATH')) as CommentEvent
+const event = readJson(requireEnv('EVENT_JSON_PATH')) as CommentEvent
 const pr = readJson(requireEnv('PR_JSON_PATH')) as PullRequest
 
 const decision = evaluateTrigger(event, pr)

@@ -75,7 +75,7 @@ jobs:
       - id: gate
         run: pnpm --filter @l2beat/ai-review gate
         env:
-          GITHUB_EVENT_PATH: ${{ runner.temp }}/event.json
+          EVENT_JSON_PATH: ${{ runner.temp }}/event.json
           PR_JSON_PATH: ${{ runner.temp }}/pr.json
 
   ack:
