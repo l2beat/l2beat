@@ -1,6 +1,6 @@
 {
   "name": "playblock",
-  "timestamp": 1779799894,
+  "timestamp": 1787668999,
   "configHash": "0xbd12ffc6e459bb8bb23fb78b233946ffc2c443832fb062dc0794562d044d030c",
   "entries": [
     {
@@ -161,7 +161,6 @@
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
-      "critical": true,
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
@@ -206,13 +205,13 @@
         "confirmPeriodBlocks": 150,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 18242,
+        "firstUnresolvedNode": 18424,
         "inbox": "arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 25172077,
-        "latestConfirmed": 18241,
-        "latestNodeCreated": 18241,
+        "latestConfirmed": 18423,
+        "latestNodeCreated": 18423,
         "loserStakeEscrow": "arb-nova:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "arb-nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
@@ -246,8 +245,7 @@
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
         "wasmModuleRoot": {
-          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.",
-          "severity": "HIGH"
+          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
         },
         "arbOsFromWmRoot": {
           "description": "ArbOS version derived from known wasmModuleRoots."
@@ -257,9 +255,7 @@
         },
         "challenges": {
           "description": "Emitted on createChallenge() in RollupUserLogic."
-        },
-        "validators": { "severity": "HIGH" },
-        "anyTrustFastConfirmer": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0": "RollupProxy",
@@ -294,6 +290,7 @@
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
             "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c": "ArbOS v51.1 wasmModuleRoot",
+            "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97": "ArbOS v61 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -313,7 +310,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
-      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -365,7 +361,6 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["arb-nova:0x04b47Ba4A06bc88279BaCd4af2185090e2FF3F57"]
       },
-      "fieldMeta": { "executors": { "severity": "HIGH" } },
       "implementationNames": {
         "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9": "TransparentUpgradeableProxy",
         "arb-nova:0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1": "UpgradeExecutor"
@@ -383,7 +378,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Helper contract sending configuration data over the bridge during the systems initialization.",
-      "critical": true,
       "deployerAddress": "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a",
       "sinceTimestamp": 1709904018,
       "sinceBlock": 55663578,
@@ -416,7 +410,6 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
-      "critical": true,
       "deployerAddress": "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148392,
       "sinceBlock": 75267048,
@@ -510,7 +503,6 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
-      "critical": true,
       "deployerAddress": "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148409,
       "sinceBlock": 75267056,
@@ -535,7 +527,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.",
-      "critical": true,
       "deployerAddress": "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a",
       "sinceTimestamp": 1709904018,
       "sinceBlock": 55663578,
@@ -633,7 +624,6 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
-      "critical": true,
       "deployerAddress": "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148416,
       "sinceBlock": 75267060,
@@ -670,7 +660,6 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
-      "critical": true,
       "deployerAddress": "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148424,
       "sinceBlock": 75267067,
@@ -706,7 +695,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.",
-      "critical": true,
       "deployerAddress": "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a",
       "sinceTimestamp": 1709904018,
       "sinceBlock": 55663578,
@@ -754,7 +742,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
-      "critical": true,
       "ignoreInWatchMode": [
         "delayedMessageCount",
         "sequencerMessageCount",
@@ -799,8 +786,8 @@
         ],
         "rollup": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
         "sequencerInbox": "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
-        "sequencerMessageCount": 186652,
-        "sequencerReportedSubMessageCount": 242989067
+        "sequencerMessageCount": 188953,
+        "sequencerReportedSubMessageCount": 265824746
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -837,7 +824,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here.",
-      "critical": true,
       "ignoreInWatchMode": [
         "batchCount",
         "totalDelayedMessagesRead",
@@ -868,7 +854,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 186652,
+        "batchCount": 188953,
         "batchPosterManager": "arb-nova:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "arb-nova:0x28a60eFd283Dc7FC6aa959bA733B5612C9982458",
@@ -901,16 +887,14 @@
         "rollup": "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 6,
-        "totalDelayedMessagesRead": 145703,
+        "totalDelayedMessagesRead": 145704,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
       "fieldMeta": {
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
-        },
-        "batchPosters": { "severity": "HIGH" },
-        "dacKeyset": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77": "TransparentUpgradeableProxy",
@@ -951,7 +935,6 @@
       ],
       "proxyType": "immutable",
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
-      "critical": true,
       "deployerAddress": "arb-nova:0xa4b1cd457E5635b64eBc8c5be3a1cA7543F7984D",
       "sinceTimestamp": 1724148400,
       "sinceBlock": 75267052,
@@ -971,7 +954,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
-      "critical": true,
       "deployerAddress": "arb-nova:0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a",
       "sinceTimestamp": 1709904018,
       "sinceBlock": 55663578,
@@ -1639,6 +1621,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "nova": 84977068 },
+  "usedBlockNumbers": { "nova": 85261405 },
   "permissionsConfigHash": "0xf183374056600666bcdb39d2621f07d991345399b96dea572fd6c309f8e4c013"
 }

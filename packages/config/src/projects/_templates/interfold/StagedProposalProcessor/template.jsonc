@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PublicStagedProposalProcessor",
+  "category": "gov",
+  "description": "Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.",
+  "ignoreMethods": [
+    "canExecute",
+    "canProposalAdvance",
+    "getBodyProposalId",
+    "getBodyResult",
+    "getCreateProposalParams",
+    "getProposal",
+    "getProposalTally",
+    "getStages",
+    "hasSucceeded",
+    "proposalCount",
+    "proxiableUUID",
+    "state"
+  ],
+  "fields": {
+    "dao": {
+      "description": "Aragon DAO whose permission manager controls proposal creation, configuration, advancement and upgrades."
+    },
+    "currentStages": {
+      "description": "Latest proposal-stage configuration reconstructed from events, including voting bodies, approval and veto thresholds, timing windows, and edit/cancel flags.",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "select": "stages",
+        "set": { "event": "StagesUpdated" }
+      }
+    },
+    "getCurrentConfigIndex": {
+      "description": "Index of the stage configuration used by newly created proposals. Existing proposals retain their earlier snapshot."
+    },
+    "getCurrentTargetConfig": {
+      "description": "Stored target and call operation for passed proposal actions. A zero target resolves to the DAO; delegatecall changes the security context.",
+      "type": "CODE_CHANGE"
+    },
+    "getTrustedForwarder": {
+      "description": "Address trusted to append the effective caller to proposal transactions."
+    }
+  }
+}

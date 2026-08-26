@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   type AllProviders,
-  type Analysis,
   ConfigReader,
   type ConfigRegistry,
   combinePermissionsIntoDiscovery,
@@ -12,6 +11,7 @@ import {
   getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
   modelPermissions,
+  remapDiscoverySourceNames,
   type TemplateService,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
@@ -94,8 +94,7 @@ export class DiscoveryRunner {
     // TODO: Should not be here - drop it and use implementation name once it's ready
     // if somebody changes the name and decides to re-colorize
     // then .flat folder will be incorrect
-    // Duplicated from saveDiscoveryResult.ts
-    const remappedResults = remapNames(
+    const remappedResults = remapDiscoverySourceNames(
       projectDiscovery.analysis,
       projectDiscovery.discoveryOutput,
     )
@@ -171,30 +170,4 @@ export class DiscoveryRunner {
       throw err
     }
   }
-}
-
-function remapNames(
-  results: Analysis[],
-  discoveryOutput: DiscoveryOutput,
-): Analysis[] {
-  return results.map((entry) => {
-    if (entry.type === 'EOA' || entry.type === 'Reference') {
-      return entry
-    }
-
-    const matchingEntry = discoveryOutput.entries.find(
-      (e) => e.address === entry.address,
-    )
-
-    if (!matchingEntry) {
-      return entry
-    }
-
-    const newName = matchingEntry.name ?? entry.name
-
-    return {
-      ...entry,
-      name: newName,
-    }
-  })
 }

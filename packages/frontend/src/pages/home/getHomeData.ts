@@ -13,6 +13,7 @@ import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInt
 import { TOP_PROTOCOLS_LIMIT } from '~/server/features/layer2s/interop/utils/pickTopProtocolEntries'
 import { getOngoingAnomaliesOverview } from '~/server/features/layer2s/liveness/getOngoingAnomaliesOverview'
 import { getL2SummaryData } from '~/server/features/layer2s/summary/getL2SummaryEntries'
+import { getPrivacyProjects } from '~/server/features/privacy/getPrivacyProjects'
 import { getPrivacySummaryEntries } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { getRecentChangesOverview } from '~/server/features/projects/recent-changes/getRecentChangesOverview'
 import { getZkCatalogEntries } from '~/server/features/zk-catalog/getZkCatalogEntries'
@@ -206,17 +207,7 @@ async function getCachedData(manifest: Manifest) {
 }
 
 async function getPrivacyEntriesForHome() {
-  const projects = await ps.getProjects({
-    where: ['privacyInfo'],
-    select: ['display', 'privacyInfo', 'statuses'],
-    optional: [
-      'tvsConfig',
-      'contracts',
-      'permissions',
-      'discoveryInfo',
-      'zkCatalogInfo',
-    ],
-  })
+  const projects = await getPrivacyProjects()
   return getPrivacySummaryEntries(projects)
 }
 

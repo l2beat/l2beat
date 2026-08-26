@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "BfvPkVerifier",
+  "category": "core",
+  "description": "BFV public-key proof wrapper. It binds the generated circuit verifier to the expected DKG-fold and C5 verification-key hashes.",
+  "fields": {
+    "circuitVerifier": {
+      "description": "Generated onchain verifier for the BFV distributed-key-generation proof.",
+      "type": "CODE_CHANGE"
+    },
+    "expectedNodesFoldKeyHash": {
+      "description": "Immutable hash binding the accepted nodes-fold verification key.",
+      "type": "CODE_CHANGE"
+    },
+    "expectedC5KeyHash": {
+      "description": "Immutable hash binding the accepted C5 verification key.",
+      "type": "CODE_CHANGE"
+    },
+    "h": {
+      "description": "Immutable circuit parameter used by the BFV public-key proof.",
+      "type": "CODE_CHANGE"
+    }
+  }
+}

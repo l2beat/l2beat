@@ -1,4 +1,4 @@
-import { partition } from '../../../../../utils/partition'
+import { partition } from '@l2beat/shared-pure'
 import type { Field } from '../../store/State'
 
 export function groupByPath(fields: Field[]) {
