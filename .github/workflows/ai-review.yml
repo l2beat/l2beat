@@ -3,19 +3,14 @@ name: AI Review
 on:
   issue_comment:
     types: [created]
-  # Replay an existing /ai-review comment from any branch, so YAML and code
-  # changes can be tested before they reach main.
-  workflow_dispatch:
-    inputs:
-      comment_id:
-        description: 'ID of an existing /ai-review PR comment to replay'
-        required: true
-
-env:
-  COMMENT_ID: ${{ github.event.comment.id || inputs.comment_id }}
+  # Dev replay: labeling a PR `ai-review-test` re-runs the latest /ai-review
+  # comment on it using this branch's workflow and code (issue_comment always
+  # runs the version on main).
+  pull_request:
+    types: [labeled]
 
 concurrency:
-  group: ai-review-${{ github.event.issue.number || inputs.comment_id }}
+  group: ai-review-${{ github.event.issue.number || github.event.pull_request.number }}
   cancel-in-progress: true
 
 permissions: {}
@@ -27,7 +22,8 @@ jobs:
     name: Gate
     if: >
       ${{
-        github.event_name == 'workflow_dispatch' ||
+        (github.event_name == 'pull_request' && github.event.label.name == 'ai-review-test') ||
+        github.event_name == 'issue_comment' &&
         github.event.issue.pull_request != null &&
         startsWith(github.event.comment.body, '/ai-review') &&
         contains(fromJSON('["MEMBER","OWNER"]'), github.event.comment.author_association)
@@ -39,7 +35,7 @@ jobs:
       pull-requests: read
     outputs:
       run: ${{ steps.gate.outputs.run }}
-      comment_id: ${{ env.COMMENT_ID }}
+      comment_id: ${{ steps.event.outputs.comment_id }}
       pr_number: ${{ steps.gate.outputs.pr_number }}
       head_sha: ${{ steps.gate.outputs.head_sha }}
       base_sha: ${{ steps.gate.outputs.base_sha }}
@@ -52,16 +48,26 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install --filter @l2beat/ai-review...
       - name: Build comment event
+        id: event
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           if [ "${{ github.event_name }}" = "issue_comment" ]; then
             cp "$GITHUB_EVENT_PATH" "$RUNNER_TEMP/event.json"
           else
-            gh api "repos/${{ github.repository }}/issues/comments/$COMMENT_ID" \
+            COMMENT_ID=$(gh api "repos/$REPO/issues/$PR_NUMBER/comments?per_page=100" \
+              --jq '[.[] | select(.body | startswith("/ai-review"))] | last | .id // empty')
+            if [ -z "$COMMENT_ID" ]; then
+              echo "No /ai-review comment found on PR $PR_NUMBER"
+              exit 1
+            fi
+            gh api "repos/$REPO/issues/comments/$COMMENT_ID" \
               | jq '{action: "created", comment: ., issue: {number: (.issue_url | split("/") | last | tonumber), pull_request: {url: .issue_url}}}' \
               > "$RUNNER_TEMP/event.json"
           fi
+          echo "comment_id=$(jq .comment.id "$RUNNER_TEMP/event.json")" >> "$GITHUB_OUTPUT"
       - name: Fetch pull request
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
