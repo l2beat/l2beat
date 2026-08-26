@@ -40,6 +40,8 @@ jobs:
       pr_number: ${{ steps.gate.outputs.pr_number }}
       head_sha: ${{ steps.gate.outputs.head_sha }}
       base_sha: ${{ steps.gate.outputs.base_sha }}
+      pr_title: ${{ steps.pr.outputs.title }}
+      pr_body: ${{ steps.pr.outputs.body }}
     steps:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v6
@@ -70,9 +72,17 @@ jobs:
           fi
           echo "comment_id=$(jq .comment.id "$RUNNER_TEMP/event.json")" >> "$GITHUB_OUTPUT"
       - name: Fetch pull request
+        id: pr
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh api "repos/${{ github.repository }}/pulls/$(jq .issue.number "$RUNNER_TEMP/event.json")" > "$RUNNER_TEMP/pr.json"
+        run: |
+          gh api "repos/${{ github.repository }}/pulls/$(jq .issue.number "$RUNNER_TEMP/event.json")" > "$RUNNER_TEMP/pr.json"
+          echo "title=$(jq -r .title "$RUNNER_TEMP/pr.json")" >> "$GITHUB_OUTPUT"
+          {
+            echo "body<<AI_REVIEW_EOF"
+            jq -r '.body // ""' "$RUNNER_TEMP/pr.json"
+            echo "AI_REVIEW_EOF"
+          } >> "$GITHUB_OUTPUT"
       - id: gate
         run: pnpm --filter @l2beat/ai-review gate
         env:
@@ -102,24 +112,51 @@ jobs:
     timeout-minutes: 20
     permissions:
       contents: read
+    outputs:
+      engine: ${{ steps.review.outputs.engine }}
     steps:
       - uses: actions/checkout@v6
         with:
           ref: ${{ needs.gate.outputs.head_sha }}
           persist-credentials: false
+          fetch-depth: 0
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: 'pnpm'
-      - run: pnpm install --filter @l2beat/ai-review...
-      - run: pnpm --filter @l2beat/ai-review review
+      - run: pnpm install
+      - run: pnpm --filter @l2beat/ai-review^... build
+      - name: Compute diff
+        run: git diff "${{ needs.gate.outputs.base_sha }}...${{ needs.gate.outputs.head_sha }}" > "$RUNNER_TEMP/diff.patch"
+      - name: Install Codex CLI
+        if: ${{ secrets.CODEX_AUTH_JSON != '' }}
         env:
+          CODEX_AUTH_JSON: ${{ secrets.CODEX_AUTH_JSON }}
+        run: |
+          npm install -g @openai/codex@0.149.1
+          mkdir -p "$RUNNER_TEMP/codex-home"
+          printf '%s' "$CODEX_AUTH_JSON" > "$RUNNER_TEMP/codex-home/auth.json"
+      - id: review
+        run: pnpm --filter @l2beat/ai-review review
+        env:
+          # Falls back to the stub engine when the Codex secret is not configured.
+          ENGINE: ${{ secrets.CODEX_AUTH_JSON != '' && 'codex' || 'stub' }}
+          CODEX_HOME: ${{ runner.temp }}/codex-home
+          CODEX_MODEL: ${{ vars.AI_REVIEW_MODEL }}
+          FIND_MAX_TOKENS: ${{ vars.AI_REVIEW_FIND_MAX_TOKENS || 400000 }}
+          FIND_TIMEOUT_MS: 600000
+          REVIEW_CWD: ${{ github.workspace }}
+          DIFF_PATH: ${{ runner.temp }}/diff.patch
           REVIEW_OUTPUT_PATH: ${{ runner.temp }}/review.json
+          PR_TITLE: ${{ needs.gate.outputs.pr_title }}
+          PR_BODY: ${{ needs.gate.outputs.pr_body }}
       - uses: actions/upload-artifact@v7
         with:
           name: ai-review-output
-          path: ${{ runner.temp }}/review.json
+          path: |
+            ${{ runner.temp }}/review.json
+            ${{ runner.temp }}/diff.patch
 
   post:
     name: Post
@@ -145,19 +182,19 @@ jobs:
           name: ai-review-output
           path: ${{ runner.temp }}
       - run: pnpm --filter @l2beat/ai-review^... build
-      - name: Validate and render comment
+      - name: Validate and build review payload
         run: pnpm --filter @l2beat/ai-review post
         env:
           REVIEW_OUTPUT_PATH: ${{ runner.temp }}/review.json
-          COMMENT_PATH: ${{ runner.temp }}/comment.md
+          DIFF_PATH: ${{ runner.temp }}/diff.patch
+          REVIEW_PAYLOAD_PATH: ${{ runner.temp }}/review-payload.json
           RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
           LESSONS_VERSION: none
-          ENGINE: stub
-      - name: Post comment
-        uses: peter-evans/create-or-update-comment@v5
-        with:
-          issue-number: ${{ needs.gate.outputs.pr_number }}
-          body-path: ${{ runner.temp }}/comment.md
+          ENGINE: ${{ needs.review.outputs.engine }}
+      - name: Post review
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh api -X POST "repos/${{ github.repository }}/pulls/${{ needs.gate.outputs.pr_number }}/reviews" --input "$RUNNER_TEMP/review-payload.json" --jq .html_url
       - name: Mark trigger comment as done
         uses: peter-evans/create-or-update-comment@v5
         with:
