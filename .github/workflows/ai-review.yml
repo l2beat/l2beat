@@ -149,3 +149,9 @@ jobs:
         with:
           issue-number: ${{ needs.gate.outputs.pr_number }}
           body-path: ${{ runner.temp }}/comment.md
+      - name: Mark trigger comment as done
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          comment-id: ${{ needs.gate.outputs.comment_id }}
+          reactions: '+1'
+          reactions-edit-mode: replace
