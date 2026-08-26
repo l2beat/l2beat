@@ -112,6 +112,9 @@ jobs:
     timeout-minutes: 20
     permissions:
       contents: read
+    env:
+      # Falls back to the stub engine when the Codex secret is not configured.
+      ENGINE: ${{ secrets.CODEX_AUTH_JSON != '' && 'codex' || 'stub' }}
     outputs:
       engine: ${{ steps.review.outputs.engine }}
     steps:
@@ -130,7 +133,7 @@ jobs:
       - name: Compute diff
         run: git diff "${{ needs.gate.outputs.base_sha }}...${{ needs.gate.outputs.head_sha }}" > "$RUNNER_TEMP/diff.patch"
       - name: Install Codex CLI
-        if: ${{ secrets.CODEX_AUTH_JSON != '' }}
+        if: env.ENGINE == 'codex'
         env:
           CODEX_AUTH_JSON: ${{ secrets.CODEX_AUTH_JSON }}
         run: |
@@ -140,8 +143,6 @@ jobs:
       - id: review
         run: pnpm --filter @l2beat/ai-review review
         env:
-          # Falls back to the stub engine when the Codex secret is not configured.
-          ENGINE: ${{ secrets.CODEX_AUTH_JSON != '' && 'codex' || 'stub' }}
           CODEX_HOME: ${{ runner.temp }}/codex-home
           CODEX_MODEL: ${{ vars.AI_REVIEW_MODEL }}
           FIND_MAX_TOKENS: ${{ vars.AI_REVIEW_FIND_MAX_TOKENS || 400000 }}
