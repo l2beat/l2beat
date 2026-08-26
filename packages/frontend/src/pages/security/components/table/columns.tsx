@@ -60,6 +60,22 @@ export const ossificationColumns = [
     },
     sortDescFirst: true,
   }),
+  columnHelper.display({
+    id: 'timeline',
+    header: 'TVS &\nchanges (1y)',
+    cell: (ctx) => (
+      <OssificationTimelineCell
+        timeline={ctx.row.original.timeline}
+        projectName={ctx.row.original.name}
+      />
+    ),
+    meta: {
+      tooltip:
+        'TVS over one year. The highlighted part is the ossified period — its area is the battle-tested exposure. Ticks below the baseline are earlier critical changes to the smart contracts. Heights are normalized per-project.',
+      cellClassName: 'py-0',
+    },
+    enableSorting: false,
+  }),
   columnHelper.accessor((entry) => entry.exposure ?? undefined, {
     id: 'exposure',
     header: 'Battle-tested\nexposure',
@@ -79,22 +95,6 @@ export const ossificationColumns = [
     },
     sortDescFirst: true,
     sortUndefined: 'last',
-  }),
-  columnHelper.display({
-    id: 'timeline',
-    header: 'TVS &\nchanges (1y)',
-    cell: (ctx) => (
-      <OssificationTimelineCell
-        timeline={ctx.row.original.timeline}
-        projectName={ctx.row.original.name}
-      />
-    ),
-    meta: {
-      tooltip:
-        'TVS over one year. The highlighted part is the ossified period — its area is the battle-tested exposure. Ticks below the baseline are earlier critical changes to the smart contracts. Heights are normalized per-project.',
-      cellClassName: 'py-0',
-    },
-    enableSorting: false,
   }),
   columnHelper.accessor('criticalChangesPerYear', {
     header: 'Critical\nchanges / year',
