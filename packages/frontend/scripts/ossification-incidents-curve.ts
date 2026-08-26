@@ -1,135 +1,189 @@
 /**
- * Generates the versioned empirical exploit-age curve that defines the
- * ossification score: score = share of recorded code-bug exploits whose
- * exploited code was younger than the perimeter's current age.
+ * Projects the canonical ossification dataset curve release into the compact
+ * runtime input used by the frontend.
  *
- * Inputs (all committed, all onchain-verified by their producing scripts):
- *   - ossification-incidents.data.json + .curated-results.json
- *     (hand-curated incidents; results regenerated via
- *      `ossification-incidents.ts --json`)
- *   - ossification-incidents.registry.json + .batch-results.json
- *     (DeFiHackLabs-extracted incidents, classified with per-row evidence)
+ * The only accepted input is ../ossification-dataset/dist/latest/curve.json,
+ * shaped by ../ossification-dataset/schema/release-curve.schema.json. There is
+ * intentionally no fallback for the legacy in-repo incident or curve formats.
  *
- * Merge rules match the backtest report: code-bug rows only, measured ages
- * only, duplicates by (chain, victim contract) deduped with the curated row
- * winning.
- *
- * Output: src/server/features/projects/ossification/ossificationCurve.ts —
- * the sorted age knots (seconds) consumed by getOssificationFactor. Bump
- * `version` whenever the dataset changes; score changes must be deliberate,
- * versioned releases, never silent drift.
- *
- * Usage: npx tsx scripts/ossification-incidents-curve.ts
+ * Usage:
+ *   pnpm tsx scripts/ossification-incidents-curve.ts
+ *   pnpm tsx scripts/ossification-incidents-curve.ts --check
  */
+import { execFileSync } from 'child_process'
 import { readFileSync, writeFileSync } from 'fs'
 import path from 'path'
 
-const SECONDS_PER_YEAR = 365 * 24 * 60 * 60
-
-interface CuratedIncident {
-  name: string
-  chain: string
-  category: string
-  contract: string | null
-}
-interface CuratedResult {
-  name: string
-  chain: string
-  status: string
-  ageDays?: number
-}
-interface RegistryRow {
-  source: string
-  chain: string
-  contract: string
-  category?: string
-}
-interface BatchResult {
-  status: string
-  ageDays?: number
-  incidentTs?: number
-  source: string
-}
+const DATASET_ROOT = path.resolve(__dirname, '../../../../ossification-dataset')
+const RELEASE_PATH = path.join(DATASET_ROOT, 'dist/latest/curve.json')
+const SCHEMA_PATH = path.join(DATASET_ROOT, 'schema/release-curve.schema.json')
+const OUTPUT_PATH = path.join(
+  __dirname,
+  '../src/server/features/projects/ossification/ossificationCurve.ts',
+)
 
 function main() {
-  const dir = __dirname
-  const read = (f: string) =>
-    JSON.parse(readFileSync(path.join(dir, f), 'utf-8'))
-
-  const curated = (
-    read('ossification-incidents.data.json') as { incidents: CuratedIncident[] }
-  ).incidents
-  const curatedResults = read(
-    'ossification-incidents.curated-results.json',
-  ) as CuratedResult[]
-  const registry = (
-    read('ossification-incidents.registry.json') as { rows: RegistryRow[] }
-  ).rows
-  const batch = read('ossification-incidents.batch-results.json') as Record<
-    string,
-    BatchResult
-  >
-
-  const curatedByName = new Map(curated.map((i) => [i.name, i]))
-  const seen = new Set<string>()
-  const ageSeconds: number[] = []
-
-  for (const r of curatedResults) {
-    const inc = curatedByName.get(r.name)
-    if (!inc || r.status !== 'OK' || inc.category !== 'code-bug') continue
-    if (inc.contract) seen.add(`${r.chain}:${inc.contract.toLowerCase()}`)
-    ageSeconds.push((r.ageDays ?? 0) * 24 * 60 * 60)
+  const args = process.argv.slice(2)
+  const check = args.length === 1 && args[0] === '--check'
+  if (args.length > 0 && !check) {
+    throw new Error('Usage: ossification-incidents-curve.ts [--check]')
   }
-  const registryBySource = new Map(registry.map((r) => [r.source, r]))
-  // one observation per (chain, contract): repeated exploits of the same
-  // contract are not independent — the earliest measured incident wins
-  // (deterministic, insertion-order independent)
-  const batchRows = Object.values(batch).sort(
-    (a, b) => (a.incidentTs ?? 0) - (b.incidentTs ?? 0),
+
+  const release = readObject(RELEASE_PATH)
+  const schema = readObject(SCHEMA_PATH)
+  const ageKnots = readCanonicalAgeKnots(release, schema)
+  const revision = execFileSync(
+    'git',
+    ['-C', DATASET_ROOT, 'rev-parse', 'HEAD'],
+    { encoding: 'utf8' },
+  ).trim()
+  const output = renderOutput(ageKnots, revision)
+
+  if (check) {
+    if (readFileSync(OUTPUT_PATH, 'utf8') !== output) {
+      throw new Error(
+        `${OUTPUT_PATH} does not match the checked-out ossification dataset release`,
+      )
+    }
+    console.log(
+      `curve is current: ossification-dataset@${revision}, n=${ageKnots.length}`,
+    )
+    return
+  }
+
+  writeFileSync(OUTPUT_PATH, output)
+  console.log(
+    `wrote ${OUTPUT_PATH}\nossification-dataset@${revision}, n=${ageKnots.length}`,
   )
-  for (const r of batchRows) {
-    const reg = registryBySource.get(r.source)
-    if (!reg || r.status !== 'OK' || reg.category !== 'code-bug') continue
-    const key = `${reg.chain}:${reg.contract.toLowerCase()}`
-    if (seen.has(key)) continue
-    seen.add(key)
-    ageSeconds.push((r.ageDays ?? 0) * 24 * 60 * 60)
+}
+
+function readCanonicalAgeKnots(
+  release: Record<string, unknown>,
+  schema: Record<string, unknown>,
+): number[] {
+  if (schema.additionalProperties !== false) {
+    throw new Error('Curve schema must reject additional top-level properties')
   }
 
-  ageSeconds.sort((a, b) => a - b)
-  const knots = ageSeconds.map((s) => Math.round(s))
-  const version = '2026-08'
+  const properties = asObject(schema.properties, 'schema.properties')
+  const required = asStringArray(schema.required, 'schema.required')
+  for (const property of required) {
+    if (!(property in release)) {
+      throw new Error(`Curve release is missing required property ${property}`)
+    }
+  }
+  for (const property of Object.keys(release)) {
+    if (!(property in properties)) {
+      throw new Error(`Curve release has unknown property ${property}`)
+    }
+  }
 
-  const out = `/**
+  assertSchemaConstant(release, properties, '$schema')
+  assertSchemaConstant(release, properties, 'formatVersion')
+
+  const ageKnots = asIntegerArray(release.ageKnots, 'release.ageKnots')
+  for (let i = 0; i < ageKnots.length; i++) {
+    const age = ageKnots[i] ?? 0
+    if (age < 0) {
+      throw new Error(`release.ageKnots[${i}] must be non-negative`)
+    }
+    if (i > 0 && age < (ageKnots[i - 1] ?? 0)) {
+      throw new Error('release.ageKnots must be sorted ascending')
+    }
+  }
+
+  const observations = asArray(release.observations, 'release.observations')
+  if (observations.length !== ageKnots.length) {
+    throw new Error('release.observations and release.ageKnots must align')
+  }
+  for (let i = 0; i < observations.length; i++) {
+    const observation = asObject(observations[i], `release.observations[${i}]`)
+    if (
+      asInteger(observation.codeAgeSeconds, 'codeAgeSeconds') !== ageKnots[i]
+    ) {
+      throw new Error(
+        `release.observations[${i}].codeAgeSeconds does not match ageKnots`,
+      )
+    }
+  }
+
+  const counts = asObject(release.counts, 'release.counts')
+  if (
+    asInteger(counts.curveObservations, 'release.counts.curveObservations') !==
+    ageKnots.length
+  ) {
+    throw new Error('release.counts.curveObservations does not match ageKnots')
+  }
+
+  return ageKnots
+}
+
+function assertSchemaConstant(
+  release: Record<string, unknown>,
+  properties: Record<string, unknown>,
+  property: '$schema' | 'formatVersion',
+) {
+  const propertySchema = asObject(
+    properties[property],
+    `schema.properties.${property}`,
+  )
+  if (release[property] !== propertySchema.const) {
+    throw new Error(`Curve release has unsupported ${property}`)
+  }
+}
+
+function renderOutput(ageKnots: number[], revision: string): string {
+  return `/**
  * GENERATED by scripts/ossification-incidents-curve.ts — do not edit by hand.
  *
- * The empirical exploit-age curve defining the ossification score: the sorted
- * ages (seconds since last change) of the exploited code in every measured
- * code-bug incident of the published dataset. The score is the interpolated
- * percentile of the perimeter's age within these knots: "this perimeter has
- * outlived the code age of N% of recorded code-bug exploits."
- *
- * Dataset releases are deliberate and versioned; regenerate only alongside a
- * dataset update and record the change.
+ * Source: ossification-dataset@${revision}
+ * Canonical input: dist/latest/curve.json, validated against
+ * schema/release-curve.schema.json by the dataset repository. Only the sorted
+ * age knots are projected because the remaining release fields are not runtime
+ * inputs to the score.
  */
-export const OSSIFICATION_CURVE = {
-  version: '${version}',
-  n: ${knots.length},
-  /** Sorted exploited-code ages at incident time, in seconds. */
-  ageKnots: ${JSON.stringify(knots)},
-} as const
+// biome-ignore format: preserve the canonical ageKnots serialization
+export const OSSIFICATION_CURVE_AGE_KNOTS = ${JSON.stringify(ageKnots)} as const
 `
-  const outPath = path.join(
-    dir,
-    '../src/server/features/projects/ossification/ossificationCurve.ts',
+}
+
+function readObject(file: string): Record<string, unknown> {
+  return asObject(JSON.parse(readFileSync(file, 'utf8')), file)
+}
+
+function asObject(value: unknown, label: string): Record<string, unknown> {
+  if (value === null || typeof value !== 'object' || Array.isArray(value)) {
+    throw new Error(`${label} must be an object`)
+  }
+  return value as Record<string, unknown>
+}
+
+function asArray(value: unknown, label: string): unknown[] {
+  if (!Array.isArray(value)) {
+    throw new Error(`${label} must be an array`)
+  }
+  return value
+}
+
+function asStringArray(value: unknown, label: string): string[] {
+  const array = asArray(value, label)
+  if (!array.every((item) => typeof item === 'string')) {
+    throw new Error(`${label} must contain only strings`)
+  }
+  return array as string[]
+}
+
+function asIntegerArray(value: unknown, label: string): number[] {
+  return asArray(value, label).map((item, i) =>
+    asInteger(item, `${label}[${i}]`),
   )
-  writeFileSync(outPath, out)
-  const yrs = knots.map((k) => k / SECONDS_PER_YEAR)
-  console.log(
-    `wrote ${outPath}\nversion ${version}, n=${knots.length}, median ${(
-      (yrs[Math.floor(yrs.length / 2)] ?? 0) * 12
-    ).toFixed(1)}mo, max ${(yrs.at(-1) ?? 0).toFixed(2)}y`,
-  )
+}
+
+function asInteger(value: unknown, label: string): number {
+  if (!Number.isSafeInteger(value)) {
+    throw new Error(`${label} must be a safe integer`)
+  }
+  return value as number
 }
 
 main()

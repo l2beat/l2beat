@@ -6,7 +6,7 @@ import {
   isImplementationChangeDiffBody,
 } from '~/utils/diffHistory/diffHistoryMarkdown'
 import type { DiscoveryUpdate } from '../recent-changes/getDiscoveryUpdates'
-import { OSSIFICATION_CURVE } from './ossificationCurve'
+import { OSSIFICATION_CURVE_AGE_KNOTS } from './ossificationCurve'
 /** Critical changes within this window count as a single event, so the
  *  rate measures project decisions (one fork, one governance execution),
  *  not how many fields we annotated. */
@@ -467,7 +467,7 @@ function getObservationStart(
  *  younger. Uses Weibull plotting positions p_i = (i+1)/(n+1), linear between
  *  knots, so the score approaches (not fakes) 0 and 100 at the extremes. */
 export function exploitAgePercentile(ageSeconds: number): number {
-  const knots: readonly number[] = OSSIFICATION_CURVE.ageKnots
+  const knots: readonly number[] = OSSIFICATION_CURVE_AGE_KNOTS
   const n = knots.length
   if (n === 0) return 0
   const p = (index: number) => (index + 1) / (n + 1)
