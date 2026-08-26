@@ -45,6 +45,11 @@ const { review, usage } = await runFind(engine, {
   },
 })
 
+// A stub run must never read as a clean review.
+if (engine.name === 'stub') {
+  review.aborted =
+    'stub engine: no Codex credentials configured, no review performed'
+}
 console.log(
   JSON.stringify({
     engine: engine.name,

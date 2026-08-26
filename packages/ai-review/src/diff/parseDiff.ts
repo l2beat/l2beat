@@ -5,14 +5,22 @@ export function parseDiffLines(diff: string): DiffLines {
   const result: DiffLines = new Map()
   let file: string | undefined
   let line = 0
+  let prevWasOldHeader = false
   for (const raw of diff.split('\n')) {
-    if (raw.startsWith('+++ ')) {
+    // "+++ " is a header only right after "--- "; an added line "++ x" also starts with it.
+    if (raw.startsWith('+++ ') && prevWasOldHeader) {
+      prevWasOldHeader = false
       const path = raw.slice(4).trim()
       file = path === '/dev/null' ? undefined : path.replace(/^b\//, '')
       if (file) result.set(file, new Set())
       continue
     }
-    if (raw.startsWith('--- ') || raw.startsWith('diff ')) continue
+    prevWasOldHeader = raw.startsWith('--- ') && !file
+    if (raw.startsWith('diff ')) {
+      file = undefined
+      continue
+    }
+    if (prevWasOldHeader) continue
     const hunk = /^@@ -\d+(?:,\d+)? \+(\d+)(?:,\d+)? @@/.exec(raw)
     if (hunk) {
       line = Number(hunk[1])

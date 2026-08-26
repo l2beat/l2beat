@@ -41,6 +41,21 @@ describe(parseDiffLines.name, () => {
   })
 })
 
+describe('parseDiffLines edge cases', () => {
+  it('does not treat an added "++ " line as a file header', () => {
+    const lines = parseDiffLines(`diff --git a/c.ts b/c.ts
+--- a/c.ts
++++ b/c.ts
+@@ -1,1 +1,3 @@
+ a
++++ weird
++b
+`)
+    expect([...lines.keys()]).toEqual(['c.ts'])
+    expect([...(lines.get('c.ts') ?? [])]).toEqual([2, 3])
+  })
+})
+
 describe(isInDiff.name, () => {
   const lines = parseDiffLines(diff)
   it('true only when the whole range is added', () => {
