@@ -21,11 +21,21 @@ export const FindOutput = v.object({
 export type FindOutput = v.infer<typeof FindOutput>
 
 export function toFindings(output: FindOutput): Finding[] {
-  return output.findings.map((f) => ({
-    ...f,
-    file: f.file ?? undefined,
-    line_start: f.line_start ?? undefined,
-    line_end: f.line_end ?? undefined,
-    confidence: Math.min(1, Math.max(0, f.confidence)),
-  }))
+  return output.findings.map((f) => {
+    const range = normalizeRange(f.line_start, f.line_end)
+    return {
+      ...f,
+      file: f.file ?? undefined,
+      line_start: range?.start,
+      line_end: range?.end,
+      confidence: Math.min(1, Math.max(0, f.confidence)),
+    }
+  })
+}
+
+function normalizeRange(start: number | null, end: number | null) {
+  const s = start ?? end
+  if (!s || s < 1) return undefined
+  const e = end ?? s
+  return e >= s ? { start: s, end: e } : { start: e, end: s }
 }

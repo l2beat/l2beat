@@ -57,8 +57,10 @@ describe(buildReview.name, () => {
       ]),
       diff,
       meta,
+      'sha1',
     )
     expect(payload.event).toEqual('COMMENT')
+    expect(payload.commit_id).toEqual('sha1')
     expect(payload.comments.map((c) => [c.path, c.start_line, c.line])).toEqual(
       [
         ['src/a.ts', 2, 3],
@@ -79,7 +81,7 @@ describe(buildReview.name, () => {
 
   it('zero findings posts the explicit no-findings body', () => {
     const r = review([])
-    const payload = buildReview(r, diff, meta)
+    const payload = buildReview(r, diff, meta, 'sha1')
     expect(payload.comments).toEqual([])
     expect(payload.body).toInclude(
       'Reviewed, consulted `diff`, no findings above the bar.',
@@ -92,6 +94,7 @@ describe(buildReview.name, () => {
       review([], { aborted: 'over-budget: 9 > 1' }),
       diff,
       meta,
+      'sha1',
     )
     expect(payload.body).toInclude('Review aborted: over-budget: 9 > 1')
     expect(payload.body).not.toInclude('no findings above the bar')
@@ -103,6 +106,7 @@ describe(buildReview.name, () => {
       review([], { commands: ['pnpm -F x typecheck'] }),
       diff,
       meta,
+      'sha1',
     )
     expect(payload.body).toInclude('- `pnpm -F x typecheck`')
   })

@@ -73,6 +73,28 @@ describe(runFind.name, () => {
     expect(review.aborted?.startsWith('invalid-output')).toEqual(true)
   })
 
+  it('normalizes reversed and non-positive line ranges', async () => {
+    const findings = [
+      { ...rawFinding(3), line_end: 2 },
+      { ...rawFinding(0), line_end: null, claim: 'zero' },
+      { ...rawFinding(1), line_start: null, line_end: 7, claim: 'end-only' },
+    ]
+    const { review } = await runFind(
+      new StubEngine({ intent: 'x', findings }),
+      input,
+    )
+    const byClaim = Object.fromEntries(review.findings.map((f) => [f.claim, f]))
+    expect([byClaim.c3.line_start, byClaim.c3.line_end]).toEqual([2, 3])
+    expect([byClaim.zero.line_start, byClaim.zero.line_end]).toEqual([
+      undefined,
+      undefined,
+    ])
+    expect([
+      byClaim['end-only'].line_start,
+      byClaim['end-only'].line_end,
+    ]).toEqual([7, 7])
+  })
+
   it('rank stage is what orders the output', async () => {
     const findings = [rawFinding(1, 'minor', 0.1), rawFinding(2, 'blocker', 1)]
     const { review } = await runFind(

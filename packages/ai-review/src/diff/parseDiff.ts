@@ -38,7 +38,7 @@ export function isInDiff(
   lineEnd = lineStart,
 ): boolean {
   const lines = diff.get(file)
-  if (!lines) return false
+  if (!lines || lineStart < 1 || lineEnd < lineStart) return false
   for (let l = lineStart; l <= lineEnd; l++) {
     if (!lines.has(l)) return false
   }

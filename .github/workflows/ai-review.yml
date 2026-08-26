@@ -118,9 +118,15 @@ jobs:
     outputs:
       engine: ${{ steps.review.outputs.engine }}
     steps:
+      # Reviewer code runs from the trusted default-branch checkout; the PR head
+      # is checked out into pr/ as inert input the agent inspects and probes.
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: actions/checkout@v6
         with:
           ref: ${{ needs.gate.outputs.head_sha }}
+          path: pr
           persist-credentials: false
           fetch-depth: 0
       - uses: pnpm/action-setup@v6
@@ -128,9 +134,13 @@ jobs:
         with:
           node-version: 22
           cache: 'pnpm'
-      - run: pnpm install
+      - run: pnpm install --filter @l2beat/ai-review...
       - run: pnpm --filter @l2beat/ai-review^... build
+      - name: Install PR dependencies for agent probes
+        working-directory: pr
+        run: pnpm install
       - name: Compute diff
+        working-directory: pr
         run: git diff "${{ needs.gate.outputs.base_sha }}...${{ needs.gate.outputs.head_sha }}" > "$RUNNER_TEMP/diff.patch"
       - name: Install Codex CLI
         if: env.ENGINE == 'codex'
@@ -147,22 +157,26 @@ jobs:
           CODEX_MODEL: ${{ vars.AI_REVIEW_MODEL }}
           FIND_MAX_TOKENS: ${{ vars.AI_REVIEW_FIND_MAX_TOKENS || 400000 }}
           FIND_TIMEOUT_MS: 600000
-          REVIEW_CWD: ${{ github.workspace }}
+          REVIEW_CWD: ${{ github.workspace }}/pr
           DIFF_PATH: ${{ runner.temp }}/diff.patch
           REVIEW_OUTPUT_PATH: ${{ runner.temp }}/review.json
           PR_TITLE: ${{ needs.gate.outputs.pr_title }}
           PR_BODY: ${{ needs.gate.outputs.pr_body }}
       - uses: actions/upload-artifact@v7
+        if: always()
         with:
           name: ai-review-output
           path: |
             ${{ runner.temp }}/review.json
             ${{ runner.temp }}/diff.patch
+          if-no-files-found: ignore
 
   post:
     name: Post
     # ack is included so the final reaction is always written after the eyes.
     needs: [gate, ack, review]
+    # Runs even when review failed so the abort reason is posted and the reaction cleared.
+    if: always() && needs.gate.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -179,6 +193,7 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install --filter @l2beat/ai-review...
       - uses: actions/download-artifact@v7
+        continue-on-error: true
         with:
           name: ai-review-output
           path: ${{ runner.temp }}
@@ -190,8 +205,10 @@ jobs:
           DIFF_PATH: ${{ runner.temp }}/diff.patch
           REVIEW_PAYLOAD_PATH: ${{ runner.temp }}/review-payload.json
           RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+          HEAD_SHA: ${{ needs.gate.outputs.head_sha }}
           LESSONS_VERSION: none
-          ENGINE: ${{ needs.review.outputs.engine }}
+          ENGINE: ${{ needs.review.outputs.engine || 'none' }}
+          REVIEW_JOB_RESULT: ${{ needs.review.result }}
       - name: Post review
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

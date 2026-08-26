@@ -30,6 +30,8 @@ export class CodexEngine implements Engine {
       '--output-schema',
       schemaPath,
     ]
+    // Probes run PR code; keep them offline so a hostile diff cannot exfiltrate anything.
+    args.push('-c', 'sandbox_workspace_write.network_access=false')
     if (this.options.model) args.push('--model', this.options.model)
     if (this.options.reasoningEffort) {
       args.push(

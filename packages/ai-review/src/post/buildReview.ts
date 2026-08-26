@@ -25,6 +25,8 @@ export interface InlineComment {
 /** Payload for POST /repos/{owner}/{repo}/pulls/{n}/reviews */
 export interface ReviewPayload {
   event: 'COMMENT'
+  /** Pins inline comments to the reviewed head; a push mid-review would otherwise shift them. */
+  commit_id: string
   body: string
   comments: InlineComment[]
 }
@@ -33,6 +35,7 @@ export function buildReview(
   review: ReviewOutput,
   diff: DiffLines,
   meta: RunMeta,
+  commitId: string,
 ): ReviewPayload {
   const inline: InlineComment[] = []
   const topLevel: Finding[] = []
@@ -57,6 +60,7 @@ export function buildReview(
   }
   return {
     event: 'COMMENT',
+    commit_id: commitId,
     body: buildBody(review, meta, inline.length, topLevel),
     comments: inline,
   }

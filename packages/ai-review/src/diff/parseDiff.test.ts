@@ -49,5 +49,7 @@ describe(isInDiff.name, () => {
     expect(isInDiff(lines, 'src/a.ts', 1)).toEqual(false)
     expect(isInDiff(lines, 'src/a.ts', 3, 4)).toEqual(false)
     expect(isInDiff(lines, 'missing.ts', 1)).toEqual(false)
+    expect(isInDiff(lines, 'src/a.ts', 3, 2)).toEqual(false)
+    expect(isInDiff(lines, 'src/a.ts', 0)).toEqual(false)
   })
 })
