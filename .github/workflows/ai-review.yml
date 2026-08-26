@@ -3,20 +3,31 @@ name: AI Review
 on:
   issue_comment:
     types: [created]
+  # Replay an existing /ai-review comment from any branch, so YAML and code
+  # changes can be tested before they reach main.
+  workflow_dispatch:
+    inputs:
+      comment_id:
+        description: 'ID of an existing /ai-review PR comment to replay'
+        required: true
 
-# Cheap pre-filter so non-member / non-command comments never spin a runner.
-# The authoritative gate (draft/fork/bot checks) is the unit-tested evaluateTrigger.
+env:
+  COMMENT_ID: ${{ github.event.comment.id || inputs.comment_id }}
+
 concurrency:
-  group: ai-review-${{ github.event.issue.number }}
+  group: ai-review-${{ github.event.issue.number || inputs.comment_id }}
   cancel-in-progress: true
 
 permissions: {}
 
 jobs:
+  # Cheap pre-filter so non-member / non-command comments never spin a runner.
+  # The authoritative gate (draft/fork/bot checks) is the unit-tested evaluateTrigger.
   gate:
     name: Gate
     if: >
       ${{
+        github.event_name == 'workflow_dispatch' ||
         github.event.issue.pull_request != null &&
         startsWith(github.event.comment.body, '/ai-review') &&
         contains(fromJSON('["MEMBER","OWNER"]'), github.event.comment.author_association)
@@ -28,6 +39,7 @@ jobs:
       pull-requests: read
     outputs:
       run: ${{ steps.gate.outputs.run }}
+      comment_id: ${{ env.COMMENT_ID }}
       pr_number: ${{ steps.gate.outputs.pr_number }}
       head_sha: ${{ steps.gate.outputs.head_sha }}
       base_sha: ${{ steps.gate.outputs.base_sha }}
@@ -39,13 +51,25 @@ jobs:
           node-version: 22
           cache: 'pnpm'
       - run: pnpm install --filter @l2beat/ai-review...
+      - name: Build comment event
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ "${{ github.event_name }}" = "issue_comment" ]; then
+            cp "$GITHUB_EVENT_PATH" "$RUNNER_TEMP/event.json"
+          else
+            gh api "repos/${{ github.repository }}/issues/comments/$COMMENT_ID" \
+              | jq '{action: "created", comment: ., issue: {number: (.issue_url | split("/") | last | tonumber), pull_request: {url: .issue_url}}}' \
+              > "$RUNNER_TEMP/event.json"
+          fi
       - name: Fetch pull request
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh api "repos/${{ github.repository }}/pulls/${{ github.event.issue.number }}" > "$RUNNER_TEMP/pr.json"
+        run: gh api "repos/${{ github.repository }}/pulls/$(jq .issue.number "$RUNNER_TEMP/event.json")" > "$RUNNER_TEMP/pr.json"
       - id: gate
         run: pnpm --filter @l2beat/ai-review gate
         env:
+          GITHUB_EVENT_PATH: ${{ runner.temp }}/event.json
           PR_JSON_PATH: ${{ runner.temp }}/pr.json
 
   ack:
@@ -60,7 +84,7 @@ jobs:
       - name: React with eyes on the trigger comment
         uses: peter-evans/create-or-update-comment@v5
         with:
-          comment-id: ${{ github.event.comment.id }}
+          comment-id: ${{ needs.gate.outputs.comment_id }}
           reactions: eyes
 
   review:
