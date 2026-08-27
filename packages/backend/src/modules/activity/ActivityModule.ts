@@ -18,6 +18,7 @@ export function initActivityModule({
   db: database,
   clock,
   providers,
+  blockObservers,
 }: ModuleDependencies): ApplicationModule | undefined {
   if (!config.activity) {
     logger.info('Activity module disabled')
@@ -58,6 +59,12 @@ export function initActivityModule({
         )
 
         const provider = providers.activityBlock.getProvider(project.chainName)
+        if (
+          provider.blockObserver &&
+          !blockObservers.includes(provider.blockObserver)
+        ) {
+          blockObservers.push(provider.blockObserver)
+        }
         const txsCountService = new BlockTxsCountService(
           {
             provider,
