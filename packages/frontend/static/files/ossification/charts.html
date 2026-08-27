@@ -14,7 +14,6 @@
   --grid:#e6e7ec; --axis:#ccd0da; --brand:#9621bf;
   --s1:#2a5bd8; --s2:#ef43b3; --s3:#ab8000; --s4:#ce66f4;
   --ghost:#ccd0da; --dim:rgba(95,100,112,.35);
-  --wash1:rgba(42,91,216,.10);
   --chip:#e6e7ec; --chip-ink:#5f6470;
 }
 :root[data-theme="dark"]{
@@ -23,7 +22,6 @@
   --grid:#2b303b; --axis:#40444c; --brand:#db8bf7;
   --s1:#3387ff; --s2:#ef43b3; --s3:#ab8000; --s4:#a65ec4;
   --ghost:#484d54; --dim:rgba(134,139,152,.35);
-  --wash1:rgba(51,135,255,.14);
   --chip:#2b303b; --chip-ink:#868b98;
 }
 *{box-sizing:border-box}
@@ -83,9 +81,10 @@ const YEAR=31557600, DAY=86400;
 const AMIN=3600, AMAX=10*YEAR, ALINMAX=8.5*YEAR;
 const clampA=a=>Math.max(AMIN,Math.min(a,AMAX));
 let TH=1000, AGELIN=false;
-const CHART_NAMES=["curve","scatter","sweep","kinds"];
+const CHART_NAMES=["curve","scatter","kinds"];
 const CHART_PARAM=(location.hash.match(/chart=(\w+)/)||[])[1];
-const CHART=CHART_NAMES.includes(CHART_PARAM)?CHART_PARAM:"curve";
+/* select the canonical constant, so the hash value itself never reaches the dispatch */
+const CHART=CHART_NAMES[Math.max(0,CHART_NAMES.indexOf(CHART_PARAM))];
 const THKEY="l2beat-ossification-threshold";
 
 /* ---------- theme: follow the parent page's .dark class ---------- */
@@ -186,11 +185,6 @@ function svgPt(svg,evt,W,H){
 }
 
 /* ---------- shared pieces ---------- */
-function quant(sorted,q){
-  if(!sorted.length)return NaN;
-  const i=(sorted.length-1)*q,lo=Math.floor(i),hi=Math.ceil(i);
-  return sorted[lo]+(sorted[hi]-sorted[lo])*(i-lo);
-}
 function ecdfPoints(rows,weightFn){
   const pts=rows.map(d=>({x:clampA(d.a),w:weightFn(d)})).sort((p,q)=>p.x-q.x);
   const tot=pts.reduce((a,p)=>a+p.w,0);
@@ -338,73 +332,6 @@ function renderScatter(){
   hit.addEventListener("pointerleave",()=>{if(hov){hov.c.setAttribute("r",4);hov=null;}tipHide();});
 }
 
-/* ================= sweep ================= */
-function renderSweep(){
-  const W=720,H1=240,GAP=12,H2=84,H=H1+GAP+H2+30,pl=50,pr=16,pt=14;
-  const svg=mkSvg(W,H);
-  legendRow([["lkey",css("--s1"),"median code age (band: interquartile range)"]]);
-  const TMIN=1e3,TMAX=1e9;
-  const X=v=>logS(v,TMIN,TMAX,pl,W-pr);
-  const ageFrac=v=>AGELIN?Math.min(v,ALINMAX)/ALINMAX:(Math.log(clampA(v))-Math.log(AMIN))/(Math.log(AMAX)-Math.log(AMIN));
-  const Y=v=>H1-ageFrac(v)*(H1-pt);
-  const steps=[];
-  for(let e=3;e<=9.0001;e+=0.05){
-    const th=Math.pow(10,e);
-    const ages=D.filter(d=>d.l>=th).map(d=>d.a).sort((a,b)=>a-b);
-    steps.push({th,n:ages.length,p25:quant(ages,.25),p50:quant(ages,.5),p75:quant(ages,.75)});
-  }
-  for(const [v,lab] of (AGELIN?AGE_TICKS_LIN_SPARSE:AGE_TICKS)){
-    if(!AGELIN&&v<DAY)continue;
-    el("line",{x1:pl,y1:Y(v),x2:W-pr,y2:Y(v),class:"gl"},svg);
-    txt(svg,pl-6,Y(v)+3.5,lab,"tick","end");
-  }
-  const band=steps.filter(s=>s.n>=3);
-  let d="M"+band.map(s=>X(s.th)+","+Y(s.p75)).join("L");
-  d+="L"+band.slice().reverse().map(s=>X(s.th)+","+Y(s.p25)).join("L")+"Z";
-  el("path",{d,fill:css("--wash1")},svg);
-  el("path",{d:"M"+band.map(s=>X(s.th)+","+Y(s.p50)).join("L"),fill:"none",stroke:css("--s1"),"stroke-width":2,"stroke-linejoin":"round"},svg);
-  el("line",{x1:pl,y1:H1,x2:W-pr,y2:H1,class:"ax"},svg);
-  const Y2=v=>H1+GAP+H2-(v/320)*(H2-4);
-  el("line",{x1:pl,y1:Y2(0),x2:W-pr,y2:Y2(0),class:"ax"},svg);
-  for(const g of [100,200,300]){
-    el("line",{x1:pl,y1:Y2(g),x2:W-pr,y2:Y2(g),class:"gl"},svg);
-    txt(svg,pl-6,Y2(g)+3.5,String(g),"tick","end");
-  }
-  txt(svg,W-pr,H1+GAP+8,"observations admitted","axl","end");
-  el("path",{d:"M"+X(steps[0].th)+","+Y2(0)+"L"+steps.map(s=>X(s.th)+","+Y2(s.n)).join("L")+"L"+X(steps[steps.length-1].th)+","+Y2(0)+"Z",fill:css("--wash1")},svg);
-  el("path",{d:"M"+steps.map(s=>X(s.th)+","+Y2(s.n)).join("L"),fill:"none",stroke:css("--s1"),"stroke-width":2},svg);
-  for(const [v,lab] of USD_TICKS){
-    txt(svg,X(v),H-6,lab,"tick","middle");
-    el("line",{x1:X(v),y1:H-20,x2:X(v),y2:H-24,class:"ax"},svg);
-  }
-  const cx=X(TH);
-  el("line",{x1:cx,y1:pt,x2:cx,y2:H-24,stroke:css("--ink2"),"stroke-width":1.5,"stroke-dasharray":"5 4"},svg);
-  const cur=steps.reduce((a,b)=>Math.abs(Math.log(b.th/TH))<Math.abs(Math.log(a.th/TH))?b:a);
-  if(cur.n>=3){
-    el("circle",{cx,cy:Y(cur.p50),r:4.5,fill:css("--s1"),stroke:css("--surface"),"stroke-width":2},svg);
-    txt(svg,Math.min(cx+7,W-150),Y(cur.p50)-7,fmtAge(cur.p50)+" median at "+fmtUsd(TH),"dlabel");
-  }
-  const hit=el("rect",{x:pl,y:pt,width:W-pl-pr,height:H-pt-26,fill:"transparent",style:"cursor:crosshair"},svg);
-  const probe=el("line",{x1:0,y1:pt,x2:0,y2:H-24,class:"ax",visibility:"hidden"},svg);
-  hit.addEventListener("pointermove",evt=>{
-    const [mx]=svgPt(svg,evt,W,H);
-    const x=Math.max(pl,Math.min(W-pr,mx));
-    probe.setAttribute("x1",x);probe.setAttribute("x2",x);probe.setAttribute("visibility","visible");
-    const th=logInv(x,TMIN,TMAX,pl,W-pr);
-    const s=steps.reduce((a,b)=>Math.abs(Math.log(b.th/th))<Math.abs(Math.log(a.th/th))?b:a);
-    tipShow(evt,"threshold "+fmtUsd(s.th),[
-      {color:css("--s1"),value:s.n?fmtAge(s.p50):"—",label:"median code age"},
-      {value:s.n?fmtAge(s.p25)+" – "+fmtAge(s.p75):"—",label:"interquartile range"},
-      {value:String(s.n),label:"observations admitted"},
-    ]);
-  });
-  hit.addEventListener("pointerleave",()=>{probe.setAttribute("visibility","hidden");tipHide();});
-  hit.addEventListener("pointerdown",evt=>{
-    const [mx]=svgPt(svg,evt,W,H);
-    setThreshold(logInv(Math.max(pl,Math.min(W-pr,mx)),TMIN,TMAX,pl,W-pr),true);
-  });
-}
-
 /* ================= kinds ================= */
 function renderKinds(){
   const rows=filtered();
@@ -454,45 +381,39 @@ function renderKinds(){
 }
 
 /* ================= controls ================= */
-const RENDERERS={curve:renderCurve,scatter:renderScatter,sweep:renderSweep,kinds:renderKinds};
-const HAS_TH_CONTROLS=CHART!=="sweep";
-const HAS_AX=CHART!=="sweep";
+const RENDERERS={curve:renderCurve,scatter:renderScatter,kinds:renderKinds};
 const PRESETS=[1e3,1e4,1e5,1e6,1e7,1e8];
 let slider,thval,chipbox,axbox,countEl;
 function buildControls(){
   const box=document.getElementById("controls");box.textContent="";
-  if(HAS_TH_CONTROLS){
-    const l=document.createElement("span");l.className="flabel";l.textContent="Loss threshold";box.appendChild(l);
-    thval=document.createElement("span");thval.className="thval";box.appendChild(thval);
-    slider=document.createElement("input");slider.type="range";slider.min="0";slider.max="120";slider.step="1";
-    slider.setAttribute("aria-label","Minimum loss in USD, logarithmic");
-    slider.addEventListener("input",()=>setThreshold(Math.pow(10,3+slider.value/20),false));
-    box.appendChild(slider);
-    chipbox=document.createElement("span");chipbox.className="chips";
-    for(const v of PRESETS){
-      const b=document.createElement("button");b.className="chip";b.type="button";b.textContent=fmtUsd(v);
-      b.addEventListener("click",()=>setThreshold(v,true));
-      chipbox.appendChild(b);
-    }
-    box.appendChild(chipbox);
+  const l=document.createElement("span");l.className="flabel";l.textContent="Loss threshold";box.appendChild(l);
+  thval=document.createElement("span");thval.className="thval";box.appendChild(thval);
+  slider=document.createElement("input");slider.type="range";slider.min="0";slider.max="120";slider.step="1";
+  slider.setAttribute("aria-label","Minimum loss in USD, logarithmic");
+  slider.addEventListener("input",()=>setThreshold(Math.pow(10,3+slider.value/20)));
+  box.appendChild(slider);
+  chipbox=document.createElement("span");chipbox.className="chips";
+  for(const v of PRESETS){
+    const b=document.createElement("button");b.className="chip";b.type="button";b.textContent=fmtUsd(v);
+    b.addEventListener("click",()=>setThreshold(v));
+    chipbox.appendChild(b);
   }
-  if(HAS_AX){
-    axbox=document.createElement("span");axbox.className="chips";
-    [["log",false],["linear",true]].forEach(([lab,lin])=>{
-      const b=document.createElement("button");b.className="chip";b.type="button";b.textContent=lab;
-      b.addEventListener("click",()=>{if(AGELIN!==lin){AGELIN=lin;render();}});
-      axbox.appendChild(b);
-    });
-    box.appendChild(axbox);
-  }
+  box.appendChild(chipbox);
+  axbox=document.createElement("span");axbox.className="chips";
+  [["log",false],["linear",true]].forEach(([lab,lin])=>{
+    const b=document.createElement("button");b.className="chip";b.type="button";b.textContent=lab;
+    b.addEventListener("click",()=>{if(AGELIN!==lin){AGELIN=lin;render();}});
+    axbox.appendChild(b);
+  });
+  box.appendChild(axbox);
   countEl=document.createElement("span");countEl.className="count";box.appendChild(countEl);
 }
 function syncControls(){
-  if(thval)thval.textContent=fmtUsd(TH);
-  if(slider)slider.value=Math.round((Math.log10(TH)-3)*20);
-  if(chipbox)[...chipbox.children].forEach((c,i)=>c.setAttribute("aria-pressed",PRESETS[i]===TH?"true":"false"));
-  if(axbox)[...axbox.children].forEach((c,i)=>c.setAttribute("aria-pressed",(i===1)===AGELIN?"true":"false"));
-  if(countEl)countEl.textContent=filtered().length+" / 320 observations ≥ "+fmtUsd(TH);
+  thval.textContent=fmtUsd(TH);
+  slider.value=Math.round((Math.log10(TH)-3)*20);
+  [...chipbox.children].forEach((c,i)=>c.setAttribute("aria-pressed",PRESETS[i]===TH?"true":"false"));
+  [...axbox.children].forEach((c,i)=>c.setAttribute("aria-pressed",(i===1)===AGELIN?"true":"false"));
+  countEl.textContent=filtered().length+" / 320 observations ≥ "+fmtUsd(TH);
 }
 function roundTh(th){
   const m=Math.pow(10,Math.floor(Math.log10(th)));
@@ -502,9 +423,11 @@ let raf=0;
 function render(){
   syncControls();
   cancelAnimationFrame(raf);
-  raf=requestAnimationFrame(()=>RENDERERS[CHART]());
+  raf=requestAnimationFrame(()=>{
+    if(Object.prototype.hasOwnProperty.call(RENDERERS,CHART))RENDERERS[CHART]();
+  });
 }
-function setThreshold(th,broadcast){
+function setThreshold(th){
   TH=Math.max(1000,Math.min(1e9,roundTh(th)));
   try{localStorage.setItem(THKEY,String(TH));}catch(e){}
   render();

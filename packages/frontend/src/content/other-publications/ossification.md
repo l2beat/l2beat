@@ -22,8 +22,6 @@ We do not aim to feed you fugazi numbers though, so let us introduce the evidenc
 <p style="margin:6px 0 0"><em>The curve is heavily front-loaded, supporting our hypothesis that code ossifies (becomes safer with age). Drag the loss threshold to see how the curve holds its shape as small incidents are excluded.</em></p>
 </figure>
 
-<iframe src="/files/ossification/charts.html#chart=sweep" style="width:100%;height:440px;border:none" loading="lazy" title="Threshold sweep: median code age at exploit and sample size as the loss admission floor rises"></iframe>
-
 But vulnerable public code alone will not be exploited unless there is something to gain. Bones harden with regular strain, so we publish the ossification score in the context of a TVS integral, the **battle-tested exposure.** Similarly to e.g. watt-hours in physics, its dollar-years measure the dollar-time that the project's code withstood since its last critical change. This boosts projects with a low 🦴-score like Arbitrum or Base, revealing that their young code is likely under much more scrutiny than projects with lower TVS or a lower ‘bounty’.
 
 Amazing, so ossification \= security, right? No. Although we are approaching security metrics, the new ossification metrics **do not measure**:
