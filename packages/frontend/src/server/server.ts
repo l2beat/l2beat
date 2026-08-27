@@ -109,7 +109,7 @@ export function createServer(baseLogger: Logger, options: ServerOptions) {
   })
 
   if (!options.dev) {
-    app.use(ErrorHandler())
+    app.use(ErrorHandler(baseLogger))
   }
 
   const server = app.listen(port, () => {
