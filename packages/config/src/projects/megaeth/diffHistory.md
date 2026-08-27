@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xe95260b8dba0cbbe724b24ff8881a3663b649a67
+
+# Diff at Thu, 27 Aug 2026 12:39:13 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@07685e2b690dd5d880203f3696ff2e1bc300a13d block: 1784846614
+- current timestamp: 1787834236
+
+## Description
+
+EigenDAOperationsMultisig: member removed; threshold 3/5 → 2/4.
+
+## Watched changes
+
+```diff
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xA3e302a6Ea0cf79B8580d94e92Eb5514292daacE"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 4 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xac021ded89d99f2a65a343e21859532ac2c8777e
 
 # Diff at Tue, 21 Jul 2026 15:40:29 GMT:
