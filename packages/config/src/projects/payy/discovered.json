@@ -1,0 +1,387 @@
+{
+  "name": "payy",
+  "timestamp": 1787654846,
+  "configHash": "0xf9dae4ed919c602c4cff9a32200df1fc2e0c08bf20865837019e39b5cfa5e878",
+  "entries": [
+    {
+      "address": "eth:0x111e5feA3D613EB866fd41B30c8257C930180428",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "HonkVerifier",
+      "address": "eth:0x14DACD534ddc676601B27f41Eb541a7951524a2F",
+      "type": "Contract",
+      "template": "payy/HonkVerifier",
+      "sourceHashes": [
+        "0x422e7165fb575343655a16b67b4014e5f586e6023ba71dec750c7847849046b1"
+      ],
+      "proxyType": "immutable",
+      "description": "UltraHonk proof verifier generated with Aztec's Barretenberg from Payy's final aggregation Noir circuit. It verifies the aggregated validity proof of each state update submitted to the Rollup contract.",
+      "deployerAddress": "eth:0x0E55252D64535621037b1198D153b69d4fc86F01",
+      "sinceTimestamp": 1778861075,
+      "sinceBlock": 25101626,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x14DACD534ddc676601B27f41Eb541a7951524a2F": "HonkVerifier"
+      }
+    },
+    {
+      "name": "PayyMultisig",
+      "address": "eth:0x230Dfb03F078B0d5E705F4624fCC915f3126B40f",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270",
+          "description": "can manage provers, validators, ZK verifiers, supported tokens and burn substitutors, and can overwrite the current state root via setRoot().",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xfE455baCAF1968F1Ae6a322b8Ffbe56840e2f590" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xfE455baCAF1968F1Ae6a322b8Ffbe56840e2f590",
+          "role": ".owner"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "deployerAddress": "eth:0xAF657A8Fa036bcc99AC3cCd5b7fFa4AaddFBE501",
+      "sinceTimestamp": 1771329767,
+      "sinceBlock": 24476425,
+      "values": {
+        "$immutable": false,
+        "$implementation": "eth:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "eth:0x54e22ad93DE7Dad5C83e9b1caC257F3aB384b02c",
+          "eth:0x111e5feA3D613EB866fd41B30c8257C930180428",
+          "eth:0xCa1Df6eDf8adaCA00FC24DBD919578dD2e9EcBb6",
+          "eth:0xAF657A8Fa036bcc99AC3cCd5b7fFa4AaddFBE501"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x7f8a046a646f462469985ce154fcb677e616a7aca541e226bca8263f14a8742f",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 6,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "eth:0x230Dfb03F078B0d5E705F4624fCC915f3126B40f": "GnosisSafeProxy",
+        "eth:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
+    },
+    {
+      "name": "RollupV1",
+      "address": "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270",
+      "type": "Contract",
+      "template": "payy/Rollup",
+      "sourceHashes": [
+        "0x073cc256d5cffd26bf6dd662372540d3adb4fd4480c2ac6eb239afbe4263b413",
+        "0x347d9ab97d6b782ad7ced6ab24847c5db647843e32daefab92e2c54ac77a6f74"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Main contract of the Payy ZK rollup. It stores the state root, escrows USDC backing the notes on the rollup, processes deposits (mints) and withdrawals (burns), and accepts state updates that must include an aggregated ZK proof and signatures from more than 2/3 of the current validator set.",
+      "ignoreInWatchMode": ["blockHeight", "rootHash"],
+      "deployerAddress": "eth:0x6B96F1A8D65eDe8AD688716078B3DD79f9BD7323",
+      "sinceTimestamp": 1771324355,
+      "sinceBlock": 24475975,
+      "values": {
+        "$admin": "eth:0xfE455baCAF1968F1Ae6a322b8Ffbe56840e2f590",
+        "$implementation": "eth:0x7d8837b547F4FEa0053571CB149e845FC58e9B2D",
+        "$pastUpgrades": [
+          [
+            "2026-02-17T10:32:35.000Z",
+            "0x8d002955fe594ded0ee57519c15a7c9dcf52e759be1fdd628eaf810dc2558abd",
+            ["eth:0x7d8837b547F4FEa0053571CB149e845FC58e9B2D"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "blockHeight": 30630111,
+        "DOMAIN_SEPARATOR": "0x25521b004adaea3e41a925a25e4df49cf18c65c504ffd7685315e7bb5bb2cd53",
+        "getValidatorSets": [
+          [[["eth:0x41582701CB3117680687Df80bD5a2ca971bDA964"], 0]],
+          []
+        ],
+        "initialProver": "eth:0x5343B904Bf837Befb2f5A256B0CD5fbF30503D38",
+        "owner": "eth:0x230Dfb03F078B0d5E705F4624fCC915f3126B40f",
+        "provers": [],
+        "rootHash": "0x069f4260c1c1cf4bb20216ee0733cd0eda31e25e769c37bd035166156ef3dc7d",
+        "usdc": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "version": 2,
+        "zkVerifierKeys": [
+          "0x0701c58cb73e870b8da74294bb1a820e346546e4d3cdca393aa84d3716d3787c"
+        ],
+        "zkVerifiers": [
+          {
+            "verificationKey": "0x0701c58cb73e870b8da74294bb1a820e346546e4d3cdca393aa84d3716d3787c",
+            "zkVerifierAddress": "eth:0x14DACD534ddc676601B27f41Eb541a7951524a2F"
+          }
+        ]
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "provers": {
+          "description": "Addresses allowed to submit state updates via verifyRollup(). Tracked from ProverAdded/ProverRemoved events, which do not cover the prover registered at initialization."
+        },
+        "zkVerifiers": {
+          "severity": "HIGH",
+          "description": "Currently registered ZK verifier contracts by verification key hash. Each state update references one of these keys for proof verification."
+        },
+        "zkVerifierKeys": {
+          "severity": "HIGH",
+          "description": "Verification key hashes accepted for state update proofs."
+        },
+        "getValidatorSets": {
+          "description": "All validator sets with their activation heights. The currently active set must sign each state update with more than 2/3 of its members."
+        },
+        "initialProver": {
+          "description": "Prover registered at initialization (not covered by ProverAdded events)."
+        }
+      },
+      "implementationNames": {
+        "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270": "TransparentUpgradeableProxy",
+        "eth:0x7d8837b547F4FEa0053571CB149e845FC58e9B2D": "RollupV1"
+      }
+    },
+    {
+      "address": "eth:0x41582701CB3117680687Df80bD5a2ca971bDA964",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270",
+          "description": "can sign state updates as a validator. Signatures from more than 2/3 of the current validator set are required for each update.",
+          "role": ".getValidatorSets"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x5343B904Bf837Befb2f5A256B0CD5fbF30503D38",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270",
+          "description": "can submit state updates (new state roots) via verifyRollup(), providing an aggregated ZK proof and validator signatures.",
+          "role": ".initialProver"
+        }
+      ]
+    },
+    {
+      "address": "eth:0x54e22ad93DE7Dad5C83e9b1caC257F3aB384b02c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xAF657A8Fa036bcc99AC3cCd5b7fFa4AaddFBE501",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xCa1Df6eDf8adaCA00FC24DBD919578dD2e9EcBb6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0xfE455baCAF1968F1Ae6a322b8Ffbe56840e2f590",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270",
+          "role": "admin"
+        }
+      ],
+      "deployerAddress": "eth:0x6B96F1A8D65eDe8AD688716078B3DD79f9BD7323",
+      "sinceTimestamp": 1771324355,
+      "sinceBlock": 24475975,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x230Dfb03F078B0d5E705F4624fCC915f3126B40f",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "eth:0xfE455baCAF1968F1Ae6a322b8Ffbe56840e2f590": "ProxyAdmin"
+      }
+    }
+  ],
+  "abis": {
+    "eth:0x14DACD534ddc676601B27f41Eb541a7951524a2F": [
+      "error ConsistencyCheckFailed()",
+      "error GeminiChallengeInSubgroup()",
+      "error ProofLengthWrong()",
+      "error ProofLengthWrongWithLogN(uint256 logN, uint256 actualLength, uint256 expectedLength)",
+      "error PublicInputsLengthWrong()",
+      "error ShpleminiFailed()",
+      "error SumcheckFailed()",
+      "function verify(bytes proof, bytes32[] publicInputs) view returns (bool verified)"
+    ],
+    "eth:0x230Dfb03F078B0d5E705F4624fCC915f3126B40f": [
+      "constructor(address _singleton)"
+    ],
+    "eth:0x367C1eAF14AA06b78ce76bd0243297de79d85270": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0x7d8837b547F4FEa0053571CB149e845FC58e9B2D": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeERC20FailedOperation(address token)",
+      "event Burned(address indexed token, bytes32 indexed burn_hash, address indexed recipient, bool substitute, bool success)",
+      "event Initialized(uint64 version)",
+      "event MintAdded(bytes32 indexed mint_hash, uint256 value, bytes32 note_kind)",
+      "event Minted(bytes32 indexed hash, bytes32 value, bytes32 note_kind)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProverAdded(address indexed prover)",
+      "event ProverRemoved(address indexed prover)",
+      "event RollupVerified(uint256 indexed height, bytes32 root)",
+      "event RootHashUpdated(bytes32 indexed oldRoot, bytes32 indexed newRoot)",
+      "event ValidatorSetAdded(uint256 index, uint256 validFrom)",
+      "event VerifierAdded(bytes32 verificationKey, address zkVerifierAddress, uint32 messages_length)",
+      "event VerifierRemoved(bytes32 verificationKey, address zkVerifierAddress)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function addBurnSubstitutor(address burnSubstitutor)",
+      "function addProver(address prover)",
+      "function addToken(bytes32 noteKind, address tokenAddress)",
+      "function addZkVerifier(bytes32 verificationKeyHash, address verifierAddress, uint32 messages_length)",
+      "function blockHeight() view returns (uint256)",
+      "function currentRootHash() view returns (bytes32)",
+      "function debugGetIntermediateHashes(bytes32 newRoot, uint256 height, bytes32 otherHashFromBlockHash) pure returns (bytes32 proposalHash, bytes32 acceptMsg, bytes32 sigMsg)",
+      "function debugGetPackedBytes(bytes32 acceptMsg) pure returns (bytes)",
+      "function debugGetSignatureMessageHash(bytes32 newRoot, uint256 height, bytes32 otherHashFromBlockHash) pure returns (bytes32)",
+      "function getMint(bytes32 hash) view returns (tuple(bytes32 note_kind, uint256 amount, bool spent))",
+      "function getValidatorSets(uint256 from) view returns (tuple(address[] validators, uint256 validFrom)[])",
+      "function getZkVerifier(bytes32 verificationKeyHash) view returns (address, uint32)",
+      "function initialize(address owner, address _usdcAddress, address _verifierAddress, address prover, address[] initialValidators, bytes32 verifierKeyHash, uint32 verifierMessagesCount, bytes32 initialNoteKind)",
+      "function mint(bytes32 mint_hash, bytes32 value, bytes32 note_kind)",
+      "function mintWithAuthorization(bytes32 mint_hash, bytes32 value, bytes32 note_kind, address from, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint256 v, bytes32 r, bytes32 s, uint256 v2, bytes32 r2, bytes32 s2)",
+      "function mints(bytes32) view returns (bytes32 note_kind, uint256 amount, bool spent)",
+      "function noteKindTokenAddress(bytes32 noteKind) view returns (address)",
+      "function owner() view returns (address)",
+      "function removeBurnSubstitutor(address burnSubstitutor)",
+      "function removeProver(address prover)",
+      "function removeZkVerifier(bytes32 verificationKeyHash)",
+      "function renounceOwnership()",
+      "function rootHash() view returns (bytes32)",
+      "function setRoot(bytes32 newRoot)",
+      "function setValidators(uint256 validFrom, address[] validators)",
+      "function substituteBurn(address burnAddress, bytes32 note_kind, bytes32 hash, uint256 amount, uint256 burnBlockHeight)",
+      "function substitutedBurns(bytes32) view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function usdc() view returns (address)",
+      "function verifyRollup(uint256 height, bytes32 verificationKeyHash, bytes aggrProof, bytes32[] publicInputs, bytes32 otherHashFromBlockHash, tuple(bytes32 r, bytes32 s, uint256 v)[] signatures)",
+      "function version() view returns (uint8)",
+      "function wasBurnSubstituted(address burn_address, bytes32 note_kind, bytes32 hash, uint256 amount) view returns (bool)",
+      "function zkVerifierKeys(uint256) view returns (bytes32)",
+      "function zkVerifiers(bytes32) view returns (address verifier, uint32 messages_length, bool enabled)"
+    ],
+    "eth:0xfE455baCAF1968F1Ae6a322b8Ffbe56840e2f590": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ]
+  },
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "payy/HonkVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "payy/Rollup": "0xf7a0ec4aeecff88c7330666e8c5ed2d09340c14447c657796b7f2c1dd95b1743"
+  },
+  "usedBlockNumbers": { "ethereum": 25831710 },
+  "permissionsConfigHash": "0xf02b2bcd0521c929adad21643818467dd397fac97d3acef5826d5d52a96e80c3"
+}

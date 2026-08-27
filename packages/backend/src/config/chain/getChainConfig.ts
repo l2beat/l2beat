@@ -125,6 +125,7 @@ export async function getChainConfig(
           })
           break
         case 'lighter':
+        case 'payy':
           break
         default:
           assertUnreachable(api)
