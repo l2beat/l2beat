@@ -87,11 +87,10 @@ describe(BlockProvider.name, () => {
 
   describe(BlockProvider.prototype.getBlockNumberAtOrBefore.name, () => {
     it('finds the closest block number to given timestamp', async () => {
-      const client = mockObject<BlockClient>({
-        getLatestBlockNumber: async () => 1000,
-        getBlockWithTransactions: async (n: number) => block(n),
-      })
-
+      const getBlockHeader = mockFn(async (x: number | 'latest') =>
+        header(x === 'latest' ? 1000 : x),
+      )
+      const client = mockObject<BlockClient>({ getBlockHeader })
       const provider = new BlockProvider('chain', [client])
 
       const blockNumber = await provider.getBlockNumberAtOrBefore(
@@ -99,68 +98,151 @@ describe(BlockProvider.name, () => {
       )
 
       expect(blockNumber).toEqual(800)
-      expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
+      expect(getBlockHeader).toHaveBeenCalledWith('latest')
+    })
+
+    it('returns the latest block when timestamp is not earlier', async () => {
+      const getBlockHeader = mockFn(async (x: number | 'latest') =>
+        header(x === 'latest' ? 1000 : x),
+      )
+      const client = mockObject<BlockClient>({ getBlockHeader })
+      const provider = new BlockProvider('chain', [client])
+
+      const blockNumber = await provider.getBlockNumberAtOrBefore(
+        UnixTime(1000 * 100 + 5),
+      )
+
+      expect(blockNumber).toEqual(1000)
+      expect(getBlockHeader).toHaveBeenOnlyCalledWith('latest')
+    })
+
+    it('respects the start lower bound', async () => {
+      const requested: (number | 'latest')[] = []
+      const client = mockObject<BlockClient>({
+        getBlockHeader: async (x) => {
+          requested.push(x)
+          return header(x === 'latest' ? 1000 : x)
+        },
+      })
+      const provider = new BlockProvider('chain', [client])
+
+      const blockNumber = await provider.getBlockNumberAtOrBefore(
+        UnixTime(800 * 100),
+        700,
+      )
+
+      expect(blockNumber).toEqual(800)
+      const numbers = requested.filter(
+        (x): x is number => typeof x === 'number',
+      )
+      expect(Math.min(...numbers)).toBeGreaterThanOrEqual(700)
+    })
+
+    it('ignores a start above the latest block', async () => {
+      const client = mockObject<BlockClient>({
+        getBlockHeader: async (x) => header(x === 'latest' ? 1000 : x),
+      })
+      const provider = new BlockProvider('chain', [client])
+
+      const blockNumber = await provider.getBlockNumberAtOrBefore(
+        UnixTime(800 * 100),
+        1500,
+      )
+
+      expect(blockNumber).toEqual(800)
+    })
+
+    it('reuses known headers to shrink a later, nearby search', async () => {
+      const getBlockHeader = mockFn(async (x: number | 'latest') =>
+        header(x === 'latest' ? 1000 : x),
+      )
+      const client = mockObject<BlockClient>({ getBlockHeader })
+      const provider = new BlockProvider('chain', [client])
+
+      await provider.getBlockNumberAtOrBefore(UnixTime(500 * 100))
+      const firstCalls = getBlockHeader.calls.length
+
+      getBlockHeader.calls.length = 0
+      const blockNumber = await provider.getBlockNumberAtOrBefore(
+        UnixTime(505 * 100),
+      )
+
+      expect(blockNumber).toEqual(505)
+      // latest + a handful of probes bracketed by cached headers, never block 1
+      const numbers = getBlockHeader.calls
+        .map((c) => c.args[0])
+        .filter((x): x is number => typeof x === 'number')
+      expect(Math.min(...numbers)).toBeGreaterThan(1)
+      expect(getBlockHeader.calls.length).toBeLessThan(firstCalls)
+    })
+
+    it('handles a sequence of non-consecutive timestamps', async () => {
+      const client = mockObject<BlockClient>({
+        getBlockHeader: async (x) => header(x === 'latest' ? 1000 : x),
+      })
+      const provider = new BlockProvider('chain', [client])
+
+      for (const target of [800, 300, 600, 950, 100]) {
+        expect(
+          await provider.getBlockNumberAtOrBefore(UnixTime(target * 100)),
+        ).toEqual(target)
+      }
     })
 
     it('calls other client when there are errors', async () => {
-      const client = mockObject<BlockClient>({
-        getLatestBlockNumber: async () => 1000,
-        getBlockWithTransactions: mockFn().rejectsWith(new Error('error')),
-      })
-
-      const client2 = mockObject<BlockClient>({
-        getLatestBlockNumber: async () => 1000,
-        getBlockWithTransactions: async (n: number) => block(n),
-      })
-
-      const provider = new BlockProvider('chain', [client, client2])
+      const failing = mockFn().rejectsWith(new Error('error'))
+      const working = mockFn(async (x: number | 'latest') =>
+        header(x === 'latest' ? 1000 : x),
+      )
+      const provider = new BlockProvider('chain', [
+        mockObject<BlockClient>({ getBlockHeader: failing }),
+        mockObject<BlockClient>({ getBlockHeader: working }),
+      ])
 
       const blockNumber = await provider.getBlockNumberAtOrBefore(
         UnixTime(800 * 100),
       )
 
       expect(blockNumber).toEqual(800)
-      expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
-      expect(client2.getLatestBlockNumber).toHaveBeenCalledTimes(1)
-    })
-
-    it('falls back to 0 when start is above client latest', async () => {
-      const client = mockObject<BlockClient>({
-        getLatestBlockNumber: async () => 500,
-        getBlockWithTransactions: async (n: number) => block(n),
-      })
-
-      const provider = new BlockProvider('chain', [client])
-
-      const blockNumber = await provider.getBlockNumberAtOrBefore(
-        UnixTime(300 * 100),
-        800,
-      )
-
-      expect(blockNumber).toEqual(300)
-      expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
+      expect(failing).toHaveBeenCalledTimes(1)
+      expect(working).toHaveBeenCalledWith('latest')
     })
 
     it('throws error when run out of fallbacks', async () => {
-      const client = mockObject<BlockClient>({
-        getLatestBlockNumber: mockFn().rejectsWith(new Error('1')),
-      })
-      const client2 = mockObject<BlockClient>({
-        getLatestBlockNumber: mockFn().rejectsWith(new Error('2')),
-      })
-      const client3 = mockObject<BlockClient>({
-        getLatestBlockNumber: mockFn().rejectsWith(new Error('3')),
-      })
-
-      const provider = new BlockProvider('chain', [client, client2, client3])
+      const failing = [1, 2, 3].map((i) =>
+        mockFn().rejectsWith(new Error(i.toString())),
+      )
+      const provider = new BlockProvider(
+        'chain',
+        failing.map((getBlockHeader) =>
+          mockObject<BlockClient>({ getBlockHeader }),
+        ),
+      )
 
       await expect(
         async () => await provider.getBlockNumberAtOrBefore(UnixTime(800)),
       ).toBeRejectedWith('3')
 
-      expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
-      expect(client2.getLatestBlockNumber).toHaveBeenCalledTimes(1)
-      expect(client3.getLatestBlockNumber).toHaveBeenCalledTimes(1)
+      for (const getBlockHeader of failing) {
+        expect(getBlockHeader).toHaveBeenCalledTimes(1)
+      }
+    })
+
+    it('evicts the oldest headers past the cap', async () => {
+      const getBlockHeader = mockFn(async (x: number | 'latest') =>
+        header(x === 'latest' ? 100_000 : x),
+      )
+      const client = mockObject<BlockClient>({ getBlockHeader })
+      const provider = new BlockProvider('chain', [client], 8)
+
+      for (let i = 1; i <= 40; i++) {
+        await provider.getBlockNumberAtOrBefore(UnixTime(i * 1000 * 100))
+      }
+
+      // still correct after many evictions
+      expect(
+        await provider.getBlockNumberAtOrBefore(UnixTime(5000 * 100)),
+      ).toEqual(5000)
     })
   })
 })

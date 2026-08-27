@@ -3,9 +3,15 @@ import type { BlockClient, BlockHeader } from '../../clients'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 
 export class BlockProvider {
+  // Headers resolved by earlier timestamp searches, kept so later searches can
+  // seed the interpolation from the closest known block instead of block 1 —
+  // even when consumers ask for non-consecutive timestamps.
+  private readonly knownHeaders = new Map<number, BlockHeader>()
+
   constructor(
     readonly chain: string,
     private readonly clients: BlockClient[],
+    private readonly maxKnownHeaders = 1024,
   ) {
     assert(clients.length > 0, 'Clients cannot be empty')
   }
@@ -53,16 +59,44 @@ export class BlockProvider {
     start = 1,
   ): Promise<number> {
     return await this.tryClients(async (client) => {
-      const end = await client.getLatestBlockNumber()
-      const effectiveStart = start >= end ? 1 : start
+      const getHeader = async (x: number | 'latest') => {
+        const cached = x !== 'latest' ? this.knownHeaders.get(x) : undefined
+        if (cached) return cached
+        const header = await client.getBlockHeader(x)
+        assertBlockNumber(header, x)
+        this.remember(header)
+        return header
+      }
 
-      return await getBlockNumberAtOrBefore(
-        timestamp,
-        effectiveStart,
-        end,
-        (number: number) => client.getBlockWithTransactions(number),
-      )
+      const latest = await getHeader('latest')
+      if (timestamp >= latest.timestamp) return latest.number
+
+      // Narrow the search to the tightest bracket of already-known headers.
+      // Block timestamps increase with block number, so any known header at or
+      // before the target is a valid lower bound and any known header after it
+      // an upper bound.
+      let lo = start < latest.number ? start : 1
+      let hi = latest.number
+      for (const header of this.knownHeaders.values()) {
+        if (header.number <= lo || header.number >= hi) continue
+        if (header.timestamp <= timestamp) lo = header.number
+        else hi = header.number
+      }
+
+      return await getBlockNumberAtOrBefore(timestamp, lo, hi, getHeader)
     })
+  }
+
+  private remember(header: BlockHeader) {
+    this.knownHeaders.delete(header.number)
+    this.knownHeaders.set(header.number, header)
+    // Evict the least recently inserted headers, which are the lowest blocks
+    // once timestamps march forward
+    while (this.knownHeaders.size > this.maxKnownHeaders) {
+      const oldest = this.knownHeaders.keys().next().value
+      if (oldest === undefined) break
+      this.knownHeaders.delete(oldest)
+    }
   }
 
   private async tryClients<T>(
