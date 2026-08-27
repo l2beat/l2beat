@@ -368,9 +368,6 @@ export type ChainApiConfig =
   | ChainBasicApi<'rpc'>
   | ChainBasicApi<'starknet'>
   | ChainBasicApi<'lighter'>
-  | ChainBasicApi<'zksync'>
-  | ChainBasicApi<'loopring'>
-  | ChainBasicApi<'degate3'>
   | ChainBasicApi<'fuel'>
   | ChainBasicApi<'svm-rpc'>
   | ChainBasicApi<'aztec-rpc'>
