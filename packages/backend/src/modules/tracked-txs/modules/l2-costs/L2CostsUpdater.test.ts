@@ -145,6 +145,32 @@ describe(L2CostsUpdater.name, () => {
       expect(result).toEqualUnsorted(expected)
     })
 
+    it('keeps one cost when a transaction matches a configuration multiple times', () => {
+      const repository = getMockL2CostsRepository()
+      const blobPriceProvider = getMockBlobPriceProvider()
+      const updater = new L2CostsUpdater(
+        mockObject<Database>({ l2Cost: repository }),
+        Logger.SILENT,
+        blobPriceProvider,
+      )
+      const transaction = {
+        ...getMockTrackedTxResults()[0],
+        hash: '0x5335f04aaa9c23b1950f50a62e2c880ec612bc61d4f76d37a65520c197dc7820',
+        input: '0x069d1525-epoch-1',
+        type: 'l2costs' as const,
+      }
+      const duplicate = {
+        ...transaction,
+        input: '0x069d1525-epoch-2',
+      }
+
+      const result = updater.transform([transaction, duplicate], new Map())
+
+      expect(result).toHaveLength(1)
+      expect(result[0].configurationId).toEqual(transaction.id)
+      expect(result[0].txHash).toEqual(transaction.hash)
+    })
+
     it('throws error when blob price is missing for transaction with blob hashes', () => {
       const repository = getMockL2CostsRepository()
       const blobPriceProvider = getMockBlobPriceProvider()

@@ -22,8 +22,16 @@ export class LivenessUpdater implements TxUpdaterInterface<'liveness'> {
     }
 
     const transformedTransactions = this.transformTransactions(transactions)
+    const deduplicated = transactions.length - transformedTransactions.length
+    if (deduplicated > 0) {
+      this.logger.info('Deduplicated liveness transactions', {
+        count: deduplicated,
+      })
+    }
     await this.db.liveness.insertMany(transformedTransactions)
-    this.logger.info('Updated liveness', { count: transactions.length })
+    this.logger.info('Updated liveness', {
+      count: transformedTransactions.length,
+    })
   }
 
   async deleteFromById(id: TrackedTxId, fromInclusive: UnixTime) {
@@ -31,7 +39,9 @@ export class LivenessUpdater implements TxUpdaterInterface<'liveness'> {
   }
 
   transformTransactions(transactions: TrackedTxResult[]): LivenessRecord[] {
-    return transactions.map((transaction) => {
+    const records = new Map<string, LivenessRecord>()
+
+    for (const transaction of transactions) {
       const record: LivenessRecord = {
         timestamp: transaction.blockTimestamp,
         blockNumber: transaction.blockNumber,
@@ -47,7 +57,12 @@ export class LivenessUpdater implements TxUpdaterInterface<'liveness'> {
         record.groupingKey = transaction.groupingKey
       }
 
-      return record
-    })
+      const key = `${record.configurationId}-${record.txHash}-${record.groupingKey ?? ''}`
+      if (!records.has(key)) {
+        records.set(key, record)
+      }
+    }
+
+    return [...records.values()]
   }
 }
