@@ -459,10 +459,13 @@ layout re-runs and the clusters settle without the hidden nodes — an
 invisible node held in the force simulation would still distort its
 cluster's shape, which defeats the point of hiding it. Because that rebuild
 blocks the main thread for seconds, the click is acknowledged before the
-work starts: the radio switches immediately, a loading state covers the
-graph, and the rebuild is deferred until after that paints; the radios stay
-disabled until the graph reports the layout done, so clicks cannot queue up
-faster than rebuilds finish. The header counts report displayed tokens plus
+work starts: the graph renders from a deferred copy of the mode
+(`useDeferredValue`), so the switched radio and a loading overlay paint
+first and the blocking scene build then runs inside React's deferred
+re-render, whose commit shows the new clusters and removes the overlay in
+one step; the radios stay disabled until the deferred copy catches up, so
+clicks cannot queue up faster than rebuilds finish. The header counts report
+displayed tokens plus
 how many the mode hides, so the modes can be compared by switching between
 them. The picker may be simplified once the chain-support decision is made.
 

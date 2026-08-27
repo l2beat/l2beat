@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useMemo, useState } from 'react'
+import { useDeferredValue, useEffect, useMemo, useState } from 'react'
 import { LoadingState } from '~/components/LoadingState'
 import { AppLayout } from '~/layouts/AppLayout'
 import { useTRPC } from '~/react-query/trpc'
@@ -29,17 +29,19 @@ export function TokenRelationsGraphPage() {
   // re-runs the whole layout (and re-fits the camera) — hidden tokens must
   // not distort the force simulation of the clusters they would belong to.
   //
-  // The rebuild blocks the main thread for seconds, so it must not start in
-  // the frame that handles the click: the radio state updates instantly, a
-  // loading overlay covers the graph, and only after that paints (two
-  // animation frames) does the applied mode change and hand the graph its
-  // new payload. The radios stay disabled until the graph reports the
-  // layout done, so clicks cannot pile up faster than rebuilds finish.
+  // The rebuild blocks the main thread for seconds, so the graph renders
+  // from a deferred copy of the mode: a click's urgent render paints the
+  // switched radio and the loading overlay, and React's deferred re-render
+  // then performs the blocking scene build (a useMemo inside
+  // TokenRelationsGraph) and commits the new clusters together with the
+  // overlay's removal. The radios are disabled while the copies differ, so
+  // clicks cannot pile up faster than rebuilds finish. (An urgent update
+  // landing mid-rebuild restarts the deferred render — rare with the overlay
+  // up, and only ever a repeated build, never wrong state.)
   const [withoutRelationsMode, setWithoutRelationsMode] =
     useState<TokensWithoutRelationsDisplayMode>('supported')
-  const [appliedWithoutRelationsMode, setAppliedWithoutRelationsMode] =
-    useState<TokensWithoutRelationsDisplayMode>(withoutRelationsMode)
-  const [isRelayouting, setIsRelayouting] = useState(false)
+  const appliedWithoutRelationsMode = useDeferredValue(withoutRelationsMode)
+  const isRelayouting = appliedWithoutRelationsMode !== withoutRelationsMode
   // Relations deleted while this page is open. The graph payload is not
   // refetched on deletion (see PlanConfirmationDialog) and the layout is not
   // re-run — the deleted edges are simply hidden everywhere they would show.
@@ -98,35 +100,6 @@ export function TokenRelationsGraphPage() {
     changeSelection(undefined)
   }
 
-  function changeWithoutRelationsMode(mode: TokensWithoutRelationsDisplayMode) {
-    setWithoutRelationsMode(mode)
-    if (graph === undefined || graph.nodes.length === 0) {
-      // No graph on screen, so no layout to rebuild — and no mounted graph
-      // that could report a rebuild done. Apply the mode directly.
-      setAppliedWithoutRelationsMode(mode)
-      return
-    }
-    setIsRelayouting(true)
-  }
-
-  // Applies the picked mode only after the switched radio and the loading
-  // overlay have painted: the first animation frame runs before that paint,
-  // the second after it, and only then may the payload change kick off the
-  // blocking layout rebuild.
-  useEffect(() => {
-    if (appliedWithoutRelationsMode === withoutRelationsMode) return
-    let innerFrame: number | undefined
-    const outerFrame = requestAnimationFrame(() => {
-      innerFrame = requestAnimationFrame(() =>
-        setAppliedWithoutRelationsMode(withoutRelationsMode),
-      )
-    })
-    return () => {
-      cancelAnimationFrame(outerFrame)
-      if (innerFrame !== undefined) cancelAnimationFrame(innerFrame)
-    }
-  }, [appliedWithoutRelationsMode, withoutRelationsMode])
-
   useEffect(() => {
     if (
       graph !== undefined &&
@@ -163,7 +136,7 @@ export function TokenRelationsGraphPage() {
             <TokensWithoutRelationsPicker
               value={withoutRelationsMode}
               disabled={isRelayouting}
-              onChange={changeWithoutRelationsMode}
+              onChange={setWithoutRelationsMode}
             />
             <AnomalySwitch
               checked={highlightAnomalies}
@@ -191,7 +164,6 @@ export function TokenRelationsGraphPage() {
                 highlightAnomalies={highlightAnomalies}
                 deletedRelationIds={deletedRelationIds}
                 onSelectionChange={changeSelection}
-                onLayoutComplete={() => setIsRelayouting(false)}
               />
               {isRelayouting && (
                 <LoadingState className="absolute inset-0 z-10 h-full bg-background" />

@@ -60,7 +60,6 @@ export function TokenRelationsGraph({
   highlightAnomalies,
   deletedRelationIds,
   onSelectionChange,
-  onLayoutComplete,
 }: {
   graph: RelationGraph
   selection: RelationGraphSelection | undefined
@@ -68,8 +67,6 @@ export function TokenRelationsGraph({
   highlightAnomalies: boolean
   deletedRelationIds: ReadonlySet<string>
   onSelectionChange: (selection: RelationGraphSelection | undefined) => void
-  /** Called after the blocking scene build whenever `graph` changes. */
-  onLayoutComplete?: () => void
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const tooltipRef = useRef<HTMLDivElement>(null)
@@ -84,6 +81,12 @@ export function TokenRelationsGraph({
     () => getRelationGraphFocus(graph, selection, deletedRelationIds),
     [graph, selection, deletedRelationIds],
   )
+  // Runs the force layout to completion, blocking the main thread for
+  // seconds on large graphs. It lives in render rather than in the lifecycle
+  // effect below so the page can pass `graph` derived from a deferred value:
+  // the urgent render (switched radio, loading overlay) paints first, and
+  // the build then happens inside React's deferred re-render.
+  const scene = useMemo(() => buildRelationGraphScene(graph), [graph])
   // The draw loop reads the latest style inputs through a ref so that the
   // canvas lifecycle effect does not have to re-run on every style change.
   const styleStateRef = useRef({
@@ -93,15 +96,9 @@ export function TokenRelationsGraph({
     selection,
   })
 
-  const onLayoutCompleteRef = useRef(onLayoutComplete)
-
   useEffect(() => {
     onSelectionChangeRef.current = onSelectionChange
   }, [onSelectionChange])
-
-  useEffect(() => {
-    onLayoutCompleteRef.current = onLayoutComplete
-  }, [onLayoutComplete])
 
   useEffect(() => {
     styleStateRef.current = {
@@ -122,7 +119,6 @@ export function TokenRelationsGraph({
     const canvas = canvasElement
     const context = contextOrNull
 
-    const scene = buildRelationGraphScene(graph)
     const theme = resolveTheme(canvas)
     let cameraTransform = d3.zoomIdentity
     let cameraInitialized = false
@@ -415,10 +411,6 @@ export function TokenRelationsGraph({
     })
     observer.observe(canvas)
 
-    // The scene build above is the multi-second blocking part; from here on
-    // the graph only waits for cheap resize/draw callbacks.
-    onLayoutCompleteRef.current?.()
-
     return () => {
       if (frame !== undefined) cancelAnimationFrame(frame)
       observer.disconnect()
@@ -428,7 +420,7 @@ export function TokenRelationsGraph({
       zoomToNodeRef.current = undefined
       setTooltip(undefined)
     }
-  }, [graph])
+  }, [scene])
 
   useEffect(() => {
     if (zoomTarget === undefined) return
