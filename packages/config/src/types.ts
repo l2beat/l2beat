@@ -1476,6 +1476,7 @@ export type InteropPluginName =
   | 'avalanche'
   | 'axelar'
   | 'axelar-its'
+  | 'basesolbridge'
   | 'beefy-bridge'
   | 'ccip'
   | 'cctp-v1'
