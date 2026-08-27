@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ossification dataset charts</title>
+<style>
+@font-face{font-family:"Roboto";src:url("/fonts/roboto/roboto-v48-latin-400.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Roboto";src:url("/fonts/roboto/roboto-v48-latin-500.woff2") format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Roboto";src:url("/fonts/roboto/roboto-v48-latin-700.woff2") format("woff2");font-weight:700;font-display:swap}
+:root{
+  color-scheme: light;
+  --ink:#131215; --ink2:#5f6470; --surface:#fafafa;
+  --grid:#e6e7ec; --axis:#ccd0da; --brand:#9621bf;
+  --s1:#2a5bd8; --s2:#ef43b3; --s3:#ab8000; --s4:#ce66f4;
+  --ghost:#ccd0da; --dim:rgba(95,100,112,.35);
+  --chip:#e6e7ec; --chip-ink:#5f6470;
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --ink:#fafafa; --ink2:#868b98; --surface:#17191f;
+  --grid:#2b303b; --axis:#40444c; --brand:#db8bf7;
+  --s1:#3387ff; --s2:#ef43b3; --s3:#ab8000; --s4:#a65ec4;
+  --ghost:#484d54; --dim:rgba(134,139,152,.35);
+  --chip:#2b303b; --chip-ink:#868b98;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:transparent}
+body{
+  color:var(--ink);
+  font-family:"Roboto","Arial",sans-serif;font-size:13px;line-height:1.4;
+  -webkit-font-smoothing:antialiased;
+}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--ink2);margin:0 0 6px}
+.legend .li{display:inline-flex;align-items:center;gap:6px;font-weight:500}
+.lkey{width:14px;height:0;border-top:3px solid;border-radius:2px}
+.lswatch{width:9px;height:9px;border-radius:3px}
+svg{display:block;width:100%;height:auto}
+svg text{font-family:"Roboto","Arial",sans-serif}
+.tick{font-size:10.5px;fill:var(--ink2);font-variant-numeric:tabular-nums}
+.axl{font-size:10.5px;font-weight:500;letter-spacing:.05em;fill:var(--ink2)}
+.dlabel{font-size:11px;font-weight:500;fill:var(--ink2);paint-order:stroke;stroke:var(--surface);stroke-width:3.5px;stroke-linejoin:round}
+.gl{stroke:var(--grid);stroke-width:1}
+.ax{stroke:var(--axis);stroke-width:1}
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:8px}
+.flabel{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2)}
+.thval{font-size:14px;font-weight:700;min-width:56px;font-variant-numeric:tabular-nums}
+input[type=range]{appearance:none;-webkit-appearance:none;width:min(200px,36vw);height:20px;background:transparent;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:var(--grid)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;background:var(--brand);border:2px solid var(--surface);margin-top:-5px}
+input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:var(--grid)}
+input[type=range]::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--brand);border:2px solid var(--surface)}
+input[type=range]:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px}
+.chips{display:flex;gap:4px;flex-wrap:wrap}
+.chip{font:inherit;font-size:11px;font-weight:500;padding:3px 9px;border-radius:999px;border:none;background:var(--chip);color:var(--chip-ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--brand);color:var(--surface)}
+.chip:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.count{font-size:11px;color:var(--ink2);font-variant-numeric:tabular-nums;margin-left:auto}
+#tip{position:fixed;pointer-events:none;z-index:50;display:none;background:var(--surface);border:1px solid var(--axis);border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.16);padding:7px 9px;font-size:11.5px;max-width:260px}
+#tip .tt{font-weight:700;font-size:12px;margin-bottom:2px}
+#tip .tr{display:flex;align-items:center;gap:6px;margin-top:2px;color:var(--ink2)}
+#tip .tr b{color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums}
+#tip .tk{width:11px;height:0;border-top:3px solid;border-radius:2px;flex:none}
+</style>
+</head>
+<body>
+<div class="legend" id="legend"></div>
+<div id="chart"></div>
+<div class="controls" id="controls"></div>
+<div id="tip" role="status"></div>
+<script>
+"use strict";
+/* rows: [ageSeconds, lossUsd, kindIdx, chainId, ts, protocol, nObsInIncident] */
+const RAW = [[0,2705352.52,3,8453,1771178673,"Moonwell",1],[2,1550000,1,42161,1742415882,"Kinto",1],[12,11836288.02,1,1,1722934139,"Ronin Bridge",1],[12,287062.85,1,1,1751749415,"Neemo (nrETH) StakingManagerL1",1],[12,1049844.91,1,1,1758027731,"USPD",1],[12,90467.78,1,1,1740109499,"Pundi AI",1],[15,4500000,0,42161,1704221618,"Radiant Capital",1],[24,1058620.25,3,1,1723547363,"VOW",1],[77,4885267.73,3,534352,1721379589,"Rho Markets",1],[900,405988.81,0,1,1725500183,"PLN",1],[4180,29239.56,0,8453,1690853013,"Leetswap",1],[5712,10000000,0,1,1750902839,"ResupplyFi",1],[6134,928504.96,1,56,1674104507,"Thoreum Finance",1],[7392,11600000,2,1,1721131595,"LI.FI",1],[12522,19532.98,0,8453,1690853331,"Leetswap",1],[16344,34144874.58,0,1,1650675891,"Akutar NFT",1],[17520,3654454.98,1,1,1709928815,"Unizen",1],[18378,8719125.23,0,250,1731780030,"Polter Finance",1],[18858,80000000,1,1,1632965906,"Compound",1],[22531,8900000,1,56,1680031587,"SafeMoon",1],[32517,35145.31,0,56,1750823338,"Unverified BSC executor 0xb5cb",1],[42346,22883.5,0,8453,1690853291,"Leetswap",1],[43992,1036119.19,1,1,1713943115,"XBridge",1],[44096,205741.4,0,8453,1690852969,"Leetswap",1],[44592,16729.32,0,8453,1690853423,"Leetswap",1],[51048,15151298.9,0,1,1601342441,"Eminence",1],[57882,931525.91,0,56,1628041745,"Wault Finance",1],[73798,18853.33,0,8453,1690853379,"Leetswap",1],[73928,13605.77,0,8453,1690853449,"Leetswap",1],[75495,637681.66,0,1,1581995638,"bZx",1],[79698,1251290.72,0,56,1662602965,"NewFreeDAO",1],[85596,30463.05,1,1,1692452891,"BTC20",1],[89040,800009.32,0,56,1774245553,"BCE",1],[89300,222530.18,0,8453,1690852841,"Leetswap",1],[90167,518869.48,0,56,1693017649,"SVT",1],[91736,1042028.47,0,56,1650525308,"Zeed Finance",1],[92548,1440195.64,0,81457,1718049249,"Bazaar",1],[105174,36072.36,0,8453,1690853109,"Leetswap",1],[106214,954285.0,0,56,1684860210,"CS Token",1],[107995,502963.34,0,56,1701429640,"MetaWin (unverified BSC staking)",1],[115878,31957.84,0,8453,1690853541,"Leetswap",1],[120060,1711485.82,1,1,1727375303,"Bedrock",1],[125233,282426.96,0,59144,1748631114,"Malda",1],[125328,2047635.17,0,1,1676607635,"Dexible",1],[129302,38393187.17,1,1,1613196415,"Alpha Homora",1],[129716,21156.01,0,8453,1690853243,"Leetswap",1],[144451,2964147.83,1,43114,1696656215,"Stars Arena",1],[148612,7780630.43,0,1,1608243881,"Warp Finance",1],[170938,4673883.53,0,56,1751466319,"FPC",1],[173999,327728.38,0,56,1728650125,"P719Token",1],[179976,1438263.79,1,1,1714515551,"PikeFinance",1],[186684,293986.42,0,1,1716938495,"Scroll Network (SCROLL) token",1],[187163,698634.39,0,56,1732453676,"DCF Token",1],[194469,7395118.6,0,42161,1685233492,"Jimbos Protocol",1],[204176,2164822.37,1,56,1654658091,"GYM Network",1],[211032,639901.3,0,1,1698727235,"Unibot",1],[215397,2157126.18,1,56,1746948826,"MBU Token",1],[220077,2812370.14,0,42161,1675984222,"dForce",1],[221796,14486,1,1,1708351223,"Rugged Art",1],[222756,1255949.61,0,1,1776945467,"giddyvaultv3_compound_auth",1],[238080,464103.56,0,1,1707918503,"Miner (ERC-X)",1],[241533,34000000,1,1,1630302287,"Cream Finance",1],[251016,745302.92,0,10,1710389801,"MO",1],[303012,1333.12,0,1,1727078363,"Pesto the Baby King Penguin",1],[305256,3302795.17,2,1,1705432283,"Socket",1],[319265,205445.08,1,56,1625944650,"ChainSwap",1],[321807,7000000,1,1,1605574039,"Origin Dollar",1],[328007,754147.29,2,42161,1731310565,"DeltaPrime",1],[328347,4125532.16,2,43114,1731310543,"DeltaPrime",1],[330492,3347028,0,1,1681007711,"SushiSwap",1],[355231,332253.2,1,56,1687021303,"Midas Capital",1],[363401,301279.55,1,56,1780165447,"AROS",1],[375350,20000000,0,10,1715723763,"Sonne Finance",1],[396589,7152983.67,0,42161,1670690606,"Lodestar Finance",1],[402135,1534753.1,1,250,1647888250,"OneRing Finance",1],[438388,31000000,1,1,1638278871,"MonoX Finance",1],[446480,8168339.83,1,1,1605368190,"Value DeFi",1],[468900,3572.88,0,56,1704236954,"MIC Token",1],[485004,539794.78,0,1,1647762534,"Umbrella Network",1],[496836,2140000,0,1,1698832727,"Onyx Protocol",1],[513144,55943.49,0,1,1699584695,"GROK",1],[516325,1346340.82,0,56,1697033673,"BH",1],[516412,319227.01,0,10,1734993279,"Moonhacker",1],[551685,339644.29,2,1,1581730737,"bZx",1],[564684,33611919.99,0,1,1603680838,"Harvest Finance",1],[565918,989451.69,0,8453,1729813473,"Unnamed Compound fork (Base)",1],[569398,15740419.94,0,250,1651113614,"Deus Finance",1],[584484,92308.06,0,1,1719974843,"unverified_0x452E25",1],[591768,24000,0,1,1710923363,"ParaSwap",1],[592946,298656.94,0,56,1662087762,"ShadowFi",1],[614748,546092.51,0,1,1750860683,"Silo Finance",1],[616859,35798320.48,1,43114,1632170767,"Vee Finance",1],[635448,5108973.34,3,1,1768880435,"Makina Finance",1],[642918,591934.2,0,56,1736265142,"IPC",1],[670614,885272.6,0,42161,1689061525,"Rodeo Finance",1],[687098,8950039.03,0,1,1628578498,"Punk Protocol",1],[701676,12000000,0,1,1711625111,"Prisma Finance",1],[739006,8100000,2,1,1599988201,"bZx",1],[744672,6400000,0,1,1709122199,"Seneca Protocol",1],[777372,270000,0,1,1708654931,"Blueberry Protocol",1],[839724,2212878.3,0,56,1758135745,"NGP",1],[895799,1139456.2,0,1,1615237065,"DODO",1],[902652,7542021.12,2,1,1784778107,"VerusBridge",1],[914214,823417.78,0,56,1681242593,"MetaPoint",1],[947636,501279,0,8453,1733818249,"CloberDEX",1],[983880,482137.58,1,1,1698188027,"Maestro Bot",1],[1003445,979262.06,0,56,1785703811,"MOKE",1],[1005660,1625029.18,1,1,1702773815,"Floor Protocol (Flooring Lab)",1],[1024110,53300000,0,56,1619578972,"Uranium Finance",1],[1058624,904155.92,1,56,1690219418,"Palmswap",1],[1080976,4600000,0,81457,1711032645,"SSS",1],[1113036,629929.32,1,1,1686969707,"Pawnfi",1],[1157670,1102113.65,1,56,1682963441,"Level Finance",1],[1275519,25247248.96,1,1,1620827026,"xToken",2],[1331472,41747693.69,1,56,1621463668,"PancakeBunny",2],[1390941,11072464.49,3,1,1612473160,"Yearn",1],[1398455,732336.01,0,56,1649518714,"GYM Network",1],[1413491,75923910.25,2,1,1650198256,"Beanstalk",1],[1511548,5570000,0,56,1629142811,"XSURGE",1],[1536624,4900000,0,1,1726860659,"Shezmu",1],[1548528,3549199.8,2,1,1689935711,"Conic Finance",1],[1549416,210000,1,1,1722524387,"Convergence Finance",1],[1549452,451915.07,0,1,1731573347,"vETH",1],[1562920,2040805.02,1,1,1605181841,"Akropolis",1],[1578912,932030.35,2,1,1689966095,"Conic Finance",1],[1641696,169577.74,1,1,1707555647,"DN404",1],[1647834,463890.04,1,42161,1715672488,"Predy Finance",1],[1657524,700535.14,0,56,1785686399,"LpdFi",2],[1664388,6500000,1,42161,1683309165,"Deus Finance",1],[1811459,3773147.58,1,1,1656244531,"XCarnival",1],[1844944,343961.83,1,42161,1711666653,"LavaLending",1],[1849224,2356594.95,0,1,1699399463,"Unverified router 0x05f0",1],[1915495,3393834.92,0,1,1604690541,"Cheese Bank",1],[1938065,10080763.46,0,1,1655369278,"Inverse Finance",1],[1944336,772809.16,1,1,1783022759,"Hinkal",1],[1966739,41747693.69,1,56,1621463668,"PancakeBunny",2],[2043946,1002.06,0,250,1659425191,"Reaper Farm",1],[2152656,73325,1,1,1721746439,"Spectra Finance",1],[2234256,69961.51,1,1,1686818459,"DEPUSDT",1],[2294168,465578.32,0,250,1659416878,"Reaper Farm",1],[2342592,4000000,0,1,1668108479,"DFX Finance",1],[2377050,700535.14,0,56,1785686399,"LpdFi",2],[2382213,221822.47,0,250,1659416760,"Reaper Farm",1],[2431668,220000,1,1,1702438235,"HYPR",1],[2469828,1800000,0,1,1720765571,"Dough Finance",1],[2479546,7612038,1,10,1692349893,"Exactly Protocol",1],[2564438,94931.41,0,250,1659416305,"Reaper Farm",1],[2570563,5856713.14,1,56,1620184942,"Value DeFi",1],[2572388,19759355,0,1,1605983844,"Pickle Finance",1],[2611558,518055.82,0,1,1593367391,"Balancer",1],[2650334,596685.5,0,250,1659416450,"Reaper Farm",1],[2718971,46944373.93,1,56,1622315374,"Belt Finance",2],[2724091,4000000,0,1,1630706304,"DAO Maker",1],[2797109,371260,0,1,1596511389,"Opyn",1],[2936257,591659.75,0,56,1785254909,"LULA",1],[2979580,321970.58,0,250,1659416669,"Reaper Farm",1],[2991756,304066.41,0,1,1666329767,"OlympusDao",1],[3030526,5338.11,1,56,1727196179,"MARA (0xc6a8)",1],[3079913,959228.63,1,56,1744656747,"KiloEx",1],[3250092,354472.76,0,1,1743315671,"LeverageSIR",1],[3251011,42000,0,1,1538872770,"SpankChain",1],[3313301,9400000,0,1,1609143076,"Cover Protocol",1],[3341964,731762.72,1,1,1753690919,"SuperRare",1],[3377722,20700000,0,1,1628031222,"Popsicle Finance",1],[3452448,565709.49,0,1,1705087763,"WiseLending",1],[3455856,392764.0,0,1,1777388411,"RWAVault",1],[3534156,3670000,0,1,1769361035,"Aperture Finance",1],[3552782,190000000,1,1,1659389551,"Nomad Bridge",1],[3566267,377642.54,0,56,1781685338,"Little Boy Plus",1],[3641274,4379114.55,0,137,1682678716,"0VIX Protocol",1],[3652369,306440.32,1,42161,1675466814,"Sperax USDs",1],[3674315,46944373.93,1,56,1622315374,"Belt Finance",2],[3778304,1439563.63,0,56,1725972052,"Caterpillar Coin (CUT)",1],[3864204,32087.62,0,1,1699400627,"StakeStone",1],[3869980,86928378.86,1,1,1643319691,"Qubit Finance",1],[4153910,56072614.97,0,1,1466134488,"The DAO",1],[4279795,15000000,0,1,1614445632,"Furucombo",1],[4393757,1115903.66,0,56,1781955063,"OLPC",1],[4395252,2844766.43,1,1,1675353395,"Orion Protocol",1],[4407400,30000000,0,1,1500466695,"Parity",1],[4413476,14500000,1,1,1666859363,"Team Finance",1],[4614185,504557.86,0,56,1689641737,"BNO",1],[4731996,11302955.12,0,56,1649782173,"Elephant Money",1],[4818684,23456997.24,0,1,1718021159,"UwU Lend",1],[4847467,1744418.55,0,137,1675276158,"BonqDAO",1],[4872983,1159609.03,0,56,1649992718,"Rikkei Finance",1],[5032824,3336330.88,0,1,1699642763,"Raft",1],[5083556,4800000,0,56,1624402680,"Eleven Finance",1],[5114023,800000,1,1,1625272990,"ChainSwap",1],[5237440,206903.7,0,8453,1745664225,"ImpermaxV3",1],[5666844,13430000,1,8453,1769369029,"SwapNet",1],[5772324,262280.51,0,1,1697207963,"WiseLending",1],[6158385,144401589.37,0,1,1635342850,"Cream Finance",1],[6241020,835550.63,0,1,1697629739,"Hopelend",1],[6487378,10859319,0,56,1621161380,"bEarn",1],[6728987,291391.55,0,56,1665051350,"RES Token",1],[6881640,13000,1,1,1702256351,"GoodDollar",1],[6931896,776078.27,0,8453,1716694913,"NORMIE",1],[7066558,1780448.59,1,56,1647121956,"Paraluni",1],[7104480,8400000,0,1,1756787903,"Bunni",1],[7200432,27000000,1,1,1725387815,"Penpie",1],[7208920,818675.96,1,56,1716866601,"Trade On Orion",1],[7396128,625140.68,1,1,1702770839,"GoodDollar",1],[7412878,349248.7,1,8453,1712942885,"Sumer Money",1],[7810142,3980000,0,8453,1779689497,"NewMarketTrading",1],[7910954,2230000,1,43114,1697091429,"Platypus Finance",1],[8055252,55234535.17,0,1,1700693711,"KyberSwap Elastic",1],[8056096,9190000,1,43114,1676575014,"Platypus Finance",1],[8807413,7400000,0,10,1681567920,"Hundred Finance",1],[8949108,12000000,0,1,1748432387,"Cork Protocol",1],[9236544,298620.28,0,137,1689060728,"Libertify",1],[9273474,742286.27,0,56,1662652827,"YYDS",1],[9413135,151686683.0,0,1,1509981921,"Parity Wallet Library",1],[9479160,8200000,0,1,1640096295,"Visor Finance",1],[9483100,30000000,0,250,1639849155,"Grim Finance",1],[10225416,879314.39,1,1,1686531995,"Sturdy Finance",1],[10709148,1508457.39,0,1,1671957071,"Rubic",1],[11156085,57969.17,1,56,1785253494,"Pro Token",1],[11187901,273623.0,0,56,1624579645,"xWin Finance",1],[11363580,2349942.09,0,1,1665493715,"TempleDAO",1],[11556263,232239.46,0,1,1587182364,"Uniswap V1",1],[11685564,138969.99,1,1,1707977327,"Particle Trade",1],[11774507,10321276.36,0,1,1651304424,"Saddle Finance",1],[12120375,996846.76,0,1,1665748727,"EFLeverVault",1],[12166280,1098458.66,0,42161,1680630629,"Sentiment",1],[12342987,1393165.0,1,5000,1720963466,"Minterest",1],[12637742,2356794.49,0,56,1652042082,"Fortress Loans",1],[12841308,44700000,0,1,1713510359,"HedgeyFinance",1],[13169064,9000000,0,1,1764537119,"yETH",1],[13604305,80000000,0,1,1651311149,"Rari Fuse",1],[13786344,2127895.33,0,1,1691966087,"Zunami",1],[14174508,295911.91,1,1,1691566463,"EarningFram",1],[14373021,16000000,1,1,1634236663,"Indexed Finance",1],[15179136,324542.83,0,1,1690965899,"Uwerx",1],[15699780,317720.75,0,1,1705943675,"DAO SoulMate",1],[16120025,2994423.98,0,42161,1704339455,"Gamma Strategies",1],[16149966,913382.88,1,137,1774997749,"Whalebit",1],[16521253,1313000,0,42161,1704339102,"Gamma Strategies",1],[16984473,2128000,0,42161,1704339037,"Gamma Strategies",1],[17858966,197000000,2,1,1678697459,"Euler Finance",1],[18102619,572681.67,0,56,1680386222,"Allbridge",1],[18599312,1381492.33,0,1,1642612358,"Multichain",1],[18673283,30500000,2,56,1619887119,"Spartan Protocol",1],[18747657,747936.95,0,1,1670898767,"ElasticSwap",1],[18906952,134983.61,0,56,1685239913,"BabyDogeCoin",2],[19120992,194298.75,0,56,1622155011,"JulSwap",1],[19260056,25247248.96,1,1,1620827026,"xToken",2],[20920056,1376975.3,0,1,1778003435,"Ekubo",1],[21410388,3800000,0,1,1727352119,"OnyxDAO",2],[21467946,390354.71,0,43114,1670898185,"ElasticSwap",1],[21662877,7200000,0,56,1622141686,"BurgerSwap",1],[21725321,2566833.87,0,56,1644070960,"Meter Passport",1],[22185718,25000000,0,1,1587257935,"dForce",1],[22317661,2106269.47,3,250,1652586223,"Scream",1],[25654822,639109.39,0,1,1643972077,"Tecra Space",1],[26068380,6800000,0,59144,1717281449,"Velocore",1],[26142302,448972.51,0,8453,1777157281,"SingularityDynaVault",1],[26429604,11460969.46,0,1,1690722635,"Curve",1],[26960960,5422965.23,0,100,1647339940,"Agave",1],[27146544,22564.29,1,1,1734426335,"GemPad",1],[27932688,3196.8,0,1,1701296999,"Burnt Bubba (LevX FarmingLPToken)",1],[27992200,4317363.9,1,100,1647340120,"Hundred Finance",1],[28128584,14852159.54,0,1,1648897449,"Inverse Finance",1],[28826796,19749.66,0,1,1699656239,"MahaLend",1],[29763628,21000000,0,56,1664649354,"Transit Swap",1],[31287449,611000000,0,1,1628588920,"Poly Network",1],[31517148,6500000,0,1,1706609675,"Abracadabra",1],[32414763,366058.04,0,56,1699815052,"MEV bot 0x8c2d",1],[34739220,297943.48,2,1,1708698935,"Compound v2",1],[39129913,2173500,1,1,1684567511,"Tornado Cash",1],[41749665,8462826.79,0,42161,1709653326,"WOOFi",1],[42039723,226263.72,0,56,1677479141,"LaunchZone / SwapX",1],[43775580,1512.16,1,1,1748988131,"PegaBall",1],[47901060,65076.99,0,1,1693898711,"FloorDAO",1],[48630732,1793766.13,0,1,1759582463,"Abracadabra Money",1],[49752756,3800000,1,1,1727352119,"OnyxDAO",2],[50933424,5890058.97,2,1,1778114855,"TrustedVolumes",1],[51293343,414202.76,0,56,1678850051,"Poolz Finance",1],[52990345,19466180.69,0,1,1690744103,"Curve",1],[53321076,1640350.68,0,1,1702725683,"NFT Trader",1],[53688032,2120000,0,1,1693122959,"Balancer",1],[55283324,1091400.86,0,1,1658616877,"Audius",1],[60943428,121100000,0,1,1762156007,"Balancer",1],[63622237,134983.61,0,56,1685239913,"BabyDogeCoin",2],[64289834,321340.22,0,56,1703938731,"Channels",1],[64538506,74474.04,0,42161,1783929429,"Lumi Finance",1],[65095656,685832.52,0,8453,1787355701,"The Sandbox",1],[65860368,1250000,0,137,1703525020,"Telcoin",1],[68003364,11624229.68,2,1,1779062123,"VerusBridge",1],[68751828,2190000,1,1,1781439983,"Aztec",1],[69470844,4500000,0,1,1741194923,"1inch Fusion v1 Settlement",1],[69593330,51238.32,1,10,1774346443,"Univ3CollateralToken",1],[71856828,110844.04,2,1,1780845995,"Ambient Finance",1],[73102812,14442.4,1,1,1776262763,"xLOOT",1],[73724760,2201243.52,1,1,1781721287,"Aztec",1],[74651820,140180.18,0,137,1778484294,"INKFinance",1],[80743010,859045.97,0,1,1702715099,"NFT Trader",1],[81310402,27146.69,0,1,1686111251,"Compounder Finance",1],[86410930,42213353.03,0,42161,1752064211,"GMX v1",1],[87139181,768261.56,0,56,1701813183,"Bearn DAO",1],[90693912,346780.41,0,1,1736874575,"The Idols NFT",1],[99894647,11649884.28,0,1,1681365155,"Yearn",1],[101430522,261117.33,1,137,1782232072,"RoyalRoyalties",1],[102187798,8187.51,0,1,1697736719,"kTAF (kTeslaAppleFacebook market)",1],[115829043,6532.57,1,1,1755858827,"Unidentified proxy 0x6f7a\u2026ea68",1],[117347168,2971315.46,0,1,1765036835,"Aevo (legacy Ribbon DOV vaults)",1],[119086175,1889436.97,0,1,1710950987,"Dolomite (legacy Ethereum exchange)",1],[120439782,6320.95,0,1,1716282527,"pNetwork",1],[135273351,89577.03,1,1,1773144611,"Alkemi",1],[138931621,4867767.04,0,1,1752066815,"ZKSwap",1],[149749661,26800000,0,1,1767888155,"Truebit",1],[155565516,12296.04,0,1,1782350483,"LixirPermitDrain",1],[158645750,560744.54,0,1,1784941919,"Projekt Reward Vault",1],[163658489,340567.0,0,1,1764663203,"Goldfinch",1],[166149898,7300000,0,56,1780012999,"DxSale",1],[173205221,542144.63,0,1,1784856407,"Lien Finance",3],[173205405,542144.63,0,1,1784856407,"Lien Finance",3],[180132030,542144.63,0,1,1784856407,"Lien Finance",3],[199548948,10782.19,0,1,1722938291,"OMPx",1],[262522555,1576.41,0,1,1744097291,"Laundromat",1]];
+const KINDS = ["deployment","implementation-change","module-change","configuration-change"];
+const KINDCOL = ["--s1","--s2","--s3","--s4"];
+const CHAINS = {1:"Ethereum",10:"OP Mainnet",56:"BNB Chain",100:"Gnosis",137:"Polygon",250:"Fantom",5000:"Mantle",8453:"Base",42161:"Arbitrum",43114:"Avalanche",59144:"Linea",81457:"Blast",534352:"Scroll"};
+const D = RAW.map(r=>({a:r[0],l:r[1],k:r[2],c:r[3],t:r[4],p:r[5],n:r[6]}));
+
+const YEAR=31557600, DAY=86400;
+const AMIN=3600, AMAX=10*YEAR, ALINMAX=8.5*YEAR;
+const clampA=a=>Math.max(AMIN,Math.min(a,AMAX));
+let TH=1000, AGELIN=false;
+const CHART_NAMES=["curve","scatter","kinds"];
+const CHART_PARAM=(location.hash.match(/chart=(\w+)/)||[])[1];
+/* select the canonical constant, so the hash value itself never reaches the dispatch */
+const CHART=CHART_NAMES[Math.max(0,CHART_NAMES.indexOf(CHART_PARAM))];
+const THKEY="l2beat-ossification-threshold";
+
+/* ---------- theme: follow the parent page's .dark class ---------- */
+function detectTheme(){
+  try{
+    if(parent!==window)
+      return parent.document.documentElement.classList.contains("dark")?"dark":"light";
+  }catch(e){}
+  try{
+    const t=localStorage.getItem("theme"); /* next-themes default storage key */
+    if(t==="dark"||t==="light")return t;
+  }catch(e){}
+  return matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";
+}
+function applyTheme(){
+  const t=detectTheme();
+  if(document.documentElement.dataset.theme!==t){document.documentElement.dataset.theme=t;render();}
+}
+try{
+  if(parent!==window)
+    new MutationObserver(applyTheme).observe(parent.document.documentElement,{attributes:true,attributeFilter:["class"]});
+}catch(e){
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change",applyTheme);
+}
+document.documentElement.dataset.theme=detectTheme();
+
+/* ---------- formatting ---------- */
+const fmtUsd=v=>{
+  const u=[["B",1e9],["M",1e6],["K",1e3]];
+  for(const [s,m] of u) if(v>=m){
+    const x=v/m;
+    let str=x>=100?String(Math.round(x)):x>=10?x.toFixed(1):x.toFixed(2);
+    str=str.includes(".")?str.replace(/0+$/,"").replace(/\.$/,""):str;
+    return "$"+str+s;
+  }
+  return "$"+Math.round(v).toLocaleString();
+};
+const fmtAge=s=>{
+  if(s<2*3600)return Math.max(1,Math.round(s/60))+" min";
+  if(s<2*DAY)return Math.round(s/3600)+" h";
+  if(s<90*DAY)return Math.round(s/DAY)+" d";
+  if(s<2*365.25*DAY)return Math.round(s/(30.44*DAY))+" mo";
+  return (s/YEAR).toFixed(1)+" y";
+};
+const fmtDate=ts=>new Date(ts*1000).toLocaleDateString("en-GB",{year:"numeric",month:"short",day:"numeric",timeZone:"UTC"});
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+/* ---------- svg helpers ---------- */
+const NS="http://www.w3.org/2000/svg";
+function el(tag,attrs,parent){
+  const e=document.createElementNS(NS,tag);
+  for(const k in attrs)e.setAttribute(k,attrs[k]);
+  if(parent)parent.appendChild(e);
+  return e;
+}
+function txt(parent,x,y,str,cls,anchor){
+  const t=el("text",{x,y,class:cls||"tick","text-anchor":anchor||"start"},parent);
+  t.textContent=str;return t;
+}
+function mkSvg(W,H){
+  const m=document.getElementById("chart");m.textContent="";
+  return el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img"},m);
+}
+const logS=(v,d0,d1,r0,r1)=>r0+(Math.log(v)-Math.log(d0))/(Math.log(d1)-Math.log(d0))*(r1-r0);
+const logInv=(px,d0,d1,r0,r1)=>Math.exp(Math.log(d0)+(px-r0)/(r1-r0)*(Math.log(d1)-Math.log(d0)));
+const ageX=(v,r0,r1)=>AGELIN?r0+Math.min(v,ALINMAX)/ALINMAX*(r1-r0):logS(clampA(v),AMIN,AMAX,r0,r1);
+const ageInv=(px,r0,r1)=>AGELIN?Math.max(0,(px-r0)/(r1-r0)*ALINMAX):logInv(px,AMIN,AMAX,r0,r1);
+const ageEnd=()=>AGELIN?ALINMAX:AMAX;
+const AGE_TICKS=[[3600,"1h"],[6*3600,"6h"],[DAY,"1d"],[7*DAY,"1w"],[30*DAY,"1mo"],[90*DAY,"3mo"],[YEAR,"1y"],[3*YEAR,"3y"],[10*YEAR,"10y"]];
+const AGE_TICKS_LIN=Array.from({length:9},(_,i)=>[i*YEAR,i?i+"y":"0"]);
+const AGE_TICKS_LIN_SPARSE=[[0,"0"],[2*YEAR,"2y"],[4*YEAR,"4y"],[6*YEAR,"6y"],[8*YEAR,"8y"]];
+const ageTicks=()=>AGELIN?AGE_TICKS_LIN:AGE_TICKS;
+const USD_TICKS=[[1e3,"$1K"],[1e4,"$10K"],[1e5,"$100K"],[1e6,"$1M"],[1e7,"$10M"],[1e8,"$100M"],[1e9,"$1B"]];
+
+/* ---------- tooltip ---------- */
+const tip=document.getElementById("tip");
+function tipShow(evt,title,rows){
+  tip.textContent="";
+  const tt=document.createElement("div");tt.className="tt";tt.textContent=title;tip.appendChild(tt);
+  for(const r of rows){
+    const d=document.createElement("div");d.className="tr";
+    if(r.color){const k=document.createElement("span");k.className="tk";k.style.borderTopColor=r.color;d.appendChild(k);}
+    const b=document.createElement("b");b.textContent=r.value;d.appendChild(b);
+    const lbl=document.createElement("span");lbl.textContent=r.label;d.appendChild(lbl);
+    tip.appendChild(d);
+  }
+  tip.style.display="block";
+  const pad=12,w=tip.offsetWidth,h=tip.offsetHeight;
+  let x=evt.clientX+pad,y=evt.clientY+pad;
+  if(x+w>innerWidth-6)x=evt.clientX-w-pad;
+  if(y+h>innerHeight-6)y=Math.max(4,evt.clientY-h-pad);
+  tip.style.left=x+"px";tip.style.top=y+"px";
+}
+const tipHide=()=>{tip.style.display="none";};
+function svgPt(svg,evt,W,H){
+  const r=svg.getBoundingClientRect();
+  return [(evt.clientX-r.left)/r.width*W,(evt.clientY-r.top)/r.height*H];
+}
+
+/* ---------- shared pieces ---------- */
+function ecdfPoints(rows,weightFn){
+  const pts=rows.map(d=>({x:clampA(d.a),w:weightFn(d)})).sort((p,q)=>p.x-q.x);
+  const tot=pts.reduce((a,p)=>a+p.w,0);
+  let c=0;const out=[];
+  for(const p of pts){c+=p.w;out.push([p.x,c/tot]);}
+  return out;
+}
+function stepPath(pts,X,Y){
+  if(!pts.length)return "";
+  let d=`M${X(pts[0][0])},${Y(0)}`,py=0;
+  for(const [x,y] of pts){d+=`L${X(x)},${Y(py)}L${X(x)},${Y(y)}`;py=y;}
+  d+=`L${X(ageEnd())},${Y(py)}`;
+  return d;
+}
+function drawAgeAxis(svg,X,Y0,pl,pr,W){
+  for(const [v,lab] of ageTicks()){
+    const x=X(v);
+    el("line",{x1:x,y1:14,x2:x,y2:Y0,class:"gl"},svg);
+    txt(svg,x,Y0+15,lab,"tick","middle");
+  }
+  el("line",{x1:pl,y1:Y0,x2:W-pr,y2:Y0,class:"ax"},svg);
+}
+function legendRow(items){
+  const leg=document.getElementById("legend");leg.textContent="";
+  for(const [kind,color,label] of items){
+    const li=document.createElement("span");li.className="li";
+    const k=document.createElement("span");k.className=kind;
+    if(kind==="lkey")k.style.borderColor=color;else k.style.background=color;
+    li.appendChild(k);li.appendChild(document.createTextNode(label));
+    leg.appendChild(li);
+  }
+}
+const filtered=()=>D.filter(d=>d.l>=TH);
+
+/* ================= curve ================= */
+function renderCurve(){
+  const rows=filtered();
+  const W=720,H=340,pl=42,pr=16,pt=14,pb=30;
+  const svg=mkSvg(W,H);
+  const X=v=>ageX(v,pl,W-pr);
+  const Y=v=>H-pb-v*(H-pt-pb);
+  for(let p=0;p<=100;p+=25){
+    el("line",{x1:pl,y1:Y(p/100),x2:W-pr,y2:Y(p/100),class:"gl"},svg);
+    txt(svg,pl-6,Y(p/100)+3.5,p+"%","tick","end");
+  }
+  drawAgeAxis(svg,X,Y(0),pl,pr,W);
+  txt(svg,W-pr,H-2,"code age at exploit →","axl","end");
+  const items=[["lkey",css("--s1"),"share of exploits"],["lkey",css("--s2"),"share of loss"]];
+  if(TH>1000)items.push(["lkey",css("--ghost"),"exploits at $1K baseline"]);
+  legendRow(items);
+  const cPts=ecdfPoints(rows,()=>1);
+  const lPts=ecdfPoints(rows,d=>d.l/d.n);
+  if(TH>1000)
+    el("path",{d:stepPath(ecdfPoints(D,()=>1),X,Y),fill:"none",stroke:css("--ghost"),"stroke-width":2,"stroke-linejoin":"round"},svg);
+  const at=(pts,x)=>{let y=0;for(const [px,py] of pts){if(px<=x)y=py;else break;}return y;};
+  if(rows.length){
+    el("path",{d:stepPath(lPts,X,Y),fill:"none",stroke:css("--s2"),"stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"},svg);
+    el("path",{d:stepPath(cPts,X,Y),fill:"none",stroke:css("--s1"),"stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"},svg);
+    let bestX=30*DAY,bestGap=-1;
+    for(let px=pl+40;px<=W-pr-40;px+=8){
+      const x=ageInv(px,pl,W-pr),g=Math.abs(at(cPts,x)-at(lPts,x));
+      if(g>bestGap){bestGap=g;bestX=x;}
+    }
+    const cy=at(cPts,bestX),ly=at(lPts,bestX);
+    txt(svg,X(bestX),Y(cy)-(cy>=ly?8:-14),"exploits","dlabel","middle").style.fill=css("--s1");
+    txt(svg,X(bestX),Y(ly)+(cy>=ly?14:-8),"loss","dlabel","middle").style.fill=css("--s2");
+  }
+  const cross=el("line",{x1:0,y1:pt,x2:0,y2:Y(0),class:"ax",visibility:"hidden"},svg);
+  const hit=el("rect",{x:pl,y:pt,width:W-pl-pr,height:H-pt-pb,fill:"transparent"},svg);
+  hit.addEventListener("pointermove",evt=>{
+    const [mx]=svgPt(svg,evt,W,H);
+    const x=Math.max(pl,Math.min(W-pr,mx));
+    cross.setAttribute("x1",x);cross.setAttribute("x2",x);cross.setAttribute("visibility","visible");
+    const age=ageInv(x,pl,W-pr);
+    const cv=at(cPts,age),lv=at(lPts,age);
+    tipShow(evt,"code age ≤ "+fmtAge(age),[
+      {color:css("--s1"),value:Math.round(cv*100)+"%",label:"of exploits ("+Math.round(cv*rows.length)+" of "+rows.length+")"},
+      {color:css("--s2"),value:Math.round(lv*100)+"%",label:"of stolen USD"},
+    ]);
+  });
+  hit.addEventListener("pointerleave",()=>{cross.setAttribute("visibility","hidden");tipHide();});
+}
+
+/* ================= scatter ================= */
+function renderScatter(){
+  const W=720,H=420,pl=50,pr=16,pt=24,pb=30;
+  const svg=mkSvg(W,H);
+  const X=v=>ageX(v,pl,W-pr);
+  const LMIN=1e3,LMAX=1e9;
+  const Y=v=>H-pb-(Math.log(Math.max(LMIN,Math.min(v,LMAX)))-Math.log(LMIN))/(Math.log(LMAX)-Math.log(LMIN))*(H-pt-pb);
+  legendRow([["lswatch",css("--s1"),"observation"],["lkey",css("--s2"),"trend-line (least-squares fit, log loss on log age)"]]);
+  for(const [v,lab] of USD_TICKS){
+    el("line",{x1:pl,y1:Y(v),x2:W-pr,y2:Y(v),class:"gl"},svg);
+    txt(svg,pl-6,Y(v)+3.5,lab,"tick","end");
+  }
+  drawAgeAxis(svg,X,H-pb,pl,pr,W);
+  txt(svg,W-pr,H-2,"code age at exploit →","axl","end");
+  txt(svg,pl,10,"incident loss","axl");
+  if(TH>1000){
+    el("line",{x1:pl,y1:Y(TH),x2:W-pr,y2:Y(TH),stroke:css("--ink2"),"stroke-width":1.5,"stroke-dasharray":"5 4"},svg);
+    txt(svg,W-pr-4,Y(TH)-5,"threshold "+fmtUsd(TH),"dlabel","end");
+  }
+  const pts=[];
+  const dim=css("--dim"),blue=css("--s1"),surf=css("--surface");
+  for(const d of D){
+    const sel=d.l>=TH;
+    const c=el("circle",{cx:X(d.a),cy:Y(d.l),r:4,fill:sel?blue:dim,stroke:surf,"stroke-width":2,"fill-opacity":sel?.85:1},svg);
+    pts.push({x:X(d.a),y:Y(d.l),d,c});
+  }
+  /* OLS fit of log(loss) on log(age), drawn only across the admitted age range */
+  const sel=D.filter(d=>d.l>=TH);
+  if(sel.length>=10){
+    const lx=sel.map(d=>Math.log(Math.max(d.a,1))),ly=sel.map(d=>Math.log(d.l));
+    const mx=lx.reduce((a,b)=>a+b)/lx.length,my=ly.reduce((a,b)=>a+b)/ly.length;
+    const slope=lx.reduce((s,x,i)=>s+(x-mx)*(ly[i]-my),0)/lx.reduce((s,x)=>s+(x-mx)**2,0);
+    const fit=age=>Math.exp(my+slope*(Math.log(Math.max(age,1))-mx));
+    const x0=ageX(Math.min(...sel.map(d=>d.a)),pl,W-pr),x1=ageX(Math.max(...sel.map(d=>d.a)),pl,W-pr);
+    const path=[];
+    for(let px=x0;px<=x1;px+=8)path.push(px+","+Y(fit(ageInv(px,pl,W-pr))));
+    el("path",{d:"M"+path.join("L"),fill:"none",stroke:css("--s2"),"stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"},svg);
+  }
+  const selPts=pts.filter(p=>p.d.l>=TH);
+  if(selPts.length){
+    const top=selPts.reduce((a,b)=>b.d.l>a.d.l?b:a);
+    txt(svg,top.x,top.y-8,top.d.p,"dlabel","middle");
+  }
+  const hit=el("rect",{x:0,y:0,width:W,height:H,fill:"transparent"},svg);
+  let hov=null;
+  hit.addEventListener("pointermove",evt=>{
+    const [mx,my]=svgPt(svg,evt,W,H);
+    let best=null,bd=24*24;
+    for(const p of pts){const dx=p.x-mx,dy=p.y-my,dd=dx*dx+dy*dy;if(dd<bd){bd=dd;best=p;}}
+    if(hov&&hov!==best){hov.c.setAttribute("r",4);hov=null;}
+    if(best){
+      hov=best;best.c.setAttribute("r",6);
+      tipShow(evt,best.d.p,[
+        {value:fmtUsd(best.d.l),label:"incident loss"},
+        {value:fmtAge(best.d.a),label:"code age · "+KINDS[best.d.k]},
+        {value:fmtDate(best.d.t),label:CHAINS[best.d.c]||("chain "+best.d.c)},
+      ]);
+    }else tipHide();
+  });
+  hit.addEventListener("pointerleave",()=>{if(hov){hov.c.setAttribute("r",4);hov=null;}tipHide();});
+}
+
+/* ================= kinds ================= */
+function renderKinds(){
+  const rows=filtered();
+  const W=720,H=320,pl=42,pr=16,pt=16,pb=30;
+  const svg=mkSvg(W,H);
+  const X=v=>ageX(v,pl,W-pr);
+  const Y=v=>H-pb-v*(H-pt-pb);
+  for(let p=0;p<=100;p+=50){
+    el("line",{x1:pl,y1:Y(p/100),x2:W-pr,y2:Y(p/100),class:"gl"},svg);
+    txt(svg,pl-6,Y(p/100)+3.5,p+"%","tick","end");
+  }
+  const AX=AGELIN?AGE_TICKS_LIN_SPARSE:[[3600,"1h"],[DAY,"1d"],[30*DAY,"1mo"],[YEAR,"1y"],[10*YEAR,"10y"]];
+  for(const [v,lab] of AX){
+    el("line",{x1:X(v),y1:pt,x2:X(v),y2:Y(0),class:"gl"},svg);
+    txt(svg,X(v),Y(0)+15,lab,"tick","middle");
+  }
+  el("line",{x1:pl,y1:Y(0),x2:W-pr,y2:Y(0),class:"ax"},svg);
+  const series=[],legItems=[];
+  KINDS.forEach((name,ki)=>{
+    const sub=rows.filter(d=>d.k===ki);
+    legItems.push(["lkey",css(KINDCOL[ki]),name+" ("+sub.length+")"]);
+    if(sub.length<2)return;
+    const pts=ecdfPoints(sub,()=>1);
+    el("path",{d:stepPath(pts,X,Y),fill:"none",stroke:css(KINDCOL[ki]),"stroke-width":2,"stroke-linejoin":"round"},svg);
+    series.push({name,ki,pts,n:sub.length});
+  });
+  legendRow(legItems);
+  const anchors=[0.30,0.52,0.70,0.86];
+  series.forEach((s,i)=>{
+    const x=ageInv(pl+anchors[i%4]*(W-pl-pr),pl,W-pr);
+    let y=0;for(const [px,py] of s.pts){if(px<=x)y=py;else break;}
+    txt(svg,X(x),Y(y)-6,s.name.replace("-change",""),"dlabel","middle").style.fill=css(KINDCOL[s.ki]);
+  });
+  const cross=el("line",{x1:0,y1:pt,x2:0,y2:Y(0),class:"ax",visibility:"hidden"},svg);
+  const hit=el("rect",{x:pl,y:pt,width:W-pl-pr,height:H-pt-pb,fill:"transparent"},svg);
+  hit.addEventListener("pointermove",evt=>{
+    const [mx]=svgPt(svg,evt,W,H);
+    const x=Math.max(pl,Math.min(W-pr,mx));
+    cross.setAttribute("x1",x);cross.setAttribute("x2",x);cross.setAttribute("visibility","visible");
+    const age=ageInv(x,pl,W-pr);
+    tipShow(evt,"code age ≤ "+fmtAge(age),series.map(s=>{
+      let y=0;for(const [px,py] of s.pts){if(px<=age)y=py;else break;}
+      return {color:css(KINDCOL[s.ki]),value:Math.round(y*100)+"%",label:s.name+" (n="+s.n+")"};
+    }));
+  });
+  hit.addEventListener("pointerleave",()=>{cross.setAttribute("visibility","hidden");tipHide();});
+}
+
+/* ================= controls ================= */
+const RENDERERS={curve:renderCurve,scatter:renderScatter,kinds:renderKinds};
+const PRESETS=[1e3,1e4,1e5,1e6,1e7,1e8];
+let slider,thval,chipbox,axbox,countEl;
+function buildControls(){
+  const box=document.getElementById("controls");box.textContent="";
+  const l=document.createElement("span");l.className="flabel";l.textContent="Loss threshold";box.appendChild(l);
+  thval=document.createElement("span");thval.className="thval";box.appendChild(thval);
+  slider=document.createElement("input");slider.type="range";slider.min="0";slider.max="120";slider.step="1";
+  slider.setAttribute("aria-label","Minimum loss in USD, logarithmic");
+  slider.addEventListener("input",()=>setThreshold(Math.pow(10,3+slider.value/20)));
+  box.appendChild(slider);
+  chipbox=document.createElement("span");chipbox.className="chips";
+  for(const v of PRESETS){
+    const b=document.createElement("button");b.className="chip";b.type="button";b.textContent=fmtUsd(v);
+    b.addEventListener("click",()=>setThreshold(v));
+    chipbox.appendChild(b);
+  }
+  box.appendChild(chipbox);
+  axbox=document.createElement("span");axbox.className="chips";
+  [["log",false],["linear",true]].forEach(([lab,lin])=>{
+    const b=document.createElement("button");b.className="chip";b.type="button";b.textContent=lab;
+    b.addEventListener("click",()=>{if(AGELIN!==lin){AGELIN=lin;render();}});
+    axbox.appendChild(b);
+  });
+  box.appendChild(axbox);
+  countEl=document.createElement("span");countEl.className="count";box.appendChild(countEl);
+}
+function syncControls(){
+  thval.textContent=fmtUsd(TH);
+  slider.value=Math.round((Math.log10(TH)-3)*20);
+  [...chipbox.children].forEach((c,i)=>c.setAttribute("aria-pressed",PRESETS[i]===TH?"true":"false"));
+  [...axbox.children].forEach((c,i)=>c.setAttribute("aria-pressed",(i===1)===AGELIN?"true":"false"));
+  countEl.textContent=filtered().length+" / 320 observations ≥ "+fmtUsd(TH);
+}
+function roundTh(th){
+  const m=Math.pow(10,Math.floor(Math.log10(th)));
+  return Math.round(th/(m/10))*(m/10);
+}
+let raf=0;
+function render(){
+  syncControls();
+  cancelAnimationFrame(raf);
+  raf=requestAnimationFrame(()=>{
+    if(Object.prototype.hasOwnProperty.call(RENDERERS,CHART))RENDERERS[CHART]();
+  });
+}
+function setThreshold(th){
+  TH=Math.max(1000,Math.min(1e9,roundTh(th)));
+  try{localStorage.setItem(THKEY,String(TH));}catch(e){}
+  render();
+}
+addEventListener("storage",e=>{
+  if(e.key===THKEY&&e.newValue){
+    const v=+e.newValue;
+    if(v>=1000&&v!==TH){TH=v;render();}
+  }
+  if(e.key==="theme")applyTheme();
+});
+try{
+  const saved=+localStorage.getItem(THKEY);
+  if(saved>=1000&&saved<=1e9)TH=saved;
+}catch(e){}
+buildControls();
+render();
+</script>
+</body>
+</html>
