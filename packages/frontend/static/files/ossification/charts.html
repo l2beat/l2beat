@@ -275,7 +275,7 @@ function renderScatter(){
   const X=v=>ageX(v,pl,W-pr);
   const LMIN=1e3,LMAX=1e9;
   const Y=v=>H-pb-(Math.log(Math.max(LMIN,Math.min(v,LMAX)))-Math.log(LMIN))/(Math.log(LMAX)-Math.log(LMIN))*(H-pt-pb);
-  legendRow([["lswatch",css("--s1"),"observation"],["lkey",css("--s2"),"rolling median loss"]]);
+  legendRow([["lswatch",css("--s1"),"observation"],["lkey",css("--s2"),"trend-line (least-squares fit, log loss on log age)"]]);
   for(const [v,lab] of USD_TICKS){
     el("line",{x1:pl,y1:Y(v),x2:W-pr,y2:Y(v),class:"gl"},svg);
     txt(svg,pl-6,Y(v)+3.5,lab,"tick","end");
@@ -294,19 +294,17 @@ function renderScatter(){
     const c=el("circle",{cx:X(d.a),cy:Y(d.l),r:4,fill:sel?blue:dim,stroke:surf,"stroke-width":2,"fill-opacity":sel?.85:1},svg);
     pts.push({x:X(d.a),y:Y(d.l),d,c});
   }
+  /* OLS fit of log(loss) on log(age), drawn only across the admitted age range */
   const sel=D.filter(d=>d.l>=TH);
-  if(sel.length>=20){
-    const hw=Math.log(10)/2,path=[];
-    for(let px=pl;px<=W-pr;px+=8){
-      const x=ageInv(px,pl,W-pr),lx=Math.log(Math.max(x,1));
-      const win=sel.filter(d=>Math.abs(Math.log(Math.max(d.a,1))-lx)<=hw).map(d=>d.l).sort((a,b)=>a-b);
-      if(win.length>=10){
-        const m=win.length%2?win[(win.length-1)/2]:(win[win.length/2-1]+win[win.length/2])/2;
-        path.push(px+","+Y(m));
-      }
-    }
-    if(path.length>1)
-      el("path",{d:"M"+path.join("L"),fill:"none",stroke:css("--s2"),"stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"},svg);
+  if(sel.length>=10){
+    const lx=sel.map(d=>Math.log(Math.max(d.a,1))),ly=sel.map(d=>Math.log(d.l));
+    const mx=lx.reduce((a,b)=>a+b)/lx.length,my=ly.reduce((a,b)=>a+b)/ly.length;
+    const slope=lx.reduce((s,x,i)=>s+(x-mx)*(ly[i]-my),0)/lx.reduce((s,x)=>s+(x-mx)**2,0);
+    const fit=age=>Math.exp(my+slope*(Math.log(Math.max(age,1))-mx));
+    const x0=ageX(Math.min(...sel.map(d=>d.a)),pl,W-pr),x1=ageX(Math.max(...sel.map(d=>d.a)),pl,W-pr);
+    const path=[];
+    for(let px=x0;px<=x1;px+=8)path.push(px+","+Y(fit(ageInv(px,pl,W-pr))));
+    el("path",{d:"M"+path.join("L"),fill:"none",stroke:css("--s2"),"stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"},svg);
   }
   const selPts=pts.filter(p=>p.d.l>=TH);
   if(selPts.length){
