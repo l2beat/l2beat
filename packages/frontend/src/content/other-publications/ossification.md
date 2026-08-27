@@ -15,7 +15,7 @@ On blockchains like Ethereum, code age can be an even stronger signal because sm
 
 We do not aim to feed you fugazi numbers though, so let us introduce the evidence backing our **ossification score.** The 0-100 🦴-score is directly based on a [open dataset of blockchain hacks](https://github.com/sekuba/ossification-dataset) that we are collecting and plan to maintain. Each incident in the dataset is reviewed as to its mechanism, age of the vulnerable configuration or source code and loss in USD. This allows us to generate a curve for the 🦴-score and gives it practical meaning:
 
-*a score of 67 means that 67% of hacks with a loss of \>$1k targeted younger code*
+> a score of 67 means that 67% of hacks with a loss of \>$1k targeted younger code
 
 <iframe src="/files/ossification/charts.html#chart=curve" style="width:100%;height:480px;border:none" loading="lazy" title="The ossification curve: cumulative share of exploits and stolen USD by code age at exploit, with adjustable loss threshold"></iframe>
 
