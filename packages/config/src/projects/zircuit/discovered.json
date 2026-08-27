@@ -1,7 +1,7 @@
 {
   "name": "zircuit",
-  "timestamp": 1787747199,
-  "configHash": "0x6bb9fcd1a8dc234b048bb2f52505f3f90b537fbf533046cef3c26fdcbb74da1d",
+  "timestamp": 1787820501,
+  "configHash": "0xead909b5eb293c5f44799bdfb897db8961bfb45e9d185423cdb117902b4a5b2a",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -210,7 +210,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 516470,
-          "prevBlockNum": 25835683
+          "prevBlockNum": 25842624
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -317,13 +317,13 @@
         ],
         "$upgradeCount": 1,
         "absolutePrestateFromGame": "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6",
-        "anchorGame": "eth:0x62C87f363f3046010D307FD27C0b68b9360C3Ec2",
+        "anchorGame": "eth:0xC051215ac9F42167896070DF8Bf174b7E465d7A7",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x805b51805aea3c1bb88ac1913d3be0fd1a8d0d02fa224f5e9120d7c87e64b3bc",
-          33583865
+          "0x5daf8cf22dca6fd1af7a0bed65adbda59056b9e8d2a62a89d2de63400e484a9c",
+          33626717
         ],
         "initVersion": 1,
         "oracleFromVm": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
@@ -430,7 +430,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641367",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641369",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -459,7 +459,15 @@
     {
       "address": "eth:0x2d14057c3ad6b04a480b06Da2356AdcdF5Ed97eE",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x4F80B390aF3b49dda96134DA1ac905b05e816496",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "SystemConfig",
@@ -776,6 +784,12 @@
           "from": "eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x4F80B390aF3b49dda96134DA1ac905b05e816496",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challenger"
         },
         {
           "permission": "upgrade",
@@ -1150,7 +1164,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 44,
+        "gameCount": 46,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x4F80B390aF3b49dda96134DA1ac905b05e816496",
@@ -1165,7 +1179,7 @@
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "permissionedGameArgs": "0x",
-        "permissionedGamesTotal": 44,
+        "permissionedGamesTotal": 46,
         "proposerFromDGF": "UNRESOLVED",
         "proxyAdmin": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -1549,10 +1563,10 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 80600263,
+        "basefee": 122017210,
         "baseFeeScalar": 7600,
         "batcherHash": "0x000000000000000000000000cf8225801df6ef90ad3bc86808f574403a309de8",
-        "blobBaseFee": 4907717,
+        "blobBaseFee": 7978792,
         "blobBaseFeeScalar": 862000,
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
         "gasPayingToken": {
@@ -1561,15 +1575,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x706610ee35a8c0994a07fa737ec69fb812fc2cf6fdebc778905a74e5bcb868a3",
+        "hash": "0xd1a10bd2395abafe3a5576298544ae25cde5bd15b7793941cc8b304284e218dd",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 25839373,
+        "number": 25845455,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 5,
-        "timestamp": 1787747123,
+        "sequenceNumber": 7,
+        "timestamp": 1787820431,
         "version": "1.6.1"
       },
       "implementationNames": {
@@ -2583,6 +2597,6 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25839379, "zircuit": 33905492 },
-  "permissionsConfigHash": "0x43d56c235c32554f8fb84c0cc788b20b7c73631558d260d549b8ab614b026a38"
+  "usedBlockNumbers": { "ethereum": 25845460, "zircuit": 33942143 },
+  "permissionsConfigHash": "0xdbdf9b63971c6eb99ea19fca5b8c8cd5b2c6aac771c8ac9f6af485772b6f1362"
 }

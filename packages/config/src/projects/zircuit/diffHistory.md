@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xf34aed76b9a1c9b66ed45def224b91de7bbdae15
+
+# Diff at Thu, 27 Aug 2026 08:51:59 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@fe0597dfc044814c2211715fa77b5f9f3ec22e2a block: 1787747199
+- current timestamp: 1787820501
+
+## Description
+
+Config change: added proposer/challenger permission overrides on the
+PermissionedDisputeGame, in line with other OP stack projects using
+permissioned dispute games. The proposer EOA can create dispute games
+(propose state roots) and the challenger (Conduit Multisig 1) can
+challenge them.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787747199 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x2d14057c3ad6b04a480b06Da2356AdcdF5Ed97eE) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x4F80B390aF3b49dda96134DA1ac905b05e816496","description":"Allowed to post new state roots of the current layer to the host chain.","role":".proposer"}]
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x4F80B390aF3b49dda96134DA1ac905b05e816496","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challenger"}
+    }
+```
+
 Generated with discovered.json: 0x9c7050a36d08c1bd71edfdebabbf499bec254c97
 
 # Diff at Wed, 26 Aug 2026 12:30:17 GMT:
