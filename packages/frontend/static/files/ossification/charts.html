@@ -83,7 +83,9 @@ const YEAR=31557600, DAY=86400;
 const AMIN=3600, AMAX=10*YEAR, ALINMAX=8.5*YEAR;
 const clampA=a=>Math.max(AMIN,Math.min(a,AMAX));
 let TH=1000, AGELIN=false;
-const CHART=(location.hash.match(/chart=(\w+)/)||[])[1]||"curve";
+const CHART_NAMES=["curve","scatter","sweep","kinds"];
+const CHART_PARAM=(location.hash.match(/chart=(\w+)/)||[])[1];
+const CHART=CHART_NAMES.includes(CHART_PARAM)?CHART_PARAM:"curve";
 const THKEY="l2beat-ossification-threshold";
 
 /* ---------- theme: follow the parent page's .dark class ---------- */
