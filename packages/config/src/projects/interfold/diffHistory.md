@@ -1,3 +1,79 @@
+Generated with discovered.json: 0x06a71415eaa12dc6641376ab618529d879eebf40
+
+# Diff at Thu, 27 Aug 2026 12:19:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@07685e2b690dd5d880203f3696ff2e1bc300a13d block: 1787653815
+- current timestamp: 1787833077
+
+## Description
+
+Operators added, still paused.
+
+## Watched changes
+
+```diff
+    contract BondingRegistry (eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F) [interfold/BondingRegistry] {
+    +++ description: Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond; the contract also enforces exits, committee obligations, bans and slashing debits.
++++ description: Operator keys currently active under the collateral and ban rules, reconstructed from activation events.
+      values.activeOperators.7:
++        "eth:0x2179a7A0bE3EB10c45A9aeec11F260E2bC4B1A7C"
++++ description: Operator keys currently active under the collateral and ban rules, reconstructed from activation events.
+      values.activeOperators.8:
++        "eth:0xCdc8B4379dDF736f8e34B0A65585E07dE7060A84"
++++ description: Operator keys currently active under the collateral and ban rules, reconstructed from activation events.
+      values.activeOperators.9:
++        "eth:0x18F98f8F44a37d4179888f286191f4F856CB4663"
++++ description: Operator keys currently active under the collateral and ban rules, reconstructed from activation events.
+      values.activeOperators.10:
++        "eth:0x18ddBf8Aa6F72FC4D9E1911527d0CE1E9f3597d8"
+      values.bondOwners.eth:0x2179a7A0bE3EB10c45A9aeec11F260E2bC4B1A7C:
++        "eth:0x2179a7A0bE3EB10c45A9aeec11F260E2bC4B1A7C"
+      values.bondOwners.eth:0x18F98f8F44a37d4179888f286191f4F856CB4663:
++        "eth:0x2DeB5Ff7d2CdfA92A73f0b0B534e51875c81a5Ed"
+      values.bondOwners.eth:0x9e6d627D60183276Bcd528D634e660f0c56EaDeE:
++        "eth:0x9e6d627D60183276Bcd528D634e660f0c56EaDeE"
+      values.bondOwners.eth:0x65eb99fdd2a7508D34c6D17b874da8566d8E19c5:
++        "eth:0x65eb99fdd2a7508D34c6D17b874da8566d8E19c5"
+      values.bondOwners.eth:0x0EebbDa2423b58e59Df0F4969e6Ce96af69BEFC3:
++        "eth:0x0EebbDa2423b58e59Df0F4969e6Ce96af69BEFC3"
+      values.numActiveOperators:
+-        7
++        11
+      values.numRegisteredOperators:
+-        7
++        11
+    }
+```
+
+```diff
+    contract CiphernodeRegistry (eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7) [interfold/CiphernodeRegistry] {
+    +++ description: Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection, records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability.
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.
+      values.$members.7:
++        "eth:0x2179a7A0bE3EB10c45A9aeec11F260E2bC4B1A7C"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.
+      values.$members.8:
++        "eth:0xCdc8B4379dDF736f8e34B0A65585E07dE7060A84"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.
+      values.$members.9:
++        "eth:0x18F98f8F44a37d4179888f286191f4F856CB4663"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.
+      values.$members.10:
++        "eth:0x18ddBf8Aa6F72FC4D9E1911527d0CE1E9f3597d8"
++++ description: Number of currently registered ciphernode keys.
+      values.numCiphernodes:
+-        7
++        11
+    }
+```
+
+```diff
++   Status: CREATED
+    EOA  (eth:0x0EebbDa2423b58e59Df0F4969e6Ce96af69BEFC3)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd3a4075ede581d3d9135e6069c8d7387c91fcb89
 
 # Diff at Tue, 25 Aug 2026 12:24:41 GMT:
