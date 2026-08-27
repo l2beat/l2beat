@@ -62,6 +62,42 @@ describe(BlockProvider.name, () => {
     })
   })
 
+  describe(BlockProvider.prototype.getBlockHeader.name, () => {
+    it('returns header from client', async () => {
+      const client = mockObject<BlockClient>({
+        getBlockHeader: async (x) => header(x === 'latest' ? 1000 : x),
+      })
+      const provider = new BlockProvider('chain', [client])
+
+      expect(await provider.getBlockHeader(5)).toEqual(header(5))
+      expect(await provider.getBlockHeader('latest')).toEqual(header(1000))
+    })
+
+    it('falls back to full blocks for clients without header support', async () => {
+      const client = mockObject<BlockClient>({
+        getBlockHeader: undefined,
+        getLatestBlockNumber: async () => 1000,
+        getBlockWithTransactions: async (n: number) => block(n),
+      })
+      const provider = new BlockProvider('chain', [client])
+
+      expect(await provider.getBlockHeader('latest')).toEqual(block(1000))
+      expect(await provider.getBlockHeader(5)).toEqual(block(5))
+      expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
+    })
+
+    it('rejects a header of a different block', async () => {
+      const client = mockObject<BlockClient>({
+        getBlockHeader: async () => header(7),
+      })
+      const provider = new BlockProvider('chain', [client])
+
+      await expect(provider.getBlockHeader(5)).toBeRejectedWith(
+        'expected block number 5, got 7',
+      )
+    })
+  })
+
   describe(BlockProvider.prototype.getBlockNumberAtOrBefore.name, () => {
     it('finds the closest block number to given timestamp', async () => {
       const client = mockObject<BlockClient>({
@@ -148,6 +184,14 @@ function block(x: number) {
     transactions: [],
     hash: '0x' + x.toString(),
     logsBloom: `0x${'0'.repeat(512)}`,
+    timestamp: x * 100,
+  }
+}
+
+function header(x: number) {
+  return {
+    number: x,
+    hash: '0x' + x.toString(),
     timestamp: x * 100,
   }
 }

@@ -83,6 +83,34 @@ describe(RpcClient.name, () => {
     })
   })
 
+  describe(RpcClient.prototype.getBlockHeader.name, () => {
+    it('fetches block without tx bodies', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => mockResponse(100),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getBlockHeader(100)
+
+      expect(result).toEqual({
+        timestamp: 100,
+        hash: '0xabcdef',
+        logsBloom: `0x${'0'.repeat(512)}`,
+        number: 100,
+        parentBeaconBlockRoot: '0x123',
+      })
+
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getBlockByNumber',
+          params: ['0x64', false],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+  })
+
   describe(RpcClient.prototype.getTransaction.name, () => {
     it('fetches tx from rpc and parses response', async () => {
       const http = mockObject<HttpClient>({

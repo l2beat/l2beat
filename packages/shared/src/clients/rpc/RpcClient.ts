@@ -76,6 +76,10 @@ export class RpcClient extends ClientCore implements IRpcClient {
     return await this.getBlock(blockNumber, true)
   }
 
+  async getBlockHeader(blockNumber: number | 'latest'): Promise<EVMBlock> {
+    return await this.getBlock(blockNumber, false)
+  }
+
   async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
     const block = await this.getBlock(blockNumber, false)
 
