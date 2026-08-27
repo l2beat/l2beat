@@ -17,9 +17,10 @@ We do not aim to feed you fugazi numbers though, so let us introduce the evidenc
 
 > a score of 67 means that 67% of hacks with a loss of \>$1k targeted younger code
 
-<iframe src="/files/ossification/charts.html#chart=curve" style="width:100%;height:480px;border:none" loading="lazy" title="The ossification curve: cumulative share of exploits and stolen USD by code age at exploit, with adjustable loss threshold"></iframe>
-
-*The curve is heavily front-loaded, supporting our hypothesis that code ossifies (becomes safer with age). Drag the loss threshold to see how the curve holds its shape as small incidents are excluded.*
+<figure style="margin:0 0 16px">
+<iframe src="/files/ossification/charts.html#chart=curve" style="width:100%;height:480px;border:none;display:block" loading="lazy" title="The ossification curve: cumulative share of exploits and stolen USD by code age at exploit, with adjustable loss threshold"></iframe>
+<p style="margin:6px 0 0"><em>The curve is heavily front-loaded, supporting our hypothesis that code ossifies (becomes safer with age). Drag the loss threshold to see how the curve holds its shape as small incidents are excluded.</em></p>
+</figure>
 
 <iframe src="/files/ossification/charts.html#chart=sweep" style="width:100%;height:440px;border:none" loading="lazy" title="Threshold sweep: median code age at exploit and sample size as the loss admission floor rises"></iframe>
 
