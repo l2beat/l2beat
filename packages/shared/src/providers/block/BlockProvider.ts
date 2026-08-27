@@ -44,19 +44,25 @@ export class BlockProvider {
     })
   }
 
-  async getBlockNumberAtOrBefore(
-    timestamp: UnixTime,
-    start = 1,
-  ): Promise<number> {
+  async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
     return await this.withClient(async (client) => {
-      const end = await client.getLatestBlockNumber()
-      const effectiveStart = start >= end ? 1 : start
+      const known = new Map<number, BlockHeader>()
+      const getHeader = async (x: number | 'latest') => {
+        const cached = x !== 'latest' ? known.get(x) : undefined
+        if (cached) return cached
+        const header = await getBlockHeader(client, x)
+        known.set(header.number, header)
+        return header
+      }
+
+      const latest = await getHeader('latest')
+      if (timestamp >= latest.timestamp) return latest.number
 
       return await getBlockNumberAtOrBefore(
         timestamp,
-        effectiveStart,
-        end,
-        (number: number) => client.getBlockWithTransactions(number),
+        1,
+        latest.number,
+        getHeader,
       )
     })
   }
