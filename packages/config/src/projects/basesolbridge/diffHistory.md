@@ -7,7 +7,7 @@ Generated with discovered.json: 0x224efc77a2d0d5e007fee118742b3fd4f2870395
 
 ## Description
 
-Initial discovery of the Base <> Solana native bridge (Base side): Bridge escrow with MMR message accumulator, BridgeValidator (2-of-2 Base validators + 3-of-10 Chainlink partner signers, fixed at initialization), SignerRegistry owned by the CCIP RBACTimelock (border of this discovery), CrossChainERC20/Twin beacon architecture upgradable by a single EOA.
+Initial discovery of the Base <> Solana native bridge (Base side): Bridge escrow with MMR (merkle mountain range) message accumulator, BridgeValidator (2-of-2 Base validators + 3-of-10 Chainlink partner signers, fixed at initialization), SignerRegistry owned by the CCIP RBACTimelock (border of this discovery), CrossChainERC20/Twin beacon architecture upgradable by a single EOA.
 
 ## Initial discovery
 
