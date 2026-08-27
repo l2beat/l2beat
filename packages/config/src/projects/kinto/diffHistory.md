@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xf632f15b33e21d593ba9c394a179ac004302a9fb
+
+# Diff at Thu, 27 Aug 2026 08:53:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe0597dfc044814c2211715fa77b5f9f3ec22e2a block: 1756898514
+- current timestamp: 1756898514
+
+## Description
+
+Add HIGH severity to beacon implementation in global/UpgradeableBeacon template (no value changes).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1756898514 (main branch discovery), not current.
+
+```diff
+    contract BeaconKintoWallet (kinto:0x87f0eE85bF3198654900a422832157abBba30828) [global/UpgradeableBeacon] {
+    +++ description: Beacon proxy for the KintoWallet smartwallet implementation that is used for all users.
+      fieldMeta:
++        {"implementation":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x551340194c5623381a95183198dfd87da771f041
 
 # Diff at Tue, 09 Jun 2026 12:43:35 GMT:

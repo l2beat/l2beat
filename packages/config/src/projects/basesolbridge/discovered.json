@@ -1,0 +1,1044 @@
+{
+  "name": "basesolbridge",
+  "timestamp": 1787816633,
+  "configHash": "0x5d6b9a129ea2aa12caff8e708f367ef76c8a0626f5640b86b58816c4f337105f",
+  "entries": [
+    {
+      "name": "CrossChainERC20",
+      "address": "base:0x0c39C78Dc31082187D8D7de9937bA46Ddba3c043",
+      "type": "Contract",
+      "template": "basesolbridge/CrossChainERC20",
+      "sourceHashes": [
+        "0x8d39cab96966006e7cd5ca5e3cea8bbe59dac1bb0d85d44c0b35eda2562df657"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation contract for the CrossChainERC20 tokens (beacon proxies) representing Solana-native assets on Base (e.g. SOL, JitoSOL). Only the Bridge can mint and burn them.",
+      "ignoreInWatchMode": ["totalSupply"],
+      "deployerAddress": "base:0xfb42764d7038afA33c19F362B7B6d13226891E60",
+      "sinceTimestamp": 1764174909,
+      "sinceBlock": 38692781,
+      "values": {
+        "$immutable": true,
+        "bridge": "base:0x3eff766C76a1be2Ce1aCF2B69c78bCae257D5188",
+        "decimals": 0,
+        "DOMAIN_SEPARATOR": "0xfea5956b7468437962e454e4060b1452e8db2a9d2c7d8bc010195a5cfbe91d1b",
+        "name": "",
+        "remoteToken": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "symbol": "",
+        "totalSupply": 0
+      },
+      "implementationNames": {
+        "base:0x0c39C78Dc31082187D8D7de9937bA46Ddba3c043": "CrossChainERC20"
+      }
+    },
+    {
+      "address": "base:0x1B23E9D34076EAe4C414b95Fc44728ee3F18E992",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    {
+      "address": "base:0x25646667cD30e52c0b458bAAcCB9fAdA7046f167",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x3eff766C76a1be2Ce1aCF2B69c78bCae257D5188",
+          "description": "pause and unpause the Bridge, which blocks outgoing messages, incoming relays and new message attestations in the BridgeValidator.",
+          "role": ".guardians"
+        }
+      ]
+    },
+    {
+      "name": "Bridge",
+      "address": "base:0x3eff766C76a1be2Ce1aCF2B69c78bCae257D5188",
+      "type": "Contract",
+      "template": "basesolbridge/Bridge",
+      "sourceHashes": [
+        "0x766723bd69168b226fe66626d42673677daa94caebf329589dde4a609c611579",
+        "0x766723bd69168b226fe66626d42673677daa94caebf329589dde4a609c611579"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Core contract of the Base <> Solana bridge on the Base side. Outgoing messages (token transfers and arbitrary Solana instructions) are appended to an onchain merkle mountain range accumulator that is consumed by offchain infrastructure and the bridge program on Solana. Incoming messages from Solana must first be attested in the BridgeValidator and can then be relayed permissionlessly: they mint CrossChainERC20 tokens, release escrowed Base-native assets or execute arbitrary calls through per-user Twin contracts. Base-native assets (ETH, ERC20s) that are bridged to Solana are escrowed in this contract.",
+      "ignoreInWatchMode": ["getRoot", "getNextNonce"],
+      "deployerAddress": "base:0xfb42764d7038afA33c19F362B7B6d13226891E60",
+      "sinceTimestamp": 1764174947,
+      "sinceBlock": 38692800,
+      "values": {
+        "$admin": "base:0xa966054731540a48b28990b63Dcf4f33d8aE57B2",
+        "$implementation": "base:0x9b937e776cb00cE79036e58ff1dE777df8Ebde48",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "BRIDGE_VALIDATOR": "base:0xAF24c1c24Ff3BF1e6D882518120fC25442d6794B",
+        "CROSS_CHAIN_ERC20_FACTORY": "base:0xDD56781d0509650f8C2981231B6C917f2d5d7dF2",
+        "getNextNonce": 2478,
+        "getRoot": "0xcb3718311371c0b6a918f37389201ed6dba030255774a9e80abd838ebd70ad2e",
+        "GUARDIAN_ROLE": 1,
+        "guardians": ["base:0x25646667cD30e52c0b458bAAcCB9fAdA7046f167"],
+        "owner": "base:0xa966054731540a48b28990b63Dcf4f33d8aE57B2",
+        "paused": false,
+        "REMOTE_BRIDGE": "0xf32983e871bc87d15a994f95f5f5054d98498c80cf09b3bafa91cb9507143b36",
+        "TWIN_BEACON": "base:0xb326c02150bb0De265Bb0eCeDA53531ab0163bf6"
+      },
+      "fieldMeta": {
+        "guardians": { "description": "Accounts holding the guardian role." },
+        "paused": {
+          "severity": "HIGH",
+          "description": "If true, outgoing messages, incoming relays and new message attestations are blocked."
+        },
+        "getRoot": {
+          "description": "Current root of the merkle mountain range accumulating all outgoing messages."
+        },
+        "getNextNonce": {
+          "description": "Nonce of the next outgoing message."
+        },
+        "REMOTE_BRIDGE": {
+          "description": "Pubkey of the bridge program on Solana."
+        }
+      },
+      "implementationNames": {
+        "base:0x3eff766C76a1be2Ce1aCF2B69c78bCae257D5188": "Bridge",
+        "base:0x9b937e776cb00cE79036e58ff1dE777df8Ebde48": "Bridge"
+      }
+    },
+    {
+      "name": "SignerRegistry",
+      "address": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+      "type": "Contract",
+      "template": "basesolbridge/SignerRegistry",
+      "sourceHashes": [
+        "0x6694706c328573635c50b164d40ac2403fffce3dac480d43b1de6a392c0d212a"
+      ],
+      "proxyType": "immutable",
+      "description": "Registry of the partner validator set that co-signs attestations of Solana -> Base messages for the BridgeValidator of the Base <> Solana bridge.",
+      "deployerAddress": "base:0x062f05CD6c835677B05a8658A351969476861316",
+      "sinceTimestamp": 1758557031,
+      "sinceBlock": 35883842,
+      "values": {
+        "$immutable": true,
+        "getMaxSigners": 20,
+        "getSignerCount": 10,
+        "getSigners": [
+          {
+            "evmAddress": "base:0x675aeaCb0586E7B4F53cf087428ce4F67AB37A1F",
+            "newEVMAddress": "base:0x0000000000000000000000000000000000000000"
+          },
+          {
+            "evmAddress": "base:0x5cdd49FC6c34cA3075F3c959E99429eE2c8b83ad",
+            "newEVMAddress": "base:0x0000000000000000000000000000000000000000"
+          },
+          {
+            "evmAddress": "base:0x1B23E9D34076EAe4C414b95Fc44728ee3F18E992",
+            "newEVMAddress": "base:0x0000000000000000000000000000000000000000"
+          },
+          {
+            "evmAddress": "base:0x77a7d8B04DB676496899a339c5D437b7711CFE02",
+            "newEVMAddress": "base:0x0000000000000000000000000000000000000000"
+          },
+          {
+            "evmAddress": "base:0xC2ea57E68D59bB32299Fd6902D06B70Ca84c5D48",
+            "newEVMAddress": "base:0x0000000000000000000000000000000000000000"
+          },
+          {
+            "evmAddress": "base:0xa0c9e5CddD280370523A56c9866efaE85b36D5aE",
+            "newEVMAddress": "base:0x0000000000000000000000000000000000000000"
+          },
+          {
+            "evmAddress": "base:0x994Ef538120DB2Ad4769a88A137C7D6F7c711509",
+            "newEVMAddress": "base:0x0000000000000000000000000000000000000000"
+          },
+          {
+            "evmAddress": "base:0xDD7D52578cf811aC63Ec3e0142315eCc633a8C93",
+            "newEVMAddress": "base:0x0000000000000000000000000000000000000000"
+          },
+          {
+            "evmAddress": "base:0xa379f170d6461365E720cAE4B6512Ec8657875c4",
+            "newEVMAddress": "base:0x0000000000000000000000000000000000000000"
+          },
+          {
+            "evmAddress": "base:0xbAB7077c1a5b2071A32554A14d2D688dCdA01b70",
+            "newEVMAddress": "base:0x0000000000000000000000000000000000000000"
+          }
+        ],
+        "owner": "base:0x7B0328745A01634c32eFAf041d91432a075B308D",
+        "signers": [
+          "base:0x675aeaCb0586E7B4F53cf087428ce4F67AB37A1F",
+          "base:0x5cdd49FC6c34cA3075F3c959E99429eE2c8b83ad",
+          "base:0x1B23E9D34076EAe4C414b95Fc44728ee3F18E992",
+          "base:0x77a7d8B04DB676496899a339c5D437b7711CFE02",
+          "base:0xC2ea57E68D59bB32299Fd6902D06B70Ca84c5D48",
+          "base:0xa0c9e5CddD280370523A56c9866efaE85b36D5aE",
+          "base:0x994Ef538120DB2Ad4769a88A137C7D6F7c711509",
+          "base:0xDD7D52578cf811aC63Ec3e0142315eCc633a8C93",
+          "base:0xa379f170d6461365E720cAE4B6512Ec8657875c4",
+          "base:0xbAB7077c1a5b2071A32554A14d2D688dCdA01b70"
+        ],
+        "typeAndVersion": "SignerRegistry 1.0.0"
+      },
+      "fieldMeta": {
+        "getSigners": {
+          "description": "Partner validator signers, each with an optional pending replacement address (key rotation)."
+        },
+        "signers": {
+          "description": "Current partner validator signer addresses."
+        }
+      },
+      "implementationNames": {
+        "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a": "SignerRegistry"
+      }
+    },
+    {
+      "address": "base:0x5cdd49FC6c34cA3075F3c959E99429eE2c8b83ad",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    {
+      "address": "base:0x675aeaCb0586E7B4F53cf087428ce4F67AB37A1F",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    {
+      "address": "base:0x77a7d8B04DB676496899a339c5D437b7711CFE02",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    {
+      "name": "RBACTimelock",
+      "address": "base:0x7B0328745A01634c32eFAf041d91432a075B308D",
+      "type": "Contract",
+      "template": "transporter/RBACTimelock",
+      "sourceHashes": [
+        "0x7626f6b1eaf5b322ddcc5a798e7402c8d43fb8ae6f435b47d1d82df5c80af4aa"
+      ],
+      "proxyType": "immutable",
+      "description": "Role based timelock used to administer CCIP contracts.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "add, remove and rotate the partner validator signers (up to 20) that attest Solana -> Base messages in the BridgeValidator.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0x7B0328745A01634c32eFAf041d91432a075B308D",
+          "description": "grant or revoke roles on this timelock.",
+          "role": ".adminRoleMembers"
+        }
+      ],
+      "deployerAddress": "base:0xa5E47E431BA433D1425039abF3CE091468440F72",
+      "sinceTimestamp": 1697195841,
+      "sinceBlock": 5203247,
+      "values": {
+        "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "ADMIN_ROLE": {
+            "adminRole": "ADMIN_ROLE",
+            "members": ["base:0x7B0328745A01634c32eFAf041d91432a075B308D"]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "ADMIN_ROLE",
+            "members": [
+              "base:0xF9f0a7B42202fAE9F5c03610dd9eE4Cf48FCc3DA",
+              "base:0xdbE2d99519E9C70669129Dfa9387E51E443fb48F",
+              "base:0xA68B757d60B5542F09A3123b72B96A03d07c50aB"
+            ]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "ADMIN_ROLE",
+            "members": ["base:0xEeE2b71c85Db5c919963Aab330f62AE4a76aC5b1"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "ADMIN_ROLE",
+            "members": [
+              "base:0xF9f0a7B42202fAE9F5c03610dd9eE4Cf48FCc3DA",
+              "base:0x29adcaFEdB612cBDDAfAddB676b72e9Ac80682F2",
+              "base:0xdbE2d99519E9C70669129Dfa9387E51E443fb48F",
+              "base:0x68c38b653535daAF7E067CBC814cD34E88280CfE",
+              "base:0xA68B757d60B5542F09A3123b72B96A03d07c50aB"
+            ]
+          },
+          "BYPASSER_ROLE": {
+            "adminRole": "ADMIN_ROLE",
+            "members": ["base:0x68c38b653535daAF7E067CBC814cD34E88280CfE"]
+          }
+        },
+        "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
+        "adminRoleMembers": ["base:0x7B0328745A01634c32eFAf041d91432a075B308D"],
+        "BYPASSER_ROLE": "0xa1b2b8005de234c4b8ce8cd0be058239056e0d54f6097825b5117101469d5a8d",
+        "bypasserRoleMembers": [
+          "base:0x68c38b653535daAF7E067CBC814cD34E88280CfE"
+        ],
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "cancellerRoleMembers": [
+          "base:0xF9f0a7B42202fAE9F5c03610dd9eE4Cf48FCc3DA",
+          "base:0x29adcaFEdB612cBDDAfAddB676b72e9Ac80682F2",
+          "base:0xdbE2d99519E9C70669129Dfa9387E51E443fb48F",
+          "base:0x68c38b653535daAF7E067CBC814cD34E88280CfE",
+          "base:0xA68B757d60B5542F09A3123b72B96A03d07c50aB"
+        ],
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "executorRoleMembers": [
+          "base:0xEeE2b71c85Db5c919963Aab330f62AE4a76aC5b1"
+        ],
+        "getBlockedFunctionSelectorAt": [],
+        "getBlockedFunctionSelectorCount": 0,
+        "getMinDelay": 10800,
+        "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "proposerRoleMembers": [
+          "base:0xF9f0a7B42202fAE9F5c03610dd9eE4Cf48FCc3DA",
+          "base:0xdbE2d99519E9C70669129Dfa9387E51E443fb48F",
+          "base:0xA68B757d60B5542F09A3123b72B96A03d07c50aB"
+        ]
+      },
+      "fieldMeta": {
+        "accessControl": {
+          "description": "Full role map: per-role admin role and current members."
+        },
+        "adminRoleMembers": {
+          "description": "Current accounts granted the admin role."
+        },
+        "bypasserRoleMembers": {
+          "description": "Current accounts granted permission to bypass the timelock delay."
+        },
+        "cancellerRoleMembers": {
+          "description": "Current accounts granted permission to cancel scheduled operations."
+        },
+        "executorRoleMembers": {
+          "description": "Current accounts granted permission to execute scheduled operations."
+        },
+        "proposerRoleMembers": {
+          "description": "Current accounts granted permission to schedule operations."
+        }
+      },
+      "implementationNames": {
+        "base:0x7B0328745A01634c32eFAf041d91432a075B308D": "RBACTimelock"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "address": "base:0x994Ef538120DB2Ad4769a88A137C7D6F7c711509",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    {
+      "address": "base:0xa0c9e5CddD280370523A56c9866efaE85b36D5aE",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    {
+      "address": "base:0xa0F80e237Be74A580cCAEd06236075C17f1fEc69",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xAF24c1c24Ff3BF1e6D882518120fC25442d6794B",
+          "description": "attest messages passed from Solana to Base by co-signing message batches (2 of 2 signatures required, alongside 3 partner validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".baseValidators"
+        }
+      ]
+    },
+    {
+      "address": "base:0xa379f170d6461365E720cAE4B6512Ec8657875c4",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    {
+      "address": "base:0xa966054731540a48b28990b63Dcf4f33d8aE57B2",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "eoaWithUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x3eff766C76a1be2Ce1aCF2B69c78bCae257D5188",
+          "description": "grant and revoke the guardian role and transfer ownership of the Bridge.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0xb326c02150bb0De265Bb0eCeDA53531ab0163bf6",
+          "description": "change the implementation of the TwinBeacon and with it the code of every Twin account contract of the Base <> Solana bridge.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0xdDc41fdA4B758728d07F4686DbE7D1C75C6b2552",
+          "description": "change the implementation of the CrossChainERC20Beacon and with it the code of every bridged token (e.g. SOL, JitoSOL) of the Base <> Solana bridge.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x3eff766C76a1be2Ce1aCF2B69c78bCae257D5188",
+          "role": "admin"
+        }
+      ]
+    },
+    {
+      "name": "BridgeValidator",
+      "address": "base:0xAF24c1c24Ff3BF1e6D882518120fC25442d6794B",
+      "type": "Contract",
+      "template": "basesolbridge/BridgeValidator",
+      "sourceHashes": [
+        "0x0cd9a6376a68595e45526cf4ccf09d827aeae75affee65552a5e28236cde1598",
+        "0x0cd9a6376a68595e45526cf4ccf09d827aeae75affee65552a5e28236cde1598"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Attestation registry for messages passed from Solana to Base: batches of message hashes become valid for execution in the Bridge after being co-signed by at least 2 of 2 Base validators and 3 partner validators listed in the SignerRegistry. The validator set and thresholds are fixed at initialization: the contract exposes no functions to change them and its proxy has no admin.",
+      "ignoreInWatchMode": ["nextNonce"],
+      "deployerAddress": "base:0xfb42764d7038afA33c19F362B7B6d13226891E60",
+      "sinceTimestamp": 1764174937,
+      "sinceBlock": 38692795,
+      "values": {
+        "$admin": "base:0x0000000000000000000000000000000000000000",
+        "$implementation": "base:0x8bb6C703e6928fc1A15132459C1eD3AdE9214b8a",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "baseValidators": [
+          "base:0xa0F80e237Be74A580cCAEd06236075C17f1fEc69",
+          "base:0xe018748703F74b806399dd1ECe608453578DDE79"
+        ],
+        "BRIDGE": "base:0x3eff766C76a1be2Ce1aCF2B69c78bCae257D5188",
+        "getBaseThreshold": 2,
+        "getBaseValidatorCount": 2,
+        "GUARDIAN_ROLE": 1,
+        "MAX_PARTNER_VALIDATOR_THRESHOLD": 5,
+        "nextNonce": 3528,
+        "PARTNER_VALIDATORS": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+        "partnerValidatorThreshold": 3
+      },
+      "fieldMeta": {
+        "nextNonce": {
+          "description": "Nonce of the next expected message attestation (incremented with each registered message)."
+        },
+        "getBaseThreshold": {
+          "severity": "HIGH",
+          "description": "Number of Base validator signatures required to attest a message batch."
+        },
+        "partnerValidatorThreshold": {
+          "severity": "HIGH",
+          "description": "Number of partner validator signatures (from the SignerRegistry) required to attest a message batch."
+        },
+        "PARTNER_VALIDATORS": {
+          "description": "The SignerRegistry contract holding the partner validator set."
+        },
+        "baseValidators": {
+          "description": "Base validator set, fixed at initialization."
+        }
+      },
+      "implementationNames": {
+        "base:0xAF24c1c24Ff3BF1e6D882518120fC25442d6794B": "BridgeValidator",
+        "base:0x8bb6C703e6928fc1A15132459C1eD3AdE9214b8a": "BridgeValidator"
+      }
+    },
+    {
+      "name": "Twin",
+      "address": "base:0xb0887e4793d944Cf7bA674B3b3FA5C15900ddaA7",
+      "type": "Contract",
+      "template": "basesolbridge/Twin",
+      "sourceHashes": [
+        "0xe5964ecd211ec6c945133c08bf2f72e63311ad633678adb81ff7739f07ccc5f6"
+      ],
+      "proxyType": "immutable",
+      "description": "Implementation contract for Twin accounts: each Solana address gets a deterministic Twin beacon proxy on Base that executes arbitrary calls on its behalf when instructed via bridge messages from Solana. Only the Bridge can call it.",
+      "deployerAddress": "base:0xfb42764d7038afA33c19F362B7B6d13226891E60",
+      "sinceTimestamp": 1764174899,
+      "sinceBlock": 38692776,
+      "values": {
+        "$immutable": true,
+        "BRIDGE": "base:0x3eff766C76a1be2Ce1aCF2B69c78bCae257D5188"
+      },
+      "implementationNames": {
+        "base:0xb0887e4793d944Cf7bA674B3b3FA5C15900ddaA7": "Twin"
+      }
+    },
+    {
+      "name": "TwinBeacon",
+      "address": "base:0xb326c02150bb0De265Bb0eCeDA53531ab0163bf6",
+      "type": "Contract",
+      "template": "global/UpgradeableBeacon",
+      "sourceHashes": [
+        "0xcb33e9894b3ccc02f7d9511a725a42e91d4b3be81177489c4e045cf0ace202de"
+      ],
+      "proxyType": "immutable",
+      "description": "A beacon with an upgradeable implementation currently set as base:0xb0887e4793d944Cf7bA674B3b3FA5C15900ddaA7. Beacon proxy contracts pointing to this beacon will all use its implementation.",
+      "deployerAddress": "base:0xfb42764d7038afA33c19F362B7B6d13226891E60",
+      "sinceTimestamp": 1764174903,
+      "sinceBlock": 38692778,
+      "values": {
+        "$immutable": true,
+        "implementation": "base:0xb0887e4793d944Cf7bA674B3b3FA5C15900ddaA7",
+        "owner": "base:0xa966054731540a48b28990b63Dcf4f33d8aE57B2"
+      },
+      "fieldMeta": { "implementation": { "severity": "HIGH" } },
+      "implementationNames": {
+        "base:0xb326c02150bb0De265Bb0eCeDA53531ab0163bf6": "UpgradeableBeacon"
+      }
+    },
+    {
+      "address": "base:0xbAB7077c1a5b2071A32554A14d2D688dCdA01b70",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    {
+      "address": "base:0xC2ea57E68D59bB32299Fd6902D06B70Ca84c5D48",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    {
+      "name": "CrossChainERC20Factory",
+      "address": "base:0xDD56781d0509650f8C2981231B6C917f2d5d7dF2",
+      "type": "Contract",
+      "template": "basesolbridge/CrossChainERC20Factory",
+      "sourceHashes": [
+        "0x61ce467bd9aa5a4cf87e2c7442defebdb22a0e2ef1574c8650e8d375e6a63b69",
+        "0x61ce467bd9aa5a4cf87e2c7442defebdb22a0e2ef1574c8650e8d375e6a63b69"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Factory that permissionlessly deploys CrossChainERC20 token contracts (beacon proxies) representing Solana-native assets (SOL and SPL tokens) on Base. The deployed tokens are minted and burned by the Bridge.",
+      "deployerAddress": "base:0xfb42764d7038afA33c19F362B7B6d13226891E60",
+      "sinceTimestamp": 1764174925,
+      "sinceBlock": 38692789,
+      "values": {
+        "$admin": "base:0x0000000000000000000000000000000000000000",
+        "$implementation": "base:0x92Fc5119dC6a68eD161AFfBe59792AA04d8C375c",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "BEACON": "base:0xdDc41fdA4B758728d07F4686DbE7D1C75C6b2552"
+      },
+      "implementationNames": {
+        "base:0xDD56781d0509650f8C2981231B6C917f2d5d7dF2": "CrossChainERC20Factory",
+        "base:0x92Fc5119dC6a68eD161AFfBe59792AA04d8C375c": "CrossChainERC20Factory"
+      }
+    },
+    {
+      "address": "base:0xDD7D52578cf811aC63Ec3e0142315eCc633a8C93",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".signers"
+        }
+      ]
+    },
+    {
+      "name": "CrossChainERC20Beacon",
+      "address": "base:0xdDc41fdA4B758728d07F4686DbE7D1C75C6b2552",
+      "type": "Contract",
+      "template": "global/UpgradeableBeacon",
+      "sourceHashes": [
+        "0xcb33e9894b3ccc02f7d9511a725a42e91d4b3be81177489c4e045cf0ace202de"
+      ],
+      "proxyType": "immutable",
+      "description": "A beacon with an upgradeable implementation currently set as base:0x0c39C78Dc31082187D8D7de9937bA46Ddba3c043. Beacon proxy contracts pointing to this beacon will all use its implementation.",
+      "deployerAddress": "base:0xfb42764d7038afA33c19F362B7B6d13226891E60",
+      "sinceTimestamp": 1764174915,
+      "sinceBlock": 38692784,
+      "values": {
+        "$immutable": true,
+        "implementation": "base:0x0c39C78Dc31082187D8D7de9937bA46Ddba3c043",
+        "owner": "base:0xa966054731540a48b28990b63Dcf4f33d8aE57B2"
+      },
+      "fieldMeta": { "implementation": { "severity": "HIGH" } },
+      "implementationNames": {
+        "base:0xdDc41fdA4B758728d07F4686DbE7D1C75C6b2552": "UpgradeableBeacon"
+      }
+    },
+    {
+      "address": "base:0xe018748703F74b806399dd1ECe608453578DDE79",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xAF24c1c24Ff3BF1e6D882518120fC25442d6794B",
+          "description": "attest messages passed from Solana to Base by co-signing message batches (2 of 2 signatures required, alongside 3 partner validator signatures). Attested messages are executable on the Bridge without further verification.",
+          "role": ".baseValidators"
+        }
+      ]
+    }
+  ],
+  "abis": {
+    "base:0x0c39C78Dc31082187D8D7de9937bA46Ddba3c043": [
+      "constructor(address bridge_)",
+      "error AllowanceOverflow()",
+      "error AllowanceUnderflow()",
+      "error BurnFromZeroAddress()",
+      "error InsufficientAllowance()",
+      "error InsufficientBalance()",
+      "error InvalidInitialization()",
+      "error InvalidPermit()",
+      "error MintToZeroAddress()",
+      "error NotInitializing()",
+      "error Permit2AllowanceIsFixedAtInfinity()",
+      "error PermitExpired()",
+      "error SenderIsNotBridge()",
+      "error TotalSupplyOverflow()",
+      "error ZeroAddress()",
+      "event Approval(address indexed owner, address indexed spender, uint256 amount)",
+      "event Burn(address indexed from, uint256 amount)",
+      "event Initialized(uint64 version)",
+      "event Mint(address indexed to, uint256 amount)",
+      "event Transfer(address indexed from, address indexed to, uint256 amount)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32 result)",
+      "function allowance(address owner, address spender) view returns (uint256 result)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address owner) view returns (uint256 result)",
+      "function bridge() view returns (address)",
+      "function burn(address from, uint256 amount)",
+      "function decimals() view returns (uint8)",
+      "function initialize(bytes32 remoteToken_, string name_, string symbol_, uint8 decimals_)",
+      "function mint(address to, uint256 amount)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256 result)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function remoteToken() view returns (bytes32)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256 result)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
+    ],
+    "base:0x3eff766C76a1be2Ce1aCF2B69c78bCae257D5188": [
+      "constructor(bytes32 remoteBridge, address twinBeacon, address crossChainErc20Factory, address bridgeValidator)",
+      "error AlreadyInitialized()",
+      "error CumulativeDepositExceedsU64()",
+      "error EmptyMMR()",
+      "error IncorrectRemoteToken()",
+      "error InvalidInitialization()",
+      "error InvalidMessage()",
+      "error InvalidMsgValue()",
+      "error InvalidSerializedAccountLength()",
+      "error LeafIndexOutOfBounds()",
+      "error LeafNotFound()",
+      "error NewOwnerIsZeroAddress()",
+      "error NoHandoverRequest()",
+      "error NotInitializing()",
+      "error Paused()",
+      "error Reentrancy()",
+      "error SenderIsNotEntrypoint()",
+      "error SerializedMessageTooBig()",
+      "error SiblingNodeOutOfBounds()",
+      "error TooManyAccounts()",
+      "error TooManyInstructions()",
+      "error TooManySignatures()",
+      "error Unauthorized()",
+      "error WrappedSplRouteNotRegistered()",
+      "error ZeroAddress()",
+      "error ZeroAmount()",
+      "event FailedToRelayMessage(address indexed submitter, bytes32 indexed messageHash)",
+      "event Initialized(uint64 version)",
+      "event MessageInitiated(bytes32 indexed messageHash, bytes32 indexed mmrRoot, tuple(uint64 nonce, address sender, bytes data) message)",
+      "event MessageSuccessfullyRelayed(address indexed submitter, bytes32 indexed messageHash)",
+      "event OwnershipHandoverCanceled(address indexed pendingOwner)",
+      "event OwnershipHandoverRequested(address indexed pendingOwner)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event PauseSwitched(bool paused)",
+      "event RolesUpdated(address indexed user, uint256 indexed roles)",
+      "event TransferFinalized(address localToken, bytes32 remoteToken, address to, uint256 amount)",
+      "event TransferInitialized(address localToken, bytes32 remoteToken, bytes32 to, uint256 amount)",
+      "function BRIDGE_VALIDATOR() view returns (address)",
+      "function CROSS_CHAIN_ERC20_FACTORY() view returns (address)",
+      "function GUARDIAN_ROLE() view returns (uint256)",
+      "function REMOTE_BRIDGE() view returns (bytes32)",
+      "function TWIN_BEACON() view returns (address)",
+      "function __relayMessage(tuple(bytes32 outgoingMessagePubkey, uint64 nonce, bytes32 sender, uint64 gasLimit, uint8 ty, bytes data) message)",
+      "function bridgeCall(tuple(bytes32 programId, bytes[] serializedAccounts, bytes data)[] ixs)",
+      "function bridgeToken(tuple(address localToken, bytes32 remoteToken, bytes32 to, uint64 remoteAmount) transfer, tuple(bytes32 programId, bytes[] serializedAccounts, bytes data)[] ixs) payable",
+      "function cancelOwnershipHandover() payable",
+      "function completeOwnershipHandover(address pendingOwner) payable",
+      "function deposits(address localToken, bytes32 remoteToken) view returns (uint256)",
+      "function failures(bytes32 messageHash) view returns (bool failure)",
+      "function generateProof(uint64 leafIndex) view returns (bytes32[] proof)",
+      "function getMessageHash(tuple(bytes32 outgoingMessagePubkey, uint64 nonce, bytes32 sender, uint64 gasLimit, uint8 ty, bytes data) message) pure returns (bytes32)",
+      "function getNextNonce() view returns (uint64)",
+      "function getPredictedTwinAddress(bytes32 sender) view returns (address)",
+      "function getRoot() view returns (bytes32)",
+      "function grantRoles(address user, uint256 roles) payable",
+      "function hasAllRoles(address user, uint256 roles) view returns (bool)",
+      "function hasAnyRole(address user, uint256 roles) view returns (bool)",
+      "function initialize(address owner, address[] guardians)",
+      "function owner() view returns (address result)",
+      "function ownershipHandoverExpiresAt(address pendingOwner) view returns (uint256 result)",
+      "function paused() view returns (bool)",
+      "function relayMessages(tuple(bytes32 outgoingMessagePubkey, uint64 nonce, bytes32 sender, uint64 gasLimit, uint8 ty, bytes data)[] messages)",
+      "function renounceOwnership() payable",
+      "function renounceRoles(uint256 roles) payable",
+      "function requestOwnershipHandover() payable",
+      "function revokeRoles(address user, uint256 roles) payable",
+      "function rolesOf(address user) view returns (uint256 roles)",
+      "function scalars(address localToken, bytes32 remoteToken) view returns (uint256)",
+      "function setPaused(bool isPaused)",
+      "function successes(bytes32 messageHash) view returns (bool success)",
+      "function transferOwnership(address newOwner) payable",
+      "function twins(bytes32 owner) view returns (address twinAddress)"
+    ],
+    "base:0x50Ea62F44f44C17d48390cc9fd235dac8E5e127a": [
+      "constructor(uint256 maxSigners, tuple(address evmAddress, address newEVMAddress)[] newSigners)",
+      "error CannotTransferToSelf()",
+      "error DuplicateSigner(address signerAddress)",
+      "error InvalidInputLength()",
+      "error InvalidSignerAddress(address signerAddress)",
+      "error MissingNewAddress(address signerAddress)",
+      "error MustBeProposedOwner()",
+      "error NoMatchingSignerFound(address signerAddress)",
+      "error OnlyCallableByOwner()",
+      "error OwnerCannotBeZero()",
+      "error TooManySigners(uint256 currentSignerCount, uint256 newSignersCount)",
+      "event NewSignerAddressSet(address indexed evmAddress, address previousNewEVMAddress, address newEVMAddress)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "event SignerAdded(address indexed evmAddress)",
+      "event SignerAddressPromoted(address indexed evmAddress, address newEVMAddress)",
+      "event SignerNotRemovedDueToNoMatch(address signerAddress)",
+      "event SignerRemoved(address indexed evmAddress)",
+      "function acceptOwnership()",
+      "function addSigners(tuple(address evmAddress, address newEVMAddress)[] newSigners)",
+      "function getMaxSigners() view returns (uint256)",
+      "function getSignerCount() view returns (uint256)",
+      "function getSigners() view returns (tuple(address evmAddress, address newEVMAddress)[])",
+      "function isSigner(address signerAddress) view returns (bool)",
+      "function owner() view returns (address)",
+      "function promoteNewSignerAddresses(address[] existingSignerAddresses)",
+      "function removeSigners(address[] signersToRemove)",
+      "function setNewSignerAddresses(address[] existingSignerAddresses, address[] newSignerAddresses)",
+      "function supportsInterface(bytes4 interfaceId) pure returns (bool)",
+      "function transferOwnership(address to)",
+      "function typeAndVersion() view returns (string)"
+    ],
+    "base:0x7B0328745A01634c32eFAf041d91432a075B308D": [
+      "constructor(uint256 minDelay, address admin, address[] proposers, address[] executors, address[] cancellers, address[] bypassers)",
+      "event BypasserCallExecuted(uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event FunctionSelectorBlocked(bytes4 indexed selector)",
+      "event FunctionSelectorUnblocked(bytes4 indexed selector)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function ADMIN_ROLE() view returns (bytes32)",
+      "function BYPASSER_ROLE() view returns (bytes32)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function blockFunctionSelector(bytes4 selector)",
+      "function bypasserExecuteBatch(tuple(address target, uint256 value, bytes data)[] calls) payable",
+      "function cancel(bytes32 id)",
+      "function executeBatch(tuple(address target, uint256 value, bytes data)[] calls, bytes32 predecessor, bytes32 salt) payable",
+      "function getBlockedFunctionSelectorAt(uint256 index) view returns (bytes4)",
+      "function getBlockedFunctionSelectorCount() view returns (uint256)",
+      "function getMinDelay() view returns (uint256 duration)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function getTimestamp(bytes32 id) view returns (uint256 timestamp)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperationBatch(tuple(address target, uint256 value, bytes data)[] calls, bytes32 predecessor, bytes32 salt) pure returns (bytes32 hash)",
+      "function isOperation(bytes32 id) view returns (bool registered)",
+      "function isOperationDone(bytes32 id) view returns (bool done)",
+      "function isOperationPending(bytes32 id) view returns (bool pending)",
+      "function isOperationReady(bytes32 id) view returns (bool ready)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function scheduleBatch(tuple(address target, uint256 value, bytes data)[] calls, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unblockFunctionSelector(bytes4 selector)",
+      "function updateDelay(uint256 newDelay)"
+    ],
+    "base:0x8bb6C703e6928fc1A15132459C1eD3AdE9214b8a": [
+      "constructor(address bridgeAddress, address partnerValidators)",
+      "error BaseSignerCountTooHigh()",
+      "error BaseThresholdNotMet()",
+      "error CallerNotGuardian()",
+      "error DuplicateSigner()",
+      "error InvalidInitialization()",
+      "error InvalidSignatureLength()",
+      "error InvalidThreshold()",
+      "error InvalidValidatorAddress()",
+      "error NoMessages()",
+      "error NotInitializing()",
+      "error PartnerThresholdNotMet()",
+      "error Paused()",
+      "error ThresholdTooHigh()",
+      "error UnsortedSigners()",
+      "error ValidatorAlreadyAdded()",
+      "error ZeroAddress()",
+      "event Initialized(uint64 version)",
+      "event MessageRegistered(bytes32 indexed messageHash, bytes32 indexed outgoingMessagePubkey)",
+      "event PartnerThresholdUpdated(uint256 oldThreshold, uint256 newThreshold)",
+      "function BRIDGE() view returns (address)",
+      "function GUARDIAN_ROLE() view returns (uint256)",
+      "function MAX_PARTNER_VALIDATOR_THRESHOLD() view returns (uint256)",
+      "function PARTNER_VALIDATORS() view returns (address)",
+      "function getBaseThreshold() view returns (uint128)",
+      "function getBaseValidatorCount() view returns (uint256)",
+      "function initialize(address[] baseValidators, uint128 baseThreshold, uint256 partnerThreshold)",
+      "function isBaseValidator(address validator) view returns (bool)",
+      "function nextNonce() view returns (uint256)",
+      "function partnerValidatorThreshold() view returns (uint256)",
+      "function registerMessages(tuple(bytes32 innerMessageHash, bytes32 outgoingMessagePubkey)[] signedMessages, bytes validatorSigs)",
+      "function validMessages(bytes32 messageHash) view returns (bool isValid)"
+    ],
+    "base:0x92Fc5119dC6a68eD161AFfBe59792AA04d8C375c": [
+      "constructor(address beacon)",
+      "error CannotWrapNativeSOL()",
+      "error ZeroAddress()",
+      "event CrossChainERC20Created(address indexed localToken, bytes32 indexed remoteToken, address deployer)",
+      "function BEACON() view returns (address)",
+      "function deploy(bytes32 remoteToken, string name, string symbol, uint8 decimals) returns (address)",
+      "function deploySolWrapper() returns (address)",
+      "function isCrossChainErc20(address token) view returns (bool isCrossChainErc20)"
+    ],
+    "base:0x9b937e776cb00cE79036e58ff1dE777df8Ebde48": [
+      "constructor(bytes32 remoteBridge, address twinBeacon, address crossChainErc20Factory, address bridgeValidator)",
+      "error AlreadyInitialized()",
+      "error CumulativeDepositExceedsU64()",
+      "error EmptyMMR()",
+      "error IncorrectRemoteToken()",
+      "error InvalidInitialization()",
+      "error InvalidMessage()",
+      "error InvalidMsgValue()",
+      "error InvalidSerializedAccountLength()",
+      "error LeafIndexOutOfBounds()",
+      "error LeafNotFound()",
+      "error NewOwnerIsZeroAddress()",
+      "error NoHandoverRequest()",
+      "error NotInitializing()",
+      "error Paused()",
+      "error Reentrancy()",
+      "error SenderIsNotEntrypoint()",
+      "error SerializedMessageTooBig()",
+      "error SiblingNodeOutOfBounds()",
+      "error TooManyAccounts()",
+      "error TooManyInstructions()",
+      "error TooManySignatures()",
+      "error Unauthorized()",
+      "error WrappedSplRouteNotRegistered()",
+      "error ZeroAddress()",
+      "error ZeroAmount()",
+      "event FailedToRelayMessage(address indexed submitter, bytes32 indexed messageHash)",
+      "event Initialized(uint64 version)",
+      "event MessageInitiated(bytes32 indexed messageHash, bytes32 indexed mmrRoot, tuple(uint64 nonce, address sender, bytes data) message)",
+      "event MessageSuccessfullyRelayed(address indexed submitter, bytes32 indexed messageHash)",
+      "event OwnershipHandoverCanceled(address indexed pendingOwner)",
+      "event OwnershipHandoverRequested(address indexed pendingOwner)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event PauseSwitched(bool paused)",
+      "event RolesUpdated(address indexed user, uint256 indexed roles)",
+      "event TransferFinalized(address localToken, bytes32 remoteToken, address to, uint256 amount)",
+      "event TransferInitialized(address localToken, bytes32 remoteToken, bytes32 to, uint256 amount)",
+      "function BRIDGE_VALIDATOR() view returns (address)",
+      "function CROSS_CHAIN_ERC20_FACTORY() view returns (address)",
+      "function GUARDIAN_ROLE() view returns (uint256)",
+      "function REMOTE_BRIDGE() view returns (bytes32)",
+      "function TWIN_BEACON() view returns (address)",
+      "function __relayMessage(tuple(bytes32 outgoingMessagePubkey, uint64 nonce, bytes32 sender, uint64 gasLimit, uint8 ty, bytes data) message)",
+      "function bridgeCall(tuple(bytes32 programId, bytes[] serializedAccounts, bytes data)[] ixs)",
+      "function bridgeToken(tuple(address localToken, bytes32 remoteToken, bytes32 to, uint64 remoteAmount) transfer, tuple(bytes32 programId, bytes[] serializedAccounts, bytes data)[] ixs) payable",
+      "function cancelOwnershipHandover() payable",
+      "function completeOwnershipHandover(address pendingOwner) payable",
+      "function deposits(address localToken, bytes32 remoteToken) view returns (uint256)",
+      "function failures(bytes32 messageHash) view returns (bool failure)",
+      "function generateProof(uint64 leafIndex) view returns (bytes32[] proof)",
+      "function getMessageHash(tuple(bytes32 outgoingMessagePubkey, uint64 nonce, bytes32 sender, uint64 gasLimit, uint8 ty, bytes data) message) pure returns (bytes32)",
+      "function getNextNonce() view returns (uint64)",
+      "function getPredictedTwinAddress(bytes32 sender) view returns (address)",
+      "function getRoot() view returns (bytes32)",
+      "function grantRoles(address user, uint256 roles) payable",
+      "function hasAllRoles(address user, uint256 roles) view returns (bool)",
+      "function hasAnyRole(address user, uint256 roles) view returns (bool)",
+      "function initialize(address owner, address[] guardians)",
+      "function owner() view returns (address result)",
+      "function ownershipHandoverExpiresAt(address pendingOwner) view returns (uint256 result)",
+      "function paused() view returns (bool)",
+      "function relayMessages(tuple(bytes32 outgoingMessagePubkey, uint64 nonce, bytes32 sender, uint64 gasLimit, uint8 ty, bytes data)[] messages)",
+      "function renounceOwnership() payable",
+      "function renounceRoles(uint256 roles) payable",
+      "function requestOwnershipHandover() payable",
+      "function revokeRoles(address user, uint256 roles) payable",
+      "function rolesOf(address user) view returns (uint256 roles)",
+      "function scalars(address localToken, bytes32 remoteToken) view returns (uint256)",
+      "function setPaused(bool isPaused)",
+      "function successes(bytes32 messageHash) view returns (bool success)",
+      "function transferOwnership(address newOwner) payable",
+      "function twins(bytes32 owner) view returns (address twinAddress)"
+    ],
+    "base:0xAF24c1c24Ff3BF1e6D882518120fC25442d6794B": [
+      "constructor(address bridgeAddress, address partnerValidators)",
+      "error BaseSignerCountTooHigh()",
+      "error BaseThresholdNotMet()",
+      "error CallerNotGuardian()",
+      "error DuplicateSigner()",
+      "error InvalidInitialization()",
+      "error InvalidSignatureLength()",
+      "error InvalidThreshold()",
+      "error InvalidValidatorAddress()",
+      "error NoMessages()",
+      "error NotInitializing()",
+      "error PartnerThresholdNotMet()",
+      "error Paused()",
+      "error ThresholdTooHigh()",
+      "error UnsortedSigners()",
+      "error ValidatorAlreadyAdded()",
+      "error ZeroAddress()",
+      "event Initialized(uint64 version)",
+      "event MessageRegistered(bytes32 indexed messageHash, bytes32 indexed outgoingMessagePubkey)",
+      "event PartnerThresholdUpdated(uint256 oldThreshold, uint256 newThreshold)",
+      "function BRIDGE() view returns (address)",
+      "function GUARDIAN_ROLE() view returns (uint256)",
+      "function MAX_PARTNER_VALIDATOR_THRESHOLD() view returns (uint256)",
+      "function PARTNER_VALIDATORS() view returns (address)",
+      "function getBaseThreshold() view returns (uint128)",
+      "function getBaseValidatorCount() view returns (uint256)",
+      "function initialize(address[] baseValidators, uint128 baseThreshold, uint256 partnerThreshold)",
+      "function isBaseValidator(address validator) view returns (bool)",
+      "function nextNonce() view returns (uint256)",
+      "function partnerValidatorThreshold() view returns (uint256)",
+      "function registerMessages(tuple(bytes32 innerMessageHash, bytes32 outgoingMessagePubkey)[] signedMessages, bytes validatorSigs)",
+      "function validMessages(bytes32 messageHash) view returns (bool isValid)"
+    ],
+    "base:0xb0887e4793d944Cf7bA674B3b3FA5C15900ddaA7": [
+      "constructor(address bridge)",
+      "error DelegateCallCannotHaveValue()",
+      "error Unauthorized()",
+      "error ZeroAddress()",
+      "function BRIDGE() view returns (address)",
+      "function execute(tuple(uint8 ty, address to, uint128 value, bytes data) call)"
+    ],
+    "base:0xb326c02150bb0De265Bb0eCeDA53531ab0163bf6": [
+      "constructor(address initialOwner, address initialImplementation) payable",
+      "error NewImplementationHasNoCode()",
+      "error NewOwnerIsZeroAddress()",
+      "error Unauthorized()",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function implementation() view returns (address result)",
+      "function owner() view returns (address result)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)"
+    ],
+    "base:0xDD56781d0509650f8C2981231B6C917f2d5d7dF2": [
+      "constructor(address beacon)",
+      "error CannotWrapNativeSOL()",
+      "error ZeroAddress()",
+      "event CrossChainERC20Created(address indexed localToken, bytes32 indexed remoteToken, address deployer)",
+      "function BEACON() view returns (address)",
+      "function deploy(bytes32 remoteToken, string name, string symbol, uint8 decimals) returns (address)",
+      "function deploySolWrapper() returns (address)",
+      "function isCrossChainErc20(address token) view returns (bool isCrossChainErc20)"
+    ],
+    "base:0xdDc41fdA4B758728d07F4686DbE7D1C75C6b2552": [
+      "constructor(address initialOwner, address initialImplementation) payable",
+      "error NewImplementationHasNoCode()",
+      "error NewOwnerIsZeroAddress()",
+      "error Unauthorized()",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function implementation() view returns (address result)",
+      "function owner() view returns (address result)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)"
+    ]
+  },
+  "usedTemplates": {
+    "basesolbridge/Bridge": "0x2bf7ed0ab725a8a9f927968b8a1f4b98581b96febd16470b3007a19e27f01614",
+    "basesolbridge/BridgeValidator": "0x3ef4cb6e4242c5b926d2ef671296e8ae54bfd38ff1737eb5f4d6a30c79d96ae3",
+    "basesolbridge/CrossChainERC20": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
+    "basesolbridge/CrossChainERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "basesolbridge/SignerRegistry": "0x2bb8041d79e5e2eb970e6d3ec0b386ab5e856206497346da5145099ab54e586a",
+    "basesolbridge/Twin": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "global/UpgradeableBeacon": "0x5131b8b980cf5a0a571c88590e4878fe796a0b46c9d9854db77dfdf4125f92c9",
+    "transporter/RBACTimelock": "0x7e2aacb693365ed1a6996fe36a483ba61e87663e13acf6dcac56f4ecd50cc9e2"
+  },
+  "usedBlockNumbers": { "base": 50513643 },
+  "permissionsConfigHash": "0x4180a98de2e3950d23acfe912bd277a7544b1222d1ba82994d6359d53e8c2b28"
+}

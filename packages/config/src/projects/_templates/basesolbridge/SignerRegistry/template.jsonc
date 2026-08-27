@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Registry of the partner validator set that co-signs attestations of Solana -> Base messages for the BridgeValidator of the Base <> Solana bridge.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add, remove and rotate the partner validator signers (up to {{getMaxSigners}}) that attest Solana -> Base messages in the BridgeValidator."
+        }
+      ]
+    },
+    "getSigners": {
+      "description": "Partner validator signers, each with an optional pending replacement address (key rotation)."
+    },
+    "signers": {
+      "copy": "getSigners",
+      "edit": ["map", ["get", "evmAddress"]],
+      "description": "Current partner validator signer addresses.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "attest messages passed from Solana to Base by co-signing message batches for the BridgeValidator (the partner validator threshold defined there is required, alongside the Base validator signatures). Attested messages are executable on the Bridge without further verification."
+        }
+      ]
+    }
+  }
+}

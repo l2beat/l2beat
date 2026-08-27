@@ -1332,7 +1332,7 @@ function getStateValidation(
   }
 }
 
-function describeOPFP({
+export function describeOPFP({
   disputeGameBonds,
   maxClockDuration,
   gameMaxDepth,
