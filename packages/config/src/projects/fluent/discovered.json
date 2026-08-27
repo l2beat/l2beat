@@ -655,6 +655,7 @@
         "implementation": "eth:0x056fD0A3eD85c6ae1Ec1c398B33581951Ed4b090",
         "owner": "eth:0xF6d49E874Cb64b8ee56D6F99BD340134B30AB225"
       },
+      "fieldMeta": { "implementation": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xdD283a04cc711aB9c08d79e665835821BEef710B": "UpgradeableBeacon"
       }
@@ -1740,7 +1741,7 @@
     "fluent/L1FluentBridge": "0xac8ac7bce9d4a146a60a73dc807c6c61ff1f11e4147b9e3dc26b8861f1fe0fb4",
     "fluent/NativeGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "fluent/NitroVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "global/UpgradeableBeacon": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/UpgradeableBeacon": "0x5131b8b980cf5a0a571c88590e4878fe796a0b46c9d9854db77dfdf4125f92c9",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25838626 },
