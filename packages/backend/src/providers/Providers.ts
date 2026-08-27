@@ -2,7 +2,6 @@ import type { Logger } from '@l2beat/backend-tools'
 import {
   AvailDaProvider,
   BalanceProvider,
-  BlockProvider,
   BlockTimestampProvider,
   CelestiaDaProvider,
   CirculatingSupplyProvider,
@@ -107,10 +106,9 @@ export class Providers {
 
     this.blockTimestamp = new BlockTimestampProvider({
       indexerClients: this.clients.indexer,
-      blockProviders: [
-        ...this.clients.block.map((c) => new BlockProvider(c.chain, [c])),
-        ...this.aztecBlock.getAll(),
-      ],
+      // Reuse the per-chain BlockProviders so timestamp lookups share their
+      // client fallback and header cache instead of a second set of instances
+      blockProviders: [...this.block.getAll(), ...this.aztecBlock.getAll()],
     })
 
     this.slotTimestamp = new SlotTimestampProvider({
