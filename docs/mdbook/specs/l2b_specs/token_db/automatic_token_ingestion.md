@@ -16,7 +16,8 @@
   - [Propagation](#propagation)
   - [Reading the interop transfer table](#reading-the-interop-transfer-table)
   - [CoinGecko: never called from `plan`](#coingecko-never-called-from-plan)
-  - [CoinGecko symbol casing](#coingecko-symbol-casing)
+  - [CoinGecko symbol casing and punctuation](#coingecko-symbol-casing-and-punctuation)
+  - [Resolving CoinGecko symbol conflicts](#resolving-coingecko-symbol-conflicts)
   - [Address normalization](#address-normalization)
   - [What runs where](#what-runs-where)
   - [What this replaces](#what-this-replaces)
@@ -94,6 +95,8 @@ The queue holds at most one row per `(chain, address)`. States:
   automatic drain ignores these. A human can promote one to `pending` from
   the UI. Used only during rollout (see *Approval mode*).
 - **conflict** — disagreement was detected; left for a human to resolve.
+  The CoinGecko-symbol variety can be resolved directly from the queue UI —
+  see [Resolving CoinGecko symbol conflicts](#resolving-coingecko-symbol-conflicts).
 - **error** — processing tried but could not fetch required data (e.g.
   `symbol`, `decimals`, `deploymentTimestamp`). Left for a human.
 
@@ -197,9 +200,8 @@ strategies, tried in order:
    inserts learn the deployed token symbol from RPC/explorer facts, this
    mismatch check happens in `fetch`; a mismatch becomes `conflict`, while
    a missing deployed token symbol remains an `error`. The symbol comparison
-   is case-insensitive, because the CoinGecko endpoints we call
-   (`/coins/list` and `/coins/{id}`) return symbols lower-cased (`susde`,
-   `wsteth`) — see *CoinGecko symbol casing* below.
+   ignores casing and punctuation — see *CoinGecko symbol casing and
+   punctuation* below.
 
 If none of the three resolves anything, the outcome is `skip` and the
 entry is removed. RPC/explorer fact fetching only runs in the `fetch`
@@ -230,6 +232,9 @@ update, possibly with a newly built CoinGecko abstract), `conflict`
   needed, inserts a new abstract token in the same transaction. It then
   re-enqueues every neighbor token from the address's transfers
   (propagation) and removes the queue entry.
+  Automatically inserted deployed tokens start with `ignored = false`.
+  Ingestion updates only the fields it resolved, so it never clears an
+  `ignored` value set manually later.
 
 ## Shared write boundary
 
@@ -388,7 +393,7 @@ address simply disappears from the queue. If audit history is needed
 later, the natural place to store it is alongside the deployed token
 itself — see *Future: persistent audit*.
 
-## CoinGecko symbol casing
+## CoinGecko symbol casing and punctuation
 
 The two CoinGecko endpoints this pipeline calls — `/coins/list`
 (used by `plan` to find the coin from `(chain, address)`) and
@@ -400,27 +405,123 @@ it's a full name rather than a symbol. The RPC call against the
 deployed token returns the true casing, so RPC is the source of truth
 for the symbol.
 
-Two places treat this as a casing-only normalization rather than a real
-mismatch:
+Beyond casing, CoinGecko symbols also routinely differ from the on-chain
+symbol only in punctuation: `$`-prefixed meme coins (`$PEPE` vs `PEPE`,
+in either direction), stray spaces, dots and similar. The production
+conflict backlog showed such pairs make up roughly 40% of all
+CoinGecko-symbol mismatches, and none of them describe a different
+asset.
 
-- The conflict check that gates creating a new CoinGecko-sourced abstract
-  compares the candidate symbol against the deployed-token symbol
-  **case-insensitively**. A casing-only difference is not a conflict; a
-  real symbol mismatch (e.g. `USDC` vs. `DAI`) still is.
-- When the check passes and a new abstract is about to be written, `fetch`
-  copies the deployed-token's casing onto the abstract record so the row
-  persisted to TokenDB carries the canonical casing — not CoinGecko's
-  lower-cased value or our previous upper-cased placeholder. A
-  `corrected-coingecko-symbol-casing` step is appended to the trace so the
-  preview dialog and the persisted ingestion log both make the correction
-  visible.
+The `fetch` phase therefore treats symbols that match after lower-casing
+and stripping everything that is not a Unicode letter or digit as **the
+same symbol** rather than a conflict (two symbols that are *all*
+punctuation never match — there is no comparable content). What ends up
+on the new abstract token depends on how the raw values differed:
 
-Both of these live inside the existing `fetch` phase: that's the moment we
+- **Casing-only difference**: the deployed-token casing is copied onto
+  the abstract record, and a `corrected-coingecko-symbol-casing` step is
+  appended to the trace.
+- **Punctuation difference**: the deployed-token symbol is adopted
+  (it is on-chain truth and carries real casing) with edge whitespace
+  stripped — an invisible stray space on an abstract symbol would
+  spuriously conflict with clean deployments of the same asset later.
+  An `adopted-deployed-token-symbol` step is appended to the trace, and
+  the CoinGecko spelling is recorded in the abstract token's `comment`
+  so the substitution stays traceable on the record itself. (The
+  deployed-token *record* keeps its RPC symbol verbatim; only the
+  abstract token symbol is curated. The manual resolution flow below
+  trims its chosen symbol for the same reason.)
+- **Genuine difference** (e.g. `USDC` vs. `DAI`, `WKAS` vs. `KAS`): still
+  a `conflict`.
+
+All of this lives inside the existing `fetch` phase: that's the moment we
 already have both the materialized CoinGecko abstract and the
 deployed-token symbol in hand, so no additional plumbing is needed. If
-CoinGecko ever starts returning properly cased symbols, the substitution
-becomes a no-op (the values already match) and can be removed without
-touching the rest of the pipeline.
+CoinGecko ever starts returning properly cased symbols, the casing
+substitution becomes a no-op (the values already match) and can be
+removed without touching the rest of the pipeline.
+
+## Resolving CoinGecko symbol conflicts
+
+When the symbols genuinely differ, the entry lands in the sticky
+`conflict` state as before — but this particular conflict kind is
+**resolvable from the queue UI**. Production data shows the remaining
+mismatches are dominated by wrapped/bridged variants (`WKAS` vs `KAS`,
+`aEthUSDT` vs `AUSDT`) and CoinGecko-side renames (`SAI` vs `DAI`,
+`LUNC` vs `LUNA`), where a researcher has to decide which spelling the
+abstract token should carry; a small tail are CoinGecko platform-mapping
+errors (a scam contract mapped onto a real coin) that must *not* be
+written automatically — which is why this stays a human decision instead
+of blindly preferring CoinGecko.
+
+The conflict fires precisely when ingestion is about to **create** the
+abstract token — an existing abstract found by CoinGecko id is linked
+without any symbol comparison (see *Abstract token resolution*). So the
+resolution is not a special ingestion mode; it is simply: **a human
+creates the abstract token, then the entry is retried**. The re-plan
+finds the abstract by its CoinGecko id and links the deployed token
+through the ordinary existing-abstract path, and the conflict never
+fires again. No decision is transported through the pipeline, so there
+is nothing to go stale and nothing to guard — the pipeline keeps its
+core invariant of re-deriving everything from current state on every
+run, and queue entries keep carrying only status, never decisions.
+
+The moving parts:
+
+- The conflict outcome produced by `fetch` carries a structured
+  `symbolConflict` field (CoinGecko id + both symbols) next to the
+  human-readable message, so the UI never parses message strings. For
+  *stored* queue entries, the `getPage` route flags rows with
+  `resolvableSymbolConflict`, derived from the fresh plan it already
+  computes per row: the CoinGecko-symbol conflict is the only conflict
+  kind that can fire while the plan wants to create a new abstract token
+  from CoinGecko, so `state = conflict` plus a `new-coingecko` pending
+  plan identifies it — no message-format knowledge anywhere. Because the
+  flag is derived from current evidence rather than the stored message,
+  it also disappears on its own once the conflict stops applying (e.g. a
+  sibling chain's resolution already created the abstract token).
+- The queue page shows a **Resolve** button on flagged rows. The dialog
+  re-runs `plan` + `fetch` (the `preview` route) to get a fresh
+  structured conflict and offers three choices: the CoinGecko symbol
+  (upper-cased — CoinGecko loses casing), the deployed-token symbol, or
+  a custom value (pre-filled with the CoinGecko symbol so fixing its
+  casing is a two-keystroke edit). Because the abstract token is shared
+  by every deployment of the coin, the dialog nudges towards a
+  chain-neutral symbol (`aWBTC`, not `aArbWBTC`). If re-planning no
+  longer produces this conflict — evidence changed while the entry sat
+  in the queue, or a sibling chain's entry was already resolved — the
+  dialog says so and points at Preview / Retry instead.
+- Confirming reuses the **ordinary manual write path**: an
+  `AddAbstractTokenIntent` (`plan.generate` + `plan.execute`) creates
+  the abstract token with the chosen symbol, the coin's CoinGecko id,
+  icon and listing timestamp (fetched via the same `checks` route the
+  Add-abstract-token form uses), and a `comment` recording both original
+  symbols and the choice. Then the entry is retried. There is no
+  dedicated resolution endpoint, and the ingestion pipeline knows
+  nothing about resolutions.
+- The audit trail is the ordinary one: the manual insert lands in
+  `TokenDbHistory` with `source = manual`, the researcher's email and
+  the intent; the subsequent link write lands as a normal `ingestion`
+  row with its trace log. The abstract token's `comment` keeps the
+  decision visible on the record itself.
+
+Failure modes degrade to visible, recoverable states instead of wrong
+writes. If the evidence changes before the retry runs (CoinGecko
+remapped the address or delisted the coin), the retry just reports the
+new reality and the manually created abstract sits unlinked —
+reviewable and deletable like any other token. Two researchers racing
+on sibling entries of the same coin can at worst create a spare
+abstract for that coin (the dialog previews on open, so a conflict that
+was already resolved shows as no-longer-resolvable instead of offering
+a second resolution); the spare is equally visible and deletable.
+
+The queue page also has a *Retry conflicts on this page* bulk action
+(`retryMany`): after the punctuation normalization above shipped, a large
+share of the accumulated conflict backlog resolves automatically on
+re-processing, and conflicts whose cause still holds simply come back
+with a refreshed message. It is also the natural way to clear sibling
+entries after one chain's conflict was resolved — their re-plan now
+finds the abstract token and links to it.
 
 ## Address normalization
 
@@ -452,11 +553,7 @@ EVM addresses. Normalization:
 
 ## What this replaces
 
-The two cards on the legacy Token UI suggestions page. Manual entry via
-the form and the BackOffice missing-tokens action column remain
-untouched, mostly to limit the amount of work necessary to implement
-automatic ingestion. In the future they will be slimmed down where
-they overlap with automatic ingestion process.
+The two cards on the legacy Token UI suggestions page.
 
 ## Future: persistent trace audit
 

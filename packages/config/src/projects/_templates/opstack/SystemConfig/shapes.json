@@ -185,5 +185,11 @@
     "address": "eth:0x2dBFabA1D1d4172E0f8301671DED544C0079B961",
     "chain": "ethereum",
     "blockNumber": 24167604
+  },
+  "SystemConfig_v2_3_0_beta_3_hashkey": {
+    "hash": "0xf27c4a47f5f30ee0ed7d69662eb98874c98bc6957423153a1383eb983a2bbf5f",
+    "address": "eth:0xE4577dCF1C44F04cf489AA995E01e988f461cc4A",
+    "chain": "ethereum",
+    "blockNumber": 25680353
   }
 }

@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x0decd64c3ec5a73420755849e871231080e6b27a
+
+# Diff at Tue, 25 Aug 2026 07:57:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@19c383d3b8961aa173298f261cae4a76da50a99d block: 1786536914
+- current timestamp: 1787644553
+
+## Description
+
+Second trusted aggregator removed (was not used in ~250d).
+
+Tajirchain starts sending pessimistic proofs.
+
+## Watched changes
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) [polygon-cdk/AgglayerManager] {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      values.accessControl.TRUSTED_AGGREGATOR.members.1:
+-        "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.14:
++        28
+      values.trustedAggregatorAC.1:
+-        "eth:0xD7e6c31750838Ef895fBe0c57f7Fd881a14482Fb"
+    }
+```
+
+Generated with discovered.json: 0x3d750f17be46b20724b5a8095ad9254a678a780f
+
+# Diff at Wed, 12 Aug 2026 12:17:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fcd1e391c3f4bb947d4d1cd82a80d26e44f435a9 block: 1784814697
+- current timestamp: 1786536914
+
+## Description
+
+New agglayer chain with chainId 3377, which maps to tajirchain.com. pessimistic (noproofs) architecture.
+
+## Watched changes
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) [polygon-cdk/AgglayerManager] {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      values.rollupCount:
+-        27
++        28
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: LOW
+      values.rollupsDataV2.27:
++        {"rollupContract":"eth:0xB07134fF28e74a90667Ab5e3F7271a542D6E0358","chainID":3377,"verifier":"eth:0x0000000000000000000000000000000000000000","forkID":0,"rollupTypeID":14,"rollupVerifierType":2,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+    }
+```
+
 Generated with discovered.json: 0xeed66383c3e1b421c260c92b6d5ca4da30a9c4e5
 
 # Diff at Thu, 30 Jul 2026 14:36:31 GMT:

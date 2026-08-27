@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Wrapper token (WFPS) for FPS. Wrapped shares cannot vote individually and can be unwrapped or redeemed for ZCHF at any time, subject to the wrapper's collective holding duration.",
+  "ignoreInWatchMode": ["totalSupply"],
+  "fields": {
+    "underlying": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "halve the accrued holding duration of the FPSWrapper with 2% of FPS votes, delaying WFPS holders' ability to redeem the underlying FPS for ZCHF."
+        }
+      ]
+    }
+  }
+}

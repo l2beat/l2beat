@@ -83,6 +83,7 @@ export function AddDeployedToken() {
 
   const form = useForm<DeployedTokenSchema>({
     resolver: validateResolver(DeployedTokenSchema),
+    defaultValues: { ignored: false },
   })
   const [plan, setPlan] = useState<Plan | undefined>(undefined)
   const [isQueueSheetOpen, setIsQueueSheetOpen] = useState(false)
@@ -246,6 +247,7 @@ export function AddDeployedToken() {
     form.resetField('deploymentTimestamp')
     form.resetField('abstractTokenId')
     form.resetField('comment')
+    form.resetField('ignored')
     form.clearErrors()
 
     if (next) {

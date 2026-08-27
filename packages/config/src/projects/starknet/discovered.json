@@ -1,7 +1,7 @@
 {
   "name": "starknet",
-  "timestamp": 1784036617,
-  "configHash": "0xae977e3db9220e228674be34897a37d1cca9030b01c2fc8777d7710e9b714112",
+  "timestamp": 1786612387,
+  "configHash": "0x2e6508c3065ac604a4b2341439c30bdf79511651bea082bff8ba2a97432fbcc5",
   "entries": [
     {
       "name": "Starkware Multisig 2",
@@ -633,8 +633,8 @@
       },
       "references": [
         {
-          "text": "Security Council members - Starkware Governance Hub",
-          "href": "https://governance.starknet.io/learn/security_council"
+          "text": "Security Council - Starknet Docs",
+          "href": "https://docs.starknet.io/learn/protocol/security-council"
         }
       ]
     },
@@ -2262,7 +2262,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1696230,
+        "l1ToL2MessageNonce": 1696820,
         "messageCancellationDelay": 432100,
         "operators": [
           "eth:0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
@@ -2290,9 +2290,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "3258949359598867981118512513858741206324439976304817540590561633668036655482",
-        "stateBlockNumber": 11838783,
-        "stateRoot": "2998318177306854875512855887843976845528800634535496288445148486038690637403",
+        "stateBlockHash": "460416287689914351838488462183993789270396474383792784101450107858726611728",
+        "stateBlockNumber": 13216199,
+        "stateRoot": "2826411619930727617352753332712584583771552457306778130493037728711489308726",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -5100,6 +5100,6 @@
     "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b",
     "starknet/StarknetMultiBridge_haltable": "0xe8353adf6ac366e8437be00a65d081e1d14c386d2b59bbfc9f50dcc2d80299b9"
   },
-  "usedBlockNumbers": { "ethereum": 25531259 },
+  "usedBlockNumbers": { "ethereum": 25745123 },
   "permissionsConfigHash": "0x8d7e07bdf23362ed999fa6b9521fb6f1214328b6851e693ccb9805ebe31ff9d2"
 }

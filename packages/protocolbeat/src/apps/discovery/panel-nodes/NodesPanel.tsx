@@ -113,6 +113,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           data: null,
           fields: toNodeFields(contract.fields),
           hiddenFields: keysToHideOnLoad,
+          compressedRows: [],
           opened: false,
           subnodes: [],
         }
@@ -135,6 +136,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           data: null,
           fields: [],
           hiddenFields: [],
+          compressedRows: [],
           opened: false,
           subnodes: [],
         }
@@ -302,9 +304,24 @@ function getKeysToHideOnLoad(fields: ApiField[]): string[] {
   const largeArrays = fields.filter(
     (field) =>
       field.name !== '$members' &&
-      field.value.type === 'array' &&
-      field.value.values.length > LARGE_ARRAY_THRESHOLD,
+      countAddresses(field.value) > LARGE_ARRAY_THRESHOLD,
   )
 
   return toNodeFields(largeArrays).map((field) => field.name)
+}
+
+function countAddresses(value: FieldValue): number {
+  switch (value.type) {
+    case 'address':
+      return 1
+    case 'array':
+      return value.values.reduce((total, v) => total + countAddresses(v), 0)
+    case 'object':
+      return value.values.reduce(
+        (total, [key, v]) => total + countAddresses(key) + countAddresses(v),
+        0,
+      )
+    default:
+      return 0
+  }
 }

@@ -7,14 +7,15 @@ import {
 } from '~/server/features/changelog/getChangelogEntries'
 import { getDaProjectEconomicSecurity } from '~/server/features/data-availability/project/utils/getDaProjectEconomicSecurity'
 import { getHomeEthereumCharts } from '~/server/features/home/getHomeEthereumCharts'
-import { getHomeScalingCharts } from '~/server/features/home/getHomeScalingCharts'
+import { getHomeL2Charts } from '~/server/features/home/getHomeL2Charts'
 import { getHomeTopChainsTvsData } from '~/server/features/home/getHomeTopChainsTvsData'
+import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
+import { TOP_PROTOCOLS_LIMIT } from '~/server/features/layer2s/interop/utils/pickTopProtocolEntries'
+import { getOngoingAnomaliesOverview } from '~/server/features/layer2s/liveness/getOngoingAnomaliesOverview'
+import { getL2SummaryData } from '~/server/features/layer2s/summary/getL2SummaryEntries'
+import { getPrivacyProjects } from '~/server/features/privacy/getPrivacyProjects'
 import { getPrivacySummaryEntries } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { getRecentChangesOverview } from '~/server/features/projects/recent-changes/getRecentChangesOverview'
-import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
-import { TOP_PROTOCOLS_LIMIT } from '~/server/features/scaling/interop/utils/pickTopProtocolEntries'
-import { getOngoingAnomaliesOverview } from '~/server/features/scaling/liveness/getOngoingAnomaliesOverview'
-import { getScalingSummaryData } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import { getZkCatalogEntries } from '~/server/features/zk-catalog/getZkCatalogEntries'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -30,7 +31,7 @@ import {
 import { getFlowChainOrderByVolume } from '../interop/utils/getFlowChainOrderByVolume'
 import { getInteropChainHref } from '../interop/utils/getInteropChainHref'
 import { selectDefaultFlowChains } from '../interop/utils/selectDefaultFlowChains'
-import type { HomeScalingCategoryCounts } from './components/HomeScalingCard'
+import type { HomeL2CategoryCounts } from './components/HomeL2Card'
 import type { HomeWhatsNewItem } from './components/HomeWhatsNewCard'
 import { getHomeProjectCounts } from './getHomeProjectCounts'
 import { HOME_CHART_RANGE } from './homeChartRanges'
@@ -63,7 +64,7 @@ export async function getHomeData(
       metadata: getMetadata(manifest, {
         title: 'L2BEAT',
         description:
-          'Bird-eye view of the Ethereum scaling ecosystem: total value secured, activity, interoperability, recent additions and what L2BEAT is currently tracking.',
+          'Track the Ethereum ecosystem in one view: L2s and Ethereum metrics, interoperability flows, privacy protocols and ZK provers, ongoing anomalies, new projects, and the latest additions to L2BEAT.',
         url: req.originalUrl,
         openGraph: {
           image: '/meta-images/home/opengraph-image.png',
@@ -83,19 +84,17 @@ export async function getHomeData(
 async function getCachedData(manifest: Manifest) {
   const helpers = getSsrHelpers()
 
-  const scalingProjects = await ps.getProjects({
+  const l2Projects = await ps.getProjects({
     select: ['scalingInfo'],
   })
-  const scalingProjectSlugById = new Map(
-    scalingProjects.map((p) => [p.id, p.slug]),
-  )
+  const l2ProjectSlugById = new Map(l2Projects.map((p) => [p.id, p.slug]))
 
   const interopChainsRaw = getInteropChains()
   const interopChains: InteropChainWithIcon[] = interopChainsRaw.map(
     (chain) => ({
       ...chain,
       iconUrl: manifest.getUrl(`/icons/${chain.iconSlug ?? chain.id}.png`),
-      href: getInteropChainHref(chain.id, scalingProjectSlugById),
+      href: getInteropChainHref(chain.id, l2ProjectSlugById),
     }),
   )
   const activeInteropChains = interopChains.filter((chain) => !chain.isUpcoming)
@@ -127,18 +126,18 @@ async function getCachedData(manifest: Manifest) {
     projectCounts,
     recentChanges,
     ongoingAnomalies,
-    scalingCharts,
+    l2Charts,
     ethereumCharts,
     ethereumEconomicSecurity,
     privacyEntries,
     zkCatalogEntries,
   ] = await Promise.all([
-    getScalingSummaryData(),
+    getL2SummaryData(),
     getRecentProjectsForHome(manifest),
     getHomeProjectCounts(),
     getRecentChangesOverview(),
     getOngoingAnomaliesOverview(),
-    getHomeScalingCharts(chartRange),
+    getHomeL2Charts(chartRange),
     getHomeEthereumCharts(chartRange),
     getEthereumEconomicSecurity(),
     getPrivacyEntriesForHome(),
@@ -164,7 +163,7 @@ async function getCachedData(manifest: Manifest) {
   ])
 
   const summaryTabs = summaryData.tabs
-  const scalingCategoryCounts: HomeScalingCategoryCounts = {
+  const l2CategoryCounts: HomeL2CategoryCounts = {
     rollups: summaryTabs.rollups.length,
     validiumsAndOptimiums: summaryTabs.validiumsAndOptimiums.length,
   }
@@ -189,14 +188,14 @@ async function getCachedData(manifest: Manifest) {
     topChainsTvsData,
     topPrivacyProtocols: privacyEntries.slice(0, TOP_PRIVACY_PROTOCOLS_COUNT),
     topZkProvers: zkCatalogEntries.slice(0, TOP_ZK_PROVERS_COUNT),
-    scalingCharts,
+    l2Charts,
     ethereumCharts,
     ethereumEconomicSecurity,
     recentProjects,
     interopChains: sortedChains,
     interopProtocols: protocols,
     defaultSelectedFlowChains,
-    scalingCategoryCounts,
+    l2CategoryCounts,
     recentChangesCount: recentChanges.count,
     recentChangesProjects: recentChanges.groups.map((group) => ({
       name: group.name,
@@ -208,17 +207,7 @@ async function getCachedData(manifest: Manifest) {
 }
 
 async function getPrivacyEntriesForHome() {
-  const projects = await ps.getProjects({
-    where: ['privacyInfo'],
-    select: ['display', 'privacyInfo', 'statuses'],
-    optional: [
-      'tvsConfig',
-      'contracts',
-      'permissions',
-      'discoveryInfo',
-      'zkCatalogInfo',
-    ],
-  })
+  const projects = await getPrivacyProjects()
   return getPrivacySummaryEntries(projects)
 }
 
@@ -263,15 +252,21 @@ export interface HomeRecentProject {
   name: string
   href: string
   iconUrl: string
-  category: 'scaling' | 'da' | 'zkCatalog' | 'ecosystems'
-  scalingCategory: string | undefined
+  category: 'l2' | 'da' | 'zkCatalog' | 'ecosystems' | 'privacy'
+  l2Category: string | undefined
 }
 
 async function getRecentProjectsForHome(
   manifest: Manifest,
 ): Promise<HomeRecentProject[]> {
   const projects = await ps.getProjects({
-    optional: ['scalingInfo', 'daLayer', 'ecosystemConfig', 'zkCatalogInfo'],
+    optional: [
+      'scalingInfo',
+      'daLayer',
+      'ecosystemConfig',
+      'zkCatalogInfo',
+      'privacyInfo',
+    ],
     whereNot: ['archivedAt'],
   })
 
@@ -281,7 +276,8 @@ async function getRecentProjectsForHome(
         project.scalingInfo ||
         project.daLayer ||
         project.ecosystemConfig ||
-        project.zkCatalogInfo,
+        project.zkCatalogInfo ||
+        project.privacyInfo,
     )
     .sort((a, b) => b.addedAt - a.addedAt)
     .slice(0, RECENT_PROJECTS_COUNT)
@@ -290,10 +286,10 @@ async function getRecentProjectsForHome(
         return {
           id: project.id.toString(),
           name: project.name,
-          href: `/scaling/projects/${project.slug}`,
+          href: `/layer2s/projects/${project.slug}`,
           iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
-          category: 'scaling' as const,
-          scalingCategory:
+          category: 'l2' as const,
+          l2Category:
             project.scalingInfo.type === 'Other'
               ? `${project.scalingInfo.layer === 'layer3' ? 'Layer 3s' : 'Layer 2s'} - Other`
               : project.scalingInfo.type,
@@ -306,7 +302,7 @@ async function getRecentProjectsForHome(
           href: `/data-availability/projects/${project.slug}/no-bridge`,
           iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
           category: 'da' as const,
-          scalingCategory: undefined,
+          l2Category: undefined,
         }
       }
       if (project.zkCatalogInfo) {
@@ -316,7 +312,17 @@ async function getRecentProjectsForHome(
           href: `/zk-catalog/${project.slug}`,
           iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
           category: 'zkCatalog' as const,
-          scalingCategory: undefined,
+          l2Category: undefined,
+        }
+      }
+      if (project.privacyInfo) {
+        return {
+          id: project.id.toString(),
+          name: project.name,
+          href: `/privacy/projects/${project.slug}`,
+          iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
+          category: 'privacy' as const,
+          l2Category: undefined,
         }
       }
       return {
@@ -325,7 +331,7 @@ async function getRecentProjectsForHome(
         href: `/ecosystems/${project.slug}`,
         iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
         category: 'ecosystems' as const,
-        scalingCategory: undefined,
+        l2Category: undefined,
       }
     })
 }

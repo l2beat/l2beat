@@ -44,5 +44,17 @@
     "address": "eth:0xd22cA89e8991FCE568456914c616d303e3142395",
     "chain": "ethereum",
     "blockNumber": 25625379
+  },
+  "L1VerifierPlonk_v30_0": {
+    "hash": "0x583dc7da886d67e3dccd8e65e4db1d4d6aad3dd47fd9cc2f75cdce2d42cb7b76",
+    "address": "eth:0x35CD3865199F2D9c574f34DD72520B19842d440c",
+    "chain": "ethereum",
+    "blockNumber": 25704941
+  },
+  "EraVerifierPlonk_v30_1": {
+    "hash": "0x0ab2b031f6964199dfc9f49330365e06bf50ea3b669eb96e80633d81333c44fc",
+    "address": "eth:0x0DAAB2B7b38ab48712996E760152c569FA356DbF",
+    "chain": "ethereum",
+    "blockNumber": 25753516
   }
 }

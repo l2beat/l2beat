@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AragonExecutor",
+  "category": "gov",
+  "description": "Immutable Aragon action executor used as a delegatecall target by PublicTokenVoting. It executes proposal action batches in the calling plugin's context."
+}

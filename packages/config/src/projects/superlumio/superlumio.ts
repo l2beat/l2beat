@@ -3,7 +3,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('superlumio')
 
@@ -11,6 +11,7 @@ export const superlumio: ScalingProject = opStackL2({
   addedAt: UnixTime(1726646157), // 2024-09-18T07:55:57Z
   archivedAt: UnixTime(1759137268),
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 19314570 })],
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {

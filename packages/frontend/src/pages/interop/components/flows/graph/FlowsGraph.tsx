@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import type { InteropFlowsData } from '~/server/features/scaling/interop/getInteropFlows'
+import type { InteropFlowsData } from '~/server/features/layer2s/interop/getInteropFlows'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { BackgroundRoads } from './BackgroundRoads'
 import { ChainBubblesLayer } from './ChainBubblesLayer'

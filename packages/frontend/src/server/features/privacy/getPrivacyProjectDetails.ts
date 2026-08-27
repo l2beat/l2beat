@@ -1,6 +1,7 @@
 import type {
   PrivacyAttribute,
   PrivacyExitWindow,
+  PrivacyNoteDiscovery,
   PrivacySummaryValue,
   ProjectContracts,
   ProjectDisplay,
@@ -18,8 +19,8 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { ps } from '~/server/projects'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
+import { getPrivacyProject } from './getPrivacyProjects'
 import type { PrivacyAsset, PrivacyBucket, PrivacyProject } from './types'
 
 interface PrivacyProjectFlowData {
@@ -38,9 +39,12 @@ export interface PrivacyProjectDetails {
   permissions?: Record<string, ProjectPermissions>
   statuses: ProjectStatuses
   zkCatalogInfo?: ProjectZkCatalogInfo
+  trustedSetups: ProjectZkCatalogInfo['trustedSetups']
   exitWindow: PrivacyExitWindow
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
+  hasTvl: boolean
+  noteDiscovery?: PrivacyNoteDiscovery
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   attributes: PrivacyAttribute[]
@@ -63,18 +67,7 @@ export interface PrivacyProjectDetails {
 export async function getPrivacyProjectDetails(
   slug: string,
 ): Promise<PrivacyProjectDetails | undefined> {
-  const project = await ps.getProject({
-    slug,
-    where: ['privacyInfo'],
-    select: ['display', 'privacyInfo', 'statuses'],
-    optional: [
-      'tvsConfig',
-      'contracts',
-      'permissions',
-      'discoveryInfo',
-      'zkCatalogInfo',
-    ],
-  })
+  const project = await getPrivacyProject(slug)
   if (!project) {
     return undefined
   }
@@ -254,9 +247,12 @@ export async function getPrivacyProjectDetails(
     permissions: project.permissions,
     statuses: project.statuses,
     zkCatalogInfo: project.zkCatalogInfo,
+    trustedSetups: project.trustedSetups,
     exitWindow: project.privacyInfo.exitWindow,
     privacy: project.privacyInfo.privacy,
     reproducibility: project.privacyInfo.reproducibility,
+    hasTvl: project.tvsConfig !== undefined,
+    noteDiscovery: project.privacyInfo.noteDiscovery,
     riskSummary: project.privacyInfo.riskSummary,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
     attributes: project.privacyInfo.attributes ?? [],

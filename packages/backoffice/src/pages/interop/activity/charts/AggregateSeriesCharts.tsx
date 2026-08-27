@@ -1,4 +1,4 @@
-import { formatLargeNumber, formatSeconds } from '@l2beat/shared-pure'
+import { formatNumber, formatSeconds } from '@l2beat/shared-pure'
 import {
   CartesianGrid,
   Legend,
@@ -210,7 +210,7 @@ function formatCountVolume(value: unknown) {
     return '-'
   }
 
-  return formatLargeNumber(value)
+  return formatNumber(value)
 }
 
 function formatVolumeValue(value: unknown) {

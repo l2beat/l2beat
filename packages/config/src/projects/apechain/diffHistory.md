@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x5a6e5b7dfda006c03559e8dbfcc97f4d66dca248
+
+# Diff at Tue, 25 Aug 2026 14:43:10 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@bba6c9e66ca2dd99590b6f233fe8f6509dc767a0 block: 1786359767
+- current timestamp: 1787668924
+
+## Description
+
+Config-related: the shared wasmModuleRoot type map gained the ArbOS v61 label. No onchain changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786359767 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (arb1:0x374de579AE15aD59eD0519aeAf1A23F348Df259c) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97:
++        "ArbOS v61 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0xd2b77653e6b7d3b4e85cdecd1ad80b62c6b15a28
+
+# Diff at Mon, 10 Aug 2026 11:03:54 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@b69b5b6595d9041cb4e6d7872e95451210cc7bd7 block: 1783073499
+- current timestamp: 1786359767
+
+## Description
+
+SequencerInbox: the latest batch was posted as an AnyTrust DAC certificate rather than as data on the host chain.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (arb1:0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C) [orbitstack/SequencerInbox_Espresso] {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.sequencerVersion:
+-        "0x00"
++        "0x88"
+    }
+```
+
 Generated with discovered.json: 0x76869a79df2f4f45c7004f654c3ebdfb8f4c5d06
 
 # Diff at Fri, 03 Jul 2026 10:13:14 GMT:

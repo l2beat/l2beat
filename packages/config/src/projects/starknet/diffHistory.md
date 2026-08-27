@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x0d33a7d1a1642c0211bb19b8d41921b76fda0651
+
+# Diff at Thu, 13 Aug 2026 09:14:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4a0cce7a33eee94f7395bc3adf267ebe20e3f4bc block: 1784036617
+- current timestamp: 1786612387
+
+## Description
+
+Update Security Council reference link to Starknet docs (old governance hub link is dead)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784036617 (main branch discovery), not current.
+
+```diff
+    contract Starkware Security Council (eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) [GnosisSafe] {
+    +++ description: None
+      references.0.href:
+-        "https://governance.starknet.io/learn/security_council"
++        "https://docs.starknet.io/learn/protocol/security-council"
+      references.0.text:
+-        "Security Council members - Starkware Governance Hub"
++        "Security Council - Starknet Docs"
+    }
+```
+
 Generated with discovered.json: 0x1308e0d801f222644c71695191c9b9bbead94e5e
 
 # Diff at Mon, 27 Jul 2026 10:17:00 GMT:

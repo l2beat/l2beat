@@ -52,12 +52,7 @@ export const adi: ScalingProject = {
   id: ProjectId('adi'),
   addedAt: UnixTime(1766016000), // 2025-12-18T00:00:00Z
   capability: 'universal',
-  badges: [
-    BADGES.Stack.ZKStack,
-    BADGES.Infra.ElasticChain,
-    BADGES.VM.EVM,
-    BADGES.DA.EthereumCalldata,
-  ],
+  badges: [BADGES.Stack.ZKStack, BADGES.VM.EVM, BADGES.DA.EthereumCalldata],
   display: {
     name: 'ADI Chain',
     purposes: ['Universal'],

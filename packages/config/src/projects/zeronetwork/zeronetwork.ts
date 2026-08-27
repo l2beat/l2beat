@@ -7,9 +7,10 @@ import {
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { zkStackL2 } from '../../templates/zkStack'
+import { getZkStackDaTracking, zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zeronetwork')
+const archivedAt = UnixTime(1786523999) // 2026-08-12T08:39:59Z (last L2 block)
 const v26UpgradeTS = UnixTime(1742860739)
 const v29UpgradeTS = UnixTime(1783512011)
 const chainId = 543210
@@ -24,6 +25,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
   discovery,
   additionalBadges: [BADGES.RaaS.Caldera],
   addedAt: UnixTime(1731369600), // 2024-11-12T00:00:00Z
+  archivedAt,
   display: {
     name: 'ZERO Network',
     slug: 'zeronetwork',
@@ -59,6 +61,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
     chainId,
     explorerUrl: 'https://explorer.zero.network',
     sinceTimestamp: UnixTime(1729616414),
+    untilTimestamp: archivedAt,
     apis: [
       {
         type: 'rpc',
@@ -67,8 +70,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
       },
     ],
   },
-  usesEthereumBlobs: true,
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
@@ -82,16 +84,9 @@ export const zeronetwork: ScalingProject = zkStackL2({
         EthereumAddress('0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0'),
       ],
     },
-    {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
+    getZkStackDaTracking(discovery, {
       sinceBlock: 25482106, // v29 upgrade
-      inbox: EthereumAddress('0x2e5110cF18678Ec99818bFAa849B8C881744b776'),
-      sequencers: [
-        EthereumAddress('0xef854E09fa6e281268e1051D4d5465d8c92862ee'),
-        EthereumAddress('0x7b55c1D9b75Fa35793157aD674b0a1aEF7b8DdE0'),
-      ],
-    },
+    }),
   ],
   nonTemplateTrackedTxs: [
     {

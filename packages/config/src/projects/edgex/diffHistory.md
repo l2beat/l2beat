@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xee53092577b7cb42dd450482d21fb5dca85a6d07
+
+# Diff at Mon, 17 Aug 2026 11:08:35 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@9b7337c108d300967ecea6d6606607859d1de669 block: 1783938661
+- current timestamp: 1786964851
+
+## Description
+
+EdgeX v1 StarkEx deployment stops operating and freezes due to a forced withdrawal on L1 not being processed for 7 days. 
+Observable trading activity stopped even before this, so it's a planned sunset of StarkEx deployment as a part of migration to EDGE L3 on arbitrum.
+
+## Watched changes
+
+```diff
+    contract StarkPerpetual (eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD) [N/A] {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      values.isFrozen:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x745c3b276b223719f5dce71e971dae2afac8dfa5
 
 # Diff at Mon, 13 Jul 2026 10:32:06 GMT:

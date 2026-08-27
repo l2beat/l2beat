@@ -6,7 +6,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import type { InteropScope } from '~/server/features/scaling/interop/types'
+import type { InteropScope } from '~/server/features/layer2s/interop/types'
 import { ChainIcon } from './ChainIcon'
 import { InteropNoDataBadge } from './InteropNoDataBadge'
 import { InteropTransferDetailsTrigger } from './InteropTransferDetailsTrigger'

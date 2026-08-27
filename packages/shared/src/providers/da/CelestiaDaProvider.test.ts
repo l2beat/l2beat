@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import type { CelestiaRpcClient } from '../../clients'
 import { CelestiaDaProvider } from './CelestiaDaProvider'
 
@@ -169,6 +169,24 @@ describe(CelestiaDaProvider.name, () => {
       const blobs = await provider.getBlobs(6515204, 6515204)
 
       expect(blobs).toEqual([])
+    })
+  })
+
+  describe(CelestiaDaProvider.prototype.getBlockTimestamp.name, () => {
+    it('returns the timestamp of the block', async () => {
+      const rpcClientMock = mockObject<CelestiaRpcClient>({
+        getBlockTimestamp: mockFn().resolvesTo(
+          UnixTime.fromDate(new Date('2024-01-01T12:00:00Z')),
+        ),
+      })
+      const provider = new CelestiaDaProvider(rpcClientMock, 'celestia')
+
+      const timestamp = await provider.getBlockTimestamp(6515203)
+
+      expect(timestamp).toEqual(
+        UnixTime.fromDate(new Date('2024-01-01T12:00:00Z')),
+      )
+      expect(rpcClientMock.getBlockTimestamp).toHaveBeenOnlyCalledWith(6515203)
     })
   })
 })

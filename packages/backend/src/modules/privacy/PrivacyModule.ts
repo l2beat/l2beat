@@ -6,7 +6,11 @@ import type { ApplicationModule, ModuleDependencies } from '../types'
 import { PrivacyBlockTimestampIndexer } from './indexers/PrivacyBlockTimestampIndexer'
 import { PrivacyFlowIndexer } from './indexers/PrivacyFlowIndexer'
 import { PrivacyPriceIndexer } from './indexers/PrivacyPriceIndexer'
-import type { PrivacyFlowIndexerConfig } from './types'
+import { StarknetPrivacyFlowIndexer } from './indexers/StarknetPrivacyFlowIndexer'
+import type {
+  PrivacyFlowIndexerConfig,
+  StarknetPrivacyFlowIndexerConfig,
+} from './types'
 
 export function createPrivacyModule({
   config,
@@ -49,12 +53,25 @@ export function createPrivacyModule({
     ])
   }
 
+  const starknetFlowConfigsByChain = new Map<
+    string,
+    StarknetPrivacyFlowIndexerConfig[]
+  >()
+  for (const flowConfig of config.privacy.starknetFlowConfigs) {
+    starknetFlowConfigsByChain.set(flowConfig.chain, [
+      ...(starknetFlowConfigsByChain.get(flowConfig.chain) ?? []),
+      flowConfig,
+    ])
+  }
+
   for (const blockTimestampConfig of config.privacy.blockTimestampConfigs) {
     const sinceTimestamp = UnixTime.toStartOf(
       blockTimestampConfig.sinceTimestamp,
       'hour',
     )
     const flowConfigs = flowConfigsByChain.get(blockTimestampConfig.chain) ?? []
+    const starknetFlowConfigs =
+      starknetFlowConfigsByChain.get(blockTimestampConfig.chain) ?? []
 
     const blockTimestampIndexer = new PrivacyBlockTimestampIndexer(
       {
@@ -74,34 +91,65 @@ export function createPrivacyModule({
       logger,
     )
 
-    const flowIndexer = new PrivacyFlowIndexer(
-      {
-        chain: blockTimestampConfig.chain,
-        parents: [priceIndexer, blockTimestampIndexer],
-        indexerService,
-        blockProvider: providers.block.getBlockProvider(
-          blockTimestampConfig.chain,
-        ),
-        logsProvider: providers.logs.getLogsProvider(
-          blockTimestampConfig.chain,
-        ),
-        configurations: flowConfigs.map((flowConfig) => ({
-          id: flowConfig.id,
-          minHeight: flowConfig.sinceTimestamp,
-          maxHeight: null,
-          properties: flowConfig,
-        })),
-        db,
-      },
-      logger,
-    )
+    indexers.push(blockTimestampIndexer)
 
-    indexers.push(blockTimestampIndexer, flowIndexer)
+    if (flowConfigs.length > 0) {
+      indexers.push(
+        new PrivacyFlowIndexer(
+          {
+            chain: blockTimestampConfig.chain,
+            parents: [priceIndexer, blockTimestampIndexer],
+            indexerService,
+            blockProvider: providers.block.getBlockProvider(
+              blockTimestampConfig.chain,
+            ),
+            logsProvider: providers.logs.getLogsProvider(
+              blockTimestampConfig.chain,
+            ),
+            configurations: flowConfigs.map((flowConfig) => ({
+              id: flowConfig.id,
+              minHeight: flowConfig.sinceTimestamp,
+              maxHeight: null,
+              properties: flowConfig,
+            })),
+            db,
+          },
+          logger,
+        ),
+      )
+    }
+
+    if (starknetFlowConfigs.length > 0) {
+      indexers.push(
+        new StarknetPrivacyFlowIndexer(
+          {
+            chain: blockTimestampConfig.chain,
+            parents: [priceIndexer, blockTimestampIndexer],
+            indexerService,
+            blockProvider: providers.block.getBlockProvider(
+              blockTimestampConfig.chain,
+            ),
+            starknetClient: providers.clients.getStarknetClient(
+              blockTimestampConfig.chain,
+            ),
+            configurations: starknetFlowConfigs.map((flowConfig) => ({
+              id: flowConfig.id,
+              minHeight: flowConfig.sinceTimestamp,
+              maxHeight: null,
+              properties: flowConfig,
+            })),
+            db,
+          },
+          logger,
+        ),
+      )
+    }
   }
 
   logger.info('Privacy config loaded', {
     projects: config.privacy.projects.length,
     flowConfigs: config.privacy.flowConfigs.length,
+    starknetFlowConfigs: config.privacy.starknetFlowConfigs.length,
     priceConfigs: config.privacy.priceConfigs.length,
     chains: config.privacy.chains.length,
   })

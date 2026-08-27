@@ -1,7 +1,7 @@
 {
   "name": "educhain",
-  "timestamp": 1785409703,
-  "configHash": "0x5d04e5f10c6092328e7836a79c6dcdfd732f44182e86912b72fddca3beb3bcac",
+  "timestamp": 1787668968,
+  "configHash": "0xf27c8026758915086aac6f66ba6b7d637c5e4e51cbab4e63bee07e30697b33cd",
   "entries": [
     {
       "name": "ChallengeManager",
@@ -93,7 +93,7 @@
         "allowedOutboxList": [
           "arb1:0x6339965Cb3002f5c746895e4eD895bd775dbfdf9"
         ],
-        "delayedMessageCount": 29217,
+        "delayedMessageCount": 29238,
         "inboxHistory": [
           "arb1:0x590044e628ea1B9C10a86738Cf7a7eeF52D031B8",
           "arb1:0xD36cd2624a7187ED41ec30FC1d6E6B7b3abAf251"
@@ -103,8 +103,8 @@
         "outboxHistory": ["arb1:0x6339965Cb3002f5c746895e4eD895bd775dbfdf9"],
         "rollup": "arb1:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
         "sequencerInbox": "arb1:0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631",
-        "sequencerMessageCount": 174323,
-        "sequencerReportedSubMessageCount": 75725727
+        "sequencerMessageCount": 175697,
+        "sequencerReportedSubMessageCount": 76337783
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -707,7 +707,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 174323,
+        "batchCount": 175697,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": ["arb1:0xfB61f6Dff37F794eE56D9A1Cf4BB73f189E92399"],
         "bridge": "arb1:0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8",
@@ -737,7 +737,7 @@
         "rollup": "arb1:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 5,
-        "totalDelayedMessagesRead": 29217,
+        "totalDelayedMessagesRead": 29238,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -818,13 +818,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "10000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 14829,
+        "firstUnresolvedNode": 15453,
         "inbox": "arb1:0x590044e628ea1B9C10a86738Cf7a7eeF52D031B8",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 25630738,
-        "latestConfirmed": 14828,
-        "latestNodeCreated": 14828,
+        "latestConfirmed": 15452,
+        "latestNodeCreated": 15452,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 10,
         "outbox": "arb1:0x6339965Cb3002f5c746895e4eD895bd775dbfdf9",
@@ -903,6 +903,7 @@
             "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499": "ArbOS v51 wasmModuleRoot",
             "0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c": "ArbOS v51.1 wasmModuleRoot",
+            "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97": "ArbOS v61 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot",
             "0x597de35fc2ee60e5b2840157370d037542d6a4bc587af7f88202636c54e6bd8d": "Celestia Nitro ArbOS v40 wasmModuleRoot"
@@ -1113,7 +1114,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 14809,
+        "nonce": 15433,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1906,6 +1907,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 489272304 },
+  "usedBlockNumbers": { "arbitrum": 498266547 },
   "permissionsConfigHash": "0xd0d8de8e45c4219508d996c68e518487764d3377c75c64602d8e650d4a2fea5b"
 }

@@ -1,6 +1,6 @@
 import { expect } from 'earl'
-import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/scaling/interop/consts'
-import type { InteropAbstractToken } from '~/server/features/scaling/interop/token/getInteropAbstractTokens'
+import { UNKNOWN_ABSTRACT_TOKEN_ID } from '~/server/features/layer2s/interop/consts'
+import type { InteropAbstractToken } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { getSearchBarTokenEntries } from './getSearchBarTokenEntries'
 
@@ -16,19 +16,19 @@ describe(getSearchBarTokenEntries.name, () => {
         category: 'tokens',
         id: 'usdc01',
         name: 'USDC',
-        href: '/interop/tokens/circle-usdc',
+        href: '/interop/tokens/usdc01/circle/usdc',
         iconUrl: 'https://example.com/icon.png',
         issuer: 'circle',
       },
     ])
   })
 
-  it('slugifies issuerless tokens by symbol and falls back to the placeholder icon', () => {
+  it('links issuerless tokens by id and symbol and falls back to the placeholder icon', () => {
     const entries = getSearchBarTokenEntries([
       token({ id: 'eth001', symbol: 'ETH', issuer: null, iconUrl: null }),
     ])
 
-    expect(entries[0]?.href).toEqual('/interop/tokens/eth')
+    expect(entries[0]?.href).toEqual('/interop/tokens/eth001/eth')
     expect(entries[0]?.iconUrl).toEqual(TOKEN_PLACEHOLDER_ICON_URL)
   })
 

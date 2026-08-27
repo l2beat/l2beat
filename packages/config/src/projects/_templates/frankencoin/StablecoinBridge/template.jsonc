@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Mints ZCHF against a whitelisted Swiss franc stablecoin held in escrow, at a fixed 1:1 (decimal-adjusted) rate, up to a hard cap and only until its expiration (see isExpired). An expired bridge is permanently mint-disabled, but ZCHF from it can always be burned to redeem the escrowed stablecoin. A depeg or freeze of the escrowed stablecoin impairs ZCHF backing up to the cap.",
+  "ignoreInWatchMode": ["minted"],
+  "fields": {
+    "limit": {
+      "description": "Maximum ZCHF that can ever be minted through this bridge."
+    },
+    "horizon": {
+      "description": "Timestamp after which the bridge can no longer mint (one year from deployment)."
+    },
+    "minted": {
+      "description": "ZCHF currently outstanding from this bridge."
+    },
+    "isExpired": {
+      "copy": "horizon",
+      "edit": ["<", ["env", "timestamp"]],
+      "description": "True once the minting horizon has passed: the bridge is deprecated and can only redeem ZCHF for the escrowed stablecoin, never mint again."
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
   "name": "adi",
   "timestamp": 1780586199,
-  "configHash": "0xb1d16e98b12749d104e1efba56be701598325de6fbcc53356fc2f67df91eb338",
+  "configHash": "0xb7c0037bb81c1363b02ae6e551d609a25259612d1e55482208f60fcc234e49b7",
   "entries": [
     {
       "name": "L1GenesisUpgrade",
@@ -531,7 +531,7 @@
         {
           "permission": "interact",
           "from": "eth:0x08A1D2962fC29AA46e869A1E7561112cc1026EfA",
-          "description": "revert batches for any connected chain (ZK cluster Admin role).",
+          "description": "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role).",
           "role": ".admin"
         },
         {
@@ -1200,7 +1200,7 @@
         {
           "permission": "interact",
           "from": "eth:0x08A1D2962fC29AA46e869A1E7561112cc1026EfA",
-          "description": "revert batches for any connected chain (ZK cluster Admin role).",
+          "description": "set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role).",
           "role": ".admin",
           "via": [
             { "address": "eth:0x2d6E82F1f8fba89a67cc8d742B12633db4732Ca7" }
@@ -1466,7 +1466,7 @@
         "0x593c116cad4320c6760a18580f3103b6f65b31d84ff30b96e64db9cf940c3104"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).",
+      "description": "Canonical central asset router for all ZK stack chains. Routes deposits and withdrawals to the respective asset handlers (like the L1NativeTokenVault); does not escrow funds itself.",
       "deployerAddress": "eth:0xb63320480218fbC7Cc31c3f92C254D4732528985",
       "sinceTimestamp": 1764060407,
       "sinceBlock": 23874722,
@@ -1497,7 +1497,7 @@
         "eth:0xf25227EFAD2046d19777A4CA540b5C016Df7fe7A": "TransparentUpgradeableProxy",
         "eth:0x47eec6F57c7E84391Ba6C9Ac976537d0DB0bb257": "L1AssetRouter"
       },
-      "category": { "name": "Spam", "priority": -1 }
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "ADI Multisig 1",
@@ -2855,5 +2855,5 @@
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
   "usedBlockNumbers": { "ethereum": 25244858 },
-  "permissionsConfigHash": "0x3378ecb604e89076da8362ac999a1254748ef9b6c129049de3e1104354b32c10"
+  "permissionsConfigHash": "0x6a75c8a6f72e221214a9651b98537830d8ba7402f56c22f9448d83bc6202d2c6"
 }

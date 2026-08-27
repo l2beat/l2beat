@@ -196,6 +196,40 @@
             }
           },
           "required": ["type", "chain", "sinceTimestamp", "address", "decimals"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "starknetBalanceOf"
+            },
+            "chain": {
+              "type": "string"
+            },
+            "sinceTimestamp": {
+              "type": "number"
+            },
+            "untilTimestamp": {
+              "type": "number"
+            },
+            "address": {
+              "type": "string"
+            },
+            "escrowAddress": {
+              "type": "string"
+            },
+            "decimals": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "type",
+            "chain",
+            "sinceTimestamp",
+            "address",
+            "escrowAddress",
+            "decimals"
+          ]
         }
       ]
     },
@@ -344,6 +378,40 @@
             }
           },
           "required": ["type", "chain", "sinceTimestamp", "address", "decimals"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "starknetBalanceOf"
+            },
+            "chain": {
+              "type": "string"
+            },
+            "sinceTimestamp": {
+              "type": "number"
+            },
+            "untilTimestamp": {
+              "type": "number"
+            },
+            "address": {
+              "type": "string"
+            },
+            "escrowAddress": {
+              "type": "string"
+            },
+            "decimals": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "type",
+            "chain",
+            "sinceTimestamp",
+            "address",
+            "escrowAddress",
+            "decimals"
+          ]
         }
       ]
     },
@@ -592,6 +660,40 @@
                       "chain",
                       "sinceTimestamp",
                       "address",
+                      "decimals"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "starknetBalanceOf"
+                      },
+                      "chain": {
+                        "type": "string"
+                      },
+                      "sinceTimestamp": {
+                        "type": "number"
+                      },
+                      "untilTimestamp": {
+                        "type": "number"
+                      },
+                      "address": {
+                        "type": "string"
+                      },
+                      "escrowAddress": {
+                        "type": "string"
+                      },
+                      "decimals": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "chain",
+                      "sinceTimestamp",
+                      "address",
+                      "escrowAddress",
                       "decimals"
                     ]
                   }

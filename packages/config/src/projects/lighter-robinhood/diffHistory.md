@@ -1,3 +1,271 @@
+Generated with discovered.json: 0xa8b8ed61af7057d7a31013acf9bbbb844e171ca2
+
+# Diff at Mon, 24 Aug 2026 11:55:55 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@2a46bd4322e5006deef913ce76a8462980544454 block: 1787136754
+- current timestamp: 1787570584
+
+## Description
+
+New verifier deployed (no sources published yet).
+Also, upgraded Lighter contract to add `PricedOnly` asset margin mode (the same diff as this Lighter upgrade: https://disco.l2beat.com/diff/eth:0xE67606837D3d68a679B25B49b8abE5cB4B0Ae483/eth:0x8D692294a4824d868e35B3CEcd734aCf41B2342e).
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb.
+      values.versionId:
+-        4
++        5
+    }
+```
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [N/A] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7ce2f744c6d607ee57b68b69025659533ae352619bab2cea5c26e5cc9175d95d"
++        "0x3a35ceb50e1870902c0afbda8de806932d6a7168c2e27af00ca755fc5db60b93"
+      values.$implementation.0:
+-        "robinhood:0xE470e41Cacc197EA07f879577765A8c81234ED7B"
++        "robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90"
+      values.$implementation.1:
+-        "robinhood:0x1be72833f96e47366610CCFb9Bec081FE69EECf5"
++        "robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c"
+      values.additionalZkLighter:
+-        "robinhood:0x1be72833f96e47366610CCFb9Bec081FE69EECf5"
++        "robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c"
+      values.getTarget:
+-        "robinhood:0xE470e41Cacc197EA07f879577765A8c81234ED7B"
++        "robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90"
+      implementationNames.robinhood:0xE470e41Cacc197EA07f879577765A8c81234ED7B:
+-        "ZkLighter"
+      implementationNames.robinhood:0x1be72833f96e47366610CCFb9Bec081FE69EECf5:
+-        "AdditionalZkLighter"
+      implementationNames.robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90:
++        "ZkLighter"
+      implementationNames.robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c:
++        "AdditionalZkLighter"
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0x59e0ec2f0ddd3e5e201753df9c0d5acf7b63eaeffcef7037e926b825152d4278"
++        "0xe9918698c11cc35630c3cd99d564142087c3968ded02116451208d19007b069a"
+      values.$implementation:
+-        "robinhood:0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4"
++        "robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa"
+      values.getTarget:
+-        "robinhood:0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4"
++        "robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa"
+      implementationNames.robinhood:0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4:
+-        "ZkLighterVerifier"
+      implementationNames.robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa:
++        "ZkLighterVerifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Lighter/AdditionalZkLighter.2.sol                          | 10 ++++++----
+ .../{.flat@1787136754 => .flat}/Lighter/ZkLighter.1.sol        | 10 ++++++----
+ .../ZkLighterVerifier/ZkLighterVerifier.sol                    | 10 +++++-----
+ 3 files changed, 17 insertions(+), 13 deletions(-)
+```
+
+Generated with discovered.json: 0xffaeb84469796685d025db3187e5324c70bd9a86
+
+# Diff at Wed, 19 Aug 2026 12:10:28 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@a370e767776b076bdee7fe699dbe0b6597849e65 block: 1786615810
+- current timestamp: 1787136754
+
+## Description
+
+Verified all contracts and removed spam.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786615810 (main branch discovery), not current.
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [N/A] {
+    +++ description: None
+      unverified:
+-        true
+      implementationNames.robinhood:0x1be72833f96e47366610CCFb9Bec081FE69EECf5:
+-        ""
++        "AdditionalZkLighter"
+      sourceHashes:
++        ["0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6","0x7ce2f744c6d607ee57b68b69025659533ae352619bab2cea5c26e5cc9175d95d"]
+    }
+```
+
+Generated with discovered.json: 0x762eefd9aa9099dd9504c8370f54e277a4717442
+
+# Diff at Thu, 13 Aug 2026 10:41:42 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@6d00177786a5d027e88302fc923a55fb5e236536 block: 1785767480
+- current timestamp: 1786615810
+
+## Description
+
+Network governor and upgrade master changed from an EOA to a 3/5 ms (old EOA is one of the members).
+
+Also, many lighter contract fields got discovered, probably due to one of the contracts becoming verified.
+
+## Watched changes
+
+```diff
+    EOA Lighter Governor (robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7","description":"manage validators, update the address that manages the insurance fund, update the treasury address that collects fees from markets, add and update markets and assets.","role":".networkGovernor"},{"permission":"upgrade","from":"robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d","role":"admin","via":[{"address":"robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716","delay":1814400}]},{"permission":"upgrade","from":"robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31","role":"admin","via":[{"address":"robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716","delay":1814400}]},{"permission":"upgrade","from":"robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7","role":"admin","via":[{"address":"robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716","delay":1814400}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716","delay":1814400,"role":".getMaster"}]
+      eoaWithUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb.
++++ severity: HIGH
+      values.getMaster:
+-        "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213"
++        "robinhood:0x8Caf9FF9392F39E87cBC65A130c026caaCD321ef"
+    }
+```
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [N/A] {
+    +++ description: None
+      values.lastVerifiedStateRoot:
+-        "0x7bb3507766d0a6cf31a2fcc1e3185206f797ce0fac1126dc276e1be5de9a8135"
++        "0x0baaad506ee8ac901c9464f0aa869df325e25c5720ebaf12fe0088652a908c88"
+      values.lastVerifiedValidiumRoot:
+-        "0x479fc285e15020f8af391a5de57116592c83633d7a7384a93df0261bee1042d7"
++        "0x941b1cc85a411f5ce91565555a0778cdd701e5299f2abda7e1dc31353f8dbfc9"
+      values.stateRoot:
+-        "0x7bb3507766d0a6cf31a2fcc1e3185206f797ce0fac1126dc276e1be5de9a8135"
++        "0x0baaad506ee8ac901c9464f0aa869df325e25c5720ebaf12fe0088652a908c88"
+      values.validiumRoot:
+-        "0x479fc285e15020f8af391a5de57116592c83633d7a7384a93df0261bee1042d7"
++        "0x941b1cc85a411f5ce91565555a0778cdd701e5299f2abda7e1dc31353f8dbfc9"
+    }
+```
+
+```diff
+    contract Governance (robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7) [lighter/Governance] {
+    +++ description: Manages the list of validators and the network governor.
++++ severity: HIGH
+      values.networkGovernor:
+-        "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213"
++        "robinhood:0x8Caf9FF9392F39E87cBC65A130c026caaCD321ef"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (robinhood:0x8Caf9FF9392F39E87cBC65A130c026caaCD321ef) [GnosisSafe]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../lighter-robinhood/.flat/SafeL2/SafeL2.sol      | 1286 ++++++++++++++++++++
+ .../lighter-robinhood/.flat/SafeL2/SafeProxy.p.sol |   42 +
+ 2 files changed, 1328 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785767480 (main branch discovery), not current.
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [N/A] {
+    +++ description: None
++++ severity: HIGH
+      values.desertMode:
++        false
+      values.insuranceFundOperator:
++        "robinhood:0x6cCdD1f3f599C69fA74eeDc3dab28559fe99aB0A"
+      values.lastVerifiedStateRoot:
++        "0x7bb3507766d0a6cf31a2fcc1e3185206f797ce0fac1126dc276e1be5de9a8135"
+      values.lastVerifiedValidiumRoot:
++        "0x479fc285e15020f8af391a5de57116592c83633d7a7384a93df0261bee1042d7"
+      values.MAX_ACCOUNT_INDEX:
++        281474976710654
+      values.MAX_API_KEY_INDEX:
++        254
+      values.MAX_ASSET_INDEX:
++        62
+      values.MAX_BATCH_DEPOSIT_LENGTH:
++        1000
+      values.MAX_DEPOSIT_CAP_TICKS:
++        "1152921504606846975"
+      values.MAX_MASTER_ACCOUNT_INDEX:
++        140737488355327
+      values.MAX_ORDER_BASE_AMOUNT:
++        281474976710655
+      values.MAX_ORDER_PRICE:
++        4294967295
+      values.MAX_ORDER_QUOTE_AMOUNT:
++        281474976710655
+      values.MAX_PERPS_MARKET_INDEX:
++        254
+      values.MAX_POOL_SHARES_TO_MINT_OR_BURN:
++        "1152921504606846975"
+      values.MAX_SPOT_MARKET_INDEX:
++        4094
+      values.MAX_STAKING_SHARES_TO_MINT_OR_BURN:
++        "1152921504606846975"
+      values.MAX_TICK_SIZE:
++        "340282366920938463463374607431768211455"
+      values.MIN_ASSET_INDEX:
++        1
+      values.MIN_ORDER_PRICE:
++        1
+      values.MIN_POOL_SHARES_TO_MINT_OR_BURN:
++        1
+      values.MIN_SPOT_MARKET_INDEX:
++        2048
+      values.MIN_STAKING_SHARES_TO_MINT_OR_BURN:
++        1
+      values.NATIVE_ASSET_INDEX:
++        1
+      values.NIL_ACCOUNT_INDEX:
++        281474976710655
+      values.QUOTE_ASSET_INDEX:
++        3
+      values.stateRoot:
++        "0x7bb3507766d0a6cf31a2fcc1e3185206f797ce0fac1126dc276e1be5de9a8135"
+      values.treasury:
++        "robinhood:0xAc71eC137c892d02d531e48cEb1D060f9C9AC357"
+      values.validiumRoot:
++        "0x479fc285e15020f8af391a5de57116592c83633d7a7384a93df0261bee1042d7"
+      fieldMeta.desertMode:
++        {"severity":"HIGH"}
+      implementationNames.robinhood:0xE470e41Cacc197EA07f879577765A8c81234ED7B:
+-        ""
++        "ZkLighter"
+    }
+```
+
 Generated with discovered.json: 0x35f0856968b5f4f51e2907a834580fee7fb666c4
 
 # Diff at Mon, 03 Aug 2026 14:32:34 GMT:

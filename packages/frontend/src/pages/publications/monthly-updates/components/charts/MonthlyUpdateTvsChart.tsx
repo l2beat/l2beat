@@ -24,13 +24,13 @@ import { MarketShare } from './MonthlyUpdateMarketShare'
 export function MonthlyUpdateTvsChart({
   type,
   entries,
-  allScalingProjectsTvs,
+  allL2ProjectsTvs,
   from,
   to,
 }: {
   type: 'ecosystem' | 'daLayer'
   entries: ProjectId[]
-  allScalingProjectsTvs: number
+  allL2ProjectsTvs: number
   from: UnixTime
   to: UnixTime
 }) {
@@ -76,7 +76,7 @@ export function MonthlyUpdateTvsChart({
     } satisfies ChartMeta
   }, [type])
 
-  const stats = getStats(chartData, allScalingProjectsTvs)
+  const stats = getStats(chartData, allL2ProjectsTvs)
   const timeRange = getChartTimeRangeFromData(chartData)
 
   return (
@@ -156,7 +156,7 @@ function Header({
 
 function getStats(
   chartData: TvsChartDataPoint[] | undefined,
-  allScalingProjectsTvs: number,
+  allL2ProjectsTvs: number,
 ) {
   if (!chartData) {
     return undefined
@@ -173,6 +173,6 @@ function getStats(
 
   return {
     total: last.value,
-    marketShare: last.value / allScalingProjectsTvs,
+    marketShare: last.value / allL2ProjectsTvs,
   }
 }

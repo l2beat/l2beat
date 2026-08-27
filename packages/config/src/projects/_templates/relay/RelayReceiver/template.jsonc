@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Passthrough deposit contract of the legacy Relay flow: any native tokens sent to it are immediately forwarded to a solver address hardcoded at deployment, and the attached calldata is only emitted as an event that commits the payment to a Relay order id. The contract holds no funds and enforces nothing about the order - after the forward, the user's outcome depends entirely on the solver. ERC20 payments in this flow do not even touch this contract and are transferred to the solver directly."
+}

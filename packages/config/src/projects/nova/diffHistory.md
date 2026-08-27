@@ -1,3 +1,99 @@
+Generated with discovered.json: 0xf11dbc58cdb57be90d043db4cbab80b3d84cb1c8
+
+# Diff at Wed, 19 Aug 2026 12:46:27 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@0ba95775cb09bf7f5dc60188c1169153757538d5 block: 1786612737
+- current timestamp: 1787143520
+
+## Description
+
+RollupProxy: `wasmModuleRoot` updated to the ArbOS v61 root. L1Timelock records the accompanying scheduled transactions: SetWasmModuleRootAction on Ethereum, UpgradeArbOSVersionAtTimestampAction and ArbOS61SettingsAction on Arbitrum One, and the matching Nova actions.
+
+## Watched changes
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      values.scheduledTransactions.137:
++        {"id":"0xf60ffd47f050d5cd5ed97b0225a01845d0bca8471dc0dc0e07f9968a4cf88901","decoded":{"chain":"ethereum","contractName":"SetWasmModuleRootAction","function":"perform","inputs":[],"address":"eth:0x114637D5cB4BaE22c94F822c984F5cA6013284Da","calldata":"0xb147f40c","executor":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},"raw":{"target":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd000000000000000000000000114637d5cb4bae22c94f822c984f5ca6013284da00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000","delay":259200}}
+      values.scheduledTransactions.138:
++        {"id":"0xf60ffd47f050d5cd5ed97b0225a01845d0bca8471dc0dc0e07f9968a4cf88901","decoded":{"chain":"ethereum","contractName":"SetWasmModuleRootAction","function":"perform","inputs":[],"address":"eth:0x36E3BbEF91D182b47DAb09E8AC3a4EA9C524fBab","calldata":"0xb147f40c","executor":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},"raw":{"target":"eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd00000000000000000000000036e3bbef91d182b47dab09e8ac3a4ea9c524fbab00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000","delay":259200}}
+      values.scheduledTransactions.139:
++        {"id":"0xf60ffd47f050d5cd5ed97b0225a01845d0bca8471dc0dc0e07f9968a4cf88901","decoded":{"chain":"arbitrum","contractName":"UpgradeArbOSVersionAtTimestampAction","function":"perform","inputs":[],"address":"arb1:0xF93353c1Fe24225B6C82B284b2B6DBB924690515","calldata":"0xb147f40c","executor":"eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd000000000000000000000000f93353c1fe24225b6c82b284b2b6dbb92469051500000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+      values.scheduledTransactions.140:
++        {"id":"0xf60ffd47f050d5cd5ed97b0225a01845d0bca8471dc0dc0e07f9968a4cf88901","decoded":{"chain":"nova","address":"eth:0x6bE7bA57Dd831A7D0AeDA1fB87C3c206C38098fF","calldata":"0xb147f40c","executor":"eth:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","inboxOnEthereum":"eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x000000000000000000000000c4448b71118c9071bcb9734a0eac55d18a15394900000000000000000000000086a02dd71363c440b21f4c0e5b2ad01ffe1a748200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000006be7ba57dd831a7d0aeda1fb87c3c206c38098ff00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+      values.scheduledTransactions.141:
++        {"id":"0xf60ffd47f050d5cd5ed97b0225a01845d0bca8471dc0dc0e07f9968a4cf88901","decoded":{"chain":"arbitrum","contractName":"ArbOS61SettingsAction","function":"perform","inputs":[],"address":"arb1:0x9625eE87a85cF1D5EE31f0883df27A5c8770312E","calldata":"0xb147f40c","executor":"eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000009625ee87a85cf1d5ee31f0883df27a5c8770312e00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+      values.scheduledTransactions.142:
++        {"id":"0xf60ffd47f050d5cd5ed97b0225a01845d0bca8471dc0dc0e07f9968a4cf88901","decoded":{"chain":"nova","address":"eth:0xd489C8512e3E82060873950c835f5ed1f06aBF84","calldata":"0xb147f40c","executor":"eth:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","inboxOnEthereum":"eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x000000000000000000000000c4448b71118c9071bcb9734a0eac55d18a15394900000000000000000000000086a02dd71363c440b21f4c0e5b2ad01ffe1a748200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd000000000000000000000000d489c8512e3e82060873950c835f5ed1f06abf8400000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "ArbOS v51 wasmModuleRoot"
++        "ArbOS v61 wasmModuleRoot"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499"
++        "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786612737 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      usedTypes.0.arg.0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97:
++        "ArbOS v61 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x80f983b26de08e68dc788d13ef1e532007bdf166
+
+# Diff at Thu, 13 Aug 2026 09:20:34 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@4a0cce7a33eee94f7395bc3adf267ebe20e3f4bc block: 1785996103
+- current timestamp: 1786612737
+
+## Description
+
+Track the ArbOS 61 transaction-filtering precompile (`0x..74`) via the new shared `orbitstack/ArbFilteredTransactionsManager` template, seeded as a relative off the L2UpgradeExecutor, with a `manualSourcePaths` pointer to the Nitro implementation. The feature is not enabled on Arbitrum Nova, so it yields no results today (0 filtered txs; `getAllTransactionFilterers` reverts, rendered as `EXPECT_REVERT`); it auto-populates if ever activated.
+
+## Watched changes
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      values.scheduledTransactions.136:
++        {"id":"0xca1f46b8ad7e85e9361445532fccf860739d3d56b7db05bf4cb27d6ea15b5b8e","decoded":{"chain":"arbitrum","contractName":"TransparentUpgradeableProxy","function":"0xec20b526","inputs":[{"name":"calldata","value":"0xec20b526ffffffffffffffffffffffffffffffffffffffffffd5ad352eec3ec51bda416e"}],"address":"arb1:0x912CE59144191C1204E64559FE8253a0e49E6548","calldata":"0xec20b526ffffffffffffffffffffffffffffffffffffffffffd5ad352eec3ec51bda416e","executor":"eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000a4bca8c7b5000000000000000000000000912ce59144191c1204e64559fe8253a0e49e654800000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000024ec20b526ffffffffffffffffffffffffffffffffffffffffffd5ad352eec3ec51bda416e0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785996103 (main branch discovery), not current.
+
+```diff
+    contract L2UpgradeExecutor (arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.transactionFilteringPrecompile:
++        "arb-nova:0x0000000000000000000000000000000000000074"
+    }
+```
+
 Generated with discovered.json: 0x69dd4b3e7d5e187f1bd678025c038e43d5407efc
 
 # Diff at Thu, 06 Aug 2026 06:03:32 GMT:

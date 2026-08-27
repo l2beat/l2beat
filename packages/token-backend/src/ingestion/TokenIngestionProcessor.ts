@@ -93,6 +93,13 @@ type NewDeployedTokenResult =
   | { type: 'ready'; record: DeployedTokenRecord }
   | { type: 'error'; message: string }
 
+type FinalizedAbstractSymbol =
+  | { type: 'ok'; abstract: AbstractTokenRecord | undefined }
+  | {
+      type: 'conflict'
+      outcome: Extract<IngestionOutcome, { kind: 'conflict' }>
+    }
+
 const ABSTRACT_TOKEN_ID_CHARS =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
@@ -231,28 +238,24 @@ export class TokenIngestionProcessor {
       if (!pending.existing) {
         throw new Error('pending update outcome has no existing deployed token')
       }
-      const conflict = getNewCoingeckoSymbolConflict(
-        newAbstractToken,
-        pending.existing.symbol,
-      )
-      if (conflict) {
-        return {
-          ...trace,
-          steps,
-          outcome: { kind: 'conflict', message: conflict },
-        }
-      }
-      const finalAbstract = adoptDeployedTokenSymbolCasing(
+      const finalized = finalizeNewAbstractTokenSymbol(
         newAbstractToken,
         pending.existing.symbol,
         steps,
       )
+      if (finalized.type === 'conflict') {
+        return {
+          ...trace,
+          steps,
+          outcome: finalized.outcome,
+        }
+      }
       return {
         ...trace,
         steps,
         outcome: {
           kind: 'write',
-          newAbstractToken: finalAbstract,
+          newAbstractToken: finalized.abstract,
           deployedToken: {
             type: 'update',
             pk: { chain: trace.address.chain, address: trace.address.address },
@@ -282,35 +285,38 @@ export class TokenIngestionProcessor {
       }
     }
 
-    const conflict =
-      getNewCoingeckoSymbolConflict(newAbstractToken, built.record.symbol) ??
-      getTransferAbstractSymbolConflict(
-        pending.proof.kind,
-        pending.abstract.kind === 'existing'
-          ? pending.abstract.token
-          : undefined,
-        built.record.symbol,
-      )
-    if (conflict) {
+    const transferConflict = getTransferAbstractSymbolConflict(
+      pending.proof.kind,
+      pending.abstract.kind === 'existing' ? pending.abstract.token : undefined,
+      built.record.symbol,
+    )
+    if (transferConflict) {
       return {
         ...trace,
         steps,
-        outcome: { kind: 'conflict', message: conflict },
+        outcome: { kind: 'conflict', message: transferConflict },
       }
     }
 
-    const finalAbstract = adoptDeployedTokenSymbolCasing(
+    const finalized = finalizeNewAbstractTokenSymbol(
       newAbstractToken,
       built.record.symbol,
       steps,
     )
+    if (finalized.type === 'conflict') {
+      return {
+        ...trace,
+        steps,
+        outcome: finalized.outcome,
+      }
+    }
 
     return {
       ...trace,
       steps,
       outcome: {
         kind: 'write',
-        newAbstractToken: finalAbstract,
+        newAbstractToken: finalized.abstract,
         deployedToken: {
           type: 'insert',
           record: {
@@ -718,6 +724,7 @@ export class TokenIngestionProcessor {
         decimals: facts.decimals,
         deploymentTimestamp: facts.deploymentTimestamp,
         comment: null,
+        ignored: false,
         metadata: null,
       },
     }
@@ -936,23 +943,93 @@ function formatRef(ref: AbstractTokenRef) {
   return `${ref.id}:${ref.symbol}`
 }
 
-function getNewCoingeckoSymbolConflict(
+/**
+ * Decides what symbol a newly materialized CoinGecko abstract token gets,
+ * given the deployed-token symbol (the RPC symbol for inserts, the stored one
+ * for updates). Two amicable cases and one conflict:
+ *
+ * - Casing-only difference: never a real mismatch — CoinGecko lower-cases
+ *   every symbol — so the deployed-token casing is adopted silently.
+ * - Punctuation-only difference (`$PEPE` vs `PEPE`, `VIRTU ` vs `VIRTU`):
+ *   also not a real mismatch; the deployed-token symbol is adopted and the
+ *   CoinGecko spelling is recorded in the abstract token's comment.
+ * - Genuine difference: conflict, carrying the structured `symbolConflict`
+ *   data the token-UI resolve dialog needs. Resolution happens outside the
+ *   pipeline: a human creates the abstract token manually (choosing its
+ *   symbol) and retries the entry, which then takes the existing-abstract
+ *   path and never reaches this check.
+ */
+function finalizeNewAbstractTokenSymbol(
   newAbstractToken: AbstractTokenRecord | undefined,
   deployedTokenSymbol: string,
-): string | undefined {
-  if (!newAbstractToken) return undefined
-  // CoinGecko's /coins/list and /coins/{platform}/contract/{addr} endpoints
-  // return symbols lower-cased (e.g. "susde", "wsteth"), so a casing-only
-  // difference vs. the RPC symbol never reflects a real mismatch. Compare
-  // case-insensitively here; the canonical casing is restored from the
-  // deployed-token symbol in `adoptDeployedTokenSymbolCasing`.
-  if (
-    newAbstractToken.symbol.toLowerCase() === deployedTokenSymbol.toLowerCase()
-  ) {
-    return undefined
+  steps: IngestionStep[],
+): FinalizedAbstractSymbol {
+  if (!newAbstractToken) return { type: 'ok', abstract: undefined }
+
+  const coingeckoSymbol = newAbstractToken.symbol
+  if (coingeckoSymbol.toLowerCase() === deployedTokenSymbol.toLowerCase()) {
+    return {
+      type: 'ok',
+      abstract: adoptDeployedTokenSymbolCasing(
+        newAbstractToken,
+        deployedTokenSymbol,
+        steps,
+      ),
+    }
   }
 
-  return `CoinGecko would create abstract token ${newAbstractToken.id}:${newAbstractToken.symbol}, but the deployed token symbol is ${deployedTokenSymbol}.`
+  const normalized = normalizeSymbolForComparison(coingeckoSymbol)
+  if (
+    normalized.length > 0 &&
+    normalized === normalizeSymbolForComparison(deployedTokenSymbol)
+  ) {
+    // Edge whitespace is stripped from the adopted symbol (`VIRTU ` → `VIRTU`):
+    // it is invisible in every UI, and an abstract symbol with a stray edge
+    // space would spuriously conflict with clean deployments of the same
+    // asset on other chains (the transfer-abstract check below is
+    // case-insensitive but not punctuation-normalized). Inner punctuation is
+    // visible content and stays.
+    const adoptedSymbol = deployedTokenSymbol.trim()
+    steps.push({
+      kind: 'adopted-deployed-token-symbol',
+      from: coingeckoSymbol,
+      to: adoptedSymbol,
+    })
+    return {
+      type: 'ok',
+      abstract: {
+        ...newAbstractToken,
+        symbol: adoptedSymbol,
+        comment: `CoinGecko symbol "${coingeckoSymbol}" differs only in punctuation from the deployed token symbol "${deployedTokenSymbol}"; automatic ingestion used the deployed token symbol.`,
+      },
+    }
+  }
+
+  return {
+    type: 'conflict',
+    outcome: {
+      kind: 'conflict',
+      message: `CoinGecko would create abstract token ${newAbstractToken.id}:${coingeckoSymbol}, but the deployed token symbol is ${deployedTokenSymbol}.`,
+      symbolConflict: {
+        coingeckoId: newAbstractToken.coingeckoId,
+        coingeckoSymbol,
+        deployedTokenSymbol,
+      },
+    },
+  }
+}
+
+/**
+ * Symbols that differ only in casing or punctuation (`$PEPE` vs `pepe`,
+ * `VIRTU ` vs `VIRTU`, `BL0CK.` vs `bl0ck`) describe the same asset — the
+ * production conflict backlog shows `$`-prefixes, stray spaces and dots make
+ * up a large share of all CoinGecko-symbol mismatches. Strips everything that
+ * is not a Unicode letter or digit. Callers must treat an empty result as
+ * "no match" — an all-punctuation symbol (e.g. an emoji symbol like `⚗️`)
+ * carries no comparable content.
+ */
+function normalizeSymbolForComparison(symbol: string): string {
+  return symbol.toLowerCase().replace(/[^\p{L}\p{N}]/gu, '')
 }
 
 /**
@@ -985,9 +1062,10 @@ function getTransferAbstractSymbolConflict(
  * CoinGecko coin can't carry the correct casing on its own. The deployed
  * token's symbol — read from RPC for inserts, or already canonical on the
  * existing record for updates — is the source of truth, so we copy its
- * casing onto the abstract before the write. The conflict check above has
- * already proven the two symbols match case-insensitively. No-op when the
- * casings already agree, so we don't pollute the trace with empty steps.
+ * casing onto the abstract before the write. `finalizeNewAbstractTokenSymbol`
+ * only calls this after proving the two symbols match case-insensitively.
+ * No-op when the casings already agree, so we don't pollute the trace with
+ * empty steps.
  */
 function adoptDeployedTokenSymbolCasing(
   newAbstractToken: AbstractTokenRecord | undefined,

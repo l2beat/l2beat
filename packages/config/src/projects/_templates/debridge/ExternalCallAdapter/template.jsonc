@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Escrow and dispatcher for external calls attached to DLN orders: it receives the taker's funds of orders that carry calldata and releases them when the calldata is executed by the registered executor, or refunds the order authority on cancellation.",
+  "fields": {
+    "defaultExecutor": {
+      "description": "The contract that executes external calldata attached to DLN orders."
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the executor contract that handles external calldata of DLN orders and pause the adapter."
+        }
+      ]
+    }
+  }
+}

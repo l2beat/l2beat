@@ -1,4 +1,86 @@
-Generated with discovered.json: 0xb37bf783180fd6eaf70261a7acd75e7a6c6dae4c
+Generated with discovered.json: 0xa09437974b541882134ddedb3608619b985f6b8b
+
+# Diff at Thu, 20 Aug 2026 12:49:54 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@00219f808cbf3466c6d2af96ddc96440efc3714c block: 1761589819
+- current timestamp: 1787230124
+
+## Description
+
+Verified the sources of two proxy admin contracts, permissions auto resolved for their EOA owner.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1761589819 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0xab64A3Da57886cD4205176c72b8Be63C34E46366) [global/ProxyAdmin] {
+    +++ description: None
+      name:
+-        ""
++        "ProxyAdmin"
+      unverified:
+-        true
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0xa80f2401c8AE7D95C7995295DC2c0D651F25FD60","role":"admin"}]
+      values.owner:
++        "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01"
+      values.UPGRADE_INTERFACE_VERSION:
++        "5.0.0"
+      implementationNames.eth:0xab64A3Da57886cD4205176c72b8Be63C34E46366:
+-        ""
++        "ProxyAdmin"
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0xa80f2401c8AE7D95C7995295DC2c0D651F25FD60","role":"admin"}]
+    }
+```
+
+```diff
+    EOA  (eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x8E132B3bD37f3f6E223cD23adD390111e674C94E","role":"admin","via":[{"address":"eth:0xeC638D2C7d0F07c0245ac94e51A51Bac427d8262"}]},{"permission":"upgrade","from":"eth:0xa80f2401c8AE7D95C7995295DC2c0D651F25FD60","role":"admin","via":[{"address":"eth:0xab64A3Da57886cD4205176c72b8Be63C34E46366"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xab64A3Da57886cD4205176c72b8Be63C34E46366","role":".owner"},{"permission":"act","from":"eth:0xeC638D2C7d0F07c0245ac94e51A51Bac427d8262","role":".owner"}]
+      eoaWithUpgradePermissions:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xeC638D2C7d0F07c0245ac94e51A51Bac427d8262) [global/ProxyAdmin] {
+    +++ description: None
+      name:
+-        ""
++        "ProxyAdmin"
+      unverified:
+-        true
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0x8E132B3bD37f3f6E223cD23adD390111e674C94E","role":"admin"}]
+      values.owner:
++        "eth:0xBFdA2dF9Cd91cF7A3e794EDB9C268588d42d7c01"
+      values.UPGRADE_INTERFACE_VERSION:
++        "5.0.0"
+      implementationNames.eth:0xeC638D2C7d0F07c0245ac94e51A51Bac427d8262:
+-        ""
++        "ProxyAdmin"
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x8E132B3bD37f3f6E223cD23adD390111e674C94E","role":"admin"}]
+    }
+```
+
+Generated with discovered.json: 0x044e0dedde2c02d971c3cd80e6d45640b7b6ec59
 
 # Diff at Tue, 09 Jun 2026 12:43:36 GMT:
 

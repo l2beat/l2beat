@@ -8,7 +8,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "can update the FeeQuoter address used for fee estimations."
+          "description": "can update the FeeQuoter used for fee estimation and the fee aggregator that receives withdrawn fee tokens."
         },
         {
           "type": "interact",
@@ -17,6 +17,10 @@
         {
           "type": "interact",
           "description": "can set the permissioned actor who can manage the sender whitelist."
+        },
+        {
+          "type": "interact",
+          "description": "can add, disable, or reconfigure destination-chain routes and directly manage each route's sender allowlist."
         }
       ]
     },
@@ -65,5 +69,5 @@
       "edit": ["map_keys", ["format", "CCIPChainName"]]
     }
   },
-  "description": "Contract used to send outgoing messages to other chains. It saves destination chain configs, storing the router that is allowed to call the OnRamp and whether a whitelist is enabled to send messages."
+  "description": "OnRamp used to send messages from its local chain to other chains. It stores each destination route's authorized Router and optional sender allowlist, prices messages through the configured FeeQuoter, and advances outbound nonces through the NonceManager."
 }

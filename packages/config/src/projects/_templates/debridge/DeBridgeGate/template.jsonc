@@ -1,0 +1,63 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "Central hub of the deBridge messaging protocol on this chain: it emits cross-chain submissions (asset transfers and/or arbitrary messages), locks and releases native assets, mints and burns deBridge-wrapped assets (deTokens), and executes claimed submissions after their validator signatures are checked by the SignatureVerifier. Claiming is permissionless: anyone can execute a submission that carries enough validator signatures.",
+  "ignoreMethods": ["getChainFromConfig", "getChainToConfig"],
+  "ignoreInWatchMode": ["nonce"],
+  "ignoreRelatives": ["weth"],
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the SignatureVerifier (and with it the entire validation layer of the deBridge messaging protocol), the CallProxy and the deToken deployer, censor individual submissions (blockSubmission), toggle supported chains, set all fees and per-address fee discounts, designate the fee withdrawal contract, unpause the gate, and grant/revoke all roles. Most of these setters emit no events."
+        }
+      ]
+    },
+    "govMonitoringAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "GOVMONITORING_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the DeBridgeGate, stopping all sends, claims and deToken deployments on this chain (only the admin can unpause)."
+        }
+      ]
+    },
+    "signatureVerifier": {
+      "description": "Contract that verifies deBridge validator signatures for all submissions claimed on this chain."
+    },
+    "callProxy": {
+      "description": "Contract that executes arbitrary calldata attached to claimed submissions."
+    },
+    "feeProxy": {
+      "description": "The only address allowed to withdraw protocol fees accrued in the gate."
+    },
+    "deBridgeTokenDeployer": {
+      "description": "Factory (and beacon) for deBridge-wrapped tokens (deTokens) on this chain."
+    },
+    "globalFixedNativeFee": {
+      "description": "Default flat protocol fee in native tokens charged per submission."
+    },
+    "globalTransferFeeBps": {
+      "description": "Default variable protocol fee in basis points charged on transferred amounts."
+    },
+    "excessConfirmations": {
+      "description": "Elevated number of validator signatures required for claims above the per-asset amount threshold and for new deToken deployments (effective only if higher than the SignatureVerifier's minConfirmations)."
+    },
+    "paused": {
+      "description": "Whether all sends, claims and deToken deployments through the gate are currently paused."
+    }
+  }
+}

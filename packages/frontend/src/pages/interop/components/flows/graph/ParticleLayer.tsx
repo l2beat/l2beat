@@ -1,10 +1,12 @@
-import { INTEROP_PAIR_SEPARATOR } from '~/server/features/scaling/interop/consts'
+import { useId } from 'react'
+import { INTEROP_PAIR_SEPARATOR } from '~/server/features/layer2s/interop/consts'
 import type {
   ChainData,
   Flow,
-} from '~/server/features/scaling/interop/getInteropFlows'
+} from '~/server/features/layer2s/interop/getInteropFlows'
 import type { InteropChainWithIcon } from '../../chain-selector/types'
 import { useInteropFlows } from '../utils/InteropFlowsContext'
+import { BubbleHolesClip } from './BubbleHolesClip'
 import type { FlowsGraphLayout } from './utils/computeGraphLayout'
 import { getChainColor } from './utils/getChainColor'
 import {
@@ -38,6 +40,18 @@ interface Props {
  * for the remainder of the cycle. This way the visible density is
  * exactly 2.5 on average and the emission rate is exactly R/s —
  * two flows with slightly different volumes are always visually distinct.
+ *
+ * Only <animateMotion> is used — no SMIL animation of a CSS property such as
+ * opacity. Those are applied through style per element per sample, and when
+ * the graph sits inside a CSS size container (the home card) every one of
+ * those style updates forces a layout, so hundreds of particles meant
+ * thousands of layouts per frame. Instead, particles are hidden by position:
+ * the path is relative to the source and the flow group is translated there,
+ * so a particle that hasn't started yet sits at the source bubble's center
+ * and an idle one holds at the path end, the destination bubble's center.
+ * The whole layer is clipped to everything outside the bubble discs, so
+ * those parked particles never paint (icons with transparent middles would
+ * otherwise show them).
  */
 export function ParticleLayer({
   flows,
@@ -52,6 +66,7 @@ export function ParticleLayer({
 }: Props) {
   const { highlightedChains } = useInteropFlows()
   const particleRadius = isSmallScreen ? 1.5 : 2
+  const clipId = `particles-clip-${useId().replace(/\W/g, '')}`
 
   const { flowsParticles } = useScaledParticleCounts(
     visibleChainIds,
@@ -61,7 +76,8 @@ export function ParticleLayer({
   )
 
   return (
-    <g pointerEvents="none" aria-hidden="true">
+    <g pointerEvents="none" aria-hidden="true" clipPath={`url(#${clipId})`}>
+      <BubbleHolesClip id={clipId} chainIds={visibleChainIds} layout={layout} />
       {flows.map((flow) => {
         const src = layout.get(flow.srcChain)
         const dst = layout.get(flow.dstChain)
@@ -73,10 +89,10 @@ export function ParticleLayer({
         if (!particles || particles.exactCount <= 0) return null
 
         const path = getConnectionPath(
-          src,
-          dst,
-          centerX,
-          centerY,
+          { ...src, x: 0, y: 0 },
+          { ...dst, x: dst.x - src.x, y: dst.y - src.y },
+          centerX - src.x,
+          centerY - src.y,
           BIDIRECTIONAL_OFFSET,
         )
         const color = getChainColor(interopChains, flow.srcChain)
@@ -97,16 +113,22 @@ export function ParticleLayer({
         const particleInterval = cycleDuration / count
         const initialOffset = Math.random() * particleInterval
 
-        // fraction of each cycle spent traveling (rest is idle / hidden)
+        // fraction of each cycle spent traveling (rest is parked at the end)
         const t = exactCount / count
 
         return (
-          <g key={`${flow.srcChain}-${flow.dstChain}`} opacity={groupOpacity}>
+          <g
+            key={`${flow.srcChain}-${flow.dstChain}`}
+            opacity={groupOpacity}
+            transform={`translate(${src.x} ${src.y})`}
+          >
             {Array.from({ length: count }, (_, i) => {
+              // Positive delay, so particles emerge from the source one by
+              // one over the first cycle instead of appearing mid-path.
               const begin = `${initialOffset + i * particleInterval}s`
 
               return (
-                <circle key={i} r={particleRadius} fill={color} opacity={0}>
+                <circle key={i} r={particleRadius} fill={color} opacity={0.8}>
                   <animateMotion
                     path={path}
                     dur={`${cycleDuration}s`}
@@ -114,15 +136,6 @@ export function ParticleLayer({
                     keyTimes={`0;${t};1`}
                     calcMode="linear"
                     begin={begin}
-                    repeatCount="indefinite"
-                  />
-                  <animate
-                    attributeName="opacity"
-                    dur={`${cycleDuration}s`}
-                    begin={begin}
-                    calcMode="discrete"
-                    values={'0.8;0'}
-                    keyTimes={`0;${t}`}
                     repeatCount="indefinite"
                   />
                 </circle>

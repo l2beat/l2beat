@@ -74,10 +74,12 @@ export type {
   InteropPluginSyncedRangeRecord,
 } from './repositories/InteropPluginSyncedRangeRepository'
 export type { InteropPluginSyncStateRecord } from './repositories/InteropPluginSyncStateRepository'
-export type { InteropRecentPriceRequest } from './repositories/InteropRecentPricesRepository'
+export type {
+  InteropRecentPriceRequest,
+  InteropRecentPricesRecord,
+} from './repositories/InteropRecentPricesRepository'
 export {
   hasAnyInteropTransferFinancialsFilter,
-  type InteropMissingTokenInfo,
   type InteropSuspiciousTransferRecord,
   type InteropTokenRouteRecord,
   type InteropTransferFinancialsFilter,
@@ -86,7 +88,6 @@ export {
   type InteropTransfersDetailedStatsRecord,
   type InteropTransfersStatsRecord,
   type InteropTransferTimeRange,
-  type InteropTransferTokenInfo,
   type InteropTransferUpdate,
 } from './repositories/InteropTransferRepository'
 export type {
@@ -129,6 +130,7 @@ export type {
 export type { TokenMetadataRecord } from './repositories/TokenMetadataRepository'
 export type {
   JsonValue,
+  MintingPluginRecord,
   TokenRelationLockedToken,
   TokenRelationPrimaryKey,
   TokenRelationRecord,
@@ -148,4 +150,5 @@ export type { UpdateDiffRecord } from './repositories/UpdateDiffRepository'
 export type { UpdateMessageRecord } from './repositories/UpdateMessageRepository'
 export type { UpdateMonitorRecord } from './repositories/UpdateMonitorRepository'
 export type { UpdateNotifierRecord } from './repositories/UpdateNotifierRepository'
+export { mergeTransferTypeStats } from './repositories/utils/mergeTransferTypeStats'
 export type { CleanableRepoName } from './utils/deleteArchivedRecords'

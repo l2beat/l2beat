@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "OffRamp used to receive messages on Ethereum from other chains. It stores the list and threshold of \"OCR\" signers that authorize the commitment of crosschain messages and the list of \"transmitters\", i.e. addresses can relay messages signed by the signers. Currently {{ocrCommitN}} signers are configured with F={{ocrCommitF}}, so {{ocrCommitF}}+1 signatures are required on every commit report. Committed message are usually executed by whitelisted \"execution transmitters\". If they are not executed within {{permissionLessExecutionThresholdFmt}}, anyone can execute them.",
+  "description": "OffRamp used to receive messages on its local chain from other chains. It stores the list and threshold of OCR signers that authorize crosschain message commitments and the transmitters that can relay those reports. Currently {{ocrCommitN}} signers are configured with F={{ocrCommitF}}, so {{ocrCommitF}}+1 signatures are required on every commit report. Committed messages are usually executed by permissioned execution transmitters. After {{permissionLessExecutionThresholdFmt}}, anyone can execute them.",
   "ignoreMethods": ["getAllSourceChainConfigs", "getLatestPriceSequenceNumber"],
   "ignoreRelatives": ["ocrExecution"],
   "fields": {
@@ -8,7 +8,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "can arbitrarily update signers and transmitters set."
+          "description": "can replace the OCR commit and execution configurations, including their digests, fault thresholds, signers, and transmitters."
         },
         {
           "type": "interact",
@@ -20,16 +20,11 @@
         },
         {
           "type": "interact",
-          "description": "add a 'message interceptor' contract that can gate messages based on content."
-        },
-        { "type": "interact", "description": "can disable source chains." },
-        {
-          "type": "interact",
-          "description": "can enable 'RMN' verification for messages coming from a certain route, which require additional signatures to be accepted."
+          "description": "can set a message-interceptor contract that gates execution based on message content."
         },
         {
           "type": "interact",
-          "description": "can update the router contract used to relay messages on this chain from another chain. Each source chain has its own router configured."
+          "description": "can add, disable, or reconfigure source-chain routes, including each route's Router, source OnRamp address, and whether commits call the configured RMN verifier."
         }
       ]
     },
@@ -125,7 +120,7 @@
       ]
     },
     "sourceChainConfigs": {
-      "description": "Per-source-chain config for inbound CCIP messages: local Router used to deliver to receivers, whether the lane is enabled, whether RMN signature blessing is required on commits (false = blessing REQUIRED, true = blessing skipped — only OCR signatures gate the commit), and the bytes-encoded source-chain OnRamp address (left-padded EVM address for EVM sources; native encoding for non-EVM families). Keys are source-chain names. Replayed from SourceChainConfigSet events. minSeqNr is omitted because the event captures the value at config-change time, not the current commit counter (which advances on every _commitRoot).",
+      "description": "Per-source-chain config for inbound CCIP messages: local Router used to deliver to receivers, whether the lane is enabled, whether RMN verification is disabled, and the bytes-encoded source-chain OnRamp address (left-padded EVM address for EVM sources; native encoding for non-EVM families). When isRMNVerificationDisabled is false, roots must be submitted in the blessed list and commit() calls the configured RMN verify(); when true, that call is skipped and the OCR commit quorum is the root's signer gate. The validation and liveness provided by an enabled RMN path depend on the configured RMN implementation. Keys are source-chain names. Replayed from SourceChainConfigSet events. minSeqNr is omitted because the event captures the value at config-change time, not the current commit counter (which advances on every _commitRoot).",
       "handler": {
         "type": "event",
         "groupBy": "sourceChainSelector",

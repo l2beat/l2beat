@@ -4,7 +4,7 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import { CursorClickIcon } from '~/icons/CursorClick'
-import type { ProtocolDisplayable } from '~/server/features/scaling/interop/types'
+import type { ProtocolDisplayable } from '~/server/features/layer2s/interop/types'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
 import type { InteropChainWithIcon } from '../chain-selector/types'
@@ -93,7 +93,7 @@ function FlowsViewContent({
           <FlowsGeneralStats />
         </div>
         <div className="flex h-full min-w-0 flex-col">
-          <div className="group/flows flex w-full min-w-0 flex-1 flex-col items-center gap-10 pb-4 xl:min-h-[max(calc(100svh-24rem),40rem)]">
+          <div className="group/flows flex w-full min-w-0 flex-1 flex-col items-center gap-10 pb-4 lg:min-h-[max(min(calc(70svh+10rem),calc(100svh-10rem)),40rem)]">
             <div className="flex flex-col items-center gap-3 max-lg:order-1">
               <div className="flex gap-2">
                 <FlowsChainsSelector allChains={interopChains} />
@@ -109,6 +109,7 @@ function FlowsViewContent({
               hasEnoughChains={hasEnoughChains}
               hasEnoughProtocols={hasEnoughProtocols}
               isLoading={isLoading}
+              maxSizeClassName="max-w-[max(min(70svh,calc(100svh-20rem)),30rem)] lg:h-full lg:w-auto lg:max-w-full"
             />
           </div>
           {(isLoading || showInactiveChainsInfo) && (

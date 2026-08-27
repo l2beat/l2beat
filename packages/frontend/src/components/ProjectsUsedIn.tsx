@@ -1,21 +1,10 @@
 import type { UsedInProject } from '@l2beat/config'
-import { useState } from 'react'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { useRouter } from '~/hooks/useRouter'
-import { cn } from '~/utils/cn'
-import {
-  Command,
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from './core/Command'
+import { ProjectIconList } from './ProjectIconList'
 
 export interface UsedInProjectWithIcon extends UsedInProject {
   icon: string
@@ -36,8 +25,6 @@ export function ProjectsUsedIn({
   maxProjects = 5,
   noLink,
 }: Props) {
-  const [open, setOpen] = useState(false)
-  const router = useRouter()
   if (usedIn.length === 0) {
     return (
       <Tooltip>
@@ -49,104 +36,23 @@ export function ProjectsUsedIn({
     )
   }
 
-  const cappedProjects = usedIn.slice(0, maxProjects)
-
-  const rest = usedIn.slice(maxProjects)
-
-  function onItemSelect(item: UsedInProjectWithIcon) {
-    setOpen(false)
-    router.push(item.url)
-  }
-
   return (
-    <div
-      className={cn('grid grid-cols-2', className)}
-      style={{
-        gridTemplateColumns: `${cappedProjects.length === 1 ? 20 : cappedProjects.length * 15}px  30px`,
+    <ProjectIconList
+      projects={usedIn.map((project) => ({
+        id: project.id,
+        name: project.name,
+        iconUrl: project.icon,
+        href: project.url,
+      }))}
+      dialog={{
+        title: 'Projects used in',
+        description: 'Search for projects used in',
+        searchPlaceholder: 'Start typing to find project...',
+        emptyText: 'No projects found.',
       }}
-    >
-      <div className="-space-x-1.5 flex shrink-0 flex-row flex-nowrap items-center">
-        {cappedProjects.map((project, index) => {
-          const image = (
-            <img
-              width={20}
-              height={20}
-              src={project.icon}
-              alt={`${project.name} logo`}
-              className="relative size-5 min-w-5 rounded-full bg-white shadow"
-              style={{ zIndex: maxProjects - index }}
-            />
-          )
-
-          return (
-            <Tooltip key={project.slug}>
-              {noLink ? (
-                <TooltipTrigger>{image}</TooltipTrigger>
-              ) : (
-                <TooltipTrigger asChild disabledOnMobile>
-                  <a href={project.url} className="size-5">
-                    {image}
-                  </a>
-                </TooltipTrigger>
-              )}
-              <TooltipContent>
-                <p className="font-bold">{project.name}</p>
-                {!noLink && (
-                  <p className="text-secondary text-xs">
-                    Click to view project page
-                  </p>
-                )}
-              </TooltipContent>
-            </Tooltip>
-          )
-        })}
-      </div>
-      {rest.length > 0 && (
-        <>
-          <button
-            className="font-bold text-label-value-13 hover:underline"
-            onClick={(e) => {
-              e.preventDefault()
-              setOpen(true)
-            }}
-          >
-            +{rest.length}
-          </button>
-          <CommandDialog
-            open={open}
-            onOpenChange={setOpen}
-            title="Projects used in"
-            description="Search for projects used in"
-          >
-            <Command className="rounded-none">
-              <CommandInput placeholder="Start typing to find project..." />
-              <CommandList>
-                <CommandEmpty>No projects found.</CommandEmpty>
-                <CommandGroup>
-                  {usedIn.map((project) => (
-                    <CommandItem
-                      key={project.slug}
-                      className="flex items-center gap-3"
-                      onSelect={() => onItemSelect(project)}
-                    >
-                      <img
-                        src={project.icon}
-                        alt={project.name}
-                        width={20}
-                        height={20}
-                        className="size-5"
-                      />
-                      <span className="font-bold text-label-value-15">
-                        {project.name}
-                      </span>
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </CommandDialog>
-        </>
-      )}
-    </div>
+      className={className}
+      maxVisibleProjects={maxProjects}
+      disableIconLinks={noLink}
+    />
   )
 }

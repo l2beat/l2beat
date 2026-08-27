@@ -15,7 +15,7 @@ export const arenaz = opStackL2({
   addedAt: UnixTime(1737720994), // 2025-01-24T12:16:34+00:00
   archivedAt: UnixTime.fromDate(new Date('2026-05-07')),
   discovery,
-  nonTemplateDaTracking: [
+  daTracking: [
     {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),

@@ -1,13 +1,11 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getInteropTokenData } from '~/server/features/scaling/interop/getInteropTokenData'
-import { getAbstractTokenSlug } from '~/server/features/scaling/interop/token/getAbstractTokenSlug'
-import { getInteropAbstractTokens } from '~/server/features/scaling/interop/token/getInteropAbstractTokens'
-import { getInteropTokenEntry } from '~/server/features/scaling/interop/token/getInteropTokenEntry'
-import { getInteropTokenOnchainDeployments } from '~/server/features/scaling/interop/token/getInteropTokenOnchainDeployments'
-import { resolveInteropTokenBySlug } from '~/server/features/scaling/interop/token/resolveInteropTokenBySlug'
-import { getInteropChains } from '~/server/features/scaling/interop/utils/getInteropChains'
+import { getInteropTokenData } from '~/server/features/layer2s/interop/getInteropTokenData'
+import { getInteropAbstractTokens } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
+import { getInteropTokenEntry } from '~/server/features/layer2s/interop/token/getInteropTokenEntry'
+import { getInteropTokenOnchainDeployments } from '~/server/features/layer2s/interop/token/getInteropTokenOnchainDeployments'
+import { getInteropChains } from '~/server/features/layer2s/interop/utils/getInteropChains'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -15,6 +13,7 @@ import type { Manifest } from '~/utils/Manifest'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import type { InteropChainWithIcon } from '../components/chain-selector/types'
 import type { InteropQuery } from '../InteropRouter'
+import { getInteropTokenUrl } from '../utils/getInteropTokenUrl'
 import { mapInteropChainsToWithIcons } from '../utils/mapInteropChainsToWithIcons'
 import type { InteropSelection } from '../utils/types'
 
@@ -65,7 +64,9 @@ export async function getInteropTokenPageData(
       metadata: getMetadata(manifest, {
         title: `${data.token.symbol} - L2BEAT`,
         description: `Interoperability activity for ${data.token.symbol} across the Ethereum ecosystem.`,
-        url: req.originalUrl,
+        // The page is reachable by id alone, so point metadata at the full
+        // issuer/symbol URL to keep a single canonical address per token.
+        url: getInteropTokenUrl(data.token) ?? req.originalUrl,
         openGraph: {
           image: `/interop/tokens/${data.token.slug}/opengraph-image.png`,
           dynamic: true,
@@ -102,33 +103,38 @@ async function getCachedData({
   interopChainsWithIcons: InteropChainWithIcon[]
 }) {
   const abstractTokens = await getInteropAbstractTokens(activeInteropChainIds)
-  const token = resolveInteropTokenBySlug(abstractTokens, slug)
+  const token = abstractTokens.find((token) => token.id === slug)
   if (!token) return undefined
 
   const apiSelection = initialSelection
 
-  const [tokenData, deployments, projectsWithChains] = await Promise.all([
-    getInteropTokenData({
-      tokenId: token.id,
-      ...apiSelection,
-    }),
-    getInteropTokenOnchainDeployments(token.id, activeInteropChainIds),
-    ps.getProjects({
-      select: ['chainConfig'],
-    }),
-  ])
+  const [tokenData, deployments, projectsWithChains, interopProjects] =
+    await Promise.all([
+      getInteropTokenData({
+        tokenId: token.id,
+        ...apiSelection,
+      }),
+      getInteropTokenOnchainDeployments(token.id, activeInteropChainIds),
+      ps.getProjects({
+        select: ['chainConfig'],
+      }),
+      ps.getProjects({
+        select: ['interopConfig'],
+      }),
+    ])
 
   const tokenEntry = getInteropTokenEntry(
     token.id,
     interopChainsWithIcons,
     projectsWithChains,
+    interopProjects,
     deployments,
   )
 
   return {
     token: {
       ...token,
-      slug: getAbstractTokenSlug(token),
+      slug: token.id,
     },
     tokenEntry,
     tokenData,

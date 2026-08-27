@@ -1,13 +1,13 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "ARMProxy",
-  "description": "Proxy pointing to the active ARM/RMN contract used by CCIP to report whether routes are cursed.",
+  "description": "Call-forwarding proxy for the active ARM/RMN implementation. It transparently forwards curse checks, the legacy isBlessed() compatibility check and other supported ARM/RMN interface calls; their semantics depend on the selected implementation.",
   "fields": {
     "getARM": {
       "permissions": [
         {
           "type": "interact",
-          "description": "block or allow CCIP activity by reporting whether global or route-specific subjects are cursed."
+          "description": "supply the curse and legacy root-blessing results consumed by CCIP contracts, according to the selected ARM/RMN implementation."
         }
       ]
     },
@@ -15,7 +15,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "replace the active ARM/RMN contract used for CCIP safety checks."
+          "description": "replace the active ARM/RMN implementation, changing the semantics of curse checks, legacy root-blessing checks and any other forwarded interface calls."
         }
       ]
     }

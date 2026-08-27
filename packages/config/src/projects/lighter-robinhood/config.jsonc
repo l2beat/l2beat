@@ -40,20 +40,56 @@
           }
         },
         "verifier": {
-          "handler": { "type": "storage", "slot": 4, "returnType": "address" },
+          "handler": {
+            "type": "storage",
+            "slot": 4,
+            "returnType": "address"
+          },
           "severity": "HIGH"
         },
         "desertVerifier": {
-          "handler": { "type": "storage", "slot": 5, "returnType": "address" },
+          "handler": {
+            "type": "storage",
+            "slot": 5,
+            "returnType": "address"
+          },
           "severity": "HIGH"
         },
         "governance": {
-          "handler": { "type": "storage", "slot": 6, "returnType": "address" }
+          "handler": {
+            "type": "storage",
+            "slot": 6,
+            "returnType": "address"
+          }
         },
         "additionalZkLighter": {
-          "handler": { "type": "storage", "slot": 7, "returnType": "address" }
+          "handler": {
+            "type": "storage",
+            "slot": 7,
+            "returnType": "address"
+          }
+        },
+        "desertMode": {
+          "severity": "HIGH"
         }
-      }
+      },
+      "ignoreInWatchMode": [
+        "committedBatchesCount",
+        "committedPriorityRequestCount",
+        "executedBatchesCount",
+        "executedOnChainBatchesCount",
+        "executedPriorityRequestCount",
+        "lastAccountIndex",
+        "lastVerifiedEndBlockNumber",
+        "openPriorityRequestCount",
+        "pendingOnChainBatchesCount",
+        "verifiedBatchesCount",
+        "verifiedPriorityRequestCount",
+        "validiumRoot",
+        "stateRoot",
+        "lastVerifiedStateRoot",
+        "lastVerifiedValidiumRoot"
+      ]
     },
     "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7": {
       "ignoreRelatives": ["quoteAsset"]

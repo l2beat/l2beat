@@ -82,7 +82,7 @@ export function EcosystemProjectPage({
                     id={ecosystem.id}
                     name={ecosystem.name}
                     entries={ecosystem.liveProjects}
-                    allScalingProjectsTvs={ecosystem.allScalingProjects.tvs}
+                    allL2ProjectsTvs={ecosystem.allL2Projects.tvs}
                     ecosystemMilestones={ecosystem.ecosystemMilestones}
                     className="col-span-12 md:col-span-6"
                   />
@@ -90,7 +90,7 @@ export function EcosystemProjectPage({
                     id={ecosystem.id}
                     name={ecosystem.name}
                     entries={ecosystem.liveProjects}
-                    allScalingProjectsUops={ecosystem.allScalingProjects.uops}
+                    allL2ProjectsUops={ecosystem.allL2Projects.uops}
                     ecosystemMilestones={ecosystem.ecosystemMilestones}
                     className="col-span-12 md:col-span-6"
                   />
@@ -157,16 +157,22 @@ export function EcosystemProjectPage({
                     milestones={ecosystem.allMilestones}
                     className="col-span-12"
                   />
-                  <EcosystemProjectsByRaas
-                    projectsByRaas={ecosystem.projectsByRaas}
-                    className="col-span-12 lg:col-span-4"
-                  />
+                  {Object.keys(ecosystem.projectsByRaas).length > 0 && (
+                    <EcosystemProjectsByRaas
+                      projectsByRaas={ecosystem.projectsByRaas}
+                      className="col-span-12 lg:col-span-4"
+                    />
+                  )}
                   <EcosystemGovernanceLinks
                     links={ecosystem.links.governance}
                     delegateToL2BEATBackgroundImage={
                       ecosystem.images.delegateToL2BEAT
                     }
-                    className="col-span-12 lg:col-span-8"
+                    className={cn(
+                      'col-span-12',
+                      Object.keys(ecosystem.projectsByRaas).length > 0 &&
+                        'lg:col-span-8',
+                    )}
                   />
                   <EcosystemUpdateLink
                     className="col-span-12"

@@ -70,6 +70,11 @@
       "type": "Contract",
       "project": "chainlink"
     },
+    "eth:0x47Fb2585D2C56Fe188D0E6ec628a38b74fCeeeDf": {
+      "name": "FeedRegistry",
+      "type": "Contract",
+      "project": "chainlink"
+    },
     "eth:0x4CB67cfee180B6B73B70c7B3fC162E5FCF6532f1": {
       "name": "ChainlinkAuthorizedForwarder",
       "type": "Contract",

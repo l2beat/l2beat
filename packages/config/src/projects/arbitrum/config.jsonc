@@ -72,8 +72,41 @@
     "eth:0xc4940069140142236D4065b866018f7b2BeC77fD": "OutboxEntry"
   },
   "overrides": {
+    "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": {
+      "fields": {
+        // Seeds the ArbOS 61 transaction-filtering precompile (0x..74) as a
+        // relative and applies the shared orbitstack/ArbFilteredTransactionsManager
+        // template (censored-tx counts + authorized filterer set). The feature is
+        // not enabled on Arbitrum One, so it yields no results today; it
+        // auto-populates if it is ever activated. Hosted on the chain owner
+        // (UpgradeExecutor) because that is the ArbOS-config authority.
+        "transactionFilteringPrecompile": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "arb1:0x0000000000000000000000000000000000000074"
+          },
+          "template": "orbitstack/ArbFilteredTransactionsManager"
+        }
+      }
+    },
+    "arb1:0x0000000000000000000000000000000000000074": {
+      // The precompile is a 0xfe stub once ArbOS 61 activates (no code before
+      // then), so discovery cannot fetch its source and would flag it unverified.
+      // Point at the Nitro implementation. This is a manual label, NOT an
+      // integrity check: divergence of the actual precompile logic is caught by
+      // the RollupProxy wasmModuleRoot (One/Nova activate the reproduced v61 root
+      // 0xc10cd7ec..., identical to Robinhood), not by this source hash.
+      "manualSourcePaths": {
+        "arb1:0x0000000000000000000000000000000000000074": "https://github.com/OffchainLabs/nitro/blob/v3.11.0/precompiles/ArbFilteredTransactionsManager.go"
+      }
+    },
     "arb1:0xF06E95eF589D9c38af242a8AAee8375f14023F85": {
       "ignoreDiscovery": true
+    },
+    "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999": {
+      // ParentToChildRewardRouter.destination is an L2 treasury address. Keep
+      // the value recorded, but do not follow it as an Ethereum relative.
+      "ignoreRelatives": ["destination"]
     },
     "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840": {
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions."

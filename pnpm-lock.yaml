@@ -366,9 +366,15 @@ importers:
       '@l2beat/discovery':
         specifier: workspace:*
         version: link:../discovery
+      '@l2beat/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
@@ -382,15 +388,9 @@ importers:
       '@l2beat/backend-tools':
         specifier: workspace:*
         version: link:../backend-tools
-      '@l2beat/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@l2beat/validate':
-        specifier: workspace:*
-        version: link:../validate
       '@types/diff':
         specifier: ^7.0.2
         version: 7.0.2
@@ -462,8 +462,8 @@ importers:
         specifier: ^16.3.1
         version: 16.4.5
       prisma:
-        specifier: ^5.15.0
-        version: 5.21.1
+        specifier: 5.22.0
+        version: 5.22.0
       prisma-kysely:
         specifier: ^1.8.0
         version: 1.8.0(encoding@0.1.13)
@@ -996,9 +996,15 @@ importers:
       '@l2beat/backend-tools':
         specifier: workspace:*
         version: link:../backend-tools
+      '@l2beat/config':
+        specifier: workspace:*
+        version: link:../config
       '@l2beat/database':
         specifier: workspace:*
         version: link:../database
+      '@l2beat/shared-pure':
+        specifier: workspace:*
+        version: link:../shared-pure
       '@l2beat/validate':
         specifier: workspace:*
         version: link:../validate
@@ -1012,12 +1018,6 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1(express@5.0.1)
     devDependencies:
-      '@l2beat/config':
-        specifier: workspace:*
-        version: link:../config
-      '@l2beat/shared-pure':
-        specifier: workspace:*
-        version: link:../shared-pure
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1125,9 +1125,18 @@ importers:
       '@l2beat/validate':
         specifier: workspace:*
         version: link:../validate
+      '@trpc/client':
+        specifier: 11.17.0
+        version: 11.17.0(@trpc/server@11.17.0(typescript@7.0.2))(typescript@7.0.2)
       '@trpc/server':
         specifier: 11.17.0
         version: 11.17.0(typescript@7.0.2)
+      dotenv:
+        specifier: ^17.2.3
+        version: 17.2.3
+      express:
+        specifier: ^5.1.0
+        version: 5.1.0
       fuzzysort:
         specifier: 3.1.0
         version: 3.1.0
@@ -1138,24 +1147,15 @@ importers:
         specifier: ^2.31.6
         version: 2.31.6(typescript@7.0.2)(zod@3.24.1)
     devDependencies:
-      '@trpc/client':
-        specifier: 11.17.0
-        version: 11.17.0(@trpc/server@11.17.0(typescript@7.0.2))(typescript@7.0.2)
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
       '@types/mocha':
         specifier: ^10.0.6
         version: 10.0.9
-      dotenv:
-        specifier: ^17.2.3
-        version: 17.2.3
       earl:
         specifier: ^1.1.0
         version: 1.3.0
-      express:
-        specifier: ^5.1.0
-        version: 5.1.0
       mocha:
         specifier: ^10.2.0
         version: 10.7.3
@@ -2784,23 +2784,23 @@ packages:
   '@popperjs/core@2.11.8':
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
 
-  '@prisma/debug@5.21.1':
-    resolution: {integrity: sha512-uY8SAhcnORhvgtOrNdvWS98Aq/nkQ9QDUxrWAgW8XrCZaI3j2X7zb7Xe6GQSh6xSesKffFbFlkw0c2luHQviZA==}
+  '@prisma/debug@5.22.0':
+    resolution: {integrity: sha512-AUt44v3YJeggO2ZU5BkXI7M4hu9BF2zzH2iF2V5pyXT/lRTyWiElZ7It+bRH1EshoMRxHgpYg4VB6rCM+mG5jQ==}
 
   '@prisma/debug@5.3.1':
     resolution: {integrity: sha512-eYrxqslEKf+wpMFIIHgbcNYuZBXUdiJLA85Or3TwOhgPIN1ZoXT9CwJph3ynW8H1Xg0LkdYLwVmuULCwiMoU5A==}
 
-  '@prisma/engines-version@5.21.1-1.bf0e5e8a04cada8225617067eaa03d041e2bba36':
-    resolution: {integrity: sha512-qvnEflL0//lh44S/T9NcvTMxfyowNeUxTunPcDfKPjyJNrCNf2F1zQLcUv5UHAruECpX+zz21CzsC7V2xAeM7Q==}
+  '@prisma/engines-version@5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2':
+    resolution: {integrity: sha512-2PTmxFR2yHW/eB3uqWtcgRcgAbG1rwG9ZriSvQw+nnb7c4uCr3RAcGMb6/zfE88SKlC1Nj2ziUvc96Z379mHgQ==}
 
-  '@prisma/engines@5.21.1':
-    resolution: {integrity: sha512-hGVTldUkIkTwoV8//hmnAAiAchi4oMEKD3aW5H2RrnI50tTdwza7VQbTTAyN3OIHWlK5DVg6xV7X8N/9dtOydA==}
+  '@prisma/engines@5.22.0':
+    resolution: {integrity: sha512-UNjfslWhAt06kVL3CjkuYpHAWSO6L4kDCVPegV6itt7nD1kSJavd3vhgAEhjglLJJKEdJ7oIqDJ+yHk6qO8gPA==}
 
   '@prisma/engines@5.3.1':
     resolution: {integrity: sha512-6QkILNyfeeN67BNEPEtkgh3Xo2tm6D7V+UhrkBbRHqKw9CTaz/vvTP/ROwYSP/3JT2MtIutZm/EnhxUiuOPVDA==}
 
-  '@prisma/fetch-engine@5.21.1':
-    resolution: {integrity: sha512-70S31vgpCGcp9J+mh/wHtLCkVezLUqe/fGWk3J3JWZIN7prdYSlr1C0niaWUyNK2VflLXYi8kMjAmSxUVq6WGQ==}
+  '@prisma/fetch-engine@5.22.0':
+    resolution: {integrity: sha512-bkrD/Mc2fSvkQBV5EpoFcZ87AvOgDxbG99488a5cexp5Ccny+UM6MAe/UFkUC0wLYD9+9befNOqGiIJhhq+HbA==}
 
   '@prisma/fetch-engine@5.3.1':
     resolution: {integrity: sha512-w1yk1YiK8N82Pobdq58b85l6e8akyrkxuzwV9DoiUTRf3gpsuhJJesHc4Yi0WzUC9/3znizl1UfCsI6dhkj3Vw==}
@@ -2808,8 +2808,8 @@ packages:
   '@prisma/generator-helper@5.3.1':
     resolution: {integrity: sha512-zrYS0iHLgPlOJjYnd5KvVMMvSS+ktOL39EwooS5EnyvfzwfzxlKCeOUgxTfiKYs0WUWqzEvyNAYtramYgSknsQ==}
 
-  '@prisma/get-platform@5.21.1':
-    resolution: {integrity: sha512-sRxjL3Igst3ct+e8ya/x//cDXmpLbZQ5vfps2N4tWl4VGKQAmym77C/IG/psSMsQKszc8uFC/q1dgmKFLUgXZQ==}
+  '@prisma/get-platform@5.22.0':
+    resolution: {integrity: sha512-pHhpQdr1UPFpt+zFfnPazhulaZYCUqeIcPpJViYoq9R+D/yw4fjE+CtnsnKzPYm0ddUbeXUzjGVGIRVgPDCk4Q==}
 
   '@prisma/get-platform@5.3.1':
     resolution: {integrity: sha512-3IiZY2BUjKnAuZ0569zppZE6/rZbVAM09//c2nvPbbkGG9MqrirA8fbhhF7tfVmhyVfdmVCHnf/ujWPHJ8B46Q==}
@@ -7420,8 +7420,8 @@ packages:
     resolution: {integrity: sha512-VpNpolZ8RXRgfU+j4R+fPZmX8EE95w3vJ2tt7+FwuiQc0leNTfLK5QLf3KbbPDes2rfjh3g20AjDxefQIo5GIA==}
     hasBin: true
 
-  prisma@5.21.1:
-    resolution: {integrity: sha512-PB+Iqzld/uQBPaaw2UVIk84kb0ITsLajzsxzsadxxl54eaU5Gyl2/L02ysivHxK89t7YrfQJm+Ggk37uvM70oQ==}
+  prisma@5.22.0:
+    resolution: {integrity: sha512-vtpjW3XuYCSnMsNVBjLMNkTj6OZbudcPPTPYHqX0CJfpcdWciI1dM8uHETwmDxxiqEwCIE6WvXucWUetJgfu/A==}
     engines: {node: '>=16.13'}
     hasBin: true
 
@@ -9982,7 +9982,7 @@ snapshots:
 
   '@popperjs/core@2.11.8': {}
 
-  '@prisma/debug@5.21.1': {}
+  '@prisma/debug@5.22.0': {}
 
   '@prisma/debug@5.3.1':
     dependencies:
@@ -9992,22 +9992,22 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@prisma/engines-version@5.21.1-1.bf0e5e8a04cada8225617067eaa03d041e2bba36': {}
+  '@prisma/engines-version@5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2': {}
 
-  '@prisma/engines@5.21.1':
+  '@prisma/engines@5.22.0':
     dependencies:
-      '@prisma/debug': 5.21.1
-      '@prisma/engines-version': 5.21.1-1.bf0e5e8a04cada8225617067eaa03d041e2bba36
-      '@prisma/fetch-engine': 5.21.1
-      '@prisma/get-platform': 5.21.1
+      '@prisma/debug': 5.22.0
+      '@prisma/engines-version': 5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2
+      '@prisma/fetch-engine': 5.22.0
+      '@prisma/get-platform': 5.22.0
 
   '@prisma/engines@5.3.1': {}
 
-  '@prisma/fetch-engine@5.21.1':
+  '@prisma/fetch-engine@5.22.0':
     dependencies:
-      '@prisma/debug': 5.21.1
-      '@prisma/engines-version': 5.21.1-1.bf0e5e8a04cada8225617067eaa03d041e2bba36
-      '@prisma/get-platform': 5.21.1
+      '@prisma/debug': 5.22.0
+      '@prisma/engines-version': 5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2
+      '@prisma/get-platform': 5.22.0
 
   '@prisma/fetch-engine@5.3.1(encoding@0.1.13)':
     dependencies:
@@ -10041,9 +10041,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@prisma/get-platform@5.21.1':
+  '@prisma/get-platform@5.22.0':
     dependencies:
-      '@prisma/debug': 5.21.1
+      '@prisma/debug': 5.22.0
 
   '@prisma/get-platform@5.3.1':
     dependencies:
@@ -14904,9 +14904,9 @@ snapshots:
       - encoding
       - supports-color
 
-  prisma@5.21.1:
+  prisma@5.22.0:
     dependencies:
-      '@prisma/engines': 5.21.1
+      '@prisma/engines': 5.22.0
     optionalDependencies:
       fsevents: 2.3.3
 

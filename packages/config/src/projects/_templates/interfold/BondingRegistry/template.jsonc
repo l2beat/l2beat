@@ -1,0 +1,133 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "BondingRegistry",
+  "category": "core",
+  "description": "Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond; the contract also enforces exits, committee obligations, bans and slashing debits.",
+  "ignoreInWatchMode": [
+    "bondingAssetConfigurationVersion",
+    "ciphernodeBonds",
+    "eligibilityConfigurationVersion",
+    "reservedSlashedTicketBalance",
+    "slashedCiphernodeBond",
+    "slashedTicketBalance",
+    "ticketBalances",
+    "totalCiphernodeBondLiability",
+    "unresolvedCommitteeCount"
+  ],
+  "fields": {
+    "owner": {
+      "description": "Account controlling bonding and authorization parameters.",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace collateral assets and protocol dependencies; change bond, ticket, eligibility and exit parameters; authorize slashing managers and reward distributors; clear bans from old managers; withdraw slashed funds; and replace the slashed-funds treasury."
+        }
+      ]
+    },
+    "activeOperators": {
+      "description": "Operator keys currently active under the collateral and ban rules, reconstructed from activation events.",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "operator",
+        "add": {
+          "event": "OperatorActivationChanged",
+          "where": ["=", "#active", true]
+        },
+        "remove": {
+          "event": "OperatorActivationChanged",
+          "where": ["=", "#active", false]
+        }
+      },
+      "permissions": [
+        {
+          "type": "member",
+          "description": "submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties."
+        }
+      ]
+    },
+    "bondOwners": {
+      "description": "Latest collateral owner for each operator key, reconstructed from ownership events. One address can own several operator positions.",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "groupBy": "operator",
+        "select": "bondOwner",
+        "set": { "event": "BondOwnerSet" }
+      }
+    },
+    "ticketBalances": {
+      "description": "Latest ticket-token balance for each operator reconstructed from balance-update events.",
+      "handler": {
+        "type": "event",
+        "groupBy": "operator",
+        "select": "newBalance",
+        "set": { "event": "TicketBalanceUpdated" },
+        "ignoreRelative": true
+      }
+    },
+    "ciphernodeBonds": {
+      "description": "Latest FOLD bond for each operator reconstructed from bond-update events.",
+      "handler": {
+        "type": "event",
+        "groupBy": "operator",
+        "select": "newBond",
+        "set": { "event": "CiphernodeBondUpdated" },
+        "ignoreRelative": true
+      }
+    },
+    "authorizedSlashingManagerAt": {
+      "description": "Contracts currently authorized to debit ticket collateral and FOLD bonds, ban operators and manage slash-routing state.",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "slash operator ticket collateral and FOLD bonds, ban operators and manage slash-routing state."
+        }
+      ]
+    },
+    "authorizedDistributors": {
+      "description": "Contracts currently allowed to credit ticket collateral on behalf of operators.",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "distributor",
+        "add": {
+          "event": "RewardDistributorUpdated",
+          "where": ["=", "#authorized", true]
+        },
+        "remove": {
+          "event": "RewardDistributorUpdated",
+          "where": ["=", "#authorized", false]
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "deposit and credit ticket collateral for an operator."
+        }
+      ]
+    },
+    "requiredCiphernodeBond": {
+      "description": "Minimum FOLD bond required for an operator to remain eligible.",
+      "type": "RISK_PARAMETER"
+    },
+    "ticketPrice": {
+      "description": "Amount of sUSDS-backed ticket token represented by one sortition ticket.",
+      "type": "RISK_PARAMETER"
+    },
+    "minTicketBalance": {
+      "description": "Minimum number of tickets required for operator eligibility.",
+      "type": "RISK_PARAMETER"
+    },
+    "ciphernodeBondActiveBps": {
+      "description": "Minimum fraction of the configured FOLD bond that must remain after slashing for an operator to stay active.",
+      "type": "RISK_PARAMETER"
+    },
+    "exitDelay": {
+      "description": "Delay before queued ticket collateral and FOLD bond exits can be claimed.",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}
