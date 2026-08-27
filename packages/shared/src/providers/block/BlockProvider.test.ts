@@ -99,6 +99,8 @@ describe(BlockProvider.name, () => {
 
       expect(blockNumber).toEqual(800)
       expect(getBlockHeader).toHaveBeenCalledWith('latest')
+      // the latest header is reused as the upper bound, not fetched again
+      expect(getBlockHeader.calls.map((c) => c.args[0])).not.toInclude(1000)
     })
 
     it('returns the latest block when timestamp is not earlier', async () => {
@@ -174,6 +176,37 @@ describe(BlockProvider.name, () => {
         .filter((x): x is number => typeof x === 'number')
       expect(Math.min(...numbers)).toBeGreaterThan(1)
       expect(getBlockHeader.calls.length).toBeLessThan(firstCalls)
+    })
+
+    it('does not cache headers within the reorg window of the tip', async () => {
+      // 1s blocks, latest = 100_000
+      const oneSecondBlocks = (x: number | 'latest') => {
+        const number = x === 'latest' ? 100_000 : x
+        return { number, hash: `0x${number}`, timestamp: number }
+      }
+      const getBlockHeader = mockFn(async (x: number | 'latest') =>
+        oneSecondBlocks(x),
+      )
+      const client = mockObject<BlockClient>({ getBlockHeader })
+      const provider = new BlockProvider('chain', [client])
+
+      const requested = () => getBlockHeader.calls.map((c) => c.args[0])
+
+      // ~10s behind the tip: the probe is too fresh to remember, so an
+      // identical search fetches it again
+      await provider.getBlockNumberAtOrBefore(UnixTime(99_990))
+      expect(requested()).toInclude(99_990)
+      getBlockHeader.calls.length = 0
+      await provider.getBlockNumberAtOrBefore(UnixTime(99_990))
+      expect(requested()).toInclude(99_990)
+
+      // ~14h behind the tip: probes are remembered, the repeat needs only latest
+      getBlockHeader.calls.length = 0
+      await provider.getBlockNumberAtOrBefore(UnixTime(50_000))
+      expect(requested()).toInclude(50_000)
+      getBlockHeader.calls.length = 0
+      await provider.getBlockNumberAtOrBefore(UnixTime(50_000))
+      expect(requested()).toEqual(['latest'])
     })
 
     it('handles a sequence of non-consecutive timestamps', async () => {

@@ -2,6 +2,11 @@ import { assert, type Block, UnixTime } from '@l2beat/shared-pure'
 import type { BlockClient, BlockHeader } from '../../clients'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 
+// Headers younger than this are not cached: a reorg could replace the block
+// and a stale timestamp would then mis-bracket later searches. Deeper than any
+// reorg seen on the tracked chains (Ethereum finalizes in ~13 min).
+const REORG_SAFETY_SECONDS = UnixTime.HOUR
+
 export class BlockProvider {
   // Headers resolved by earlier timestamp searches, kept so later searches can
   // seed the interpolation from the closest known block instead of block 1 —
@@ -59,17 +64,19 @@ export class BlockProvider {
     start = 1,
   ): Promise<number> {
     return await this.tryClients(async (client) => {
-      const getHeader = async (x: number | 'latest') => {
-        const cached = x !== 'latest' ? this.knownHeaders.get(x) : undefined
+      const latest = await client.getBlockHeader('latest')
+      if (timestamp >= latest.timestamp) return latest.number
+
+      const cacheable = latest.timestamp - REORG_SAFETY_SECONDS
+      const getHeader = async (number: number) => {
+        if (number === latest.number) return latest
+        const cached = this.knownHeaders.get(number)
         if (cached) return cached
-        const header = await client.getBlockHeader(x)
-        assertBlockNumber(header, x)
-        this.remember(header)
+        const header = await client.getBlockHeader(number)
+        assertBlockNumber(header, number)
+        if (header.timestamp <= cacheable) this.remember(header)
         return header
       }
-
-      const latest = await getHeader('latest')
-      if (timestamp >= latest.timestamp) return latest.number
 
       // Narrow the search to the tightest bracket of already-known headers.
       // Block timestamps increase with block number, so any known header at or
