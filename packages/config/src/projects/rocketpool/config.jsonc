@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "rocketpool",
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 200,
+  "types": {
+    // Fractions are stored with 18 decimals and rendered as percentages, so
+    // they are un-decimaled by 16 rather than 18.
+    "Undecimal16": {
+      "typeCaster": "Undecimal",
+      "arg": { "decimals": 16 }
+    }
+  },
+  "initialAddresses": [
+    // RocketStorage. Every other protocol contract is registered here under a
+    // name hash and is reachable only by resolving that hash, so this is the
+    // single entrypoint to the graph.
+    "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46"
+  ],
+  "names": {
+    "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46": "RocketStorage",
+    // Override the two globalTokens display names so the entries keep their
+    // contract names, which is what the page description resolves them by.
+    "eth:0xae78736Cd615f374D3085123A210448E74Fc6393": "RocketTokenRETH",
+    "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f": "RocketTokenRPL"
+  }
+}

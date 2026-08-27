@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOProtocolSettingsAuction",
+  "category": "gov",
+  "description": "Parameters of the collateral auction: whether lots may be created and bid on, lot size bounds, duration, and the starting and reserve price ratios. Values live in the shared registry, not here; this contract is the typed accessor and the only writer is a passed governance proposal."
+}

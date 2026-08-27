@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOProtocolSettingsSecurity",
+  "category": "gov",
+  "description": "Parameters of the security council and of the upgrade path: council quorum and vote, action, and execution windows, the waiting period between an approved upgrade and its application, and the share of the council needed to cancel one. Values live in the shared registry, not here; this contract is the typed accessor and the only writer is a passed governance proposal."
+}

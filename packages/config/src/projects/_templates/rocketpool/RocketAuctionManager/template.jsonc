@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketAuctionManager",
+  "category": "core",
+  "description": "Dutch auction that sells collateral tokens seized from node operators back for ETH, returning the ETH to the pool. Lot creation and bidding are permissionless when their flags are on, and the price decays from a governed starting ratio to a governed reserve ratio over a fixed number of blocks. Both flags are on the security council's allowlist.",
+  "ignoreMethods": [
+    "getLotEndBlock",
+    "getLotExists",
+    "getLotIsCleared",
+    "getLotPriceAtCurrentBlock",
+    "getLotReservePrice",
+    "getLotRPLRecovered",
+    "getLotStartBlock",
+    "getLotStartPrice",
+    "getLotTotalBidAmount",
+    "getLotTotalRPLAmount"
+  ],
+  "ignoreInWatchMode": [
+    "getTotalRPLBalance",
+    "getAllottedRPLBalance",
+    "getRemainingRPLBalance",
+    "getLotCount"
+  ]
+}

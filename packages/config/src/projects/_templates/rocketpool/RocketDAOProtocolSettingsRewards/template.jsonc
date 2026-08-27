@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOProtocolSettingsRewards",
+  "category": "gov",
+  "description": "Parameters of the reward periods: the period length, the number of periods in a claim interval, and the split of issuance between node operators, the oracle set, and the treasury. Values live in the shared registry, not here; this contract is the typed accessor and the only writer is a passed governance proposal.",
+  "ignoreInWatchMode": ["getRewardsClaimersTimeUpdated"]
+}

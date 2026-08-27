@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAONodeTrustedSettingsProposals",
+  "category": "gov",
+  "description": "Parameters of oracle-set proposals: the cooldown between one member's proposals, the delay before voting opens, the voting window, and the execution window. Values live in the shared registry, not here; this contract is the typed accessor and the only writer is a passed governance proposal."
+}

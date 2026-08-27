@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOProtocol",
+  "category": "gov",
+  "description": "Entry point of token-holder governance and the holder of the retired bootstrap powers. While bootstrap mode was engaged the bootstrap account could set any protocol parameter, spend the treasury, and seat or remove security-council members on its own. Bootstrap mode is now permanently disabled, so every one of those functions reverts and the same actions are reachable only through a passed token-holder proposal.",
+  "fields": {
+    "getBootstrapModeDisabled": {
+      "description": "When true, all bootstrap functions revert; the flag can only ever be set, never cleared.",
+      "severity": "HIGH"
+    }
+  }
+}

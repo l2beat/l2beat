@@ -1,0 +1,76 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOProtocolProposal",
+  "category": "gov",
+  "description": "Voting machine for token-holder governance. Voting power is proven optimistically: a proposer posts a bond and a claimed voting-power tree, which anyone can challenge within a challenge window by posting their own bond, and an unanswered challenge defeats the proposal and forfeits the proposer's bond. Voting runs in two phases; a proposal needs {{ proposalQuorum }}% support to pass and can be blocked by {{ vetoQuorum }}% of voting power voting against it outright. A passed proposal has {{ executeWindow }} to execute.",
+  "ignoreMethods": [
+    "getMessage",
+    "getPayload",
+    "getProposer",
+    "getCreated",
+    "getStart",
+    "getExpires",
+    "getExecuted",
+    "getDestroyed",
+    "getFinalised",
+    "getVetoed",
+    "getPhase1End",
+    "getPhase2End",
+    "getProposalBlock",
+    "getProposalVetoQuorum",
+    "getVetoQuorum",
+    "getVotingPowerAbstained",
+    "getVotingPowerAgainst",
+    "getVotingPowerFor",
+    "getVotingPowerRequired",
+    "getVotingPowerVeto",
+    "getState"
+  ],
+  "ignoreInWatchMode": ["getTotal"],
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "proposalSettings": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsProposals")
+          "0x5aa44b41e40cd45c081364aad7a61c1f32e659ec04db2ab21b4b81488165d219"
+        ]
+      }
+    },
+    "proposalQuorum": {
+      "handler": {
+        "type": "call",
+        "address": "{{ proposalSettings }}",
+        "method": "function getProposalQuorum() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal16"]
+    },
+    "vetoQuorum": {
+      "handler": {
+        "type": "call",
+        "address": "{{ proposalSettings }}",
+        "method": "function getProposalVetoQuorum() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal16"]
+    },
+    "executeWindow": {
+      "handler": {
+        "type": "call",
+        "address": "{{ proposalSettings }}",
+        "method": "function getExecuteTime() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAONodeTrusted",
+  "category": "gov",
+  "description": "Membership register for the oracle set: the permissioned group that reports the network balances, the collateral price, and the rewards tree, votes on penalties, and is the only body that can approve a contract upgrade. Seats currently filled: {{ memberCount }}. Each seat carries one vote and a proposal passes once votes for it reach {{ quorumVotes }}. Membership is bonded: joining locks {{ memberBond }} collateral tokens, which a passed kick proposal can fine. The bootstrap account could once seat members directly; that path is permanently closed.",
+  "ignoreMethods": [
+    "getMemberAt",
+    "getMemberCount",
+    "getMemberQuorumVotesRequired"
+  ],
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "members": {
+      "handler": {
+        "type": "array",
+        "method": "getMemberAt",
+        "length": "{{ memberCount }}"
+      },
+      "permissions": [
+        {
+          "type": "member"
+        }
+      ],
+      "severity": "HIGH",
+      "description": "Addresses currently seated in the oracle set."
+    },
+    "memberCount": {
+      "handler": {
+        "type": "call",
+        "method": "function getMemberCount() view returns (uint256)",
+        "args": []
+      }
+    },
+    "quorumVotes": {
+      "handler": {
+        "type": "call",
+        "method": "function getMemberQuorumVotesRequired() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    },
+    "memberSettings": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAONodeTrustedSettingsMembers")
+          "0x35892cd5ef87e2f4b3c234f833b932091704e2ab89e2cb30a61907e30582efbe"
+        ]
+      }
+    },
+    "memberBond": {
+      "handler": {
+        "type": "call",
+        "address": "{{ memberSettings }}",
+        "method": "function getRPLBond() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    },
+    "getBootstrapModeDisabled": {
+      "description": "When true, the bootstrap account can no longer seat members, change settings, or push an upgrade here.",
+      "severity": "HIGH"
+    }
+  }
+}

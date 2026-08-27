@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketMegapoolFactory",
+  "category": "core",
+  "description": "Deploys one pooled validator contract per node operator, at an address derived from the operator address, and holds the implementation those proxies delegate to."
+}

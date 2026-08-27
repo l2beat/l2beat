@@ -1,0 +1,47 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketRewardsPool",
+  "category": "core",
+  "description": "Accrues the token inflation and the pooled ETH rewards for each reward period and records the tree that splits them. A period is closed when submissions from the oracle set reach the network consensus share; anyone can finalise a submission that already has it. The tree itself is computed off-chain, so the oracle set is trusted for its contents; the totals it can distribute are bounded by what has accrued.",
+  "ignoreMethods": [
+    "getClaimIntervalExecutionAddress",
+    "getClaimIntervalExecutionBlock"
+  ],
+  "ignoreInWatchMode": [
+    "getRewardIndex",
+    "getRPLBalance",
+    "getEthBalance",
+    "getPendingRPLRewards",
+    "getPendingETHRewards",
+    "getPendingVoterShare",
+    "getClaimIntervalTimeStart",
+    "getClaimIntervalsPassed"
+  ],
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "oracleSet": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAONodeTrusted")
+          "0x9a354e1bb2e38ca826db7a8d061cfb0ed7dbd83d241a2cbe4fd5218f9bb4333f"
+        ]
+      },
+      "severity": "HIGH",
+      "description": "Membership contract of the permissioned reporter set, resolved from the registry.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can write the Merkle root that assigns each reward period, once submissions from its members reach the network consensus share."
+        }
+      ]
+    }
+  }
+}

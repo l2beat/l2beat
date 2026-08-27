@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOProtocolSettingsProposals",
+  "category": "gov",
+  "description": "Parameters of token-holder governance: proposal and challenge bonds, the challenge period, the vote delay and the two voting phases, the quorum and veto quorum, and the execution window. Values live in the shared registry, not here; this contract is the typed accessor and the only writer is a passed governance proposal."
+}

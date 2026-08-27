@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAOSecurityUpgrade",
+  "category": "gov",
+  "description": "Veto lever over pending contract changes. A council member proposes a veto against a change that is still inside its waiting period; the veto passes at {{ vetoQuorum }}% of the council's seats and takes effect as soon as it reaches that threshold, so it always lands inside the window. A vetoed change can never be applied. This contract can only cancel changes; it cannot make one.",
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs",
+        "nameArgs": true
+      }
+    },
+    "securitySettings": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOProtocolSettingsSecurity")
+          "0x87336d3db0f2d2ad242d7fb1fed28c752c24fa617f404ed98ee246f9b27671b3"
+        ]
+      }
+    },
+    "vetoQuorum": {
+      "handler": {
+        "type": "call",
+        "address": "{{ securitySettings }}",
+        "method": "function getUpgradeVetoQuorum() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal16"]
+    },
+    "securityCouncil": {
+      "handler": {
+        "type": "call",
+        "address": "{{ constructorArgs._rocketStorageAddress }}",
+        "method": "function getAddress(bytes32) view returns (address)",
+        "args": [
+          // keccak256("contract.address", "rocketDAOSecurity")
+          "0x72244aef95b32bf9d0fd65a6e3212550a59abd181a93cfc66753a7197c36df07"
+        ]
+      },
+      "severity": "HIGH",
+      "description": "Membership contract of the security council, resolved from the registry.",
+      "permissions": [
+        {
+          "type": "act",
+          "description": "only its members can propose and pass a veto here."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "RocketDAONodeTrustedProposals",
+  "category": "gov",
+  "description": "Proposal front end for the oracle set. Only a seated member can propose, and only after a per-member cooldown; voting opens after a delay and runs for a fixed window, with one vote per member. A passed proposal can invite, remove, or fine a member, change the oracle set's own settings, or schedule a contract upgrade. It cannot move funds."
+}
