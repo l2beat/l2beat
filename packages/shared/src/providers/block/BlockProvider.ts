@@ -11,75 +11,63 @@ export class BlockProvider {
   }
 
   async getLatestBlockNumber(): Promise<number> {
-    for (const [index, client] of this.clients.entries()) {
-      try {
-        return await client.getLatestBlockNumber()
-      } catch (error) {
-        if (index === this.clients.length - 1) throw error
-      }
-    }
-
-    throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
+    return await this.withClient((client) => client.getLatestBlockNumber())
   }
 
   async getBlockWithTransactions(x: number | 'latest'): Promise<Block> {
-    for (const [index, client] of this.clients.entries()) {
-      try {
-        const block = await client.getBlockWithTransactions(x)
-        if (typeof x === 'number') {
-          assert(
-            block.number === x,
-            `Invalid response: expected block number ${x}, got ${block.number}`,
-          )
-        }
-        return block
-      } catch (error) {
-        if (index === this.clients.length - 1) throw error
+    return await this.withClient(async (client) => {
+      const block = await client.getBlockWithTransactions(x)
+      if (typeof x === 'number') {
+        assert(
+          block.number === x,
+          `Invalid response: expected block number ${x}, got ${block.number}`,
+        )
       }
-    }
-
-    throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
+      return block
+    })
   }
 
   async getBlockTimestamps(
     blockNumbers: number[],
   ): Promise<Map<number, UnixTime>> {
-    for (const [index, client] of this.clients.entries()) {
-      try {
-        assert(
-          client.getBlockTimestamps,
-          'Client does not support batch fetching of block timestamps',
-        )
-        const out = new Map<number, UnixTime>()
-        const timestamps = await client.getBlockTimestamps(blockNumbers)
-        for (const [n, ts] of timestamps) {
-          out.set(n, UnixTime(ts))
-        }
-        assert(out.size === blockNumbers.length, 'Missing block timestamps')
-        return out
-      } catch (error) {
-        if (index === this.clients.length - 1) throw error
+    return await this.withClient(async (client) => {
+      assert(
+        client.getBlockTimestamps,
+        'Client does not support batch fetching of block timestamps',
+      )
+      const out = new Map<number, UnixTime>()
+      const timestamps = await client.getBlockTimestamps(blockNumbers)
+      for (const [n, ts] of timestamps) {
+        out.set(n, UnixTime(ts))
       }
-    }
-
-    throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
+      assert(out.size === blockNumbers.length, 'Missing block timestamps')
+      return out
+    })
   }
 
   async getBlockNumberAtOrBefore(
     timestamp: UnixTime,
     start = 1,
   ): Promise<number> {
+    return await this.withClient(async (client) => {
+      const end = await client.getLatestBlockNumber()
+      const effectiveStart = start >= end ? 1 : start
+
+      return await getBlockNumberAtOrBefore(
+        timestamp,
+        effectiveStart,
+        end,
+        (number: number) => client.getBlockWithTransactions(number),
+      )
+    })
+  }
+
+  private async withClient<T>(
+    callback: (client: BlockClient) => Promise<T>,
+  ): Promise<T> {
     for (const [index, client] of this.clients.entries()) {
       try {
-        const end = await client.getLatestBlockNumber()
-        const effectiveStart = start >= end ? 1 : start
-
-        return await getBlockNumberAtOrBefore(
-          timestamp,
-          effectiveStart,
-          end,
-          (number: number) => client.getBlockWithTransactions(number),
-        )
+        return await callback(client)
       } catch (error) {
         if (index === this.clients.length - 1) throw error
       }
