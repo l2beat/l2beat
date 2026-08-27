@@ -256,9 +256,11 @@ function tokenRelationRole(
   token: { chain: string; address: string },
 ): 'locked' | 'minted' | 'unknown' {
   if (relation.bridgeType === 'burnAndMint') return 'minted'
-  // Anything that is neither burnAndMint nor lockAndMint (a human-added
-  // nonMinting relation) mints nothing and has no locked side to name — it
-  // must not claim a minter, consistently with `getMintingPluginsFor`.
+  // Anything that is neither burnAndMint nor lockAndMint mints nothing and
+  // has no locked side to name — it must not claim a minter, consistently
+  // with `getMintingPluginsFor`. No writer produces such a row (ingestion
+  // keeps only the non-swapping types and the add planner rejects the rest),
+  // but this reader does not assume that.
   if (relation.bridgeType !== 'lockAndMint') return 'unknown'
   if (relation.lockedToken === null) return 'unknown'
 

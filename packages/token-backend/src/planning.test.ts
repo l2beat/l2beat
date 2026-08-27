@@ -324,6 +324,26 @@ describe('planning proof stamping', () => {
       })
     })
 
+    it('rejects a relation with a nonMinting bridge type', async () => {
+      const relation = tokenRelation(
+        deployedRecord('ethereum', '0xaaa', 'USDC01'),
+        deployedRecord('arbitrum', '0xbbb', 'USDC01'),
+        { bridgeType: 'nonMinting', lockedToken: null },
+      )
+
+      const result = await generatePlan(
+        mockDb({}),
+        { type: 'AddTokenRelationIntent', record: relation },
+        { user: USER, skipLogs: true },
+      )
+
+      expect(result).toEqual({
+        outcome: 'error',
+        error:
+          'A token relation cannot use bridge type nonMinting — a nonMinting route may swap assets, and a relation asserts both endpoints are the same asset',
+      })
+    })
+
     it('rejects a locked token on a non-lockAndMint relation', async () => {
       const relation = tokenRelation(
         deployedRecord('ethereum', '0xaaa', 'USDC01'),

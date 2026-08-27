@@ -4,7 +4,11 @@ import {
   normalizeTokenRelation,
   type TokenDatabase,
 } from '@l2beat/database'
-import { assertUnreachable, MANUAL_RELATION_PLUGIN } from '@l2beat/shared-pure'
+import {
+  assertUnreachable,
+  MANUAL_RELATION_PLUGIN,
+  type ManualRelationEvidence,
+} from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { Command } from './commands'
 import { manualProof } from './commitTokenChanges'
@@ -28,7 +32,6 @@ import type {
 } from './schemas/AbstractToken'
 import type { DeployedTokenUpdateable } from './schemas/DeployedToken'
 import {
-  type ManualRelationEvidence,
   ManualRelationEvidenceInput,
   type TokenRelationPrimaryKey,
   type TokenRelationRecord,
@@ -406,13 +409,23 @@ async function planAddTokenRelation(
   intent: AddTokenRelationIntent,
   opts: PlanOptions,
 ): Promise<Command[]> {
-  // These mirror the table's CHECK constraints, so a violation surfaces here
-  // as a friendly planning error instead of failing the execute transaction.
+  // Planner policy, not a CHECK mirror — the table has no constraint on
+  // bridgeType. A relation asserts its endpoints are the same asset, which
+  // only the non-swapping types guarantee, so a human is held to the same
+  // rule as ingestion (see tokenRouteFromTransfer): a nonMinting route may
+  // swap assets, and 'unknown' names no mechanism at all.
   if (intent.record.bridgeType === 'unknown') {
     throw new PlanningError(
       "A token relation cannot use bridge type 'unknown' — pick the mechanism the bridge uses",
     )
   }
+  if (intent.record.bridgeType === 'nonMinting') {
+    throw new PlanningError(
+      'A token relation cannot use bridge type nonMinting — a nonMinting route may swap assets, and a relation asserts both endpoints are the same asset',
+    )
+  }
+  // Mirrors the table's CHECK constraint, so a violation surfaces here as a
+  // friendly planning error instead of failing the execute transaction.
   if (
     intent.record.lockedToken !== null &&
     intent.record.bridgeType !== 'lockAndMint'

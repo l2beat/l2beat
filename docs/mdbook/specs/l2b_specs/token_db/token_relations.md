@@ -121,8 +121,13 @@ Nothing else should ever accept the old names.
 
 The remaining columns:
 
-- `bridgeType` is `NOT NULL` — a relation only exists for non-swapping
-  types, so every row has one.
+- `bridgeType` is `NOT NULL` — a relation only exists for the non-swapping
+  types (`lockAndMint`, `burnAndMint`), so every row has one. `nonMinting` is
+  **not supported in the table**: a nonMinting route may swap assets, and a
+  relation asserts its endpoints are the same asset, so ingestion never
+  writes such a row and the add planner rejects one. This is writer policy,
+  not a `CHECK` — readers that filter on bridge type (the graph, the minter
+  queries) stay defensive anyway.
 - `lockedToken` names the slot holding the locked token: `'A'`, `'B'`, or
   `NULL` — a `CHAR(1)`, since one letter says everything there is to say. It
   is deliberately **outside** the
@@ -149,10 +154,11 @@ The remaining columns:
     keeps its own observed direction; read `srcChain`/`dstChain` from inside
     the JSON when displaying it, never the relation's endpoint columns.
   - For a manually added relation: a human attestation
-    `{ kind: 'manual', user, comment, bridge }`, where `bridge` optionally
-    names the mechanism (`{ name, chain, address }`, e.g. the WETH contract).
-    Sample transfers carry no `kind` field, so the discriminator is
-    unambiguous.
+    `{ kind: 'manual', user, comment, bridge }` — the `ManualRelationEvidence`
+    schema in `@l2beat/shared-pure` — where `bridge` optionally names the
+    mechanism (`{ name, chain, address }`, e.g. the WETH contract). Sample
+    transfers carry no `kind` field, so the discriminator is unambiguous;
+    readers still dispatch on the row-level `plugin`, not on the JSON.
 
   Either way the evidence is display-only: no read path derives roles,
   direction, or identity from it.
@@ -382,9 +388,10 @@ There is deliberately no `symmetric` role (there used to be one, shown for
 `burnAndMint` pairs). A `burnAndMint` pair *is* symmetric, but from each
 endpoint's point of view that fact reads "minted" — the question the role
 answers — and the bridge type, shown alongside, is what carries the
-symmetry. A relation that is neither `burnAndMint` nor `lockAndMint` (a
-human-added `nonMinting` row; ingestion never writes one) mints nothing and
-shows `unknown`.
+symmetry. A relation that is neither `burnAndMint` nor `lockAndMint` mints
+nothing and shows `unknown` — defensively: no writer produces such a row
+(ingestion keeps only the non-swapping types and the add planner rejects the
+rest), but the reader does not assume that.
 
 This is the answer to "which plugin minted this token, and which token is it
 a representation of" — the question the Relations tab exists for. Read it
@@ -396,8 +403,9 @@ token-backend — is answered by
 `TokenRelationRepository.getMintingPluginsFor`: the distinct plugins of the
 relations where the token's role is minted. Deliberately excluded: relations
 where the token is locked, relations with an unknown role (one of their
-endpoints is minted, but nothing says it is this one), and human-added
-`nonMinting` relations, which mint nothing. Token-UI exposes the same query
+endpoints is minted, but nothing says it is this one), and — defensively,
+since no writer produces them — `nonMinting` relations, which mint nothing.
+Token-UI exposes the same query
 as `deployedTokens.getMintingPlugins` and shows the list above the Relations
 table, so the summary can be eyeballed against the roles in the table.
 
@@ -508,10 +516,15 @@ moves with the endpoints when they are swapped, so the role a human stated is
 preserved. The update intent can also set `lockedToken` directly, which is
 how a human corrects a role the flags got wrong.
 
-The add and update planners also mirror the table's `CHECK` constraints, so
-violations surface as friendly planning errors instead of failing the execute
-transaction: `bridgeType` must not be `unknown`, only a `lockAndMint` relation
-may name a `lockedToken`, and the two endpoints must differ (compared
+The add planner accepts only the non-swapping bridge types, `lockAndMint` and
+`burnAndMint`. This is planner policy, not a `CHECK` mirror — the table has
+no constraint on `bridgeType` — and it holds a human to the same rule as
+ingestion: a relation asserts that its endpoints are the same asset, a
+`nonMinting` route may swap assets (see [The table](#the-table)), and
+`unknown` names no mechanism at all. The planners also mirror the table's
+actual `CHECK` constraints, so violations surface as friendly planning errors
+instead of failing the execute transaction: only a `lockAndMint` relation may
+name a `lockedToken`, and the two endpoints must differ (compared
 case-insensitively, like the table stores them).
 
 ### Manually added relations
@@ -550,9 +563,11 @@ intent (it is an authenticated internal tool and every write lands in
 `TokenDbHistory`); only relations claiming the `manual` sentinel must carry
 manual-entry evidence.
 
-Manual relations are ordinary rows everywhere else: they render in the
-Relations tab and the graph (edge label `manual`), `getMintingPluginsFor`
-counts them, and the delete intent removes them. Same-chain pairs are legal —
+Manual relations are ordinary rows everywhere else — and because only the
+non-swapping types can be added, every manual row qualifies for every reader:
+they render in the Relations tab and the graph (edge label `manual`),
+`getMintingPluginsFor` counts them, and the delete intent removes them.
+Same-chain pairs are legal —
 the endpoint-ordering constraint only rejects *identical* endpoints. One
 consequence to expect: `getMintingPluginsForMany` now returns `manual`
 records to the public frontend, which **skips them for now** when resolving

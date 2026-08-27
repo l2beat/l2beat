@@ -1,8 +1,4 @@
-import {
-  type KnownInteropBridgeType,
-  KnownInteropBridgeTypeValues,
-  MANUAL_RELATION_PLUGIN,
-} from '@l2beat/shared-pure'
+import { MANUAL_RELATION_PLUGIN } from '@l2beat/shared-pure'
 import type {
   ChainRecord,
   ManualRelationEvidenceInput,
@@ -60,11 +56,16 @@ import { useTRPC } from '~/react-query/trpc'
 import { cn } from '~/utils/cn'
 import { validateResolver } from '~/utils/validateResolver'
 
-const BRIDGE_TYPE_LABELS: Record<KnownInteropBridgeType, string> = {
-  lockAndMint: 'Lock and mint — one token is escrowed, the other is minted',
-  burnAndMint: 'Burn and mint — burned on one side, minted on the other',
-  nonMinting: 'Non-minting — connected without minting',
-}
+// Only the non-swapping bridge types can be recorded — a relation asserts
+// both endpoints are the same asset, and a nonMinting route may swap assets.
+// The planner rejects anything else, so the form never offers it.
+const MANUAL_BRIDGE_TYPES = ['lockAndMint', 'burnAndMint'] as const
+
+const BRIDGE_TYPE_LABELS: Record<(typeof MANUAL_BRIDGE_TYPES)[number], string> =
+  {
+    lockAndMint: 'Lock and mint — one token is escrowed, the other is minted',
+    burnAndMint: 'Burn and mint — burned on one side, minted on the other',
+  }
 
 const LOCKED_SIDES = ['this', 'other', 'unknown'] as const
 
@@ -72,7 +73,7 @@ type AddTokenRelationSchema = v.infer<typeof AddTokenRelationSchema>
 const AddTokenRelationSchema = v.object({
   otherChain: v.string().check(requiredCheck('Select a chain')),
   otherAddress: v.string().check(requiredCheck('Enter an address')),
-  bridgeType: v.enum(KnownInteropBridgeTypeValues),
+  bridgeType: v.enum(MANUAL_BRIDGE_TYPES),
   lockedSide: v.enum(LOCKED_SIDES),
   bridgeName: v.string(),
   bridgeChain: v.string(),
@@ -283,7 +284,7 @@ export function AddTokenRelationDialog({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {KnownInteropBridgeTypeValues.map((value) => (
+                        {MANUAL_BRIDGE_TYPES.map((value) => (
                           <SelectItem key={value} value={value}>
                             {BRIDGE_TYPE_LABELS[value]}
                           </SelectItem>

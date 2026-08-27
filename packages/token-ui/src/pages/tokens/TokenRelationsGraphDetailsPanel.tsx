@@ -1,3 +1,7 @@
+import {
+  MANUAL_RELATION_PLUGIN,
+  ManualRelationEvidence,
+} from '@l2beat/shared-pure'
 import type { Plan, RouterOutputs } from '@l2beat/token-backend'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import {
@@ -18,7 +22,6 @@ import { ExplorerLink } from '~/components/ExplorerLink'
 import { LoadingState } from '~/components/LoadingState'
 import { PlanConfirmationDialog } from '~/components/PlanConfirmationDialog'
 import { useTRPC } from '~/react-query/trpc'
-import { readManualRelationEvidence } from '~/utils/manualRelationEvidence'
 import {
   nodeLabel,
   RELATION_COLORS,
@@ -548,33 +551,41 @@ function RelationEvidence({
   relation: RelationDetails
   chains: Chain[]
 }) {
-  const manualEvidence = readManualRelationEvidence(relation.transfer)
-  if (manualEvidence) {
+  // The plugin sentinel — not the evidence JSON — says which shape the
+  // evidence has; the parse is just the assertion. Should it ever fail
+  // (hand-edited row), the raw JSON below still shows everything.
+  if (relation.plugin === MANUAL_RELATION_PLUGIN) {
+    const manualEvidence = ManualRelationEvidence.safeParse(relation.transfer)
     return (
       <DetailsSection title="Manual entry evidence">
-        <DetailRows>
-          {manualEvidence.user && (
-            <DetailRow label="Added by">{manualEvidence.user}</DetailRow>
-          )}
-          {manualEvidence.bridge?.name && (
-            <DetailRow label="Bridge">{manualEvidence.bridge.name}</DetailRow>
-          )}
-          {manualEvidence.bridge?.chain && manualEvidence.bridge.address && (
-            <DetailRow label="Bridge contract">
-              <AddressValue
-                chain={manualEvidence.bridge.chain}
-                address={manualEvidence.bridge.address}
-                explorerUrl={findExplorerUrl(
-                  chains,
-                  manualEvidence.bridge.chain,
-                )}
-              />
-            </DetailRow>
-          )}
-          {manualEvidence.comment && (
-            <DetailRow label="Comment">{manualEvidence.comment}</DetailRow>
-          )}
-        </DetailRows>
+        {manualEvidence.success && (
+          <DetailRows>
+            <DetailRow label="Added by">{manualEvidence.data.user}</DetailRow>
+            {manualEvidence.data.bridge && (
+              <DetailRow label="Bridge">
+                {manualEvidence.data.bridge.name}
+              </DetailRow>
+            )}
+            {manualEvidence.data.bridge?.chain &&
+              manualEvidence.data.bridge.address && (
+                <DetailRow label="Bridge contract">
+                  <AddressValue
+                    chain={manualEvidence.data.bridge.chain}
+                    address={manualEvidence.data.bridge.address}
+                    explorerUrl={findExplorerUrl(
+                      chains,
+                      manualEvidence.data.bridge.chain,
+                    )}
+                  />
+                </DetailRow>
+              )}
+            {manualEvidence.data.comment && (
+              <DetailRow label="Comment">
+                {manualEvidence.data.comment}
+              </DetailRow>
+            )}
+          </DetailRows>
+        )}
         <JsonDetails label="Raw evidence" value={relation.transfer} />
       </DetailsSection>
     )
