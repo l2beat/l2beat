@@ -39,6 +39,44 @@ describe(FuelClient.name, () => {
     })
   })
 
+  describe(FuelClient.prototype.getBlockHeader.name, () => {
+    const time = '4611686020155261080'
+
+    it('fetches a header by block number without tx bodies', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          data: { block: { id: '0xabc', height: '100', header: { time } } },
+        }),
+      })
+      const client = mockClient({ http })
+
+      expect(await client.getBlockHeader(100)).toEqual({
+        hash: '0xabc',
+        number: 100,
+        timestamp: tai64ToUnix(time),
+      })
+    })
+
+    it('fetches the latest header', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          data: {
+            blocks: {
+              nodes: [{ id: '0xdef', height: '200', header: { time } }],
+            },
+          },
+        }),
+      })
+      const client = mockClient({ http })
+
+      expect(await client.getBlockHeader('latest')).toEqual({
+        hash: '0xdef',
+        number: 200,
+        timestamp: tai64ToUnix(time),
+      })
+    })
+  })
+
   describe(FuelClient.prototype.getLatestBlockNumber.name, () => {
     it('returns number of the block', async () => {
       const http = mockObject<HttpClient>({

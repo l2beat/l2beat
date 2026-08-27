@@ -32,6 +32,24 @@ describe(CelestiaRpcClient.name, () => {
     })
   })
 
+  describe(CelestiaRpcClient.prototype.getBlockHeader.name, () => {
+    it('returns the header for a block number', async () => {
+      const time = '2024-02-07T10:00:00Z'
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: { block: { header: { time, height: '12345' } } },
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      expect(await rpc.getBlockHeader(12345)).toEqual({
+        number: 12345,
+        hash: 'UNSUPPORTED',
+        timestamp: UnixTime.fromDate(new Date(time)),
+      })
+    })
+  })
+
   describe(CelestiaRpcClient.prototype.getBlockWithTransactions.name, () => {
     it('returns block with transactions for a specific block number', async () => {
       const mockBlockHeight = '12345'

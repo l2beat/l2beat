@@ -1,7 +1,7 @@
 import type { Block, json } from '@l2beat/shared-pure'
 import { generateIntId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
-import type { BlockClient } from '../types'
+import type { BlockClient, BlockHeader } from '../types'
 import {
   type StarknetCallParameters,
   StarknetCallResponse,
@@ -38,6 +38,25 @@ export class StarknetClient extends ClientCore implements BlockClient {
     }
 
     return Number(latestBlockNumberResponse.data.result.block_number)
+  }
+
+  async getBlockHeader(blockNumber: number | 'latest'): Promise<BlockHeader> {
+    const params = [
+      blockNumber === 'latest' ? 'latest' : { block_number: blockNumber },
+    ]
+
+    const response = await this.query('starknet_getBlockWithTxHashes', params)
+
+    const parsed = StarknetGetBlockResponse.safeParse(response)
+    if (!parsed.success) {
+      throw new Error(`Block ${blockNumber}: Error during parsing`)
+    }
+
+    return {
+      number: parsed.data.result.block_number,
+      hash: parsed.data.result.block_hash,
+      timestamp: parsed.data.result.timestamp,
+    }
   }
 
   async getBlockWithTransactions(blockNumber: number): Promise<Block> {
@@ -80,12 +99,10 @@ export class StarknetClient extends ClientCore implements BlockClient {
   async getBlockTimestamps(
     blockNumbers: number[],
   ): Promise<Map<number, number>> {
-    const blocks = await Promise.all(
-      blockNumbers.map((blockNumber) =>
-        this.getBlockWithTransactions(blockNumber),
-      ),
+    const headers = await Promise.all(
+      blockNumbers.map((blockNumber) => this.getBlockHeader(blockNumber)),
     )
-    return new Map(blocks.map((block) => [block.number, block.timestamp]))
+    return new Map(headers.map((header) => [header.number, header.timestamp]))
   }
 
   async call(

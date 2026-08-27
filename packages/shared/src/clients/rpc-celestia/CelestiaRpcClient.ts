@@ -1,5 +1,6 @@
 import { type Block, type json, UnixTime } from '@l2beat/shared-pure'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
+import type { BlockHeader } from '../types'
 import {
   type CelestiaBlock,
   CelestiaBlockResponse,
@@ -37,6 +38,16 @@ export class CelestiaRpcClient extends ClientCore {
       logsBloom: 'UNSUPPORTED',
       timestamp: UnixTime.fromDate(new Date(block.block.header.time)),
       transactions: [], // UNSUPPORTED
+    }
+  }
+
+  async getBlockHeader(blockNumber: number | 'latest'): Promise<BlockHeader> {
+    const height = blockNumber === 'latest' ? undefined : blockNumber
+    const block = await this.getBlock(height)
+    return {
+      number: block.block.header.height,
+      hash: 'UNSUPPORTED',
+      timestamp: UnixTime.fromDate(new Date(block.block.header.time)),
     }
   }
 

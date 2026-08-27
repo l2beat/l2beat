@@ -55,18 +55,41 @@ describe(StarknetClient.name, () => {
     })
   })
 
+  describe(StarknetClient.prototype.getBlockHeader.name, () => {
+    it('fetches a block header via getBlockWithTxHashes', async () => {
+      const timestamp = UnixTime.now()
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          jsonrpc: '2.0',
+          id: 1,
+          result: {
+            block_number: 100,
+            block_hash: '0xabcdef',
+            timestamp,
+            transactions: [],
+          },
+        }),
+      })
+      const client = mockClient({ http })
+
+      const result = await client.getBlockHeader(100)
+
+      expect(result).toEqual({ number: 100, hash: '0xabcdef', timestamp })
+    })
+  })
+
   describe(StarknetClient.prototype.getBlockTimestamps.name, () => {
     it('returns timestamps keyed by block number', async () => {
       const client = mockClient({})
-      const getBlockWithTransactions = mockFn()
+      const getBlockHeader = mockFn()
         .returnsOnce({ number: 100, timestamp: 1_000 })
         .returnsOnce({ number: 200, timestamp: 2_000 })
-      client.getBlockWithTransactions = getBlockWithTransactions
+      client.getBlockHeader = getBlockHeader
 
       const result = await client.getBlockTimestamps([100, 200])
 
-      expect(getBlockWithTransactions).toHaveBeenNthCalledWith(1, 100)
-      expect(getBlockWithTransactions).toHaveBeenNthCalledWith(2, 200)
+      expect(getBlockHeader).toHaveBeenNthCalledWith(1, 100)
+      expect(getBlockHeader).toHaveBeenNthCalledWith(2, 200)
       expect(result).toEqual(
         new Map([
           [100, 1_000],
@@ -235,6 +258,7 @@ const mockStarknetGetBlockResponse = (
   id: 1,
   result: {
     block_number: blockNumber,
+    block_hash: '0xblockhash',
     timestamp: UnixTime.now(),
     transactions: [],
   },

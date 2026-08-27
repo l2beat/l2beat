@@ -1,6 +1,7 @@
 import type { Block, json } from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
+import type { BlockHeader } from '../types'
 import {
   type PolkadotBlock,
   PolkadotErrorResponse,
@@ -39,6 +40,17 @@ export class PolkadotRpcClient extends ClientCore {
       logsBloom: 'UNSUPPORTED',
       timestamp: PolkadotRpcClient.calculateAvailTimestamp(bn),
       transactions: [], // UNSUPPORTED
+    }
+  }
+
+  async getBlockHeader(blockNumber: number | 'latest'): Promise<BlockHeader> {
+    const height = blockNumber === 'latest' ? undefined : blockNumber
+    const block = await this.getBlock(height)
+    const bn = Number(block.header.number)
+    return {
+      number: bn,
+      hash: 'UNSUPPORTED',
+      timestamp: PolkadotRpcClient.calculateAvailTimestamp(bn),
     }
   }
 

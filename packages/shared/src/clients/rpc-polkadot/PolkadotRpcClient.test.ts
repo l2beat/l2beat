@@ -24,6 +24,26 @@ describe(PolkadotRpcClient.name, () => {
     })
   })
 
+  describe(PolkadotRpcClient.prototype.getBlockHeader.name, () => {
+    it('returns the header for a block number', async () => {
+      const mockBlockNumber = '0x12345'
+      const http = mockObject<HttpClient>({
+        fetch: mockFn()
+          .resolvesToOnce({ result: '0x00001' })
+          .resolvesToOnce(
+            mockBlockResponse({ header: { number: mockBlockNumber } }),
+          ),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      expect(await rpc.getBlockHeader(+mockBlockNumber)).toEqual({
+        number: +mockBlockNumber,
+        hash: 'UNSUPPORTED',
+        timestamp: PolkadotRpcClient.calculateAvailTimestamp(+mockBlockNumber),
+      })
+    })
+  })
+
   describe(PolkadotRpcClient.prototype.getBlockWithTransactions.name, () => {
     it('returns block with transactions for a specific block number', async () => {
       const mockBlockNumber = '0x12345'

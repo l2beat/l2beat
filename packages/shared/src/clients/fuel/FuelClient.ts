@@ -1,10 +1,13 @@
 import type { Block, json } from '@l2beat/shared-pure'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
-import type { BlockClient } from '../types'
+import type { BlockClient, BlockHeader } from '../types'
 import { tai64ToUnix } from './tai64ToUnix'
 import {
+  type FuelBlockHeader,
+  FuelBlockHeaderResponse,
   FuelBlockResponse,
   FuelError,
+  FuelLatestBlockHeaderResponse,
   FuelLatestBlockNumberResponse,
 } from './types'
 
@@ -39,6 +42,57 @@ export class FuelClient extends ClientCore implements BlockClient {
     }
 
     return Number(latestBlockNumberResponse.data.data.blocks.nodes[0].height)
+  }
+
+  async getBlockHeader(blockNumber: number | 'latest'): Promise<BlockHeader> {
+    const header =
+      blockNumber === 'latest'
+        ? await this.queryLatestHeader()
+        : await this.queryHeader(blockNumber)
+
+    return {
+      hash: header.id,
+      number: Number(header.height),
+      timestamp: tai64ToUnix(header.header.time),
+    }
+  }
+
+  private async queryHeader(blockNumber: number): Promise<FuelBlockHeader> {
+    const query = `query Block($height: U32) {
+        block(height: $height) {
+            id
+            height
+            header {
+                time
+            }
+        }
+      }`
+    const response = await this.query(query, { height: blockNumber.toString() })
+    const parsed = FuelBlockHeaderResponse.safeParse(response)
+    if (!parsed.success) {
+      throw new Error(`Block ${blockNumber}: Error during parsing`)
+    }
+    return parsed.data.data.block
+  }
+
+  private async queryLatestHeader(): Promise<FuelBlockHeader> {
+    const query = `query LatestBlocks {
+        blocks(last: 1) {
+          nodes {
+            id
+            height
+            header {
+                time
+            }
+          }
+        }
+      }`
+    const response = await this.query(query)
+    const parsed = FuelLatestBlockHeaderResponse.safeParse(response)
+    if (!parsed.success || parsed.data.data.blocks.nodes.length === 0) {
+      throw new Error('Latest block header: Error during parsing')
+    }
+    return parsed.data.data.blocks.nodes[0]
   }
 
   async getBlockWithTransactions(blockNumber: number): Promise<Block> {

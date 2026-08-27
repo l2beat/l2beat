@@ -1,5 +1,5 @@
 import { assert, type Block, UnixTime } from '@l2beat/shared-pure'
-import type { BlockClient } from '../../clients'
+import type { BlockClient, BlockHeader } from '../../clients'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 
 export class BlockProvider {
@@ -17,13 +17,16 @@ export class BlockProvider {
   async getBlockWithTransactions(x: number | 'latest'): Promise<Block> {
     return await this.tryClients(async (client) => {
       const block = await client.getBlockWithTransactions(x)
-      if (typeof x === 'number') {
-        assert(
-          block.number === x,
-          `Invalid response: expected block number ${x}, got ${block.number}`,
-        )
-      }
+      assertBlockNumber(block, x)
       return block
+    })
+  }
+
+  async getBlockHeader(x: number | 'latest'): Promise<BlockHeader> {
+    return await this.tryClients(async (client) => {
+      const header = await client.getBlockHeader(x)
+      assertBlockNumber(header, x)
+      return header
     })
   }
 
@@ -74,5 +77,14 @@ export class BlockProvider {
     }
 
     throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
+  }
+}
+
+function assertBlockNumber(block: { number: number }, x: number | 'latest') {
+  if (typeof x === 'number') {
+    assert(
+      block.number === x,
+      `Invalid response: expected block number ${x}, got ${block.number}`,
+    )
   }
 }

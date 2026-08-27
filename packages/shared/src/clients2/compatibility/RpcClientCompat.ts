@@ -49,6 +49,7 @@ export interface IRpcClient extends BlockClient, LogsClient {
   getBlockWithTransactions(
     blockNumber: number | 'latest',
   ): Promise<EVMBlockWithTransactions>
+  getBlockHeader(blockNumber: number | 'latest'): Promise<EVMBlock>
   getBlockParentBeaconRoot(blockNumber: number): Promise<string>
   getBlock(blockNumber: 'latest' | number, includeTxs: false): Promise<EVMBlock>
   getBlock(
@@ -129,6 +130,10 @@ export class RpcClientCompat implements IRpcClient {
     blockNumber: number | 'latest',
   ): Promise<EVMBlockWithTransactions> {
     return await this.getBlock(blockNumber, true)
+  }
+
+  async getBlockHeader(blockNumber: number | 'latest'): Promise<EVMBlock> {
+    return await this.getBlock(blockNumber, false)
   }
 
   async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {

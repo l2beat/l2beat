@@ -38,6 +38,7 @@ export const StarknetGetBlockResponse = v.object({
   id: v.number().check(Number.isInteger),
   result: v.object({
     block_number: v.number().check(Number.isInteger),
+    block_hash: v.string(),
     timestamp: v.number().check(Number.isInteger),
     transactions: v.array(v.string()),
   }),
