@@ -1622,5 +1622,7 @@
   "static/meta-images/zk-catalog/projects/privacy-boost/opengraph-image.png": "3846e8359ecef180a9482a573c9a69fe",
   "static/icons/cloaked.png": "d6b35a364c788135893b87774ea736ff",
   "static/meta-images/privacy/projects/cloaked/opengraph-image.png": "ec087c9997e682cbc2accc568b290fc3",
-  "static/images/architecture/cloaked.png": "3be42ea82cfe93fbd66539c6663ffb58"
+  "static/images/architecture/cloaked.png": "3be42ea82cfe93fbd66539c6663ffb58",
+  "static/icons/basesolbridge.png": "49e1cdfa364cfa9ff227d26d8381827f",
+  "static/meta-images/interop/projects/basesolbridge/opengraph-image.png": "8c551fb08d9261833a6038c82f6b646d"
 }

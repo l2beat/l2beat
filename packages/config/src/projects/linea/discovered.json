@@ -907,6 +907,7 @@
         "implementation": "eth:0x36f274C1C197F277EA3C57859729398FCc8a3763",
         "owner": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
       },
+      "fieldMeta": { "implementation": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB": "UpgradeableBeacon"
       }
@@ -2547,6 +2548,7 @@
         "implementation": "linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF",
         "owner": "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"
       },
+      "fieldMeta": { "implementation": { "severity": "HIGH" } },
       "implementationNames": {
         "linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0": "UpgradeableBeacon"
       }
@@ -3991,7 +3993,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "global/Timelock": "0xadf6c9c4d77d92049a7365bc568182b2182a16c5c6e5e0e7ab6c15c6a1c76e3c",
-    "global/UpgradeableBeacon": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/UpgradeableBeacon": "0x5131b8b980cf5a0a571c88590e4878fe796a0b46c9d9854db77dfdf4125f92c9",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "gnosisSafeModules/ZodiacDelay": "0x1cf1f83927c30dff78d2b2b635f9995b93db52502fcae1b9478e1dd4664540c5",
     "linea/AddressFilter": "0xf041beaf993cf44b777d84da4360f6df2e8b6689c93751aee22ab830d8c06d3d",

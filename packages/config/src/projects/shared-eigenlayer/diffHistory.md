@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xaf4050e5ce210d9bf138144890138ed467a204aa
+
+# Diff at Thu, 27 Aug 2026 08:52:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe0597dfc044814c2211715fa77b5f9f3ec22e2a block: 1785420260
+- current timestamp: 1785420260
+
+## Description
+
+Add HIGH severity to beacon implementation in global/UpgradeableBeacon template (no value changes).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785420260 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0x0fCE0A591D96BB76883323eF555867111E2050a9) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0xc946787cFd6c155886C673BF9815C841c1718903. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta:
++        {"implementation":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xd30c18ab8d72684ccf9fb49faaec99b652988e9d
 
 # Diff at Wed, 15 Jul 2026 13:40:40 GMT:

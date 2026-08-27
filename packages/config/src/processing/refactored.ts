@@ -6,6 +6,7 @@ import { axelar } from '../projects/axelar/axelar'
 import { axelarits } from '../projects/axelar-its/axelar-its'
 import { aztecv1prover } from '../projects/aztecv1prover/aztecv1prover'
 import { barretenberg } from '../projects/barretenberg/barretenberg'
+import { basesolbridge } from '../projects/basesolbridge/basesolbridge'
 import { blobstream } from '../projects/blobstream/blobstream'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
@@ -133,6 +134,7 @@ export const refactored: BaseProject[] = [
   butternetwork,
   hyperevm,
   freetunnel,
+  basesolbridge,
   // defi
   frankencoin,
   liquityv2,
