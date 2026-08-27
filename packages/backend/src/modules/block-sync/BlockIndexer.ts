@@ -15,6 +15,8 @@ export interface BlockIndexerDeps
   blockProvider: BlockProvider
   logsProvider: LogsProvider
   blockProcessors: BlockProcessor[]
+  /** Cheap listeners that only get the block; failures are logged, nothing else */
+  blockObservers: BlockProcessor[]
   stopBlockIndexerAtTimestampMs?: number
   /** The number of blocks/days to process at once. In case of error this is the maximum amount of blocks/days we will need to refetch */
   batchSize: number
@@ -119,6 +121,17 @@ export class BlockIndexer extends ManagedChildIndexer {
           )
         }
         break
+      }
+
+      for (const observer of this.$.blockObservers) {
+        try {
+          await observer.processBlock(block, logs)
+        } catch (error) {
+          this.logger.error('Observer failed', {
+            blockNumber: block.number,
+            error,
+          })
+        }
       }
 
       for (const processor of this.$.blockProcessors) {
