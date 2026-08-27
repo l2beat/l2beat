@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 
-describe('mergeTransferTypeStats', () => {
+describe(mergeTransferTypeStats.name, () => {
   it('returns current stats when next is undefined', () => {
     const current = {
       bus: { transferCount: 1, totalDurationSum: 60 },

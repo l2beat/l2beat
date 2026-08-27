@@ -137,5 +137,11 @@
     "address": "robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa",
     "chain": "robinhood",
     "blockNumber": 44827049
+  },
+  "ZkLighterVerifier_v0.0.23": {
+    "hash": "0x2bdf2a91d1eee5475a67f9eacc65aa114fe720836d91f4ec076ef9e1e19c9675",
+    "address": "eth:0xB1386c4266974D81256afB9908e104B00587112A",
+    "chain": "ethereum",
+    "blockNumber": 25838624
   }
 }

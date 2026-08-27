@@ -1,6 +1,6 @@
 {
   "name": "zircuit",
-  "timestamp": 1787133501,
+  "timestamp": 1787747199,
   "configHash": "0x6bb9fcd1a8dc234b048bb2f52505f3f90b537fbf533046cef3c26fdcbb74da1d",
   "entries": [
     {
@@ -209,8 +209,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 517494,
-          "prevBlockNum": 25787578
+          "prevBoughtGas": 516470,
+          "prevBlockNum": 25835683
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -317,13 +317,13 @@
         ],
         "$upgradeCount": 1,
         "absolutePrestateFromGame": "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6",
-        "anchorGame": "eth:0x4875E64C8C08097056cb8bD5177e71DFab755391",
+        "anchorGame": "eth:0x62C87f363f3046010D307FD27C0b68b9360C3Ec2",
         "challengePeriodFromOracle": 86400,
         "disputeGameFactory": "eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0xb324450aada95194d93722d3cc8d8b15becc667220c361542120fa65fd422be3",
-          33281171
+          "0x805b51805aea3c1bb88ac1913d3be0fd1a8d0d02fa224f5e9120d7c87e64b3bc",
+          33583865
         ],
         "initVersion": 1,
         "oracleFromVm": "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3",
@@ -430,7 +430,7 @@
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "initVersion": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641328",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641367",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -722,9 +722,19 @@
             "2026-08-04T14:16:11.000Z",
             "0xeb6b35d861c5b232c47bc0e604f0834975876f80181776e46cb486f7a398cf03",
             ["eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A"]
+          ],
+          [
+            "2026-08-22T11:12:35.000Z",
+            "0xa2c6d7a895f7793beb83cd3f0734b427fea4982e2ed35044555c52bf3a8a8a23",
+            ["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
+          ],
+          [
+            "2026-08-22T11:12:35.000Z",
+            "0xa2c6d7a895f7793beb83cd3f0734b427fea4982e2ed35044555c52bf3a8a8a23",
+            ["eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A"]
           ]
         ],
-        "$upgradeCount": 16,
+        "$upgradeCount": 18,
         "initVersion": 3,
         "l2TokenBridge": "eth:0x4200000000000000000000000000000000000010",
         "messenger": "eth:0x2a721cBE81a128be0F01040e3353c3805A5EA091",
@@ -869,6 +879,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2",
           "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
           "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
@@ -884,8 +895,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 302,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 305,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1139,7 +1150,7 @@
         "game1337": "eth:0x0000000000000000000000000000000000000000",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 30,
+        "gameCount": 44,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x4F80B390aF3b49dda96134DA1ac905b05e816496",
@@ -1154,7 +1165,7 @@
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "permissionedGameArgs": "0x",
-        "permissionedGamesTotal": 30,
+        "permissionedGamesTotal": 44,
         "proposerFromDGF": "UNRESOLVED",
         "proxyAdmin": "eth:0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -1276,6 +1287,11 @@
         "eth:0x912C7271a6A3622dfb8B218eb46a6122aB046C79": "OssifiableProxy",
         "eth:0x6bc726C993103197C41d787dd72eCd4D2e1614E8": "L1ERC20TokenBridge"
       }
+    },
+    {
+      "address": "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "L1ERC721Bridge",
@@ -1505,28 +1521,60 @@
       "name": "L1Block",
       "address": "zircuit:0x4200000000000000000000000000000000000015",
       "type": "Contract",
-      "unverified": true,
+      "template": "opstack/Layer2/L1Block",
+      "sourceHashes": [
+        "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
+        "0xba1197cf8ad03c23a68877c7bad92c7d43c0348aa7b03d38f36a17acb35a942e"
+      ],
       "proxyType": "EIP1967 proxy",
+      "description": "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.",
+      "ignoreInWatchMode": [
+        "basefee",
+        "hash",
+        "number",
+        "timestamp",
+        "sequenceNumber",
+        "blobBaseFee",
+        "operatorFeeConstant",
+        "operatorFeeScalar"
+      ],
       "values": {
         "$admin": "zircuit:0x4200000000000000000000000000000000000018",
         "$implementation": "zircuit:0xe95F7EdfB4cbf87eD14d94913448d89282513d66",
         "$pastUpgrades": [
-          [
-            "2025-05-12T16:00:01.000Z",
-            "0xe992e00998b34075506d2726a274db07a62af6cdd9d527bfda9128114603cfbd",
-            ["zircuit:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"]
-          ],
           [
             "2026-08-04T14:50:01.000Z",
             "0xd89e381f4e17d7226144ae90c4efef010f4f085afb76b191add65dcf51aef089",
             ["zircuit:0xe95F7EdfB4cbf87eD14d94913448d89282513d66"]
           ]
         ],
-        "$upgradeCount": 2
+        "$upgradeCount": 1,
+        "basefee": 80600263,
+        "baseFeeScalar": 7600,
+        "batcherHash": "0x000000000000000000000000cf8225801df6ef90ad3bc86808f574403a309de8",
+        "blobBaseFee": 4907717,
+        "blobBaseFeeScalar": 862000,
+        "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+        "gasPayingToken": {
+          "addr_": "zircuit:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+          "decimals_": 18
+        },
+        "gasPayingTokenName": "Ether",
+        "gasPayingTokenSymbol": "ETH",
+        "hash": "0x706610ee35a8c0994a07fa737ec69fb812fc2cf6fdebc778905a74e5bcb868a3",
+        "isCustomGasToken": false,
+        "l1FeeOverhead": 0,
+        "l1FeeScalar": 0,
+        "number": 25839373,
+        "operatorFeeConstant": 0,
+        "operatorFeeScalar": 0,
+        "sequenceNumber": 5,
+        "timestamp": 1787747123,
+        "version": "1.6.1"
       },
       "implementationNames": {
         "zircuit:0x4200000000000000000000000000000000000015": "Proxy",
-        "zircuit:0xe95F7EdfB4cbf87eD14d94913448d89282513d66": ""
+        "zircuit:0xe95F7EdfB4cbf87eD14d94913448d89282513d66": "L1Block"
       }
     },
     {
@@ -1593,6 +1641,16 @@
           "role": ".owner"
         }
       ]
+    },
+    {
+      "address": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "zircuit:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -2480,6 +2538,30 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
+    ],
+    "zircuit:0xe95F7EdfB4cbf87eD14d94913448d89282513d66": [
+      "function DEPOSITOR_ACCOUNT() pure returns (address addr_)",
+      "function baseFeeScalar() view returns (uint32)",
+      "function basefee() view returns (uint256)",
+      "function batcherHash() view returns (bytes32)",
+      "function blobBaseFee() view returns (uint256)",
+      "function blobBaseFeeScalar() view returns (uint32)",
+      "function gasPayingToken() pure returns (address addr_, uint8 decimals_)",
+      "function gasPayingTokenName() pure returns (string name_)",
+      "function gasPayingTokenSymbol() pure returns (string symbol_)",
+      "function hash() view returns (bytes32)",
+      "function isCustomGasToken() pure returns (bool is_)",
+      "function l1FeeOverhead() view returns (uint256)",
+      "function l1FeeScalar() view returns (uint256)",
+      "function number() view returns (uint64)",
+      "function operatorFeeConstant() view returns (uint64)",
+      "function operatorFeeScalar() view returns (uint32)",
+      "function sequenceNumber() view returns (uint64)",
+      "function setL1BlockValues(uint64 _number, uint64 _timestamp, uint256 _basefee, bytes32 _hash, uint64 _sequenceNumber, bytes32 _batcherHash, uint256 _l1FeeOverhead, uint256 _l1FeeScalar)",
+      "function setL1BlockValuesEcotone()",
+      "function setL1BlockValuesIsthmus()",
+      "function timestamp() view returns (uint64)",
+      "function version() pure returns (string)"
     ]
   },
   "usedTemplates": {
@@ -2492,6 +2574,7 @@
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
+    "opstack/Layer2/L1Block": "0x285f931e841dfeccb9fd8de970781403669decd9880ffbed39a4c35bf5c15333",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal2": "0x52ecd41211faad3599bd32ca82e2af9561910cce6d33f93242e9bf13a426018c",
@@ -2500,6 +2583,6 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 25788407, "zircuit": 33598643 },
-  "permissionsConfigHash": "0x8988b6df668a009c44f413f0de10efea016a14745238f1e4777a6313e60b4d77"
+  "usedBlockNumbers": { "ethereum": 25839379, "zircuit": 33905492 },
+  "permissionsConfigHash": "0x43d56c235c32554f8fb84c0cc788b20b7c73631558d260d549b8ab614b026a38"
 }

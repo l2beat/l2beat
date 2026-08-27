@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x81921109d1e71e75391d4cee38163b09f1687f8c
+
+# Diff at Wed, 26 Aug 2026 09:56:58 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@00448b8c7fc6d3a3b8b155e386f5ffa195696a81 block: 1787570248
+- current timestamp: 1787738123
+
+## Description
+
+New verifier deployed (no sources published yet).
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.
+      values.versionId:
+-        66
++        67
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0xb74e656664c529e0a1c04288f9e2e470923d276a463dcdb7e85e47c2c95336c8"
++        "0x2bdf2a91d1eee5475a67f9eacc65aa114fe720836d91f4ec076ef9e1e19c9675"
+      values.$implementation:
+-        "eth:0x9Ca512d2F131134972EB95515325F69812395332"
++        "eth:0xB1386c4266974D81256afB9908e104B00587112A"
+      values.getTarget:
+-        "eth:0x9Ca512d2F131134972EB95515325F69812395332"
++        "eth:0xB1386c4266974D81256afB9908e104B00587112A"
+      implementationNames.eth:0x9Ca512d2F131134972EB95515325F69812395332:
+-        "ZkLighterVerifier"
+      implementationNames.eth:0xB1386c4266974D81256afB9908e104B00587112A:
++        "ZkLighterVerifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ZkLighterVerifier/ZkLighterVerifier.sol                       | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
+
 Generated with discovered.json: 0x3a03bfae34aee447d1cf23f1429df1acf946a8cb
 
 # Diff at Mon, 24 Aug 2026 11:19:02 GMT:

@@ -1,9 +1,11 @@
-import type { InteropTransferTypeStatsMap } from '@l2beat/database'
+import {
+  type InteropTransferTypeStatsMap,
+  mergeTransferTypeStats,
+} from '@l2beat/database'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { INTEROP_PAIR_SEPARATOR } from '../consts'
 import type { InteropTransferWithTokens } from '../types'
 import { getInteropTransferRecordValue } from './getInteropTransferRecordValue'
-import { mergeTransferTypeStats } from './mergeTransferTypeStats'
 
 export interface TopEntry {
   id: string
