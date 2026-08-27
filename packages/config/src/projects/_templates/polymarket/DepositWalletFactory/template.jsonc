@@ -1,0 +1,57 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DepositWalletFactory",
+  "description": "Upgradeable CREATE2 wallet factory. Operator-role holders deploy deterministic beacon-proxy wallets and relay signed call batches; legacy-deployer-role holders can separately deploy deterministic legacy UUPS wallets. Admins manage both roles and set the {{ timelockDelay }} delay that wallet owners must wait after pausing before withdrawals unlock.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "ignoreRelative": true,
+        "select": ["user", "roles"],
+        "add": {
+          "event": "RolesUpdated"
+        },
+        "dedupBy": "user"
+      },
+      "severity": "HIGH",
+      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (1) admin, bit 1 (2) operator, bit 2 (4) legacy deployer."
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can upgrade the factory implementation, manage all roles, and authorise or unauthorise implementations for legacy wallet upgrades."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "timelockDelay": {
+      "handler": {
+        "type": "call",
+        "method": "function timelockDelay() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"],
+      "description": "Delay that must elapse after a wallet owner pauses their wallet before paused-only operations such as withdrawals can be executed."
+    },
+    "BEACON": {
+      "description": "Immutable beacon used by deploy() for beacon-proxy wallets. The separate deployLegacy() path does not use it.",
+      "severity": "HIGH"
+    },
+    "LEGACY_IMPL": {
+      "description": "Immutable implementation embedded by deployLegacy() in legacy UUPS wallets. The deploy() path uses BEACON instead."
+    },
+    "implementation": {
+      "description": "Deprecated implementation pointer retained for storage and ABI compatibility. Neither wallet deployment path reads it."
+    },
+    "maxTimelockDelayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function MAX_TIMELOCK_DELAY() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    }
+  }
+}

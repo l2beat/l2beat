@@ -1624,5 +1624,10 @@
   "static/meta-images/privacy/projects/cloaked/opengraph-image.png": "ec087c9997e682cbc2accc568b290fc3",
   "static/images/architecture/cloaked.png": "3be42ea82cfe93fbd66539c6663ffb58",
   "static/icons/basesolbridge.png": "49e1cdfa364cfa9ff227d26d8381827f",
-  "static/meta-images/interop/projects/basesolbridge/opengraph-image.png": "8c551fb08d9261833a6038c82f6b646d"
+  "static/meta-images/interop/projects/basesolbridge/opengraph-image.png": "8c551fb08d9261833a6038c82f6b646d",
+  "static/icons/polymarket.png": "0d44b64a030886f704f358647d945caf",
+  "static/icons/uma.png": "0cee9dfea1f7e8eb169667a43dd8fc03",
+  "static/icons/usdc.png": "71c0be809f67c2ce08f95647f5fe8d0a",
+  "static/images/architecture/polymarket.png": "80bd95041728f20890300177d0220a83",
+  "static/meta-images/defi/projects/polymarket/opengraph-image.png": "3a2063cadb6cd005bbe0d3c058033ed8"
 }

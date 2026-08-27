@@ -1,0 +1,8 @@
+{
+  "CollateralOnramp": {
+    "hash": "0xacce8504f3aa00ace54823d187c93307d070b7638f86f59f3e1f7f5f14b40552",
+    "address": "matic:0x93070a847efEf7F70739046A929D47a521F5B8ee",
+    "chain": "polygonpos",
+    "blockNumber": 91023912
+  }
+}

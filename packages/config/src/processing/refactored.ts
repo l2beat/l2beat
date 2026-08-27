@@ -45,6 +45,7 @@ import { meson } from '../projects/meson/meson'
 import { monad } from '../projects/monad/monad'
 import { near } from '../projects/near/near-da'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
+import { polymarket } from '../projects/polymarket/polymarket'
 import { privacyBoost } from '../projects/privacy-boost/privacy-boost'
 import { privacyPools } from '../projects/privacy-pools/privacy-pools'
 import { railgun } from '../projects/railgun/railgun'
@@ -141,6 +142,7 @@ export const refactored: BaseProject[] = [
   chainlink,
   uniswapv3,
   uniswapv4,
+  polymarket,
   // privacy
   cloaked,
   privacyPools,
