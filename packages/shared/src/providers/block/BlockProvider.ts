@@ -3,6 +3,10 @@ import type { BlockClient, BlockHeader } from '../../clients'
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
 
 export class BlockProvider {
+  // Consumers ask for hourly, increasing timestamps, so the previous answer is
+  // a much better lower bound for the next search than block 1
+  private lastFound: BlockHeader | undefined
+
   constructor(
     readonly chain: string,
     private readonly clients: BlockClient[],
@@ -58,12 +62,21 @@ export class BlockProvider {
       const latest = await getHeader('latest')
       if (timestamp >= latest.timestamp) return latest.number
 
-      return await getBlockNumberAtOrBefore(
+      let start = 1
+      const seed = this.lastFound
+      if (seed && seed.timestamp <= timestamp && seed.number < latest.number) {
+        known.set(seed.number, seed)
+        start = seed.number
+      }
+
+      const found = await getBlockNumberAtOrBefore(
         timestamp,
-        1,
+        start,
         latest.number,
         getHeader,
       )
+      this.lastFound = known.get(found)
+      return found
     })
   }
 

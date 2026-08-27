@@ -129,6 +129,50 @@ describe(BlockProvider.name, () => {
       expect(getBlockHeader).toHaveBeenOnlyCalledWith('latest')
     })
 
+    it('starts the next search from the previous result', async () => {
+      const requested: (number | 'latest')[] = []
+      const client = mockObject<BlockClient>({
+        getBlockHeader: async (x) => {
+          requested.push(x)
+          return header(x === 'latest' ? 1000 : x)
+        },
+      })
+      const provider = new BlockProvider('chain', [client])
+
+      await provider.getBlockNumberAtOrBefore(UnixTime(500 * 100))
+      expect(requested).toInclude(1)
+
+      requested.length = 0
+      const blockNumber = await provider.getBlockNumberAtOrBefore(
+        UnixTime(600 * 100),
+      )
+
+      expect(blockNumber).toEqual(600)
+      const numbers = requested.filter((x) => typeof x === 'number')
+      expect(Math.min(...numbers)).toBeGreaterThanOrEqual(500)
+    })
+
+    it('does not reuse the previous result for an earlier timestamp', async () => {
+      const requested: (number | 'latest')[] = []
+      const client = mockObject<BlockClient>({
+        getBlockHeader: async (x) => {
+          requested.push(x)
+          return header(x === 'latest' ? 1000 : x)
+        },
+      })
+      const provider = new BlockProvider('chain', [client])
+
+      await provider.getBlockNumberAtOrBefore(UnixTime(600 * 100))
+
+      requested.length = 0
+      const blockNumber = await provider.getBlockNumberAtOrBefore(
+        UnixTime(300 * 100),
+      )
+
+      expect(blockNumber).toEqual(300)
+      expect(requested).toInclude(1)
+    })
+
     it('uses full blocks for clients without header support', async () => {
       const client = mockObject<BlockClient>({
         getBlockHeader: undefined,
