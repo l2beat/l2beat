@@ -19,6 +19,11 @@
     "address": "base:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C",
     "blockNumber": 39201131
   },
+  "L1Block_v1_6_1": {
+    "hash": "0xba1197cf8ad03c23a68877c7bad92c7d43c0348aa7b03d38f36a17acb35a942e",
+    "address": "zircuit:0xe95F7EdfB4cbf87eD14d94913448d89282513d66",
+    "blockNumber": 33905485
+  },
   "L1Block_v1_9_0": {
     "hash": "0xca6401a4032def95df36b0d432052526888ef8a396f7e4fc37cdda3690932646",
     "address": "ink:0x6a97C5D55A21265326150Efe12FC30Fb21cbff56",

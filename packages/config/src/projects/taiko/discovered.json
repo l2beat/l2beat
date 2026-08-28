@@ -1,6 +1,6 @@
 {
   "name": "taiko",
-  "timestamp": 1786955407,
+  "timestamp": 1787832377,
   "configHash": "0x5818477a5d3509fe254dafba7775a97c0d82d4b7976e53c79e566e533af3f5ef",
   "entries": [
     {
@@ -797,7 +797,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1786955399,
+        "clock": 1787832371,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -912,19 +912,6 @@
         "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97": "RiscZeroGroth16Verifier"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0x2267C7246523191b8bf7615B86b3bdEE612b7D9E",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
-          "description": "eligible to propose batches on L1; only the selected current-epoch operator can successfully propose.",
-          "role": ".operatorMapping"
-        }
-      ]
     },
     {
       "name": "Chainbound Agent",
@@ -1179,6 +1166,19 @@
         "eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609": "SafeProxy",
         "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
+    },
+    {
+      "address": "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
+          "description": "eligible to propose batches on L1; only the selected current-epoch operator can successfully propose.",
+          "role": ".operatorMapping"
+        }
+      ]
     },
     {
       "name": "Taiko Foundation Treasury Multisig",
@@ -1673,12 +1673,12 @@
           "permissionlessInclusionMultiplier": 160
         },
         "getCoreState": {
-          "nextProposalId": 29005,
-          "lastProposalBlockId": 25773604,
-          "lastFinalizedProposalId": 28999,
-          "lastFinalizedTimestamp": 1786953659,
-          "lastCheckpointTimestamp": 1786953659,
-          "lastFinalizedBlockHash": "0xfe7f59ac1a8da1e6e0e347233e101d5a577de399b394faf638cce8f6bb86537b"
+          "nextProposalId": 31289,
+          "lastProposalBlockId": 25846444,
+          "lastFinalizedProposalId": 31284,
+          "lastFinalizedTimestamp": 1787831567,
+          "lastCheckpointTimestamp": 1787831567,
+          "lastFinalizedBlockHash": "0x99d97ccb5c6986d7366fdfb3e9ef04ded1b0b0ad6fe0a1b5d142f05aa5abcf91"
         },
         "getCurrentForcedInclusionFee": 1000000,
         "getForcedInclusionState": { "head_": 3, "tail_": 3 },
@@ -2295,7 +2295,7 @@
         "minVetoPercent": "10",
         "minVetoRatio": 100000,
         "pluginType": 0,
-        "proposalCount": 37,
+        "proposalCount": 38,
         "proposalIds": [
           "594318504305273196926027118847304676812617940992",
           "594333808845007833054360677244409987180489867265",
@@ -2333,7 +2333,8 @@
           "606424105314793757798300924445813695132257484833",
           "606634685654739111357042014770979344991156961314",
           "606707631305171219093581685850458871248271179811",
-          "607065748551507217783827454409519139164457533476"
+          "607065748551507217783827454409519139164457533476",
+          "608325339122031231284005618251537221674155900965"
         ],
         "PROPOSER_PERMISSION_ID": "0x8513c2609a72007a81419055c80fdd2cf7e49f07dffbb28683bb4593636ce3b2",
         "taikoBridge": "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
@@ -3407,7 +3408,7 @@
         "GAS_RESERVE": 800000,
         "impl": "eth:0x1c94D798CFA08F396E5BA9F81697289c53273381",
         "inNonReentrant": false,
-        "nextMessageId": 40463,
+        "nextMessageId": 40479,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pauser": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -3470,7 +3471,7 @@
           "proposalExpirationPeriod": 1209600
         },
         "pluginType": 0,
-        "proposalCount": 22,
+        "proposalCount": 24,
         "UPDATE_MULTISIG_SETTINGS_PERMISSION_ID": "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
         "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5"
       },
@@ -3663,7 +3664,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 52,
+        "nonce": 56,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -3803,16 +3804,16 @@
           "eth:0x45D4403351Bc34283CE6450D91c099f40D06dA4e",
           "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
         ],
-        "getOperatorForCurrentEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
-        "getOperatorForNextEpoch": "eth:0x2267C7246523191b8bf7615B86b3bdEE612b7D9E",
+        "getOperatorForCurrentEpoch": "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06",
+        "getOperatorForNextEpoch": "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06",
         "impl": "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149",
         "inNonReentrant": false,
-        "latestActivationEpoch": 1786707671,
+        "latestActivationEpoch": 1786964951,
         "OPERATOR_CHANGE_DELAY": 2,
         "operatorCount": 2,
         "operatorMapping": [
           "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
-          "eth:0x2267C7246523191b8bf7615B86b3bdEE612b7D9E"
+          "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06"
         ],
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
@@ -5428,6 +5429,6 @@
     "taiko/TaikoToken": "0x715f0fe61aa0d583fd8574521dfa81827a944339f94c46c74a6a058c47089804",
     "taiko/ZkRequiredVerifier": "0x215cf223af5b47bf8dab2909a0722a0465a0fc6dc7d60fffd22c4ec5e9018c67"
   },
-  "usedBlockNumbers": { "ethereum": 25773614 },
-  "permissionsConfigHash": "0x6afbcc592593f5caac13dbd5483451c71296de3701a7f3420367fafc2e1eccfa"
+  "usedBlockNumbers": { "ethereum": 25846448 },
+  "permissionsConfigHash": "0x36231b979e95351e0ee221d74c1a1c8c53462575b1d0ce1fb7cad2ce0ee7f5e4"
 }

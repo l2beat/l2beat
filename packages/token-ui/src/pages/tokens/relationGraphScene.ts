@@ -4,6 +4,7 @@ import {
   layoutRelationGraph,
 } from './relationGraphLayout'
 import {
+  mostCommonAbstractTokenId,
   mostCommonDeployedSymbol,
   nodeLabel,
   type RelationGraph,
@@ -77,10 +78,11 @@ export function buildRelationGraphScene(
     (node): WorkingNode => ({ id: node.id, data: node }),
   )
   const workingById = new Map(workingNodes.map((node) => [node.id, node]))
-  const layout = layoutRelationGraph(
-    workingNodes,
-    buildSimulationLinks(graph.relations, workingById),
-  )
+  const simulationLinks = buildSimulationLinks(graph.relations, workingById)
+  const layout = layoutRelationGraph(workingNodes, [
+    ...simulationLinks,
+    ...buildVirtualLinks(workingNodes, simulationLinks),
+  ])
 
   const nodes = workingNodes.map((node): SceneNode => {
     if (node.x === undefined || node.y === undefined) {
@@ -132,6 +134,95 @@ function buildSimulationLinks<Node extends LayoutNode>(
     byPair.set(unorderedPairKey(source.id, target.id), { source, target })
   }
   return [...byPair.values()]
+}
+
+/**
+ * A deployed token manually assigned to an abstract token but observed in no
+ * relation still belongs with the cluster representing that abstract token.
+ * The cluster's abstract token is its most common one — the same "most common
+ * wins" rule the cluster label uses — so a lone dissenting assignment inside
+ * a cluster cannot claim it. Each matching node gets a virtual link to a
+ * node of that abstract token in that cluster: layout-only, so the node is
+ * placed with the cluster (held a bit outside by the longer, looser virtual
+ * link) while no edge is drawn, because none was observed. When several
+ * clusters share a most common abstract token the largest wins. A node whose
+ * abstract token is not any cluster's most common one stays unattached and
+ * lays out as its own single-node cluster.
+ */
+function buildVirtualLinks<
+  Node extends LayoutNode & { data: RelationGraphNode },
+>(nodes: Node[], links: LayoutLink<Node>[]): LayoutLink<Node>[] {
+  const anchors = new Map<string, { node: Node; clusterSize: number }>()
+  for (const component of connectedComponents(nodes, links)) {
+    const abstractTokenId = mostCommonAbstractTokenId(
+      component.map((node) => node.data),
+    )
+    if (abstractTokenId === undefined) continue
+    const anchor = component
+      .filter((node) => node.data.abstractTokenId === abstractTokenId)
+      .sort((a, b) => a.id.localeCompare(b.id))
+      .at(0)
+    if (anchor === undefined) {
+      throw new Error(
+        `Graph cluster has no node of its abstract token ${abstractTokenId}`,
+      )
+    }
+    const current = anchors.get(abstractTokenId)
+    if (current === undefined || component.length > current.clusterSize) {
+      anchors.set(abstractTokenId, {
+        node: anchor,
+        clusterSize: component.length,
+      })
+    }
+  }
+
+  const virtualLinks: LayoutLink<Node>[] = []
+  for (const node of nodes) {
+    if (node.data.hasRelations || node.data.abstractTokenId === null) continue
+    const anchor = anchors.get(node.data.abstractTokenId)
+    if (anchor === undefined) continue
+    virtualLinks.push({ source: node, target: anchor.node, virtual: true })
+  }
+  return virtualLinks
+}
+
+/** Connected components of the nodes that have links, in node order. */
+function connectedComponents<Node extends LayoutNode>(
+  nodes: Node[],
+  links: LayoutLink<Node>[],
+): Node[][] {
+  const neighbors = new Map<string, Node[]>()
+  for (const link of links) {
+    getOrCreate(neighbors, link.source.id).push(link.target)
+    getOrCreate(neighbors, link.target.id).push(link.source)
+  }
+
+  const visited = new Set<string>()
+  const components: Node[][] = []
+  for (const node of nodes) {
+    if (!neighbors.has(node.id) || visited.has(node.id)) continue
+
+    const component: Node[] = []
+    const pending = [node]
+    while (pending.length > 0) {
+      const current = pending.pop()
+      if (current === undefined || visited.has(current.id)) continue
+      visited.add(current.id)
+      component.push(current)
+      pending.push(...(neighbors.get(current.id) ?? []))
+    }
+    components.push(component)
+  }
+  return components
+}
+
+function getOrCreate<Node>(neighbors: Map<string, Node[]>, id: string) {
+  let result = neighbors.get(id)
+  if (result === undefined) {
+    result = []
+    neighbors.set(id, result)
+  }
+  return result
 }
 
 function buildSceneLinks(

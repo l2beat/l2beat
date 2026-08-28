@@ -1,0 +1,58 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "UmaCtfAdapterLegacy",
+  "description": "Resolution adapter registering binary questions with an UMA optimistic oracle and reporting settled answers to an outcome-token ledger. Anyone can initialize a question and resolve it when an oracle price is available unless an admin has paused it. Admins can pause, unpause, reset or flag initialized questions. A flagged question cannot be unflagged and, after {{ emergencySafetyPeriodFormatted }}, can be resolved by an admin with any two-value payout array that is not all zeroes.",
+  "fields": {
+    "emergencySafetyPeriodFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function emergencySafetyPeriod() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "admins": {
+      "handler": {
+        "type": "event",
+        "select": "member",
+        "add": {
+          "event": "event NewAdmin(address indexed admin, address indexed member)"
+        },
+        "remove": {
+          "event": "event RemovedAdmin(address indexed admin, address indexed member)"
+        }
+      },
+      "severity": "HIGH",
+      "description": "Can pause, unpause, reset and flag initialized questions, and emergency-resolve a flagged question with any two-value payout array that is not all zeroes after the emergency safety period.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause, unpause, reset and flag initialized questions, and emergency-resolve a flagged question with any two-value payout array that is not all zeroes after the {{ emergencySafetyPeriodFormatted }} emergency safety period."
+        }
+      ]
+    },
+    "ctf": {
+      "description": "Outcome-token ledger that this adapter reports payouts to."
+    },
+    "optimisticOracle": {
+      "description": "UMA optimistic oracle that price requests for questions are sent to."
+    },
+    "adminsEverObserved": {
+      "handler": {
+        "type": "event",
+        "ignoreRelative": true,
+        "select": "admin",
+        "add": [
+          {
+            "event": "event NewAdmin(address indexed admin, address indexed member)"
+          },
+          {
+            "event": "event RemovedAdmin(address indexed admin, address indexed member)"
+          }
+        ]
+      },
+      "description": "Every address ever observed exercising an admin power, taken from the granter recorded in each authorization event. The authorization mixin grants admin in the constructor without emitting an event, so such an admin is invisible in the added/removed sets and only shows up here. The list is historical and not a live permission set - confirm current status with isAdmin().",
+      "severity": "HIGH"
+    }
+  }
+}

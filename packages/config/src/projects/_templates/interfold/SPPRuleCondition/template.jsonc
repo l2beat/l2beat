@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PublicProposalCondition",
+  "category": "gov",
+  "description": "Aragon condition attached to the public CREATE_PROPOSAL permission. Its mutable rule program determines which callers and proposal calls qualify for the otherwise-public grant.",
+  "ignoreMethods": ["decodeRuleValue"],
+  "fields": {
+    "dao": {
+      "description": "Aragon DAO whose permission manager controls updates to the condition's rule program."
+    },
+    "getRules": {
+      "description": "Current ordered rule program evaluated for public proposal creation.",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}

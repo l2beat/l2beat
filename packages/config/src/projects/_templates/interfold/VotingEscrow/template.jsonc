@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "VotingEscrow",
+  "category": "gov",
+  "description": "veFOLD escrow that custodies locked FOLD, issues lock NFTs and calculates the voting power consumed by BondedVotes through EscrowVotesAdapter.",
+  "ignoreMethods": [
+    "isVoting",
+    "locked",
+    "proxiableUUID",
+    "totalVotingPowerAt",
+    "votingPower"
+  ],
+  "ignoreInWatchMode": [
+    "currentExitingAmount",
+    "lastLockId",
+    "totalLocked",
+    "totalVotingPower"
+  ],
+  "fields": {
+    "dao": {
+      "description": "Aragon DAO whose permission manager grants the escrow's admin, pause, sweep and upgrade roles."
+    },
+    "token": { "description": "FOLD token custodied by the escrow." },
+    "ivotesAdapter": {
+      "description": "Adapter exposing the escrow's voting power through IVotes."
+    },
+    "clock": {
+      "description": "Upgradeable epoch clock used for voting checkpoints and lock timing."
+    },
+    "curve": {
+      "description": "Upgradeable voting-power curve applied to locked FOLD."
+    },
+    "lockNFT": {
+      "description": "Upgradeable ERC-721 representing FOLD lock positions."
+    },
+    "queue": {
+      "description": "Upgradeable exit queue controlling withdrawal cooldowns and fees."
+    },
+    "voter": {
+      "description": "Gauge-voting plugin allowed to update a lock's voting state."
+    },
+    "paused": {
+      "description": "Whether lock and voting-power operations are paused.",
+      "type": "RISK_PARAMETER"
+    },
+    "minDeposit": {
+      "description": "Minimum FOLD amount accepted for a voting-escrow lock.",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}

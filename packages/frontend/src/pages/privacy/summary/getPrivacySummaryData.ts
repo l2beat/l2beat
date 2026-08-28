@@ -1,7 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getPrivacyProjects } from '~/server/features/privacy/getPrivacyProjects'
 import { getPrivacySummaryEntries } from '~/server/features/privacy/getPrivacySummaryEntries'
-import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
@@ -55,19 +55,9 @@ async function getCachedData() {
   const helpers = getSsrHelpers()
 
   const defaultChartRange = optionToRange('1y')
-  const projects = (
-    await ps.getProjects({
-      where: ['privacyInfo'],
-      select: ['display', 'privacyInfo', 'statuses'],
-      optional: [
-        'tvsConfig',
-        'contracts',
-        'permissions',
-        'discoveryInfo',
-        'zkCatalogInfo',
-      ],
-    })
-  ).sort((a, b) => a.slug.localeCompare(b.slug))
+  const projects = (await getPrivacyProjects()).sort((a, b) =>
+    a.slug.localeCompare(b.slug),
+  )
 
   const flowProjectIds = projects
     .filter((project) =>

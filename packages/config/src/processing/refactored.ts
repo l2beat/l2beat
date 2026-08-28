@@ -6,6 +6,7 @@ import { axelar } from '../projects/axelar/axelar'
 import { axelarits } from '../projects/axelar-its/axelar-its'
 import { aztecv1prover } from '../projects/aztecv1prover/aztecv1prover'
 import { barretenberg } from '../projects/barretenberg/barretenberg'
+import { basesolbridge } from '../projects/basesolbridge/basesolbridge'
 import { blobstream } from '../projects/blobstream/blobstream'
 import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
@@ -44,6 +45,7 @@ import { meson } from '../projects/meson/meson'
 import { monad } from '../projects/monad/monad'
 import { near } from '../projects/near/near-da'
 import { openvmprover } from '../projects/openvmprover/openvmprover'
+import { polymarket } from '../projects/polymarket/polymarket'
 import { privacyBoost } from '../projects/privacy-boost/privacy-boost'
 import { privacyPools } from '../projects/privacy-pools/privacy-pools'
 import { railgun } from '../projects/railgun/railgun'
@@ -133,12 +135,14 @@ export const refactored: BaseProject[] = [
   butternetwork,
   hyperevm,
   freetunnel,
+  basesolbridge,
   // defi
   frankencoin,
   liquityv2,
   chainlink,
   uniswapv3,
   uniswapv4,
+  polymarket,
   // privacy
   cloaked,
   privacyPools,

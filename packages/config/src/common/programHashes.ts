@@ -99,6 +99,22 @@ Verify:
 5. From the repo root run \`cargo run --release --bin config\` to print the Ethereum DA range verification key hash and aggregation verification key hash. The range commitment is the \`hash_u32()\` digest converted to big-endian bytes.
 `
 
+const OP_SUCCINCT_AGGLAYER_V3120_STEPS = `
+Prepare:
+
+1. Install sp1 toolchain version \`v6.4.0\`: \`curl -L https://sp1up.succinct.xyz/ | bash\`, then \`sp1up -v 6.4.0\`.
+2. Install docker https://docs.docker.com/get-started/get-docker/.
+3. Install \`clang\` / \`libclang\` and Go, required by the host-side vkey printing command.
+
+Verify:
+
+1. Checkout the correct tag in [agglayer/op-succinct](https://github.com/agglayer/op-succinct) repo: \`git checkout v3.12.0-agglayer\`. Commit hash should be \`32f9cfbe9067a1c97ec26e117bd958f5ece2975b\`.
+2. Make sure docker is running: \`docker ps\`.
+3. Reproducibly rebuild the Ethereum DA range ELF from source: from \`programs/range/ethereum\` run \`cargo prove build --elf-name range-elf-embedded --docker --tag v6.4.0 --output-directory ../../../elf\`.
+4. Reproducibly rebuild the aggregation ELF from source: from \`programs/aggregation\` run \`cargo prove build --elf-name aggregation-elf --docker --tag v6.4.0 --output-directory ../../elf\`.
+5. From the repo root run \`cargo run --release --bin config\` to print the Ethereum DA range verification key hash and aggregation verification key hash. The range commitment is the \`hash_u32()\` digest converted to big-endian bytes.
+`
+
 const PESSIMISTIC_PROG = (version: string) => ({
   title: `Pessimistic program of agglayer ${version}`,
   description:
@@ -454,6 +470,14 @@ Verify:
       'common/programHashes/0x0034587dfb1de8163284d39f3043f5fadfa92f9e03fb3e0315eb469c550fde40.md',
     ),
   },
+  '0x00d68eb096f4c731512562f7a06e6bba104dbcb959261edd3eb3ec542c200c89': {
+    ...OP_SUCCINCT_AGG_BLOBS,
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/agglayer/op-succinct/tree/v3.12.0-agglayer/programs/aggregation',
+    verificationStatus: 'successful',
+    verificationSteps: OP_SUCCINCT_AGGLAYER_V3120_STEPS,
+  },
   '0x490685ea27adbbb83301073734f40a5656c984fe352359d54dd637e828e66872': {
     ...OP_SUCCINCT_RANGE_BLOBS,
     programUrl:
@@ -488,6 +512,14 @@ Verify:
     verificationSteps: readMarkdown(
       'common/programHashes/0x1b04822373ca65680026b5610c1edf424798421b032ef9117b2c264661de246f.md',
     ),
+  },
+  '0x1f089f9d1cd3f727775788003d3e496037d3625e2e9de6e5005f1e9707ba3b8f': {
+    ...OP_SUCCINCT_RANGE_BLOBS,
+    programUrl:
+      'https://github.com/agglayer/op-succinct/tree/v3.12.0-agglayer/programs/range/ethereum',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    verificationStatus: 'successful',
+    verificationSteps: OP_SUCCINCT_AGGLAYER_V3120_STEPS,
   },
   '0x00d9be2980d484ba29aaa1e0d27648b8182df8616a4ec85c3c2b528b29d1a085': {
     ...OP_SUCCINCT_LITE_AGG_BLOBS,
@@ -2496,6 +2528,18 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x00e726560b91ff68e7e232d79536f4a8fb951f1f0197f97f7377b3f21e7e641e.md',
+    ),
+  },
+  '0x00637b56bd0f68aa55fa7128386e6a61a73df18a3d7a50a47c8c02d672346915': {
+    title: 'Fluent Nitro TEE verifier v1.0.5',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/fluentlabs-xyz/fluent-stf/tree/v1.0.5/bin/aws-nitro-validator',
+    description:
+      'Verifies correctness of a single TEE attestation for executing Fluent STF within a trusted enclave on AWS cloud.',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x00637b56bd0f68aa55fa7128386e6a61a73df18a3d7a50a47c8c02d672346915.md',
     ),
   },
   '0x00e34107e4c5284bd4ecc4269c650671038c1e85d9dacb931b534e984f607334': {

@@ -104,7 +104,13 @@
                   "util": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
                   "vm": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead.",
                   "zlib": "Do not use node dependencies inside this package as it can be used in frontend code. Use @l2beat/shared instead."
-                }
+                },
+                "patterns": [
+                  {
+                    "group": ["@l2beat/*/dist", "@l2beat/*/dist/**"],
+                    "message": "Import from the package's public entrypoint instead."
+                  }
+                ]
               }
             }
           }

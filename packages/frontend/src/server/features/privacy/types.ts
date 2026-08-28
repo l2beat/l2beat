@@ -1,10 +1,12 @@
-import type { Project } from '@l2beat/config'
+import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
 
 export type PrivacyProject = Project<
   'display' | 'privacyInfo' | 'statuses',
   'tvsConfig' | 'contracts' | 'permissions' | 'discoveryInfo' | 'zkCatalogInfo'
->
-
+> & {
+  /** Own zkCatalogInfo trusted setups, or those of privacyInfo.zkCatalogId. */
+  trustedSetups: ProjectZkCatalogInfo['trustedSetups']
+}
 export interface PrivacyDepositedValueUsd {
   total: number
   last7d: number
