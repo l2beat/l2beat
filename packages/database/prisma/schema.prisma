@@ -567,6 +567,12 @@ model TokenDbHistory {
 // They are stored in a fixed lexicographic order — A before B — so one pair
 // cannot occupy two rows, and `lockedToken` ('A' or 'B') names the endpoint
 // holding the locked token of a `lockAndMint` pair.
+//
+// A manually added relation (e.g. a same-chain wrapper like ETH <-> WETH,
+// which no interop transfer can evidence) stores the sentinel plugin `manual`
+// — `plugin` sits in the primary key and cannot be NULL — and a
+// `{ kind: 'manual', ... }` attestation in `transfer` instead of a sample
+// transfer.
 // See docs/mdbook/specs/l2b_specs/token_db/token_relations.md.
 model TokenRelation {
   tokenAChain   String  @db.VarChar(32)

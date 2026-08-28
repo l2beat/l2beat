@@ -39,7 +39,7 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
 
         const transformed = this.transform(transactions, blobPriceByBlock)
         await this.db.l2Cost.insertMany(transformed)
-        this.logger.info('Updated L2 costs', { count: transactions.length })
+        this.logger.info('Updated L2 costs', { count: transformed.length })
       },
     )
   }

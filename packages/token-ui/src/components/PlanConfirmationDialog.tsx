@@ -51,6 +51,9 @@ export function PlanConfirmationDialog({
     queryClient.invalidateQueries(
       trpc.deployedTokens.getRelations.queryFilter(),
     )
+    queryClient.invalidateQueries(
+      trpc.deployedTokens.getMintingPlugins.queryFilter(),
+    )
     // The relations graph takes seconds to lay out and must never redraw
     // under a user who is looking at it (e.g. right after deleting a
     // relation from the graph page, which handles the disappearing edge

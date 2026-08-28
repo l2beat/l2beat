@@ -10,6 +10,7 @@ import { ButtonWithSpinner } from '~/components/ButtonWithSpinner'
 import { Badge } from '~/components/core/Badge'
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardHeader,
@@ -42,6 +43,7 @@ import type { DeployedToken } from '~/mock/types'
 import { useTRPC } from '~/react-query/trpc'
 import { dateTimeInputToUnixTimestamp } from '~/utils/dateTimeInputToUnixTimestamp'
 import { validateResolver } from '~/utils/validateResolver'
+import { AddTokenRelationDialog } from './AddTokenRelationDialog'
 
 export function DeployedTokenPage() {
   const trpc = useTRPC()
@@ -289,6 +291,9 @@ function DeployedTokenView({ token }: { token: DeployedToken }) {
             <TokenRelationsSection
               entries={relations ?? []}
               loading={areRelationsLoading}
+              action={
+                <AddTokenRelationDialog token={token} setPlan={setPlan} />
+              }
             />
           </div>
         </TabsContent>
@@ -354,9 +359,11 @@ function MintingPluginsSection({
 function TokenRelationsSection({
   entries,
   loading,
+  action,
 }: {
   entries: TokenRelationEntry[]
   loading: boolean
+  action?: React.ReactNode
 }) {
   return (
     <Card>
@@ -364,8 +371,9 @@ function TokenRelationsSection({
         <CardTitle>Relations</CardTitle>
         <CardDescription>
           Non-swapping interop transfers observed between this token and another
-          one.
+          one, plus manually added relations.
         </CardDescription>
+        {action !== undefined && <CardAction>{action}</CardAction>}
       </CardHeader>
       <CardContent>
         {loading ? (
@@ -380,7 +388,7 @@ function TokenRelationsSection({
                 <TableHead>This token's role</TableHead>
                 <TableHead>Plugin</TableHead>
                 <TableHead>Bridge type</TableHead>
-                <TableHead>Transfer</TableHead>
+                <TableHead>Evidence</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
