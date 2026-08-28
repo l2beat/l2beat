@@ -13,7 +13,20 @@ import { buildRelayBootstrapChainNamesById, RelayConfig } from './relay.config'
 type RelayMetadata = GetRequestsResponse['requests'][number]['data']['metadata']
 type RelayCurrency = NonNullable<RelayMetadata>['currencyIn']
 
+export interface RelayIndexerConfig {
+  batchSize: number
+  maxRequestsPerUpdate: number
+  safeTimeOffset: number
+}
+
 export class RelayRootIndexer extends RootIndexer {
+  constructor(
+    logger: Logger,
+    private readonly safeTimeOffset: number,
+  ) {
+    super(logger)
+  }
+
   override initialize() {
     setInterval(() => this.requestTick(), 1_000)
     this.requestTick()
@@ -21,7 +34,7 @@ export class RelayRootIndexer extends RootIndexer {
   }
 
   tick(): Promise<number> {
-    return Promise.resolve(UnixTime.now())
+    return Promise.resolve(UnixTime.now() - this.safeTimeOffset)
   }
 }
 
@@ -58,6 +71,7 @@ export class RelayIndexer extends ManagedChildIndexer {
     chains: { id: number; name: string }[],
     private configs: InteropConfigStore,
     private trackedChains: string[],
+    private readonly relayConfig: RelayIndexerConfig,
     private relayApiClient: RelayApiClient,
     private db: Database,
     private interopEventStore: InteropEventStore,
@@ -111,35 +125,27 @@ export class RelayIndexer extends ManagedChildIndexer {
       return to
     }
 
+    const batchSize = this.relayConfig.batchSize
+    const syncedTo = from + batchSize < to ? from + batchSize : to
+
     const res = await this.relayApiClient.getAllRequests({
-      limit: 500,
       startTimestamp: from,
+      endTimestamp: syncedTo + 1,
+      limit: this.relayConfig.maxRequestsPerUpdate,
     })
 
-    const successes = res.requests.filter((x) => x.status === 'success')
-    const last =
-      successes.length > 0 ? successes[successes.length - 1] : undefined
+    if (res.continuation) {
+      throw new Error(
+        `Window ${from}-${syncedTo} incomplete after ${res.requests.length} requests. Check the client warning for the reason and lower INTEROP_RELAY_BATCH_SIZE if the window is too dense`,
+      )
+    }
 
-    if (!last) {
-      // TODO: allow not progressing
-      throw new Error('No entries')
-    }
-    const syncedTo = Math.min(
-      to,
-      UnixTime.fromDate(new Date(last.updatedAt)) - 1,
-    )
-    if (syncedTo < from) {
-      // TODO: allow not progressing
-      throw new Error('No entries')
-    }
+    const successes = res.requests.filter((x) => x.status === 'success')
 
     const events: InteropEvent[] = []
 
     for (const item of successes) {
       const updateTime = UnixTime.fromDate(new Date(item.updatedAt))
-      if (updateTime > syncedTo) {
-        continue
-      }
       const createTime = UnixTime.fromDate(new Date(item.createdAt))
 
       const srcTx = item.data.inTxs?.[0]
