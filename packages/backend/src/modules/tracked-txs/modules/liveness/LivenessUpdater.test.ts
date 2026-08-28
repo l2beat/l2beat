@@ -99,53 +99,6 @@ describe(LivenessUpdater.name, () => {
 
       expect(updater.transformTransactions(transactions)).toEqual(expected)
     })
-
-    it('deduplicates by storage identity without merging different grouping keys', () => {
-      const updater = new LivenessUpdater(
-        mockDatabase({ liveness: getMockLivenessRepository() }),
-        Logger.SILENT,
-      )
-      const [grouped, ungrouped] = getMockTrackedTxResults()
-      if (
-        grouped?.formula !== 'functionCall' ||
-        grouped.type !== 'liveness' ||
-        ungrouped?.formula !== 'transfer'
-      ) {
-        throw new Error('Invalid mock tracked transaction results')
-      }
-      const transactions: TrackedTxResult[] = [
-        grouped,
-        { ...grouped, input: 'different-input' },
-        { ...grouped, input: 'another-input', groupingKey: 'epoch-2' },
-        ungrouped,
-        { ...ungrouped, fromAddress: EthereumAddress.random() },
-      ]
-
-      const result = updater.transformTransactions(transactions)
-
-      expect(result).toEqual([
-        {
-          txHash: grouped.hash,
-          blockNumber: grouped.blockNumber,
-          timestamp: grouped.blockTimestamp,
-          configurationId: grouped.id,
-          groupingKey: 'epoch-1',
-        },
-        {
-          txHash: grouped.hash,
-          blockNumber: grouped.blockNumber,
-          timestamp: grouped.blockTimestamp,
-          configurationId: grouped.id,
-          groupingKey: 'epoch-2',
-        },
-        {
-          txHash: ungrouped.hash,
-          blockNumber: ungrouped.blockNumber,
-          timestamp: ungrouped.blockTimestamp,
-          configurationId: ungrouped.id,
-        },
-      ])
-    })
   })
 })
 
