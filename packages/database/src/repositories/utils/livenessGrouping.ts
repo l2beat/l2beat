@@ -63,7 +63,7 @@ export async function insertGroupedKeepingEarliest(
       // The conflict target must match each table's partial grouping index.
       const guarded =
         table === 'Liveness'
-          ? target.where('groupingKey', '<>', UNGROUPED_GROUPING_KEY)
+          ? target.where('groupingKey', '!=', UNGROUPED_GROUPING_KEY)
           : target.where('groupingKey', 'is not', null)
       return guarded
         .doUpdateSet((eb) => ({

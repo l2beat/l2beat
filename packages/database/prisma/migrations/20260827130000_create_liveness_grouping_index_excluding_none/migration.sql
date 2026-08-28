@@ -5,4 +5,4 @@
 -- constraint.
 CREATE UNIQUE INDEX CONCURRENTLY "Liveness_configurationId_groupingKey_idx"
 ON "Liveness"("configurationId", "groupingKey")
-WHERE "groupingKey" <> 'none';
+WHERE "groupingKey" != 'none';
