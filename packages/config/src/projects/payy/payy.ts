@@ -275,19 +275,19 @@ export const payy: ScalingProject = {
     },
     reproducibility: {
       value: 'Reproducible',
-      sentiment: 'good',
+      sentiment: 'warning',
       description:
-        'The contracts, Noir circuits and node software are published in the Payy repository and can be built and run locally.',
+        'The sources for UI / wallet are not published, so users have to rely on Payy operated software.\n\nThe contracts, Noir circuits and node software are published in the Payy repository (without any license) and can be built and run locally.',
     },
     privacy: {
       value: 'Linkable notes',
-      sentiment: 'warning',
+      sentiment: 'bad',
       description:
-        'Transactions within the Payy network do not hide the links between token transferred: anyone with Payy block data can reconstruct the spend graph. Only the contents of each note (owner address, amount and asset) are hidden.',
+        'Transactions within the Payy network do not hide the links between token transferred: anyone with Payy block data can reconstruct the spend graph and trace every withdrawal back to contributing deposits. Only the contents of each individual note (owner address, amount and asset) are hidden.',
     },
     noteDiscovery: {
       description:
-        "Funds are held as UTXO-like notes and the L2 chain state stores only their commitments, so a recipient cannot reconstruct an incoming note from the chain alone. Payy runs an encrypted registry, where the sender submits full note data, encrypted to the receiver.\n\nThis registry also stores the recipient's public key in the clear, and clients poll it for their own address (`GET /registry/notes/{public_key}`). So the centralized operator learns which addresses receive notes and when, and who transacted with whom, while note values stay encrypted.\n\nThe protocol itself allows direct peer-to-peer note communication that bypasses the registry.",
+        "Payy operator runs a centralized note discovery service, where the sender submits full transfer data encrypted to the receiver. The centralized operator learns which addresses receive notes and when, and who transacted with whom.\n\nThe protocol itself allows direct peer-to-peer note communication that bypasses the registry.",
       risks: [
         'The Payy-operated note registry, note lookup and wallet backup services learn which addresses receive and hold which notes and can link senders to recipients. The same operator holds KYC data for users of the Payy card and fiat ramps, which can tie those addresses to real identities.',
         'A compromise of a recipient key or of the encryption scheme exposes all note data ever stored in the encrypted registry.',
@@ -295,7 +295,7 @@ export const payy: ScalingProject = {
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
-      PRIVACY_ATTRIBUTES.transfers,
+      PRIVACY_ATTRIBUTES.privateAmounts,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     riskSummary: readProjectMarkdown('payy', 'riskSummary'),

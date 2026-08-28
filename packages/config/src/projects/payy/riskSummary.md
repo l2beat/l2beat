@@ -1,5 +1,5 @@
 ## Funds can be stolen if
-1. the proof system is broken and a malicious verifier is registered, allowing forged spends or withdrawals.
+1. the proof system is broken and a malicious validator is registered, allowing forged spends or withdrawals.
 2. the PayyMultisig upgrades the Rollup contract or directly overwrites the state root to a malicious version.
 <br>
 ## Funds can be lost if
