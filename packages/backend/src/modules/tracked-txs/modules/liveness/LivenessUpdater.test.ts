@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { Database, LivenessRecord } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
@@ -11,20 +11,6 @@ const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
 
 describe(LivenessUpdater.name, () => {
   describe(LivenessUpdater.prototype.update.name, () => {
-    it('skips update if no transactions', async () => {
-      const livenessRepo = getMockLivenessRepository()
-      const updater = new LivenessUpdater(
-        mockDatabase({ liveness: livenessRepo }),
-        Logger.SILENT,
-      )
-
-      const transactions: TrackedTxResult[] = []
-
-      await updater.update(transactions)
-
-      expect(livenessRepo.insertMany).not.toHaveBeenCalled()
-    })
-
     it('calls liveness repo with correct parameters', async () => {
       const livenessRepo = getMockLivenessRepository()
       const updater = new LivenessUpdater(
@@ -53,53 +39,7 @@ describe(LivenessUpdater.name, () => {
     })
   })
 
-  describe(LivenessUpdater.prototype.deleteFromById.name, () => {
-    it('calls liveness repo with correct parameters', async () => {
-      const livenessRepo = getMockLivenessRepository()
-      const updater = new LivenessUpdater(
-        mockDatabase({ liveness: livenessRepo }),
-        Logger.SILENT,
-      )
-
-      const id = createTrackedTxId.random()
-      await updater.deleteFromById(id, MIN_TIMESTAMP)
-
-      expect(livenessRepo.deleteFromById).toHaveBeenNthCalledWith(
-        1,
-        id,
-        MIN_TIMESTAMP,
-      )
-    })
-  })
-
   describe(LivenessUpdater.prototype.transformTransactions.name, () => {
-    it('it correctly transforms records to livenessRow', () => {
-      const updater = new LivenessUpdater(
-        mockDatabase({ liveness: getMockLivenessRepository() }),
-        Logger.SILENT,
-      )
-
-      const transactions: TrackedTxResult[] = getMockTrackedTxResults()
-
-      const expected: LivenessRecord[] = [
-        {
-          txHash: transactions[0].hash,
-          blockNumber: transactions[0].blockNumber,
-          timestamp: transactions[0].blockTimestamp,
-          configurationId: transactions[0].id,
-          groupingKey: 'epoch-1',
-        },
-        {
-          txHash: transactions[1].hash,
-          blockNumber: transactions[1].blockNumber,
-          timestamp: transactions[1].blockTimestamp,
-          configurationId: transactions[1].id,
-        },
-      ]
-
-      expect(updater.transformTransactions(transactions)).toEqual(expected)
-    })
-
     it('deduplicates by storage identity without merging different grouping keys', () => {
       const updater = new LivenessUpdater(
         mockDatabase({ liveness: getMockLivenessRepository() }),

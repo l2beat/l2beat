@@ -115,6 +115,53 @@ describe(TrackedTxsIndexer.name, () => {
       expect(safeHeight).toEqual(to)
     })
 
+    it('deduplicates l2costs per transaction but passes all liveness results', async () => {
+      const [liveness, , l2costs] = getMockTrackedTxResults()
+      const trackedTxsClient = mockObject<TrackedTxsClient>({
+        getData: async () => [
+          liveness,
+          { ...liveness, gasUsed: 111 },
+          l2costs,
+          { ...l2costs, gasUsed: 999 },
+        ],
+      })
+      const l2costsUpdater = mockObject<L2CostsUpdater>({
+        type: 'l2costs',
+        update: mockFn(async () => {}),
+      })
+      const livenessUpdater = mockObject<LivenessUpdater>({
+        type: 'liveness',
+        update: mockFn(async () => {}),
+      })
+
+      const indexer = getMockTrackedTxsIndexer({
+        updaters: [livenessUpdater, l2costsUpdater],
+        trackedTxsClient,
+        projects: [
+          mockObject<TrackedTxProject>({
+            id: ProjectId('test'),
+            isArchived: false,
+          }),
+        ],
+      })
+
+      const configurations: Configuration<TrackedTxConfigEntry>[] = [
+        actual<TrackedTxConfigEntry>('a', 100, null, {
+          projectId: ProjectId('test'),
+          type: 'liveness',
+        }),
+      ]
+
+      const saveData = await indexer.multiUpdate(100, 300, configurations)
+      await saveData()
+
+      expect(livenessUpdater.update).toHaveBeenNthCalledWith(1, [
+        liveness,
+        { ...liveness, gasUsed: 111 },
+      ])
+      expect(l2costsUpdater.update).toHaveBeenNthCalledWith(1, [l2costs])
+    })
+
     it('correctly clamps FROM and TO to day', async () => {
       const from = UnixTime.fromDate(new Date('2024-01-01T12:00:00Z'))
       const to = UnixTime.fromDate(new Date('2024-01-02T12:00:00Z'))

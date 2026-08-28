@@ -38,12 +38,6 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
           ])
 
         const transformed = this.transform(transactions, blobPriceByBlock)
-        const deduplicated = transactions.length - transformed.length
-        if (deduplicated > 0) {
-          this.logger.info('Deduplicated L2 cost transactions', {
-            count: deduplicated,
-          })
-        }
         await this.db.l2Cost.insertMany(transformed)
         this.logger.info('Updated L2 costs', { count: transformed.length })
       },
@@ -58,15 +52,7 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
     transactions: TrackedTxResult[],
     blobBaseFeeByBlock: Map<number, bigint>,
   ): L2CostRecord[] {
-    const records = new Map<string, L2CostRecord>()
-
-    for (const tx of transactions) {
-      // The query returns matching calls, while costs are stored per
-      // transaction. A transaction can match the same configuration more than
-      // once when it contains multiple matching calls.
-      const key = `${tx.id}-${tx.hash}`
-      if (records.has(key)) continue
-
+    return transactions.map((tx) => {
       const blobBaseFee = blobBaseFeeByBlock.get(tx.blockNumber)
 
       if (tx.blobVersionedHashes && !blobBaseFee) {
@@ -76,7 +62,7 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
       const blobGasUsed = tx.blobVersionedHashes
         ? tx.blobVersionedHashes.length * ONE_BLOB_GAS
         : null
-      records.set(key, {
+      return {
         timestamp: tx.blockTimestamp,
         txHash: tx.hash,
         configurationId: tx.id,
@@ -86,9 +72,7 @@ export class L2CostsUpdater implements TxUpdaterInterface<'l2costs'> {
         calldataGasUsed: tx.calldataGasUsed,
         blobGasUsed,
         blobGasPrice: blobGasUsed ? (blobBaseFee ?? null) : null,
-      })
-    }
-
-    return [...records.values()]
+      }
+    })
   }
 }

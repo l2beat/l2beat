@@ -13,6 +13,7 @@ import type {
   WipeRemovalConfiguration,
 } from '../../tools/uif/multi/types'
 import type { TrackedTxsClient } from './TrackedTxsClient'
+import type { TrackedTxResult } from './types/model'
 import type { TxUpdaterInterface } from './types/TxUpdaterInterface'
 
 interface Dependencies
@@ -72,6 +73,10 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
     return async () => {
       for (const updater of this.$.updaters) {
         const filteredTxs = txs.filter((tx) => tx.type === updater.type)
+        const txsToUpdate =
+          updater.type === 'l2costs'
+            ? this.deduplicateByTransaction(filteredTxs)
+            : filteredTxs
         await this.$.db.syncMetadata.updateSyncedUntil(
           updater.type,
           uniq(
@@ -81,7 +86,7 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
           ),
           unixTo,
         )
-        await updater.update(filteredTxs)
+        await updater.update(txsToUpdate)
       }
 
       this.logger.info('Executed updaters', {
@@ -93,6 +98,24 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
 
       return unixTo
     }
+  }
+
+  private deduplicateByTransaction(txs: TrackedTxResult[]): TrackedTxResult[] {
+    const seen = new Set<string>()
+    const deduplicated = txs.filter((tx) => {
+      const key = `${tx.id}-${tx.hash}`
+      if (seen.has(key)) {
+        return false
+      }
+      seen.add(key)
+      return true
+    })
+    if (deduplicated.length < txs.length) {
+      this.logger.info('Deduplicated transactions', {
+        count: txs.length - deduplicated.length,
+      })
+    }
+    return deduplicated
   }
 
   override async wipeData(configurations: WipeRemovalConfiguration[]) {
