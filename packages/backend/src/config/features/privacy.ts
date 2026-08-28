@@ -1,11 +1,13 @@
 import type { Env } from '@l2beat/backend-tools'
 import type {
   PrivacyBucketAddress,
+  PrivacyFlowSource,
   ProjectPrivacyBucket,
   ProjectPrivacyToken,
   ProjectService,
 } from '@l2beat/config'
 import {
+  assert,
   ChainSpecificAddress,
   EthereumAddress,
   type UnixTime,
@@ -152,7 +154,9 @@ function toFlowConfig(
   minTimestamp: UnixTime,
 ): PrivacyFlowIndexerConfig | StarknetPrivacyFlowIndexerConfig {
   const source = bucket[direction]
-  const privacyAddress = getPrivacyBucketAddress(bucket.address)
+  const privacyAddress = getPrivacyBucketAddress(
+    source.address ?? bucket.address,
+  )
   const base = {
     projectId,
     bucketId: bucket.id,
@@ -167,7 +171,7 @@ function toFlowConfig(
     source.extractor === 'strk20Deposit' ||
     source.extractor === 'strk20Withdrawal'
   ) {
-    const config = { ...base, ...source }
+    const config = { ...base, ...source, address: privacyAddress.address }
     return {
       id: StarknetPrivacyFlowIndexer.idToConfigurationId(config),
       ...config,
@@ -176,10 +180,61 @@ function toFlowConfig(
 
   const config = {
     ...base,
-    address: EthereumAddress(privacyAddress.address),
     ...source,
+    address: EthereumAddress(privacyAddress.address),
+    topics: resolveTopics(source),
   }
   return { id: PrivacyFlowIndexer.idToConfigurationId(config), ...config }
+}
+
+/**
+ * Combines the explicit source topic filters with filters implied by the
+ * extractor params (erc20Transfer from/to are indexed args) and normalizes
+ * everything to lowercase 32-byte values, positions starting at topic1.
+ */
+function resolveTopics(
+  source: Exclude<
+    PrivacyFlowSource,
+    { extractor: 'strk20Deposit' | 'strk20Withdrawal' }
+  >,
+): (string | null)[] | undefined {
+  const topics = (source.topics ?? []).map((topic) =>
+    topic === null ? null : padTopic(topic),
+  )
+
+  if (source.extractor === 'erc20Transfer') {
+    // Transfer(address indexed from, address indexed to, uint256 value)
+    if (source.params.from) {
+      setTopic(topics, 0, padTopic(source.params.from.toString()))
+    }
+    if (source.params.to) {
+      setTopic(topics, 1, padTopic(source.params.to.toString()))
+    }
+  }
+
+  while (topics.length > 0 && topics[topics.length - 1] === null) {
+    topics.pop()
+  }
+  return topics.length > 0 ? topics : undefined
+}
+
+function setTopic(topics: (string | null)[], index: number, value: string) {
+  while (topics.length <= index) {
+    topics.push(null)
+  }
+  assert(
+    topics[index] === null || topics[index] === value,
+    `Conflicting topic filter at position ${index + 1}: ${topics[index]} vs ${value}`,
+  )
+  topics[index] = value
+}
+
+function padTopic(value: string): string {
+  assert(
+    /^0x[0-9a-fA-F]+$/.test(value) && value.length <= 66,
+    `Invalid topic filter: ${value}`,
+  )
+  return `0x${value.slice(2).padStart(64, '0')}`.toLowerCase()
 }
 
 function getPrivacyBucketAddress(address: PrivacyBucketAddress): {

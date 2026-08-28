@@ -149,13 +149,7 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       `Missing block timestamp mapping for ${this.$.chain}: to=${adjustedTo}`,
     )
 
-    const { addresses, events } = buildLogFilter(configurations)
-    const logs = await this.$.logsProvider.getLogs(
-      blockFrom,
-      blockTo,
-      addresses,
-      events,
-    )
+    const logs = await this.fetchLogs(configurations, blockFrom, blockTo)
 
     const blockTimestampLookup = await this.buildBlockTimestampLookup(logs)
     const configMap = buildConfigMap(configurations)
@@ -171,6 +165,49 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
     return this.buildRecords(rawRecords, priceLookup)
   }
 
+  /**
+   * Configurations with different indexed-arg filters cannot share one
+   * eth_getLogs call: the query ANDs topic positions across the whole
+   * filter, so an extra topic1 filter from one configuration would wrongly
+   * constrain the others. Group by the extra-topics shape and query once
+   * per group; exact per-configuration matching happens client-side.
+   */
+  private async fetchLogs(
+    configurations: Configuration<PrivacyFlowIndexerConfig>[],
+    blockFrom: number,
+    blockTo: number,
+  ): Promise<Log[]> {
+    const groups = new Map<string, Configuration<PrivacyFlowIndexerConfig>[]>()
+    for (const configuration of configurations) {
+      const key = JSON.stringify(configuration.properties.topics ?? [])
+      groups.set(key, [...(groups.get(key) ?? []), configuration])
+    }
+
+    const results = await Promise.all(
+      Array.from(groups.values()).map((group) => {
+        const { addresses, events } = buildLogFilter(group)
+        const topics = group[0].properties.topics ?? []
+        return this.$.logsProvider.getLogs(blockFrom, blockTo, addresses, [
+          events,
+          ...topics,
+        ])
+      }),
+    )
+
+    const logs = results.flat()
+    if (groups.size === 1) return logs
+
+    // The same log can match filters of more than one group; dedupe so a
+    // configuration is never fed the same log twice.
+    const seen = new Set<string>()
+    return logs.filter((log) => {
+      const key = `${log.transactionHash}:${log.logIndex}`
+      if (seen.has(key)) return false
+      seen.add(key)
+      return true
+    })
+  }
+
   private extractRawRecords(
     logs: Log[],
     configMap: Map<string, Configuration<PrivacyFlowIndexerConfig>[]>,
@@ -180,7 +217,9 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
 
     for (const log of logs) {
       const key = `${log.address.toLowerCase()}:${log.topics[0]?.toLowerCase() ?? ''}`
-      const matching = configMap.get(key) ?? []
+      const matching = (configMap.get(key) ?? []).filter((configuration) =>
+        matchesTopicFilters(configuration.properties, log),
+      )
 
       for (const configuration of matching) {
         const result = extractPrivacyFlow(configuration.properties, log)
@@ -320,8 +359,22 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       config.event,
       config.extractor,
       stringifyParams(config.params),
+      // Empty for configs without topic filters so their ids predate the
+      // introduction of this field and existing data is not re-indexed.
+      config.topics ? JSON.stringify(config.topics) : '',
     ])
   }
+}
+
+function matchesTopicFilters(
+  config: PrivacyFlowIndexerConfig,
+  log: Log,
+): boolean {
+  if (!config.topics) return true
+  return config.topics.every(
+    (topic, index) =>
+      topic === null || log.topics[index + 1]?.toLowerCase() === topic,
+  )
 }
 
 interface RawRecord {

@@ -24,6 +24,14 @@ const zamaInterface = new utils.Interface([
   'event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)',
 ])
 
+const erc20Interface = new utils.Interface([
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
+])
+
+const privacyBoostInterface = new utils.Interface([
+  'event DepositRequested(uint256 indexed depositRequestId, address indexed depositor, uint16 tokenId, uint96 totalAmount, uint16 commitmentCount, uint256 commitmentsHash, uint256[] commitments, tuple(bytes32 viewingKey, bytes32 teeWrapKey, bytes32 receiverWrapKey, bytes32 ct0, bytes32 ct1, bytes16 ct2)[] ciphertexts)',
+])
+
 const ADDRESS = EthereumAddress.random()
 const TOKEN_ADDRESS = EthereumAddress(
   '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
@@ -78,6 +86,145 @@ describe(extractPrivacyFlow.name, () => {
       const result = extractPrivacyFlow(config, log)
 
       expect(result).toEqual({ count: 1, amount: 1_000_000_000_000_000_000n })
+    })
+  })
+
+  describe('erc20Transfer', () => {
+    const POOL = EthereumAddress('0xca689828854a422CF1f778be03CA80549408F620')
+    const RECIPIENT = EthereumAddress(
+      '0x1111111111111111111111111111111111111111',
+    )
+
+    it('extracts value from a Transfer matching the from filter', () => {
+      const config: PrivacyFlowIndexerConfig = {
+        ...baseFlowConfig,
+        direction: 'withdrawal',
+        event: 'Transfer',
+        extractor: 'erc20Transfer',
+        params: { from: POOL },
+      }
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        POOL.toString(),
+        RECIPIENT.toString(),
+        123_456n,
+      ])
+
+      const result = extractPrivacyFlow(config, log)
+
+      expect(result).toEqual({ count: 1, amount: 123_456n })
+    })
+
+    it('returns undefined when the from filter does not match', () => {
+      const config: PrivacyFlowIndexerConfig = {
+        ...baseFlowConfig,
+        direction: 'withdrawal',
+        event: 'Transfer',
+        extractor: 'erc20Transfer',
+        params: { from: POOL },
+      }
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        RECIPIENT.toString(),
+        POOL.toString(),
+        123_456n,
+      ])
+
+      const result = extractPrivacyFlow(config, log)
+
+      expect(result).toEqual(undefined)
+    })
+
+    it('returns undefined when the to filter does not match', () => {
+      const config: PrivacyFlowIndexerConfig = {
+        ...baseFlowConfig,
+        event: 'Transfer',
+        extractor: 'erc20Transfer',
+        params: { to: POOL },
+      }
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        POOL.toString(),
+        RECIPIENT.toString(),
+        123_456n,
+      ])
+
+      const result = extractPrivacyFlow(config, log)
+
+      expect(result).toEqual(undefined)
+    })
+
+    it('extracts value without filters', () => {
+      const config: PrivacyFlowIndexerConfig = {
+        ...baseFlowConfig,
+        event: 'Transfer',
+        extractor: 'erc20Transfer',
+        params: {},
+      }
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        POOL.toString(),
+        RECIPIENT.toString(),
+        777n,
+      ])
+
+      const result = extractPrivacyFlow(config, log)
+
+      expect(result).toEqual({ count: 1, amount: 777n })
+    })
+  })
+
+  describe('privacyBoostDeposit', () => {
+    const depositRequestedArgs = (tokenId: number, totalAmount: bigint) => [
+      1n,
+      EthereumAddress.random().toString(),
+      tokenId,
+      totalAmount,
+      1,
+      42n,
+      [43n],
+      [
+        {
+          viewingKey: `0x${'11'.repeat(32)}`,
+          teeWrapKey: `0x${'22'.repeat(32)}`,
+          receiverWrapKey: `0x${'33'.repeat(32)}`,
+          ct0: `0x${'44'.repeat(32)}`,
+          ct1: `0x${'55'.repeat(32)}`,
+          ct2: `0x${'66'.repeat(16)}`,
+        },
+      ],
+    ]
+
+    it('extracts totalAmount for the matching tokenId', () => {
+      const config: PrivacyFlowIndexerConfig = {
+        ...baseFlowConfig,
+        event: 'DepositRequested',
+        extractor: 'privacyBoostDeposit',
+        params: { tokenId: 4 },
+      }
+      const log = encodeLog(
+        privacyBoostInterface,
+        'DepositRequested',
+        depositRequestedArgs(4, 5_000_000n),
+      )
+
+      const result = extractPrivacyFlow(config, log)
+
+      expect(result).toEqual({ count: 1, amount: 5_000_000n })
+    })
+
+    it('returns undefined for a different tokenId', () => {
+      const config: PrivacyFlowIndexerConfig = {
+        ...baseFlowConfig,
+        event: 'DepositRequested',
+        extractor: 'privacyBoostDeposit',
+        params: { tokenId: 4 },
+      }
+      const log = encodeLog(
+        privacyBoostInterface,
+        'DepositRequested',
+        depositRequestedArgs(3, 5_000_000n),
+      )
+
+      const result = extractPrivacyFlow(config, log)
+
+      expect(result).toEqual(undefined)
     })
   })
 

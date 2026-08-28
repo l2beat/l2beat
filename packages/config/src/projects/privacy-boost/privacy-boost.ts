@@ -12,7 +12,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
-import type { BaseProject } from '../../types'
+import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('privacy-boost')
@@ -40,14 +40,78 @@ function formatBasisPoints(value: number): string {
   return `${Number((value / 100).toFixed(4))}%`
 }
 
+// topic0 of DepositRequested(uint256,address,uint16,uint96,uint16,uint256,uint256[],(bytes32,bytes32,bytes32,bytes32,bytes32,bytes16)[])
+const DEPOSIT_REQUESTED_EVENT =
+  '0xa15fc34b5443213f492feff5b6ffa403b1c6398b9b02f237b44f5a4e128a4630'
+// topic0 of the standard ERC-20 Transfer(address,address,uint256)
+const TRANSFER_EVENT =
+  '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
+
 const registeredTokens = discovery
   .getContractValue<{ tokenAddress: string }[]>('TokenRegistry', 'tokens')
-  .map((token) => {
-    const address = ChainSpecificAddress.address(
-      token.tokenAddress as ChainSpecificAddress,
-    )
-    return getTokenByAddress(address.toString(), OP_MAINNET_CHAIN_ID).symbol
+  .map((token, index) => {
+    const chainSpecificAddress = token.tokenAddress as ChainSpecificAddress
+    const address = ChainSpecificAddress.address(chainSpecificAddress)
+    return {
+      // TokenRegistry assigns ids sequentially starting at 1
+      tokenId: index + 1,
+      chainSpecificAddress,
+      address,
+      info: getTokenByAddress(address.toString(), OP_MAINNET_CHAIN_ID),
+    }
   })
+
+const poolAddress = ChainSpecificAddress.address(pool.address)
+
+const privacyTokens: ProjectPrivacyToken[] = registeredTokens.map(
+  ({ tokenId, chainSpecificAddress, address, info }) => {
+    // Prices must cover the whole bucket range, so never start before listing.
+    const sinceTimestamp = Math.max(
+      PRIVACY_BOOST_SINCE_TIMESTAMP,
+      info.coingeckoListingTimestamp,
+    )
+
+    return {
+      token: {
+        address: address.toString(),
+        iconUrl: info.iconUrl,
+        symbol: info.symbol,
+        decimals: info.decimals,
+        priceId: info.coingeckoId,
+        sinceTimestamp,
+      },
+      buckets: [
+        {
+          id: `privacy-boost-${info.symbol}`,
+          type: 'pool',
+          label: info.symbol,
+          address: pool.address,
+          sinceTimestamp,
+          // Deposits are counted at request time from DepositRequested, so
+          // later cancelled deposits are overcounted (DepositCancelled
+          // carries no amount).
+          // To correct: subtract cancelled deposits
+          deposit: {
+            event: DEPOSIT_REQUESTED_EVENT,
+            extractor: 'privacyBoostDeposit',
+            params: { tokenId },
+          },
+          // Epoch withdrawals emit no pool event with an amount, so
+          // withdrawals are tracked as ERC-20 transfers out of the pool.
+          // This also covers forced withdrawals, but overcounts fee legs to
+          // the treasury, relay fee payouts and deposit cancellation refunds.
+          // To correct: subtract withdrawals to the treasury for all forces withdrawals
+          withdrawal: {
+            address: chainSpecificAddress,
+            event: TRANSFER_EVENT,
+            extractor: 'erc20Transfer',
+            params: { from: poolAddress },
+          },
+        },
+      ],
+    }
+  },
+)
 
 export const privacyBoost: BaseProject = {
   id: ProjectId('privacy-boost'),
@@ -94,7 +158,7 @@ export const privacyBoost: BaseProject = {
       address: ChainSpecificAddress.address(pool.address),
       chain: ChainSpecificAddress.longChain(pool.address),
       sinceTimestamp: PRIVACY_BOOST_SINCE_TIMESTAMP,
-      tokens: registeredTokens,
+      tokens: registeredTokens.map((token) => token.info.symbol),
     },
   ],
   tvsInfo: {
@@ -195,12 +259,7 @@ export const privacyBoost: BaseProject = {
     ],
   },
   privacyInfo: {
-    // TODO: Proposed tracking: deposits from DepositRequested (has tokenId + totalAmount),
-    // withdrawals from ERC-20 Transfer logs with from == pool (epoch withdrawals emit no pool event).
-    // Needs: (1) indexed-topic (topic1/2) filter support in LogsProvider/PrivacyFlowIndexerConfig,
-    // (2) new extractors: privacyBoostDeposit (params: tokenId) and generic erc20TransferOut (params: pool).
-    // Accepted errors: cancelled deposits overcounted; refunds/fee legs/relay fee exits count as withdrawals.
-    tokens: [],
+    tokens: privacyTokens,
     exitWindow: {
       value: 'None',
       sentiment: 'bad',

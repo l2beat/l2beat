@@ -46,7 +46,7 @@ type Param =
   | string
   | number
   | boolean
-  | Record<string, string | string[] | string[][]>
+  | Record<string, string | (string | string[] | null)[] | string[][]>
   | number[]
 
 export class RpcClient extends ClientCore implements IRpcClient {
@@ -175,13 +175,13 @@ export class RpcClient extends ClientCore implements IRpcClient {
     from: number,
     to: number,
     addresses?: string[],
-    topics?: string[],
+    topics?: (string | string[] | null)[],
   ): Promise<EVMLog[]> {
     const method = 'eth_getLogs'
     const response = await this.query(method, [
       {
         address: addresses ?? [],
-        topics: topics ? [topics] : [],
+        topics: topics ?? [],
         fromBlock: Quantity.encode(BigInt(from)),
         toBlock: Quantity.encode(BigInt(to)),
       },

@@ -26,6 +26,11 @@ export type PrivacyFlowIndexerConfig = {
   chain: string
   address: EthereumAddress
   event: string
+  /**
+   * Normalized (lowercase, 32-byte padded) filters on the indexed event
+   * args, starting at topic1. null matches anything at that position.
+   */
+  topics?: (string | null)[]
   sinceTimestamp: UnixTime
   priceId: string
   decimals: number

@@ -101,7 +101,7 @@ describe(PrivacyFlowIndexer.name, () => {
         50,
         150,
         [ADDRESS_A.toString()],
-        [TOPIC_A],
+        [[TOPIC_A]],
       )
 
       expect(blockProvider.getBlockTimestamps).not.toHaveBeenCalled()
@@ -768,10 +768,225 @@ describe(PrivacyFlowIndexer.name, () => {
       expect(new Set(getLogsCall?.[2])).toEqual(
         new Set([ADDRESS_A.toString(), ADDRESS_B.toString()]),
       )
-      expect(new Set(getLogsCall?.[3])).toEqual(new Set([TOPIC_A, TOPIC_B]))
+      expect(new Set(getLogsCall?.[3]?.[0] as string[])).toEqual(
+        new Set([TOPIC_A, TOPIC_B]),
+      )
 
       const records = privacyFlowEventRepo.upsertMany.calls[0]?.args[0]
       expect(records?.length).toEqual(2)
+      expect(records?.map((r) => r.configurationId).sort()).toEqual([
+        'config-A',
+        'config-B',
+      ])
+    })
+
+    it('matches configurations only against logs passing their topic filters', async () => {
+      const from = UnixTime.toStartOf(UnixTime(0), 'day')
+      const to = from + 5 * UnixTime.HOUR
+      const blockTimestamp = from + UnixTime.HOUR
+      const filterTopic = `0x${'11'.repeat(32)}`
+      const otherTopic = `0x${'22'.repeat(32)}`
+
+      const configs = [
+        flowConfig({
+          id: 'config-1',
+          address: ADDRESS_A,
+          event: TOPIC_A,
+          priceId: 'ethereum',
+          decimals: 18,
+          fixedAmount: '1000000000000000000',
+          topics: [filterTopic],
+        }),
+      ]
+
+      const matchingLog: Log = {
+        address: ADDRESS_A.toString(),
+        topics: [TOPIC_A, filterTopic],
+        data: '0x',
+        blockNumber: 100,
+        blockHash: '0x',
+        transactionHash: '0xtx1',
+        logIndex: 0,
+        blockTimestamp,
+      }
+      const filteredOutLog: Log = {
+        ...matchingLog,
+        topics: [TOPIC_A, otherTopic],
+        transactionHash: '0xtx2',
+        logIndex: 1,
+      }
+
+      const logsProvider = mockObject<LogsProvider>({
+        getLogs: mockFn().returnsOnce([matchingLog, filteredOutLog]),
+      })
+
+      const privacyBlockTimestampRepo = mockObject<
+        Database['privacyBlockTimestamp']
+      >({
+        findBlockNumberByChainAndTimestamp: mockFn()
+          .returnsOnce(50)
+          .returnsOnce(150),
+      })
+
+      const privacyPriceRepo = mockObject<Database['privacyPrice']>({
+        getPricesByPriceIdsInRange: mockFn().returnsOnce([
+          {
+            priceId: 'ethereum',
+            timestamp: UnixTime.toStartOf(blockTimestamp, 'hour'),
+            priceUsd: 2000,
+            configurationId: 'price-1',
+          },
+        ]),
+      })
+
+      const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
+        upsertMany: mockFn().returnsOnce(undefined),
+      })
+
+      const indexer = new PrivacyFlowIndexer(
+        {
+          chain: 'ethereum',
+          configurations: configs,
+          blockProvider: mockObject<BlockProvider>({}),
+          logsProvider,
+          db: mockDatabase({
+            privacyBlockTimestamp: privacyBlockTimestampRepo,
+            privacyPrice: privacyPriceRepo,
+            privacyFlowEvent: privacyFlowEventRepo,
+          }),
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
+
+      const updateFn = await indexer.multiUpdate(from, to, configs)
+      await updateFn()
+
+      expect(logsProvider.getLogs).toHaveBeenOnlyCalledWith(
+        50,
+        150,
+        [ADDRESS_A.toString()],
+        [[TOPIC_A], filterTopic],
+      )
+
+      const records = privacyFlowEventRepo.upsertMany.calls[0]?.args[0]
+      expect(records?.length).toEqual(1)
+      expect(records?.[0]?.txHash).toEqual('0xtx1')
+    })
+
+    it('issues one log query per topic filter group', async () => {
+      const from = UnixTime.toStartOf(UnixTime(0), 'day')
+      const to = from + 5 * UnixTime.HOUR
+      const blockTimestamp = from + UnixTime.HOUR
+      const filterTopic = `0x${'11'.repeat(32)}`
+
+      const unfilteredConfig = flowConfig({
+        id: 'config-A',
+        address: ADDRESS_A,
+        event: TOPIC_A,
+        priceId: 'ethereum',
+        decimals: 18,
+        fixedAmount: '1',
+      })
+      const filteredConfig = flowConfig({
+        id: 'config-B',
+        address: ADDRESS_B,
+        event: TOPIC_B,
+        priceId: 'ethereum',
+        decimals: 18,
+        fixedAmount: '2',
+        topics: [filterTopic],
+      })
+
+      const logA: Log = {
+        address: ADDRESS_A.toString(),
+        topics: [TOPIC_A],
+        data: '0x',
+        blockNumber: 100,
+        blockHash: '0x',
+        transactionHash: '0xtxA',
+        logIndex: 0,
+        blockTimestamp,
+      }
+      const logB: Log = {
+        address: ADDRESS_B.toString(),
+        topics: [TOPIC_B, filterTopic],
+        data: '0x',
+        blockNumber: 101,
+        blockHash: '0x',
+        transactionHash: '0xtxB',
+        logIndex: 1,
+        blockTimestamp,
+      }
+
+      const logsProvider = mockObject<LogsProvider>({
+        getLogs: mockFn().returnsOnce([logA]).returnsOnce([logB]),
+      })
+
+      const privacyBlockTimestampRepo = mockObject<
+        Database['privacyBlockTimestamp']
+      >({
+        findBlockNumberByChainAndTimestamp: mockFn()
+          .returnsOnce(50)
+          .returnsOnce(150),
+      })
+
+      const privacyPriceRepo = mockObject<Database['privacyPrice']>({
+        getPricesByPriceIdsInRange: mockFn().returnsOnce([
+          {
+            priceId: 'ethereum',
+            timestamp: UnixTime.toStartOf(blockTimestamp, 'hour'),
+            priceUsd: 1,
+            configurationId: 'price-1',
+          },
+        ]),
+      })
+
+      const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
+        upsertMany: mockFn().returnsOnce(undefined),
+      })
+
+      const indexer = new PrivacyFlowIndexer(
+        {
+          chain: 'ethereum',
+          configurations: [unfilteredConfig, filteredConfig],
+          blockProvider: mockObject<BlockProvider>({}),
+          logsProvider,
+          db: mockDatabase({
+            privacyBlockTimestamp: privacyBlockTimestampRepo,
+            privacyPrice: privacyPriceRepo,
+            privacyFlowEvent: privacyFlowEventRepo,
+          }),
+          parents: [],
+          indexerService: mockObject<IndexerService>({}),
+        },
+        Logger.SILENT,
+      )
+
+      const updateFn = await indexer.multiUpdate(from, to, [
+        unfilteredConfig,
+        filteredConfig,
+      ])
+      await updateFn()
+
+      expect(logsProvider.getLogs).toHaveBeenCalledTimes(2)
+      expect(logsProvider.getLogs).toHaveBeenNthCalledWith(
+        1,
+        50,
+        150,
+        [ADDRESS_A.toString()],
+        [[TOPIC_A]],
+      )
+      expect(logsProvider.getLogs).toHaveBeenNthCalledWith(
+        2,
+        50,
+        150,
+        [ADDRESS_B.toString()],
+        [[TOPIC_B], filterTopic],
+      )
+
+      const records = privacyFlowEventRepo.upsertMany.calls[0]?.args[0]
       expect(records?.map((r) => r.configurationId).sort()).toEqual([
         'config-A',
         'config-B',
@@ -912,6 +1127,49 @@ describe(PrivacyFlowIndexer.name, () => {
       )
     })
 
+    it('is unchanged by an absent topics field', () => {
+      const base = {
+        projectId: 'project-1',
+        bucketId: 'bucket-1',
+        direction: 'deposit' as const,
+        chain: 'ethereum',
+        address: ADDRESS_A,
+        event: TOPIC_A,
+        sinceTimestamp: UnixTime(0),
+        priceId: 'ethereum',
+        decimals: 18,
+        extractor: 'fixedAmount' as const,
+        params: { amount: '1000' },
+      }
+      // Configs without filters must keep their pre-topics ids so existing
+      // projects are not re-indexed.
+      expect(
+        PrivacyFlowIndexer.idToConfigurationId({ ...base, topics: undefined }),
+      ).toEqual(PrivacyFlowIndexer.idToConfigurationId(base))
+    })
+
+    it('differs by topics', () => {
+      const base = {
+        projectId: 'project-1',
+        bucketId: 'bucket-1',
+        direction: 'deposit' as const,
+        chain: 'ethereum',
+        address: ADDRESS_A,
+        event: TOPIC_A,
+        sinceTimestamp: UnixTime(0),
+        priceId: 'ethereum',
+        decimals: 18,
+        extractor: 'fixedAmount' as const,
+        params: { amount: '1000' },
+      }
+      expect(
+        PrivacyFlowIndexer.idToConfigurationId({
+          ...base,
+          topics: [`0x${'11'.repeat(32)}`],
+        }),
+      ).not.toEqual(PrivacyFlowIndexer.idToConfigurationId(base))
+    })
+
     it('differs by params', () => {
       const base = {
         projectId: 'project-1',
@@ -951,6 +1209,7 @@ function flowConfig(opts: {
   priceId: string
   decimals: number
   fixedAmount: string
+  topics?: (string | null)[]
 }): Configuration<PrivacyFlowIndexerConfig> {
   return {
     id: opts.id,
@@ -964,6 +1223,7 @@ function flowConfig(opts: {
       chain: 'ethereum',
       address: opts.address,
       event: opts.event,
+      topics: opts.topics,
       sinceTimestamp: UnixTime(0),
       priceId: opts.priceId,
       decimals: opts.decimals,

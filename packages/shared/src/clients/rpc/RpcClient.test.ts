@@ -182,7 +182,7 @@ describe(RpcClient.name, () => {
         mockFromBlock,
         mockToBlock,
         mockAddresses,
-        mockTopics,
+        [mockTopics],
       )
 
       expect(result).toEqual([
@@ -266,7 +266,7 @@ describe(RpcClient.name, () => {
         mockFromBlock,
         mockToBlock,
         mockAddresses,
-        mockTopics,
+        [mockTopics],
       )
 
       expect(http.fetch.calls[0].args[1]?.body).toEqual(
