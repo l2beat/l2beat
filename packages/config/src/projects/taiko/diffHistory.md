@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x944e4923ff7b113fa2d85afda1928383c9cf8c3a
+
+# Diff at Thu, 27 Aug 2026 12:07:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@07685e2b690dd5d880203f3696ff2e1bc300a13d block: 1787647451
+- current timestamp: 1787832377
+
+## Description
+
+Add proposal that reduces the Security Council to a 4/5 multisig. The resulting Council is not a valid Security Council after the L2BEAT criteria: https://medium.com/l2beat/stages-update-security-council-requirements-4c79cea8ef52, https://forum.l2beat.com/t/stage-1-requirements-update-security-council-walkaway-test/412 .
+
+full review of the proposal: https://gist.github.com/sekuba/b19aa30b123d7247280e96f5a49e5c15 .
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.
+      values.proposalCount:
+-        37
++        38
+      values.proposalIds.37:
++        "608325339122031231284005618251537221674155900965"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
++++ description: total standard proposal count.
++++ severity: HIGH
+      values.proposalCount:
+-        23
++        24
+    }
+```
+
 Generated with discovered.json: 0xeb8204b46d9882056b1611fb4a4abd9915ec4187
 
 # Diff at Tue, 25 Aug 2026 08:45:40 GMT:

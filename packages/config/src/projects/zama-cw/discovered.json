@@ -1,7 +1,7 @@
 {
   "name": "zama-cw",
-  "timestamp": 1787648016,
-  "configHash": "0x0e4befdb419e57bc226ac81d3a5fcc9ce773e856fa9675547f3b725ababb39aa",
+  "timestamp": 1787834146,
+  "configHash": "0xab82b12530dcd31e263cdd956f9d808be58d8730dc70f452e77354765a3b7adf",
   "entries": [
     {
       "address": "eth:0x0321a4Ee7E843A83Fa314f4e76E756864CBdE62e",
@@ -288,7 +288,7 @@
         "aclAddress": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
         "aclOwner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
         "blockHCUWhitelist": [],
-        "getBlockMeter": { "blockNumber": 25831142, "usedHCU": 0 },
+        "getBlockMeter": { "blockNumber": 25846595, "usedHCU": 0 },
         "getFHEVMExecutorAddress": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
         "getGlobalHCUCapPerBlock": 281474976710655,
         "getMaxHCUDepthPerTx": 5000000,
@@ -419,7 +419,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 304,
+        "nonce": 305,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -504,20 +504,20 @@
       "name": "ConfidentialSteakcUSDCWrapper",
       "address": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
       "type": "Contract",
-      "template": "zama/ConfidentialWrapperV3",
+      "template": "zama/ConfidentialWrapper",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
+        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.",
       "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1781877707,
       "sinceBlock": 25352089,
       "values": {
         "$admin": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-        "$implementation": "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5",
+        "$implementation": "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8",
         "$pastUpgrades": [
           [
             "2026-06-19T14:01:47.000Z",
@@ -528,12 +528,17 @@
             "2026-06-22T10:55:23.000Z",
             "0x78c56acfe7e477612beb8536dc51fe47a0531b0e71ca194fe1b449bfd4f110c2",
             ["eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"]
+          ],
+          [
+            "2026-08-25T15:59:35.000Z",
+            "0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",
+            ["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x01072396bad6c4cd7e79209ceb96d2fc7103aaacf0ff00000000000000010500",
+        "confidentialTotalSupply": "0x3f7c5ad5deddcde61cc16c0ec78cb98934af7fdc81ff00000000000000010500",
         "constructorArgs": [
           "eth:0xAea1d2cc69aF93CA0fdd34426E74Ad7cB19E9745",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000beef00a59b577423653a1526c7009bde103f542b000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000017436f6e666964656e7469616c20737465616b6355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000b63737465616b635553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ae646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c20737465616b6355534443222c2273796d626f6c223a2263737465616b6355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f6620737465616b635553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d000000000000000000000000000000000000"
@@ -543,14 +548,14 @@
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
         "fheCoprocessor": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
         "fheKmsVerifier": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
-        "getUnderlyingDenyListSelector": {
-          "isSet": false,
-          "selector": "0x00000000"
-        },
-        "inferredTotalSupply": 33308526880984,
+        "getUnderlyingDenyListSelector": "0x00000000",
+        "inferredTotalSupply": 33925638327548,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential steakcUSDC",
+        "observers": [],
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "paused": false,
+        "pauser": "eth:0x0000000000000000000000000000000000000000",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "rate": 1000000000000,
         "symbol": "csteakcUSDC",
@@ -573,13 +578,26 @@
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
-          "description": "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations.",
+          "description": "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.",
           "type": "RISK_PARAMETER"
         },
         "blockedUsers": {
           "severity": "HIGH",
           "description": "Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.",
           "type": "PERMISSION"
+        },
+        "observers": {
+          "severity": "HIGH",
+          "description": "Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.",
+          "type": "PERMISSION"
+        },
+        "pauser": {
+          "description": "Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.",
+          "type": "PERMISSION"
+        },
+        "paused": {
+          "description": "Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.",
+          "type": "RISK_PARAMETER"
         },
         "fheAcl": {
           "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
@@ -593,7 +611,7 @@
       },
       "implementationNames": {
         "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458": "ERC1967Proxy",
-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5": "ConfidentialWrapperV3"
+        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8": "ConfidentialWrapper"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -743,7 +761,7 @@
             ]
           }
         },
-        "clock": 25831142,
+        "clock": 25846595,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -779,8 +797,8 @@
         "rewardRate": "6970000000000000000",
         "stakingToken": "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
         "symbol": "stZAMA-Coprocessor",
-        "totalStakedWeight": 60646842355733,
-        "totalSupply": "736112730123491454303307318",
+        "totalStakedWeight": 61875777115542,
+        "totalSupply": "768184839571869883317687494",
         "unstakeCooldownPeriod": 604800,
         "unstakeCooldownPeriod_fmt": "7d",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -861,20 +879,20 @@
       "name": "ConfidentialXAUTWrapper",
       "address": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
       "type": "Contract",
-      "template": "zama/ConfidentialWrapperV3",
+      "template": "zama/ConfidentialWrapper",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
+        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.",
       "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1772116091,
       "sinceBlock": 24541690,
       "values": {
         "$admin": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-        "$implementation": "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5",
+        "$implementation": "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8",
         "$pastUpgrades": [
           [
             "2026-02-26T14:28:11.000Z",
@@ -890,9 +908,14 @@
             "2026-06-01T13:52:11.000Z",
             "0x468f9a1433f795da68b88d6adb33f7180e86937d3f3437ec001173c52e7f35f4",
             ["eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"]
+          ],
+          [
+            "2026-08-25T15:59:35.000Z",
+            "0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",
+            ["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
         "confidentialTotalSupply": "0xb15d8a186cbfeaf3b1a3418afc3dcc6891691ed84dff00000000000000010500",
@@ -905,14 +928,14 @@
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
         "fheCoprocessor": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
         "fheKmsVerifier": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
-        "getUnderlyingDenyListSelector": {
-          "isSet": true,
-          "selector": "0xfbac3951"
-        },
+        "getUnderlyingDenyListSelector": "0xfbac3951",
         "inferredTotalSupply": 10020472,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential XAUt",
+        "observers": [],
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "paused": false,
+        "pauser": "eth:0x0000000000000000000000000000000000000000",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "rate": 1,
         "symbol": "cXAUt",
@@ -935,13 +958,26 @@
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
-          "description": "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations.",
+          "description": "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.",
           "type": "RISK_PARAMETER"
         },
         "blockedUsers": {
           "severity": "HIGH",
           "description": "Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.",
           "type": "PERMISSION"
+        },
+        "observers": {
+          "severity": "HIGH",
+          "description": "Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.",
+          "type": "PERMISSION"
+        },
+        "pauser": {
+          "description": "Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.",
+          "type": "PERMISSION"
+        },
+        "paused": {
+          "description": "Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.",
+          "type": "RISK_PARAMETER"
         },
         "fheAcl": {
           "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
@@ -955,7 +991,7 @@
       },
       "implementationNames": {
         "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1": "ERC1967Proxy",
-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5": "ConfidentialWrapperV3"
+        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8": "ConfidentialWrapper"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1127,20 +1163,20 @@
       "name": "ConfidentialZAMAWrapper",
       "address": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
       "type": "Contract",
-      "template": "zama/ConfidentialWrapperV3",
+      "template": "zama/ConfidentialWrapper",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
+        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.",
       "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1766750867,
       "sinceBlock": 24096701,
       "values": {
         "$admin": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-        "$implementation": "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5",
+        "$implementation": "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8",
         "$pastUpgrades": [
           [
             "2025-12-26T12:07:47.000Z",
@@ -1156,12 +1192,17 @@
             "2026-06-01T13:52:11.000Z",
             "0x468f9a1433f795da68b88d6adb33f7180e86937d3f3437ec001173c52e7f35f4",
             ["eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"]
+          ],
+          [
+            "2026-08-25T15:59:35.000Z",
+            "0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",
+            ["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x726d7bfa631bf4f261876d6c247383f736a1584240ff00000000000000010500",
+        "confidentialTotalSupply": "0xcb9c242a50ad065a5300ed498c1ed04c655a519d8cff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000a12cc123ba206d4031d1c7f6223d1c2ec249f4f3000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205a414d410000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005635a414d41000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c205a414d41222c2273796d626f6c223a22635a414d41222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205a414d4120736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1171,14 +1212,14 @@
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
         "fheCoprocessor": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
         "fheKmsVerifier": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
-        "getUnderlyingDenyListSelector": {
-          "isSet": false,
-          "selector": "0x00000000"
-        },
-        "inferredTotalSupply": 153155930083403,
+        "getUnderlyingDenyListSelector": "0x00000000",
+        "inferredTotalSupply": 153161359594036,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential ZAMA",
+        "observers": [],
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "paused": false,
+        "pauser": "eth:0x0000000000000000000000000000000000000000",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "rate": 1000000000000,
         "symbol": "cZAMA",
@@ -1201,13 +1242,26 @@
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
-          "description": "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations.",
+          "description": "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.",
           "type": "RISK_PARAMETER"
         },
         "blockedUsers": {
           "severity": "HIGH",
           "description": "Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.",
           "type": "PERMISSION"
+        },
+        "observers": {
+          "severity": "HIGH",
+          "description": "Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.",
+          "type": "PERMISSION"
+        },
+        "pauser": {
+          "description": "Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.",
+          "type": "PERMISSION"
+        },
+        "paused": {
+          "description": "Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.",
+          "type": "RISK_PARAMETER"
         },
         "fheAcl": {
           "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
@@ -1221,7 +1275,7 @@
       },
       "implementationNames": {
         "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071": "ERC1967Proxy",
-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5": "ConfidentialWrapperV3"
+        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8": "ConfidentialWrapper"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1234,20 +1288,20 @@
       "name": "ConfidentialBRONWrapper",
       "address": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
       "type": "Contract",
-      "template": "zama/ConfidentialWrapperV3",
+      "template": "zama/ConfidentialWrapper",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
+        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.",
       "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1766750855,
       "sinceBlock": 24096700,
       "values": {
         "$admin": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-        "$implementation": "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5",
+        "$implementation": "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8",
         "$pastUpgrades": [
           [
             "2025-12-26T12:07:35.000Z",
@@ -1263,9 +1317,14 @@
             "2026-06-01T13:52:11.000Z",
             "0x468f9a1433f795da68b88d6adb33f7180e86937d3f3437ec001173c52e7f35f4",
             ["eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"]
+          ],
+          [
+            "2026-08-25T15:59:35.000Z",
+            "0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",
+            ["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
         "confidentialTotalSupply": "0xe63c9be27b0da1ab96cf0400a0b15be6f0d9d40b1cff00000000000000010500",
@@ -1278,14 +1337,14 @@
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
         "fheCoprocessor": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
         "fheKmsVerifier": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
-        "getUnderlyingDenyListSelector": {
-          "isSet": false,
-          "selector": "0x00000000"
-        },
+        "getUnderlyingDenyListSelector": "0x00000000",
         "inferredTotalSupply": 10455146191145,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential BRON",
+        "observers": [],
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "paused": false,
+        "pauser": "eth:0x0000000000000000000000000000000000000000",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "rate": 1000000000000,
         "symbol": "cBRON",
@@ -1308,13 +1367,26 @@
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
-          "description": "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations.",
+          "description": "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.",
           "type": "RISK_PARAMETER"
         },
         "blockedUsers": {
           "severity": "HIGH",
           "description": "Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.",
           "type": "PERMISSION"
+        },
+        "observers": {
+          "severity": "HIGH",
+          "description": "Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.",
+          "type": "PERMISSION"
+        },
+        "pauser": {
+          "description": "Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.",
+          "type": "PERMISSION"
+        },
+        "paused": {
+          "description": "Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.",
+          "type": "RISK_PARAMETER"
         },
         "fheAcl": {
           "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
@@ -1328,7 +1400,7 @@
       },
       "implementationNames": {
         "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc": "ERC1967Proxy",
-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5": "ConfidentialWrapperV3"
+        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8": "ConfidentialWrapper"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1499,20 +1571,20 @@
       "name": "ConfidentialTGBPWrapper",
       "address": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
       "type": "Contract",
-      "template": "zama/ConfidentialWrapperV3",
+      "template": "zama/ConfidentialWrapper",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
+        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.",
       "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1767000887,
       "sinceBlock": 24117438,
       "values": {
         "$admin": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-        "$implementation": "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5",
+        "$implementation": "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8",
         "$pastUpgrades": [
           [
             "2025-12-29T09:34:47.000Z",
@@ -1528,9 +1600,14 @@
             "2026-06-01T13:52:11.000Z",
             "0x468f9a1433f795da68b88d6adb33f7180e86937d3f3437ec001173c52e7f35f4",
             ["eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"]
+          ],
+          [
+            "2026-08-25T15:59:35.000Z",
+            "0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",
+            ["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
         "confidentialTotalSupply": "0xcc3a4e581c35384e70c9c02ff9e71019dd80317094ff00000000000000010500",
@@ -1543,14 +1620,14 @@
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
         "fheCoprocessor": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
         "fheKmsVerifier": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
-        "getUnderlyingDenyListSelector": {
-          "isSet": true,
-          "selector": "0x97f735d5"
-        },
+        "getUnderlyingDenyListSelector": "0x97f735d5",
         "inferredTotalSupply": 7687968600,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential tGBP",
+        "observers": [],
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "paused": false,
+        "pauser": "eth:0x0000000000000000000000000000000000000000",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "rate": 1000000000000,
         "symbol": "ctGBP",
@@ -1573,13 +1650,26 @@
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
-          "description": "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations.",
+          "description": "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.",
           "type": "RISK_PARAMETER"
         },
         "blockedUsers": {
           "severity": "HIGH",
           "description": "Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.",
           "type": "PERMISSION"
+        },
+        "observers": {
+          "severity": "HIGH",
+          "description": "Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.",
+          "type": "PERMISSION"
+        },
+        "pauser": {
+          "description": "Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.",
+          "type": "PERMISSION"
+        },
+        "paused": {
+          "description": "Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.",
+          "type": "RISK_PARAMETER"
         },
         "fheAcl": {
           "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
@@ -1593,7 +1683,7 @@
       },
       "implementationNames": {
         "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9": "ERC1967Proxy",
-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5": "ConfidentialWrapperV3"
+        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8": "ConfidentialWrapper"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1606,20 +1696,20 @@
       "name": "ConfidentialUSDTWrapper",
       "address": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
       "type": "Contract",
-      "template": "zama/ConfidentialWrapperV3",
+      "template": "zama/ConfidentialWrapper",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
+        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.",
       "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1766750831,
       "sinceBlock": 24096698,
       "values": {
         "$admin": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-        "$implementation": "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5",
+        "$implementation": "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8",
         "$pastUpgrades": [
           [
             "2025-12-26T12:07:11.000Z",
@@ -1635,12 +1725,17 @@
             "2026-06-01T13:52:11.000Z",
             "0x468f9a1433f795da68b88d6adb33f7180e86937d3f3437ec001173c52e7f35f4",
             ["eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"]
+          ],
+          [
+            "2026-08-25T15:59:35.000Z",
+            "0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",
+            ["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x798b2ad359bbdb9fbed6e89a63631743bbf3265182ff00000000000000010500",
+        "confidentialTotalSupply": "0x3886a1a1a6ab8e02c6bc387a1a3eb4625007b4f0bfff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000dac17f958d2ee523a2206206994597c13d831ec7000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205553445400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056355534454000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2055534454222c2273796d626f6c223a226355534454222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205553445420736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -1650,14 +1745,14 @@
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
         "fheCoprocessor": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
         "fheKmsVerifier": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
-        "getUnderlyingDenyListSelector": {
-          "isSet": true,
-          "selector": "0x59bf1abe"
-        },
-        "inferredTotalSupply": 7670285721517,
+        "getUnderlyingDenyListSelector": "0x59bf1abe",
+        "inferredTotalSupply": 7668974313612,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential USDT",
+        "observers": [],
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "paused": false,
+        "pauser": "eth:0x0000000000000000000000000000000000000000",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "rate": 1,
         "symbol": "cUSDT",
@@ -1680,13 +1775,26 @@
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
-          "description": "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations.",
+          "description": "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.",
           "type": "RISK_PARAMETER"
         },
         "blockedUsers": {
           "severity": "HIGH",
           "description": "Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.",
           "type": "PERMISSION"
+        },
+        "observers": {
+          "severity": "HIGH",
+          "description": "Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.",
+          "type": "PERMISSION"
+        },
+        "pauser": {
+          "description": "Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.",
+          "type": "PERMISSION"
+        },
+        "paused": {
+          "description": "Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.",
+          "type": "RISK_PARAMETER"
         },
         "fheAcl": {
           "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
@@ -1700,7 +1808,7 @@
       },
       "implementationNames": {
         "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50": "ERC1967Proxy",
-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5": "ConfidentialWrapperV3"
+        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8": "ConfidentialWrapper"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -1738,7 +1846,7 @@
         {
           "permission": "interact",
           "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner"
         },
         {
@@ -1756,31 +1864,31 @@
         {
           "permission": "interact",
           "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner"
         },
         {
@@ -1804,7 +1912,7 @@
         {
           "permission": "interact",
           "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner"
         },
         {
@@ -1834,13 +1942,13 @@
         {
           "permission": "interact",
           "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner"
         },
         {
@@ -2209,20 +2317,20 @@
       "name": "ConfidentialBbqTGBPWrapper",
       "address": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
       "type": "Contract",
-      "template": "zama/ConfidentialWrapperV3",
+      "template": "zama/ConfidentialWrapper",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
+        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.",
       "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1780585031,
       "sinceBlock": 25244762,
       "values": {
         "$admin": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-        "$implementation": "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5",
+        "$implementation": "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8",
         "$pastUpgrades": [
           [
             "2026-06-04T14:57:11.000Z",
@@ -2233,9 +2341,14 @@
             "2026-06-05T12:41:11.000Z",
             "0x88640fcae1f813a06ecd522d8baad4898ea1abeec37935d5280f0edec77717e4",
             ["eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"]
+          ],
+          [
+            "2026-08-25T15:59:35.000Z",
+            "0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",
+            ["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
         "confidentialTotalSupply": "0xc16111568d6653739c6127e79797fe3aa220106891ff00000000000000010500",
@@ -2248,14 +2361,14 @@
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
         "fheCoprocessor": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
         "fheKmsVerifier": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
-        "getUnderlyingDenyListSelector": {
-          "isSet": false,
-          "selector": "0x00000000"
-        },
+        "getUnderlyingDenyListSelector": "0x00000000",
         "inferredTotalSupply": 3780540220951,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential bbqTGBP",
+        "observers": [],
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "paused": false,
+        "pauser": "eth:0x0000000000000000000000000000000000000000",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "rate": 1000000000000,
         "symbol": "cbbqTGBP",
@@ -2278,13 +2391,26 @@
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
-          "description": "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations.",
+          "description": "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.",
           "type": "RISK_PARAMETER"
         },
         "blockedUsers": {
           "severity": "HIGH",
           "description": "Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.",
           "type": "PERMISSION"
+        },
+        "observers": {
+          "severity": "HIGH",
+          "description": "Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.",
+          "type": "PERMISSION"
+        },
+        "pauser": {
+          "description": "Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.",
+          "type": "PERMISSION"
+        },
+        "paused": {
+          "description": "Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.",
+          "type": "RISK_PARAMETER"
         },
         "fheAcl": {
           "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
@@ -2298,7 +2424,7 @@
       },
       "implementationNames": {
         "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762": "ERC1967Proxy",
-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5": "ConfidentialWrapperV3"
+        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8": "ConfidentialWrapper"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -2398,7 +2524,7 @@
         {
           "permission": "interact",
           "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2425,7 +2551,7 @@
         {
           "permission": "interact",
           "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2434,7 +2560,7 @@
         {
           "permission": "interact",
           "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2443,7 +2569,7 @@
         {
           "permission": "interact",
           "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2452,7 +2578,7 @@
         {
           "permission": "interact",
           "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2461,7 +2587,7 @@
         {
           "permission": "interact",
           "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2509,7 +2635,7 @@
         {
           "permission": "interact",
           "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2554,7 +2680,7 @@
         {
           "permission": "interact",
           "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -2563,7 +2689,7 @@
         {
           "permission": "interact",
           "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -3372,20 +3498,20 @@
       "name": "ConfidentialWETHWrapper",
       "address": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
       "type": "Contract",
-      "template": "zama/ConfidentialWrapperV3",
+      "template": "zama/ConfidentialWrapper",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
+        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.",
       "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1766750843,
       "sinceBlock": 24096699,
       "values": {
         "$admin": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-        "$implementation": "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5",
+        "$implementation": "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8",
         "$pastUpgrades": [
           [
             "2025-12-26T12:07:23.000Z",
@@ -3401,12 +3527,17 @@
             "2026-06-01T13:52:11.000Z",
             "0x468f9a1433f795da68b88d6adb33f7180e86937d3f3437ec001173c52e7f35f4",
             ["eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"]
+          ],
+          [
+            "2026-08-25T15:59:35.000Z",
+            "0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",
+            ["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x11b0f879c1bd02809efb4c0f2aaa4d872d8990907bff00000000000000010500",
+        "confidentialTotalSupply": "0x7412e07f6bef8782ec9065b02f66f948941f6e7a8dff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205745544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056357455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2057455448222c2273796d626f6c223a226357455448222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205745544820736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -3416,14 +3547,14 @@
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
         "fheCoprocessor": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
         "fheKmsVerifier": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
-        "getUnderlyingDenyListSelector": {
-          "isSet": false,
-          "selector": "0x00000000"
-        },
-        "inferredTotalSupply": 21688788,
+        "getUnderlyingDenyListSelector": "0x00000000",
+        "inferredTotalSupply": 21188789,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential WETH",
+        "observers": [],
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "paused": false,
+        "pauser": "eth:0x0000000000000000000000000000000000000000",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "rate": 1000000000000,
         "symbol": "cWETH",
@@ -3446,13 +3577,26 @@
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
-          "description": "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations.",
+          "description": "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.",
           "type": "RISK_PARAMETER"
         },
         "blockedUsers": {
           "severity": "HIGH",
           "description": "Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.",
           "type": "PERMISSION"
+        },
+        "observers": {
+          "severity": "HIGH",
+          "description": "Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.",
+          "type": "PERMISSION"
+        },
+        "pauser": {
+          "description": "Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.",
+          "type": "PERMISSION"
+        },
+        "paused": {
+          "description": "Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.",
+          "type": "RISK_PARAMETER"
         },
         "fheAcl": {
           "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
@@ -3466,7 +3610,7 @@
       },
       "implementationNames": {
         "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893": "ERC1967Proxy",
-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5": "ConfidentialWrapperV3"
+        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8": "ConfidentialWrapper"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -3520,7 +3664,7 @@
         {
           "permission": "interact",
           "from": "eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -3547,7 +3691,7 @@
         {
           "permission": "interact",
           "from": "eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -3556,7 +3700,7 @@
         {
           "permission": "interact",
           "from": "eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -3565,7 +3709,7 @@
         {
           "permission": "interact",
           "from": "eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -3574,7 +3718,7 @@
         {
           "permission": "interact",
           "from": "eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -3583,7 +3727,7 @@
         {
           "permission": "interact",
           "from": "eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -3631,7 +3775,7 @@
         {
           "permission": "interact",
           "from": "eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -3676,7 +3820,7 @@
         {
           "permission": "interact",
           "from": "eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -3685,7 +3829,7 @@
         {
           "permission": "interact",
           "from": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
-          "description": "block and unblock users, and transfer ownership.",
+          "description": "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership.",
           "role": ".owner",
           "via": [
             { "address": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3" }
@@ -3990,20 +4134,20 @@
       "name": "ConfidentialUSDCWrapper",
       "address": "eth:0xe978F22157048E5DB8E5d07971376e86671672B2",
       "type": "Contract",
-      "template": "zama/ConfidentialWrapperV3",
+      "template": "zama/ConfidentialWrapper",
       "sourceHashes": [
         "0x7df5501f3f5ffd35e0c61153fcd76f37533ab73a80adf20a7a19b30c246faea3",
-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
+        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks.",
+      "description": "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.",
       "ignoreInWatchMode": ["confidentialTotalSupply", "inferredTotalSupply"],
       "deployerAddress": "eth:0xB15981a567C2c3fF472132505265BBe74576443c",
       "sinceTimestamp": 1766750819,
       "sinceBlock": 24096697,
       "values": {
         "$admin": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
-        "$implementation": "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5",
+        "$implementation": "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8",
         "$pastUpgrades": [
           [
             "2025-12-26T12:06:59.000Z",
@@ -4019,12 +4163,17 @@
             "2026-06-01T13:52:11.000Z",
             "0x468f9a1433f795da68b88d6adb33f7180e86937d3f3437ec001173c52e7f35f4",
             ["eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"]
+          ],
+          [
+            "2026-08-25T15:59:35.000Z",
+            "0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",
+            ["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "blockedUsers": [],
         "confidentialProtocolId": 1,
-        "confidentialTotalSupply": "0x17702c7c9317e6cb7b59778aac27b40fbf017814c3ff00000000000000010500",
+        "confidentialTotalSupply": "0xe3522872275ebfa6945ee3248ab322b514f5648612ff00000000000000010500",
         "constructorArgs": [
           "eth:0x0309b4308A6AC121B9b3A960aC7Bc9bd8256cf38",
           "0xd6d0faee00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000b6d69d5f334d8b97b194617b53c6ab62f8681ef30000000000000000000000000000000000000000000000000000000000000011436f6e666964656e7469616c205553444300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000056355534443000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009c646174613a6170706c69636174696f6e2f6a736f6e3b757466382c7b226e616d65223a22436f6e666964656e7469616c2055534443222c2273796d626f6c223a226355534443222c226465736372697074696f6e223a22436f6e666964656e7469616c2077726170706572206f66205553444320736869656c64696e6720697420696e746f206120636f6e666964656e7469616c20746f6b656e227d00000000"
@@ -4034,14 +4183,14 @@
         "fheAcl": "eth:0xcA2E8f1F656CD25C01F05d0b243Ab1ecd4a8ffb6",
         "fheCoprocessor": "eth:0xD82385dADa1ae3E969447f20A3164F6213100e75",
         "fheKmsVerifier": "eth:0x77627828a55156b04Ac0DC0eb30467f1a552BB03",
-        "getUnderlyingDenyListSelector": {
-          "isSet": true,
-          "selector": "0xfe575a87"
-        },
-        "inferredTotalSupply": 4387487308306,
+        "getUnderlyingDenyListSelector": "0xfe575a87",
+        "inferredTotalSupply": 3963775256228,
         "maxTotalSupply": "18446744073709551615",
         "name": "Confidential USDC",
+        "observers": [],
         "owner": "eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3",
+        "paused": false,
+        "pauser": "eth:0x0000000000000000000000000000000000000000",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "rate": 1,
         "symbol": "cUSDC",
@@ -4064,13 +4213,26 @@
         },
         "getUnderlyingDenyListSelector": {
           "severity": "HIGH",
-          "description": "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations.",
+          "description": "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.",
           "type": "RISK_PARAMETER"
         },
         "blockedUsers": {
           "severity": "HIGH",
           "description": "Wrapper-local denylist reconstructed from UserBlocked and UserUnblocked events.",
           "type": "PERMISSION"
+        },
+        "observers": {
+          "severity": "HIGH",
+          "description": "Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.",
+          "type": "PERMISSION"
+        },
+        "pauser": {
+          "description": "Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.",
+          "type": "PERMISSION"
+        },
+        "paused": {
+          "description": "Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.",
+          "type": "RISK_PARAMETER"
         },
         "fheAcl": {
           "description": "Zama ACL contract used by the confidential token stack to check which accounts/contracts may use encrypted handles."
@@ -4084,7 +4246,7 @@
       },
       "implementationNames": {
         "eth:0xe978F22157048E5DB8E5d07971376e86671672B2": "ERC1967Proxy",
-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5": "ConfidentialWrapperV3"
+        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8": "ConfidentialWrapper"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -4152,7 +4314,7 @@
             ]
           }
         },
-        "clock": 25831142,
+        "clock": 25846595,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -4196,8 +4358,8 @@
         "rewardRate": "10460000000000000000",
         "stakingToken": "eth:0xA12CC123ba206d4031D1c7f6223D1C2Ec249f4f3",
         "symbol": "stZAMA-KMS",
-        "totalStakedWeight": 127464143799168,
-        "totalSupply": "1442174642659746771371598255",
+        "totalStakedWeight": 127273139539963,
+        "totalSupply": "1438965493351328654606024609",
         "unstakeCooldownPeriod": 604800,
         "unstakeCooldownPeriod_fmt": "7d",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -6288,6 +6450,128 @@
       "function updateUserDecryptionThresholdForContext(uint256 kmsContextId, uint256 threshold)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error ERC7984InvalidReceiver(address receiver)",
+      "error ERC7984InvalidReceiver(address receiver)",
+      "error ERC7984InvalidSender(address sender)",
+      "error ERC7984TotalSupplyOverflow()",
+      "error ERC7984UnauthorizedCaller(address caller)",
+      "error ERC7984UnauthorizedSpender(address holder, address spender)",
+      "error ERC7984UnauthorizedUseOfEncryptedAmount(bytes32 amount, address user)",
+      "error ERC7984UtilsUnauthorizedUseOfEncryptedAmount(bytes32 retval, address to)",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedCall()",
+      "error InvalidInitialization()",
+      "error InvalidKMSSignatures()",
+      "error InvalidObserver(address observer)",
+      "error InvalidUnderlyingDenyListResponse()",
+      "error InvalidUnwrapRequest(bytes32 unwrapRequestId)",
+      "error InvalidWrapRecipientEncoding(uint256 length)",
+      "error NotInitializing()",
+      "error ObserverAlreadyConfigured(address observer)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error RenounceOwnershipDisabled()",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error SafeERC20FailedOperation(address token)",
+      "error SenderNotAllowedToUseHandle(bytes32 handle, address sender)",
+      "error SenderNotPauser(address sender)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error UnderlyingDenyListCallFailed()",
+      "error UnderlyingDenyListSelectorAlreadySet(bytes4 selector)",
+      "error UnderlyingDenyListedAddress(address user)",
+      "error UserAlreadyBlocked(address user)",
+      "error UserAlreadyUnblocked(address user)",
+      "error WrapperBlockedAddress(address user)",
+      "error ZamaProtocolUnsupported()",
+      "event AmountDiscloseRequested(bytes32 indexed encryptedAmount, address indexed requester)",
+      "event AmountDisclosed(bytes32 indexed encryptedAmount, uint64 amount)",
+      "event ConfidentialTransfer(address indexed from, address indexed to, bytes32 indexed amount)",
+      "event Initialized(uint64 version)",
+      "event ObserverAdded(address indexed observer)",
+      "event ObserverRemoved(address indexed observer)",
+      "event OperatorSet(address indexed holder, address indexed operator, uint48 until)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event PauserUpdated(address indexed pauser)",
+      "event PublicDecryptionVerified(bytes32[] handlesList, bytes abiEncodedCleartexts)",
+      "event UnderlyingDenyListSelectorUpdated(bytes4 indexed selector)",
+      "event Unpaused(address account)",
+      "event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)",
+      "event UnwrapRequested(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 amount)",
+      "event Upgraded(address indexed implementation)",
+      "event UserBlocked(address indexed user)",
+      "event UserUnblocked(address indexed user)",
+      "event Wrap(address indexed to, uint256 roundedAmount, bytes32 encryptedWrappedAmount)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function WILDCARD_CONTRACT() view returns (address)",
+      "function acceptOwnership()",
+      "function addObserver(address observer)",
+      "function blockUser(address user)",
+      "function confidentialBalanceOf(address account) view returns (bytes32)",
+      "function confidentialProtocolId() view returns (uint256)",
+      "function confidentialTotalSupply() view returns (bytes32)",
+      "function confidentialTransfer(address to, bytes32 encryptedAmount, bytes inputProof) returns (bytes32)",
+      "function confidentialTransfer(address to, bytes32 amount) returns (bytes32)",
+      "function confidentialTransferAndCall(address to, bytes32 amount, bytes data) returns (bytes32 transferred)",
+      "function confidentialTransferAndCall(address to, bytes32 encryptedAmount, bytes inputProof, bytes data) returns (bytes32 transferred)",
+      "function confidentialTransferFrom(address from, address to, bytes32 encryptedAmount, bytes inputProof) returns (bytes32 transferred)",
+      "function confidentialTransferFrom(address from, address to, bytes32 amount) returns (bytes32 transferred)",
+      "function confidentialTransferFromAndCall(address from, address to, bytes32 encryptedAmount, bytes inputProof, bytes data) returns (bytes32 transferred)",
+      "function confidentialTransferFromAndCall(address from, address to, bytes32 amount, bytes data) returns (bytes32 transferred)",
+      "function contractURI() view returns (string)",
+      "function decimals() view returns (uint8)",
+      "function discloseEncryptedAmount(bytes32 encryptedAmount, uint64 cleartextAmount, bytes decryptionProof)",
+      "function finalizeUnwrap(bytes32 unwrapRequestId, uint64 unwrapAmountCleartext, bytes decryptionProof)",
+      "function getUnderlyingDenyListSelector() view returns (bytes4 selector)",
+      "function inferredTotalSupply() view returns (uint256)",
+      "function initialize(string name_, string symbol_, string contractURI_, address underlying_, address owner_, address[] blockedUsers, bytes4 underlyingDenyListSelector, address[] initialObservers, address pauser_)",
+      "function isBlocked(address user) view returns (bool)",
+      "function isBlockedOnUnderlying(address user) view returns (bool)",
+      "function isBlockedOnWrapper(address user) view returns (bool)",
+      "function isObserver(address observer) view returns (bool)",
+      "function isOperator(address holder, address spender) view returns (bool)",
+      "function maxTotalSupply() view returns (uint256)",
+      "function name() view returns (string)",
+      "function observerAt(uint256 index) view returns (address)",
+      "function observerCount() view returns (uint256)",
+      "function observers() view returns (address[])",
+      "function onTransferReceived(address operator, address from, uint256 amount, bytes data) returns (bytes4)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pauser() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function rate() view returns (uint256)",
+      "function reinitializeV4(address[] initialObservers, address pauser_)",
+      "function removeObserver(address observer)",
+      "function renounceObserver()",
+      "function renounceOwnership()",
+      "function requestDiscloseEncryptedAmount(bytes32 encryptedAmount)",
+      "function setOperator(address operator, uint48 until)",
+      "function setPauser(address pauser_)",
+      "function setUnderlyingDenyListSelector(bytes4 selector_)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function transferOwnership(address newOwner)",
+      "function unblockUser(address user)",
+      "function underlying() view returns (address)",
+      "function unpause()",
+      "function unwrap(address from, address to, bytes32 encryptedAmount, bytes inputProof) returns (bytes32)",
+      "function unwrap(address from, address to, bytes32 amount) returns (bytes32)",
+      "function unwrapAmount(bytes32 unwrapRequestId) view returns (bytes32)",
+      "function unwrapRequester(bytes32 unwrapRequestId) view returns (address)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function wrap(address to, uint256 amount) returns (bytes32)"
+    ],
     "eth:0x31bBD7a242A38372DE92CA304fE29C12C90A382C": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -6465,98 +6749,6 @@
       "function updateMultisigSettings(tuple(bool onlyListed, uint16 minApprovals) _multisigSettings)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5": [
-      "error AddressEmptyCode(address target)",
-      "error BlockedUser(address user)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error ERC7984InvalidReceiver(address receiver)",
-      "error ERC7984InvalidReceiver(address receiver)",
-      "error ERC7984InvalidSender(address sender)",
-      "error ERC7984TotalSupplyOverflow()",
-      "error ERC7984UnauthorizedCaller(address caller)",
-      "error ERC7984UnauthorizedSpender(address holder, address spender)",
-      "error ERC7984UnauthorizedUseOfEncryptedAmount(bytes32 amount, address user)",
-      "error ERC7984ZeroBalance(address holder)",
-      "error FailedCall()",
-      "error InvalidInitialization()",
-      "error InvalidKMSSignatures()",
-      "error InvalidUnderlyingDenyListResponse()",
-      "error InvalidUnwrapRequest(bytes32 unwrapRequestId)",
-      "error NotInitializing()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "error SafeERC20FailedOperation(address token)",
-      "error SenderNotAllowedToUseHandle(bytes32 handle, address sender)",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "error UnderlyingDenyListCallFailed()",
-      "error UnderlyingDenyListedAddress(address user)",
-      "error UserAlreadyBlocked(address user)",
-      "error UserAlreadyUnblocked(address user)",
-      "error ZamaProtocolUnsupported()",
-      "event AmountDiscloseRequested(bytes32 indexed encryptedAmount, address indexed requester)",
-      "event AmountDisclosed(bytes32 indexed encryptedAmount, uint64 amount)",
-      "event ConfidentialTransfer(address indexed from, address indexed to, bytes32 indexed amount)",
-      "event Initialized(uint64 version)",
-      "event OperatorSet(address indexed holder, address indexed operator, uint48 until)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PublicDecryptionVerified(bytes32[] handlesList, bytes abiEncodedCleartexts)",
-      "event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)",
-      "event UnwrapRequested(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 amount)",
-      "event Upgraded(address indexed implementation)",
-      "event UserBlocked(address indexed user)",
-      "event UserUnblocked(address indexed user)",
-      "event Wrap(address indexed to, uint256 roundedAmount, bytes32 encryptedWrappedAmount)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function acceptOwnership()",
-      "function blockUser(address user)",
-      "function confidentialBalanceOf(address account) view returns (bytes32)",
-      "function confidentialProtocolId() view returns (uint256)",
-      "function confidentialTotalSupply() view returns (bytes32)",
-      "function confidentialTransfer(address to, bytes32 encryptedAmount, bytes inputProof) returns (bytes32)",
-      "function confidentialTransfer(address to, bytes32 amount) returns (bytes32)",
-      "function confidentialTransferAndCall(address to, bytes32 amount, bytes data) returns (bytes32 transferred)",
-      "function confidentialTransferAndCall(address to, bytes32 encryptedAmount, bytes inputProof, bytes data) returns (bytes32 transferred)",
-      "function confidentialTransferFrom(address from, address to, bytes32 encryptedAmount, bytes inputProof) returns (bytes32 transferred)",
-      "function confidentialTransferFrom(address from, address to, bytes32 amount) returns (bytes32 transferred)",
-      "function confidentialTransferFromAndCall(address from, address to, bytes32 encryptedAmount, bytes inputProof, bytes data) returns (bytes32 transferred)",
-      "function confidentialTransferFromAndCall(address from, address to, bytes32 amount, bytes data) returns (bytes32 transferred)",
-      "function contractURI() view returns (string)",
-      "function decimals() view returns (uint8)",
-      "function discloseEncryptedAmount(bytes32 encryptedAmount, uint64 cleartextAmount, bytes decryptionProof)",
-      "function finalizeUnwrap(bytes32 unwrapRequestId, uint64 unwrapAmountCleartext, bytes decryptionProof)",
-      "function getUnderlyingDenyListSelector() view returns (bool isSet, bytes4 selector)",
-      "function inferredTotalSupply() view returns (uint256)",
-      "function initialize(string name_, string symbol_, string contractURI_, address underlying_, address owner_)",
-      "function isBlocked(address user) view returns (bool)",
-      "function isOperator(address holder, address spender) view returns (bool)",
-      "function maxTotalSupply() view returns (uint256)",
-      "function name() view returns (string)",
-      "function onTransferReceived(address operator, address from, uint256 amount, bytes data) returns (bytes4)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function rate() view returns (uint256)",
-      "function reinitializeV2()",
-      "function reinitializeV3(address[] blockedUsers, bytes4 underlyingDenyListSelector, bool hasUnderlyingDenyListSelector_)",
-      "function renounceOwnership()",
-      "function requestDiscloseEncryptedAmount(bytes32 encryptedAmount)",
-      "function setOperator(address operator, uint48 until)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function symbol() view returns (string)",
-      "function transferOwnership(address newOwner)",
-      "function unblockUser(address user)",
-      "function underlying() view returns (address)",
-      "function unwrap(address from, address to, bytes32 encryptedAmount, bytes inputProof) returns (bytes32)",
-      "function unwrap(address from, address to, bytes32 amount) returns (bytes32)",
-      "function unwrapAmount(bytes32 unwrapRequestId) view returns (bytes32)",
-      "function unwrapRequester(bytes32 unwrapRequestId) view returns (address)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function wrap(address to, uint256 amount) returns (bytes32)"
     ],
     "eth:0x58C1F7Bc62Bb63fb137bc8F6d8ea6321a0501d29": [
       "constructor()",
@@ -7962,7 +8154,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "zama/CiphertextCommits": "0x4af301cefd395479dd672918f72424dfe344bf949d3cda2b65fc5cf5316816bd",
     "zama/ConfidentialTokenWrappersRegistry": "0xac4c61aea2fe3548481375913505c610bc9a6c1ea7a22dfc9ac73d0c1a5b9a66",
-    "zama/ConfidentialWrapperV3": "0x4c4042fbf171de0b14b575e4bde209e4e75a7cac9f7ef1ed7fe20dadf9a65cb3",
+    "zama/ConfidentialWrapper": "0x57e01b7e4c9067638a4f67dcf88aab11f4877fb81dec977bfd59b118f02d444e",
     "zama/Decryption_v0_5_0": "0xf7de11ef6782ebf68e102501316d7179c6213af2476f361584c01ea2773ffddb",
     "zama/GatewayConfig_v0_6_0": "0xc7f5e473c5e69c597defe4fd99d83e82d01187142d8ed30c1451e9861e093fa2",
     "zama/GatewayPauserSet": "0x6e3bdded022ec01666a6e04d5f08b9f51c449213ba48bee15c272d39a5e512c8",
@@ -7982,6 +8174,6 @@
     "zama/ZamaPauserSet": "0x1af56cc25e42342b2f464add26e41d36787603eb96bf24f0923abdf7caf5d35f",
     "zama/ZamaProtocolConfig": "0xfb7d7b44691fe08077e0599f81136c1579f4123d76ccfb12fc11e8dffa8949c8"
   },
-  "usedBlockNumbers": { "ethereum": 25831142, "zama": 2582062 },
-  "permissionsConfigHash": "0xfa7fd4813dfc3c2289630db1b210fd103a5a69ff07ac3d1c348d031b8d56548a"
+  "usedBlockNumbers": { "ethereum": 25846595, "zama": 2754431 },
+  "permissionsConfigHash": "0x9861a7101e638b3331670d08515df7552c9aed6ec3861b713690fca54d232f1c"
 }

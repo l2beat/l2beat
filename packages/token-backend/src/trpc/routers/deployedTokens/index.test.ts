@@ -468,6 +468,7 @@ describe('deployedTokensRouter', () => {
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByPrimaryKeys: mockGetTokens,
+          getAll: mockFn().resolvesTo([]),
         }),
       })
       const mockDb = mockObject<Database>({})
@@ -483,14 +484,18 @@ describe('deployedTokensRouter', () => {
             chain: 'base',
             address: '0xbbb',
             symbol: 'USDC',
+            abstractTokenId: 'USDC',
             isDeployed: true,
+            hasRelations: true,
           },
           {
             id: 'ethereum:0xaaa',
             chain: 'ethereum',
             address: '0xaaa',
             symbol: 'USDC',
+            abstractTokenId: 'USDC',
             isDeployed: true,
+            hasRelations: true,
           },
         ],
         relations: relations.map((relation) => ({
@@ -540,6 +545,7 @@ describe('deployedTokensRouter', () => {
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByPrimaryKeys: mockFn().resolvesTo(tokens),
+          getAll: mockFn().resolvesTo([]),
         }),
       })
 
@@ -556,21 +562,27 @@ describe('deployedTokensRouter', () => {
             chain: 'ethereum',
             address: '0xaaa',
             symbol: 'USDC',
+            abstractTokenId: 'USDC',
             isDeployed: true,
+            hasRelations: true,
           },
           {
             id: 'base:0xbbb',
             chain: 'base',
             address: '0xbbb',
             symbol: 'USDC',
+            abstractTokenId: 'USDC-BASE',
             isDeployed: true,
+            hasRelations: true,
           },
           {
             id: 'optimism:0xccc',
             chain: 'optimism',
             address: '0xccc',
             symbol: null,
+            abstractTokenId: null,
             isDeployed: false,
+            hasRelations: true,
           },
         ],
         relations: [
@@ -606,6 +618,7 @@ describe('deployedTokensRouter', () => {
               symbol: 'OP',
             }),
           ]),
+          getAll: mockFn().resolvesTo([]),
         }),
       })
 
@@ -646,6 +659,7 @@ describe('deployedTokensRouter', () => {
         }),
         deployedToken: mockObject<TokenDatabase['deployedToken']>({
           getByPrimaryKeys: getTokens,
+          getAll: mockFn().resolvesTo([]),
         }),
       })
 
@@ -662,14 +676,18 @@ describe('deployedTokensRouter', () => {
             chain: 'ethereum',
             address: '0xaaa',
             symbol: null,
+            abstractTokenId: null,
             isDeployed: false,
+            hasRelations: true,
           },
           {
             id: 'base:0xbbb',
             chain: 'base',
             address: '0xbbb',
             symbol: null,
+            abstractTokenId: null,
             isDeployed: false,
+            hasRelations: true,
           },
         ],
         relations: [{ ...supported, isConflict: false }],
@@ -678,6 +696,108 @@ describe('deployedTokensRouter', () => {
         { chain: 'ethereum', address: '0xaaa' },
         { chain: 'base', address: '0xbbb' },
       ])
+    })
+
+    it('appends assigned tokens without relations when their abstract token has endpoints', async () => {
+      const relation = tokenRelationRoute({
+        tokenAChain: 'base',
+        tokenAAddress: '0xbbb',
+        tokenBChain: 'ethereum',
+        tokenBAddress: '0xaaa',
+        plugin: 'test-plugin',
+      })
+      const endpointTokens = [
+        deployedToken({
+          chain: 'base',
+          address: '0xbbb',
+          symbol: 'USDC',
+          abstractTokenId: 'USDC',
+        }),
+        deployedToken({
+          chain: 'ethereum',
+          address: '0xaaa',
+          symbol: 'USDC',
+          abstractTokenId: 'USDC',
+        }),
+      ]
+      const withoutRelations = deployedToken({
+        chain: 'arbitrum',
+        address: '0xddd',
+        symbol: 'USDC.e',
+        abstractTokenId: 'USDC',
+      })
+      const mockTokenDb = mockObject<TokenDatabase>({
+        tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+          getAllRoutes: mockFn().resolvesTo([relation]),
+        }),
+        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+          getByPrimaryKeys: mockFn().resolvesTo(endpointTokens),
+          getAll: mockFn().resolvesTo([
+            ...endpointTokens,
+            withoutRelations,
+            // A different abstract token with no endpoints — nowhere to go.
+            deployedToken({
+              chain: 'polygon',
+              address: '0xeee',
+              symbol: 'DAI',
+              abstractTokenId: 'DAI',
+            }),
+            // Ignored tokens stay hidden even when assigned.
+            deployedToken({
+              chain: 'optimism',
+              address: '0xfff',
+              symbol: 'USDC',
+              abstractTokenId: 'USDC',
+              ignored: true,
+            }),
+            // Assignment missing — nothing says where it belongs.
+            deployedToken({
+              chain: 'linea',
+              address: '0x999',
+              symbol: 'USDC',
+            }),
+          ]),
+        }),
+      })
+
+      const caller = createRouter(
+        mockTokenDb,
+        mockObject<Database>({}),
+        mockObject<CoingeckoClient>({}),
+      )
+
+      expect(await caller.getRelationsGraph()).toEqual({
+        nodes: [
+          {
+            id: 'base:0xbbb',
+            chain: 'base',
+            address: '0xbbb',
+            symbol: 'USDC',
+            abstractTokenId: 'USDC',
+            isDeployed: true,
+            hasRelations: true,
+          },
+          {
+            id: 'ethereum:0xaaa',
+            chain: 'ethereum',
+            address: '0xaaa',
+            symbol: 'USDC',
+            abstractTokenId: 'USDC',
+            isDeployed: true,
+            hasRelations: true,
+          },
+          {
+            id: 'arbitrum:0xddd',
+            chain: 'arbitrum',
+            address: '0xddd',
+            symbol: 'USDC.e',
+            abstractTokenId: 'USDC',
+            isDeployed: true,
+            hasRelations: false,
+          },
+        ],
+        relations: [{ ...relation, isConflict: false }],
+      })
     })
   })
 

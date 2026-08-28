@@ -71,6 +71,104 @@ describe(buildRelationGraphScene.name, () => {
     expect(scene.clusterLabels.map((label) => label.text)).toEqual(['USDC'])
     expect(scene.clusterLabels[0]?.nodes.length).toEqual(3)
   })
+
+  it('attaches a node without relations to the cluster whose most common abstract token matches, without an edge', () => {
+    const withoutRelations = graphNode('arbitrum', '0xddd', 'USDC.e', {
+      abstractTokenId: 'AT-USDC',
+      hasRelations: false,
+    })
+    const scene = buildRelationGraphScene({
+      nodes: [
+        graphNode('ethereum', '0xaaa', 'USDC', { abstractTokenId: 'AT-USDC' }),
+        graphNode('base', '0xbbb', 'USDC', { abstractTokenId: 'AT-USDC' }),
+        // A dissenting assignment inside the cluster is outvoted.
+        graphNode('optimism', '0xccc', 'USDC', {
+          abstractTokenId: 'AT-OTHER',
+        }),
+        withoutRelations,
+      ],
+      relations: [
+        relation('ethereum', '0xaaa', 'base', '0xbbb', 'first'),
+        relation('ethereum', '0xaaa', 'optimism', '0xccc', 'second'),
+      ],
+    })
+
+    expect(scene.clusterLabels.length).toEqual(1)
+    expect(
+      scene.clusterLabels[0]?.nodes.some(
+        (node) => node.data.id === withoutRelations.id,
+      ),
+    ).toEqual(true)
+    expect(
+      scene.links.some(
+        (link) =>
+          link.source.data.id === withoutRelations.id ||
+          link.target.data.id === withoutRelations.id,
+      ),
+    ).toEqual(false)
+  })
+
+  it('keeps a node without relations whose abstract token claims no cluster as its own cluster', () => {
+    const scene = buildRelationGraphScene({
+      nodes: [
+        graphNode('ethereum', '0xaaa', 'USDC', { abstractTokenId: 'AT-USDC' }),
+        graphNode('base', '0xbbb', 'USDC', { abstractTokenId: 'AT-USDC' }),
+        graphNode('polygon', '0xeee', 'DAI', {
+          abstractTokenId: 'AT-OTHER',
+          hasRelations: false,
+        }),
+      ],
+      relations: [relation('ethereum', '0xaaa', 'base', '0xbbb', 'first')],
+    })
+
+    expect(scene.clusterLabels.map((label) => label.text)).toEqual([
+      'USDC',
+      'DAI',
+    ])
+    expect(scene.clusterLabels[1]?.nodes.length).toEqual(1)
+  })
+
+  it('prefers the largest cluster when several share the most common abstract token', () => {
+    const withoutRelations = graphNode('polygon', '0xfff', 'USDC', {
+      abstractTokenId: 'AT-USDC',
+      hasRelations: false,
+    })
+    const scene = buildRelationGraphScene({
+      nodes: [
+        graphNode('ethereum', '0xaaa', 'USDC', { abstractTokenId: 'AT-USDC' }),
+        graphNode('base', '0xbbb', 'USDC', { abstractTokenId: 'AT-USDC' }),
+        graphNode('arbitrum', '0xccc', 'USDC', {
+          abstractTokenId: 'AT-USDC',
+        }),
+        graphNode('optimism', '0xddd', 'USDC', {
+          abstractTokenId: 'AT-USDC',
+        }),
+        graphNode('linea', '0xeee', 'USDC', { abstractTokenId: 'AT-USDC' }),
+        withoutRelations,
+      ],
+      relations: [
+        relation('ethereum', '0xaaa', 'base', '0xbbb', 'first'),
+        relation('ethereum', '0xaaa', 'arbitrum', '0xccc', 'second'),
+        relation('optimism', '0xddd', 'linea', '0xeee', 'third'),
+      ],
+    })
+
+    // Clusters are sorted largest first; the three-node cluster won the
+    // node without relations and shows four.
+    expect(
+      scene.clusterLabels.map((label) =>
+        label.nodes.map((node) => node.data.id),
+      ),
+    ).toEqual([
+      [
+        tokenId('arbitrum', '0xccc'),
+        tokenId('base', '0xbbb'),
+        tokenId('ethereum', '0xaaa'),
+        withoutRelations.id,
+      ],
+      [tokenId('linea', '0xeee'), tokenId('optimism', '0xddd')],
+    ])
+  })
 })
 
 describe(findNodeAt.name, () => {
@@ -138,13 +236,16 @@ function graphNode(
   chain: string,
   address: string,
   symbol: string,
+  options: { abstractTokenId?: string; hasRelations?: boolean } = {},
 ): RelationGraphNode {
   return {
     id: tokenId(chain, address),
     chain,
     address,
     symbol,
+    abstractTokenId: options.abstractTokenId ?? null,
     isDeployed: true,
+    hasRelations: options.hasRelations ?? true,
   }
 }
 
