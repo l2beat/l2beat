@@ -20,6 +20,7 @@ import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('payy')
 
@@ -37,6 +38,7 @@ export const payy: ScalingProject = {
     slug: 'payy',
     description:
       'Payy is a payments-focused ZK network for private stablecoin transfers, settled on Ethereum with aggregated validity proofs and validator signatures, while transaction data is kept offchain.',
+    detailedDescription: readProjectMarkdown('payy', 'detailedDescription'),
     purposes: ['Payments', 'Privacy'],
     links: {
       websites: ['https://payy.network'],
@@ -181,11 +183,16 @@ export const payy: ScalingProject = {
     ],
     otherConsiderations: [
       {
-        name: 'Private transfers with public entries and exits',
+        name: 'Confidential notes over a public spend graph',
         description:
-          'Funds on Payy are represented as UTXO-like notes: the chain state only contains note commitments and nullifiers, and transfers are proven in zero knowledge, hiding sender, recipient and amount. Deposits to and withdrawals from the Ethereum escrow are public, so activity can potentially be correlated at the boundaries.',
+          'Funds on Payy are represented as UTXO-like notes, and the chain state is a tree of note commitments. Each transaction proof hides the note contents (owner address, value, asset and entropy) but publishes the commitments of the two notes it consumes and the two it creates, and spending removes the input commitment from the tree. The deployed circuits do not use nullifiers, so anyone with Payy block data (served by the public node RPC and the explorer) can follow which commitments were spent into which, i.e. the transaction graph is public while its contents are not. Deposits to and withdrawals from the Ethereum escrow are public, and a withdrawal reveals asset, amount and Ethereum recipient onchain together with a burn hash that equals the first consumed note commitment, which anchors the withdrawal to a specific node in that graph.',
         risks: [],
         references: [
+          {
+            title:
+              'noir/utxo - commitments are public inputs of the UTXO proof',
+            url: 'https://github.com/polybase/payy/blob/main/noir/utxo/src/main.nr',
+          },
           {
             title: 'Payy docs',
             url: 'https://docs.payy.network',
@@ -253,6 +260,7 @@ export const payy: ScalingProject = {
     // backend (extractPrivacyFlow) plus the extractor union in types.ts, and a
     // solution for withdrawal amounts. Until then Payy is shown as untracked.
     tokens: [],
+    zkCatalogId: ProjectId('barretenberg'),
     exitWindow: {
       value: 'None',
       sentiment: 'bad',
@@ -266,32 +274,31 @@ export const payy: ScalingProject = {
       },
     },
     reproducibility: {
-      // TODO: verify that the published repository (contracts, circuits, node)
-      // is complete and can actually be built and run locally
       value: 'Reproducible',
       sentiment: 'good',
       description:
-        'The contracts, Noir circuits and node software are published in the payy repository and can be built and run locally.',
+        'The contracts, Noir circuits and node software are published in the Payy repository and can be built and run locally.',
     },
     privacy: {
-      // TODO: verify whether Payy has any compliance mechanism, privileged
-      // view keys or selective disclosure feature, and adjust the value and
-      // description accordingly
-      value: 'Private transfers',
-      sentiment: 'good',
+      value: 'Linkable notes',
+      sentiment: 'warning',
       description:
-        'Transfers within the Payy network are proven in zero knowledge, hiding sender, recipient and amount. Deposits (mints) and withdrawals (burns) are public on Ethereum, so activity can potentially be correlated at the boundaries.',
+        'Transactions within the Payy network do not hide the links between token transferred: anyone with Payy block data can reconstruct the spend graph. Only the contents of each note (owner address, amount and asset) are hidden.',
     },
-    // TODO: noteDiscovery - describe how the Payy wallet discovers the user's
-    // notes and what the validators / RPC provider learn about the user from
-    // the queries
+    noteDiscovery: {
+      description:
+        "Funds are held as UTXO-like notes and the L2 chain state stores only their commitments, so a recipient cannot reconstruct an incoming note from the chain alone. Payy runs an encrypted registry, where the sender submits full note data, encrypted to the receiver.\n\nThis registry also stores the recipient's public key in the clear, and clients poll it for their own address (`GET /registry/notes/{public_key}`). So the centralized operator learns which addresses receive notes and when, and who transacted with whom, while note values stay encrypted.\n\nThe protocol itself allows direct peer-to-peer note communication that bypasses the registry.",
+      risks: [
+        'The Payy-operated note registry, note lookup and wallet backup services learn which addresses receive and hold which notes and can link senders to recipients. The same operator holds KYC data for users of the Payy card and fiat ramps, which can tie those addresses to real identities.',
+        'A compromise of a recipient key or of the encryption scheme exposes all note data ever stored in the encrypted registry.',
+      ],
+    },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
       PRIVACY_ATTRIBUTES.transfers,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
-    // TODO: riskSummary - add a riskSummary.md for the privacy project page
-    // (see e.g. privacy-pools or umbra for reference)
+    riskSummary: readProjectMarkdown('payy', 'riskSummary'),
     upgradesAndGovernance: {
       content: upgradesAndGovernanceContent,
     },
