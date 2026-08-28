@@ -22,6 +22,8 @@ export const lisk: ScalingProject = opStackL2({
   display: {
     name: 'Lisk',
     slug: 'lisk',
+    headerWarning:
+      'Lisk Chain will shut down on October 31, 2026. See the [announcement](https://lisk.com/blog/posts/introducing-the-new-lisk) and withdraw your funds to Ethereum.',
     description:
       'Lisk is an OP stack rollup on Ethereum that migrated from the L1 blockchain of the same name.',
     links: {
@@ -45,6 +47,14 @@ export const lisk: ScalingProject = opStackL2({
     },
   },
   milestones: [
+    {
+      title: 'Lisk Chain shutdown announcement',
+      url: 'https://lisk.com/blog/posts/introducing-the-new-lisk',
+      date: '2026-08-25T00:00:00Z',
+      description:
+        'Lisk announces its chain will shut down on October 31, 2026. Live projects will migrate to Celo.',
+      type: 'general',
+    },
     {
       title: 'Mainnet Launch',
       url: 'https://lisk.com/blog/posts/lisk-user-mainnet-is-live/',
