@@ -11,10 +11,11 @@ import type {
 } from './railgun/RailgunBroadcasterProvider'
 import type { PrivacyRelayerSampleConfig } from './types'
 
-const TODAY = UnixTime.toStartOf(UnixTime.now(), 'day')
+const SAMPLE_TIME = UnixTime.fromDate(new Date('2026-08-20T12:00:00Z'))
+const SAMPLE_DAY = UnixTime.toStartOf(SAMPLE_TIME, 'day')
 
 describe(PrivacyRelayerSampler.name, () => {
-  it('observes and saves a sample for the current day', async () => {
+  it('observes and saves a sample for the timestamp day', async () => {
     const provider = mockObject<RailgunBroadcasterProvider>({
       observe: mockFn().resolvesToOnce(
         observations([
@@ -34,7 +35,7 @@ describe(PrivacyRelayerSampler.name, () => {
     })
 
     const sampler = createSampler(provider, privacyRelayerSample)
-    await sampler.sampleToday()
+    await sampler.sample(SAMPLE_TIME)
 
     expect(provider.observe).toHaveBeenOnlyCalledWith({
       chainIds: [1],
@@ -45,7 +46,7 @@ describe(PrivacyRelayerSampler.name, () => {
         configurationId: 'config-1',
         projectId: 'railgun',
         chain: 'ethereum',
-        timestamp: TODAY,
+        timestamp: SAMPLE_DAY,
         relayerCount: 46,
         messagesReceived: 1000,
         messagesParsed: 995,
@@ -54,7 +55,7 @@ describe(PrivacyRelayerSampler.name, () => {
     ])
   })
 
-  it('skips configurations that already have a sample for today', async () => {
+  it('skips configurations that already have a sample for the timestamp day', async () => {
     const provider = mockObject<RailgunBroadcasterProvider>({
       observe: mockFn(),
     })
@@ -64,7 +65,7 @@ describe(PrivacyRelayerSampler.name, () => {
     })
 
     const sampler = createSampler(provider, privacyRelayerSample)
-    await sampler.sampleToday()
+    await sampler.sample(SAMPLE_TIME)
 
     expect(provider.observe).not.toHaveBeenCalled()
     expect(privacyRelayerSample.upsertMany).not.toHaveBeenCalled()
@@ -80,9 +81,9 @@ describe(PrivacyRelayerSampler.name, () => {
     })
 
     const sampler = createSampler(provider, privacyRelayerSample, [
-      configuration({ sinceTimestamp: UnixTime(TODAY + UnixTime.DAY) }),
+      configuration({ sinceTimestamp: SAMPLE_DAY + UnixTime.DAY }),
     ])
-    await sampler.sampleToday()
+    await sampler.sample(SAMPLE_TIME)
 
     expect(
       privacyRelayerSample.getConfigurationIdsByTimestamp,
@@ -111,7 +112,7 @@ describe(PrivacyRelayerSampler.name, () => {
     })
 
     const sampler = createSampler(provider, privacyRelayerSample)
-    await sampler.sampleToday()
+    await sampler.sample(SAMPLE_TIME)
 
     expect(privacyRelayerSample.upsertMany).not.toHaveBeenCalled()
   })
@@ -136,7 +137,7 @@ describe(PrivacyRelayerSampler.name, () => {
     })
 
     const sampler = createSampler(provider, privacyRelayerSample)
-    await sampler.sampleToday()
+    await sampler.sample(SAMPLE_TIME)
 
     expect(privacyRelayerSample.upsertMany).not.toHaveBeenCalled()
   })
@@ -151,7 +152,7 @@ describe(PrivacyRelayerSampler.name, () => {
     })
 
     const sampler = createSampler(provider, privacyRelayerSample)
-    await sampler.sampleToday()
+    await sampler.sample(SAMPLE_TIME)
 
     expect(privacyRelayerSample.upsertMany).not.toHaveBeenCalled()
   })
@@ -176,14 +177,14 @@ describe(PrivacyRelayerSampler.name, () => {
     })
 
     const sampler = createSampler(provider, privacyRelayerSample)
-    await sampler.sampleToday()
+    await sampler.sample(SAMPLE_TIME)
 
     expect(privacyRelayerSample.upsertMany).toHaveBeenOnlyCalledWith([
       {
         configurationId: 'config-1',
         projectId: 'railgun',
         chain: 'ethereum',
-        timestamp: TODAY,
+        timestamp: SAMPLE_DAY,
         relayerCount: 0,
         messagesReceived: 10,
         messagesParsed: 10,
@@ -216,7 +217,7 @@ describe(PrivacyRelayerSampler.name, () => {
       configurations,
     )
 
-    await sampler.sampleToday()
+    await sampler.sample(SAMPLE_TIME)
 
     expect(provider.observe).toHaveBeenOnlyCalledWith({
       chainIds: [1, 137],
@@ -227,7 +228,7 @@ describe(PrivacyRelayerSampler.name, () => {
         configurationId: 'config-1',
         projectId: 'railgun',
         chain: 'ethereum',
-        timestamp: TODAY,
+        timestamp: SAMPLE_DAY,
         relayerCount: 10,
         messagesReceived: 1,
         messagesParsed: 1,
@@ -237,7 +238,7 @@ describe(PrivacyRelayerSampler.name, () => {
         configurationId: 'config-137',
         projectId: 'railgun',
         chain: 'polygonpos',
-        timestamp: TODAY,
+        timestamp: SAMPLE_DAY,
         relayerCount: 5,
         messagesReceived: 1,
         messagesParsed: 1,
@@ -277,14 +278,14 @@ describe(PrivacyRelayerSampler.name, () => {
       configurations,
     )
 
-    await sampler.sampleToday()
+    await sampler.sample(SAMPLE_TIME)
 
     expect(privacyRelayerSample.upsertMany).toHaveBeenOnlyCalledWith([
       {
         configurationId: 'config-1',
         projectId: 'railgun',
         chain: 'ethereum',
-        timestamp: TODAY,
+        timestamp: SAMPLE_DAY,
         relayerCount: 10,
         messagesReceived: 1,
         messagesParsed: 1,
@@ -295,6 +296,7 @@ describe(PrivacyRelayerSampler.name, () => {
 
   it('samples on start and on each new hour', () => {
     const clock = mockObject<Clock>({
+      getLastHour: mockFn().returnsOnce(SAMPLE_TIME),
       onNewHour: mockFn().returnsOnce(() => {}),
     })
     const privacyRelayerSample = mockObject<Database['privacyRelayerSample']>({
@@ -311,6 +313,7 @@ describe(PrivacyRelayerSampler.name, () => {
     sampler.start()
 
     expect(clock.onNewHour).toHaveBeenCalled()
+    expect(clock.getLastHour).toHaveBeenOnlyCalledWith()
   })
 
   describe(PrivacyRelayerSampler.idToConfigurationId.name, () => {

@@ -21,7 +21,7 @@ interface PrivacyRelayerSamplerDeps {
 
 export class PrivacyRelayerSampler {
   private readonly logger: Logger
-  private readonly taskQueue: TaskQueue<void>
+  private readonly taskQueue: TaskQueue<UnixTime>
 
   constructor(
     private readonly $: PrivacyRelayerSamplerDeps,
@@ -29,7 +29,7 @@ export class PrivacyRelayerSampler {
   ) {
     this.logger = logger.for(this)
     this.taskQueue = new TaskQueue(
-      async () => this.sampleToday(),
+      async (timestamp) => this.sample(timestamp),
       this.logger.for('taskQueue'),
       { metricsId: PrivacyRelayerSampler.name },
     )
@@ -37,12 +37,12 @@ export class PrivacyRelayerSampler {
 
   start() {
     this.logger.info('Started')
-    this.$.clock.onNewHour(() => this.taskQueue.addIfEmpty())
-    this.taskQueue.addToFront()
+    this.$.clock.onNewHour((timestamp) => this.taskQueue.addIfEmpty(timestamp))
+    this.taskQueue.addToFront(this.$.clock.getLastHour())
   }
 
-  async sampleToday() {
-    const day = UnixTime.toStartOf(UnixTime.now(), 'day')
+  async sample(timestamp: UnixTime) {
+    const day = UnixTime.toStartOf(timestamp, 'day')
     const configurations = this.$.configurations.filter(
       (configuration) =>
         UnixTime.toStartOf(configuration.sinceTimestamp, 'day') <= day,
