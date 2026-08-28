@@ -424,6 +424,51 @@ catalogued deployed-token symbol. The overlay stays readable through the
 mid-zoom range, then shrinks and fades at extreme zoom-out to avoid overlapping
 nearby cluster labels.
 
+Besides the relation endpoints, the graph shows **tokens without relations**:
+deployed tokens that were manually assigned to an abstract token (typically
+legacy imports) but appear in no observed relation. Without this they would be
+invisible on the graph and easy to forget about. Each cluster is considered to
+represent one abstract token — its most common one, decided by the same "most
+common wins" rule as the cluster's symbol label, so a rare dissenting
+assignment inside a cluster is outvoted — and every token without relations
+whose assignment matches a cluster's abstract token is attached to that
+cluster with a *virtual link*: layout-only, longer and looser than a real
+link, so the node sits with the cluster but a bit outside it, and no edge is
+drawn because none was observed. When several clusters share a most common
+abstract token the largest wins. Nodes without relations are drawn hollow (an
+outlined circle instead of a filled dot), the legend names them "No
+relations", and the page header counts them so their production volume is
+visible at a glance. The graph payload only includes tokens without relations
+whose abstract token appears among the endpoints at all; one whose abstract
+token has no cluster anywhere would have nowhere to go and is not shipped.
+The rare shipped token whose abstract token is present but is not any
+cluster's most common one stays unattached and lays out as its own
+single-node cluster.
+
+Many tokens without relations live on chains interop transfers do not cover,
+so they can never gain a relation; dropping such chains from the graph
+entirely is a decision under consideration. To size that decision, a header
+radio group ("Tokens without relations") picks which of them are displayed:
+**Hide** (the graph as it was before these tokens existed), **Show
+supported** (the default: only tokens without relations whose chain appears
+in some relation — the distinct chains among relation endpoints stand in for
+the interop-supported list, keeping the graph free of any dependency on
+interop configuration), or **Show all**. Unlike relation deletion, changing
+the mode filters the *payload* before the scene is built, so the whole
+layout re-runs and the clusters settle without the hidden nodes — an
+invisible node held in the force simulation would still distort its
+cluster's shape, which defeats the point of hiding it. Because that rebuild
+blocks the main thread for seconds, the click is acknowledged before the
+work starts: the graph renders from a deferred copy of the mode
+(`useDeferredValue`), so the switched radio and a loading overlay paint
+first and the blocking scene build then runs inside React's deferred
+re-render, whose commit shows the new clusters and removes the overlay in
+one step; the radios stay disabled until the deferred copy catches up, so
+clicks cannot queue up faster than rebuilds finish. The header counts report
+displayed tokens plus
+how many the mode hides, so the modes can be compared by switching between
+them. The picker may be simplified once the chain-support decision is made.
+
 Clicking a node keeps the node, its incident edges, and its neighbors
 prominent while dimming the rest of the graph. A non-modal details panel loads
 that one deployed token and its abstract token on demand; the initial graph

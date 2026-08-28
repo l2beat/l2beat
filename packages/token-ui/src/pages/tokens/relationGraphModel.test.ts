@@ -1,9 +1,12 @@
 import { expect } from 'earl'
 import {
+  filterTokensWithoutRelations,
   getClusterLabelOpacity,
   getExistingRelationGraphSelection,
+  getNodeIdsOutsideRelationChains,
   getNodeVisualScale,
   getRelationGraphFocus,
+  mostCommonAbstractTokenId,
   mostCommonDeployedSymbol,
   type RelationGraph,
   type RelationGraphFocus,
@@ -42,6 +45,107 @@ describe(mostCommonDeployedSymbol.name, () => {
   it('preserves the symbol casing', () => {
     expect(mostCommonDeployedSymbol([node('ethereum:1', 'stETH')])).toEqual(
       'stETH',
+    )
+  })
+})
+
+describe(mostCommonAbstractTokenId.name, () => {
+  it('uses the most common assignment and ignores unassigned nodes', () => {
+    expect(
+      mostCommonAbstractTokenId([
+        node('ethereum:1', 'USDC', 'AT-USDC'),
+        node('base:1', 'USDC', 'AT-OTHER'),
+        node('arbitrum:1', 'USDC', 'AT-USDC'),
+        node('optimism:1', 'USDC'),
+        missingNode('linea:1'),
+      ]),
+    ).toEqual('AT-USDC')
+  })
+
+  it('uses id order as a stable tie-breaker', () => {
+    expect(
+      mostCommonAbstractTokenId([
+        node('ethereum:1', 'WETH', 'AT-WETH'),
+        node('base:1', 'ETH', 'AT-ETH'),
+      ]),
+    ).toEqual('AT-ETH')
+  })
+
+  it('returns undefined when nothing is assigned', () => {
+    expect(mostCommonAbstractTokenId([node('ethereum:1', 'USDC')])).toEqual(
+      undefined,
+    )
+  })
+})
+
+describe(getNodeIdsOutsideRelationChains.name, () => {
+  it('returns only nodes without relations on chains no relation touches', () => {
+    const graph: RelationGraph = {
+      nodes: [
+        node('ethereum:0xaaa', 'USDC', 'AT-USDC'),
+        node('base:0xbbb', 'USDC', 'AT-USDC'),
+        // Without relations, but base appears among relation endpoints.
+        {
+          ...node('base:0xccc', 'USDC.e', 'AT-USDC'),
+          hasRelations: false,
+        },
+        // Without relations on a chain absent from every relation.
+        {
+          ...node('polygon:0xddd', 'USDC', 'AT-USDC'),
+          hasRelations: false,
+        },
+        // A relation endpoint is never hidden, whatever its chain — this
+        // cannot occur in real payloads, where endpoint chains are by
+        // definition relation chains.
+        node('polygon:0xeee', 'USDC', 'AT-USDC'),
+      ],
+      relations: [relation('ethereum', '0xaaa', 'base', '0xbbb', 'plugin')],
+    }
+
+    expect(getNodeIdsOutsideRelationChains(graph)).toEqual(
+      new Set(['polygon:0xddd']),
+    )
+  })
+})
+
+describe(filterTokensWithoutRelations.name, () => {
+  const endpointA = node('ethereum:0xaaa', 'USDC', 'AT-USDC')
+  const endpointB = node('base:0xbbb', 'USDC', 'AT-USDC')
+  const onSupportedChain = {
+    ...node('base:0xccc', 'USDC.e', 'AT-USDC'),
+    hasRelations: false,
+  }
+  const offSupportedChain = {
+    ...node('polygon:0xddd', 'USDC', 'AT-USDC'),
+    hasRelations: false,
+  }
+  const graph: RelationGraph = {
+    nodes: [endpointA, endpointB, onSupportedChain, offSupportedChain],
+    relations: [relation('ethereum', '0xaaa', 'base', '0xbbb', 'plugin')],
+  }
+
+  it('returns the graph unchanged when showing all', () => {
+    expect(filterTokensWithoutRelations(graph, 'all')).toEqual(graph)
+  })
+
+  it('drops every node without relations when hiding them', () => {
+    expect(filterTokensWithoutRelations(graph, 'hide').nodes).toEqual([
+      endpointA,
+      endpointB,
+    ])
+  })
+
+  it('keeps only nodes without relations on relation chains in supported mode', () => {
+    expect(filterTokensWithoutRelations(graph, 'supported').nodes).toEqual([
+      endpointA,
+      endpointB,
+      onSupportedChain,
+    ])
+  })
+
+  it('never filters relations', () => {
+    expect(filterTokensWithoutRelations(graph, 'hide').relations).toEqual(
+      graph.relations,
     )
   })
 })
@@ -351,7 +455,11 @@ describe(getRelationGraphFocus.name, () => {
   })
 })
 
-function node(id: string, symbol: string): RelationGraphNode {
+function node(
+  id: string,
+  symbol: string,
+  abstractTokenId: string | null = null,
+): RelationGraphNode {
   const [chain, address] = id.split(':')
   if (chain === undefined || address === undefined) {
     throw new Error(`Invalid test node id ${id}`)
@@ -361,7 +469,9 @@ function node(id: string, symbol: string): RelationGraphNode {
     symbol,
     chain,
     address,
+    abstractTokenId,
     isDeployed: true,
+    hasRelations: true,
   }
 }
 
@@ -375,7 +485,9 @@ function missingNode(id: string): RelationGraphNode {
     symbol: null,
     chain,
     address,
+    abstractTokenId: null,
     isDeployed: false,
+    hasRelations: true,
   }
 }
 
@@ -385,7 +497,9 @@ function graphNode(chain: string, address: string): RelationGraphNode {
     symbol: 'TOKEN',
     chain,
     address,
+    abstractTokenId: null,
     isDeployed: true,
+    hasRelations: true,
   }
 }
 
