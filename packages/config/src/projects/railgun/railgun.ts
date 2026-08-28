@@ -230,8 +230,7 @@ export const railgun: BaseProject = {
       chainId: 1,
       // Sampling observes the current network state, so there is no history
       // to backfill before the first deployment of the sampler.
-      // TODO(L2B-14560): bump to the actual deployment date before merging.
-      sinceTimestamp: UnixTime(1785974400), // 2026-08-06T00:00:00Z
+      sinceTimestamp: UnixTime(1788134400), // 2026-08-31T00:00:00Z
     },
     exitWindow: {
       value: formatSeconds(executionStartOffset),
