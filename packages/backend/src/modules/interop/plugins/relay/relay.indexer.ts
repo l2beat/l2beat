@@ -13,6 +13,8 @@ import { buildRelayBootstrapChainNamesById, RelayConfig } from './relay.config'
 type RelayMetadata = GetRequestsResponse['requests'][number]['data']['metadata']
 type RelayCurrency = NonNullable<RelayMetadata>['currencyIn']
 
+export const SAFE_TIME_OFFSET = 10
+
 export class RelayRootIndexer extends RootIndexer {
   override initialize() {
     setInterval(() => this.requestTick(), 1_000)
@@ -21,7 +23,7 @@ export class RelayRootIndexer extends RootIndexer {
   }
 
   tick(): Promise<number> {
-    return Promise.resolve(UnixTime.now())
+    return Promise.resolve(UnixTime.now() - SAFE_TIME_OFFSET)
   }
 }
 

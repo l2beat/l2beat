@@ -1,14 +1,28 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
 import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import type { GetRequestsResponse, RelayApiClient } from './RelayApiClient'
-import { BATCH_SIZE, RelayIndexer, RelayRootIndexer } from './relay.indexer'
+import {
+  BATCH_SIZE,
+  RelayIndexer,
+  RelayRootIndexer,
+  SAFE_TIME_OFFSET,
+} from './relay.indexer'
 
 const FROM = 1787583059
+
+describe(RelayRootIndexer.name, () => {
+  it('never targets a second that has not fully elapsed', async () => {
+    const target = await new RelayRootIndexer(Logger.SILENT).tick()
+
+    expect(UnixTime.now() - target).toBeGreaterThanOrEqual(SAFE_TIME_OFFSET)
+  })
+})
 
 describe(RelayIndexer.name, () => {
   beforeEach(() => {
