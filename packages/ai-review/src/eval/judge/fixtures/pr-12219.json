@@ -1,0 +1,69 @@
+{
+  "description": "Recorded codex exec verdicts for PR #12219 (codex-cli 0.149.1, baseline run 2026-08-26T10-45-56-537Z)",
+  "entry": {
+    "pr": 12219,
+    "title": "Add links to interop notifications",
+    "humanComments": [
+      {
+        "id": 3542641347,
+        "path": "packages/backoffice/src/components/environment/EnvironmentContext.tsx",
+        "body": "cant you just safeParse?"
+      },
+      {
+        "id": 3542668031,
+        "path": "packages/backoffice/src/pages/interop/activity/table/SuspiciousTransfersTable.tsx",
+        "body": "why extract it?"
+      }
+    ],
+    "codexFindings": [
+      {
+        "id": 3538388984,
+        "path": "packages/backoffice/src/components/environment/EnvironmentContext.tsx",
+        "body": "**Validate URL envs against own keys**\n\nFor malformed deep links such as `?env=toString`, the `in` operator accepts inherited `Object.prototype` properties, so `readEnvironmentFromUrl()` returns a non-environment value and `setEnvironment` persists it for the current session. On the next render `ENVIRONMENTS[environment]` resolves to that inherited function instead of falling back, and consumers like the environment banner dereference `config.classNames`, crashing the backoffice page. Check own keys only, e.g. via `Object.hasOwn(ENVIRONMENTS, value)`."
+      },
+      {
+        "id": 3538388990,
+        "path": "packages/backoffice/src/pages/interop/promotion/PromotionPage.tsx",
+        "body": "**Reset the promotion scroll guard per hash target**\n\nWhen a user follows one promotion deep link and then navigates to another hash while this page stays mounted, `scrolledRef.current` remains `true`, so the effect returns before scrolling the newly requested snapshot into view. The highlight changes because it uses `highlightTimestamp`, but the viewport remains on the old row; track the last scrolled timestamp instead of a boolean, or reset the ref when the hash changes."
+      },
+      {
+        "id": 3557641833,
+        "path": "packages/backoffice/src/components/environment/EnvironmentContext.tsx",
+        "body": "**Ignore unsupported URL environments**\n\nWhen the hosted backoffice is opened with `?env=local` (for example from a local backend alert link), this effect writes `local` even though production builds omit `ENVIRONMENTS.local`. On the next render `useBackendTrpc()` selects `CLIENTS.local`, but `TRPCReactProvider` only mounts the local `PinnedProvider` when `urls.local` exists (`packages/backoffice/src/react-query/trpc.tsx:62`), so interop pages render without a matching local TRPC provider instead of falling back. Please ignore URL environments that are not present in `ENVIRONMENTS` (or avoid emitting local links)."
+      }
+    ]
+  },
+  "rawOutput": "{\"verdicts\":[{\"finding_id\":3538388984,\"human_comment_id\":3542641347,\"match\":true,\"reason\":\"Both concern replacing the manual environment URL validation with schema-based parsing to reject invalid environment values.\"},{\"finding_id\":3538388984,\"human_comment_id\":3542668031,\"match\":false,\"reason\":\"The finding concerns unsafe environment-key validation, while the human comment questions an extraction in the suspicious-transfers table.\"},{\"finding_id\":3538388990,\"human_comment_id\":3542641347,\"match\":false,\"reason\":\"The finding concerns resetting hash-target scroll state, while the human comment concerns parsing an environment value.\"},{\"finding_id\":3538388990,\"human_comment_id\":3542668031,\"match\":false,\"reason\":\"The finding concerns stale promotion-page scrolling, while the human comment questions extracting table logic.\"},{\"finding_id\":3557641833,\"human_comment_id\":3542641347,\"match\":true,\"reason\":\"Both concern validating the URL environment against the supported environment schema so unsupported values are ignored.\"},{\"finding_id\":3557641833,\"human_comment_id\":3542668031,\"match\":false,\"reason\":\"The finding concerns unsupported URL environments, while the human comment concerns an unrelated extraction in the suspicious-transfers table.\"}]}",
+  "expected": [
+    {
+      "findingId": 3538388984,
+      "humanCommentId": 3542641347,
+      "match": true
+    },
+    {
+      "findingId": 3538388984,
+      "humanCommentId": 3542668031,
+      "match": false
+    },
+    {
+      "findingId": 3538388990,
+      "humanCommentId": 3542641347,
+      "match": false
+    },
+    {
+      "findingId": 3538388990,
+      "humanCommentId": 3542668031,
+      "match": false
+    },
+    {
+      "findingId": 3557641833,
+      "humanCommentId": 3542641347,
+      "match": true
+    },
+    {
+      "findingId": 3557641833,
+      "humanCommentId": 3542668031,
+      "match": false
+    }
+  ]
+}
