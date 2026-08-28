@@ -88,7 +88,7 @@ export async function makeConfig(
         },
     notifications:
       flags.isEnabled('notifications') &&
-      getNotificationsConfig(env, flags, clockOffsetSeconds, deploymentEnv),
+      getNotificationsConfig(env, flags, deploymentEnv),
     coingeckoApiKey: env.string('COINGECKO_API_KEY'),
     api: {
       port: env.integer('PORT', isLocal ? 3001 : undefined),
@@ -175,7 +175,6 @@ export async function makeConfig(
 function getNotificationsConfig(
   env: Env,
   flags: FeatureFlags,
-  clockOffsetSeconds: number,
   deploymentEnv: DeploymentEnvironment,
 ): Config['notifications'] {
   return {
@@ -199,25 +198,6 @@ function getNotificationsConfig(
       discordWebhookUrl: env.string(
         'NOTIFICATIONS_ETHEREUM_BLOBS_DISCORD_WEBHOOK_URL',
       ),
-    },
-    dailyChecks: flags.isEnabled('notifications', 'dailyChecks') && {
-      discordWebhookUrl: env.string(
-        'NOTIFICATIONS_DAILY_CHECKS_DISCORD_WEBHOOK_URL',
-      ),
-      discordUserIds: env
-        .string('NOTIFICATIONS_DAILY_CHECKS_DISCORD_USER_IDS')
-        .split(',')
-        .map((id) => id.trim())
-        .filter((id) => id.length > 0),
-      timezone: env.string(
-        'NOTIFICATIONS_DAILY_CHECKS_TIMEZONE',
-        'Europe/Warsaw',
-      ),
-      hour:
-        (env.integer('NOTIFICATIONS_DAILY_CHECKS_HOUR', 9) -
-          clockOffsetSeconds / UnixTime.HOUR +
-          24) %
-        24,
     },
   }
 }
