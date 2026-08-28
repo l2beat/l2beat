@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "E3RefundManager",
+  "category": "core",
+  "description": "Upgradeable accounting contract that snapshots the refund policy for each E3 and distributes request fees and routed slashed funds between the requester, honest committee members, protocol treasury and reserve.",
+  "ignoreMethods": ["getE3PolicySnapshot", "getRefundDistribution"],
+  "fields": {
+    "owner": {
+      "description": "Account controlling future refund policy and dependencies.",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the work-allocation split, coordinator and treasury without an onchain delay."
+        }
+      ]
+    },
+    "interfold": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "snapshot E3 refund policy and credit protocol payments."
+        }
+      ]
+    },
+    "getWorkAllocation": {
+      "description": "Current fee allocation between committee formation, DKG, decryption and the protocol, plus the share assigned to an honest replacement when another node is slashed.",
+      "type": "RISK_PARAMETER"
+    },
+    "treasury": {
+      "description": "Recipient of the protocol share and treasury-directed slashed funds."
+    }
+  }
+}

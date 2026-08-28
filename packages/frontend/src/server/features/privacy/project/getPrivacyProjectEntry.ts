@@ -20,6 +20,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/getC
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import {
@@ -30,7 +31,7 @@ import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getPr
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
 import {
   getPrivacyTrustedSetup,
-  getPrivacyTrustedSetupsSection,
+  type PrivacyTrustedSetupSummary,
   toTrustedSetupSummaryValue,
 } from '../utils/getPrivacyTrustedSetup'
 
@@ -56,7 +57,7 @@ export interface ProjectPrivacyEntry {
   hasTvl: boolean
   attributes: PrivacyAttribute[]
   exitWindow: PrivacyExitWindow
-  trustedSetup: PrivacySummaryValue
+  trustedSetup: PrivacyTrustedSetupSummary
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
   summary: {
@@ -235,14 +236,16 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  sections.push({
-    type: 'TrustedSetupSection',
-    props: {
-      id: 'trusted-setups',
-      title: 'Trusted setup',
-      ...getPrivacyTrustedSetupsSection(details.zkCatalogInfo),
-    },
-  })
+  if (details.trustedSetups.length > 0) {
+    sections.push({
+      type: 'TrustedSetupSection',
+      props: {
+        id: 'trusted-setups',
+        title: 'Trusted setup',
+        ...getTrustedSetupsSectionFromTrustedSetups(details.trustedSetups),
+      },
+    })
+  }
 
   if (
     details.zkCatalogInfo?.verifierHashes &&
@@ -321,7 +324,7 @@ export async function getPrivacyProjectEntry(
     attributes: details.attributes,
     exitWindow: details.exitWindow,
     trustedSetup: toTrustedSetupSummaryValue(
-      getPrivacyTrustedSetup(details.zkCatalogInfo),
+      getPrivacyTrustedSetup(details.trustedSetups),
     ),
     privacy: details.privacy,
     reproducibility: details.reproducibility,

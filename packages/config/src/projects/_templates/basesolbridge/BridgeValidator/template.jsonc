@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Attestation registry for messages passed from Solana to Base: batches of message hashes become valid for execution in the Bridge after being co-signed by at least {{getBaseThreshold}} of {{getBaseValidatorCount}} Base validators and {{partnerValidatorThreshold}} partner validators listed in the SignerRegistry. The validator set and thresholds are fixed at initialization: the contract exposes no functions to change them and its proxy has no admin.",
+  "ignoreInWatchMode": ["nextNonce"],
+  "fields": {
+    "nextNonce": {
+      "description": "Nonce of the next expected message attestation (incremented with each registered message)."
+    },
+    "getBaseThreshold": {
+      "description": "Number of Base validator signatures required to attest a message batch.",
+      "severity": "HIGH"
+    },
+    "partnerValidatorThreshold": {
+      "description": "Number of partner validator signatures (from the SignerRegistry) required to attest a message batch.",
+      "severity": "HIGH"
+    },
+    "PARTNER_VALIDATORS": {
+      "description": "The SignerRegistry contract holding the partner validator set."
+    }
+  }
+}

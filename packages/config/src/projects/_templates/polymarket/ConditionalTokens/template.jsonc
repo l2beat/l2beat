@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ConditionalTokens",
+  "description": "Immutable, adminless ERC1155 ledger of conditional outcome tokens: anyone can split collateral into a complete outcome set, merge it back, or redeem after resolution. Only the oracle named at preparation can report payouts, and reports are write-once.",
+  "category": "core"
+}

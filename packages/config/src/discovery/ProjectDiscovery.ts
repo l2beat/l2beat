@@ -6,8 +6,11 @@ import type {
 } from '@l2beat/discovery'
 import {
   ConfigReader,
+  get$Admins,
+  get$Implementations,
   getDiscoveryPaths,
   getReachableEntries,
+  toAddressArray,
 } from '@l2beat/discovery'
 import {
   assert,
@@ -32,7 +35,6 @@ import type {
   ReferenceLink,
   SharedEscrow,
 } from '../types'
-import { get$Admins, get$Implementations, toAddressArray } from './extractors'
 import { pastUpgradesSchema } from './models'
 import type { PermissionRegistry } from './PermissionRegistry'
 import { PermissionsFromDiscovery } from './PermissionsFromDiscovery'

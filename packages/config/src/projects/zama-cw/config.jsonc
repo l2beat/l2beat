@@ -8,7 +8,7 @@
       "arg": { "prefix": "zama" }
     }
   },
-  "maxAddresses": 200,
+  "maxAddresses": 300,
   "initialAddresses": [
     "eth:0x7147485b892158f2B875f7aC5Ea48A9937C66AE8", // kms staking
     "eth:0xe9b176CCaA8840DC3b3567bb83e2cD2a6c36F4Ab", // coprocessor staking

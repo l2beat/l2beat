@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "VotingPowerCurve",
+  "category": "gov",
+  "description": "Curve that converts veFOLD lock amount and duration into voting power.",
+  "ignoreMethods": [
+    "getCoefficients",
+    "globalPointHistory",
+    "isWarm",
+    "previewMaxBias",
+    "proxiableUUID",
+    "slopeChanges",
+    "supplyAt",
+    "tokenPointIntervals",
+    "tokenPointLatestIndex"
+  ],
+  "ignoreInWatchMode": ["globalPointLatestIndex"],
+  "fields": {
+    "dao": {
+      "description": "Aragon DAO whose Curve admin role controls configuration and upgrades."
+    },
+    "escrow": {
+      "description": "VotingEscrow whose lock history is transformed into voting power."
+    },
+    "clock": { "description": "Epoch clock used by curve calculations." },
+    "maxTime": {
+      "description": "Maximum lock duration considered by the voting-power curve.",
+      "type": "RISK_PARAMETER"
+    },
+    "warmupPeriod": {
+      "description": "Warm-up period before newly locked FOLD reaches voting power.",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}
