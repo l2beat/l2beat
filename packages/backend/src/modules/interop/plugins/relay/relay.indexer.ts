@@ -49,6 +49,9 @@ export const TokenReceived = createInteropEventType<TokenReceivedArgs>(
   { direction: 'incoming' },
 )
 
+export const BATCH_SIZE = 60
+export const MAX_REQUESTS_PER_UPDATE = 10_000
+
 export class RelayIndexer extends ManagedChildIndexer {
   private sentIds = new Set<string>()
   private receivedIds = new Set<string>()
@@ -111,35 +114,26 @@ export class RelayIndexer extends ManagedChildIndexer {
       return to
     }
 
+    const syncedTo = from + BATCH_SIZE < to ? from + BATCH_SIZE : to
+
     const res = await this.relayApiClient.getAllRequests({
-      limit: 500,
       startTimestamp: from,
+      endTimestamp: syncedTo + 1,
+      limit: MAX_REQUESTS_PER_UPDATE,
     })
 
-    const successes = res.requests.filter((x) => x.status === 'success')
-    const last =
-      successes.length > 0 ? successes[successes.length - 1] : undefined
+    if (res.continuation !== undefined) {
+      throw new Error(
+        `Window ${from}-${syncedTo} was not fully fetched after ${res.requests.length} requests`,
+      )
+    }
 
-    if (!last) {
-      // TODO: allow not progressing
-      throw new Error('No entries')
-    }
-    const syncedTo = Math.min(
-      to,
-      UnixTime.fromDate(new Date(last.updatedAt)) - 1,
-    )
-    if (syncedTo < from) {
-      // TODO: allow not progressing
-      throw new Error('No entries')
-    }
+    const successes = res.requests.filter((x) => x.status === 'success')
 
     const events: InteropEvent[] = []
 
     for (const item of successes) {
       const updateTime = UnixTime.fromDate(new Date(item.updatedAt))
-      if (updateTime > syncedTo) {
-        continue
-      }
       const createTime = UnixTime.fromDate(new Date(item.createdAt))
 
       const srcTx = item.data.inTxs?.[0]
