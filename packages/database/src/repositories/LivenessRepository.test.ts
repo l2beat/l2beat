@@ -9,7 +9,7 @@ import {
 } from './LivenessRepository'
 
 describe(toRecord.name, () => {
-  it('maps a null grouping key to undefined', () => {
+  it('maps the ungrouped sentinel to undefined', () => {
     const timestamp = UnixTime(1)
 
     expect(
@@ -18,7 +18,7 @@ describe(toRecord.name, () => {
         blockNumber: 1,
         txHash: '0x1234',
         configurationId: 'config-id',
-        groupingKey: null,
+        groupingKey: 'none',
       }),
     ).toEqual({
       timestamp,

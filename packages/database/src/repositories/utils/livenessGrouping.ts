@@ -4,6 +4,12 @@ import type { Liveness, RealTimeLiveness } from '../../kysely/generated/types'
 
 type LivenessTable = 'Liveness' | 'RealTimeLiveness'
 
+/**
+ * Marks ungrouped Liveness rows; keeps the column non-null so it can be part
+ * of the primary key. RealTimeLiveness keeps a nullable column instead.
+ */
+export const UNGROUPED_GROUPING_KEY = 'none'
+
 interface LivenessLikeRecord {
   configurationId: string
   timestamp: number
@@ -52,17 +58,21 @@ export async function insertGroupedKeepingEarliest(
   await db
     .insertInto(table)
     .values(rows)
-    .onConflict((cb) =>
-      cb
-        .columns(['configurationId', 'groupingKey'])
-        .where('groupingKey', 'is not', null)
+    .onConflict((cb) => {
+      const target = cb.columns(['configurationId', 'groupingKey'])
+      // The conflict target must match each table's partial grouping index.
+      const guarded =
+        table === 'Liveness'
+          ? target.where('groupingKey', '<>', UNGROUPED_GROUPING_KEY)
+          : target.where('groupingKey', 'is not', null)
+      return guarded
         .doUpdateSet((eb) => ({
           timestamp: eb.ref('excluded.timestamp'),
           blockNumber: eb.ref('excluded.blockNumber'),
           txHash: eb.ref('excluded.txHash'),
         }))
-        .where(isEarlierThanStored(table)),
-    )
+        .where(isEarlierThanStored(table))
+    })
     .execute()
 }
 
