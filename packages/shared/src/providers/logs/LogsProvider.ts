@@ -9,11 +9,16 @@ export class LogsProvider {
     assert(clients.length > 0, 'Clients cannot be empty')
   }
 
+  /**
+   * `topics` follows eth_getLogs semantics: entries are positional starting
+   * at topic0, an array entry means OR within that position, null matches
+   * anything at that position.
+   */
   async getLogs(
     from: number,
     to: number,
     addresses?: string[],
-    topics?: string[],
+    topics?: (string | string[] | null)[],
   ): Promise<Log[]> {
     for (const [index, client] of this.clients.entries()) {
       try {

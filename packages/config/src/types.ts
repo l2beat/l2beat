@@ -1068,7 +1068,20 @@ export type PrivacyBucketAddress =
   | { chain: string; address: string }
 
 export type PrivacyFlowSource = {
+  /**
+   * Contract emitting the tracked event. Defaults to the bucket address.
+   * Use this when the flow is only visible on another contract, e.g. ERC-20
+   * Transfer events on the token contract instead of the pool.
+   */
+  address?: PrivacyBucketAddress
+  /** topic0 hash of the tracked event */
   event: string
+  /**
+   * Optional server-side filters on the indexed event args, starting at the
+   * first indexed arg (topic1). null matches anything at that position.
+   * 20-byte addresses are accepted and padded to 32 bytes automatically.
+   */
+  topics?: (string | null)[]
 } & PrivacyFlowExtractorConfig
 
 export type PrivacyFlowExtractorConfig =
@@ -1076,6 +1089,24 @@ export type PrivacyFlowExtractorConfig =
       extractor: 'fixedAmount'
       params: {
         amount: string
+      }
+    }
+  | {
+      /**
+       * Standard ERC-20 Transfer(from, to, value) with amount = value.
+       * from/to filters are pushed down to the log query as topic filters.
+       */
+      extractor: 'erc20Transfer'
+      params: {
+        from?: EthereumAddress
+        to?: EthereumAddress
+      }
+    }
+  | {
+      extractor: 'privacyBoostDeposit'
+      params: {
+        /** TokenRegistry id of the tracked token (ids start at 1) */
+        tokenId: number
       }
     }
   | {

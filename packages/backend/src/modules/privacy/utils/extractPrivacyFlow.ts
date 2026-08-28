@@ -32,6 +32,14 @@ const zamaInterface = new utils.Interface([
   'event UnwrapFinalized(address indexed receiver, bytes32 indexed unwrapRequestId, bytes32 encryptedAmount, uint64 cleartextAmount)',
 ])
 
+const erc20Interface = new utils.Interface([
+  'event Transfer(address indexed from, address indexed to, uint256 value)',
+])
+
+const privacyBoostInterface = new utils.Interface([
+  'event DepositRequested(uint256 indexed depositRequestId, address indexed depositor, uint16 tokenId, uint96 totalAmount, uint16 commitmentCount, uint256 commitmentsHash, uint256[] commitments, tuple(bytes32 viewingKey, bytes32 teeWrapKey, bytes32 receiverWrapKey, bytes32 ct0, bytes32 ct1, bytes16 ct2)[] ciphertexts)',
+])
+
 export function extractPrivacyFlow(
   source: PrivacyFlowIndexerConfig,
   log: PrivacyRpcLog,
@@ -42,6 +50,10 @@ export function extractPrivacyFlow(
         count: 1,
         amount: BigInt(source.params.amount),
       }
+    case 'erc20Transfer':
+      return extractErc20Transfer(source, log)
+    case 'privacyBoostDeposit':
+      return extractPrivacyBoostDeposit(source, log)
     case 'privacyPoolsValue':
       return extractPrivacyPoolsValue(log)
     case 'railgunShield':
@@ -56,6 +68,53 @@ export function extractPrivacyFlow(
       return extractZamaUnwrap(source, log)
     default:
       return undefined
+  }
+}
+
+// The from/to filters are usually already applied server-side as topic
+// filters; re-checking here keeps the extractor correct on its own.
+function extractErc20Transfer(
+  source: Extract<PrivacyFlowIndexerConfig, { extractor: 'erc20Transfer' }>,
+  log: PrivacyRpcLog,
+): PrivacyFlowExtractResult | undefined {
+  const parsedLog = erc20Interface.parseLog(log)
+
+  if (
+    source.params.from !== undefined &&
+    EthereumAddress(parsedLog.args.from) !== source.params.from
+  ) {
+    return undefined
+  }
+
+  if (
+    source.params.to !== undefined &&
+    EthereumAddress(parsedLog.args.to) !== source.params.to
+  ) {
+    return undefined
+  }
+
+  return {
+    count: 1,
+    amount: BigInt(parsedLog.args.value.toString()),
+  }
+}
+
+function extractPrivacyBoostDeposit(
+  source: Extract<
+    PrivacyFlowIndexerConfig,
+    { extractor: 'privacyBoostDeposit' }
+  >,
+  log: PrivacyRpcLog,
+): PrivacyFlowExtractResult | undefined {
+  const parsedLog = privacyBoostInterface.parseLog(log)
+
+  if (Number(parsedLog.args.tokenId) !== source.params.tokenId) {
+    return undefined
+  }
+
+  return {
+    count: 1,
+    amount: BigInt(parsedLog.args.totalAmount.toString()),
   }
 }
 

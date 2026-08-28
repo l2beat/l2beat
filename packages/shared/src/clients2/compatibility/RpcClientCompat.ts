@@ -65,7 +65,7 @@ export interface IRpcClient extends BlockClient, LogsClient {
     from: number,
     to: number,
     addresses?: string[],
-    topics?: string[],
+    topics?: (string | string[] | null)[],
   ): Promise<EVMLog[]>
   getFeeHistory(
     blockCount: number,
@@ -190,7 +190,7 @@ export class RpcClientCompat implements IRpcClient {
     from: number,
     to: number,
     addresses?: string[],
-    topics?: string[],
+    topics?: (string | string[] | null)[],
   ): Promise<EVMLog[]> {
     try {
       const logs = await this.ethRpcClient.getLogs({
