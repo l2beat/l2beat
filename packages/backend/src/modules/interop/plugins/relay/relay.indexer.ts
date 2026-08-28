@@ -13,9 +13,20 @@ import { buildRelayBootstrapChainNamesById, RelayConfig } from './relay.config'
 type RelayMetadata = GetRequestsResponse['requests'][number]['data']['metadata']
 type RelayCurrency = NonNullable<RelayMetadata>['currencyIn']
 
-export const SAFE_TIME_OFFSET = 10
+export interface RelayIndexerConfig {
+  batchSize: number
+  maxRequestsPerUpdate: number
+  safeTimeOffset: number
+}
 
 export class RelayRootIndexer extends RootIndexer {
+  constructor(
+    logger: Logger,
+    private readonly safeTimeOffset: number,
+  ) {
+    super(logger)
+  }
+
   override initialize() {
     setInterval(() => this.requestTick(), 1_000)
     this.requestTick()
@@ -23,7 +34,7 @@ export class RelayRootIndexer extends RootIndexer {
   }
 
   tick(): Promise<number> {
-    return Promise.resolve(UnixTime.now() - SAFE_TIME_OFFSET)
+    return Promise.resolve(UnixTime.now() - this.safeTimeOffset)
   }
 }
 
@@ -51,9 +62,6 @@ export const TokenReceived = createInteropEventType<TokenReceivedArgs>(
   { direction: 'incoming' },
 )
 
-export const BATCH_SIZE = 60
-export const MAX_REQUESTS_PER_UPDATE = 10_000
-
 export class RelayIndexer extends ManagedChildIndexer {
   private sentIds = new Set<string>()
   private receivedIds = new Set<string>()
@@ -63,6 +71,7 @@ export class RelayIndexer extends ManagedChildIndexer {
     chains: { id: number; name: string }[],
     private configs: InteropConfigStore,
     private trackedChains: string[],
+    private readonly relayConfig: RelayIndexerConfig,
     private relayApiClient: RelayApiClient,
     private db: Database,
     private interopEventStore: InteropEventStore,
@@ -116,17 +125,18 @@ export class RelayIndexer extends ManagedChildIndexer {
       return to
     }
 
-    const syncedTo = from + BATCH_SIZE < to ? from + BATCH_SIZE : to
+    const batchSize = this.relayConfig.batchSize
+    const syncedTo = from + batchSize < to ? from + batchSize : to
 
     const res = await this.relayApiClient.getAllRequests({
       startTimestamp: from,
       endTimestamp: syncedTo + 1,
-      limit: MAX_REQUESTS_PER_UPDATE,
+      limit: this.relayConfig.maxRequestsPerUpdate,
     })
 
-    if (res.continuation !== undefined) {
+    if (res.continuation) {
       throw new Error(
-        `Window ${from}-${syncedTo} was not fully fetched after ${res.requests.length} requests`,
+        `Window ${from}-${syncedTo} incomplete after ${res.requests.length} requests. Check the client warning for the reason and lower INTEROP_RELAY_BATCH_SIZE if the window is too dense`,
       )
     }
 

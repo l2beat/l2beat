@@ -7,18 +7,19 @@ import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
 import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import type { GetRequestsResponse, RelayApiClient } from './RelayApiClient'
-import {
-  BATCH_SIZE,
-  RelayIndexer,
-  RelayRootIndexer,
-  SAFE_TIME_OFFSET,
-} from './relay.indexer'
+import { RelayIndexer, RelayRootIndexer } from './relay.indexer'
 
 const FROM = 1787583059
+const BATCH_SIZE = 60
+const MAX_REQUESTS_PER_UPDATE = 10_000
+const SAFE_TIME_OFFSET = 10
 
 describe(RelayRootIndexer.name, () => {
   it('never targets a second that has not fully elapsed', async () => {
-    const target = await new RelayRootIndexer(Logger.SILENT).tick()
+    const target = await new RelayRootIndexer(
+      Logger.SILENT,
+      SAFE_TIME_OFFSET,
+    ).tick()
 
     expect(UnixTime.now() - target).toBeGreaterThanOrEqual(SAFE_TIME_OFFSET)
   })
@@ -86,8 +87,20 @@ describe(RelayIndexer.name, () => {
       const indexer = createIndexer(relayApiClient)
 
       await expect(indexer.update(FROM, FROM + 10_000)).toBeRejectedWith(
-        'was not fully fetched',
+        'incomplete after 3 requests',
       )
+    })
+
+    it('treats an empty continuation as a fully fetched window', async () => {
+      const relayApiClient = clientReturning({
+        requests: manyInSameSecond(3, '2026-08-24T14:50:59'),
+        continuation: '',
+      })
+      const indexer = createIndexer(relayApiClient)
+
+      const syncedTo = await indexer.update(FROM, FROM + 10_000)
+
+      expect(syncedTo).toEqual(FROM + BATCH_SIZE)
     })
   })
 })
@@ -113,10 +126,15 @@ function createIndexer(relayApiClient: RelayApiClient) {
     [],
     mockObject<InteropConfigStore>({ get: mockFn().returns(undefined) }),
     ['ethereum'],
+    {
+      batchSize: BATCH_SIZE,
+      maxRequestsPerUpdate: MAX_REQUESTS_PER_UPDATE,
+      safeTimeOffset: SAFE_TIME_OFFSET,
+    },
     relayApiClient,
     mockObject<Database>(),
     mockObject<InteropEventStore>(),
-    new RelayRootIndexer(Logger.SILENT),
+    new RelayRootIndexer(Logger.SILENT, SAFE_TIME_OFFSET),
     mockObject<IndexerService>(),
     Logger.SILENT,
   )

@@ -217,11 +217,15 @@ export function createInteropModule({
   )
 
   const relayApiClient = new RelayApiClient(new HttpClient(), logger)
-  const relayRootIndexer = new RelayRootIndexer(logger)
+  const relayRootIndexer = new RelayRootIndexer(
+    logger,
+    config.interop.relay.safeTimeOffset,
+  )
   const relayIndexer = new RelayIndexer(
     config.interop.config.chains,
     configStore,
     config.interop.capture.chains.map((c) => c.id),
+    config.interop.relay,
     relayApiClient,
     db,
     eventStore,
