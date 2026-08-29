@@ -9,8 +9,11 @@
 const DIFF_BLOCK_RE = /```diff\n([\s\S]*?)```/g
 /** The parenthesized payload of the contract/EOA header line. Deliberately
  *  not EVM-specific: non-EVM addresses (e.g. Starknet felts) must be
- *  attributable rather than silently dropped. */
-const DIFF_BLOCK_ADDRESS_RE = /^\s*(?:contract\s+.*?|EOA\s*)\(([^)\s]+)\)/im
+ *  attributable rather than silently dropped. Written without overlapping
+ *  quantifiers (a single [ \t] after "contract", parens excluded from the
+ *  classes) so backtracking stays linear on malformed input. */
+const DIFF_BLOCK_ADDRESS_RE =
+  /^[ \t]*(?:contract[ \t][^\n(]*|EOA[ \t]*)\(([^()\s]+)\)/im
 const DIFF_BLOCK_STATUS_RE = /^[+-]\s+Status: (CREATED|DELETED)\s*$/im
 
 export interface DiffBlockSpan {
