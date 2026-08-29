@@ -80,10 +80,7 @@
         "implementation": "eth:0xc946787cFd6c155886C673BF9815C841c1718903",
         "owner": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
       },
-      "fieldMeta": {
-        "implementation": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "implementation": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9": "UpgradeableBeacon"
       }

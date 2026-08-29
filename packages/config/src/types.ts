@@ -368,9 +368,6 @@ export type ChainApiConfig =
   | ChainBasicApi<'rpc'>
   | ChainBasicApi<'starknet'>
   | ChainBasicApi<'lighter'>
-  | ChainBasicApi<'zksync'>
-  | ChainBasicApi<'loopring'>
-  | ChainBasicApi<'degate3'>
   | ChainBasicApi<'fuel'>
   | ChainBasicApi<'svm-rpc'>
   | ChainBasicApi<'aztec-rpc'>
@@ -962,7 +959,11 @@ export interface TrustedSetup {
 
 // #region defi data
 
-export type ProjectDefiCategory = 'DEX' | 'Oracle' | 'Stablecoin'
+export type ProjectDefiCategory =
+  | 'DEX'
+  | 'Oracle'
+  | 'Prediction market'
+  | 'Stablecoin'
 
 export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
@@ -1478,6 +1479,7 @@ export type InteropPluginName =
   | 'avalanche'
   | 'axelar'
   | 'axelar-its'
+  | 'basesolbridge'
   | 'beefy-bridge'
   | 'ccip'
   | 'cctp-v1'

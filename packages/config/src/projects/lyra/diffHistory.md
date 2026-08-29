@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd007046344424199e36311f9226f31b06a90533a
+Generated with discovered.json: 0xc8973962cbaaad3f577123dde45fabe630d20128
 
-# Diff at Wed, 26 Aug 2026 12:18:35 GMT:
+# Diff at Sat, 29 Aug 2026 15:27:03 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1786722093
-- current timestamp: 1786722093
+- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787834220
+- current timestamp: 1787834220
 
 ## Description
 
@@ -14,7 +14,7 @@ reapply branch discovery config after merging main
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1786722093 (main branch discovery), not current.
+discovery. Values are for block 1787834220 (main branch discovery), not current.
 
 ```diff
     contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) [opstack/SuperchainConfigFake_expiry] {
@@ -137,6 +137,31 @@ discovery. Values are for block 1786722093 (main branch discovery), not current.
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
       critical:
 +        true
+    }
+```
+
+Generated with discovered.json: 0xa0c3ece8d7493a52d637f1ccefbdb68afcd40618
+
+# Diff at Thu, 27 Aug 2026 12:38:15 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@07685e2b690dd5d880203f3696ff2e1bc300a13d block: 1786722093
+- current timestamp: 1787834220
+
+## Description
+
+Conduit Multisig 1: member added; threshold 4/10 → 4/11.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
     }
 ```
 

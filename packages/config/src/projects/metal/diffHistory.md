@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xda1496ae8aa6d77f14b6707ac91f3d02b980b093
+Generated with discovered.json: 0x26917812e9c3984b373b9bb952980970a9b541f3
 
-# Diff at Wed, 26 Aug 2026 12:19:16 GMT:
+# Diff at Sat, 29 Aug 2026 15:27:46 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1784283015
-- current timestamp: 1784283015
+- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787834294
+- current timestamp: 1787834294
 
 ## Description
 
@@ -14,7 +14,7 @@ reapply branch discovery config after merging main
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1784283015 (main branch discovery), not current.
+discovery. Values are for block 1787834294 (main branch discovery), not current.
 
 ```diff
     contract LivenessModule (eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748) [gnosisSafeModules/LivenessModule] {
@@ -183,6 +183,31 @@ discovery. Values are for block 1784283015 (main branch discovery), not current.
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
       critical:
 +        true
+    }
+```
+
+Generated with discovered.json: 0x1fafc505f44f1999e65b26cc8e3df841b64a1e6e
+
+# Diff at Thu, 27 Aug 2026 12:39:31 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@07685e2b690dd5d880203f3696ff2e1bc300a13d block: 1784283015
+- current timestamp: 1787834294
+
+## Description
+
+Conduit Multisig 1: member added; threshold 4/10 → 4/11.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
     }
 ```
 

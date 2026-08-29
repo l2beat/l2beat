@@ -1,6 +1,6 @@
 {
   "name": "orderly",
-  "timestamp": 1786722130,
+  "timestamp": 1787834344,
   "configHash": "0x59d4f0718dd609358e7b0e188ac1b5cc378f4b04ffb5d9546b94655e88e58303",
   "entries": [
     {
@@ -244,6 +244,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2",
           "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
           "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
@@ -259,8 +260,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 302,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 305,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -847,6 +848,11 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1010,12 +1016,12 @@
           ]
         ],
         "$upgradeCount": 4,
-        "anchorGame": "eth:0x839c867Bf8053A32538720d3d674d3d528DF315d",
+        "anchorGame": "eth:0xdEeA3fC9a3922f3983A0f9780905A96815958Ee5",
         "disputeGameFactory": "eth:0xC8BF04A73704051E5E274F1B43B1F2F153Db2136",
         "disputeGameFinalityDelaySeconds": 302400,
         "getAnchorRoot": [
-          "0x0fb697d40fe6b39de79af75904d7c556a013b3916654194172c91678a391047b",
-          44735313
+          "0x693cc2b458a63ec1938707c196ab0e7e79b79607b1ce0bebbd47b147f6ca5504",
+          45296457
         ],
         "getStartingAnchorRoot": {
           "root": "0xdead000000000000000000000000000000000000000000000000000000000000",
@@ -1245,7 +1251,7 @@
         "game8": "eth:0x0000000000000000000000000000000000000000",
         "game8Args": "0x",
         "game8Vm": "UNRESOLVED",
-        "gameCount": 772,
+        "gameCount": 798,
         "initBondGame0": 0,
         "initBondGame1": 0,
         "initBondGame42": 0,
@@ -1254,7 +1260,7 @@
         "initVersion": 1,
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "permissionedGameArgs": "0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6acc005dcd857b401e4732e6f7837135a22825cfabaf9dd4c5dd9389b263a5394513943be06f1c0f092667f1aa549d0ec6ad1500df66b18341328ff72000000000000000000000000000000000000000000000000000000000000012374bad482a7f73c8286f50d8aa03e53b7d24a5f3b4a4962275df8c60a80d3a25faec5aa7de116a746",
-        "permissionedGamesTotal": 772,
+        "permissionedGamesTotal": 798,
         "proposerFromDGF": "eth:0x74BaD482a7f73C8286F50D8Aa03e53b7d24A5f3B",
         "proxyAdmin": "eth:0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9",
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -2232,6 +2238,6 @@
     "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0xa5ad1d7fe3bfc5d96d4166fbfb1e6ef0b1d5baaf568225c532428da4d84175c6"
   },
-  "usedBlockNumbers": { "ethereum": 25754240 },
-  "permissionsConfigHash": "0x24b508f2e505fe41b1a54d316e90327f1a5df03292b75a1f4a9b13485cdcb7a8"
+  "usedBlockNumbers": { "ethereum": 25846612 },
+  "permissionsConfigHash": "0x2266913bad765081a8ba0c74c6c312cc1de06bcdd295c6f846780ee34699c902"
 }

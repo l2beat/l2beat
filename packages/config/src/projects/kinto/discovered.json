@@ -2338,10 +2338,7 @@
         "implementation": "kinto:0xbFE260680514e0D669fdC5A5f7334b97a5513d9D",
         "owner": "kinto:0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },
-      "fieldMeta": {
-        "implementation": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "implementation": { "severity": "HIGH" } },
       "implementationNames": {
         "kinto:0x87f0eE85bF3198654900a422832157abBba30828": "UpgradeableBeacon"
       }

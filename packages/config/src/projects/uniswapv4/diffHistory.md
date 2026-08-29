@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xb2976193e3cfadc4579671ee87d1caeae16e5d2a
+Generated with discovered.json: 0x75960848adb65f36ebeb472c16be4c8885775c95
 
-# Diff at Wed, 26 Aug 2026 12:24:58 GMT:
+# Diff at Sat, 29 Aug 2026 15:29:50 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1787566228
-- current timestamp: 1787566228
+- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787836675
+- current timestamp: 1787836675
 
 ## Description
 
@@ -14,7 +14,7 @@ reapply branch discovery config after merging main
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1787566228 (main branch discovery), not current.
+discovery. Values are for block 1787836675 (main branch discovery), not current.
 
 ```diff
     contract Timelock (eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC) [uniswapv3/Timelock] {
@@ -56,7 +56,7 @@ discovery. Values are for block 1787566228 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x838417a7f856cf128bbd08892bc91b7aa2d9c9a7
+Generated with discovered.json: 0x543c8a86aa7df627c29938cc4f8a27a64758d15b
 
 # Diff at Mon, 24 Aug 2026 10:11:33 GMT:
 

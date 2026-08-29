@@ -1,26 +1,54 @@
-Generated with discovered.json: 0x2ed7538c444d6b9e664048d96e24f343e8f592c5
+Generated with discovered.json: 0x5762278d18280b34977f19eae0200627cdcc7b31
 
-# Diff at Wed, 26 Aug 2026 12:56:57 GMT:
+# Diff at Sat, 29 Aug 2026 15:41:49 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1784811471
-- current timestamp: 1784811471
+- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787834881
+- current timestamp: 1787834881
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1784811471 (main branch discovery), not current.
+discovery. Values are for block 1787834881 (main branch discovery), not current.
 
 ```diff
     contract ProxyAdmin (eth:0x8247EF5705d3345516286B72bFE6D690197C2E99) [global/ProxyAdmin] {
     +++ description: None
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0xd97d13fbc8f16fc112a8ffd27628c1445cd97dd7
+
+# Diff at Thu, 27 Aug 2026 12:49:13 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@07685e2b690dd5d880203f3696ff2e1bc300a13d block: 1784811471
+- current timestamp: 1787834881
+
+## Description
+
+EigenDAOperationsMultisig: member removed; threshold 3/5 → 2/4.
+
+## Watched changes
+
+```diff
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xA3e302a6Ea0cf79B8580d94e92Eb5514292daacE"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 4 (50%)"
     }
 ```
 

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc20c9efa837dedc2c7c09112c944dd140d0e5cdf
+Generated with discovered.json: 0x805bf79c8877987fdd15b777347383d58c48b24d
 
-# Diff at Wed, 26 Aug 2026 12:24:45 GMT:
+# Diff at Sat, 29 Aug 2026 15:29:40 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1786722168
-- current timestamp: 1786722168
+- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787834409
+- current timestamp: 1787834409
 
 ## Description
 
@@ -14,7 +14,7 @@ reapply branch discovery config after merging main
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1786722168 (main branch discovery), not current.
+discovery. Values are for block 1787834409 (main branch discovery), not current.
 
 ```diff
     contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) [opstack/SuperchainConfigFake_expiry] {
@@ -137,6 +137,31 @@ discovery. Values are for block 1786722168 (main branch discovery), not current.
     +++ description: None
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x97fa8f30a61663285a6485a26f2a39f9fe1c7084
+
+# Diff at Thu, 27 Aug 2026 12:41:23 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@07685e2b690dd5d880203f3696ff2e1bc300a13d block: 1786722168
+- current timestamp: 1787834409
+
+## Description
+
+Conduit Multisig 1: member added; threshold 4/10 → 4/11.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
     }
 ```
 

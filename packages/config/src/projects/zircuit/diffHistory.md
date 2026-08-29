@@ -1,20 +1,20 @@
-Generated with discovered.json: 0x037a4c3b308aa895fd29dc000b442f72934d1618
+Generated with discovered.json: 0x0c0047148732e7fd308cefbd7096f172b93341f7
 
-# Diff at Wed, 26 Aug 2026 12:57:00 GMT:
+# Diff at Sat, 29 Aug 2026 15:44:21 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1787133501
-- current timestamp: 1787133501
+- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787820501
+- current timestamp: 1787820501
 
 ## Description
 
-Ossification perimeter: externally governed escrows (Maker/Sky DAI/USDS, Lido wstETH) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1787133501 (main branch discovery), not current.
+discovery. Values are for block 1787820501 (main branch discovery), not current.
 
 ```diff
     contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) [opstack/SuperchainConfigFake_expiry] {
@@ -63,10 +63,10 @@ discovery. Values are for block 1787133501 (main branch discovery), not current.
 ```diff
     contract SystemConfig (eth:0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) [opstack/SystemConfig] {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
-      fieldMeta.batcherHash:
-+        {"severity":"LOW"}
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
+      fieldMeta.batcherHash:
++        {"severity":"LOW"}
       fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
@@ -143,6 +143,134 @@ discovery. Values are for block 1787133501 (main branch discovery), not current.
     +++ description: None
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0xf34aed76b9a1c9b66ed45def224b91de7bbdae15
+
+# Diff at Thu, 27 Aug 2026 08:51:59 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@fe0597dfc044814c2211715fa77b5f9f3ec22e2a block: 1787747199
+- current timestamp: 1787820501
+
+## Description
+
+Config change: added proposer/challenger permission overrides on the
+PermissionedDisputeGame, in line with other OP stack projects using
+permissioned dispute games. The proposer EOA can create dispute games
+(propose state roots) and the challenger (Conduit Multisig 1) can
+challenge them.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787747199 (main branch discovery), not current.
+
+```diff
+    EOA  (eth:0x2d14057c3ad6b04a480b06Da2356AdcdF5Ed97eE) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x4F80B390aF3b49dda96134DA1ac905b05e816496","description":"Allowed to post new state roots of the current layer to the host chain.","role":".proposer"}]
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x4F80B390aF3b49dda96134DA1ac905b05e816496","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challenger"}
+    }
+```
+
+Generated with discovered.json: 0x9c7050a36d08c1bd71edfdebabbf499bec254c97
+
+# Diff at Wed, 26 Aug 2026 12:30:17 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@00448b8c7fc6d3a3b8b155e386f5ffa195696a81 block: 1787133501
+- current timestamp: 1787747199
+
+## Description
+
+OP-stack storage surgery performed on L1StandardBridge: https://tools.l2beat.com/decoder-new/?hash=0xa2c6d7a895f7793beb83cd3f0734b427fea4982e2ed35044555c52bf3a8a8a23&data=AwA that manually overwritten bridge storage slots.
+
+Until Aug 4, 2026, Zircuit ran a modified bridge implementation that never maintained the OP-stack deposits accounting, after the migration to standard OP-stack contracts correct escrow balances had to be set for the following 12 tokens: ZRC, WETH, WBTC, USDT, USDC, weETH, weETHs, mETH, LsETH, FBTC, LBTC, GUD. This was verifeid by reproducing corresponding storage slots and comparing with the values in the transaction above.
+
+Also, updated conduit ms and verified sources for L1Block contract on zircuit.
+
+## Watched changes
+
+```diff
+    contract L1StandardBridge (eth:0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      values.$pastUpgrades.16:
++        ["2026-08-22T11:12:35.000Z","0xa2c6d7a895f7793beb83cd3f0734b427fea4982e2ed35044555c52bf3a8a8a23",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.17:
++        ["2026-08-22T11:12:35.000Z","0xa2c6d7a895f7793beb83cd3f0734b427fea4982e2ed35044555c52bf3a8a8a23",["eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A"]]
+      values.$upgradeCount:
+-        16
++        18
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787133501 (main branch discovery), not current.
+
+```diff
+    contract L1Block (zircuit:0x4200000000000000000000000000000000000015) [opstack/Layer2/L1Block] {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      unverified:
+-        true
+      values.$pastUpgrades.0:
+-        ["2025-05-12T16:00:01.000Z","0xe992e00998b34075506d2726a274db07a62af6cdd9d527bfda9128114603cfbd",["zircuit:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"]]
+      values.$upgradeCount:
+-        2
++        1
+      values.baseFeeScalar:
++        7600
+      values.batcherHash:
++        "0x000000000000000000000000cf8225801df6ef90ad3bc86808f574403a309de8"
+      values.DEPOSITOR_ACCOUNT:
++        "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
+      values.gasPayingToken:
++        {"addr_":"zircuit:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","decimals_":18}
+      values.gasPayingTokenName:
++        "Ether"
+      values.gasPayingTokenSymbol:
++        "ETH"
+      values.isCustomGasToken:
++        false
+      values.l1FeeOverhead:
++        0
+      values.l1FeeScalar:
++        0
+      values.version:
++        "1.6.1"
+      implementationNames.zircuit:0xe95F7EdfB4cbf87eD14d94913448d89282513d66:
+-        ""
++        "L1Block"
+      template:
++        "opstack/Layer2/L1Block"
+      sourceHashes:
++        ["0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50","0xba1197cf8ad03c23a68877c7bad92c7d43c0348aa7b03d38f36a17acb35a942e"]
+      description:
++        "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain."
     }
 ```
 

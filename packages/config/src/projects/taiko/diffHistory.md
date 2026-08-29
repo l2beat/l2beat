@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xff89ae70a98f9edc3c867d744f1b3accd8ad69b9
+Generated with discovered.json: 0xdc2d48170be11108f40c1a2fa4e9f1eb6107142f
 
-# Diff at Wed, 26 Aug 2026 12:24:47 GMT:
+# Diff at Sat, 29 Aug 2026 15:29:41 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1787647451
-- current timestamp: 1787647451
+- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787832377
+- current timestamp: 1787832377
 
 ## Description
 
@@ -14,7 +14,7 @@ reapply branch discovery config after merging main
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1787647451 (main branch discovery), not current.
+discovery. Values are for block 1787832377 (main branch discovery), not current.
 
 ```diff
     contract PEMCertChainLib (eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169) [taiko/PEMCertChainLib] {
@@ -375,6 +375,44 @@ discovery. Values are for block 1787647451 (main branch discovery), not current.
 +        {"severity":"HIGH"}
       critical:
 +        true
+    }
+```
+
+Generated with discovered.json: 0x944e4923ff7b113fa2d85afda1928383c9cf8c3a
+
+# Diff at Thu, 27 Aug 2026 12:07:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@07685e2b690dd5d880203f3696ff2e1bc300a13d block: 1787647451
+- current timestamp: 1787832377
+
+## Description
+
+Add proposal that reduces the Security Council to a 4/5 multisig. The resulting Council is not a valid Security Council after the L2BEAT criteria: https://medium.com/l2beat/stages-update-security-council-requirements-4c79cea8ef52, https://forum.l2beat.com/t/stage-1-requirements-update-security-council-walkaway-test/412 .
+
+full review of the proposal: https://gist.github.com/sekuba/b19aa30b123d7247280e96f5a49e5c15 .
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.
+      values.proposalCount:
+-        37
++        38
+      values.proposalIds.37:
++        "608325339122031231284005618251537221674155900965"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
++++ description: total standard proposal count.
++++ severity: HIGH
+      values.proposalCount:
+-        23
++        24
     }
 ```
 

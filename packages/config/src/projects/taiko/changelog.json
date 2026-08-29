@@ -2,6 +2,46 @@
   "formatVersion": 1,
   "entries": [
     {
+      "id": "ec5264fb",
+      "timestamp": 1787832377,
+      "changes": [
+        {
+          "address": "eth:0x989e348275b659d36f8751ea1c10d146211650be",
+          "fields": [
+            {
+              "key": "values.proposalCount",
+              "removed": [
+                "37"
+              ],
+              "added": [
+                "38"
+              ]
+            },
+            {
+              "key": "values.proposalIds.37",
+              "added": [
+                "\"608325339122031231284005618251537221674155900965\""
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xd7da1c25e915438720692bc55eb3a7170ca90321",
+          "fields": [
+            {
+              "key": "values.proposalCount",
+              "removed": [
+                "23"
+              ],
+              "added": [
+                "24"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "9777f08d",
       "timestamp": 1787647451,
       "changes": [
@@ -387,20 +427,6 @@
       "timestamp": 1784274333,
       "changes": [
         {
-          "address": "eth:0x0f95e6968ec1b28c794cf1ad99609431de5179c2",
-          "fields": [
-            {
-              "key": "values.$members.4",
-              "removed": [
-                "\"eth:0xbC40317A69CB1D1aF2CBcfE32C8B7a6840Dc287a\""
-              ],
-              "added": [
-                "\"eth:0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A\""
-              ]
-            }
-          ]
-        },
-        {
           "address": "eth:0x989e348275b659d36f8751ea1c10d146211650be",
           "fields": [
             {
@@ -491,20 +517,6 @@
       "id": "e0cf6e6c",
       "timestamp": 1782979130,
       "changes": [
-        {
-          "address": "eth:0x0f95e6968ec1b28c794cf1ad99609431de5179c2",
-          "fields": [
-            {
-              "key": "values.$members.4",
-              "removed": [
-                "\"eth:0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A\""
-              ],
-              "added": [
-                "\"eth:0xbC40317A69CB1D1aF2CBcfE32C8B7a6840Dc287a\""
-              ]
-            }
-          ]
-        },
         {
           "address": "eth:0x2affadeb2ef5e1f2a7f58964ee191f1e88317ecd",
           "fields": [
@@ -623,9 +635,6 @@
         {
           "address": "eth:0x08568df252ecf37d6c3efd24f6ca3688118697f1",
           "status": "deleted"
-        },
-        {
-          "address": "eth:0x0f95e6968ec1b28c794cf1ad99609431de5179c2"
         },
         {
           "address": "eth:0x0ffa4a625ed9db32b70f99180fd00759fc3e9261",

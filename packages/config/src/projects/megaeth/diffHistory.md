@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x9663131282751cb040d9ec5c049a715f8b632f70
+Generated with discovered.json: 0x491bcf17d9ad2cba13ead2734306e3dde9ea5aaa
 
-# Diff at Wed, 26 Aug 2026 12:18:55 GMT:
+# Diff at Sat, 29 Aug 2026 15:27:30 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1784846614
-- current timestamp: 1784846614
+- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787834236
+- current timestamp: 1787834236
 
 ## Description
 
@@ -14,7 +14,7 @@ reapply branch discovery config after merging main
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1784846614 (main branch discovery), not current.
+discovery. Values are for block 1787834236 (main branch discovery), not current.
 
 ```diff
     contract L1StandardBridge (eth:0x0CA3A2FBC3D770b578223FBB6b062fa875a2eE75) [opstack/L1StandardBridge] {
@@ -163,6 +163,34 @@ discovery. Values are for block 1784846614 (main branch discovery), not current.
     +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
       critical:
 +        true
+    }
+```
+
+Generated with discovered.json: 0xe95260b8dba0cbbe724b24ff8881a3663b649a67
+
+# Diff at Thu, 27 Aug 2026 12:39:13 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@07685e2b690dd5d880203f3696ff2e1bc300a13d block: 1784846614
+- current timestamp: 1787834236
+
+## Description
+
+EigenDAOperationsMultisig: member removed; threshold 3/5 → 2/4.
+
+## Watched changes
+
+```diff
+    contract EigenDAOperationsMultisig (eth:0x002721B4790d97dC140a049936aA710152Ba92D5) [GnosisSafe] {
+    +++ description: None
+      values.$members.1:
+-        "eth:0xA3e302a6Ea0cf79B8580d94e92Eb5514292daacE"
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 4 (50%)"
     }
 ```
 

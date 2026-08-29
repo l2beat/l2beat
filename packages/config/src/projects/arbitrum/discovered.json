@@ -1,6 +1,6 @@
 {
   "name": "arbitrum",
-  "timestamp": 1787143507,
+  "timestamp": 1787840339,
   "configHash": "0x85c3346409f7a03e76f67f3c7df147cea950578bf3008eede797204f59bb62fb",
   "entries": [
     {
@@ -11,14 +11,21 @@
     {
       "name": "ArbFilteredTransactionsManager",
       "address": "arb1:0x0000000000000000000000000000000000000074",
-      "type": "EOA",
+      "type": "Contract",
       "template": "orbitstack/ArbFilteredTransactionsManager",
-      "proxyType": "EOA",
+      "sourceHashes": [
+        "0xc92ac7c82ac0ae6811eb5889bb19d300f3f59cc6c21e25d1be2dcc6c4a9db41a"
+      ],
+      "proxyType": "immutable",
       "description": "ArbOS 61 transaction-filtering precompile (0x..74). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. Available from ArbOS 61 onwards. On chains where the feature is not enabled (e.g. Arbitrum One and Nova) it has no filterers and no filtered transactions, but is tracked so any future activation is caught immediately. Compare Robinhood, where this precompile is active.",
       "values": {
+        "$immutable": true,
         "filteredTransactionsAdded": 0,
         "filteredTransactionsDeleted": 0,
-        "transactionFilterers": "EXPECT_REVERT"
+        "transactionFilterers": []
+      },
+      "implementationNames": {
+        "arb1:0x0000000000000000000000000000000000000074": ""
       },
       "references": [
         {
@@ -89,7 +96,7 @@
         "beaconProxyFactory": "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "arb1:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 45099,
+        "exitNum": 45328,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -916,7 +923,7 @@
         "l2Gateway": "arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "137825248390051777288400"
+        "totalSupply": "119115930078105678988458"
       },
       "implementationNames": {
         "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1": "TransparentUpgradeableProxy",
@@ -1035,7 +1042,7 @@
         "$upgradeCount": 2,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x81e28e6f37e32d4756bbeaf3c057b82178ac53398af819adfc680fad31b2ecd5",
-        "getTotalDelegation": "5334317315539748242839150857",
+        "getTotalDelegation": "5290050706727048527349683540",
         "l1Address": "arb1:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
         "MIN_MINT_INTERVAL": 31536000,
         "MINT_CAP_DENOMINATOR": 10000,
@@ -1045,7 +1052,7 @@
         "nextMint": 1710504508,
         "owner": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
         "symbol": "ARB",
-        "totalSupply": "9999998977630224104158908096"
+        "totalSupply": "9999998977610261816650915825"
       },
       "fieldMeta": {
         "mintCapPerYer": {
@@ -1801,7 +1808,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "arb1:0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2373,
+        "exitNum": 2375,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -3164,7 +3171,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 1317109,
+        "batchCount": 1323184,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
@@ -3177,9 +3184,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 25789113,
+          "prevBlockNumber": 25846965,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 25789181
+          "prevSequencedBlockNumber": 25847034
         },
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -3205,7 +3212,7 @@
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 2538677,
+        "totalDelayedMessagesRead": 2547005,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -3581,7 +3588,7 @@
         "getValidators": [],
         "inbox": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isPostBoLD": true,
-        "latestConfirmed": "0xff00bf589a538bd1c8eeb91b83ac1f75d71a8d45080e969a9192f20957614432",
+        "latestConfirmed": "0x5de877d37bbfbfe6ac317006cbd08610c2cecae32a35541164462e2fd72b8125",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -4069,7 +4076,7 @@
           "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 2538683,
+        "delayedMessageCount": 2547011,
         "inboxHistory": [
           "eth:0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "eth:0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -4083,8 +4090,8 @@
         ],
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 1317109,
-        "sequencerReportedSubMessageCount": 473963756
+        "sequencerMessageCount": 1323184,
+        "sequencerReportedSubMessageCount": 476735805
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -11289,6 +11296,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "arbitrum": 496172058, "ethereum": 25789238 },
-  "permissionsConfigHash": "0xc9590c25aff1714cba64fc4820f624e821370982ff2c001f51b3137fdddc59fe"
+  "usedBlockNumbers": { "arbitrum": 498943718, "ethereum": 25847112 },
+  "permissionsConfigHash": "0x221514ad3c6562f79f186553d1796ca7cdcc61b4ea55bc2a16ae206d5e543d85"
 }

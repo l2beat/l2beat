@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x19ac8508ea0fa0e96f55b98f9baf6491ad4541b8
+Generated with discovered.json: 0x19cacaba48607145884c71fb4d4ee2f26a0a2db2
 
-# Diff at Thu, 20 Aug 2026 18:19:07 GMT:
+# Diff at Sat, 29 Aug 2026 15:26:51 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bd2a19ed47921b541d6d991c325212600c2751a9 block: 1784543140
+- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1784543140
 - current timestamp: 1784543140
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
@@ -19,8 +19,6 @@ discovery. Values are for block 1784543140 (main branch discovery), not current.
 ```diff
     contract TokenBridge (eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) [linea/L1TokenBridge_v1_1] {
     +++ description: Contract used to bridge and escrow ERC-20 tokens.
-      fieldMeta.nonSecurityCouncilCooldownEnd.severity:
--        "HIGH"
       fieldMeta.remoteSender:
 +        {"severity":"HIGH","description":"The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here."}
       fieldMeta.messageService:
@@ -93,8 +91,6 @@ discovery. Values are for block 1784543140 (main branch discovery), not current.
     +++ description: A beacon with an upgradeable implementation currently set as eth:0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.
       critical:
 +        true
-      fieldMeta:
-+        {"implementation":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -107,8 +103,6 @@ discovery. Values are for block 1784543140 (main branch discovery), not current.
 +        "HIGH"
       fieldMeta.limitInWei.severity:
 +        "HIGH"
-      fieldMeta.nonSecurityCouncilCooldownEnd.severity:
--        "HIGH"
       fieldMeta.periodInSeconds:
 +        {"severity":"HIGH"}
       critical:
@@ -177,8 +171,6 @@ discovery. Values are for block 1784543140 (main branch discovery), not current.
 ```diff
     contract TokenBridge (linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9) [linea/L1TokenBridge_v1_1] {
     +++ description: Contract used to bridge and escrow ERC-20 tokens.
-      fieldMeta.nonSecurityCouncilCooldownEnd.severity:
--        "HIGH"
       fieldMeta.remoteSender:
 +        {"severity":"HIGH","description":"The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here."}
       fieldMeta.messageService:
@@ -195,8 +187,6 @@ discovery. Values are for block 1784543140 (main branch discovery), not current.
 +        "HIGH"
       fieldMeta.periodInSeconds.severity:
 +        "HIGH"
-      fieldMeta.nonSecurityCouncilCooldownEnd.severity:
--        "HIGH"
       fieldMeta.minimumFeeInWei:
 +        {"severity":"HIGH"}
       critical:
@@ -235,8 +225,40 @@ discovery. Values are for block 1784543140 (main branch discovery), not current.
     +++ description: A beacon with an upgradeable implementation currently set as linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF. Beacon proxy contracts pointing to this beacon will all use its implementation.
       critical:
 +        true
+    }
+```
+
+Generated with discovered.json: 0x9e1124e9a1d7f4fd26d89207107ee3b6ed6d888d
+
+# Diff at Thu, 27 Aug 2026 08:52:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe0597dfc044814c2211715fa77b5f9f3ec22e2a block: 1784543140
+- current timestamp: 1784543140
+
+## Description
+
+Add HIGH severity to beacon implementation in global/UpgradeableBeacon template (no value changes).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784543140 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.
       fieldMeta:
-+        {"implementation":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
++        {"implementation":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta:
++        {"implementation":{"severity":"HIGH"}}
     }
 ```
 

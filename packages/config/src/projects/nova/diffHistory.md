@@ -1,20 +1,20 @@
-Generated with discovered.json: 0x15f2205dca40ca4601eac380e0ba610068d3d7ca
+Generated with discovered.json: 0x877eb8e53df9388b8dac841d0501ed7a6662e54f
 
-# Diff at Wed, 26 Aug 2026 12:56:58 GMT:
+# Diff at Sat, 29 Aug 2026 15:41:50 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1787143520
-- current timestamp: 1787143520
+- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787834844
+- current timestamp: 1787834844
 
 ## Description
 
-Ossification perimeter: externally governed escrows (Maker/Sky DAI, Lido wstETH, Livepeer LPT) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1787143520 (main branch discovery), not current.
+discovery. Values are for block 1787834844 (main branch discovery), not current.
 
 ```diff
     contract L2GatewayRouter (arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8) [orbitstack/layer2/L2GatewayRouter] {
@@ -51,14 +51,6 @@ discovery. Values are for block 1787143520 (main branch discovery), not current.
 ```
 
 ```diff
-    contract L2SecurityCouncilEmergency (arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) [orbitstack/layer2/L2SecurityCouncilEmergency] {
-    +++ description: None
-      critical:
-+        true
-    }
-```
-
-```diff
     contract L2ERC20Gateway (arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257) [orbitstack/layer2/L2ERC20Gateway] {
     +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
       critical:
@@ -81,14 +73,6 @@ discovery. Values are for block 1787143520 (main branch discovery), not current.
 +        {"severity":"LOW"}
       fieldMeta.dacKeyset:
 +        {"severity":"HIGH"}
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract CustomGateway (eth:0x23122da8C581AA7E0d07A36Ff1f16F799650232f) [orbitstack/CustomGateway] {
-    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
       critical:
 +        true
     }
@@ -253,14 +237,6 @@ discovery. Values are for block 1787143520 (main branch discovery), not current.
 ```
 
 ```diff
-    contract SecurityCouncil (eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85) [orbitstack/SecurityCouncil] {
-    +++ description: None
-      critical:
-+        true
-    }
-```
-
-```diff
     contract ProxyAdmin (eth:0xF32e5B5Ad94c0c0F83E0023b0AC48A93A8a2a428) [global/ProxyAdmin] {
     +++ description: None
       fieldMeta:
@@ -273,6 +249,47 @@ discovery. Values are for block 1787143520 (main branch discovery), not current.
     +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
       critical:
 +        true
+    }
+```
+
+Generated with discovered.json: 0x908e99176c871b83984e4376306fefb091e9b011
+
+# Diff at Thu, 27 Aug 2026 12:49:01 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@07685e2b690dd5d880203f3696ff2e1bc300a13d block: 1787143520
+- current timestamp: 1787834844
+
+## Description
+
+ArbFilteredTransactionsManager (ArbOS 61 transaction-filtering precompile) now tracked; no filterers registered.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (arb-nova:0x0000000000000000000000000000000000000074) [orbitstack/ArbFilteredTransactionsManager] {
+    +++ description: ArbOS 61 transaction-filtering precompile (0x..74). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. Available from ArbOS 61 onwards. On chains where the feature is not enabled (e.g. Arbitrum One and Nova) it has no filterers and no filtered transactions, but is tracked so any future activation is caught immediately. Compare Robinhood, where this precompile is active.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      values.transactionFilterers:
+-        "EXPECT_REVERT"
++        []
+      values.$immutable:
++        true
+      sourceHashes:
++        ["0xc92ac7c82ac0ae6811eb5889bb19d300f3f59cc6c21e25d1be2dcc6c4a9db41a"]
+      deployerAddress:
++        "arb-nova:0x0000000000000000000000000000000000000000"
+      sinceTimestamp:
++        1656122488
+      sinceBlock:
++        0
+      implementationNames:
++        {"arb-nova:0x0000000000000000000000000000000000000074":""}
     }
 ```
 

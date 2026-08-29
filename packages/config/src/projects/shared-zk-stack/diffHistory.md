@@ -1,20 +1,20 @@
-Generated with discovered.json: 0xbc0bba2d9bfe81283c0c082ec109286727d18e1e
+Generated with discovered.json: 0x9f2aec808ed6ab52050f12759ed9e2848b447cdd
 
-# Diff at Thu, 20 Aug 2026 20:07:58 GMT:
+# Diff at Sat, 29 Aug 2026 15:29:29 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bd2a19ed47921b541d6d991c325212600c2751a9 block: 1786965974
-- current timestamp: 1786965974
+- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787738139
+- current timestamp: 1787738139
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+reapply branch discovery config after merging main
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1786965974 (main branch discovery), not current.
+discovery. Values are for block 1787738139 (main branch discovery), not current.
 
 ```diff
     contract ProxyAdmin (eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e) [global/ProxyAdmin] {
@@ -155,6 +155,11 @@ discovery. Values are for block 1786965974 (main branch discovery), not current.
 ```diff
     contract ChainAssetHandler (eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076) [shared-zk-stack/ChainAssetHandler] {
     +++ description: Specialized contract for managing chain assets, i.e. chain migrations.
+      fieldMeta.migrations.severity:
+-        "HIGH"
+      fieldMeta.migrations.description:
+-        "zk chain migrations that were started"
++        "zk chain migrations that were started. Any chain's migration appears here; Era's own settlement moves are tracked as HIGH on its Diamond (getSettlementLayer)."
       fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
@@ -259,6 +264,29 @@ discovery. Values are for block 1786965974 (main branch discovery), not current.
     +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
       fieldMeta:
 +        {"currentQuorum":{"severity":"HIGH"},"proposalThreshold_MTokens":{"severity":"HIGH"},"votingDelay":{"severity":"HIGH"},"votingPeriod":{"severity":"HIGH"},"lateQuorumVoteExtension":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x9f6afab07e493a9978da2efad6e38a0083508aab
+
+# Diff at Wed, 26 Aug 2026 09:56:44 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@00448b8c7fc6d3a3b8b155e386f5ffa195696a81 block: 1786965974
+- current timestamp: 1787738139
+
+## Description
+
+Created this gov ops proposal: https://www.tally.xyz/gov/zksync/proposal/100740533362465570091053731139742615879729169445685970195620671955457283837153?govId=eip155:324:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160.
+
+## Watched changes
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        2
++        3
     }
 ```
 

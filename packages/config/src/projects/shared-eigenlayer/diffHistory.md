@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x4c763ef8a4d1fe0e2b24fe8038f9b22d72c75459
+Generated with discovered.json: 0x1974af166b0efb6bbbb52fbf38f3a33c231d5ea8
 
-# Diff at Wed, 26 Aug 2026 12:24:18 GMT:
+# Diff at Sat, 29 Aug 2026 15:41:50 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1785420260
+- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1785420260
 - current timestamp: 1785420260
 
 ## Description
@@ -15,14 +15,6 @@ reapply branch discovery config after merging main
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1785420260 (main branch discovery), not current.
-
-```diff
-    contract UpgradeableBeacon (eth:0x0fCE0A591D96BB76883323eF555867111E2050a9) [global/UpgradeableBeacon] {
-    +++ description: A beacon with an upgradeable implementation currently set as eth:0xc946787cFd6c155886C673BF9815C841c1718903. Beacon proxy contracts pointing to this beacon will all use its implementation.
-      fieldMeta:
-+        {"implementation":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
-    }
-```
 
 ```diff
     contract ProxyAdmin (eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9) [global/ProxyAdmin] {
@@ -37,6 +29,32 @@ discovery. Values are for block 1785420260 (main branch discovery), not current.
     +++ description: None
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0xaf4050e5ce210d9bf138144890138ed467a204aa
+
+# Diff at Thu, 27 Aug 2026 08:52:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe0597dfc044814c2211715fa77b5f9f3ec22e2a block: 1785420260
+- current timestamp: 1785420260
+
+## Description
+
+Add HIGH severity to beacon implementation in global/UpgradeableBeacon template (no value changes).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785420260 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0x0fCE0A591D96BB76883323eF555867111E2050a9) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0xc946787cFd6c155886C673BF9815C841c1718903. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta:
++        {"implementation":{"severity":"HIGH"}}
     }
 ```
 

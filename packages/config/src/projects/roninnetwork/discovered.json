@@ -1,6 +1,6 @@
 {
   "name": "roninnetwork",
-  "timestamp": 1783604846,
+  "timestamp": 1787834376,
   "configHash": "0x48cefa8eb6ab8681425d8dffe01eaa5a457aa85ed6656cae61166abce612651e",
   "entries": [
     {
@@ -780,7 +780,7 @@
         "game1337": "eth:0x296e7aD6D441b0627768bC0650179a4206479444",
         "game2000": "eth:0x0000000000000000000000000000000000000000",
         "game42": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 116,
+        "gameCount": 214,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A",
@@ -854,6 +854,7 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2",
           "eth:0xcdC931935768c0562AfE989A366a3Dc4d52F4853",
           "eth:0xA9FCCc53F1c9095DA867Bd648683F8bdCcc78d09",
           "eth:0x6BB4249858Ee19b6ABC071AD26bEe690baa783A6",
@@ -869,8 +870,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 278,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 305,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1759,6 +1760,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0x9aA8feACbB42659a806cDD6933ab3982586824F1",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1895,7 +1901,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2465772783194992912944652"
+        "totalSupply": "2037784277857463146069301"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -2067,7 +2073,7 @@
         "L2_BLOCK_NUMBER": 56278374,
         "l2BlockNumber": 0,
         "l2SequenceNumber": 0,
-        "lastResolved": "eth:0x31148E296790E417FE88bb065f367d4B06329dA6",
+        "lastResolved": "eth:0xf33330b0821D8486DA75fc3eB70282915202a9bE",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77",
@@ -4229,6 +4235,6 @@
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25495416 },
-  "permissionsConfigHash": "0xcc0b1c6a2fc3d6bb3bc7a9be8cc395c230797656daf0b3fea23aa9c724fa1b84"
+  "usedBlockNumbers": { "ethereum": 25846615 },
+  "permissionsConfigHash": "0xd1f4502a30460fbd7ed0460e3a75944aff921dde4b32902476f30ad87c260bf0"
 }

@@ -2530,6 +2530,18 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'common/programHashes/0x00e726560b91ff68e7e232d79536f4a8fb951f1f0197f97f7377b3f21e7e641e.md',
     ),
   },
+  '0x00637b56bd0f68aa55fa7128386e6a61a73df18a3d7a50a47c8c02d672346915': {
+    title: 'Fluent Nitro TEE verifier v1.0.5',
+    proverSystemProject: ProjectId('sp1hypercube'),
+    programUrl:
+      'https://github.com/fluentlabs-xyz/fluent-stf/tree/v1.0.5/bin/aws-nitro-validator',
+    description:
+      'Verifies correctness of a single TEE attestation for executing Fluent STF within a trusted enclave on AWS cloud.',
+    verificationStatus: 'successful',
+    verificationSteps: readMarkdown(
+      'common/programHashes/0x00637b56bd0f68aa55fa7128386e6a61a73df18a3d7a50a47c8c02d672346915.md',
+    ),
+  },
   '0x00e34107e4c5284bd4ecc4269c650671038c1e85d9dacb931b534e984f607334': {
     title: 'Fluent STF guest program',
     proverSystemProject: ProjectId('sp1hypercube'),

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x638461b3f324c4fe354e40e0e008155c08c613c5
+Generated with discovered.json: 0x5f7dfd13970b4c0bf6abe55612acdea9731f395e
 
-# Diff at Wed, 26 Aug 2026 12:18:13 GMT:
+# Diff at Sat, 29 Aug 2026 15:26:26 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1787143507
-- current timestamp: 1787143507
+- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787840339
+- current timestamp: 1787840339
 
 ## Description
 
@@ -14,7 +14,7 @@ reapply branch discovery config after merging main
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1787143507 (main branch discovery), not current.
+discovery. Values are for block 1787840339 (main branch discovery), not current.
 
 ```diff
     contract L2ERC20Gateway (arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe) [orbitstack/layer2/L2ERC20Gateway] {
@@ -448,6 +448,50 @@ discovery. Values are for block 1787143507 (main branch discovery), not current.
 +   Status: CREATED
     contract L1WethGateway (eth:0xd92023E9d9911199a6711321D1277285e6d4e2db) [N/A]
     +++ description: Canonical WETH gateway escrowing L1 WETH and releasing it for withdrawals proven through the Arbitrum bridge.
+```
+
+Generated with discovered.json: 0x760b556403597be4ae735db91028268e1c0bcaa3
+
+# Diff at Thu, 27 Aug 2026 14:20:06 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@07685e2b690dd5d880203f3696ff2e1bc300a13d block: 1787143507
+- current timestamp: 1787840339
+
+## Description
+
+ArbFilteredTransactionsManager (ArbOS 61 transaction-filtering precompile) now tracked; no filterers registered.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (arb1:0x0000000000000000000000000000000000000074) [orbitstack/ArbFilteredTransactionsManager] {
+    +++ description: ArbOS 61 transaction-filtering precompile (0x..74). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. Available from ArbOS 61 onwards. On chains where the feature is not enabled (e.g. Arbitrum One and Nova) it has no filterers and no filtered transactions, but is tracked so any future activation is caught immediately. Compare Robinhood, where this precompile is active.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      values.transactionFilterers:
+-        "EXPECT_REVERT"
++        []
+      values.$immutable:
++        true
+      sourceHashes:
++        ["0xc92ac7c82ac0ae6811eb5889bb19d300f3f59cc6c21e25d1be2dcc6c4a9db41a"]
+      implementationNames:
++        {"arb1:0x0000000000000000000000000000000000000074":""}
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (arb1:0x912CE59144191C1204E64559FE8253a0e49E6548) [orbitstack/layer2/L2ArbitrumToken] {
+    +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+      values.totalSupply:
+-        "9999998977630224104158908096"
++        "9999998977610261816650915825"
+    }
 ```
 
 Generated with discovered.json: 0xee242bcd6242117c5a88cde0dc7b95e1ea130f5e

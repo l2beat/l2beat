@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x688259ec2c87525708ef5b330d4fb3fbb358c3ca
+Generated with discovered.json: 0x9727cacdc2ba3bf2e832e1fd270cc223e175eee0
 
-# Diff at Wed, 26 Aug 2026 12:18:10 GMT:
+# Diff at Sat, 29 Aug 2026 14:51:46 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1786696302
-- current timestamp: 1786696302
+- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787834158
+- current timestamp: 1787834158
 
 ## Description
 
@@ -14,7 +14,7 @@ reapply branch discovery config after merging main
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1786696302 (main branch discovery), not current.
+discovery. Values are for block 1787834158 (main branch discovery), not current.
 
 ```diff
     contract L1CrossDomainMessenger (eth:0x012c341506ee1939e56084F43Ae5dbCe224Ce2af) [opstack/L1CrossDomainMessenger] {
@@ -145,6 +145,31 @@ discovery. Values are for block 1786696302 (main branch discovery), not current.
 +        true
       fieldMeta:
 +        {"$admin":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0xd489f121b7ba0ce557de3a7d5f838e7480599923
+
+# Diff at Thu, 27 Aug 2026 12:37:13 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@07685e2b690dd5d880203f3696ff2e1bc300a13d block: 1786696302
+- current timestamp: 1787834158
+
+## Description
+
+Conduit Multisig 1: member added; threshold 4/10 → 4/11.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
     }
 ```
 

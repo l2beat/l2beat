@@ -932,10 +932,7 @@
         "implementation": "eth:0x36f274C1C197F277EA3C57859729398FCc8a3763",
         "owner": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
       },
-      "fieldMeta": {
-        "implementation": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "implementation": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB": "UpgradeableBeacon"
       }
@@ -2604,10 +2601,7 @@
         "implementation": "linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF",
         "owner": "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"
       },
-      "fieldMeta": {
-        "implementation": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "implementation": { "severity": "HIGH" } },
       "implementationNames": {
         "linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0": "UpgradeableBeacon"
       }

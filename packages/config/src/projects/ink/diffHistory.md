@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x2d05cce95928b0a1e8ee983032da22f0e3cd3e57
+Generated with discovered.json: 0x8489eb04e01fb36d7858f2272ba5c2515941a402
 
-# Diff at Wed, 26 Aug 2026 12:18:22 GMT:
+# Diff at Sat, 29 Aug 2026 15:26:51 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1786359753
-- current timestamp: 1786359753
+- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787834174
+- current timestamp: 1787834174
 
 ## Description
 
@@ -14,7 +14,7 @@ reapply branch discovery config after merging main
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1786359753 (main branch discovery), not current.
+discovery. Values are for block 1787834174 (main branch discovery), not current.
 
 ```diff
     contract LivenessModule (eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748) [gnosisSafeModules/LivenessModule] {
@@ -257,6 +257,54 @@ discovery. Values are for block 1786359753 (main branch discovery), not current.
 +        true
       fieldMeta:
 +        {"$admin":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x63fc43b7cf9b2004ea7e5824c6c1d5da21d6e264
+
+# Diff at Thu, 27 Aug 2026 12:38:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@07685e2b690dd5d880203f3696ff2e1bc300a13d block: 1786359753
+- current timestamp: 1787834174
+
+## Description
+
+SystemConfig: ownership transferred from OpFoundationOperationsSafe to OpFoundationUpgradeSafe.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.owner:
+-        "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner"}
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner"}]
+    }
+```
+
+```diff
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) [gnosisSafeModules/SaferSafes] {
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+      receivedPermissions.0.via.0.address:
+-        "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
     }
 ```
 

@@ -2,6 +2,46 @@
   "formatVersion": 1,
   "entries": [
     {
+      "id": "afd516ac",
+      "timestamp": 1787840339,
+      "changes": [
+        {
+          "address": "arb1:0x0000000000000000000000000000000000000074",
+          "fields": [
+            {
+              "key": "values.transactionFilterers",
+              "removed": [
+                "\"EXPECT_REVERT\""
+              ],
+              "added": [
+                "[]"
+              ]
+            },
+            {
+              "key": "values.$immutable",
+              "added": [
+                "true"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "arb1:0x912ce59144191c1204e64559fe8253a0e49e6548",
+          "fields": [
+            {
+              "key": "values.totalSupply",
+              "removed": [
+                "\"9999998977630224104158908096\""
+              ],
+              "added": [
+                "\"9999998977610261816650915825\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "b0f8c079",
       "timestamp": 1787143507,
       "changes": [

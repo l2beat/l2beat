@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x1517b826a86ab5de2f81c170eb3033c56787c127
+Generated with discovered.json: 0x19554caa922a162da97dd13b7788ed9e26a1fcea
 
-# Diff at Wed, 26 Aug 2026 12:18:34 GMT:
+# Diff at Thu, 27 Aug 2026 08:52:49 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1787647851
+- comparing to: main@fe0597dfc044814c2211715fa77b5f9f3ec22e2a block: 1787647851
 - current timestamp: 1787647851
 
 ## Description
 
-reapply branch discovery config after merging main
+Add HIGH severity to beacon implementation in global/UpgradeableBeacon template (no value changes).
 
 ## Config/verification related changes
 
@@ -20,7 +20,7 @@ discovery. Values are for block 1787647851 (main branch discovery), not current.
     contract UpgradeableBeacon (eth:0x5FbE8cEf9CCc56ad245736D3C5bAf82ad54Ca789) [global/UpgradeableBeacon] {
     +++ description: A beacon with an upgradeable implementation currently set as eth:0x06A56487494aa080deC7Bf69128EdA9225784553. Beacon proxy contracts pointing to this beacon will all use its implementation.
       fieldMeta:
-+        {"implementation":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
++        {"implementation":{"severity":"HIGH"}}
     }
 ```
 

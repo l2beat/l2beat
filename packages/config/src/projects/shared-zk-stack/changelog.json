@@ -2,6 +2,26 @@
   "formatVersion": 1,
   "entries": [
     {
+      "id": "378e5602",
+      "timestamp": 1787738139,
+      "changes": [
+        {
+          "address": "zksync:0xeeea739a8b6fb1b8f703e23c9be03ceea643b160",
+          "fields": [
+            {
+              "key": "values.proposalQueuedCount",
+              "removed": [
+                "2"
+              ],
+              "added": [
+                "3"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "28af77ee",
       "timestamp": 1786965974,
       "changes": [
