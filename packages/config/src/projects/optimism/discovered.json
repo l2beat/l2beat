@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "timestamp": 1784283055,
-  "configHash": "0x53ce518fe537fcd00831ffbb310935581aa2f0ee34e3518bb06c57e4c06f2bb3",
+  "configHash": "0x937feaf07f6e60ec9bbe5c4d43042062f4ddc29a7b4c5ec9f771d066ebe22cca",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -478,6 +478,10 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
+        "disputeGameFinalityDelaySeconds": {
+          "severity": "HIGH",
+          "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
+        },
         "respectedGameType": { "severity": "HIGH" },
         "retirementTimestamp": { "severity": "HIGH" }
       },

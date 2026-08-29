@@ -1,0 +1,142 @@
+{
+  "formatVersion": 1,
+  "entries": [
+    {
+      "id": "ebe8672f",
+      "timestamp": 1787311119,
+      "changes": [
+        {
+          "address": "eth:0xc480f68a3dcc3edd82134fab45c14a0fcf1da3cc",
+          "fields": [
+            {
+              "key": "values.proposalCount",
+              "removed": [
+                "27"
+              ],
+              "added": [
+                "28"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "63068031",
+      "timestamp": 1787135135,
+      "changes": [
+        {
+          "address": "eth:0xc480f68a3dcc3edd82134fab45c14a0fcf1da3cc",
+          "fields": [
+            {
+              "key": "values.proposalCount",
+              "removed": [
+                "26"
+              ],
+              "added": [
+                "27"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "276685e8",
+      "timestamp": 1786961539,
+      "changes": [
+        {
+          "address": "eth:0xfa7093cdd9ee6932b4eb2c9e1cde7ce00b1fa4b9",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b\""
+              ],
+              "added": [
+                "\"eth:0xD662C4B1F22AcEb0BEaCdf3A493De6f478686A0C\""
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ebc35776",
+      "timestamp": 1785404669,
+      "changes": [
+        {
+          "address": "eth:0xc480f68a3dcc3edd82134fab45c14a0fcf1da3cc",
+          "fields": [
+            {
+              "key": "values.proposalCount",
+              "removed": [
+                "25"
+              ],
+              "added": [
+                "26"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "492590d7",
+      "timestamp": 1784543269,
+      "changes": [
+        {
+          "address": "eth:0xa02782ce1bf85f56f8cc7c0e66e61299ac75c86f",
+          "fields": [
+            {
+              "key": "values.$implementation",
+              "removed": [
+                "\"eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b\""
+              ],
+              "added": [
+                "\"eth:0xaC76eB94703b16e704f76ECFFDADF36b6A53ECDB\""
+              ]
+            },
+            {
+              "key": "values.intervalBP",
+              "removed": [
+                "200"
+              ],
+              "added": [
+                "420"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xc480f68a3dcc3edd82134fab45c14a0fcf1da3cc",
+          "fields": [
+            {
+              "key": "values.proposalCount",
+              "removed": [
+                "23"
+              ],
+              "added": [
+                "25"
+              ]
+            }
+          ]
+        },
+        {
+          "address": "eth:0xe76c6c83af64e4c60245d8c7de953df673a7a33d",
+          "fields": [
+            {
+              "key": "values.totalSupply",
+              "removed": [
+                "\"57500000000000000000000000\""
+              ],
+              "added": [
+                "\"60000000000000000000000000\""
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

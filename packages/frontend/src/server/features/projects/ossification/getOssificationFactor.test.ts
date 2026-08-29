@@ -1,10 +1,14 @@
+import type {
+  DiscoveryChangelogContract,
+  DiscoveryChangelogEntry,
+} from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { DiscoveryUpdate } from '../recent-changes/getDiscoveryUpdates'
 import {
   exploitAgePercentile,
   getOssificationFactor,
   type OssificationContractInput,
+  toDisplayScore,
 } from './getOssificationFactor'
 
 const scoreAt = (ageSeconds: number) =>
@@ -34,7 +38,7 @@ function entry(
     name: 'Example',
     isVerified: true,
     upgradeTimestamps: [],
-    // the field changed by highSeverityBlock(), HIGH in current metadata
+    // the field changed by highSeverityChange(), HIGH in current metadata
     highSeverityFields: ['trustedImages'],
     ...overrides,
   }
@@ -42,61 +46,58 @@ function entry(
 
 function update(
   timestamp: number,
-  body: string,
-  overrides: Partial<DiscoveryUpdate> = {},
-): DiscoveryUpdate {
+  changes: DiscoveryChangelogContract[],
+  overrides: Partial<DiscoveryChangelogEntry> = {},
+): DiscoveryChangelogEntry {
   return {
     id: `update-${timestamp}`,
-    date: new Date(timestamp * 1000).toUTCString(),
     timestamp,
-    description: '',
-    isHighSeverity: true,
-    changeCount: 1,
-    sections: [{ kind: 'watched-changes', body }],
+    changes,
     ...overrides,
   }
 }
 
-function highSeverityBlock(address: string): string {
-  return [
-    '```diff',
-    `    contract Example (${address}) {`,
-    '    +++ description: test contract',
-    '+++ description: trusted keys',
-    '+++ severity: HIGH',
-    '      values.trustedImages.0:',
-    '-        "0xaa"',
-    '+        "0xbb"',
-    '    }',
-    '```',
-  ].join('\n')
+/** Changes the field entry() marks HIGH in current metadata. */
+function highSeverityChange(address: string): DiscoveryChangelogContract {
+  return {
+    address,
+    fields: [
+      {
+        key: 'values.trustedImages.0',
+        removed: ['"0xaa"'],
+        added: ['"0xbb"'],
+      },
+    ],
+  }
 }
 
-function implementationChangeBlock(address: string): string {
-  return [
-    '```diff',
-    `    contract Example (${address}) {`,
-    '    +++ description: test contract',
-    '      values.$implementation:',
-    `-        "${ADDRESS_E}"`,
-    `+        "${ADDRESS_B}"`,
-    '    }',
-    '```',
-  ].join('\n')
+function implementationChange(address: string): DiscoveryChangelogContract {
+  return {
+    address,
+    fields: [
+      {
+        key: 'values.$implementation',
+        removed: [`"${ADDRESS_E}"`],
+        added: [`"${ADDRESS_B}"`],
+      },
+    ],
+  }
 }
 
-function pastUpgradeChangeBlock(address: string): string {
-  return [
-    '```diff',
-    `    contract Example (${address}) {`,
-    '    +++ description: test contract',
-    '      values.$pastUpgrades.10:',
-    '+        ["2026-04-21T03:26:47.000Z","0x123",["eth:0x111"]]',
-    '      values.$pastUpgrades.11:',
-    '+        ["2026-04-21T03:26:47.000Z","0x123",["eth:0x222"]]',
-    '    }',
-    '```',
-  ].join('\n')
+function pastUpgradeChange(address: string): DiscoveryChangelogContract {
+  return {
+    address,
+    fields: [
+      {
+        key: 'values.$pastUpgrades.10',
+        added: ['["2026-04-21T03:26:47.000Z","0x123",["eth:0x111"]]'],
+      },
+      {
+        key: 'values.$pastUpgrades.11',
+        added: ['["2026-04-21T03:26:47.000Z","0x123",["eth:0x222"]]'],
+      },
+    ],
+  }
 }
 
 describe(getOssificationFactor.name, () => {
@@ -251,7 +252,7 @@ describe(getOssificationFactor.name, () => {
   it('counts a high-severity value change from diff history', () => {
     const result = getOssificationFactor(
       [entry({ sinceTimestamp: NOW - 4 * YEAR })],
-      [update(NOW - 30 * DAY, highSeverityBlock(ADDRESS_A))],
+      [update(NOW - 30 * DAY, [highSeverityChange(ADDRESS_A)])],
       NOW,
     )
     expect(result?.lastCriticalChange).toEqual(NOW - 30 * DAY)
@@ -269,7 +270,7 @@ describe(getOssificationFactor.name, () => {
   it('ignores implementation-change diffs when $pastUpgrades covers them', () => {
     const result = getOssificationFactor(
       [entry({ upgradeTimestamps: [NOW - 3 * YEAR] })],
-      [update(NOW - 30 * DAY, implementationChangeBlock(ADDRESS_A))],
+      [update(NOW - 30 * DAY, [implementationChange(ADDRESS_A)])],
       NOW,
     )
     expect(result?.contracts[0]?.codeChangeCount).toEqual(0)
@@ -288,7 +289,7 @@ describe(getOssificationFactor.name, () => {
           upgradeTimestamps: [NOW - 3 * YEAR, upgradeTimestamp],
         }),
       ],
-      [update(NOW - 30 * DAY, pastUpgradeChangeBlock(ADDRESS_A))],
+      [update(NOW - 30 * DAY, [pastUpgradeChange(ADDRESS_A)])],
       NOW,
     )
 
@@ -302,7 +303,7 @@ describe(getOssificationFactor.name, () => {
   it('uses implementation-change diffs for proxies without $pastUpgrades', () => {
     const result = getOssificationFactor(
       [entry({ sinceTimestamp: NOW - 4 * YEAR })],
-      [update(NOW - 30 * DAY, implementationChangeBlock(ADDRESS_A))],
+      [update(NOW - 30 * DAY, [implementationChange(ADDRESS_A)])],
       NOW,
     )
     expect(result?.contracts[0]?.codeChangeCount).toEqual(1)
@@ -318,13 +319,10 @@ describe(getOssificationFactor.name, () => {
         }),
       ],
       [
-        update(
-          NOW - 30 * DAY,
-          [
-            implementationChangeBlock(ADDRESS_A),
-            highSeverityBlock(ADDRESS_A),
-          ].join('\n\n'),
-        ),
+        update(NOW - 30 * DAY, [
+          implementationChange(ADDRESS_A),
+          highSeverityChange(ADDRESS_A),
+        ]),
       ],
       NOW,
     )
@@ -346,9 +344,9 @@ describe(getOssificationFactor.name, () => {
         }),
       ],
       [
-        update(NOW - 30 * DAY, highSeverityBlock(ADDRESS_A)),
-        update(NOW - 30 * DAY + 60 * 60, highSeverityBlock(ADDRESS_B)),
-        update(NOW - 10 * DAY, highSeverityBlock(ADDRESS_A)),
+        update(NOW - 30 * DAY, [highSeverityChange(ADDRESS_A)]),
+        update(NOW - 30 * DAY + 60 * 60, [highSeverityChange(ADDRESS_B)]),
+        update(NOW - 10 * DAY, [highSeverityChange(ADDRESS_A)]),
       ],
       NOW,
     )
@@ -385,7 +383,7 @@ describe(getOssificationFactor.name, () => {
           sinceTimestamp: NOW - 30 * DAY,
         }),
       ],
-      [update(NOW - 30 * DAY + 60 * 60, highSeverityBlock(ADDRESS_A))],
+      [update(NOW - 30 * DAY + 60 * 60, [highSeverityChange(ADDRESS_A)])],
       NOW,
     )
     expect(result?.perimeterResets).toEqual([NOW - 4 * YEAR, NOW - 30 * DAY])
@@ -395,7 +393,7 @@ describe(getOssificationFactor.name, () => {
     const bareAddress = ADDRESS_A.split(':')[1] ?? ''
     const result = getOssificationFactor(
       [entry({ sinceTimestamp: NOW - 4 * YEAR })],
-      [update(NOW - 30 * DAY, highSeverityBlock(bareAddress))],
+      [update(NOW - 30 * DAY, [highSeverityChange(bareAddress)])],
       NOW,
     )
     expect(result?.contracts[0]?.stateChangeCount).toEqual(1)
@@ -405,7 +403,7 @@ describe(getOssificationFactor.name, () => {
     const address = ADDRESS_A.replace('eth:', 'arb-nova:')
     const result = getOssificationFactor(
       [entry({ address, sinceTimestamp: NOW - 4 * YEAR })],
-      [update(NOW - 30 * DAY, highSeverityBlock(address))],
+      [update(NOW - 30 * DAY, [highSeverityChange(address)])],
       NOW,
     )
     expect(result?.contracts[0]?.stateChangeCount).toEqual(1)
@@ -441,7 +439,9 @@ describe(getOssificationFactor.name, () => {
       [],
       NOW,
     )
-    expect(result?.score).toEqual(0)
+    // a verified perimeter never displays 0 — that value is reserved for the
+    // unverified gate
+    expect(result?.score).toEqual(1)
     expect(result?.projectClockStart).toEqual(NOW)
     expect(result?.projectAgeSeconds).toEqual(0)
   })
@@ -456,7 +456,7 @@ describe(getOssificationFactor.name, () => {
           sinceTimestamp: NOW - 4 * YEAR,
         }),
       ],
-      [update(NOW - 30 * DAY, highSeverityBlock(ADDRESS_A))],
+      [update(NOW - 30 * DAY, [highSeverityChange(ADDRESS_A)])],
       NOW,
     )
     expect(result?.projectClockStart).toEqual(NOW - 30 * DAY)
@@ -504,7 +504,7 @@ describe(getOssificationFactor.name, () => {
     // plus reviewed events; annotated diff blocks on their addresses are inert
     const result = getOssificationFactor(
       [entry({ sinceTimestamp: NOW - 4 * YEAR })],
-      [update(NOW - 30 * DAY, highSeverityBlock(ADDRESS_B))],
+      [update(NOW - 30 * DAY, [highSeverityChange(ADDRESS_B)])],
       NOW,
       [{ address: ADDRESS_B, name: 'OldVerifier', upgradeTimestamps: [] }],
     )
@@ -517,7 +517,7 @@ describe(getOssificationFactor.name, () => {
     // the annotation is a frozen snapshot; the current judgment wins
     const result = getOssificationFactor(
       [entry({ sinceTimestamp: NOW - 4 * YEAR, highSeverityFields: [] })],
-      [update(NOW - 30 * DAY, highSeverityBlock(ADDRESS_A))],
+      [update(NOW - 30 * DAY, [highSeverityChange(ADDRESS_A)])],
       NOW,
     )
     expect(result?.projectAgeSeconds).toEqual(4 * YEAR)
@@ -526,20 +526,12 @@ describe(getOssificationFactor.name, () => {
     expect(result?.criticalUpdates).toEqual([])
   })
 
-  it('counts an unannotated diff on a field that is HIGH today', () => {
-    const unannotatedBlock = [
-      '```diff',
-      `    contract Example (${ADDRESS_A}) {`,
-      '    +++ description: test contract',
-      '      values.trustedImages.0:',
-      '-        "0xaa"',
-      '+        "0xbb"',
-      '    }',
-      '```',
-    ].join('\n')
+  it('counts a diff on a field that is HIGH today regardless of past annotations', () => {
+    // the changelog carries no severity snapshots at all — only the current
+    // fieldMeta judgment decides, in both directions
     const result = getOssificationFactor(
       [entry({ sinceTimestamp: NOW - 4 * YEAR })],
-      [update(NOW - 30 * DAY, unannotatedBlock)],
+      [update(NOW - 30 * DAY, [highSeverityChange(ADDRESS_A)])],
       NOW,
     )
     expect(result?.contracts[0]?.stateChangeCount).toEqual(1)
@@ -547,15 +539,16 @@ describe(getOssificationFactor.name, () => {
   })
 
   it('evaluates a legacy upgradeability.admin diff against the $admin field', () => {
-    const legacyAdminBlock = [
-      '```diff',
-      `    contract Example (${ADDRESS_A}) {`,
-      '      upgradeability.admin:',
-      `-        "${ADDRESS_B}"`,
-      `+        "${ADDRESS_C}"`,
-      '    }',
-      '```',
-    ].join('\n')
+    const legacyAdminChange: DiscoveryChangelogContract = {
+      address: ADDRESS_A,
+      fields: [
+        {
+          key: 'upgradeability.admin',
+          removed: [`"${ADDRESS_B}"`],
+          added: [`"${ADDRESS_C}"`],
+        },
+      ],
+    }
     const result = getOssificationFactor(
       [
         entry({
@@ -563,7 +556,7 @@ describe(getOssificationFactor.name, () => {
           highSeverityFields: ['$admin'],
         }),
       ],
-      [update(NOW - 30 * DAY, legacyAdminBlock)],
+      [update(NOW - 30 * DAY, [legacyAdminChange])],
       NOW,
     )
     expect(result?.contracts[0]?.stateChangeCount).toEqual(1)
@@ -572,14 +565,15 @@ describe(getOssificationFactor.name, () => {
   it('dates state diffs at the onchain upgrade bundled in the same update', () => {
     const onchainTimestamp = NOW - 32 * DAY
     const iso = new Date(onchainTimestamp * 1000).toISOString()
-    const bundledUpgradeBlock = [
-      '```diff',
-      `    contract Other (${ADDRESS_B}) {`,
-      '      values.$pastUpgrades.3:',
-      `+        ["${iso}","0xabc",["eth:0x111"]]`,
-      '    }',
-      '```',
-    ].join('\n')
+    const bundledUpgrade: DiscoveryChangelogContract = {
+      address: ADDRESS_B,
+      fields: [
+        {
+          key: 'values.$pastUpgrades.3',
+          added: [`["${iso}","0xabc",["eth:0x111"]]`],
+        },
+      ],
+    }
     const result = getOssificationFactor(
       [
         entry({ sinceTimestamp: NOW - 4 * YEAR }),
@@ -590,12 +584,7 @@ describe(getOssificationFactor.name, () => {
           upgradeTimestamps: [NOW - 5 * YEAR, onchainTimestamp],
         }),
       ],
-      [
-        update(
-          NOW - 30 * DAY,
-          [bundledUpgradeBlock, highSeverityBlock(ADDRESS_A)].join('\n\n'),
-        ),
-      ],
+      [update(NOW - 30 * DAY, [bundledUpgrade, highSeverityChange(ADDRESS_A)])],
       NOW,
     )
     // the state change and the upgrade form one 24h cluster at onchain time
@@ -610,13 +599,10 @@ describe(getOssificationFactor.name, () => {
     const result = getOssificationFactor(
       [entry({ sinceTimestamp: NOW - 4 * YEAR })],
       [
-        update(
-          NOW - 30 * DAY,
-          [
-            pastUpgradeChangeBlock(ADDRESS_B),
-            highSeverityBlock(ADDRESS_A),
-          ].join('\n\n'),
-        ),
+        update(NOW - 30 * DAY, [
+          pastUpgradeChange(ADDRESS_B),
+          highSeverityChange(ADDRESS_A),
+        ]),
       ],
       NOW,
     )
@@ -627,7 +613,7 @@ describe(getOssificationFactor.name, () => {
     const onchainTimestamp = NOW - 33 * DAY
     const result = getOssificationFactor(
       [entry({ sinceTimestamp: NOW - 4 * YEAR })],
-      [update(NOW - 30 * DAY, highSeverityBlock(ADDRESS_A))],
+      [update(NOW - 30 * DAY, [highSeverityChange(ADDRESS_A)])],
       NOW,
       [],
       [
@@ -650,19 +636,19 @@ describe(getOssificationFactor.name, () => {
 
   it('ignores representation-only rewrites of a HIGH field', () => {
     // chain-prefix migration: the value did not change onchain
-    const prefixMigrationBlock = [
-      '```diff',
-      `    contract Example (${ADDRESS_A}) {`,
-      '+++ severity: HIGH',
-      '      values.trustedImages.0:',
-      '-        "0xaAbB00000000000000000000000000000000CdEf"',
-      '+        "eth:0xaAbB00000000000000000000000000000000CdEf"',
-      '    }',
-      '```',
-    ].join('\n')
+    const prefixMigration: DiscoveryChangelogContract = {
+      address: ADDRESS_A,
+      fields: [
+        {
+          key: 'values.trustedImages.0',
+          removed: ['"0xaAbB00000000000000000000000000000000CdEf"'],
+          added: ['"eth:0xaAbB00000000000000000000000000000000CdEf"'],
+        },
+      ],
+    }
     const result = getOssificationFactor(
       [entry({ sinceTimestamp: NOW - 4 * YEAR })],
-      [update(NOW - 30 * DAY, prefixMigrationBlock)],
+      [update(NOW - 30 * DAY, [prefixMigration])],
       NOW,
     )
     expect(result?.contracts[0]?.stateChangeCount).toEqual(0)
@@ -683,6 +669,16 @@ describe(getOssificationFactor.name, () => {
       ],
     )
     expect(result?.lastCriticalChange).toEqual(null)
+  })
+})
+
+describe(toDisplayScore.name, () => {
+  it('reserves 0 for the unverified gate and never fakes the extremes', () => {
+    expect(toDisplayScore(0)).toEqual(0)
+    expect(toDisplayScore(0.0001)).toEqual(1)
+    expect(toDisplayScore(0.5)).toEqual(50)
+    expect(toDisplayScore(0.999)).toEqual(99)
+    expect(toDisplayScore(1)).toEqual(99)
   })
 })
 

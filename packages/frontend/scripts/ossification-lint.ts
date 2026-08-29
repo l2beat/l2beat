@@ -15,13 +15,13 @@
  */
 import { existsSync, readFileSync } from 'fs'
 import path from 'path'
-import { getDiscoveryUpdates } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import {
   collectEscrowSeeds,
   type DiscoveredEntryLite,
   deriveOssificationPerimeter,
   getTrackedTxSeeds,
 } from '~/server/features/projects/ossification/getOssificationPerimeter'
+import { getDiscoveryUpdates } from '~/server/features/projects/recent-changes/getDiscoveryUpdates'
 import { ps } from '~/server/projects'
 import {
   extractDiffBlockAddress,
@@ -126,11 +126,29 @@ function auditSeverityHistory(projectId: string) {
     projectId,
     ...((ossification?.includeProjects as string[] | undefined) ?? []),
   ]
-  const coveredUpdateIds = new Set(
-    ((ossification?.criticalEvents as { updateId?: string }[]) ?? [])
-      .map((event) => event.updateId)
-      .filter((updateId) => updateId !== undefined),
-  )
+  const criticalEvents =
+    (ossification?.criticalEvents as
+      | {
+          updateId?: string
+          contract?: string
+          historical?: boolean
+          source?: string
+        }[]
+      | undefined) ?? []
+  /** Same granularity as the runtime's getSupersededUpdates: a reviewed event
+   *  replaces the mechanical diff events of its update for ONE contract, so
+   *  the audit must keep looking at the update's other contracts. */
+  const supersededByUpdate = new Map<string, Set<string>>()
+  for (const event of criticalEvents) {
+    if (!event.updateId || !event.contract) continue
+    const contracts =
+      supersededByUpdate.get(event.updateId) ?? new Set<string>()
+    const key = event.contract.toLowerCase()
+    contracts.add(key)
+    const bare = key.split(':').at(-1)
+    if (bare) contracts.add(bare)
+    supersededByUpdate.set(event.updateId, contracts)
+  }
   /** "<chain:address>#<field>" entries a reviewer confirmed: the downgrade is
    *  intended and the silenced history needs no backfill. */
   const reviewedDowngrades = new Set(
@@ -177,16 +195,57 @@ function auditSeverityHistory(projectId: string) {
     if (bare && !criticalKeys.has(bare)) historicalByAddress.set(bare, contract)
   }
 
+  // criticalEvents integrity: an attributed event whose contract does not
+  // resolve, or whose updateId matches no update, is SILENTLY inert at
+  // runtime (no event, no supersession) — always a mistake worth a report.
+  const knownUpdateIds = new Set<string>()
+  const updatesByProject = new Map(
+    projectIds.map((id) => {
+      const updates = getDiscoveryUpdates(id, Number.POSITIVE_INFINITY)
+      for (const update of updates) knownUpdateIds.add(update.id)
+      return [id, updates] as const
+    }),
+  )
+  const eventIssues: string[] = []
+  for (const event of criticalEvents) {
+    const label = event.source ?? event.updateId ?? '?'
+    if (event.contract) {
+      const key = event.contract.toLowerCase()
+      const resolved = event.historical
+        ? historicalByAddress.has(key)
+        : criticalKeys.has(key)
+      if (!resolved) {
+        eventIssues.push(
+          `contract ${event.contract} (${label}) does not resolve to a ${
+            event.historical ? 'historical' : 'current critical'
+          } contract — the event is silently dropped by the runtime`,
+        )
+      }
+    }
+    if (event.updateId && !knownUpdateIds.has(event.updateId)) {
+      eventIssues.push(
+        `updateId ${event.updateId} (${label}) matches no discovery update — tagging and supersession silently no-op`,
+      )
+    }
+  }
+  if (eventIssues.length > 0) {
+    console.log('criticalEvents integrity problems:')
+    for (const issue of eventIssues.sort()) console.log(`  - ${issue}`)
+  } else {
+    console.log(`criticalEvents integrity: ok (${criticalEvents.length})`)
+  }
+
   const silenced = new Map<string, SilencedFieldHistory>()
   const ledgerGaps: string[] = []
   for (const id of projectIds) {
-    for (const update of getDiscoveryUpdates(id, Number.POSITIVE_INFINITY)) {
-      if (coveredUpdateIds.has(update.id)) continue
+    for (const update of updatesByProject.get(id) ?? []) {
+      const superseded = supersededByUpdate.get(update.id)
       for (const section of update.sections) {
         if (section.kind !== 'watched-changes') continue
         for (const { content } of extractDiffBlockSpans(section.body)) {
           const address = extractDiffBlockAddress(content)
           if (!address) continue
+          if (superseded?.has(address)) continue
 
           // Historical contracts are a closed reviewed ledger: diff history is
           // inert for them, so anything counted-looking here is either
@@ -197,9 +256,25 @@ function auditSeverityHistory(projectId: string) {
               ? new Date(update.timestamp * 1000).toISOString().slice(0, 10)
               : '???'
             if (isImplementationChangeDiffBody(content)) {
-              if ((historicalContract.upgradeTimestamps ?? []).length === 0) {
+              const ledger = historicalContract.upgradeTimestamps ?? []
+              // The appended $pastUpgrades entries carry exact onchain
+              // timestamps; each must be represented in the closed ledger —
+              // a non-empty but incomplete ledger is still a gap.
+              const appended = extractAppendedUpgradeTimestamps(content)
+              const unrepresented = appended.filter(
+                (timestamp) => !ledger.includes(timestamp),
+              )
+              if (ledger.length === 0) {
                 ledgerGaps.push(
                   `${historicalContract.name ?? address}: implementation change ${day} (${update.id}) but upgradeTimestamps is empty — backfill the onchain upgrade history`,
+                )
+              } else if (unrepresented.length > 0) {
+                ledgerGaps.push(
+                  `${historicalContract.name ?? address}: onchain upgrade(s) ${unrepresented
+                    .map((timestamp) =>
+                      new Date(timestamp * 1000).toISOString().slice(0, 10),
+                    )
+                    .join(', ')} (${update.id}) missing from upgradeTimestamps`,
                 )
               }
               continue
@@ -289,6 +364,23 @@ function auditSeverityHistory(projectId: string) {
       `  - ${row.name} ${row.field} [${row.status}] ${row.count} event(s), ${day(row.first)} .. ${day(row.last)}`,
     )
   }
+}
+
+/** Onchain timestamps of freshly appended $pastUpgrades entries (added,
+ *  nothing removed, single-index key), mirroring the runtime's rule. */
+function extractAppendedUpgradeTimestamps(content: string): number[] {
+  const timestamps: number[] = []
+  for (const change of extractDiffBlockFieldChanges(content)) {
+    if (!/^\$pastUpgrades\.\d+$/.test(change.path)) continue
+    if (change.removed.length > 0) continue
+    const match = /^\["(\d{4}-\d{2}-\d{2}T[0-9:.]+Z)"/.exec(
+      change.added[0] ?? '',
+    )
+    if (match?.[1] === undefined) continue
+    const parsed = Date.parse(match[1])
+    if (Number.isFinite(parsed)) timestamps.push(Math.floor(parsed / 1000))
+  }
+  return timestamps
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: ad-hoc JSON inspection

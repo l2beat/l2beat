@@ -70,7 +70,7 @@
       "timestamp": 1707514547,
       "type": "state",
       "contract": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-      "updateId": "92b2a82b",
+      "updateId": "db0d2b31",
       "source": "tx:0xd2a7e63eb76199234e4876c1c99dcdf73f0ed04eb8b8767e94809cc2de2629ca",
       "reason": "Transferred the core ProxyAdmin to the new Foundation and Security Council authority path."
     },
@@ -78,7 +78,7 @@
       "timestamp": 1718042751,
       "type": "state",
       "contract": "oeth:0x4200000000000000000000000000000000000018",
-      "updateId": "5cb2d466",
+      "updateId": "aeff10bd",
       "source": "tx:0x93b7a9956faec114c3bac7fd72479ebdc23f8aace38220f8914cbf6af971bf6e",
       "reason": "Transferred the L2 predeploy ProxyAdmin to the aliased Superchain authority path."
     },
@@ -86,7 +86,7 @@
       "timestamp": 1719529907,
       "type": "state",
       "contract": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
-      "updateId": "4ecf8c00",
+      "updateId": "50024322",
       "source": "tx:0xa324ca8056ff79064771df050d70df9d44deab56290916339d94fd11ea5ee3c0",
       "reason": "Transferred control of SystemConfig to the Foundation Upgrade Safe."
     },
@@ -107,7 +107,7 @@
     {
       "timestamp": 1726070915,
       "type": "state",
-      "updateId": "f50681e8",
+      "updateId": "41492ef8",
       "source": "tx:0x592e73fdf57e7cc2c51cfaafa891fe91164d125b7943aa26a15285276de27509",
       "reason": "Replaced the Guardian Safe module that delegated protocol pause authority."
     },
@@ -128,7 +128,7 @@
     {
       "timestamp": 1746626291,
       "type": "state",
-      "updateId": "2ec9fa35",
+      "updateId": "fee2cf7f",
       "source": "tx:0x5580a50fd248f0d4034f5eb270636202e2d957b84a6975f7bd7b8c72ff541233",
       "reason": "Enabled a module that delegated protocol pause authority through the Operations Safe."
     },
@@ -142,42 +142,42 @@
     {
       "timestamp": 1753378247,
       "type": "state",
-      "updateId": "d99b1c51",
+      "updateId": "793e7ea6",
       "source": "tx:0x48a3f2ec90b240d052e7612f85669cd496336e113ca6e591bbc8e0b22781e565",
       "reason": "Enabled the new DeputyPauseModule on the Guardian Safe."
     },
     {
       "timestamp": 1753380539,
       "type": "state",
-      "updateId": "d99b1c51",
+      "updateId": "793e7ea6",
       "source": "tx:0x7e5703b1ab5d09aa107aa1a5fb2c7808c32023bd76048c192139bdb9b5dda092",
       "reason": "Disabled the former deputy module on the Guardian Safe."
     },
     {
       "timestamp": 1753380743,
       "type": "state",
-      "updateId": "d99b1c51",
+      "updateId": "793e7ea6",
       "source": "tx:0xd770166ff63183dae868ca11852268115035d2f74574b55b8e1ecd552da80378",
       "reason": "Removed the former deputy module from the Operations Safe authority path."
     },
     {
       "timestamp": 1769108699,
       "type": "state",
-      "updateId": "ada75541",
+      "updateId": "5871bec8",
       "source": "tx:0xf1ae77bea001acd7f3355ce971fd992601f467ce0a2305a38b1a82da459b502c",
       "reason": "Enabled the SaferSafes execution module on the Operations Safe."
     },
     {
       "timestamp": 1769109083,
       "type": "state",
-      "updateId": "ada75541",
+      "updateId": "5871bec8",
       "source": "tx:0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
       "reason": "Enabled the SaferSafes execution module on the Upgrade Safe."
     },
     {
       "timestamp": 1775575311,
       "type": "state",
-      "updateId": "daeac6d3",
+      "updateId": "4bd2123b",
       "source": "tx:0xcab1687f5c496d1f2447a4dd9205cd5c9965c74444a8f9be9d5d5345ce6ed647",
       "reason": "Replaced the direct OP minting threshold with the SafeL2 authority path."
     }
@@ -234,6 +234,7 @@
     }
   ],
   "reviewedSeverityDowngrades": [
-    "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9#gameImpls"
+    "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9#gameImpls",
+    "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290#paused"
   ]
 }

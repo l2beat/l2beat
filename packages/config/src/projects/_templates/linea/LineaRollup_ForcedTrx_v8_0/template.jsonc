@@ -298,6 +298,7 @@
       "description": "Smart contract that attests existence of blob commitments (shnarfs)."
     },
     "nonSecurityCouncilCooldownEnd": {
+      "severity": "HIGH",
       "description": "Timestamp until which non security council entities can't pause the rollup."
     }
   }

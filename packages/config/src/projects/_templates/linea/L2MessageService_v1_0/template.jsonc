@@ -155,6 +155,7 @@
       }
     },
     "nonSecurityCouncilCooldownEnd": {
+      "severity": "HIGH",
       "description": "Timestamp until which non security council entities can't pause the rollup."
     }
   }

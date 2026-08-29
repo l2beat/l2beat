@@ -128,7 +128,7 @@
       "type": "state",
       "contract": "eth:0x5ef0d09d1e6204141b4d37530808ed19f60fba35",
       "historical": true,
-      "updateId": "d25ef78a",
+      "updateId": "556e5ed4",
       "source": "diffHistory:2024-01-30T13:04:34Z",
       "reason": "Changed the pre-BoLD rollup execution wasmModuleRoot to ArbOS 11."
     },
@@ -137,14 +137,14 @@
       "type": "state",
       "contract": "eth:0x5ef0d09d1e6204141b4d37530808ed19f60fba35",
       "historical": true,
-      "updateId": "c18ce1d7",
+      "updateId": "5edc278c",
       "source": "diffHistory:2024-03-22T07:51:09Z",
       "reason": "Changed the pre-BoLD rollup execution wasmModuleRoot to ArbOS 20."
     },
     {
       "timestamp": 1719023040,
       "type": "state",
-      "updateId": "0f31aa6b",
+      "updateId": "642dbd35",
       "source": "tx:0x90afa16b3c0c8009e6854fce49e52bc6ecfb0508f5c6ba96202abe9c79916872",
       "reason": "Changed the Security Council proposal Safe threshold; the Safe shell itself is outside the contract perimeter."
     },
@@ -152,7 +152,7 @@
       "timestamp": 1720582885,
       "type": "state",
       "contract": "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
-      "updateId": "687a429f",
+      "updateId": "7ec2eb8d",
       "source": "tx:0xf2929a5ee3c2a073de95293f91f163b4d743fdec38e4dceaa7c4796e090783c3",
       "reason": "Changed SecurityCouncilManager role assignments and its authority path."
     },
@@ -161,7 +161,7 @@
       "type": "state",
       "contract": "eth:0x5ef0d09d1e6204141b4d37530808ed19f60fba35",
       "historical": true,
-      "updateId": "0fd77f8a",
+      "updateId": "a1a19b5d",
       "source": "diffHistory:2024-08-28T12:44:07Z",
       "reason": "Changed the pre-BoLD rollup execution wasmModuleRoot to ArbOS 31."
     },
@@ -170,7 +170,7 @@
       "type": "state",
       "contract": "eth:0x5ef0d09d1e6204141b4d37530808ed19f60fba35",
       "historical": true,
-      "updateId": "cac62f6e",
+      "updateId": "8bd3d02d",
       "source": "diffHistory:2024-09-25T08:10:46Z",
       "reason": "Changed the pre-BoLD rollup execution wasmModuleRoot to ArbOS 32."
     },
@@ -178,7 +178,7 @@
       "timestamp": 1729843702,
       "type": "state",
       "contract": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
-      "updateId": "8c67719f",
+      "updateId": "3b2790a0",
       "source": "tx:0x196d67adfc0e64b2a583870512fb268aa457fbdbe79c2a6bdc7fdb26b9c4d3d1",
       "reason": "Changed the L2 governance timelock delay."
     },
@@ -186,7 +186,7 @@
       "timestamp": 1750200983,
       "type": "state",
       "contract": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
-      "updateId": "c9f096b9",
+      "updateId": "4baf4688",
       "source": "tx:0x2cbcaa7c2127a2ff1d489d47d094893d61ef7cfcbc66417a5cbbd1d6168594ee",
       "reason": "Changed the current rollup execution wasmModuleRoot to ArbOS 40."
     },
@@ -194,7 +194,7 @@
       "timestamp": 1753193843,
       "type": "state",
       "contract": "arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
-      "updateId": "ae57abf8",
+      "updateId": "ca7c961e",
       "source": "tx:0xcd74670cb1dfcb3d9025ee5fae025f1493e952c909b50d2697af854a44b37a23",
       "reason": "Changed the CoreGovernor quorum numerator."
     },
@@ -202,7 +202,7 @@
       "timestamp": 1767622835,
       "type": "state",
       "contract": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
-      "updateId": "a991afd0",
+      "updateId": "58ac24d1",
       "source": "tx:0x8b04671ba978323abca56c6859b983b4e0ad2a77216c5ac30742e3b24abb7a2c",
       "reason": "Changed the current rollup execution wasmModuleRoot to ArbOS 51."
     },
@@ -210,7 +210,7 @@
       "timestamp": 1787092955,
       "type": "state",
       "contract": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
-      "updateId": "a030adba",
+      "updateId": "b0f8c079",
       "source": "tx:0x62261500c825179f3b81a80b27dcf926ce153e36c7797eb24e3827ef78e7aca9",
       "reason": "Changed the current rollup execution wasmModuleRoot to ArbOS 61."
     }

@@ -7,6 +7,9 @@ import { getProjectOssification } from './getProjectOssification'
 export interface OssificationSummaryEntry {
   slug: string
   name: string
+  shortName?: string
+  description: string
+  isUnderReview: boolean
   icon: string
   href: string | undefined
   score: number
@@ -27,6 +30,7 @@ export async function getOssificationEntries(): Promise<
   OssificationSummaryEntry[]
 > {
   const projects = await ps.getProjects({
+    select: ['display', 'statuses'],
     optional: ['scalingInfo', 'scalingRisks', 'privacyInfo', 'defiInfo'],
     whereNot: ['archivedAt'],
   })
@@ -40,6 +44,9 @@ export async function getOssificationEntries(): Promise<
         return {
           slug: project.slug,
           name: project.name,
+          shortName: project.shortName,
+          description: project.display.description,
+          isUnderReview: !!project.statuses.reviewStatus,
           icon: manifest.getUrl(`/icons/${project.slug}.png`),
           href: project.scalingInfo
             ? `/layer2s/projects/${project.slug}#ossification`

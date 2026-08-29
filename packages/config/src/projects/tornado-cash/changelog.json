@@ -1,0 +1,45 @@
+{
+  "formatVersion": 1,
+  "entries": [
+    {
+      "id": "24f9ce54",
+      "timestamp": 1787307944,
+      "changes": [
+        {
+          "address": "eth:0x5efda50f22d34f262c29268506c5fa42cb56a1ce",
+          "fields": [
+            {
+              "key": "values.proposalCount",
+              "removed": [
+                "67"
+              ],
+              "added": [
+                "68"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "36401cab",
+      "timestamp": 1782391445,
+      "changes": [
+        {
+          "address": "eth:0x5efda50f22d34f262c29268506c5fa42cb56a1ce",
+          "fields": [
+            {
+              "key": "values.proposalCount",
+              "removed": [
+                "66"
+              ],
+              "added": [
+                "67"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "name": "base",
   "timestamp": 1785226129,
-  "configHash": "0x36f504debed1540cdf220ef7a9d66b893bdf296eb36be8744e3dd1461a1c047d",
+  "configHash": "0xc58a0072339fd0e9958423dc2c25155b8d5a17d8a973af5590d39f0ce9bc0bf7",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -3036,6 +3036,10 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
+        "disputeGameFinalityDelaySeconds": {
+          "severity": "HIGH",
+          "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
+        },
         "respectedGameType": { "severity": "HIGH" },
         "retirementTimestamp": { "severity": "HIGH" }
       },

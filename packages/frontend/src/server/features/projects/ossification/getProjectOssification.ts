@@ -1,12 +1,12 @@
+import type {
+  DiscoveryChangelog,
+  DiscoveryChangelogEntry,
+} from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { existsSync, readFileSync, statSync } from 'fs'
 import path from 'path'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import {
-  type DiscoveryUpdate,
-  getDiscoveryUpdates,
-} from '../recent-changes/getDiscoveryUpdates'
 import {
   type BattleTestedExposurePoint,
   calculateBattleTestedExposure,
@@ -117,7 +117,10 @@ export async function getProjectOssification(
     ]),
   ]
   const critical: (DiscoveredEntryLite & { address: string })[] = []
-  const updates: DiscoveryUpdate[] = []
+  // changelog.json is the machine-readable projection of diffHistory.md's
+  // watched changes, maintained by l2b for opted-in projects and verified by
+  // scripts/ossification-build-changelog.ts --check.
+  const changelog: DiscoveryChangelogEntry[] = []
   for (const id of projectIds) {
     const discovered = readProjectJson(id, 'discovered.json') as
       | { entries?: DiscoveredEntryLite[] }
@@ -130,7 +133,10 @@ export async function getProjectOssification(
           entry.critical === true,
       ),
     )
-    updates.push(...getDiscoveryUpdates(id, Number.POSITIVE_INFINITY))
+    const projectChangelog = readProjectJson(id, 'changelog.json') as
+      | DiscoveryChangelog
+      | undefined
+    changelog.push(...(projectChangelog?.entries ?? []))
   }
   if (critical.length === 0) {
     return undefined
@@ -173,7 +179,7 @@ export async function getProjectOssification(
         ignoredUpgradeTransactions,
       ),
     ),
-    updates,
+    changelog,
     now,
     historical,
     ossificationJson.criticalEvents ?? [],

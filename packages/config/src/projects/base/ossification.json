@@ -31,7 +31,7 @@
       "timestamp": 1736355959,
       "type": "state",
       "contract": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
-      "updateId": "cb367f7b",
+      "updateId": "05eaffb6",
       "source": "tx:0xb6fc07450001150de1d6edcda68e7b4de5725259bb55ca3e5c22d474c7127e9c",
       "reason": "Replaced the permissioned and permissionless fault-dispute game implementations."
     },
@@ -47,7 +47,7 @@
       "timestamp": 1738702573,
       "type": "state",
       "contract": "base:0x4200000000000000000000000000000000000018",
-      "updateId": "b4fed2e0",
+      "updateId": "1c86e952",
       "source": "tx:0x54d61996fe28795556fe87e57fcecb7d38d35aa0c58fa7b7ae42709453c0ff2c",
       "reason": "Transferred the L2 predeploy ProxyAdmin to Base's governance authority."
     },
@@ -62,21 +62,21 @@
       "timestamp": 1745512871,
       "type": "state",
       "contract": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
-      "updateId": "cc6df8c2",
+      "updateId": "9f17fcf4",
       "source": "tx:0xfd06079372fea0ef0c8907b71931fc6907cc88c39f0dc036d3ebf267686fb6da",
       "reason": "Replaced the permissioned and permissionless fault-dispute game implementations."
     },
     {
       "timestamp": 1745938967,
       "type": "state",
-      "updateId": "7a28c604",
+      "updateId": "710999d3",
       "source": "tx:0xfeff9bf53acee54f6f54a90140b893e07ab5e7e2b250b884b1caf2d2d3ea0b0f",
       "reason": "Changed the Base Coordinator threshold while it participated in Base's upgrade authority."
     },
     {
       "timestamp": 1746626291,
       "type": "state",
-      "updateId": "c565c9d4",
+      "updateId": "a8dda342",
       "source": "tx:0x5580a50fd248f0d4034f5eb270636202e2d957b84a6975f7bd7b8c72ff541233",
       "reason": "Enabled a module that delegated Base pause authority through the Operations Safe."
     },
@@ -84,7 +84,7 @@
       "timestamp": 1746643607,
       "type": "state",
       "contract": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
-      "updateId": "c565c9d4",
+      "updateId": "a8dda342",
       "source": "tx:0x3baaa485746af0bb3d0a054a44a37c997b49b5528e0b58d351f5be05eacc2718",
       "reason": "Replaced the permissioned and permissionless fault-dispute game implementations."
     },
@@ -120,21 +120,21 @@
     {
       "timestamp": 1753378247,
       "type": "state",
-      "updateId": "32570022",
+      "updateId": "36e9aea4",
       "source": "tx:0x48a3f2ec90b240d052e7612f85669cd496336e113ca6e591bbc8e0b22781e565",
       "reason": "Enabled the new DeputyPauseModule on the Guardian Safe that could pause Base."
     },
     {
       "timestamp": 1753380539,
       "type": "state",
-      "updateId": "32570022",
+      "updateId": "36e9aea4",
       "source": "tx:0x7e5703b1ab5d09aa107aa1a5fb2c7808c32023bd76048c192139bdb9b5dda092",
       "reason": "Disabled the former Base pause deputy on the Guardian Safe."
     },
     {
       "timestamp": 1753380743,
       "type": "state",
-      "updateId": "32570022",
+      "updateId": "36e9aea4",
       "source": "tx:0xd770166ff63183dae868ca11852268115035d2f74574b55b8e1ecd552da80378",
       "reason": "Removed the former Base pause deputy from the Operations Safe authority path."
     },
@@ -177,28 +177,28 @@
     {
       "timestamp": 1769108699,
       "type": "state",
-      "updateId": "a382381b",
+      "updateId": "47a1c68b",
       "source": "tx:0xf1ae77bea001acd7f3355ce971fd992601f467ce0a2305a38b1a82da459b502c",
       "reason": "Enabled the SaferSafes execution module on the Operations Safe while it governed Base."
     },
     {
       "timestamp": 1769109083,
       "type": "state",
-      "updateId": "a382381b",
+      "updateId": "47a1c68b",
       "source": "tx:0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
       "reason": "Enabled the SaferSafes execution module on the Upgrade Safe while it governed Base."
     },
     {
       "timestamp": 1772558891,
       "type": "state",
-      "updateId": "d482a40e",
+      "updateId": "91b4eeeb",
       "source": "tx:0x17d10687b8d9e0f7ce68b65e5cbc23bbceb7ac494a99746a6a2f979cd7206e4f",
       "reason": "Changed the Base Coordinator threshold during the governance decoupling."
     },
     {
       "timestamp": 1772559431,
       "type": "state",
-      "updateId": "d482a40e",
+      "updateId": "91b4eeeb",
       "source": "tx:0x117b78c970396446c891ba82439351555c537f04d0d90222a9d523975bfe599b",
       "reason": "Changed the Base Security Council threshold during the governance decoupling."
     },
@@ -227,7 +227,7 @@
       "timestamp": 1780160147,
       "type": "state",
       "contract": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
-      "updateId": "83f814fb",
+      "updateId": "d1275fe3",
       "source": "tx:0x3ddfe6f96ea84cd60fc92aafa64bdee06d16593ebef3206ce16d64dc0a357893",
       "reason": "Replaced the AggregateVerifier game implementation during Azul activation."
     },
@@ -235,7 +235,7 @@
       "timestamp": 1780423643,
       "type": "state",
       "contract": "eth:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
-      "updateId": "83f814fb",
+      "updateId": "d1275fe3",
       "source": "tx:0xb7ad31567dc133740576aa5d128b15989de6769df327763011fc7464f72c0132",
       "reason": "Replaced the AggregateVerifier game implementation during Azul activation."
     },
@@ -250,7 +250,7 @@
       "timestamp": 1785176507,
       "type": "state",
       "contract": "eth:0xdc32E228636273285Befa5F001dBB5142517C106",
-      "updateId": "839d28f5",
+      "updateId": "310f6e25",
       "source": "tx:0xa9ff84a22c4de540be566f561f4ee2a0c890732b19251871b90bfe8941d9be71",
       "reason": "Replaced the active SP1 proof-verifier route."
     }

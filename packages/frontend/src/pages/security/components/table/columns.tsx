@@ -1,9 +1,11 @@
 import type { Sentiment } from '@l2beat/config'
 import { formatCurrency } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
+import { Badge } from '~/components/badge/Badge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { SentimentText } from '~/components/SentimentText'
 import { ExitWindowCell } from '~/components/table/cells/ExitWindowCell'
+import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import {
@@ -32,17 +34,47 @@ export const ossificationColumns = [
     header: 'Project',
     cell: (ctx) => (
       <TableLink href={ctx.row.original.href}>
-        <span className="font-medium text-sm">{ctx.getValue()}</span>
+        <ProjectNameCell
+          project={{
+            name: ctx.row.original.name,
+            shortName: ctx.row.original.shortName,
+            slug: ctx.row.original.slug,
+            icon: ctx.row.original.icon,
+            backgroundColor: undefined,
+            description: ctx.row.original.description,
+            statuses: {
+              underReview: ctx.row.original.isUnderReview
+                ? 'config'
+                : undefined,
+            },
+          }}
+        />
       </TableLink>
     ),
     enableHiding: false,
+    meta: {
+      cellClassName: 'pl-4',
+      headClassName: 'pl-4',
+    },
   }),
   columnHelper.accessor('score', {
     header: 'Ossification %',
     cell: (ctx) => {
       if (ctx.row.original.isUnverified) {
+        // the unverified gate zeroes the score; say so instead of showing a
+        // bare number indistinguishable from a young perimeter
         return (
-          <span className="font-medium tabular-nums">{ctx.getValue()}</span>
+          <span className="flex items-center">
+            <span className="font-medium tabular-nums">0</span>
+            <Badge
+              type="error"
+              size="extraSmall"
+              padding="small"
+              className="ml-1.5 uppercase"
+            >
+              Unverified
+            </Badge>
+          </span>
         )
       }
       return (
@@ -56,7 +88,7 @@ export const ossificationColumns = [
     },
     meta: {
       tooltip:
-        "The project's critical smart contracts have stayed unchanged longer than the exploited code in N% of recorded incidents. Below 50: younger than the median exploited code. 80+: about a year unchanged.",
+        "The project's critical smart contracts have stayed unchanged longer than the exploited code in N% of recorded incidents. Below 50: younger than the median exploited code. 80+: about a year unchanged. An unverified critical contract gates the score to zero.",
     },
     sortDescFirst: true,
   }),

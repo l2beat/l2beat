@@ -32,6 +32,18 @@
     "base:0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d": "Base Governance Multisig - L2 Alias"
   },
   "overrides": {
+    // The air gap: how long a resolved dispute game must wait before its root
+    // can finalize withdrawals. Changing it alters the guardian's window to
+    // blacklist a faulty game, i.e. the conditions under which user
+    // withdrawals are validated.
+    "eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72": {
+      "fields": {
+        "disputeGameFinalityDelaySeconds": {
+          "severity": "HIGH",
+          "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
+        }
+      }
+    },
     // Active RISC Zero verification path for TEE prover registration.
     // Permanently paused verifier routes are intentionally not flagged.
     "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": {
