@@ -1,9 +1,8 @@
-import {
-  type DiscoveryChangelogEntry,
-  type DiscoveryChangelogField,
-  normalizeDiffValueLines,
+import type {
+  DiscoveryChangelogEntry,
+  DiscoveryChangelogField,
 } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { normalizeDiffValueLines, UnixTime } from '@l2beat/shared-pure'
 import { OSSIFICATION_CURVE_AGE_KNOTS } from './ossificationCurve'
 /** Critical changes within this window count as a single event, so the
  *  rate measures project decisions (one fork, one governance execution),

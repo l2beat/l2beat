@@ -11,14 +11,14 @@
  * shared by l2b, the one-time backfill, and the CI `--check`, so the two
  * artifacts cannot drift.
  */
-import type { ChainPoint, DiffHistoryEntry } from './DiffHistoryParser'
-import { DiffHistoryParser } from './DiffHistoryParser'
 import {
   extractDiffBlockAddress,
   extractDiffBlockFieldChanges,
   extractDiffBlockSpans,
   extractDiffBlockStatus,
-} from './diffBlocks'
+} from '@l2beat/shared-pure'
+import type { ChainPoint, DiffHistoryEntry } from './DiffHistoryParser'
+import { DiffHistoryParser } from './DiffHistoryParser'
 import { hashJson } from './hashJson'
 
 export interface DiscoveryChangelog {

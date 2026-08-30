@@ -1,6 +1,6 @@
 /**
  * Classification helpers over the diff-block extraction primitives in
- * @l2beat/shared. Extraction (spans, addresses, field paths, raw values)
+ * @l2beat/shared-pure. Extraction (spans, addresses, field paths, raw values)
  * lives there because l2b's changelog.json writer shares it; the judgments
  * here (what counts as high severity, what is an implementation change) are
  * presentation- and audit-side only — the ossification runtime consumes the
@@ -10,7 +10,7 @@ import {
   type DiffBlockFieldChange,
   extractDiffBlockFieldChanges,
   extractDiffBlockSpans,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 
 export {
   type DiffBlockFieldChange,
@@ -18,7 +18,7 @@ export {
   extractDiffBlockAddress,
   extractDiffBlockFieldChanges,
   extractDiffBlockSpans,
-} from '@l2beat/shared'
+} from '@l2beat/shared-pure'
 
 export function countDiffChanges(body: string): number {
   return extractDiffBlockSpans(body)
