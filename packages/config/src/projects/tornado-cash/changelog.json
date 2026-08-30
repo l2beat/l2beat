@@ -10,12 +10,8 @@
           "fields": [
             {
               "key": "values.proposalCount",
-              "removed": [
-                "67"
-              ],
-              "added": [
-                "68"
-              ]
+              "removed": ["67"],
+              "added": ["68"]
             }
           ]
         }
@@ -30,12 +26,8 @@
           "fields": [
             {
               "key": "values.proposalCount",
-              "removed": [
-                "66"
-              ],
-              "added": [
-                "67"
-              ]
+              "removed": ["66"],
+              "added": ["67"]
             }
           ]
         }

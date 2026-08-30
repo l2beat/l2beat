@@ -14,12 +14,8 @@
           "fields": [
             {
               "key": "values.$implementation",
-              "removed": [
-                "\"eth:0xE68697690E8ff196A6aBB3E1385156D87Df85332\""
-              ],
-              "added": [
-                "\"eth:0x59290394dDC1cF84e671701A929710643c343530\""
-              ]
+              "removed": ["\"eth:0xE68697690E8ff196A6aBB3E1385156D87Df85332\""],
+              "added": ["\"eth:0x59290394dDC1cF84e671701A929710643c343530\""]
             },
             {
               "key": "values.$pastUpgrades.11",
@@ -29,36 +25,22 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "11"
-              ],
-              "added": [
-                "12"
-              ]
+              "removed": ["11"],
+              "added": ["12"]
             },
             {
               "key": "values.CONTRACT_VERSION",
-              "removed": [
-                "\"7.1\""
-              ],
-              "added": [
-                "\"8.0\""
-              ]
+              "removed": ["\"7.1\""],
+              "added": ["\"8.0\""]
             },
             {
               "key": "values.verifiers.1",
-              "removed": [
-                "\"eth:0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb\""
-              ],
-              "added": [
-                "\"eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77\""
-              ]
+              "removed": ["\"eth:0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb\""],
+              "added": ["\"eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77\""]
             },
             {
               "key": "values.addressFilter",
-              "added": [
-                "\"eth:0x526AE78F0103Ae73F05449ae30eb626C1003784E\""
-              ]
+              "added": ["\"eth:0x526AE78F0103Ae73F05449ae30eb626C1003784E\""]
             },
             {
               "key": "values.FORCED_TRANSACTION_FEE_SETTER_ROLE",
@@ -74,9 +56,7 @@
             },
             {
               "key": "values.forcedTransactionFeeInWei",
-              "added": [
-                "1000000000000000"
-              ]
+              "added": ["1000000000000000"]
             },
             {
               "key": "values.getRequiredForcedTransactionFields",
@@ -97,21 +77,13 @@
           "fields": [
             {
               "key": "values.minimumWithdrawalReservePercentageBps",
-              "removed": [
-                "9000"
-              ],
-              "added": [
-                "8500"
-              ]
+              "removed": ["9000"],
+              "added": ["8500"]
             },
             {
               "key": "values.targetWithdrawalReservePercentageBps",
-              "removed": [
-                "9888"
-              ],
-              "added": [
-                "9000"
-              ]
+              "removed": ["9888"],
+              "added": ["9000"]
             }
           ]
         },
@@ -149,39 +121,23 @@
           "fields": [
             {
               "key": "values.$implementation",
-              "removed": [
-                "\"eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552\""
-              ],
-              "added": [
-                "\"eth:0x41675C099F32341bf84BFc5382aF534df5C7461a\""
-              ]
+              "removed": ["\"eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552\""],
+              "added": ["\"eth:0x41675C099F32341bf84BFc5382aF534df5C7461a\""]
             },
             {
               "key": "values.$members.1",
-              "removed": [
-                "\"eth:0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB\""
-              ],
-              "added": [
-                "\"eth:0xD6481cC92eD746EbC679788654723Ce49D45EbeA\""
-              ]
+              "removed": ["\"eth:0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB\""],
+              "added": ["\"eth:0xD6481cC92eD746EbC679788654723Ce49D45EbeA\""]
             },
             {
               "key": "values.$members.7",
-              "removed": [
-                "\"eth:0x99234cd9B532F30538ac797D33c212e3B69Fd087\""
-              ],
-              "added": [
-                "\"eth:0x0F4df4939a6B126a088A40B4Bbf9F30337ACBFE4\""
-              ]
+              "removed": ["\"eth:0x99234cd9B532F30538ac797D33c212e3B69Fd087\""],
+              "added": ["\"eth:0x0F4df4939a6B126a088A40B4Bbf9F30337ACBFE4\""]
             },
             {
               "key": "values.VERSION",
-              "removed": [
-                "\"1.3.0\""
-              ],
-              "added": [
-                "\"1.4.1\""
-              ]
+              "removed": ["\"1.3.0\""],
+              "added": ["\"1.4.1\""]
             }
           ]
         },
@@ -190,12 +146,8 @@
           "fields": [
             {
               "key": "values.targetWithdrawalReservePercentageBps",
-              "removed": [
-                "9980"
-              ],
-              "added": [
-                "9888"
-              ]
+              "removed": ["9980"],
+              "added": ["9888"]
             }
           ]
         },
@@ -204,12 +156,8 @@
           "fields": [
             {
               "key": "values.limitInWei",
-              "removed": [
-                "\"24000000000000000000000\""
-              ],
-              "added": [
-                "\"8000000000000000000000\""
-              ]
+              "removed": ["\"24000000000000000000000\""],
+              "added": ["\"8000000000000000000000\""]
             }
           ]
         },
@@ -221,36 +169,26 @@
               "removed": [
                 "\"linea:0x3E5c63644E683549055b9Be8653de26E0B4CD36E\""
               ],
-              "added": [
-                "\"linea:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762\""
-              ]
+              "added": ["\"linea:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762\""]
             },
             {
               "key": "values.$members.2",
               "removed": [
                 "\"linea:0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB\""
               ],
-              "added": [
-                "\"linea:0xD6481cC92eD746EbC679788654723Ce49D45EbeA\""
-              ]
+              "added": ["\"linea:0xD6481cC92eD746EbC679788654723Ce49D45EbeA\""]
             },
             {
               "key": "values.$members.8",
               "removed": [
                 "\"linea:0x99234cd9B532F30538ac797D33c212e3B69Fd087\""
               ],
-              "added": [
-                "\"linea:0x0F4df4939a6B126a088A40B4Bbf9F30337ACBFE4\""
-              ]
+              "added": ["\"linea:0x0F4df4939a6B126a088A40B4Bbf9F30337ACBFE4\""]
             },
             {
               "key": "values.VERSION",
-              "removed": [
-                "\"1.3.0\""
-              ],
-              "added": [
-                "\"1.4.1\""
-              ]
+              "removed": ["\"1.3.0\""],
+              "added": ["\"1.4.1\""]
             }
           ]
         },
@@ -273,21 +211,13 @@
           "fields": [
             {
               "key": "values.limitInWei",
-              "removed": [
-                "\"30000000000000000000000\""
-              ],
-              "added": [
-                "\"10000000000000000000000\""
-              ]
+              "removed": ["\"30000000000000000000000\""],
+              "added": ["\"10000000000000000000000\""]
             },
             {
               "key": "values.verifiers.0",
-              "removed": [
-                "\"eth:0xC83ed08E2262fBa264D528C749c051f8fC526897\""
-              ],
-              "added": [
-                "\"eth:0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc\""
-              ]
+              "removed": ["\"eth:0xC83ed08E2262fBa264D528C749c051f8fC526897\""],
+              "added": ["\"eth:0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc\""]
             }
           ]
         },
@@ -296,12 +226,8 @@
           "fields": [
             {
               "key": "values.targetWithdrawalReservePercentageBps",
-              "removed": [
-                "9985"
-              ],
-              "added": [
-                "9980"
-              ]
+              "removed": ["9985"],
+              "added": ["9980"]
             }
           ]
         },
@@ -320,18 +246,12 @@
           "fields": [
             {
               "key": "values.yieldProviderByIndex.0",
-              "added": [
-                "\"eth:0x486D8cADc10489B30b64c890aEc747F1220eEEC3\""
-              ]
+              "added": ["\"eth:0x486D8cADc10489B30b64c890aEc747F1220eEEC3\""]
             },
             {
               "key": "values.yieldProviderCount",
-              "removed": [
-                "0"
-              ],
-              "added": [
-                "1"
-              ]
+              "removed": ["0"],
+              "added": ["1"]
             }
           ]
         },
@@ -354,12 +274,8 @@
           "fields": [
             {
               "key": "values.verifiers.1",
-              "removed": [
-                "\"eth:0x1442833180e253844897339aFb5800c797547987\""
-              ],
-              "added": [
-                "\"eth:0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb\""
-              ]
+              "removed": ["\"eth:0x1442833180e253844897339aFb5800c797547987\""],
+              "added": ["\"eth:0x0D0f070386edC441A63fB8FAe8FB937Bbd88c5Cb\""]
             }
           ]
         },
@@ -378,12 +294,8 @@
           "fields": [
             {
               "key": "values.$implementation",
-              "removed": [
-                "\"eth:0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34\""
-              ],
-              "added": [
-                "\"eth:0xF0e003F0dE2d583Ae28FA8cBF66aa096CdAce3ff\""
-              ]
+              "removed": ["\"eth:0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34\""],
+              "added": ["\"eth:0xF0e003F0dE2d583Ae28FA8cBF66aa096CdAce3ff\""]
             },
             {
               "key": "values.$pastUpgrades.3",
@@ -393,18 +305,12 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "3"
-              ],
-              "added": [
-                "4"
-              ]
+              "removed": ["3"],
+              "added": ["4"]
             },
             {
               "key": "values.accessControl.PAUSE_ALL_ROLE.members.1",
-              "added": [
-                "\"eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0\""
-              ]
+              "added": ["\"eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0\""]
             },
             {
               "key": "values.accessControl.SET_REMOTE_TOKENBRIDGE_ROLE",
@@ -426,30 +332,20 @@
             },
             {
               "key": "values.allPausers.1",
-              "added": [
-                "\"eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0\""
-              ]
+              "added": ["\"eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0\""]
             },
             {
               "key": "values.CONTRACT_VERSION",
-              "removed": [
-                "\"1.0\""
-              ],
-              "added": [
-                "\"1.1\""
-              ]
+              "removed": ["\"1.0\""],
+              "added": ["\"1.1\""]
             },
             {
               "key": "values.isPaused_BLOB_SUBMISSION",
-              "removed": [
-                "false"
-              ]
+              "removed": ["false"]
             },
             {
               "key": "values.isPaused_CALLDATA_SUBMISSION",
-              "removed": [
-                "false"
-              ]
+              "removed": ["false"]
             },
             {
               "key": "values.remoteTokenBridgeSetters",
@@ -465,51 +361,35 @@
             },
             {
               "key": "values.COOLDOWN_DURATION",
-              "added": [
-                "172800"
-              ]
+              "added": ["172800"]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_REPORTING",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_STAKING",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_UNSTAKING",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_STATE_DATA_SUBMISSION",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.nonSecurityCouncilCooldownEnd",
-              "added": [
-                "0"
-              ]
+              "added": ["0"]
             },
             {
               "key": "values.PAUSE_DURATION",
-              "added": [
-                "172800"
-              ]
+              "added": ["172800"]
             },
             {
               "key": "values.SECURITY_COUNCIL_ROLE",
@@ -534,12 +414,8 @@
           "fields": [
             {
               "key": "values.$implementation",
-              "removed": [
-                "\"eth:0x04728BF704a716C26F9EF4085013b760AC885631\""
-              ],
-              "added": [
-                "\"eth:0xE68697690E8ff196A6aBB3E1385156D87Df85332\""
-              ]
+              "removed": ["\"eth:0x04728BF704a716C26F9EF4085013b760AC885631\""],
+              "added": ["\"eth:0xE68697690E8ff196A6aBB3E1385156D87Df85332\""]
             },
             {
               "key": "values.$pastUpgrades.10",
@@ -549,18 +425,12 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "10"
-              ],
-              "added": [
-                "11"
-              ]
+              "removed": ["10"],
+              "added": ["11"]
             },
             {
               "key": "values.accessControl.PAUSE_ALL_ROLE.members.1",
-              "added": [
-                "\"eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0\""
-              ]
+              "added": ["\"eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0\""]
             },
             {
               "key": "values.accessControl.PAUSE_BLOB_SUBMISSION_ROLE",
@@ -606,30 +476,20 @@
             },
             {
               "key": "values.CONTRACT_VERSION",
-              "removed": [
-                "\"7.0\""
-              ],
-              "added": [
-                "\"7.1\""
-              ]
+              "removed": ["\"7.0\""],
+              "added": ["\"7.1\""]
             },
             {
               "key": "values.fallbackOperator",
-              "removed": [
-                "\"eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D\""
-              ]
+              "removed": ["\"eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D\""]
             },
             {
               "key": "values.isPaused_BLOB_SUBMISSION",
-              "removed": [
-                "false"
-              ]
+              "removed": ["false"]
             },
             {
               "key": "values.isPaused_CALLDATA_SUBMISSION",
-              "removed": [
-                "false"
-              ]
+              "removed": ["false"]
             },
             {
               "key": "values.PAUSE_BLOB_SUBMISSION_ROLE",
@@ -645,72 +505,48 @@
             },
             {
               "key": "values.verifiers.1",
-              "removed": [
-                "\"eth:0x66355689a9f067eeb9dc9d899E4192676988279C\""
-              ],
-              "added": [
-                "\"eth:0x1442833180e253844897339aFb5800c797547987\""
-              ]
+              "removed": ["\"eth:0x66355689a9f067eeb9dc9d899E4192676988279C\""],
+              "added": ["\"eth:0x1442833180e253844897339aFb5800c797547987\""]
             },
             {
               "key": "values.COOLDOWN_DURATION",
-              "added": [
-                "172800"
-              ]
+              "added": ["172800"]
             },
             {
               "key": "values.COOLDOWN_DURATION_fmt",
-              "added": [
-                "\"2d\""
-              ]
+              "added": ["\"2d\""]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_REPORTING",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_STAKING",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_UNSTAKING",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_STATE_DATA_SUBMISSION",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.livenessRecoveryOperator",
-              "added": [
-                "\"eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D\""
-              ]
+              "added": ["\"eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D\""]
             },
             {
               "key": "values.nonSecurityCouncilCooldownEnd",
-              "added": [
-                "0"
-              ]
+              "added": ["0"]
             },
             {
               "key": "values.PAUSE_DURATION",
-              "added": [
-                "172800"
-              ]
+              "added": ["172800"]
             },
             {
               "key": "values.PAUSE_STATE_DATA_SUBMISSION_ROLE",
@@ -726,9 +562,7 @@
             },
             {
               "key": "values.pauseDuration_fmt",
-              "added": [
-                "\"2d\""
-              ]
+              "added": ["\"2d\""]
             },
             {
               "key": "values.SECURITY_COUNCIL_ROLE",
@@ -738,15 +572,11 @@
             },
             {
               "key": "values.securityCouncilAC",
-              "added": [
-                "[\"eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3\"]"
-              ]
+              "added": ["[\"eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3\"]"]
             },
             {
               "key": "values.shnarfProvider",
-              "added": [
-                "\"eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F\""
-              ]
+              "added": ["\"eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F\""]
             },
             {
               "key": "values.UNPAUSE_STATE_DATA_SUBMISSION_ROLE",
@@ -764,9 +594,7 @@
               "removed": [
                 "\"linea:0xD90ed3D4f9d11262d3D346a4369058d5B3777137\""
               ],
-              "added": [
-                "\"linea:0x4a496167F187A97379e763f693A499cE1182848b\""
-              ]
+              "added": ["\"linea:0x4a496167F187A97379e763f693A499cE1182848b\""]
             },
             {
               "key": "values.$pastUpgrades.3",
@@ -776,18 +604,12 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "3"
-              ],
-              "added": [
-                "4"
-              ]
+              "removed": ["3"],
+              "added": ["4"]
             },
             {
               "key": "values.accessControl.PAUSE_ALL_ROLE.members.1",
-              "added": [
-                "\"linea:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0\""
-              ]
+              "added": ["\"linea:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0\""]
             },
             {
               "key": "values.accessControl.SET_REMOTE_TOKENBRIDGE_ROLE",
@@ -809,30 +631,20 @@
             },
             {
               "key": "values.allPausers.1",
-              "added": [
-                "\"linea:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0\""
-              ]
+              "added": ["\"linea:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0\""]
             },
             {
               "key": "values.CONTRACT_VERSION",
-              "removed": [
-                "\"1.0\""
-              ],
-              "added": [
-                "\"1.1\""
-              ]
+              "removed": ["\"1.0\""],
+              "added": ["\"1.1\""]
             },
             {
               "key": "values.isPaused_BLOB_SUBMISSION",
-              "removed": [
-                "false"
-              ]
+              "removed": ["false"]
             },
             {
               "key": "values.isPaused_CALLDATA_SUBMISSION",
-              "removed": [
-                "false"
-              ]
+              "removed": ["false"]
             },
             {
               "key": "values.remoteTokenBridgeSetters",
@@ -848,51 +660,35 @@
             },
             {
               "key": "values.COOLDOWN_DURATION",
-              "added": [
-                "172800"
-              ]
+              "added": ["172800"]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_REPORTING",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_STAKING",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_UNSTAKING",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_STATE_DATA_SUBMISSION",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.nonSecurityCouncilCooldownEnd",
-              "added": [
-                "0"
-              ]
+              "added": ["0"]
             },
             {
               "key": "values.PAUSE_DURATION",
-              "added": [
-                "172800"
-              ]
+              "added": ["172800"]
             },
             {
               "key": "values.SECURITY_COUNCIL_ROLE",
@@ -910,9 +706,7 @@
               "removed": [
                 "\"linea:0x05d43713B7E333d2D54be65cE3b5F3698aB960Fd\""
               ],
-              "added": [
-                "\"linea:0x9976fD7edDb78156a002DE74c9158E884702273d\""
-              ]
+              "added": ["\"linea:0x9976fD7edDb78156a002DE74c9158E884702273d\""]
             },
             {
               "key": "values.$pastUpgrades.6",
@@ -922,18 +716,12 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "6"
-              ],
-              "added": [
-                "7"
-              ]
+              "removed": ["6"],
+              "added": ["7"]
             },
             {
               "key": "values.accessControl.PAUSE_ALL_ROLE.members.1",
-              "added": [
-                "\"linea:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0\""
-              ]
+              "added": ["\"linea:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0\""]
             },
             {
               "key": "values.accessControl.SECURITY_COUNCIL_ROLE",
@@ -946,93 +734,63 @@
               "removed": [
                 "\"linea:0x00000000000000000000000000000000075BCd15\""
               ],
-              "added": [
-                "\"linea:0x0000000000000000000000000000000000000000\""
-              ]
+              "added": ["\"linea:0x0000000000000000000000000000000000000000\""]
             },
             {
               "key": "values.COOLDOWN_DURATION",
-              "added": [
-                "172800"
-              ]
+              "added": ["172800"]
             },
             {
               "key": "values.isPaused_COMPLETE_TOKEN_BRIDGING",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_FINALIZATION",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_GENERAL",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_INITIATE_TOKEN_BRIDGING",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_L1_L2",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_L2_L1",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_REPORTING",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_STAKING",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_NATIVE_YIELD_UNSTAKING",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.isPaused_STATE_DATA_SUBMISSION",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.nonSecurityCouncilCooldownEnd",
-              "added": [
-                "0"
-              ]
+              "added": ["0"]
             },
             {
               "key": "values.PAUSE_DURATION",
-              "added": [
-                "172800"
-              ]
+              "added": ["172800"]
             },
             {
               "key": "values.SECURITY_COUNCIL_ROLE",
@@ -1064,15 +822,11 @@
           "fields": [
             {
               "key": "values.verifiers.1",
-              "added": [
-                "\"eth:0x66355689a9f067eeb9dc9d899E4192676988279C\""
-              ]
+              "added": ["\"eth:0x66355689a9f067eeb9dc9d899E4192676988279C\""]
             },
             {
               "key": "values.verifiers.4",
-              "removed": [
-                "\"eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b\""
-              ]
+              "removed": ["\"eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b\""]
             }
           ]
         },
@@ -1095,15 +849,11 @@
           "fields": [
             {
               "key": "values.verifiers.0",
-              "added": [
-                "\"eth:0xC83ed08E2262fBa264D528C749c051f8fC526897\""
-              ]
+              "added": ["\"eth:0xC83ed08E2262fBa264D528C749c051f8fC526897\""]
             },
             {
               "key": "values.verifiers.3",
-              "removed": [
-                "\"eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a\""
-              ]
+              "removed": ["\"eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a\""]
             }
           ]
         },
@@ -1125,18 +875,14 @@
               "removed": [
                 "\"linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67\""
               ],
-              "added": [
-                "\"linea:0x2b0F9C76970975aec03784EFd763623757EF7652\""
-              ]
+              "added": ["\"linea:0x2b0F9C76970975aec03784EFd763623757EF7652\""]
             },
             {
               "key": "values.l1l2MessageSetter.0",
               "removed": [
                 "\"linea:0xc1C6B09D1eB6fCA0fF3cA11027E5Bc4AeDb47F67\""
               ],
-              "added": [
-                "\"linea:0x2b0F9C76970975aec03784EFd763623757EF7652\""
-              ]
+              "added": ["\"linea:0x2b0F9C76970975aec03784EFd763623757EF7652\""]
             }
           ]
         }
@@ -1151,9 +897,7 @@
           "fields": [
             {
               "key": "values.GnosisSafe_modules.0",
-              "removed": [
-                "\"eth:0xF24f1DC519d88246809B660eb56D94048575d083\""
-              ]
+              "removed": ["\"eth:0xF24f1DC519d88246809B660eb56D94048575d083\""]
             }
           ]
         },
@@ -1162,12 +906,8 @@
           "fields": [
             {
               "key": "values.$implementation",
-              "removed": [
-                "\"eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0\""
-              ],
-              "added": [
-                "\"eth:0x04728BF704a716C26F9EF4085013b760AC885631\""
-              ]
+              "removed": ["\"eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0\""],
+              "added": ["\"eth:0x04728BF704a716C26F9EF4085013b760AC885631\""]
             },
             {
               "key": "values.$pastUpgrades.9",
@@ -1177,12 +917,8 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "9"
-              ],
-              "added": [
-                "10"
-              ]
+              "removed": ["9"],
+              "added": ["10"]
             },
             {
               "key": "values.accessControl.SET_YIELD_MANAGER_ROLE",
@@ -1210,12 +946,8 @@
             },
             {
               "key": "values.CONTRACT_VERSION",
-              "removed": [
-                "\"6.0\""
-              ],
-              "added": [
-                "\"7.0\""
-              ]
+              "removed": ["\"6.0\""],
+              "added": ["\"7.0\""]
             },
             {
               "key": "values.GENESIS_SHNARF",
@@ -1231,9 +963,7 @@
             },
             {
               "key": "values.isWithdrawLSTAllowed",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             },
             {
               "key": "values.PAUSE_NATIVE_YIELD_STAKING_ROLE",
@@ -1261,15 +991,11 @@
             },
             {
               "key": "values.yieldManager",
-              "added": [
-                "\"eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94\""
-              ]
+              "added": ["\"eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94\""]
             },
             {
               "key": "values.yieldManagerSetterAC",
-              "added": [
-                "[\"eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3\"]"
-              ]
+              "added": ["[\"eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3\"]"]
             }
           ]
         },
@@ -1299,21 +1025,13 @@
           "fields": [
             {
               "key": "values.verifiers.0",
-              "removed": [
-                "\"eth:0xA12E79C375FB0aaddfDA597BBe7b4e9A92e9b3De\""
-              ],
-              "added": [
-                "\"eth:0x0000000000000000000000000000000000000000\""
-              ]
+              "removed": ["\"eth:0xA12E79C375FB0aaddfDA597BBe7b4e9A92e9b3De\""],
+              "added": ["\"eth:0x0000000000000000000000000000000000000000\""]
             },
             {
               "key": "values.verifiers.4",
-              "removed": [
-                "\"eth:0x0000000000000000000000000000000000000000\""
-              ],
-              "added": [
-                "\"eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b\""
-              ]
+              "removed": ["\"eth:0x0000000000000000000000000000000000000000\""],
+              "added": ["\"eth:0x8f8EC9608223C0b8D13238950c03F5D42ceeBb9b\""]
             }
           ]
         },
@@ -1340,24 +1058,16 @@
           "fields": [
             {
               "key": "values.verifiers.1",
-              "removed": [
-                "\"eth:0x8421D1e3fb9A737A85dC7FF531c39f324FB2aC5d\""
-              ]
+              "removed": ["\"eth:0x8421D1e3fb9A737A85dC7FF531c39f324FB2aC5d\""]
             },
             {
               "key": "values.verifiers.3",
-              "added": [
-                "\"eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a\""
-              ]
+              "added": ["\"eth:0x814D80782aA8c508aBABE9C6956D8F1f90E5177a\""]
             },
             {
               "key": "values.verifiers.4",
-              "removed": [
-                "\"eth:0x8CAE7ff138e401384df88a408314e4E9a92f274E\""
-              ],
-              "added": [
-                "\"eth:0x0000000000000000000000000000000000000000\""
-              ]
+              "removed": ["\"eth:0x8CAE7ff138e401384df88a408314e4E9a92f274E\""],
+              "added": ["\"eth:0x0000000000000000000000000000000000000000\""]
             }
           ]
         },
@@ -1380,30 +1090,18 @@
           "fields": [
             {
               "key": "values.verifiers.0",
-              "removed": [
-                "\"eth:0xED39C0C41A7651006953AB58Ecb3039363620995\""
-              ],
-              "added": [
-                "\"eth:0xA12E79C375FB0aaddfDA597BBe7b4e9A92e9b3De\""
-              ]
+              "removed": ["\"eth:0xED39C0C41A7651006953AB58Ecb3039363620995\""],
+              "added": ["\"eth:0xA12E79C375FB0aaddfDA597BBe7b4e9A92e9b3De\""]
             },
             {
               "key": "values.verifiers.1",
-              "removed": [
-                "\"eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873\""
-              ],
-              "added": [
-                "\"eth:0x8421D1e3fb9A737A85dC7FF531c39f324FB2aC5d\""
-              ]
+              "removed": ["\"eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873\""],
+              "added": ["\"eth:0x8421D1e3fb9A737A85dC7FF531c39f324FB2aC5d\""]
             },
             {
               "key": "values.verifiers.4",
-              "removed": [
-                "\"eth:0x0000000000000000000000000000000000000000\""
-              ],
-              "added": [
-                "\"eth:0x8CAE7ff138e401384df88a408314e4E9a92f274E\""
-              ]
+              "removed": ["\"eth:0x0000000000000000000000000000000000000000\""],
+              "added": ["\"eth:0x8CAE7ff138e401384df88a408314e4E9a92f274E\""]
             }
           ]
         },
@@ -1434,12 +1132,8 @@
           "fields": [
             {
               "key": "values.limitInWei",
-              "removed": [
-                "\"18750000000000000000000\""
-              ],
-              "added": [
-                "\"30000000000000000000000\""
-              ]
+              "removed": ["\"18750000000000000000000\""],
+              "added": ["\"30000000000000000000000\""]
             }
           ]
         },
@@ -1448,12 +1142,8 @@
           "fields": [
             {
               "key": "values.limitInWei",
-              "removed": [
-                "\"15000000000000000000000\""
-              ],
-              "added": [
-                "\"24000000000000000000000\""
-              ]
+              "removed": ["\"15000000000000000000000\""],
+              "added": ["\"24000000000000000000000\""]
             }
           ]
         },
@@ -1462,36 +1152,24 @@
           "fields": [
             {
               "key": "values.$members.0",
-              "added": [
-                "\"linea:0x1f0cdfb6aa74293E06f3A6D3B7958b6d36563c4f\""
-              ]
+              "added": ["\"linea:0x1f0cdfb6aa74293E06f3A6D3B7958b6d36563c4f\""]
             },
             {
               "key": "values.$members.0",
               "removed": [
                 "\"linea:0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE\""
               ],
-              "added": [
-                "\"linea:0xD30373335C6d71499EE6CDcF832b5BcB731BAe8d\""
-              ]
+              "added": ["\"linea:0xD30373335C6d71499EE6CDcF832b5BcB731BAe8d\""]
             },
             {
               "key": "values.$threshold",
-              "removed": [
-                "4"
-              ],
-              "added": [
-                "5"
-              ]
+              "removed": ["4"],
+              "added": ["5"]
             },
             {
               "key": "values.multisigThreshold",
-              "removed": [
-                "\"4 of 8 (50%)\""
-              ],
-              "added": [
-                "\"5 of 9 (56%)\""
-              ]
+              "removed": ["\"4 of 8 (50%)\""],
+              "added": ["\"5 of 9 (56%)\""]
             }
           ]
         }
@@ -1506,36 +1184,22 @@
           "fields": [
             {
               "key": "values.$members.0",
-              "added": [
-                "\"eth:0x1f0cdfb6aa74293E06f3A6D3B7958b6d36563c4f\""
-              ]
+              "added": ["\"eth:0x1f0cdfb6aa74293E06f3A6D3B7958b6d36563c4f\""]
             },
             {
               "key": "values.$members.1",
-              "removed": [
-                "\"eth:0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE\""
-              ],
-              "added": [
-                "\"eth:0xD30373335C6d71499EE6CDcF832b5BcB731BAe8d\""
-              ]
+              "removed": ["\"eth:0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE\""],
+              "added": ["\"eth:0xD30373335C6d71499EE6CDcF832b5BcB731BAe8d\""]
             },
             {
               "key": "values.$threshold",
-              "removed": [
-                "4"
-              ],
-              "added": [
-                "5"
-              ]
+              "removed": ["4"],
+              "added": ["5"]
             },
             {
               "key": "values.multisigThreshold",
-              "removed": [
-                "\"4 of 8 (50%)\""
-              ],
-              "added": [
-                "\"5 of 9 (56%)\""
-              ]
+              "removed": ["\"4 of 8 (50%)\""],
+              "added": ["\"5 of 9 (56%)\""]
             }
           ]
         }
@@ -1550,21 +1214,13 @@
           "fields": [
             {
               "key": "values.$members.3",
-              "removed": [
-                "\"eth:0x5822D8457c00FB82203918ED92907b935B9D40AE\""
-              ],
-              "added": [
-                "\"eth:0xC263178AC471C4411abAf5c22cD4D8D67033bc82\""
-              ]
+              "removed": ["\"eth:0x5822D8457c00FB82203918ED92907b935B9D40AE\""],
+              "added": ["\"eth:0xC263178AC471C4411abAf5c22cD4D8D67033bc82\""]
             },
             {
               "key": "values.$members.6",
-              "removed": [
-                "\"eth:0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1\""
-              ],
-              "added": [
-                "\"eth:0x99234cd9B532F30538ac797D33c212e3B69Fd087\""
-              ]
+              "removed": ["\"eth:0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1\""],
+              "added": ["\"eth:0x99234cd9B532F30538ac797D33c212e3B69Fd087\""]
             }
           ]
         }
@@ -1583,15 +1239,11 @@
           "fields": [
             {
               "key": "values.verifiers.1",
-              "added": [
-                "\"eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873\""
-              ]
+              "added": ["\"eth:0x9473C37A9fE76fbbc3Fd7d3b59E1b550415bd873\""]
             },
             {
               "key": "values.verifiers.4",
-              "removed": [
-                "\"eth:0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7\""
-              ]
+              "removed": ["\"eth:0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7\""]
             }
           ]
         },
@@ -1613,18 +1265,12 @@
           "fields": [
             {
               "key": "values.$members.2",
-              "removed": [
-                "\"eth:0xF112a2438a4e08836046D587350f9315C0eAE300\""
-              ],
-              "added": [
-                "\"eth:0x7E55b79A01BD9125CD213Bc9F533d21Eb3bD68c5\""
-              ]
+              "removed": ["\"eth:0xF112a2438a4e08836046D587350f9315C0eAE300\""],
+              "added": ["\"eth:0x7E55b79A01BD9125CD213Bc9F533d21Eb3bD68c5\""]
             },
             {
               "key": "values.GnosisSafe_modules.0",
-              "added": [
-                "\"eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436\""
-              ]
+              "added": ["\"eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436\""]
             }
           ]
         },
@@ -1643,21 +1289,15 @@
           "fields": [
             {
               "key": "values.accessControl.SET_CUSTOM_CONTRACT_ROLE.members.1",
-              "added": [
-                "\"0xB8F5524D73f549Cf14A0587a3C7810723f9c0051\""
-              ]
+              "added": ["\"0xB8F5524D73f549Cf14A0587a3C7810723f9c0051\""]
             },
             {
               "key": "values.accessControl.REMOVE_RESERVED_TOKEN_ROLE.members.1",
-              "added": [
-                "\"0xB8F5524D73f549Cf14A0587a3C7810723f9c0051\""
-              ]
+              "added": ["\"0xB8F5524D73f549Cf14A0587a3C7810723f9c0051\""]
             },
             {
               "key": "values.accessControl.SET_RESERVED_TOKEN_ROLE.members.1",
-              "added": [
-                "\"0xB8F5524D73f549Cf14A0587a3C7810723f9c0051\""
-              ]
+              "added": ["\"0xB8F5524D73f549Cf14A0587a3C7810723f9c0051\""]
             }
           ]
         },
@@ -1666,57 +1306,33 @@
           "fields": [
             {
               "key": "values.$members.7",
-              "removed": [
-                "\"0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB\""
-              ],
-              "added": [
-                "\"0x535dE1e2A961529AA84EF208981f8cF4e7dcbdF5\""
-              ]
+              "removed": ["\"0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB\""],
+              "added": ["\"0x535dE1e2A961529AA84EF208981f8cF4e7dcbdF5\""]
             },
             {
               "key": "values.$members.6",
-              "removed": [
-                "\"0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE\""
-              ],
-              "added": [
-                "\"0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB\""
-              ]
+              "removed": ["\"0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE\""],
+              "added": ["\"0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB\""]
             },
             {
               "key": "values.$members.5",
-              "removed": [
-                "\"0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1\""
-              ],
-              "added": [
-                "\"0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE\""
-              ]
+              "removed": ["\"0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1\""],
+              "added": ["\"0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE\""]
             },
             {
               "key": "values.$members.4",
-              "removed": [
-                "\"0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4\""
-              ],
-              "added": [
-                "\"0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1\""
-              ]
+              "removed": ["\"0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4\""],
+              "added": ["\"0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1\""]
             },
             {
               "key": "values.$members.3",
-              "removed": [
-                "\"0xB4dAebe4D01f467701F95f0196fc29033c54dBcb\""
-              ],
-              "added": [
-                "\"0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4\""
-              ]
+              "removed": ["\"0xB4dAebe4D01f467701F95f0196fc29033c54dBcb\""],
+              "added": ["\"0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4\""]
             },
             {
               "key": "values.$members.2",
-              "removed": [
-                "\"0x12d674b7eCc0302977E956Cd2d5AC8D030fdbea9\""
-              ],
-              "added": [
-                "\"0xB4dAebe4D01f467701F95f0196fc29033c54dBcb\""
-              ]
+              "removed": ["\"0x12d674b7eCc0302977E956Cd2d5AC8D030fdbea9\""],
+              "added": ["\"0xB4dAebe4D01f467701F95f0196fc29033c54dBcb\""]
             }
           ]
         },
@@ -1729,48 +1345,28 @@
           "fields": [
             {
               "key": "values.verifiers.19",
-              "removed": [
-                "\"0x1111111111111111111111111111111111111111\""
-              ],
-              "added": [
-                "\"0xED39C0C41A7651006953AB58Ecb3039363620995\""
-              ]
+              "removed": ["\"0x1111111111111111111111111111111111111111\""],
+              "added": ["\"0xED39C0C41A7651006953AB58Ecb3039363620995\""]
             },
             {
               "key": "values.verifiers.18",
-              "removed": [
-                "\"0x1111111111111111111111111111111111111111\""
-              ],
-              "added": [
-                "\"0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7\""
-              ]
+              "removed": ["\"0x1111111111111111111111111111111111111111\""],
+              "added": ["\"0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7\""]
             },
             {
               "key": "values.verifiers.17",
-              "removed": [
-                "\"0x1111111111111111111111111111111111111111\""
-              ],
-              "added": [
-                "\"0x0000000000000000000000000000000000000000\""
-              ]
+              "removed": ["\"0x1111111111111111111111111111111111111111\""],
+              "added": ["\"0x0000000000000000000000000000000000000000\""]
             },
             {
               "key": "values.verifiers.16",
-              "removed": [
-                "\"0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F\""
-              ],
-              "added": [
-                "\"0x0000000000000000000000000000000000000000\""
-              ]
+              "removed": ["\"0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F\""],
+              "added": ["\"0x0000000000000000000000000000000000000000\""]
             },
             {
               "key": "values.verifiers.15",
-              "removed": [
-                "\"0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7\""
-              ],
-              "added": [
-                "\"0x0000000000000000000000000000000000000000\""
-              ]
+              "removed": ["\"0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7\""],
+              "added": ["\"0x0000000000000000000000000000000000000000\""]
             }
           ]
         },
@@ -1779,15 +1375,11 @@
           "fields": [
             {
               "key": "values.accessControl.PROPOSER_ROLE.members.1",
-              "added": [
-                "\"0xB8F5524D73f549Cf14A0587a3C7810723f9c0051\""
-              ]
+              "added": ["\"0xB8F5524D73f549Cf14A0587a3C7810723f9c0051\""]
             },
             {
               "key": "values.proposerAC.1",
-              "added": [
-                "\"0xB8F5524D73f549Cf14A0587a3C7810723f9c0051\""
-              ]
+              "added": ["\"0xB8F5524D73f549Cf14A0587a3C7810723f9c0051\""]
             }
           ]
         },
@@ -1810,21 +1402,13 @@
           "fields": [
             {
               "key": "values.verifiers.16",
-              "removed": [
-                "\"0x1111111111111111111111111111111111111111\""
-              ],
-              "added": [
-                "\"0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F\""
-              ]
+              "removed": ["\"0x1111111111111111111111111111111111111111\""],
+              "added": ["\"0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F\""]
             },
             {
               "key": "values.verifiers.15",
-              "removed": [
-                "\"0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F\""
-              ],
-              "added": [
-                "\"0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7\""
-              ]
+              "removed": ["\"0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F\""],
+              "added": ["\"0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7\""]
             }
           ]
         },
@@ -1843,12 +1427,8 @@
           "fields": [
             {
               "key": "values.$implementation",
-              "removed": [
-                "\"0x0eC393209674090368C592A591B25811e490BF36\""
-              ],
-              "added": [
-                "\"0x66CFD1562d6Aa4629e9e4142662c1A403528Df00\""
-              ]
+              "removed": ["\"0x0eC393209674090368C592A591B25811e490BF36\""],
+              "added": ["\"0x66CFD1562d6Aa4629e9e4142662c1A403528Df00\""]
             },
             {
               "key": "values.$pastUpgrades.2",
@@ -1861,45 +1441,29 @@
               "removed": [
                 "\"0xe752ce539119fc11af6239e8b26a79d80c9e84cec19ac6aca060f466853f5b7d\""
               ],
-              "added": [
-                "[\"0x66CFD1562d6Aa4629e9e4142662c1A403528Df00\"]"
-              ]
+              "added": ["[\"0x66CFD1562d6Aa4629e9e4142662c1A403528Df00\"]"]
             },
             {
               "key": "values.$pastUpgrades.1.1",
-              "removed": [
-                "\"2023-09-01T20:25:47.000Z\""
-              ],
+              "removed": ["\"2023-09-01T20:25:47.000Z\""],
               "added": [
                 "\"0xd61b29009aa7f628ff1b04138e30ebd39805e40a2e3e4a3e43050fd8b0f75548\""
               ]
             },
             {
               "key": "values.$pastUpgrades.1.0",
-              "removed": [
-                "[\"0x0eC393209674090368C592A591B25811e490BF36\"]"
-              ],
-              "added": [
-                "\"2025-03-16T19:57:11.000Z\""
-              ]
+              "removed": ["[\"0x0eC393209674090368C592A591B25811e490BF36\"]"],
+              "added": ["\"2025-03-16T19:57:11.000Z\""]
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "2"
-              ],
-              "added": [
-                "3"
-              ]
+              "removed": ["2"],
+              "added": ["3"]
             },
             {
               "key": "values.paused",
-              "removed": [
-                "false"
-              ],
-              "added": [
-                "true"
-              ]
+              "removed": ["false"],
+              "added": ["true"]
             }
           ]
         }
@@ -1914,12 +1478,8 @@
           "fields": [
             {
               "key": "values.$implementation",
-              "removed": [
-                "\"0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2\""
-              ],
-              "added": [
-                "\"0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34\""
-              ]
+              "removed": ["\"0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2\""],
+              "added": ["\"0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34\""]
             },
             {
               "key": "values.$pastUpgrades.2",
@@ -1929,18 +1489,12 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "2"
-              ],
-              "added": [
-                "3"
-              ]
+              "removed": ["2"],
+              "added": ["3"]
             },
             {
               "key": "values.accessControl.DEFAULT_ADMIN_ROLE.members.0",
-              "added": [
-                "\"0x892bb7EeD71efB060ab90140e7825d8127991DD3\""
-              ]
+              "added": ["\"0x892bb7EeD71efB060ab90140e7825d8127991DD3\""]
             },
             {
               "key": "values.accessControl.PAUSE_ALL_ROLE",
@@ -2010,27 +1564,19 @@
             },
             {
               "key": "values.owner",
-              "removed": [
-                "\"0x892bb7EeD71efB060ab90140e7825d8127991DD3\""
-              ]
+              "removed": ["\"0x892bb7EeD71efB060ab90140e7825d8127991DD3\""]
             },
             {
               "key": "values.paused",
-              "removed": [
-                "false"
-              ]
+              "removed": ["false"]
             },
             {
               "key": "values.pendingOwner",
-              "removed": [
-                "\"0x0000000000000000000000000000000000000000\""
-              ]
+              "removed": ["\"0x0000000000000000000000000000000000000000\""]
             },
             {
               "key": "values.CONTRACT_VERSION",
-              "added": [
-                "\"1.0\""
-              ]
+              "added": ["\"1.0\""]
             },
             {
               "key": "values.DEFAULT_ADMIN_ROLE",
@@ -2111,12 +1657,8 @@
           "fields": [
             {
               "key": "values.$implementation",
-              "removed": [
-                "\"0x1825242411792536469Cbb5843fd27Ce3e9e583A\""
-              ],
-              "added": [
-                "\"0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0\""
-              ]
+              "removed": ["\"0x1825242411792536469Cbb5843fd27Ce3e9e583A\""],
+              "added": ["\"0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0\""]
             },
             {
               "key": "values.$pastUpgrades.8",
@@ -2126,12 +1668,8 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "8"
-              ],
-              "added": [
-                "9"
-              ]
+              "removed": ["8"],
+              "added": ["9"]
             },
             {
               "key": "values.accessControl.PAUSE_MANAGER_ROLE",
@@ -2219,21 +1757,15 @@
             },
             {
               "key": "values.GENERAL_PAUSE_TYPE",
-              "removed": [
-                "1"
-              ]
+              "removed": ["1"]
             },
             {
               "key": "values.L1_L2_PAUSE_TYPE",
-              "removed": [
-                "2"
-              ]
+              "removed": ["2"]
             },
             {
               "key": "values.L2_L1_PAUSE_TYPE",
-              "removed": [
-                "3"
-              ]
+              "removed": ["3"]
             },
             {
               "key": "values.PAUSE_MANAGER_ROLE",
@@ -2243,21 +1775,15 @@
             },
             {
               "key": "values.PROVING_SYSTEM_PAUSE_TYPE",
-              "removed": [
-                "4"
-              ]
+              "removed": ["4"]
             },
             {
               "key": "values.CONTRACT_VERSION",
-              "added": [
-                "\"6.0\""
-              ]
+              "added": ["\"6.0\""]
             },
             {
               "key": "values.fallbackOperator",
-              "added": [
-                "\"0x3697bD0bC6C050135b8321F989a5316eACbF367D\""
-              ]
+              "added": ["\"0x3697bD0bC6C050135b8321F989a5316eACbF367D\""]
             },
             {
               "key": "values.PAUSE_ALL_ROLE",
@@ -2348,12 +1874,8 @@
           "fields": [
             {
               "key": "values.$implementation",
-              "removed": [
-                "\"0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562\""
-              ],
-              "added": [
-                "\"0x1825242411792536469Cbb5843fd27Ce3e9e583A\""
-              ]
+              "removed": ["\"0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562\""],
+              "added": ["\"0x1825242411792536469Cbb5843fd27Ce3e9e583A\""]
             },
             {
               "key": "values.$pastUpgrades.7",
@@ -2363,12 +1885,8 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "7"
-              ],
-              "added": [
-                "8"
-              ]
+              "removed": ["7"],
+              "added": ["8"]
             }
           ]
         }
@@ -2383,21 +1901,13 @@
           "fields": [
             {
               "key": "values.accessControl.OPERATOR_ROLE.members.1",
-              "removed": [
-                "\"0xa9268341831eFa4937537bc3e9EB36DbecE83C7e\""
-              ],
-              "added": [
-                "\"0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754\""
-              ]
+              "removed": ["\"0xa9268341831eFa4937537bc3e9EB36DbecE83C7e\""],
+              "added": ["\"0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754\""]
             },
             {
               "key": "values.accessControl.OPERATOR_ROLE.members.0",
-              "removed": [
-                "\"0x9228624C3185FCBcf24c1c9dB76D8Bef5f5DAd64\""
-              ],
-              "added": [
-                "\"0x46d2F319fd42165D4318F099E143dEA8124E9E3e\""
-              ]
+              "removed": ["\"0x9228624C3185FCBcf24c1c9dB76D8Bef5f5DAd64\""],
+              "added": ["\"0x46d2F319fd42165D4318F099E143dEA8124E9E3e\""]
             }
           ]
         }
@@ -2412,12 +1922,8 @@
           "fields": [
             {
               "key": "values.$members.4",
-              "removed": [
-                "\"0x36a0b60162d7F407d74bd1def01410D20437F87B\""
-              ],
-              "added": [
-                "\"0x9376c137AF5124FFc39bD8940A3D88D1cd508992\""
-              ]
+              "removed": ["\"0x36a0b60162d7F407d74bd1def01410D20437F87B\""],
+              "added": ["\"0x9376c137AF5124FFc39bD8940A3D88D1cd508992\""]
             }
           ]
         }
@@ -2436,12 +1942,8 @@
           "fields": [
             {
               "key": "values.verifiers.1",
-              "removed": [
-                "\"0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4\""
-              ],
-              "added": [
-                "\"0x0000000000000000000000000000000000000000\""
-              ]
+              "removed": ["\"0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4\""],
+              "added": ["\"0x0000000000000000000000000000000000000000\""]
             }
           ]
         }
@@ -2456,12 +1958,8 @@
           "fields": [
             {
               "key": "values.verifiers.3",
-              "removed": [
-                "\"0x1111111111111111111111111111111111111111\""
-              ],
-              "added": [
-                "\"0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F\""
-              ]
+              "removed": ["\"0x1111111111111111111111111111111111111111\""],
+              "added": ["\"0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F\""]
             }
           ]
         },
@@ -2480,21 +1978,13 @@
           "fields": [
             {
               "key": "upgradeability.implementation",
-              "removed": [
-                "\"0x6ccfD65b0b14F67259C77Ca6267104e058dDB292\""
-              ],
-              "added": [
-                "\"0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2\""
-              ]
+              "removed": ["\"0x6ccfD65b0b14F67259C77Ca6267104e058dDB292\""],
+              "added": ["\"0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2\""]
             },
             {
               "key": "upgradeability.admin",
-              "removed": [
-                "\"0x5B0bb17755FBa06028530682E2FD5bc373931768\""
-              ],
-              "added": [
-                "\"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6\""
-              ]
+              "removed": ["\"0x5B0bb17755FBa06028530682E2FD5bc373931768\""],
+              "added": ["\"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6\""]
             }
           ]
         },
@@ -2507,12 +1997,8 @@
           "fields": [
             {
               "key": "upgradeability.implementation",
-              "removed": [
-                "\"0x934Dd4C63E285551CEceF8459103554D0096c179\""
-              ],
-              "added": [
-                "\"0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562\""
-              ]
+              "removed": ["\"0x934Dd4C63E285551CEceF8459103554D0096c179\""],
+              "added": ["\"0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562\""]
             },
             {
               "key": "values.GENESIS_SHNARF",
@@ -2525,12 +2011,8 @@
             },
             {
               "key": "values.sender",
-              "removed": [
-                "\"0x00000000000000000000000000000000075BCd15\""
-              ],
-              "added": [
-                "\"0x0000000000000000000000000000000000000000\""
-              ]
+              "removed": ["\"0x00000000000000000000000000000000075BCd15\""],
+              "added": ["\"0x0000000000000000000000000000000000000000\""]
             },
             {
               "key": "values.currentFinalizedState",
@@ -2551,30 +2033,18 @@
           "fields": [
             {
               "key": "upgradeability.implementation",
-              "removed": [
-                "\"0xAA4b3a9515c921996Abe7930bF75Eff7466a4457\""
-              ],
-              "added": [
-                "\"0x934Dd4C63E285551CEceF8459103554D0096c179\""
-              ]
+              "removed": ["\"0xAA4b3a9515c921996Abe7930bF75Eff7466a4457\""],
+              "added": ["\"0x934Dd4C63E285551CEceF8459103554D0096c179\""]
             },
             {
               "key": "values.verifiers.1",
-              "removed": [
-                "\"0x1111111111111111111111111111111111111111\""
-              ],
-              "added": [
-                "\"0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4\""
-              ]
+              "removed": ["\"0x1111111111111111111111111111111111111111\""],
+              "added": ["\"0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4\""]
             },
             {
               "key": "values.verifiers.0",
-              "removed": [
-                "\"0xfB0C26A89833762b65098dD66b6Ae04b34D153be\""
-              ],
-              "added": [
-                "\"0x1111111111111111111111111111111111111111\""
-              ]
+              "removed": ["\"0xfB0C26A89833762b65098dD66b6Ae04b34D153be\""],
+              "added": ["\"0x1111111111111111111111111111111111111111\""]
             },
             {
               "key": "values.GENESIS_SHNARF",
@@ -2611,21 +2081,13 @@
           "fields": [
             {
               "key": "values.verifiers.7",
-              "removed": [
-                "\"0x2eDEa64BB8b45Fd87c05dC89286f1a60F4f4BEE0\""
-              ],
-              "added": [
-                "\"0x1111111111111111111111111111111111111111\""
-              ]
+              "removed": ["\"0x2eDEa64BB8b45Fd87c05dC89286f1a60F4f4BEE0\""],
+              "added": ["\"0x1111111111111111111111111111111111111111\""]
             },
             {
               "key": "values.verifiers.6",
-              "removed": [
-                "\"0x6312E56c17e1011dD0821558034a77BB60D06e1B\""
-              ],
-              "added": [
-                "\"0x1111111111111111111111111111111111111111\""
-              ]
+              "removed": ["\"0x6312E56c17e1011dD0821558034a77BB60D06e1B\""],
+              "added": ["\"0x1111111111111111111111111111111111111111\""]
             }
           ]
         }
@@ -2640,18 +2102,12 @@
           "fields": [
             {
               "key": "upgradeability.implementation",
-              "removed": [
-                "\"0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3\""
-              ],
-              "added": [
-                "\"0xAA4b3a9515c921996Abe7930bF75Eff7466a4457\""
-              ]
+              "removed": ["\"0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3\""],
+              "added": ["\"0xAA4b3a9515c921996Abe7930bF75Eff7466a4457\""]
             },
             {
               "key": "values.accessControl.OPERATOR_ROLE.members[1]",
-              "added": [
-                "\"0xa9268341831eFa4937537bc3e9EB36DbecE83C7e\""
-              ]
+              "added": ["\"0xa9268341831eFa4937537bc3e9EB36DbecE83C7e\""]
             },
             {
               "key": "values.accessControl.VERIFIER_SETTER_ROLE",
@@ -2664,63 +2120,45 @@
               "removed": [
                 "\"0x06193bb948d6b7a6fcbe51c193ccf2183bb5d979b6ae5d3a6971b8851461d3b0\""
               ],
-              "added": [
-                "1"
-              ]
+              "added": ["1"]
             },
             {
               "key": "values.L1_L2_PAUSE_TYPE",
               "removed": [
                 "\"0x9a80e24e463f00a8763c4dcec6a92d07d33272fa5db895d8589be70dccb002df\""
               ],
-              "added": [
-                "2"
-              ]
+              "added": ["2"]
             },
             {
               "key": "values.L2_L1_PAUSE_TYPE",
               "removed": [
                 "\"0x21ea2f4fee4bcb623de15ac222ea5c1464307d884f23394b78ddc07f9c9c7cd8\""
               ],
-              "added": [
-                "3"
-              ]
+              "added": ["3"]
             },
             {
               "key": "values.PROVING_SYSTEM_PAUSE_TYPE",
               "removed": [
                 "\"0x3a56b1bd788a764cbd923badb6d0719f21f520455285bf6877e636d08708878d\""
               ],
-              "added": [
-                "4"
-              ]
+              "added": ["4"]
             },
             {
               "key": "values.verifiers.0",
-              "removed": [
-                "\"0x1111111111111111111111111111111111111111\""
-              ],
-              "added": [
-                "\"0xfB0C26A89833762b65098dD66b6Ae04b34D153be\""
-              ]
+              "removed": ["\"0x1111111111111111111111111111111111111111\""],
+              "added": ["\"0xfB0C26A89833762b65098dD66b6Ae04b34D153be\""]
             },
             {
               "key": "values.provenCompressedBlocksWithoutProof",
-              "added": [
-                "[2242752]"
-              ]
+              "added": ["[2242752]"]
             },
             {
               "key": "values.provenNonCompressedBlocksWithoutProof",
-              "added": [
-                "[]"
-              ]
+              "added": ["[]"]
             },
             {
               "key": "values.systemMigrationBlock",
-              "added": [
-                "19219000"
-              ]
+              "added": ["19219000"]
             },
             {
               "key": "values.VERIFIER_SETTER_ROLE",
@@ -2762,9 +2200,7 @@
           "fields": [
             {
               "key": "upgradeability.modules[0]",
-              "added": [
-                "\"0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8\""
-              ]
+              "added": ["\"0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8\""]
             },
             {
               "key": "values.roles.roles.1",
@@ -2785,9 +2221,7 @@
           "fields": [
             {
               "key": "upgradeability.modules[0]",
-              "added": [
-                "\"0xF24f1DC519d88246809B660eb56D94048575d083\""
-              ]
+              "added": ["\"0xF24f1DC519d88246809B660eb56D94048575d083\""]
             }
           ]
         },
@@ -2796,12 +2230,8 @@
           "fields": [
             {
               "key": "values.limitInWei",
-              "removed": [
-                "\"6250000000000000000000\""
-              ],
-              "added": [
-                "\"18750000000000000000000\""
-              ]
+              "removed": ["\"6250000000000000000000\""],
+              "added": ["\"18750000000000000000000\""]
             }
           ]
         },
@@ -2836,66 +2266,42 @@
           "fields": [
             {
               "key": "values.verifiers[9]",
-              "added": [
-                "\"0x0000000000000000000000000000000000000000\""
-              ]
+              "added": ["\"0x0000000000000000000000000000000000000000\""]
             },
             {
               "key": "values.verifiers[8]",
-              "added": [
-                "\"0x0000000000000000000000000000000000000000\""
-              ]
+              "added": ["\"0x0000000000000000000000000000000000000000\""]
             },
             {
               "key": "values.verifiers[7]",
-              "added": [
-                "\"0x2eDEa64BB8b45Fd87c05dC89286f1a60F4f4BEE0\""
-              ]
+              "added": ["\"0x2eDEa64BB8b45Fd87c05dC89286f1a60F4f4BEE0\""]
             },
             {
               "key": "values.verifiers[6]",
-              "added": [
-                "\"0x6312E56c17e1011dD0821558034a77BB60D06e1B\""
-              ]
+              "added": ["\"0x6312E56c17e1011dD0821558034a77BB60D06e1B\""]
             },
             {
               "key": "values.verifiers[5]",
-              "added": [
-                "\"0x0000000000000000000000000000000000000000\""
-              ]
+              "added": ["\"0x0000000000000000000000000000000000000000\""]
             },
             {
               "key": "values.verifiers[4]",
-              "added": [
-                "\"0x1111111111111111111111111111111111111111\""
-              ]
+              "added": ["\"0x1111111111111111111111111111111111111111\""]
             },
             {
               "key": "values.verifiers.3",
-              "removed": [
-                "\"0xC84832f69bFFbC1A94E44a157A342766E959ED27\""
-              ],
-              "added": [
-                "\"0x1111111111111111111111111111111111111111\""
-              ]
+              "removed": ["\"0xC84832f69bFFbC1A94E44a157A342766E959ED27\""],
+              "added": ["\"0x1111111111111111111111111111111111111111\""]
             },
             {
               "key": "values.verifiers.1",
-              "removed": [
-                "\"0xa4F1155202D36348097b7488b0D2365fA91f8CaC\""
-              ],
-              "added": [
-                "\"0x1111111111111111111111111111111111111111\""
-              ]
+              "removed": ["\"0xa4F1155202D36348097b7488b0D2365fA91f8CaC\""],
+              "added": ["\"0x1111111111111111111111111111111111111111\""]
             },
             {
               "key": "values.verifiers.0",
-              "removed": [
-                "\"0xc01E6807DB9Fb9cC75E9Fe622ba8e7f3eB9f2B32\""
-              ],
-              "added": [
-                "\"0x1111111111111111111111111111111111111111\""
-              ]
+              "removed": ["\"0xc01E6807DB9Fb9cC75E9Fe622ba8e7f3eB9f2B32\""],
+              "added": ["\"0x1111111111111111111111111111111111111111\""]
             }
           ]
         },

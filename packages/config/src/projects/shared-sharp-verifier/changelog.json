@@ -10,12 +10,8 @@
           "fields": [
             {
               "key": "values.referralHasExpired",
-              "removed": [
-                "false"
-              ],
-              "added": [
-                "true"
-              ]
+              "removed": ["false"],
+              "added": ["true"]
             }
           ]
         }
@@ -36,30 +32,18 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "14"
-              ],
-              "added": [
-                "15"
-              ]
+              "removed": ["14"],
+              "added": ["15"]
             },
             {
               "key": "values.callProxyImplementation",
-              "removed": [
-                "\"eth:0xE67515a751291445B85b2F176c1eCdf08e86b406\""
-              ],
-              "added": [
-                "\"eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6\""
-              ]
+              "removed": ["\"eth:0xE67515a751291445B85b2F176c1eCdf08e86b406\""],
+              "added": ["\"eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6\""]
             },
             {
               "key": "values.StarkWareProxy_callImplementation",
-              "removed": [
-                "\"eth:0xE67515a751291445B85b2F176c1eCdf08e86b406\""
-              ],
-              "added": [
-                "\"eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6\""
-              ]
+              "removed": ["\"eth:0xE67515a751291445B85b2F176c1eCdf08e86b406\""],
+              "added": ["\"eth:0x4956bda1d23F75B988644329c5B06BD1494a72b6\""]
             }
           ]
         },
@@ -78,21 +62,15 @@
           "fields": [
             {
               "key": "values.customImplOperators.8",
-              "added": [
-                "\"eth:0x6eEDe907dF99F7FBCd26e71e5b157BBB6483Fc8b\""
-              ]
+              "added": ["\"eth:0x6eEDe907dF99F7FBCd26e71e5b157BBB6483Fc8b\""]
             },
             {
               "key": "values.customImplOperators.9",
-              "added": [
-                "\"eth:0xA410aEA6d7ad518165c214a42730A19fB3828170\""
-              ]
+              "added": ["\"eth:0xA410aEA6d7ad518165c214a42730A19fB3828170\""]
             },
             {
               "key": "values.customProxyImplementations.4",
-              "added": [
-                "\"eth:0xE67515a751291445B85b2F176c1eCdf08e86b406\""
-              ]
+              "added": ["\"eth:0xE67515a751291445B85b2F176c1eCdf08e86b406\""]
             }
           ]
         }
@@ -113,30 +91,18 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "13"
-              ],
-              "added": [
-                "14"
-              ]
+              "removed": ["13"],
+              "added": ["14"]
             },
             {
               "key": "values.callProxyImplementation",
-              "removed": [
-                "\"eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7\""
-              ],
-              "added": [
-                "\"eth:0xE67515a751291445B85b2F176c1eCdf08e86b406\""
-              ]
+              "removed": ["\"eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7\""],
+              "added": ["\"eth:0xE67515a751291445B85b2F176c1eCdf08e86b406\""]
             },
             {
               "key": "values.StarkWareProxy_callImplementation",
-              "removed": [
-                "\"eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7\""
-              ],
-              "added": [
-                "\"eth:0xE67515a751291445B85b2F176c1eCdf08e86b406\""
-              ]
+              "removed": ["\"eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7\""],
+              "added": ["\"eth:0xE67515a751291445B85b2F176c1eCdf08e86b406\""]
             }
           ]
         },
@@ -155,12 +121,8 @@
           "fields": [
             {
               "key": "values.hasRegisteredFact",
-              "removed": [
-                "false"
-              ],
-              "added": [
-                "true"
-              ]
+              "removed": ["false"],
+              "added": ["true"]
             }
           ]
         }
@@ -181,30 +143,18 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "12"
-              ],
-              "added": [
-                "13"
-              ]
+              "removed": ["12"],
+              "added": ["13"]
             },
             {
               "key": "values.callProxyImplementation",
-              "removed": [
-                "\"eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe\""
-              ],
-              "added": [
-                "\"eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7\""
-              ]
+              "removed": ["\"eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe\""],
+              "added": ["\"eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7\""]
             },
             {
               "key": "values.StarkWareProxy_callImplementation",
-              "removed": [
-                "\"eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe\""
-              ],
-              "added": [
-                "\"eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7\""
-              ]
+              "removed": ["\"eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe\""],
+              "added": ["\"eth:0x7Da1225C752ab37E610a242D9D8a0548262E3fF7\""]
             }
           ]
         },
@@ -223,21 +173,15 @@
           "fields": [
             {
               "key": "values.customImplOperators.6",
-              "added": [
-                "\"eth:0x93b1F80BaDc57AE16Ef21d25EEc31A3785e7c426\""
-              ]
+              "added": ["\"eth:0x93b1F80BaDc57AE16Ef21d25EEc31A3785e7c426\""]
             },
             {
               "key": "values.customImplOperators.7",
-              "added": [
-                "\"eth:0x8Cdcf93be2508cb8b348E539EC8EEF2434BFB2DE\""
-              ]
+              "added": ["\"eth:0x8Cdcf93be2508cb8b348E539EC8EEF2434BFB2DE\""]
             },
             {
               "key": "values.customProxyImplementations.3",
-              "added": [
-                "\"eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe\""
-              ]
+              "added": ["\"eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe\""]
             }
           ]
         }
@@ -258,30 +202,18 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "11"
-              ],
-              "added": [
-                "12"
-              ]
+              "removed": ["11"],
+              "added": ["12"]
             },
             {
               "key": "values.callProxyImplementation",
-              "removed": [
-                "\"eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066\""
-              ],
-              "added": [
-                "\"eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe\""
-              ]
+              "removed": ["\"eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066\""],
+              "added": ["\"eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe\""]
             },
             {
               "key": "values.StarkWareProxy_callImplementation",
-              "removed": [
-                "\"eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066\""
-              ],
-              "added": [
-                "\"eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe\""
-              ]
+              "removed": ["\"eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066\""],
+              "added": ["\"eth:0x5C1Ce45534A9c5f7F3E6683Cd79a8ad57EE3a9fe\""]
             }
           ]
         },
@@ -312,21 +244,15 @@
           "fields": [
             {
               "key": "values.customImplOperators.4",
-              "added": [
-                "\"eth:0xb641a2035c7340CDff40f069454EB0B8Bbab6a3C\""
-              ]
+              "added": ["\"eth:0xb641a2035c7340CDff40f069454EB0B8Bbab6a3C\""]
             },
             {
               "key": "values.customImplOperators.5",
-              "added": [
-                "\"eth:0x3F3380d9e31D53264dEA568E654b6e9D9EB3895A\""
-              ]
+              "added": ["\"eth:0x3F3380d9e31D53264dEA568E654b6e9D9EB3895A\""]
             },
             {
               "key": "values.customProxyImplementations.2",
-              "added": [
-                "\"eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066\""
-              ]
+              "added": ["\"eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066\""]
             }
           ]
         }
@@ -355,48 +281,30 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "10"
-              ],
-              "added": [
-                "11"
-              ]
+              "removed": ["10"],
+              "added": ["11"]
             },
             {
               "key": "values.callProxyImplementation",
-              "removed": [
-                "\"eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934\""
-              ],
-              "added": [
-                "\"eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066\""
-              ]
+              "removed": ["\"eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934\""],
+              "added": ["\"eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066\""]
             },
             {
               "key": "values.customImplOperators.2",
-              "added": [
-                "\"eth:0x8B0A18cc6472Bf429d058948AF78d85CB25cd284\""
-              ]
+              "added": ["\"eth:0x8B0A18cc6472Bf429d058948AF78d85CB25cd284\""]
             },
             {
               "key": "values.customImplOperators.3",
-              "added": [
-                "\"eth:0xDBf0eDAebbC97931c595f4aC883d7C7fdedc7526\""
-              ]
+              "added": ["\"eth:0xDBf0eDAebbC97931c595f4aC883d7C7fdedc7526\""]
             },
             {
               "key": "values.customProxyImplementations.1",
-              "added": [
-                "\"eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934\""
-              ]
+              "added": ["\"eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934\""]
             },
             {
               "key": "values.StarkWareProxy_callImplementation",
-              "removed": [
-                "\"eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934\""
-              ],
-              "added": [
-                "\"eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066\""
-              ]
+              "removed": ["\"eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934\""],
+              "added": ["\"eth:0xFE5e5b24FfE981C9faA0d4F36Ce346c3B22B0066\""]
             }
           ]
         },
@@ -474,12 +382,8 @@
           "fields": [
             {
               "key": "values.$implementation",
-              "removed": [
-                "\"eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458\""
-              ],
-              "added": [
-                "\"eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb\""
-              ]
+              "removed": ["\"eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458\""],
+              "added": ["\"eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb\""]
             },
             {
               "key": "values.$pastUpgrades.9",
@@ -489,12 +393,8 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "9"
-              ],
-              "added": [
-                "10"
-              ]
+              "removed": ["9"],
+              "added": ["10"]
             },
             {
               "key": "values.accessControl.GOVERNANCE_ADMIN",
@@ -516,21 +416,15 @@
             },
             {
               "key": "values.accessControl.OPERATOR",
-              "added": [
-                "{\"adminRole\":\"APP_ROLE_ADMIN\",\"members\":[]}"
-              ]
+              "added": ["{\"adminRole\":\"APP_ROLE_ADMIN\",\"members\":[]}"]
             },
             {
               "key": "values.accessControl.TOKEN_ADMIN",
-              "added": [
-                "{\"adminRole\":\"APP_ROLE_ADMIN\",\"members\":[]}"
-              ]
+              "added": ["{\"adminRole\":\"APP_ROLE_ADMIN\",\"members\":[]}"]
             },
             {
               "key": "values.accessControl.UPGRADE_GOVERNOR",
-              "added": [
-                "{\"adminRole\":\"GOVERNANCE_ADMIN\",\"members\":[]}"
-              ]
+              "added": ["{\"adminRole\":\"GOVERNANCE_ADMIN\",\"members\":[]}"]
             },
             {
               "key": "values.accessControl.SECURITY_ADMIN",
@@ -540,48 +434,30 @@
             },
             {
               "key": "values.accessControl.SECURITY_AGENT",
-              "added": [
-                "{\"adminRole\":\"SECURITY_ADMIN\",\"members\":[]}"
-              ]
+              "added": ["{\"adminRole\":\"SECURITY_ADMIN\",\"members\":[]}"]
             },
             {
               "key": "values.CALL_PROXY_VERSION",
-              "removed": [
-                "\"3.1.0\""
-              ]
+              "removed": ["\"3.1.0\""]
             },
             {
               "key": "values.callProxyImplementation",
-              "removed": [
-                "\"eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942\""
-              ],
-              "added": [
-                "\"eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934\""
-              ]
+              "removed": ["\"eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942\""],
+              "added": ["\"eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934\""]
             },
             {
               "key": "values.implementation",
-              "removed": [
-                "\"eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458\""
-              ],
-              "added": [
-                "\"eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb\""
-              ]
+              "removed": ["\"eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458\""],
+              "added": ["\"eth:0x3597c5CBCbCB30079a0bD2A68cDE5f98272f9feb\""]
             },
             {
               "key": "values.StarkWareProxy_callImplementation",
-              "removed": [
-                "\"eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942\""
-              ],
-              "added": [
-                "\"eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934\""
-              ]
+              "removed": ["\"eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942\""],
+              "added": ["\"eth:0x13e120F6c8E747983F7aaF0f7731796bfcb0D934\""]
             },
             {
               "key": "values.appGovernorAC",
-              "added": [
-                "[\"eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4\"]"
-              ]
+              "added": ["[\"eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4\"]"]
             },
             {
               "key": "values.customImplOperators",
@@ -591,9 +467,7 @@
             },
             {
               "key": "values.customProxyImplementations",
-              "added": [
-                "[\"eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942\"]"
-              ]
+              "added": ["[\"eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942\"]"]
             },
             {
               "key": "values.ENABLE_WINDOW_DURATION_SLOT",
@@ -603,9 +477,7 @@
             },
             {
               "key": "values.governanceAdminAC",
-              "added": [
-                "[\"eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4\"]"
-              ]
+              "added": ["[\"eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4\"]"]
             }
           ]
         },
@@ -906,12 +778,8 @@
             },
             {
               "key": "values.$pastUpgrades.7.1",
-              "removed": [
-                "\"2022-05-02T16:49:21.000Z\""
-              ],
-              "added": [
-                "\"2022-08-07T10:50:09.000Z\""
-              ]
+              "removed": ["\"2022-05-02T16:49:21.000Z\""],
+              "added": ["\"2022-08-07T10:50:09.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.6.2",
@@ -924,12 +792,8 @@
             },
             {
               "key": "values.$pastUpgrades.6.1",
-              "removed": [
-                "\"2022-08-07T10:50:09.000Z\""
-              ],
-              "added": [
-                "\"2024-07-28T20:08:35.000Z\""
-              ]
+              "removed": ["\"2022-08-07T10:50:09.000Z\""],
+              "added": ["\"2024-07-28T20:08:35.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.5.2",
@@ -942,12 +806,8 @@
             },
             {
               "key": "values.$pastUpgrades.5.1",
-              "removed": [
-                "\"2024-07-28T20:08:35.000Z\""
-              ],
-              "added": [
-                "\"2024-02-26T09:25:23.000Z\""
-              ]
+              "removed": ["\"2024-07-28T20:08:35.000Z\""],
+              "added": ["\"2024-02-26T09:25:23.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.3.2",
@@ -960,12 +820,8 @@
             },
             {
               "key": "values.$pastUpgrades.3.1",
-              "removed": [
-                "\"2024-02-26T09:25:23.000Z\""
-              ],
-              "added": [
-                "\"2021-10-24T13:06:25.000Z\""
-              ]
+              "removed": ["\"2024-02-26T09:25:23.000Z\""],
+              "added": ["\"2021-10-24T13:06:25.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.2.2",
@@ -978,12 +834,8 @@
             },
             {
               "key": "values.$pastUpgrades.2.1",
-              "removed": [
-                "\"2021-10-24T13:06:25.000Z\""
-              ],
-              "added": [
-                "\"2023-03-06T12:34:23.000Z\""
-              ]
+              "removed": ["\"2021-10-24T13:06:25.000Z\""],
+              "added": ["\"2023-03-06T12:34:23.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.1.2",
@@ -996,66 +848,42 @@
             },
             {
               "key": "values.$pastUpgrades.1.1",
-              "removed": [
-                "\"2023-03-06T12:34:23.000Z\""
-              ],
-              "added": [
-                "\"2024-07-28T10:07:47.000Z\""
-              ]
+              "removed": ["\"2023-03-06T12:34:23.000Z\""],
+              "added": ["\"2024-07-28T10:07:47.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.0.2",
               "removed": [
                 "\"0x7c71592ea4c455371365d843f1a21bbf647aad7d6fae12f7187650ce24805f00\""
               ],
-              "added": [
-                "\"2025-05-12T16:09:35.000Z\""
-              ]
+              "added": ["\"2025-05-12T16:09:35.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.0.1",
-              "removed": [
-                "\"2024-07-28T10:07:47.000Z\""
-              ],
+              "removed": ["\"2024-07-28T10:07:47.000Z\""],
               "added": [
                 "\"0x0764cd09cc5c9a96b151dd222bf14b9c33111c80bdddf27721a6406f4c0e1f3f\""
               ]
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "8"
-              ],
-              "added": [
-                "9"
-              ]
+              "removed": ["8"],
+              "added": ["9"]
             },
             {
               "key": "values.getUpgradeActivationDelay",
-              "removed": [
-                "0"
-              ],
-              "added": [
-                "691200"
-              ]
+              "removed": ["0"],
+              "added": ["691200"]
             },
             {
               "key": "values.StarkWareProxy_upgradeDelay",
-              "removed": [
-                "0"
-              ],
-              "added": [
-                "691200"
-              ]
+              "removed": ["0"],
+              "added": ["691200"]
             },
             {
               "key": "values.upgradeActivationDelayFmt",
-              "removed": [
-                "\"0s\""
-              ],
-              "added": [
-                "\"8d\""
-              ]
+              "removed": ["\"0s\""],
+              "added": ["\"8d\""]
             }
           ]
         }
@@ -1073,9 +901,7 @@
               "removed": [
                 "[\"0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6\",\"0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4\"]"
               ],
-              "added": [
-                "\"0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4\""
-              ]
+              "added": ["\"0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4\""]
             }
           ]
         }
@@ -1090,45 +916,27 @@
           "fields": [
             {
               "key": "values.$members.3",
-              "added": [
-                "\"0x955B978F3ee7818dA71fA25c676062E6BC462Fec\""
-              ]
+              "added": ["\"0x955B978F3ee7818dA71fA25c676062E6BC462Fec\""]
             },
             {
               "key": "values.$members.2",
-              "removed": [
-                "\"0x955B978F3ee7818dA71fA25c676062E6BC462Fec\""
-              ],
-              "added": [
-                "\"0xebc8416179fE90854fe8B3f774801165572cfD7F\""
-              ]
+              "removed": ["\"0x955B978F3ee7818dA71fA25c676062E6BC462Fec\""],
+              "added": ["\"0xebc8416179fE90854fe8B3f774801165572cfD7F\""]
             },
             {
               "key": "values.$members.1",
-              "removed": [
-                "\"0xebc8416179fE90854fe8B3f774801165572cfD7F\""
-              ],
-              "added": [
-                "\"0x59232aC80E6d403b6381393e52f4665ECA328558\""
-              ]
+              "removed": ["\"0xebc8416179fE90854fe8B3f774801165572cfD7F\""],
+              "added": ["\"0x59232aC80E6d403b6381393e52f4665ECA328558\""]
             },
             {
               "key": "values.$members.0",
-              "removed": [
-                "\"0x59232aC80E6d403b6381393e52f4665ECA328558\""
-              ],
-              "added": [
-                "\"0x0405107a60391Eb51821be373ff978115Ee58488\""
-              ]
+              "removed": ["\"0x59232aC80E6d403b6381393e52f4665ECA328558\""],
+              "added": ["\"0x0405107a60391Eb51821be373ff978115Ee58488\""]
             },
             {
               "key": "values.multisigThreshold",
-              "removed": [
-                "\"2 of 3 (67%)\""
-              ],
-              "added": [
-                "\"2 of 4 (50%)\""
-              ]
+              "removed": ["\"2 of 3 (67%)\""],
+              "added": ["\"2 of 4 (50%)\""]
             }
           ]
         }
@@ -1143,21 +951,13 @@
           "fields": [
             {
               "key": "values.callProxyImplementation",
-              "removed": [
-                "\"0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF\""
-              ],
-              "added": [
-                "\"0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942\""
-              ]
+              "removed": ["\"0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF\""],
+              "added": ["\"0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942\""]
             },
             {
               "key": "values.StarkWareProxy_callImplementation",
-              "removed": [
-                "\"0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF\""
-              ],
-              "added": [
-                "\"0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942\""
-              ]
+              "removed": ["\"0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF\""],
+              "added": ["\"0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942\""]
             }
           ]
         },
@@ -1347,39 +1147,23 @@
           "fields": [
             {
               "key": "upgradeability.callImplementation",
-              "removed": [
-                "\"0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6\""
-              ],
-              "added": [
-                "\"0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF\""
-              ]
+              "removed": ["\"0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6\""],
+              "added": ["\"0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF\""]
             },
             {
               "key": "upgradeability.upgradeDelay",
-              "removed": [
-                "2419200"
-              ],
-              "added": [
-                "0"
-              ]
+              "removed": ["2419200"],
+              "added": ["0"]
             },
             {
               "key": "values.callProxyImplementation",
-              "removed": [
-                "\"0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6\""
-              ],
-              "added": [
-                "\"0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF\""
-              ]
+              "removed": ["\"0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6\""],
+              "added": ["\"0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF\""]
             },
             {
               "key": "values.getUpgradeActivationDelay",
-              "removed": [
-                "2419200"
-              ],
-              "added": [
-                "0"
-              ]
+              "removed": ["2419200"],
+              "added": ["0"]
             }
           ]
         },

@@ -16,39 +16,23 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "28"
-              ],
-              "added": [
-                "29"
-              ]
+              "removed": ["28"],
+              "added": ["29"]
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "128849018880"
-              ],
-              "added": [
-                "128849018881"
-              ]
+              "removed": ["128849018880"],
+              "added": ["128849018881"]
             },
             {
               "key": "values.getSemverProtocolVersion.2",
-              "removed": [
-                "0"
-              ],
-              "added": [
-                "1"
-              ]
+              "removed": ["0"],
+              "added": ["1"]
             },
             {
               "key": "values.getVerifier",
-              "removed": [
-                "\"eth:0xC47D355402E78b886B628914B3b129F236fEe3cc\""
-              ],
-              "added": [
-                "\"eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081\""
-              ]
+              "removed": ["\"eth:0xC47D355402E78b886B628914B3b129F236fEe3cc\""],
+              "added": ["\"eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081\""]
             }
           ]
         },
@@ -93,48 +77,28 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "27"
-              ],
-              "added": [
-                "28"
-              ]
+              "removed": ["27"],
+              "added": ["28"]
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "124554051589"
-              ],
-              "added": [
-                "128849018880"
-              ]
+              "removed": ["124554051589"],
+              "added": ["128849018880"]
             },
             {
               "key": "values.getSemverProtocolVersion.1",
-              "removed": [
-                "29"
-              ],
-              "added": [
-                "30"
-              ]
+              "removed": ["29"],
+              "added": ["30"]
             },
             {
               "key": "values.getSemverProtocolVersion.2",
-              "removed": [
-                "5"
-              ],
-              "added": [
-                "0"
-              ]
+              "removed": ["5"],
+              "added": ["0"]
             },
             {
               "key": "values.getVerifier",
-              "removed": [
-                "\"eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e\""
-              ],
-              "added": [
-                "\"eth:0xC47D355402E78b886B628914B3b129F236fEe3cc\""
-              ]
+              "removed": ["\"eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e\""],
+              "added": ["\"eth:0xC47D355402E78b886B628914B3b129F236fEe3cc\""]
             }
           ]
         },
@@ -179,39 +143,23 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "26"
-              ],
-              "added": [
-                "27"
-              ]
+              "removed": ["26"],
+              "added": ["27"]
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "124554051588"
-              ],
-              "added": [
-                "124554051589"
-              ]
+              "removed": ["124554051588"],
+              "added": ["124554051589"]
             },
             {
               "key": "values.getSemverProtocolVersion.2",
-              "removed": [
-                "4"
-              ],
-              "added": [
-                "5"
-              ]
+              "removed": ["4"],
+              "added": ["5"]
             },
             {
               "key": "values.getVerifier",
-              "removed": [
-                "\"eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45\""
-              ],
-              "added": [
-                "\"eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e\""
-              ]
+              "removed": ["\"eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45\""],
+              "added": ["\"eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e\""]
             }
           ]
         },
@@ -250,27 +198,19 @@
           "fields": [
             {
               "key": "values.$members.3",
-              "removed": [
-                "\"eth:0xd3cA2aDe062d453F410b5C5cfA1B2b89879AbE1b\""
-              ]
+              "removed": ["\"eth:0xd3cA2aDe062d453F410b5C5cfA1B2b89879AbE1b\""]
             },
             {
               "key": "values.$members.7",
-              "added": [
-                "\"eth:0x2400D5d69043d9BE4fF32c6F8F28047d605ad976\""
-              ]
+              "added": ["\"eth:0x2400D5d69043d9BE4fF32c6F8F28047d605ad976\""]
             },
             {
               "key": "values.multisigMembers.3",
-              "removed": [
-                "\"eth:0xd3cA2aDe062d453F410b5C5cfA1B2b89879AbE1b\""
-              ]
+              "removed": ["\"eth:0xd3cA2aDe062d453F410b5C5cfA1B2b89879AbE1b\""]
             },
             {
               "key": "values.multisigMembers.7",
-              "added": [
-                "\"eth:0x2400D5d69043d9BE4fF32c6F8F28047d605ad976\""
-              ]
+              "added": ["\"eth:0x2400D5d69043d9BE4fF32c6F8F28047d605ad976\""]
             }
           ]
         }
@@ -285,51 +225,35 @@
           "fields": [
             {
               "key": "values.$members.2",
-              "removed": [
-                "\"eth:0x8ffC957cba878cDdF446574e88Cf7e1004fc953F\""
-              ]
+              "removed": ["\"eth:0x8ffC957cba878cDdF446574e88Cf7e1004fc953F\""]
             },
             {
               "key": "values.$members.3",
-              "removed": [
-                "\"eth:0x548409daf1D6766929F3927D1Ca1df0A13129a6b\""
-              ]
+              "removed": ["\"eth:0x548409daf1D6766929F3927D1Ca1df0A13129a6b\""]
             },
             {
               "key": "values.$members.6",
-              "added": [
-                "\"eth:0xf6f32866b8De74683563fCCd07dE7e23431d0626\""
-              ]
+              "added": ["\"eth:0xf6f32866b8De74683563fCCd07dE7e23431d0626\""]
             },
             {
               "key": "values.$members.7",
-              "added": [
-                "\"eth:0x809bc2e1519641B482730330922950a4972a2227\""
-              ]
+              "added": ["\"eth:0x809bc2e1519641B482730330922950a4972a2227\""]
             },
             {
               "key": "values.multisigMembers.2",
-              "removed": [
-                "\"eth:0x8ffC957cba878cDdF446574e88Cf7e1004fc953F\""
-              ]
+              "removed": ["\"eth:0x8ffC957cba878cDdF446574e88Cf7e1004fc953F\""]
             },
             {
               "key": "values.multisigMembers.3",
-              "removed": [
-                "\"eth:0x548409daf1D6766929F3927D1Ca1df0A13129a6b\""
-              ]
+              "removed": ["\"eth:0x548409daf1D6766929F3927D1Ca1df0A13129a6b\""]
             },
             {
               "key": "values.multisigMembers.6",
-              "added": [
-                "\"eth:0xf6f32866b8De74683563fCCd07dE7e23431d0626\""
-              ]
+              "added": ["\"eth:0xf6f32866b8De74683563fCCd07dE7e23431d0626\""]
             },
             {
               "key": "values.multisigMembers.7",
-              "added": [
-                "\"eth:0x809bc2e1519641B482730330922950a4972a2227\""
-              ]
+              "added": ["\"eth:0x809bc2e1519641B482730330922950a4972a2227\""]
             }
           ]
         }
@@ -344,21 +268,13 @@
           "fields": [
             {
               "key": "values.executor.eth:0x32400084C286CF3E17e7B677ea9583e60a000324.0",
-              "removed": [
-                "\"eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd\""
-              ],
-              "added": [
-                "\"eth:0xa90c7CDB553332948E2943431436117eCFb1e781\""
-              ]
+              "removed": ["\"eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd\""],
+              "added": ["\"eth:0xa90c7CDB553332948E2943431436117eCFb1e781\""]
             },
             {
               "key": "values.executor.eth:0x32400084C286CF3E17e7B677ea9583e60a000324.1",
-              "removed": [
-                "\"eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1\""
-              ],
-              "added": [
-                "\"eth:0x28942E6870612893B96F77De0F485fcE3497AAA8\""
-              ]
+              "removed": ["\"eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1\""],
+              "added": ["\"eth:0x28942E6870612893B96F77De0F485fcE3497AAA8\""]
             }
           ]
         }
@@ -373,63 +289,43 @@
           "fields": [
             {
               "key": "values.validatorVTL.PRECOMMITTER_ROLE.members.0",
-              "removed": [
-                "\"eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd\""
-              ]
+              "removed": ["\"eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd\""]
             },
             {
               "key": "values.validatorVTL.PRECOMMITTER_ROLE.members.1",
-              "removed": [
-                "\"eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1\""
-              ]
+              "removed": ["\"eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1\""]
             },
             {
               "key": "values.validatorVTL.COMMITTER_ROLE.members.0",
-              "removed": [
-                "\"eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd\""
-              ]
+              "removed": ["\"eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd\""]
             },
             {
               "key": "values.validatorVTL.COMMITTER_ROLE.members.1",
-              "removed": [
-                "\"eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1\""
-              ]
+              "removed": ["\"eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1\""]
             },
             {
               "key": "values.validatorVTL.REVERTER_ROLE.members.0",
-              "removed": [
-                "\"eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd\""
-              ]
+              "removed": ["\"eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd\""]
             },
             {
               "key": "values.validatorVTL.REVERTER_ROLE.members.1",
-              "removed": [
-                "\"eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1\""
-              ]
+              "removed": ["\"eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1\""]
             },
             {
               "key": "values.validatorVTL.PROVER_ROLE.members.0",
-              "removed": [
-                "\"eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd\""
-              ]
+              "removed": ["\"eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd\""]
             },
             {
               "key": "values.validatorVTL.PROVER_ROLE.members.1",
-              "removed": [
-                "\"eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1\""
-              ]
+              "removed": ["\"eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1\""]
             },
             {
               "key": "values.validatorVTL.EXECUTOR_ROLE.members.0",
-              "removed": [
-                "\"eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd\""
-              ]
+              "removed": ["\"eth:0x882A6C2ecbAbfFc40686D599a9375ad3b35427Fd\""]
             },
             {
               "key": "values.validatorVTL.EXECUTOR_ROLE.members.1",
-              "removed": [
-                "\"eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1\""
-              ]
+              "removed": ["\"eth:0xc75cDcBEef3aE3365ABF0217815748586F9047F1\""]
             }
           ]
         },
@@ -444,21 +340,13 @@
           "fields": [
             {
               "key": "values.$threshold",
-              "removed": [
-                "0"
-              ],
-              "added": [
-                "3"
-              ]
+              "removed": ["0"],
+              "added": ["3"]
             },
             {
               "key": "values.threshold",
-              "removed": [
-                "0"
-              ],
-              "added": [
-                "3"
-              ]
+              "removed": ["0"],
+              "added": ["3"]
             }
           ]
         }
@@ -473,63 +361,43 @@
           "fields": [
             {
               "key": "values.validatorVTL.PRECOMMITTER_ROLE.members.0",
-              "removed": [
-                "\"eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7\""
-              ]
+              "removed": ["\"eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7\""]
             },
             {
               "key": "values.validatorVTL.PRECOMMITTER_ROLE.members.2",
-              "added": [
-                "\"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d\""
-              ]
+              "added": ["\"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d\""]
             },
             {
               "key": "values.validatorVTL.COMMITTER_ROLE.members.0",
-              "removed": [
-                "\"eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7\""
-              ]
+              "removed": ["\"eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7\""]
             },
             {
               "key": "values.validatorVTL.COMMITTER_ROLE.members.2",
-              "added": [
-                "\"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d\""
-              ]
+              "added": ["\"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d\""]
             },
             {
               "key": "values.validatorVTL.REVERTER_ROLE.members.0",
-              "removed": [
-                "\"eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7\""
-              ]
+              "removed": ["\"eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7\""]
             },
             {
               "key": "values.validatorVTL.REVERTER_ROLE.members.2",
-              "added": [
-                "\"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d\""
-              ]
+              "added": ["\"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d\""]
             },
             {
               "key": "values.validatorVTL.PROVER_ROLE.members.0",
-              "removed": [
-                "\"eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7\""
-              ]
+              "removed": ["\"eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7\""]
             },
             {
               "key": "values.validatorVTL.PROVER_ROLE.members.2",
-              "added": [
-                "\"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d\""
-              ]
+              "added": ["\"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d\""]
             },
             {
               "key": "values.validatorVTL.EXECUTOR_ROLE.members.0",
-              "removed": [
-                "\"eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7\""
-              ]
+              "removed": ["\"eth:0xE222D6354b49eaF8a7099fC4E7F9C0B4FE72d1E7\""]
             },
             {
               "key": "values.validatorVTL.EXECUTOR_ROLE.members.2",
-              "added": [
-                "\"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d\""
-              ]
+              "added": ["\"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d\""]
             }
           ]
         },
@@ -560,12 +428,8 @@
           "fields": [
             {
               "key": "values.$implementation",
-              "removed": [
-                "\"eth:0x9a810469F4a451Ebb7ef53672142053b4971587c\""
-              ],
-              "added": [
-                "\"eth:0x43a66B32c9AdcA1A59b273E69b61Da5197c21cCd\""
-              ]
+              "removed": ["\"eth:0x9a810469F4a451Ebb7ef53672142053b4971587c\""],
+              "added": ["\"eth:0x43a66B32c9AdcA1A59b273E69b61Da5197c21cCd\""]
             },
             {
               "key": "values.$pastUpgrades.1",
@@ -575,30 +439,18 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "1"
-              ],
-              "added": [
-                "2"
-              ]
+              "removed": ["1"],
+              "added": ["2"]
             },
             {
               "key": "values.isDepositsEnabled",
-              "removed": [
-                "false"
-              ],
-              "added": [
-                "true"
-              ]
+              "removed": ["false"],
+              "added": ["true"]
             },
             {
               "key": "values.proxy__getImplementation",
-              "removed": [
-                "\"eth:0x9a810469F4a451Ebb7ef53672142053b4971587c\""
-              ],
-              "added": [
-                "\"eth:0x43a66B32c9AdcA1A59b273E69b61Da5197c21cCd\""
-              ]
+              "removed": ["\"eth:0x9a810469F4a451Ebb7ef53672142053b4971587c\""],
+              "added": ["\"eth:0x43a66B32c9AdcA1A59b273E69b61Da5197c21cCd\""]
             }
           ]
         }
@@ -613,12 +465,8 @@
           "fields": [
             {
               "key": "values.isDepositsEnabled",
-              "removed": [
-                "true"
-              ],
-              "added": [
-                "false"
-              ]
+              "removed": ["true"],
+              "added": ["false"]
             }
           ]
         }
@@ -639,39 +487,23 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "25"
-              ],
-              "added": [
-                "26"
-              ]
+              "removed": ["25"],
+              "added": ["26"]
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "124554051587"
-              ],
-              "added": [
-                "124554051588"
-              ]
+              "removed": ["124554051587"],
+              "added": ["124554051588"]
             },
             {
               "key": "values.getSemverProtocolVersion.2",
-              "removed": [
-                "3"
-              ],
-              "added": [
-                "4"
-              ]
+              "removed": ["3"],
+              "added": ["4"]
             },
             {
               "key": "values.getVerifier",
-              "removed": [
-                "\"eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B\""
-              ],
-              "added": [
-                "\"eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45\""
-              ]
+              "removed": ["\"eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B\""],
+              "added": ["\"eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45\""]
             }
           ]
         },
@@ -721,12 +553,8 @@
           "fields": [
             {
               "key": "values.getSettlementLayer",
-              "removed": [
-                "\"eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9\""
-              ],
-              "added": [
-                "\"eth:0x0000000000000000000000000000000000000000\""
-              ]
+              "removed": ["\"eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9\""],
+              "added": ["\"eth:0x0000000000000000000000000000000000000000\""]
             }
           ]
         },
@@ -755,39 +583,23 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "24"
-              ],
-              "added": [
-                "25"
-              ]
+              "removed": ["24"],
+              "added": ["25"]
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "124554051586"
-              ],
-              "added": [
-                "124554051587"
-              ]
+              "removed": ["124554051586"],
+              "added": ["124554051587"]
             },
             {
               "key": "values.getSemverProtocolVersion.2",
-              "removed": [
-                "2"
-              ],
-              "added": [
-                "3"
-              ]
+              "removed": ["2"],
+              "added": ["3"]
             },
             {
               "key": "values.getVerifier",
-              "removed": [
-                "\"eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3\""
-              ],
-              "added": [
-                "\"eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B\""
-              ]
+              "removed": ["\"eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3\""],
+              "added": ["\"eth:0x4f06ef57618b16959879fC86E65eda0bd629A12B\""]
             }
           ]
         },
@@ -808,12 +620,8 @@
           "fields": [
             {
               "key": "values.getSemverProtocolVersion.2",
-              "removed": [
-                "2"
-              ],
-              "added": [
-                "3"
-              ]
+              "removed": ["2"],
+              "added": ["3"]
             },
             {
               "key": "values.initialCutHash",
@@ -826,12 +634,8 @@
             },
             {
               "key": "values.protocolVersion",
-              "removed": [
-                "124554051586"
-              ],
-              "added": [
-                "124554051587"
-              ]
+              "removed": ["124554051586"],
+              "added": ["124554051587"]
             },
             {
               "key": "values.storedBatchZero",
@@ -859,30 +663,18 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "3"
-              ],
-              "added": [
-                "4"
-              ]
+              "removed": ["3"],
+              "added": ["4"]
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "124554051586"
-              ],
-              "added": [
-                "124554051587"
-              ]
+              "removed": ["124554051586"],
+              "added": ["124554051587"]
             },
             {
               "key": "values.getSemverProtocolVersion.2",
-              "removed": [
-                "2"
-              ],
-              "added": [
-                "3"
-              ]
+              "removed": ["2"],
+              "added": ["3"]
             },
             {
               "key": "values.getVerifier",
@@ -934,39 +726,23 @@
           "fields": [
             {
               "key": "values.$implementation.0",
-              "removed": [
-                "\"eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC\""
-              ],
-              "added": [
-                "\"eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253\""
-              ]
+              "removed": ["\"eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC\""],
+              "added": ["\"eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253\""]
             },
             {
               "key": "values.$implementation.1",
-              "removed": [
-                "\"eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22\""
-              ],
-              "added": [
-                "\"eth:0x1666124221622eb6154306Ea9BA87043e8be88B2\""
-              ]
+              "removed": ["\"eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22\""],
+              "added": ["\"eth:0x1666124221622eb6154306Ea9BA87043e8be88B2\""]
             },
             {
               "key": "values.$implementation.2",
-              "removed": [
-                "\"eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec\""
-              ],
-              "added": [
-                "\"eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45\""
-              ]
+              "removed": ["\"eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec\""],
+              "added": ["\"eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45\""]
             },
             {
               "key": "values.$implementation.3",
-              "removed": [
-                "\"eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A\""
-              ],
-              "added": [
-                "\"eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691\""
-              ]
+              "removed": ["\"eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A\""],
+              "added": ["\"eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691\""]
             },
             {
               "key": "values.$pastUpgrades.23",
@@ -976,48 +752,28 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "23"
-              ],
-              "added": [
-                "24"
-              ]
+              "removed": ["23"],
+              "added": ["24"]
             },
             {
               "key": "values.facetAddresses.0",
-              "removed": [
-                "\"eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC\""
-              ],
-              "added": [
-                "\"eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253\""
-              ]
+              "removed": ["\"eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC\""],
+              "added": ["\"eth:0x37CefD5b44c131FEf27e9Bc542e5B77A177A7253\""]
             },
             {
               "key": "values.facetAddresses.1",
-              "removed": [
-                "\"eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22\""
-              ],
-              "added": [
-                "\"eth:0x1666124221622eb6154306Ea9BA87043e8be88B2\""
-              ]
+              "removed": ["\"eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22\""],
+              "added": ["\"eth:0x1666124221622eb6154306Ea9BA87043e8be88B2\""]
             },
             {
               "key": "values.facetAddresses.2",
-              "removed": [
-                "\"eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec\""
-              ],
-              "added": [
-                "\"eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45\""
-              ]
+              "removed": ["\"eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec\""],
+              "added": ["\"eth:0x1e34aB39a9682149165ddeCc0583d238A5448B45\""]
             },
             {
               "key": "values.facetAddresses.3",
-              "removed": [
-                "\"eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A\""
-              ],
-              "added": [
-                "\"eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691\""
-              ]
+              "removed": ["\"eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A\""],
+              "added": ["\"eth:0x0597CaA8A823A699d7CD9E62B5E5d4153FF82691\""]
             },
             {
               "key": "values.facets.eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC",
@@ -1096,66 +852,40 @@
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "120259084289"
-              ],
-              "added": [
-                "124554051586"
-              ]
+              "removed": ["120259084289"],
+              "added": ["124554051586"]
             },
             {
               "key": "values.getSemverProtocolVersion.1",
-              "removed": [
-                "28"
-              ],
-              "added": [
-                "29"
-              ]
+              "removed": ["28"],
+              "added": ["29"]
             },
             {
               "key": "values.getSemverProtocolVersion.2",
-              "removed": [
-                "1"
-              ],
-              "added": [
-                "2"
-              ]
+              "removed": ["1"],
+              "added": ["2"]
             },
             {
               "key": "values.getVerifier",
-              "removed": [
-                "\"eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A\""
-              ],
-              "added": [
-                "\"eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3\""
-              ]
+              "removed": ["\"eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A\""],
+              "added": ["\"eth:0x4d335C5C08FEc91a39965351AbB6E315ad2e9ff3\""]
             },
             {
               "key": "values.validators.0",
-              "removed": [
-                "\"eth:0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD\""
-              ]
+              "removed": ["\"eth:0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD\""]
             },
             {
               "key": "values.validators.1",
-              "removed": [
-                "\"eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E\""
-              ]
+              "removed": ["\"eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E\""]
             },
             {
               "key": "values.validators.2",
-              "removed": [
-                "\"eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564\""
-              ],
-              "added": [
-                "\"eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776\""
-              ]
+              "removed": ["\"eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564\""],
+              "added": ["\"eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776\""]
             },
             {
               "key": "values.getRollupDAManager",
-              "added": [
-                "\"eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45\""
-              ]
+              "added": ["\"eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45\""]
             }
           ]
         },
@@ -1225,12 +955,8 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "2"
-              ],
-              "added": [
-                "3"
-              ]
+              "removed": ["2"],
+              "added": ["3"]
             },
             {
               "key": "values.facetAddresses.0",
@@ -1345,30 +1071,18 @@
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "120259084289"
-              ],
-              "added": [
-                "124554051586"
-              ]
+              "removed": ["120259084289"],
+              "added": ["124554051586"]
             },
             {
               "key": "values.getSemverProtocolVersion.1",
-              "removed": [
-                "28"
-              ],
-              "added": [
-                "29"
-              ]
+              "removed": ["28"],
+              "added": ["29"]
             },
             {
               "key": "values.getSemverProtocolVersion.2",
-              "removed": [
-                "1"
-              ],
-              "added": [
-                "2"
-              ]
+              "removed": ["1"],
+              "added": ["2"]
             },
             {
               "key": "values.getVerifier",
@@ -1431,12 +1145,8 @@
           "fields": [
             {
               "key": "values.$implementation",
-              "removed": [
-                "\"eth:0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142\""
-              ],
-              "added": [
-                "\"eth:0x6ed98623e0B51be68748aB5091Aa891Adb883e13\""
-              ]
+              "removed": ["\"eth:0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142\""],
+              "added": ["\"eth:0x6ed98623e0B51be68748aB5091Aa891Adb883e13\""]
             },
             {
               "key": "values.$pastUpgrades.10",
@@ -1446,12 +1156,8 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "10"
-              ],
-              "added": [
-                "11"
-              ]
+              "removed": ["10"],
+              "added": ["11"]
             }
           ]
         },
@@ -1479,30 +1185,18 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "2"
-              ],
-              "added": [
-                "3"
-              ]
+              "removed": ["2"],
+              "added": ["3"]
             },
             {
               "key": "values.getSemverProtocolVersion.1",
-              "removed": [
-                "28"
-              ],
-              "added": [
-                "29"
-              ]
+              "removed": ["28"],
+              "added": ["29"]
             },
             {
               "key": "values.getSemverProtocolVersion.2",
-              "removed": [
-                "1"
-              ],
-              "added": [
-                "2"
-              ]
+              "removed": ["1"],
+              "added": ["2"]
             },
             {
               "key": "values.initialCutHash",
@@ -1533,12 +1227,8 @@
             },
             {
               "key": "values.protocolVersion",
-              "removed": [
-                "120259084289"
-              ],
-              "added": [
-                "124554051586"
-              ]
+              "removed": ["120259084289"],
+              "added": ["124554051586"]
             },
             {
               "key": "values.storedBatchZero",
@@ -1601,39 +1291,23 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "22"
-              ],
-              "added": [
-                "23"
-              ]
+              "removed": ["22"],
+              "added": ["23"]
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "120259084288"
-              ],
-              "added": [
-                "120259084289"
-              ]
+              "removed": ["120259084288"],
+              "added": ["120259084289"]
             },
             {
               "key": "values.getSemverProtocolVersion.2",
-              "removed": [
-                "0"
-              ],
-              "added": [
-                "1"
-              ]
+              "removed": ["0"],
+              "added": ["1"]
             },
             {
               "key": "values.getVerifier",
-              "removed": [
-                "\"eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579\""
-              ],
-              "added": [
-                "\"eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A\""
-              ]
+              "removed": ["\"eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579\""],
+              "added": ["\"eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A\""]
             }
           ]
         },
@@ -1681,12 +1355,8 @@
           "fields": [
             {
               "key": "values.getSemverProtocolVersion.2",
-              "removed": [
-                "0"
-              ],
-              "added": [
-                "1"
-              ]
+              "removed": ["0"],
+              "added": ["1"]
             },
             {
               "key": "values.initialCutHash",
@@ -1699,12 +1369,8 @@
             },
             {
               "key": "values.protocolVersion",
-              "removed": [
-                "120259084288"
-              ],
-              "added": [
-                "120259084289"
-              ]
+              "removed": ["120259084288"],
+              "added": ["120259084289"]
             }
           ]
         },
@@ -1738,30 +1404,18 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "1"
-              ],
-              "added": [
-                "2"
-              ]
+              "removed": ["1"],
+              "added": ["2"]
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "120259084288"
-              ],
-              "added": [
-                "120259084289"
-              ]
+              "removed": ["120259084288"],
+              "added": ["120259084289"]
             },
             {
               "key": "values.getSemverProtocolVersion.2",
-              "removed": [
-                "0"
-              ],
-              "added": [
-                "1"
-              ]
+              "removed": ["0"],
+              "added": ["1"]
             },
             {
               "key": "values.getVerifier",
@@ -1797,12 +1451,8 @@
           "fields": [
             {
               "key": "values.getSettlementLayer",
-              "removed": [
-                "\"eth:0x0000000000000000000000000000000000000000\""
-              ],
-              "added": [
-                "\"eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9\""
-              ]
+              "removed": ["\"eth:0x0000000000000000000000000000000000000000\""],
+              "added": ["\"eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9\""]
             }
           ]
         }
@@ -1825,39 +1475,23 @@
           "fields": [
             {
               "key": "values.$implementation.3",
-              "removed": [
-                "\"0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f\""
-              ],
-              "added": [
-                "\"0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A\""
-              ]
+              "removed": ["\"0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f\""],
+              "added": ["\"0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A\""]
             },
             {
               "key": "values.$implementation.2",
-              "removed": [
-                "\"0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4\""
-              ],
-              "added": [
-                "\"0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec\""
-              ]
+              "removed": ["\"0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4\""],
+              "added": ["\"0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec\""]
             },
             {
               "key": "values.$implementation.1",
-              "removed": [
-                "\"0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4\""
-              ],
-              "added": [
-                "\"0x431449e2a28A69122860A4956A3f7191eE15aFBC\""
-              ]
+              "removed": ["\"0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4\""],
+              "added": ["\"0x431449e2a28A69122860A4956A3f7191eE15aFBC\""]
             },
             {
               "key": "values.$implementation.0",
-              "removed": [
-                "\"0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490\""
-              ],
-              "added": [
-                "\"0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22\""
-              ]
+              "removed": ["\"0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490\""],
+              "added": ["\"0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22\""]
             },
             {
               "key": "values.$pastUpgrades.21",
@@ -1867,51 +1501,31 @@
             },
             {
               "key": "values.$pastUpgrades.20.2.4",
-              "removed": [
-                "\"0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4\""
-              ]
+              "removed": ["\"0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4\""]
             },
             {
               "key": "values.$pastUpgrades.20.2.3",
-              "removed": [
-                "\"0x62aA95ac4740A367746A664C4C69034d52E968EF\""
-              ],
-              "added": [
-                "\"0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f\""
-              ]
+              "removed": ["\"0x62aA95ac4740A367746A664C4C69034d52E968EF\""],
+              "added": ["\"0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f\""]
             },
             {
               "key": "values.$pastUpgrades.20.2.2",
-              "removed": [
-                "\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\""
-              ],
-              "added": [
-                "\"0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4\""
-              ]
+              "removed": ["\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\""],
+              "added": ["\"0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4\""]
             },
             {
               "key": "values.$pastUpgrades.20.2.1",
-              "removed": [
-                "\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""
-              ],
-              "added": [
-                "\"0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4\""
-              ]
+              "removed": ["\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""],
+              "added": ["\"0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4\""]
             },
             {
               "key": "values.$pastUpgrades.20.2.0",
-              "removed": [
-                "\"0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b\""
-              ],
-              "added": [
-                "\"0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490\""
-              ]
+              "removed": ["\"0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b\""],
+              "added": ["\"0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490\""]
             },
             {
               "key": "values.$pastUpgrades.20.1",
-              "removed": [
-                "\"2023-09-22T17:22:47.000Z\""
-              ],
+              "removed": ["\"2023-09-22T17:22:47.000Z\""],
               "added": [
                 "\"0xf20c9ac3a8c84e97d8403833810d9c2d38f29bb18f592b983e69e14da66b1d12\""
               ]
@@ -1921,51 +1535,31 @@
               "removed": [
                 "\"0x5e3ce9e7d3920f293487a5581146f8333191a4068762db6fe4d1eec65a3fb805\""
               ],
-              "added": [
-                "\"2025-05-05T12:02:59.000Z\""
-              ]
+              "added": ["\"2025-05-05T12:02:59.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.19.2.4",
-              "added": [
-                "\"0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4\""
-              ]
+              "added": ["\"0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4\""]
             },
             {
               "key": "values.$pastUpgrades.19.2.3",
-              "removed": [
-                "\"0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f\""
-              ],
-              "added": [
-                "\"0x62aA95ac4740A367746A664C4C69034d52E968EF\""
-              ]
+              "removed": ["\"0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f\""],
+              "added": ["\"0x62aA95ac4740A367746A664C4C69034d52E968EF\""]
             },
             {
               "key": "values.$pastUpgrades.19.2.2",
-              "removed": [
-                "\"0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4\""
-              ],
-              "added": [
-                "\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\""
-              ]
+              "removed": ["\"0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4\""],
+              "added": ["\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\""]
             },
             {
               "key": "values.$pastUpgrades.19.2.1",
-              "removed": [
-                "\"0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4\""
-              ],
-              "added": [
-                "\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""
-              ]
+              "removed": ["\"0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4\""],
+              "added": ["\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""]
             },
             {
               "key": "values.$pastUpgrades.19.2.0",
-              "removed": [
-                "\"0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490\""
-              ],
-              "added": [
-                "\"0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b\""
-              ]
+              "removed": ["\"0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490\""],
+              "added": ["\"0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b\""]
             },
             {
               "key": "values.$pastUpgrades.19.1",
@@ -1978,78 +1572,50 @@
             },
             {
               "key": "values.$pastUpgrades.19.0",
-              "removed": [
-                "\"2025-05-05T12:02:59.000Z\""
-              ],
-              "added": [
-                "\"2023-10-20T16:15:35.000Z\""
-              ]
+              "removed": ["\"2025-05-05T12:02:59.000Z\""],
+              "added": ["\"2023-10-20T16:15:35.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.18.1",
               "removed": [
                 "\"0x0de4556791139b205562b388f2ddc4a2d2ec1bf0996feea38158535cd7e1a5c6\""
               ],
-              "added": [
-                "\"2023-09-07T10:53:11.000Z\""
-              ]
+              "added": ["\"2023-09-07T10:53:11.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.18.0",
-              "removed": [
-                "\"2023-10-20T16:15:35.000Z\""
-              ],
+              "removed": ["\"2023-10-20T16:15:35.000Z\""],
               "added": [
                 "\"0x72983cd25802230545bcb38b805638b0ffa17990ad51e8843e55519fe96d702c\""
               ]
             },
             {
               "key": "values.$pastUpgrades.17.2.4",
-              "removed": [
-                "\"0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4\""
-              ]
+              "removed": ["\"0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4\""]
             },
             {
               "key": "values.$pastUpgrades.17.2.3",
-              "removed": [
-                "\"0x62aA95ac4740A367746A664C4C69034d52E968EF\""
-              ],
-              "added": [
-                "\"0xE60E94fCCb18a81D501a38959E532C0A85A1be89\""
-              ]
+              "removed": ["\"0x62aA95ac4740A367746A664C4C69034d52E968EF\""],
+              "added": ["\"0xE60E94fCCb18a81D501a38959E532C0A85A1be89\""]
             },
             {
               "key": "values.$pastUpgrades.17.2.2",
-              "removed": [
-                "\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\""
-              ],
-              "added": [
-                "\"0xaD193aDe635576d8e9f7ada71Af2137b16c64075\""
-              ]
+              "removed": ["\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\""],
+              "added": ["\"0xaD193aDe635576d8e9f7ada71Af2137b16c64075\""]
             },
             {
               "key": "values.$pastUpgrades.17.2.1",
-              "removed": [
-                "\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""
-              ],
-              "added": [
-                "\"0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a\""
-              ]
+              "removed": ["\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""],
+              "added": ["\"0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a\""]
             },
             {
               "key": "values.$pastUpgrades.17.2.0",
-              "removed": [
-                "\"0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b\""
-              ],
-              "added": [
-                "\"0xCDB6228b616EEf8Df47D69A372C4f725C43e718C\""
-              ]
+              "removed": ["\"0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b\""],
+              "added": ["\"0xCDB6228b616EEf8Df47D69A372C4f725C43e718C\""]
             },
             {
               "key": "values.$pastUpgrades.17.1",
-              "removed": [
-                "\"2023-09-07T10:53:11.000Z\""
-              ],
+              "removed": ["\"2023-09-07T10:53:11.000Z\""],
               "added": [
                 "\"0x2060aa785aeefa91a0b103accc9df689c7a2056aacfa70309492e729ddea4565\""
               ]
@@ -2059,9 +1625,7 @@
               "removed": [
                 "\"0x72983cd25802230545bcb38b805638b0ffa17990ad51e8843e55519fe96d702c\""
               ],
-              "added": [
-                "\"2024-08-06T09:50:47.000Z\""
-              ]
+              "added": ["\"2024-08-06T09:50:47.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.16.2",
@@ -2083,12 +1647,8 @@
             },
             {
               "key": "values.$pastUpgrades.16.0",
-              "removed": [
-                "\"2024-08-06T09:50:47.000Z\""
-              ],
-              "added": [
-                "\"2025-01-10T14:55:59.000Z\""
-              ]
+              "removed": ["\"2024-08-06T09:50:47.000Z\""],
+              "added": ["\"2025-01-10T14:55:59.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.15.2",
@@ -2110,69 +1670,43 @@
             },
             {
               "key": "values.$pastUpgrades.15.0",
-              "removed": [
-                "\"2025-01-10T14:55:59.000Z\""
-              ],
-              "added": [
-                "\"2025-03-12T14:59:11.000Z\""
-              ]
+              "removed": ["\"2025-01-10T14:55:59.000Z\""],
+              "added": ["\"2025-03-12T14:59:11.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.14.2.4",
-              "added": [
-                "\"0xab458aCbD8FF9B6cF7B8a029705A02F70DCDBf7D\""
-              ]
+              "added": ["\"0xab458aCbD8FF9B6cF7B8a029705A02F70DCDBf7D\""]
             },
             {
               "key": "values.$pastUpgrades.14.2.3",
-              "removed": [
-                "\"0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800\""
-              ],
-              "added": [
-                "\"0x8c0f38F13526fCB379a80B87F4DEbdBCC9CAEcbD\""
-              ]
+              "removed": ["\"0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800\""],
+              "added": ["\"0x8c0f38F13526fCB379a80B87F4DEbdBCC9CAEcbD\""]
             },
             {
               "key": "values.$pastUpgrades.14.2.2",
-              "removed": [
-                "\"0x36b026c39125964D99596CE302866B5A59E4dE27\""
-              ],
-              "added": [
-                "\"0xf002dFBc52C250a2E14C148041aDB8567a0B19BD\""
-              ]
+              "removed": ["\"0x36b026c39125964D99596CE302866B5A59E4dE27\""],
+              "added": ["\"0xf002dFBc52C250a2E14C148041aDB8567a0B19BD\""]
             },
             {
               "key": "values.$pastUpgrades.14.2.1",
-              "removed": [
-                "\"0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1\""
-              ],
-              "added": [
-                "\"0x9B1A10bDC4A40219544C835263b2cA3f3e689693\""
-              ]
+              "removed": ["\"0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1\""],
+              "added": ["\"0x9B1A10bDC4A40219544C835263b2cA3f3e689693\""]
             },
             {
               "key": "values.$pastUpgrades.14.2.0",
-              "removed": [
-                "\"0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb\""
-              ],
-              "added": [
-                "\"0xA389bF185B301C8e20E79E3098e71399914035dF\""
-              ]
+              "removed": ["\"0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb\""],
+              "added": ["\"0xA389bF185B301C8e20E79E3098e71399914035dF\""]
             },
             {
               "key": "values.$pastUpgrades.14.1",
               "removed": [
                 "\"0x2c6aa40efd0500a015b036cf03de961b6e2aa2c726d21b5b8cede9a91964c12f\""
               ],
-              "added": [
-                "\"2023-08-16T10:15:11.000Z\""
-              ]
+              "added": ["\"2023-08-16T10:15:11.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.14.0",
-              "removed": [
-                "\"2025-03-12T14:59:11.000Z\""
-              ],
+              "removed": ["\"2025-03-12T14:59:11.000Z\""],
               "added": [
                 "\"0x83d729e260c7ac2cf439aa2b8e667454489e4fb8d4965aaa9dc8e2fb95a44f46\""
               ]
@@ -2182,15 +1716,11 @@
               "removed": [
                 "[\"0x9B1A10bDC4A40219544C835263b2cA3f3e689693\",\"0xA389bF185B301C8e20E79E3098e71399914035dF\",\"0xf002dFBc52C250a2E14C148041aDB8567a0B19BD\",\"0xab458aCbD8FF9B6cF7B8a029705A02F70DCDBf7D\",\"0x8c0f38F13526fCB379a80B87F4DEbdBCC9CAEcbD\"]"
               ],
-              "added": [
-                "\"2023-12-04T20:29:11.000Z\""
-              ]
+              "added": ["\"2023-12-04T20:29:11.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.13.1",
-              "removed": [
-                "\"2023-08-16T10:15:11.000Z\""
-              ],
+              "removed": ["\"2023-08-16T10:15:11.000Z\""],
               "added": [
                 "\"0x9f0e9ecd78b5c17ff95c130b183df452486a0f784705927e608fd90a00aa9bcd\""
               ]
@@ -2206,9 +1736,7 @@
             },
             {
               "key": "values.$pastUpgrades.12.2",
-              "removed": [
-                "\"2023-12-04T20:29:11.000Z\""
-              ],
+              "removed": ["\"2023-12-04T20:29:11.000Z\""],
               "added": [
                 "[\"0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4\",\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\",\"0x62aA95ac4740A367746A664C4C69034d52E968EF\",\"0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b\",\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\"]"
               ]
@@ -2218,9 +1746,7 @@
               "removed": [
                 "\"0x9f0e9ecd78b5c17ff95c130b183df452486a0f784705927e608fd90a00aa9bcd\""
               ],
-              "added": [
-                "\"2023-11-01T16:41:35.000Z\""
-              ]
+              "added": ["\"2023-11-01T16:41:35.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.12.0",
@@ -2233,57 +1759,33 @@
             },
             {
               "key": "values.$pastUpgrades.11.2.4",
-              "removed": [
-                "\"0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4\""
-              ],
-              "added": [
-                "\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\""
-              ]
+              "removed": ["\"0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4\""],
+              "added": ["\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\""]
             },
             {
               "key": "values.$pastUpgrades.11.2.3",
-              "removed": [
-                "\"0x62aA95ac4740A367746A664C4C69034d52E968EF\""
-              ],
-              "added": [
-                "\"0x16615a85B451edfb6FCBea0b34405D9C7ca1a22A\""
-              ]
+              "removed": ["\"0x62aA95ac4740A367746A664C4C69034d52E968EF\""],
+              "added": ["\"0x16615a85B451edfb6FCBea0b34405D9C7ca1a22A\""]
             },
             {
               "key": "values.$pastUpgrades.11.2.2",
-              "removed": [
-                "\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\""
-              ],
-              "added": [
-                "\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""
-              ]
+              "removed": ["\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\""],
+              "added": ["\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""]
             },
             {
               "key": "values.$pastUpgrades.11.2.1",
-              "removed": [
-                "\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""
-              ],
-              "added": [
-                "\"0xc6f7e57C6e1e20468D869Fe33675524e243CD6a0\""
-              ]
+              "removed": ["\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""],
+              "added": ["\"0xc6f7e57C6e1e20468D869Fe33675524e243CD6a0\""]
             },
             {
               "key": "values.$pastUpgrades.11.2.0",
-              "removed": [
-                "\"0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b\""
-              ],
-              "added": [
-                "\"0x5349E94435Cc9Cab9FfB40A492DA46935052733A\""
-              ]
+              "removed": ["\"0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b\""],
+              "added": ["\"0x5349E94435Cc9Cab9FfB40A492DA46935052733A\""]
             },
             {
               "key": "values.$pastUpgrades.11.1",
-              "removed": [
-                "\"2023-11-01T16:41:35.000Z\""
-              ],
-              "added": [
-                "\"2023-08-29T08:28:11.000Z\""
-              ]
+              "removed": ["\"2023-11-01T16:41:35.000Z\""],
+              "added": ["\"2023-08-29T08:28:11.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.11.0",
@@ -2299,15 +1801,11 @@
               "removed": [
                 "[\"0xc6f7e57C6e1e20468D869Fe33675524e243CD6a0\",\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\",\"0x5349E94435Cc9Cab9FfB40A492DA46935052733A\",\"0x16615a85B451edfb6FCBea0b34405D9C7ca1a22A\",\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\"]"
               ],
-              "added": [
-                "\"2024-02-05T14:30:47.000Z\""
-              ]
+              "added": ["\"2024-02-05T14:30:47.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.10.1",
-              "removed": [
-                "\"2023-08-29T08:28:11.000Z\""
-              ],
+              "removed": ["\"2023-08-29T08:28:11.000Z\""],
               "added": [
                 "\"0x937dd21a05142c02159170dafb1bbaaa145ae7bd2c29bf512534fbec9ff801ab\""
               ]
@@ -2323,9 +1821,7 @@
             },
             {
               "key": "values.$pastUpgrades.9.2",
-              "removed": [
-                "\"2024-02-05T14:30:47.000Z\""
-              ],
+              "removed": ["\"2024-02-05T14:30:47.000Z\""],
               "added": [
                 "[\"0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a\",\"0xE60E94fCCb18a81D501a38959E532C0A85A1be89\",\"0xCDB6228b616EEf8Df47D69A372C4f725C43e718C\",\"0xaD193aDe635576d8e9f7ada71Af2137b16c64075\"]"
               ]
@@ -2335,9 +1831,7 @@
               "removed": [
                 "\"0x937dd21a05142c02159170dafb1bbaaa145ae7bd2c29bf512534fbec9ff801ab\""
               ],
-              "added": [
-                "\"2024-06-06T11:55:23.000Z\""
-              ]
+              "added": ["\"2024-06-06T11:55:23.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.9.0",
@@ -2353,15 +1847,11 @@
               "removed": [
                 "[\"0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a\",\"0xE60E94fCCb18a81D501a38959E532C0A85A1be89\",\"0xCDB6228b616EEf8Df47D69A372C4f725C43e718C\",\"0xaD193aDe635576d8e9f7ada71Af2137b16c64075\"]"
               ],
-              "added": [
-                "\"2023-12-21T11:51:35.000Z\""
-              ]
+              "added": ["\"2023-12-21T11:51:35.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.8.1",
-              "removed": [
-                "\"2024-06-06T11:55:23.000Z\""
-              ],
+              "removed": ["\"2024-06-06T11:55:23.000Z\""],
               "added": [
                 "[\"0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967\",\"0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7\",\"0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58\",\"0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d\"]"
               ]
@@ -2377,12 +1867,8 @@
             },
             {
               "key": "values.$pastUpgrades.7.2",
-              "removed": [
-                "\"2023-12-21T11:51:35.000Z\""
-              ],
-              "added": [
-                "\"2024-03-11T14:32:11.000Z\""
-              ]
+              "removed": ["\"2023-12-21T11:51:35.000Z\""],
+              "added": ["\"2024-03-11T14:32:11.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.7.1",
@@ -2404,12 +1890,8 @@
             },
             {
               "key": "values.$pastUpgrades.6.2",
-              "removed": [
-                "\"2024-03-11T14:32:11.000Z\""
-              ],
-              "added": [
-                "\"2025-06-23T23:51:35.000Z\""
-              ]
+              "removed": ["\"2024-03-11T14:32:11.000Z\""],
+              "added": ["\"2025-06-23T23:51:35.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.6.1",
@@ -2422,84 +1904,48 @@
             },
             {
               "key": "values.$pastUpgrades.6.0.3",
-              "removed": [
-                "\"0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7\""
-              ],
-              "added": [
-                "\"0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A\""
-              ]
+              "removed": ["\"0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7\""],
+              "added": ["\"0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A\""]
             },
             {
               "key": "values.$pastUpgrades.6.0.2",
-              "removed": [
-                "\"0x230214F0224C7E0485f348a79512ad00514DB1F7\""
-              ],
-              "added": [
-                "\"0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec\""
-              ]
+              "removed": ["\"0x230214F0224C7E0485f348a79512ad00514DB1F7\""],
+              "added": ["\"0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec\""]
             },
             {
               "key": "values.$pastUpgrades.6.0.1",
-              "removed": [
-                "\"0x10113bB3a8e64f8eD67003126adC8CE74C34610c\""
-              ],
-              "added": [
-                "\"0x431449e2a28A69122860A4956A3f7191eE15aFBC\""
-              ]
+              "removed": ["\"0x10113bB3a8e64f8eD67003126adC8CE74C34610c\""],
+              "added": ["\"0x431449e2a28A69122860A4956A3f7191eE15aFBC\""]
             },
             {
               "key": "values.$pastUpgrades.6.0.0",
-              "removed": [
-                "\"0xfd3779e6214eBBd40f5F5890351298e123A46BA6\""
-              ],
-              "added": [
-                "\"0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22\""
-              ]
+              "removed": ["\"0xfd3779e6214eBBd40f5F5890351298e123A46BA6\""],
+              "added": ["\"0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22\""]
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "21"
-              ],
-              "added": [
-                "22"
-              ]
+              "removed": ["21"],
+              "added": ["22"]
             },
             {
               "key": "values.facetAddresses.3",
-              "removed": [
-                "\"0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f\""
-              ],
-              "added": [
-                "\"0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A\""
-              ]
+              "removed": ["\"0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f\""],
+              "added": ["\"0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A\""]
             },
             {
               "key": "values.facetAddresses.2",
-              "removed": [
-                "\"0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4\""
-              ],
-              "added": [
-                "\"0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec\""
-              ]
+              "removed": ["\"0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4\""],
+              "added": ["\"0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec\""]
             },
             {
               "key": "values.facetAddresses.1",
-              "removed": [
-                "\"0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4\""
-              ],
-              "added": [
-                "\"0x431449e2a28A69122860A4956A3f7191eE15aFBC\""
-              ]
+              "removed": ["\"0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4\""],
+              "added": ["\"0x431449e2a28A69122860A4956A3f7191eE15aFBC\""]
             },
             {
               "key": "values.facetAddresses.0",
-              "removed": [
-                "\"0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490\""
-              ],
-              "added": [
-                "\"0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22\""
-              ]
+              "removed": ["\"0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490\""],
+              "added": ["\"0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22\""]
             },
             {
               "key": "values.facets.0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4",
@@ -2578,30 +2024,18 @@
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "115964116992"
-              ],
-              "added": [
-                "120259084288"
-              ]
+              "removed": ["115964116992"],
+              "added": ["120259084288"]
             },
             {
               "key": "values.getSemverProtocolVersion.0",
-              "removed": [
-                "27"
-              ],
-              "added": [
-                "28"
-              ]
+              "removed": ["27"],
+              "added": ["28"]
             },
             {
               "key": "values.getVerifier",
-              "removed": [
-                "\"0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0\""
-              ],
-              "added": [
-                "\"0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579\""
-              ]
+              "removed": ["\"0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0\""],
+              "added": ["\"0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579\""]
             }
           ]
         },
@@ -2638,21 +2072,13 @@
           "fields": [
             {
               "key": "values.validatorsVTL.1",
-              "removed": [
-                "\"0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99\""
-              ],
-              "added": [
-                "\"0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2\""
-              ]
+              "removed": ["\"0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99\""],
+              "added": ["\"0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2\""]
             },
             {
               "key": "values.validatorsVTL.0",
-              "removed": [
-                "\"0x3527439923a63F8C13CF72b8Fe80a77f6e572092\""
-              ],
-              "added": [
-                "\"0x30066439887C0a509Cb38E45c9262E6924a29BbD\""
-              ]
+              "removed": ["\"0x3527439923a63F8C13CF72b8Fe80a77f6e572092\""],
+              "added": ["\"0x30066439887C0a509Cb38E45c9262E6924a29BbD\""]
             }
           ]
         }
@@ -2667,39 +2093,23 @@
           "fields": [
             {
               "key": "values.$implementation.3",
-              "removed": [
-                "\"0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800\""
-              ],
-              "added": [
-                "\"0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f\""
-              ]
+              "removed": ["\"0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800\""],
+              "added": ["\"0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f\""]
             },
             {
               "key": "values.$implementation.2",
-              "removed": [
-                "\"0x36b026c39125964D99596CE302866B5A59E4dE27\""
-              ],
-              "added": [
-                "\"0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4\""
-              ]
+              "removed": ["\"0x36b026c39125964D99596CE302866B5A59E4dE27\""],
+              "added": ["\"0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4\""]
             },
             {
               "key": "values.$implementation.1",
-              "removed": [
-                "\"0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1\""
-              ],
-              "added": [
-                "\"0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4\""
-              ]
+              "removed": ["\"0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1\""],
+              "added": ["\"0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4\""]
             },
             {
               "key": "values.$implementation.0",
-              "removed": [
-                "\"0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb\""
-              ],
-              "added": [
-                "\"0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490\""
-              ]
+              "removed": ["\"0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb\""],
+              "added": ["\"0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490\""]
             },
             {
               "key": "values.$pastUpgrades.20",
@@ -2709,51 +2119,31 @@
             },
             {
               "key": "values.$pastUpgrades.19.2.4",
-              "removed": [
-                "\"0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4\""
-              ]
+              "removed": ["\"0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4\""]
             },
             {
               "key": "values.$pastUpgrades.19.2.3",
-              "removed": [
-                "\"0x62aA95ac4740A367746A664C4C69034d52E968EF\""
-              ],
-              "added": [
-                "\"0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f\""
-              ]
+              "removed": ["\"0x62aA95ac4740A367746A664C4C69034d52E968EF\""],
+              "added": ["\"0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f\""]
             },
             {
               "key": "values.$pastUpgrades.19.2.2",
-              "removed": [
-                "\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\""
-              ],
-              "added": [
-                "\"0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4\""
-              ]
+              "removed": ["\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\""],
+              "added": ["\"0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4\""]
             },
             {
               "key": "values.$pastUpgrades.19.2.1",
-              "removed": [
-                "\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""
-              ],
-              "added": [
-                "\"0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4\""
-              ]
+              "removed": ["\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""],
+              "added": ["\"0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4\""]
             },
             {
               "key": "values.$pastUpgrades.19.2.0",
-              "removed": [
-                "\"0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b\""
-              ],
-              "added": [
-                "\"0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490\""
-              ]
+              "removed": ["\"0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b\""],
+              "added": ["\"0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490\""]
             },
             {
               "key": "values.$pastUpgrades.19.1",
-              "removed": [
-                "\"2023-09-22T17:22:47.000Z\""
-              ],
+              "removed": ["\"2023-09-22T17:22:47.000Z\""],
               "added": [
                 "\"0xf20c9ac3a8c84e97d8403833810d9c2d38f29bb18f592b983e69e14da66b1d12\""
               ]
@@ -2763,54 +2153,32 @@
               "removed": [
                 "\"0x5e3ce9e7d3920f293487a5581146f8333191a4068762db6fe4d1eec65a3fb805\""
               ],
-              "added": [
-                "\"2025-05-05T12:02:59.000Z\""
-              ]
+              "added": ["\"2025-05-05T12:02:59.000Z\""]
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "20"
-              ],
-              "added": [
-                "21"
-              ]
+              "removed": ["20"],
+              "added": ["21"]
             },
             {
               "key": "values.facetAddresses.3",
-              "removed": [
-                "\"0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800\""
-              ],
-              "added": [
-                "\"0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f\""
-              ]
+              "removed": ["\"0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800\""],
+              "added": ["\"0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f\""]
             },
             {
               "key": "values.facetAddresses.2",
-              "removed": [
-                "\"0x36b026c39125964D99596CE302866B5A59E4dE27\""
-              ],
-              "added": [
-                "\"0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4\""
-              ]
+              "removed": ["\"0x36b026c39125964D99596CE302866B5A59E4dE27\""],
+              "added": ["\"0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4\""]
             },
             {
               "key": "values.facetAddresses.1",
-              "removed": [
-                "\"0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1\""
-              ],
-              "added": [
-                "\"0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4\""
-              ]
+              "removed": ["\"0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1\""],
+              "added": ["\"0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4\""]
             },
             {
               "key": "values.facetAddresses.0",
-              "removed": [
-                "\"0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb\""
-              ],
-              "added": [
-                "\"0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490\""
-              ]
+              "removed": ["\"0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb\""],
+              "added": ["\"0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490\""]
             },
             {
               "key": "values.facets.0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb",
@@ -2880,30 +2248,18 @@
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "111669149696"
-              ],
-              "added": [
-                "115964116992"
-              ]
+              "removed": ["111669149696"],
+              "added": ["115964116992"]
             },
             {
               "key": "values.getSemverProtocolVersion.0",
-              "removed": [
-                "26"
-              ],
-              "added": [
-                "27"
-              ]
+              "removed": ["26"],
+              "added": ["27"]
             },
             {
               "key": "values.getVerifier",
-              "removed": [
-                "\"0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5\""
-              ],
-              "added": [
-                "\"0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0\""
-              ]
+              "removed": ["\"0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5\""],
+              "added": ["\"0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0\""]
             },
             {
               "key": "values.getL2EvmEmulatorBytecodeHash",
@@ -2940,12 +2296,8 @@
           "fields": [
             {
               "key": "values.getTransactionFilterer",
-              "removed": [
-                "\"0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f\""
-              ],
-              "added": [
-                "\"0x0000000000000000000000000000000000000000\""
-              ]
+              "removed": ["\"0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f\""],
+              "added": ["\"0x0000000000000000000000000000000000000000\""]
             }
           ]
         },
@@ -2964,12 +2316,8 @@
           "fields": [
             {
               "key": "values.getTransactionFilterer",
-              "removed": [
-                "\"0xC8Cc8454fBe5919431D425fcA9dC6aF055db7C78\""
-              ],
-              "added": [
-                "\"0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f\""
-              ]
+              "removed": ["\"0xC8Cc8454fBe5919431D425fcA9dC6aF055db7C78\""],
+              "added": ["\"0x62F3376E73cF96A0C3232682a88dbe31B8D2FA4f\""]
             }
           ]
         },
@@ -2992,12 +2340,8 @@
           "fields": [
             {
               "key": "values.getTransactionFilterer",
-              "removed": [
-                "\"0x0000000000000000000000000000000000000000\""
-              ],
-              "added": [
-                "\"0xC8Cc8454fBe5919431D425fcA9dC6aF055db7C78\""
-              ]
+              "removed": ["\"0x0000000000000000000000000000000000000000\""],
+              "added": ["\"0xC8Cc8454fBe5919431D425fcA9dC6aF055db7C78\""]
             }
           ]
         },
@@ -3016,12 +2360,8 @@
           "fields": [
             {
               "key": "values.$implementation",
-              "removed": [
-                "\"0x8D231E4097C3cb200Ed62134B466AA615cE60336\""
-              ],
-              "added": [
-                "\"0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142\""
-              ]
+              "removed": ["\"0x8D231E4097C3cb200Ed62134B466AA615cE60336\""],
+              "added": ["\"0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142\""]
             },
             {
               "key": "values.$pastUpgrades.9",
@@ -3031,63 +2371,45 @@
             },
             {
               "key": "values.$pastUpgrades.8.2",
-              "removed": [
-                "[\"0x8191975d8B0851C7f0740918896Cf298c09aA05E\"]"
-              ],
+              "removed": ["[\"0x8191975d8B0851C7f0740918896Cf298c09aA05E\"]"],
               "added": [
                 "\"0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5\""
               ]
             },
             {
               "key": "values.$pastUpgrades.8.1",
-              "removed": [
-                "\"2024-06-06T13:20:35.000Z\""
-              ],
-              "added": [
-                "[\"0x8D231E4097C3cb200Ed62134B466AA615cE60336\"]"
-              ]
+              "removed": ["\"2024-06-06T13:20:35.000Z\""],
+              "added": ["[\"0x8D231E4097C3cb200Ed62134B466AA615cE60336\"]"]
             },
             {
               "key": "values.$pastUpgrades.8.0",
               "removed": [
                 "\"0xb689a0cfff9af4bb1d1da94c404d396f24d5cf5031c31647671549c717cdba7a\""
               ],
-              "added": [
-                "\"2025-01-08T16:00:35.000Z\""
-              ]
+              "added": ["\"2025-01-08T16:00:35.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.7.2",
               "removed": [
                 "\"0xc90d135e4b8ab58304853f3be34b2fefd18c2a817d3d250e7b669e024d5277c5\""
               ],
-              "added": [
-                "\"2023-12-04T20:29:11.000Z\""
-              ]
+              "added": ["\"2023-12-04T20:29:11.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.7.1",
-              "removed": [
-                "[\"0x8D231E4097C3cb200Ed62134B466AA615cE60336\"]"
-              ],
+              "removed": ["[\"0x8D231E4097C3cb200Ed62134B466AA615cE60336\"]"],
               "added": [
                 "\"0x9f0e9ecd78b5c17ff95c130b183df452486a0f784705927e608fd90a00aa9bcd\""
               ]
             },
             {
               "key": "values.$pastUpgrades.7.0",
-              "removed": [
-                "\"2025-01-08T16:00:35.000Z\""
-              ],
-              "added": [
-                "[\"0x03F3F3c12e11C2FAA60080bd3F7f80AADF369a33\"]"
-              ]
+              "removed": ["\"2025-01-08T16:00:35.000Z\""],
+              "added": ["[\"0x03F3F3c12e11C2FAA60080bd3F7f80AADF369a33\"]"]
             },
             {
               "key": "values.$pastUpgrades.6.2",
-              "removed": [
-                "\"2023-12-04T20:29:11.000Z\""
-              ],
+              "removed": ["\"2023-12-04T20:29:11.000Z\""],
               "added": [
                 "\"0xa462b66e80e973da1eaea5a5bde5a1b4ff6a1a3b29ac4db25922712e71900e80\""
               ]
@@ -3097,84 +2419,56 @@
               "removed": [
                 "\"0x9f0e9ecd78b5c17ff95c130b183df452486a0f784705927e608fd90a00aa9bcd\""
               ],
-              "added": [
-                "\"2023-04-25T12:37:35.000Z\""
-              ]
+              "added": ["\"2023-04-25T12:37:35.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.6.0.0",
-              "removed": [
-                "\"0x03F3F3c12e11C2FAA60080bd3F7f80AADF369a33\""
-              ],
-              "added": [
-                "\"0x38ABF296EE79621A225AA85086853b0dA3225D2F\""
-              ]
+              "removed": ["\"0x03F3F3c12e11C2FAA60080bd3F7f80AADF369a33\""],
+              "added": ["\"0x38ABF296EE79621A225AA85086853b0dA3225D2F\""]
             },
             {
               "key": "values.$pastUpgrades.5.2",
               "removed": [
                 "\"0xa462b66e80e973da1eaea5a5bde5a1b4ff6a1a3b29ac4db25922712e71900e80\""
               ],
-              "added": [
-                "\"2025-03-31T08:00:47.000Z\""
-              ]
+              "added": ["\"2025-03-31T08:00:47.000Z\""]
             },
             {
               "key": "values.$pastUpgrades.5.1",
-              "removed": [
-                "\"2023-04-25T12:37:35.000Z\""
-              ],
-              "added": [
-                "[\"0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142\"]"
-              ]
+              "removed": ["\"2023-04-25T12:37:35.000Z\""],
+              "added": ["[\"0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142\"]"]
             },
             {
               "key": "values.$pastUpgrades.5.0",
-              "removed": [
-                "[\"0x38ABF296EE79621A225AA85086853b0dA3225D2F\"]"
-              ],
+              "removed": ["[\"0x38ABF296EE79621A225AA85086853b0dA3225D2F\"]"],
               "added": [
                 "\"0x96a2f14c85022136ab3d4e568e9f1fe8f4611a4a2597f979332840259378f6b3\""
               ]
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "9"
-              ],
-              "added": [
-                "10"
-              ]
+              "removed": ["9"],
+              "added": ["10"]
             },
             {
               "key": "values.SHARED_BRIDGE",
-              "removed": [
-                "\"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB\""
-              ]
+              "removed": ["\"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB\""]
             },
             {
               "key": "values.ERA_CHAIN_ID",
-              "added": [
-                "324"
-              ]
+              "added": ["324"]
             },
             {
               "key": "values.L1_ASSET_ROUTER",
-              "added": [
-                "\"0x8829AD80E425C646DAB305381ff105169FeEcE56\""
-              ]
+              "added": ["\"0x8829AD80E425C646DAB305381ff105169FeEcE56\""]
             },
             {
               "key": "values.L1_NATIVE_TOKEN_VAULT",
-              "added": [
-                "\"0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6\""
-              ]
+              "added": ["\"0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6\""]
             },
             {
               "key": "values.L1_NULLIFIER",
-              "added": [
-                "\"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB\""
-              ]
+              "added": ["\"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB\""]
             }
           ]
         }
@@ -3196,39 +2490,23 @@
           "fields": [
             {
               "key": "values.$implementation.3",
-              "removed": [
-                "\"0xBB13642F795014E0EAC2b0d52ECD5162ECb66712\""
-              ],
-              "added": [
-                "\"0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800\""
-              ]
+              "removed": ["\"0xBB13642F795014E0EAC2b0d52ECD5162ECb66712\""],
+              "added": ["\"0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800\""]
             },
             {
               "key": "values.$implementation.2",
-              "removed": [
-                "\"0x5575218cECd370E1d630d1AdB03c254B0B376821\""
-              ],
-              "added": [
-                "\"0x36b026c39125964D99596CE302866B5A59E4dE27\""
-              ]
+              "removed": ["\"0x5575218cECd370E1d630d1AdB03c254B0B376821\""],
+              "added": ["\"0x36b026c39125964D99596CE302866B5A59E4dE27\""]
             },
             {
               "key": "values.$implementation.1",
-              "removed": [
-                "\"0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9\""
-              ],
-              "added": [
-                "\"0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1\""
-              ]
+              "removed": ["\"0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9\""],
+              "added": ["\"0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1\""]
             },
             {
               "key": "values.$implementation.0",
-              "removed": [
-                "\"0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a\""
-              ],
-              "added": [
-                "\"0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb\""
-              ]
+              "removed": ["\"0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a\""],
+              "added": ["\"0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb\""]
             },
             {
               "key": "values.$pastUpgrades.19",
@@ -3238,54 +2516,32 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "19"
-              ],
-              "added": [
-                "20"
-              ]
+              "removed": ["19"],
+              "added": ["20"]
             },
             {
               "key": "values.daMode",
-              "removed": [
-                "0"
-              ]
+              "removed": ["0"]
             },
             {
               "key": "values.facetAddresses.3",
-              "removed": [
-                "\"0xBB13642F795014E0EAC2b0d52ECD5162ECb66712\""
-              ],
-              "added": [
-                "\"0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800\""
-              ]
+              "removed": ["\"0xBB13642F795014E0EAC2b0d52ECD5162ECb66712\""],
+              "added": ["\"0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800\""]
             },
             {
               "key": "values.facetAddresses.2",
-              "removed": [
-                "\"0x5575218cECd370E1d630d1AdB03c254B0B376821\""
-              ],
-              "added": [
-                "\"0x36b026c39125964D99596CE302866B5A59E4dE27\""
-              ]
+              "removed": ["\"0x5575218cECd370E1d630d1AdB03c254B0B376821\""],
+              "added": ["\"0x36b026c39125964D99596CE302866B5A59E4dE27\""]
             },
             {
               "key": "values.facetAddresses.1",
-              "removed": [
-                "\"0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9\""
-              ],
-              "added": [
-                "\"0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1\""
-              ]
+              "removed": ["\"0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9\""],
+              "added": ["\"0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1\""]
             },
             {
               "key": "values.facetAddresses.0",
-              "removed": [
-                "\"0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a\""
-              ],
-              "added": [
-                "\"0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb\""
-              ]
+              "removed": ["\"0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a\""],
+              "added": ["\"0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb\""]
             },
             {
               "key": "values.facets.0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a",
@@ -3337,9 +2593,7 @@
             },
             {
               "key": "values.getBaseTokenBridge",
-              "removed": [
-                "\"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB\""
-              ]
+              "removed": ["\"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB\""]
             },
             {
               "key": "values.getL2BootloaderBytecodeHash",
@@ -3361,48 +2615,30 @@
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "107374182400"
-              ],
-              "added": [
-                "111669149696"
-              ]
+              "removed": ["107374182400"],
+              "added": ["111669149696"]
             },
             {
               "key": "values.getSemverProtocolVersion.1",
-              "removed": [
-                "25"
-              ],
-              "added": [
-                "26"
-              ]
+              "removed": ["25"],
+              "added": ["26"]
             },
             {
               "key": "values.getStateTransitionManager",
-              "removed": [
-                "\"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C\""
-              ]
+              "removed": ["\"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C\""]
             },
             {
               "key": "values.getVerifier",
-              "removed": [
-                "\"0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66\""
-              ],
-              "added": [
-                "\"0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5\""
-              ]
+              "removed": ["\"0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66\""],
+              "added": ["\"0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5\""]
             },
             {
               "key": "values.txFilterer",
-              "removed": [
-                "[]"
-              ]
+              "removed": ["[]"]
             },
             {
               "key": "values.validators.2",
-              "added": [
-                "\"0x8c0Bfc04AdA21fd496c55B8C50331f904306F564\""
-              ]
+              "added": ["\"0x8c0Bfc04AdA21fd496c55B8C50331f904306F564\""]
             },
             {
               "key": "values.getBaseTokenAssetId",
@@ -3412,15 +2648,11 @@
             },
             {
               "key": "values.getChainId",
-              "added": [
-                "324"
-              ]
+              "added": ["324"]
             },
             {
               "key": "values.getChainTypeManager",
-              "added": [
-                "\"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C\""
-              ]
+              "added": ["\"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C\""]
             },
             {
               "key": "values.getDAValidatorPair",
@@ -3430,21 +2662,15 @@
             },
             {
               "key": "values.getSettlementLayer",
-              "added": [
-                "\"0x0000000000000000000000000000000000000000\""
-              ]
+              "added": ["\"0x0000000000000000000000000000000000000000\""]
             },
             {
               "key": "values.getTransactionFilterer",
-              "added": [
-                "\"0x0000000000000000000000000000000000000000\""
-              ]
+              "added": ["\"0x0000000000000000000000000000000000000000\""]
             },
             {
               "key": "values.isPriorityQueueActive",
-              "added": [
-                "false"
-              ]
+              "added": ["false"]
             }
           ]
         },
@@ -3456,15 +2682,11 @@
           "fields": [
             {
               "key": "values.validatorsVTL.1",
-              "added": [
-                "\"0x3527439923a63F8C13CF72b8Fe80a77f6e572092\""
-              ]
+              "added": ["\"0x3527439923a63F8C13CF72b8Fe80a77f6e572092\""]
             },
             {
               "key": "values.validatorsVTL.0",
-              "added": [
-                "\"0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99\""
-              ]
+              "added": ["\"0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99\""]
             }
           ]
         },
@@ -3491,12 +2713,8 @@
           "fields": [
             {
               "key": "values.owner",
-              "removed": [
-                "\"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897\""
-              ],
-              "added": [
-                "\"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3\""
-              ]
+              "removed": ["\"0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897\""],
+              "added": ["\"0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3\""]
             }
           ]
         },
@@ -3527,21 +2745,13 @@
           "fields": [
             {
               "key": "values.executionDelay",
-              "removed": [
-                "75600"
-              ],
-              "added": [
-                "10800"
-              ]
+              "removed": ["75600"],
+              "added": ["10800"]
             },
             {
               "key": "values.executionDelay_fmt",
-              "removed": [
-                "\"21h\""
-              ],
-              "added": [
-                "\"3h\""
-              ]
+              "removed": ["\"21h\""],
+              "added": ["\"3h\""]
             }
           ]
         }
@@ -3556,39 +2766,23 @@
           "fields": [
             {
               "key": "values.$implementation.3",
-              "removed": [
-                "\"0xaD193aDe635576d8e9f7ada71Af2137b16c64075\""
-              ],
-              "added": [
-                "\"0xBB13642F795014E0EAC2b0d52ECD5162ECb66712\""
-              ]
+              "removed": ["\"0xaD193aDe635576d8e9f7ada71Af2137b16c64075\""],
+              "added": ["\"0xBB13642F795014E0EAC2b0d52ECD5162ECb66712\""]
             },
             {
               "key": "values.$implementation.2",
-              "removed": [
-                "\"0xCDB6228b616EEf8Df47D69A372C4f725C43e718C\""
-              ],
-              "added": [
-                "\"0x5575218cECd370E1d630d1AdB03c254B0B376821\""
-              ]
+              "removed": ["\"0xCDB6228b616EEf8Df47D69A372C4f725C43e718C\""],
+              "added": ["\"0x5575218cECd370E1d630d1AdB03c254B0B376821\""]
             },
             {
               "key": "values.$implementation.1",
-              "removed": [
-                "\"0xE60E94fCCb18a81D501a38959E532C0A85A1be89\""
-              ],
-              "added": [
-                "\"0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9\""
-              ]
+              "removed": ["\"0xE60E94fCCb18a81D501a38959E532C0A85A1be89\""],
+              "added": ["\"0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9\""]
             },
             {
               "key": "values.$implementation.0",
-              "removed": [
-                "\"0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a\""
-              ],
-              "added": [
-                "\"0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a\""
-              ]
+              "removed": ["\"0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a\""],
+              "added": ["\"0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a\""]
             },
             {
               "key": "values.$pastUpgrades.18",
@@ -3598,48 +2792,28 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "18"
-              ],
-              "added": [
-                "19"
-              ]
+              "removed": ["18"],
+              "added": ["19"]
             },
             {
               "key": "values.facetAddresses.3",
-              "removed": [
-                "\"0xaD193aDe635576d8e9f7ada71Af2137b16c64075\""
-              ],
-              "added": [
-                "\"0xBB13642F795014E0EAC2b0d52ECD5162ECb66712\""
-              ]
+              "removed": ["\"0xaD193aDe635576d8e9f7ada71Af2137b16c64075\""],
+              "added": ["\"0xBB13642F795014E0EAC2b0d52ECD5162ECb66712\""]
             },
             {
               "key": "values.facetAddresses.2",
-              "removed": [
-                "\"0xCDB6228b616EEf8Df47D69A372C4f725C43e718C\""
-              ],
-              "added": [
-                "\"0x5575218cECd370E1d630d1AdB03c254B0B376821\""
-              ]
+              "removed": ["\"0xCDB6228b616EEf8Df47D69A372C4f725C43e718C\""],
+              "added": ["\"0x5575218cECd370E1d630d1AdB03c254B0B376821\""]
             },
             {
               "key": "values.facetAddresses.1",
-              "removed": [
-                "\"0xE60E94fCCb18a81D501a38959E532C0A85A1be89\""
-              ],
-              "added": [
-                "\"0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9\""
-              ]
+              "removed": ["\"0xE60E94fCCb18a81D501a38959E532C0A85A1be89\""],
+              "added": ["\"0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9\""]
             },
             {
               "key": "values.facetAddresses.0",
-              "removed": [
-                "\"0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a\""
-              ],
-              "added": [
-                "\"0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a\""
-              ]
+              "removed": ["\"0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a\""],
+              "added": ["\"0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a\""]
             },
             {
               "key": "values.facets.0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
@@ -3709,39 +2883,23 @@
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "103079215106"
-              ],
-              "added": [
-                "107374182400"
-              ]
+              "removed": ["103079215106"],
+              "added": ["107374182400"]
             },
             {
               "key": "values.getSemverProtocolVersion.2",
-              "removed": [
-                "2"
-              ],
-              "added": [
-                "0"
-              ]
+              "removed": ["2"],
+              "added": ["0"]
             },
             {
               "key": "values.getSemverProtocolVersion.1",
-              "removed": [
-                "24"
-              ],
-              "added": [
-                "25"
-              ]
+              "removed": ["24"],
+              "added": ["25"]
             },
             {
               "key": "values.getVerifier",
-              "removed": [
-                "\"0x70F3FBf8a427155185Ec90BED8a3434203de9604\""
-              ],
-              "added": [
-                "\"0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66\""
-              ]
+              "removed": ["\"0x70F3FBf8a427155185Ec90BED8a3434203de9604\""],
+              "added": ["\"0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66\""]
             }
           ]
         },
@@ -3764,12 +2922,8 @@
           "fields": [
             {
               "key": "values.$implementation",
-              "removed": [
-                "\"0x8191975d8B0851C7f0740918896Cf298c09aA05E\""
-              ],
-              "added": [
-                "\"0x8D231E4097C3cb200Ed62134B466AA615cE60336\""
-              ]
+              "removed": ["\"0x8191975d8B0851C7f0740918896Cf298c09aA05E\""],
+              "added": ["\"0x8D231E4097C3cb200Ed62134B466AA615cE60336\""]
             },
             {
               "key": "values.$pastUpgrades.8",
@@ -3779,12 +2933,8 @@
             },
             {
               "key": "values.$upgradeCount",
-              "removed": [
-                "8"
-              ],
-              "added": [
-                "9"
-              ]
+              "removed": ["8"],
+              "added": ["9"]
             }
           ]
         }
@@ -3799,30 +2949,18 @@
           "fields": [
             {
               "key": "values.getAdmin",
-              "removed": [
-                "\"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61\""
-              ],
-              "added": [
-                "\"0x2cf3bD6a9056b39999F3883955E183F655345063\""
-              ]
+              "removed": ["\"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61\""],
+              "added": ["\"0x2cf3bD6a9056b39999F3883955E183F655345063\""]
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "103079215105"
-              ],
-              "added": [
-                "103079215106"
-              ]
+              "removed": ["103079215105"],
+              "added": ["103079215106"]
             },
             {
               "key": "values.getSemverProtocolVersion.2",
-              "removed": [
-                "1"
-              ],
-              "added": [
-                "2"
-              ]
+              "removed": ["1"],
+              "added": ["2"]
             }
           ]
         }
@@ -3837,54 +2975,32 @@
           "fields": [
             {
               "key": "values.$multisigThreshold",
-              "removed": [
-                "\"4 of 8 (50%)\""
-              ],
-              "added": [
-                "\"4 of 7 (57%)\""
-              ]
+              "removed": ["\"4 of 8 (50%)\""],
+              "added": ["\"4 of 7 (57%)\""]
             },
             {
               "key": "values.getOwners.7",
-              "removed": [
-                "\"0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df\""
-              ]
+              "removed": ["\"0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df\""]
             },
             {
               "key": "values.getOwners.6",
-              "removed": [
-                "\"0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF\""
-              ],
-              "added": [
-                "\"0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df\""
-              ]
+              "removed": ["\"0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF\""],
+              "added": ["\"0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df\""]
             },
             {
               "key": "values.getOwners.5",
-              "removed": [
-                "\"0x9dF8bc0918F357c766A5697E031fF5237c05747A\""
-              ],
-              "added": [
-                "\"0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2\""
-              ]
+              "removed": ["\"0x9dF8bc0918F357c766A5697E031fF5237c05747A\""],
+              "added": ["\"0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2\""]
             },
             {
               "key": "values.getOwners.4",
-              "removed": [
-                "\"0x702caCafA54B88e9c54449563Fb2e496e85c78b7\""
-              ],
-              "added": [
-                "\"0x9dF8bc0918F357c766A5697E031fF5237c05747A\""
-              ]
+              "removed": ["\"0x702caCafA54B88e9c54449563Fb2e496e85c78b7\""],
+              "added": ["\"0x9dF8bc0918F357c766A5697E031fF5237c05747A\""]
             },
             {
               "key": "values.getOwners.3",
-              "removed": [
-                "\"0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f\""
-              ],
-              "added": [
-                "\"0x702caCafA54B88e9c54449563Fb2e496e85c78b7\""
-              ]
+              "removed": ["\"0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f\""],
+              "added": ["\"0x702caCafA54B88e9c54449563Fb2e496e85c78b7\""]
             }
           ]
         }
@@ -3899,21 +3015,13 @@
           "fields": [
             {
               "key": "values.getL2SystemContractsUpgradeBatchNumber",
-              "removed": [
-                "484290"
-              ],
-              "added": [
-                "0"
-              ]
+              "removed": ["484290"],
+              "added": ["0"]
             },
             {
               "key": "values.getL2SystemContractsUpgradeBlockNumber",
-              "removed": [
-                "484290"
-              ],
-              "added": [
-                "0"
-              ]
+              "removed": ["484290"],
+              "added": ["0"]
             },
             {
               "key": "values.getL2SystemContractsUpgradeTxHash",
@@ -3937,681 +3045,391 @@
           "fields": [
             {
               "key": "upgradeability.facets.3",
-              "removed": [
-                "\"0xfd3779e6214eBBd40f5F5890351298e123A46BA6\""
-              ],
-              "added": [
-                "\"0xaD193aDe635576d8e9f7ada71Af2137b16c64075\""
-              ]
+              "removed": ["\"0xfd3779e6214eBBd40f5F5890351298e123A46BA6\""],
+              "added": ["\"0xaD193aDe635576d8e9f7ada71Af2137b16c64075\""]
             },
             {
               "key": "upgradeability.facets.2",
-              "removed": [
-                "\"0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7\""
-              ],
-              "added": [
-                "\"0xCDB6228b616EEf8Df47D69A372C4f725C43e718C\""
-              ]
+              "removed": ["\"0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7\""],
+              "added": ["\"0xCDB6228b616EEf8Df47D69A372C4f725C43e718C\""]
             },
             {
               "key": "upgradeability.facets.1",
-              "removed": [
-                "\"0x10113bB3a8e64f8eD67003126adC8CE74C34610c\""
-              ],
-              "added": [
-                "\"0xE60E94fCCb18a81D501a38959E532C0A85A1be89\""
-              ]
+              "removed": ["\"0x10113bB3a8e64f8eD67003126adC8CE74C34610c\""],
+              "added": ["\"0xE60E94fCCb18a81D501a38959E532C0A85A1be89\""]
             },
             {
               "key": "upgradeability.facets.0",
-              "removed": [
-                "\"0x230214F0224C7E0485f348a79512ad00514DB1F7\""
-              ],
-              "added": [
-                "\"0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a\""
-              ]
+              "removed": ["\"0x230214F0224C7E0485f348a79512ad00514DB1F7\""],
+              "added": ["\"0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a\""]
             },
             {
               "key": "values.facetAddresses.3",
-              "removed": [
-                "\"0xfd3779e6214eBBd40f5F5890351298e123A46BA6\""
-              ],
-              "added": [
-                "\"0xaD193aDe635576d8e9f7ada71Af2137b16c64075\""
-              ]
+              "removed": ["\"0xfd3779e6214eBBd40f5F5890351298e123A46BA6\""],
+              "added": ["\"0xaD193aDe635576d8e9f7ada71Af2137b16c64075\""]
             },
             {
               "key": "values.facetAddresses.2",
-              "removed": [
-                "\"0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7\""
-              ],
-              "added": [
-                "\"0xCDB6228b616EEf8Df47D69A372C4f725C43e718C\""
-              ]
+              "removed": ["\"0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7\""],
+              "added": ["\"0xCDB6228b616EEf8Df47D69A372C4f725C43e718C\""]
             },
             {
               "key": "values.facetAddresses.1",
-              "removed": [
-                "\"0x10113bB3a8e64f8eD67003126adC8CE74C34610c\""
-              ],
-              "added": [
-                "\"0xE60E94fCCb18a81D501a38959E532C0A85A1be89\""
-              ]
+              "removed": ["\"0x10113bB3a8e64f8eD67003126adC8CE74C34610c\""],
+              "added": ["\"0xE60E94fCCb18a81D501a38959E532C0A85A1be89\""]
             },
             {
               "key": "values.facetAddresses.0",
-              "removed": [
-                "\"0x230214F0224C7E0485f348a79512ad00514DB1F7\""
-              ],
-              "added": [
-                "\"0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a\""
-              ]
+              "removed": ["\"0x230214F0224C7E0485f348a79512ad00514DB1F7\""],
+              "added": ["\"0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a\""]
             },
             {
               "key": "values.facets.3.1.7",
-              "added": [
-                "\"0x0f23da43\""
-              ]
+              "added": ["\"0x0f23da43\""]
             },
             {
               "key": "values.facets.3.1.6",
-              "added": [
-                "\"0x97c09d34\""
-              ]
+              "added": ["\"0x97c09d34\""]
             },
             {
               "key": "values.facets.3.1.5",
-              "added": [
-                "\"0xc37533bb\""
-              ]
+              "added": ["\"0xc37533bb\""]
             },
             {
               "key": "values.facets.3.1.4",
-              "added": [
-                "\"0x7f61885c\""
-              ]
+              "added": ["\"0x7f61885c\""]
             },
             {
               "key": "values.facets.3.1.3",
-              "removed": [
-                "\"0x97c09d34\""
-              ],
-              "added": [
-                "\"0x6f497ac6\""
-              ]
+              "removed": ["\"0x97c09d34\""],
+              "added": ["\"0x6f497ac6\""]
             },
             {
               "key": "values.facets.3.1.2",
-              "removed": [
-                "\"0x7f61885c\""
-              ],
-              "added": [
-                "\"0xc3d93e7c\""
-              ]
+              "removed": ["\"0x7f61885c\""],
+              "added": ["\"0xc3d93e7c\""]
             },
             {
               "key": "values.facets.3.1.1",
-              "removed": [
-                "\"0xc3d93e7c\""
-              ],
-              "added": [
-                "\"0x6edd4f12\""
-              ]
+              "removed": ["\"0xc3d93e7c\""],
+              "added": ["\"0x6edd4f12\""]
             },
             {
               "key": "values.facets.3.0",
-              "removed": [
-                "\"0xfd3779e6214eBBd40f5F5890351298e123A46BA6\""
-              ],
-              "added": [
-                "\"0xaD193aDe635576d8e9f7ada71Af2137b16c64075\""
-              ]
+              "removed": ["\"0xfd3779e6214eBBd40f5F5890351298e123A46BA6\""],
+              "added": ["\"0xaD193aDe635576d8e9f7ada71Af2137b16c64075\""]
             },
             {
               "key": "values.facets.2.1.7",
-              "added": [
-                "\"0xc924de35\""
-              ]
+              "added": ["\"0xc924de35\""]
             },
             {
               "key": "values.facets.2.1.6",
-              "added": [
-                "\"0xeb672419\""
-              ]
+              "added": ["\"0xeb672419\""]
             },
             {
               "key": "values.facets.2.1.5",
-              "removed": [
-                "\"0xeb672419\""
-              ],
-              "added": [
-                "\"0xe4948f43\""
-              ]
+              "removed": ["\"0xeb672419\""],
+              "added": ["\"0xe4948f43\""]
             },
             {
               "key": "values.facets.2.1.4",
-              "removed": [
-                "\"0xe4948f43\""
-              ],
-              "added": [
-                "\"0x263b7f8e\""
-              ]
+              "removed": ["\"0xe4948f43\""],
+              "added": ["\"0x263b7f8e\""]
             },
             {
               "key": "values.facets.2.1.3",
-              "removed": [
-                "\"0x263b7f8e\""
-              ],
-              "added": [
-                "\"0x042901c7\""
-              ]
+              "removed": ["\"0x263b7f8e\""],
+              "added": ["\"0x042901c7\""]
             },
             {
               "key": "values.facets.2.1.2",
-              "removed": [
-                "\"0x042901c7\""
-              ],
-              "added": [
-                "\"0xb473318e\""
-              ]
+              "removed": ["\"0x042901c7\""],
+              "added": ["\"0xb473318e\""]
             },
             {
               "key": "values.facets.2.1.1",
-              "removed": [
-                "\"0xb473318e\""
-              ],
-              "added": [
-                "\"0x6c0960f9\""
-              ]
+              "removed": ["\"0xb473318e\""],
+              "added": ["\"0x6c0960f9\""]
             },
             {
               "key": "values.facets.2.1.0",
-              "removed": [
-                "\"0x6c0960f9\""
-              ],
-              "added": [
-                "\"0x12f43dab\""
-              ]
+              "removed": ["\"0x6c0960f9\""],
+              "added": ["\"0x12f43dab\""]
             },
             {
               "key": "values.facets.2.0",
-              "removed": [
-                "\"0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7\""
-              ],
-              "added": [
-                "\"0xCDB6228b616EEf8Df47D69A372C4f725C43e718C\""
-              ]
+              "removed": ["\"0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7\""],
+              "added": ["\"0xCDB6228b616EEf8Df47D69A372C4f725C43e718C\""]
             },
             {
               "key": "values.facets.1.1.40",
-              "added": [
-                "\"0x74f4d30d\""
-              ]
+              "added": ["\"0x74f4d30d\""]
             },
             {
               "key": "values.facets.1.1.39",
-              "added": [
-                "\"0xb22dd78e\""
-              ]
+              "added": ["\"0xb22dd78e\""]
             },
             {
               "key": "values.facets.1.1.38",
-              "added": [
-                "\"0x56142d7a\""
-              ]
+              "added": ["\"0x56142d7a\""]
             },
             {
               "key": "values.facets.1.1.37",
-              "added": [
-                "\"0x9cd939e4\""
-              ]
+              "added": ["\"0x9cd939e4\""]
             },
             {
               "key": "values.facets.1.1.36",
-              "added": [
-                "\"0xfacd743b\""
-              ]
+              "added": ["\"0xfacd743b\""]
             },
             {
               "key": "values.facets.1.1.35",
-              "added": [
-                "\"0xe81e0ba1\""
-              ]
+              "added": ["\"0xe81e0ba1\""]
             },
             {
               "key": "values.facets.1.1.34",
-              "added": [
-                "\"0xc3bbd2d7\""
-              ]
+              "added": ["\"0xc3bbd2d7\""]
             },
             {
               "key": "values.facets.1.1.33",
-              "added": [
-                "\"0xbd7c5412\""
-              ]
+              "added": ["\"0xbd7c5412\""]
             },
             {
               "key": "values.facets.1.1.32",
-              "removed": [
-                "\"0x74f4d30d\""
-              ],
-              "added": [
-                "\"0x29b98c67\""
-              ]
+              "removed": ["\"0x74f4d30d\""],
+              "added": ["\"0x29b98c67\""]
             },
             {
               "key": "values.facets.1.1.31",
-              "removed": [
-                "\"0xb22dd78e\""
-              ],
-              "added": [
-                "\"0x18e3a941\""
-              ]
+              "removed": ["\"0xb22dd78e\""],
+              "added": ["\"0x18e3a941\""]
             },
             {
               "key": "values.facets.1.1.30",
-              "removed": [
-                "\"0x56142d7a\""
-              ],
-              "added": [
-                "\"0x46657fe9\""
-              ]
+              "removed": ["\"0x56142d7a\""],
+              "added": ["\"0x46657fe9\""]
             },
             {
               "key": "values.facets.1.1.29",
-              "removed": [
-                "\"0x9cd939e4\""
-              ],
-              "added": [
-                "\"0xa1954fc5\""
-              ]
+              "removed": ["\"0x9cd939e4\""],
+              "added": ["\"0xa1954fc5\""]
             },
             {
               "key": "values.facets.1.1.28",
-              "removed": [
-                "\"0xfacd743b\""
-              ],
-              "added": [
-                "\"0xaf6a2dcd\""
-              ]
+              "removed": ["\"0xfacd743b\""],
+              "added": ["\"0xaf6a2dcd\""]
             },
             {
               "key": "values.facets.1.1.27",
-              "removed": [
-                "\"0xe81e0ba1\""
-              ],
-              "added": [
-                "\"0x39607382\""
-              ]
+              "removed": ["\"0xe81e0ba1\""],
+              "added": ["\"0x39607382\""]
             },
             {
               "key": "values.facets.1.1.26",
-              "removed": [
-                "\"0xc3bbd2d7\""
-              ],
-              "added": [
-                "\"0xfe26699e\""
-              ]
+              "removed": ["\"0xc3bbd2d7\""],
+              "added": ["\"0xfe26699e\""]
             },
             {
               "key": "values.facets.1.1.25",
-              "removed": [
-                "\"0xbd7c5412\""
-              ],
-              "added": [
-                "\"0xef3f0bae\""
-              ]
+              "removed": ["\"0xbd7c5412\""],
+              "added": ["\"0xef3f0bae\""]
             },
             {
               "key": "values.facets.1.1.24",
-              "removed": [
-                "\"0x29b98c67\""
-              ],
-              "added": [
-                "\"0xb8c2f66f\""
-              ]
+              "removed": ["\"0x29b98c67\""],
+              "added": ["\"0xb8c2f66f\""]
             },
             {
               "key": "values.facets.1.1.23",
-              "removed": [
-                "\"0x18e3a941\""
-              ],
-              "added": [
-                "\"0xdb1f0bf9\""
-              ]
+              "removed": ["\"0x18e3a941\""],
+              "added": ["\"0xdb1f0bf9\""]
             },
             {
               "key": "values.facets.1.1.22",
-              "removed": [
-                "\"0x46657fe9\""
-              ],
-              "added": [
-                "\"0x5518c73b\""
-              ]
+              "removed": ["\"0x46657fe9\""],
+              "added": ["\"0x5518c73b\""]
             },
             {
               "key": "values.facets.1.1.21",
-              "removed": [
-                "\"0xa1954fc5\""
-              ],
-              "added": [
-                "\"0xf5c1182c\""
-              ]
+              "removed": ["\"0xa1954fc5\""],
+              "added": ["\"0xf5c1182c\""]
             },
             {
               "key": "values.facets.1.1.20",
-              "removed": [
-                "\"0xaf6a2dcd\""
-              ],
-              "added": [
-                "\"0x06d49e5b\""
-              ]
+              "removed": ["\"0xaf6a2dcd\""],
+              "added": ["\"0x06d49e5b\""]
             },
             {
               "key": "values.facets.1.1.19",
-              "removed": [
-                "\"0x39607382\""
-              ],
-              "added": [
-                "\"0x33ce93fe\""
-              ]
+              "removed": ["\"0x39607382\""],
+              "added": ["\"0x33ce93fe\""]
             },
             {
               "key": "values.facets.1.1.18",
-              "removed": [
-                "\"0xfe26699e\""
-              ],
-              "added": [
-                "\"0x0ec6b0b7\""
-              ]
+              "removed": ["\"0xfe26699e\""],
+              "added": ["\"0x0ec6b0b7\""]
             },
             {
               "key": "values.facets.1.1.17",
-              "removed": [
-                "\"0xef3f0bae\""
-              ],
-              "added": [
-                "\"0x631f4bac\""
-              ]
+              "removed": ["\"0xef3f0bae\""],
+              "added": ["\"0x631f4bac\""]
             },
             {
               "key": "values.facets.1.1.16",
-              "removed": [
-                "\"0xb8c2f66f\""
-              ],
-              "added": [
-                "\"0xd0468156\""
-              ]
+              "removed": ["\"0xb8c2f66f\""],
+              "added": ["\"0xd0468156\""]
             },
             {
               "key": "values.facets.1.1.15",
-              "removed": [
-                "\"0xdb1f0bf9\""
-              ],
-              "added": [
-                "\"0x7b30c8da\""
-              ]
+              "removed": ["\"0xdb1f0bf9\""],
+              "added": ["\"0x7b30c8da\""]
             },
             {
               "key": "values.facets.1.1.14",
-              "removed": [
-                "\"0x33ce93fe\""
-              ],
-              "added": [
-                "\"0x9d1b5a81\""
-              ]
+              "removed": ["\"0x33ce93fe\""],
+              "added": ["\"0x9d1b5a81\""]
             },
             {
               "key": "values.facets.1.1.13",
-              "removed": [
-                "\"0x0ec6b0b7\""
-              ],
-              "added": [
-                "\"0xe5355c75\""
-              ]
+              "removed": ["\"0x0ec6b0b7\""],
+              "added": ["\"0xe5355c75\""]
             },
             {
               "key": "values.facets.1.1.12",
-              "removed": [
-                "\"0x631f4bac\""
-              ],
-              "added": [
-                "\"0xfd791f3c\""
-              ]
+              "removed": ["\"0x631f4bac\""],
+              "added": ["\"0xfd791f3c\""]
             },
             {
               "key": "values.facets.1.1.11",
-              "removed": [
-                "\"0x8665b150\""
-              ],
-              "added": [
-                "\"0xd86970d8\""
-              ]
+              "removed": ["\"0x8665b150\""],
+              "added": ["\"0xd86970d8\""]
             },
             {
               "key": "values.facets.1.1.10",
-              "removed": [
-                "\"0x7b30c8da\""
-              ],
-              "added": [
-                "\"0x79823c9a\""
-              ]
+              "removed": ["\"0x7b30c8da\""],
+              "added": ["\"0x79823c9a\""]
             },
             {
               "key": "values.facets.1.1.9",
-              "removed": [
-                "\"0x9d1b5a81\""
-              ],
-              "added": [
-                "\"0x3591c1a0\""
-              ]
+              "removed": ["\"0x9d1b5a81\""],
+              "added": ["\"0x3591c1a0\""]
             },
             {
               "key": "values.facets.1.1.8",
-              "removed": [
-                "\"0xe5355c75\""
-              ],
-              "added": [
-                "\"0x086a56f8\""
-              ]
+              "removed": ["\"0xe5355c75\""],
+              "added": ["\"0x086a56f8\""]
             },
             {
               "key": "values.facets.1.1.7",
-              "removed": [
-                "\"0xfd791f3c\""
-              ],
-              "added": [
-                "\"0x98acd7a6\""
-              ]
+              "removed": ["\"0xfd791f3c\""],
+              "added": ["\"0x98acd7a6\""]
             },
             {
               "key": "values.facets.1.1.6",
-              "removed": [
-                "\"0xd86970d8\""
-              ],
-              "added": [
-                "\"0x6e9960c3\""
-              ]
+              "removed": ["\"0xd86970d8\""],
+              "added": ["\"0x6e9960c3\""]
             },
             {
               "key": "values.facets.1.1.5",
-              "removed": [
-                "\"0x4fc07d75\""
-              ],
-              "added": [
-                "\"0x7a0ed627\""
-              ]
+              "removed": ["\"0x4fc07d75\""],
+              "added": ["\"0x7a0ed627\""]
             },
             {
               "key": "values.facets.1.1.4",
-              "removed": [
-                "\"0x79823c9a\""
-              ],
-              "added": [
-                "\"0xadfca15e\""
-              ]
+              "removed": ["\"0x79823c9a\""],
+              "added": ["\"0xadfca15e\""]
             },
             {
               "key": "values.facets.1.1.3",
-              "removed": [
-                "\"0x7a0ed627\""
-              ],
-              "added": [
-                "\"0x52ef6b2c\""
-              ]
+              "removed": ["\"0x7a0ed627\""],
+              "added": ["\"0x52ef6b2c\""]
             },
             {
               "key": "values.facets.1.1.2",
-              "removed": [
-                "\"0xadfca15e\""
-              ],
-              "added": [
-                "\"0xcdffacc6\""
-              ]
+              "removed": ["\"0xadfca15e\""],
+              "added": ["\"0xcdffacc6\""]
             },
             {
               "key": "values.facets.1.1.1",
-              "removed": [
-                "\"0x52ef6b2c\""
-              ],
-              "added": [
-                "\"0xea6c029c\""
-              ]
+              "removed": ["\"0x52ef6b2c\""],
+              "added": ["\"0xea6c029c\""]
             },
             {
               "key": "values.facets.1.1.0",
-              "removed": [
-                "\"0xcdffacc6\""
-              ],
-              "added": [
-                "\"0x1de72e34\""
-              ]
+              "removed": ["\"0xcdffacc6\""],
+              "added": ["\"0x1de72e34\""]
             },
             {
               "key": "values.facets.1.0",
-              "removed": [
-                "\"0x10113bB3a8e64f8eD67003126adC8CE74C34610c\""
-              ],
-              "added": [
-                "\"0xE60E94fCCb18a81D501a38959E532C0A85A1be89\""
-              ]
+              "removed": ["\"0x10113bB3a8e64f8eD67003126adC8CE74C34610c\""],
+              "added": ["\"0xE60E94fCCb18a81D501a38959E532C0A85A1be89\""]
             },
             {
               "key": "values.facets.0.1.12",
-              "added": [
-                "\"0xfc57565f\""
-              ]
+              "added": ["\"0xfc57565f\""]
             },
             {
               "key": "values.facets.0.1.11",
-              "added": [
-                "\"0x17338945\""
-              ]
+              "added": ["\"0x17338945\""]
             },
             {
               "key": "values.facets.0.1.10",
-              "removed": [
-                "\"0x17338945\""
-              ],
-              "added": [
-                "\"0x4623c91d\""
-              ]
+              "removed": ["\"0x17338945\""],
+              "added": ["\"0x4623c91d\""]
             },
             {
               "key": "values.facets.0.1.9",
-              "removed": [
-                "\"0x4623c91d\""
-              ],
-              "added": [
-                "\"0x21f603d7\""
-              ]
+              "removed": ["\"0x4623c91d\""],
+              "added": ["\"0x21f603d7\""]
             },
             {
               "key": "values.facets.0.1.8",
-              "removed": [
-                "\"0xbe6f11cf\""
-              ],
-              "added": [
-                "\"0x235d9eb5\""
-              ]
+              "removed": ["\"0xbe6f11cf\""],
+              "added": ["\"0x235d9eb5\""]
             },
             {
               "key": "values.facets.0.1.7",
-              "removed": [
-                "\"0x1cc5d103\""
-              ],
-              "added": [
-                "\"0xe76db865\""
-              ]
+              "removed": ["\"0x1cc5d103\""],
+              "added": ["\"0xe76db865\""]
             },
             {
               "key": "values.facets.0.1.6",
-              "removed": [
-                "\"0xf235757f\""
-              ],
-              "added": [
-                "\"0xbe6f11cf\""
-              ]
+              "removed": ["\"0xf235757f\""],
+              "added": ["\"0xbe6f11cf\""]
             },
             {
               "key": "values.facets.0.1.5",
-              "removed": [
-                "\"0x4dd18bf5\""
-              ],
-              "added": [
-                "\"0x1cc5d103\""
-              ]
+              "removed": ["\"0x4dd18bf5\""],
+              "added": ["\"0x1cc5d103\""]
             },
             {
               "key": "values.facets.0.1.4",
-              "removed": [
-                "\"0x27ae4c16\""
-              ],
-              "added": [
-                "\"0x4dd18bf5\""
-              ]
+              "removed": ["\"0x27ae4c16\""],
+              "added": ["\"0x4dd18bf5\""]
             },
             {
               "key": "values.facets.0.1.3",
-              "removed": [
-                "\"0xa9f6d941\""
-              ],
-              "added": [
-                "\"0x27ae4c16\""
-              ]
+              "removed": ["\"0xa9f6d941\""],
+              "added": ["\"0x27ae4c16\""]
             },
             {
               "key": "values.facets.0.1.2",
-              "removed": [
-                "\"0x64bf8d66\""
-              ],
-              "added": [
-                "\"0xa9f6d941\""
-              ]
+              "removed": ["\"0x64bf8d66\""],
+              "added": ["\"0xa9f6d941\""]
             },
             {
               "key": "values.facets.0.1.1",
-              "removed": [
-                "\"0xe58bb639\""
-              ],
-              "added": [
-                "\"0x64bf8d66\""
-              ]
+              "removed": ["\"0xe58bb639\""],
+              "added": ["\"0x64bf8d66\""]
             },
             {
               "key": "values.facets.0.0",
-              "removed": [
-                "\"0x230214F0224C7E0485f348a79512ad00514DB1F7\""
-              ],
-              "added": [
-                "\"0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a\""
-              ]
+              "removed": ["\"0x230214F0224C7E0485f348a79512ad00514DB1F7\""],
+              "added": ["\"0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a\""]
             },
             {
               "key": "values.getGovernor",
-              "removed": [
-                "\"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61\""
-              ]
+              "removed": ["\"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61\""]
             },
             {
               "key": "values.getL2BootloaderBytecodeHash",
@@ -4633,21 +3451,13 @@
             },
             {
               "key": "values.getL2SystemContractsUpgradeBatchNumber",
-              "removed": [
-                "0"
-              ],
-              "added": [
-                "484290"
-              ]
+              "removed": ["0"],
+              "added": ["484290"]
             },
             {
               "key": "values.getL2SystemContractsUpgradeBlockNumber",
-              "removed": [
-                "0"
-              ],
-              "added": [
-                "484290"
-              ]
+              "removed": ["0"],
+              "added": ["484290"]
             },
             {
               "key": "values.getL2SystemContractsUpgradeTxHash",
@@ -4660,27 +3470,17 @@
             },
             {
               "key": "values.getPendingGovernor",
-              "removed": [
-                "\"0x0000000000000000000000000000000000000000\""
-              ]
+              "removed": ["\"0x0000000000000000000000000000000000000000\""]
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "22"
-              ],
-              "added": [
-                "103079215105"
-              ]
+              "removed": ["22"],
+              "added": ["103079215105"]
             },
             {
               "key": "values.getVerifier",
-              "removed": [
-                "\"0xdd9C826196cf3510B040A8784D85aE36674c7Ed2\""
-              ],
-              "added": [
-                "\"0x70F3FBf8a427155185Ec90BED8a3434203de9604\""
-              ]
+              "removed": ["\"0xdd9C826196cf3510B040A8784D85aE36674c7Ed2\""],
+              "added": ["\"0x70F3FBf8a427155185Ec90BED8a3434203de9604\""]
             },
             {
               "key": "values.getVerifierParams.1",
@@ -4702,63 +3502,43 @@
             },
             {
               "key": "values.baseTokenGasPriceMultiplierDenominator",
-              "added": [
-                "1"
-              ]
+              "added": ["1"]
             },
             {
               "key": "values.baseTokenGasPriceMultiplierNominator",
-              "added": [
-                "1"
-              ]
+              "added": ["1"]
             },
             {
               "key": "values.getAdmin",
-              "added": [
-                "\"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61\""
-              ]
+              "added": ["\"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61\""]
             },
             {
               "key": "values.getBaseToken",
-              "added": [
-                "\"0x0000000000000000000000000000000000000001\""
-              ]
+              "added": ["\"0x0000000000000000000000000000000000000001\""]
             },
             {
               "key": "values.getBaseTokenBridge",
-              "added": [
-                "\"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB\""
-              ]
+              "added": ["\"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB\""]
             },
             {
               "key": "values.getBridgehub",
-              "added": [
-                "\"0x303a465B659cBB0ab36eE643eA362c509EEb5213\""
-              ]
+              "added": ["\"0x303a465B659cBB0ab36eE643eA362c509EEb5213\""]
             },
             {
               "key": "values.getPendingAdmin",
-              "added": [
-                "\"0x0000000000000000000000000000000000000000\""
-              ]
+              "added": ["\"0x0000000000000000000000000000000000000000\""]
             },
             {
               "key": "values.getPubdataPricingMode",
-              "added": [
-                "0"
-              ]
+              "added": ["0"]
             },
             {
               "key": "values.getSemverProtocolVersion",
-              "added": [
-                "[0,24,1]"
-              ]
+              "added": ["[0,24,1]"]
             },
             {
               "key": "values.getStateTransitionManager",
-              "added": [
-                "\"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C\""
-              ]
+              "added": ["\"0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C\""]
             }
           ]
         },
@@ -4767,27 +3547,17 @@
           "fields": [
             {
               "key": "upgradeability.implementation",
-              "removed": [
-                "\"0x810c6598CAaA08B61f6430Df5a8e120B3390d78A\""
-              ],
-              "added": [
-                "\"0x8191975d8B0851C7f0740918896Cf298c09aA05E\""
-              ]
+              "removed": ["\"0x810c6598CAaA08B61f6430Df5a8e120B3390d78A\""],
+              "added": ["\"0x8191975d8B0851C7f0740918896Cf298c09aA05E\""]
             },
             {
               "key": "upgradeability.admin",
-              "removed": [
-                "\"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61\""
-              ],
-              "added": [
-                "\"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1\""
-              ]
+              "removed": ["\"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61\""],
+              "added": ["\"0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1\""]
             },
             {
               "key": "values.SHARED_BRIDGE",
-              "added": [
-                "\"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB\""
-              ]
+              "added": ["\"0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB\""]
             }
           ]
         },
@@ -4838,12 +3608,8 @@
           "fields": [
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "21"
-              ],
-              "added": [
-                "22"
-              ]
+              "removed": ["21"],
+              "added": ["22"]
             },
             {
               "key": "values.getVerifierParams.1",
@@ -4867,111 +3633,63 @@
           "fields": [
             {
               "key": "upgradeability.facets.3",
-              "removed": [
-                "\"0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a\""
-              ],
-              "added": [
-                "\"0xfd3779e6214eBBd40f5F5890351298e123A46BA6\""
-              ]
+              "removed": ["\"0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a\""],
+              "added": ["\"0xfd3779e6214eBBd40f5F5890351298e123A46BA6\""]
             },
             {
               "key": "upgradeability.facets.2",
-              "removed": [
-                "\"0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB\""
-              ],
-              "added": [
-                "\"0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7\""
-              ]
+              "removed": ["\"0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB\""],
+              "added": ["\"0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7\""]
             },
             {
               "key": "upgradeability.facets.1",
-              "removed": [
-                "\"0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B\""
-              ],
-              "added": [
-                "\"0x10113bB3a8e64f8eD67003126adC8CE74C34610c\""
-              ]
+              "removed": ["\"0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B\""],
+              "added": ["\"0x10113bB3a8e64f8eD67003126adC8CE74C34610c\""]
             },
             {
               "key": "upgradeability.facets.0",
-              "removed": [
-                "\"0xE6426c725cB507168369c10284390E59d91eC821\""
-              ],
-              "added": [
-                "\"0x230214F0224C7E0485f348a79512ad00514DB1F7\""
-              ]
+              "removed": ["\"0xE6426c725cB507168369c10284390E59d91eC821\""],
+              "added": ["\"0x230214F0224C7E0485f348a79512ad00514DB1F7\""]
             },
             {
               "key": "values.facetAddresses.3",
-              "removed": [
-                "\"0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a\""
-              ],
-              "added": [
-                "\"0xfd3779e6214eBBd40f5F5890351298e123A46BA6\""
-              ]
+              "removed": ["\"0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a\""],
+              "added": ["\"0xfd3779e6214eBBd40f5F5890351298e123A46BA6\""]
             },
             {
               "key": "values.facetAddresses.2",
-              "removed": [
-                "\"0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB\""
-              ],
-              "added": [
-                "\"0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7\""
-              ]
+              "removed": ["\"0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB\""],
+              "added": ["\"0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7\""]
             },
             {
               "key": "values.facetAddresses.1",
-              "removed": [
-                "\"0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B\""
-              ],
-              "added": [
-                "\"0x10113bB3a8e64f8eD67003126adC8CE74C34610c\""
-              ]
+              "removed": ["\"0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B\""],
+              "added": ["\"0x10113bB3a8e64f8eD67003126adC8CE74C34610c\""]
             },
             {
               "key": "values.facetAddresses.0",
-              "removed": [
-                "\"0xE6426c725cB507168369c10284390E59d91eC821\""
-              ],
-              "added": [
-                "\"0x230214F0224C7E0485f348a79512ad00514DB1F7\""
-              ]
+              "removed": ["\"0xE6426c725cB507168369c10284390E59d91eC821\""],
+              "added": ["\"0x230214F0224C7E0485f348a79512ad00514DB1F7\""]
             },
             {
               "key": "values.facets.3.0",
-              "removed": [
-                "\"0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a\""
-              ],
-              "added": [
-                "\"0xfd3779e6214eBBd40f5F5890351298e123A46BA6\""
-              ]
+              "removed": ["\"0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a\""],
+              "added": ["\"0xfd3779e6214eBBd40f5F5890351298e123A46BA6\""]
             },
             {
               "key": "values.facets.2.0",
-              "removed": [
-                "\"0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB\""
-              ],
-              "added": [
-                "\"0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7\""
-              ]
+              "removed": ["\"0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB\""],
+              "added": ["\"0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7\""]
             },
             {
               "key": "values.facets.1.0",
-              "removed": [
-                "\"0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B\""
-              ],
-              "added": [
-                "\"0x10113bB3a8e64f8eD67003126adC8CE74C34610c\""
-              ]
+              "removed": ["\"0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B\""],
+              "added": ["\"0x10113bB3a8e64f8eD67003126adC8CE74C34610c\""]
             },
             {
               "key": "values.facets.0.0",
-              "removed": [
-                "\"0xE6426c725cB507168369c10284390E59d91eC821\""
-              ],
-              "added": [
-                "\"0x230214F0224C7E0485f348a79512ad00514DB1F7\""
-              ]
+              "removed": ["\"0xE6426c725cB507168369c10284390E59d91eC821\""],
+              "added": ["\"0x230214F0224C7E0485f348a79512ad00514DB1F7\""]
             },
             {
               "key": "values.getL2BootloaderBytecodeHash",
@@ -4993,30 +3711,18 @@
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "20"
-              ],
-              "added": [
-                "21"
-              ]
+              "removed": ["20"],
+              "added": ["21"]
             },
             {
               "key": "values.getVerifier",
-              "removed": [
-                "\"0x3390051435eCB25a9610A1cF17d1BA0a228A0560\""
-              ],
-              "added": [
-                "\"0xdd9C826196cf3510B040A8784D85aE36674c7Ed2\""
-              ]
+              "removed": ["\"0x3390051435eCB25a9610A1cF17d1BA0a228A0560\""],
+              "added": ["\"0xdd9C826196cf3510B040A8784D85aE36674c7Ed2\""]
             },
             {
               "key": "values.validators.0",
-              "removed": [
-                "\"0xa0425d71cB1D6fb80E65a5361a04096E0672De03\""
-              ],
-              "added": [
-                "\"0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD\""
-              ]
+              "removed": ["\"0xa0425d71cB1D6fb80E65a5361a04096E0672De03\""],
+              "added": ["\"0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD\""]
             }
           ]
         },
@@ -5047,12 +3753,8 @@
           "fields": [
             {
               "key": "upgradeability.implementation",
-              "removed": [
-                "\"0x79Cc1DF74Ac2d1B0876498C9FcE32c7e34F57B43\""
-              ],
-              "added": [
-                "\"0x810c6598CAaA08B61f6430Df5a8e120B3390d78A\""
-              ]
+              "removed": ["\"0x79Cc1DF74Ac2d1B0876498C9FcE32c7e34F57B43\""],
+              "added": ["\"0x810c6598CAaA08B61f6430Df5a8e120B3390d78A\""]
             }
           ]
         }
@@ -5067,189 +3769,107 @@
           "fields": [
             {
               "key": "upgradeability.facets.3",
-              "removed": [
-                "\"0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d\""
-              ],
-              "added": [
-                "\"0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a\""
-              ]
+              "removed": ["\"0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d\""],
+              "added": ["\"0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a\""]
             },
             {
               "key": "upgradeability.facets.2",
-              "removed": [
-                "\"0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58\""
-              ],
-              "added": [
-                "\"0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB\""
-              ]
+              "removed": ["\"0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58\""],
+              "added": ["\"0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB\""]
             },
             {
               "key": "upgradeability.facets.1",
-              "removed": [
-                "\"0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7\""
-              ],
-              "added": [
-                "\"0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B\""
-              ]
+              "removed": ["\"0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7\""],
+              "added": ["\"0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B\""]
             },
             {
               "key": "upgradeability.facets.0",
-              "removed": [
-                "\"0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967\""
-              ],
-              "added": [
-                "\"0xE6426c725cB507168369c10284390E59d91eC821\""
-              ]
+              "removed": ["\"0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967\""],
+              "added": ["\"0xE6426c725cB507168369c10284390E59d91eC821\""]
             },
             {
               "key": "values.facetAddresses.3",
-              "removed": [
-                "\"0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d\""
-              ],
-              "added": [
-                "\"0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a\""
-              ]
+              "removed": ["\"0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d\""],
+              "added": ["\"0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a\""]
             },
             {
               "key": "values.facetAddresses.2",
-              "removed": [
-                "\"0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58\""
-              ],
-              "added": [
-                "\"0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB\""
-              ]
+              "removed": ["\"0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58\""],
+              "added": ["\"0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB\""]
             },
             {
               "key": "values.facetAddresses.1",
-              "removed": [
-                "\"0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7\""
-              ],
-              "added": [
-                "\"0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B\""
-              ]
+              "removed": ["\"0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7\""],
+              "added": ["\"0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B\""]
             },
             {
               "key": "values.facetAddresses.0",
-              "removed": [
-                "\"0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967\""
-              ],
-              "added": [
-                "\"0xE6426c725cB507168369c10284390E59d91eC821\""
-              ]
+              "removed": ["\"0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967\""],
+              "added": ["\"0xE6426c725cB507168369c10284390E59d91eC821\""]
             },
             {
               "key": "values.facets.3.0",
-              "removed": [
-                "\"0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d\""
-              ],
-              "added": [
-                "\"0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a\""
-              ]
+              "removed": ["\"0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d\""],
+              "added": ["\"0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a\""]
             },
             {
               "key": "values.facets.2.0",
-              "removed": [
-                "\"0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58\""
-              ],
-              "added": [
-                "\"0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB\""
-              ]
+              "removed": ["\"0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58\""],
+              "added": ["\"0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB\""]
             },
             {
               "key": "values.facets.1.0",
-              "removed": [
-                "\"0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7\""
-              ],
-              "added": [
-                "\"0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B\""
-              ]
+              "removed": ["\"0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7\""],
+              "added": ["\"0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B\""]
             },
             {
               "key": "values.facets.0.1[10]",
-              "added": [
-                "\"0x17338945\""
-              ]
+              "added": ["\"0x17338945\""]
             },
             {
               "key": "values.facets.0.1.9",
-              "removed": [
-                "\"0x17338945\""
-              ],
-              "added": [
-                "\"0x4623c91d\""
-              ]
+              "removed": ["\"0x17338945\""],
+              "added": ["\"0x4623c91d\""]
             },
             {
               "key": "values.facets.0.1.8",
-              "removed": [
-                "\"0x4623c91d\""
-              ],
-              "added": [
-                "\"0xbe6f11cf\""
-              ]
+              "removed": ["\"0x4623c91d\""],
+              "added": ["\"0xbe6f11cf\""]
             },
             {
               "key": "values.facets.0.1.7",
-              "removed": [
-                "\"0xbe6f11cf\""
-              ],
-              "added": [
-                "\"0x1cc5d103\""
-              ]
+              "removed": ["\"0xbe6f11cf\""],
+              "added": ["\"0x1cc5d103\""]
             },
             {
               "key": "values.facets.0.1.6",
-              "removed": [
-                "\"0x1cc5d103\""
-              ],
-              "added": [
-                "\"0xf235757f\""
-              ]
+              "removed": ["\"0x1cc5d103\""],
+              "added": ["\"0xf235757f\""]
             },
             {
               "key": "values.facets.0.1.5",
-              "removed": [
-                "\"0xf235757f\""
-              ],
-              "added": [
-                "\"0x4dd18bf5\""
-              ]
+              "removed": ["\"0xf235757f\""],
+              "added": ["\"0x4dd18bf5\""]
             },
             {
               "key": "values.facets.0.1.4",
-              "removed": [
-                "\"0x4dd18bf5\""
-              ],
-              "added": [
-                "\"0x27ae4c16\""
-              ]
+              "removed": ["\"0x4dd18bf5\""],
+              "added": ["\"0x27ae4c16\""]
             },
             {
               "key": "values.facets.0.1.3",
-              "removed": [
-                "\"0x27ae4c16\""
-              ],
-              "added": [
-                "\"0xa9f6d941\""
-              ]
+              "removed": ["\"0x27ae4c16\""],
+              "added": ["\"0xa9f6d941\""]
             },
             {
               "key": "values.facets.0.1.2",
-              "removed": [
-                "\"0xa9f6d941\""
-              ],
-              "added": [
-                "\"0x64bf8d66\""
-              ]
+              "removed": ["\"0xa9f6d941\""],
+              "added": ["\"0x64bf8d66\""]
             },
             {
               "key": "values.facets.0.0",
-              "removed": [
-                "\"0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967\""
-              ],
-              "added": [
-                "\"0xE6426c725cB507168369c10284390E59d91eC821\""
-              ]
+              "removed": ["\"0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967\""],
+              "added": ["\"0xE6426c725cB507168369c10284390E59d91eC821\""]
             },
             {
               "key": "values.getL2BootloaderBytecodeHash",
@@ -5271,21 +3891,13 @@
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "19"
-              ],
-              "added": [
-                "20"
-              ]
+              "removed": ["19"],
+              "added": ["20"]
             },
             {
               "key": "values.getVerifier",
-              "removed": [
-                "\"0xB465882F67d236DcC0D090F78ebb0d838e9719D8\""
-              ],
-              "added": [
-                "\"0x3390051435eCB25a9610A1cF17d1BA0a228A0560\""
-              ]
+              "removed": ["\"0xB465882F67d236DcC0D090F78ebb0d838e9719D8\""],
+              "added": ["\"0x3390051435eCB25a9610A1cF17d1BA0a228A0560\""]
             },
             {
               "key": "values.getVerifierParams.1",
@@ -5321,393 +3933,221 @@
           "fields": [
             {
               "key": "upgradeability.facets.3",
-              "removed": [
-                "\"0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269\""
-              ],
-              "added": [
-                "\"0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d\""
-              ]
+              "removed": ["\"0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269\""],
+              "added": ["\"0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d\""]
             },
             {
               "key": "upgradeability.facets.2",
-              "removed": [
-                "\"0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08\""
-              ],
-              "added": [
-                "\"0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58\""
-              ]
+              "removed": ["\"0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08\""],
+              "added": ["\"0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58\""]
             },
             {
               "key": "upgradeability.facets.1",
-              "removed": [
-                "\"0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4\""
-              ],
-              "added": [
-                "\"0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7\""
-              ]
+              "removed": ["\"0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4\""],
+              "added": ["\"0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7\""]
             },
             {
               "key": "upgradeability.facets.0",
-              "removed": [
-                "\"0x409560DE546e057ce5bD5dB487EdF2bB5E785baB\""
-              ],
-              "added": [
-                "\"0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967\""
-              ]
+              "removed": ["\"0x409560DE546e057ce5bD5dB487EdF2bB5E785baB\""],
+              "added": ["\"0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967\""]
             },
             {
               "key": "values.facetAddresses.3",
-              "removed": [
-                "\"0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269\""
-              ],
-              "added": [
-                "\"0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d\""
-              ]
+              "removed": ["\"0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269\""],
+              "added": ["\"0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d\""]
             },
             {
               "key": "values.facetAddresses.2",
-              "removed": [
-                "\"0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08\""
-              ],
-              "added": [
-                "\"0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58\""
-              ]
+              "removed": ["\"0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08\""],
+              "added": ["\"0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58\""]
             },
             {
               "key": "values.facetAddresses.1",
-              "removed": [
-                "\"0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4\""
-              ],
-              "added": [
-                "\"0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7\""
-              ]
+              "removed": ["\"0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4\""],
+              "added": ["\"0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7\""]
             },
             {
               "key": "values.facetAddresses.0",
-              "removed": [
-                "\"0x409560DE546e057ce5bD5dB487EdF2bB5E785baB\""
-              ],
-              "added": [
-                "\"0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967\""
-              ]
+              "removed": ["\"0x409560DE546e057ce5bD5dB487EdF2bB5E785baB\""],
+              "added": ["\"0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967\""]
             },
             {
               "key": "values.facets.3.0",
-              "removed": [
-                "\"0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269\""
-              ],
-              "added": [
-                "\"0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d\""
-              ]
+              "removed": ["\"0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269\""],
+              "added": ["\"0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d\""]
             },
             {
               "key": "values.facets.2.0",
-              "removed": [
-                "\"0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08\""
-              ],
-              "added": [
-                "\"0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58\""
-              ]
+              "removed": ["\"0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08\""],
+              "added": ["\"0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58\""]
             },
             {
               "key": "values.facets.1.1[33]",
-              "removed": [
-                "\"0x74f4d30d\""
-              ]
+              "removed": ["\"0x74f4d30d\""]
             },
             {
               "key": "values.facets.1.1.32",
-              "removed": [
-                "\"0xb22dd78e\""
-              ],
-              "added": [
-                "\"0x74f4d30d\""
-              ]
+              "removed": ["\"0xb22dd78e\""],
+              "added": ["\"0x74f4d30d\""]
             },
             {
               "key": "values.facets.1.1.31",
-              "removed": [
-                "\"0x56142d7a\""
-              ],
-              "added": [
-                "\"0xb22dd78e\""
-              ]
+              "removed": ["\"0x56142d7a\""],
+              "added": ["\"0xb22dd78e\""]
             },
             {
               "key": "values.facets.1.1.30",
-              "removed": [
-                "\"0x9cd939e4\""
-              ],
-              "added": [
-                "\"0x56142d7a\""
-              ]
+              "removed": ["\"0x9cd939e4\""],
+              "added": ["\"0x56142d7a\""]
             },
             {
               "key": "values.facets.1.1.29",
-              "removed": [
-                "\"0xfacd743b\""
-              ],
-              "added": [
-                "\"0x9cd939e4\""
-              ]
+              "removed": ["\"0xfacd743b\""],
+              "added": ["\"0x9cd939e4\""]
             },
             {
               "key": "values.facets.1.1.28",
-              "removed": [
-                "\"0xe81e0ba1\""
-              ],
-              "added": [
-                "\"0xfacd743b\""
-              ]
+              "removed": ["\"0xe81e0ba1\""],
+              "added": ["\"0xfacd743b\""]
             },
             {
               "key": "values.facets.1.1.27",
-              "removed": [
-                "\"0xc3bbd2d7\""
-              ],
-              "added": [
-                "\"0xe81e0ba1\""
-              ]
+              "removed": ["\"0xc3bbd2d7\""],
+              "added": ["\"0xe81e0ba1\""]
             },
             {
               "key": "values.facets.1.1.26",
-              "removed": [
-                "\"0xbd7c5412\""
-              ],
-              "added": [
-                "\"0xc3bbd2d7\""
-              ]
+              "removed": ["\"0xbd7c5412\""],
+              "added": ["\"0xc3bbd2d7\""]
             },
             {
               "key": "values.facets.1.1.25",
-              "removed": [
-                "\"0x29b98c67\""
-              ],
-              "added": [
-                "\"0xbd7c5412\""
-              ]
+              "removed": ["\"0x29b98c67\""],
+              "added": ["\"0xbd7c5412\""]
             },
             {
               "key": "values.facets.1.1.24",
-              "removed": [
-                "\"0x18e3a941\""
-              ],
-              "added": [
-                "\"0x29b98c67\""
-              ]
+              "removed": ["\"0x18e3a941\""],
+              "added": ["\"0x29b98c67\""]
             },
             {
               "key": "values.facets.1.1.23",
-              "removed": [
-                "\"0x46657fe9\""
-              ],
-              "added": [
-                "\"0x18e3a941\""
-              ]
+              "removed": ["\"0x46657fe9\""],
+              "added": ["\"0x18e3a941\""]
             },
             {
               "key": "values.facets.1.1.22",
-              "removed": [
-                "\"0xa1954fc5\""
-              ],
-              "added": [
-                "\"0x46657fe9\""
-              ]
+              "removed": ["\"0xa1954fc5\""],
+              "added": ["\"0x46657fe9\""]
             },
             {
               "key": "values.facets.1.1.21",
-              "removed": [
-                "\"0xaf6a2dcd\""
-              ],
-              "added": [
-                "\"0xa1954fc5\""
-              ]
+              "removed": ["\"0xaf6a2dcd\""],
+              "added": ["\"0xa1954fc5\""]
             },
             {
               "key": "values.facets.1.1.20",
-              "removed": [
-                "\"0x39607382\""
-              ],
-              "added": [
-                "\"0xaf6a2dcd\""
-              ]
+              "removed": ["\"0x39607382\""],
+              "added": ["\"0xaf6a2dcd\""]
             },
             {
               "key": "values.facets.1.1.19",
-              "removed": [
-                "\"0xfe26699e\""
-              ],
-              "added": [
-                "\"0x39607382\""
-              ]
+              "removed": ["\"0xfe26699e\""],
+              "added": ["\"0x39607382\""]
             },
             {
               "key": "values.facets.1.1.18",
-              "removed": [
-                "\"0xef3f0bae\""
-              ],
-              "added": [
-                "\"0xfe26699e\""
-              ]
+              "removed": ["\"0xef3f0bae\""],
+              "added": ["\"0xfe26699e\""]
             },
             {
               "key": "values.facets.1.1.17",
-              "removed": [
-                "\"0xb8c2f66f\""
-              ],
-              "added": [
-                "\"0xef3f0bae\""
-              ]
+              "removed": ["\"0xb8c2f66f\""],
+              "added": ["\"0xef3f0bae\""]
             },
             {
               "key": "values.facets.1.1.16",
-              "removed": [
-                "\"0xdb1f0bf9\""
-              ],
-              "added": [
-                "\"0xb8c2f66f\""
-              ]
+              "removed": ["\"0xdb1f0bf9\""],
+              "added": ["\"0xb8c2f66f\""]
             },
             {
               "key": "values.facets.1.1.15",
-              "removed": [
-                "\"0x33ce93fe\""
-              ],
-              "added": [
-                "\"0xdb1f0bf9\""
-              ]
+              "removed": ["\"0x33ce93fe\""],
+              "added": ["\"0xdb1f0bf9\""]
             },
             {
               "key": "values.facets.1.1.14",
-              "removed": [
-                "\"0x0ec6b0b7\""
-              ],
-              "added": [
-                "\"0x33ce93fe\""
-              ]
+              "removed": ["\"0x0ec6b0b7\""],
+              "added": ["\"0x33ce93fe\""]
             },
             {
               "key": "values.facets.1.1.13",
-              "removed": [
-                "\"0x631f4bac\""
-              ],
-              "added": [
-                "\"0x0ec6b0b7\""
-              ]
+              "removed": ["\"0x631f4bac\""],
+              "added": ["\"0x0ec6b0b7\""]
             },
             {
               "key": "values.facets.1.1.12",
-              "removed": [
-                "\"0x8665b150\""
-              ],
-              "added": [
-                "\"0x631f4bac\""
-              ]
+              "removed": ["\"0x8665b150\""],
+              "added": ["\"0x631f4bac\""]
             },
             {
               "key": "values.facets.1.1.11",
-              "removed": [
-                "\"0x7b30c8da\""
-              ],
-              "added": [
-                "\"0x8665b150\""
-              ]
+              "removed": ["\"0x7b30c8da\""],
+              "added": ["\"0x8665b150\""]
             },
             {
               "key": "values.facets.1.1.10",
-              "removed": [
-                "\"0x9d1b5a81\""
-              ],
-              "added": [
-                "\"0x7b30c8da\""
-              ]
+              "removed": ["\"0x9d1b5a81\""],
+              "added": ["\"0x7b30c8da\""]
             },
             {
               "key": "values.facets.1.1.9",
-              "removed": [
-                "\"0xe5355c75\""
-              ],
-              "added": [
-                "\"0x9d1b5a81\""
-              ]
+              "removed": ["\"0xe5355c75\""],
+              "added": ["\"0x9d1b5a81\""]
             },
             {
               "key": "values.facets.1.1.8",
-              "removed": [
-                "\"0xfd791f3c\""
-              ],
-              "added": [
-                "\"0xe5355c75\""
-              ]
+              "removed": ["\"0xfd791f3c\""],
+              "added": ["\"0xe5355c75\""]
             },
             {
               "key": "values.facets.1.1.7",
-              "removed": [
-                "\"0xd86970d8\""
-              ],
-              "added": [
-                "\"0xfd791f3c\""
-              ]
+              "removed": ["\"0xd86970d8\""],
+              "added": ["\"0xfd791f3c\""]
             },
             {
               "key": "values.facets.1.1.6",
-              "removed": [
-                "\"0x4fc07d75\""
-              ],
-              "added": [
-                "\"0xd86970d8\""
-              ]
+              "removed": ["\"0x4fc07d75\""],
+              "added": ["\"0xd86970d8\""]
             },
             {
               "key": "values.facets.1.1.5",
-              "removed": [
-                "\"0x79823c9a\""
-              ],
-              "added": [
-                "\"0x4fc07d75\""
-              ]
+              "removed": ["\"0x79823c9a\""],
+              "added": ["\"0x4fc07d75\""]
             },
             {
               "key": "values.facets.1.1.4",
-              "removed": [
-                "\"0xa7cd63b7\""
-              ],
-              "added": [
-                "\"0x79823c9a\""
-              ]
+              "removed": ["\"0xa7cd63b7\""],
+              "added": ["\"0x79823c9a\""]
             },
             {
               "key": "values.facets.1.0",
-              "removed": [
-                "\"0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4\""
-              ],
-              "added": [
-                "\"0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7\""
-              ]
+              "removed": ["\"0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4\""],
+              "added": ["\"0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7\""]
             },
             {
               "key": "values.facets.0.0",
-              "removed": [
-                "\"0x409560DE546e057ce5bD5dB487EdF2bB5E785baB\""
-              ],
-              "added": [
-                "\"0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967\""
-              ]
+              "removed": ["\"0x409560DE546e057ce5bD5dB487EdF2bB5E785baB\""],
+              "added": ["\"0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967\""]
             },
             {
               "key": "values.getAllowList",
-              "removed": [
-                "\"0x0C0dC1171258694635AA50cec5845aC1031cA6d7\""
-              ]
+              "removed": ["\"0x0C0dC1171258694635AA50cec5845aC1031cA6d7\""]
             },
             {
               "key": "values.getGovernor",
-              "removed": [
-                "\"0x4e4943346848c4867F81dFb37c4cA9C5715A7828\""
-              ],
-              "added": [
-                "\"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61\""
-              ]
+              "removed": ["\"0x4e4943346848c4867F81dFb37c4cA9C5715A7828\""],
+              "added": ["\"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61\""]
             },
             {
               "key": "values.getL2BootloaderBytecodeHash",
@@ -5729,12 +4169,8 @@
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "18"
-              ],
-              "added": [
-                "19"
-              ]
+              "removed": ["18"],
+              "added": ["19"]
             }
           ]
         },
@@ -5743,21 +4179,13 @@
           "fields": [
             {
               "key": "upgradeability.implementation",
-              "removed": [
-                "\"0x03F3F3c12e11C2FAA60080bd3F7f80AADF369a33\""
-              ],
-              "added": [
-                "\"0x79Cc1DF74Ac2d1B0876498C9FcE32c7e34F57B43\""
-              ]
+              "removed": ["\"0x03F3F3c12e11C2FAA60080bd3F7f80AADF369a33\""],
+              "added": ["\"0x79Cc1DF74Ac2d1B0876498C9FcE32c7e34F57B43\""]
             },
             {
               "key": "upgradeability.admin",
-              "removed": [
-                "\"0x4e4943346848c4867F81dFb37c4cA9C5715A7828\""
-              ],
-              "added": [
-                "\"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61\""
-              ]
+              "removed": ["\"0x4e4943346848c4867F81dFb37c4cA9C5715A7828\""],
+              "added": ["\"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61\""]
             }
           ]
         },
@@ -5766,12 +4194,8 @@
           "fields": [
             {
               "key": "values.owner",
-              "removed": [
-                "\"0x4e4943346848c4867F81dFb37c4cA9C5715A7828\""
-              ],
-              "added": [
-                "\"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61\""
-              ]
+              "removed": ["\"0x4e4943346848c4867F81dFb37c4cA9C5715A7828\""],
+              "added": ["\"0x0b622A2061EaccAE1c664eBC3E868b8438e03F61\""]
             }
           ]
         },
@@ -5790,87 +4214,51 @@
           "fields": [
             {
               "key": "upgradeability.facets[4]",
-              "removed": [
-                "\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\""
-              ]
+              "removed": ["\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\""]
             },
             {
               "key": "upgradeability.facets.3",
-              "removed": [
-                "\"0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b\""
-              ],
-              "added": [
-                "\"0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269\""
-              ]
+              "removed": ["\"0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b\""],
+              "added": ["\"0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269\""]
             },
             {
               "key": "upgradeability.facets.2",
-              "removed": [
-                "\"0x62aA95ac4740A367746A664C4C69034d52E968EF\""
-              ],
-              "added": [
-                "\"0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08\""
-              ]
+              "removed": ["\"0x62aA95ac4740A367746A664C4C69034d52E968EF\""],
+              "added": ["\"0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08\""]
             },
             {
               "key": "upgradeability.facets.1",
-              "removed": [
-                "\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""
-              ],
-              "added": [
-                "\"0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4\""
-              ]
+              "removed": ["\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""],
+              "added": ["\"0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4\""]
             },
             {
               "key": "upgradeability.facets.0",
-              "removed": [
-                "\"0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4\""
-              ],
-              "added": [
-                "\"0x409560DE546e057ce5bD5dB487EdF2bB5E785baB\""
-              ]
+              "removed": ["\"0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4\""],
+              "added": ["\"0x409560DE546e057ce5bD5dB487EdF2bB5E785baB\""]
             },
             {
               "key": "values.facetAddresses[4]",
-              "removed": [
-                "\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\""
-              ]
+              "removed": ["\"0x2E64926BE35412f7710A3E097Ba076740bF97CC0\""]
             },
             {
               "key": "values.facetAddresses.3",
-              "removed": [
-                "\"0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b\""
-              ],
-              "added": [
-                "\"0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269\""
-              ]
+              "removed": ["\"0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b\""],
+              "added": ["\"0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269\""]
             },
             {
               "key": "values.facetAddresses.2",
-              "removed": [
-                "\"0x62aA95ac4740A367746A664C4C69034d52E968EF\""
-              ],
-              "added": [
-                "\"0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08\""
-              ]
+              "removed": ["\"0x62aA95ac4740A367746A664C4C69034d52E968EF\""],
+              "added": ["\"0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08\""]
             },
             {
               "key": "values.facetAddresses.1",
-              "removed": [
-                "\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""
-              ],
-              "added": [
-                "\"0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4\""
-              ]
+              "removed": ["\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""],
+              "added": ["\"0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4\""]
             },
             {
               "key": "values.facetAddresses.0",
-              "removed": [
-                "\"0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4\""
-              ],
-              "added": [
-                "\"0x409560DE546e057ce5bD5dB487EdF2bB5E785baB\""
-              ]
+              "removed": ["\"0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4\""],
+              "added": ["\"0x409560DE546e057ce5bD5dB487EdF2bB5E785baB\""]
             },
             {
               "key": "values.facets[4]",
@@ -5880,360 +4268,204 @@
             },
             {
               "key": "values.facets.3.1.3",
-              "removed": [
-                "\"0xa9a2d18a\""
-              ],
-              "added": [
-                "\"0x97c09d34\""
-              ]
+              "removed": ["\"0xa9a2d18a\""],
+              "added": ["\"0x97c09d34\""]
             },
             {
               "key": "values.facets.3.1.2",
-              "removed": [
-                "\"0x7739cbe7\""
-              ],
-              "added": [
-                "\"0x7f61885c\""
-              ]
+              "removed": ["\"0x7739cbe7\""],
+              "added": ["\"0x7f61885c\""]
             },
             {
               "key": "values.facets.3.1.1",
-              "removed": [
-                "\"0xce9dcf16\""
-              ],
-              "added": [
-                "\"0xc3d93e7c\""
-              ]
+              "removed": ["\"0xce9dcf16\""],
+              "added": ["\"0xc3d93e7c\""]
             },
             {
               "key": "values.facets.3.1.0",
-              "removed": [
-                "\"0x0c4dd810\""
-              ],
-              "added": [
-                "\"0x701f58c5\""
-              ]
+              "removed": ["\"0x0c4dd810\""],
+              "added": ["\"0x701f58c5\""]
             },
             {
               "key": "values.facets.3.0",
-              "removed": [
-                "\"0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b\""
-              ],
-              "added": [
-                "\"0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269\""
-              ]
+              "removed": ["\"0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b\""],
+              "added": ["\"0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269\""]
             },
             {
               "key": "values.facets.2.0",
-              "removed": [
-                "\"0x62aA95ac4740A367746A664C4C69034d52E968EF\""
-              ],
-              "added": [
-                "\"0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08\""
-              ]
+              "removed": ["\"0x62aA95ac4740A367746A664C4C69034d52E968EF\""],
+              "added": ["\"0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08\""]
             },
             {
               "key": "values.facets.1.1[34]",
-              "removed": [
-                "\"0x74f4d30d\""
-              ]
+              "removed": ["\"0x74f4d30d\""]
             },
             {
               "key": "values.facets.1.1.33",
-              "removed": [
-                "\"0x56142d7a\""
-              ],
-              "added": [
-                "\"0x74f4d30d\""
-              ]
+              "removed": ["\"0x56142d7a\""],
+              "added": ["\"0x74f4d30d\""]
             },
             {
               "key": "values.facets.1.1.32",
-              "removed": [
-                "\"0x9cd939e4\""
-              ],
-              "added": [
-                "\"0xb22dd78e\""
-              ]
+              "removed": ["\"0x9cd939e4\""],
+              "added": ["\"0xb22dd78e\""]
             },
             {
               "key": "values.facets.1.1.31",
-              "removed": [
-                "\"0xfacd743b\""
-              ],
-              "added": [
-                "\"0x56142d7a\""
-              ]
+              "removed": ["\"0xfacd743b\""],
+              "added": ["\"0x56142d7a\""]
             },
             {
               "key": "values.facets.1.1.30",
-              "removed": [
-                "\"0xe81e0ba1\""
-              ],
-              "added": [
-                "\"0x9cd939e4\""
-              ]
+              "removed": ["\"0xe81e0ba1\""],
+              "added": ["\"0x9cd939e4\""]
             },
             {
               "key": "values.facets.1.1.29",
-              "removed": [
-                "\"0xc3bbd2d7\""
-              ],
-              "added": [
-                "\"0xfacd743b\""
-              ]
+              "removed": ["\"0xc3bbd2d7\""],
+              "added": ["\"0xfacd743b\""]
             },
             {
               "key": "values.facets.1.1.28",
-              "removed": [
-                "\"0xbd7c5412\""
-              ],
-              "added": [
-                "\"0xe81e0ba1\""
-              ]
+              "removed": ["\"0xbd7c5412\""],
+              "added": ["\"0xe81e0ba1\""]
             },
             {
               "key": "values.facets.1.1.27",
-              "removed": [
-                "\"0x29b98c67\""
-              ],
-              "added": [
-                "\"0xc3bbd2d7\""
-              ]
+              "removed": ["\"0x29b98c67\""],
+              "added": ["\"0xc3bbd2d7\""]
             },
             {
               "key": "values.facets.1.1.26",
-              "removed": [
-                "\"0x3db920ce\""
-              ],
-              "added": [
-                "\"0xbd7c5412\""
-              ]
+              "removed": ["\"0x3db920ce\""],
+              "added": ["\"0xbd7c5412\""]
             },
             {
               "key": "values.facets.1.1.25",
-              "removed": [
-                "\"0x18e3a941\""
-              ],
-              "added": [
-                "\"0x29b98c67\""
-              ]
+              "removed": ["\"0x18e3a941\""],
+              "added": ["\"0x29b98c67\""]
             },
             {
               "key": "values.facets.1.1.24",
-              "removed": [
-                "\"0x46657fe9\""
-              ],
-              "added": [
-                "\"0x18e3a941\""
-              ]
+              "removed": ["\"0x46657fe9\""],
+              "added": ["\"0x18e3a941\""]
             },
             {
               "key": "values.facets.1.1.23",
-              "removed": [
-                "\"0xa39980a0\""
-              ],
-              "added": [
-                "\"0x46657fe9\""
-              ]
+              "removed": ["\"0xa39980a0\""],
+              "added": ["\"0x46657fe9\""]
             },
             {
               "key": "values.facets.1.1.18",
-              "removed": [
-                "\"0x0ef240a0\""
-              ],
-              "added": [
-                "\"0xef3f0bae\""
-              ]
+              "removed": ["\"0x0ef240a0\""],
+              "added": ["\"0xef3f0bae\""]
             },
             {
               "key": "values.facets.1.1.17",
-              "removed": [
-                "\"0x33ce93fe\""
-              ],
-              "added": [
-                "\"0xb8c2f66f\""
-              ]
+              "removed": ["\"0x33ce93fe\""],
+              "added": ["\"0xb8c2f66f\""]
             },
             {
               "key": "values.facets.1.1.16",
-              "removed": [
-                "\"0xe39d3bff\""
-              ],
-              "added": [
-                "\"0xdb1f0bf9\""
-              ]
+              "removed": ["\"0xe39d3bff\""],
+              "added": ["\"0xdb1f0bf9\""]
             },
             {
               "key": "values.facets.1.1.15",
-              "removed": [
-                "\"0x1b60e626\""
-              ],
-              "added": [
-                "\"0x33ce93fe\""
-              ]
+              "removed": ["\"0x1b60e626\""],
+              "added": ["\"0x33ce93fe\""]
             },
             {
               "key": "values.facets.1.1.9",
-              "removed": [
-                "\"0xfd791f3c\""
-              ],
-              "added": [
-                "\"0xe5355c75\""
-              ]
+              "removed": ["\"0xfd791f3c\""],
+              "added": ["\"0xe5355c75\""]
             },
             {
               "key": "values.facets.1.1.8",
-              "removed": [
-                "\"0xd86970d8\""
-              ],
-              "added": [
-                "\"0xfd791f3c\""
-              ]
+              "removed": ["\"0xd86970d8\""],
+              "added": ["\"0xfd791f3c\""]
             },
             {
               "key": "values.facets.1.1.7",
-              "removed": [
-                "\"0x4fc07d75\""
-              ],
-              "added": [
-                "\"0xd86970d8\""
-              ]
+              "removed": ["\"0x4fc07d75\""],
+              "added": ["\"0xd86970d8\""]
             },
             {
               "key": "values.facets.1.1.6",
-              "removed": [
-                "\"0x79823c9a\""
-              ],
-              "added": [
-                "\"0x4fc07d75\""
-              ]
+              "removed": ["\"0x79823c9a\""],
+              "added": ["\"0x4fc07d75\""]
             },
             {
               "key": "values.facets.1.1.5",
-              "removed": [
-                "\"0xfe10226d\""
-              ],
-              "added": [
-                "\"0x79823c9a\""
-              ]
+              "removed": ["\"0xfe10226d\""],
+              "added": ["\"0x79823c9a\""]
             },
             {
               "key": "values.facets.1.0",
-              "removed": [
-                "\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""
-              ],
-              "added": [
-                "\"0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4\""
-              ]
+              "removed": ["\"0x7444DE636699F080cA1C033528D2bB3705B391Ce\""],
+              "added": ["\"0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4\""]
             },
             {
               "key": "values.facets.0.1[9]",
-              "added": [
-                "\"0x17338945\""
-              ]
+              "added": ["\"0x17338945\""]
             },
             {
               "key": "values.facets.0.1[8]",
-              "added": [
-                "\"0x4623c91d\""
-              ]
+              "added": ["\"0x4623c91d\""]
             },
             {
               "key": "values.facets.0.1.7",
-              "removed": [
-                "\"0x587809c7\""
-              ],
-              "added": [
-                "\"0xbe6f11cf\""
-              ]
+              "removed": ["\"0x587809c7\""],
+              "added": ["\"0xbe6f11cf\""]
             },
             {
               "key": "values.facets.0.1.6",
-              "removed": [
-                "\"0x17338945\""
-              ],
-              "added": [
-                "\"0x1cc5d103\""
-              ]
+              "removed": ["\"0x17338945\""],
+              "added": ["\"0x1cc5d103\""]
             },
             {
               "key": "values.facets.0.1.5",
-              "removed": [
-                "\"0xbeda4b12\""
-              ],
-              "added": [
-                "\"0xf235757f\""
-              ]
+              "removed": ["\"0xbeda4b12\""],
+              "added": ["\"0xf235757f\""]
             },
             {
               "key": "values.facets.0.1.4",
-              "removed": [
-                "\"0x8043760a\""
-              ],
-              "added": [
-                "\"0x4dd18bf5\""
-              ]
+              "removed": ["\"0x8043760a\""],
+              "added": ["\"0x4dd18bf5\""]
             },
             {
               "key": "values.facets.0.1.3",
-              "removed": [
-                "\"0x0551448c\""
-              ],
-              "added": [
-                "\"0x27ae4c16\""
-              ]
+              "removed": ["\"0x0551448c\""],
+              "added": ["\"0x27ae4c16\""]
             },
             {
               "key": "values.facets.0.1.2",
-              "removed": [
-                "\"0x27ae4c16\""
-              ],
-              "added": [
-                "\"0xa9f6d941\""
-              ]
+              "removed": ["\"0x27ae4c16\""],
+              "added": ["\"0xa9f6d941\""]
             },
             {
               "key": "values.facets.0.1.1",
-              "removed": [
-                "\"0x36d4eb84\""
-              ],
-              "added": [
-                "\"0xe58bb639\""
-              ]
+              "removed": ["\"0x36d4eb84\""],
+              "added": ["\"0xe58bb639\""]
             },
             {
               "key": "values.facets.0.1.0",
-              "removed": [
-                "\"0x73fb9297\""
-              ],
-              "added": [
-                "\"0x0e18b681\""
-              ]
+              "removed": ["\"0x73fb9297\""],
+              "added": ["\"0x0e18b681\""]
             },
             {
               "key": "values.facets.0.0",
-              "removed": [
-                "\"0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4\""
-              ],
-              "added": [
-                "\"0x409560DE546e057ce5bD5dB487EdF2bB5E785baB\""
-              ]
+              "removed": ["\"0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4\""],
+              "added": ["\"0x409560DE546e057ce5bD5dB487EdF2bB5E785baB\""]
             },
             {
               "key": "values.getAllowList",
-              "removed": [
-                "\"0x8ffd57A9B2dcc10327768b601468FA192adC5C86\""
-              ],
-              "added": [
-                "\"0x0C0dC1171258694635AA50cec5845aC1031cA6d7\""
-              ]
+              "removed": ["\"0x8ffd57A9B2dcc10327768b601468FA192adC5C86\""],
+              "added": ["\"0x0C0dC1171258694635AA50cec5845aC1031cA6d7\""]
             },
             {
               "key": "values.getCurrentProposalId",
-              "removed": [
-                "11"
-              ]
+              "removed": ["11"]
             },
             {
               "key": "values.getL2BootloaderBytecodeHash",
@@ -6261,39 +4493,25 @@
             },
             {
               "key": "values.getProposedUpgradeTimestamp",
-              "removed": [
-                "1701681527"
-              ]
+              "removed": ["1701681527"]
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "17"
-              ],
-              "added": [
-                "18"
-              ]
+              "removed": ["17"],
+              "added": ["18"]
             },
             {
               "key": "values.getSecurityCouncil",
-              "removed": [
-                "\"0x0000000000000000000000000000000000000000\""
-              ]
+              "removed": ["\"0x0000000000000000000000000000000000000000\""]
             },
             {
               "key": "values.getUpgradeProposalState",
-              "removed": [
-                "1"
-              ]
+              "removed": ["1"]
             },
             {
               "key": "values.getVerifier",
-              "removed": [
-                "\"0x3F04F86f14aB74953fDAEde8175e0714eB8e798e\""
-              ],
-              "added": [
-                "\"0xB465882F67d236DcC0D090F78ebb0d838e9719D8\""
-              ]
+              "removed": ["\"0x3F04F86f14aB74953fDAEde8175e0714eB8e798e\""],
+              "added": ["\"0xB465882F67d236DcC0D090F78ebb0d838e9719D8\""]
             },
             {
               "key": "values.getVerifierParams.2",
@@ -6324,42 +4542,28 @@
             },
             {
               "key": "values.isApprovedBySecurityCouncil",
-              "removed": [
-                "false"
-              ]
+              "removed": ["false"]
             },
             {
               "key": "values.validators.0",
-              "removed": [
-                "\"0x3dB52cE065f728011Ac6732222270b3F2360d919\""
-              ],
-              "added": [
-                "\"0xa0425d71cB1D6fb80E65a5361a04096E0672De03\""
-              ]
+              "removed": ["\"0x3dB52cE065f728011Ac6732222270b3F2360d919\""],
+              "added": ["\"0xa0425d71cB1D6fb80E65a5361a04096E0672De03\""]
             },
             {
               "key": "values.getL2SystemContractsUpgradeBatchNumber",
-              "added": [
-                "0"
-              ]
+              "added": ["0"]
             },
             {
               "key": "values.getTotalBatchesCommitted",
-              "added": [
-                "336365"
-              ]
+              "added": ["336365"]
             },
             {
               "key": "values.getTotalBatchesExecuted",
-              "added": [
-                "335480"
-              ]
+              "added": ["335480"]
             },
             {
               "key": "values.getTotalBatchesVerified",
-              "added": [
-                "336239"
-              ]
+              "added": ["336239"]
             },
             {
               "key": "values.storedBatchHash",
@@ -6382,12 +4586,8 @@
           "fields": [
             {
               "key": "upgradeability.implementation",
-              "removed": [
-                "\"0x7FB17101A744e156e63d5fF6A4775fb48756577c\""
-              ],
-              "added": [
-                "\"0x03F3F3c12e11C2FAA60080bd3F7f80AADF369a33\""
-              ]
+              "removed": ["\"0x7FB17101A744e156e63d5fF6A4775fb48756577c\""],
+              "added": ["\"0x03F3F3c12e11C2FAA60080bd3F7f80AADF369a33\""]
             }
           ]
         },
@@ -6418,12 +4618,8 @@
           "fields": [
             {
               "key": "values.getCurrentProposalId",
-              "removed": [
-                "10"
-              ],
-              "added": [
-                "11"
-              ]
+              "removed": ["10"],
+              "added": ["11"]
             },
             {
               "key": "values.getProposedUpgradeHash",
@@ -6436,21 +4632,13 @@
             },
             {
               "key": "values.getProposedUpgradeTimestamp",
-              "removed": [
-                "0"
-              ],
-              "added": [
-                "1701681527"
-              ]
+              "removed": ["0"],
+              "added": ["1701681527"]
             },
             {
               "key": "values.getUpgradeProposalState",
-              "removed": [
-                "0"
-              ],
-              "added": [
-                "1"
-              ]
+              "removed": ["0"],
+              "added": ["1"]
             }
           ]
         }
@@ -6465,12 +4653,8 @@
           "fields": [
             {
               "key": "values.getOwners.7",
-              "removed": [
-                "\"0xa265146cA40F52cfC439888D0b4291b5440e6769\""
-              ],
-              "added": [
-                "\"0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df\""
-              ]
+              "removed": ["\"0xa265146cA40F52cfC439888D0b4291b5440e6769\""],
+              "added": ["\"0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df\""]
             }
           ]
         }
@@ -6494,30 +4678,18 @@
             },
             {
               "key": "values.getProposedUpgradeTimestamp",
-              "removed": [
-                "1698826475"
-              ],
-              "added": [
-                "0"
-              ]
+              "removed": ["1698826475"],
+              "added": ["0"]
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "16"
-              ],
-              "added": [
-                "17"
-              ]
+              "removed": ["16"],
+              "added": ["17"]
             },
             {
               "key": "values.getUpgradeProposalState",
-              "removed": [
-                "1"
-              ],
-              "added": [
-                "0"
-              ]
+              "removed": ["1"],
+              "added": ["0"]
             },
             {
               "key": "values.getVerifierParams.2",
@@ -6541,12 +4713,8 @@
           "fields": [
             {
               "key": "values.getCurrentProposalId",
-              "removed": [
-                "9"
-              ],
-              "added": [
-                "10"
-              ]
+              "removed": ["9"],
+              "added": ["10"]
             },
             {
               "key": "values.getProposedUpgradeHash",
@@ -6559,21 +4727,13 @@
             },
             {
               "key": "values.getProposedUpgradeTimestamp",
-              "removed": [
-                "0"
-              ],
-              "added": [
-                "1698826475"
-              ]
+              "removed": ["0"],
+              "added": ["1698826475"]
             },
             {
               "key": "values.getUpgradeProposalState",
-              "removed": [
-                "0"
-              ],
-              "added": [
-                "1"
-              ]
+              "removed": ["0"],
+              "added": ["1"]
             }
           ]
         }
@@ -6588,21 +4748,13 @@
           "fields": [
             {
               "key": "values.getCurrentProposalId",
-              "removed": [
-                "8"
-              ],
-              "added": [
-                "9"
-              ]
+              "removed": ["8"],
+              "added": ["9"]
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "15"
-              ],
-              "added": [
-                "16"
-              ]
+              "removed": ["15"],
+              "added": ["16"]
             }
           ]
         }
@@ -6626,30 +4778,18 @@
             },
             {
               "key": "values.getProposedUpgradeTimestamp",
-              "removed": [
-                "1695294167"
-              ],
-              "added": [
-                "0"
-              ]
+              "removed": ["1695294167"],
+              "added": ["0"]
             },
             {
               "key": "values.getProtocolVersion",
-              "removed": [
-                "14"
-              ],
-              "added": [
-                "15"
-              ]
+              "removed": ["14"],
+              "added": ["15"]
             },
             {
               "key": "values.getUpgradeProposalState",
-              "removed": [
-                "1"
-              ],
-              "added": [
-                "0"
-              ]
+              "removed": ["1"],
+              "added": ["0"]
             },
             {
               "key": "values.getVerifierParams.2",
@@ -6667,9 +4807,7 @@
           "fields": [
             {
               "key": "values.revertedBlocks",
-              "added": [
-                "[]"
-              ]
+              "added": ["[]"]
             }
           ]
         }
@@ -6684,12 +4822,8 @@
           "fields": [
             {
               "key": "values.getCurrentProposalId",
-              "removed": [
-                "7"
-              ],
-              "added": [
-                "8"
-              ]
+              "removed": ["7"],
+              "added": ["8"]
             },
             {
               "key": "values.getProposedUpgradeHash",
@@ -6702,21 +4836,13 @@
             },
             {
               "key": "values.getProposedUpgradeTimestamp",
-              "removed": [
-                "0"
-              ],
-              "added": [
-                "1695294167"
-              ]
+              "removed": ["0"],
+              "added": ["1695294167"]
             },
             {
               "key": "values.getUpgradeProposalState",
-              "removed": [
-                "0"
-              ],
-              "added": [
-                "1"
-              ]
+              "removed": ["0"],
+              "added": ["1"]
             }
           ]
         },
@@ -6725,12 +4851,8 @@
           "fields": [
             {
               "key": "values.getOwners.1",
-              "removed": [
-                "\"0xd7aF418d98C0F8EDbaa407fc30ad10382286F36F\""
-              ],
-              "added": [
-                "\"0xe79af29d618141Ffef951B240b250d47030D56d7\""
-              ]
+              "removed": ["\"0xd7aF418d98C0F8EDbaa407fc30ad10382286F36F\""],
+              "added": ["\"0xe79af29d618141Ffef951B240b250d47030D56d7\""]
             }
           ]
         }
