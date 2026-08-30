@@ -10,13 +10,21 @@
           "fields": [
             {
               "key": "values.$members.2",
-              "removed": ["\"eth:0x554c5aF96E9e3c05AEC01ce18221d0DD25975aB4\""],
-              "added": ["\"eth:0x652E36f8EA937c19417380dCDb48D6e4375d13dA\""]
+              "removed": [
+                "\"eth:0x554c5aF96E9e3c05AEC01ce18221d0DD25975aB4\""
+              ],
+              "added": [
+                "\"eth:0x652E36f8EA937c19417380dCDb48D6e4375d13dA\""
+              ]
             },
             {
               "key": "values.$members.3",
-              "removed": ["\"eth:0x42FEdcd80C8C9694DBc3b2ff0fD48BB8651dfC62\""],
-              "added": ["\"eth:0xE8A2cC5c2349615D947b9d9fE5D7F144730cAf77\""]
+              "removed": [
+                "\"eth:0x42FEdcd80C8C9694DBc3b2ff0fD48BB8651dfC62\""
+              ],
+              "added": [
+                "\"eth:0xE8A2cC5c2349615D947b9d9fE5D7F144730cAf77\""
+              ]
             }
           ]
         }

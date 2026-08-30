@@ -10,8 +10,12 @@
           "fields": [
             {
               "key": "values.proposalCount",
-              "removed": ["27"],
-              "added": ["28"]
+              "removed": [
+                "27"
+              ],
+              "added": [
+                "28"
+              ]
             }
           ]
         }
@@ -26,8 +30,12 @@
           "fields": [
             {
               "key": "values.proposalCount",
-              "removed": ["26"],
-              "added": ["27"]
+              "removed": [
+                "26"
+              ],
+              "added": [
+                "27"
+              ]
             }
           ]
         }
@@ -42,8 +50,12 @@
           "fields": [
             {
               "key": "values.$implementation",
-              "removed": ["\"eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b\""],
-              "added": ["\"eth:0xD662C4B1F22AcEb0BEaCdf3A493De6f478686A0C\""]
+              "removed": [
+                "\"eth:0xB4F2d77bD12c6b548Ae398244d7FAD4ABCE4D89b\""
+              ],
+              "added": [
+                "\"eth:0xD662C4B1F22AcEb0BEaCdf3A493De6f478686A0C\""
+              ]
             }
           ]
         }
@@ -58,8 +70,12 @@
           "fields": [
             {
               "key": "values.proposalCount",
-              "removed": ["25"],
-              "added": ["26"]
+              "removed": [
+                "25"
+              ],
+              "added": [
+                "26"
+              ]
             }
           ]
         }
@@ -74,13 +90,21 @@
           "fields": [
             {
               "key": "values.$implementation",
-              "removed": ["\"eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b\""],
-              "added": ["\"eth:0xaC76eB94703b16e704f76ECFFDADF36b6A53ECDB\""]
+              "removed": [
+                "\"eth:0xaF51CD5f71Ed88D6d1F65b575f1a8Ce3a78eC42b\""
+              ],
+              "added": [
+                "\"eth:0xaC76eB94703b16e704f76ECFFDADF36b6A53ECDB\""
+              ]
             },
             {
               "key": "values.intervalBP",
-              "removed": ["200"],
-              "added": ["420"]
+              "removed": [
+                "200"
+              ],
+              "added": [
+                "420"
+              ]
             }
           ]
         },
@@ -89,8 +113,12 @@
           "fields": [
             {
               "key": "values.proposalCount",
-              "removed": ["23"],
-              "added": ["25"]
+              "removed": [
+                "23"
+              ],
+              "added": [
+                "25"
+              ]
             }
           ]
         },
@@ -99,8 +127,12 @@
           "fields": [
             {
               "key": "values.totalSupply",
-              "removed": ["\"57500000000000000000000000\""],
-              "added": ["\"60000000000000000000000000\""]
+              "removed": [
+                "\"57500000000000000000000000\""
+              ],
+              "added": [
+                "\"60000000000000000000000000\""
+              ]
             }
           ]
         }
