@@ -7,7 +7,6 @@ export interface EngineRequest {
 }
 
 export interface Budget {
-  maxTokens: number
   timeoutMs: number
 }
 
@@ -22,7 +21,7 @@ export type EngineResult =
   | { ok: true; output: unknown; usage?: TokenUsage; commands: string[] }
   | {
       ok: false
-      reason: 'timeout' | 'over-budget' | 'engine-error' | 'invalid-output'
+      reason: 'timeout' | 'engine-error' | 'invalid-output'
       detail: string
       usage?: TokenUsage
     }

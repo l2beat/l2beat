@@ -9,7 +9,7 @@ const input = {
   cwd: '.',
   prompt: 'p',
   outputSchema: {},
-  budget: { maxTokens: 1, timeoutMs: 1 },
+  budget: { timeoutMs: 1 },
 }
 
 function rawFinding(i: number, severity = 'minor', confidence = 0.5) {
@@ -56,10 +56,10 @@ describe(runFind.name, () => {
     const failing: Engine = {
       name: 'x',
       run: () =>
-        Promise.resolve({ ok: false, reason: 'over-budget', detail: '9 > 1' }),
+        Promise.resolve({ ok: false, reason: 'timeout', detail: '9 > 1' }),
     }
     const { review } = await runFind(failing, input)
-    expect(review.aborted).toEqual('over-budget: 9 > 1')
+    expect(review.aborted).toEqual('timeout: 9 > 1')
     expect(review.findings).toEqual([])
     expect(ReviewOutput.isValid(review)).toEqual(true)
   })

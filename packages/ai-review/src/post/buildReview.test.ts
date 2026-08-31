@@ -80,10 +80,12 @@ describe(buildReview.name, () => {
 
   it('aborted review posts the abort reason and no findings', () => {
     const payload = buildReview(
-      review([], { aborted: 'over-budget: 9 > 1' }),
+      review([], { aborted: 'timeout: killed after 60000ms' }),
       meta,
     )
-    expect(payload.body).toInclude('Review aborted: over-budget: 9 > 1')
+    expect(payload.body).toInclude(
+      'Review aborted: timeout: killed after 60000ms',
+    )
     expect(payload.body).not.toInclude('no findings above the bar')
     expect(payload.body).toInclude('<!-- ai-review run=r1')
   })

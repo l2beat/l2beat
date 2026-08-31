@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { type Execute, execute } from '../execute.js'
 import type { Engine, EngineRequest, EngineResult } from '../types.js'
-import { parseTranscript, totalTokens } from './parseTranscript.js'
+import { parseTranscript } from './parseTranscript.js'
 
 export interface CodexOptions {
   model?: string
@@ -72,12 +72,6 @@ export class CodexEngine implements Engine {
     }
     if (error || code !== 0) {
       return fail('engine-error', error ?? stderr.slice(-2000))
-    }
-    if (usage && totalTokens(usage) > request.budget.maxTokens) {
-      return fail(
-        'over-budget',
-        `${totalTokens(usage)} tokens > cap ${request.budget.maxTokens}`,
-      )
     }
     if (lastMessage === undefined) {
       return fail('invalid-output', 'no final message')

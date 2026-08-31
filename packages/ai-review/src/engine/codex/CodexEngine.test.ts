@@ -29,7 +29,7 @@ const request = {
   cwd: '/repo',
   prompt: 'review this',
   outputSchema: { type: 'object' },
-  budget: { maxTokens: 100_000, timeoutMs: 5_000 },
+  budget: { timeoutMs: 5_000 },
 }
 
 describe(CodexEngine.name, () => {
@@ -76,16 +76,6 @@ describe(CodexEngine.name, () => {
       detail: 'boom',
       usage: undefined,
     })
-  })
-
-  it('rejects runs over the token budget', async () => {
-    const { engine } = engineWith({ stdout: fixture('simple') })
-    const result = await engine.run({
-      ...request,
-      budget: { maxTokens: 10, timeoutMs: 1 },
-    })
-    expect(result.ok).toEqual(false)
-    if (!result.ok) expect(result.reason).toEqual('over-budget')
   })
 
   it('rejects a missing or non-JSON final message', async () => {

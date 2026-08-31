@@ -31,7 +31,6 @@ const { review, usage } = await runFind(engine, {
   prompt,
   outputSchema: FIND_OUTPUT_SCHEMA,
   budget: {
-    maxTokens: Number(process.env.FIND_MAX_TOKENS || 400_000),
     timeoutMs: Number(process.env.FIND_TIMEOUT_MS || 10 * 60_000),
   },
 })
