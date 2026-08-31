@@ -246,15 +246,13 @@ export const tornadoCash: BaseProject = {
         'Unconditional privacy.',
         'Clearly defined anonymity set per fixed-denomination pool.',
       ],
-      missing: ['No mechanism to exclude bad actors.'],
     },
     security: {
       sentiment: 'good',
       status: 'partiallyReviewed',
-      points: ['Simple, ossified design, audited extensively.'],
+      points: ['Simple, well-ossified design.'],
       missing: [
         'Not quantum-resistant, which may expose user privacy to harvest-now-decrypt-later attacks.',
-        'Immutability means bugs cannot be patched.',
         'Brittle onchain governance (token voting) controls the official frontend (ENS+IPFS).',
       ],
       notReviewed: ['Formal verification.'],
