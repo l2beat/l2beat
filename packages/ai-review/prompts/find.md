@@ -10,6 +10,7 @@ Rules:
 - Do not modify files.
 - `intent` is a 1–3 sentence restatement of what the PR is trying to do, based on its title and description. If neither states an intent, say so and add an `intent-missing` finding (severity major, no file/line).
 - Set `file`/`line_start`/`line_end` to null when a finding is not tied to specific lines. Paths are repo-relative.
+- Line numbers must be line numbers in the head version of the file, and every line in the range must be one this change added or modified (a `+` line in `git diff <base>...<head>`). Line numbers that miss the changed lines make GitHub reject the entire review, so before you answer, verify each range: re-run the diff for that file and confirm the cited lines are `+` lines at those head positions. If a finding sits on unchanged code, set the line fields to null instead of guessing.
 
 Severity: `blocker` = ships a bug or security hole; `major` = likely wrong or clearly violates conventions; `minor` = worth fixing, not blocking.
 Confidence: 0–1, your honest probability the finding is real and actionable.
