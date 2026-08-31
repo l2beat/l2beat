@@ -82,7 +82,7 @@ describe(InMemoryEventDb.name, () => {
   })
 
   it('can find a new event after the first query', () => {
-    // This is a test to prevent a bug that occured before.
+    // This is a test to prevent a bug that occurred before.
     // A dynamic index (called Lookup) was constructed during
     // the first query. But that index was not updated with
     // new events later.
