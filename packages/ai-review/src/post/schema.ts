@@ -11,10 +11,19 @@ export const Category = v.enum([
   'intent-missing',
 ])
 
+/** Inclusive right-side line range; start <= end, both >= 1. */
+export const LineRange = v.object({ start: v.number(), end: v.number() })
+export type LineRange = v.infer<typeof LineRange>
+
+/** Repo-relative file, optionally narrowed to a line range. */
+export const Location = v.object({
+  file: v.string(),
+  range: LineRange.optional(),
+})
+export type Location = v.infer<typeof Location>
+
 export const Finding = v.object({
-  file: v.string().optional(),
-  line_start: v.number().optional(),
-  line_end: v.number().optional(),
+  location: Location.optional(),
   severity: Severity,
   category: Category,
   claim: v.string(),
@@ -37,5 +46,7 @@ export const RunMeta = v.object({
   run_id: v.string(),
   lessons_version: v.string(),
   engine: v.string(),
+  /** Reviewed head; pins inline comments so a push mid-review does not shift them. */
+  commit_id: v.string(),
 })
 export type RunMeta = v.infer<typeof RunMeta>

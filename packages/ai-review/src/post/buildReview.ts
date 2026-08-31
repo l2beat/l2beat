@@ -1,5 +1,5 @@
 import { type DiffLines, isInDiff } from '../diff/parseDiff.js'
-import type { Finding, ReviewOutput, RunMeta } from './schema.js'
+import type { Finding, Location, ReviewOutput, RunMeta } from './schema.js'
 
 export const MARKER_PREFIX = '<!-- ai-review'
 
@@ -25,7 +25,6 @@ export interface InlineComment {
 /** Payload for POST /repos/{owner}/{repo}/pulls/{n}/reviews */
 export interface ReviewPayload {
   event: 'COMMENT'
-  /** Pins inline comments to the reviewed head; a push mid-review would otherwise shift them. */
   commit_id: string
   body: string
   comments: InlineComment[]
@@ -35,21 +34,17 @@ export function buildReview(
   review: ReviewOutput,
   diff: DiffLines,
   meta: RunMeta,
-  commitId: string,
 ): ReviewPayload {
   const inline: InlineComment[] = []
   const topLevel: Finding[] = []
   for (const f of review.findings) {
-    if (
-      f.file &&
-      f.line_start &&
-      isInDiff(diff, f.file, f.line_start, f.line_end ?? f.line_start)
-    ) {
+    const loc = f.location
+    if (loc?.range && isInDiff(diff, loc.file, loc.range)) {
       inline.push({
-        path: f.file,
-        line: f.line_end ?? f.line_start,
-        ...(f.line_end && f.line_end !== f.line_start
-          ? { start_line: f.line_start, start_side: 'RIGHT' as const }
+        path: loc.file,
+        line: loc.range.end,
+        ...(loc.range.end !== loc.range.start
+          ? { start_line: loc.range.start, start_side: 'RIGHT' as const }
           : {}),
         side: 'RIGHT',
         body: formatFinding(f),
@@ -60,16 +55,14 @@ export function buildReview(
   }
   return {
     event: 'COMMENT',
-    commit_id: commitId,
+    commit_id: meta.commit_id,
     body: buildBody(review, meta, inline.length, topLevel),
     comments: inline,
   }
 }
 
 export function formatFinding(f: Finding): string {
-  const loc = f.file
-    ? ` — \`${f.file}${f.line_start ? `:${f.line_start}` : ''}\``
-    : ''
+  const loc = f.location ? ` — \`${formatLocation(f.location)}\`` : ''
   return [
     `**[${f.severity}/${f.category}]** ${f.claim}${loc}`,
     '',
@@ -79,6 +72,12 @@ export function formatFinding(f: Finding): string {
     '',
     `<sub>confidence ${f.confidence.toFixed(2)}</sub>`,
   ].join('\n')
+}
+
+function formatLocation({ file, range }: Location): string {
+  if (!range) return file
+  const end = range.end !== range.start ? `-${range.end}` : ''
+  return `${file}:${range.start}${end}`
 }
 
 function buildBody(

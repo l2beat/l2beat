@@ -12,16 +12,15 @@ export function score(f: Finding): number {
   return SEVERITY_WEIGHT[f.severity] * f.confidence
 }
 
-export function rankFindings(
-  findings: Finding[],
-  cap = MAX_FINDINGS,
-): Finding[] {
+export function rankFindings(findings: Finding[]): Finding[] {
   const seen = new Map<string, Finding>()
   for (const f of findings) {
     if (!f.evidence.trim() || !f.fix_sketch.trim()) continue
-    const key = `${f.file ?? ''}:${f.line_start ?? ''}:${f.category}`
+    const key = `${f.location?.file ?? ''}:${f.location?.range?.start ?? ''}:${f.category}`
     const prev = seen.get(key)
     if (!prev || score(f) > score(prev)) seen.set(key, f)
   }
-  return [...seen.values()].sort((a, b) => score(b) - score(a)).slice(0, cap)
+  return [...seen.values()]
+    .sort((a, b) => score(b) - score(a))
+    .slice(0, MAX_FINDINGS)
 }

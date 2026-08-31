@@ -1,10 +1,16 @@
 import { expect } from 'earl'
 import { parseDiffLines } from '../diff/parseDiff.js'
 import { buildMarker, buildReview } from './buildReview.js'
-import type { Finding, ReviewOutput, RunMeta } from './schema.js'
+import type { Finding, Location, ReviewOutput, RunMeta } from './schema.js'
 
-const meta: RunMeta = { run_id: 'r1', lessons_version: 'none', engine: 'codex' }
-const diff = parseDiffLines(`--- a/src/a.ts
+const meta: RunMeta = {
+  run_id: 'r1',
+  lessons_version: 'none',
+  engine: 'codex',
+  commit_id: 'sha1',
+}
+const diff = parseDiffLines(`diff --git a/src/a.ts b/src/a.ts
+--- a/src/a.ts
 +++ b/src/a.ts
 @@ -1,2 +1,4 @@
  x
@@ -12,6 +18,10 @@ const diff = parseDiffLines(`--- a/src/a.ts
 +l3
 +l4
 `)
+
+function at(file: string, start?: number, end = start): Location {
+  return { file, range: start ? { start, end: end ?? start } : undefined }
+}
 
 function finding(overrides: Partial<Finding>): Finding {
   return {
@@ -44,20 +54,15 @@ describe(buildReview.name, () => {
   it('puts in-diff findings inline and the rest top-level', () => {
     const payload = buildReview(
       review([
-        finding({
-          file: 'src/a.ts',
-          line_start: 2,
-          line_end: 3,
-          claim: 'inline-range',
-        }),
-        finding({ file: 'src/a.ts', line_start: 4, claim: 'inline-single' }),
-        finding({ file: 'src/a.ts', line_start: 1, claim: 'context-line' }),
-        finding({ file: 'src/b.ts', line_start: 1, claim: 'other-file' }),
+        finding({ location: at('src/a.ts', 2, 3), claim: 'inline-range' }),
+        finding({ location: at('src/a.ts', 4), claim: 'inline-single' }),
+        finding({ location: at('src/a.ts', 1), claim: 'context-line' }),
+        finding({ location: at('src/b.ts', 1), claim: 'other-file' }),
+        finding({ location: at('src/c.ts'), claim: 'file-only' }),
         finding({ category: 'intent-missing', claim: 'no-location' }),
       ]),
       diff,
       meta,
-      'sha1',
     )
     expect(payload.event).toEqual('COMMENT')
     expect(payload.commit_id).toEqual('sha1')
@@ -68,20 +73,21 @@ describe(buildReview.name, () => {
       ],
     )
     expect(payload.comments[0].body).toInclude(
-      '**[major/correctness]** inline-range — `src/a.ts:2`',
+      '**[major/correctness]** inline-range — `src/a.ts:2-3`',
     )
     expect(payload.body).toInclude(
-      '5 finding(s); 2 inline. 3 outside the diff:',
+      '6 finding(s); 2 inline. 4 outside the diff:',
     )
     expect(payload.body).toInclude('context-line')
     expect(payload.body).toInclude('other-file')
     expect(payload.body).toInclude('no-location')
+    expect(payload.body).toInclude('file-only — `src/c.ts`')
     expect(payload.body).not.toInclude('inline-single')
   })
 
   it('zero findings posts the explicit no-findings body', () => {
     const r = review([])
-    const payload = buildReview(r, diff, meta, 'sha1')
+    const payload = buildReview(r, diff, meta)
     expect(payload.comments).toEqual([])
     expect(payload.body).toInclude(
       'Reviewed, consulted `diff`, no findings above the bar.',
@@ -94,7 +100,6 @@ describe(buildReview.name, () => {
       review([], { aborted: 'over-budget: 9 > 1' }),
       diff,
       meta,
-      'sha1',
     )
     expect(payload.body).toInclude('Review aborted: over-budget: 9 > 1')
     expect(payload.body).not.toInclude('no findings above the bar')
@@ -106,7 +111,6 @@ describe(buildReview.name, () => {
       review([], { commands: ['pnpm -F x typecheck'] }),
       diff,
       meta,
-      'sha1',
     )
     expect(payload.body).toInclude('- `pnpm -F x typecheck`')
   })

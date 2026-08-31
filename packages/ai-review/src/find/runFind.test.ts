@@ -38,7 +38,7 @@ describe(runFind.name, () => {
       rawFinding(7),
     ]
     const { review } = await runFind(
-      new StubEngine({ intent: 'does x', findings }),
+      StubEngine.withOutput({ intent: 'does x', findings }),
       input,
     )
     expect(ReviewOutput.isValid(review)).toEqual(true)
@@ -64,9 +64,18 @@ describe(runFind.name, () => {
     expect(ReviewOutput.isValid(review)).toEqual(true)
   })
 
+  it('passes a failing stub engine through as an aborted review', async () => {
+    const { review, usage } = await runFind(StubEngine.unavailable(), input)
+    expect(review.aborted?.startsWith('engine-error: stub engine')).toEqual(
+      true,
+    )
+    expect(review.findings).toEqual([])
+    expect(usage).toEqual(undefined)
+  })
+
   it('marks the review aborted on schema-invalid engine output', async () => {
     const { review } = await runFind(
-      new StubEngine({ intent: 'x', findings: [{ severity: 'huge' }] }),
+      StubEngine.withOutput({ intent: 'x', findings: [{ severity: 'huge' }] }),
       input,
     )
     expect(review.aborted).toBeA(String)
@@ -80,25 +89,24 @@ describe(runFind.name, () => {
       { ...rawFinding(1), line_start: null, line_end: 7, claim: 'end-only' },
     ]
     const { review } = await runFind(
-      new StubEngine({ intent: 'x', findings }),
+      StubEngine.withOutput({ intent: 'x', findings }),
       input,
     )
-    const byClaim = Object.fromEntries(review.findings.map((f) => [f.claim, f]))
-    expect([byClaim.c3.line_start, byClaim.c3.line_end]).toEqual([2, 3])
-    expect([byClaim.zero.line_start, byClaim.zero.line_end]).toEqual([
-      undefined,
-      undefined,
-    ])
-    expect([
-      byClaim['end-only'].line_start,
-      byClaim['end-only'].line_end,
-    ]).toEqual([7, 7])
+    const byClaim = Object.fromEntries(
+      review.findings.map((f) => [f.claim, f.location]),
+    )
+    expect(byClaim.c3).toEqual({ file: 'a.ts', range: { start: 2, end: 3 } })
+    expect(byClaim.zero).toEqual({ file: 'a.ts', range: undefined })
+    expect(byClaim['end-only']).toEqual({
+      file: 'a.ts',
+      range: { start: 7, end: 7 },
+    })
   })
 
   it('rank stage is what orders the output', async () => {
     const findings = [rawFinding(1, 'minor', 0.1), rawFinding(2, 'blocker', 1)]
     const { review } = await runFind(
-      new StubEngine({ intent: 'x', findings }),
+      StubEngine.withOutput({ intent: 'x', findings }),
       input,
     )
     const expected = rankFindings(review.findings)

@@ -1,14 +1,7 @@
-import type { Engine, StageBudget, TokenUsage } from '../engine/types.js'
+import type { Engine, EngineRequest, TokenUsage } from '../engine/types.js'
 import type { ReviewOutput } from '../post/schema.js'
 import { rankFindings } from '../rank/rankFindings.js'
 import { FindOutput, toFindings } from './schema.js'
-
-export interface FindInput {
-  cwd: string
-  prompt: string
-  outputSchema: object
-  budget: StageBudget
-}
 
 export interface FindResult {
   review: ReviewOutput
@@ -19,7 +12,7 @@ const CONTEXT_SOURCES = ['diff', 'pr-description', 'checkout']
 
 export async function runFind(
   engine: Engine,
-  input: FindInput,
+  input: EngineRequest,
 ): Promise<FindResult> {
   const result = await engine.run(input)
   const base = { context_sources: CONTEXT_SOURCES, intent: '', findings: [] }

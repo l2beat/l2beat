@@ -3,10 +3,10 @@ export interface EngineRequest {
   prompt: string
   /** JSON Schema the final message must conform to. */
   outputSchema: object
-  budget: StageBudget
+  budget: Budget
 }
 
-export interface StageBudget {
+export interface Budget {
   maxTokens: number
   timeoutMs: number
 }
@@ -17,8 +17,9 @@ export interface TokenUsage {
   output: number
 }
 
+/** `usage` is absent when the engine did not report it (e.g. died before its final turn). */
 export type EngineResult =
-  | { ok: true; output: unknown; usage: TokenUsage; commands: string[] }
+  | { ok: true; output: unknown; usage?: TokenUsage; commands: string[] }
   | {
       ok: false
       reason: 'timeout' | 'over-budget' | 'engine-error' | 'invalid-output'

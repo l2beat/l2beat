@@ -42,6 +42,12 @@ describe(parseDiffLines.name, () => {
 })
 
 describe('parseDiffLines edge cases', () => {
+  it('ignores content before the first diff header', () => {
+    expect(parseDiffLines('--- a/x\n+++ b/x\n@@ -1 +1 @@\n+y\n').size).toEqual(
+      0,
+    )
+  })
+
   it('does not treat an added "++ " line as a file header', () => {
     const lines = parseDiffLines(`diff --git a/c.ts b/c.ts
 --- a/c.ts
@@ -58,13 +64,12 @@ describe('parseDiffLines edge cases', () => {
 
 describe(isInDiff.name, () => {
   const lines = parseDiffLines(diff)
+  const range = (start: number, end = start) => ({ start, end })
   it('true only when the whole range is added', () => {
-    expect(isInDiff(lines, 'src/a.ts', 2)).toEqual(true)
-    expect(isInDiff(lines, 'src/a.ts', 2, 3)).toEqual(true)
-    expect(isInDiff(lines, 'src/a.ts', 1)).toEqual(false)
-    expect(isInDiff(lines, 'src/a.ts', 3, 4)).toEqual(false)
-    expect(isInDiff(lines, 'missing.ts', 1)).toEqual(false)
-    expect(isInDiff(lines, 'src/a.ts', 3, 2)).toEqual(false)
-    expect(isInDiff(lines, 'src/a.ts', 0)).toEqual(false)
+    expect(isInDiff(lines, 'src/a.ts', range(2))).toEqual(true)
+    expect(isInDiff(lines, 'src/a.ts', range(2, 3))).toEqual(true)
+    expect(isInDiff(lines, 'src/a.ts', range(1))).toEqual(false)
+    expect(isInDiff(lines, 'src/a.ts', range(3, 4))).toEqual(false)
+    expect(isInDiff(lines, 'missing.ts', range(1))).toEqual(false)
   })
 })

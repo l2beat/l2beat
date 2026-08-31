@@ -150,8 +150,7 @@ jobs:
         env:
           CODEX_HOME: ${{ runner.temp }}/codex-home
           CODEX_MODEL: ${{ vars.AI_REVIEW_MODEL }}
-          FIND_MAX_TOKENS: ${{ vars.AI_REVIEW_FIND_MAX_TOKENS || 400000 }}
-          FIND_TIMEOUT_MS: 600000
+          FIND_MAX_TOKENS: ${{ vars.AI_REVIEW_FIND_MAX_TOKENS }}
           REVIEW_CWD: ${{ github.workspace }}/pr
           DIFF_PATH: ${{ runner.temp }}/diff.patch
           REVIEW_OUTPUT_PATH: ${{ runner.temp }}/review.json

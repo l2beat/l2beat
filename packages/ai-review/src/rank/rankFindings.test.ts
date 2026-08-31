@@ -2,17 +2,17 @@ import { expect } from 'earl'
 import type { Finding } from '../post/schema.js'
 import { rankFindings, score } from './rankFindings.js'
 
-function finding(overrides: Partial<Finding>): Finding {
+function finding(overrides: Partial<Finding> & { line?: number }): Finding {
+  const { line = 1, ...rest } = overrides
   return {
-    file: 'a.ts',
-    line_start: 1,
+    location: { file: 'a.ts', range: { start: line, end: line } },
     severity: 'minor',
     category: 'correctness',
     claim: 'c',
     evidence: 'e',
     fix_sketch: 'f',
     confidence: 0.5,
-    ...overrides,
+    ...rest,
   }
 }
 
@@ -24,13 +24,13 @@ describe(rankFindings.name, () => {
         claim: 'blocker-low',
         severity: 'blocker',
         confidence: 0.4,
-        line_start: 2,
+        line: 2,
       }),
       finding({
         claim: 'major-mid',
         severity: 'major',
         confidence: 0.7,
-        line_start: 3,
+        line: 3,
       }),
     ])
     expect(ranked.map((f) => f.claim)).toEqual([
@@ -42,7 +42,7 @@ describe(rankFindings.name, () => {
   })
 
   it('caps at 5', () => {
-    const many = Array.from({ length: 8 }, (_, i) => finding({ line_start: i }))
+    const many = Array.from({ length: 8 }, (_, i) => finding({ line: i }))
     expect(rankFindings(many)).toHaveLength(5)
   })
 
@@ -58,9 +58,9 @@ describe(rankFindings.name, () => {
   it('drops findings without evidence or fix sketch', () => {
     const ranked = rankFindings([
       finding({ evidence: ' ' }),
-      finding({ fix_sketch: '', line_start: 2 }),
-      finding({ line_start: 3 }),
+      finding({ fix_sketch: '', line: 2 }),
+      finding({ line: 3 }),
     ])
-    expect(ranked.map((f) => f.line_start)).toEqual([3])
+    expect(ranked.map((f) => f.location?.range?.start)).toEqual([3])
   })
 })

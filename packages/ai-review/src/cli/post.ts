@@ -9,13 +9,10 @@ const meta = RunMeta.validate({
   run_id: requireEnv('RUN_ID'),
   lessons_version: process.env.LESSONS_VERSION ?? 'none',
   engine: process.env.ENGINE ?? 'stub',
+  commit_id: requireEnv('HEAD_SHA'),
 })
 const diff = parseDiffLines(readFileSync(requireEnv('DIFF_PATH'), 'utf8'))
 writeText(
   requireEnv('REVIEW_PAYLOAD_PATH'),
-  JSON.stringify(
-    buildReview(review, diff, meta, requireEnv('HEAD_SHA')),
-    null,
-    2,
-  ),
+  JSON.stringify(buildReview(review, diff, meta), null, 2),
 )

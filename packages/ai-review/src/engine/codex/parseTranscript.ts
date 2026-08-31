@@ -12,37 +12,43 @@ export function parseTranscript(jsonl: string): Transcript {
   const result: Transcript = { commands: [] }
   for (const line of jsonl.split('\n')) {
     if (!line.trim()) continue
-    let event: unknown
-    try {
-      event = JSON.parse(line)
-    } catch {
-      continue
-    }
-    const e = event as {
+    let event: {
       type?: string
       message?: string
       error?: { message?: string }
       item?: { type?: string; text?: string; command?: string }
       usage?: Record<string, number>
     }
-    switch (e.type) {
+    try {
+      event = JSON.parse(line)
+    } catch {
+      continue
+    }
+    switch (event.type) {
       case 'item.completed':
-        if (e.item?.type === 'agent_message' && e.item.text !== undefined) {
-          result.lastMessage = e.item.text
-        } else if (e.item?.type === 'command_execution' && e.item.command) {
-          result.commands.push(e.item.command)
+        if (
+          event.item?.type === 'agent_message' &&
+          event.item.text !== undefined
+        ) {
+          result.lastMessage = event.item.text
+        } else if (
+          event.item?.type === 'command_execution' &&
+          event.item.command
+        ) {
+          result.commands.push(event.item.command)
         }
         break
       case 'turn.completed':
         result.usage = {
-          input: e.usage?.input_tokens ?? 0,
-          cachedInput: e.usage?.cached_input_tokens ?? 0,
-          output: e.usage?.output_tokens ?? 0,
+          input: event.usage?.input_tokens ?? 0,
+          cachedInput: event.usage?.cached_input_tokens ?? 0,
+          output: event.usage?.output_tokens ?? 0,
         }
         break
       case 'turn.failed':
       case 'error':
-        result.error = e.error?.message ?? e.message ?? 'unknown engine error'
+        result.error =
+          event.error?.message ?? event.message ?? 'unknown engine error'
         break
     }
   }

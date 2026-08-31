@@ -1,21 +1,23 @@
-import { spawn } from 'node:child_process'
 import { mkdtempSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { type Execute, execute } from '../execute.js'
 import type { Engine, EngineRequest, EngineResult } from '../types.js'
 import { parseTranscript, totalTokens } from './parseTranscript.js'
 
 export interface CodexOptions {
   model?: string
   reasoningEffort?: 'low' | 'medium' | 'high'
-  sandbox?: 'read-only' | 'workspace-write'
-  binary?: string
 }
 
+/** Runs `codex exec --json` headless and interprets its transcript. */
 export class CodexEngine implements Engine {
   readonly name: string
 
-  constructor(private readonly options: CodexOptions = {}) {
+  constructor(
+    private readonly options: CodexOptions = {},
+    private readonly exec: Execute = execute,
+  ) {
     this.name = `codex${options.model ? `:${options.model}` : ''}`
   }
 
@@ -25,8 +27,9 @@ export class CodexEngine implements Engine {
       '--json',
       '--ephemeral',
       '--skip-git-repo-check',
+      // Probes (targeted tests, typecheck) need to write build artifacts.
       '--sandbox',
-      this.options.sandbox ?? 'read-only',
+      'workspace-write',
       '--output-schema',
       schemaPath,
     ]
@@ -49,117 +52,40 @@ export class CodexEngine implements Engine {
     const schemaPath = join(dir, 'schema.json')
     writeFileSync(schemaPath, JSON.stringify(request.outputSchema))
 
-    const { stdout, stderr, timedOut, code } = await execute(
-      this.options.binary ?? 'codex',
+    const { stdout, stderr, timedOut, code } = await this.exec(
+      'codex',
       this.buildArgs(schemaPath),
-      request.cwd,
-      request.prompt,
-      request.budget.timeoutMs,
+      {
+        cwd: request.cwd,
+        stdin: request.prompt,
+        timeoutMs: request.budget.timeoutMs,
+      },
     )
-    const transcript = parseTranscript(stdout)
+    const { usage, error, lastMessage, commands } = parseTranscript(stdout)
+    const fail = (
+      reason: Extract<EngineResult, { ok: false }>['reason'],
+      detail: string,
+    ): EngineResult => ({ ok: false, reason, detail, usage })
 
     if (timedOut) {
-      return {
-        ok: false,
-        reason: 'timeout',
-        detail: `killed after ${request.budget.timeoutMs}ms`,
-        usage: transcript.usage,
-      }
+      return fail('timeout', `killed after ${request.budget.timeoutMs}ms`)
     }
-    if (transcript.error || code !== 0) {
-      return {
-        ok: false,
-        reason: 'engine-error',
-        detail: transcript.error ?? stderr.slice(-2000),
-        usage: transcript.usage,
-      }
+    if (error || code !== 0) {
+      return fail('engine-error', error ?? stderr.slice(-2000))
     }
-    if (
-      transcript.usage &&
-      totalTokens(transcript.usage) > request.budget.maxTokens
-    ) {
-      return {
-        ok: false,
-        reason: 'over-budget',
-        detail: `${totalTokens(transcript.usage)} tokens > cap ${request.budget.maxTokens}`,
-        usage: transcript.usage,
-      }
+    if (usage && totalTokens(usage) > request.budget.maxTokens) {
+      return fail(
+        'over-budget',
+        `${totalTokens(usage)} tokens > cap ${request.budget.maxTokens}`,
+      )
     }
-    if (transcript.lastMessage === undefined) {
-      return {
-        ok: false,
-        reason: 'invalid-output',
-        detail: 'no final message',
-        usage: transcript.usage,
-      }
+    if (lastMessage === undefined) {
+      return fail('invalid-output', 'no final message')
     }
     try {
-      return {
-        ok: true,
-        output: JSON.parse(transcript.lastMessage),
-        usage: transcript.usage ?? { input: 0, cachedInput: 0, output: 0 },
-        commands: transcript.commands,
-      }
+      return { ok: true, output: JSON.parse(lastMessage), usage, commands }
     } catch {
-      return {
-        ok: false,
-        reason: 'invalid-output',
-        detail: transcript.lastMessage.slice(0, 500),
-        usage: transcript.usage,
-      }
+      return fail('invalid-output', lastMessage.slice(0, 500))
     }
-  }
-}
-
-function execute(
-  binary: string,
-  args: string[],
-  cwd: string,
-  stdin: string,
-  timeoutMs: number,
-) {
-  return new Promise<{
-    stdout: string
-    stderr: string
-    timedOut: boolean
-    code: number | null
-  }>((resolve) => {
-    // Own process group so the timeout also kills probes Codex spawned.
-    const child = spawn(binary, args, {
-      cwd,
-      stdio: ['pipe', 'pipe', 'pipe'],
-      detached: true,
-    })
-    let stdout = ''
-    let stderr = ''
-    let timedOut = false
-    const timer = setTimeout(() => {
-      timedOut = true
-      killGroup(child.pid)
-    }, timeoutMs)
-    child.on('error', (err) => {
-      stderr += String(err)
-    })
-    child.stdout.on('data', (d) => {
-      stdout += d
-    })
-    child.stderr.on('data', (d) => {
-      stderr += d
-      process.stderr.write(d)
-    })
-    child.on('close', (code) => {
-      clearTimeout(timer)
-      resolve({ stdout, stderr, timedOut, code })
-    })
-    child.stdin.end(stdin)
-  })
-}
-
-function killGroup(pid: number | undefined) {
-  if (pid === undefined) return
-  try {
-    process.kill(-pid, 'SIGKILL')
-  } catch {
-    process.kill(pid, 'SIGKILL')
   }
 }
