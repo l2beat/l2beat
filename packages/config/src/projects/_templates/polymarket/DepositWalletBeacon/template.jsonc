@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DepositWalletBeacon",
+  "description": "Beacon with an owner-controlled default wallet implementation and per-caller implementation pins. Its owner can replace the default implementation in one transaction; callers can pin themselves to the current default and later rejoin default upgrades.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can replace the default implementation used by every caller without a pinned implementation."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "defaultImplementation": {
+      "description": "Default implementation returned to callers without a pinned implementation.",
+      "severity": "HIGH"
+    }
+  }
+}

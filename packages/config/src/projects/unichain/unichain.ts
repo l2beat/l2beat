@@ -7,7 +7,7 @@ import {
 import { DERIVATION, SOA } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('unichain')
 const genesisTimestamp = UnixTime(1730748359)
@@ -20,6 +20,7 @@ export const unichain: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1739318400), // 2025-02-11T00:00:00Z
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 21116363 })],
   additionalPurposes: ['Exchange'],
   display: {
     name: 'Unichain',

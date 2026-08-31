@@ -8,8 +8,8 @@
       "typeCaster": "Mapping",
       "arg": {
         // Reproduce future rollup config hashes before adding them to this mapping:
-        // 1. Checkout agglayer/op-succinct tag v3.10.0-agglayer, commit
-        //    36f20e5265ac77634997424f5817b1548c449183.
+        // 1. Checkout agglayer/op-succinct tag v3.12.0-agglayer, commit
+        //    32f9cfbe9067a1c97ec26e117bd958f5ece2975b.
         // 2. Query Katana's OP node with optimism_rollupConfig and deserialize the result as
         //    kona_genesis::RollupConfig from the checked-out revision.
         // 3. Pretty-serialize the parsed struct with serde_json::to_string_pretty and hash the
@@ -19,7 +19,7 @@
         // 4. Compare the result with AggchainFEP.opSuccinctConfigs(...).rollupConfigHash and add
         //    a label only after they match. Unknown mapping values deliberately remain visible.
         // Expected hash for the current Katana config:
-        // 0xecdbb340ded82ca2e5baf5e40c90a3b0c1227c27f9be2962df93d2e061e9a5d4.
+        // 0x720a7d9b12c0a7fbbd1b2634eb9d17b5cc7720575c48736b1c40e9399f31de09.
         // Exact pretty-serialized RollupConfig preimage:
         // {
         //   "genesis": {
@@ -63,6 +63,7 @@
         //   "holocene_time": 0,
         //   "isthmus_time": 1746806401,
         //   "jovian_time": 1773066601,
+        //   "karst_time": 1790179201,
         //   "batch_inbox_address": "0x000d4411cdeb152378626b5c5e33fd5d6808939a",
         //   "deposit_contract_address": "0x250d30c523104bf0a06825e7eade4dc46edfe40e",
         //   "l1_system_config_address": "0xb6e1f8b589a14b79ddd3ad7f0589ab548c70c174",
@@ -73,7 +74,8 @@
         //     "eip1559DenominatorCanyon": 250
         //   }
         // }
-        "0xecdbb340ded82ca2e5baf5e40c90a3b0c1227c27f9be2962df93d2e061e9a5d4": "Katana OP Succinct v3.10.0 rollup config (Kona v1.6.0)"
+        "0xecdbb340ded82ca2e5baf5e40c90a3b0c1227c27f9be2962df93d2e061e9a5d4": "Katana OP Succinct v3.10.0 rollup config (Kona v1.6.0)",
+        "0x720a7d9b12c0a7fbbd1b2634eb9d17b5cc7720575c48736b1c40e9399f31de09": "Katana OP Succinct v3.12.0 rollup config (Kona v1.6.0)"
       }
     }
   },

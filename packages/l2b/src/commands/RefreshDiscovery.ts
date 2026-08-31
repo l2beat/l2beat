@@ -120,23 +120,30 @@ export const RefreshDiscovery = command({
         `\nOverall ${toRefresh.length} projects need discovery refresh.`,
       )
       const predictor = new TimePredictor()
+      const failedProjects: { name: string; message: string }[] = []
       if (args.confirmed || keyInYN('Do you want to continue?')) {
         for (const [i, { config }] of toRefresh.entries()) {
+          let failureMessage: string | undefined
           const startTime = performance.now()
-          await discoverAndUpdateDiffHistory(
-            {
-              project: config.name,
-              dev: true,
-              overwriteCache: args.overwriteCache,
-            },
-            {
-              description: args.message,
-              configReader,
-              templateService,
-              paths,
-              logger,
-            },
-          )
+          try {
+            await discoverAndUpdateDiffHistory(
+              {
+                project: config.name,
+                dev: true,
+                overwriteCache: args.overwriteCache,
+              },
+              {
+                description: args.message,
+                configReader,
+                templateService,
+                paths,
+                logger,
+              },
+            )
+          } catch (error) {
+            failureMessage = getErrorMessage(error)
+            failedProjects.push({ name: config.name, message: failureMessage })
+          }
 
           reportStatus(
             logger,
@@ -144,8 +151,18 @@ export const RefreshDiscovery = command({
             i + 1,
             toRefresh.length,
             performance.now() - startTime,
-            `${config.name}`,
+            config.name,
+            failureMessage !== undefined ? chalk.red('FAILED') : undefined,
           )
+        }
+
+        if (failedProjects.length > 0) {
+          logger.error(
+            `Discovery failed for ${failedProjects.length} project(s):`,
+          )
+          for (const { name, message } of failedProjects) {
+            logger.error(`- ${name}: ${message}`)
+          }
         }
       }
     }
@@ -159,6 +176,7 @@ function reportStatus(
   count: number,
   runTime: number,
   project: string,
+  note?: string,
 ) {
   const bar = chalk.cyan(asciiProgressBar(finishedCount, count))
   const timeLeft = formatSeconds(
@@ -171,10 +189,15 @@ function reportStatus(
     finishedCount,
     count,
   )
-  const status = `${counter} ${project}`
+  const status = `${counter} ${project}${note ? ` (${note})` : ''}`
 
   const report = [bar, eta, status]
   logger.warn(report.join(' | '))
+}
+
+function getErrorMessage(error: unknown): string {
+  const message = error instanceof Error ? error.message : String(error)
+  return message.split('\n')[0]
 }
 
 function colorMap(toColor: string, value: number, multiplier = 1): string {

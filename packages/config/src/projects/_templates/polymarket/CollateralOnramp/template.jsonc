@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CollateralOnramp",
+  "description": "Lets anyone deposit an asset supported by the configured collateral token and mint an equal amount of collateral tokens while that asset is not paused. Admins can pause or unpause wrapping per asset with no delay.",
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "select": ["user", "roles"],
+        "add": { "event": "RolesUpdated" },
+        "dedupBy": "user"
+      },
+      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (value 1) is the admin role that can pause wrapping per asset.",
+      "severity": "HIGH"
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can grant and revoke the admin role that pauses wrapping through this contract."
+        }
+      ],
+      "severity": "LOW"
+    }
+  }
+}

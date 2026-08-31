@@ -60,37 +60,32 @@ export const lighterprover: BaseProject = {
     ],
     verifierHashes: [
       {
-        hash: '0x836ea0348ed3ae0bf5136f58d874d57075d4094691b08c3ef02a6aaa332df363',
+        hash: '0x32f44b5cbcd701d03206b427e62eae6f171d4b145c4f0717bd9ad004bc24993c',
         name: 'Lighter verifier',
-        sourceLink:
-          'https://github.com/elliottech/lighter-prover/tree/8c01ea010d6fd46bdb77ef2f93a79278d1adf0df/circuit/src',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'ethereum',
-              '0xf7b964eD0C05a7aA12fdC54865295531C9D2AEC1',
+              '0xB1386c4266974D81256afB9908e104B00587112A',
             ),
           },
         ],
-        verificationStatus: 'successful',
-        attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
-        verificationSteps: readProjectMarkdown(
-          'lighterprover',
-          'verificationSteps-0x836ea034',
-        ),
+        verificationStatus: 'notVerified',
+        verificationSteps:
+          'The sources for the verifier circuits are not published and thus the verifier cannot be independently regenerated.',
         description:
           'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract, abi packed in the same order they are defined.',
       },
       {
-        hash: '0x1ea7019dfa94b4b4c58254a958d8fa81a2a8d5d651477acae75bd9405ee5f181',
+        hash: '0x0b3f7515b28812264c235ac2bba289e19a42cecfbceb2eef9856bd6f591a2308',
         name: 'Lighter on Robinhood verifier',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
             address: ChainSpecificAddress.fromLong(
               'robinhood',
-              '0xA3c70B197AcE329D9e09C753DA7874B78F1D00f4',
+              '0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa',
             ),
           },
         ],

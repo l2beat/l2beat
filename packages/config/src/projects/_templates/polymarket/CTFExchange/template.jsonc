@@ -1,0 +1,108 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CTFExchange",
+  "description": "Exchange settling EIP-712 signed limit orders that are matched off-chain by operator-role holders, who also choose the fee on each fill. The fee is not part of the signed order and is checked against an admin-configurable rate limit, currently {{ getMaxFeeRate }} bps. A zero rate means fees have no percentage cap, not that fees are zero: an operator can charge up to all proceeds on a sell or collect an additional amount from a buyer, subject to the buyer's balance and allowance. Users can pause settlement of all their orders, effective after {{ userPauseBlockInterval }} blocks, an interval the admins can change.",
+  "category": "core",
+  "fields": {
+    "admins": {
+      "handler": {
+        "type": "event",
+        "select": "member",
+        "add": {
+          "event": "event NewAdmin(address indexed member, address indexed admin)"
+        },
+        "remove": {
+          "event": "event RemovedAdmin(address indexed member, address indexed admin)"
+        }
+      },
+      "description": "Admins reconstructed from post-deployment authorization events. The constructor grant emits no event, so the initial admin is not included solely by virtue of that grant.",
+      "severity": "HIGH"
+    },
+    "admin": {
+      "description": "Admin granted in the constructor without an authorization event.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage admins and operators, pause and unpause all trading, and set the fee receiver, the maximum fee rate and the user-pause interval."
+        }
+      ]
+    },
+    "operators": {
+      "handler": {
+        "type": "event",
+        "select": "member",
+        "add": {
+          "event": "event NewOperator(address indexed member, address indexed admin)"
+        },
+        "remove": {
+          "event": "event RemovedOperator(address indexed member, address indexed admin)"
+        },
+        "ignoreRelative": true
+      },
+      "permissions": [
+        {
+          "type": "act",
+          "description": "can match and settle signed orders, choose the fee charged on each fill subject to the configured fee-rate check, and store or remove order preapprovals. If the configured rate is zero, fees have no percentage cap: an operator can charge up to all proceeds on a sell or collect an additional amount from a buyer, subject to the buyer's balance and allowance. Storing a preapproval requires a valid maker signature and only lets later fills omit the signature bytes; removing it does not invalidate an otherwise valid signed order."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "getMaxFeeRate": {
+      "description": "Maximum rate, in basis points, enforced for operator-supplied fill fees. Zero means fees have no percentage cap, not that fees are zero: an operator can charge up to all proceeds on a sell or collect an additional amount from a buyer, subject to the buyer's balance and allowance.",
+      "handler": {
+        "type": "call",
+        "method": "getMaxFeeRate",
+        "args": []
+      }
+    },
+    "getFeeReceiver": {
+      "description": "Address receiving all fees charged on order fills.",
+      "handler": {
+        "type": "call",
+        "method": "getFeeReceiver",
+        "args": []
+      },
+      "severity": "HIGH"
+    },
+    "paused": {
+      "description": "Whether all trading on the exchange is currently paused by an admin.",
+      "handler": {
+        "type": "call",
+        "method": "paused",
+        "args": []
+      },
+      "severity": "HIGH"
+    },
+    "userPauseBlockInterval": {
+      "description": "Number of blocks after which a user's self-requested trading pause takes effect.",
+      "handler": {
+        "type": "call",
+        "method": "userPauseBlockInterval",
+        "args": []
+      }
+    },
+    "adminsEverObserved": {
+      "handler": {
+        "type": "event",
+        "select": "admin",
+        "add": [
+          {
+            "event": "event NewOperator(address indexed member, address indexed admin)"
+          },
+          {
+            "event": "event RemovedOperator(address indexed member, address indexed admin)"
+          },
+          {
+            "event": "event NewAdmin(address indexed member, address indexed admin)"
+          },
+          {
+            "event": "event RemovedAdmin(address indexed member, address indexed admin)"
+          }
+        ]
+      },
+      "description": "Addresses recorded as the admin in tracked role-change events. This list is historical, not a live permission set. A constructor-granted admin appears here only if it later performs one of these role changes; confirm current status with isAdmin().",
+      "severity": "HIGH"
+    }
+  }
+}

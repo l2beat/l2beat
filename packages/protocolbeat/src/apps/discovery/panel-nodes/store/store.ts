@@ -102,7 +102,7 @@ export const useStore = create<StoreState>()(
     }),
     {
       // You can update the key if changes are backwards incompatible
-      name: 'store-v5',
+      name: 'store-v6',
       partialize: (state) => {
         return {
           projectId: state.projectId,

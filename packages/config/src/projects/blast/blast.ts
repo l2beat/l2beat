@@ -6,7 +6,7 @@ import {
 import { ESCROW, EXITS, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('blast')
 const chainId = 81457
@@ -14,6 +14,7 @@ const chainId = 81457
 export const blast: ScalingProject = opStackL2({
   addedAt: UnixTime(1700555008), // 2023-11-21T08:23:28Z
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 19300387 })],
   display: {
     name: 'Blast',
     slug: 'blast',

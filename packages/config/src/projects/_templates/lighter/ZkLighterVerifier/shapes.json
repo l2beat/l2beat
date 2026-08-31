@@ -125,5 +125,23 @@
     "address": "eth:0xf7b964eD0C05a7aA12fdC54865295531C9D2AEC1",
     "chain": "ethereum",
     "blockNumber": 25724189
+  },
+  "ZkLighterVerifier_v0.0.22": {
+    "hash": "0xb74e656664c529e0a1c04288f9e2e470923d276a463dcdb7e85e47c2c95336c8",
+    "address": "eth:0x9Ca512d2F131134972EB95515325F69812395332",
+    "chain": "ethereum",
+    "blockNumber": 25824681
+  },
+  "ZkLighterVerifierRobinhood_v0.0.1": {
+    "hash": "0xe9918698c11cc35630c3cd99d564142087c3968ded02116451208d19007b069a",
+    "address": "robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa",
+    "chain": "robinhood",
+    "blockNumber": 44827049
+  },
+  "ZkLighterVerifier_v0.0.23": {
+    "hash": "0x2bdf2a91d1eee5475a67f9eacc65aa114fe720836d91f4ec076ef9e1e19c9675",
+    "address": "eth:0xB1386c4266974D81256afB9908e104B00587112A",
+    "chain": "ethereum",
+    "blockNumber": 25838624
   }
 }

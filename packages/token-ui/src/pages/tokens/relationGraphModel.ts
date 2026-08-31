@@ -158,16 +158,93 @@ export function nodeLabel(node: RelationGraphNode) {
 }
 
 export function mostCommonDeployedSymbol(nodes: RelationGraphNode[]) {
+  return mostCommon(
+    nodes
+      .filter((node) => node.isDeployed)
+      .map((node) => node.symbol)
+      .filter((symbol) => symbol !== null),
+  )
+}
+
+/**
+ * The abstract token a cluster represents, decided by the same "most common
+ * wins" rule as the cluster's symbol label. A cluster ultimately defines an
+ * abstract token, so in practice almost all assigned members agree; the rare
+ * dissenting assignment is outvoted.
+ */
+export function mostCommonAbstractTokenId(nodes: RelationGraphNode[]) {
+  return mostCommon(
+    nodes.map((node) => node.abstractTokenId).filter((id) => id !== null),
+  )
+}
+
+/**
+ * The nodes without relations sitting on chains that no relation touches.
+ * The distinct chains among relation endpoints stand in for the list of
+ * chains interop transfers support — relations are observed from interop
+ * transfers, so a chain with any relation is a supported one — which keeps
+ * this code free of any dependency on interop configuration. A token on any
+ * other chain can never gain a relation in the current state, and the
+ * `supported` display mode drops these nodes to show how much of the
+ * without-relations volume they account for.
+ */
+export function getNodeIdsOutsideRelationChains(
+  graph: RelationGraph,
+): Set<string> {
+  const relationChains = new Set(
+    graph.relations.flatMap((relation) => [
+      relation.tokenAChain,
+      relation.tokenBChain,
+    ]),
+  )
+  return new Set(
+    graph.nodes
+      .filter((node) => !node.hasRelations && !relationChains.has(node.chain))
+      .map((node) => node.id),
+  )
+}
+
+/**
+ * Which tokens without relations (deployed tokens assigned to an abstract
+ * token but observed in no relation) the graph displays: `hide` them all
+ * (the graph as it was before they existed), show only the ones on
+ * `supported` chains (chains some relation touches — the rest can never
+ * gain a relation), or show `all` of them.
+ */
+export type TokensWithoutRelationsDisplayMode = 'hide' | 'supported' | 'all'
+
+/**
+ * Drops the without-relations nodes the display mode hides. This runs on the
+ * graph payload, before the scene is built — unlike relation deletion, which
+ * hides at draw time — so changing the mode re-runs the layout and the
+ * clusters settle without the hidden nodes distorting their shape. Relations
+ * need no filtering: a node without relations has none.
+ */
+export function filterTokensWithoutRelations(
+  graph: RelationGraph,
+  mode: TokensWithoutRelationsDisplayMode,
+): RelationGraph {
+  if (mode === 'all') return graph
+  if (mode === 'hide') {
+    return { ...graph, nodes: graph.nodes.filter((node) => node.hasRelations) }
+  }
+  const outsideIds = getNodeIdsOutsideRelationChains(graph)
+  return {
+    ...graph,
+    nodes: graph.nodes.filter((node) => !outsideIds.has(node.id)),
+  }
+}
+
+function mostCommon(values: string[]) {
   const counts = new Map<string, number>()
-  for (const node of nodes) {
-    if (!node.isDeployed || node.symbol === null) continue
-    counts.set(node.symbol, (counts.get(node.symbol) ?? 0) + 1)
+  for (const value of values) {
+    counts.set(value, (counts.get(value) ?? 0) + 1)
   }
 
   return [...counts]
     .sort(
-      ([symbolA, countA], [symbolB, countB]) =>
-        countB - countA || symbolA.localeCompare(symbolB),
+      ([valueA, countA], [valueB, countB]) =>
+        countB - countA || valueA.localeCompare(valueB),
     )
     .at(0)?.[0]
 }

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PositionManager",
+  "description": "Uniswap v4 periphery: represents v4 liquidity positions as ERC-721 NFTs and batches liquidity operations against the configured pool manager, pulling tokens through Permit2. It has no owner and no special privileges in the core.",
+  "ignoreInWatchMode": ["nextTokenId"]
+}

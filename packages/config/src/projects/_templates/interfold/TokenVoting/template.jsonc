@@ -1,0 +1,59 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PublicTokenVoting",
+  "category": "gov",
+  "description": "Upgradeable Aragon majority-voting plugin used as the voting body in Interfold's public staged proposal path. Voting power comes from the immutable BondedVotes adapter.",
+  "ignoreMethods": [
+    "canExecute",
+    "canVote",
+    "getProposal",
+    "hasSucceeded",
+    "isMinApprovalReached",
+    "isMinParticipationReached",
+    "isSupportThresholdReached",
+    "isSupportThresholdReachedEarly",
+    "proposalCount",
+    "proxiableUUID",
+    "totalVotingPower"
+  ],
+  "fields": {
+    "dao": {
+      "description": "Aragon DAO whose permission manager controls voting settings, targets and upgrades."
+    },
+    "getVotingToken": {
+      "description": "Immutable IVotes source used for proposal snapshots and vote weights."
+    },
+    "votingMode": {
+      "description": "Early-execution mode applied to newly created votes.",
+      "type": "RISK_PARAMETER"
+    },
+    "supportThreshold": {
+      "description": "Required yes-vote ratio over yes plus no votes, using Aragon's 10^6 ratio base.",
+      "type": "RISK_PARAMETER"
+    },
+    "minParticipation": {
+      "description": "Minimum participating voting power relative to the snapshotted total supply, using Aragon's 10^6 ratio base.",
+      "type": "RISK_PARAMETER"
+    },
+    "minDuration": {
+      "description": "Minimum voting duration in seconds.",
+      "type": "RISK_PARAMETER"
+    },
+    "minProposerVotingPower": {
+      "description": "Minimum voting power the creator must hold at the proposal snapshot.",
+      "type": "RISK_PARAMETER"
+    },
+    "minApproval": {
+      "description": "Absolute minimum yes-vote requirement for a proposal to succeed.",
+      "type": "RISK_PARAMETER"
+    },
+    "tokenIndexedByTimestamp": {
+      "description": "Whether proposal snapshots use timestamp-based rather than block-number-based voting checkpoints.",
+      "type": "RISK_PARAMETER"
+    },
+    "getCurrentTargetConfig": {
+      "description": "Stored execution target and call operation for successful voting proposals.",
+      "type": "CODE_CHANGE"
+    }
+  }
+}

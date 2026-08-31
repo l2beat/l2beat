@@ -1,19 +1,29 @@
 {
   "name": "nova",
-  "timestamp": 1787143520,
+  "timestamp": 1787834844,
   "configHash": "0x82658dd6bcec77284dbacc5e1e9109874fcf45b2faea01530f373607a179804d",
   "entries": [
     {
       "name": "ArbFilteredTransactionsManager",
       "address": "arb-nova:0x0000000000000000000000000000000000000074",
-      "type": "EOA",
+      "type": "Contract",
       "template": "orbitstack/ArbFilteredTransactionsManager",
-      "proxyType": "EOA",
+      "sourceHashes": [
+        "0xc92ac7c82ac0ae6811eb5889bb19d300f3f59cc6c21e25d1be2dcc6c4a9db41a"
+      ],
+      "proxyType": "immutable",
       "description": "ArbOS 61 transaction-filtering precompile (0x..74). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. Available from ArbOS 61 onwards. On chains where the feature is not enabled (e.g. Arbitrum One and Nova) it has no filterers and no filtered transactions, but is tracked so any future activation is caught immediately. Compare Robinhood, where this precompile is active.",
+      "deployerAddress": "arb-nova:0x0000000000000000000000000000000000000000",
+      "sinceTimestamp": 1656122488,
+      "sinceBlock": 0,
       "values": {
+        "$immutable": true,
         "filteredTransactionsAdded": 0,
         "filteredTransactionsDeleted": 0,
-        "transactionFilterers": "EXPECT_REVERT"
+        "transactionFilterers": []
+      },
+      "implementationNames": {
+        "arb-nova:0x0000000000000000000000000000000000000074": ""
       },
       "references": [
         {
@@ -612,7 +622,7 @@
         "beaconProxyFactory": "arb-nova:0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
         "counterpartGateway": "arb-nova:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-        "exitNum": 1092,
+        "exitNum": 1094,
         "router": "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "implementationNames": {
@@ -825,7 +835,7 @@
         "l2Gateway": "arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4",
         "name": "Arbitrum",
         "symbol": "ARB",
-        "totalSupply": "171871164970888910513846"
+        "totalSupply": "174372867218724459596308"
       },
       "implementationNames": {
         "arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD": "TransparentUpgradeableProxy",
@@ -988,7 +998,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "batchCount": 377382,
+        "batchCount": 379707,
         "batchPosterManager": "eth:0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "eth:0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -1000,9 +1010,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 300,
-          "prevBlockNumber": 25789068,
+          "prevBlockNumber": 25846595,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 25789120
+          "prevSequencedBlockNumber": 25846653
         },
         "dacKeyset": {
           "requiredSignatures": 5,
@@ -1035,7 +1045,7 @@
         "rollup": "eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 623543,
+        "totalDelayedMessagesRead": 625890,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1968,7 +1978,7 @@
           "eth:0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 623545,
+        "delayedMessageCount": 625893,
         "inboxHistory": [
           "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
           "eth:0x304807A7ed6c1296df2128E6ff3836e477329CD2"
@@ -1976,8 +1986,8 @@
         "outboxHistory": ["eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
         "rollup": "eth:0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerInbox": "eth:0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 377382,
-        "sequencerReportedSubMessageCount": 85248671
+        "sequencerMessageCount": 379707,
+        "sequencerReportedSubMessageCount": 85264262
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -6673,7 +6683,7 @@
         ],
         "inbox": "eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isPostBoLD": true,
-        "latestConfirmed": "0xe93ea22b7f98fbf0425b994c18e06f336efa66c7177562117fb48f0b3c54c26c",
+        "latestConfirmed": "0x9ef62422e22d6667a91f2134398d477e7c45a7d295ddc30ee52d08dfb472159d",
         "loserStakeEscrow": "eth:0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -8487,6 +8497,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 25789239, "nova": 85248679 },
-  "permissionsConfigHash": "0xb1ca02e35bce3d96c3b8ad0292d0b0c54bc0a931882ec1a4f88b268675d9f8c1"
+  "usedBlockNumbers": { "ethereum": 25846654, "nova": 85264261 },
+  "permissionsConfigHash": "0xcf697b5973fd3945c062983ece5c3e166e1b1f784c15260587d4e8f756541531"
 }

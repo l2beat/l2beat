@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xf426051e3841a646f40813e480fae6579b24eea9
+
+# Diff at Fri, 21 Aug 2026 10:26:51 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@97be884924a799765834458d955d84040bed3cfb block: 1783068981
+- current timestamp: 1787307944
+
+## Description
+
+New proposal to update DAO-controled tornado cash frontend: https://github.com/tornado-dao/classic-ui/compare/e312df5a4f6caaa7e93f1b5960c603d8dd7ec67a...17c54dae9ad91bb3c6d62a7860df6cd365ab76d4. It replaces RPC queries with Graph queries, sources proposal states from the onchain data, changes source link from Codeberg to GitHub and adds a phishing website notice board for tornado.cash.
+
+Sol verified that the published CID matches the changes.
+
+## Watched changes
+
+```diff
+    contract GovernanceProposalStateUpgrade (eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce) [tornado-cash/GovernanceProposalStateUpgrade] {
+    +++ description: Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.
+      values.proposalCount:
+-        67
++        68
+    }
+```
+
 Generated with discovered.json: 0x20c0960a1fae73c6cf95e435cb22b97b777ef4e3
 
 # Diff at Thu, 30 Jul 2026 14:13:58 GMT:

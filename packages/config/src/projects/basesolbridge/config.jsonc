@@ -1,0 +1,76 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "basesolbridge",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["base:0x3eff766C76a1be2Ce1aCF2B69c78bCae257D5188"],
+  "names": {
+    "base:0xb326c02150bb0De265Bb0eCeDA53531ab0163bf6": "TwinBeacon",
+    "base:0xdDc41fdA4B758728d07F4686DbE7D1C75C6b2552": "CrossChainERC20Beacon"
+  },
+  "overrides": {
+    "base:0x7B0328745A01634c32eFAf041d91432a075B308D": {
+      // RBACTimelock: terminal entry of this discovery. Its role members
+      // (Chainlink's ManyChainMultiSigs, CallProxy and a Safe with ~90 signer EOAs)
+      // are already tracked in the ccip project (which discovers this same timelock
+      // on base), so the border is drawn here to keep this discovery focused.
+      "ignoreRelatives": [
+        "accessControl",
+        "adminRoleMembers",
+        "proposerRoleMembers",
+        "cancellerRoleMembers",
+        "executorRoleMembers",
+        "bypasserRoleMembers"
+      ]
+    },
+    "base:0xAF24c1c24Ff3BF1e6D882518120fC25442d6794B": {
+      // BridgeValidator
+      "fields": {
+        "baseValidators": {
+          // decoded from the initialize() calldata (tx 0xcd4041d7bfbdf3a32ceff0630b2bc0d23085df2dc8e3b96a26a558b6e8ec3579):
+          // there is no getter or event for the full set and no function to change it,
+          // so the hardcoded list cannot go stale (verified via isBaseValidator()).
+          "description": "Base validator set, fixed at initialization.",
+          "handler": {
+            "type": "hardcoded",
+            "value": [
+              "base:0xa0F80e237Be74A580cCAEd06236075C17f1fEc69",
+              "base:0xe018748703F74b806399dd1ECe608453578DDE79"
+            ]
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "attest messages passed from Solana to Base by co-signing message batches ({{getBaseThreshold}} of {{getBaseValidatorCount}} signatures required, alongside {{partnerValidatorThreshold}} partner validator signatures). Attested messages are executable on the Bridge without further verification."
+            }
+          ]
+        }
+      }
+    },
+    "base:0xb326c02150bb0De265Bb0eCeDA53531ab0163bf6": {
+      // TwinBeacon
+      "fields": {
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "change the implementation of the TwinBeacon and with it the code of every Twin account contract of the Base <> Solana bridge."
+            }
+          ]
+        }
+      }
+    },
+    "base:0xdDc41fdA4B758728d07F4686DbE7D1C75C6b2552": {
+      // CrossChainERC20Beacon
+      "fields": {
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "change the implementation of the CrossChainERC20Beacon and with it the code of every bridged token (e.g. SOL, JitoSOL) of the Base <> Solana bridge."
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AutoRedeemer",
+  "description": "Upgradeable helper that batch-redeems resolved positions for users who approved it on the relevant ERC1155 ledger. Operator-role holders choose which approved positions to redeem and when, but the current implementation always sends proceeds to the position owner.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "select": ["user", "roles"],
+        "add": { "event": "RolesUpdated" },
+        "dedupBy": "user"
+      },
+      "severity": "HIGH",
+      "description": "Role bitmask per address, reconstructed from role-update events. Only bit 0 (1), the admin role, and bit 1 (2), the operator role, are checked to restrict calls. Granting any other role bit gives no additional access in this contract."
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can upgrade the redemption helper implementation and manage all roles. An upgrade could transfer positions belonging to users who approved this contract or redirect their redemption proceeds."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "POSITION_MANAGER": {
+      "description": "The outcome-token ledger whose positions this contract redeems for users who approved it as an operator."
+    },
+    "COLLATERAL_TOKEN": {
+      "description": "The collateral token paid out to position owners on redemption."
+    }
+  }
+}

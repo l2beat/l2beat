@@ -1,0 +1,113 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "CiphernodeRegistry",
+  "category": "core",
+  "description": "Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection, records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability.",
+  "ignoreMethods": [
+    "committeePublicKey",
+    "committeeThresholdMet",
+    "dkgFoldAttestationVerifierFor",
+    "getActiveCommitteeNodes",
+    "getCommitteeDeadline",
+    "getCommitteeHash",
+    "getCommitteeNodes",
+    "getCommitteeViability",
+    "getDkgAnchors",
+    "isOpen",
+    "publicKeyHashes",
+    "rootAt",
+    "roots",
+    "sortitionEntropyBlocks",
+    "sortitionSeed",
+    "sortitionSeedResolved",
+    "sortitionTicketPrices"
+  ],
+  "ignoreRelatives": ["BLOCKHASH_HISTORY"],
+  "ignoreInWatchMode": ["ciphernodes", "root", "treeSize"],
+  "fields": {
+    "owner": {
+      "description": "Account controlling registry configuration.",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the coordinator, bonding and slashing dependencies; add or remove ciphernodes; change the sortition window; and update the DKG verifier and accusation-vote validity parameters. DKG-verifier replacement and risk-reducing accusation-window changes use a two-day propose/commit delay, while other changes are immediate."
+        }
+      ]
+    },
+    "$members": {
+      "description": "Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.",
+      "type": "PERMISSION",
+      "handler": {
+        "type": "event",
+        "select": "node",
+        "add": { "event": "CiphernodeAdded" },
+        "remove": { "event": "CiphernodeRemoved" }
+      },
+      "permissions": [
+        {
+          "type": "member",
+          "description": "eligible for ticket-weighted selection into E3 committees, where selected members create key shares and participate in threshold decryption."
+        }
+      ]
+    },
+    "$threshold": {
+      "description": "Decryption shares required within each newly selected minimum-size committee. This represents two of the selected three ciphernodes, not two of all registered $members.",
+      "handler": {
+        "type": "call",
+        "address": "{{ interfold }}",
+        "method": "function committeeThresholds(uint8 size, uint256 index) view returns (uint32)",
+        "args": [0, 0]
+      }
+    },
+    "selectedCommitteeSize": {
+      "description": "Number of ciphernodes selected from $members for each minimum-size committee.",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "call",
+        "address": "{{ interfold }}",
+        "method": "function committeeThresholds(uint8 size, uint256 index) view returns (uint32)",
+        "args": [0, 1]
+      }
+    },
+    "interfold": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "request and release E3 committees."
+        }
+      ]
+    },
+    "bondingRegistry": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add and remove ciphernode operator keys as collateral positions are registered and exited."
+        }
+      ]
+    },
+    "slashingManager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "expel selected members from active committees."
+        }
+      ]
+    },
+    "dkgFoldAttestationVerifier": {
+      "description": "Verifier that authenticates each selected node's DKG-fold commitment before the aggregate DKG proof is accepted.",
+      "type": "CODE_CHANGE"
+    },
+    "sortitionSubmissionWindow": {
+      "description": "Time after entropy becomes available during which eligible operators submit a ticket for committee sortition.",
+      "type": "RISK_PARAMETER"
+    },
+    "accusationVoteValidity": {
+      "description": "Validity window for committee accusation attestations used by permissionless proof-based slashing.",
+      "type": "RISK_PARAMETER"
+    },
+    "numCiphernodes": {
+      "description": "Number of currently registered ciphernode keys."
+    }
+  }
+}

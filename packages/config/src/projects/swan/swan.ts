@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getOpStackDaTracking, opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('swan')
 
@@ -13,6 +13,7 @@ export const swan: ScalingProject = opStackL2({
   },
   addedAt: UnixTime(1722275591), // 2024-07-29T17:53:11Z
   discovery,
+  daTracking: [getOpStackDaTracking(discovery, { sinceBlock: 20112981 })],
   additionalPurposes: ['AI', 'Storage'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {

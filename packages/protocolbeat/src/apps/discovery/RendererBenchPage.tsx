@@ -203,6 +203,7 @@ function generateNodes(
       name: `Node ${i}`,
       fields: [],
       hiddenFields: [],
+      compressedRows: [],
       box: {
         x: col * colStride,
         y: row * rowStride,

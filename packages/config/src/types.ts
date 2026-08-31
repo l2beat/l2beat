@@ -368,9 +368,6 @@ export type ChainApiConfig =
   | ChainBasicApi<'rpc'>
   | ChainBasicApi<'starknet'>
   | ChainBasicApi<'lighter'>
-  | ChainBasicApi<'zksync'>
-  | ChainBasicApi<'loopring'>
-  | ChainBasicApi<'degate3'>
   | ChainBasicApi<'fuel'>
   | ChainBasicApi<'svm-rpc'>
   | ChainBasicApi<'aztec-rpc'>
@@ -967,6 +964,7 @@ export type ProjectDefiCategory =
   | 'Oracle'
   | 'Stablecoin'
   | 'Liquid Staking'
+  | 'Prediction market'
 
 export interface ProjectDefiInfo {
   /** Short category label shown in the DeFi table, e.g. "Stablecoin". */
@@ -997,6 +995,12 @@ export type ProjectExternalDependency =
 
 export interface ProjectPrivacyInfo {
   tokens: ProjectPrivacyToken[]
+  /**
+   * A project tracks relayers either through onchain events or through
+   * Railgun Waku sampling - the two produce incompatible statistics, so
+   * mixing kinds within one project is not representable.
+   */
+  relayerTracking?: ProjectPrivacyRelayerTracking
   summaryTrackedItemName?: string
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
@@ -1010,11 +1014,34 @@ export interface ProjectPrivacyInfo {
   quantumResistant?: true
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
+  /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
+  zkCatalogId?: ProjectId
 }
 
 export interface PrivacyNoteDiscovery {
   description: string
   risks?: string[]
+}
+
+export type ProjectPrivacyRelayerTracking =
+  | {
+      type: 'onchainEvents'
+      sources: ProjectPrivacyOnchainRelayerSource[]
+    }
+  | ProjectPrivacyRailgunWakuRelayerSource
+
+/** Relayers identified by extracting their addresses from onchain withdrawal events. */
+export type ProjectPrivacyOnchainRelayerSource = {
+  address: ChainSpecificAddress
+  sinceTimestamp: UnixTime
+  extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal'
+}
+
+/** Relayers counted from daily observations of fee advertisements on the Railgun Waku network. */
+export type ProjectPrivacyRailgunWakuRelayerSource = {
+  type: 'railgunWaku'
+  chainId: number
+  sinceTimestamp: UnixTime
 }
 
 export interface PrivacyExitWindow extends ExitWindowRisk {
@@ -1478,6 +1505,7 @@ export type InteropPluginName =
   | 'avalanche'
   | 'axelar'
   | 'axelar-its'
+  | 'basesolbridge'
   | 'beefy-bridge'
   | 'ccip'
   | 'cctp-v1'
@@ -1586,7 +1614,6 @@ export type InteropPlugin = {
   bridgeType: KnownInteropBridgeType
   chain?: string
   abstractTokenId?: string
-  transferType?: string
 }
 
 export type InteropDurationSplit = InteropDurationSplitEntry[]

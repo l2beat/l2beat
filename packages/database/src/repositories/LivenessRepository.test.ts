@@ -9,7 +9,7 @@ import {
 } from './LivenessRepository'
 
 describe(toRecord.name, () => {
-  it('maps a null grouping key to undefined', () => {
+  it('maps the ungrouped sentinel to undefined', () => {
     const timestamp = UnixTime(1)
 
     expect(
@@ -18,7 +18,7 @@ describe(toRecord.name, () => {
         blockNumber: 1,
         txHash: '0x1234',
         configurationId: 'config-id',
-        groupingKey: null,
+        groupingKey: 'none',
       }),
     ).toEqual({
       timestamp,
@@ -167,6 +167,36 @@ describeDatabase(LivenessRepository.name, (db) => {
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([...DATA, earlier])
+    })
+
+    it('stores a record per grouping key for one transaction', async () => {
+      const sharedTx = {
+        timestamp: START - 4 * UnixTime.MINUTE,
+        blockNumber: 20,
+        txHash: '0xgrouped-multicall',
+        configurationId: txIdA,
+      }
+      const grouped = [
+        { ...sharedTx, groupingKey: 'epoch-1' },
+        { ...sharedTx, groupingKey: 'epoch-2' },
+      ]
+
+      await repository.insertMany(grouped)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([...DATA, ...grouped])
+    })
+
+    it('rejects the same ungrouped transaction twice', async () => {
+      const record = {
+        timestamp: START - 4 * UnixTime.MINUTE,
+        blockNumber: 20,
+        txHash: '0xungrouped-duplicate',
+        configurationId: txIdA,
+        groupingKey: undefined,
+      }
+
+      await expect(repository.insertMany([record, record])).toBeRejected()
     })
 
     it('big query', async () => {

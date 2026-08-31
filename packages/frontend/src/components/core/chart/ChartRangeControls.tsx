@@ -16,24 +16,16 @@ import { useTracking } from '~/hooks/useTracking'
 import { CalendarIcon } from '~/icons/Calendar'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
-import {
-  type ChartRange,
-  optionToDays,
-  optionToRange,
-} from '~/utils/range/range'
-import { rangeToDays } from '~/utils/range/rangeToDays'
+import { type ChartRange, optionToRange } from '~/utils/range/range'
 import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
 import { Skeleton } from '../Skeleton'
 import { VerticalSeparator } from '../VerticalSeparator'
+import {
+  type ChartRangeOptionValue,
+  rangeToOption,
+} from './utils/rangeToOption'
 
-export type ChartRangeOptionValue =
-  | '1d'
-  | '7d'
-  | '30d'
-  | '90d'
-  | '180d'
-  | '1y'
-  | 'max'
+export { rangeToOption, type ChartRangeOptionValue }
 
 interface ChartRangeOption {
   value: ChartRangeOptionValue
@@ -63,7 +55,10 @@ export function ChartRangeControls({ name, value, setValue, options }: Props) {
   if (!isClient) {
     return <Skeleton className={cn('h-8 w-14 md:w-[320px]')} />
   }
-  const selectedOption = rangeToOption(value, options)
+  const selectedOption = rangeToOption(
+    value,
+    options.map((option) => option.value),
+  )
 
   function onDateRangeChange(dateRange: DateRange | undefined) {
     setInternalValue(dateRange)
@@ -259,21 +254,4 @@ function CalendarComponent({
       className={cn('rounded-lg pb-3', className)}
     />
   )
-}
-
-function rangeToOption(
-  [from, to]: ChartRange,
-  options: { value: ChartRangeOptionValue }[],
-): ChartRangeOptionValue | 'custom' {
-  if (
-    UnixTime.toStartOf(to, 'day') !== UnixTime.toStartOf(UnixTime.now(), 'day')
-  ) {
-    return 'custom'
-  }
-  if (from === null) return 'max'
-  const days = rangeToDays([from, to])
-  const option = options.find((option) => optionToDays(option.value) === days)
-  if (option) return option.value
-
-  return 'custom'
 }

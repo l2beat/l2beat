@@ -1,3 +1,101 @@
+Generated with discovered.json: 0x3683d67de9a541b825bee6739813885877800c4b
+
+# Diff at Thu, 20 Aug 2026 13:17:37 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@00219f808cbf3466c6d2af96ddc96440efc3714c block: 1787035190
+- current timestamp: 1787230295
+
+## Description
+
+Verified source code of 3 proxy admins and external call executor. The sources of two more contract were not identified
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787035190 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3) [global/ProxyAdmin] {
+    +++ description: None
+      name:
+-        ""
++        "ProxyAdmin"
+      unverified:
+-        true
+      values.UPGRADE_INTERFACE_VERSION:
++        "5.0.0"
+      implementationNames.eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3:
+-        ""
++        "ProxyAdmin"
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F) [global/ProxyAdmin] {
+    +++ description: None
+      name:
+-        ""
++        "ProxyAdmin"
+      unverified:
+-        true
+      values.UPGRADE_INTERFACE_VERSION:
++        "5.0.0"
+      implementationNames.eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F:
+-        ""
++        "ProxyAdmin"
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"]
+    }
+```
+
+```diff
+    contract ExternalCallExecutor (eth:0xAE0361b1C3454b297129e01046057F1D294c7974) [N/A] {
+    +++ description: The default executor in the ExternalCallAdapter: it executes external calldata attached to DLN orders.
+      unverified:
+-        true
+      description:
+-        "Unverified contract registered as the default executor in the ExternalCallAdapter: it executes external calldata attached to DLN orders."
++        "The default executor in the ExternalCallAdapter: it executes external calldata attached to DLN orders."
+      values.ADAPTER_ROLE:
++        "0xdbeb657137b1822b3d5418bea6fd641226d964b4c3871ef23546db2622258871"
+      values.DEFAULT_ADMIN_ROLE:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      implementationNames.eth:0xAE0361b1C3454b297129e01046057F1D294c7974:
+-        ""
++        "ExternalCallExecutor"
+      sourceHashes:
++        ["0x6c5aae59f2a5722455f7f6b27b17e514a918ab56299c83ae29aed90c2f8863b0"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xb54CD1e74f232C6de444464C81f81D13E6978816) [global/ProxyAdmin] {
+    +++ description: None
+      name:
+-        ""
++        "ProxyAdmin"
+      unverified:
+-        true
+      values.UPGRADE_INTERFACE_VERSION:
++        "5.0.0"
+      implementationNames.eth:0xb54CD1e74f232C6de444464C81f81D13E6978816:
+-        ""
++        "ProxyAdmin"
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"]
+    }
+```
+
 Generated with discovered.json: 0xf9e9961ba5caa63fe68c0ace8aa0932fdf5aebef
 
 # Diff at Tue, 18 Aug 2026 06:41:07 GMT:

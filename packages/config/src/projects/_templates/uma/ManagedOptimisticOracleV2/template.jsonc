@@ -1,0 +1,100 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ManagedOptimisticOracleV2",
+  "category": "shared",
+  "description": "Managed variant of the UMA Optimistic Oracle V2 that acts as an escalation layer before UMA's DVM. Only whitelisted requesters can create price requests. Both the proposal submitter and credited proposer must pass the effective proposer whitelist, which can be overridden per request. Anyone can dispute an active proposal by posting the required bond, but only a resolver-role holder can settle the request. The proposal liveness defaults to {{ defaultLivenessFormatted }}, with a minimum dispute window of {{ minimumDisputeWindowFormatted }}. Because settlement is permissioned, a proposal that outlives its liveness window does not become final on its own and can still be disputed until a resolver settles it. Roles (OpenZeppelin AccessControl): the default admin can upgrade the contract and manage the config admin role; the config admin sets the requester and default proposer whitelists, the default liveness, the minimum dispute window and the allowed bond ranges, and manages request managers; request managers set per-request proposer whitelists, bonds and liveness; the self-governing resolver admin manages resolvers.",
+  "ignoreMethods": ["proxiableUUID", "getCurrentTime"],
+  "ignoreRelatives": ["finder"],
+  "fields": {
+    "defaultLivenessFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function defaultLiveness() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "minimumDisputeWindowFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function minimumDisputeWindow() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      },
+      "severity": "HIGH"
+    },
+    "configAdmins": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "CONFIG_ADMIN_ROLE"
+      },
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the requester and proposer whitelists, the default liveness, the minimum dispute window and the allowed bond ranges, and add or remove request managers."
+        }
+      ]
+    },
+    "requestManagers": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "REQUEST_MANAGER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set per-request proposer whitelists, bond amounts (within the allowed range) and liveness values."
+        }
+      ]
+    },
+    "resolvers": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "RESOLVER_ROLE"
+      },
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "settle price requests. Settlement is restricted to this role, so no request becomes final without a resolver, and disputes stay possible until a resolver settles."
+        }
+      ]
+    },
+    "resolverAdmins": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "RESOLVER_ADMIN_ROLE"
+      },
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add and remove resolvers and resolver admins."
+        }
+      ]
+    },
+    "defaultAdmin": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can upgrade the oracle implementation and manage the config admin role."
+        }
+      ]
+    },
+    "requesterWhitelist": {
+      "description": "Contract consulted to decide whether a caller may make a price request.",
+      "severity": "HIGH"
+    },
+    "defaultProposerWhitelist": {
+      "description": "Default contract consulted for proposal submitters and credited proposers when no per-request override is configured.",
+      "severity": "HIGH"
+    }
+  }
+}

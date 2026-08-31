@@ -1,4 +1,7 @@
-import type { InteropBridgeType } from '@l2beat/shared-pure'
+import type {
+  InteropBridgeType,
+  KnownInteropBridgeType,
+} from '@l2beat/shared-pure'
 import type {
   Expression,
   ExpressionBuilder,
@@ -47,6 +50,12 @@ export type TokenRelationRecord = {
 }
 
 export type TokenRelationRoute = Omit<TokenRelationRecord, 'transfer'>
+
+export interface MintingPluginRecord extends DeployedTokenPrimaryKey {
+  plugin: string
+  bridgeType: KnownInteropBridgeType
+  relatedChain: string
+}
 
 // The identity and role columns come back re-derived, so their literal types
 // widen; anything else the caller passed in (e.g. `transfer`) is preserved.
@@ -319,8 +328,16 @@ export class TokenRelationRepository extends BaseRepository {
       .distinct()
       .where((eb) =>
         eb.or([
-          this.mintedAtEndpoint(eb, { chain: token.chain, address }, 'A'),
-          this.mintedAtEndpoint(eb, { chain: token.chain, address }, 'B'),
+          eb.and([
+            eb('tokenAChain', '=', token.chain),
+            eb('tokenAAddress', '=', address),
+            this.mintedAtEndpoint(eb, 'A'),
+          ]),
+          eb.and([
+            eb('tokenBChain', '=', token.chain),
+            eb('tokenBAddress', '=', address),
+            this.mintedAtEndpoint(eb, 'B'),
+          ]),
         ]),
       )
       .orderBy('plugin')
@@ -329,22 +346,78 @@ export class TokenRelationRepository extends BaseRepository {
     return rows.map((row) => row.plugin)
   }
 
-  // The token occupies the given endpoint slot and is minted there.
+  /**
+   * Distinct records, in no particular order. Input addresses are matched
+   * case-insensitively; returned addresses are as stored (lowercase), so
+   * group results by lowercased address, not by comparing against the input.
+   */
+  async getMintingPluginsForMany(
+    tokens: DeployedTokenPrimaryKey[],
+  ): Promise<MintingPluginRecord[]> {
+    // The UNION dedupes rows within a query, so deduping the input is all it
+    // takes for the result to be distinct overall.
+    const uniqueTokens = [
+      ...new Map(
+        tokens.map((token) => {
+          const normalized = {
+            chain: token.chain,
+            address: token.address.toLowerCase(),
+          }
+          return [`${normalized.chain}|${normalized.address}`, normalized]
+        }),
+      ).values(),
+    ]
+
+    const result: MintingPluginRecord[] = []
+    await this.batch(uniqueTokens, BATCH_SIZE, async (batch) => {
+      const mintedAt = (slot: 'A' | 'B') => {
+        const otherSlot = slot === 'A' ? 'B' : 'A'
+        return this.db
+          .selectFrom('TokenRelation')
+          .select([
+            `token${slot}Chain as chain` as const,
+            `token${slot}Address as address` as const,
+            `token${otherSlot}Chain as relatedChain` as const,
+            'plugin',
+            'bridgeType',
+          ])
+          .where((eb) =>
+            eb(
+              eb.refTuple(`token${slot}Chain`, `token${slot}Address`),
+              'in',
+              batch.map((token) => eb.tuple(token.chain, token.address)),
+            ),
+          )
+          .where((eb) => this.mintedAtEndpoint(eb, slot))
+      }
+
+      const rows = await mintedAt('A').union(mintedAt('B')).execute()
+      for (const row of rows) {
+        result.push({
+          chain: row.chain,
+          address: row.address,
+          plugin: row.plugin,
+          bridgeType: row.bridgeType as KnownInteropBridgeType,
+          relatedChain: row.relatedChain,
+        })
+      }
+    })
+
+    return result
+  }
+
+  // The relation's `slot` endpoint is minted there: a burnAndMint pair mints
+  // on both endpoints, a lockAndMint pair on the one opposite the locked one.
   private mintedAtEndpoint(
     eb: ExpressionBuilder<DB, 'TokenRelation'>,
-    token: DeployedTokenPrimaryKey,
     slot: 'A' | 'B',
   ): Expression<SqlBool> {
     const otherSlot = slot === 'A' ? 'B' : 'A'
-    return eb.and([
-      eb(`token${slot}Chain`, '=', token.chain),
-      eb(`token${slot}Address`, '=', token.address),
-      eb.or([
-        eb('bridgeType', '=', 'burnAndMint' satisfies InteropBridgeType),
-        eb.and([
-          eb('bridgeType', '=', 'lockAndMint' satisfies InteropBridgeType),
-          eb('lockedToken', '=', otherSlot),
-        ]),
+    return eb.or([
+      eb('bridgeType', '=', 'burnAndMint' satisfies InteropBridgeType),
+      eb.and([
+        eb('bridgeType', '=', 'lockAndMint' satisfies InteropBridgeType),
+        eb('lockedToken', '=', otherSlot),
       ]),
     ])
   }

@@ -40,7 +40,7 @@ export function toAddressRecord(value: ContractValue | undefined) {
 }
 
 export function toAddressArray(
-  value: ContractValue | undefined,
+  value: ContractValue | null | undefined,
 ): ChainSpecificAddress[] {
   if (Array.isArray(value)) {
     return value.flatMap((v) => toAddressArray(v))

@@ -1,0 +1,25 @@
+{
+  "name": "@l2beat/ai-review",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm run clean && tsc -p tsconfig.build.json",
+    "clean": "rm -rf build *.tsbuildinfo",
+    "format:fix": "biome format --write .",
+    "format": "biome format .",
+    "lint:fix": "biome check --formatter-enabled=false --write .",
+    "lint": "biome check --formatter-enabled=false .",
+    "test": "mocha",
+    "typecheck": "tsc --noEmit",
+    "gate": "tsx src/cli/gate.ts",
+    "review": "tsx src/cli/review.ts",
+    "post": "tsx src/cli/post.ts"
+  },
+  "dependencies": {
+    "@l2beat/validate": "workspace:*"
+  },
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*"
+  }
+}

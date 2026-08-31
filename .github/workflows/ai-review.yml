@@ -1,0 +1,219 @@
+name: AI Review
+
+on:
+  issue_comment:
+    types: [created]
+  # Dev replay: labeling a PR `ai-review-test` re-runs the latest /ai-review
+  # comment on it using this branch's workflow and code (issue_comment always
+  # runs the version on main).
+  pull_request:
+    types: [labeled]
+
+concurrency:
+  group: ai-review-${{ github.event.issue.number || github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  # Cheap pre-filter so non-member / non-command comments never spin a runner.
+  # Must stay a loose superset of the unit-tested evaluateTrigger, which is the
+  # authoritative gate (command syntax, membership, draft/fork/bot checks).
+  gate:
+    name: Gate
+    # The label replay runs this branch's ai-review package as trusted reviewer
+    # code next to the Codex credential, so restrict it to member/owner-authored
+    # PRs. This is a policy control, not a boundary: the branch code is still
+    # unreviewed, so treat the label as a maintainer-only debug tool.
+    if: >
+      ${{
+        (github.event_name == 'pull_request' &&
+          github.event.label.name == 'ai-review-test' &&
+          contains(fromJSON('["MEMBER","OWNER"]'), github.event.pull_request.author_association)) ||
+        github.event_name == 'issue_comment' &&
+        github.event.issue.pull_request != null &&
+        contains(github.event.comment.body, '/ai-review') &&
+        contains(fromJSON('["MEMBER","OWNER"]'), github.event.comment.author_association)
+      }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
+    outputs:
+      run: ${{ steps.gate.outputs.run }}
+      comment_id: ${{ steps.event.outputs.comment_id }}
+      pr_number: ${{ steps.gate.outputs.pr_number }}
+      head_sha: ${{ steps.gate.outputs.head_sha }}
+      base_sha: ${{ steps.gate.outputs.base_sha }}
+      pr_meta: ${{ steps.pr.outputs.pr_meta }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - run: pnpm install --filter @l2beat/ai-review...
+      - run: pnpm --filter @l2beat/ai-review^... build
+      - name: Build comment event
+        id: event
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          if [ "${{ github.event_name }}" = "issue_comment" ]; then
+            cp "$GITHUB_EVENT_PATH" "$RUNNER_TEMP/event.json"
+          else
+            COMMENT_ID=$(gh api "repos/$REPO/issues/$PR_NUMBER/comments?per_page=100" \
+              --jq '[.[] | select(.body | test("^\\s*/ai-review"))] | last | .id // empty')
+            if [ -z "$COMMENT_ID" ]; then
+              echo "No /ai-review comment found on PR $PR_NUMBER"
+              exit 1
+            fi
+            gh api "repos/$REPO/issues/comments/$COMMENT_ID" \
+              | jq '{action: "created", comment: ., issue: {number: (.issue_url | split("/") | last | tonumber), pull_request: {url: .issue_url}}}' \
+              > "$RUNNER_TEMP/event.json"
+          fi
+          echo "comment_id=$(jq .comment.id "$RUNNER_TEMP/event.json")" >> "$GITHUB_OUTPUT"
+      - name: Fetch pull request
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api "repos/${{ github.repository }}/pulls/$(jq .issue.number "$RUNNER_TEMP/event.json")" > "$RUNNER_TEMP/pr.json"
+          # Single-line JSON: PR text must not be able to inject output-file syntax.
+          echo "pr_meta=$(jq -c '{title, body: (.body // "")}' "$RUNNER_TEMP/pr.json")" >> "$GITHUB_OUTPUT"
+      - id: gate
+        run: pnpm --filter @l2beat/ai-review gate
+        env:
+          EVENT_JSON_PATH: ${{ runner.temp }}/event.json
+          PR_JSON_PATH: ${{ runner.temp }}/pr.json
+      - name: React with eyes on the trigger comment
+        if: steps.gate.outputs.run == 'true'
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          comment-id: ${{ steps.event.outputs.comment_id }}
+          reactions: eyes
+
+  review:
+    name: Review (no write token)
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    env:
+      # Falls back to the stub engine when the Codex secret is not configured.
+      ENGINE: ${{ secrets.CODEX_AUTH_JSON != '' && 'codex' || 'stub' }}
+    outputs:
+      engine: ${{ steps.review.outputs.engine }}
+    steps:
+      # Reviewer code runs from the trusted default-branch checkout; the PR head
+      # is checked out into pr/ as inert input the agent inspects and probes.
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.gate.outputs.head_sha }}
+          path: pr
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - run: pnpm install --filter @l2beat/ai-review...
+      - run: pnpm --filter @l2beat/ai-review^... build
+      - name: Install PR dependencies for agent probes
+        working-directory: pr
+        run: pnpm install --ignore-scripts
+      - name: Install Codex CLI
+        if: env.ENGINE == 'codex'
+        env:
+          CODEX_AUTH_JSON: ${{ secrets.CODEX_AUTH_JSON }}
+        run: |
+          npm install -g @openai/codex@0.149.1
+          mkdir -p "$RUNNER_TEMP/codex-home"
+          printf '%s' "$CODEX_AUTH_JSON" > "$RUNNER_TEMP/codex-home/auth.json"
+      - id: review
+        run: pnpm --filter @l2beat/ai-review review
+        env:
+          CODEX_HOME: ${{ runner.temp }}/codex-home
+          CODEX_MODEL: ${{ vars.AI_REVIEW_MODEL }}
+          REVIEW_CWD: ${{ github.workspace }}/pr
+          BASE_SHA: ${{ needs.gate.outputs.base_sha }}
+          HEAD_SHA: ${{ needs.gate.outputs.head_sha }}
+          REVIEW_OUTPUT_PATH: ${{ runner.temp }}/review.json
+          PR_META: ${{ needs.gate.outputs.pr_meta }}
+      # Probes can read auth.json; make sure nothing from it reaches the posted
+      # output. A tripwire for the obvious case, not a boundary — encoded or
+      # split credential material passes a literal scan. Gated on the file, not
+      # on env, so nothing that can write $GITHUB_ENV can switch it off.
+      - name: Check output for leaked credentials
+        run: |
+          [ -f "$RUNNER_TEMP/codex-home/auth.json" ] || exit 0
+          jq -r '.. | strings' "$RUNNER_TEMP/codex-home/auth.json" | awk 'length >= 16' > "$RUNNER_TEMP/secrets.txt"
+          if grep -qF -f "$RUNNER_TEMP/secrets.txt" "$RUNNER_TEMP/review.json"; then
+            echo "::error::review output contains credential material"
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ai-review-output
+          path: ${{ runner.temp }}/review.json
+
+  post:
+    name: Post
+    needs: [gate, review]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - run: pnpm install --filter @l2beat/ai-review...
+      - uses: actions/download-artifact@v7
+        with:
+          name: ai-review-output
+          path: ${{ runner.temp }}
+      - run: pnpm --filter @l2beat/ai-review^... build
+      - name: Validate and build review payload
+        run: pnpm --filter @l2beat/ai-review post
+        env:
+          REVIEW_OUTPUT_PATH: ${{ runner.temp }}/review.json
+          REVIEW_PAYLOAD_PATH: ${{ runner.temp }}/review-payload.json
+          REVIEW_FALLBACK_PATH: ${{ runner.temp }}/review-fallback.json
+          RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+          HEAD_SHA: ${{ needs.gate.outputs.head_sha }}
+          LESSONS_VERSION: none
+          ENGINE: ${{ needs.review.outputs.engine }}
+      - name: Post review
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          URL: repos/${{ github.repository }}/pulls/${{ needs.gate.outputs.pr_number }}/reviews
+        # Engine-reported lines can miss the diff; GitHub then 422s the whole
+        # review, so retry with every finding flattened into the body.
+        run: |
+          gh api -X POST "$URL" --input "$RUNNER_TEMP/review-payload.json" --jq .html_url ||
+            gh api -X POST "$URL" --input "$RUNNER_TEMP/review-fallback.json" --jq .html_url
+      - name: Mark trigger comment as done
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          comment-id: ${{ needs.gate.outputs.comment_id }}
+          reactions: '+1'
+          reactions-edit-mode: replace
