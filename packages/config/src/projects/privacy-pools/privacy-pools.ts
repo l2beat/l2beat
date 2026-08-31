@@ -217,6 +217,12 @@ function getPrivacyTokens(): ProjectPrivacyToken[] {
       label: `${bucket.tokenInfo.symbol} pool`,
       address: bucket.address,
       sinceTimestamp: bucket.sinceTimestamp,
+      anonymitySet:
+        bucket.tokenInfo.symbol === 'ETH'
+          ? {
+              minimumAmounts: ['100000000000000000', '10000000000000000000'],
+            }
+          : undefined,
       deposit: {
         event: bucket.depositEvent,
         extractor: 'privacyPoolsValue',
