@@ -1,24 +1,36 @@
-export interface CommentEvent {
-  action: string
-  comment: {
-    body: string
-    user: { login: string; type: string }
-    author_association: string
-  }
-  issue: {
-    number: number
-    pull_request?: { url: string }
-  }
-}
+import { v } from '@l2beat/validate'
 
-export interface PullRequest {
-  number: number
-  draft: boolean
-  state: string
-  user: { login: string; type: string }
-  head: { sha: string; ref: string; repo: { fork: boolean; full_name: string } }
-  base: { sha: string; ref: string; repo: { full_name: string } }
-}
+export const CommentEvent = v.object({
+  action: v.string(),
+  comment: v.object({
+    body: v.string(),
+    user: v.object({ login: v.string(), type: v.string() }),
+    author_association: v.string(),
+  }),
+  issue: v.object({
+    number: v.number(),
+    pull_request: v.object({ url: v.string() }).optional(),
+  }),
+})
+export type CommentEvent = v.infer<typeof CommentEvent>
+
+export const PullRequest = v.object({
+  number: v.number(),
+  draft: v.boolean(),
+  state: v.string(),
+  user: v.object({ login: v.string(), type: v.string() }),
+  head: v.object({
+    sha: v.string(),
+    ref: v.string(),
+    repo: v.object({ fork: v.boolean(), full_name: v.string() }),
+  }),
+  base: v.object({
+    sha: v.string(),
+    ref: v.string(),
+    repo: v.object({ full_name: v.string() }),
+  }),
+})
+export type PullRequest = v.infer<typeof PullRequest>
 
 export type GateDecision =
   | { run: true; prNumber: number; headSha: string; baseSha: string }
