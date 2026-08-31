@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x7839e54ce3dda2f3f26298bf6f4b1cc379c7d26b
+Generated with discovered.json: 0x4cacb8866922a44ac5ab290b7bad30c725c86009
 
-# Diff at Mon, 24 Aug 2026 15:09:42 GMT:
+# Diff at Mon, 31 Aug 2026 15:32:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@13eb47c755f8f1545e987d7aa8482c1840bc9dfd block: 1787311119
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1787311119
 - current timestamp: 1787311119
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -184,11 +184,11 @@ discovery. Values are for block 1787311119 (main branch discovery), not current.
 -        0
 +        5
 +++ description: Number of token blocklist additions, including additions later reverted.
-+++ severity: HIGH
++++ severity: MEDIUM
       values.blocklistAdditionCount:
 +        0
 +++ description: Number of token blocklist removals, including removals later reverted.
-+++ severity: HIGH
++++ severity: MEDIUM
       values.blocklistRemovalCount:
 +        0
 +++ description: Number of fee schedule changes, including changes later reverted.
@@ -200,7 +200,7 @@ discovery. Values are for block 1787311119 (main branch discovery), not current.
       values.logicOwnershipChangeCount:
 +        2
 +++ description: Whether the smart wallet proxy currently blocks all calls to its implementation.
-+++ severity: HIGH
++++ severity: MEDIUM
       values.paused:
 +        0
 +++ description: Number of proxy ownership transfers, including changes later reverted.
@@ -208,11 +208,11 @@ discovery. Values are for block 1787311119 (main branch discovery), not current.
       values.proxyOwnershipChangeCount:
 +        0
 +++ description: Number of times the proxy has been paused.
-+++ severity: HIGH
++++ severity: MEDIUM
       values.proxyPauseCount:
 +        0
 +++ description: Number of times the proxy has been unpaused.
-+++ severity: HIGH
++++ severity: MEDIUM
       values.proxyUnpauseCount:
 +        1
 +++ description: Number of SNARK verification key changes, including keys later replaced or restored.
@@ -224,22 +224,25 @@ discovery. Values are for block 1787311119 (main branch discovery), not current.
       fieldMeta.treasury.description:
 -        "Treasury contract that receives shield and unshield fees."
 +        "Treasury contract that receives shield and unshield fees. Changing the recipient does not change the fees charged to users."
+      fieldMeta.tokenBlocklist.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.paused:
-+        {"severity":"HIGH","description":"Whether the smart wallet proxy currently blocks all calls to its implementation."}
++        {"severity":"MEDIUM","description":"Whether the smart wallet proxy currently blocks all calls to its implementation."}
       fieldMeta.proxyOwnershipChangeCount:
 +        {"severity":"HIGH","description":"Number of proxy ownership transfers, including changes later reverted."}
       fieldMeta.proxyPauseCount:
-+        {"severity":"HIGH","description":"Number of times the proxy has been paused."}
++        {"severity":"MEDIUM","description":"Number of times the proxy has been paused."}
       fieldMeta.proxyUnpauseCount:
-+        {"severity":"HIGH","description":"Number of times the proxy has been unpaused."}
++        {"severity":"MEDIUM","description":"Number of times the proxy has been unpaused."}
       fieldMeta.logicOwnershipChangeCount:
 +        {"severity":"HIGH","description":"Number of logic ownership transfers, including changes later reverted."}
       fieldMeta.feeChangeCount:
 +        {"severity":"HIGH","description":"Number of fee schedule changes, including changes later reverted."}
       fieldMeta.blocklistAdditionCount:
-+        {"severity":"HIGH","description":"Number of token blocklist additions, including additions later reverted."}
++        {"severity":"MEDIUM","description":"Number of token blocklist additions, including additions later reverted."}
       fieldMeta.blocklistRemovalCount:
-+        {"severity":"HIGH","description":"Number of token blocklist removals, including removals later reverted."}
++        {"severity":"MEDIUM","description":"Number of token blocklist removals, including removals later reverted."}
       fieldMeta.verificationKeyChangeCount:
 +        {"severity":"HIGH","description":"Number of SNARK verification key changes, including keys later replaced or restored."}
       critical:

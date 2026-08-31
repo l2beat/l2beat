@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x491bcf17d9ad2cba13ead2734306e3dde9ea5aaa
+Generated with discovered.json: 0xea5b0b340a1106efbd58d162b6ad69d21a17f97f
 
-# Diff at Sat, 29 Aug 2026 15:27:30 GMT:
+# Diff at Mon, 31 Aug 2026 15:32:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787834236
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1787834236
 - current timestamp: 1787834236
 
 ## Description
 
-reapply branch discovery config after merging main
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -62,7 +62,7 @@ discovery. Values are for block 1787834236 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"paused":{"severity":"HIGH"}}
++        {"paused":{"severity":"MEDIUM"}}
     }
 ```
 
@@ -79,6 +79,9 @@ discovery. Values are for block 1787834236 (main branch discovery), not current.
 ```diff
     contract OptimismPortal2 (eth:0x7f82f57F0Dd546519324392e408b01fcC7D709e8) [opstack/OptimismPortal2] {
     +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
       critical:
@@ -145,6 +148,9 @@ discovery. Values are for block 1787834236 (main branch discovery), not current.
 ```diff
     contract PermissionedDisputeGame (eth:0xB2E4D20ECF58f2cE6a8d3bf0c982c2c77BE42152) [opstack/PermissionedDisputeGame] {
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
       critical:
 +        true
     }

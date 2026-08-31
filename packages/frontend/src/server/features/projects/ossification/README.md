@@ -41,9 +41,13 @@ availability, or privacy remain secure.
   plus the contracts implementing their upgrade or governance mechanism
   (ProxyAdmins, upgrade executors, timelocks, governors, modules, guards).
 - Exclude: actor containers (Safes/multisigs/EOAs) — members name who holds a
-  trusted role; the container is not the mechanism. Exclude externally governed
-  escrows and gateways (additional-trust assets); project-governed canonical
-  bridges stay in.
+  trusted role; the container is not the mechanism. Exclude every escrow or
+  gateway whose TVS is tagged 'with additional trust assumptions' — the TVS
+  tag, not the governance domain, is the test, so a project-governed ADD_TA
+  escrow (e.g. a StarkGate token bridge or an Arbitrum custom-gateway escrow)
+  is also out; give its important state `severity: "MEDIUM"` so changes still
+  surface without touching the clock. Escrows whose TVS counts without the
+  tag stay in.
 
 **Critical code change** — any implementation change to a critical contract, or
 the deployment of a new critical contract. Always counts; needs no severity
@@ -60,6 +64,11 @@ disclosed. In practice:
 - Not HIGH: identity churn inside an unchanged role (multisig members,
   sequencers, batch posters, validators, operators, signers, committee members)
   while powers and trust model stay the same.
+- MEDIUM: important-but-not-ossification-relevant state — pausing/unpausing,
+  and the watched state of escrows outside the perimeter (e.g. TVS tagged
+  'with additional trust assumptions'). A MEDIUM change puts the project under
+  review on the frontend and lights up the update monitor, but never resets
+  the ossification clock — only HIGH does.
 - Classify a field as a whole; every change to a HIGH field counts. Split broad
   fields whose values differ in security consequence.
 

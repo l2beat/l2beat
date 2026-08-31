@@ -139,8 +139,12 @@ export class UpdateDiffer {
         return false
       }),
     )
+    // MEDIUM counts here on purpose: it puts the project under review on the
+    // frontend without resetting the ossification clock (that stays HIGH-only).
     const fieldHighSeverityChanges = diff.filter((discoveryDiff) =>
-      discoveryDiff.diff?.some((f) => f.severity === 'HIGH'),
+      discoveryDiff.diff?.some(
+        (f) => f.severity === 'HIGH' || f.severity === 'MEDIUM',
+      ),
     )
 
     const upgradeChanges = diff.filter((discoveryDiff) =>

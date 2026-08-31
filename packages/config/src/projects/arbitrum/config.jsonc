@@ -109,6 +109,10 @@
     },
     "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": {
       "fields": {
+        // EXECUTOR_ROLE members hold undelayed, unrestricted upgrade authority
+        // over every L2 proxy (same power class as ProxyAdmin.owner, which is
+        // HIGH); the 2023 role migration is a recorded criticalEvent.
+        "executors": { "severity": "HIGH" },
         // Seeds the ArbOS 61 transaction-filtering precompile (0x..74) as a
         // relative and applies the shared orbitstack/ArbFilteredTransactionsManager
         // template (censored-tx counts + authorized filterer set). The feature is
@@ -144,10 +148,18 @@
       "ignoreRelatives": ["destination"]
     },
     "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840": {
+      "fields": {
+        // updateRollupAddress() re-points who may call updateSendRoot(): a
+        // swapped rollup can insert arbitrary withdrawal roots. State-only.
+        "rollup": { "severity": "HIGH" }
+      },
       "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions."
     },
     "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": {
       "fields": {
+        // updateRollupAddress() re-points the bridge's trusted rollup without
+        // any implementation upgrade; the rollup gates outbox/inbox authority.
+        "rollup": { "severity": "HIGH" },
         "mainOutboxAddress": {
           "handler": {
             "type": "call",
@@ -237,7 +249,13 @@
     // forge/replay legacy withdrawal records against the Bridge escrow.
     "eth:0x14797f5432f699Cb4d4dB04DF599B74952d78d7b": {
       "critical": true,
-      "category": "spam"
+      "category": "spam",
+      "fields": {
+        // beacon swaps are plain value changes (proxyType immutable), not
+        // auto-HIGH code events; past swaps are recorded criticalEvents.
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      }
     },
     // ProxyAdmin of the canonical token gateways and GatewayRouter: can swap
     // their implementations and drain escrows.
@@ -289,10 +307,62 @@
       "critical": true
     },
     "arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333": {
-      "critical": true
+      "critical": true,
+      "fields": {
+        // beacon swaps are plain value changes (proxyType immutable), not
+        // auto-HIGH code events; past swaps are recorded criticalEvents.
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      }
     },
     "arb1:0x3f770Ac673856F105b586bb393d122721265aD46": {
       "critical": true
+    },
+    // --- ossification severity overrides on shared orbitstack templates
+    // (config-level, NOT the templates: template edits fan out to all orbit
+    // chains; see the timelock getMinDelay precedent above) ---
+    "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0": {
+      "fields": {
+        // live onlyOwner setters on RollupAdminLogic — no upgrade needed:
+        // setChallengeManager (fraud-proof adjudicator pointer),
+        // setAnyTrustFastConfirmer (bypasses the challenge period when set),
+        // setValidatorWhitelistDisabled (re-permissions fraud proofs),
+        // setConfirmPeriodBlocks (the challenge window), setOwner.
+        "challengeManager": { "severity": "HIGH" },
+        "anyTrustFastConfirmer": { "severity": "HIGH" },
+        "validatorWhitelistDisabled": { "severity": "HIGH" },
+        "confirmPeriodBlocks": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      }
+    },
+    "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6": {
+      "fields": {
+        // force-inclusion window (delayBlocks/delaySeconds): the user's
+        // censorship-resistance guarantee, owner-settable. Same rationale as
+        // the timelock getMinDelay override above.
+        "maxTimeVariation": { "severity": "HIGH" }
+      }
+    },
+    "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd": {
+      "fields": {
+        // EXECUTOR_ROLE members hold undelayed, unrestricted upgrade authority
+        // over every L1 ProxyAdmin; the 2023 role migration is a recorded
+        // criticalEvent.
+        "executors": { "severity": "HIGH" }
+      }
+    },
+    "eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef": {
+      "fields": {
+        // a changed default gateway redirects future deposits to an arbitrary
+        // "gateway"; owner can also set per-token routes (setGateway).
+        "defaultGateway": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      }
+    },
+    "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933": {
+      "fields": {
+        "defaultGateway": { "severity": "HIGH" }
+      }
     }
   }
 }

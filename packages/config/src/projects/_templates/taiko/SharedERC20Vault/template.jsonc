@@ -2,7 +2,7 @@
   "critical": true,
   "description": "Shared vault for Taiko chains for bridged ERC20 tokens. Pausing stops token sends, message-triggered releases, and recalls. Released or minted tokens are subject to the configured quota manager.",
   "fields": {
-    "paused": { "severity": "HIGH" },
+    "paused": { "severity": "MEDIUM" },
     "owner": {
       "severity": "HIGH",
       "permissions": [

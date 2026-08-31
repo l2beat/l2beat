@@ -55,7 +55,7 @@
             }
           },
           "description": { "type": "string" },
-          "severity": { "enum": ["HIGH", "LOW"] },
+          "severity": { "enum": ["HIGH", "MEDIUM", "LOW"] },
           "type": {
             "anyOf": [
               {
@@ -698,7 +698,7 @@
             }
           },
           "description": { "type": "string" },
-          "severity": { "enum": ["HIGH", "LOW"] }
+          "severity": { "enum": ["HIGH", "MEDIUM", "LOW"] }
         }
       }
     },

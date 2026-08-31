@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x9fe3f25da3f5b7483d3487e6dcaa5a5e65fa82a0
+Generated with discovered.json: 0x9ba162345876363c509dd3cb38f8a7cd4a9cb4a7
 
-# Diff at Wed, 26 Aug 2026 12:21:44 GMT:
+# Diff at Mon, 31 Aug 2026 15:08:33 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1786656108
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1786656108
 - current timestamp: 1786656108
 
 ## Description
 
-reapply branch discovery config after merging main
+reintroduce MEDIUM severity: pause-type fields and ADD_TA starkgate escrows demoted from HIGH (ossification perimeter/severity review)
 
 ## Config/verification related changes
 
@@ -76,7 +76,7 @@ discovery. Values are for block 1786656108 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"paused":{"severity":"HIGH"}}
++        {"paused":{"severity":"MEDIUM"}}
     }
 ```
 

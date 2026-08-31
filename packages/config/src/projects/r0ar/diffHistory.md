@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xdc0e305d31487b8b4682062604efeb8e9aa6df1f
+Generated with discovered.json: 0x9dd32304ee6ef81a29b214ffaefc89d6481a4a2d
 
-# Diff at Wed, 26 Aug 2026 12:21:19 GMT:
+# Diff at Mon, 31 Aug 2026 15:32:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1765550969
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1765550969
 - current timestamp: 1765550969
 
 ## Description
 
-reapply branch discovery config after merging main
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -100,7 +100,7 @@ discovery. Values are for block 1765550969 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"paused":{"severity":"HIGH"}}
++        {"paused":{"severity":"MEDIUM"}}
     }
 ```
 
@@ -115,6 +115,9 @@ discovery. Values are for block 1765550969 (main branch discovery), not current.
 ```diff
     contract PermissionedDisputeGame (eth:0xC5D5B6fCD5FdBdA41Ae640aC9881dC949aEd36d0) [opstack/PermissionedDisputeGame] {
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
       critical:
 +        true
     }
@@ -143,6 +146,9 @@ discovery. Values are for block 1765550969 (main branch discovery), not current.
 ```diff
     contract FaultDisputeGame (eth:0xFED2F84E3e18e24EE6aa5f375edBA79782FDA6D2) [opstack/FaultDisputeGame] {
     +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
       critical:
 +        true
     }

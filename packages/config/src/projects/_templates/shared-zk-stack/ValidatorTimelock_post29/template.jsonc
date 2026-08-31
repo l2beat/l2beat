@@ -11,6 +11,7 @@
     //   "handler": { "type": "crossChainAccessControl" }
     // },
     "executionDelay_fmt": {
+      "severity": "HIGH",
       "handler": { "type": "call", "method": "executionDelay", "args": [] },
       "edit": ["format", "FormatSeconds"]
     },

@@ -97,6 +97,7 @@
           }
         }
       },
+      "fieldMeta": { "executionDelay_fmt": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": "TransparentUpgradeableProxy",
         "eth:0x6086051f93412F550C0820e76f0fbE85F64C7ef8": "ValidatorTimelock"

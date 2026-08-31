@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x56c8e2682d3789b0d2bd27d8e118e3b4909c2043
+Generated with discovered.json: 0x3ac72a445a40384942cc499dcd1a568dcc3de0e7
 
-# Diff at Wed, 26 Aug 2026 12:56:56 GMT:
+# Diff at Mon, 31 Aug 2026 16:08:04 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1785226129
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1785226129
 - current timestamp: 1785226129
 
 ## Description
 
-Ossification perimeter: externally governed escrows (Maker/Sky DAI/USDS, Lido wstETH, Livepeer LPT) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -153,6 +153,10 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 +        {"severity":"HIGH"}
       fieldMeta.owner:
 +        {"severity":"HIGH"}
+      fieldMeta.permissionedGameArgs:
++        {"severity":"HIGH"}
+      fieldMeta.game8Args:
++        {"severity":"HIGH"}
       fieldMeta.game8Vm:
 +        {"severity":"HIGH"}
       fieldMeta.wethFromDGF:
@@ -173,6 +177,9 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 ```diff
     contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
     +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
       critical:
@@ -191,6 +198,9 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 ```diff
     contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) [opstack/PermissionedDisputeGame] {
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
       critical:
 +        true
     }
@@ -225,6 +235,9 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 ```diff
     contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499) [opstack/FaultDisputeGame] {
     +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
       critical:
 +        true
     }
@@ -248,7 +261,7 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
     contract Escrow (eth:0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3) [maker/L1Escrow] {
     +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
       fieldMeta:
-+        {"wards":{"severity":"HIGH"}}
++        {"wards":{"severity":"MEDIUM"}}
     }
 ```
 
@@ -309,8 +322,8 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 ```diff
     contract AnchorStateRegistry (eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72) [opstack/AnchorStateRegistry_post20] {
     +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
-      fieldMeta.disputeGameFinalityDelaySeconds:
--        {"severity":"HIGH"}
+      fieldMeta.disputeGameFinalityDelaySeconds.description:
++        "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
       critical:
@@ -339,6 +352,9 @@ discovery. Values are for block 1785226129 (main branch discovery), not current.
 ```diff
     contract SuperchainConfig (eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c) [opstack/SuperchainConfig_base] {
     +++ description: Base's own SuperchainConfig, used to manage pause states for the Base chain. The guardian and incident responder roles are immutable and set at construction time. The guardian can pause, unpause, and extend pauses, while the incident responder can only pause. Each pause automatically expires after 3 months.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       critical:
 +        true
     }

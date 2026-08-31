@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xb1c1500ff5de3664d4927aed68221c6e73c4766a
+Generated with discovered.json: 0xca79a6aeb3a3c4829ac0224aa605fd1f2d4f28af
 
-# Diff at Thu, 20 Aug 2026 17:08:38 GMT:
+# Diff at Mon, 31 Aug 2026 15:32:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bd2a19ed47921b541d6d991c325212600c2751a9 block: 1779964040
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1779964040
 - current timestamp: 1779964040
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -69,8 +69,6 @@ discovery. Values are for block 1779964040 (main branch discovery), not current.
 ```diff
     contract PrivacyPoolsEntrypoint (eth:0x6818809EefCe719E480a7526D76bD3e561526b46) [privacy-pools/Entrypoint] {
     +++ description: Main hub for Privacy Pools. Entrypoint for deposits, relayed withdrawals, pool registry/configuration, ASP root updates, fee withdrawal, and wind-down management.
-      fieldMeta.ownerRoleMembers.severity:
--        "HIGH"
       fieldMeta.aspPostmen.severity:
 -        "HIGH"
       critical:

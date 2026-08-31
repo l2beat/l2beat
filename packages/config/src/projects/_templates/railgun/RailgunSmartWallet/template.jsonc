@@ -73,7 +73,7 @@
     },
     "tokenBlocklist": {
       "description": "Tokens currently blocked from being newly shielded into Railgun, reconstructed from blocklist events.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "type": "EXTERNAL",
       "handler": {
         "type": "event",
@@ -85,7 +85,7 @@
     },
     "paused": {
       "description": "Whether the smart wallet proxy currently blocks all calls to its implementation.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "storage",
         "slot": "0x8dea8703c3cf94703383ce38a9c894669dccd4ca8e65ddb43267aa0248711450",
@@ -104,7 +104,7 @@
     },
     "proxyPauseCount": {
       "description": "Number of times the proxy has been paused.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "eventCount",
         "topics": [
@@ -114,7 +114,7 @@
     },
     "proxyUnpauseCount": {
       "description": "Number of times the proxy has been unpaused.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "eventCount",
         "topics": [
@@ -144,7 +144,7 @@
     },
     "blocklistAdditionCount": {
       "description": "Number of token blocklist additions, including additions later reverted.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "eventCount",
         "topics": [
@@ -154,7 +154,7 @@
     },
     "blocklistRemovalCount": {
       "description": "Number of token blocklist removals, including removals later reverted.",
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "eventCount",
         "topics": [

@@ -90,6 +90,7 @@
   "reviewedSeverityDowngrades": [
     "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44#Executor",
     "eth:0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd#Executor",
+    "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d#paused",
     "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4#Executor",
     "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14#Executor"
   ]

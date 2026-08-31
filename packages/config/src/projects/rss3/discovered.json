@@ -143,7 +143,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.0.0"
       },
-      "fieldMeta": { "paused": { "severity": "HIGH" } },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x3e5FaB39eD4eFB4fc29A5201059AE819f2f0418A": "Proxy",
         "eth:0x314774a6Cfc3838E5a5a1DE3723EEa995aAD4e8f": "SuperchainConfig"

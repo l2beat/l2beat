@@ -7,7 +7,7 @@
   "ignoreMethods": ["l2BridgeAddress"],
   "fields": {
     "owner": { "severity": "HIGH" },
-    "paused": { "severity": "HIGH" },
+    "paused": { "severity": "MEDIUM" },
     "legacyBridge": { "severity": "HIGH" },
     "nativeTokenVault": { "severity": "HIGH" }
   }

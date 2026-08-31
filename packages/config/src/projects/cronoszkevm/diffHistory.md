@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xd28e47c6319db68c99de0ca1f505db6df99c1d97
+Generated with discovered.json: 0x307c59f1f1c4a71050c965a763c93eb18e918d26
 
-# Diff at Wed, 26 Aug 2026 12:18:16 GMT:
+# Diff at Mon, 31 Aug 2026 15:32:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1787310854
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1787310854
 - current timestamp: 1787310854
 
 ## Description
 
-reapply branch discovery config after merging main
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -29,6 +29,8 @@ discovery. Values are for block 1787310854 (main branch discovery), not current.
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
       critical:
 +        true
+      fieldMeta:
++        {"executionDelay_fmt":{"severity":"HIGH"}}
     }
 ```
 

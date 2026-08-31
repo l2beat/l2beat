@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x759d6d68520bb8f46c9a7d3ac3bc14fd343605a8
+Generated with discovered.json: 0x8552449f08ba478e04b7c6a3bae2ce5cfe9221ac
 
-# Diff at Wed, 26 Aug 2026 12:18:15 GMT:
+# Diff at Mon, 31 Aug 2026 15:32:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1782210040
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1782210040
 - current timestamp: 1782210040
 
 ## Description
 
-reapply branch discovery config after merging main
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -41,6 +41,9 @@ discovery. Values are for block 1782210040 (main branch discovery), not current.
 ```diff
     contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) [opstack/PermissionedDisputeGame] {
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
       critical:
 +        true
     }
@@ -67,6 +70,9 @@ discovery. Values are for block 1782210040 (main branch discovery), not current.
 ```diff
     contract OptimismPortal2 (eth:0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e) [opstack/OptimismPortal2] {
     +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
       critical:
@@ -97,6 +103,9 @@ discovery. Values are for block 1782210040 (main branch discovery), not current.
 ```diff
     contract SuperchainConfig (eth:0x996ffD627901f10C80A7d4B72A12316D2e77c076) [opstack/SuperchainConfigFake_expiry] {
     +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       critical:
 +        true
     }

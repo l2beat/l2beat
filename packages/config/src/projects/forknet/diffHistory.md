@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xc9ff1f876ce4f85eba9ba8515704dda7e5708d7c
+Generated with discovered.json: 0xfd41504fccb7dc7a6c213a4904c356bc89101d1f
 
-# Diff at Wed, 26 Aug 2026 12:18:19 GMT:
+# Diff at Mon, 31 Aug 2026 15:32:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1787644642
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1787644642
 - current timestamp: 1787644642
 
 ## Description
 
-reapply branch discovery config after merging main
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -29,6 +29,9 @@ discovery. Values are for block 1787644642 (main branch discovery), not current.
 ```diff
     contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) [opstack/SuperchainConfigFake_expiry] {
     +++ description: Since this contract is deployed in the context of a neutered op stack system, the guardian role has no significance.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       critical:
 +        true
     }
@@ -87,6 +90,9 @@ discovery. Values are for block 1787644642 (main branch discovery), not current.
 ```diff
     contract PermissionedDisputeGame (eth:0x88d414cA1d500E5CDf131022e4A27D281e8Dba44) [opstack/PermissionedDisputeGame] {
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
       critical:
 +        true
     }
@@ -125,6 +131,9 @@ discovery. Values are for block 1787644642 (main branch discovery), not current.
 ```diff
     contract OptimismPortal2 (eth:0xD7cF5ce4688663e057E99D9f880599Ce88757695) [opstack/OptimismPortal2] {
     +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific contract is deployed in the agglayer system context which **disables the depositTransaction() function**, preventing users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
       critical:

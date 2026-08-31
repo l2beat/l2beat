@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x7e4cf71111c7f0f6c9d83baead20ab7909eb2e27
+Generated with discovered.json: 0x4c18367e3c344d4a1fd7d1538cc78799d961a07d
 
-# Diff at Wed, 26 Aug 2026 12:46:24 GMT:
+# Diff at Mon, 31 Aug 2026 16:08:23 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1783324564
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1783324564
 - current timestamp: 1783324564
 
 ## Description
 
-reapply branch discovery config after merging main
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -27,16 +27,25 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
 ```diff
     contract ETHLockbox (eth:0x08bA0023eD60C7Bd040716dD13C45fA0062df5C5) [opstack/ETHLockbox] {
     +++ description: A simple escrow contract storing ETH for the canonical bridge.
++++ severity: HIGH
+      values.authorizedLockboxes:
++        []
++++ severity: HIGH
+      values.authorizedPortals:
++        ["eth:0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2"]
       critical:
 +        true
       fieldMeta:
-+        {"$admin":{"severity":"HIGH"}}
++        {"$admin":{"severity":"HIGH"},"authorizedPortals":{"severity":"HIGH"},"authorizedLockboxes":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract OptimismPortal2 (eth:0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2) [opstack/OptimismPortal2] {
     +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
       critical:
@@ -58,7 +67,7 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
     contract Escrow (eth:0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A) [maker/L1Escrow] {
     +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
       fieldMeta:
-+        {"wards":{"severity":"HIGH"}}
++        {"wards":{"severity":"MEDIUM"}}
     }
 ```
 
@@ -125,6 +134,9 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
 ```diff
     contract PermissionedDisputeGame (eth:0x58bf355C5d4EdFc723eF89d99582ECCfd143266A) [opstack/PermissionedDisputeGame] {
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
       critical:
 +        true
     }
@@ -141,6 +153,9 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
 ```diff
     contract FaultDisputeGame (eth:0x6dDBa09bc4cCB0D6Ca9Fc5350580f74165707499) [opstack/FaultDisputeGame] {
     +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
       critical:
 +        true
     }
@@ -177,6 +192,9 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
 ```diff
     contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) [opstack/SuperchainConfig_expiry] {
     +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
       fieldMeta.guardian:

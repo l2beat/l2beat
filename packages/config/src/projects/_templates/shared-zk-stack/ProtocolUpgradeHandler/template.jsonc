@@ -7,9 +7,11 @@
   "canActIndependently": false,
   "fields": {
     "emergencyUpgradeBoard": {
+      "severity": "HIGH",
       "permissions": [{ "type": "act" }]
     },
     "guardians": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -18,6 +20,7 @@
       ]
     },
     "securityCouncil": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -26,6 +29,7 @@
       ]
     },
     "L2_PROTOCOL_GOVERNOR": {
+      "severity": "HIGH",
       "permissions": [
         { "type": "interact", "description": "start (queue) upgrades." }
       ],

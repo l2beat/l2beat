@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x529d0bd9efd5bcd7515ac30828abb3f96b88ab54
+Generated with discovered.json: 0xe784aa3313fa18f00c08e6bb31348f53f03efad8
 
-# Diff at Thu, 20 Aug 2026 16:35:01 GMT:
+# Diff at Mon, 31 Aug 2026 15:32:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bd2a19ed47921b541d6d991c325212600c2751a9 block: 1786913047
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1786913047
 - current timestamp: 1786913047
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -84,33 +84,33 @@ discovery. Values are for block 1786913047 (main branch discovery), not current.
     contract V3OpenFeeAdapter (eth:0xf2371551Fe3937Db7c750f4DfABe5c2fFFdcBf5A) [uniswapv3/V3OpenFeeAdapter] {
     +++ description: Adapter for administering a configured Uniswap v3 factory. While it holds the factory owner role, anyone can ask it to apply configured protocol fees to pools or collect accrued fees to its fixed recipient. The fee setter controls global, per-tier, and per-pool fee settings; the owner can replace the fee setter, enable factory fee tiers, or transfer factory ownership.
 +++ description: Fee tiers whose explicit protocol-fee setting has been cleared in favor of the global default.
-+++ severity: HIGH
++++ severity: MEDIUM
       values.feeTierDefaultClears:
 +        []
 +++ description: History of per-tier protocol-fee settings. A new entry changes the share of LP fees that can be diverted for pools in that tier.
-+++ severity: HIGH
++++ severity: MEDIUM
       values.feeTierDefaultUpdates:
 +        [{"feeTier":100,"feeValue":68},{"feeTier":500,"feeValue":68},{"feeTier":3000,"feeValue":102},{"feeTier":10000,"feeValue":102}]
 +++ description: Pools whose explicit protocol-fee setting has been cleared in favor of their tier or the global default.
-+++ severity: HIGH
++++ severity: MEDIUM
       values.poolOverrideClears:
 +        []
 +++ description: History of pool-specific protocol-fee settings.
-+++ severity: HIGH
++++ severity: MEDIUM
       values.poolOverrideUpdates:
 +        []
       fieldMeta.defaultFee.severity:
-+        "HIGH"
++        "MEDIUM"
       fieldMeta.tier03DefaultFee.severity:
-+        "HIGH"
++        "MEDIUM"
       fieldMeta.feeTierDefaultUpdates:
-+        {"severity":"HIGH","description":"History of per-tier protocol-fee settings. A new entry changes the share of LP fees that can be diverted for pools in that tier."}
++        {"severity":"MEDIUM","description":"History of per-tier protocol-fee settings. A new entry changes the share of LP fees that can be diverted for pools in that tier."}
       fieldMeta.feeTierDefaultClears:
-+        {"severity":"HIGH","description":"Fee tiers whose explicit protocol-fee setting has been cleared in favor of the global default."}
++        {"severity":"MEDIUM","description":"Fee tiers whose explicit protocol-fee setting has been cleared in favor of the global default."}
       fieldMeta.poolOverrideUpdates:
-+        {"severity":"HIGH","description":"History of pool-specific protocol-fee settings."}
++        {"severity":"MEDIUM","description":"History of pool-specific protocol-fee settings."}
       fieldMeta.poolOverrideClears:
-+        {"severity":"HIGH","description":"Pools whose explicit protocol-fee setting has been cleared in favor of their tier or the global default."}
++        {"severity":"MEDIUM","description":"Pools whose explicit protocol-fee setting has been cleared in favor of their tier or the global default."}
       critical:
 +        true
     }

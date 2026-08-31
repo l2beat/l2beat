@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x88e288cc838b94d9b103c38b15bdbdc9e6926d07
+Generated with discovered.json: 0x17fcbb0009ecb43d23c015abeee9839e71ffb1db
 
-# Diff at Wed, 26 Aug 2026 12:18:21 GMT:
+# Diff at Mon, 31 Aug 2026 15:32:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1786436525
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1786436525
 - current timestamp: 1786436525
 
 ## Description
 
-reapply branch discovery config after merging main
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -117,6 +117,9 @@ discovery. Values are for block 1786436525 (main branch discovery), not current.
 ```diff
     contract FaultDisputeGame (eth:0xC3E7f3606aeAC543bD268a637c6847E92d69B8aA) [opstack/FaultDisputeGame] {
     +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
       critical:
 +        true
     }
@@ -135,6 +138,9 @@ discovery. Values are for block 1786436525 (main branch discovery), not current.
 ```diff
     contract PermissionedDisputeGame (eth:0xE38135e20BA018a5542C83De258d80d6883Da8A3) [opstack/PermissionedDisputeGame] {
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
       critical:
 +        true
     }
@@ -143,6 +149,9 @@ discovery. Values are for block 1786436525 (main branch discovery), not current.
 ```diff
     contract OptimismPortal2 (eth:0xe7Aa79B59CAc06F9706D896a047fEb9d3BDA8bD3) [opstack/OptimismPortal2] {
     +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
       critical:
@@ -156,7 +165,7 @@ discovery. Values are for block 1786436525 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"paused":{"severity":"HIGH"}}
++        {"paused":{"severity":"MEDIUM"}}
     }
 ```
 

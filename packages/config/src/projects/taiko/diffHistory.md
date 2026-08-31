@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xdc2d48170be11108f40c1a2fa4e9f1eb6107142f
+Generated with discovered.json: 0xb5a349c8de9197f971bec00c0828fadc48717498
 
-# Diff at Sat, 29 Aug 2026 15:29:41 GMT:
+# Diff at Mon, 31 Aug 2026 16:10:49 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787832377
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1787832377
 - current timestamp: 1787832377
 
 ## Description
 
-reapply branch discovery config after merging main
+restore critical flags on returning taiko L2 core contracts (Bridge, ERC20Vault, Anchor)
 
 ## Config/verification related changes
 
@@ -47,6 +47,22 @@ discovery. Values are for block 1787832377 (main branch discovery), not current.
 ```diff
     contract SignerList (Security Council) (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) [taiko/SignerList] {
     +++ description: A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.
+      receivedPermissions.18:
++        {"permission":"interact","from":"taiko:0x1670000000000000000000000000000000000005","description":"pause and unpause signal proof verification.","role":".owner","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.19:
++        {"permission":"interact","from":"taiko:0x1670000000000000000000000000000000000006","description":"can update the contract address for a given name","role":".owner","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.33:
++        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000000001","role":"admin","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.34:
++        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000000002","role":"admin","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.35:
++        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000000005","role":"admin","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.36:
++        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000000006","role":"admin","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.37:
++        {"permission":"upgrade","from":"taiko:0x1670000000000000000000000000000000010001","role":"admin","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
+      receivedPermissions.38:
++        {"permission":"upgrade","from":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C","role":"admin","via":[{"address":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C"},{"address":"eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"},{"address":"eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261","delay":604800,"condition":"(emergency proposals bypass the delay)"}]}
       critical:
 +        true
     }
@@ -56,7 +72,7 @@ discovery. Values are for block 1787832377 (main branch discovery), not current.
     contract AutomataDcapV3Attestation (eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) [taiko/AutomataDcapV3Attestation] {
     +++ description: Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.
       fieldMeta.paused:
-+        {"severity":"HIGH"}
++        {"severity":"MEDIUM"}
       fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
@@ -70,7 +86,7 @@ discovery. Values are for block 1787832377 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"owner":{"severity":"HIGH"},"paused":{"severity":"HIGH"}}
++        {"owner":{"severity":"HIGH"},"paused":{"severity":"MEDIUM"}}
     }
 ```
 
@@ -149,6 +165,9 @@ discovery. Values are for block 1787832377 (main branch discovery), not current.
 ```diff
     contract MainnetInbox (eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f) [taiko/MainnetInbox] {
     +++ description: The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. Users can enqueue forced inclusions by publishing an L1 blob. Once an inclusion is due, subsequent proposals must process it, but proposing remains restricted by the configured proposer checker. If the configured prover whitelist is non-empty, proofs from non-whitelisted provers revert.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.getCurrentForcedInclusionFee:
 -        {"severity":"HIGH"}
       fieldMeta.owner:
@@ -179,10 +198,12 @@ discovery. Values are for block 1787832377 (main branch discovery), not current.
 ```diff
     contract TaikoDAOController (eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) [taiko/TaikoDAOController] {
     +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C","role":".daoController"}
       critical:
 +        true
       fieldMeta:
-+        {"owner":{"severity":"HIGH"},"paused":{"severity":"HIGH"}}
++        {"owner":{"severity":"HIGH"},"paused":{"severity":"MEDIUM"}}
     }
 ```
 
@@ -200,7 +221,7 @@ discovery. Values are for block 1787832377 (main branch discovery), not current.
     contract AutomataDcapV3Attestation (eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) [taiko/AutomataDcapV3Attestation] {
     +++ description: Contract managing SGX DCAP attestation policy, trusted measurements, and certificate revocation data.
       fieldMeta.paused:
-+        {"severity":"HIGH"}
++        {"severity":"MEDIUM"}
       fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
@@ -241,6 +262,9 @@ discovery. Values are for block 1787832377 (main branch discovery), not current.
 ```diff
     contract MainnetERC20Vault (eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) [taiko/SharedERC20Vault] {
     +++ description: Shared vault for Taiko chains for bridged ERC20 tokens. Pausing stops token sends, message-triggered releases, and recalls. Released or minted tokens are subject to the configured quota manager.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.quotaManager.severity:
 +        "HIGH"
       fieldMeta.owner:
@@ -275,6 +299,9 @@ discovery. Values are for block 1787832377 (main branch discovery), not current.
 ```diff
     contract SignalService (eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) [taiko/SignalService] {
     +++ description: Facilitates secure cross-chain message passing by storing signals and state-root checkpoints. Bridge escrows and other applications use it to prove that a specific L1<->L2 signal or checkpointed state transition occurred via Merkle proofs. Pausing disables signal proof verification.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.owner:
 +        {"severity":"HIGH"}
       fieldMeta.pauser:
@@ -317,6 +344,9 @@ discovery. Values are for block 1787832377 (main branch discovery), not current.
 ```diff
     contract MainnetBridge (eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) [taiko/TaikoBridge] {
     +++ description: Shared bridge escrow for Taiko chains for bridged ETH and arbitrary bridge messages. Pausing stops sending, processing, recalling, retrying, and failing messages. ETH released from the bridge is subject to the configured quota manager.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.quotaManager.severity:
 +        "HIGH"
       fieldMeta.signalService.severity:
@@ -364,18 +394,57 @@ discovery. Values are for block 1787832377 (main branch discovery), not current.
     contract TaikoDAOController (eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3) [taiko/TaikoDAOController] {
     +++ description: Middleware contract that maintains ownership of DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
       fieldMeta:
-+        {"owner":{"severity":"HIGH"},"paused":{"severity":"HIGH"}}
++        {"owner":{"severity":"HIGH"},"paused":{"severity":"MEDIUM"}}
     }
 ```
 
 ```diff
     contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
     +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.owner:
 +        {"severity":"HIGH"}
       critical:
 +        true
     }
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (taiko:0x1670000000000000000000000000000000000001) [taiko/L2Bridge]
+    +++ description: Bridge escrow holding preminted ETH on Taiko.
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Vault (taiko:0x1670000000000000000000000000000000000002) [taiko/L2ERC20Vault]
+    +++ description: Escrow for L2-native tokens sent to L1 via the canonical bridge.
+```
+
+```diff
++   Status: CREATED
+    contract SignalService (taiko:0x1670000000000000000000000000000000000005) [taiko/SignalService]
+    +++ description: Facilitates secure cross-chain message passing by storing signals and state-root checkpoints. Bridge escrows and other applications use it to prove that a specific L1<->L2 signal or checkpointed state transition occurred via Merkle proofs. Pausing disables signal proof verification.
+```
+
+```diff
++   Status: CREATED
+    contract L2AddressManager (taiko:0x1670000000000000000000000000000000000006) [taiko/L2AddressManager]
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
++   Status: CREATED
+    contract Anchor (taiko:0x1670000000000000000000000000000000010001) [taiko/Anchor]
+    +++ description: Stores L1 block details on L2 as a cross-layer oracle and manages EIP-1559 gas pricing for L2 operations.
+```
+
+```diff
++   Status: CREATED
+    contract DelegateController (taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C) [taiko/DelegateController]
+    +++ description: Middleware contract that can maintain ownership of DAO-controlled assets and contracts. It can only be invoked by the TaikoDAOController on L1 through the L2 bridge.
 ```
 
 Generated with discovered.json: 0x944e4923ff7b113fa2d85afda1928383c9cf8c3a

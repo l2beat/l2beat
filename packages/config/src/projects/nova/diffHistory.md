@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x877eb8e53df9388b8dac841d0501ed7a6662e54f
+Generated with discovered.json: 0x152f72fb590ea3e946995b80d75ec3a92b0c828b
 
-# Diff at Sat, 29 Aug 2026 15:41:50 GMT:
+# Diff at Mon, 31 Aug 2026 15:32:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787834844
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1787834844
 - current timestamp: 1787834844
 
 ## Description
 
-reapply branch discovery config after merging main
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -132,7 +132,7 @@ discovery. Values are for block 1787834844 (main branch discovery), not current.
     contract L1Escrow (eth:0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3) [maker/L1Escrow] {
     +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
       fieldMeta:
-+        {"wards":{"severity":"HIGH"}}
++        {"wards":{"severity":"MEDIUM"}}
     }
 ```
 

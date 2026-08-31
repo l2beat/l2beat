@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x5f7dfd13970b4c0bf6abe55612acdea9731f395e
+Generated with discovered.json: 0x50e1e51e7a963519c0251ed07cfc59fdf6415924
 
-# Diff at Sat, 29 Aug 2026 15:26:26 GMT:
+# Diff at Mon, 31 Aug 2026 16:08:02 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787840339
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1787840339
 - current timestamp: 1787840339
 
 ## Description
 
-reapply branch discovery config after merging main
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -71,6 +71,8 @@ discovery. Values are for block 1787840339 (main branch discovery), not current.
     +++ description: Router managing token <–> gateway mapping on L2.
       critical:
 +        true
+      fieldMeta:
++        {"defaultGateway":{"severity":"HIGH"}}
     }
 ```
 
@@ -145,6 +147,8 @@ discovery. Values are for block 1787840339 (main branch discovery), not current.
     +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
       critical:
 +        true
+      fieldMeta:
++        {"executors":{"severity":"HIGH"}}
     }
 ```
 
@@ -183,6 +187,8 @@ discovery. Values are for block 1787840339 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
+      fieldMeta:
++        {"implementation":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -213,6 +219,8 @@ discovery. Values are for block 1787840339 (main branch discovery), not current.
     +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions.
       critical:
 +        true
+      fieldMeta:
++        {"rollup":{"severity":"HIGH"}}
     }
 ```
 
@@ -221,12 +229,16 @@ discovery. Values are for block 1787840339 (main branch discovery), not current.
     +++ description: None
       critical:
 +        true
+      fieldMeta:
++        {"implementation":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract SequencerInbox (eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) [orbitstack/SequencerInbox] {
     +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.maxTimeVariation.severity:
++        "HIGH"
       fieldMeta.batchPosters:
 +        {"severity":"LOW"}
       fieldMeta.dacKeyset:
@@ -250,7 +262,7 @@ discovery. Values are for block 1787840339 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"executors":{"severity":"LOW"}}
++        {"executors":{"severity":"HIGH"}}
     }
 ```
 
@@ -273,10 +285,20 @@ discovery. Values are for block 1787840339 (main branch discovery), not current.
 ```diff
     contract RollupProxy (eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0) [orbitstack/RollupProxyBoLD] {
     +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      fieldMeta.confirmPeriodBlocks.severity:
++        "HIGH"
       fieldMeta.wasmModuleRoot.severity:
 +        "HIGH"
       fieldMeta.getValidators:
 +        {"severity":"LOW"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.challengeManager:
++        {"severity":"HIGH"}
+      fieldMeta.anyTrustFastConfirmer:
++        {"severity":"HIGH"}
+      fieldMeta.validatorWhitelistDisabled:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -325,6 +347,8 @@ discovery. Values are for block 1787840339 (main branch discovery), not current.
     +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
       critical:
 +        true
+      fieldMeta:
++        {"defaultGateway":{"severity":"HIGH"},"owner":{"severity":"HIGH"}}
     }
 ```
 
@@ -339,6 +363,8 @@ discovery. Values are for block 1787840339 (main branch discovery), not current.
 ```diff
     contract Bridge (eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) [orbitstack/Bridge] {
     +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
       critical:
 +        true
     }
@@ -368,7 +394,7 @@ discovery. Values are for block 1787840339 (main branch discovery), not current.
     contract L1Escrow (eth:0xA10c7CE4b876998858b1a9E12b10092229539400) [maker/L1Escrow] {
     +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
       fieldMeta:
-+        {"wards":{"severity":"HIGH"}}
++        {"wards":{"severity":"MEDIUM"}}
     }
 ```
 

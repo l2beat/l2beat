@@ -1756,12 +1756,12 @@
           "type": "RISK_PARAMETER"
         },
         "tokenBlocklist": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Tokens currently blocked from being newly shielded into Railgun, reconstructed from blocklist events.",
           "type": "EXTERNAL"
         },
         "paused": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether the smart wallet proxy currently blocks all calls to its implementation."
         },
         "proxyOwnershipChangeCount": {
@@ -1769,11 +1769,11 @@
           "description": "Number of proxy ownership transfers, including changes later reverted."
         },
         "proxyPauseCount": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Number of times the proxy has been paused."
         },
         "proxyUnpauseCount": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Number of times the proxy has been unpaused."
         },
         "logicOwnershipChangeCount": {
@@ -1785,11 +1785,11 @@
           "description": "Number of fee schedule changes, including changes later reverted."
         },
         "blocklistAdditionCount": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Number of token blocklist additions, including additions later reverted."
         },
         "blocklistRemovalCount": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Number of token blocklist removals, including removals later reverted."
         },
         "verificationKeyChangeCount": {

@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x781e6667f4eabb5450d09e658331cb63e6d6b7ca
+Generated with discovered.json: 0x66a7e5f562300577ac0874add44310e6b8339b50
 
-# Diff at Wed, 26 Aug 2026 12:56:58 GMT:
+# Diff at Mon, 31 Aug 2026 15:32:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1777043298
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1777043298
 - current timestamp: 1777043298
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -30,7 +30,7 @@ discovery. Values are for block 1777043298 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"paused":{"severity":"HIGH"}}
++        {"paused":{"severity":"MEDIUM"}}
     }
 ```
 
@@ -63,6 +63,9 @@ discovery. Values are for block 1777043298 (main branch discovery), not current.
 ```diff
     contract PermissionedDisputeGame (eth:0xC7Ab73aE577650565cE7337b09704570C3e379b7) [opstack/PermissionedDisputeGame] {
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
       critical:
 +        true
     }

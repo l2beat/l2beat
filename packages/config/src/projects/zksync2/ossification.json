@@ -35,6 +35,7 @@
     }
   ],
   "reviewedSeverityDowngrades": [
+    "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213#migrationPaused",
     "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213#migrations",
     "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3#emergencyUpgradesExecuted",
     "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d#multisigMembers"

@@ -34,8 +34,17 @@
         }
       ]
     },
-    "paused": { "severity": "HIGH" },
-    "migrationPaused": { "severity": "HIGH" },
+    "paused": { "severity": "MEDIUM" },
+    "migrationPaused": { "severity": "MEDIUM" },
+    // ecosystem pointers: live onlyOwner setters (setAddresses /
+    // setChainAssetHandler) can repoint them without any code change —
+    // swapping the asset router redirects every chain's deposit/withdrawal
+    // routing, so these are HIGH.
+    "assetRouter": { "severity": "HIGH" },
+    "sharedBridge": { "severity": "HIGH" },
+    "messageRoot": { "severity": "HIGH" },
+    "l1CtmDeployer": { "severity": "HIGH" },
+    "chainAssetHandler": { "severity": "HIGH" },
     "chainsCreated": {
       "description": "All new chains created go thorugh the central bridgehub and are stored here with their respective STMs.",
       "handler": {

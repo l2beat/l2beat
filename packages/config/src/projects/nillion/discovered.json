@@ -93,7 +93,7 @@
         "proxyAdminOwner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "version": "2.4.2"
       },
-      "fieldMeta": { "paused": { "severity": "HIGH" } },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC": "Proxy",
         "eth:0xE4F9779ab53070a55db24dFAeFf9AF147c6ED550": "SuperchainConfig"
@@ -371,11 +371,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.",
       "critical": true,
-      "ignoreInWatchMode": [
-        "permissionedGamesTotal",
-        "gameCount",
-        "permissionedGamesTotal"
-      ],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "deployerAddress": "eth:0x58Cb6D59Cf449f2fF149cCac1746aD9D9F3c55dc",
       "sinceTimestamp": 1765911287,
       "sinceBlock": 24027092,
@@ -449,6 +445,8 @@
         "game0": { "severity": "HIGH" },
         "game1": { "severity": "HIGH" },
         "game8": { "severity": "HIGH" },
+        "permissionedGameArgs": { "severity": "HIGH" },
+        "game8Args": { "severity": "HIGH" },
         "game8Vm": { "severity": "HIGH" },
         "wethFromDGF": { "severity": "HIGH" }
       },
@@ -695,7 +693,7 @@
         "$admin": { "severity": "HIGH" },
         "respectedGameType": { "severity": "HIGH" },
         "paused": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
         }
       },
@@ -1165,7 +1163,7 @@
       },
       "fieldMeta": {
         "absolutePrestateDecoded": {
-          "description": "Prestate tag for known prestates."
+          "description": "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
         }
       },
       "implementationNames": {
@@ -2068,7 +2066,7 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry_post20": "0x6bf8916daf3b007503e2aa81cc8920469b22cdf5eb4501c85b8743633076e00e",
     "opstack/DelayedWETH": "0x2bb65b9dcbc119352d4c860b2c99ea1ab78770cfd36c559c5150dadfc1580c84",
-    "opstack/DisputeGameFactory_v2": "0x8846c3263ee16aaea65c3af20a2118d0c11aaf2a6fdd0487970b43a8d0e42123",
+    "opstack/DisputeGameFactory_v2": "0x54a98ca8d78a1ab5eb0795847a776c4d3c5c7de392bcf1b29c206cfb7e7afa7d",
     "opstack/L1CrossDomainMessenger": "0xea24e2bfdb6536e3712d13097b867ff34904f65030f57e349694caa653cce8fa",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",

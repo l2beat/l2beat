@@ -187,17 +187,19 @@
         }
       },
       "fieldMeta": {
-        "isPaused_GENERAL": { "severity": "HIGH" },
-        "isPaused_L1_L2": { "severity": "HIGH" },
-        "isPaused_L2_L1": { "severity": "HIGH" },
-        "isPaused_FINALIZATION": { "severity": "HIGH" },
-        "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "HIGH" },
-        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" },
-        "isPaused_NATIVE_YIELD_STAKING": { "severity": "HIGH" },
-        "isPaused_NATIVE_YIELD_UNSTAKING": { "severity": "HIGH" },
-        "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": { "severity": "HIGH" },
-        "isPaused_NATIVE_YIELD_REPORTING": { "severity": "HIGH" },
-        "isPaused_STATE_DATA_SUBMISSION": { "severity": "HIGH" },
+        "isPaused_GENERAL": { "severity": "MEDIUM" },
+        "isPaused_L1_L2": { "severity": "MEDIUM" },
+        "isPaused_L2_L1": { "severity": "MEDIUM" },
+        "isPaused_FINALIZATION": { "severity": "MEDIUM" },
+        "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "MEDIUM" },
+        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "MEDIUM" },
+        "isPaused_NATIVE_YIELD_STAKING": { "severity": "MEDIUM" },
+        "isPaused_NATIVE_YIELD_UNSTAKING": { "severity": "MEDIUM" },
+        "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": {
+          "severity": "MEDIUM"
+        },
+        "isPaused_NATIVE_YIELD_REPORTING": { "severity": "MEDIUM" },
+        "isPaused_STATE_DATA_SUBMISSION": { "severity": "MEDIUM" },
         "remoteSender": {
           "severity": "HIGH",
           "description": "The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here."
@@ -207,7 +209,7 @@
           "description": "The message service whose crosschain sender context authenticates bridge messages."
         },
         "nonSecurityCouncilCooldownEnd": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Timestamp until which non security council entities can't pause the rollup."
         }
       },
@@ -1345,6 +1347,18 @@
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
           "eth:0x0000000000000000000000000000000000000000"
         ],
         "YIELD_PROVIDER_STAKING_ROLE": "0x220bd22ef7c53d75fe3eac0a09e90815a0c5ba4f9e8da8b039542cd3db347258",
@@ -1359,17 +1373,19 @@
           "severity": "HIGH",
           "description": "Mapping of proof type to ZK Plonk Verifier contract."
         },
-        "isPaused_GENERAL": { "severity": "HIGH" },
-        "isPaused_L1_L2": { "severity": "HIGH" },
-        "isPaused_L2_L1": { "severity": "HIGH" },
-        "isPaused_FINALIZATION": { "severity": "HIGH" },
-        "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "HIGH" },
-        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" },
-        "isPaused_NATIVE_YIELD_STAKING": { "severity": "HIGH" },
-        "isPaused_NATIVE_YIELD_UNSTAKING": { "severity": "HIGH" },
-        "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": { "severity": "HIGH" },
-        "isPaused_NATIVE_YIELD_REPORTING": { "severity": "HIGH" },
-        "isPaused_STATE_DATA_SUBMISSION": { "severity": "HIGH" },
+        "isPaused_GENERAL": { "severity": "MEDIUM" },
+        "isPaused_L1_L2": { "severity": "MEDIUM" },
+        "isPaused_L2_L1": { "severity": "MEDIUM" },
+        "isPaused_FINALIZATION": { "severity": "MEDIUM" },
+        "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "MEDIUM" },
+        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "MEDIUM" },
+        "isPaused_NATIVE_YIELD_STAKING": { "severity": "MEDIUM" },
+        "isPaused_NATIVE_YIELD_UNSTAKING": { "severity": "MEDIUM" },
+        "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": {
+          "severity": "MEDIUM"
+        },
+        "isPaused_NATIVE_YIELD_REPORTING": { "severity": "MEDIUM" },
+        "isPaused_STATE_DATA_SUBMISSION": { "severity": "MEDIUM" },
         "limitInWei": {
           "severity": "HIGH",
           "description": "The cap on the total amount of ether that can leave rollup contract via L2 -> L1 message claims per period given by periodInSeconds."
@@ -1386,7 +1402,7 @@
           "description": "Smart contract that attests existence of blob commitments (shnarfs)."
         },
         "nonSecurityCouncilCooldownEnd": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Timestamp until which non security council entities can't pause the rollup."
         }
       },
@@ -2025,17 +2041,19 @@
         }
       },
       "fieldMeta": {
-        "isPaused_GENERAL": { "severity": "HIGH" },
-        "isPaused_L1_L2": { "severity": "HIGH" },
-        "isPaused_L2_L1": { "severity": "HIGH" },
-        "isPaused_FINALIZATION": { "severity": "HIGH" },
-        "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "HIGH" },
-        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" },
-        "isPaused_NATIVE_YIELD_STAKING": { "severity": "HIGH" },
-        "isPaused_NATIVE_YIELD_UNSTAKING": { "severity": "HIGH" },
-        "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": { "severity": "HIGH" },
-        "isPaused_NATIVE_YIELD_REPORTING": { "severity": "HIGH" },
-        "isPaused_STATE_DATA_SUBMISSION": { "severity": "HIGH" },
+        "isPaused_GENERAL": { "severity": "MEDIUM" },
+        "isPaused_L1_L2": { "severity": "MEDIUM" },
+        "isPaused_L2_L1": { "severity": "MEDIUM" },
+        "isPaused_FINALIZATION": { "severity": "MEDIUM" },
+        "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "MEDIUM" },
+        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "MEDIUM" },
+        "isPaused_NATIVE_YIELD_STAKING": { "severity": "MEDIUM" },
+        "isPaused_NATIVE_YIELD_UNSTAKING": { "severity": "MEDIUM" },
+        "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": {
+          "severity": "MEDIUM"
+        },
+        "isPaused_NATIVE_YIELD_REPORTING": { "severity": "MEDIUM" },
+        "isPaused_STATE_DATA_SUBMISSION": { "severity": "MEDIUM" },
         "remoteSender": {
           "severity": "HIGH",
           "description": "The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here."
@@ -2045,7 +2063,7 @@
           "description": "The message service whose crosschain sender context authenticates bridge messages."
         },
         "nonSecurityCouncilCooldownEnd": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Timestamp until which non security council entities can't pause the rollup."
         }
       },
@@ -2228,7 +2246,7 @@
         "USED_RATE_LIMIT_RESETTER_ROLE": "0x0cf0d2deb70d7bdac2fa48c4ac99bc558170be0ce5fcb994caefa4bf7b96edf9"
       },
       "fieldMeta": {
-        "minimumFeeInWei": { "severity": "HIGH" },
+        "minimumFeeInWei": { "severity": "MEDIUM" },
         "sender": {
           "description": "Value used to identify the crosschain caller during a crosschain call. It defaults to a inaccessible address outside of calls."
         },
@@ -2240,19 +2258,21 @@
           "severity": "HIGH",
           "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
         },
-        "isPaused_GENERAL": { "severity": "HIGH" },
-        "isPaused_L1_L2": { "severity": "HIGH" },
-        "isPaused_L2_L1": { "severity": "HIGH" },
-        "isPaused_FINALIZATION": { "severity": "HIGH" },
-        "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "HIGH" },
-        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "HIGH" },
-        "isPaused_NATIVE_YIELD_STAKING": { "severity": "HIGH" },
-        "isPaused_NATIVE_YIELD_UNSTAKING": { "severity": "HIGH" },
-        "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": { "severity": "HIGH" },
-        "isPaused_NATIVE_YIELD_REPORTING": { "severity": "HIGH" },
-        "isPaused_STATE_DATA_SUBMISSION": { "severity": "HIGH" },
+        "isPaused_GENERAL": { "severity": "MEDIUM" },
+        "isPaused_L1_L2": { "severity": "MEDIUM" },
+        "isPaused_L2_L1": { "severity": "MEDIUM" },
+        "isPaused_FINALIZATION": { "severity": "MEDIUM" },
+        "isPaused_INITIATE_TOKEN_BRIDGING": { "severity": "MEDIUM" },
+        "isPaused_COMPLETE_TOKEN_BRIDGING": { "severity": "MEDIUM" },
+        "isPaused_NATIVE_YIELD_STAKING": { "severity": "MEDIUM" },
+        "isPaused_NATIVE_YIELD_UNSTAKING": { "severity": "MEDIUM" },
+        "isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS": {
+          "severity": "MEDIUM"
+        },
+        "isPaused_NATIVE_YIELD_REPORTING": { "severity": "MEDIUM" },
+        "isPaused_STATE_DATA_SUBMISSION": { "severity": "MEDIUM" },
         "nonSecurityCouncilCooldownEnd": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Timestamp until which non security council entities can't pause the rollup."
         }
       },
@@ -4056,7 +4076,7 @@
     "linea/L1USDCBridge": "0xccec7b3207d7988b8869cf749a88b90a47d5a9e6cd0dc62f99b2accc9a81df1f",
     "linea/L2MessageService_v1_0": "0x6ce49291fdd8eb072f0295dc0f64f74c095763316783d9579fede3e9f4798cda",
     "linea/LidoStakingVaultYieldProvider": "0xc3f19fa44794b28bab13fe7e59ad3e8982927823f5cea3abf7c1cde603f2da71",
-    "linea/LineaRollup_ForcedTrx_v8_0": "0x6cc5193e59cfacf65584116c7930c16d37e5e771d836e6c072342a25564a23c6",
+    "linea/LineaRollup_ForcedTrx_v8_0": "0x50fe7201d012862930a53c0a39dd690cf46d25895eb5a055237add3e0a559f3d",
     "linea/LineaVoyageXP": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
     "linea/YieldManager": "0xfa42f479f67e7ac26fb54a60733c021ce953d4d9d2706a7830201e9b380bc3d3"

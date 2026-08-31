@@ -9,6 +9,6 @@
       "severity": "HIGH",
       "permissions": [{ "type": "act" }]
     },
-    "paused": { "severity": "HIGH" }
+    "paused": { "severity": "MEDIUM" }
   }
 }

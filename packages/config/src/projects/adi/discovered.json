@@ -449,7 +449,7 @@
       },
       "fieldMeta": {
         "owner": { "severity": "HIGH" },
-        "paused": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
         "bridgedTokenBeacon": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -727,7 +727,7 @@
       },
       "fieldMeta": {
         "owner": { "severity": "HIGH" },
-        "paused": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
         "l1AssetRouter": { "severity": "HIGH" },
         "legacyBridge": { "severity": "HIGH" }
       },
@@ -896,8 +896,13 @@
       "fieldMeta": {
         "admin": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" },
-        "paused": { "severity": "HIGH" },
-        "migrationPaused": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "migrationPaused": { "severity": "MEDIUM" },
+        "assetRouter": { "severity": "HIGH" },
+        "sharedBridge": { "severity": "HIGH" },
+        "messageRoot": { "severity": "HIGH" },
+        "l1CtmDeployer": { "severity": "HIGH" },
+        "chainAssetHandler": { "severity": "HIGH" },
         "chainsCreated": {
           "description": "All new chains created go thorugh the central bridgehub and are stored here with their respective STMs."
         },
@@ -1158,7 +1163,7 @@
       },
       "fieldMeta": {
         "owner": { "severity": "HIGH" },
-        "migrationPaused": { "severity": "HIGH" },
+        "migrationPaused": { "severity": "MEDIUM" },
         "paused": {
           "severity": "LOW",
           "description": "this 'paused' is unrelated to migrations and only used for initialization."
@@ -1484,6 +1489,7 @@
           }
         }
       },
+      "fieldMeta": { "executionDelay_fmt": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186": "TransparentUpgradeableProxy",
         "eth:0x6CB28384f21B18924FA312AA2E10D4E813e66263": "ValidatorTimelock"
@@ -1530,7 +1536,7 @@
       },
       "fieldMeta": {
         "owner": { "severity": "HIGH" },
-        "paused": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
         "legacyBridge": { "severity": "HIGH" },
         "nativeTokenVault": { "severity": "HIGH" }
       },
@@ -2884,7 +2890,7 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/BlobsL1DAValidatorZKsyncOS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "shared-zk-stack/BridgeHub": "0x0ca129f2c9283d30f7901d57acacc97af4da37a93c6bd7f520d603d4b8676b2c",
+    "shared-zk-stack/BridgeHub": "0x85d84032c3f2eae0ff0e6a0d3e425dd5bf1ae3a31fc2ef68fea4aa5f442edbd9",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/ChainAssetHandler": "0x8014df0d446cdb3c3b832daf6f52f4993f5315bacda2db187328db9c6a777312",
     "shared-zk-stack/CTMDeploymentTracker": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",

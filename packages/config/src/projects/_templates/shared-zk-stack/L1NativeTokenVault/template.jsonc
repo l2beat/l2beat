@@ -13,7 +13,7 @@
         }
       ]
     },
-    "paused": { "severity": "HIGH" },
+    "paused": { "severity": "MEDIUM" },
     "bridgedTokenBeacon": { "severity": "HIGH" }
   }
 }

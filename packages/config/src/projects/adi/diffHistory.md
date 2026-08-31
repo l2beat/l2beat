@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x54ff4dfe2958b26f78c0b75249af5ff9bcc3125a
+Generated with discovered.json: 0x8c85fcb92c0b70ceaf46af4ddd9ac116064dfc24
 
-# Diff at Wed, 26 Aug 2026 12:18:09 GMT:
+# Diff at Mon, 31 Aug 2026 15:33:52 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1780586199
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1780586199
 - current timestamp: 1780586199
 
 ## Description
 
-reapply branch discovery config after merging main
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -32,7 +32,7 @@ discovery. Values are for block 1780586199 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"owner":{"severity":"HIGH"},"paused":{"severity":"HIGH"},"bridgedTokenBeacon":{"severity":"HIGH"}}
++        {"owner":{"severity":"HIGH"},"paused":{"severity":"MEDIUM"},"bridgedTokenBeacon":{"severity":"HIGH"}}
     }
 ```
 
@@ -74,7 +74,7 @@ discovery. Values are for block 1780586199 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"owner":{"severity":"HIGH"},"paused":{"severity":"HIGH"},"l1AssetRouter":{"severity":"HIGH"},"legacyBridge":{"severity":"HIGH"}}
++        {"owner":{"severity":"HIGH"},"paused":{"severity":"MEDIUM"},"l1AssetRouter":{"severity":"HIGH"},"legacyBridge":{"severity":"HIGH"}}
     }
 ```
 
@@ -94,8 +94,18 @@ discovery. Values are for block 1780586199 (main branch discovery), not current.
       fieldMeta.owner:
 +        {"severity":"HIGH"}
       fieldMeta.paused:
-+        {"severity":"HIGH"}
++        {"severity":"MEDIUM"}
       fieldMeta.migrationPaused:
++        {"severity":"MEDIUM"}
+      fieldMeta.assetRouter:
++        {"severity":"HIGH"}
+      fieldMeta.sharedBridge:
++        {"severity":"HIGH"}
+      fieldMeta.messageRoot:
++        {"severity":"HIGH"}
+      fieldMeta.l1CtmDeployer:
++        {"severity":"HIGH"}
+      fieldMeta.chainAssetHandler:
 +        {"severity":"HIGH"}
       critical:
 +        true
@@ -113,6 +123,9 @@ discovery. Values are for block 1780586199 (main branch discovery), not current.
 ```diff
     contract L1ChainAssetHandler (eth:0x924E0145347243a94C5C69e372Ca52c77f8e6CF1) [shared-zk-stack/ChainAssetHandler] {
     +++ description: Specialized contract for managing chain assets, i.e. chain migrations.
+      fieldMeta.migrationPaused.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.migrations.severity:
 -        "HIGH"
       fieldMeta.migrations.description:
@@ -130,6 +143,8 @@ discovery. Values are for block 1780586199 (main branch discovery), not current.
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
       critical:
 +        true
+      fieldMeta:
++        {"executionDelay_fmt":{"severity":"HIGH"}}
     }
 ```
 
@@ -139,7 +154,7 @@ discovery. Values are for block 1780586199 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"owner":{"severity":"HIGH"},"paused":{"severity":"HIGH"},"legacyBridge":{"severity":"HIGH"},"nativeTokenVault":{"severity":"HIGH"}}
++        {"owner":{"severity":"HIGH"},"paused":{"severity":"MEDIUM"},"legacyBridge":{"severity":"HIGH"},"nativeTokenVault":{"severity":"HIGH"}}
     }
 ```
 

@@ -1736,7 +1736,7 @@
           "eth:0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
         ]
       },
-      "fieldMeta": { "wards": { "severity": "HIGH" } },
+      "fieldMeta": { "wards": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3": "L1Escrow"
       }

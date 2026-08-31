@@ -1381,7 +1381,7 @@
         "pendingGuardian": "eth:0x0000000000000000000000000000000000000000",
         "version": "1.3.0"
       },
-      "fieldMeta": { "paused": { "severity": "HIGH" } },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x5d0Ff601BC8580D8682c0462df55343Cb0b99285": "Proxy",
         "eth:0x2F64d234f1Ec6bA2eA6914d943c99b45fFF14E89": "SuperchainConfig"
@@ -1588,7 +1588,7 @@
         "$admin": { "severity": "HIGH" },
         "respectedGameType": { "severity": "HIGH" },
         "paused": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
         }
       },
@@ -2448,7 +2448,7 @@
       },
       "fieldMeta": {
         "absolutePrestateDecoded": {
-          "description": "Prestate tag for known prestates."
+          "description": "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
         }
       },
       "implementationNames": {

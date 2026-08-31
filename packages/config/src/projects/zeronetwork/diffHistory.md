@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x849a5155ddf91fda0f0078959bcb0d3b464bdb2a
+Generated with discovered.json: 0x1f704c98956c9d07d23c55e8dca7b95f5c44e192
 
-# Diff at Wed, 26 Aug 2026 12:57:00 GMT:
+# Diff at Mon, 31 Aug 2026 15:32:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1786615271
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1786615271
 - current timestamp: 1786615271
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -21,6 +21,8 @@ discovery. Values are for block 1786615271 (main branch discovery), not current.
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
       critical:
 +        true
+      fieldMeta:
++        {"executionDelay_fmt":{"severity":"HIGH"}}
     }
 ```
 

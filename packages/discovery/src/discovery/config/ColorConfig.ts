@@ -2,7 +2,7 @@ import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 export type ContractFieldSeverity = v.infer<typeof ContractFieldSeverity>
-export const ContractFieldSeverity = v.enum(['HIGH', 'LOW'])
+export const ContractFieldSeverity = v.enum(['HIGH', 'MEDIUM', 'LOW'])
 
 export type ContractValueType = v.infer<typeof ContractValueType>
 export const ContractValueType = v.enum([

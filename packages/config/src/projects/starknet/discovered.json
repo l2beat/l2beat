@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "timestamp": 1786612387,
-  "configHash": "0x560738705e84675bb81029e2cd3b51a551c760ef8842175673374666273baee1",
+  "configHash": "0xdab222658b3090e9c987ee68bd78d7e80d7c376c2c99e678bbc6f40f6cba2127",
   "entries": [
     {
       "name": "Starkware Multisig 2",
@@ -366,7 +366,7 @@
           "eth:0xc238E3D63DfD677Fa0FA9985576f0945C581A266"
         ]
       },
-      "fieldMeta": { "wards": { "severity": "HIGH" } },
+      "fieldMeta": { "wards": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x0437465dfb5B79726e35F08559B0cBea55bb585C": "L1Escrow"
       }
@@ -781,11 +781,11 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
         },
         "withdrawLimitPct": {
@@ -795,18 +795,18 @@
           "description": "The maximum total escrow balance per token (can limit deposits) is listed here if modified."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "tokenHaltSignalled": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Bridge halt was signalled for these tokens."
         },
         "tokenHaltCompleted": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Bridge halt was completed for these tokens."
         }
       },
@@ -1130,11 +1130,11 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
@@ -1147,7 +1147,7 @@
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -1462,11 +1462,11 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
         },
         "withdrawLimitPct": {
@@ -1476,7 +1476,7 @@
           "description": "The maximum total escrow balance per token (can limit deposits) is listed here if modified."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -1634,11 +1634,11 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
         },
         "withdrawLimitPct": {
@@ -1648,18 +1648,18 @@
           "description": "The maximum total escrow balance per token (can limit deposits) is listed here if modified."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
           "description": "This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation."
         },
         "tokenHaltSignalled": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Bridge halt was signalled for these tokens."
         },
         "tokenHaltCompleted": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Bridge halt was completed for these tokens."
         }
       },
@@ -1965,11 +1965,11 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
@@ -1982,7 +1982,7 @@
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -2110,11 +2110,11 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
@@ -2127,7 +2127,7 @@
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -2303,6 +2303,7 @@
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
       "fieldMeta": {
+        "messageCancellationDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "HIGH",
           "description": "Permissioned to upgrade the proxy implementation and access `onlyGovernance` calls. While the contract is not finalized, governance can replace the OS program hash, aggregator program hash, and OS-config hash. An implementation upgrade can also replace the verifier address or bypass all proof checks."
@@ -2723,11 +2724,11 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
@@ -2740,7 +2741,7 @@
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -2901,11 +2902,11 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
@@ -2918,7 +2919,7 @@
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -3037,11 +3038,11 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
@@ -3054,7 +3055,7 @@
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -3172,11 +3173,11 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
@@ -3189,7 +3190,7 @@
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -3342,11 +3343,11 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation)."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "empty: withdrawals are not limited, `0x0000000000000000000000000000000000455448` (or respective `bridgedToken` address): withdrawals are limited."
         },
         "withdrawLimitPct": {
@@ -3356,7 +3357,7 @@
           "description": "The maximum total escrow balance per token (can limit deposits) is listed here if modified."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -3380,7 +3381,7 @@
       ],
       "proxyType": "StarkWare proxy",
       "description": "Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.",
-      "critical": true,
+      "critical": false,
       "deployerAddress": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "sinceTimestamp": 1657137639,
       "sinceBlock": 15090984,
@@ -3484,11 +3485,11 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
@@ -3501,7 +3502,7 @@
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -3713,11 +3714,11 @@
       },
       "fieldMeta": {
         "$admin": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
         },
         "withdrawalLimitStatus": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
@@ -3730,7 +3731,7 @@
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
         "accessControl": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
         },
         "govAdminAC": {
@@ -5101,7 +5102,7 @@
     "starknet/LordsL1Bridge": "0x6f155638dd1434607b38c9304ae5de49b108365e50ae6968b56c16cab946c1f4",
     "starknet/StarkgateManager": "0x4b9115f849ab55459358778c2380fc07a7c113eba4d1ea123fccc3b0ee31385d",
     "starknet/StarkgateRegistry": "0x146d95b0ca7a2c08ff095b65a07bf282d92759ed499c9c175b0aae23c17c1072",
-    "starknet/Starknet": "0xfadaad9feb97c113d19f43abb4e24ed692a26a6efc6094ada095836e6793f431",
+    "starknet/Starknet": "0xf01cf432d074a3417a43b6dad120f3d2b6382edac6c12e28608c3ff6f608ade5",
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6",
     "starknet/StarknetEthBridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6",
     "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b",

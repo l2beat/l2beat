@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xbc58def2f01eac2a876d82f7581344208b6727e5
+Generated with discovered.json: 0xa074cca261b63703d0affb3921c0818cab8b35d3
 
-# Diff at Thu, 20 Aug 2026 20:12:03 GMT:
+# Diff at Mon, 31 Aug 2026 15:08:33 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bd2a19ed47921b541d6d991c325212600c2751a9 block: 1787147569
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1787147569
 - current timestamp: 1787147569
 
 ## Description
 
-Ossification perimeter: externally governed escrows (Maker/Sky DAI, Lido wstETH) are not critical — their code is governed and battle-tested by the external protocol, not the host project.
+reintroduce MEDIUM severity: pause-type fields and ADD_TA starkgate escrows demoted from HIGH (ossification perimeter/severity review)
 
 ## Config/verification related changes
 
@@ -103,6 +103,9 @@ discovery. Values are for block 1787147569 (main branch discovery), not current.
 ```diff
     contract EnforcedTxGateway (eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d) [scroll/EnforcedTxGateway] {
     +++ description: Contracts to force L1 -> L2 messages with the proper sender.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       critical:
 +        true
     }

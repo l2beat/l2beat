@@ -706,27 +706,27 @@
         "owner": { "severity": "HIGH" },
         "feeSetter": { "severity": "HIGH" },
         "defaultFee": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Stored global protocol-fee fallback. The sentinel value represents an explicitly disabled fee; other nonzero values pack the token0 and token1 denominators into two 4-bit nibbles."
         },
         "tier03DefaultFee": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Resolved configured protocol fee for the 0.3% tier before any per-pool override."
         },
         "feeTierDefaultUpdates": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "History of per-tier protocol-fee settings. A new entry changes the share of LP fees that can be diverted for pools in that tier."
         },
         "feeTierDefaultClears": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Fee tiers whose explicit protocol-fee setting has been cleared in favor of the global default."
         },
         "poolOverrideUpdates": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "History of pool-specific protocol-fee settings."
         },
         "poolOverrideClears": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Pools whose explicit protocol-fee setting has been cleared in favor of their tier or the global default."
         }
       },

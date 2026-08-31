@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x91eb8780d361642833f3dbf66ef8a8bd96f9f35b
+Generated with discovered.json: 0x3d296b899dabbbe417fbd40051306e4b453c09a6
 
-# Diff at Thu, 20 Aug 2026 06:21:35 GMT:
+# Diff at Mon, 31 Aug 2026 16:08:18 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@bde00b38fbd457b8120826670cd31917494be32c block: 1784193913
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1784193913
 - current timestamp: 1784193913
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -19,6 +19,8 @@ discovery. Values are for block 1784193913 (main branch discovery), not current.
 ```diff
     contract USDC Bridge (eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) [starknet/StarknetERC20Bridge] {
     +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+      fieldMeta.depositStatus.severity:
+-        "HIGH"
       critical:
 +        true
     }
@@ -27,7 +29,9 @@ discovery. Values are for block 1784193913 (main branch discovery), not current.
 ```diff
     contract Paradex (eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640) [starknet/Starknet] {
     +++ description: Central Starknet rollup contract. For every state update it derives a SHARP fact from the state-transition output and either the Starknet OS or aggregator program hash, checks that fact through the configured SHARP call proxy, and requires the output's OS-config hash to match. It also processes L1 <-> L2 messages and stores the finalized L2 state.
-      fieldMeta.operators:
+      fieldMeta.feeCollector.severity:
+-        "HIGH"
+      fieldMeta.messageCancellationDelay:
 +        {"severity":"HIGH"}
       critical:
 +        true

@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x9f2aec808ed6ab52050f12759ed9e2848b447cdd
+Generated with discovered.json: 0x4647e79449129ccb0ebde74ca0784d105a75d0d5
 
-# Diff at Sat, 29 Aug 2026 15:29:29 GMT:
+# Diff at Mon, 31 Aug 2026 16:08:20 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787738139
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1787738139
 - current timestamp: 1787738139
 
 ## Description
 
-reapply branch discovery config after merging main
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -54,8 +54,18 @@ discovery. Values are for block 1787738139 (main branch discovery), not current.
       fieldMeta.owner:
 +        {"severity":"HIGH"}
       fieldMeta.paused:
-+        {"severity":"HIGH"}
++        {"severity":"MEDIUM"}
       fieldMeta.migrationPaused:
++        {"severity":"MEDIUM"}
+      fieldMeta.assetRouter:
++        {"severity":"HIGH"}
+      fieldMeta.sharedBridge:
++        {"severity":"HIGH"}
+      fieldMeta.messageRoot:
++        {"severity":"HIGH"}
+      fieldMeta.l1CtmDeployer:
++        {"severity":"HIGH"}
+      fieldMeta.chainAssetHandler:
 +        {"severity":"HIGH"}
       critical:
 +        true
@@ -108,7 +118,7 @@ discovery. Values are for block 1787738139 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"owner":{"severity":"HIGH"},"paused":{"severity":"HIGH"},"legacyBridge":{"severity":"HIGH"},"nativeTokenVault":{"severity":"HIGH"}}
++        {"owner":{"severity":"HIGH"},"paused":{"severity":"MEDIUM"},"legacyBridge":{"severity":"HIGH"},"nativeTokenVault":{"severity":"HIGH"}}
     }
 ```
 
@@ -118,7 +128,7 @@ discovery. Values are for block 1787738139 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"owner":{"severity":"HIGH"},"paused":{"severity":"HIGH"},"bridgedTokenBeacon":{"severity":"HIGH"}}
++        {"owner":{"severity":"HIGH"},"paused":{"severity":"MEDIUM"},"bridgedTokenBeacon":{"severity":"HIGH"}}
     }
 ```
 
@@ -148,13 +158,16 @@ discovery. Values are for block 1787738139 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"owner":{"severity":"HIGH"},"paused":{"severity":"HIGH"},"l1AssetRouter":{"severity":"HIGH"},"legacyBridge":{"severity":"HIGH"}}
++        {"owner":{"severity":"HIGH"},"paused":{"severity":"MEDIUM"},"l1AssetRouter":{"severity":"HIGH"},"legacyBridge":{"severity":"HIGH"}}
     }
 ```
 
 ```diff
     contract ChainAssetHandler (eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076) [shared-zk-stack/ChainAssetHandler] {
     +++ description: Specialized contract for managing chain assets, i.e. chain migrations.
+      fieldMeta.migrationPaused.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.migrations.severity:
 -        "HIGH"
       fieldMeta.migrations.description:
@@ -172,6 +185,14 @@ discovery. Values are for block 1787738139 (main branch discovery), not current.
     +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
       fieldMeta.emergencyUpgradesExecuted:
 -        {"severity":"HIGH"}
+      fieldMeta.emergencyUpgradeBoard:
++        {"severity":"HIGH"}
+      fieldMeta.guardians:
++        {"severity":"HIGH"}
+      fieldMeta.securityCouncil:
++        {"severity":"HIGH"}
+      fieldMeta.L2_PROTOCOL_GOVERNOR:
++        {"severity":"HIGH"}
       critical:
 +        true
     }

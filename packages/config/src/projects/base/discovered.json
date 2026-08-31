@@ -1579,11 +1579,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.",
       "critical": true,
-      "ignoreInWatchMode": [
-        "gameCount",
-        "permissionedGameArgs",
-        "permissionedGamesTotal"
-      ],
+      "ignoreInWatchMode": ["gameCount", "permissionedGamesTotal"],
       "deployerAddress": "eth:0x4B7FcC44F12b1F7A61D0E5f34521cF37E38e23E5",
       "sinceTimestamp": 1728307967,
       "sinceBlock": 20914005,
@@ -1657,6 +1653,8 @@
         "game0": { "severity": "HIGH" },
         "game1": { "severity": "HIGH" },
         "game8": { "severity": "HIGH" },
+        "permissionedGameArgs": { "severity": "HIGH" },
+        "game8Args": { "severity": "HIGH" },
         "game8Vm": { "severity": "HIGH" },
         "wethFromDGF": { "severity": "HIGH" }
       },
@@ -1807,7 +1805,7 @@
         "$admin": { "severity": "HIGH" },
         "respectedGameType": { "severity": "HIGH" },
         "paused": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
         }
       },
@@ -1961,7 +1959,7 @@
       },
       "fieldMeta": {
         "absolutePrestateDecoded": {
-          "description": "Prestate tag for known prestates."
+          "description": "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
         }
       },
       "implementationNames": {
@@ -2267,7 +2265,7 @@
       },
       "fieldMeta": {
         "absolutePrestateDecoded": {
-          "description": "Prestate tag for known prestates."
+          "description": "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
         }
       },
       "implementationNames": {
@@ -2684,7 +2682,7 @@
         "$immutable": true,
         "wards": ["eth:0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB"]
       },
-      "fieldMeta": { "wards": { "severity": "HIGH" } },
+      "fieldMeta": { "wards": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3": "Escrow"
       }
@@ -3036,12 +3034,12 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
+        "respectedGameType": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "HIGH" },
         "disputeGameFinalityDelaySeconds": {
           "severity": "HIGH",
           "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
-        },
-        "respectedGameType": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0x909f6cf47ed12f010A796527f562bFc26C7F4E72": "Proxy",
@@ -3346,7 +3344,7 @@
         "proxyAdminOwner": "eth:0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "version": "2.5.0"
       },
-      "fieldMeta": { "paused": { "severity": "HIGH" } },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xb535ff7F118260a952CE65e7fF41B1743De8EE6c": "Proxy",
         "eth:0xc4ceeB264Fa35a022e470aCc3C6A522308f3ec02": "SuperchainConfig"
@@ -5802,7 +5800,7 @@
     "opstack/AggregateVerifier": "0x81754fdafe6192d4454c14c2e5ebb15c616a3e439e1e5fb4d605153ccc3b4ca8",
     "opstack/AnchorStateRegistry_post20": "0x6bf8916daf3b007503e2aa81cc8920469b22cdf5eb4501c85b8743633076e00e",
     "opstack/DelayedWETH": "0x2bb65b9dcbc119352d4c860b2c99ea1ab78770cfd36c559c5150dadfc1580c84",
-    "opstack/DisputeGameFactory_v2": "0x8846c3263ee16aaea65c3af20a2118d0c11aaf2a6fdd0487970b43a8d0e42123",
+    "opstack/DisputeGameFactory_v2": "0x54a98ca8d78a1ab5eb0795847a776c4d3c5c7de392bcf1b29c206cfb7e7afa7d",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/L1CrossDomainMessenger": "0xea24e2bfdb6536e3712d13097b867ff34904f65030f57e349694caa653cce8fa",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",

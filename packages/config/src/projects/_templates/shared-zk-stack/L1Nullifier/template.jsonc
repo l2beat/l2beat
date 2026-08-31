@@ -20,7 +20,7 @@
         }
       ]
     },
-    "paused": { "severity": "HIGH" },
+    "paused": { "severity": "MEDIUM" },
     "l1AssetRouter": { "severity": "HIGH" },
     "legacyBridge": { "severity": "HIGH" }
   }

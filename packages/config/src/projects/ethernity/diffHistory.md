@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xcf8f09420a2c1a942eaf293e9fd2d0cd8572ea8f
+Generated with discovered.json: 0x9770b6b6b428ba145df41b2415317b7a53faaa7f
 
-# Diff at Wed, 26 Aug 2026 12:56:57 GMT:
+# Diff at Mon, 31 Aug 2026 15:08:31 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1777390951
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1777390951
 - current timestamp: 1777390951
 
 ## Description
 
-Classify critical contracts and trust-defining value severities for the ossification factor.
+reintroduce MEDIUM severity: pause-type fields and ADD_TA starkgate escrows demoted from HIGH (ossification perimeter/severity review)
 
 ## Config/verification related changes
 
@@ -38,7 +38,7 @@ discovery. Values are for block 1777390951 (main branch discovery), not current.
       critical:
 +        true
       fieldMeta:
-+        {"paused":{"severity":"HIGH"}}
++        {"paused":{"severity":"MEDIUM"}}
     }
 ```
 

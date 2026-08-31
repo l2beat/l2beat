@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x7540d8b0a7790a76bb241c16a5004204a2374882
+Generated with discovered.json: 0x29ae3f6e59b2ffe958b6c5e326aef866597cc513
 
-# Diff at Wed, 26 Aug 2026 12:18:24 GMT:
+# Diff at Mon, 31 Aug 2026 15:32:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1787645431
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1787645431
 - current timestamp: 1787645431
 
 ## Description
 
-reapply branch discovery config after merging main
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -111,6 +111,9 @@ discovery. Values are for block 1787645431 (main branch discovery), not current.
 ```diff
     contract PermissionedDisputeGame (eth:0xA7A26BbA1191a064637d7B0b23896589F4e4d22D) [opstack/PermissionedDisputeGame] {
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
       critical:
 +        true
     }

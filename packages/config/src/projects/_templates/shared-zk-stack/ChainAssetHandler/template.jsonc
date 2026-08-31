@@ -9,7 +9,7 @@
         { "type": "interact", "description": "pause, resume chain migrations." }
       ]
     },
-    "migrationPaused": { "severity": "HIGH" },
+    "migrationPaused": { "severity": "MEDIUM" },
     "paused": {
       "severity": "LOW",
       "description": "this 'paused' is unrelated to migrations and only used for initialization."

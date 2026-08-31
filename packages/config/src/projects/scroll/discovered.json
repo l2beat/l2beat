@@ -1093,7 +1093,7 @@
       },
       "fieldMeta": {
         "paused": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk."
         }
       },

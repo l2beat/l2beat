@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "timestamp": 1787840339,
-  "configHash": "0x85c3346409f7a03e76f67f3c7df147cea950578bf3008eede797204f59bb62fb",
+  "configHash": "0x40ff7476427c7d3227813f064ced8ff3854cb6823dae61d4d74cb25555054f49",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000001",
@@ -655,6 +655,7 @@
         "defaultGateway": "arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
         "router": "arb1:0x0000000000000000000000000000000000000000"
       },
+      "fieldMeta": { "defaultGateway": { "severity": "HIGH" } },
       "implementationNames": {
         "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933": "TransparentUpgradeableProxy",
         "arb1:0xe80eb0238029333e368e0bDDB7acDf1b9cb28278": "L2GatewayRouter"
@@ -1899,6 +1900,7 @@
         ],
         "transactionFilteringPrecompile": "arb1:0x0000000000000000000000000000000000000074"
       },
+      "fieldMeta": { "executors": { "severity": "HIGH" } },
       "implementationNames": {
         "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": "TransparentUpgradeableProxy",
         "arb1:0x3d745b8815F9be5BF053858165f8aB1F58c77932": "UpgradeExecutor"
@@ -2197,6 +2199,10 @@
         "$immutable": true,
         "implementation": "arb1:0x3f770Ac673856F105b586bb393d122721265aD46",
         "owner": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      },
+      "fieldMeta": {
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333": "UpgradeableBeacon"
@@ -2993,6 +2999,7 @@
         "OUTBOX_VERSION": 2,
         "rollup": "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
       },
+      "fieldMeta": { "rollup": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840": "TransparentUpgradeableProxy",
         "eth:0x3FFf9BdC3ce99d3D587b0d06Aa7C4a10075193b4": "Outbox"
@@ -3109,6 +3116,10 @@
         "implementation": "eth:0xc4940069140142236D4065b866018f7b2BeC77fD",
         "owner": "eth:0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A"
       },
+      "fieldMeta": {
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x14797f5432f699Cb4d4dB04DF599B74952d78d7b": "UpgradeableBeacon"
       },
@@ -3218,6 +3229,7 @@
       },
       "fieldMeta": {
         "maxTimeVariation": {
+          "severity": "HIGH",
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         },
         "batchPosters": { "severity": "LOW" },
@@ -3365,7 +3377,7 @@
           "eth:0xF06E95eF589D9c38af242a8AAee8375f14023F85"
         ]
       },
-      "fieldMeta": { "executors": { "severity": "LOW" } },
+      "fieldMeta": { "executors": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd": "TransparentUpgradeableProxy",
         "eth:0x3d745b8815F9be5BF053858165f8aB1F58c77932": "UpgradeExecutor"
@@ -3607,10 +3619,12 @@
       },
       "fieldMeta": {
         "getValidators": { "severity": "LOW" },
+        "owner": { "severity": "HIGH" },
         "minimumAssertionPeriod": {
           "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
         },
         "confirmPeriodBlocks": {
+          "severity": "HIGH",
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
         "wasmModuleRoot": {
@@ -3622,7 +3636,10 @@
         },
         "challenges": {
           "description": "Emitted on createChallenge() in RollupUserLogic."
-        }
+        },
+        "challengeManager": { "severity": "HIGH" },
+        "anyTrustFastConfirmer": { "severity": "HIGH" },
+        "validatorWhitelistDisabled": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0": "RollupProxy",
@@ -3954,6 +3971,10 @@
         "router": "eth:0x0000000000000000000000000000000000000000",
         "whitelist": "eth:0x0000000000000000000000000000000000000000"
       },
+      "fieldMeta": {
+        "defaultGateway": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef": "TransparentUpgradeableProxy",
         "eth:0x52595021fA01B3E14EC6C88953AFc8E35dFf423c": "L1GatewayRouter"
@@ -4109,7 +4130,8 @@
         "inboxHistory": {
           "severity": "HIGH",
           "description": "All Inboxes that were ever set as allowed in the bridge."
-        }
+        },
+        "rollup": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": "TransparentUpgradeableProxy",
@@ -4219,7 +4241,7 @@
           "eth:0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
         ]
       },
-      "fieldMeta": { "wards": { "severity": "HIGH" } },
+      "fieldMeta": { "wards": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0xA10c7CE4b876998858b1a9E12b10092229539400": "L1Escrow"
       },

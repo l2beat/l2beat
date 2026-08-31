@@ -348,7 +348,8 @@
         },
         "ownerRoleMembers": {
           "description": "Addresses with OWNER_ROLE.",
-          "type": "PERMISSION"
+          "type": "PERMISSION",
+          "severity": "HIGH"
         },
         "aspPostmen": {
           "description": "Addresses with ASP_POSTMAN.",

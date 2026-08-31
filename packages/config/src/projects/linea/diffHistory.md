@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x19cacaba48607145884c71fb4d4ee2f26a0a2db2
+Generated with discovered.json: 0x127d1abff562fd81697f91b3c7b491af897f0b50
 
-# Diff at Sat, 29 Aug 2026 15:26:51 GMT:
+# Diff at Mon, 31 Aug 2026 16:08:07 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1784543140
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1784543140
 - current timestamp: 1784543140
 
 ## Description
 
-reapply branch discovery config after merging main
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -19,6 +19,42 @@ discovery. Values are for block 1784543140 (main branch discovery), not current.
 ```diff
     contract TokenBridge (eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) [linea/L1TokenBridge_v1_1] {
     +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      fieldMeta.isPaused_GENERAL.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_L1_L2.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_L2_L1.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_FINALIZATION.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_INITIATE_TOKEN_BRIDGING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_COMPLETE_TOKEN_BRIDGING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_NATIVE_YIELD_STAKING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_NATIVE_YIELD_UNSTAKING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_NATIVE_YIELD_REPORTING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_STATE_DATA_SUBMISSION.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.nonSecurityCouncilCooldownEnd.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.remoteSender:
 +        {"severity":"HIGH","description":"The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here."}
       fieldMeta.messageService:
@@ -97,12 +133,96 @@ discovery. Values are for block 1784543140 (main branch discovery), not current.
 ```diff
     contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) [linea/LineaRollup_ForcedTrx_v8_0] {
     +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
++++ severity: HIGH
+      values.verifiers.2:
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
++++ severity: HIGH
+      values.verifiers.3:
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
++++ severity: HIGH
+      values.verifiers.4:
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
++++ severity: HIGH
+      values.verifiers.5:
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
++++ severity: HIGH
+      values.verifiers.6:
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
++++ severity: HIGH
+      values.verifiers.7:
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
++++ severity: HIGH
+      values.verifiers.8:
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
++++ severity: HIGH
+      values.verifiers.9:
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
++++ severity: HIGH
+      values.verifiers.10:
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
++++ severity: HIGH
+      values.verifiers.11:
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
++++ severity: HIGH
+      values.verifiers.12:
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract.
++++ severity: HIGH
+      values.verifiers.13:
++        "eth:0x0000000000000000000000000000000000000000"
       fieldMeta.livenessRecoveryOperator:
 -        {"severity":"HIGH"}
       fieldMeta.verifiers.severity:
 +        "HIGH"
+      fieldMeta.isPaused_GENERAL.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_L1_L2.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_L2_L1.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_FINALIZATION.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_INITIATE_TOKEN_BRIDGING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_COMPLETE_TOKEN_BRIDGING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_NATIVE_YIELD_STAKING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_NATIVE_YIELD_UNSTAKING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_NATIVE_YIELD_REPORTING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_STATE_DATA_SUBMISSION.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.limitInWei.severity:
 +        "HIGH"
+      fieldMeta.nonSecurityCouncilCooldownEnd.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.periodInSeconds:
 +        {"severity":"HIGH"}
       critical:
@@ -171,6 +291,42 @@ discovery. Values are for block 1784543140 (main branch discovery), not current.
 ```diff
     contract TokenBridge (linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9) [linea/L1TokenBridge_v1_1] {
     +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      fieldMeta.isPaused_GENERAL.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_L1_L2.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_L2_L1.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_FINALIZATION.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_INITIATE_TOKEN_BRIDGING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_COMPLETE_TOKEN_BRIDGING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_NATIVE_YIELD_STAKING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_NATIVE_YIELD_UNSTAKING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_NATIVE_YIELD_REPORTING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_STATE_DATA_SUBMISSION.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.nonSecurityCouncilCooldownEnd.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.remoteSender:
 +        {"severity":"HIGH","description":"The trusted TokenBridge counterpart on the other layer whose crosschain messages authorize releasing or minting tokens here."}
       fieldMeta.messageService:
@@ -187,8 +343,44 @@ discovery. Values are for block 1784543140 (main branch discovery), not current.
 +        "HIGH"
       fieldMeta.periodInSeconds.severity:
 +        "HIGH"
+      fieldMeta.isPaused_GENERAL.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_L1_L2.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_L2_L1.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_FINALIZATION.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_INITIATE_TOKEN_BRIDGING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_COMPLETE_TOKEN_BRIDGING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_NATIVE_YIELD_STAKING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_NATIVE_YIELD_UNSTAKING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_NATIVE_YIELD_PERMISSIONLESS_ACTIONS.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_NATIVE_YIELD_REPORTING.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.isPaused_STATE_DATA_SUBMISSION.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.nonSecurityCouncilCooldownEnd.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.minimumFeeInWei:
-+        {"severity":"HIGH"}
++        {"severity":"MEDIUM"}
       critical:
 +        true
     }

@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x73ec8f43af8a855314d5d1157e24636f69f2e9d1
+Generated with discovered.json: 0x3f1805c1dfb374ae1452f90a75f4d92995af51ae
 
-# Diff at Wed, 26 Aug 2026 12:25:31 GMT:
+# Diff at Mon, 31 Aug 2026 15:32:58 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1782911432
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1782911432
 - current timestamp: 1782911432
 
 ## Description
 
-reapply branch discovery config after merging main
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -75,6 +75,9 @@ discovery. Values are for block 1782911432 (main branch discovery), not current.
 ```diff
     contract OptimismPortal2 (eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993) [opstack/OptimismPortal2] {
     +++ description: Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It finalizes withdrawals against the currently respected OP Succinct Lite dispute game and allows forced transactions.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
       critical:
@@ -115,6 +118,9 @@ discovery. Values are for block 1782911432 (main branch discovery), not current.
 ```diff
     contract PermissionedDisputeGame (eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8) [opstack/PermissionedDisputeGame] {
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
       critical:
 +        true
     }

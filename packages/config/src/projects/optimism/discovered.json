@@ -478,12 +478,12 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
+        "respectedGameType": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "HIGH" },
         "disputeGameFinalityDelaySeconds": {
           "severity": "HIGH",
           "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
-        },
-        "respectedGameType": { "severity": "HIGH" },
-        "retirementTimestamp": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0x23B2C62946350F4246f9f9D027e071f0264FD113": "Proxy",
@@ -528,7 +528,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "2mo 1d",
+        "timeSinceLastL2beatInteraction": "2mo 6d",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -745,7 +745,7 @@
       },
       "fieldMeta": {
         "absolutePrestateDecoded": {
-          "description": "Prestate tag for known prestates."
+          "description": "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
         }
       },
       "implementationNames": {
@@ -857,6 +857,8 @@
           ]
         ],
         "$upgradeCount": 3,
+        "authorizedLockboxes": [],
+        "authorizedPortals": ["eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"],
         "initVersion": 1,
         "paused": false,
         "proxyAdmin": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
@@ -865,7 +867,11 @@
         "systemConfig": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
         "version": "1.3.1"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "authorizedPortals": { "severity": "HIGH" },
+        "authorizedLockboxes": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x322b47Ff1FA8D5611F761e3E275C45B71b294D43": "Proxy",
         "eth:0xb3A24DB07038b51962026329B62E7a965d56A6ad": "ETHLockbox"
@@ -896,7 +902,7 @@
           "eth:0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
         ]
       },
-      "fieldMeta": { "wards": { "severity": "HIGH" } },
+      "fieldMeta": { "wards": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": "L1Escrow"
       }
@@ -1676,7 +1682,7 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
-        "paused": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
         "guardian": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -2009,7 +2015,7 @@
         "$admin": { "severity": "HIGH" },
         "respectedGameType": { "severity": "HIGH" },
         "paused": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
         }
       },
@@ -2209,7 +2215,7 @@
       },
       "fieldMeta": {
         "absolutePrestateDecoded": {
-          "description": "Prestate tag for known prestates."
+          "description": "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
         }
       },
       "implementationNames": {
@@ -2263,11 +2269,7 @@
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.",
       "critical": true,
-      "ignoreInWatchMode": [
-        "gameCount",
-        "permissionedGameArgs",
-        "permissionedGamesTotal"
-      ],
+      "ignoreInWatchMode": ["gameCount", "permissionedGamesTotal"],
       "deployerAddress": "eth:0xf2FbAE9b080Ae2AC24a56CF456636804FA54DB29",
       "sinceTimestamp": 1715887043,
       "sinceBlock": 19884569,
@@ -2359,6 +2361,8 @@
         "game0": { "severity": "HIGH" },
         "game1": { "severity": "HIGH" },
         "game8": { "severity": "HIGH" },
+        "permissionedGameArgs": { "severity": "HIGH" },
+        "game8Args": { "severity": "HIGH" },
         "game8Vm": { "severity": "HIGH" },
         "wethFromDGF": { "severity": "HIGH" }
       },
@@ -5776,8 +5780,8 @@
     "opstack/AnchorStateRegistry_post20": "0x6bf8916daf3b007503e2aa81cc8920469b22cdf5eb4501c85b8743633076e00e",
     "opstack/DelayedWETH": "0x2bb65b9dcbc119352d4c860b2c99ea1ab78770cfd36c559c5150dadfc1580c84",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory_v2": "0x8846c3263ee16aaea65c3af20a2118d0c11aaf2a6fdd0487970b43a8d0e42123",
-    "opstack/ETHLockbox": "0x84d206c43cf8dcc115f08a2a0487ec907ecbc3908440fbfb8e57ee0601bb3c82",
+    "opstack/DisputeGameFactory_v2": "0x54a98ca8d78a1ab5eb0795847a776c4d3c5c7de392bcf1b29c206cfb7e7afa7d",
+    "opstack/ETHLockbox": "0xad6cc805444533b0959cdd3c8002715684d903c23f06623f80fc0c801b625f57",
     "opstack/FaultDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/L1CrossDomainMessenger": "0xea24e2bfdb6536e3712d13097b867ff34904f65030f57e349694caa653cce8fa",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",

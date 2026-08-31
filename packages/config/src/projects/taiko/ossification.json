@@ -278,6 +278,8 @@
   "reviewedSeverityDowngrades": [
     "eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd#proposalCount",
     "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f#getCurrentForcedInclusionFee",
-    "eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321#proposalCount"
+    "eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab#paused",
+    "eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321#proposalCount",
+    "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC#paused"
   ]
 }

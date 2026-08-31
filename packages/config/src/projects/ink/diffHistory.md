@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x8489eb04e01fb36d7858f2272ba5c2515941a402
+Generated with discovered.json: 0xd0ee1fcbe324928e50860d9de1d7c6fb4dcced3c
 
-# Diff at Sat, 29 Aug 2026 15:26:51 GMT:
+# Diff at Mon, 31 Aug 2026 16:08:05 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@5153f62ddca1cbaaa7f0dae43d1dcd92bd0dcee7 block: 1787834174
+- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1787834174
 - current timestamp: 1787834174
 
 ## Description
 
-reapply branch discovery config after merging main
+ossification severity fixes: DGF gameArgs + ETHLockbox authorizations + zk-stack governance pointers HIGH; fee/blocklist/maker-wards MEDIUM
 
 ## Config/verification related changes
 
@@ -30,6 +30,10 @@ discovery. Values are for block 1787834174 (main branch discovery), not current.
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
       fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.permissionedGameArgs:
++        {"severity":"HIGH"}
+      fieldMeta.game8Args:
 +        {"severity":"HIGH"}
       fieldMeta.game8Vm:
 +        {"severity":"HIGH"}
@@ -59,6 +63,9 @@ discovery. Values are for block 1787834174 (main branch discovery), not current.
 ```diff
     contract FaultDisputeGame (eth:0x2DDA3584b51eF5236f7726Dea5A0FB6B3cA94AeC) [opstack/FaultDisputeGame] {
     +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
       critical:
 +        true
     }
@@ -85,6 +92,9 @@ discovery. Values are for block 1787834174 (main branch discovery), not current.
 ```diff
     contract OptimismPortal2 (eth:0x5d66C1782664115999C47c9fA5cd031f495D3e4F) [opstack/OptimismPortal2] {
     +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
       critical:
@@ -137,6 +147,9 @@ discovery. Values are for block 1787834174 (main branch discovery), not current.
 ```diff
     contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) [opstack/SuperchainConfig_expiry] {
     +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      fieldMeta.paused.severity:
+-        "HIGH"
++        "MEDIUM"
       fieldMeta.$admin:
 +        {"severity":"HIGH"}
       fieldMeta.guardian:
@@ -175,10 +188,16 @@ discovery. Values are for block 1787834174 (main branch discovery), not current.
 ```diff
     contract ETHLockbox (eth:0xbd4AbB321138e8Eddc399cE64E66451294325a14) [opstack/ETHLockbox] {
     +++ description: A simple escrow contract storing ETH for the canonical bridge.
++++ severity: HIGH
+      values.authorizedLockboxes:
++        []
++++ severity: HIGH
+      values.authorizedPortals:
++        ["eth:0x5d66C1782664115999C47c9fA5cd031f495D3e4F"]
       critical:
 +        true
       fieldMeta:
-+        {"$admin":{"severity":"HIGH"}}
++        {"$admin":{"severity":"HIGH"},"authorizedPortals":{"severity":"HIGH"},"authorizedLockboxes":{"severity":"HIGH"}}
     }
 ```
 
@@ -203,6 +222,9 @@ discovery. Values are for block 1787834174 (main branch discovery), not current.
 ```diff
     contract PermissionedDisputeGame (eth:0xe1dFFCBE4e22B813F26d2106D943C102e7cAb87e) [opstack/PermissionedDisputeGame] {
     +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      fieldMeta.absolutePrestateDecoded.description:
+-        "Prestate tag for known prestates."
++        "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
       critical:
 +        true
     }
