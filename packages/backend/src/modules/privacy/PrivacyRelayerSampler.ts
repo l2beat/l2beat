@@ -1,7 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import { createPrivacyConfigurationId } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { createPrivacyConfigurationId } from '../../config/features/privacy'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import type {
