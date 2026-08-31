@@ -60,7 +60,7 @@ export const ossificationColumns = [
     },
   }),
   columnHelper.accessor('score', {
-    header: 'Ossification %\nLast updated',
+    header: 'Ossification %\nLast reset',
     cell: (ctx) => {
       const clockStart = ctx.row.original.timeline.clockStart
       const sinceLine = clockStart !== null && (
