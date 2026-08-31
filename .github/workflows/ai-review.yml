@@ -49,6 +49,7 @@ jobs:
           node-version: 22
           cache: 'pnpm'
       - run: pnpm install --filter @l2beat/ai-review...
+      - run: pnpm --filter @l2beat/ai-review^... build
       - name: Build comment event
         id: event
         env:
