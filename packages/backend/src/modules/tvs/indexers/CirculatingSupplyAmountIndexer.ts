@@ -69,7 +69,23 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
                 CoingeckoId(configuration.properties.apiId),
                 { from: from, to: adjustedTo },
               )
-            const supplyRecords: TvsAmountRecord[] = supplies.map((p) => ({
+
+            // defense in depth: a non-finite value would crash the BigInt
+            // conversion below and halt the whole indexer
+            const validSupplies = supplies.filter(
+              (p) => Number.isFinite(p.value) && p.value >= 0,
+            )
+            if (validSupplies.length !== supplies.length) {
+              this.logger.error(
+                `Dropped invalid circulating supply values for ${configuration.properties.apiId}`,
+                {
+                  priceId: configuration.properties.apiId,
+                  dropped: supplies.length - validSupplies.length,
+                },
+              )
+            }
+
+            const supplyRecords: TvsAmountRecord[] = validSupplies.map((p) => ({
               configurationId: configuration.id,
               timestamp: p.timestamp,
               amount: BigInt(p.value * 10 ** configuration.properties.decimals),

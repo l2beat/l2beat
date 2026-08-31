@@ -6,6 +6,7 @@ import {
   CoingeckoQueryService,
   generateRangesToCallHourly,
   MAX_DAYS_FOR_HOURLY_PRECISION,
+  MAX_REPAIRED_SUPPLY_GAP_HOURS,
   pickClosestValues,
 } from './CoingeckoQueryService'
 
@@ -290,6 +291,119 @@ describe(CoingeckoQueryService.name, () => {
         { timestamp: START + 1 * UnixTime.HOUR, value: 2126600 },
         { timestamp: START + 2 * UnixTime.HOUR, value: 2871100 },
       ])
+    })
+
+    it('repairs a poisoned market cap from the previous hour', async () => {
+      const START = UnixTime.fromDate(new Date('2026-08-16T15:00:00Z'))
+
+      const coingeckoClient = supplyClient(
+        START,
+        [10, 10, 10],
+        [1_000_000, -1, 3_000_000],
+      )
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      const supplies = await coingeckoQueryService.getCirculatingSupplies(
+        CoingeckoId('venice-token'),
+        { from: START, to: START + 2 * UnixTime.HOUR },
+      )
+      expect(supplies).toEqual([
+        { timestamp: START, value: 100000 },
+        { timestamp: START + 1 * UnixTime.HOUR, value: 100000 },
+        { timestamp: START + 2 * UnixTime.HOUR, value: 300000 },
+      ])
+    })
+
+    it('repairs leading poisoned values from the next valid hour', async () => {
+      const START = UnixTime.fromDate(new Date('2026-08-16T15:00:00Z'))
+
+      const coingeckoClient = supplyClient(
+        START,
+        [0, 10, 10],
+        [2_000_000, -1, 2_000_000],
+      )
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      const supplies = await coingeckoQueryService.getCirculatingSupplies(
+        CoingeckoId('venice-token'),
+        { from: START, to: START + 2 * UnixTime.HOUR },
+      )
+      expect(supplies).toEqual([
+        { timestamp: START, value: 200000 },
+        { timestamp: START + 1 * UnixTime.HOUR, value: 200000 },
+        { timestamp: START + 2 * UnixTime.HOUR, value: 200000 },
+      ])
+    })
+
+    it('keeps zero supply when market cap is zero', async () => {
+      const START = UnixTime.fromDate(new Date('2026-08-16T15:00:00Z'))
+
+      const coingeckoClient = supplyClient(START, [10, 10], [0, 1_000_000])
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      const supplies = await coingeckoQueryService.getCirculatingSupplies(
+        CoingeckoId('venice-token'),
+        { from: START, to: START + 1 * UnixTime.HOUR },
+      )
+      expect(supplies).toEqual([
+        { timestamp: START, value: 0 },
+        { timestamp: START + 1 * UnixTime.HOUR, value: 100000 },
+      ])
+    })
+
+    it('repairs a gap of exactly the repairable length', async () => {
+      const START = UnixTime.fromDate(new Date('2026-08-16T15:00:00Z'))
+      const hours = MAX_REPAIRED_SUPPLY_GAP_HOURS + 2
+
+      const marketCaps = new Array(hours).fill(-1)
+      marketCaps[0] = 1_000_000
+      marketCaps[hours - 1] = 3_000_000
+
+      const coingeckoClient = supplyClient(
+        START,
+        new Array(hours).fill(10),
+        marketCaps,
+      )
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      const supplies = await coingeckoQueryService.getCirculatingSupplies(
+        CoingeckoId('venice-token'),
+        { from: START, to: START + (hours - 1) * UnixTime.HOUR },
+      )
+      expect(supplies[1].value).toEqual(100000)
+      expect(supplies[hours - 2].value).toEqual(100000)
+      expect(supplies[hours - 1].value).toEqual(300000)
+    })
+
+    it('throws when the corrupt stretch is longer than the repairable gap', async () => {
+      const START = UnixTime.fromDate(new Date('2026-08-16T15:00:00Z'))
+      const hours = MAX_REPAIRED_SUPPLY_GAP_HOURS + 3
+
+      const marketCaps = new Array(hours).fill(-1)
+      marketCaps[0] = 1_000_000
+      marketCaps[hours - 1] = 3_000_000
+
+      const coingeckoClient = supplyClient(
+        START,
+        new Array(hours).fill(10),
+        marketCaps,
+      )
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      await expect(async () => {
+        await coingeckoQueryService.getCirculatingSupplies(
+          CoingeckoId('venice-token'),
+          { from: START, to: START + (hours - 1) * UnixTime.HOUR },
+        )
+      }).toBeRejectedWith('Insufficient data in response for venice-token')
+    })
+
+    it('throws when all values are invalid', async () => {
+      const START = UnixTime.fromDate(new Date('2026-08-16T15:00:00Z'))
+
+      const coingeckoClient = supplyClient(START, [10, 10, 10], [-1, -1, -1])
+      const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+      await expect(async () => {
+        await coingeckoQueryService.getCirculatingSupplies(
+          CoingeckoId('venice-token'),
+          { from: START, to: START + 2 * UnixTime.HOUR },
+        )
+      }).toBeRejectedWith('Insufficient data in response for venice-token')
     })
   })
 
@@ -576,6 +690,20 @@ describe(approximateCirculatingSupply.name, () => {
       ).toEqual(testCase.expected)
     })
   }
+
+  it('returns NaN for a negative market cap', () => {
+    expect(Number.isNaN(approximateCirculatingSupply(-1, 11.9))).toEqual(true)
+  })
+
+  it('returns NaN for a zero price and positive market cap', () => {
+    expect(Number.isNaN(approximateCirculatingSupply(1_000_000, 0))).toEqual(
+      true,
+    )
+  })
+
+  it('returns 0 for a zero market cap and positive price', () => {
+    expect(approximateCirculatingSupply(0, 10)).toEqual(0)
+  })
 })
 
 function mock(date?: Date, value?: number) {
@@ -583,4 +711,19 @@ function mock(date?: Date, value?: number) {
     date: date ?? new Date(),
     value: value ?? 1234567,
   }
+}
+
+function supplyClient(start: UnixTime, prices: number[], marketCaps: number[]) {
+  return mockObject<CoingeckoClient>({
+    getCoinMarketChartRange: mockFn().returns({
+      prices: prices.map((value, i) => ({
+        date: UnixTime.toDate(start + i * UnixTime.HOUR),
+        value,
+      })),
+      marketCaps: marketCaps.map((value, i) => ({
+        date: UnixTime.toDate(start + i * UnixTime.HOUR),
+        value,
+      })),
+    }),
+  })
 }
