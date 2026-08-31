@@ -95,10 +95,6 @@ export function createPrivacyModule({
     const blockProvider = providers.block.getBlockProvider(
       blockTimestampConfig.chain,
     )
-    const logsProvider = providers.logs.getLogsProvider(
-      blockTimestampConfig.chain,
-    )
-
     const blockTimestampIndexer = new PrivacyBlockTimestampIndexer(
       {
         parents: [hourlyIndexer],
@@ -128,7 +124,9 @@ export function createPrivacyModule({
             parents: [priceIndexer, blockTimestampIndexer],
             indexerService,
             blockProvider,
-            logsProvider,
+            logsProvider: providers.logs.getLogsProvider(
+              blockTimestampConfig.chain,
+            ),
             configurations: flowConfigs.map((flowConfig) => ({
               id: flowConfig.id,
               minHeight: flowConfig.sinceTimestamp,
@@ -178,7 +176,9 @@ export function createPrivacyModule({
             parents: [blockTimestampIndexer],
             indexerService,
             blockProvider,
-            logsProvider,
+            logsProvider: providers.logs.getLogsProvider(
+              blockTimestampConfig.chain,
+            ),
             configurations: relayerConfigs.map((relayerConfig) => ({
               id: relayerConfig.id,
               minHeight: relayerConfig.sinceTimestamp,
