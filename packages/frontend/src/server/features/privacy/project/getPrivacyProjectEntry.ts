@@ -194,6 +194,18 @@ export async function getPrivacyProjectEntry(
     })
   }
 
+  if (details.hasAnonymitySet) {
+    sections.push({
+      type: 'PrivacyAnonymitySetSection',
+      props: {
+        id: 'privacy-anonymity-set',
+        title: 'Anonymity sets',
+        defaultRange: defaultChartRange,
+        project: chartProject,
+      },
+    })
+  }
+
   if (hasTrackedAssets) {
     sections.push({
       type: 'PrivacyFlowsSection',
@@ -374,12 +386,21 @@ async function prefetchCharts(
         )
       : undefined
 
+  const anonymitySetPrefetch = details.hasAnonymitySet
+    ? helpers.queryClient.prefetchQuery(
+        helpers.trpc.privacy.anonymitySetChart.queryOptions({
+          projectId: details.id,
+          range,
+        }),
+      )
+    : undefined
+
   if (!details.hasTvl) {
-    await flowsPrefetch
+    await Promise.all([flowsPrefetch, anonymitySetPrefetch])
     return undefined
   }
 
-  // The flows chart prefetch rides along so both charts are dehydrated for the client
+  // The other chart prefetches ride along so all charts are dehydrated for the client.
   await Promise.all([
     helpers.queryClient.fetchQuery(
       helpers.trpc.tvs.chartByProjects.queryOptions({
@@ -388,5 +409,6 @@ async function prefetchCharts(
       }),
     ),
     flowsPrefetch,
+    anonymitySetPrefetch,
   ])
 }

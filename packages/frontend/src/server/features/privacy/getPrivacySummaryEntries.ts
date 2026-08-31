@@ -9,6 +9,10 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
 import { get7dTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
+import {
+  getPrivacyAnonymitySetSummaries,
+  type PrivacyAnonymitySetSummary,
+} from './anonymity-set/getPrivacyAnonymitySetSummaries'
 import type { PrivacyProject } from './types'
 import {
   getPrivacyTrustedSetup,
@@ -30,6 +34,7 @@ export interface PrivacySummaryEntry {
   poolsTracked: number
   totalDeposits?: number
   totalValueDeposited30dUsd?: number
+  anonymitySet: PrivacyAnonymitySetSummary
   isUnderReview: boolean
   summaryTrackedItemName: string
   trustedSetup: PrivacyTrustedSetup
@@ -48,6 +53,7 @@ type PrivacySummaryTrackingMetrics = Pick<
   | 'totalValueLockedChange7d'
   | 'totalDeposits'
   | 'totalValueDeposited30dUsd'
+  | 'anonymitySet'
 >
 
 type PrivacySummaryBaseEntry = Omit<
@@ -58,8 +64,10 @@ type PrivacySummaryBaseEntry = Omit<
 export async function getPrivacySummaryEntries(
   projects: PrivacyProject[],
 ): Promise<PrivacySummaryEntry[]> {
+  const currentDay = UnixTime.toStartOf(UnixTime.now(), 'day')
+
   if (env.MOCK) {
-    return getMockPrivacySummaryEntries(projects)
+    return getMockPrivacySummaryEntries(projects, currentDay)
   }
 
   const db = getDb()
@@ -69,10 +77,9 @@ export async function getPrivacySummaryEntries(
     .map((project) => project.id)
 
   const now = UnixTime.now()
-  const currentDay = UnixTime.toStartOf(now, 'day')
   const last30dCutoff = currentDay - 30 * UnixTime.DAY
 
-  const [totals, daily30d, tvl] = await Promise.all([
+  const [totals, daily30d, tvl, anonymitySets] = await Promise.all([
     db.privacyFlowEvent.getBucketTotalsByProjectIds(projectIds),
     db.privacyFlowEvent.getDailyByProjectIds(
       projectIds,
@@ -80,6 +87,7 @@ export async function getPrivacySummaryEntries(
       currentDay,
     ),
     get7dTvsBreakdown({ type: 'projects', projectIds: tvlProjectIds }),
+    getPrivacyAnonymitySetSummaries(projects, currentDay),
   ])
 
   const totalsByProject = groupBy(totals, (t) => t.projectId)
@@ -109,6 +117,9 @@ export async function getPrivacySummaryEntries(
         totalValueLockedChange7d,
         totalDeposits,
         totalValueDeposited30dUsd,
+        anonymitySet: anonymitySets.get(projectId) ?? {
+          status: 'unavailable',
+        },
       }),
     }
   })
@@ -116,9 +127,15 @@ export async function getPrivacySummaryEntries(
   return entries.sort(comparePrivacySummaryEntries)
 }
 
-function getMockPrivacySummaryEntries(
+async function getMockPrivacySummaryEntries(
   projects: PrivacyProject[],
-): PrivacySummaryEntry[] {
+  currentDay: UnixTime,
+): Promise<PrivacySummaryEntry[]> {
+  const anonymitySets = await getPrivacyAnonymitySetSummaries(
+    projects,
+    currentDay,
+  )
+
   return projects
     .map((project): PrivacySummaryEntry => {
       return {
@@ -132,6 +149,9 @@ function getMockPrivacySummaryEntries(
           totalValueLockedChange7d: project.tvsConfig ? 0.12 : undefined,
           totalDeposits: Math.round(Math.random() * 10_000),
           totalValueDeposited30dUsd: Math.random() * 100_000_000,
+          anonymitySet: anonymitySets.get(project.id) ?? {
+            status: 'unavailable',
+          },
         }),
       }
     })
@@ -171,6 +191,7 @@ function getTrackingMetrics(
       poolsTracked: metrics.poolsTracked,
       totalValueLockedUsd: metrics.totalValueLockedUsd,
       totalValueLockedChange7d: metrics.totalValueLockedChange7d,
+      anonymitySet: metrics.anonymitySet,
     }
   }
 
