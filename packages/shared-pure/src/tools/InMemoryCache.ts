@@ -86,25 +86,31 @@ export class InMemoryCache {
       return existingPromise.promise as Promise<T>
     }
 
-    const promise = fallback().finally(() => {
-      this.inFlight.delete(key)
-    })
+    const promise = fallback()
     this.inFlight.set(key, { promise, timestamp: now })
 
     this.logger?.info('Cache miss', { key })
 
     const start = Date.now()
-    const fallbackResult = await promise
-    const duration = Date.now() - start
+    try {
+      const fallbackResult = await promise
+      const duration = Date.now() - start
 
-    this.cache.set(key, {
-      result: fallbackResult,
-      timestamp: now,
-      maxLifetime,
-    })
-    this.logger?.info('Cache set', { key, duration })
+      if (this.inFlight.get(key)?.promise === promise) {
+        this.cache.set(key, {
+          result: fallbackResult,
+          timestamp: now,
+          maxLifetime,
+        })
+        this.logger?.info('Cache set', { key, duration })
+      }
 
-    return fallbackResult
+      return fallbackResult
+    } finally {
+      if (this.inFlight.get(key)?.promise === promise) {
+        this.inFlight.delete(key)
+      }
+    }
   }
 
   private async revalidateInBackground<T>(
@@ -120,24 +126,28 @@ export class InMemoryCache {
       return
     }
 
-    const promise = fallback().finally(() => {
-      this.inFlight.delete(key)
-    })
+    const promise = fallback()
     this.inFlight.set(key, { promise, timestamp: UnixTime.now() })
 
     try {
       const result = await promise
-      this.cache.set(key, {
-        result,
-        timestamp: UnixTime.now(),
-        maxLifetime,
-      })
+      if (this.inFlight.get(key)?.promise === promise) {
+        this.cache.set(key, {
+          result,
+          timestamp: UnixTime.now(),
+          maxLifetime,
+        })
+      }
     } catch (error) {
       // If revalidation fails, we keep the stale data
       this.logger?.warn('Cache revalidation failed', {
         key,
         error,
       })
+    } finally {
+      if (this.inFlight.get(key)?.promise === promise) {
+        this.inFlight.delete(key)
+      }
     }
   }
 

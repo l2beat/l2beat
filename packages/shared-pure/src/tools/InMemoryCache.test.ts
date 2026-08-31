@@ -74,6 +74,62 @@ describe(InMemoryCache.name, () => {
       expect(result2).toEqual('test2')
     })
 
+    it('should not overwrite cache when superseded fallback resolves last', async () => {
+      const cache = new InMemoryCache({ promiseTimeout: 0 })
+      const cacheOptions = { key: ['key'], ttl: 1000 }
+      const first = deferred<string>()
+      const second = deferred<string>()
+
+      const firstRequest = cache.get(cacheOptions, () => first.promise)
+      const secondRequest = cache.get(cacheOptions, () => second.promise)
+
+      second.resolve('new')
+      expect(await secondRequest).toEqual('new')
+
+      first.resolve('old')
+      expect(await firstRequest).toEqual('old')
+
+      const fallback = mockFn().resolvesTo('unexpected')
+      const result = await cache.get(cacheOptions, fallback)
+
+      expect(result).toEqual('new')
+      expect(fallback).not.toHaveBeenCalled()
+    })
+
+    it('should not clear newer in-flight fallback when superseded fallback resolves', async () => {
+      const originalNow = Date.now
+      let now = originalNow()
+      Date.now = () => now
+
+      try {
+        const cache = new InMemoryCache({ promiseTimeout: 30 })
+        const cacheOptions = { key: ['key'], ttl: 1000 }
+        const first = deferred<string>()
+        const second = deferred<string>()
+
+        const firstRequest = cache.get(cacheOptions, () => first.promise)
+        now += 31_000
+        const secondRequest = cache.get(cacheOptions, () => second.promise)
+
+        first.resolve('old')
+        expect(await firstRequest).toEqual('old')
+
+        cache._set('key', {
+          result: 'expired',
+          timestamp: UnixTime.now() - 2000,
+        })
+        const fallback = mockFn().resolvesTo('unexpected')
+        const thirdRequest = cache.get(cacheOptions, fallback)
+        expect(fallback).not.toHaveBeenCalled()
+
+        second.resolve('new')
+        expect(await secondRequest).toEqual('new')
+        expect(await thirdRequest).toEqual('new')
+      } finally {
+        Date.now = originalNow
+      }
+    })
+
     describe('stale-while-revalidate', () => {
       it('should serve stale data and revalidate in background', async () => {
         const now = UnixTime.now()
@@ -244,6 +300,91 @@ describe(InMemoryCache.name, () => {
         expect(result2).toEqual('stale')
         expect(fallback).toHaveBeenCalledTimes(2)
       })
+
+      it('should not overwrite cache when superseded revalidation resolves last', async () => {
+        const now = UnixTime.now()
+        const cache = new InMemoryCache({
+          initialCache: new Map([
+            ['key', { result: 'stale', timestamp: now - 2 }],
+          ]),
+          promiseTimeout: 0,
+        })
+        const cacheOptions = {
+          key: ['key'],
+          ttl: 1,
+          staleWhileRevalidate: 100,
+        }
+        const first = deferred<string>()
+        const second = deferred<string>()
+
+        expect(await cache.get(cacheOptions, () => first.promise)).toEqual(
+          'stale',
+        )
+        expect(await cache.get(cacheOptions, () => second.promise)).toEqual(
+          'stale',
+        )
+
+        second.resolve('new')
+        await second.promise
+        await Promise.resolve()
+        first.resolve('old')
+        await first.promise
+        await Promise.resolve()
+
+        expect(cache._get('key')?.result).toEqual('new')
+      })
+
+      it('should not clear newer in-flight revalidation when superseded revalidation resolves', async () => {
+        const originalNow = Date.now
+        let now = originalNow()
+        Date.now = () => now
+
+        try {
+          const cache = new InMemoryCache({
+            initialCache: new Map([
+              ['key', { result: 'stale', timestamp: UnixTime.now() - 2 }],
+            ]),
+            promiseTimeout: 30,
+          })
+          const cacheOptions = {
+            key: ['key'],
+            ttl: 1,
+            staleWhileRevalidate: 100,
+          }
+          const first = deferred<string>()
+          const second = deferred<string>()
+
+          await cache.get(cacheOptions, () => first.promise)
+          now += 31_000
+          await cache.get(cacheOptions, () => second.promise)
+
+          first.resolve('old')
+          await first.promise
+          await Promise.resolve()
+
+          cache._set('key', {
+            result: 'stale',
+            timestamp: UnixTime.now() - 2,
+          })
+          const fallback = mockFn().resolvesTo('unexpected')
+          await cache.get(cacheOptions, fallback)
+          expect(fallback).not.toHaveBeenCalled()
+
+          second.resolve('new')
+          await second.promise
+        } finally {
+          Date.now = originalNow
+        }
+      })
     })
   })
 })
+
+function deferred<T>() {
+  let resolve!: (value: T | PromiseLike<T>) => void
+  const promise = new Promise<T>((res) => {
+    resolve = res
+  })
+
+  return { promise, resolve }
+}
