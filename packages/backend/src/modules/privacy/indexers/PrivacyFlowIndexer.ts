@@ -1,9 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, PrivacyFlowEventRecord } from '@l2beat/database'
-import type { BlockProvider, LogsProvider } from '@l2beat/shared'
+import {
+  type BlockProvider,
+  createPrivacyConfigurationId,
+  type LogsProvider,
+  stringifyPrivacyConfigurationParams,
+} from '@l2beat/shared'
 import { assert, type Log, UnixTime, unique } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-import { createPrivacyConfigurationId } from '../../../config/features/privacy'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -14,6 +18,11 @@ import type {
 } from '../../../tools/uif/multi/types'
 import type { PrivacyFlowIndexerConfig } from '../types'
 import { extractPrivacyFlow } from '../utils/extractPrivacyFlow'
+import {
+  buildPrivacyLogConfigurationMap,
+  buildPrivacyLogFilter,
+  getPrivacyLogKey,
+} from '../utils/privacyLogConfiguration'
 
 interface PrivacyFlowIndexerDeps
   extends Omit<
@@ -149,7 +158,7 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       `Missing block timestamp mapping for ${this.$.chain}: to=${adjustedTo}`,
     )
 
-    const { addresses, events } = buildLogFilter(configurations)
+    const { addresses, events } = buildPrivacyLogFilter(configurations)
     const logs = await this.$.logsProvider.getLogs(
       blockFrom,
       blockTo,
@@ -158,7 +167,7 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
     )
 
     const blockTimestampLookup = await this.buildBlockTimestampLookup(logs)
-    const configMap = buildConfigMap(configurations)
+    const configMap = buildPrivacyLogConfigurationMap(configurations)
     const rawRecords = this.extractRawRecords(
       logs,
       configMap,
@@ -179,7 +188,7 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
     const rawRecords: RawRecord[] = []
 
     for (const log of logs) {
-      const key = `${log.address.toLowerCase()}:${log.topics[0]?.toLowerCase() ?? ''}`
+      const key = getPrivacyLogKey(log)
       const matching = configMap.get(key) ?? []
 
       for (const configuration of matching) {
@@ -319,7 +328,7 @@ export class PrivacyFlowIndexer extends ManagedMultiIndexer<PrivacyFlowIndexerCo
       config.address.toString(),
       config.event,
       config.extractor,
-      stringifyParams(config.params),
+      stringifyPrivacyConfigurationParams(config.params),
     ])
   }
 }
@@ -330,42 +339,6 @@ interface RawRecord {
   count: number
   amount: bigint
   timestamp: UnixTime
-}
-
-function buildLogFilter(
-  configurations: Configuration<PrivacyFlowIndexerConfig>[],
-): { addresses: string[]; events: string[] } {
-  const addresses = Array.from(
-    new Set(configurations.map((c) => c.properties.address.toString())),
-  )
-
-  const events = Array.from(
-    new Set(configurations.map((c) => c.properties.event)),
-  )
-
-  return { addresses, events }
-}
-
-function buildConfigMap(
-  configurations: Configuration<PrivacyFlowIndexerConfig>[],
-): Map<string, Configuration<PrivacyFlowIndexerConfig>[]> {
-  const configMap = new Map<string, Configuration<PrivacyFlowIndexerConfig>[]>()
-
-  for (const configuration of configurations) {
-    const addr = configuration.properties.address.toString().toLowerCase()
-    const event = configuration.properties.event.toLowerCase()
-    const key = `${addr}:${event}`
-    const existing = configMap.get(key) ?? []
-    existing.push(configuration)
-    configMap.set(key, existing)
-  }
-
-  return configMap
-}
-
-function stringifyParams(params: Record<string, unknown>): string {
-  const keys = Object.keys(params).sort()
-  return keys.map((k) => `${k}=${String(params[k])}`).join(',')
 }
 
 // Splits the bigint into whole/fractional parts before casting to Number to

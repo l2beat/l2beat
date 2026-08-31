@@ -3,11 +3,13 @@ import type { Indexer } from '@l2beat/uif'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule, ModuleDependencies } from '../types'
+import { PrivacyAnonymitySetIndexer } from './indexers/PrivacyAnonymitySetIndexer'
 import { PrivacyBlockTimestampIndexer } from './indexers/PrivacyBlockTimestampIndexer'
 import { PrivacyFlowIndexer } from './indexers/PrivacyFlowIndexer'
 import { PrivacyPriceIndexer } from './indexers/PrivacyPriceIndexer'
 import { StarknetPrivacyFlowIndexer } from './indexers/StarknetPrivacyFlowIndexer'
 import type {
+  PrivacyAnonymitySetIndexerConfig,
   PrivacyFlowIndexerConfig,
   StarknetPrivacyFlowIndexerConfig,
 } from './types'
@@ -53,6 +55,17 @@ export function createPrivacyModule({
     ])
   }
 
+  const anonymitySetConfigsByChain = new Map<
+    string,
+    PrivacyAnonymitySetIndexerConfig[]
+  >()
+  for (const anonymitySetConfig of config.privacy.anonymitySetConfigs) {
+    anonymitySetConfigsByChain.set(anonymitySetConfig.chain, [
+      ...(anonymitySetConfigsByChain.get(anonymitySetConfig.chain) ?? []),
+      anonymitySetConfig,
+    ])
+  }
+
   const starknetFlowConfigsByChain = new Map<
     string,
     StarknetPrivacyFlowIndexerConfig[]
@@ -70,6 +83,8 @@ export function createPrivacyModule({
       'hour',
     )
     const flowConfigs = flowConfigsByChain.get(blockTimestampConfig.chain) ?? []
+    const anonymitySetConfigs =
+      anonymitySetConfigsByChain.get(blockTimestampConfig.chain) ?? []
     const starknetFlowConfigs =
       starknetFlowConfigsByChain.get(blockTimestampConfig.chain) ?? []
 
@@ -92,6 +107,36 @@ export function createPrivacyModule({
     )
 
     indexers.push(blockTimestampIndexer)
+
+    if (anonymitySetConfigs.length > 0) {
+      indexers.push(
+        new PrivacyAnonymitySetIndexer(
+          {
+            chain: blockTimestampConfig.chain,
+            parents: [hourlyIndexer],
+            indexerService,
+            blockTimestampProvider: providers.blockTimestamp,
+            blockProvider: providers.block.getBlockProvider(
+              blockTimestampConfig.chain,
+            ),
+            logsProvider: providers.logs.getLogsProvider(
+              blockTimestampConfig.chain,
+            ),
+            rpcClient: providers.clients.getRpcClient(
+              blockTimestampConfig.chain,
+            ),
+            configurations: anonymitySetConfigs.map((anonymitySetConfig) => ({
+              id: anonymitySetConfig.id,
+              minHeight: anonymitySetConfig.sinceTimestamp,
+              maxHeight: null,
+              properties: anonymitySetConfig,
+            })),
+            db,
+          },
+          logger,
+        ),
+      )
+    }
 
     if (flowConfigs.length > 0) {
       indexers.push(
@@ -149,6 +194,7 @@ export function createPrivacyModule({
   logger.info('Privacy config loaded', {
     projects: config.privacy.projects.length,
     flowConfigs: config.privacy.flowConfigs.length,
+    anonymitySetConfigs: config.privacy.anonymitySetConfigs.length,
     starknetFlowConfigs: config.privacy.starknetFlowConfigs.length,
     priceConfigs: config.privacy.priceConfigs.length,
     chains: config.privacy.chains.length,
