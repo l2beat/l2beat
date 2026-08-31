@@ -13,3 +13,7 @@ writeText(
   requireEnv('REVIEW_PAYLOAD_PATH'),
   JSON.stringify(buildReview(review, meta), null, 2),
 )
+writeText(
+  requireEnv('REVIEW_FALLBACK_PATH'),
+  JSON.stringify(buildReview(review, meta, { inline: false }), null, 2),
+)

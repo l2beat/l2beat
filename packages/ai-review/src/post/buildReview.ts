@@ -30,16 +30,18 @@ export interface ReviewPayload {
 }
 
 // Line numbers come straight from the engine; a hallucinated line outside the
-// diff makes GitHub reject the whole review with a 422.
+// diff makes GitHub reject the whole review with a 422. `inline: false` builds
+// the fallback payload posted in that case, with every finding in the body.
 export function buildReview(
   review: ReviewOutput,
   meta: RunMeta,
+  opts: { inline?: boolean } = {},
 ): ReviewPayload {
   const inline: InlineComment[] = []
   const topLevel: Finding[] = []
   for (const f of review.findings) {
     const loc = f.location
-    if (loc?.range) {
+    if ((opts.inline ?? true) && loc?.range) {
       inline.push({
         path: loc.file,
         line: loc.range.end,
@@ -99,7 +101,7 @@ function buildBody(
     } else {
       lines.push(
         `${review.findings.length} finding(s); ${inlineCount} inline.` +
-          (topLevel.length ? ` ${topLevel.length} without a line:` : ''),
+          (topLevel.length ? ` ${topLevel.length} listed here:` : ''),
       )
       for (const f of topLevel) lines.push('', formatFinding(f))
     }

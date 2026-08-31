@@ -62,10 +62,25 @@ describe(buildReview.name, () => {
     expect(payload.comments[0].body).toInclude(
       '**[major/correctness]** inline-range — `src/a.ts:2-3`',
     )
-    expect(payload.body).toInclude('4 finding(s); 2 inline. 2 without a line:')
+    expect(payload.body).toInclude('4 finding(s); 2 inline. 2 listed here:')
     expect(payload.body).toInclude('no-location')
     expect(payload.body).toInclude('file-only — `src/c.ts`')
     expect(payload.body).not.toInclude('inline-single')
+  })
+
+  it('inline: false flattens every finding into the body', () => {
+    const payload = buildReview(
+      review([
+        finding({ location: at('src/a.ts', 2, 3), claim: 'has-lines' }),
+        finding({ claim: 'no-location' }),
+      ]),
+      meta,
+      { inline: false },
+    )
+    expect(payload.comments).toEqual([])
+    expect(payload.body).toInclude('2 finding(s); 0 inline. 2 listed here:')
+    expect(payload.body).toInclude('has-lines — `src/a.ts:2-3`')
+    expect(payload.body).toInclude('no-location')
   })
 
   it('zero findings posts the explicit no-findings body', () => {

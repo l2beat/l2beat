@@ -186,6 +186,7 @@ jobs:
         env:
           REVIEW_OUTPUT_PATH: ${{ runner.temp }}/review.json
           REVIEW_PAYLOAD_PATH: ${{ runner.temp }}/review-payload.json
+          REVIEW_FALLBACK_PATH: ${{ runner.temp }}/review-fallback.json
           RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
           HEAD_SHA: ${{ needs.gate.outputs.head_sha }}
           LESSONS_VERSION: none
@@ -193,7 +194,12 @@ jobs:
       - name: Post review
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh api -X POST "repos/${{ github.repository }}/pulls/${{ needs.gate.outputs.pr_number }}/reviews" --input "$RUNNER_TEMP/review-payload.json" --jq .html_url
+          URL: repos/${{ github.repository }}/pulls/${{ needs.gate.outputs.pr_number }}/reviews
+        # Engine-reported lines can miss the diff; GitHub then 422s the whole
+        # review, so retry with every finding flattened into the body.
+        run: |
+          gh api -X POST "$URL" --input "$RUNNER_TEMP/review-payload.json" --jq .html_url ||
+            gh api -X POST "$URL" --input "$RUNNER_TEMP/review-fallback.json" --jq .html_url
       - name: Mark trigger comment as done
         uses: peter-evans/create-or-update-comment@v5
         with:
