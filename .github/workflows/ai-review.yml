@@ -33,7 +33,7 @@ jobs:
     timeout-minutes: 5
     permissions:
       contents: read
-      pull-requests: read
+      pull-requests: write
     outputs:
       run: ${{ steps.gate.outputs.run }}
       comment_id: ${{ steps.event.outputs.comment_id }}
@@ -84,20 +84,11 @@ jobs:
         env:
           EVENT_JSON_PATH: ${{ runner.temp }}/event.json
           PR_JSON_PATH: ${{ runner.temp }}/pr.json
-
-  ack:
-    name: Ack
-    needs: gate
-    if: needs.gate.outputs.run == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 2
-    permissions:
-      pull-requests: write
-    steps:
       - name: React with eyes on the trigger comment
+        if: steps.gate.outputs.run == 'true'
         uses: peter-evans/create-or-update-comment@v5
         with:
-          comment-id: ${{ needs.gate.outputs.comment_id }}
+          comment-id: ${{ steps.event.outputs.comment_id }}
           reactions: eyes
 
   review:
@@ -169,8 +160,7 @@ jobs:
 
   post:
     name: Post
-    # ack is included so the final reaction is always written after the eyes.
-    needs: [gate, ack, review]
+    needs: [gate, review]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
