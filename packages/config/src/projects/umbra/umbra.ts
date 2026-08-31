@@ -105,6 +105,11 @@ export const umbra: BaseProject = {
   privacyInfo: {
     tokens: privacyTokens,
     summaryTrackedItemName: 'token',
+    anonymitySet: {
+      type: 'not-applicable',
+      description:
+        'Umbra sends funds to one-time stealth addresses instead of mixing deposits in a shared pool.',
+    },
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',

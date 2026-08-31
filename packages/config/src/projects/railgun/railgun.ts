@@ -125,6 +125,12 @@ const privacyTokens: ProjectPrivacyToken[] = TRACKED_TOKENS.map((token) => {
           railgunCore.sinceTimestamp ?? 0,
           resolved.coingeckoListingTimestamp,
         ),
+        anonymitySet:
+          resolved.symbol === 'WETH'
+            ? {
+                minimumAmounts: ['100000000000000000', '10000000000000000000'],
+              }
+            : undefined,
         deposit: {
           event: RAILGUN_DEPOSIT_EVENT,
           extractor: 'railgunShield',
