@@ -7,11 +7,13 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import {
+  CROPS_LEGOS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
   EXITS,
   OPERATOR,
+  OSI_LICENSES,
   RISK_VIEW,
   SOA,
   STATE_VALIDATION,
@@ -813,7 +815,7 @@ export const aztecnetwork: ScalingProject = {
         'Sequencing is permissionless with no single privileged actor.',
         'Decentralised sequencing and private execution environment provide excellent realtime, probabilistic CR.',
         'Exit window is infinite due to immutable core contracts + Escape Hatch.',
-        'Passes the walkaway test',
+        CROPS_LEGOS.passesWalkawayTest(),
       ],
       missing: [
         'No deterministic CR: Self-proposal is probabilistic through the escape hatch.',
@@ -822,7 +824,7 @@ export const aztecnetwork: ScalingProject = {
     openSource: {
       sentiment: 'good',
       points: [
-        'Apache 2.0 licensed.',
+        CROPS_LEGOS.osiLicensed(OSI_LICENSES.APACHE_2_0),
         'Onchain verifier has been reproduced.',
         'Rollup is forkable onchain by design.',
       ],
@@ -846,7 +848,10 @@ export const aztecnetwork: ScalingProject = {
         'No multiproof system.',
         'An exploit in the single proof system combined with private execution can be fatal for the protocol.',
       ],
-      notReviewed: ['Quantum safety.', 'Circuit breakers and rate limits.'],
+      notReviewed: [
+        CROPS_LEGOS.notReviewed.quantumSafety,
+        CROPS_LEGOS.notReviewed.circuitBreakers,
+      ],
     },
   },
 }

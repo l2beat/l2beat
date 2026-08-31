@@ -1,5 +1,6 @@
 export * from './bridgeRiskView'
 export * from './contracts'
+export * from './cropsLegos'
 export * from './DaCommitteeSecurityRisk'
 export * from './DaEconomicSecurityRisk'
 export * from './DaFraudDetectionRisk'

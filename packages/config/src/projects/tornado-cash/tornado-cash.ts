@@ -8,6 +8,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import { CROPS_LEGOS, OSI_LICENSES } from '../../common/cropsLegos'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
@@ -227,16 +228,16 @@ export const tornadoCash: BaseProject = {
     censorshipResistance: {
       sentiment: 'good',
       points: [
-        'Infinite exit window: the core contracts have no admin, no pause and no upgrade path.',
+        CROPS_LEGOS.infiniteExitWindow,
         'CR based on Ethereum L1 inclusion.',
-        'Passes walkaway.',
+        CROPS_LEGOS.passesWalkawayTest(),
         'Multiple active relayers; users can self-relay withdrawals.',
       ],
     },
     openSource: {
       sentiment: 'good',
       points: [
-        'GPL-3.0 licensed, so the right to run, modify and fork is granted.',
+        CROPS_LEGOS.osiLicensed(OSI_LICENSES.GPL_3_0),
         'Reproducible from source: anyone can audit it and run it locally to participate.',
       ],
     },

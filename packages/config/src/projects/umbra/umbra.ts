@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { CROPS_LEGOS, OSI_LICENSES } from '../../common/cropsLegos'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -142,8 +143,10 @@ export const umbra: BaseProject = {
     censorshipResistance: {
       sentiment: 'good',
       points: [
-        'The core contracts are immutable, cannot be paused, and have no upgrade path, so the exit window is infinite.',
-        'Passes the walkaway test: nobody can stop a recipient from claiming a payment already sent to them, and withdrawals can always be self-relayed.',
+        CROPS_LEGOS.infiniteExitWindow,
+        CROPS_LEGOS.passesWalkawayTest(
+          'nobody can stop a recipient from claiming a payment already sent to them, and withdrawals can always be self-relayed.',
+        ),
         'Nobody can censor an individual user - the owner can only raise the ETH toll on contract-routed payments, which applies to everyone equally and cannot touch payment or withdrawal logic.',
       ],
       missing: [
@@ -153,7 +156,8 @@ export const umbra: BaseProject = {
     openSource: {
       sentiment: 'good',
       points: [
-        'The immutable core contracts, the cryptographic library and the frontend are published under MIT license and can be built and run locally.',
+        CROPS_LEGOS.osiLicensed(OSI_LICENSES.MIT),
+        'The immutable core contracts, the cryptographic library and the frontend are published and can be built and run locally.',
       ],
     },
     privacy: {
@@ -171,7 +175,7 @@ export const umbra: BaseProject = {
       status: 'partiallyReviewed',
       points: [
         'A small, immutable, externally audited contract set with no proof system and no trusted setup.',
-        'Umbra Cash main contract is well-ossified: it it live for a long time without security incidents.',
+        'Umbra Cash main contract is well-ossified: it has been live for a long time without security incidents.',
       ],
       missing: [
         'Stealth addresses rely on elliptic-curve key derivation, so they are not quantum-resistant.',

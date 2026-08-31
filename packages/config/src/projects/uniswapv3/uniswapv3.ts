@@ -1,4 +1,5 @@
 import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { CROPS_LEGOS, OSI_LICENSES } from '../../common/cropsLegos'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -176,8 +177,9 @@ export const uniswapv3: BaseProject = {
     openSource: {
       sentiment: 'good',
       points: [
-        'The v3 core and periphery contracts are GPL licensed - the business-source grant on the core expired in 2023.',
-        'They are verified onchain, and can be built and run locally alongside a self-hosted interface.',
+        CROPS_LEGOS.osiLicensed(OSI_LICENSES.GPL_2_0),
+        'The GPL covers both the v3 core and the periphery - the business-source grant on the core expired in 2023.',
+        'The contracts are verified onchain, and can be built and run locally alongside a self-hosted interface.',
       ],
     },
     privacy: {
