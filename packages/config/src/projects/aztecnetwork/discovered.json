@@ -13,14 +13,6 @@
       ],
       "proxyType": "immutable",
       "description": "Manages the inflation and minting schedule of the Aztec token. It enforces an annual percentage cap and mints new tokens for the budget.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
-          "description": "mint AZTEC only through the CoinIssuer's capped issuance function. The CoinIssuer exposes no path to transfer or renounce ownership of the AZTEC token.",
-          "role": ".owner"
-        }
-      ],
       "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
       "sinceTimestamp": 1762995131,
       "sinceBlock": 23786834,
@@ -53,15 +45,6 @@
       ],
       "proxyType": "immutable",
       "description": "Intermediary contract through which the designated proposer for each L2 slot can signal support for an L1 payload. A signalling round comprises 1000 slots. A payload that receives at least 600 signals can be submitted to the L1 Governance contract within the configured lifetime.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
-          "description": "create proposals.",
-          "role": ".governanceProposer",
-          "condition": "the proposal payload passed the sequencer signalling round."
-        }
-      ],
       "ignoreInWatchMode": ["getCurrentRound"],
       "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
       "sinceTimestamp": 1762995059,
@@ -153,86 +136,6 @@
       ],
       "proxyType": "immutable",
       "description": "DAO contract used for proposals and token voting. Heavily interdependent with the GSE for voting power snapshots.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
-          "description": "mint new AZTEC within the annual cap, accept ownership of the AZTEC token when pending, and transfer or renounce CoinIssuer ownership.",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a",
-              "condition": "GATED_UNTIL has passed, the oldest unmarked Governance proposal was created after the ATP-derived activation timestamp, and markNext was not called in the same block."
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
-          "description": "register a new canonical rollup version, update the Registry-selected reward distributor pointer, and transfer or renounce Registry ownership. Updating the pointer does not change a distributor fixed in an already deployed Rollup.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
-          "description": "recover AZTEC from any implicit or earmarked accounting bucket and recover any non-AZTEC token held by the distributor.",
-          "role": ".registryOwner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a",
-          "description": "relay arbitrary calls and ETH from the ProtocolTreasury.",
-          "role": ".GOVERNANCE",
-          "condition": "GATED_UNTIL has passed, the oldest unmarked Governance proposal was created after the ATP-derived activation timestamp, and markNext was not called in the same block."
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
-          "description": "change the sequencer reward share and checkpoint reward, only increase the mana target, update proving cost within its step and cooldown bounds, update validator entry-queue limits subject to nonzero normal-phase limits and bounded bootstrap settings, queue or cancel a Slasher replacement subject to the replacement delay, set the EscapeHatch once if still unset, and transfer or renounce ownership.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
-          "description": "slash and eject validators while this contract is configured as the active Slasher.",
-          "role": ".getSlasher",
-          "condition": "the active Slasher authorizes the call under its own execution rules.",
-          "via": [
-            {
-              "address": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
-              "condition": "slashing is enabled and the payload has not been vetoed."
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
-          "description": "set Governance once if still unset, change the proof-of-possession gas limit (including to a value that prevents new deposits), add a new latest rollup that controls bonus-instance validators, and transfer or renounce ownership.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
-          "description": "execute arbitrary payload actions through the Slasher, bypassing all proposer validation including ballots, quorum, target construction, delay, and lifetime.",
-          "role": ".GOVERNANCE",
-          "condition": "slashing is enabled and the payload has not been vetoed."
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a",
-          "role": ".GOVERNANCE",
-          "condition": "GATED_UNTIL has passed, the oldest unmarked Governance proposal was created after the ATP-derived activation timestamp, and markNext was not called in the same block."
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
-          "description": "execute arbitrary payload actions through the Slasher, bypassing all proposer validation including ballots, quorum, target construction, delay, and lifetime.",
-          "role": ".GOVERNANCE",
-          "condition": "slashing is enabled and the payload has not been vetoed."
-        }
-      ],
       "ignoreInWatchMode": ["totalPowerNow", "withdrawalCount"],
       "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
       "sinceTimestamp": 1762995071,
@@ -487,14 +390,6 @@
       ],
       "proxyType": "immutable",
       "description": "Holds the protocol's funds controlled by Governance. It acts as a timelocked executor for spending or relaying transactions approved by the DAO.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
-          "description": "mint new AZTEC within the annual cap, accept ownership of the AZTEC token when pending, and transfer or renounce CoinIssuer ownership.",
-          "role": ".owner"
-        }
-      ],
       "deployerAddress": "eth:0x85e51a78FE8FE21d881894206A9adbf54e3Df8c3",
       "sinceTimestamp": 1762995107,
       "sinceBlock": 23786832,
@@ -629,37 +524,6 @@
       ],
       "proxyType": "immutable",
       "description": "Collects one signed slashing ballot from the designated proposer in each slot. After the execution delay, anyone can tally the ballots per validator and penalty level, deploy the resulting payload, and ask the Slasher to execute it before the round expires.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
-          "description": "slash and eject validators while this contract is configured as the active Slasher.",
-          "role": ".getSlasher",
-          "condition": "the active Slasher authorizes the call under its own execution rules.",
-          "via": [
-            {
-              "address": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
-              "condition": "matching ballots meet the proposer quorum, the execution delay has elapsed, the voting round is still within its lifetime, slashing is enabled, and the payload has not been vetoed."
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
-          "description": "execute payload actions accepted by its validator-ballot tally after the proposer-enforced delay.",
-          "role": ".PROPOSER",
-          "condition": "matching ballots meet the proposer quorum, the execution delay has elapsed, the voting round is still within its lifetime, slashing is enabled, and the payload has not been vetoed."
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
-          "description": "execute payload actions produced from validator ballots, including validator slashes.",
-          "role": ".PROPOSER",
-          "condition": "matching ballots meet the proposer quorum, the execution delay has elapsed, the voting round is still within its lifetime, slashing is enabled, and the payload has not been vetoed."
-        }
-      ],
       "ignoreInWatchMode": ["getCurrentRound"],
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
@@ -755,50 +619,6 @@
       ],
       "proxyType": "immutable",
       "description": "Core rollup logic contract. It processes checkpoint proposals, verifies ZK proofs for state transitions, manages data availability, and coordinates validator selection and chain tip updates.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x4490cAb7Ce3499353E1b0090b9e530c1AD03B551",
-          "description": "update prover activity scores used to calculate boosted prover reward shares.",
-          "role": ".ROLLUP"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
-          "description": "claim protocol reward funds and direct them to sequencers and provers.",
-          "role": ".canonicalRollup"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7",
-          "description": "insert L2 to L1 message roots that recipients later prove against to consume withdrawals or messages.",
-          "role": ".ROLLUP"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA",
-          "description": "consume L1 to L2 message tree roots for checkpoint processing.",
-          "role": ".ROLLUP"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
-          "description": "deposit and withdraw validator stake for its own GSE instance and, while it is the latest Rollup, for the bonus instance; cast all available own-instance and applicable bonus-instance power as yea on qualifying sequencer-signalled proposals.",
-          "role": ".getLatestRollup"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
-          "description": "distribute fee-asset funds escrowed in the portal to sequencers and provers.",
-          "role": ".ROLLUP"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xF459348962F5eA3A9A101826B03A2CE1F459E51A",
-          "description": "record submitted archives for designated escape-hatch proposers, which are later used to validate or slash them.",
-          "role": ".getRollup"
-        }
-      ],
       "ignoreInWatchMode": [
         "archive",
         "getActiveAttesterCount",
@@ -1060,15 +880,7 @@
     {
       "address": "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80",
-          "description": "add and resolve milestones, register staker implementations, set revoker roles, only decrease the execution and token unlock timestamps, and transfer or renounce ownership.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "AZTEC Token",
@@ -1226,14 +1038,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
-          "description": "veto specific payloads, repeatedly disable all slashing for 3d at a time, or re-enable slashing before a pause expires.",
-          "role": ".VETOER"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x7EAbE4F636B937628A7Fe503bD7F06772C047FEe",
       "sinceTimestamp": 1762176359,
@@ -1276,15 +1080,6 @@
       ],
       "proxyType": "immutable",
       "description": "Executes payload actions submitted by the authorized slashing proposer or Governance. Execution is blocked while slashing is disabled or when the vetoer has vetoed the payload; voting and execution-delay rules are enforced by the proposer, while Governance can bypass the proposer.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
-          "description": "slash and eject validators while this contract is configured as the active Slasher.",
-          "role": ".getSlasher",
-          "condition": "the active Slasher authorizes the call under its own execution rules."
-        }
-      ],
       "deployerAddress": "eth:0x47C47232F55CeC65FDfD027ec0799B4B03913444",
       "sinceTimestamp": 1782803327,
       "sinceBlock": 25428902,
@@ -2522,5 +2317,230 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25789871 },
-  "permissionsConfigHash": "0x7e9a541ef06420dffc5db4164cf24bf93cd0f1a53ecd15b18f2f8fbe1d327806"
+  "permissionsConfigHash": "0x7e9a541ef06420dffc5db4164cf24bf93cd0f1a53ecd15b18f2f8fbe1d327806",
+  "permissions": {
+    "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA27EC0006e59f245217Ff08CD52A7E8b169E62D2",
+          "description": "mint AZTEC only through the CoinIssuer's capped issuance function. The CoinIssuer exposes no path to transfer or renounce ownership of the AZTEC token.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x06Ef1DcF87E419C48B94a331B252819FADbD63ef": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e",
+          "description": "create proposals.",
+          "role": ".governanceProposer",
+          "condition": "the proposal payload passed the sequencer signalling round."
+        }
+      ]
+    },
+    "eth:0x1102471Eb3378FEE427121c9EfcEa452E4B6B75e": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
+          "description": "mint new AZTEC within the annual cap, accept ownership of the AZTEC token when pending, and transfer or renounce CoinIssuer ownership.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a",
+              "condition": "GATED_UNTIL has passed, the oldest unmarked Governance proposal was created after the ATP-derived activation timestamp, and markNext was not called in the same block."
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x35b22e09Ee0390539439E24f06Da43D83f90e298",
+          "description": "register a new canonical rollup version, update the Registry-selected reward distributor pointer, and transfer or renounce Registry ownership. Updating the pointer does not change a distributor fixed in an already deployed Rollup.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
+          "description": "recover AZTEC from any implicit or earmarked accounting bucket and recover any non-AZTEC token held by the distributor.",
+          "role": ".registryOwner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a",
+          "description": "relay arbitrary calls and ETH from the ProtocolTreasury.",
+          "role": ".GOVERNANCE",
+          "condition": "GATED_UNTIL has passed, the oldest unmarked Governance proposal was created after the ATP-derived activation timestamp, and markNext was not called in the same block."
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+          "description": "change the sequencer reward share and checkpoint reward, only increase the mana target, update proving cost within its step and cooldown bounds, update validator entry-queue limits subject to nonzero normal-phase limits and bounded bootstrap settings, queue or cancel a Slasher replacement subject to the replacement delay, set the EscapeHatch once if still unset, and transfer or renounce ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+          "description": "slash and eject validators while this contract is configured as the active Slasher.",
+          "role": ".getSlasher",
+          "condition": "the active Slasher authorizes the call under its own execution rules.",
+          "via": [
+            {
+              "address": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
+              "condition": "slashing is enabled and the payload has not been vetoed."
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
+          "description": "set Governance once if still unset, change the proof-of-possession gas limit (including to a value that prevents new deposits), add a new latest rollup that controls bonus-instance validators, and transfer or renounce ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
+          "description": "execute arbitrary payload actions through the Slasher, bypassing all proposer validation including ballots, quorum, target construction, delay, and lifetime.",
+          "role": ".GOVERNANCE",
+          "condition": "slashing is enabled and the payload has not been vetoed."
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a",
+          "role": ".GOVERNANCE",
+          "condition": "GATED_UNTIL has passed, the oldest unmarked Governance proposal was created after the ATP-derived activation timestamp, and markNext was not called in the same block."
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
+          "description": "execute arbitrary payload actions through the Slasher, bypassing all proposer validation including ballots, quorum, target construction, delay, and lifetime.",
+          "role": ".GOVERNANCE",
+          "condition": "slashing is enabled and the payload has not been vetoed."
+        }
+      ]
+    },
+    "eth:0x662De311f94bdbB571D95B5909e9cC6A25a6802a": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x02FAdF157d551aa6d761b2A2237D03Af68E41CA6",
+          "description": "mint new AZTEC within the annual cap, accept ownership of the AZTEC token when pending, and transfer or renounce CoinIssuer ownership.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x8A36b8F2Ca71D8d8Bd98e03Ebf8B4D0939Daf0bA": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+          "description": "slash and eject validators while this contract is configured as the active Slasher.",
+          "role": ".getSlasher",
+          "condition": "the active Slasher authorizes the call under its own execution rules.",
+          "via": [
+            {
+              "address": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
+              "condition": "matching ballots meet the proposer quorum, the execution delay has elapsed, the voting round is still within its lifetime, slashing is enabled, and the payload has not been vetoed."
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
+          "description": "execute payload actions accepted by its validator-ballot tally after the proposer-enforced delay.",
+          "role": ".PROPOSER",
+          "condition": "matching ballots meet the proposer quorum, the execution delay has elapsed, the voting round is still within its lifetime, slashing is enabled, and the payload has not been vetoed."
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
+          "description": "execute payload actions produced from validator ballots, including validator slashes.",
+          "role": ".PROPOSER",
+          "condition": "matching ballots meet the proposer quorum, the execution delay has elapsed, the voting round is still within its lifetime, slashing is enabled, and the payload has not been vetoed."
+        }
+      ]
+    },
+    "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x4490cAb7Ce3499353E1b0090b9e530c1AD03B551",
+          "description": "update prover activity scores used to calculate boosted prover reward shares.",
+          "role": ".ROLLUP"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x555bAAc4757A89f1CE0c84fA35afE9dD7aa8E1d3",
+          "description": "claim protocol reward funds and direct them to sequencers and provers.",
+          "role": ".canonicalRollup"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5B062aB5fD3A66BC7e73b04CeD38587673b6A2D7",
+          "description": "insert L2 to L1 message roots that recipients later prove against to consume withdrawals or messages.",
+          "role": ".ROLLUP"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7d4Ef0676c2032bbCC09227501D34d86641ab8cA",
+          "description": "consume L1 to L2 message tree roots for checkpoint processing.",
+          "role": ".ROLLUP"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa92ecFD0E70c9cd5E5cd76c50Af0F7Da93567a4f",
+          "description": "deposit and withdraw validator stake for its own GSE instance and, while it is the latest Rollup, for the bonus instance; cast all available own-instance and applicable bonus-instance power as yea on qualifying sequencer-signalled proposals.",
+          "role": ".getLatestRollup"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xaf73Dd51D1eb8a079BB097f39c832cDD00ac691c",
+          "description": "distribute fee-asset funds escrowed in the portal to sequencers and provers.",
+          "role": ".ROLLUP"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xF459348962F5eA3A9A101826B03A2CE1F459E51A",
+          "description": "record submitted archives for designated escape-hatch proposers, which are later used to validate or slash them.",
+          "role": ".getRollup"
+        }
+      ]
+    },
+    "eth:0x92Ba0FD39658105FaC4dF2B9BADE998B5816b350": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD938bE4A2cB41105Bc2FbE707dca124A2e5d0c80",
+          "description": "add and resolve milestones, register staker implementations, set revoker roles, only decrease the execution and token unlock timestamps, and transfer or renounce ownership.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xBbB4aF368d02827945748b28CD4b2D42e4A37480": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xCD6855470A01aBcd989126A1183Fb50673952548",
+          "description": "veto specific payloads, repeatedly disable all slashing for 3d at a time, or re-enable slashing before a pause expires.",
+          "role": ".VETOER"
+        }
+      ]
+    },
+    "eth:0xCD6855470A01aBcd989126A1183Fb50673952548": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x91fF8bbD8Ebb07893010D50A48A1609e5EBd8E34",
+          "description": "slash and eject validators while this contract is configured as the active Slasher.",
+          "role": ".getSlasher",
+          "condition": "the active Slasher authorizes the call under its own execution rules."
+        }
+      ]
+    }
+  }
 }

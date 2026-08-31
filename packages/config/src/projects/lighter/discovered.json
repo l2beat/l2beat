@@ -16,15 +16,7 @@
     {
       "address": "eth:0x191fF0EC830F83916A427d169a234c33e48aA79f",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x2994d343b6b17EC23E9E4a08082184Fd43F763a3",
@@ -431,15 +423,7 @@
     {
       "address": "eth:0x750bdb90AC72A78308d21eAC78999bBAE31cd63d",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DesertVerifier",
@@ -477,14 +461,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-          "description": "can reduce the upgrade delay to zero seconds.",
-          "role": ".securityCouncilAddress"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x06eD0b0bD3A9e0C517B6cD7C8B851Cc1e8e1a90A",
       "sinceTimestamp": 1737058487,
@@ -524,23 +500,6 @@
       ],
       "proxyType": "immutable",
       "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1737090335,
       "sinceBlock": 21642011,
@@ -582,55 +541,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "description": "manage validators, update the address that manages the insurance fund, update the treasury address that collects fees from markets, add and update markets and assets.",
-          "role": ".networkGovernor"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
-          "role": "admin",
-          "via": [
-            {
-              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-              "delay": 1814400
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "role": "admin",
-          "via": [
-            {
-              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-              "delay": 1814400
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
-          "role": "admin",
-          "via": [
-            {
-              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-              "delay": 1814400
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
-          "delay": 1814400,
-          "role": ".getMaster"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xfDb36C132fA19f7774d72fA39c89272D1B954A41",
       "sinceTimestamp": 1747063631,
@@ -789,15 +699,7 @@
     {
       "address": "eth:0xC0D2853e06F1E145177D5ef08Ab065a76e14354C",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
-          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xD80037fade5d25b9c8B23e5c43bB0577C165Dcf9",
@@ -1228,5 +1130,117 @@
     "lighter/ZkLighterWithSpot": "0xf2193f542c5b2dc29610085ddafb70c168d82e65ee4e03f27faf3e9eaa11ece2"
   },
   "usedBlockNumbers": { "ethereum": 25838624 },
-  "permissionsConfigHash": "0x70cd8169dab4019aa0d9fa1fadd61b0a842fd1dfd45497a304a1403dfa80186d"
+  "permissionsConfigHash": "0x70cd8169dab4019aa0d9fa1fadd61b0a842fd1dfd45497a304a1403dfa80186d",
+  "permissions": {
+    "eth:0x191fF0EC830F83916A427d169a234c33e48aA79f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0x750bdb90AC72A78308d21eAC78999bBAE31cd63d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+          "description": "can reduce the upgrade delay to zero seconds.",
+          "role": ".securityCouncilAddress"
+        }
+      ]
+    },
+    "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x97A90Ec950B6BCd9B190b566525B2Bb92A2C03a2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "description": "manage validators, update the address that manages the insurance fund, update the treasury address that collects fees from markets, add and update markets and assets.",
+          "role": ".networkGovernor"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7",
+          "role": "admin",
+          "via": [
+            {
+              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+              "delay": 1814400
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "role": "admin",
+          "via": [
+            {
+              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+              "delay": 1814400
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA",
+          "role": "admin",
+          "via": [
+            {
+              "address": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+              "delay": 1814400
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67",
+          "delay": 1814400,
+          "role": ".getMaster"
+        }
+      ]
+    },
+    "eth:0xC0D2853e06F1E145177D5ef08Ab065a76e14354C": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xa464DA0B43f80EE3FfC4795cbbFC78472b5c81A1",
+          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
+          "role": ".validators"
+        }
+      ]
+    }
+  }
 }

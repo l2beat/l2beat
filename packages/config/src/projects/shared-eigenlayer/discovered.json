@@ -613,13 +613,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Admin-controlled on-chain registry that tracks all EigenLayer protocol contract deployments (addresses, names, configs, and versioning) and provides a pauseAll function to pause every registered pausable contract in the protocol.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
-          "role": ".pausers"
-        }
-      ],
       "deployerAddress": "eth:0xE31ad7cFD94bD74C40b53160aA0E8A0b6D340830",
       "sinceTimestamp": 1768595087,
       "sinceBlock": 24249665,
@@ -884,24 +877,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
-          "role": ".pausers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9",
-          "description": "change the beacon implementation.",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256",
       "sinceTimestamp": 1686681203,
@@ -1053,13 +1028,6 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x7cF4888613F744aB4f3bD688eF54E6B31F92A09B",
       "sinceTimestamp": 1710958955,
       "sinceBlock": 19477666,
@@ -1096,463 +1064,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9",
-          "description": "change the beacon implementation.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
-          "description": "executes scheduled operations after the delay",
-          "role": ".executors"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "description": "executes scheduled operations after the delay",
-          "role": ".executors"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x132b466d9d5723531F68797519DfED701aC2C749",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" },
-            { "address": "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d" },
-            {
-              "address": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
-              "delay": 2073600
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xAe60d8180437b5C34bB956822ac2710972584473",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
-          "delay": 2073600,
-          "role": ".proposers"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "delay": 864000,
-          "role": ".proposers"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x3E5Ab7bf85Ccf8A41c08BFe5414c405cb3114033",
       "sinceTimestamp": 1732236023,
@@ -1595,13 +1106,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
-          "role": ".pausers"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xDD584c0EbFCc55a71d2Ca449399d3D45C94E4005",
       "sinceTimestamp": 1686325811,
@@ -2574,163 +2078,6 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x132b466d9d5723531F68797519DfED701aC2C749",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xAe60d8180437b5C34bB956822ac2710972584473",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA",
       "sinceTimestamp": 1686348935,
       "sinceBlock": 17445563,
@@ -3093,13 +2440,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x3E5Ab7bf85Ccf8A41c08BFe5414c405cb3114033",
       "sinceTimestamp": 1732299383,
@@ -3580,468 +2920,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9",
-          "description": "change the beacon implementation.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
-          "description": "can cancel scheduled operations",
-          "role": ".cancellers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "description": "can cancel scheduled operations",
-          "role": ".cancellers"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x132b466d9d5723531F68797519DfED701aC2C749",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" },
-            { "address": "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d" },
-            {
-              "address": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
-              "delay": 2073600
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xAe60d8180437b5C34bB956822ac2710972584473",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            {
-              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-              "delay": 864000
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
-          "delay": 2073600,
-          "role": ".proposers"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
-          "role": ".pausers"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "delay": 864000,
-          "role": ".proposers"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xDD584c0EbFCc55a71d2Ca449399d3D45C94E4005",
       "sinceTimestamp": 1686327791,
@@ -4494,305 +3372,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9",
-          "description": "change the beacon implementation.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x132b466d9d5723531F68797519DfED701aC2C749",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" },
-            { "address": "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xAe60d8180437b5C34bB956822ac2710972584473",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256",
       "sinceTimestamp": 1686680867,
@@ -6963,5 +5542,1446 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25646152 },
-  "permissionsConfigHash": "0x63056f58fca4740aa0dfbaa76ecae0b21e8b90487c4d0b0d41a61f4568374fcf"
+  "permissionsConfigHash": "0x63056f58fca4740aa0dfbaa76ecae0b21e8b90487c4d0b0d41a61f4568374fcf",
+  "permissions": {
+    "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+          "role": ".pausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9",
+          "description": "change the beacon implementation.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9",
+          "description": "change the beacon implementation.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+          "description": "executes scheduled operations after the delay",
+          "role": ".executors"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "description": "executes scheduled operations after the delay",
+          "role": ".executors"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x132b466d9d5723531F68797519DfED701aC2C749",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" },
+            { "address": "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d" },
+            {
+              "address": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+              "delay": 2073600
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xAe60d8180437b5C34bB956822ac2710972584473",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+          "delay": 2073600,
+          "role": ".proposers"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "delay": 864000,
+          "role": ".proposers"
+        }
+      ]
+    },
+    "eth:0x5050389572f2d220ad927CcbeA0D406831012390": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+          "role": ".pausers"
+        }
+      ]
+    },
+    "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x132b466d9d5723531F68797519DfED701aC2C749",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xAe60d8180437b5C34bB956822ac2710972584473",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9",
+          "description": "change the beacon implementation.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+          "description": "can cancel scheduled operations",
+          "role": ".cancellers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "description": "can cancel scheduled operations",
+          "role": ".cancellers"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x132b466d9d5723531F68797519DfED701aC2C749",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" },
+            { "address": "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d" },
+            {
+              "address": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+              "delay": 2073600
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xAe60d8180437b5C34bB956822ac2710972584473",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
+          "delay": 2073600,
+          "role": ".proposers"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
+          "role": ".pausers"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "delay": 864000,
+          "role": ".proposers"
+        }
+      ]
+    },
+    "eth:0xFEA47018D632A77bA579846c840d5706705Dc598": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0fCE0A591D96BB76883323eF555867111E2050a9",
+          "description": "change the beacon implementation.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x132b466d9d5723531F68797519DfED701aC2C749",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x27a84740FdDed5B7D66d9bb6E5d1DEA6eb0C0129",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3F55654b2b2b86bB11bE2f72657f9C33bf88120A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x54f4bC6bDEbe479173a2bbDc31dD7178408A57A4",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5557E1fE3068A1e823cE5Dcd052c6C352E2617B5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x619F988b4EA2f896ED068d84cE6F52550d6acE84",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9" },
+            { "address": "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9376A5863F2193cdE13e1aB7c678F22554E2Ea2b",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xAe60d8180437b5C34bB956822ac2710972584473",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd0930ee96D07de4F9d493c259232222e46B6EC25",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeDA3CAd031c0cf367cF3f517Ee0DC98F9bA80C8F",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
+          ]
+        }
+      ]
+    }
+  }
 }

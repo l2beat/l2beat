@@ -132,93 +132,17 @@
     {
       "address": "eth:0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-          "description": "manage the token admin role.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-          "delay": 1209600,
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-          "description": "change the global and per-asset configuration hashes committing to the L2 system parameters.",
-          "role": ".$admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.",
-          "role": ".operators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "description": "manage supported tokens.",
-          "role": ".tokenAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.",
-          "role": ".operators"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-          "description": "manage supported tokens.",
-          "role": ".tokenAdmins"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.",
-          "role": ".operators"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x40e1e5Ece49A878062fA9F87eA6dc81281098B22",
-          "description": "change the programHash, replacing the L2 execution logic whose proofs are accepted, directly or through appointed admins.",
-          "role": ".owner",
-          "condition": "if the adapter is not finalized"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953",
-          "description": "change the programHash, replacing the L2 execution logic whose proofs are accepted, directly or through appointed admins.",
-          "role": ".owner",
-          "condition": "if the adapter is not finalized"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x696cC7615A50CF12d1d1B38bF18A5606e9708296",
@@ -267,15 +191,7 @@
     {
       "address": "eth:0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.",
-          "role": ".operators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x81165b6504520416487E5b4935865b4D3eeaa6e5",
@@ -495,32 +411,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "description": "manage the token admin role.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "delay": 1209600,
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "description": "change the global and per-asset configuration hashes committing to the L2 system parameters.",
-          "role": ".$admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xB7B2d6d7a1ca768410B424bEd7f065F9756Cc299",
       "sinceTimestamp": 1672216439,
@@ -733,34 +623,7 @@
     {
       "address": "eth:0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "description": "manage the token admin role.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "delay": 1209600,
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-          "description": "change the global and per-asset configuration hashes committing to the L2 system parameters.",
-          "role": ".$admin"
-        }
-      ]
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1420,5 +1283,156 @@
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
   "usedBlockNumbers": { "ethereum": 24170019 },
-  "permissionsConfigHash": "0xb2840e1d5e4a4c7e6ae951087dd3d87aac005d655a290cff70e3c01ce918e36e"
+  "permissionsConfigHash": "0xb2840e1d5e4a4c7e6ae951087dd3d87aac005d655a290cff70e3c01ce918e36e",
+  "permissions": {
+    "eth:0x53c6Ec9640761c669B800088F097E01A8207Ac8b": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "description": "manage the token admin role.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "delay": 1209600,
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "description": "change the global and per-asset configuration hashes committing to the L2 system parameters.",
+          "role": ".$admin"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.",
+          "role": ".operators"
+        }
+      ]
+    },
+    "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "description": "manage supported tokens.",
+          "role": ".tokenAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.",
+          "role": ".operators"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "description": "manage supported tokens.",
+          "role": ".tokenAdmins"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.",
+          "role": ".operators"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x40e1e5Ece49A878062fA9F87eA6dc81281098B22",
+          "description": "change the programHash, replacing the L2 execution logic whose proofs are accepted, directly or through appointed admins.",
+          "role": ".owner",
+          "condition": "if the adapter is not finalized"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953",
+          "description": "change the programHash, replacing the L2 execution logic whose proofs are accepted, directly or through appointed admins.",
+          "role": ".owner",
+          "condition": "if the adapter is not finalized"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.",
+          "role": ".operators"
+        }
+      ]
+    },
+    "eth:0xC532d2976209A56DdF4a99B844130f7c0daCa7B6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "description": "manage the token admin role.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "delay": 1209600,
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "description": "change the global and per-asset configuration hashes committing to the L2 system parameters.",
+          "role": ".$admin"
+        }
+      ]
+    },
+    "eth:0xef75e1199B0599BA823b7770AcE8eb34864a1D55": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "description": "manage the token admin role.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "delay": 1209600,
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "description": "change the global and per-asset configuration hashes committing to the L2 system parameters.",
+          "role": ".$admin"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    }
+  }
 }

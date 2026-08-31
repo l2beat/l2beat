@@ -1246,206 +1246,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Upgradeable Tornado Cash governance contract that manages proposals, voting, execution, and treasury-connected governance modules. If you trust this contract, you trust its upgrade path and proposal rules to change protocol governance behavior.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce",
-          "description": "replace the proxy allowed to enqueue deposit and withdrawal leaves.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce",
-          "description": "replace the verifier used for batched tree updates.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2",
-          "description": "change the router address allowed to burn relayer stake during withdrawals.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2",
-          "description": "nullify a registered relayer's staked balance.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2",
-          "description": "set the minimum TORN stake required to become a relayer.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
-          "description": "update user reward accounting when locked balances change.",
-          "role": ".Governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
-          "description": "withdraw TORN held by the staking rewards contract.",
-          "role": ".Governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7",
-          "description": "change how long cached per-instance fees remain valid before they must be recomputed.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7",
-          "description": "change the TWAP lookback period used to price Tornado instances.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7",
-          "description": "change the Uniswap fee tier used for the TORN price source.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x722122dF12D4e14e13Ac3b6895a86e84145b6967",
-          "description": "add or update supported pool instances.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x722122dF12D4e14e13Ac3b6895a86e84145b6967",
-          "description": "replace the connected Tornado Trees contract.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x722122dF12D4e14e13Ac3b6895a86e84145b6967",
-          "description": "rescue tokens sent to the proxy.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
-          "description": "change the reward-swap pool weight used when distributing TORN rewards.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
-          "description": "replace the connected Tornado Trees contract.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
-          "description": "replace the reward, withdrawal, and tree-update verifiers.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
-          "description": "set mining reward rates.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
-          "description": "manage the allowlist of addresses that can transfer while TORN is paused.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
-          "description": "pause or unpause TORN transfers after the initial pause period expires.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
-          "description": "rescue arbitrary tokens held by the TORN contract.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x905b63Fff465B9fFBF41DeA908CEb12478ec7601",
-          "description": "enable or disable supported pool instances.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x905b63Fff465B9fFBF41DeA908CEb12478ec7601",
-          "description": "rescue tokens sent to the proxy.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
-          "description": "add or update supported Tornado instances and their enabled/disabled state.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
-          "description": "change the router contract allowed to interact with registered instances.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
-          "description": "remove supported instances from the registry.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
-          "description": "set per-instance protocol fees charged to relayers.",
-          "role": ".governance"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd90e2f925DA726b50C4Ed8D0Fb90Ad053324F31b",
-          "description": "rescue tokens sent to the router.",
-          "role": ".governance"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce",
-          "description": "upgrade the Tornado Trees implementation, changing how deposit and withdrawal roots are maintained.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2",
-          "description": "upgrade the relayer registry implementation, changing relayer registration and slashing logic.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
-          "description": "upgrade the staking rewards implementation, changing custody and reward-accounting logic for relayer stake.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
-          "description": "upgrade the governance implementation, changing proposal execution and treasury-control logic.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7",
-          "description": "upgrade the fee manager implementation, changing how relayer burn fees are computed.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
-          "description": "upgrade the registry implementation, changing how supported pool instances are tracked.",
-          "role": ".$admin"
-        }
-      ],
       "ignoreInWatchMode": ["TORNTreasury"],
       "deployerAddress": "eth:0x4e7B3769921C8DFBdb3d1B4c73558db079A180c7",
       "sinceTimestamp": 1608261835,
@@ -3853,5 +3653,209 @@
     "tornado-cash/WithdrawVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25802896 },
-  "permissionsConfigHash": "0x44bf0b4758492462db07b5908ef81f4531dbedb1013b1aca2fb307274e6c541c"
+  "permissionsConfigHash": "0x44bf0b4758492462db07b5908ef81f4531dbedb1013b1aca2fb307274e6c541c",
+  "permissions": {
+    "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce",
+          "description": "replace the proxy allowed to enqueue deposit and withdrawal leaves.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce",
+          "description": "replace the verifier used for batched tree updates.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2",
+          "description": "change the router address allowed to burn relayer stake during withdrawals.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2",
+          "description": "nullify a registered relayer's staked balance.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2",
+          "description": "set the minimum TORN stake required to become a relayer.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
+          "description": "update user reward accounting when locked balances change.",
+          "role": ".Governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
+          "description": "withdraw TORN held by the staking rewards contract.",
+          "role": ".Governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7",
+          "description": "change how long cached per-instance fees remain valid before they must be recomputed.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7",
+          "description": "change the TWAP lookback period used to price Tornado instances.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7",
+          "description": "change the Uniswap fee tier used for the TORN price source.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x722122dF12D4e14e13Ac3b6895a86e84145b6967",
+          "description": "add or update supported pool instances.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x722122dF12D4e14e13Ac3b6895a86e84145b6967",
+          "description": "replace the connected Tornado Trees contract.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x722122dF12D4e14e13Ac3b6895a86e84145b6967",
+          "description": "rescue tokens sent to the proxy.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
+          "description": "change the reward-swap pool weight used when distributing TORN rewards.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
+          "description": "replace the connected Tornado Trees contract.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
+          "description": "replace the reward, withdrawal, and tree-update verifiers.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x746Aebc06D2aE31B71ac51429A19D54E797878E9",
+          "description": "set mining reward rates.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
+          "description": "manage the allowlist of addresses that can transfer while TORN is paused.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
+          "description": "pause or unpause TORN transfers after the initial pause period expires.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x77777FeDdddFfC19Ff86DB637967013e6C6A116C",
+          "description": "rescue arbitrary tokens held by the TORN contract.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x905b63Fff465B9fFBF41DeA908CEb12478ec7601",
+          "description": "enable or disable supported pool instances.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x905b63Fff465B9fFBF41DeA908CEb12478ec7601",
+          "description": "rescue tokens sent to the proxy.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
+          "description": "add or update supported Tornado instances and their enabled/disabled state.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
+          "description": "change the router contract allowed to interact with registered instances.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
+          "description": "remove supported instances from the registry.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
+          "description": "set per-instance protocol fees charged to relayers.",
+          "role": ".governance"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd90e2f925DA726b50C4Ed8D0Fb90Ad053324F31b",
+          "description": "rescue tokens sent to the router.",
+          "role": ".governance"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x527653eA119F3E6a1F5BD18fbF4714081D7B31ce",
+          "description": "upgrade the Tornado Trees implementation, changing how deposit and withdrawal roots are maintained.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x58E8dCC13BE9780fC42E8723D8EaD4CF46943dF2",
+          "description": "upgrade the relayer registry implementation, changing relayer registration and slashing logic.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5B3f656C80E8ddb9ec01Dd9018815576E9238c29",
+          "description": "upgrade the staking rewards implementation, changing custody and reward-accounting logic for relayer stake.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce",
+          "description": "upgrade the governance implementation, changing proposal execution and treasury-control logic.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5f6c97C6AD7bdd0AE7E0Dd4ca33A4ED3fDabD4D7",
+          "description": "upgrade the fee manager implementation, changing how relayer burn fees are computed.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xB20c66C4DE72433F3cE747b58B86830c459CA911",
+          "description": "upgrade the registry implementation, changing how supported pool instances are tracked.",
+          "role": ".$admin"
+        }
+      ]
+    }
+  }
 }
