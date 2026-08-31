@@ -189,7 +189,25 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         'type',
         UnixTime(400),
       )
-      for (const record of [first, second, otherPlugin]) {
+      // Larger transfer ids than transfer2, but missing tx hashes — the
+      // sample must stay on the fully hashed row.
+      const partiallyHashed = transfer(
+        'plugin1',
+        'transfer8',
+        'type',
+        UnixTime(500),
+      )
+      partiallyHashed.dstTxHash = undefined
+      const unhashed = transfer('plugin1', 'transfer9', 'type', UnixTime(600))
+      unhashed.srcTxHash = undefined
+      unhashed.dstTxHash = undefined
+      for (const record of [
+        first,
+        second,
+        otherPlugin,
+        partiallyHashed,
+        unhashed,
+      ]) {
         record.srcTokenAddress = srcToken
         record.dstTokenAddress = dstToken
         record.bridgeType = 'lockAndMint'
@@ -201,7 +219,14 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       third.srcWasBurned = true
       third.dstWasMinted = true
 
-      await repository.insertMany([first, second, third, otherPlugin])
+      await repository.insertMany([
+        first,
+        second,
+        third,
+        otherPlugin,
+        partiallyHashed,
+        unhashed,
+      ])
 
       const routes = await repository.getTokenRoutes()
 
@@ -215,7 +240,7 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           bridgeType: 'lockAndMint',
           srcWasBurned: false,
           dstWasMinted: false,
-          transferCount: 2,
+          transferCount: 4,
           sampleTransferId: 'transfer2',
           sampleSrcTxHash: '0xtransfer2src',
           sampleDstTxHash: '0xtransfer2dst',
@@ -247,6 +272,48 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           sampleTransferId: 'transfer3',
           sampleSrcTxHash: '0xtransfer3src',
           sampleDstTxHash: '0xtransfer3dst',
+        },
+      ])
+    })
+
+    it('falls back to a partially hashed sample when no fully hashed transfer exists', async () => {
+      const srcToken = EthereumAddress.random()
+      const dstToken = EthereumAddress.random()
+
+      const partiallyHashed = transfer(
+        'plugin1',
+        'transfer1',
+        'type',
+        UnixTime(100),
+      )
+      partiallyHashed.dstTxHash = undefined
+      const unhashed = transfer('plugin1', 'transfer2', 'type', UnixTime(200))
+      unhashed.srcTxHash = undefined
+      unhashed.dstTxHash = undefined
+      for (const record of [partiallyHashed, unhashed]) {
+        record.srcTokenAddress = srcToken
+        record.dstTokenAddress = dstToken
+        record.bridgeType = 'lockAndMint'
+      }
+
+      await repository.insertMany([partiallyHashed, unhashed])
+
+      const routes = await repository.getTokenRoutes()
+
+      expect(routes).toEqual([
+        {
+          plugin: 'plugin1',
+          srcChain: 'ethereum',
+          srcTokenAddress: srcToken,
+          dstChain: 'arbitrum',
+          dstTokenAddress: dstToken,
+          bridgeType: 'lockAndMint',
+          srcWasBurned: false,
+          dstWasMinted: false,
+          transferCount: 2,
+          sampleTransferId: 'transfer1',
+          sampleSrcTxHash: '0xtransfer1src',
+          sampleDstTxHash: undefined,
         },
       ])
     })

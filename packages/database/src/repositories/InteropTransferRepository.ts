@@ -376,6 +376,11 @@ export class InteropTransferRepository extends BaseRepository {
     // The sample tx hashes must come from the same row as `sampleTransferId`
     // (mixing max() per column would stitch hashes from different transfers),
     // hence the join back on the primary key instead of extra aggregates.
+    // Transfer ids are random, so a bare max() would pick an arbitrary row;
+    // groups can mix fully hashed transfers with partially observed ones
+    // (a side's token address comes from the message payload even when its
+    // event — and thus tx hash — was never seen), so prefer a fully hashed
+    // sample, then any hashed one, before settling for an arbitrary row.
     const rows = await this.db
       .with('route', (qb) =>
         qb
@@ -383,7 +388,23 @@ export class InteropTransferRepository extends BaseRepository {
           .select((eb) => [
             ...groupColumns,
             eb.fn.countAll().as('transferCount'),
-            eb.fn.max('transferId').as('sampleTransferId'),
+            eb.fn
+              .coalesce(
+                eb.fn
+                  .max('transferId')
+                  .filterWhere('srcTxHash', 'is not', null)
+                  .filterWhere('dstTxHash', 'is not', null),
+                eb.fn
+                  .max('transferId')
+                  .filterWhere((eb) =>
+                    eb.or([
+                      eb('srcTxHash', 'is not', null),
+                      eb('dstTxHash', 'is not', null),
+                    ]),
+                  ),
+                eb.fn.max('transferId'),
+              )
+              .as('sampleTransferId'),
           ])
           .groupBy([...groupColumns]),
       )
