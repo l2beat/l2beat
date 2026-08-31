@@ -65,7 +65,7 @@ export const ossificationColumns = [
       const clockStart = ctx.row.original.timeline.clockStart
       const sinceLine = clockStart !== null && (
         <TwoRowCell.Second className="mt-0.5">
-          {`since ${formatTimestamp(clockStart, { mode: 'date' })}`}
+          {`updated ${formatTimestamp(clockStart, { mode: 'date' })}`}
         </TwoRowCell.Second>
       )
       if (ctx.row.original.isUnverified) {
