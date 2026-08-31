@@ -60,12 +60,12 @@ export const ossificationColumns = [
     },
   }),
   columnHelper.accessor('score', {
-    header: 'Ossification %',
+    header: 'Ossification %\nLast updated',
     cell: (ctx) => {
       const clockStart = ctx.row.original.timeline.clockStart
       const sinceLine = clockStart !== null && (
         <TwoRowCell.Second className="mt-0.5">
-          {`updated ${formatTimestamp(clockStart, { mode: 'date' })}`}
+          {formatTimestamp(clockStart, { mode: 'date' })}
         </TwoRowCell.Second>
       )
       if (ctx.row.original.isUnverified) {
