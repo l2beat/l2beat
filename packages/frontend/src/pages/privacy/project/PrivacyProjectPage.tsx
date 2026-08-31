@@ -104,7 +104,7 @@ export function PrivacyProjectPage({
                         assetsCount={entry.assetsCount}
                         bucketsCount={entry.bucketCount}
                         deposits={entry.summary.deposits}
-                        activeRelayers30d={entry.summary.activeRelayers30d}
+                        relayerStat={entry.summary.relayerStat}
                       />
 
                       <PrivacyProjectRiskProfile

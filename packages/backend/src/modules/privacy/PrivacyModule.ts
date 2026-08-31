@@ -8,6 +8,8 @@ import { PrivacyFlowIndexer } from './indexers/PrivacyFlowIndexer'
 import { PrivacyPriceIndexer } from './indexers/PrivacyPriceIndexer'
 import { PrivacyRelayerActivityIndexer } from './indexers/PrivacyRelayerActivityIndexer'
 import { StarknetPrivacyFlowIndexer } from './indexers/StarknetPrivacyFlowIndexer'
+import { PrivacyRelayerSampler } from './PrivacyRelayerSampler'
+import { RailgunBroadcasterProvider } from './railgun/RailgunBroadcasterProvider'
 import type {
   PrivacyFlowIndexerConfig,
   PrivacyRelayerActivityIndexerConfig,
@@ -191,24 +193,43 @@ export function createPrivacyModule({
     }
   }
 
+  const sampler =
+    config.privacy.relayerSampleConfigs.length > 0
+      ? new PrivacyRelayerSampler(
+          {
+            clock,
+            configurations: config.privacy.relayerSampleConfigs,
+            provider: new RailgunBroadcasterProvider(logger),
+            db,
+          },
+          logger,
+        )
+      : undefined
+
   logger.info('Privacy config loaded', {
     projects: config.privacy.projects.length,
     flowConfigs: config.privacy.flowConfigs.length,
     starknetFlowConfigs: config.privacy.starknetFlowConfigs.length,
     relayerConfigs: config.privacy.relayerConfigs.length,
+    relayerSampleConfigs: config.privacy.relayerSampleConfigs.length,
     priceConfigs: config.privacy.priceConfigs.length,
     chains: config.privacy.chains.length,
   })
+
+  const hasOnchainIndexers = priceIndexer !== undefined || indexers.length > 0
 
   return {
     start: async () => {
       logger = logger.for('PrivacyModule')
       logger.info('Starting...')
-      await hourlyIndexer.start()
-      await priceIndexer?.start()
-      for (const indexer of indexers) {
-        await indexer.start()
+      if (hasOnchainIndexers) {
+        await hourlyIndexer.start()
+        await priceIndexer?.start()
+        for (const indexer of indexers) {
+          await indexer.start()
+        }
       }
+      sampler?.start()
     },
   }
 }

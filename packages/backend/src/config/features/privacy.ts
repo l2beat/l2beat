@@ -1,12 +1,16 @@
 import type { Env } from '@l2beat/backend-tools'
 import type {
+  ChainConfig,
   PrivacyBucketAddress,
   ProjectPrivacyBucket,
-  ProjectPrivacyRelayerSource,
+  ProjectPrivacyOnchainRelayerSource,
+  ProjectPrivacyRailgunWakuRelayerSource,
   ProjectPrivacyToken,
   ProjectService,
 } from '@l2beat/config'
 import {
+  assert,
+  assertUnreachable,
   ChainSpecificAddress,
   EthereumAddress,
   type UnixTime,
@@ -17,12 +21,14 @@ import { PrivacyFlowIndexer } from '../../modules/privacy/indexers/PrivacyFlowIn
 import { PrivacyPriceIndexer } from '../../modules/privacy/indexers/PrivacyPriceIndexer'
 import { PrivacyRelayerActivityIndexer } from '../../modules/privacy/indexers/PrivacyRelayerActivityIndexer'
 import { StarknetPrivacyFlowIndexer } from '../../modules/privacy/indexers/StarknetPrivacyFlowIndexer'
+import { PrivacyRelayerSampler } from '../../modules/privacy/PrivacyRelayerSampler'
 import type {
   PrivacyBlockTimestampConfig,
   PrivacyConfig,
   PrivacyFlowIndexerConfig,
   PrivacyPriceIndexerConfig,
   PrivacyRelayerActivityIndexerConfig,
+  PrivacyRelayerSampleConfig,
   StarknetPrivacyFlowIndexerConfig,
 } from '../../modules/privacy/types'
 import { getPrivacyRelayerExtractor } from '../../modules/privacy/utils/extractPrivacyRelayerActivity'
@@ -32,6 +38,7 @@ export async function getPrivacyConfig(
   ps: ProjectService,
   env: Env,
   flags: FeatureFlags,
+  chainConfigs: ChainConfig[],
 ): Promise<PrivacyConfig | false> {
   const minTimestamp = env.integer('PRIVACY_MIN_TIMESTAMP', 0)
 
@@ -44,7 +51,7 @@ export async function getPrivacyConfig(
     .filter(
       (project) =>
         project.privacyInfo.tokens.some((token) => token.buckets.length > 0) ||
-        (project.privacyInfo.relayerTracking?.length ?? 0) > 0,
+        project.privacyInfo.relayerTracking !== undefined,
     )
     .map((project) => ({
       projectId: project.id.toString(),
@@ -55,9 +62,16 @@ export async function getPrivacyConfig(
     return false
   }
 
+  const chainNames: ReadonlyMap<number, string> = new Map(
+    chainConfigs.flatMap((chain) =>
+      chain.chainId === undefined ? [] : [[chain.chainId, chain.name] as const],
+    ),
+  )
+
   const flowConfigs: PrivacyFlowIndexerConfig[] = []
   const starknetFlowConfigs: StarknetPrivacyFlowIndexerConfig[] = []
   const relayerConfigs: PrivacyRelayerActivityIndexerConfig[] = []
+  const relayerSampleConfigs: PrivacyRelayerSampleConfig[] = []
   for (const project of projects) {
     for (const token of project.privacyInfo.tokens) {
       for (const bucket of token.buckets) {
@@ -90,10 +104,24 @@ export async function getPrivacyConfig(
       }
     }
 
-    for (const source of project.privacyInfo.relayerTracking ?? []) {
-      relayerConfigs.push(
-        toRelayerConfig(project.projectId, source, minTimestamp),
-      )
+    const tracking = project.privacyInfo.relayerTracking
+    if (tracking) {
+      switch (tracking.type) {
+        case 'onchainEvents':
+          relayerConfigs.push(
+            ...tracking.sources.map((source) =>
+              toRelayerConfig(project.projectId, source, minTimestamp),
+            ),
+          )
+          break
+        case 'railgunWaku':
+          relayerSampleConfigs.push(
+            toRelayerSampleConfig(project.projectId, tracking, chainNames),
+          )
+          break
+        default:
+          assertUnreachable(tracking)
+      }
     }
   }
 
@@ -154,15 +182,37 @@ export async function getPrivacyConfig(
     flowConfigs,
     starknetFlowConfigs,
     relayerConfigs,
+    relayerSampleConfigs,
     priceConfigs,
     blockTimestampConfigs,
     chains,
   }
 }
 
+function toRelayerSampleConfig(
+  projectId: string,
+  source: ProjectPrivacyRailgunWakuRelayerSource,
+  chainNames: ReadonlyMap<number, string>,
+): PrivacyRelayerSampleConfig {
+  const chain = chainNames.get(source.chainId)
+  assert(chain, `No chain config for Railgun Waku chain id: ${source.chainId}`)
+
+  const base = {
+    projectId,
+    chain,
+    chainId: source.chainId,
+    sinceTimestamp: source.sinceTimestamp,
+  }
+
+  return {
+    id: PrivacyRelayerSampler.idToConfigurationId(base),
+    ...base,
+  }
+}
+
 function toRelayerConfig(
   projectId: string,
-  source: ProjectPrivacyRelayerSource,
+  source: ProjectPrivacyOnchainRelayerSource,
   minTimestamp: UnixTime,
 ): PrivacyRelayerActivityIndexerConfig {
   const base = {
