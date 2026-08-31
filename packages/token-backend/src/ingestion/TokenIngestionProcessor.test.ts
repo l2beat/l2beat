@@ -57,6 +57,14 @@ describe(TokenIngestionProcessor.name, () => {
         total: 1,
         nonSwapping: 0,
         abstractTokens: [],
+        plugins: [
+          {
+            plugin: 'plugin1',
+            transferCount: 1,
+            sampleSrcTxHash: '0xsrc',
+            sampleDstTxHash: '0xdst',
+          },
+        ],
       })
       expect(getByPrimaryKeys).toHaveBeenCalledWith([])
     })
@@ -1567,6 +1575,7 @@ function route(
   overrides: Partial<InteropTokenRouteRecord>,
 ): InteropTokenRouteRecord {
   return {
+    plugin: 'plugin1',
     srcChain: 'ethereum',
     srcTokenAddress: undefined,
     dstChain: 'base',
@@ -1576,6 +1585,8 @@ function route(
     dstWasMinted: true,
     transferCount: 1,
     sampleTransferId: 'transfer-id',
+    sampleSrcTxHash: '0xsrc',
+    sampleDstTxHash: '0xdst',
     ...overrides,
   }
 }

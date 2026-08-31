@@ -16,6 +16,20 @@ describe(formatIngestionTrace.name, () => {
           total: 3,
           nonSwapping: 2,
           abstractTokens: [{ id: 'USDC01', symbol: 'USDC' }],
+          plugins: [
+            {
+              plugin: 'cctp',
+              transferCount: 2,
+              sampleSrcTxHash: '0xsrc1',
+              sampleDstTxHash: '0xdst1',
+            },
+            {
+              plugin: 'oft',
+              transferCount: 1,
+              sampleSrcTxHash: undefined,
+              sampleDstTxHash: '0xdst2',
+            },
+          ],
         },
         {
           kind: 'resolved-from-transfers',
@@ -50,11 +64,40 @@ describe(formatIngestionTrace.name, () => {
         'Ingestion ID: ing_test',
         'Address: ethereum:0xaaa',
         '1. No existing deployed token in TokenDB.',
-        '2. Found 3 transfers (2 non-swapping). Other sides resolve to: USDC01:USDC.',
+        '2. Found 3 transfers (2 non-swapping). Other sides resolve to: USDC01:USDC. Transfers by plugin:',
+        '   - cctp: 2 transfers (sample: src tx 0xsrc1, dst tx 0xdst1)',
+        '   - oft: 1 transfers (sample: dst tx 0xdst2)',
         '3. Resolved abstract token USDC01:USDC from non-swapping transfers.',
         'Outcome: write — insert deployed token ethereum:0xaaa (abstract: USDC01).',
       ].join('\n'),
     )
+  })
+
+  it('renders transfer evidence without a plugin list when there are no transfers', () => {
+    const trace: IngestionTrace = {
+      id: 'ing_test',
+      address: { chain: 'ethereum', address: '0xaaa' },
+      existingDeployedToken: undefined,
+      steps: [
+        {
+          kind: 'transfer-evidence',
+          total: 0,
+          nonSwapping: 0,
+          abstractTokens: [],
+          plugins: [],
+        },
+      ],
+      outcome: { kind: 'skip', reason: 'test' },
+    }
+
+    const log = formatIngestionTrace(trace)
+
+    expect(
+      log.includes(
+        '1. Found 0 transfers (0 non-swapping). Other sides resolve to: no abstract tokens.',
+      ),
+    ).toEqual(true)
+    expect(log.includes('Transfers by plugin')).toEqual(false)
   })
 
   it('renders the symbol adoption step', () => {

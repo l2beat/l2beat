@@ -176,14 +176,20 @@ describeDatabase(InteropTransferRepository.name, (db) => {
   })
 
   describe(InteropTransferRepository.prototype.getTokenRoutes.name, () => {
-    it('aggregates transfers into one row per token pair and bridge-type evidence', async () => {
+    it('aggregates transfers into one row per plugin, token pair and bridge-type evidence', async () => {
       const srcToken = EthereumAddress.random()
       const dstToken = EthereumAddress.random()
       const otherDstToken = EthereumAddress.random()
 
       const first = transfer('plugin1', 'transfer1', 'type', UnixTime(100))
       const second = transfer('plugin1', 'transfer2', 'type', UnixTime(200))
-      for (const record of [first, second]) {
+      const otherPlugin = transfer(
+        'plugin2',
+        'transfer4',
+        'type',
+        UnixTime(400),
+      )
+      for (const record of [first, second, otherPlugin]) {
         record.srcTokenAddress = srcToken
         record.dstTokenAddress = dstToken
         record.bridgeType = 'lockAndMint'
@@ -195,12 +201,13 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       third.srcWasBurned = true
       third.dstWasMinted = true
 
-      await repository.insertMany([first, second, third])
+      await repository.insertMany([first, second, third, otherPlugin])
 
       const routes = await repository.getTokenRoutes()
 
       expect(routes).toEqualUnsorted([
         {
+          plugin: 'plugin1',
           srcChain: 'ethereum',
           srcTokenAddress: srcToken,
           dstChain: 'arbitrum',
@@ -210,8 +217,25 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           dstWasMinted: false,
           transferCount: 2,
           sampleTransferId: 'transfer2',
+          sampleSrcTxHash: '0xtransfer2src',
+          sampleDstTxHash: '0xtransfer2dst',
         },
         {
+          plugin: 'plugin2',
+          srcChain: 'ethereum',
+          srcTokenAddress: srcToken,
+          dstChain: 'arbitrum',
+          dstTokenAddress: dstToken,
+          bridgeType: 'lockAndMint',
+          srcWasBurned: false,
+          dstWasMinted: false,
+          transferCount: 1,
+          sampleTransferId: 'transfer4',
+          sampleSrcTxHash: '0xtransfer4src',
+          sampleDstTxHash: '0xtransfer4dst',
+        },
+        {
+          plugin: 'plugin1',
           srcChain: 'ethereum',
           srcTokenAddress: srcToken,
           dstChain: 'arbitrum',
@@ -221,6 +245,8 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           dstWasMinted: true,
           transferCount: 1,
           sampleTransferId: 'transfer3',
+          sampleSrcTxHash: '0xtransfer3src',
+          sampleDstTxHash: '0xtransfer3dst',
         },
       ])
     })

@@ -8,6 +8,7 @@ import type {
   IngestionTrace,
   IngestionTraceView,
 } from './IngestionTrace'
+import type { TransferPluginEvidence } from './tokenIngestionUtils'
 
 /**
  * Canonical text descriptions for each `IngestionStep` and `IngestionOutcome`.
@@ -46,7 +47,12 @@ export function describeIngestionStep(step: IngestionStep): string {
         step.abstractTokens.length === 0
           ? 'no abstract tokens'
           : step.abstractTokens.map(formatRef).join(', ')
-      return `Found ${step.total} transfers (${step.nonSwapping} non-swapping). Other sides resolve to: ${refs}.`
+      const base = `Found ${step.total} transfers (${step.nonSwapping} non-swapping). Other sides resolve to: ${refs}.`
+      if (step.plugins.length === 0) return base
+      const plugins = step.plugins
+        .map((evidence) => `\n   - ${formatPluginEvidence(evidence)}`)
+        .join('')
+      return `${base} Transfers by plugin:${plugins}`
     }
     case 'resolved-from-transfers':
       return `Resolved abstract token ${formatRef(step.abstractToken)} from non-swapping transfers.`
@@ -111,6 +117,17 @@ export function describeIngestionOutcome(outcome: IngestionOutcome): string {
 
 function formatRef(ref: AbstractTokenRef): string {
   return `${ref.id}:${ref.symbol}`
+}
+
+function formatPluginEvidence(evidence: TransferPluginEvidence): string {
+  const sample = [
+    evidence.sampleSrcTxHash && `src tx ${evidence.sampleSrcTxHash}`,
+    evidence.sampleDstTxHash && `dst tx ${evidence.sampleDstTxHash}`,
+  ]
+    .filter((part): part is string => Boolean(part))
+    .join(', ')
+  const base = `${evidence.plugin}: ${evidence.transferCount} transfers`
+  return sample ? `${base} (sample: ${sample})` : base
 }
 
 /**

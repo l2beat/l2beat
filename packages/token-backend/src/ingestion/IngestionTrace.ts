@@ -5,7 +5,10 @@ import type {
   DeployedTokenPrimaryKey,
   DeployedTokenUpdateable,
 } from '../schemas/DeployedToken'
-import type { TokenAddress } from './tokenIngestionUtils'
+import type {
+  TokenAddress,
+  TransferPluginEvidence,
+} from './tokenIngestionUtils'
 
 export interface IngestionTrace {
   id: string
@@ -29,6 +32,10 @@ export type IngestionStep =
       total: number
       nonSwapping: number
       abstractTokens: AbstractTokenRef[]
+      /** One entry per distinct interop plugin whose transfers involve the
+       * address, with a sample transfer's tx hashes — the evidence a
+       * researcher needs to see where the token appears. */
+      plugins: TransferPluginEvidence[]
     }
   | { kind: 'resolved-from-transfers'; abstractToken: AbstractTokenRef }
   | { kind: 'resolved-from-existing'; abstractToken: AbstractTokenRef }
