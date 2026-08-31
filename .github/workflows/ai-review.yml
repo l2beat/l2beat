@@ -21,9 +21,15 @@ jobs:
   # authoritative gate (command syntax, membership, draft/fork/bot checks).
   gate:
     name: Gate
+    # The label replay runs this branch's ai-review package as trusted reviewer
+    # code next to the Codex credential, so restrict it to member/owner-authored
+    # PRs. This is a policy control, not a boundary: the branch code is still
+    # unreviewed, so treat the label as a maintainer-only debug tool.
     if: >
       ${{
-        (github.event_name == 'pull_request' && github.event.label.name == 'ai-review-test') ||
+        (github.event_name == 'pull_request' &&
+          github.event.label.name == 'ai-review-test' &&
+          contains(fromJSON('["MEMBER","OWNER"]'), github.event.pull_request.author_association)) ||
         github.event_name == 'issue_comment' &&
         github.event.issue.pull_request != null &&
         contains(github.event.comment.body, '/ai-review') &&
