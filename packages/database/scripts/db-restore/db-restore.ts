@@ -88,6 +88,7 @@ const FEATURES: Record<string, string[]> = {
     'PrivacyFlowEvent',
     'PrivacyPrice',
     'PrivacyRelayerActivity',
+    'PrivacyRelayerSample',
   ],
 }
 
