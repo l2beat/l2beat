@@ -867,7 +867,7 @@ describe(PrivacyFlowIndexer.name, () => {
   })
 
   describe(PrivacyFlowIndexer.idToConfigurationId.name, () => {
-    it('is deterministic for the same input', () => {
+    it('keeps the existing configuration id', () => {
       const props = {
         projectId: 'project-1',
         bucketId: 'bucket-1',
@@ -882,7 +882,7 @@ describe(PrivacyFlowIndexer.name, () => {
         params: { amount: '1000' },
       }
       expect(PrivacyFlowIndexer.idToConfigurationId(props)).toEqual(
-        PrivacyFlowIndexer.idToConfigurationId(props),
+        '30b264b834f9',
       )
     })
 

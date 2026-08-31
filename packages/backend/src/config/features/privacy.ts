@@ -1,21 +1,24 @@
 import type { Env } from '@l2beat/backend-tools'
 import type {
+  PrivacyAnonymitySetDepositSource,
   PrivacyBucketAddress,
   ProjectPrivacyBucket,
   ProjectPrivacyToken,
   ProjectService,
 } from '@l2beat/config'
+import { createPrivacyAnonymitySetConfigurationId } from '@l2beat/shared'
 import {
   ChainSpecificAddress,
   EthereumAddress,
   type UnixTime,
 } from '@l2beat/shared-pure'
-import { createHash } from 'crypto'
 import { PrivacyBlockTimestampIndexer } from '../../modules/privacy/indexers/PrivacyBlockTimestampIndexer'
 import { PrivacyFlowIndexer } from '../../modules/privacy/indexers/PrivacyFlowIndexer'
 import { PrivacyPriceIndexer } from '../../modules/privacy/indexers/PrivacyPriceIndexer'
 import { StarknetPrivacyFlowIndexer } from '../../modules/privacy/indexers/StarknetPrivacyFlowIndexer'
 import type {
+  PrivacyAnonymitySetIndexerConfig,
+  PrivacyAnonymitySetIndexerConfigProperties,
   PrivacyBlockTimestampConfig,
   PrivacyConfig,
   PrivacyFlowIndexerConfig,
@@ -50,10 +53,17 @@ export async function getPrivacyConfig(
   }
 
   const flowConfigs: PrivacyFlowIndexerConfig[] = []
+  const anonymitySetConfigs: PrivacyAnonymitySetIndexerConfig[] = []
   const starknetFlowConfigs: StarknetPrivacyFlowIndexerConfig[] = []
   for (const project of projects) {
     for (const token of project.privacyInfo.tokens) {
       for (const bucket of token.buckets) {
+        if (bucket.anonymitySet !== undefined) {
+          anonymitySetConfigs.push(
+            toAnonymitySetConfig(project.projectId, bucket, bucket.deposit),
+          )
+        }
+
         const configs = [
           toFlowConfig(
             project.projectId,
@@ -132,6 +142,7 @@ export async function getPrivacyConfig(
 
   return {
     projects,
+    anonymitySetConfigs,
     flowConfigs,
     starknetFlowConfigs,
     priceConfigs,
@@ -140,8 +151,28 @@ export async function getPrivacyConfig(
   }
 }
 
-export function createPrivacyConfigurationId(input: string[]): string {
-  return createHash('sha1').update(input.join('')).digest('hex').slice(0, 12)
+function toAnonymitySetConfig(
+  projectId: string,
+  bucket: ProjectPrivacyBucket,
+  source: PrivacyAnonymitySetDepositSource,
+): PrivacyAnonymitySetIndexerConfig {
+  const privacyAddress = getPrivacyBucketAddress(bucket.address)
+  const config: PrivacyAnonymitySetIndexerConfigProperties = {
+    projectId,
+    bucketId: bucket.id,
+    chain: privacyAddress.chain,
+    address: EthereumAddress(privacyAddress.address),
+    sinceTimestamp: bucket.sinceTimestamp,
+    ...source,
+  }
+
+  return {
+    id: createPrivacyAnonymitySetConfigurationId({
+      ...config,
+      address: config.address.toString(),
+    }),
+    ...config,
+  }
 }
 
 function toFlowConfig(
