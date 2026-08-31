@@ -122,6 +122,32 @@ export const lido: BaseProject = {
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
-    risks: [],
+    risks: [
+      {
+        category: 'Funds can be stolen if',
+        text: 'the Lido DAO passes a malicious upgrade through Dual Governance and stETH holders fail to veto (≥1%) or rage-quit (≥10%) within the timelock delay.',
+        isCritical: true,
+      },
+      {
+        category: 'Funds can be stolen if',
+        text: 'the emergency committees reset governance to the no-veto fallback and an LDO majority then pushes an upgrade the stETH-holder veto would otherwise have blocked.',
+      },
+      {
+        category: 'Funds can be stolen if',
+        text: 'a quorum of Deposit Security Module guardians colludes with a node operator to sign off a deposit batch that front-runs freshly-deposited ETH with attacker withdrawal credentials (bounded per block by the max deposits per block).',
+      },
+      {
+        category: 'Funds can lose value if',
+        text: 'the oracle committee quorum misreports — bounded per report by the OracleReportSanityChecker (rebase and consensus-layer balance-change clamps), so mispricing is capped.',
+      },
+      {
+        category: 'Funds can be frozen if',
+        text: 'the oracle committee stops submitting reports, since withdrawals can only be finalized inside the oracle report — recovery requires a governance action.',
+      },
+      {
+        category: 'Funds can lose value if',
+        text: 'node operators go offline or are slashed; the loss is socialized to all stETH holders through a smaller rebase, pooled (NOR/SDVT) operators post no bond to absorb it, and correlated mass-slashing raises the per-validator penalty.',
+      },
+    ],
   },
 }
