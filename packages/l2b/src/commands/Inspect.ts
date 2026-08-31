@@ -116,28 +116,33 @@ export const Inspect = command({
       )
     }
 
+    const permissions = discovery.permissions?.[entry.address] ?? {}
+
     if (
-      entry.directlyReceivedPermissions &&
-      entry.directlyReceivedPermissions.length > 0
+      permissions.directlyReceivedPermissions &&
+      permissions.directlyReceivedPermissions.length > 0
     ) {
       console.log(
-        `\ndirectlyReceivedPermissions (${entry.directlyReceivedPermissions.length}):`,
+        `\ndirectlyReceivedPermissions (${permissions.directlyReceivedPermissions.length}):`,
       )
-      for (const p of entry.directlyReceivedPermissions) {
+      for (const p of permissions.directlyReceivedPermissions) {
         printPermission(p, nameByAddress)
       }
     }
 
-    if (entry.receivedPermissions && entry.receivedPermissions.length > 0) {
+    if (
+      permissions.receivedPermissions &&
+      permissions.receivedPermissions.length > 0
+    ) {
       console.log(
-        `\nreceivedPermissions (${entry.receivedPermissions.length}):`,
+        `\nreceivedPermissions (${permissions.receivedPermissions.length}):`,
       )
-      for (const p of entry.receivedPermissions) {
+      for (const p of permissions.receivedPermissions) {
         printPermission(p, nameByAddress)
       }
     }
 
-    if (entry.eoaWithUpgradePermissions) {
+    if (permissions.eoaWithUpgradePermissions) {
       console.log('\neoaWithUpgradePermissions: true')
     }
   },

@@ -12,8 +12,8 @@ const configReader = new ConfigReader(paths.discovery)
 export function hasEoaWithUpgradePermissions(projectName: string): boolean {
   try {
     const discovery = configReader.readDiscovery(projectName)
-    return discovery.entries.some(
-      (entry) => entry.eoaWithUpgradePermissions === true,
+    return Object.values(discovery.permissions ?? {}).some(
+      (permissions) => permissions.eoaWithUpgradePermissions === true,
     )
   } catch {
     return false

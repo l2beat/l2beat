@@ -141,7 +141,9 @@ export function loadDiscoveryMappings(projectsPath: string): DiscoveryMappings {
 
         // Extract sequencers from permissions (eth: addresses only)
         if (entry.address?.startsWith('eth:')) {
-          const sequencerPerms = entry.receivedPermissions?.filter(
+          const sequencerPerms = data.permissions?.[
+            entry.address
+          ]?.receivedPermissions?.filter(
             (p: { permission: string; role?: string }) =>
               SEQUENCER_PERMISSIONS.includes(p.permission) ||
               (p.permission === 'interact' &&
