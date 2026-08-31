@@ -1,4 +1,5 @@
 import type {
+  PrivacyAnonymitySetDepositSource,
   PrivacyFlowExtractorConfig,
   ProjectPrivacyInfo,
 } from '@l2beat/config'
@@ -11,12 +12,26 @@ export interface PrivacyProjectConfig {
 
 export interface PrivacyConfig {
   projects: PrivacyProjectConfig[]
+  anonymitySetConfigs: PrivacyAnonymitySetIndexerConfig[]
   flowConfigs: PrivacyFlowIndexerConfig[]
   starknetFlowConfigs: StarknetPrivacyFlowIndexerConfig[]
   priceConfigs: PrivacyPriceIndexerConfig[]
   blockTimestampConfigs: PrivacyBlockTimestampConfig[]
   chains: string[]
 }
+
+export type PrivacyAnonymitySetIndexerConfigProperties = {
+  projectId: string
+  bucketId: string
+  chain: string
+  address: EthereumAddress
+  event: string
+  sinceTimestamp: UnixTime
+} & PrivacyAnonymitySetDepositSource
+
+export type PrivacyAnonymitySetIndexerConfig = {
+  id: string
+} & PrivacyAnonymitySetIndexerConfigProperties
 
 export type PrivacyFlowIndexerConfig = {
   id: string
@@ -80,4 +95,5 @@ export interface PrivacyRpcLog {
 export interface PrivacyFlowExtractResult {
   count: number
   amount: bigint
+  sender?: EthereumAddress
 }

@@ -1,7 +1,9 @@
+import type { PrivacyAnonymitySetDepositSource } from '@l2beat/config'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
 import type { PrivacyFlowIndexerConfig, PrivacyRpcLog } from '../types'
+import { extractPrivacyAnonymitySetDeposit } from './extractPrivacyAnonymitySetDeposit'
 import { extractPrivacyFlow } from './extractPrivacyFlow'
 
 const privacyPoolsInterface = new utils.Interface([
@@ -88,8 +90,9 @@ describe(extractPrivacyFlow.name, () => {
         extractor: 'privacyPoolsValue',
         params: {},
       }
+      const depositor = EthereumAddress.random()
       const log = encodeLog(privacyPoolsInterface, 'Deposited', [
-        EthereumAddress.random().toString(),
+        depositor.toString(),
         1n,
         2n,
         12_345n,
@@ -98,7 +101,7 @@ describe(extractPrivacyFlow.name, () => {
 
       const result = extractPrivacyFlow(config, log)
 
-      expect(result).toEqual({ count: 1, amount: 12_345n })
+      expect(result).toEqual({ count: 1, amount: 12_345n, sender: depositor })
     })
 
     it('extracts value from Withdrawn event', () => {
@@ -415,5 +418,62 @@ describe(extractPrivacyFlow.name, () => {
 
       expect(result).toEqual({ count: 1, amount: 9_870n })
     })
+  })
+})
+
+describe(extractPrivacyAnonymitySetDeposit.name, () => {
+  it('uses the event depositor for Privacy Pools deposits', () => {
+    const source = {
+      event: 'Deposited',
+      extractor: 'privacyPoolsValue',
+      params: {},
+    } satisfies PrivacyAnonymitySetDepositSource
+    const depositor = EthereumAddress.random()
+    const log = encodeLog(privacyPoolsInterface, 'Deposited', [
+      depositor.toString(),
+      1n,
+      2n,
+      12_345n,
+      4n,
+    ])
+
+    expect(extractPrivacyAnonymitySetDeposit(source, log)).toEqual({
+      amount: 12_345n,
+      origin: { type: 'event', sender: depositor },
+    })
+  })
+
+  it('does not fall back to the transaction sender for Privacy Pools', () => {
+    const source = {
+      event: 'Withdrawn',
+      extractor: 'privacyPoolsValue',
+      params: {},
+    } satisfies PrivacyAnonymitySetDepositSource
+    const log = encodeLog(privacyPoolsInterface, 'Withdrawn', [
+      EthereumAddress.random().toString(),
+      9_999n,
+      1n,
+      2n,
+    ])
+
+    expect(() => extractPrivacyAnonymitySetDeposit(source, log)).toThrow(
+      'Privacy Pools deposit is missing depositor',
+    )
+  })
+
+  it('requests the transaction sender for fixed deposits', () => {
+    const source = {
+      event: 'Deposit',
+      extractor: 'fixedAmount',
+      params: { amount: '100' },
+    } satisfies PrivacyAnonymitySetDepositSource
+
+    expect(
+      extractPrivacyAnonymitySetDeposit(source, {
+        address: ADDRESS.toString(),
+        data: '0x',
+        topics: [],
+      }),
+    ).toEqual({ amount: 100n, origin: { type: 'transaction' } })
   })
 })
