@@ -49,6 +49,8 @@ jobs:
       pr_meta: ${{ steps.pr.outputs.pr_meta }}
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v6
         with:
@@ -67,7 +69,7 @@ jobs:
             cp "$GITHUB_EVENT_PATH" "$RUNNER_TEMP/event.json"
           else
             COMMENT_ID=$(gh api "repos/$REPO/issues/$PR_NUMBER/comments?per_page=100" \
-              --jq '[.[] | select(.body | startswith("/ai-review"))] | last | .id // empty')
+              --jq '[.[] | select(.body | test("^\\s*/ai-review"))] | last | .id // empty')
             if [ -z "$COMMENT_ID" ]; then
               echo "No /ai-review comment found on PR $PR_NUMBER"
               exit 1
@@ -150,10 +152,13 @@ jobs:
           HEAD_SHA: ${{ needs.gate.outputs.head_sha }}
           REVIEW_OUTPUT_PATH: ${{ runner.temp }}/review.json
           PR_META: ${{ needs.gate.outputs.pr_meta }}
-      # Probes can read auth.json; make sure nothing from it reaches the posted output.
+      # Probes can read auth.json; make sure nothing from it reaches the posted
+      # output. A tripwire for the obvious case, not a boundary — encoded or
+      # split credential material passes a literal scan. Gated on the file, not
+      # on env, so nothing that can write $GITHUB_ENV can switch it off.
       - name: Check output for leaked credentials
-        if: env.ENGINE == 'codex'
         run: |
+          [ -f "$RUNNER_TEMP/codex-home/auth.json" ] || exit 0
           jq -r '.. | strings' "$RUNNER_TEMP/codex-home/auth.json" | awk 'length >= 16' > "$RUNNER_TEMP/secrets.txt"
           if grep -qF -f "$RUNNER_TEMP/secrets.txt" "$RUNNER_TEMP/review.json"; then
             echo "::error::review output contains credential material"

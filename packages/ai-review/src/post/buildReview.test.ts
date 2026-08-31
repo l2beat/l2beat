@@ -105,6 +105,13 @@ describe(buildReview.name, () => {
     expect(payload.body).toInclude('<!-- ai-review run=r1')
   })
 
+  it('puts token spend in the footer when reported', () => {
+    expect(buildReview(review([], { tokens: 12345 }), meta).body).toInclude(
+      '· tokens 12345</sub>',
+    )
+    expect(buildReview(review([]), meta).body).not.toInclude('tokens')
+  })
+
   it('lists executed commands', () => {
     const payload = buildReview(
       review([], { commands: ['pnpm -F x typecheck'] }),

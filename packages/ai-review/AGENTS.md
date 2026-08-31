@@ -20,7 +20,7 @@ Lessons are proposed as a PR to the repo they concern and do nothing until a hum
 
 ### 4. The privilege split
 
-Agent stages run with the engine credential and a read-only Linear token, nothing else. A separate deterministic post step holds the GitHub token (`pull-requests: write`) and posts only schema-validated output. A prompt-injected diff therefore cannot post, push, write to Linear, or exfiltrate through the bot identity. Any change that hands the agent a write credential breaks the project's core security property.
+Agent stages run with the engine credential and a read-only Linear token, nothing else. A separate deterministic post step holds the GitHub token (`pull-requests: write`) and posts only schema-validated output. A prompt-injected diff therefore cannot post, push, or write to Linear through the bot identity. The engine credential is the exception: the agent can read it, and the leak scan on the output is a literal-substring tripwire, not a boundary — so that credential must stay disposable. Any change that hands the agent a write credential breaks the project's core security property.
 
 ### 5. Measured or dead
 

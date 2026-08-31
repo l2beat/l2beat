@@ -39,6 +39,8 @@ export const ReviewOutput = v.object({
   context_sources: v.array(v.string()),
   commands: v.array(v.string()).optional(),
   aborted: v.string().optional(),
+  /** Total engine tokens (input + output); absent when the engine did not report usage. */
+  tokens: v.number().optional(),
 })
 export type ReviewOutput = v.infer<typeof ReviewOutput>
 

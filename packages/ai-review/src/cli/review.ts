@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { v } from '@l2beat/validate'
+import { totalTokens } from '../engine/codex/parseTranscript.js'
 import { createEngine } from '../engine/createEngine.js'
 import { buildPrompt } from '../find/buildPrompt.js'
 import { runFind } from '../find/runFind.js'
@@ -42,5 +43,8 @@ console.log(
     aborted: review.aborted,
   }),
 )
-writeText(requireEnv('REVIEW_OUTPUT_PATH'), JSON.stringify(review, null, 2))
+writeText(
+  requireEnv('REVIEW_OUTPUT_PATH'),
+  JSON.stringify({ ...review, tokens: usage && totalTokens(usage) }, null, 2),
+)
 setOutput('engine', engine.name)

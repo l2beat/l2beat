@@ -111,9 +111,10 @@ function buildBody(
       lines.push('', '</details>')
     }
   }
+  const tokens = review.tokens !== undefined ? ` · tokens ${review.tokens}` : ''
   lines.push(
     '',
-    `<sub>run \`${meta.run_id}\` · lessons \`${meta.lessons_version}\` · engine \`${meta.engine}\` · sources ${sources}</sub>`,
+    `<sub>run \`${meta.run_id}\` · lessons \`${meta.lessons_version}\` · engine \`${meta.engine}\` · sources ${sources}${tokens}</sub>`,
     buildMarker(review, meta),
   )
   return lines.join('\n')
