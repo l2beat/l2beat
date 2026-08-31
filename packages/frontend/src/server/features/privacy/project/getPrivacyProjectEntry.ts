@@ -98,6 +98,7 @@ export async function getPrivacyProjectEntry(
       }),
       get7dTvsBreakdown({ type: 'all' }),
       getTotalValueLockedUsd(details, helpers, defaultChartRange),
+      prefetchAnonymitySetChart(details, helpers, defaultChartRange),
     ])
 
   const permissionsSection = getPermissionsSection(
@@ -139,6 +140,12 @@ export async function getPrivacyProjectEntry(
   const discoveryUpdates = getDiscoveryUpdates(details.id)
 
   const sections: ProjectDetailsSection[] = []
+  const chartProject = {
+    id: details.id,
+    name: details.name,
+    shortName: details.shortName,
+    iconUrl: icon,
+  }
 
   if (details.display.detailedDescription) {
     sections.push({
@@ -168,13 +175,6 @@ export async function getPrivacyProjectEntry(
   }
 
   if (hasTrackedAssets) {
-    const chartProject = {
-      id: details.id,
-      name: details.name,
-      shortName: details.shortName,
-      iconUrl: icon,
-    }
-
     if (details.hasTvl) {
       sections.push({
         type: 'TvsValueSection',
@@ -183,6 +183,18 @@ export async function getPrivacyProjectEntry(
           title: 'Value Locked',
           defaultRange: defaultChartRange,
           rangeControls: 'privacy',
+          project: chartProject,
+        },
+      })
+    }
+
+    if (details.hasAnonymitySet) {
+      sections.push({
+        type: 'PrivacyAnonymitySetSection',
+        props: {
+          id: 'privacy-anonymity-set',
+          title: 'Anonymity sets',
+          defaultRange: defaultChartRange,
           project: chartProject,
         },
       })
@@ -340,6 +352,21 @@ export async function getPrivacyProjectEntry(
     },
     sections,
   }
+}
+
+async function prefetchAnonymitySetChart(
+  details: PrivacyProjectDetails,
+  helpers: SsrHelpers,
+  range: ChartRange,
+): Promise<void> {
+  if (!details.hasAnonymitySet) return
+
+  await helpers.queryClient.prefetchQuery(
+    helpers.trpc.privacy.anonymitySetChart.queryOptions({
+      projectId: details.id,
+      range,
+    }),
+  )
 }
 
 async function getTotalValueLockedUsd(
