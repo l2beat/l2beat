@@ -1,0 +1,177 @@
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
+import { env } from '~/env'
+import { getDb } from '~/server/database'
+import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
+import { ps } from '~/server/projects'
+import { ChartRange } from '~/utils/range/range'
+import {
+  calculateAnonymitySetHistory,
+  calculateAnonymitySetHoldingDuration,
+  type PrivacyAnonymitySetHistoryPoint,
+  type PrivacyAnonymitySetHoldingDurationPoint,
+} from './anonymity-set/calculateAnonymitySets'
+import {
+  getPrivacyAnonymitySetSeries,
+  type PrivacyAnonymitySetSeries,
+} from './anonymity-set/getPrivacyAnonymitySetSeries'
+import {
+  getPrivacyAnonymitySetConfigurations,
+  getPrivacyAnonymitySetSyncedUntil,
+} from './anonymity-set/getPrivacyAnonymitySetSync'
+
+export const PrivacyAnonymitySetChartParams = v.object({
+  projectId: v.string(),
+  range: ChartRange,
+})
+
+export type PrivacyAnonymitySetChartParams = v.infer<
+  typeof PrivacyAnonymitySetChartParams
+>
+
+export interface PrivacyAnonymitySetChartResponse {
+  series: Pick<
+    PrivacyAnonymitySetSeries,
+    'id' | 'label' | 'token' | 'minimumAmount'
+  >[]
+  history: PrivacyAnonymitySetHistoryPoint[]
+  holdingDuration: PrivacyAnonymitySetHoldingDurationPoint[]
+  syncedUntil: number | undefined
+}
+
+const HOLDING_DURATIONS = Array.from({ length: 359 }, (_, index) => index + 7)
+
+export async function getPrivacyAnonymitySetChart(
+  params: PrivacyAnonymitySetChartParams,
+): Promise<PrivacyAnonymitySetChartResponse> {
+  const project = await ps.getProject({
+    id: ProjectId(params.projectId),
+    select: ['privacyInfo'],
+  })
+  if (!project) return emptyResponse()
+
+  const series = getPrivacyAnonymitySetSeries(project)
+  if (series.length === 0) return emptyResponse()
+
+  const currentDay = UnixTime.toStartOf(UnixTime.now(), 'day')
+  if (env.MOCK) return getMockResponse(series, currentDay)
+
+  const db = getDb()
+  const configurations = await getPrivacyAnonymitySetConfigurations(db, [
+    project,
+  ])
+  const syncedUntil = getPrivacyAnonymitySetSyncedUntil(project, configurations)
+  if (syncedUntil === undefined) {
+    return {
+      ...emptyResponse(),
+      series: toResponseSeries(series),
+    }
+  }
+
+  const firstSeriesDay = UnixTime.toStartOf(
+    Math.min(...series.map((item) => item.sinceTimestamp)),
+    'day',
+  )
+  const holdingEndpoint = UnixTime.toStartOf(
+    Math.min(currentDay, syncedUntil),
+    'day',
+  )
+  if (holdingEndpoint < firstSeriesDay) {
+    return {
+      ...emptyResponse(),
+      series: toResponseSeries(series),
+      syncedUntil: holdingEndpoint,
+    }
+  }
+
+  const requestedFrom = params.range[0]
+  const historyStart = Math.max(
+    firstSeriesDay,
+    requestedFrom === null
+      ? firstSeriesDay
+      : UnixTime.toStartOf(requestedFrom, 'day'),
+  )
+  const requestedTo = UnixTime.toStartOf(params.range[1], 'day')
+  const historyEndpoint = Math.min(holdingEndpoint, requestedTo)
+  const historyEndpoints =
+    historyStart <= historyEndpoint
+      ? generateTimestamps(
+          [UnixTime(historyStart), UnixTime(historyEndpoint)],
+          'day',
+        )
+      : []
+
+  const queryFrom = UnixTime(
+    Math.max(
+      firstSeriesDay,
+      Math.min(
+        historyEndpoints.length > 0
+          ? historyStart - 30 * UnixTime.DAY
+          : holdingEndpoint,
+        holdingEndpoint - Math.max(...HOLDING_DURATIONS) * UnixTime.DAY,
+      ),
+    ),
+  )
+  const rows = await db.privacyAnonymitySetEvent.getSenderDaysByProjectIds(
+    [project.id],
+    queryFrom,
+    holdingEndpoint,
+  )
+
+  return {
+    series: toResponseSeries(series),
+    history: calculateAnonymitySetHistory(rows, series, historyEndpoints),
+    holdingDuration: calculateAnonymitySetHoldingDuration(
+      rows,
+      series,
+      holdingEndpoint,
+      HOLDING_DURATIONS,
+    ),
+    syncedUntil: holdingEndpoint,
+  }
+}
+
+function toResponseSeries(series: PrivacyAnonymitySetSeries[]) {
+  return series.map(({ id, label, token, minimumAmount }) => ({
+    id,
+    label,
+    token,
+    minimumAmount,
+  }))
+}
+
+function emptyResponse(): PrivacyAnonymitySetChartResponse {
+  return {
+    series: [],
+    history: [],
+    holdingDuration: [],
+    syncedUntil: undefined,
+  }
+}
+
+function getMockResponse(
+  series: PrivacyAnonymitySetSeries[],
+  endpoint: UnixTime,
+): PrivacyAnonymitySetChartResponse {
+  const start = endpoint - 365 * UnixTime.DAY
+  const endpoints = generateTimestamps([UnixTime(start), endpoint], 'day')
+
+  return {
+    series: toResponseSeries(series),
+    history: endpoints.map((timestamp, index) => [
+      timestamp,
+      ...series.map((_, seriesIndex) =>
+        Math.round((seriesIndex + 1) * 20 + index * 0.5),
+      ),
+    ]),
+    holdingDuration: HOLDING_DURATIONS.map((days) => {
+      return [
+        days,
+        ...series.map((_, seriesIndex) =>
+          Math.round((seriesIndex + 1) * days * 0.8),
+        ),
+      ]
+    }),
+    syncedUntil: endpoint,
+  }
+}

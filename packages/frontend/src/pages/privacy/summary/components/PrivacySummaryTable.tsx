@@ -6,8 +6,14 @@ import {
   type SortingState,
 } from '@tanstack/react-table'
 import { useState } from 'react'
+import { Badge } from '~/components/badge/Badge'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
@@ -24,6 +30,7 @@ import {
 } from '~/components/table/sorting/sortTableValues'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
+import type { PrivacyAnonymitySetSummary } from '~/server/features/privacy/anonymity-set/getPrivacyAnonymitySetSummaries'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
@@ -176,6 +183,25 @@ const columns = [
         'Total USD value of all deposits over the last 30 days, based on configured token prices.',
     },
   }),
+  columnHelper.accessor(
+    (entry) =>
+      entry.anonymitySet.status === 'available'
+        ? entry.anonymitySet.value
+        : undefined,
+    {
+      id: 'anonymitySet',
+      header: 'Anon. set',
+      cell: (ctx) => (
+        <AnonymitySetCell anonymitySet={ctx.row.original.anonymitySet} />
+      ),
+      sortUndefined: 'last',
+      meta: {
+        align: 'right',
+        tooltip:
+          'Largest configured anonymity set: unique deposit senders during the last 30 complete UTC days.',
+      },
+    },
+  ),
   columnHelper.display({
     id: 'trustedSetup',
     header: 'Setup',
@@ -244,6 +270,43 @@ const columns = [
     },
   }),
 ]
+
+function AnonymitySetCell({
+  anonymitySet,
+}: {
+  anonymitySet: PrivacyAnonymitySetSummary
+}) {
+  if (anonymitySet.status === 'syncing') {
+    return (
+      <Badge type="gray" size="small">
+        Syncing
+      </Badge>
+    )
+  }
+  if (anonymitySet.status === 'unavailable') {
+    return <NoDataBadge />
+  }
+
+  if (anonymitySet.status === 'available') {
+    return (
+      <TwoRowCell className="text-right">
+        <TwoRowCell.First>{formatInteger(anonymitySet.value)}</TwoRowCell.First>
+        <TwoRowCell.Second>{anonymitySet.label}</TwoRowCell.Second>
+      </TwoRowCell>
+    )
+  }
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <NotApplicableBadge />
+      </TooltipTrigger>
+      <TooltipContent className="max-w-[320px]">
+        {anonymitySet.description}
+      </TooltipContent>
+    </Tooltip>
+  )
+}
 
 const initialSorting: SortingState = [{ id: 'totalValueLockedUsd', desc: true }]
 
