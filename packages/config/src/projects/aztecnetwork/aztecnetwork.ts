@@ -813,9 +813,10 @@ export const aztecnetwork: ScalingProject = {
         'Sequencing is permissionless with no single privileged actor.',
         'Decentralised sequencing and private execution environment provide excellent realtime, probabilistic CR.',
         'Exit window is infinite due to immutable core contracts + Escape Hatch.',
+        'Passes the walkaway test',
       ],
       missing: [
-        'No deterministic CR: there are no forced transactions from L1.',
+        'No deterministic CR: Self-proposal is probabilistic through the escape hatch.',
       ],
     },
     openSource: {
@@ -832,13 +833,16 @@ export const aztecnetwork: ScalingProject = {
         'Programmable privacy: private state, private and public smart contracts are protocol-native.',
         'Private transactions are proven client-side (private inputs do not leave the device).',
       ],
-      missing: ['The complicated execution environment leaks some metadata.'],
+      missing: [
+        'The complicated execution environment might leak some metadata.',
+      ],
     },
     security: {
-      sentiment: 'warning',
+      sentiment: 'bad',
       status: 'partiallyReviewed',
       points: ['All state is validated with validity proofs on Ethereum.'],
       missing: [
+        'The current proof system has known critical vulnerabilities',
         'No multiproof system.',
         'An exploit in the single proof system combined with private execution can be fatal for the protocol.',
       ],
