@@ -1,0 +1,166 @@
+name: AI Review
+
+on:
+  issue_comment:
+    types: [created]
+  # Dev replay: labeling a PR `ai-review-test` re-runs the latest /ai-review
+  # comment on it using this branch's workflow and code (issue_comment always
+  # runs the version on main).
+  pull_request:
+    types: [labeled]
+
+concurrency:
+  group: ai-review-${{ github.event.issue.number || github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  # Cheap pre-filter so non-member / non-command comments never spin a runner.
+  # Must stay a loose superset of the unit-tested evaluateTrigger, which is the
+  # authoritative gate (command syntax, membership, draft/fork/bot checks).
+  gate:
+    name: Gate
+    if: >
+      ${{
+        (github.event_name == 'pull_request' && github.event.label.name == 'ai-review-test') ||
+        github.event_name == 'issue_comment' &&
+        github.event.issue.pull_request != null &&
+        contains(github.event.comment.body, '/ai-review') &&
+        contains(fromJSON('["MEMBER","OWNER"]'), github.event.comment.author_association)
+      }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      run: ${{ steps.gate.outputs.run }}
+      comment_id: ${{ steps.event.outputs.comment_id }}
+      pr_number: ${{ steps.gate.outputs.pr_number }}
+      head_sha: ${{ steps.gate.outputs.head_sha }}
+      base_sha: ${{ steps.gate.outputs.base_sha }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - run: pnpm install --filter @l2beat/ai-review...
+      - name: Build comment event
+        id: event
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          if [ "${{ github.event_name }}" = "issue_comment" ]; then
+            cp "$GITHUB_EVENT_PATH" "$RUNNER_TEMP/event.json"
+          else
+            COMMENT_ID=$(gh api "repos/$REPO/issues/$PR_NUMBER/comments?per_page=100" \
+              --jq '[.[] | select(.body | startswith("/ai-review"))] | last | .id // empty')
+            if [ -z "$COMMENT_ID" ]; then
+              echo "No /ai-review comment found on PR $PR_NUMBER"
+              exit 1
+            fi
+            gh api "repos/$REPO/issues/comments/$COMMENT_ID" \
+              | jq '{action: "created", comment: ., issue: {number: (.issue_url | split("/") | last | tonumber), pull_request: {url: .issue_url}}}' \
+              > "$RUNNER_TEMP/event.json"
+          fi
+          echo "comment_id=$(jq .comment.id "$RUNNER_TEMP/event.json")" >> "$GITHUB_OUTPUT"
+      - name: Fetch pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh api "repos/${{ github.repository }}/pulls/$(jq .issue.number "$RUNNER_TEMP/event.json")" > "$RUNNER_TEMP/pr.json"
+      - id: gate
+        run: pnpm --filter @l2beat/ai-review gate
+        env:
+          EVENT_JSON_PATH: ${{ runner.temp }}/event.json
+          PR_JSON_PATH: ${{ runner.temp }}/pr.json
+
+  ack:
+    name: Ack
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      pull-requests: write
+    steps:
+      - name: React with eyes on the trigger comment
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          comment-id: ${{ needs.gate.outputs.comment_id }}
+          reactions: eyes
+
+  review:
+    name: Review (no write token)
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.gate.outputs.head_sha }}
+          persist-credentials: false
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - run: pnpm install --filter @l2beat/ai-review...
+      - run: pnpm --filter @l2beat/ai-review review
+        env:
+          REVIEW_OUTPUT_PATH: ${{ runner.temp }}/review.json
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ai-review-output
+          path: ${{ runner.temp }}/review.json
+
+  post:
+    name: Post
+    # ack is included so the final reaction is always written after the eyes.
+    needs: [gate, ack, review]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      - run: pnpm install --filter @l2beat/ai-review...
+      - uses: actions/download-artifact@v7
+        with:
+          name: ai-review-output
+          path: ${{ runner.temp }}
+      - run: pnpm --filter @l2beat/ai-review^... build
+      - name: Validate and render comment
+        run: pnpm --filter @l2beat/ai-review post
+        env:
+          REVIEW_OUTPUT_PATH: ${{ runner.temp }}/review.json
+          COMMENT_PATH: ${{ runner.temp }}/comment.md
+          RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+          LESSONS_VERSION: none
+          ENGINE: stub
+      - name: Post comment
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          issue-number: ${{ needs.gate.outputs.pr_number }}
+          body-path: ${{ runner.temp }}/comment.md
+      - name: Mark trigger comment as done
+        uses: peter-evans/create-or-update-comment@v5
+        with:
+          comment-id: ${{ needs.gate.outputs.comment_id }}
+          reactions: '+1'
+          reactions-edit-mode: replace
