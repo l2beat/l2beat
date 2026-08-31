@@ -26,6 +26,7 @@ export interface ResolvedCropEvaluation {
   status: ProjectCropStatus
   points: string[]
   missing: string[]
+  additionalConsiderations: string[]
   notReviewed: string[]
 }
 
@@ -49,6 +50,7 @@ export function resolveCropEvaluation(
     status,
     points: evaluation.points ?? [],
     missing: evaluation.missing ?? [],
+    additionalConsiderations: evaluation.additionalConsiderations ?? [],
     notReviewed: evaluation.notReviewed ?? [],
   }
 }

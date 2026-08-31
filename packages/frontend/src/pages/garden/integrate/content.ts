@@ -69,6 +69,7 @@ export const ENDPOINTS: EndpointDoc[] = [
       "status": "reviewed",
       "points": ["Pools are immutable and adminless: …"],
       "missing": [],
+      "additionalConsiderations": [],
       "notReviewed": ["The routers and interfaces users actually reach …"]
     },
     "openSource": { "sentiment": "good", "status": "reviewed", ... },

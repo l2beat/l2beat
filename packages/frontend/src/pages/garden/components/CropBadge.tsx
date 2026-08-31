@@ -100,6 +100,10 @@ export function CropBadge({ letter, label, evaluation, delay }: Props) {
         </SentimentText>
         <CropBullets items={evaluation.points} className="mt-1.5" />
         <CropSection title="What is missing" items={evaluation.missing} />
+        <CropSection
+          title="Additional considerations"
+          items={evaluation.additionalConsiderations}
+        />
         <CropSection title="Not reviewed yet" items={evaluation.notReviewed} />
       </TooltipContent>
     </Tooltip>

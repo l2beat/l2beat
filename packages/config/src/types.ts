@@ -1141,6 +1141,8 @@ export interface ProjectCropEvaluation {
   points?: string[]
   /** Checked, and the criterion is not met. */
   missing?: string[]
+  /** Neutral caveats and context - neither a positive finding nor a miss. */
+  additionalConsiderations?: string[]
   /** Criteria we have not assessed yet. Never a claim about the protocol. */
   notReviewed?: string[]
 }

@@ -9,6 +9,7 @@ describe('canonicalCrops', () => {
         status: 'reviewed',
         points: [],
         missing: [],
+        additionalConsiderations: [],
         notReviewed: [],
       })
     })
