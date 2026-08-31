@@ -9,6 +9,8 @@ export interface OssificationSummaryEntry {
   name: string
   shortName?: string
   description: string
+  /** Which part of the site the project belongs to; the table mixes them. */
+  category: 'Layer 2' | 'Layer 3' | 'Privacy' | 'DeFi' | undefined
   isUnderReview: boolean
   icon: string
   href: string | undefined
@@ -46,6 +48,15 @@ export async function getOssificationEntries(): Promise<
           name: project.name,
           shortName: project.shortName,
           description: project.display.description,
+          category: project.scalingInfo
+            ? project.scalingInfo.layer === 'layer3'
+              ? 'Layer 3'
+              : 'Layer 2'
+            : project.privacyInfo
+              ? 'Privacy'
+              : project.defiInfo
+                ? 'DeFi'
+                : undefined,
           isUnderReview: !!project.statuses.reviewStatus,
           icon: manifest.getUrl(`/icons/${project.slug}.png`),
           href: project.scalingInfo

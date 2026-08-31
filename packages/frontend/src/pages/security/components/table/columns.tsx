@@ -14,6 +14,7 @@ import {
 } from '~/components/table/sorting/sortTableValues'
 import { TableLink } from '~/components/table/TableLink'
 import type { OssificationSummaryEntry } from '~/server/features/projects/ossification/getOssificationEntries'
+import { formatTimestamp } from '~/utils/dates'
 import { OssificationTimelineCell } from './OssificationTimelineCell'
 
 const columnHelper = createColumnHelper<OssificationSummaryEntry>()
@@ -42,6 +43,7 @@ export const ossificationColumns = [
             icon: ctx.row.original.icon,
             backgroundColor: undefined,
             description: ctx.row.original.description,
+            nameSecondLine: ctx.row.original.category,
             statuses: {
               underReview: ctx.row.original.isUnderReview
                 ? 'config'
@@ -60,30 +62,44 @@ export const ossificationColumns = [
   columnHelper.accessor('score', {
     header: 'Ossification %',
     cell: (ctx) => {
+      const clockStart = ctx.row.original.timeline.clockStart
+      const sinceLine = clockStart !== null && (
+        <TwoRowCell.Second className="mt-0.5">
+          {`since ${formatTimestamp(clockStart, { mode: 'date' })}`}
+        </TwoRowCell.Second>
+      )
       if (ctx.row.original.isUnverified) {
         // the unverified gate zeroes the score; say so instead of showing a
         // bare number indistinguishable from a young perimeter
         return (
-          <span className="flex items-center">
-            <span className="font-medium tabular-nums">0</span>
-            <Badge
-              type="error"
-              size="extraSmall"
-              padding="small"
-              className="ml-1.5 uppercase"
-            >
-              Unverified
-            </Badge>
-          </span>
+          <TwoRowCell>
+            <TwoRowCell.First className="flex items-center">
+              <span className="tabular-nums">0</span>
+              <Badge
+                type="error"
+                size="extraSmall"
+                padding="small"
+                className="ml-1.5 uppercase"
+              >
+                Unverified
+              </Badge>
+            </TwoRowCell.First>
+            {sinceLine}
+          </TwoRowCell>
         )
       }
       return (
-        <SentimentText
-          sentiment={ossificationSentiment(ctx.getValue())}
-          className="font-medium tabular-nums"
-        >
-          {`${ctx.getValue()}`}
-        </SentimentText>
+        <TwoRowCell>
+          <TwoRowCell.First>
+            <SentimentText
+              sentiment={ossificationSentiment(ctx.getValue())}
+              className="font-medium tabular-nums"
+            >
+              {`${ctx.getValue()}`}
+            </SentimentText>
+          </TwoRowCell.First>
+          {sinceLine}
+        </TwoRowCell>
       )
     },
     meta: {
