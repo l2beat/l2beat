@@ -1,5 +1,3 @@
-import { readFileSync } from 'node:fs'
-import { parseDiffLines } from '../diff/parseDiff.js'
 import { buildReview } from '../post/buildReview.js'
 import { ReviewOutput, RunMeta } from '../post/schema.js'
 import { readJson, requireEnv, writeText } from './io.js'
@@ -11,8 +9,7 @@ const meta = RunMeta.validate({
   engine: process.env.ENGINE ?? 'stub',
   commit_id: requireEnv('HEAD_SHA'),
 })
-const diff = parseDiffLines(readFileSync(requireEnv('DIFF_PATH'), 'utf8'))
 writeText(
   requireEnv('REVIEW_PAYLOAD_PATH'),
-  JSON.stringify(buildReview(review, diff, meta), null, 2),
+  JSON.stringify(buildReview(review, meta), null, 2),
 )

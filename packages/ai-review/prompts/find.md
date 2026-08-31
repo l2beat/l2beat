@@ -1,9 +1,9 @@
-You are reviewing a pull request in this repository. Your working directory is a full checkout of the PR head. The unified diff against the merge base is below.
+You are reviewing a pull request in this repository. Your working directory is a full checkout of the PR head with complete git history. Review the change between the base and head commits listed below.
 
-Goal: find real defects introduced by this diff. Judge the change against the intent stated in the PR title/description first, then the lines.
+Goal: find real defects introduced by this change. Judge it against the intent stated in the PR title/description first, then the code.
 
 Rules:
-- Only report issues introduced or made worse by the diff. Pre-existing problems outside the diff are not findings.
+- Only report issues introduced or made worse by this change. Pre-existing problems are not findings.
 - Every finding must cite concrete evidence (file:line, a command you ran and its output) and sketch a fix.
 - Prefer few, high-confidence findings over many speculative ones. Report at most 8; the top 5 by severity × confidence will be posted.
 - You may run cheap, targeted probes when a finding warrants it: a single test file, a typecheck of one package (`pnpm --filter <pkg> typecheck`). Never run the full test suite, lint, or build, and never install dependencies.

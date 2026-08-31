@@ -8,7 +8,7 @@ export interface FindResult {
   usage?: TokenUsage
 }
 
-const CONTEXT_SOURCES = ['diff', 'pr-description', 'checkout']
+const CONTEXT_SOURCES = ['pr-description', 'checkout']
 
 export async function runFind(
   engine: Engine,

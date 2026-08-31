@@ -1,4 +1,3 @@
-export { parseDiffLines } from './diff/parseDiff.js'
 export type * from './engine/types.js'
 export { runFind } from './find/runFind.js'
 export {

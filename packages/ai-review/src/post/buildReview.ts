@@ -1,4 +1,3 @@
-import { type DiffLines, isInDiff } from '../diff/parseDiff.js'
 import type { Finding, Location, ReviewOutput, RunMeta } from './schema.js'
 
 export const MARKER_PREFIX = '<!-- ai-review'
@@ -30,16 +29,17 @@ export interface ReviewPayload {
   comments: InlineComment[]
 }
 
+// Line numbers come straight from the engine; a hallucinated line outside the
+// diff makes GitHub reject the whole review with a 422.
 export function buildReview(
   review: ReviewOutput,
-  diff: DiffLines,
   meta: RunMeta,
 ): ReviewPayload {
   const inline: InlineComment[] = []
   const topLevel: Finding[] = []
   for (const f of review.findings) {
     const loc = f.location
-    if (loc?.range && isInDiff(diff, loc.file, loc.range)) {
+    if (loc?.range) {
       inline.push({
         path: loc.file,
         line: loc.range.end,
@@ -99,7 +99,7 @@ function buildBody(
     } else {
       lines.push(
         `${review.findings.length} finding(s); ${inlineCount} inline.` +
-          (topLevel.length ? ` ${topLevel.length} outside the diff:` : ''),
+          (topLevel.length ? ` ${topLevel.length} without a line:` : ''),
       )
       for (const f of topLevel) lines.push('', formatFinding(f))
     }

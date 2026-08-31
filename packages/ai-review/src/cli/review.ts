@@ -22,8 +22,8 @@ const prompt = buildPrompt({
   ),
   title: prMeta.title ?? '',
   body: prMeta.body ?? '',
-  diff: readFileSync(requireEnv('DIFF_PATH'), 'utf8'),
-  maxDiffChars: Number(process.env.MAX_DIFF_CHARS || 200_000),
+  baseSha: requireEnv('BASE_SHA'),
+  headSha: requireEnv('HEAD_SHA'),
 })
 
 const { review, usage } = await runFind(engine, {

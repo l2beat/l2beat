@@ -134,9 +134,6 @@ jobs:
       - name: Install PR dependencies for agent probes
         working-directory: pr
         run: pnpm install --ignore-scripts
-      - name: Compute diff
-        working-directory: pr
-        run: git diff "${{ needs.gate.outputs.base_sha }}...${{ needs.gate.outputs.head_sha }}" > "$RUNNER_TEMP/diff.patch"
       - name: Install Codex CLI
         if: env.ENGINE == 'codex'
         env:
@@ -152,7 +149,8 @@ jobs:
           CODEX_MODEL: ${{ vars.AI_REVIEW_MODEL }}
           FIND_MAX_TOKENS: ${{ vars.AI_REVIEW_FIND_MAX_TOKENS }}
           REVIEW_CWD: ${{ github.workspace }}/pr
-          DIFF_PATH: ${{ runner.temp }}/diff.patch
+          BASE_SHA: ${{ needs.gate.outputs.base_sha }}
+          HEAD_SHA: ${{ needs.gate.outputs.head_sha }}
           REVIEW_OUTPUT_PATH: ${{ runner.temp }}/review.json
           PR_META: ${{ needs.gate.outputs.pr_meta }}
       # Probes can read auth.json; make sure nothing from it reaches the posted output.
@@ -167,9 +165,7 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: ai-review-output
-          path: |
-            ${{ runner.temp }}/review.json
-            ${{ runner.temp }}/diff.patch
+          path: ${{ runner.temp }}/review.json
 
   post:
     name: Post
@@ -199,7 +195,6 @@ jobs:
         run: pnpm --filter @l2beat/ai-review post
         env:
           REVIEW_OUTPUT_PATH: ${{ runner.temp }}/review.json
-          DIFF_PATH: ${{ runner.temp }}/diff.patch
           REVIEW_PAYLOAD_PATH: ${{ runner.temp }}/review-payload.json
           RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
           HEAD_SHA: ${{ needs.gate.outputs.head_sha }}
