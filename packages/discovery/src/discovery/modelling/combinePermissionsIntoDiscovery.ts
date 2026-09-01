@@ -32,7 +32,7 @@ export function combinePermissionsIntoDiscovery(
       discovery,
       allAddresses,
     )
-    if (isEmpty(permissionEntry)) {
+    if (Object.keys(permissionEntry).length === 0) {
       continue
     }
     byAddress[entry.address] = permissionEntry
@@ -72,26 +72,31 @@ function buildPermissionEntry(
     )
   }
 
+  // A permission the address does not hold is an absent key, never a key
+  // holding undefined: reading joins the map with Object.assign, which would
+  // copy such a key onto the entry and make the diff report a phantom change.
+  const permissionEntry: PermissionEntry = {}
+
   const receivedPermissions = pick(true)
-  const isEoaWithUpgradePermissions =
+  if (receivedPermissions !== undefined) {
+    permissionEntry.receivedPermissions = receivedPermissions
+  }
+
+  const directlyReceivedPermissions = pick(false)
+  if (directlyReceivedPermissions !== undefined) {
+    permissionEntry.directlyReceivedPermissions = directlyReceivedPermissions
+  }
+
+  if (
     permissionsOutput.eoasWithUpgradePermissions?.includes(entry.address) &&
     !isZeroAddress(entry.address) &&
     !isAlias(entry.address, allAddresses) &&
     upgradesCriticalContract(receivedPermissions, discovery)
-
-  return {
-    receivedPermissions,
-    directlyReceivedPermissions: pick(false),
-    eoaWithUpgradePermissions: isEoaWithUpgradePermissions ? true : undefined,
+  ) {
+    permissionEntry.eoaWithUpgradePermissions = true
   }
-}
 
-function isEmpty(permissionEntry: PermissionEntry): boolean {
-  return (
-    permissionEntry.receivedPermissions === undefined &&
-    permissionEntry.directlyReceivedPermissions === undefined &&
-    permissionEntry.eoaWithUpgradePermissions === undefined
-  )
+  return permissionEntry
 }
 
 // Renounced admin slots point at the zero address, which the modelling

@@ -30,8 +30,6 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     expect(discovery.permissions).toEqual({
       [PROXY_ADMIN]: {
         receivedPermissions: [{ permission: 'upgrade', from: TIMELOCK }],
-        directlyReceivedPermissions: undefined,
-        eoaWithUpgradePermissions: undefined,
       },
     })
   })
@@ -46,11 +44,9 @@ describe(combinePermissionsIntoDiscovery.name, () => {
 
     expect(discovery.permissions).toEqual({
       [COUNCIL]: {
-        receivedPermissions: undefined,
         directlyReceivedPermissions: [
           { permission: 'upgrade', from: TIMELOCK },
         ],
-        eoaWithUpgradePermissions: undefined,
       },
     })
   })
@@ -64,6 +60,20 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     )
 
     expect(Object.keys(discovery.permissions ?? {})).toEqual([PROXY_ADMIN])
+  })
+
+  // Reading joins with Object.assign, so a key holding undefined would land on
+  // the entry and the diff would report a change that did not happen.
+  it('never writes a key holding undefined', () => {
+    const discovery = output([contract(TIMELOCK), contract(PROXY_ADMIN)])
+
+    combinePermissionsIntoDiscovery(
+      discovery,
+      permissions([upgrade(PROXY_ADMIN, TIMELOCK)]),
+    )
+
+    const stored = discovery.permissions?.[PROXY_ADMIN]
+    expect(Object.keys(stored ?? {})).toEqual(['receivedPermissions'])
   })
 
   it('clears a map left over by a previous run', () => {
