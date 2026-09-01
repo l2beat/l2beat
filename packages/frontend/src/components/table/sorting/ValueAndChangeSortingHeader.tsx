@@ -47,10 +47,14 @@ export function ValueAndChangeSortingHeader<TData>({
     'Expected change-sort companion header in the same group',
   )
 
-  const changeHeader = flexRender(
-    changeHeaderInstance.column.columnDef.header,
-    changeHeaderInstance.getContext(),
+  // Call the header fn directly: flexRender treats functions as components
+  // and would return an element, not the '7D%' string.
+  const headerDef = changeHeaderInstance.column.columnDef.header
+  assert(
+    typeof headerDef === 'function',
+    'Expected change-sort header to be a function',
   )
+  const changeHeader = headerDef(changeHeaderInstance.getContext())
   assert(
     typeof changeHeader === 'string',
     'Expected change-sort header to render a string',
