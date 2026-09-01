@@ -1,5 +1,6 @@
-import type { Logger } from '@l2beat/backend-tools'
+import { type Logger, RateLimiter } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 const API_URL = 'https://api.relay.link'
@@ -7,19 +8,8 @@ const API_URL = 'https://api.relay.link'
 interface GetRequestsOptions {
   limit?: number
   continuation?: string
-  user?: string
-  hash?: string
-  originChainId?: number
-  destinationChainId?: number
-  privateChainsToInclude?: string
-  id?: string
-  orderId?: string
   startTimestamp?: number
   endTimestamp?: number
-  startBlock?: number
-  endBlock?: number
-  chainId?: string
-  referrer?: string
   sortBy?: 'createdAt' | 'updatedAt'
   sortDirection?: 'asc' | 'desc'
 }
@@ -29,34 +19,16 @@ type GetAllRequestsOptions = Omit<
   'sortBy' | 'sortDirection'
 >
 
-const CurrencyObject = v.object({
+const Currency = v.object({
   chainId: v.number().optional(),
   address: v.string().optional(),
   symbol: v.string().optional(),
   name: v.string().optional(),
   decimals: v.number().optional(),
-  metadata: v
-    .object({
-      logoURI: v.string().optional(),
-      verified: v.boolean().optional(),
-    })
-    .optional(),
 })
 
-const NullableString = v
-  .union([v.string(), v.null()])
-  .transform((value) => value ?? undefined)
-
-const AppFee = v.object({
-  recipient: NullableString.optional(),
-  bps: NullableString.optional(),
-  amount: NullableString.optional(),
-  amountUsd: NullableString.optional(),
-  amountUsdCurrent: NullableString.optional(),
-})
-
-const CurrencyInOut = v.object({
-  currency: CurrencyObject.optional(),
+const CurrencyAmount = v.object({
+  currency: Currency.optional(),
   amount: v.string().optional(),
   amountFormatted: v.string().optional(),
   amountUsd: v.string().optional(),
@@ -64,112 +36,43 @@ const CurrencyInOut = v.object({
   minimumAmount: v.string().optional(),
 })
 
+const NullableCurrencyAmount = v.union([CurrencyAmount, v.null()])
+
 const RouteSide = v.object({
-  inputCurrency: CurrencyInOut.optional(),
-  outputCurrency: CurrencyInOut.optional(),
-  router: v.string().optional(),
-  includedSwapSources: v.array(v.string()).optional(),
+  inputCurrency: NullableCurrencyAmount.optional(),
+  outputCurrency: NullableCurrencyAmount.optional(),
 })
 
-const Fees = v.object({
-  gas: v.string().optional(),
-  fixed: v.string().optional(),
-  price: v.string().optional(),
-  gateway: v.string().optional(),
+const NullableRouteSide = v.union([RouteSide, v.null()])
+
+const RoutePhase = v.object({
+  origin: NullableRouteSide.optional(),
+  destination: NullableRouteSide.optional(),
 })
 
-const StateChange = v.object({
-  change: v.object({
-    data: v
-      .object({
-        tokenId: v.string().optional(),
-        tokenKind: v.string().optional(),
-        tokenAddress: v.string().optional(),
-      })
-      .optional(),
-    kind: v.string().optional(),
-    balanceDiff: v.string().optional(),
-  }),
-  address: v.string().optional(),
+const NullableRoutePhase = v.union([RoutePhase, v.null()])
+
+const Route = v.object({
+  quoted: NullableRoutePhase.optional(),
+  actual: NullableRoutePhase.optional(),
 })
 
 const Transaction = v.object({
-  fee: v.string().optional(),
-  data: v
-    .object({
-      block: v.number().optional(),
-      to: v.string().optional(),
-      data: v.string().optional(),
-      from: v.string().optional(),
-      value: v.string().optional(),
-      signer: v.string().optional(),
-      instructions: v.unknown().optional(),
-      hash: v.string().optional(),
-      time: v.union([v.string(), v.number()]).optional(),
-      user: v.string().optional(),
-      error: v.unknown().optional(),
-      action: v.unknown().optional(),
-      vin: v.unknown().optional(),
-      vout: v.unknown().optional(),
-    })
-    .optional(),
-  hash: v.string().optional(),
+  txHash: v.string().optional(),
   timestamp: v.number().optional(),
   chainId: v.number().optional(),
-  type: v.string().optional(),
-  block: v.number().optional(),
-  stateChanges: v.array(StateChange).optional(),
 })
 
-export type GetRequestsResponse = v.infer<typeof GetRequestsResponse>
-export const GetRequestsResponse = v.object({
+const RelayV3Response = v.object({
   requests: v.array(
     v.object({
       id: v.string(),
       status: v.string().optional(),
-      user: v.string().optional(),
-      recipient: v.string().optional(),
       data: v.object({
-        failedTxBlockNumber: v.number().optional(),
-        slippageTolerance: v.string().optional(),
-        failReason: v.string().optional(),
-        failedTxHash: v.string().optional(),
-        failedCallData: v.unknown().optional(),
-        refundFailReason: v.string().optional(),
-        fees: Fees.optional(),
-        feesUsd: Fees.optional(),
         inTxs: v.array(Transaction).optional(),
-        stateChanges: v.array(StateChange).optional(),
-        currency: v.string().optional(),
-        currencyObject: CurrencyObject.optional(),
-        feeCurrency: v.string().optional(),
-        feeCurrencyObject: CurrencyObject.optional(),
-        appFeeCurrencyObject: CurrencyObject.optional(),
-        refundCurrencyData: CurrencyInOut.optional(),
-        appFees: v.array(AppFee).optional(),
-        paidAppFees: v.array(AppFee).optional(),
-        metadata: v
-          .object({
-            sender: v.string().optional(),
-            recipient: v.string().optional(),
-            currencyIn: CurrencyInOut.optional(),
-            currencyOut: CurrencyInOut.optional(),
-            currencyGasTopup: CurrencyInOut.optional(),
-            rate: v.string().optional(),
-            route: v
-              .object({
-                origin: RouteSide.optional(),
-                destination: RouteSide.optional(),
-              })
-              .optional(),
-          })
-          .optional(),
-        price: v.string().optional(),
-        usesExternalLiquidity: v.boolean().optional(),
-        timeEstimate: v.number().optional(),
         outTxs: v.array(Transaction).optional(),
+        route: v.union([Route, v.null()]).optional(),
       }),
-      referrer: v.string().optional(),
       createdAt: v.string(),
       updatedAt: v.string(),
     }),
@@ -177,15 +80,72 @@ export const GetRequestsResponse = v.object({
   continuation: v.string().optional(),
 })
 
+type RelayV3Request = v.infer<typeof RelayV3Response>['requests'][number]
+type RelayV3Transaction = v.infer<typeof Transaction>
+
+export type RelayCurrencyAmount = v.infer<typeof CurrencyAmount>
+
+export interface RelayTransaction {
+  hash?: string
+  timestamp?: number
+  chainId?: number
+}
+
+export interface RelayRequest {
+  id: string
+  status?: string
+  sourceTx?: RelayTransaction
+  destinationTx?: RelayTransaction
+  sourceCurrency?: RelayCurrencyAmount
+  destinationCurrency?: RelayCurrencyAmount
+  createdAt: string
+  updatedAt: string
+}
+
+export interface GetRequestsResponse {
+  requests: RelayRequest[]
+  continuation?: string
+}
+
+interface RelayApiClientOptions {
+  callsPerMinute: number
+  maxAttempts: number
+  initialRetryDelayMs: number
+  maxRetryDelayMs: number
+}
+
+const DEFAULT_OPTIONS: RelayApiClientOptions = {
+  callsPerMinute: 200,
+  maxAttempts: 4,
+  initialRetryDelayMs: 1_000,
+  maxRetryDelayMs: 4_000,
+}
+
 export class RelayApiClient {
+  private readonly options: RelayApiClientOptions
+  private readonly rateLimiter: RateLimiter
+
   constructor(
-    private httpClient: HttpClient,
+    private readonly httpClient: HttpClient,
     private logger: Logger,
+    private readonly apiKey: string,
+    options: Partial<RelayApiClientOptions> = {},
   ) {
     this.logger = logger.for(this)
+    this.options = { ...DEFAULT_OPTIONS, ...options }
+    assert(
+      Number.isInteger(this.options.callsPerMinute) &&
+        this.options.callsPerMinute > 0,
+      'Relay callsPerMinute must be a positive integer',
+    )
+    this.rateLimiter = new RateLimiter({
+      callsPerMinute: this.options.callsPerMinute,
+    })
   }
 
-  async getRequests(options: GetRequestsOptions = {}) {
+  async getRequests(
+    options: GetRequestsOptions = {},
+  ): Promise<GetRequestsResponse> {
     const queryParams: Record<string, string> = {}
     for (const key in options) {
       const value = options[key as keyof typeof options]
@@ -193,50 +153,131 @@ export class RelayApiClient {
         queryParams[key] = value.toString()
       }
     }
-    const data = await this.httpClient.fetch(
-      `${API_URL}/requests/v2?${new URLSearchParams(queryParams)}`,
-      {},
-    )
-    return GetRequestsResponse.parse(data)
+
+    const url = `${API_URL}/requests/v3?${new URLSearchParams(queryParams)}`
+    const data = await this.fetchWithRetry(url)
+    const parsed = RelayV3Response.parse(data)
+
+    return {
+      requests: parsed.requests.map(normalizeRequest),
+      continuation: parsed.continuation,
+    }
   }
 
-  async getAllRequests(options: GetAllRequestsOptions = {}) {
-    let limit = options.limit ?? 50
-    const result: GetRequestsResponse = {
-      requests: [],
-    }
+  async getAllRequests(
+    options: GetAllRequestsOptions = {},
+  ): Promise<GetRequestsResponse> {
+    let remaining = options.limit ?? 50
+    assert(
+      Number.isInteger(remaining) && remaining > 0,
+      'Relay requests limit must be a positive integer',
+    )
+
+    const result: GetRequestsResponse = { requests: [] }
     let continuation = options.continuation
+
     do {
-      let res: GetRequestsResponse
-      try {
-        res = await this.getRequests({
-          ...options,
-          sortBy: 'updatedAt',
-          sortDirection: 'asc',
-          limit: Math.min(limit, 50),
-          continuation,
-        })
-      } catch (error) {
-        if (result.requests.length === 0) {
-          throw error
-        }
-        this.logger.warn('Returning partial requests', {
-          fetched: result.requests.length,
-          requested: options.limit ?? 50,
-          continuation,
-          error,
-        })
-        break
-      }
-      for (const req of res.requests) {
-        if (limit > 0) {
-          limit -= 1
-          result.requests.push(req)
-        }
-      }
+      const previousContinuation = continuation
+      const res = await this.getRequests({
+        ...options,
+        sortBy: 'updatedAt',
+        sortDirection: 'asc',
+        limit: Math.min(remaining, 50),
+        continuation,
+      })
+
+      result.requests.push(...res.requests.slice(0, remaining))
+      remaining -= res.requests.length
       continuation = res.continuation
-    } while (continuation && limit > 0)
+
+      if (continuation && continuation === previousContinuation) {
+        throw new Error('Relay API returned an unchanged continuation cursor')
+      }
+    } while (continuation && remaining > 0)
+
     result.continuation = continuation
     return result
   }
+
+  private async fetchWithRetry(url: string): Promise<unknown> {
+    for (let attempt = 1; ; attempt++) {
+      try {
+        return await this.rateLimiter.call(() =>
+          this.httpClient.fetch(url, {
+            headers: { 'x-api-key': this.apiKey },
+          }),
+        )
+      } catch (error) {
+        if (
+          attempt >= this.options.maxAttempts ||
+          !isRetryableRelayError(error)
+        ) {
+          throw error
+        }
+
+        const delay = Math.min(
+          this.options.initialRetryDelayMs * 2 ** (attempt - 1),
+          this.options.maxRetryDelayMs,
+        )
+        this.logger.warn('Retrying Relay API page', {
+          attempt,
+          delay,
+          error: error instanceof Error ? error.message : error,
+        })
+        if (delay > 0) {
+          await new Promise((resolve) => setTimeout(resolve, delay))
+        }
+      }
+    }
+  }
+}
+
+function normalizeRequest(request: RelayV3Request): RelayRequest {
+  const route = request.data.route
+  const actual = route?.actual
+  const quoted = route?.quoted
+
+  return {
+    id: request.id,
+    status: request.status,
+    sourceTx: normalizeTransaction(request.data.inTxs?.[0]),
+    destinationTx: normalizeTransaction(request.data.outTxs?.[0]),
+    sourceCurrency:
+      actual?.origin?.inputCurrency ??
+      quoted?.origin?.inputCurrency ??
+      undefined,
+    destinationCurrency:
+      actual?.destination?.outputCurrency ??
+      quoted?.destination?.outputCurrency ??
+      undefined,
+    createdAt: request.createdAt,
+    updatedAt: request.updatedAt,
+  }
+}
+
+function normalizeTransaction(
+  transaction: RelayV3Transaction | undefined,
+): RelayTransaction | undefined {
+  if (!transaction) {
+    return undefined
+  }
+  return {
+    hash: transaction.txHash,
+    timestamp: transaction.timestamp,
+    chainId: transaction.chainId,
+  }
+}
+
+function isRetryableRelayError(error: unknown): boolean {
+  if (!(error instanceof Error)) {
+    return true
+  }
+
+  const match = /^HTTP error: (\d{3})/.exec(error.message)
+  if (!match) {
+    return true
+  }
+
+  const status = Number(match[1])
+  return status === 408 || status === 429 || status >= 500
 }
