@@ -414,7 +414,7 @@ describe('discovery config.jsonc', () => {
         ].join('\n\n'),
       )
     }
-  }).timeout(30000)
+  }).timeout(10_000)
 })
 
 function compareLeftKeysInRight(
