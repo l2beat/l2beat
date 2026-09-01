@@ -160,7 +160,7 @@ describe('discovery config.jsonc', () => {
         }
       }
     }
-  }).timeout(30000)
+  })
 
   it('has full discovery of each non-legacy entrypoint in its project', () => {
     // Get any config to have access to entrypoints from globalConfig.json
