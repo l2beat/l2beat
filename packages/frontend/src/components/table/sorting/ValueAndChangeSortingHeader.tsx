@@ -47,8 +47,6 @@ export function ValueAndChangeSortingHeader<TData>({
     'Expected change-sort companion header in the same group',
   )
 
-  // Call the header fn directly: flexRender treats functions as components
-  // and would return an element, not the '7D%' string.
   const headerDef = changeHeaderInstance.column.columnDef.header
   assert(
     typeof headerDef === 'function',
