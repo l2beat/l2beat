@@ -82,3 +82,77 @@ export const BlockscoutGetInternalTransactionsResponse = v.object({
   items: v.array(BlockscoutInternalTransaction),
   next_page_params: v.union([BlockscoutNextPageParams, v.null()]),
 })
+
+const NullableString = v.union([v.string(), v.null()])
+
+const BlockscoutCompilerSettings = v.object({
+  optimizer: v
+    .object({
+      enabled: v.boolean().optional(),
+      runs: v.number().optional(),
+    })
+    .optional(),
+  evmVersion: v.string().optional(),
+  viaIR: v.boolean().optional(),
+  metadata: v
+    .object({
+      bytecodeHash: v.string().optional(),
+      useLiteralContent: v.boolean().optional(),
+      appendCBOR: v.boolean().optional(),
+    })
+    .optional(),
+  debug: v
+    .object({
+      revertStrings: v.string().optional(),
+      debugInfo: v.array(v.string()).optional(),
+    })
+    .optional(),
+  remappings: v.array(v.string()).optional(),
+  libraries: v.unknown().optional(),
+})
+
+export type BlockscoutSmartContract = v.infer<typeof BlockscoutSmartContract>
+
+export const BlockscoutSmartContract = v.object({
+  is_verified: v.boolean(),
+  name: NullableString.optional(),
+  compiler_version: NullableString.optional(),
+  optimization_enabled: v.boolean().optional(),
+  optimization_runs: v.union([v.number(), v.null()]).optional(),
+  optimizations_runs: v.union([v.number(), v.null()]).optional(),
+  evm_version: NullableString.optional(),
+  abi: v.union([v.string(), v.array(v.unknown()), v.null()]).optional(),
+  source_code: NullableString.optional(),
+  file_path: NullableString.optional(),
+  compiler_settings: v.union([BlockscoutCompilerSettings, v.null()]).optional(),
+  constructor_args: NullableString.optional(),
+  additional_sources: v
+    .union([
+      v.array(
+        v.object({
+          file_path: v.string(),
+          source_code: v.string(),
+        }),
+      ),
+      v.null(),
+    ])
+    .optional(),
+  external_libraries: v
+    .union([
+      v.array(
+        v.object({
+          name: v.string(),
+          address_hash: v.string(),
+        }),
+      ),
+      v.null(),
+    ])
+    .optional(),
+  language: NullableString.optional(),
+})
+
+export type BlockscoutAddressInfo = v.infer<typeof BlockscoutAddressInfo>
+
+export const BlockscoutAddressInfo = v.object({
+  creation_transaction_hash: NullableString.optional(),
+})

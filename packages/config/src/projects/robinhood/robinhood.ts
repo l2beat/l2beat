@@ -187,7 +187,12 @@ export const robinhood: ScalingProject = orbitStackL2({
         url: 'https://rpc.mainnet.chain.robinhood.com',
         callsPerMinute: 600,
       },
+      {
+        type: 'blockscoutV2',
+        url: 'https://robinhoodchain.blockscout.com/api/v2',
+      },
       { type: 'blockscout', url: 'https://robinhoodchain.blockscout.com/api' },
+      { type: 'sourcify', chainId: 4663 },
     ],
   },
   usesEthereumBlobs: true,

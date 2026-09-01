@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import { Response } from 'node-fetch'
 import type { HttpClient } from '../../clients'
 import { BlockscoutV2Client } from './BlockscoutV2Client'
 
@@ -118,6 +119,80 @@ describe(BlockscoutV2Client.name, () => {
       await expect(() =>
         blockscoutClient.getInternalTransactions(address),
       ).toBeRejectedWith('At .items: Expected array, got undefined.')
+    })
+  })
+
+  describe(BlockscoutV2Client.prototype.getSmartContract.name, () => {
+    it('fetches and parses smart contract metadata', async () => {
+      const address = EthereumAddress.random()
+      const response = {
+        is_verified: true,
+        name: 'Example',
+        source_code: 'contract Example {}',
+        file_path: 'Example.sol',
+        optimization_runs: null,
+      }
+      const httpClient = mockObject<HttpClient>({
+        fetchRaw: mockFn().resolvesTo(
+          new Response(JSON.stringify(response), { status: 200 }),
+        ),
+      })
+      const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)
+
+      const result = await blockscoutClient.getSmartContract(address)
+
+      expect(httpClient.fetchRaw).toHaveBeenCalledWith(
+        `${API_URL}/smart-contracts/${address.toString()}`,
+        { timeout: 10000 },
+      )
+      expect(result).toEqual(response)
+    })
+
+    it('returns undefined for a contract without source metadata', async () => {
+      const httpClient = mockObject<HttpClient>({
+        fetchRaw: mockFn().resolvesTo(new Response('', { status: 404 })),
+      })
+      const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)
+
+      const result = await blockscoutClient.getSmartContract(
+        EthereumAddress.random(),
+      )
+
+      expect(result).toEqual(undefined)
+    })
+
+    it('throws on an upstream error', async () => {
+      const httpClient = mockObject<HttpClient>({
+        fetchRaw: mockFn().resolvesTo(
+          new Response('', { status: 500, statusText: 'Internal Error' }),
+        ),
+      })
+      const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)
+
+      await expect(
+        blockscoutClient.getSmartContract(EthereumAddress.random()),
+      ).toBeRejectedWith('HTTP error: 500 Internal Error')
+    })
+  })
+
+  describe(BlockscoutV2Client.prototype.getAddress.name, () => {
+    it('fetches and parses address information', async () => {
+      const address = EthereumAddress.random()
+      const creationTransactionHash =
+        '0x8ee5e5adb4dafb1a30a367c780f7db156f933c8d453efb7736c6a0be22ce5ac1'
+      const callMock = mockFn().resolvesTo({
+        hash: address.toString(),
+        creation_transaction_hash: creationTransactionHash,
+      })
+      const client = new BlockscoutV2Client(mockObject<HttpClient>(), API_URL)
+      client.call = callMock
+
+      const result = await client.getAddress(address)
+
+      expect(callMock).toHaveBeenCalledWith('addresses', address.toString())
+      expect(result).toEqual({
+        creation_transaction_hash: creationTransactionHash,
+      })
     })
   })
 })

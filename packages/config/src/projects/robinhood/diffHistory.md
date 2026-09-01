@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x2b84d0d09e78f471ef88d0bda3c8091c33182b35
+
+# Diff at Mon, 24 Aug 2026 17:01:43 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@13eb47c755f8f1545e987d7aa8482c1840bc9dfd block: 1786359815
+- current timestamp: 1787590711
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786359815 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (eth:0x23A19d23e89166adedbDcB432518AB01e4272D94) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
++++ description: ArbOS version derived from known wasmModuleRoots.
+      values.arbOsFromWmRoot:
+-        "0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97"
++        "ArbOS v61 wasmModuleRoot"
+      usedTypes.0.arg.0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97:
++        "ArbOS v61 wasmModuleRoot"
+    }
+```
+
+```diff
+    contract SafeL2 (robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C) [GnosisSafe] {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes.0:
+-        null
++        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5"
+      implementationNames.robinhood:0x3A0C507Cc7F8785C877359ad49d0476966d17a1C:
+-        ""
++        "SafeProxy"
+    }
+```
+
 Generated with discovered.json: 0xc5244324694475bfa66bbff62c0ac74f82a0f54a
 
 # Diff at Mon, 10 Aug 2026 11:04:49 GMT:

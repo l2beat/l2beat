@@ -70,36 +70,34 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
       'COINGECKO_API_KEY',
     ]),
     multicall: chainConfig.multicall,
-    explorer: ensureArray(chainConfig.explorer).map((e) =>
-      e.type === 'blockscout'
-        ? { type: e.type, url: e.url, unsupported: e.unsupported }
-        : e.type === 'sourcify'
-          ? { type: e.type, chainId: chainConfig.chainId }
-          : e.type === 'etherscan'
-            ? {
-                type: e.type,
-                chainId: chainConfig.chainId,
-                url: e.customUrl ?? 'https://api.etherscan.io/v2/api',
-                apiKey: e.customUrl
-                  ? ''
-                  : env.string([
-                      'ETHERSCAN_API_KEY_FOR_DISCOVERY',
-                      'ETHERSCAN_API_KEY',
-                    ]),
-                unsupported: e.unsupported,
-              }
-            : ({
-                type: e.type,
-                url: e.url,
-                apiKey: env.string([
-                  `${ENV_NAME}_ETHERSCAN_V1_API_KEY_FOR_DISCOVERY`,
-                  `${ENV_NAME}_ETHERSCAN_V1_API_KEY`,
-                  //support for legacy local configs
-                  `DISCOVERY_${ENV_NAME}_ETHERSCAN_V1_API_KEY`,
+    explorer: ensureArray(chainConfig.explorer).map((e): ExplorerConfig => {
+      switch (e.type) {
+        case 'blockscoutV2':
+          return { type: e.type, url: e.url }
+        case 'blockscout':
+        case 'routescan':
+          return {
+            type: e.type,
+            url: e.url,
+            unsupported: e.unsupported,
+          }
+        case 'sourcify':
+          return { type: e.type, chainId: chainConfig.chainId }
+        case 'etherscan':
+          return {
+            type: e.type,
+            chainId: chainConfig.chainId,
+            url: e.customUrl ?? 'https://api.etherscan.io/v2/api',
+            apiKey: e.customUrl
+              ? ''
+              : env.string([
+                  'ETHERSCAN_API_KEY_FOR_DISCOVERY',
+                  'ETHERSCAN_API_KEY',
                 ]),
-                unsupported: e.unsupported,
-              } as ExplorerConfig),
-    ),
+            unsupported: e.unsupported,
+          }
+      }
+    }),
   }
 }
 

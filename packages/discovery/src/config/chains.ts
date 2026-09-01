@@ -22,6 +22,7 @@ interface ChainConfig {
         url: string
         unsupported?: EtherscanUnsupportedMethods
       }
+    | { type: 'blockscoutV2'; url: string }
     | { type: 'sourcify' }
   >
   multicall: MulticallConfig | undefined
@@ -62,6 +63,10 @@ export const chains: ChainConfig[] = [
     shortName: 'robinhood',
     multicall: getMulticall3Config(406),
     explorer: [
+      {
+        type: 'blockscoutV2',
+        url: 'https://robinhoodchain.blockscout.com/api/v2',
+      },
       {
         type: 'blockscout',
         url: 'https://robinhoodchain.blockscout.com/api',
