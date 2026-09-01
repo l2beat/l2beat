@@ -5,6 +5,7 @@ import {
   assert,
   formatAsAsciiTable,
   formatNumberWithCommas,
+  isDateOnly,
 } from '@l2beat/shared-pure'
 import { type Parser, v } from '@l2beat/validate'
 import fs from 'fs/promises'
@@ -45,36 +46,35 @@ interface ExtractedStakingProjectData
   project: StakingProjectId
 }
 
-interface PolygonValidator {
-  id: number
-  name: string
-  totalStaked: number
-}
+// Stake amounts may arrive as numbers or numeric strings.
+const StakeAmountSchema = v.union([v.number(), v.string()])
 
-interface PolygonValidatorsResponse {
-  result: PolygonValidator[]
-}
+const PolygonValidatorSchema = v.object({
+  id: v.number(),
+  name: v.string(),
+  totalStaked: StakeAmountSchema,
+})
+type PolygonValidator = v.infer<typeof PolygonValidatorSchema>
 
-interface AztecProvider {
-  identifier: string
-  name: string
-  totalStaked: number
-  metadata?: {
-    name?: string
-  }
-}
+const PolygonValidatorsResponseSchema = v.object({
+  result: v.array(PolygonValidatorSchema),
+})
 
-interface AztecProvidersResponse {
-  data: AztecProvider[]
-  pagination?: {
-    page: number
-    limit: number
-    totalPages: number
-  }
-  aggregates?: {
-    totalStaked?: number
-  }
-}
+const AztecProviderSchema = v.object({
+  identifier: v.string(),
+  name: v.string(),
+  totalStaked: StakeAmountSchema,
+  metadata: v.object({ name: v.string().optional() }).optional(),
+})
+type AztecProvider = v.infer<typeof AztecProviderSchema>
+
+const AztecProvidersResponseSchema = v.object({
+  data: v.array(AztecProviderSchema),
+  pagination: v.object({ totalPages: v.number() }).optional(),
+  aggregates: v
+    .object({ totalStaked: StakeAmountSchema.optional() })
+    .optional(),
+})
 
 type StakingApiFetcher = () => Promise<StakingDataset>
 
@@ -421,8 +421,8 @@ async function fetchEthereumValidators(): Promise<StakingDataset> {
 
 async function fetchGnosisValidators(): Promise<StakingDataset> {
   const [validatorMetrics, stakeMetrics] = await Promise.all([
-    fetchJson<unknown>(GNOSIS_ACTIVE_VALIDATORS_URL),
-    fetchJson<unknown>(GNOSIS_STAKED_GNO_URL),
+    fetchJson(GNOSIS_ACTIVE_VALIDATORS_URL),
+    fetchJson(GNOSIS_STAKED_GNO_URL),
   ])
   const validatorSnapshot = v
     .array(GnosisLatestMetricSchema)
@@ -464,11 +464,9 @@ async function executeDuneSql<T>(sql: string, schema: Parser<T>): Promise<T> {
 }
 
 async function fetchPolygonValidators(): Promise<StakingDataset> {
-  const response = await fetchJson<PolygonValidatorsResponse>(
-    POLYGON_VALIDATORS_URL,
+  const response = PolygonValidatorsResponseSchema.parse(
+    await fetchJson(POLYGON_VALIDATORS_URL),
   )
-
-  assertArray(response.result, 'Polygon validators response is missing result')
 
   const entities = response.result.map((validator) => ({
     name: getPolygonValidatorName(validator),
@@ -490,14 +488,14 @@ async function fetchPolygonValidators(): Promise<StakingDataset> {
 }
 
 async function fetchAztecProviders(): Promise<StakingDataset> {
-  const firstPage = await fetchJson<AztecProvidersResponse>(
-    getUrlWithParams(AZTEC_PROVIDERS_URL, {
-      page: '1',
-      limit: String(DEFAULT_AZTEC_PAGE_SIZE),
-    }),
+  const firstPage = AztecProvidersResponseSchema.parse(
+    await fetchJson(
+      getUrlWithParams(AZTEC_PROVIDERS_URL, {
+        page: '1',
+        limit: String(DEFAULT_AZTEC_PAGE_SIZE),
+      }),
+    ),
   )
-
-  assertArray(firstPage.data, 'Aztec providers response is missing data')
 
   const totalPages = firstPage.pagination?.totalPages ?? 1
   const remainingPages = Array.from(
@@ -505,20 +503,21 @@ async function fetchAztecProviders(): Promise<StakingDataset> {
     (_, index) => index + 2,
   )
   const remainingResponses = await Promise.all(
-    remainingPages.map((page) =>
-      fetchJson<AztecProvidersResponse>(
-        getUrlWithParams(AZTEC_PROVIDERS_URL, {
-          page: String(page),
-          limit: String(DEFAULT_AZTEC_PAGE_SIZE),
-        }),
+    remainingPages.map(async (page) =>
+      AztecProvidersResponseSchema.parse(
+        await fetchJson(
+          getUrlWithParams(AZTEC_PROVIDERS_URL, {
+            page: String(page),
+            limit: String(DEFAULT_AZTEC_PAGE_SIZE),
+          }),
+        ),
       ),
     ),
   )
 
-  const providers = [firstPage, ...remainingResponses].flatMap((response) => {
-    assertArray(response.data, 'Aztec providers response is missing data')
-    return response.data
-  })
+  const providers = [firstPage, ...remainingResponses].flatMap(
+    (response) => response.data,
+  )
   const entities = providers.map((provider) => ({
     name: getAztecProviderName(provider),
     stakeBaseUnits: toFiniteNumber(
@@ -543,7 +542,7 @@ async function fetchAztecProviders(): Promise<StakingDataset> {
   }
 }
 
-async function fetchJson<T>(url: string): Promise<T> {
+async function fetchJson(url: string): Promise<unknown> {
   const response = await fetch(url)
   if (!response.ok) {
     throw new Error(
@@ -551,7 +550,7 @@ async function fetchJson<T>(url: string): Promise<T> {
     )
   }
 
-  return (await response.json()) as T
+  return await response.json()
 }
 
 function getLargestEntities(
@@ -583,15 +582,6 @@ function getUrlWithParams(url: string, params: Record<string, string>): string {
   return parsed.toString()
 }
 
-function assertArray(
-  value: unknown,
-  message: string,
-): asserts value is unknown[] {
-  if (!Array.isArray(value)) {
-    throw new Error(message)
-  }
-}
-
 function sumStake(entities: StakingEntity[]): number {
   return entities.reduce((sum, entity) => sum + entity.stakeBaseUnits, 0)
 }
@@ -613,7 +603,7 @@ function toFiniteNumber(value: unknown, name: string): number {
 
 function toSnapshotDate(value: string, name: string): string {
   const date = value.match(/^\d{4}-\d{2}-\d{2}/)?.[0]
-  if (!date || Number.isNaN(Date.parse(`${date}T00:00:00Z`))) {
+  if (!date || !isDateOnly(date)) {
     throw new Error(`${name} is not a valid date: ${value}`)
   }
 
