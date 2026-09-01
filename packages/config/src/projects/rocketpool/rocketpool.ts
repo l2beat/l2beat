@@ -33,6 +33,15 @@ const membersNeeded = (contract: string): number =>
 const oracleSetSize = Number(value('RocketDAONodeTrusted', 'memberCount'))
 const securityCouncilSize = Number(value('RocketDAOSecurity', 'memberCount'))
 
+// Registration of new node operators is a live protocol switch; render its
+// state from discovery so the page never hardcodes it.
+const registrationStatus = discovery.getContractValue<boolean>(
+  'RocketDAOProtocolSettingsNode',
+  'getRegistrationEnabled',
+)
+  ? 'enabled'
+  : 'disabled'
+
 // The council's seats are discovered from its membership register, and each
 // seat's own signing threshold is read from whatever contract holds it, so no
 // sibling is referenced by name.
@@ -59,12 +68,17 @@ export const rocketpool: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `Rocket Pool is a permissionless Ethereum staking pool. Depositors receive ${value('RocketTokenRETH', 'symbol')}, a token whose redemption price is set by a permissioned oracle set of ${oracleSetSize} node operators: ${membersNeeded('RocketDAONodeTrusted')} of them agreeing writes the network balance from which the price is derived, bounded to a ${percent('RocketDAOProtocolSettingsNetwork', 'getMaxRethDelta')} move per report and to one report every ${duration('RocketDAOProtocolSettingsNetwork', 'getSubmitBalancesFrequency')}. Validator keys are run by permissionless node operators who post their own ETH bond; staking ${value('RocketTokenRPL', 'symbol')} is optional. Redeeming ${value('RocketTokenRETH', 'symbol')} on-chain is open to any holder and cannot be paused, but pays only out of the protocol's liquid buffer. The same oracle set is the only body that can change protocol code, after a delay of ${duration('RocketDAOProtocolSettingsSecurity', 'getUpgradeDelay')} that a security council of ${securityCouncilSize} can veto.`,
+    description: `Rocket Pool is a permissionless Ethereum staking pool. Depositors receive ${value('RocketTokenRETH', 'symbol')}, a token whose redemption price is set by a permissioned oracle set of ${oracleSetSize} node operators: ${membersNeeded('RocketDAONodeTrusted')} of them agreeing writes the network balance from which the price is derived, bounded to a ${percent('RocketDAOProtocolSettingsNetwork', 'getMaxRethDelta')} move per report and to one report every ${duration('RocketDAOProtocolSettingsNetwork', 'getSubmitBalancesFrequency')}. Validator keys are run by node operators who post their own ETH bond; staking ${value('RocketTokenRPL', 'symbol')} is optional, and registration of new operators is gated by a governance switch, currently ${registrationStatus}. Redeeming ${value('RocketTokenRETH', 'symbol')} on-chain is open to any holder and cannot be paused, but pays only out of the protocol's liquid buffer. The same oracle set is the only body that can change protocol code, after a delay of ${duration('RocketDAOProtocolSettingsSecurity', 'getUpgradeDelay')} that a security council of ${securityCouncilSize} can veto.`,
     detailedDescription: readProjectMarkdown(
       'rocketpool',
       'detailedDescription',
       {
         oracleSetSize,
+        registrationStatus,
+        votingStakeCap: percent(
+          'RocketDAOProtocolSettingsNode',
+          'getMaximumStakeForVotingPower',
+        ),
         oracleSetQuorum: membersNeeded('RocketDAONodeTrusted'),
         oracleSetBond: value('RocketDAONodeTrusted', 'memberBond'),
         consensusThreshold: percent(

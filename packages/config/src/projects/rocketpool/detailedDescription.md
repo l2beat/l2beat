@@ -1,4 +1,4 @@
-Rocket Pool is an Ethereum liquid staking protocol. Anyone can deposit ETH and receive rETH, a token that appreciates against ETH as the pool's validators earn rewards. Anyone can also become a node operator: run validators for the pool by putting up part of the stake, with the pool supplying the remainder. Node operators never take custody of depositors' ETH — validator withdrawal credentials point at a protocol contract, and that contract splits every withdrawal between the operator and the pool using onchain accounting.
+Rocket Pool is an Ethereum liquid staking protocol. Anyone can deposit ETH and receive rETH, a token that appreciates against ETH as the pool's validators earn rewards. Node operators run validators for the pool by putting up part of the stake, with the pool supplying the remainder. Node operators never take custody of depositors' ETH — validator withdrawal credentials point at a protocol contract, and that contract splits every withdrawal between the operator and the pool using onchain accounting.
 
 A permissioned set of {{oracleSetSize}} node operators, the oracle set, reports staking data from the consensus layer, thus determining the price of rETH. The same set is the only actor that can upgrade the protocol core contracts.
 
@@ -8,7 +8,7 @@ Depositing is open to anyone, it requires a minimum of {{minimumDeposit}} ETH an
 
 ### Redeeming
 
-Redeeming is permissionless, although it does depend on liquidity: redeeming requires the ETH held by the rETH token contract plus the deposit pool's unassigned surplus to cover the payout. Governance targets a buffer of {{targetCollateralRate}} of the token's backing and when the buffer is thin, as it is whenever the validator queue is absorbing deposits, onchain redemption reverts and holders have to use the secondary market or wait. Staked ETH is not redeemable on demand: the protocol does not implement EIP-7002, so no contract can trigger a validator exit, and ETH comes back only when node operators exit voluntarily.
+Redeeming is permissionless, although it does depend on liquidity: redeeming requires the ETH held by the rETH token contract plus the deposit pool's unassigned surplus to cover the payout. Governance targets a buffer of {{targetCollateralRate}} of the token's backing and when the buffer is thin, as it is whenever the validator queue is absorbing deposits, onchain redemption reverts and holders have to use the secondary market or wait. Staked ETH is not redeemable on demand: the protocol does not implement EIP-7002, so no contract can trigger a validator exit; ETH comes back only when validators leave the beacon chain, at the operator's initiative or through slashing.
 
 ### The exchange rate
 
@@ -22,7 +22,7 @@ The oracle set also writes the RPL price through `RocketNetworkPrices.submitPric
 
 ### Node operators
 
-Anyone can run validators for the pool. The operator posts part of each validator's 32 ETH as a bond and borrows the rest from the deposit pool. Staking RPL is optional: it is not needed to run validators, but it adds governance voting power and earns a share of protocol revenue. Unstaking RPL takes two steps with a waiting period of {{unstakingPeriod}}. Operators who still run legacy validators must keep a minimum RPL stake in proportion to the ETH they borrowed.
+Node operators post part of each validator's 32 ETH as a bond and borrow the rest from the deposit pool. Registration of new operators is controlled by a protocol switch, currently {{registrationStatus}}; the switch does not affect operators already registered. Staking RPL is optional: it is not needed to run validators, but it adds governance voting power and earns a share of protocol revenue. Unstaking RPL takes two steps with a waiting period of {{unstakingPeriod}}. Operators who still run legacy validators must keep a minimum RPL stake in proportion to the ETH they borrowed.
 
 Operators can also be penalised in ETH. For the current validator contracts, a penalty requires {{megapoolPenaltyThreshold}} of the oracle set and is capped at {{megapoolPenaltyCap}} ETH per penalty and over a rolling window. For the legacy contracts, penalties are capped by a rate that is currently {{maxPenaltyRate}}, which disables them entirely.
 
@@ -34,7 +34,7 @@ The oracle set can upgrade the protocol core contracts by reaching the {{consens
 
 The lane's reach is total: an executed proposal can replace or add protocol contracts, and any registered contract can write the protocol's entire state — so everything, including the deposit pool and the balance oracle, is replaceable through it. Only the vault and token contracts themselves keep their code.
 
-Token-holder governance cannot upgrade anything. `RocketDAOProtocolProposals` has no upgrade entry point, and the upgrade contract accepts no caller but the oracle set's proposal contract.
+RPL governance cannot upgrade anything. `RocketDAOProtocolProposals` has no upgrade entry point, and the upgrade contract accepts no caller but the oracle set's proposal contract.
 
 #### The security council
 
@@ -42,13 +42,13 @@ Token-holder governance cannot upgrade anything. `RocketDAOProtocolProposals` ha
 
 It can cancel a pending upgrade. `RocketDAOSecurityUpgrade.proposeVeto` requires the change to still be inside its waiting period and passes at {{upgradeVetoQuorum}} of the council's seats. `RocketDAOProposal.getState` returns `Succeeded` the moment votes reach the threshold rather than at the end of the voting window, so a veto needs to land inside that window.
 
-It can also flip an allowlist of settings. `RocketDAOSecurityProposals.proposalSettingUint`, `proposalSettingBool`, and `proposalSettingAddress` check a per-key flag in the registry and revert otherwise. Which keys are open is itself registry state that token-holder governance sets, one flag per setting. Today the open keys are on/off switches: deposits, deposit assignment, node registration, node deposits, smoothing-pool registration, vacant validators, bond reduction, withdrawable submission, auction lot creation and bidding, and the oracle reporting switches. The council can therefore halt new deposits and freeze the oracle, immediately and with no delay of its own. It cannot upgrade a contract, move funds, or stop redemption.
+It can also flip an allowlist of settings. `RocketDAOSecurityProposals.proposalSettingUint`, `proposalSettingBool`, and `proposalSettingAddress` check a per-key flag in the registry and revert otherwise. Which keys are open is itself registry state that RPL governance sets, one flag per setting. Today the open keys are on/off switches: deposits, deposit assignment, node registration, node deposits, smoothing-pool registration, vacant validators, bond reduction, withdrawable submission, auction lot creation and bidding, and the oracle reporting switches. The one numeric key is a capped additive nudge to the node commission share. The council can therefore halt new deposits and freeze the oracle, immediately and with no delay of its own. It cannot upgrade a contract, move funds, or stop redemption.
 
-Council membership is set by token-holder governance, not by the council: `RocketDAOProtocolProposals.proposalSecurityInvite`, `proposalSecurityKick`, and `proposalSecurityReplace`.
+Council membership is set by RPL governance, not by the council: `RocketDAOProtocolProposals.proposalSecurityInvite`, `proposalSecurityKick`, and `proposalSecurityReplace`.
 
-#### Token-holder governance
+#### RPL governance
 
-RPL holders vote through `RocketDAOProtocolProposal`. Voting power is proven optimistically rather than tallied on-chain: a proposer stakes {{proposalBond}} RPL on a claimed voting-power tree, anyone can stake {{challengeBond}} RPL to challenge a node of it, and a challenge left unanswered for {{challengePeriod}} defeats the proposal and transfers the bond to the challengers, refereed by `RocketDAOProtocolVerifier`. A proposal needs {{proposalQuorum}} of voting power in support and is blocked by {{proposalVetoQuorum}} voting to veto.
+Voting is by registered node operators through `RocketDAOProtocolProposal`, weighted by the square root of their staked RPL and counted only up to {{votingStakeCap}} of their bonded ETH's value; RPL held outside a registered node carries no vote. Voting power is proven optimistically rather than tallied on-chain: a proposer stakes {{proposalBond}} RPL on a claimed voting-power tree, anyone can stake {{challengeBond}} RPL to challenge a node of it, and a challenge left unanswered for {{challengePeriod}} defeats the proposal and transfers the bond to the challengers, refereed by `RocketDAOProtocolVerifier`. A proposal needs {{proposalQuorum}} of voting power in support and is blocked by {{proposalVetoQuorum}} voting to veto.
 
 What passes can set any protocol parameter, split reward inflation between claimant groups, spend the treasury through `RocketClaimDAO`, and change the security council's membership.
 
