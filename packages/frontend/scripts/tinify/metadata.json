@@ -1633,5 +1633,6 @@
   "static/images/architecture/lido-deposits.png": "350c1a41430b2bc79ebfcfe0e67f5b05",
   "static/images/architecture/lido-withdrawals.png": "ca736500510380c1010580cdb46c3122",
   "static/icons/lido.png": "648b98c9d0f694326890e51a19376bc6",
-  "static/meta-images/defi/projects/lido/opengraph-image.png": "5c52004fa44a8e2d84da5a7b2cd18801"
+  "static/meta-images/defi/projects/lido/opengraph-image.png": "5c52004fa44a8e2d84da5a7b2cd18801",
+  "static/meta-images/privacy/projects/payy/opengraph-image.png": "45949435ae3803f1fbafa478e33ffb7d"
 }

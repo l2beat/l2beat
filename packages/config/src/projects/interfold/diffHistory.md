@@ -1,4 +1,386 @@
-Generated with discovered.json: 0x06a71415eaa12dc6641376ab618529d879eebf40
+Generated with discovered.json: 0xf8ee632f970472be05986b08bad2847d6924e0b9
+
+# Diff at Tue, 01 Sep 2026 14:42:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@dfe2e020d57a240857add0385299600fbc2a51fb block: 1787833077
+- current timestamp: 1788273501
+
+## Description
+
+2026-08-28 upgrade of the Interfold, CiphernodeRegistry and BondingRegistry proxies, now fully reviewed from verified source. Discovery is back on templates: new shapes for the three upgraded implementations and new ChainlinkVrfRandomnessProvider and NodeReleaseRegistry templates replace the interim explicit-handler overrides in config.jsonc.
+
+- Sortition entropy now comes from a Chainlink VRF v2.5 subscription consumer (RandomnessProvider) instead of EIP-2935 blockhashes. All its VRF parameters are immutable (native-ETH-paid subscription, 1 ETH minimum balance, 64 confirmations); the DAO owner can only replace the coordinator. The registry accepts a response only within a 1h timeout window bound to the request, and a timed-out request permissionlessly trips a circuit breaker that zeroes the provider, disabling new E3 requests until governance re-sets it (only possible while requests are paused and no committees are outstanding).
+- The formerly unknown 16th pricing parameter is randomnessFlatFee (5 USDS): a non-refundable request-time fee credited to the protocol treasury to reimburse the VRF subscription, exempt from the margin markup and required to be nonzero.
+- NodeReleaseRegistry (DAO-owned, Ownable2Step, renounce disabled) gates operator eligibility on self-attested software releases: operators must attest the exact required protocol version (currently 1) and at least the required node generation (currently 1). The DAO can only raise the requirement, only while paused and drained, and each raise (like the wiring-in itself, which bumped the eligibility-configuration version 4 -> 5) instantly invalidates every operator's cached active status.
+- Requester cancellation was narrowed: an E3 can now only be cancelled after its randomness request times out without a result (classified as CommitteeFormationTimeout); mid-flight cancellation of active E3s was removed.
+- BondingRegistry's external interface is unchanged (internal refactor into libraries plus the node-release eligibility hook); requestsPaused remains true.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract  (eth:0x0000F90827F1C53a10cb7A02335B175320002935) [N/A]
+    +++ description: None
+```
+
+```diff
+    contract BondingRegistry (eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F) [interfold/BondingRegistry] {
+    +++ description: Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits.
+      sourceHashes.1:
+-        "0x2f4ffa441ee6931aaf10dc75ea17d88ac1e02780b5802234253f4732f19706ae"
++        "0xb97dc60ab9865caddf8025162df9c53ea501692873fbef50c57733bea73c86ab"
+      values.$implementation:
+-        "eth:0x4FF6e77A10E8f06C11a4DD2A71b6AB55394640e4"
++        "eth:0xd89D3fE1b53eF95111c0E68A8CeFDfd20EcCA53a"
+      values.$pastUpgrades.2:
++        ["2026-08-28T00:23:35.000Z","0xb72b8bc214a3416a90f0d84cf34dc833251a669b1e0201f70924805f7fa18b58",["eth:0xd89D3fE1b53eF95111c0E68A8CeFDfd20EcCA53a"]]
+      values.$upgradeCount:
+-        2
++        3
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.11:
++        "eth:0xc798b5f60150FbB2Db9b061817831DF62D2b269C"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.12:
++        "eth:0xB6Bb517ca0bD9a8b0eD2817e604b327d31626190"
+      values.bondOwners.eth:0xc798b5f60150FbB2Db9b061817831DF62D2b269C:
++        "eth:0x97843608a00e2bbc75ab0C1911387E002565DEDE"
+      values.bondOwners.eth:0x12c75ce176D5a58d2a72e85Af158Cbd8749fE1D8:
++        "eth:0x0b304924fAa64b0f040dcA67bC5175Dd6078db52"
+      values.bondOwners.eth:0xcb6ce8C3a16DeF797167e8A2aED7998A065f2513:
++        "eth:0xcb6ce8C3a16DeF797167e8A2aED7998A065f2513"
+      values.bondOwners.eth:0x819a1D34873eC46e8DD6c7DE14429F5a07E47Ff9:
++        "eth:0x819a1D34873eC46e8DD6c7DE14429F5a07E47Ff9"
+      values.bondOwners.eth:0xB6Bb517ca0bD9a8b0eD2817e604b327d31626190:
++        "eth:0x8Dcb4a4e9621C492A82c0e3E105aB69124c401a2"
+      values.bondOwners.eth:0x1dF428833f2C9FB1eF098754e5D710432450d706:
++        "eth:0x1dF428833f2C9FB1eF098754e5D710432450d706"
++++ description: Number of operators whose active status is valid under the current eligibility-configuration version.
+      values.numActiveOperators:
+-        11
++        9
+      values.numRegisteredOperators:
+-        11
++        16
+      implementationNames.eth:0x4FF6e77A10E8f06C11a4DD2A71b6AB55394640e4:
+-        "BondingRegistry"
+      implementationNames.eth:0xd89D3fE1b53eF95111c0E68A8CeFDfd20EcCA53a:
++        "BondingRegistry"
+    }
+```
+
+```diff
+    contract Interfold (eth:0x28cF63B459e6218C69EA97ea7D90541cf648c715) [interfold/Interfold] {
+    +++ description: Coordinator for Encrypted Execution Environments (E3s). It accepts requests for allowlisted programs, selects a ciphernode committee, snapshots the configured proof system, and verifies the encrypted result and threshold decryption before publishing plaintext output.
+      sourceHashes.1:
+-        "0x25830faa7c9d8c4aecf3d78f04ce54c52aae87769713d3e9ad951ca08abd4277"
++        "0xd3737346baa5d40f73aea8a15668e65fc210c6fbb56ddf2c8d8f6a0386d0a6f9"
+      values.$implementation:
+-        "eth:0x8AcBf712513C802eFFc255FEa588ED21DC7A61bA"
++        "eth:0xA7e1f2693b3b5038e505396Dbd21d6c26ECa8aA2"
+      values.$pastUpgrades.1:
++        ["2026-08-28T00:23:35.000Z","0xb72b8bc214a3416a90f0d84cf34dc833251a669b1e0201f70924805f7fa18b58",["eth:0xA7e1f2693b3b5038e505396Dbd21d6c26ECa8aA2"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.getPricingConfig.randomnessFlatFee:
++        "5000000000000000000"
++++ description: Registry controlling which self-attested ciphernode software releases remain eligible for new E3s. Replacing it requires paused requests and no active E3s, and instantly invalidates every operator's cached eligibility.
+      values.nodeReleaseRegistry:
++        "eth:0x9E1C6B433CFbC8f28d80EAB583C428B01d083b0A"
+      implementationNames.eth:0x8AcBf712513C802eFFc255FEa588ED21DC7A61bA:
+-        "Interfold"
+      implementationNames.eth:0xA7e1f2693b3b5038e505396Dbd21d6c26ECa8aA2:
++        "Interfold"
+    }
+```
+
+```diff
+    contract InterfoldSafeA (eth:0x5429D8c7fD14023f3c414126F94BbE25A05fC018) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.15:
++        {"permission":"interact","from":"eth:0x9E1C6B433CFbC8f28d80EAB583C428B01d083b0A","description":"raise the required ciphernode protocol version and node generation, which instantly invalidates every operator's cached eligibility until they attest the new release. The requirement can only increase, and only while new E3 requests are paused and no E3s or committees are active.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.30:
++        {"permission":"interact","from":"eth:0xa0273f884816dfF0BE9B5ED50aB3AA29D6AaA712","description":"replace the Chainlink VRF coordinator that delivers the sortition entropy.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+    }
+```
+
+```diff
+    contract InterfoldDAO (eth:0x652a31c669f9AB37f6040f279139a75D04F2679e) [zama/ZamaDAO] {
+    +++ description: Aragon DAO that stores governance state and executes proposal action batches.
+      directlyReceivedPermissions.20:
++        {"permission":"interact","from":"eth:0x9E1C6B433CFbC8f28d80EAB583C428B01d083b0A","description":"raise the required ciphernode protocol version and node generation, which instantly invalidates every operator's cached eligibility until they attest the new release. The requirement can only increase, and only while new E3 requests are paused and no E3s or committees are active.","role":".owner"}
+      directlyReceivedPermissions.21:
++        {"permission":"interact","from":"eth:0xa0273f884816dfF0BE9B5ED50aB3AA29D6AaA712","description":"replace the Chainlink VRF coordinator that delivers the sortition entropy.","role":".owner"}
+    }
+```
+
+```diff
+    contract InterfoldSafeB (eth:0x8B43b2852fc5031D01DDfCDF702973D93A2FF593) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.15:
++        {"permission":"interact","from":"eth:0x9E1C6B433CFbC8f28d80EAB583C428B01d083b0A","description":"raise the required ciphernode protocol version and node generation, which instantly invalidates every operator's cached eligibility until they attest the new release. The requirement can only increase, and only while new E3 requests are paused and no E3s or committees are active.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.30:
++        {"permission":"interact","from":"eth:0xa0273f884816dfF0BE9B5ED50aB3AA29D6AaA712","description":"replace the Chainlink VRF coordinator that delivers the sortition entropy.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+    }
+```
+
+```diff
+    contract PublicStagedProposalProcessor (eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb) [interfold/StagedProposalProcessor] {
+    +++ description: Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.
+      receivedPermissions.17:
++        {"permission":"interact","from":"eth:0x9E1C6B433CFbC8f28d80EAB583C428B01d083b0A","description":"raise the required ciphernode protocol version and node generation, which instantly invalidates every operator's cached eligibility until they attest the new release. The requirement can only increase, and only while new E3 requests are paused and no E3s or committees are active.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.32:
++        {"permission":"interact","from":"eth:0xa0273f884816dfF0BE9B5ED50aB3AA29D6AaA712","description":"replace the Chainlink VRF coordinator that delivers the sortition entropy.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+    }
+```
+
+```diff
+    contract CiphernodeRegistry (eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7) [interfold/CiphernodeRegistry] {
+    +++ description: Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection, records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider.
+      sourceHashes.1:
+-        "0x181143fe8736537b7086ceca31a6731ebb34e2e2612a63c3ff66ef5c7f3816af"
++        "0x993dbb9f6f7d08758f2b721cf9a1c301f9a7234933ca34d0430901203f34f1cf"
+      values.$implementation:
+-        "eth:0xB06Aaf9EF87984192490E947078D2f3563399b7B"
++        "eth:0xFff476751949a7e1B784b5c88648833c1e8dD69c"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.
+      values.$members.11:
++        "eth:0xc798b5f60150FbB2Db9b061817831DF62D2b269C"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.
+      values.$members.12:
++        "eth:0x12c75ce176D5a58d2a72e85Af158Cbd8749fE1D8"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.
+      values.$members.13:
++        "eth:0xcb6ce8C3a16DeF797167e8A2aED7998A065f2513"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.
+      values.$members.14:
++        "eth:0xB6Bb517ca0bD9a8b0eD2817e604b327d31626190"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.
+      values.$members.15:
++        "eth:0x1dF428833f2C9FB1eF098754e5D710432450d706"
+      values.$pastUpgrades.1:
++        ["2026-08-28T00:23:35.000Z","0xb72b8bc214a3416a90f0d84cf34dc833251a669b1e0201f70924805f7fa18b58",["eth:0xFff476751949a7e1B784b5c88648833c1e8dD69c"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.BLOCKHASH_HISTORY:
+-        "eth:0x0000F90827F1C53a10cb7A02335B175320002935"
+      values.exitDelayFloor:
+-        600
++        4200
++++ description: Number of currently registered ciphernode keys.
+      values.numCiphernodes:
+-        11
++        16
+      values.sortitionEntropyBlocks:
+-        [0,0,0,0,0]
+      values.sortitionSeedResolved:
+-        [false,false,false,false,false]
++++ description: Contract that supplies the asynchronous sortition entropy for committee selection. Automatically reset to zero, which disables new E3 requests, if a randomness request expires without a usable response (circuit breaker). Replacing it requires paused requests, no outstanding committees, and that the new provider names this registry as its only requester.
++++ severity: HIGH
+      values.randomnessProvider:
++        "eth:0xa0273f884816dfF0BE9B5ED50aB3AA29D6AaA712"
++++ description: Time window in which the randomness provider must deliver sortition entropy for an E3, bounded between 60 seconds and 1 day.
+      values.randomnessRequestTimeout:
++        3600
+      errors:
+-        {"sortitionEntropyBlocks":"Processing error occurred.","sortitionSeedResolved":"Processing error occurred."}
+      implementationNames.eth:0xB06Aaf9EF87984192490E947078D2f3563399b7B:
+-        "CiphernodeRegistryOwnable"
+      implementationNames.eth:0xFff476751949a7e1B784b5c88648833c1e8dD69c:
++        "CiphernodeRegistryOwnable"
+    }
+```
+
+```diff
+    contract AdminPlugin (eth:0xF21e25455988887EE797050080141eba67B33920) [interfold/AdminPlugin] {
+    +++ description: Non-upgradeable Aragon Admin plugin. Holders of its DAO-granted EXECUTE_PROPOSAL permission can submit actions that the plugin forwards immediately, without a vote or onchain delay.
+      receivedPermissions.16:
++        {"permission":"interact","from":"eth:0x9E1C6B433CFbC8f28d80EAB583C428B01d083b0A","description":"raise the required ciphernode protocol version and node generation, which instantly invalidates every operator's cached eligibility until they attest the new release. The requirement can only increase, and only while new E3 requests are paused and no E3s or committees are active.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+      receivedPermissions.31:
++        {"permission":"interact","from":"eth:0xa0273f884816dfF0BE9B5ED50aB3AA29D6AaA712","description":"replace the Chainlink VRF coordinator that delivers the sortition entropy.","role":".owner","via":[{"address":"eth:0x652a31c669f9AB37f6040f279139a75D04F2679e"}]}
+    }
+```
+
+```diff
++   Status: CREATED
+    EOA  (eth:0x1dF428833f2C9FB1eF098754e5D710432450d706)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NodeReleaseRegistry (eth:0x9E1C6B433CFbC8f28d80EAB583C428B01d083b0A) [interfold/NodeReleaseRegistry]
+    +++ description: Registry of ciphernode software releases. Operators self-attest the release they run; staying eligible for new E3 committees requires an attestation matching the exact governance-set protocol version and at least the required node generation. Raising the requirement instantly invalidates every operator's cached eligibility until they re-attest.
+```
+
+```diff
++   Status: CREATED
+    contract RandomnessProvider (eth:0xa0273f884816dfF0BE9B5ED50aB3AA29D6AaA712) [interfold/ChainlinkVrfRandomnessProvider]
+    +++ description: Supplies committee-sortition entropy as a Chainlink VRF v2.5 subscription consumer. Only its fixed requester (the CiphernodeRegistry) can request randomness, each E3 can be served exactly once, and requests revert while the funding subscription balance is below the configured minimum. All VRF parameters are immutable.
+```
+
+```diff
++   Status: CREATED
+    EOA  (eth:0xcb6ce8C3a16DeF797167e8A2aED7998A065f2513)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../BondingRegistry/BondingRegistry.sol            |   423 +-
+ .../CiphernodeRegistryOwnable.sol                  |   946 +-
+ .../Interfold/Interfold.sol                        |   452 +-
+ .../interfold/.flat/NodeReleaseRegistry.sol        | 10352 +++++++++++++++++
+ .../interfold/.flat/RandomnessProvider.sol         | 11193 +++++++++++++++++++
+ 5 files changed, 22942 insertions(+), 424 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787833077 (main branch discovery), not current.
+
+```diff
+    contract BondingRegistry (eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F) [interfold/BondingRegistry] {
+    +++ description: Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits.
+      description:
+-        "Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond; the contract also enforces exits, committee obligations, bans and slashing debits."
++        "Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits."
+      fieldMeta.activeOperators.description:
+-        "Operator keys currently active under the collateral and ban rules, reconstructed from activation events."
++        "Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation."
+      fieldMeta.exitDelay.description:
+-        "Delay before queued ticket collateral and FOLD bond exits can be claimed."
++        "Delay before queued ticket collateral and FOLD bond exits can be claimed. Must exceed the randomness timeout plus the sortition submission window."
+      fieldMeta.eligibilityConfigurationVersion:
++        {"description":"Version counter of the operator-eligibility configuration. Each bump instantly invalidates every operator's cached active status until it refreshes under the new version. The configured NodeReleaseRegistry can bump it to force re-attestation during a release cutover."}
+      fieldMeta.numActiveOperators:
++        {"description":"Number of operators whose active status is valid under the current eligibility-configuration version."}
+    }
+```
+
+```diff
+    contract Interfold (eth:0x28cF63B459e6218C69EA97ea7D90541cf648c715) [interfold/Interfold] {
+    +++ description: Coordinator for Encrypted Execution Environments (E3s). It accepts requests for allowlisted programs, selects a ciphernode committee, snapshots the configured proof system, and verifies the encrypted result and threshold decryption before publishing plaintext output.
+      fieldMeta.bfvDecryptionThreshold.severity:
++        "HIGH"
+      fieldMeta.bfvCommitteeSize.severity:
++        "HIGH"
+      fieldMeta.bfvParamSet.severity:
++        "HIGH"
+      fieldMeta.bfvPkVerifier.severity:
++        "HIGH"
+      fieldMeta.bfvDecryptionVerifier.severity:
++        "HIGH"
+      fieldMeta.bfvCiphertextVerifier.severity:
++        "HIGH"
+      fieldMeta.activeCryptoConfigId.severity:
++        "HIGH"
+      fieldMeta.getPricingConfig.description:
+-        "Fee model and fee split applied to new E3s, including minimum committee and threshold constraints."
++        "Fee model and fee split applied to new E3s, including minimum committee and threshold constraints. The randomnessFlatFee is a non-refundable request-time fee credited to the protocol treasury to reimburse the protocol-funded Chainlink VRF subscription."
+      fieldMeta.nodeReleaseRegistry:
++        {"description":"Registry controlling which self-attested ciphernode software releases remain eligible for new E3s. Replacing it requires paused requests and no active E3s, and instantly invalidates every operator's cached eligibility.","type":"CODE_CHANGE"}
+    }
+```
+
+```diff
+    contract InterfoldSafeA (eth:0x5429D8c7fD14023f3c414126F94BbE25A05fC018) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2.description:
+-        "pause or unpause new requests; replace the registry, bonding, slashing and refund dependencies; allow fee assets and E3 programs; replace proof verifiers; and change pricing, timeouts, parameter sets and committee thresholds without an onchain delay."
++        "pause or unpause new requests; replace the registry, bonding, slashing, refund and node-release dependencies; allow fee assets and E3 programs; replace proof verifiers; and change pricing (including the flat randomness fee), timeouts, parameter sets and committee thresholds without an onchain delay."
+      receivedPermissions.30.description:
+-        "replace the coordinator, bonding and slashing dependencies; add or remove ciphernodes; change the sortition window; and update the DKG verifier and accusation-vote validity parameters. DKG-verifier replacement and risk-reducing accusation-window changes use a two-day propose/commit delay, while other changes are immediate."
++        "replace the coordinator, bonding, slashing and randomness-provider dependencies; add or remove ciphernodes; change the sortition window and randomness timeout; and update the DKG verifier and accusation-vote validity parameters. DKG-verifier replacement and risk-reducing accusation-window changes use a two-day propose/commit delay, while other changes are immediate. Randomness settings can only change while new requests are paused and no committees are outstanding."
+    }
+```
+
+```diff
+    contract InterfoldDAO (eth:0x652a31c669f9AB37f6040f279139a75D04F2679e) [zama/ZamaDAO] {
+    +++ description: Aragon DAO that stores governance state and executes proposal action batches.
+      directlyReceivedPermissions.7.description:
+-        "pause or unpause new requests; replace the registry, bonding, slashing and refund dependencies; allow fee assets and E3 programs; replace proof verifiers; and change pricing, timeouts, parameter sets and committee thresholds without an onchain delay."
++        "pause or unpause new requests; replace the registry, bonding, slashing, refund and node-release dependencies; allow fee assets and E3 programs; replace proof verifiers; and change pricing (including the flat randomness fee), timeouts, parameter sets and committee thresholds without an onchain delay."
+      directlyReceivedPermissions.21.description:
+-        "replace the coordinator, bonding and slashing dependencies; add or remove ciphernodes; change the sortition window; and update the DKG verifier and accusation-vote validity parameters. DKG-verifier replacement and risk-reducing accusation-window changes use a two-day propose/commit delay, while other changes are immediate."
++        "replace the coordinator, bonding, slashing and randomness-provider dependencies; add or remove ciphernodes; change the sortition window and randomness timeout; and update the DKG verifier and accusation-vote validity parameters. DKG-verifier replacement and risk-reducing accusation-window changes use a two-day propose/commit delay, while other changes are immediate. Randomness settings can only change while new requests are paused and no committees are outstanding."
+    }
+```
+
+```diff
+    contract InterfoldSafeB (eth:0x8B43b2852fc5031D01DDfCDF702973D93A2FF593) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.2.description:
+-        "pause or unpause new requests; replace the registry, bonding, slashing and refund dependencies; allow fee assets and E3 programs; replace proof verifiers; and change pricing, timeouts, parameter sets and committee thresholds without an onchain delay."
++        "pause or unpause new requests; replace the registry, bonding, slashing, refund and node-release dependencies; allow fee assets and E3 programs; replace proof verifiers; and change pricing (including the flat randomness fee), timeouts, parameter sets and committee thresholds without an onchain delay."
+      receivedPermissions.30.description:
+-        "replace the coordinator, bonding and slashing dependencies; add or remove ciphernodes; change the sortition window; and update the DKG verifier and accusation-vote validity parameters. DKG-verifier replacement and risk-reducing accusation-window changes use a two-day propose/commit delay, while other changes are immediate."
++        "replace the coordinator, bonding, slashing and randomness-provider dependencies; add or remove ciphernodes; change the sortition window and randomness timeout; and update the DKG verifier and accusation-vote validity parameters. DKG-verifier replacement and risk-reducing accusation-window changes use a two-day propose/commit delay, while other changes are immediate. Randomness settings can only change while new requests are paused and no committees are outstanding."
+    }
+```
+
+```diff
+    contract PublicStagedProposalProcessor (eth:0x9c0Ff283399Bd1D3111E6c9C689066759b7AccDb) [interfold/StagedProposalProcessor] {
+    +++ description: Upgradeable Aragon staged-proposal plugin that executes DAO actions after proposals pass its configured sequence of voting or manual bodies, thresholds and timing windows.
+      receivedPermissions.2.description:
+-        "pause or unpause new requests; replace the registry, bonding, slashing and refund dependencies; allow fee assets and E3 programs; replace proof verifiers; and change pricing, timeouts, parameter sets and committee thresholds without an onchain delay."
++        "pause or unpause new requests; replace the registry, bonding, slashing, refund and node-release dependencies; allow fee assets and E3 programs; replace proof verifiers; and change pricing (including the flat randomness fee), timeouts, parameter sets and committee thresholds without an onchain delay."
+      receivedPermissions.32.description:
+-        "replace the coordinator, bonding and slashing dependencies; add or remove ciphernodes; change the sortition window; and update the DKG verifier and accusation-vote validity parameters. DKG-verifier replacement and risk-reducing accusation-window changes use a two-day propose/commit delay, while other changes are immediate."
++        "replace the coordinator, bonding, slashing and randomness-provider dependencies; add or remove ciphernodes; change the sortition window and randomness timeout; and update the DKG verifier and accusation-vote validity parameters. DKG-verifier replacement and risk-reducing accusation-window changes use a two-day propose/commit delay, while other changes are immediate. Randomness settings can only change while new requests are paused and no committees are outstanding."
+    }
+```
+
+```diff
+    contract CiphernodeRegistry (eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7) [interfold/CiphernodeRegistry] {
+    +++ description: Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection, records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider.
+      description:
+-        "Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection, records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability."
++        "Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection, records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider."
+      values.sortitionEntropyBlocks:
++        [0,0,0,0,0]
+      values.sortitionSeedResolved:
++        [false,false,false,false,false]
+      fieldMeta.dkgFoldAttestationVerifier.severity:
++        "HIGH"
+      fieldMeta.pendingDkgFoldAttestationVerifier:
++        {"description":"DKG-fold verifier proposed under the two-day timelock (zero when none is pending).","type":"CODE_CHANGE"}
+      fieldMeta.pendingAccusationVoteValidity:
++        {"description":"Accusation-vote validity window proposed under the two-day timelock (zero when none is pending).","type":"RISK_PARAMETER"}
+      fieldMeta.randomnessProvider:
++        {"severity":"HIGH","description":"Contract that supplies the asynchronous sortition entropy for committee selection. Automatically reset to zero, which disables new E3 requests, if a randomness request expires without a usable response (circuit breaker). Replacing it requires paused requests, no outstanding committees, and that the new provider names this registry as its only requester.","type":"CODE_CHANGE"}
+      fieldMeta.randomnessRequestTimeout:
++        {"description":"Time window in which the randomness provider must deliver sortition entropy for an E3, bounded between 60 seconds and 1 day.","type":"RISK_PARAMETER"}
+      errors:
++        {"sortitionEntropyBlocks":"Processing error occurred.","sortitionSeedResolved":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract AdminPlugin (eth:0xF21e25455988887EE797050080141eba67B33920) [interfold/AdminPlugin] {
+    +++ description: Non-upgradeable Aragon Admin plugin. Holders of its DAO-granted EXECUTE_PROPOSAL permission can submit actions that the plugin forwards immediately, without a vote or onchain delay.
+      receivedPermissions.2.description:
+-        "pause or unpause new requests; replace the registry, bonding, slashing and refund dependencies; allow fee assets and E3 programs; replace proof verifiers; and change pricing, timeouts, parameter sets and committee thresholds without an onchain delay."
++        "pause or unpause new requests; replace the registry, bonding, slashing, refund and node-release dependencies; allow fee assets and E3 programs; replace proof verifiers; and change pricing (including the flat randomness fee), timeouts, parameter sets and committee thresholds without an onchain delay."
+      receivedPermissions.31.description:
+-        "replace the coordinator, bonding and slashing dependencies; add or remove ciphernodes; change the sortition window; and update the DKG verifier and accusation-vote validity parameters. DKG-verifier replacement and risk-reducing accusation-window changes use a two-day propose/commit delay, while other changes are immediate."
++        "replace the coordinator, bonding, slashing and randomness-provider dependencies; add or remove ciphernodes; change the sortition window and randomness timeout; and update the DKG verifier and accusation-vote validity parameters. DKG-verifier replacement and risk-reducing accusation-window changes use a two-day propose/commit delay, while other changes are immediate. Randomness settings can only change while new requests are paused and no committees are outstanding."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (eth:0x0000F90827F1C53a10cb7A02335B175320002935) [N/A]
+    +++ description: None
+```
+
+Generated with discovered.json: 0x30e6cceeabb38f5ce3cd923ac26150d74c1e7d85
 
 # Diff at Thu, 27 Aug 2026 12:19:25 GMT:
 

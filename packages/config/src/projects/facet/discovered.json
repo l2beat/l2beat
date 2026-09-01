@@ -136,13 +136,6 @@
       ],
       "proxyType": "immutable",
       "description": "Module that allows the Safe to send Facet transactions.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
       "deployerAddress": "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC",
       "sinceTimestamp": 1733593847,
       "sinceBlock": 21352215,
@@ -207,21 +200,7 @@
     {
       "address": "eth:0x615452db5467849689E98a8C5C242A96cF768a94",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE",
-          "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.",
-          "role": ".whitelistedProposers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
-          "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.",
-          "role": ".whitelistedProposers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RollupDeprecated",
@@ -416,20 +395,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE",
-          "description": "can set the whitelisted proposers.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
-          "description": "can set the whitelisted proposers.",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xC2172a6315c1D7f6855768F843c420EbB36eDa97",
       "sinceTimestamp": 1701094787,
@@ -1048,5 +1013,48 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": { "ethereum": 25230004, "facet": 3880205 },
-  "permissionsConfigHash": "0xb93674a2bf445042792d9a95f86fe939e04da71422a61e33106be42845543e03"
+  "permissionsConfigHash": "0xb93674a2bf445042792d9a95f86fe939e04da71422a61e33106be42845543e03",
+  "permissions": {
+    "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
+          "role": ".GnosisSafe_modules"
+        }
+      ]
+    },
+    "eth:0x615452db5467849689E98a8C5C242A96cF768a94": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE",
+          "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.",
+          "role": ".whitelistedProposers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
+          "description": "Can propose state roots optimistically without a ZK proof. Note that anyone can propose with a ZK proof, and anyone can propose optimistically after the fallback timeout.",
+          "role": ".whitelistedProposers"
+        }
+      ]
+    },
+    "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x026902EF5a0931F25cbB78b5dd7a72EE998569AE",
+          "description": "can set the whitelisted proposers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x686E7d01C7BFCB563721333A007699F154C04eb4",
+          "description": "can set the whitelisted proposers.",
+          "role": ".owner"
+        }
+      ]
+    }
+  }
 }

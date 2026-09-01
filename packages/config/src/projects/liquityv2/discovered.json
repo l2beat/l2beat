@@ -403,6 +403,7 @@
       "proxyType": "immutable",
       "description": "The branch's liquidation backstop. Anyone can deposit BOLD here, and those deposits are the first resource used to absorb liquidations: when a trove on this branch is liquidated, the pool burns BOLD to cancel an equal amount of that trove's debt and receives the corresponding collateral in return. Because that collateral is worth more than the debt cancelled, depositors generally come out ahead on each liquidation, and they also earn a share of the interest that branch borrowers pay. Deposits can be withdrawn at any time with no lock-up, as long as a small minimum is left so the pool can never be fully emptied.",
       "ignoreInWatchMode": [
+        "getCollBalance",
         "getEntireBranchColl",
         "getEntireBranchDebt",
         "getTotalBoldDeposits",
@@ -1121,6 +1122,7 @@
       "proxyType": "immutable",
       "description": "The branch's liquidation backstop. Anyone can deposit BOLD here, and those deposits are the first resource used to absorb liquidations: when a trove on this branch is liquidated, the pool burns BOLD to cancel an equal amount of that trove's debt and receives the corresponding collateral in return. Because that collateral is worth more than the debt cancelled, depositors generally come out ahead on each liquidation, and they also earn a share of the interest that branch borrowers pay. Deposits can be withdrawn at any time with no lock-up, as long as a small minimum is left so the pool can never be fully emptied.",
       "ignoreInWatchMode": [
+        "getCollBalance",
         "getEntireBranchColl",
         "getEntireBranchDebt",
         "getTotalBoldDeposits",
@@ -1516,6 +1518,7 @@
       "proxyType": "immutable",
       "description": "The branch's liquidation backstop. Anyone can deposit BOLD here, and those deposits are the first resource used to absorb liquidations: when a trove on this branch is liquidated, the pool burns BOLD to cancel an equal amount of that trove's debt and receives the corresponding collateral in return. Because that collateral is worth more than the debt cancelled, depositors generally come out ahead on each liquidation, and they also earn a share of the interest that branch borrowers pay. Deposits can be withdrawn at any time with no lock-up, as long as a small minimum is left so the pool can never be fully emptied.",
       "ignoreInWatchMode": [
+        "getCollBalance",
         "getEntireBranchColl",
         "getEntireBranchDebt",
         "getTotalBoldDeposits",
@@ -3347,7 +3350,7 @@
     "liquityv2/MultiTroveGetter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "liquityv2/RETHPriceFeed": "0x9239003c35204078e41e7035d75de869047da4ec49793a3e311466a01403b348",
     "liquityv2/SortedTroves": "0xb8f8e34f836e20d6f3d87a1a3e36af29c0fccf37d9638cfecd5883a0d30cd815",
-    "liquityv2/StabilityPool": "0x24aa19349ac6c7d6e59fa98d153ab12e76a01a843790dd452a7ae90183e8ef48",
+    "liquityv2/StabilityPool": "0xba648f530c503239a9a18374069eefe18bccba84bc79eb2fff0a8b8e614d04b1",
     "liquityv2/TroveManager": "0x22a74f140b8d053fed03a7cc4a1f4e3df9514c66e1a2805674d8f568798e2919",
     "liquityv2/TroveNFT": "0xd94d2f2b575608ff3a0f812c17c1dd00d78b6345c20c3296953a7a7b14e6ec03",
     "liquityv2/UserProxy": "0x76c1139858057493e9d67b62aaf9bf39fe368ce27ecbde05d644d94d1db2fbcf",

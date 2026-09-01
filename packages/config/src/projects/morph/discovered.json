@@ -11,28 +11,12 @@
     {
       "address": "eth:0x0092bC49078f130D27e70dBeee441E227280B97D",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x03FD36AEd3b2597aA79bb5f543f3a0eAf9DEB0FA",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x05e1d4694041aF987Af6F8402D902686018E2136",
@@ -50,14 +34,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for staker registration and withdrawals and for verifying BLS signatures of stakers (currently not implemented).",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984",
-          "description": "can send gasless transactions to L2 (L2 gas fee waived).",
-          "role": ".whitelisted"
-        }
-      ],
       "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729307471,
       "sinceBlock": 20996843,
@@ -111,28 +87,12 @@
     {
       "address": "eth:0x111BC31F5cfE920004FD17449BDb5e476C02AEC5",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "L1ETHGateway",
@@ -177,15 +137,7 @@
     {
       "address": "eth:0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x27f05308F4b80242d3Dca1D5e9c3aE976098E9C8",
@@ -201,48 +153,6 @@
         "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x2818a3aF785975a32611155A6eE36C21Cec068ca",
       "sinceTimestamp": 1729306655,
       "sinceBlock": 20996776,
@@ -257,28 +167,12 @@
     {
       "address": "eth:0x323a78C1c910b282dE98a557d735628A02E00983",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
-          "role": ".getActiveStakers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "L1MessageQueueWithGasPriceOracle",
@@ -344,15 +238,7 @@
     {
       "address": "eth:0x3b065B18EdFFC7cf3D751E33d45C1FB4fD78d57b",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "L1StandardERC20Gateway",
@@ -399,15 +285,7 @@
     {
       "address": "eth:0x4Ee3690901157bE86A33371bEc1e5021A10Ba47C",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x5300000000000000000000000000000000000006",
@@ -450,19 +328,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A timelock with access control. The current minimum delay is 0s.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
-          "description": "manage all access control roles.",
-          "role": ".defaultAdminAC"
-        }
-      ],
       "deployerAddress": "eth:0x5add06F01e73b75A4184C8cb74485bB0A897b23E",
       "sinceTimestamp": 1770779267,
       "sinceBlock": 24430740,
@@ -525,15 +390,7 @@
     {
       "address": "eth:0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "MultipleVersionRollupVerifier",
@@ -571,80 +428,32 @@
     {
       "address": "eth:0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
-          "role": ".getActiveStakers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x6D7cC6C62CD6CcdaC482E82aA7A3763926e93854",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x71C10870dC38E54d987C22e96aB32b46cc08564F",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x731a89035F88Bde8fB7357AaAD6620F4716aC1be",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x74204e3801E9394848AbDBAd6f378d0b11e9a091",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "L1GatewayRouter",
@@ -839,28 +648,12 @@
     {
       "address": "eth:0x76F91869161dC4348230D5F60883Dd17462035f4",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
-          "role": ".getActiveStakers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x77B29534738E3F0F297d36635d7884965C7c8cE1",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ProxyAdmin",
@@ -871,13 +664,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x5add06F01e73b75A4184C8cb74485bB0A897b23E",
       "sinceTimestamp": 1770779267,
       "sinceBlock": 24430740,
@@ -893,67 +679,27 @@
     {
       "address": "eth:0x8b8bc0EB904fDD2862a6433d020F15bBc8a7b13e",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x8C0cFFcBAb44c7aB6e96EB607c49188dE99a17Cd",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x92C4d5d9CaDD1aF74080DE7aa078434007F710Bb",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x95417708f67f4a5dF1A447efe40c6C74e38Ab832",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x95C373754C66feF1Eb2dbb6934aF821C551D9738",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ZkEvmVerifierV1",
@@ -980,15 +726,7 @@
     {
       "address": "eth:0x9Ac29D4f41A139D9b7be32C2906Df9f86FA51b2b",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xA52Bb0BEBfadEDA9DfFFa3Ba5eBFE86d9f6dB321",
@@ -998,54 +736,22 @@
     {
       "address": "eth:0xa609285fF6F2a0Dfdeb03cc33d78d8a47A691497",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xAa54d89A2B420F286Db0C19732D07abe08E6b442",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xB2e53dcb84dc869E3bA61911a170B53eE1326184",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xb4A20D473e8C378aE742a8017DD67756a358eAB6",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Morph Multisig 2",
@@ -1057,44 +763,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "whitelist stakers (sequencer/proposer), remove stakers, manage staking and slashing amount and reward config.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
-          "description": "cancel queued transactions.",
-          "role": ".Canceller"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
-          "description": "propose transactions.",
-          "role": ".Proposer"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
-          "description": "pause and unpause, update the fee vault.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984",
-          "description": "manage the whitelist.",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x05e1d4694041aF987Af6F8402D902686018E2136",
       "sinceTimestamp": 1729598531,
@@ -1130,67 +798,27 @@
     {
       "address": "eth:0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
-          "role": ".getActiveStakers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xbD9f4fdC48a9A8c7eA1075CFDf4F3bd365d50Bab",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xbfd62b7915da8c19C701FD13237b555Ad38C4b4C",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xC412B4e6399F694CfF21D038d225373Fd6596811",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xC4db900F76293042349448D1Ba30F71518325Bb3",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "EnforcedTxGateway",
@@ -1250,41 +878,17 @@
     {
       "address": "eth:0xc8F7DaeF4b49c1593cC3996aB2afa8B56e00fcF8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xcA00091a35d0b546A15d000F8bCeDA56255EE4D0",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xd11f9c4F5d9b1feC2d14581d3674066442B68772",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ZkEvmVerifierV1",
@@ -1362,28 +966,12 @@
     {
       "address": "eth:0xDF063FAEb46de1b4336bC70Da7175f16aB4A7272",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xE48eA86dCdE15E28624E5De9d6D3738fc52B6bFe",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xe72BB9d10f6eA936D7D4507d298ab867128aF54C",
@@ -1393,15 +981,7 @@
     {
       "address": "eth:0xf0e11a8EA095Cc915f5a7e420928d396ed1Bb7e4",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
-          "role": ".getActiveStakers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Morph Multisig 1",
@@ -1413,139 +993,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
-          "description": "manage all access control roles.",
-          "role": ".defaultAdminAC",
-          "via": [
-            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
-          "description": "manage all access control roles.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
-          "description": "register new verifiers to be used starting from a given L2 batch index.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
-          "description": "manage token to escrow mapping and (un-)register escrows.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "can pause and unpause, revert unfinalized batches, update proof window and finalization period, manage challengers, modify the verifier address.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
-            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
-            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
-            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
-            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
-            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
-            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
-            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
-            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
-          "role": ".Executor"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x0659dF9D53A987e3aDaa9019407431413A101eF3",
       "sinceTimestamp": 1730976923,
@@ -1577,41 +1024,17 @@
     {
       "address": "eth:0xF2FF0509520fAf35B511074466A509e00d73C307",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xf50A81C771AD3237aeA2FD18E4ee8055CC4Cd2B9",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xF6Ee30269dB1854987cA6812E1ff66c3A5F660Fd",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challengers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Whitelist",
@@ -2224,5 +1647,680 @@
     "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d"
   },
   "usedBlockNumbers": { "ethereum": 25754044 },
-  "permissionsConfigHash": "0x3a0164d1a1a67ed67e2926da0984cd1a6ddc0562e77e5c7fca50279ac22ce46e"
+  "permissionsConfigHash": "0x3a0164d1a1a67ed67e2926da0984cd1a6ddc0562e77e5c7fca50279ac22ce46e",
+  "permissions": {
+    "eth:0x0092bC49078f130D27e70dBeee441E227280B97D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x03FD36AEd3b2597aA79bb5f543f3a0eAf9DEB0FA": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984",
+          "description": "can send gasless transactions to L2 (L2 gas fee waived).",
+          "role": ".whitelisted"
+        }
+      ]
+    },
+    "eth:0x111BC31F5cfE920004FD17449BDb5e476C02AEC5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x1721D3Ae2d68E3Dd32525400Ed2a29060F1300c6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x234aCb24b1DeeA7f6c7530b8c29a6378bA21e1D0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x323a78C1c910b282dE98a557d735628A02E00983": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
+          "role": ".getActiveStakers"
+        }
+      ]
+    },
+    "eth:0x3b065B18EdFFC7cf3D751E33d45C1FB4fD78d57b": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x4Ee3690901157bE86A33371bEc1e5021A10Ba47C": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        }
+      ]
+    },
+    "eth:0x5c6E1011cd3b5d7D2937c098b8F61d6B3d1aee7e": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x611e4B24e89bC524Fc06f73b6FD02bE3Ec73d6Db": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x6D7cC6C62CD6CcdaC482E82aA7A3763926e93854": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x6aB0E960911b50f6d14f249782ac12EC3E7584A0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
+          "role": ".getActiveStakers"
+        }
+      ]
+    },
+    "eth:0x71C10870dC38E54d987C22e96aB32b46cc08564F": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x731a89035F88Bde8fB7357AaAD6620F4716aC1be": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x74204e3801E9394848AbDBAd6f378d0b11e9a091": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x76F91869161dC4348230D5F60883Dd17462035f4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
+          "role": ".getActiveStakers"
+        }
+      ]
+    },
+    "eth:0x77B29534738E3F0F297d36635d7884965C7c8cE1": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x8C0cFFcBAb44c7aB6e96EB607c49188dE99a17Cd": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x8b8bc0EB904fDD2862a6433d020F15bBc8a7b13e": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x92C4d5d9CaDD1aF74080DE7aa078434007F710Bb": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x95417708f67f4a5dF1A447efe40c6C74e38Ab832": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x95C373754C66feF1Eb2dbb6934aF821C551D9738": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0x9Ac29D4f41A139D9b7be32C2906Df9f86FA51b2b": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0xAa54d89A2B420F286Db0C19732D07abe08E6b442": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0xB2e53dcb84dc869E3bA61911a170B53eE1326184": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "whitelist stakers (sequencer/proposer), remove stakers, manage staking and slashing amount and reward config.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+          "description": "pause and unpause, update the fee vault.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984",
+          "description": "manage the whitelist.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
+          "role": ".getActiveStakers"
+        }
+      ]
+    },
+    "eth:0xC412B4e6399F694CfF21D038d225373Fd6596811": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0xC4db900F76293042349448D1Ba30F71518325Bb3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0xDF063FAEb46de1b4336bC70Da7175f16aB4A7272": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0xE48eA86dCdE15E28624E5De9d6D3738fc52B6bFe": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
+          "via": [
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+          "description": "register new verifiers to be used starting from a given L2 batch index.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+          "description": "manage token to escrow mapping and (un-)register escrows.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "can pause and unpause, revert unfinalized batches, update proof window and finalization period, manage challengers, modify the verifier address.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" },
+            { "address": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530",
+          "role": ".Executor"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xF2FF0509520fAf35B511074466A509e00d73C307": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0xF6Ee30269dB1854987cA6812E1ff66c3A5F660Fd": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0xa609285fF6F2a0Dfdeb03cc33d78d8a47A691497": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0xb4A20D473e8C378aE742a8017DD67756a358eAB6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0xbD9f4fdC48a9A8c7eA1075CFDf4F3bd365d50Bab": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0xbfd62b7915da8c19C701FD13237b555Ad38C4b4C": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0xc8F7DaeF4b49c1593cC3996aB2afa8B56e00fcF8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0xcA00091a35d0b546A15d000F8bCeDA56255EE4D0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0xd11f9c4F5d9b1feC2d14581d3674066442B68772": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    },
+    "eth:0xf0e11a8EA095Cc915f5a7e420928d396ed1Bb7e4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "description": "Actors allowed to commit transaction batches and propose and prove state roots",
+          "role": ".getActiveStakers"
+        }
+      ]
+    },
+    "eth:0xf50A81C771AD3237aeA2FD18E4ee8055CC4Cd2B9": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challengers"
+        }
+      ]
+    }
+  }
 }

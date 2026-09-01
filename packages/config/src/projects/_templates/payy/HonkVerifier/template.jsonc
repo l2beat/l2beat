@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "UltraHonk proof verifier generated with Aztec's Barretenberg from Payy's final aggregation Noir circuit. It verifies the aggregated validity proof of each state update submitted to the Rollup contract."
+}

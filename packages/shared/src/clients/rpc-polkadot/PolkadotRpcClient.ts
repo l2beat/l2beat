@@ -1,4 +1,5 @@
 import type { Block, json } from '@l2beat/shared-pure'
+import type { ApiPromise } from '@polkadot/api'
 import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import {
@@ -107,6 +108,64 @@ export class PolkadotRpcClient extends ClientCore {
     return { success: true }
   }
 
+  /**
+   * Validator stake overview for the chain's current staking era.
+   * Storage reads go through @polkadot/api over HTTP - plain
+   * request/response, no sockets or background timers.
+   */
+  async getStakingEraOverview(): Promise<Record<string, Exposure>> {
+    const api = await this.createApi()
+    try {
+      const currentEra = await api.query.staking.currentEra()
+      const overview = (await api.query.staking.erasStakersOverview.entries(
+        currentEra.toHuman() as string,
+      )) as unknown as [ValidatorKeysCodec, ValidatorValueCodec][]
+
+      const validatorsOverview = overview.reduce(
+        (
+          acc: Record<string, Exposure>,
+          [validatorKeys, value]: [ValidatorKeysCodec, ValidatorValueCodec],
+        ) => {
+          const [, validator] = validatorKeys.toHuman()
+          const { own, total } = value.toPrimitive()
+
+          acc[validator] = {
+            own: BigInt(own),
+            total: BigInt(total),
+          }
+
+          return acc
+        },
+        {},
+      )
+
+      return validatorsOverview
+    } finally {
+      await api.disconnect().catch(() => {})
+    }
+  }
+
+  // ApiPromise.isReadyOrError is not a socket handshake - it downloads the
+  // chain's runtime metadata and builds the type registry. Done per call so
+  // the metadata never goes stale across runtime upgrades. @polkadot/api is
+  // imported lazily because loading it costs ~700ms and ~80MB RSS.
+  private async createApi(): Promise<ApiPromise> {
+    const { ApiPromise, HttpProvider } = await import('@polkadot/api')
+    const api = new ApiPromise({
+      provider: new HttpProvider(this.$.url),
+      noInitWarn: true,
+      throwOnConnect: true,
+    })
+    api.on('error', () => {})
+    try {
+      await api.isReadyOrError
+    } catch (error) {
+      await api.disconnect().catch(() => {})
+      throw error
+    }
+    return api
+  }
+
   get chain() {
     return this.$.sourceName
   }
@@ -127,4 +186,16 @@ export class PolkadotRpcClient extends ClientCore {
 
     return timestamp
   }
+}
+type Codec<T> = {
+  toHuman: () => T
+  toPrimitive: () => T
+}
+
+type ValidatorKeysCodec = Codec<[string, string]>
+type ValidatorValueCodec = Codec<{ own: string; total: string }>
+
+type Exposure = {
+  own: bigint
+  total: bigint
 }

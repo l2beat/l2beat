@@ -152,55 +152,6 @@
         "0xf455a6281c19d76a61ffb9a10247b781b9b6dc5ce83f91c4f7e048dee71bd1f2"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
-          "description": "set and change address mappings.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xE7c147CD1A7c05a6e73217645547582024E87a9B",
       "sinceTimestamp": 1706811599,
       "sinceBlock": 19135323,
@@ -589,15 +540,7 @@
     {
       "address": "eth:0x6017f75108f251a488B045A7ce2a7C15b179d1f2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
-          "description": "Allowed to commit transactions from the current layer to the host chain.",
-          "role": ".batcherHash"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "SuperchainConfig",
@@ -745,14 +688,6 @@
       ],
       "proxyType": "immutable",
       "description": "Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5E8422345238F34275888049021821E8E08CAa1f",
-          "description": "can mint frxETH tokens.",
-          "role": ".minters_array"
-        }
-      ],
       "deployerAddress": "eth:0x625e700125FF054f75e5348497cBFab1ee4b7A40",
       "sinceTimestamp": 1734221195,
       "sinceBlock": 21404229,
@@ -780,32 +715,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
-          "description": "set the default AMO and lending pool contracts among the registered ones and trigger the predefined rebalancing functions of the router.",
-          "role": ".operatorAddress"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
-          "description": "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s).",
-          "role": ".timelockAddress"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x7Bc6bad540453360F744666D625fec0ee1320cA3",
-          "description": "configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here).",
-          "role": ".timelockAddress"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x7Bc6bad540453360F744666D625fec0ee1320cA3",
-          "description": "pause ETH deposits / frxETH mints and withdraw ETH and ERC-20s from the contract (usually not escrowed here).",
-          "role": ".operatorAddress"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xf4E1d185666a624099298FcC42C50ba662DC7e52",
       "sinceTimestamp": 1665087971,
@@ -845,20 +754,6 @@
       ],
       "proxyType": "immutable",
       "description": "Allows for time-delayed execution of transactions. Current delay is 2d.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5E8422345238F34275888049021821E8E08CAa1f",
-          "description": "can add and remove frxETH minters and set a new timelock address.",
-          "role": ".timelock_address"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
-          "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`).",
-          "role": ".timelock_address"
-        }
-      ],
       "deployerAddress": "eth:0xa448833bEcE66fD8803ac0c390936C79b5FD6eDf",
       "sinceTimestamp": 1608140486,
       "sinceBlock": 11465576,
@@ -1022,46 +917,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
-          "description": "can increase the gas token balance assigned to the OptimismPortal and mint the gas token on L2 without actually depositing tokens.",
-          "role": ".FRAX_COMPTROLLER"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5E8422345238F34275888049021821E8E08CAa1f",
-          "description": "can add and remove frxETH minters and set a new timelock address.",
-          "role": ".timelock_address",
-          "via": [
-            {
-              "address": "eth:0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
-          "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`).",
-          "role": ".timelock_address",
-          "via": [
-            {
-              "address": "eth:0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-              "delay": 172800
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-          "delay": 172800,
-          "role": ".admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x869068bd7287573333a8C1ea7e07Fb8F2aD5d5C0",
       "sinceTimestamp": 1629667690,
@@ -1099,14 +954,6 @@
       ],
       "proxyType": "immutable",
       "description": "Accepts user-supplied ETH and converts it to frxETH.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5E8422345238F34275888049021821E8E08CAa1f",
-          "description": "can mint frxETH tokens.",
-          "role": ".minters_array"
-        }
-      ],
       "ignoreInWatchMode": ["currentWithheldETH", "numValidators"],
       "deployerAddress": "eth:0x4600D3b12c39AF925C2C07C487d31D17c1e32A35",
       "sinceTimestamp": 1665022895,
@@ -1166,119 +1013,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
-          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
-          "role": ".guardian"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
-          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
-          "role": ".guardian"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".challenger"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
-          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
-          "role": ".CHALLENGER"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
-          "description": "set and change address mappings.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
-          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
-          "role": ".$admin",
-          "via": [
-            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xE7c147CD1A7c05a6e73217645547582024E87a9B",
       "sinceTimestamp": 1706811599,
@@ -1309,21 +1043,7 @@
     {
       "address": "eth:0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
-          "description": "Allowed to post new state roots of the current layer to the host chain.",
-          "role": ".proposer"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
-          "description": "Allowed to post new state roots of the current layer to the host chain.",
-          "role": ".PROPOSER"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xfF000000000000000000000000000000000420fC",
@@ -2080,5 +1800,305 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "usedBlockNumbers": { "ethereum": 23431685 },
-  "permissionsConfigHash": "0xed97184eba61fecae655695fb9fbce318e6963c9c511be11c991ede6ce4ae8ac"
+  "permissionsConfigHash": "0xed97184eba61fecae655695fb9fbce318e6963c9c511be11c991ede6ce4ae8ac",
+  "permissions": {
+    "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
+          "description": "set and change address mappings.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x6017f75108f251a488B045A7ce2a7C15b179d1f2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "description": "Allowed to commit transactions from the current layer to the host chain.",
+          "role": ".batcherHash"
+        }
+      ]
+    },
+    "eth:0x7Bc6bad540453360F744666D625fec0ee1320cA3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5E8422345238F34275888049021821E8E08CAa1f",
+          "description": "can mint frxETH tokens.",
+          "role": ".minters_array"
+        }
+      ]
+    },
+    "eth:0x8306300ffd616049FD7e4b0354a64Da835c1A81C": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
+          "description": "set the default AMO and lending pool contracts among the registered ones and trigger the predefined rebalancing functions of the router.",
+          "role": ".operatorAddress"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
+          "description": "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s).",
+          "role": ".timelockAddress"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7Bc6bad540453360F744666D625fec0ee1320cA3",
+          "description": "configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here).",
+          "role": ".timelockAddress"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7Bc6bad540453360F744666D625fec0ee1320cA3",
+          "description": "pause ETH deposits / frxETH mints and withdraw ETH and ERC-20s from the contract (usually not escrowed here).",
+          "role": ".operatorAddress"
+        }
+      ]
+    },
+    "eth:0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5E8422345238F34275888049021821E8E08CAa1f",
+          "description": "can add and remove frxETH minters and set a new timelock address.",
+          "role": ".timelock_address"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
+          "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`).",
+          "role": ".timelock_address"
+        }
+      ]
+    },
+    "eth:0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+          "description": "can increase the gas token balance assigned to the OptimismPortal and mint the gas token on L2 without actually depositing tokens.",
+          "role": ".FRAX_COMPTROLLER"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5E8422345238F34275888049021821E8E08CAa1f",
+          "description": "can add and remove frxETH minters and set a new timelock address.",
+          "role": ".timelock_address",
+          "via": [
+            {
+              "address": "eth:0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
+          "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`).",
+          "role": ".timelock_address",
+          "via": [
+            {
+              "address": "eth:0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+              "delay": 172800
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+          "delay": 172800,
+          "role": ".admin"
+        }
+      ]
+    },
+    "eth:0xFb90465f3064fF63FC460F01A6307eC73d64bc50": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
+          "role": ".proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "description": "Allowed to post new state roots of the current layer to the host chain.",
+          "role": ".PROPOSER"
+        }
+      ]
+    },
+    "eth:0xbAFA44EFE7901E04E39Dad13167D089C559c1138": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5E8422345238F34275888049021821E8E08CAa1f",
+          "description": "can mint frxETH tokens.",
+          "role": ".minters_array"
+        }
+      ]
+    },
+    "eth:0xe0d7755252873c4eF5788f7f45764E0e17610508": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
+          "description": "Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).",
+          "role": ".guardian"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".challenger"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "description": "Allowed to challenge or delete state roots proposed by a Proposer.",
+          "role": ".CHALLENGER"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
+          "description": "set and change address mappings.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "role": ".$admin",
+          "via": [
+            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+          "role": ".owner"
+        }
+      ]
+    }
+  }
 }

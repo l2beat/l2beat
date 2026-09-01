@@ -1208,38 +1208,6 @@
         "0x3c42aaa1ea018f27efac80dacecec3f56d62a2b8b92f2f0b56c487b57741b45f"
       ],
       "proxyType": "Polygon proxy",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        }
-      ],
       "ignoreInWatchMode": ["tokensMapped"],
       "deployerAddress": "eth:0xdcFAE11C70F1575faB9d6Bd389a6188aE5524A56",
       "sinceTimestamp": 1598436547,
@@ -4120,77 +4088,6 @@
         "0x8dc59ef7baa1bce6bb67f6ec23ed1ceaebe480311b8e2a82f989d89be1b410f6"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x401F6c983eA34274ec46f84D70b31C151321188b",
-          "description": "can update the root chain it references.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
-          "description": "can delete arbitrary checkpoints.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2d641867411650cd05dB93B59964536b1ED5b1B7",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
-          "role": "admin"
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48",
-          "role": ".owner"
-        }
-      ],
       "deployerAddress": "eth:0x427cEB53c3532835CcfdBbE4c533286e15d3576E",
       "sinceTimestamp": 1630059303,
       "sinceBlock": 13106903,
@@ -4463,49 +4360,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
-          "description": "assign any access control roles that can access the escrow.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "description": "assign any access control roles that can access the escrow.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
-          "description": "assign any access control roles that can access the escrow.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
-          "description": "assign any access control roles that can access the escrow.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
-          "description": "can migrate the canonically bridged USDT token to a native or external version.",
-          "role": ".migrator"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
-          "description": "assign any access control roles that can access the escrow.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xDB2382413bCb9c2F1B6b62B52238558266361D68",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x78655080b65f42E2ceE5FA5673689CC44D4E1cFC",
       "sinceTimestamp": 1593593561,
@@ -5764,5 +5618,159 @@
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25638258 },
-  "permissionsConfigHash": "0xd5232e21891d5adc5a6e90a8641815c918327ab3ad32cabc46fa7a4972d5abaa"
+  "permissionsConfigHash": "0xd5232e21891d5adc5a6e90a8641815c918327ab3ad32cabc46fa7a4972d5abaa",
+  "permissions": {
+    "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        }
+      ]
+    },
+    "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x401F6c983eA34274ec46f84D70b31C151321188b",
+          "description": "can update the root chain it references.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
+          "description": "can delete arbitrary checkpoints.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2d641867411650cd05dB93B59964536b1ED5b1B7",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
+          "role": "admin"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
+          "description": "can migrate the canonically bridged USDT token to a native or external version.",
+          "role": ".migrator"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xDB2382413bCb9c2F1B6b62B52238558266361D68",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

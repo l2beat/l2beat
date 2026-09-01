@@ -128,32 +128,6 @@
       ],
       "proxyType": "Polygon proxy",
       "description": "Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        }
-      ],
       "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691475083,
       "sinceBlock": 17868330,
@@ -640,39 +614,7 @@
     {
       "address": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
-          "description": "move any tokens to or from the escrow.",
-          "role": ".managersAC"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DepositManager",
@@ -822,138 +764,7 @@
     {
       "address": "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
-          "description": "assign any access control roles that can access the escrow.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
-          "description": "assign any access control roles that can access the escrow.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e",
-          "description": "can update the validator registry address used to check whitelist inclusion.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6",
-          "description": "can update the whitelist of validators",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5F683665ca87dbC3D1358913da80e3C71c328Fb0",
-          "description": "manage critical config values like the exit period and the blacklist.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-          "description": "can manage the validator blacklist and change other critical settings related to staking.",
-          "role": ".governance",
-          "via": [
-            { "address": "eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-          "description": "can replace all validators and change the root chain address.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
-          "description": "assign any access control roles that can access the escrow.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x885fcE983b6a01633f764325B8c3c5D31032C995",
-          "description": "can update the root chain it references.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce",
-          "description": "can update how much of the slashed funds go to the proposer and reporter.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
-          "description": "assign any access control roles that can access the escrow.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
-          "description": "assign any access control roles that can access the escrow.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
-          "description": "can delete arbitrary checkpoints.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x12185669Dac70749f717247971E0B8819b2e472e",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
-          "role": "admin"
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RLPReader",
@@ -1038,14 +849,6 @@
       ],
       "proxyType": "EIP897 proxy",
       "description": "Simple contract that allows the owner to call an `update` function on arbitrary contracts.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
-          "description": "can manage the validator blacklist and change other critical settings related to staking.",
-          "role": ".governance"
-        }
-      ],
       "deployerAddress": "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004",
       "sinceTimestamp": 1691242715,
       "sinceBlock": 17849117,
@@ -2040,5 +1843,212 @@
     "shibarium/WithdrawManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
   "usedBlockNumbers": { "ethereum": 25394788 },
-  "permissionsConfigHash": "0x32a4cab100c0f4e26adb5a456a4c0e11a2906cfdda31d98f142e5734a85b3b4e"
+  "permissionsConfigHash": "0x32a4cab100c0f4e26adb5a456a4c0e11a2906cfdda31d98f142e5734a85b3b4e",
+  "permissions": {
+    "eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        }
+      ]
+    },
+    "eth:0x80Cc222EA02F4334F67e9E55E7412fed62599004": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
+          "description": "move any tokens to or from the escrow.",
+          "role": ".managersAC"
+        }
+      ]
+    },
+    "eth:0xBab4F3e701F6d2e009Af3C7f1eF2e7dD68225E96": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e",
+          "description": "can update the validator registry address used to check whitelist inclusion.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6",
+          "description": "can update the whitelist of validators",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5F683665ca87dbC3D1358913da80e3C71c328Fb0",
+          "description": "manage critical config values like the exit period and the blacklist.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
+          "description": "can manage the validator blacklist and change other critical settings related to staking.",
+          "role": ".governance",
+          "via": [
+            { "address": "eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
+          "description": "can replace all validators and change the root chain address.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x885fcE983b6a01633f764325B8c3c5D31032C995",
+          "description": "can update the root chain it references.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce",
+          "description": "can update how much of the slashed funds go to the proposer and reporter.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
+          "description": "assign any access control roles that can access the escrow.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9",
+          "description": "can delete arbitrary checkpoints.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x12185669Dac70749f717247971E0B8819b2e472e",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870",
+          "role": "admin"
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06",
+          "role": ".owner"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064",
+          "description": "can manage the validator blacklist and change other critical settings related to staking.",
+          "role": ".governance"
+        }
+      ]
+    }
+  }
 }
