@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import { assert, Hash256 } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { readFileSync, writeFileSync } from 'fs'
@@ -52,6 +53,23 @@ export class DiscoveryRegistry {
     }
     return result
   }
+}
+
+// Reads the project and every project it transitively references through
+// entrypoints. Referenced projects are never re-discovered: their committed
+// discovery is what the project is modelled against, and keeping the two sides
+// in sync is a research call.
+export function loadDiscoveriesForModelling(
+  project: string,
+  configReader: ConfigReader,
+  logger: Logger = Logger.SILENT,
+): DiscoveryRegistry {
+  const discoveries = new DiscoveryRegistry()
+  for (const discovery of configReader.readDiscoveryWithReferences(project)) {
+    logger.info(` - ${discovery.name}`)
+    discoveries.set(discovery.name, discovery)
+  }
+  return discoveries
 }
 
 export async function modelPermissions(
@@ -122,13 +140,16 @@ export async function modelPermissionFactsUsingClingo(
     debug: boolean
   },
 ) {
-  const clingoForProject = generateClingoForDiscoveries(
+  const clingoByProject = generateClingoForDiscoveries(
     discoveries,
     configReader,
     templateService,
   )
   const modelPermissionsClingoFile = readModelPermissionsClingoFile(paths)
-  const combinedClingo = clingoForProject + '\n' + modelPermissionsClingoFile
+  const combinedClingo =
+    Object.values(clingoByProject).join('\n') +
+    '\n' +
+    modelPermissionsClingoFile
 
   const projectPath = configReader.getProjectPath(project)
   const inputFilePath = join(projectPath, 'clingo.input.lp')
@@ -146,7 +167,11 @@ export async function modelPermissionFactsUsingClingo(
 
   const result = facts.map(parseClingoFact)
 
-  const permissionsConfigHash = generatePermissionConfigHash(clingoForProject)
+  // Scoped to this project: a change inside a shared module must not turn
+  // every consumer red, that drift is surfaced rather than blocked.
+  const ownClingo = clingoByProject[project]
+  assert(ownClingo !== undefined, `No clingo generated for ${project}.`)
+  const permissionsConfigHash = generatePermissionConfigHash(ownClingo)
   return {
     permissionsConfigHash,
     permissionFacts: result,
@@ -167,22 +192,30 @@ export function generateClingoForDiscoveries(
   discoveries: DiscoveryRegistry,
   configReader: ConfigReader,
   templateService: TemplateService,
-): string {
-  const generatedClingo: string[] = []
+): Record<string, string> {
+  // One map across the whole cluster: an address owned by a referenced project
+  // is only a Reference stub here, and without its id every permission aimed
+  // at it is dropped when the clingo facts are generated.
+  const addressToNameMap = buildAddressToNameMap(
+    discoveries
+      .getSortedProjects()
+      .flatMap((project) => discoveries.get(project).discoveryOutput.entries),
+  )
+  const byProject: Record<string, string> = {}
 
   for (const project of discoveries.getSortedProjects()) {
     const discovery = discoveries.get(project).discoveryOutput
     const config = configReader.readConfig(project)
-    const permissionsInClingo = generateClingoForProjectOnChain(
+    byProject[project] = generateClingoForProjectOnChain(
       config.permission,
       configReader,
       discovery,
       templateService,
+      addressToNameMap,
     )
-    generatedClingo.push(permissionsInClingo)
   }
 
-  return generatedClingo.join('\n')
+  return byProject
 }
 
 export function generateClingoForProjectOnChain(
@@ -190,10 +223,9 @@ export function generateClingoForProjectOnChain(
   configReader: ConfigReader,
   discovery: DiscoveryOutput,
   templateService: TemplateService,
+  addressToNameMap: Record<string, string>,
 ) {
   const generatedClingo: string[] = []
-
-  const addressToNameMap = buildAddressToNameMap(discovery.entries)
 
   const projectSpecificModelLp = getProjectSpecificModelLp(
     discovery.name,
@@ -226,11 +258,4 @@ export function generateClingoForProjectOnChain(
     })
 
   return generatedClingo.join('\n')
-}
-
-export function getDependenciesToDiscoverForProject(
-  project: string,
-  _configReader: ConfigReader,
-): string[] {
-  return [project]
 }

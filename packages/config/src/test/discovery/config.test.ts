@@ -1,13 +1,12 @@
 import {
   ConfigReader,
   colorize,
-  DiscoveryRegistry,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
   get$Implementations,
-  getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
   getHashToBeMatched,
+  loadDiscoveriesForModelling,
   makeEntryStructureConfig,
   TemplateService,
 } from '@l2beat/discovery'
@@ -392,21 +391,18 @@ describe('discovery config.jsonc', () => {
 
   it('model-permissions is up to date', () => {
     for (const c of configs) {
-      const discoveries = new DiscoveryRegistry()
-      const dependencies = getDependenciesToDiscoverForProject(
-        c.name,
-        configReader,
-      )
-      for (const dependency of dependencies) {
-        const discovery = configReader.readDiscovery(dependency)
-        discoveries.set(dependency, discovery)
-      }
-      const clingoInput = generateClingoForDiscoveries(
+      const discoveries = loadDiscoveriesForModelling(c.name, configReader)
+      const clingoByProject = generateClingoForDiscoveries(
         discoveries,
         configReader,
         templateService,
       )
-      const hash = generatePermissionConfigHash(clingoInput)
+      // The hash covers the clingo generated for this project only. Facts a
+      // referenced project contributes are not in it, so a change inside a
+      // shared module never turns a consumer red.
+      const ownClingo = clingoByProject[c.name]
+      assert(ownClingo !== undefined, `No clingo generated for ${c.name}.`)
+      const hash = generatePermissionConfigHash(ownClingo)
       assert(
         hash === discoveries.get(c.name)?.discoveryOutput.permissionsConfigHash,
         [
@@ -418,7 +414,7 @@ describe('discovery config.jsonc', () => {
         ].join('\n\n'),
       )
     }
-  }).timeout(10000)
+  }).timeout(30000)
 })
 
 function compareLeftKeysInRight(

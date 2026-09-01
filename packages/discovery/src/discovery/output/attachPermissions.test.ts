@@ -27,15 +27,15 @@ describe(attachPermissions.name, () => {
     ])
   })
 
-  // Each project of a cluster owns the permissions of its own addresses, so a
-  // referenced module's entries are filled from the module's own map.
-  it('applies each map to the entries of its own project', () => {
-    const consumer = output('abstract', [contract(TIMELOCK)])
-    const module = output('shared', [contract(COUNCIL)], {
+  // The consumer's crawl stopped at the entrypoint, so the actor holding the
+  // permission only ever has a real entry in the shared module.
+  it('reaches the entries of a referenced project', () => {
+    const consumer = output('abstract', [contract(TIMELOCK)], {
       [COUNCIL]: {
         receivedPermissions: [{ permission: 'upgrade', from: TIMELOCK }],
       },
     })
+    const module = output('shared', [contract(COUNCIL)])
 
     attachPermissions([consumer, module])
 
@@ -44,13 +44,15 @@ describe(attachPermissions.name, () => {
     ])
   })
 
-  it('does not reach across projects', () => {
-    const consumer = output('abstract', [contract(TIMELOCK)], {
+  // A project is rendered from one model, not from a union of the cluster's
+  // independently stale ones.
+  it('ignores the map of a referenced project', () => {
+    const consumer = output('abstract', [contract(TIMELOCK)])
+    const module = output('shared', [contract(COUNCIL)], {
       [COUNCIL]: {
         receivedPermissions: [{ permission: 'upgrade', from: TIMELOCK }],
       },
     })
-    const module = output('shared', [contract(COUNCIL)])
 
     attachPermissions([consumer, module])
 

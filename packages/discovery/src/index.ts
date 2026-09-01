@@ -65,7 +65,7 @@ export {
   DiscoveryRegistry,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
-  getDependenciesToDiscoverForProject,
+  loadDiscoveriesForModelling,
   modelPermissions,
 } from './discovery/modelling/modelPermissions'
 export { attachPermissions } from './discovery/output/attachPermissions'

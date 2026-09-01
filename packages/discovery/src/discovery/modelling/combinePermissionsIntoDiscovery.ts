@@ -1,4 +1,4 @@
-import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import type {
   DiscoveryOutput,
   EntryParameters,
@@ -17,25 +17,35 @@ import type {
 export function combinePermissionsIntoDiscovery(
   discovery: DiscoveryOutput,
   permissionsOutput: PermissionsOutput,
+  // Every entry of the cluster, because an upgrade target or the original of
+  // an aliased address can live in a referenced project.
+  clusterEntries: EntryParameters[] = discovery.entries,
 ) {
   discovery.permissionsConfigHash = permissionsOutput.permissionsConfigHash
 
   const allAddresses = new Set(
-    discovery.entries.map((e) => e.address.toLowerCase()),
+    clusterEntries.map((e) => e.address.toLowerCase()),
+  )
+
+  // Keyed by receiver rather than by entry: modelling now spans the whole
+  // cluster, so an address that holds a permission is often owned by a
+  // referenced project and has no entry here beyond a Reference stub.
+  const receivers = new Set(
+    permissionsOutput.permissions.map((p) => p.receiver.toString()),
   )
 
   const byAddress: Record<string, PermissionEntry> = {}
-  for (const entry of discovery.entries) {
+  for (const receiver of receivers) {
     const permissionEntry = buildPermissionEntry(
-      entry,
+      ChainSpecificAddress(receiver),
       permissionsOutput,
-      discovery,
+      clusterEntries,
       allAddresses,
     )
     if (Object.keys(permissionEntry).length === 0) {
       continue
     }
-    byAddress[entry.address] = permissionEntry
+    byAddress[receiver] = permissionEntry
   }
 
   const sorted: Record<string, PermissionEntry> = {}
@@ -49,14 +59,14 @@ export function combinePermissionsIntoDiscovery(
 }
 
 function buildPermissionEntry(
-  entry: EntryParameters,
+  receiver: ChainSpecificAddress,
   permissionsOutput: PermissionsOutput,
-  discovery: DiscoveryOutput,
+  clusterEntries: EntryParameters[],
   allAddresses: Set<string>,
 ): PermissionEntry {
   const pick = (isFinal: boolean) => {
     const forEntry = permissionsOutput.permissions.filter(
-      (p) => p.receiver.startsWith(entry.address) && p.isFinal === isFinal,
+      (p) => p.receiver === receiver && p.isFinal === isFinal,
     )
     if (forEntry.length === 0) {
       return undefined
@@ -88,10 +98,10 @@ function buildPermissionEntry(
   }
 
   if (
-    permissionsOutput.eoasWithUpgradePermissions?.includes(entry.address) &&
-    !isZeroAddress(entry.address) &&
-    !isAlias(entry.address, allAddresses) &&
-    upgradesCriticalContract(receivedPermissions, discovery)
+    permissionsOutput.eoasWithUpgradePermissions?.includes(receiver) &&
+    !isZeroAddress(receiver) &&
+    !isAlias(receiver, allAddresses) &&
+    upgradesCriticalContract(receivedPermissions, clusterEntries)
   ) {
     permissionEntry.eoaWithUpgradePermissions = true
   }
@@ -153,14 +163,14 @@ function isAlias(
 
 function upgradesCriticalContract(
   receivedPermissions: ReceivedPermission[] | undefined,
-  discovery: DiscoveryOutput,
+  clusterEntries: EntryParameters[],
 ): boolean {
   const upgradeTargets =
     receivedPermissions
       ?.filter((p) => p.permission === 'upgrade')
       .map((p) => p.from) ?? []
   return upgradeTargets.some((target) => {
-    const targetEntry = discovery.entries.find((e) => e.address === target)
+    const targetEntry = clusterEntries.find((e) => e.address === target)
     if (targetEntry === undefined) return false
     return (
       targetEntry.category === undefined || targetEntry.category.priority > 0
