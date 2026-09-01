@@ -1,0 +1,90 @@
+{
+  "includeProjects": ["shared-sp1"],
+  "criticalEvents": [
+    {
+      "timestamp": 1746626291,
+      "type": "state",
+      "source": "tx:0x5580a50fd248f0d4034f5eb270636202e2d957b84a6975f7bd7b8c72ff541233",
+      "reason": "Enabled a module that delegated the Superchain-wide pause authority over Celo through the Operations Safe."
+    },
+    {
+      "timestamp": 1753378247,
+      "type": "state",
+      "source": "tx:0x48a3f2ec90b240d052e7612f85669cd496336e113ca6e591bbc8e0b22781e565",
+      "reason": "Enabled the new DeputyPauseModule on the Guardian Safe that can pause Celo."
+    },
+    {
+      "timestamp": 1753380539,
+      "type": "state",
+      "source": "tx:0x7e5703b1ab5d09aa107aa1a5fb2c7808c32023bd76048c192139bdb9b5dda092",
+      "reason": "Disabled the former Celo pause deputy on the Guardian Safe."
+    },
+    {
+      "timestamp": 1753380743,
+      "type": "state",
+      "source": "tx:0xd770166ff63183dae868ca11852268115035d2f74574b55b8e1ecd552da80378",
+      "reason": "Removed the former pause deputy from the Operations Safe authority path."
+    },
+    {
+      "timestamp": 1769109083,
+      "type": "state",
+      "source": "tx:0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
+      "reason": "Enabled the SaferSafes execution module on the Upgrade Safe while it co-governed the shared SuperchainConfig that can pause Celo."
+    },
+    {
+      "timestamp": 1765362083,
+      "type": "state",
+      "updateId": "4c71daa7",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "source": "tx:0x33733fb387ac7c7b04813d5694fd1bb27020ad5468f49651c2cba1ac131db869",
+      "reason": "Registered the first OPSuccinctFaultDisputeGame (game type 42) implementation as part of the Jello hardfork, introducing SP1 ZK proofs for dispute resolution."
+    },
+    {
+      "timestamp": 1765362251,
+      "type": "state",
+      "updateId": "4c71daa7",
+      "contract": "eth:0xc5c5D157928BDBD2ACf6d0777626b6C75a9EAEDC",
+      "source": "tx:0x5fb3f2225dd2ba91efe941d4c9151df120ab06f6611b7b494bdecc96ff84c44b",
+      "reason": "Set the respected game type to the new OPSuccinctFaultDisputeGame (type 42); withdrawals now clear through SP1-proven dispute games."
+    },
+    {
+      "timestamp": 1770648059,
+      "type": "state",
+      "updateId": "953d9862",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "source": "tx:0xeb5a5286b0ccca1e8fcf58126fc828dd0e89622961fc31904346a22eac568ca7",
+      "reason": "Registered a new OPSuccinctFaultDisputeGame implementation, rotating the SP1 program verification keys."
+    },
+    {
+      "timestamp": 1777372319,
+      "type": "state",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "source": "tx:0x8d20b8b21620bb9a7d2f6efcbb1c4782b110be0e0d701445ad9a3234f5f6aae0",
+      "reason": "Registered a new OPSuccinctFaultDisputeGame implementation, rotating the SP1 program verification keys. Invisible to discovery diffs: it was replaced again before the next state capture."
+    },
+    {
+      "timestamp": 1779804539,
+      "type": "state",
+      "updateId": "49f509dc",
+      "contract": "eth:0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683",
+      "source": "tx:0x1c00d778e4dd672637b88583dbced60a95898f4b1599ba51d29fb9086a0b203f",
+      "reason": "Registered the OPSuccinct celo/v2.1.0 game implementation (SP1 Hypercube), rotating the aggregation and range verification keys."
+    },
+    {
+      "timestamp": 1776164147,
+      "type": "state",
+      "updateId": "4e1af81f",
+      "contract": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
+      "source": "tx:0x3254e1dbfc1b116770d0bd9697081941df3155d1e1e05cb04bf73675c38d1ec9",
+      "reason": "Transferred ownership of the OPSuccinct proposer and challenger allowlists away from the deployer path."
+    },
+    {
+      "timestamp": 1776249827,
+      "type": "state",
+      "updateId": "4e1af81f",
+      "contract": "eth:0xF59a19c5578291cB7fd22618D16281aDf76f2816",
+      "source": "tx:0x685779b0d553d85e04fa2e3da01ea321f7746868e22a5febb93ad1017e219e41",
+      "reason": "Transferred ownership of the OPSuccinct proposer and challenger allowlists to the Celo cLabs Multisig."
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "name": "roninnetwork",
   "timestamp": 1787834376,
-  "configHash": "0x48cefa8eb6ab8681425d8dffe01eaa5a457aa85ed6656cae61166abce612651e",
+  "configHash": "0xd6853d5dbf99ebda0f8533efb51745aae3697df70d7b3298ea70ddbc9398cbf4",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -38,6 +38,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 3d.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -75,6 +76,325 @@
             "members": ["eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"]
           }
         },
+        "callsExecuted": [
+          {
+            "id": "0x7a84c572dc62f88115a1ee5163b983a332e1214113fb2d000d9d1bcaef2e9c10",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af30310fe5980000000000000000000000000000000000000000000000000000000000000000000000000000000044c220f0598345195ce99ad6a57adffcb9ea33e7"
+          },
+          {
+            "id": "0xadb3b737a6a6bdcb4c8dccde80cd44ac4e4d3db3a89374a7b4acdd4b64f72dda",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x64d623530000000000000000000000000000000000000000000000000000000000093a80"
+          },
+          {
+            "id": "0x3f19aefd1b1ceef8c24d069d4199d2fa93837840c710fe02fa8caa57257b29f1",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af3050bd17690000000000000000000000000000000000000000000000000000000000000000000000000000000008aed6c108e500540a9544bef7a8b8a05e056e87"
+          },
+          {
+            "id": "0x8c69e0a7787b08054748643b2f24e534391080bd0c61e3a0267ce6b152664d0d",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af30c101b42b0000000000000000000000000000000000000000000000000000000000000000000000000000000003b66cedab014ca7e970bfb83c1951d10dd2a805"
+          },
+          {
+            "id": "0x960674420bb13639f49c3e4680c859d460652b079912a2e19d48070e1839717e",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af309f39696c0000000000000000000000000000000000000000000000000000000000000000000000000000000068dc2cb4e61774873971c499d9b239ec5ac540e3"
+          },
+          {
+            "id": "0x3d85619c066effeda2dfdaa6533cf4ab13dc517fa095d3ff1ed03ba753e04d43",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af30f536085a00000000000000000000000000000000000000000000000000000000000000000000000000000000da8f3de6fbbdb261ac771b813a578a7abda6b2b1"
+          },
+          {
+            "id": "0xd0791ae7ead2e43dd04e036894376e9f800038dcd77ca25aee9c25b10c2152c7",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x64d62353000000000000000000000000000000000000000000000000000000000003f480"
+          },
+          {
+            "id": "0xfb7623c10d952a912314a537418c1ea4f95ceeee7628d8564f7e1c814d09da5b",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af30bb001d44000000000000000000000000000000000000000000000000000000000000000000000000000000001efdd13f831ceeea14940806705a53d3211cd698"
+          },
+          {
+            "id": "0x8f9bc667a318296f0c9a7a2773fd371cfedc904128c7ff5af6c246d383cb46db",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af3073c457ba000000000000000000000000000000000000000000000000000000000000000000000000000000009f9994eb4cb5200198fefb470f8b50301662e696"
+          },
+          {
+            "id": "0xaee8ce52716542c6fedc0f10553f1b763702d9bef05dcdcdf8c5cb2ed8d6cabb",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af30242f9d5b00000000000000000000000000000000000000000000000000000000000000000000000000000000844d5f01161e3559d36f23d0aa9e9620949af782"
+          },
+          {
+            "id": "0xcb59c64b787c143323784e652a53a3df139307efbcefa80b438a461680142a2b",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0x93d237f650bd176900000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "id": "0x02c881bb278f937c1b8b577c6a44e474f471442762ddaf1e416b5ae793acf8cc",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0x93d237f6c101b42b00000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "id": "0x5fb8d6ab7b9ad6614a645faf85120306acf72c02bc66de00b027c8ec57eff377",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc10000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609"
+          },
+          {
+            "id": "0x336fa76c82918a2642423bcae028021a204288e86965316b58737fb6e6a2d985",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e630000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609"
+          },
+          {
+            "id": "0x0c0f9e544f5acb8eafdf44bbd4a1f21cde030970ad1f76c01504ff1c291f0e9d",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f7830000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609"
+          },
+          {
+            "id": "0x89a458a6781bd045d785361e429a3df71167dff9e14996fa5f98ca7c5eb9d4c3",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0xd547741fb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412"
+          },
+          {
+            "id": "0x4acc61e26f03e0270258c3fe8aec76d8ce5c80e8e100972e3091fc77c8882819",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0xd547741fd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412"
+          },
+          {
+            "id": "0xf239631e46b22677b2b8b3b35d3780a1de298d9234c6906ce98aa3168d52cc97",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0xd547741ffd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412"
+          }
+        ],
+        "callsScheduled": [
+          {
+            "id": "0x7a84c572dc62f88115a1ee5163b983a332e1214113fb2d000d9d1bcaef2e9c10",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af30310fe5980000000000000000000000000000000000000000000000000000000000000000000000000000000044c220f0598345195ce99ad6a57adffcb9ea33e7",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 1
+          },
+          {
+            "id": "0xadb3b737a6a6bdcb4c8dccde80cd44ac4e4d3db3a89374a7b4acdd4b64f72dda",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x64d623530000000000000000000000000000000000000000000000000000000000093a80",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 1
+          },
+          {
+            "id": "0xca7c32c7743c15b77a35c4f9067ba7b6a70ba735d9223900eda94ce2c9b30b84",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af304c630d8700000000000000000000000000000000000000000000000000000000000000000000000000000000b839ea7bba8e6bb2893ca5252f3f3c13323d74f7",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 604800
+          },
+          {
+            "id": "0x3f19aefd1b1ceef8c24d069d4199d2fa93837840c710fe02fa8caa57257b29f1",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af3050bd17690000000000000000000000000000000000000000000000000000000000000000000000000000000008aed6c108e500540a9544bef7a8b8a05e056e87",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 604800
+          },
+          {
+            "id": "0x8c69e0a7787b08054748643b2f24e534391080bd0c61e3a0267ce6b152664d0d",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af30c101b42b0000000000000000000000000000000000000000000000000000000000000000000000000000000003b66cedab014ca7e970bfb83c1951d10dd2a805",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 604800
+          },
+          {
+            "id": "0x7bd40c500f2b3900d572471750afc6fb8ff842feac61ce3b28457400df977bdd",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af30922fe23d000000000000000000000000000000000000000000000000000000000000000000000000000000001e785018a65d9a9c8ee52955da0dd9644353a22f",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 604800
+          },
+          {
+            "id": "0xffe2b1acdec15653f2ec46c307b748d6ada029fe63e7308d24b980d503ab7ea3",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af3014da014b00000000000000000000000000000000000000000000000000000000000000000000000000000000268436d69f9434018657b278d838546e7dbc2d7f",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 604800
+          },
+          {
+            "id": "0x960674420bb13639f49c3e4680c859d460652b079912a2e19d48070e1839717e",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af309f39696c0000000000000000000000000000000000000000000000000000000000000000000000000000000068dc2cb4e61774873971c499d9b239ec5ac540e3",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 604800
+          },
+          {
+            "id": "0x3d85619c066effeda2dfdaa6533cf4ab13dc517fa095d3ff1ed03ba753e04d43",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af30f536085a00000000000000000000000000000000000000000000000000000000000000000000000000000000da8f3de6fbbdb261ac771b813a578a7abda6b2b1",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 604800
+          },
+          {
+            "id": "0xd0791ae7ead2e43dd04e036894376e9f800038dcd77ca25aee9c25b10c2152c7",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x64d62353000000000000000000000000000000000000000000000000000000000003f480",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 604800
+          },
+          {
+            "id": "0xfb7623c10d952a912314a537418c1ea4f95ceeee7628d8564f7e1c814d09da5b",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af30bb001d44000000000000000000000000000000000000000000000000000000000000000000000000000000001efdd13f831ceeea14940806705a53d3211cd698",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          },
+          {
+            "id": "0x8f9bc667a318296f0c9a7a2773fd371cfedc904128c7ff5af6c246d383cb46db",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af3073c457ba000000000000000000000000000000000000000000000000000000000000000000000000000000009f9994eb4cb5200198fefb470f8b50301662e696",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          },
+          {
+            "id": "0xaee8ce52716542c6fedc0f10553f1b763702d9bef05dcdcdf8c5cb2ed8d6cabb",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0xd0a6af30242f9d5b00000000000000000000000000000000000000000000000000000000000000000000000000000000844d5f01161e3559d36f23d0aa9e9620949af782",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          },
+          {
+            "id": "0xcb59c64b787c143323784e652a53a3df139307efbcefa80b438a461680142a2b",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0x93d237f650bd176900000000000000000000000000000000000000000000000000000000",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          },
+          {
+            "id": "0x02c881bb278f937c1b8b577c6a44e474f471442762ddaf1e416b5ae793acf8cc",
+            "index": 0,
+            "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
+            "value": 0,
+            "data": "0x93d237f6c101b42b00000000000000000000000000000000000000000000000000000000",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          },
+          {
+            "id": "0x5fb8d6ab7b9ad6614a645faf85120306acf72c02bc66de00b027c8ec57eff377",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x2f2ff15db09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc10000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          },
+          {
+            "id": "0x336fa76c82918a2642423bcae028021a204288e86965316b58737fb6e6a2d985",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x2f2ff15dd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e630000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          },
+          {
+            "id": "0x0c0f9e544f5acb8eafdf44bbd4a1f21cde030970ad1f76c01504ff1c291f0e9d",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0x2f2ff15dfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f7830000000000000000000000002e5bcc9959db5f5016f830e47943b07242cb2609",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          },
+          {
+            "id": "0x89a458a6781bd045d785361e429a3df71167dff9e14996fa5f98ca7c5eb9d4c3",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0xd547741fb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          },
+          {
+            "id": "0x4acc61e26f03e0270258c3fe8aec76d8ce5c80e8e100972e3091fc77c8882819",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0xd547741fd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          },
+          {
+            "id": "0xf239631e46b22677b2b8b3b35d3780a1de298d9234c6906ce98aa3168d52cc97",
+            "index": 0,
+            "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+            "value": 0,
+            "data": "0xd547741ffd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783000000000000000000000000f616a4f81857cfee54a4a049ec187172574bd412",
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": 259200
+          }
+        ],
         "Canceller": ["eth:0x2E5bcc9959dB5F5016F830E47943b07242CB2609"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -88,7 +408,14 @@
       },
       "fieldMeta": {
         "getMinDelay": { "severity": "HIGH" },
-        "accessControl": { "severity": "HIGH" }
+        "accessControl": { "severity": "HIGH" },
+        "callsScheduled": {
+          "description": "since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address."
+        },
+        "callsExecuted": {
+          "severity": "HIGH",
+          "description": "since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address."
+        }
       },
       "implementationNames": {
         "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": "TimelockController"
@@ -156,7 +483,13 @@
         "vmFromGame": "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908",
         "wethFromGame": "eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434"
       },
-      "fieldMeta": { "respectedGameType": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "respectedGameType": { "severity": "HIGH" },
+        "disputeGameFinalityDelaySeconds": {
+          "severity": "HIGH",
+          "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
+        }
+      },
       "implementationNames": {
         "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A": "Proxy",
         "eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5": "AnchorStateRegistry"
@@ -202,6 +535,7 @@
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1751494343,
       "sinceBlock": 22834443,
@@ -299,6 +633,7 @@
       ],
       "proxyType": "immutable",
       "description": "Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.",
+      "critical": true,
       "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
       "sinceTimestamp": 1780027583,
       "sinceBlock": 25198521,
@@ -363,6 +698,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1755283775,
       "sinceBlock": 23148334,
@@ -531,6 +867,11 @@
         "getTotalWeight": 2200,
         "minimumVoteWeight": 1540,
         "totalBridgeOperator": 22
+      },
+      "fieldMeta": {
+        "$admin": { "severity": "MEDIUM" },
+        "getThreshold": { "severity": "MEDIUM" },
+        "getBridgeOperators": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB": "TransparentProxyV2",
@@ -909,6 +1250,7 @@
       ],
       "proxyType": "immutable",
       "description": "Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1756842743,
       "sinceBlock": 23277627,
@@ -935,6 +1277,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -1265,6 +1608,12 @@
         "WITHDRAWAL_UNLOCKER_ROLE": "0x5e5712e902fff5e704bc4d506ad976718319e019e9d2a872528a01a85db433e4",
         "wrappedNativeToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "fieldMeta": {
+        "$admin": { "severity": "MEDIUM" },
+        "paused": { "severity": "MEDIUM" },
+        "getThreshold": { "severity": "MEDIUM" },
+        "getHighTierVoteWeightThreshold": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": "TransparentUpgradeableProxyV2",
         "eth:0x5019d41B0737e39B51Fd6dA4859F3e27579E4e69": "MainchainGatewayV3"
@@ -1464,6 +1813,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Proxy in front of the Kailua proof verifier; routes verification requests to the canonical RiscZeroVerifierRouter and asserts the chain-specific rollup config and FPVM image ID.",
+      "critical": true,
       "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
       "sinceTimestamp": 1780027559,
       "sinceBlock": 25198519,
@@ -1548,6 +1898,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1641,6 +1992,7 @@
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1756842755,
       "sinceBlock": 23277628,
@@ -1727,6 +2079,7 @@
       ],
       "proxyType": "immutable",
       "description": "A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1718237375,
       "sinceBlock": 20079232,
@@ -1792,6 +2145,7 @@
       ],
       "proxyType": "immutable",
       "description": "A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1755283787,
       "sinceBlock": 23148335,
@@ -1858,6 +2212,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).",
+      "critical": true,
       "deployerAddress": "eth:0xC450a7c66f97202605c1B46ED0735DbE49c8F4fB",
       "sinceTimestamp": 1751494331,
       "sinceBlock": 22834442,
@@ -2039,6 +2394,7 @@
       ],
       "proxyType": "immutable",
       "description": "Kailua (RISC Zero ZK fault-proof) treasury: holds participation bonds, mints KailuaGame clones, and defines the vanguard proposer economics. Bonds confiscated from eliminated proposers are split 1/3 to the prover, 1/3 to the tournament winner, 1/3 burned.",
+      "critical": true,
       "ignoreInWatchMode": ["lastResolved"],
       "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
       "sinceTimestamp": 1780027583,
@@ -2422,7 +2778,13 @@
         "proxyAdminOwner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607",
         "version": "2.4.0"
       },
-      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "guardian": {
+          "severity": "HIGH",
+          "description": "Address that can pause Ronin withdrawals and blacklist dispute games."
+        }
+      },
       "implementationNames": {
         "eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c": "Proxy",
         "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957": "SuperchainConfig"

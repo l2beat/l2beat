@@ -1,0 +1,68 @@
+{
+  "criticalEvents": [
+    {
+      "timestamp": 1779285407,
+      "type": "state",
+      "updateId": "3f3ba4f2",
+      "contract": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
+      "source": "tx:0xf79de2d13a0457e371f15ce8483129baf8ffc37b95fbe59112e6312d10347bea",
+      "reason": "Rotated the DisputeGameFactory owner from the Conduit Multisig to the joint Ronin/Conduit Safe."
+    },
+    {
+      "timestamp": 1779285407,
+      "type": "state",
+      "updateId": "3f3ba4f2",
+      "contract": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
+      "source": "tx:0xf79de2d13a0457e371f15ce8483129baf8ffc37b95fbe59112e6312d10347bea",
+      "reason": "Rotated the owner of the ProxyAdmin that can upgrade the core Ronin contracts from the Conduit Multisig to the joint Ronin/Conduit Safe."
+    },
+    {
+      "timestamp": 1779285407,
+      "type": "state",
+      "updateId": "3f3ba4f2",
+      "contract": "eth:0x502e993a5aFC9fE59b00B07ee500729D71092E34",
+      "source": "tx:0xf79de2d13a0457e371f15ce8483129baf8ffc37b95fbe59112e6312d10347bea",
+      "reason": "Rotated the owner of the ProxyAdmin that can upgrade the SuperchainConfig fork holding Ronin's pause authority from the Conduit Multisig to the joint Ronin/Conduit Safe."
+    },
+    {
+      "timestamp": 1779285407,
+      "type": "state",
+      "updateId": "3f3ba4f2",
+      "contract": "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1",
+      "source": "tx:0xf79de2d13a0457e371f15ce8483129baf8ffc37b95fbe59112e6312d10347bea",
+      "reason": "Rotated the SystemConfig owner (sequencer and gas configuration authority) from the Conduit Multisig to the joint Ronin/Conduit Safe."
+    },
+    {
+      "timestamp": 1780066583,
+      "type": "state",
+      "updateId": "8d0ae0ed",
+      "contract": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
+      "source": "tx:0x1d1d7aef207d5a85e7477e3c38850782f2c655c1f27eb86b14d237a4fcb3fc66",
+      "reason": "Registered the Kailua KailuaTreasury (v1.2.0) as the type 1337 dispute game implementation; deployed but not yet the respected game type."
+    },
+    {
+      "timestamp": 1782901175,
+      "type": "state",
+      "updateId": "f6059a61",
+      "contract": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
+      "source": "tx:0x07bf7a192a2ea3b5324ef5cef339715fc6b972b261463e751f39a3f7bb2ae72d",
+      "reason": "Repointed the type 1337 dispute game implementation to the KailuaGame as part of the Kailua cutover."
+    },
+    {
+      "timestamp": 1782901175,
+      "type": "state",
+      "updateId": "f6059a61",
+      "contract": "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A",
+      "source": "tx:0x07bf7a192a2ea3b5324ef5cef339715fc6b972b261463e751f39a3f7bb2ae72d",
+      "reason": "Moved the respected game type from the PermissionedDisputeGame (1) to the Kailua ZK fault-proof game (1337); withdrawals now clear through RISC Zero-proven dispute games."
+    },
+    {
+      "timestamp": 1782901175,
+      "type": "state",
+      "updateId": "f6059a61",
+      "contract": "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77",
+      "source": "tx:0x07bf7a192a2ea3b5324ef5cef339715fc6b972b261463e751f39a3f7bb2ae72d",
+      "reason": "Moved the respected game type from the PermissionedDisputeGame (1) to the Kailua ZK fault-proof game (1337); withdrawals now clear through RISC Zero-proven dispute games."
+    }
+  ]
+}

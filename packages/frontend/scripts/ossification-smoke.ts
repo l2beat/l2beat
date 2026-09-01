@@ -21,6 +21,8 @@ const IDS = [
   'unichain',
   'bob',
   'katana',
+  'celo',
+  'roninnetwork',
 ]
 
 async function main() {

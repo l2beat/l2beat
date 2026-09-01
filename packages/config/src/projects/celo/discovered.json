@@ -1,7 +1,7 @@
 {
   "name": "celo",
   "timestamp": 1784282840,
-  "configHash": "0x0a921cd6a2dbdf8746c0fb9fcafea4026a85f119f7bce2ca2de31acb80298ec0",
+  "configHash": "0xb2ffdfd73eb7087dbe748cb06afda6a853ad2599fbcf5932a4290d778a932297",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -54,6 +54,7 @@
         "0x428c89f5d64258fe92919fe01d530631a074664ff9c244072e9e5453c7d7a1a7"
       ],
       "proxyType": "EIP1967 proxy",
+      "critical": true,
       "deployerAddress": "eth:0xbcA67eE5188efc419c42C91156EcC888b20664f3",
       "sinceTimestamp": 1741879583,
       "sinceBlock": 22038833,
@@ -331,6 +332,7 @@
         "0x463ca41187306b8ab127bfcef93a737fc34ce6ce6ec920516521e3f6af902c68"
       ],
       "proxyType": "EIP1967 proxy",
+      "critical": true,
       "deployerAddress": "eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B",
       "sinceTimestamp": 1774940723,
       "sinceBlock": 24775980,
@@ -353,6 +355,18 @@
         "SUPERCHAIN_CONFIG_SLOT": "0x57bd4505d034c48af4dca8c605cfe8a4e522364a0126bc874be225072431d635",
         "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "1.0.0-celo"
+      },
+      "fieldMeta": {
+        "guardian": {
+          "severity": "HIGH",
+          "description": "Address that can pause Celo withdrawals on its own, without any other party consenting."
+        },
+        "superchainConfig": {
+          "severity": "HIGH",
+          "description": "The shared Superchain-wide SuperchainConfig whose pause state is forwarded to Celo. Changing this pointer changes who can pause Celo from outside."
+        },
+        "paused": { "severity": "MEDIUM" },
+        "celoPaused": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x25035d2233d099f0BA710ca1e5a3834842870C66": "Proxy",
@@ -764,6 +778,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1075,6 +1090,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1443,6 +1459,10 @@
         "respectedGameType": { "severity": "HIGH" },
         "disputeGameFinalityDelaySeconds_fmt": {
           "description": "Formatted delay after which an unchallenged resolved dispute game can be used for withdrawals."
+        },
+        "disputeGameFinalityDelaySeconds": {
+          "severity": "HIGH",
+          "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
         }
       },
       "implementationNames": {
@@ -2197,7 +2217,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "critical": true,
+      "critical": false,
       "deployerAddress": "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5",
       "sinceTimestamp": 1624400033,
       "sinceBlock": 12686687,
@@ -2254,6 +2274,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract managing access control for proposers and challengers in OPSuccinct.",
+      "critical": true,
       "ignoreInWatchMode": ["getLastProposalTimestamp"],
       "deployerAddress": "eth:0x95FFAC468e37DdeEF407FfEf18f0cC9E86D8f13B",
       "sinceTimestamp": 1764689339,
@@ -2289,11 +2310,11 @@
           "description": "Address that can update the proposer and challenger allowlists and transfer ownership."
         },
         "challengers": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Addresses allowed to challenge dispute games."
         },
         "proposers": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Addresses allowed to propose dispute games."
         }
       },
@@ -2407,6 +2428,7 @@
       ],
       "proxyType": "immutable",
       "description": "Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.",
+      "critical": true,
       "deployerAddress": "eth:0x3bec6009e5b9611b7765BC245A4Bb420817483E2",
       "sinceTimestamp": 1779117911,
       "sinceBlock": 25122972,
