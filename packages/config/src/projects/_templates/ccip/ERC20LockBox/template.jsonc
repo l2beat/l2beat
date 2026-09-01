@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "ERC20 custody contract used by siloed CCIP pools. It is not bound to a chain selector: authorized callers can deposit the configured token and withdraw any amount, including the entire balance, to any recipient; the owner controls that caller set.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove addresses allowed to deposit and withdraw the configured token from this lockbox."
+        }
+      ]
+    },
+    "getAllAuthorizedCallers": {
+      "description": "Addresses allowed to deposit the configured token and withdraw it to an arbitrary recipient.",
+      "edit": ["sort"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient."
+        }
+      ]
+    },
+    "getToken": {
+      "description": "Immutable ERC20 token held by this lockbox."
+    }
+  }
+}

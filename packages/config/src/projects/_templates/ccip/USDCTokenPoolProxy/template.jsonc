@@ -1,0 +1,65 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "USDC routing pool for CCIP. After validating the Router-selected ramp, it forwards each transfer to the owner-selected CCTP v1, CCTP v2, CCTP-through-CCV, or siloed lock/release child pool.",
+  "types": {
+    "USDCLockOrBurnMechanism": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0": "INVALID_MECHANISM",
+        "1": "CCTP_V1",
+        "2": "CCTP_V2",
+        "3": "LOCK_RELEASE",
+        "4": "CCV"
+      }
+    }
+  },
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace any of the four USDC child pools and select the lock-or-burn mechanism used for each remote chain."
+        },
+        {
+          "type": "interact",
+          "description": "change the fee aggregator that receives fee-token balances withdrawn from this proxy."
+        }
+      ]
+    },
+    "lockOrBurnMechanisms": {
+      "description": "Current child-pool mechanism selected for each configured remote chain, reconstructed from mechanism-update events.",
+      "handler": {
+        "type": "event",
+        "groupBy": "remoteChainSelector",
+        "select": "mechanism",
+        "set": {
+          "event": "event LockOrBurnMechanismUpdated(uint64 indexed remoteChainSelector, uint8 mechanism)"
+        }
+      },
+      "edit": [
+        "pipe",
+        ["map_values", ["format", "USDCLockOrBurnMechanism"]],
+        ["map_keys", ["format", "CCIPChainName"]]
+      ]
+    },
+    "getPools": {
+      "description": "Four child pools available to the owner-selected per-chain routing mechanism."
+    },
+    "getStaticConfig": {
+      "description": "Immutable USDC token, CCIP Router, and CCTP verifier resolver used by this proxy."
+    },
+    "router": {
+      "copy": "getStaticConfig",
+      "edit": ["get", "router"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "select the OnRamps and OffRamps authorized to invoke this proxy for each remote chain."
+        }
+      ]
+    },
+    "getFeeAggregator": {
+      "description": "Address that receives fee-token balances withdrawn from this proxy."
+    }
+  }
+}

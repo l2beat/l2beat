@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "CCIP 2.0 verifier resolver. On source chains it selects a verifier implementation by destination chain; on destination chains it selects an implementation from the version tag prefixed to verifier results. This lets a stable CCV address route messages across verifier versions and remote chains.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add, replace, or remove inbound verifier implementations for version tags and outbound verifier implementations for destination chains."
+        },
+        {
+          "type": "interact",
+          "description": "change the fee aggregator that receives fee-token balances withdrawn from this resolver."
+        }
+      ]
+    },
+    "getAllInboundImplementations": {
+      "description": "Verifier implementation selected for each inbound verifier-result version tag.",
+      "edit": ["sort", ["get", "version"]]
+    },
+    "getAllOutboundImplementations": {
+      "description": "Verifier implementation selected for outbound messages to each destination chain.",
+      "edit": [
+        "pipe",
+        ["map", ["set", "destChainSelector", ["format", "CCIPChainName"]]],
+        ["sort", ["get", "destChainSelector"]]
+      ]
+    },
+    "getFeeAggregator": {
+      "description": "Address that receives fee-token balances withdrawn from this resolver."
+    }
+  }
+}

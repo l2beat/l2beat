@@ -1,0 +1,153 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "CCIP v1.6 home-chain configuration contract. The owner manages per-chain reader sets and fault thresholds. Its immutable CapabilitiesRegistry is the only external caller that can submit DON updates; validated updates execute self-calls that create, revoke, or promote the separate Commit and Execution OCR3 candidate/active configurations. Each config digest binds the chain id, this contract, DON id, plugin type, monotonically increasing version, and encoded OCR3 config.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add, replace, or remove per-chain reader sets, fault-tolerance thresholds, and opaque chain-family configuration."
+        }
+      ]
+    },
+    "getCapabilityRegistry": {
+      "description": "Immutable CapabilitiesRegistry that is the only external caller allowed to submit DON capability updates.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit DON capability updates that create, revoke, or promote candidate and active Commit and Execution OCR configurations."
+        }
+      ]
+    },
+    "chainConfigurations": {
+      // Replayed from ChainConfigSet. ChainConfigRemoved is not replayed, so removed selectors can remain in this latest-set view.
+      "description": "Latest ChainConfigSet event observed for each remote chain selector: the registered reader p2pIds, fChain fault-tolerance threshold, and opaque chain-family config, rendered as UTF-8 when valid. The handler does not replay ChainConfigRemoved, so this is a latest-set history view and can retain a configuration after its selector has been removed.",
+      "handler": {
+        "type": "event",
+        "groupBy": "chainSelector",
+        "select": "chainConfig",
+        "set": {
+          "event": "event ChainConfigSet(uint64 chainSelector, (bytes32[] readers, uint8 fChain, bytes config) chainConfig)"
+        }
+      },
+      "edit": [
+        "pipe",
+        [
+          "map_values",
+          [
+            "pipe",
+            ["shape", "readers", "fChain", "config"],
+            ["set", "config", ["format", "BytesToString"]]
+          ]
+        ],
+        ["map_keys", ["format", "CCIPChainName"]]
+      ]
+    },
+    "executionConfigs": {
+      // ConfigSet is emitted by setCandidate. Promotion and revocation events are not replayed, so this is the latest proposal rather than an active-config assertion.
+      "description": "Latest ConfigSet event observed per remote chain for the Execution plugin (pluginType=1). ConfigSet is emitted when setCandidate stores a candidate; this event-derived view does not replay promotion or revocation events, so the displayed digest may be active, still a candidate, or no longer current, and does not by itself prove what a remote OffRamp accepts. It surfaces the version, FRoleDON, offchainConfigVersion, rmnHomeAddress, DON oracle identities, and decoded libOCR OCR3 offchainConfig. Each node's p2pId/signerKey/transmitterKey stays index-aligned with its offchain public key, peer id, and shared-secret encryption; these complete oracle tuples are sorted by p2pId so a pure reordering produces no diff.",
+      "handler": {
+        "type": "event",
+        "groupBy": "config.1",
+        "select": ["configDigest", "version", "config"],
+        "ignoreRelative": true,
+        "set": {
+          "event": "event ConfigSet(bytes32 indexed configDigest, uint32 version, (uint8 pluginType, uint64 chainSelector, uint8 FRoleDON, uint64 offchainConfigVersion, bytes offrampAddress, bytes rmnHomeAddress, (bytes32 p2pId, bytes signerKey, bytes transmitterKey)[] nodes, bytes offchainConfig) config)",
+          "where": ["=", ["get", "config", 0], 1]
+        }
+      },
+      "edit": [
+        "pipe",
+        [
+          "map_values",
+          [
+            "set",
+            "config",
+            [
+              "pipe",
+              [
+                "shape",
+                "pluginType",
+                "chainSelector",
+                "FRoleDON",
+                "offchainConfigVersion",
+                "offrampAddress",
+                "rmnHomeAddress",
+                "nodes",
+                "offchainConfig"
+              ],
+              [
+                "pick",
+                "FRoleDON",
+                "offchainConfigVersion",
+                "rmnHomeAddress",
+                "nodes",
+                "offchainConfig"
+              ],
+              [
+                "set",
+                "nodes",
+                ["map", ["shape", "p2pId", "signerKey", "transmitterKey"]]
+              ],
+              ["format", "CCIPOcr3Config"]
+            ]
+          ]
+        ],
+        ["map_keys", ["format", "CCIPChainName"]]
+      ]
+    },
+    "commitConfigs": {
+      // Same candidate-event semantics as executionConfigs.
+      "description": "Latest ConfigSet event observed per remote chain for the Commit plugin (pluginType=0), with the same decoded shape and candidate/promotion/revocation limitations as executionConfigs.",
+      "handler": {
+        "type": "event",
+        "groupBy": "config.1",
+        "select": ["configDigest", "version", "config"],
+        "ignoreRelative": true,
+        "set": {
+          "event": "event ConfigSet(bytes32 indexed configDigest, uint32 version, (uint8 pluginType, uint64 chainSelector, uint8 FRoleDON, uint64 offchainConfigVersion, bytes offrampAddress, bytes rmnHomeAddress, (bytes32 p2pId, bytes signerKey, bytes transmitterKey)[] nodes, bytes offchainConfig) config)",
+          "where": ["=", ["get", "config", 0], 0]
+        }
+      },
+      "edit": [
+        "pipe",
+        [
+          "map_values",
+          [
+            "set",
+            "config",
+            [
+              "pipe",
+              [
+                "shape",
+                "pluginType",
+                "chainSelector",
+                "FRoleDON",
+                "offchainConfigVersion",
+                "offrampAddress",
+                "rmnHomeAddress",
+                "nodes",
+                "offchainConfig"
+              ],
+              [
+                "pick",
+                "FRoleDON",
+                "offchainConfigVersion",
+                "rmnHomeAddress",
+                "nodes",
+                "offchainConfig"
+              ],
+              [
+                "set",
+                "nodes",
+                ["map", ["shape", "p2pId", "signerKey", "transmitterKey"]]
+              ],
+              ["format", "CCIPOcr3Config"]
+            ]
+          ]
+        ],
+        ["map_keys", ["format", "CCIPChainName"]]
+      ]
+    }
+  }
+}
