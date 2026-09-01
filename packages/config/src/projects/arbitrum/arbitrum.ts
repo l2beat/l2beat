@@ -616,9 +616,17 @@ export const arbitrum: ScalingProject = orbitStackL2({
           secondLine: `${formatSeconds(currentForceInclusionDelayBlocks * assumedBlockTime)} inclusion + ${formatSeconds(
             worstCaseStateFinalizationDisplaySeconds,
           )} state`,
-          description: `After successful L2 inclusion (forced or sequencer), the user can propose the assertion needed to exit by posting the assertion bond. The assertion cadence can add up to ${formatSeconds(minimumAssertionPeriodSeconds, { fullUnit: true })}. A maximally delayed BoLD challenge can take up to twice the ${edgeChallengePeriodBlocks.toLocaleString('en-US')}-block edge challenge period, followed by a ${(
-            challengeGracePeriodSeconds / assumedBlockTime
-          ).toLocaleString('en-US')}-block grace period.`,
+          description: readProjectMarkdown('arbitrum', 'sequencingExitDelay', {
+            minimumAssertionPeriod: formatSeconds(
+              minimumAssertionPeriodSeconds,
+              { fullUnit: true },
+            ),
+            edgeChallengePeriodBlocks:
+              edgeChallengePeriodBlocks.toLocaleString('en-US'),
+            challengeGracePeriodBlocks: (
+              challengeGracePeriodSeconds / assumedBlockTime
+            ).toLocaleString('en-US'),
+          }),
           orderHint: worstCaseExitDelaySeconds,
         },
         exitEconomics: {

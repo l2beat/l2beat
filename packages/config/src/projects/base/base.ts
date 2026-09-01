@@ -18,6 +18,7 @@ import {
   getSP1Verifiers,
   opStackL2,
 } from '../../templates/opStack'
+import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('base')
 const genesisTimestamp = UnixTime(1686074603)
@@ -355,7 +356,18 @@ export const base: ScalingProject = opStackL2({
             fullUnit: true,
           }),
           secondLine: `${formatSeconds(sequencingWindowSeconds)} inclusion + ${formatSeconds(aggregateVerifierCheckpointIntervalSeconds)} + ${formatSeconds(stateFinalizationDelaySeconds)} state`,
-          description: `After successful L2 inclusion (forced or sequencer), a permissionless ZK proof is needed to finalize the state and exit on L1. Without the centralized TEE proof, the game waits ${formatSeconds(aggregateVerifierSlowFinalizationDelaySeconds, { fullUnit: true })}, followed by the currently ${formatSeconds(disputeGameFinalityDelaySeconds, { fullUnit: true })} finality air gap. The ${formatSeconds(proofMaturityDelaySeconds, { fullUnit: true })} withdrawal-proof maturity period runs concurrently.`,
+          description: readProjectMarkdown('base', 'sequencingExitDelay', {
+            slowFinalizationDelay: formatSeconds(
+              aggregateVerifierSlowFinalizationDelaySeconds,
+              { fullUnit: true },
+            ),
+            finalityAirGap: formatSeconds(disputeGameFinalityDelaySeconds, {
+              fullUnit: true,
+            }),
+            proofMaturityDelay: formatSeconds(proofMaturityDelaySeconds, {
+              fullUnit: true,
+            }),
+          }),
           orderHint: worstCaseExitDelaySeconds,
         },
         exitEconomics: {

@@ -1,0 +1,1 @@
+After successful L2 inclusion (forced or sequencer), a permissionless ZK proof is needed to finalize the state and exit on L1. Without the centralized TEE proof, the game waits {{slowFinalizationDelay}}, followed by the currently {{finalityAirGap}} finality air gap. The {{proofMaturityDelay}} withdrawal-proof maturity period runs concurrently.

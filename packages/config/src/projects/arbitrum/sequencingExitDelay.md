@@ -1,0 +1,1 @@
+After successful L2 inclusion (forced or sequencer), the user can propose the assertion needed to exit by posting the assertion bond. The assertion cadence can add up to {{minimumAssertionPeriod}}. A maximally delayed BoLD challenge can take up to twice the {{edgeChallengePeriodBlocks}}-block edge challenge period, followed by a {{challengeGracePeriodBlocks}}-block grace period.
