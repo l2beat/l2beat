@@ -40,6 +40,22 @@ export const PolkadotGetBlockResponse = v.object({
   }),
 })
 
+export const PolkadotGetStorageResponse = v.object({
+  result: v.union([v.string(), v.null()]),
+})
+
+export const PolkadotGetKeysPagedResponse = v.object({
+  result: v.array(v.string()),
+})
+
+export const PolkadotQueryStorageAtResponse = v.object({
+  result: v.array(
+    v.object({
+      changes: v.array(v.tuple([v.string(), v.union([v.string(), v.null()])])),
+    }),
+  ),
+})
+
 export const PolkadotErrorResponse = v.object({
   error: v.object({
     code: v.number(),

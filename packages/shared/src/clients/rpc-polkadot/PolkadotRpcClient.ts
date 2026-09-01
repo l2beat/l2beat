@@ -1,12 +1,23 @@
 import type { Block, json } from '@l2beat/shared-pure'
-import type { ApiPromise } from '@polkadot/api'
 import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
+import {
+  bytesToHex,
+  decodeCompact,
+  decodeU32Le,
+  encodeU32Le,
+  hexToBytes,
+  twox64Concat,
+  twox128,
+} from './substrate'
 import {
   type PolkadotBlock,
   PolkadotErrorResponse,
   PolkadotGetBlockHashResponse,
   PolkadotGetBlockResponse,
+  PolkadotGetKeysPagedResponse,
+  PolkadotGetStorageResponse,
+  PolkadotQueryStorageAtResponse,
 } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
@@ -15,6 +26,15 @@ interface Dependencies extends ClientCoreDependencies {
 }
 
 const TIMESTAMP_SHIFT = 4300
+
+// Storage key prefixes are twox128 hashes of pallet and item names.
+const STAKING = twox128(new TextEncoder().encode('Staking'))
+const CURRENT_ERA = twox128(new TextEncoder().encode('CurrentEra'))
+const ERAS_STAKERS_OVERVIEW = twox128(
+  new TextEncoder().encode('ErasStakersOverview'),
+)
+
+const KEYS_PAGE_SIZE = 1000
 
 export class PolkadotRpcClient extends ClientCore {
   constructor(private readonly $: Dependencies) {
@@ -76,7 +96,7 @@ export class PolkadotRpcClient extends ClientCore {
 
   async query(
     method: string,
-    params: (string | number | boolean | Record<string, string>)[],
+    params: (string | number | boolean | string[] | Record<string, string>)[],
   ) {
     return await this.fetch(this.$.url, {
       method: 'POST',
@@ -109,61 +129,77 @@ export class PolkadotRpcClient extends ClientCore {
   }
 
   /**
-   * Validator stake overview for the chain's current staking era.
-   * Storage reads go through @polkadot/api over HTTP - plain
-   * request/response, no sockets or background timers.
+   * Validator stake overview for the chain's current staking era, read
+   * straight from Substrate storage over JSON-RPC (see substrate.ts for the
+   * key hashing and SCALE decoding this requires).
    */
   async getStakingEraOverview(): Promise<Record<string, Exposure>> {
-    const api = await this.createApi()
-    try {
-      const currentEra = await api.query.staking.currentEra()
-      const overview = (await api.query.staking.erasStakersOverview.entries(
-        currentEra.toHuman() as string,
-      )) as unknown as [ValidatorKeysCodec, ValidatorValueCodec][]
+    const era = await this.getCurrentEra()
 
-      const validatorsOverview = overview.reduce(
-        (
-          acc: Record<string, Exposure>,
-          [validatorKeys, value]: [ValidatorKeysCodec, ValidatorValueCodec],
-        ) => {
-          const [, validator] = validatorKeys.toHuman()
-          const { own, total } = value.toPrimitive()
+    // Staking.ErasStakersOverview is a (Twox64Concat era, Twox64Concat
+    // account) double map, so all entries of one era share this prefix.
+    const prefix = bytesToHex(
+      concatBytes(
+        STAKING,
+        ERAS_STAKERS_OVERVIEW,
+        twox64Concat(encodeU32Le(era)),
+      ),
+    )
+    const keys = await this.getStorageKeys(prefix)
 
-          acc[validator] = {
-            own: BigInt(own),
-            total: BigInt(total),
-          }
+    const overview: Record<string, Exposure> = {}
+    for (const [key, value] of await this.queryStorageAt(keys)) {
+      if (value === null) continue
+      // The key ends with twox64Concat(AccountId32): 8 hash bytes + the
+      // 32-byte account id, reported as hex (the id is only used as a
+      // unique label for counting).
+      const validator = `0x${key.slice(-64)}`
+      // Value is a SCALE PagedExposureMetadata:
+      // compact total, compact own, u32 nominatorCount, u32 pageCount.
+      const bytes = hexToBytes(value)
+      const total = decodeCompact(bytes, 0)
+      const own = decodeCompact(bytes, total.offset)
+      overview[validator] = { own: own.value, total: total.value }
+    }
+    return overview
+  }
 
-          return acc
-        },
-        {},
-      )
+  private async getCurrentEra(): Promise<number> {
+    const key = bytesToHex(concatBytes(STAKING, CURRENT_ERA))
+    const response = PolkadotGetStorageResponse.parse(
+      await this.query('state_getStorage', [key]),
+    )
+    if (response.result === null) {
+      throw new Error('Staking.CurrentEra is not set')
+    }
+    return decodeU32Le(hexToBytes(response.result), 0)
+  }
 
-      return validatorsOverview
-    } finally {
-      await api.disconnect().catch(() => {})
+  private async getStorageKeys(prefix: string): Promise<string[]> {
+    const keys: string[] = []
+    let startKey: string | undefined
+    while (true) {
+      const page = PolkadotGetKeysPagedResponse.parse(
+        await this.query('state_getKeysPaged', [
+          prefix,
+          KEYS_PAGE_SIZE,
+          ...(startKey ? [startKey] : []),
+        ]),
+      ).result
+      keys.push(...page)
+      if (page.length < KEYS_PAGE_SIZE) return keys
+      startKey = page[page.length - 1]
     }
   }
 
-  // ApiPromise.isReadyOrError is not a socket handshake - it downloads the
-  // chain's runtime metadata and builds the type registry. Done per call so
-  // the metadata never goes stale across runtime upgrades. @polkadot/api is
-  // imported lazily because loading it costs ~700ms and ~80MB RSS.
-  private async createApi(): Promise<ApiPromise> {
-    const { ApiPromise, HttpProvider } = await import('@polkadot/api')
-    const api = new ApiPromise({
-      provider: new HttpProvider(this.$.url),
-      noInitWarn: true,
-      throwOnConnect: true,
-    })
-    api.on('error', () => {})
-    try {
-      await api.isReadyOrError
-    } catch (error) {
-      await api.disconnect().catch(() => {})
-      throw error
-    }
-    return api
+  private async queryStorageAt(
+    keys: string[],
+  ): Promise<[string, string | null][]> {
+    if (keys.length === 0) return []
+    const response = PolkadotQueryStorageAtResponse.parse(
+      await this.query('state_queryStorageAt', [keys]),
+    )
+    return response.result.flatMap((changeSet) => changeSet.changes)
   }
 
   get chain() {
@@ -187,13 +223,15 @@ export class PolkadotRpcClient extends ClientCore {
     return timestamp
   }
 }
-type Codec<T> = {
-  toHuman: () => T
-  toPrimitive: () => T
+function concatBytes(...parts: Uint8Array[]): Uint8Array {
+  const result = new Uint8Array(parts.reduce((sum, p) => sum + p.length, 0))
+  let offset = 0
+  for (const part of parts) {
+    result.set(part, offset)
+    offset += part.length
+  }
+  return result
 }
-
-type ValidatorKeysCodec = Codec<[string, string]>
-type ValidatorValueCodec = Codec<{ own: string; total: string }>
 
 type Exposure = {
   own: bigint
