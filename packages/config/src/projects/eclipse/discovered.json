@@ -41,15 +41,7 @@
     {
       "address": "eth:0x1a84163249B2909f746C725F23D5ae2a66D7C4fE",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a",
-          "description": "authorize withdrawals to any address.",
-          "role": ".withdrawAuthorityAC"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3392fd462d9710Fbf3A5703818b9920C119DC080",
@@ -71,38 +63,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a",
-          "description": "authorize withdrawals to any address.",
-          "role": ".withdrawAuthorityAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a",
-          "description": "grant / revoke all access control roles and thus access all permissioned functions in the contract.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a",
-          "description": "pause the contract for deposits and withdrawals.",
-          "role": ".pauserAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3",
-          "description": "start an upgrade of the core contracts.",
-          "role": ".upgraderAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
-          "description": "grant / revoke all access control roles and thus access all permissioned functions in the contract.",
-          "role": ".defaultAdminAC"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA",
       "sinceTimestamp": 1722032243,
@@ -139,14 +99,6 @@
       ],
       "proxyType": "immutable",
       "description": "Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
-          "description": "withdraw ETH from the contract.",
-          "role": ".withdrawerAC"
-        }
-      ],
       "ignoreInWatchMode": ["depositIndex"],
       "deployerAddress": "eth:0xBb534A6Bd0440727cb5883D037DEd7358059D547",
       "sinceTimestamp": 1762805459,
@@ -226,31 +178,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
-          "description": "grant / revoke all access control roles and thus access all permissioned functions in the contract.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
-          "description": "withdraw ETH from the contract, even when it is paused.",
-          "role": ".emergencyAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
-          "description": "withdraw ETH from the contract.",
-          "role": ".withdrawerAC"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
-          "role": ".upgraderAC"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x33440E53476B855A56B831e7924B5aa123981726",
       "sinceTimestamp": 1722018611,
@@ -400,19 +327,6 @@
       ],
       "proxyType": "immutable",
       "description": "This contract was used for an upgrade an still retains its permissions and permissioned actors.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
-          "description": "withdraw ETH from the contract, even when it is paused.",
-          "role": ".emergencyAC"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
-          "role": ".upgraderAC"
-        }
-      ],
       "deployerAddress": "eth:0xBb534A6Bd0440727cb5883D037DEd7358059D547",
       "sinceTimestamp": 1730774639,
       "sinceBlock": 21118543,
@@ -910,5 +824,103 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 23868113 },
-  "permissionsConfigHash": "0x07f5da376711d11a086e6a89d61b2929c924ba4586868db74e8debbec3b2f0c6"
+  "permissionsConfigHash": "0x07f5da376711d11a086e6a89d61b2929c924ba4586868db74e8debbec3b2f0c6",
+  "permissions": {
+    "eth:0x1a84163249B2909f746C725F23D5ae2a66D7C4fE": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a",
+          "description": "authorize withdrawals to any address.",
+          "role": ".withdrawAuthorityAC"
+        }
+      ]
+    },
+    "eth:0x4720342419C1D316B948690d12C86D5b485C64E0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a",
+          "description": "authorize withdrawals to any address.",
+          "role": ".withdrawAuthorityAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a",
+          "description": "grant / revoke all access control roles and thus access all permissioned functions in the contract.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a",
+          "description": "pause the contract for deposits and withdrawals.",
+          "role": ".pauserAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3",
+          "description": "start an upgrade of the core contracts.",
+          "role": ".upgraderAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "description": "grant / revoke all access control roles and thus access all permissioned functions in the contract.",
+          "role": ".defaultAdminAC"
+        }
+      ]
+    },
+    "eth:0x504392F02ee64D6B51aD3bCf7999E69EBe28b30a": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "description": "withdraw ETH from the contract.",
+          "role": ".withdrawerAC"
+        }
+      ]
+    },
+    "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "description": "grant / revoke all access control roles and thus access all permissioned functions in the contract.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "description": "withdraw ETH from the contract, even when it is paused.",
+          "role": ".emergencyAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "description": "withdraw ETH from the contract.",
+          "role": ".withdrawerAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "role": ".upgraderAC"
+        }
+      ]
+    },
+    "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "description": "withdraw ETH from the contract, even when it is paused.",
+          "role": ".emergencyAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "role": ".upgraderAC"
+        }
+      ]
+    }
+  }
 }

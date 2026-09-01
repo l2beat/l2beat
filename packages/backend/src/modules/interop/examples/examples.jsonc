@@ -248,6 +248,189 @@
       ]
     }
   },
+  "basesolbridge": {
+    "description": "Base <> Solana native bridge (one-sided)",
+    "txs": [
+      // SOL back to Solana — CrossChainERC20 burn (srcWasBurned)
+      {
+        "chain": "base",
+        "tx": "0x1eda94f5e7bc99b75beffa3a9d684fa7c5ebe72fa57429a3d7586baa65b8a3c2"
+      },
+      // SOL from Solana — CrossChainERC20 mint (dstWasMinted)
+      {
+        "chain": "base",
+        "tx": "0x26c68f77d1315a43dd0154eb4991b1239acb360cdd1c4d6875cafaa00338f931"
+      },
+      // JitoSOL back to Solana — burn of a non-SOL wrapped SPL token
+      {
+        "chain": "base",
+        "tx": "0x0b8b40a1ff85c0f99c673646ae1b195e548351806b40f6799bea2741128e192a"
+      },
+      // JitoSOL from Solana — mint of a non-SOL wrapped SPL token
+      {
+        "chain": "base",
+        "tx": "0x7391377bd25a169627ba25f834accd550626a2350950ac4bb853f950b4596421"
+      },
+      // Native ETH to Solana — ERC-7528 pseudo-address, escrow (no token log)
+      {
+        "chain": "base",
+        "tx": "0x368aca0d8412e62d08d5e4e23c8d68ae9a0dfd36ab8b105967c7adb477f2d6f1"
+      },
+      // Native ETH back from Solana — escrow release, combined
+      // registerMessages + relayMessages tx
+      {
+        "chain": "base",
+        "tx": "0x5dd34214062aa33308642474364f3da81fcb1eae05f0d376b63697a827b5d34e"
+      },
+      // Base-native ERC20 (POKE) to Solana — escrow lock (Transfer to bridge)
+      {
+        "chain": "base",
+        "tx": "0xc95eaf57fdc6d024bf3b2cbe941438f6b6085123813fbe23ac22a55cf89883bd"
+      },
+      // Base-native ERC20 (POKE) back from Solana — escrow release
+      {
+        "chain": "base",
+        "tx": "0x184b819f160a1f231d6af7f06a66e24c28615249f64458427f3abbaa7c123332"
+      },
+      // relayMessages batch mixing an escrow release (wASS) and a SOL mint —
+      // tests that the backward token-log scan stops at message boundaries
+      {
+        "chain": "base",
+        "tx": "0xbe3a67b3756dbca424efa1e85d8763c7410495d8aabd742a9077fcc2d065d4a0"
+      },
+      // relayMessages batch with two SOL mints of different amounts — tests
+      // per-message attribution for the same token
+      {
+        "chain": "base",
+        "tx": "0xfeb55ff7ea9ce6e7594944bae64bffe39ac6187f309bd9b41b28b70542805aaf"
+      }
+    ],
+    "expects": {
+      "transfers": [
+        // SOL burn out
+        {
+          "type": "basesolbridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": {
+            "event": { "ctx": { "chain": "base" } },
+            "tokenAddress": "0x000000000000000000000000311935cd80b76769bf2ecc9d8ab7635b2139cf82",
+            "tokenAmount": "59681912417",
+            "wasBurned": true
+          },
+          "dst": { "chain": "solana" }
+        },
+        // SOL mint in
+        {
+          "type": "basesolbridge.Transfer",
+          "bridgeType": "lockAndMint",
+          "src": { "chain": "solana" },
+          "dst": {
+            "event": { "ctx": { "chain": "base" } },
+            "tokenAddress": "0x000000000000000000000000311935cd80b76769bf2ecc9d8ab7635b2139cf82",
+            "tokenAmount": "3066746226205",
+            "wasMinted": true
+          }
+        },
+        // JitoSOL burn out
+        {
+          "type": "basesolbridge.Transfer",
+          "src": {
+            "tokenAddress": "0x00000000000000000000000097be14dd8f994a5364573bc035d85309e7cb34de",
+            "tokenAmount": "4121900",
+            "wasBurned": true
+          },
+          "dst": { "chain": "solana" }
+        },
+        // JitoSOL mint in
+        {
+          "type": "basesolbridge.Transfer",
+          "src": { "chain": "solana" },
+          "dst": {
+            "tokenAddress": "0x00000000000000000000000097be14dd8f994a5364573bc035d85309e7cb34de",
+            "tokenAmount": "1221160578651",
+            "wasMinted": true
+          }
+        },
+        // ETH lock out (native pseudo-address, not burned)
+        {
+          "type": "basesolbridge.Transfer",
+          "src": {
+            "tokenAddress": "native",
+            "tokenAmount": "1000000000",
+            "wasBurned": false
+          },
+          "dst": { "chain": "solana" }
+        },
+        // ETH escrow release in (not minted)
+        {
+          "type": "basesolbridge.Transfer",
+          "src": { "chain": "solana" },
+          "dst": {
+            "tokenAddress": "native",
+            "tokenAmount": "2000000000000000",
+            "wasMinted": false
+          }
+        },
+        // POKE lock out (Base-native ERC20, not burned)
+        {
+          "type": "basesolbridge.Transfer",
+          "src": {
+            "tokenAddress": "0x000000000000000000000000b2000000000000000000007d9640993d01f94199",
+            "tokenAmount": "322457065464134000000000",
+            "wasBurned": false
+          },
+          "dst": { "chain": "solana" }
+        },
+        // POKE escrow release in (not minted)
+        {
+          "type": "basesolbridge.Transfer",
+          "src": { "chain": "solana" },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000b2000000000000000000007d9640993d01f94199",
+            "tokenAmount": "1000000000000000000",
+            "wasMinted": false
+          }
+        },
+        // Mixed batch: wASS escrow release ...
+        {
+          "type": "basesolbridge.Transfer",
+          "src": { "chain": "solana" },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000445040ffaab67992ba1020ec2558cd6754d83ad6",
+            "tokenAmount": "1000000000000000000",
+            "wasMinted": false
+          }
+        },
+        // ... and SOL mint in the same tx
+        {
+          "type": "basesolbridge.Transfer",
+          "src": { "chain": "solana" },
+          "dst": {
+            "tokenAddress": "0x000000000000000000000000311935cd80b76769bf2ecc9d8ab7635b2139cf82",
+            "tokenAmount": "40000000",
+            "wasMinted": true
+          }
+        },
+        // Two-SOL-mint batch
+        {
+          "type": "basesolbridge.Transfer",
+          "src": { "chain": "solana" },
+          "dst": {
+            "tokenAmount": "125000000000",
+            "wasMinted": true
+          }
+        },
+        {
+          "type": "basesolbridge.Transfer",
+          "src": { "chain": "solana" },
+          "dst": {
+            "tokenAmount": "120000000000",
+            "wasMinted": true
+          }
+        }
+      ]
+    }
+  },
   "hyperliquid-bridge": {
     "description": "Arbitrum/HyperEVM <> Hyperliquid USDC bridge (one-sided)",
     "loadConfigs": ["cctp-v2"],

@@ -1,3 +1,95 @@
+Generated with discovered.json: 0x41195e2fb72761156676bf194d1ba2e6d59d7c82
+
+# Diff at Tue, 01 Sep 2026 12:50:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@971c51541a4e32a7dcee1adc458d42516d2950ec block: 1784543140
+- current timestamp: 1788264976
+
+## Description
+
+Single line change (replace msg.sender) in the rollup: https://disco.l2beat.com/diff/eth:0x59290394dDC1cF84e671701A929710643c343530/eth:0x052b73d934E9412045Bf731574463Fd026D74645
+
+min and target Reserve percentage ~halved in the yield manager.
+
+## Watched changes
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) [linea/LineaRollup_ForcedTrx_v8_0] {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
+      sourceHashes.1:
+-        "0xf3482110e327210ee9824abef6aa6fea72bf9a49a46187d08853a978c2210c65"
++        "0x99448a403aaba56b396cab263fdccd1a13345cb737178fc7813f1a5bf8d927d5"
+      values.$implementation:
+-        "eth:0x59290394dDC1cF84e671701A929710643c343530"
++        "eth:0x052b73d934E9412045Bf731574463Fd026D74645"
+      values.$pastUpgrades.12:
++        ["2026-09-01T09:07:47.000Z","0x0e551aff381b8c6c4c73eafddb326906ac0d3599295444324cee8b988aaa6a6a",["eth:0x052b73d934E9412045Bf731574463Fd026D74645"]]
+      values.$upgradeCount:
+-        12
++        13
+      implementationNames.eth:0x59290394dDC1cF84e671701A929710643c343530:
+-        "LineaRollup"
+      implementationNames.eth:0x052b73d934E9412045Bf731574463Fd026D74645:
++        "LineaRollup"
+    }
+```
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) [linea/YieldManager] {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
++++ description: Value relative to TVS, part of the computation of minimal rollup ETH reserve.
+      values.minimumWithdrawalReservePercentageBps:
+-        8500
++        3500
++++ description: Value relative to TVS, part of the computation of target rollup ETH reserve.
+      values.targetWithdrawalReservePercentageBps:
+-        9000
++        4000
+    }
+```
+
+## Source code changes
+
+```diff
+.../linea/{.flat@1784543140 => .flat}/LineaRollup/LineaRollup.sol       | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
+Generated with discovered.json: 0x0d6f59f8d2f6768e737166b99a0a8e9c3ad49fb0
+
+# Diff at Thu, 27 Aug 2026 08:52:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe0597dfc044814c2211715fa77b5f9f3ec22e2a block: 1784543140
+- current timestamp: 1784543140
+
+## Description
+
+Add HIGH severity to beacon implementation in global/UpgradeableBeacon template (no value changes).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784543140 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta:
++        {"implementation":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta:
++        {"implementation":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x7d5ab043524bbfa6e5ad3f4c520c7cd2e771e40d
 
 # Diff at Mon, 20 Jul 2026 10:28:28 GMT:

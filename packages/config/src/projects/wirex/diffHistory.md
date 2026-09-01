@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x5fbef36b98efcfa4ae49525b609427e0b434939f
+
+# Diff at Tue, 25 Aug 2026 08:18:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@19c383d3b8961aa173298f261cae4a76da50a99d block: 1768370794
+- current timestamp: 1787645820
+
+## Description
+
+Centralised sequencer change.
+
+## Watched changes
+
+```diff
+    contract Validium (eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9) [polygon-cdk/PolygonZkEVM] {
+    +++ description: The main system contract defining the pay-chain Layer 2 logic. Entry point for sequencing batches.
+      values.trustedSequencer:
+-        "eth:0xdF1384abe257F41569cC20bc9d7C4f022d2a4826"
++        "eth:0x3Be66949eAD195BdCF18DbefAF4606e20468D4d6"
+    }
+```
+
 Generated with discovered.json: 0xbab8105f4216a1020a39d79ae3da6060ccfc78bc
 
 # Diff at Fri, 12 Jun 2026 10:19:07 GMT:

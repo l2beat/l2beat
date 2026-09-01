@@ -81,28 +81,12 @@
     {
       "address": "eth:0x101d02006885979D2F32284c5847dF8616C24436",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x11AaeeDd19D4daf99925231b982CA0A35F77d812",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0D51c6664A773873971336850C51A5caE8e63e89",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
-          "role": ".batchPosters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "OneStepProverHostIo",
@@ -194,43 +178,6 @@
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0D51c6664A773873971336850C51A5caE8e63e89",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x191738BDecD7f73a79F64D689cf91ef873fb4172",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x73CF739b0233027cd516998e177d473D0a45E037",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xeb8307Fc8c1bEe7DfDCedf7e8c85778a81CB150f",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xf2dC65BdDb21c5DCC070067434D34a342907b5aE",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xf39A1d1Bf489bA959ca6A0e6Fa4A1887Fe526c81",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1713462371,
       "sinceBlock": 19683918,
       "values": {
@@ -251,95 +198,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0D51c6664A773873971336850C51A5caE8e63e89",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555" },
-            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x191738BDecD7f73a79F64D689cf91ef873fb4172",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555" },
-            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x73CF739b0233027cd516998e177d473D0a45E037",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555" },
-            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555" },
-            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xeb8307Fc8c1bEe7DfDCedf7e8c85778a81CB150f",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555" },
-            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xf2dC65BdDb21c5DCC070067434D34a342907b5aE",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555" },
-            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xf39A1d1Bf489bA959ca6A0e6Fa4A1887Fe526c81",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555" },
-            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C",
-          "role": ".executors"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1680797639,
       "sinceBlock": 16990669,
@@ -697,24 +555,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1713462371,
       "sinceBlock": 19683918,
       "values": {
@@ -1504,5 +1344,177 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 24281989 },
-  "permissionsConfigHash": "0x7defe317ae89970cdd170cdf22c46998a7c8b1dc137da803b728d66a0b5f20fd"
+  "permissionsConfigHash": "0x7defe317ae89970cdd170cdf22c46998a7c8b1dc137da803b728d66a0b5f20fd",
+  "permissions": {
+    "eth:0x101d02006885979D2F32284c5847dF8616C24436": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0x11AaeeDd19D4daf99925231b982CA0A35F77d812": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0D51c6664A773873971336850C51A5caE8e63e89",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
+    },
+    "eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0D51c6664A773873971336850C51A5caE8e63e89",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x191738BDecD7f73a79F64D689cf91ef873fb4172",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x73CF739b0233027cd516998e177d473D0a45E037",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeb8307Fc8c1bEe7DfDCedf7e8c85778a81CB150f",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf2dC65BdDb21c5DCC070067434D34a342907b5aE",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf39A1d1Bf489bA959ca6A0e6Fa4A1887Fe526c81",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0D51c6664A773873971336850C51A5caE8e63e89",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555" },
+            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x191738BDecD7f73a79F64D689cf91ef873fb4172",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555" },
+            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x73CF739b0233027cd516998e177d473D0a45E037",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555" },
+            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555" },
+            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeb8307Fc8c1bEe7DfDCedf7e8c85778a81CB150f",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555" },
+            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf2dC65BdDb21c5DCC070067434D34a342907b5aE",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555" },
+            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf39A1d1Bf489bA959ca6A0e6Fa4A1887Fe526c81",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555" },
+            { "address": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C",
+          "role": ".executors"
+        }
+      ]
+    },
+    "eth:0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x3b7F26ED562e21277c86ea0Ce40BC914653a3555",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

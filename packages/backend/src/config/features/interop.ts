@@ -98,6 +98,14 @@ export async function getInteropFeatureConfig(
         12 * 60 * 60 * 1000, // 12 hours
       ),
     },
+    relay: {
+      batchSize: env.integer('INTEROP_RELAY_BATCH_SIZE', 60),
+      maxRequestsPerUpdate: env.integer(
+        'INTEROP_RELAY_MAX_REQUESTS_PER_UPDATE',
+        10_000,
+      ),
+      safeTimeOffset: env.integer('INTEROP_RELAY_SAFE_TIME_OFFSET', 10),
+    },
     inMemoryEventCap: env.integer('INTEROP_EVENT_CAP', 500_000),
     oneSidedChains: [
       ...INTEROP_ONE_SIDED_CHAINS.filter((chain) =>

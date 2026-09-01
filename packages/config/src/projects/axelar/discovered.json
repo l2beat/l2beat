@@ -146,14 +146,7 @@
     {
       "address": "eth:0x72164D4448fe6cfA472946feDC71e83b4628B1aF",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2d5d7d31F671F86C782533cc367F14109a082712",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "AxelarServiceGovernance",
@@ -574,5 +567,16 @@
   },
   "usedTemplates": {},
   "usedBlockNumbers": { "ethereum": 25329318 },
-  "permissionsConfigHash": "0x9f93b42b896d1877a575b8c3c96f20d0fa5ea5464d5ebde735c0838e3ea75419"
+  "permissionsConfigHash": "0x9f93b42b896d1877a575b8c3c96f20d0fa5ea5464d5ebde735c0838e3ea75419",
+  "permissions": {
+    "eth:0x72164D4448fe6cfA472946feDC71e83b4628B1aF": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2d5d7d31F671F86C782533cc367F14109a082712",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

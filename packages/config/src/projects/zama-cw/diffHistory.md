@@ -1,3 +1,623 @@
+Generated with discovered.json: 0x24dbc4c9350137985b8ba1f10712a43c18fdc5a8
+
+# Diff at Thu, 27 Aug 2026 12:39:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@07685e2b690dd5d880203f3696ff2e1bc300a13d block: 1787648016
+- current timestamp: 1787834146
+
+## Description
+
+All nine confidential token wrappers were upgraded to a shared new implementation named `ConfidentialWrapper` (eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8). Compared to the previous `ConfidentialWrapperV3`, the upgrade adds two subsystems:
+
+1. Observers: the owner can add/remove observer accounts that receive a wildcard, non-expiring user-decryption delegation over all wrapper-owned encrypted handles, i.e. they can decrypt every confidential balance and transfer amount of the wrapper.
+2. Pausing: an owner-set pauser address can pause wrapping, unwrapping, unwrap finalization and confidential transfers; only the owner can unpause.
+
+## Watched changes
+
+```diff
+    contract ConfidentialSteakcUSDCWrapper (eth:0x66Bf74E96900D1a19c7070D939D124f2F565C458) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      template:
+-        "zama/ConfidentialWrapperV3"
++        "zama/ConfidentialWrapper"
+      sourceHashes.1:
+-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
++        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
+      description:
+-        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks."
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      values.$implementation:
+-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"
++        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"
+      values.$pastUpgrades.2:
++        ["2026-08-25T15:59:35.000Z","0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]]
+      values.$upgradeCount:
+-        2
++        3
++++ description: Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.
++++ severity: HIGH
+      values.getUnderlyingDenyListSelector:
+-        {"isSet":false,"selector":"0x00000000"}
++        "0x00000000"
++++ description: Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.
++++ severity: HIGH
+      values.observers:
++        []
++++ description: Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.
+      values.paused:
++        false
++++ description: Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.
+      values.pauser:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.getUnderlyingDenyListSelector.description:
+-        "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations."
++        "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations."
+      fieldMeta.observers:
++        {"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"}
+      fieldMeta.pauser:
++        {"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"}
+      fieldMeta.paused:
++        {"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"}
+      implementationNames.eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5:
+-        "ConfidentialWrapperV3"
+      implementationNames.eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8:
++        "ConfidentialWrapper"
+    }
+```
+
+```diff
+    contract ConfidentialXAUTWrapper (eth:0x73cc9aF9d6BEFdb3c3fAf8a5E8c05Cb95FdaEEf1) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      template:
+-        "zama/ConfidentialWrapperV3"
++        "zama/ConfidentialWrapper"
+      sourceHashes.1:
+-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
++        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
+      description:
+-        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks."
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      values.$implementation:
+-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"
++        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"
+      values.$pastUpgrades.3:
++        ["2026-08-25T15:59:35.000Z","0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]]
+      values.$upgradeCount:
+-        3
++        4
++++ description: Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.
++++ severity: HIGH
+      values.getUnderlyingDenyListSelector:
+-        {"isSet":true,"selector":"0xfbac3951"}
++        "0xfbac3951"
++++ description: Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.
++++ severity: HIGH
+      values.observers:
++        []
++++ description: Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.
+      values.paused:
++        false
++++ description: Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.
+      values.pauser:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.getUnderlyingDenyListSelector.description:
+-        "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations."
++        "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations."
+      fieldMeta.observers:
++        {"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"}
+      fieldMeta.pauser:
++        {"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"}
+      fieldMeta.paused:
++        {"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"}
+      implementationNames.eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5:
+-        "ConfidentialWrapperV3"
+      implementationNames.eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8:
++        "ConfidentialWrapper"
+    }
+```
+
+```diff
+    contract ConfidentialZAMAWrapper (eth:0x80CB147Fd86dC6dEe3Eee7e4Cee33d1397d98071) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      template:
+-        "zama/ConfidentialWrapperV3"
++        "zama/ConfidentialWrapper"
+      sourceHashes.1:
+-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
++        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
+      description:
+-        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks."
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      values.$implementation:
+-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"
++        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"
+      values.$pastUpgrades.3:
++        ["2026-08-25T15:59:35.000Z","0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]]
+      values.$upgradeCount:
+-        3
++        4
++++ description: Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.
++++ severity: HIGH
+      values.getUnderlyingDenyListSelector:
+-        {"isSet":false,"selector":"0x00000000"}
++        "0x00000000"
++++ description: Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.
++++ severity: HIGH
+      values.observers:
++        []
++++ description: Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.
+      values.paused:
++        false
++++ description: Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.
+      values.pauser:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.getUnderlyingDenyListSelector.description:
+-        "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations."
++        "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations."
+      fieldMeta.observers:
++        {"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"}
+      fieldMeta.pauser:
++        {"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"}
+      fieldMeta.paused:
++        {"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"}
+      implementationNames.eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5:
+-        "ConfidentialWrapperV3"
+      implementationNames.eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8:
++        "ConfidentialWrapper"
+    }
+```
+
+```diff
+    contract ConfidentialBRONWrapper (eth:0x85dE671c3bec1aDeD752c3Cea943521181C826bc) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      template:
+-        "zama/ConfidentialWrapperV3"
++        "zama/ConfidentialWrapper"
+      sourceHashes.1:
+-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
++        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
+      description:
+-        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks."
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      values.$implementation:
+-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"
++        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"
+      values.$pastUpgrades.3:
++        ["2026-08-25T15:59:35.000Z","0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]]
+      values.$upgradeCount:
+-        3
++        4
++++ description: Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.
++++ severity: HIGH
+      values.getUnderlyingDenyListSelector:
+-        {"isSet":false,"selector":"0x00000000"}
++        "0x00000000"
++++ description: Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.
++++ severity: HIGH
+      values.observers:
++        []
++++ description: Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.
+      values.paused:
++        false
++++ description: Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.
+      values.pauser:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.getUnderlyingDenyListSelector.description:
+-        "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations."
++        "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations."
+      fieldMeta.observers:
++        {"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"}
+      fieldMeta.pauser:
++        {"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"}
+      fieldMeta.paused:
++        {"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"}
+      implementationNames.eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5:
+-        "ConfidentialWrapperV3"
+      implementationNames.eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8:
++        "ConfidentialWrapper"
+    }
+```
+
+```diff
+    contract ConfidentialTGBPWrapper (eth:0xa873750ccBafD5ec7Dd13bfD5237d7129832eDD9) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      template:
+-        "zama/ConfidentialWrapperV3"
++        "zama/ConfidentialWrapper"
+      sourceHashes.1:
+-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
++        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
+      description:
+-        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks."
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      values.$implementation:
+-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"
++        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"
+      values.$pastUpgrades.3:
++        ["2026-08-25T15:59:35.000Z","0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]]
+      values.$upgradeCount:
+-        3
++        4
++++ description: Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.
++++ severity: HIGH
+      values.getUnderlyingDenyListSelector:
+-        {"isSet":true,"selector":"0x97f735d5"}
++        "0x97f735d5"
++++ description: Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.
++++ severity: HIGH
+      values.observers:
++        []
++++ description: Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.
+      values.paused:
++        false
++++ description: Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.
+      values.pauser:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.getUnderlyingDenyListSelector.description:
+-        "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations."
++        "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations."
+      fieldMeta.observers:
++        {"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"}
+      fieldMeta.pauser:
++        {"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"}
+      fieldMeta.paused:
++        {"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"}
+      implementationNames.eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5:
+-        "ConfidentialWrapperV3"
+      implementationNames.eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8:
++        "ConfidentialWrapper"
+    }
+```
+
+```diff
+    contract ConfidentialUSDTWrapper (eth:0xAe0207C757Aa2B4019Ad96edD0092ddc63EF0c50) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      template:
+-        "zama/ConfidentialWrapperV3"
++        "zama/ConfidentialWrapper"
+      sourceHashes.1:
+-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
++        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
+      description:
+-        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks."
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      values.$implementation:
+-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"
++        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"
+      values.$pastUpgrades.3:
++        ["2026-08-25T15:59:35.000Z","0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]]
+      values.$upgradeCount:
+-        3
++        4
++++ description: Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.
++++ severity: HIGH
+      values.getUnderlyingDenyListSelector:
+-        {"isSet":true,"selector":"0x59bf1abe"}
++        "0x59bf1abe"
++++ description: Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.
++++ severity: HIGH
+      values.observers:
++        []
++++ description: Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.
+      values.paused:
++        false
++++ description: Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.
+      values.pauser:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.getUnderlyingDenyListSelector.description:
+-        "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations."
++        "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations."
+      fieldMeta.observers:
++        {"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"}
+      fieldMeta.pauser:
++        {"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"}
+      fieldMeta.paused:
++        {"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"}
+      implementationNames.eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5:
+-        "ConfidentialWrapperV3"
+      implementationNames.eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8:
++        "ConfidentialWrapper"
+    }
+```
+
+```diff
+    contract DAO (eth:0xB6D69D5F334d8B97B194617B53c6aB62f8681Ef3) [zama/ZamaDAO] {
+    +++ description: Aragon DAO that stores governance state and executes proposal action batches.
+      directlyReceivedPermissions.1.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      directlyReceivedPermissions.4.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      directlyReceivedPermissions.5.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      directlyReceivedPermissions.6.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      directlyReceivedPermissions.7.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      directlyReceivedPermissions.8.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      directlyReceivedPermissions.12.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      directlyReceivedPermissions.17.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      directlyReceivedPermissions.18.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+    }
+```
+
+```diff
+    contract ConfidentialBbqTGBPWrapper (eth:0xBA4cFF6ED6F7Cb2A58776dECa4E984b498446762) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      template:
+-        "zama/ConfidentialWrapperV3"
++        "zama/ConfidentialWrapper"
+      sourceHashes.1:
+-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
++        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
+      description:
+-        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks."
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      values.$implementation:
+-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"
++        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"
+      values.$pastUpgrades.2:
++        ["2026-08-25T15:59:35.000Z","0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]]
+      values.$upgradeCount:
+-        2
++        3
++++ description: Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.
++++ severity: HIGH
+      values.getUnderlyingDenyListSelector:
+-        {"isSet":false,"selector":"0x00000000"}
++        "0x00000000"
++++ description: Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.
++++ severity: HIGH
+      values.observers:
++        []
++++ description: Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.
+      values.paused:
++        false
++++ description: Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.
+      values.pauser:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.getUnderlyingDenyListSelector.description:
+-        "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations."
++        "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations."
+      fieldMeta.observers:
++        {"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"}
+      fieldMeta.pauser:
++        {"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"}
+      fieldMeta.paused:
++        {"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"}
+      implementationNames.eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5:
+-        "ConfidentialWrapperV3"
+      implementationNames.eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8:
++        "ConfidentialWrapper"
+    }
+```
+
+```diff
+    contract ZamaGovMultisigB (eth:0xBc860b6a4C860C5424B84A056E53ACFb2C99a38F) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
+      receivedPermissions.1.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      receivedPermissions.4.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      receivedPermissions.5.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      receivedPermissions.6.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      receivedPermissions.7.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      receivedPermissions.8.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      receivedPermissions.14.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      receivedPermissions.19.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      receivedPermissions.20.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+    }
+```
+
+```diff
+    contract ConfidentialWETHWrapper (eth:0xda9396b82634Ea99243cE51258B6A5Ae512D4893) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      template:
+-        "zama/ConfidentialWrapperV3"
++        "zama/ConfidentialWrapper"
+      sourceHashes.1:
+-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
++        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
+      description:
+-        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks."
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      values.$implementation:
+-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"
++        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"
+      values.$pastUpgrades.3:
++        ["2026-08-25T15:59:35.000Z","0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]]
+      values.$upgradeCount:
+-        3
++        4
++++ description: Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.
++++ severity: HIGH
+      values.getUnderlyingDenyListSelector:
+-        {"isSet":false,"selector":"0x00000000"}
++        "0x00000000"
++++ description: Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.
++++ severity: HIGH
+      values.observers:
++        []
++++ description: Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.
+      values.paused:
++        false
++++ description: Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.
+      values.pauser:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.getUnderlyingDenyListSelector.description:
+-        "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations."
++        "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations."
+      fieldMeta.observers:
++        {"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"}
+      fieldMeta.pauser:
++        {"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"}
+      fieldMeta.paused:
++        {"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"}
+      implementationNames.eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5:
+-        "ConfidentialWrapperV3"
+      implementationNames.eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8:
++        "ConfidentialWrapper"
+    }
+```
+
+```diff
+    contract ZamaGovMultisigA (eth:0xE43c73aAb2b6aBBad6d0461997ce1cfea5ABe66f) [zama/Multisig] {
+    +++ description: Aragon multisig plugin for creating proposals and collecting approvals against a configurable threshold.
+      receivedPermissions.1.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      receivedPermissions.4.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      receivedPermissions.5.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      receivedPermissions.6.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      receivedPermissions.7.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      receivedPermissions.8.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      receivedPermissions.14.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      receivedPermissions.19.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+      receivedPermissions.20.description:
+-        "block and unblock users, and transfer ownership."
++        "block and unblock users, add and remove observers (wildcard decryption access to all balances of this wrapper), set the pauser and the underlying denylist selector, unpause, and transfer ownership."
+    }
+```
+
+```diff
+    contract ConfidentialUSDCWrapper (eth:0xe978F22157048E5DB8E5d07971376e86671672B2) [zama/ConfidentialWrapper] {
+    +++ description: ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing.
+      template:
+-        "zama/ConfidentialWrapperV3"
++        "zama/ConfidentialWrapper"
+      sourceHashes.1:
+-        "0xc6ef75f9a2275b9cfb58b0322dfb55b63e1630022b171af50f1851ee8052447b"
++        "0x111b5cc66fc29cac57ed685c50a509014181cbf98122b5fd89c0449eea3fab5f"
+      description:
+-        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, and optional underlying-token denylist checks."
++        "ERC-20 wrapper that escrows an underlying token and issues confidential balances. It supports encrypted transfers, wrapping, unwrapping, local blocking, optional underlying-token denylist checks, owner-managed observers with wildcard decryption access, and pausing."
+      values.$implementation:
+-        "eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5"
++        "eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"
+      values.$pastUpgrades.3:
++        ["2026-08-25T15:59:35.000Z","0x55c55172da4c231406a41da3838bff87dc9b361c62f208fe0e60994a1b82b0b0",["eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8"]]
+      values.$upgradeCount:
+-        3
++        4
++++ description: Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations.
++++ severity: HIGH
+      values.getUnderlyingDenyListSelector:
+-        {"isSet":true,"selector":"0xfe575a87"}
++        "0xfe575a87"
++++ description: Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.
++++ severity: HIGH
+      values.observers:
++        []
++++ description: Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.
+      values.paused:
++        false
++++ description: Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.
+      values.pauser:
++        "eth:0x0000000000000000000000000000000000000000"
+      fieldMeta.getUnderlyingDenyListSelector.description:
+-        "Underlying-token denylist hook used by the wrapper. If enabled, the wrapper calls this selector on the underlying token before restricted operations."
++        "Underlying-token denylist hook used by the wrapper. If enabled (non-zero), the wrapper calls this selector on the underlying token before restricted operations."
+      fieldMeta.observers:
++        {"severity":"HIGH","description":"Accounts holding a wildcard user-decryption delegation over all wrapper-owned encrypted handles. Observers can decrypt every confidential balance and transfer amount of this wrapper, so adding one changes its privacy guarantees.","type":"PERMISSION"}
+      fieldMeta.pauser:
++        {"description":"Address allowed to pause the wrapper (zero address means pausing is disabled). Only the owner can unpause.","type":"PERMISSION"}
+      fieldMeta.paused:
++        {"description":"Whether wrapping, unwrapping, unwrap finalization and confidential transfers are currently halted.","type":"RISK_PARAMETER"}
+      implementationNames.eth:0x5226fe30Fa7Bf20C1Cd33F125f77D0c42d3c23b5:
+-        "ConfidentialWrapperV3"
+      implementationNames.eth:0x2ABad2203Eba104b52cf040cCcFA100Df15687F8:
++        "ConfidentialWrapper"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ConfidentialWrapper.sol}                       |  4239 ++++-
+ .../ConfidentialWrapper.sol}                       |  4239 ++++-
+ .../ConfidentialWrapper.sol}                       |  4239 ++++-
+ .../ConfidentialWrapper.sol}                       |  4239 ++++-
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialWrapperV3.sol => /dev/null         | 15109 ---------------
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialWrapperV3.sol => /dev/null         | 15109 ---------------
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialWrapperV3.sol => /dev/null         | 15109 ---------------
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialWrapperV3.sol => /dev/null         | 15109 ---------------
+ .../ConfidentialWrapper.sol                        | 18868 +++++++++++++++++++
+ .../ConfidentialWrapperV3.sol => /dev/null         | 15109 ---------------
+ 14 files changed, 110336 insertions(+), 76505 deletions(-)
+```
+
+Generated with discovered.json: 0xdd6926b5de1bf6cee2ab80edba35ef3782a4c169
+
+# Diff at Tue, 25 Aug 2026 08:55:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@afee435bc99a79b6a7bbb46fd9865fb0e8b74e89 block: 1786539392
+- current timestamp: 1787648016
+
+## Description
+
+Add multisig signer.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
++        "eth:0x9402c42dB162d5a0927c032136f40Cc9C71853F2"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
+    }
+```
+
 Generated with discovered.json: 0x3cda5fd8197379092f8e08a01d89186879f3d6cc
 
 # Diff at Wed, 12 Aug 2026 12:58:00 GMT:

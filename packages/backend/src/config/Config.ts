@@ -219,14 +219,6 @@ export interface NotificationsConfig {
         discordWebhookUrl: string
       }
     | false
-  readonly dailyChecks:
-    | {
-        discordWebhookUrl: string
-        discordUserIds: string[]
-        timezone: string
-        hour: number
-      }
-    | false
 }
 
 export interface AnomaliesConfig {
@@ -280,6 +272,11 @@ export interface InteropFeatureConfig {
     chains: { id: number; name: string }[]
     configIntervalMs: number
   }
+  relay: {
+    batchSize: number
+    maxRequestsPerUpdate: number
+    safeTimeOffset: number
+  }
   inMemoryEventCap: number
   oneSidedChains: string[]
 }
@@ -306,7 +303,7 @@ export interface DaBeatConfig {
   readonly celestiaApiUrl: string
   readonly celestiaCallsPerMinute: number
   readonly nearRpcUrl: string
-  readonly availWsUrl: string
+  readonly availRpcUrl: string
   readonly espressoApiUrl: string
 }
 

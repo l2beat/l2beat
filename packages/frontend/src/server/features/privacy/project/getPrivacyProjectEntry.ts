@@ -20,6 +20,7 @@ import { getContractUtils } from '~/utils/project/contracts-and-permissions/getC
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
+import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
 import { type ChartRange, optionToRange } from '~/utils/range/range'
 import {
@@ -28,9 +29,10 @@ import {
 } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
+import type { PrivacyRelayerStat } from '../types'
 import {
   getPrivacyTrustedSetup,
-  getPrivacyTrustedSetupsSection,
+  type PrivacyTrustedSetupSummary,
   toTrustedSetupSummaryValue,
 } from '../utils/getPrivacyTrustedSetup'
 
@@ -56,7 +58,7 @@ export interface ProjectPrivacyEntry {
   hasTvl: boolean
   attributes: PrivacyAttribute[]
   exitWindow: PrivacyExitWindow
-  trustedSetup: PrivacySummaryValue
+  trustedSetup: PrivacyTrustedSetupSummary
   privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
   summary: {
@@ -66,6 +68,7 @@ export interface ProjectPrivacyEntry {
       last7d: number
       last30d: number
     }
+    relayerStat?: PrivacyRelayerStat
   }
   isUnderReview: boolean
   recentUpdatesCount: number
@@ -139,14 +142,14 @@ export async function getPrivacyProjectEntry(
 
   const sections: ProjectDetailsSection[] = []
 
-  if (details.display.detailedDescription) {
+  if (details.detailedDescription) {
     sections.push({
       type: 'DetailedDescriptionSection',
       props: {
         id: 'detailed-description',
         title: 'Protocol description',
         description: undefined,
-        detailedDescription: details.display.detailedDescription,
+        detailedDescription: details.detailedDescription,
       },
     })
   }
@@ -234,14 +237,16 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  sections.push({
-    type: 'TrustedSetupSection',
-    props: {
-      id: 'trusted-setups',
-      title: 'Trusted setup',
-      ...getPrivacyTrustedSetupsSection(details.zkCatalogInfo),
-    },
-  })
+  if (details.trustedSetups.length > 0) {
+    sections.push({
+      type: 'TrustedSetupSection',
+      props: {
+        id: 'trusted-setups',
+        title: 'Trusted setup',
+        ...getTrustedSetupsSectionFromTrustedSetups(details.trustedSetups),
+      },
+    })
+  }
 
   if (
     details.zkCatalogInfo?.verifierHashes &&
@@ -320,13 +325,14 @@ export async function getPrivacyProjectEntry(
     attributes: details.attributes,
     exitWindow: details.exitWindow,
     trustedSetup: toTrustedSetupSummaryValue(
-      getPrivacyTrustedSetup(details.zkCatalogInfo),
+      getPrivacyTrustedSetup(details.trustedSetups),
     ),
     privacy: details.privacy,
     reproducibility: details.reproducibility,
     summary: {
       totalValueLockedUsd,
       deposits: details.summary.deposits,
+      relayerStat: details.summary.relayerStat,
     },
     isUnderReview: !!details.statuses.reviewStatus,
     recentUpdatesCount: countRecentDiscoveryUpdates(discoveryUpdates),

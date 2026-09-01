@@ -42,17 +42,7 @@
     {
       "address": "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x4abBc1826389aC0FEaA49E70c30a041b665e8562",
-          "description": "change the programHash, replacing the L2 execution logic whose proofs are accepted, directly or through appointed admins.",
-          "role": ".owner",
-          "condition": "if the adapter is not finalized"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x223c0EF36fEe905a40175d92704b1d3624218EE7",
@@ -111,15 +101,7 @@
     {
       "address": "eth:0x38ACC82ED19e303841e222d7e933846001F969F8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xC0a1a1e4AF873E9A37a0caC37F3aB81152432Cc5",
-          "description": "withdraw any funds from this deposit wrapper contract by reaching a threshold of 2 signers.",
-          "role": ".signers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3A6ED6885608Ead8174789a81Eb2B05600ca89F8",
@@ -202,31 +184,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD",
-          "description": "manage the token admin role.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD",
-          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD",
-          "description": "change the global and per-asset configuration hashes committing to the L2 system parameters.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD",
-          "role": ".$admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xb8E3c28e88F33B9F61a37E0eE86d29C48f1cAE09",
       "sinceTimestamp": 1756178879,
@@ -262,15 +219,7 @@
     {
       "address": "eth:0x5C37D9fCD71F8d0D9E11a58b73D49148cf3A0323",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xC0a1a1e4AF873E9A37a0caC37F3aB81152432Cc5",
-          "description": "withdraw any funds from this deposit wrapper contract by reaching a threshold of 2 signers.",
-          "role": ".signers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Safe",
@@ -282,14 +231,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x1111111254EEB25477B68fb85Ed929f73A960582",
-          "description": "destroy the contract and rescue funds from it.",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x58B5DAf5662425C1B8aB4Be8B3A53e8A2374Dbf1",
       "sinceTimestamp": 1608623778,
@@ -329,15 +270,7 @@
     {
       "address": "eth:0x811aBa59F2486A0a6D93b8c708086d9A789dcFe2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xC0a1a1e4AF873E9A37a0caC37F3aB81152432Cc5",
-          "description": "withdraw any funds from this deposit wrapper contract by reaching a threshold of 2 signers.",
-          "role": ".signers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x9d8F61C5635Af2FDf8088bcd0248050A3A8B0C39",
@@ -409,15 +342,7 @@
     {
       "address": "eth:0xCBe6fbf5e3c427013688E04D0fDE56705890c4bE",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD",
-          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.",
-          "role": ".operators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xd6970196Ff8CeF3Cdd61256C1841A085EEcD3ae8",
@@ -987,5 +912,96 @@
     "starkex/FinalizableGpsFactAdapter": "0x2c4115608421d0d7aabe41291500b1f02a4d2989db1976f2c05a07b91fe4ba47"
   },
   "usedBlockNumbers": { "ethereum": 25774399 },
-  "permissionsConfigHash": "0xf3224eece7f1cad9b47318f2ca993c86fe800e143450a669ee19bece420fbab1"
+  "permissionsConfigHash": "0xf3224eece7f1cad9b47318f2ca993c86fe800e143450a669ee19bece420fbab1",
+  "permissions": {
+    "eth:0x17b287122363a0a6dBA7F185347DFcfb9816dA6e": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4abBc1826389aC0FEaA49E70c30a041b665e8562",
+          "description": "change the programHash, replacing the L2 execution logic whose proofs are accepted, directly or through appointed admins.",
+          "role": ".owner",
+          "condition": "if the adapter is not finalized"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x38ACC82ED19e303841e222d7e933846001F969F8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC0a1a1e4AF873E9A37a0caC37F3aB81152432Cc5",
+          "description": "withdraw any funds from this deposit wrapper contract by reaching a threshold of 2 signers.",
+          "role": ".signers"
+        }
+      ]
+    },
+    "eth:0x57814cC6e075f517781cB7c3B42897B3Bb2C54d8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD",
+          "description": "manage the token admin role.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD",
+          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), unfreeze the exchange and manage the governor set.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD",
+          "description": "change the global and per-asset configuration hashes committing to the L2 system parameters.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD",
+          "role": ".$admin"
+        }
+      ]
+    },
+    "eth:0x5C37D9fCD71F8d0D9E11a58b73D49148cf3A0323": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC0a1a1e4AF873E9A37a0caC37F3aB81152432Cc5",
+          "description": "withdraw any funds from this deposit wrapper contract by reaching a threshold of 2 signers.",
+          "role": ".signers"
+        }
+      ]
+    },
+    "eth:0x5E89f8d81C74E311458277EA1Be3d3247c7cd7D1": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x1111111254EEB25477B68fb85Ed929f73A960582",
+          "description": "destroy the contract and rescue funds from it.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x811aBa59F2486A0a6D93b8c708086d9A789dcFe2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC0a1a1e4AF873E9A37a0caC37F3aB81152432Cc5",
+          "description": "withdraw any funds from this deposit wrapper contract by reaching a threshold of 2 signers.",
+          "role": ".signers"
+        }
+      ]
+    },
+    "eth:0xCBe6fbf5e3c427013688E04D0fDE56705890c4bE": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xfAaE2946e846133af314d1Df13684c89fA7d83DD",
+          "description": "Permissioned to regularly update the state of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains state diffs for data availability.",
+          "role": ".operators"
+        }
+      ]
+    }
+  }
 }

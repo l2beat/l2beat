@@ -31,7 +31,9 @@ function sceneNode(): SceneNode {
     chain: 'unichain',
     address: '0xaaa',
     symbol: 'TOKEN',
+    abstractTokenId: null,
     isDeployed: true,
+    hasRelations: true,
   }
   return { data, label: 'TOKEN', x: 50, y: 50 }
 }

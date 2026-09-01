@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x18c189bcb88d6c0c951b0b975ec2935fe307b34f
+
+# Diff at Wed, 26 Aug 2026 09:56:44 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@00448b8c7fc6d3a3b8b155e386f5ffa195696a81 block: 1786965974
+- current timestamp: 1787738139
+
+## Description
+
+Created this gov ops proposal: https://www.tally.xyz/gov/zksync/proposal/100740533362465570091053731139742615879729169445685970195620671955457283837153?govId=eip155:324:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160.
+
+## Watched changes
+
+```diff
+    contract ZkGovOpsGovernor (zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) [shared-zk-stack/ZkGovernor] {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        2
++        3
+    }
+```
+
 Generated with discovered.json: 0xd51bf50387101057fc637ed55e3ce41632dfab79
 
 # Diff at Mon, 17 Aug 2026 11:27:19 GMT:

@@ -1,6 +1,6 @@
 {
   "name": "uniswapv4",
-  "timestamp": 1787566228,
+  "timestamp": 1787836675,
   "configHash": "0x1690185993f50465d4b48f8dfd74c1c51a65cd52af4ff2606f85907eee81e20c",
   "entries": [
     {
@@ -72,7 +72,7 @@
       "values": {
         "$immutable": true,
         "MAX_RELEASE_LENGTH": 20,
-        "nonce": 1234,
+        "nonce": 1256,
         "owner": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
         "RESOURCE": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
         "RESOURCE_RECIPIENT": "eth:0x000000000000000000000000000000000000dEaD",
@@ -103,79 +103,6 @@
       ],
       "proxyType": "immutable",
       "description": "Compound-style timelock. Its admin can queue, cancel, and execute transactions. A queued transaction becomes executable after 2d and remains executable for a 14d grace period. The delay can be changed only through the timelock itself and must remain between 2d and 1mo. After the one-time admin initialization path has been used, changing the admin requires a timelocked self-call; there is no emergency bypass.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xbd123D5b1E148266154F5722C1d059D70059Cf93",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x000000000004444c5dc75cB358380D2e3dE08A90",
-          "description": "can replace the protocol fee controller that sets protocol fees (hard-capped at 0.1% per swap direction) and collects them, and can transfer the PoolManager owner role.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
-          "description": "can change the burn-token amount required per token-jar release.",
-          "role": ".thresholdSetter"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
-          "description": "can replace the thresholdSetter.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x1cd822b70a0591420F65E94b9B3A0D0b0fB3a314",
-          "description": "can replace the fee setter of the V4FeePolicy and transfer its owner role.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x1cd822b70a0591420F65E94b9B3A0D0b0fB3a314",
-          "description": "configures the protocol-fee schedule in the V4FeePolicy: the default fee, the fee buckets for hookless pools, hook family assignments, flag rules, and per-family or per-pair fees.",
-          "role": ".feeSetter"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
-          "description": "can mint up to 2% of the token supply per mint after the minimum 1y interval, and set a new minter.",
-          "role": ".minter"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
-          "description": "can set the voting delay, the voting period, and the proposal threshold.",
-          "role": ".admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x89A5D5bF00a27D55c02951E49078a5C5771051dB",
-          "description": "can replace the fee policy contract and the fee setter of the V4FeeAdapter, and transfer its owner role.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x89A5D5bF00a27D55c02951E49078a5C5771051dB",
-          "description": "can set and clear per-pool protocol-fee overrides in the V4FeeAdapter.",
-          "role": ".feeSetter"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85",
-          "description": "can replace the releaser and thereby redirect all held and future token balances.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
-          "description": "can replace the governor implementation or nominate a new proxy admin; the nominee can accept and thereafter control upgrades.",
-          "role": ".admin"
-        }
-      ],
       "deployerAddress": "eth:0x41653c7d61609D856f29355E404F310Ec4142Cfb",
       "sinceTimestamp": 1600107105,
       "sinceBlock": 10861678,
@@ -302,166 +229,6 @@
       ],
       "proxyType": "call implementation proxy",
       "description": "Upgradeable Governor Bravo governance proxy. Holders with more than the current proposal threshold of 1,000,000 UNI can create proposals. Voting begins 13,140 blocks after proposal creation and lasts 40,320 blocks; success requires more for-votes than against-votes and at least 40,000,000 UNI voting for. Successful proposals are queued in the configured timelock. The proxy admin can replace the implementation or nominate a new admin.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x000000000004444c5dc75cB358380D2e3dE08A90",
-          "description": "can replace the protocol fee controller that sets protocol fees (hard-capped at 0.1% per swap direction) and collects them, and can transfer the PoolManager owner role.",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
-          "description": "can change the burn-token amount required per token-jar release.",
-          "role": ".thresholdSetter",
-          "via": [
-            {
-              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
-          "description": "can replace the thresholdSetter.",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-          "description": "can queue, cancel, and execute timelocked transactions, and change the delay or admin (through the timelock itself).",
-          "role": ".admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x1cd822b70a0591420F65E94b9B3A0D0b0fB3a314",
-          "description": "can replace the fee setter of the V4FeePolicy and transfer its owner role.",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x1cd822b70a0591420F65E94b9B3A0D0b0fB3a314",
-          "description": "configures the protocol-fee schedule in the V4FeePolicy: the default fee, the fee buckets for hookless pools, hook family assignments, flag rules, and per-family or per-pair fees.",
-          "role": ".feeSetter",
-          "via": [
-            {
-              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
-          "description": "can mint up to 2% of the token supply per mint after the minimum 1y interval, and set a new minter.",
-          "role": ".minter",
-          "via": [
-            {
-              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
-          "description": "can set the voting delay, the voting period, and the proposal threshold.",
-          "role": ".admin",
-          "via": [
-            {
-              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x89A5D5bF00a27D55c02951E49078a5C5771051dB",
-          "description": "can replace the fee policy contract and the fee setter of the V4FeeAdapter, and transfer its owner role.",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x89A5D5bF00a27D55c02951E49078a5C5771051dB",
-          "description": "can set and clear per-pool protocol-fee overrides in the V4FeeAdapter.",
-          "role": ".feeSetter",
-          "via": [
-            {
-              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85",
-          "description": "can replace the releaser and thereby redirect all held and future token balances.",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
-          "description": "can replace the governor implementation or nominate a new proxy admin; the nominee can accept and thereafter control upgrades.",
-          "role": ".admin",
-          "via": [
-            {
-              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xd1428Ba554F4C8450b763a0B2040A4935c63f06C",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xbd123D5b1E148266154F5722C1d059D70059Cf93" },
-            {
-              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "delay": 172800
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-          "delay": 172800,
-          "role": ".admin"
-        }
-      ],
       "ignoreInWatchMode": ["proposalCount"],
       "deployerAddress": "eth:0xCf2a39493f5193e8eE0D0e8DBf78a92a4EF293c4",
       "sinceTimestamp": 1629421922,
@@ -561,14 +328,6 @@
       ],
       "proxyType": "immutable",
       "description": "Protocol fee controller for a configured Uniswap v4 pool manager. Anyone can ask it to apply the protocol fee computed by the configured policy contract to a pool, and to collect accrued protocol fees to its fixed recipient. The fee setter can override the fee for individual pools; the owner can replace the policy contract and the fee setter.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x000000000004444c5dc75cB358380D2e3dE08A90",
-          "description": "can set protocol fees on any pool up to the hard-coded cap of 0.1% per swap direction, and collect accrued protocol fees to an arbitrary recipient.",
-          "role": ".protocolFeeController"
-        }
-      ],
       "deployerAddress": "eth:0x2CF8e5b175aa29C1fDf0e9fe572735C78eacCE43",
       "sinceTimestamp": 1784294639,
       "sinceBlock": 25552685,
@@ -607,13 +366,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xd1428Ba554F4C8450b763a0B2040A4935c63f06C",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x2179a60856E37dfeAacA0ab043B931fE224b27B6",
       "sinceTimestamp": 1737658139,
       "sinceBlock": 21689088,
@@ -636,6 +388,7 @@
       ],
       "proxyType": "immutable",
       "description": "Uniswap v4 periphery: represents v4 liquidity positions as ERC-721 NFTs and batches liquidity operations against the configured pool manager, pulling tokens through Permit2. It has no owner and no special privileges in the core.",
+      "ignoreInWatchMode": ["nextTokenId"],
       "deployerAddress": "eth:0x2179a60856E37dfeAacA0ab043B931fE224b27B6",
       "sinceTimestamp": 1737658151,
       "sinceBlock": 21689089,
@@ -644,7 +397,7 @@
         "DOMAIN_SEPARATOR": "0x5a2844e1b5e82beddf818b9dbccf114c9fd858817231799eae82c719362c57e6",
         "msgSender": "eth:0x0000000000000000000000000000000000000000",
         "name": "Uniswap v4 Positions NFT",
-        "nextTokenId": 382198,
+        "nextTokenId": 385327,
         "permit2": "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3",
         "poolManager": "eth:0x000000000004444c5dc75cB358380D2e3dE08A90",
         "symbol": "UNI-V4-POSM",
@@ -1225,10 +978,268 @@
     "uniswapv3/UniversalRouter": "0xb38b0e27c2dad3559972735c0287a36cc053ec43cfdb7e72f84c76c7fc6cbc1d",
     "uniswapv4/PoolManager": "0x1cd7221b70c84682aa4dcee1a51810449abafdd81b761c996b3de5b0bc98be3f",
     "uniswapv4/PositionDescriptor": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "uniswapv4/PositionManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "uniswapv4/PositionManager": "0xdbe57ec11a8d400cf43d528dc6649b50dfb0f687eaaf837cc6842736bde182cf",
     "uniswapv4/V4FeeAdapter": "0x8f8da4cb9731bb790e28cedd3d3dfe6d50af49b5ff1c7d7be5f36c4c51527e17",
     "uniswapv4/V4FeePolicy": "0xebe90526446ca427a224bf116b8d21f9fde112f11d851b5b1392a07d35616e52"
   },
-  "usedBlockNumbers": { "ethereum": 25824348 },
-  "permissionsConfigHash": "0x9c38e08f77e60c8f78d74199e979a6d434778613e70223ded1d964c943e11f3f"
+  "usedBlockNumbers": { "ethereum": 25846806 },
+  "permissionsConfigHash": "0x9c38e08f77e60c8f78d74199e979a6d434778613e70223ded1d964c943e11f3f",
+  "permissions": {
+    "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xbd123D5b1E148266154F5722C1d059D70059Cf93",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x000000000004444c5dc75cB358380D2e3dE08A90",
+          "description": "can replace the protocol fee controller that sets protocol fees (hard-capped at 0.1% per swap direction) and collects them, and can transfer the PoolManager owner role.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
+          "description": "can change the burn-token amount required per token-jar release.",
+          "role": ".thresholdSetter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
+          "description": "can replace the thresholdSetter.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1cd822b70a0591420F65E94b9B3A0D0b0fB3a314",
+          "description": "can replace the fee setter of the V4FeePolicy and transfer its owner role.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1cd822b70a0591420F65E94b9B3A0D0b0fB3a314",
+          "description": "configures the protocol-fee schedule in the V4FeePolicy: the default fee, the fee buckets for hookless pools, hook family assignments, flag rules, and per-family or per-pair fees.",
+          "role": ".feeSetter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+          "description": "can mint up to 2% of the token supply per mint after the minimum 1y interval, and set a new minter.",
+          "role": ".minter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+          "description": "can set the voting delay, the voting period, and the proposal threshold.",
+          "role": ".admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x89A5D5bF00a27D55c02951E49078a5C5771051dB",
+          "description": "can replace the fee policy contract and the fee setter of the V4FeeAdapter, and transfer its owner role.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x89A5D5bF00a27D55c02951E49078a5C5771051dB",
+          "description": "can set and clear per-pool protocol-fee overrides in the V4FeeAdapter.",
+          "role": ".feeSetter"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85",
+          "description": "can replace the releaser and thereby redirect all held and future token balances.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+          "description": "can replace the governor implementation or nominate a new proxy admin; the nominee can accept and thereafter control upgrades.",
+          "role": ".admin"
+        }
+      ]
+    },
+    "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x000000000004444c5dc75cB358380D2e3dE08A90",
+          "description": "can replace the protocol fee controller that sets protocol fees (hard-capped at 0.1% per swap direction) and collects them, and can transfer the PoolManager owner role.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
+          "description": "can change the burn-token amount required per token-jar release.",
+          "role": ".thresholdSetter",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
+          "description": "can replace the thresholdSetter.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+          "description": "can queue, cancel, and execute timelocked transactions, and change the delay or admin (through the timelock itself).",
+          "role": ".admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1cd822b70a0591420F65E94b9B3A0D0b0fB3a314",
+          "description": "can replace the fee setter of the V4FeePolicy and transfer its owner role.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1cd822b70a0591420F65E94b9B3A0D0b0fB3a314",
+          "description": "configures the protocol-fee schedule in the V4FeePolicy: the default fee, the fee buckets for hookless pools, hook family assignments, flag rules, and per-family or per-pair fees.",
+          "role": ".feeSetter",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+          "description": "can mint up to 2% of the token supply per mint after the minimum 1y interval, and set a new minter.",
+          "role": ".minter",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+          "description": "can set the voting delay, the voting period, and the proposal threshold.",
+          "role": ".admin",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x89A5D5bF00a27D55c02951E49078a5C5771051dB",
+          "description": "can replace the fee policy contract and the fee setter of the V4FeeAdapter, and transfer its owner role.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x89A5D5bF00a27D55c02951E49078a5C5771051dB",
+          "description": "can set and clear per-pool protocol-fee overrides in the V4FeeAdapter.",
+          "role": ".feeSetter",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xf38521f130fcCF29dB1961597bc5d2B60F995f85",
+          "description": "can replace the releaser and thereby redirect all held and future token balances.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+          "description": "can replace the governor implementation or nominate a new proxy admin; the nominee can accept and thereafter control upgrades.",
+          "role": ".admin",
+          "via": [
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd1428Ba554F4C8450b763a0B2040A4935c63f06C",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xbd123D5b1E148266154F5722C1d059D70059Cf93" },
+            {
+              "address": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "delay": 172800
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+          "delay": 172800,
+          "role": ".admin"
+        }
+      ]
+    },
+    "eth:0x89A5D5bF00a27D55c02951E49078a5C5771051dB": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x000000000004444c5dc75cB358380D2e3dE08A90",
+          "description": "can set protocol fees on any pool up to the hard-coded cap of 0.1% per swap direction, and collect accrued protocol fees to an arbitrary recipient.",
+          "role": ".protocolFeeController"
+        }
+      ]
+    },
+    "eth:0xbd123D5b1E148266154F5722C1d059D70059Cf93": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd1428Ba554F4C8450b763a0B2040A4935c63f06C",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

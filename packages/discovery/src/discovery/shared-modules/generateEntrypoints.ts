@@ -6,6 +6,7 @@ import { join } from 'path'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { ConfigReader } from '../config/ConfigReader'
 import { type Entrypoint, EntrypointsFile } from '../config/StructureConfig'
+import { attachPermissions } from '../output/attachPermissions'
 import type { EntryParameters } from '../output/types'
 import { mapToReferenceNodes } from '../utils/reachable'
 
@@ -73,6 +74,9 @@ export function generateEntrypointsForProject(
   configReader: ConfigReader,
 ) {
   const discovery = configReader.readDiscovery(project)
+  // Leaf detection reads issued permissions off the entries, so the stored map
+  // has to be joined back on first.
+  attachPermissions([discovery])
   const initialAddresses = new Set(
     configReader.readConfig(project).structure.initialAddresses,
   )

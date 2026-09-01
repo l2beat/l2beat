@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DepositWallet",
+  "description": "Smart-wallet implementation for factory-deployed proxies. Only the configured factory can submit call batches, which require an EIP-712 signature from the owner or an unexpired session signer. The owner can pause the wallet and, after the factory-configured delay, withdraw assets and revoke token approvals.",
+  "ignoreMethods": ["factory", "id"]
+}

@@ -1,8 +1,8 @@
 import {
   AnalyzerResultApiResponse,
   AnalyzersApiResponse,
+  withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
-import { withoutUndefinedKeys } from '../utils/withoutUndefinedKeys'
 import type {
   ApiCodeResponse,
   ApiCodeSearchResponse,

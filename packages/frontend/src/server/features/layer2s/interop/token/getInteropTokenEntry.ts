@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import { unique } from '@l2beat/shared-pure'
+import { MANUAL_RELATION_PLUGIN, unique } from '@l2beat/shared-pure'
 import type { InteropTokenOnchainDeploymentsRow } from '~/components/projects/sections/interop/onchain-deployments/InteropTokenOnchainDeploymentsSection'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { InteropChainWithIcon } from '~/pages/interop/components/chain-selector/types'
@@ -81,6 +81,12 @@ function resolveMinters(
 ): InteropTokenOnchainDeploymentsRow['minters'] {
   const projects = deployment.mintingPlugins.flatMap(
     ({ plugin, bridgeType, relatedChain }) => {
+      // A manually added relation names no interop plugin, so it can never
+      // resolve to an interop project. Skipped deliberately — not warned
+      // about — until the public site decides how to present manual bridges.
+      if (plugin === MANUAL_RELATION_PLUGIN) {
+        return []
+      }
       // Sides are arbitrary — the matcher is symmetric. A relation records
       // only the minted endpoint's abstract token, hence no dstAbstractTokenId.
       const matched = resolveProjects({

@@ -81,6 +81,12 @@ export function TokenRelationsGraph({
     () => getRelationGraphFocus(graph, selection, deletedRelationIds),
     [graph, selection, deletedRelationIds],
   )
+  // Runs the force layout to completion, blocking the main thread for
+  // seconds on large graphs. It lives in render rather than in the lifecycle
+  // effect below so the page can pass `graph` derived from a deferred value:
+  // the urgent render (switched radio, loading overlay) paints first, and
+  // the build then happens inside React's deferred re-render.
+  const scene = useMemo(() => buildRelationGraphScene(graph), [graph])
   // The draw loop reads the latest style inputs through a ref so that the
   // canvas lifecycle effect does not have to re-run on every style change.
   const styleStateRef = useRef({
@@ -113,7 +119,6 @@ export function TokenRelationsGraph({
     const canvas = canvasElement
     const context = contextOrNull
 
-    const scene = buildRelationGraphScene(graph)
     const theme = resolveTheme(canvas)
     let cameraTransform = d3.zoomIdentity
     let cameraInitialized = false
@@ -415,7 +420,7 @@ export function TokenRelationsGraph({
       zoomToNodeRef.current = undefined
       setTooltip(undefined)
     }
-  }, [graph])
+  }, [scene])
 
   useEffect(() => {
     if (zoomTarget === undefined) return
@@ -464,7 +469,11 @@ function nodeTooltip(node: SceneNode) {
   return [
     `${node.label} on ${data.chain}`,
     data.address,
-    data.isDeployed ? 'Deployed token exists' : 'Missing deployed token',
+    !data.isDeployed
+      ? 'Missing deployed token'
+      : data.hasRelations
+        ? 'Deployed token exists'
+        : 'No observed relations — placed by its abstract token assignment',
   ].join('\n')
 }
 

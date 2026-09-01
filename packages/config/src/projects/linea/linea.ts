@@ -468,7 +468,7 @@ export const linea: ScalingProject = {
         {
           title:
             'Eip4844BlobAcceptor.sol - Etherscan source code, submitBlobs() function',
-          url: 'https://etherscan.io/address/0x59290394dDC1cF84e671701A929710643c343530#code',
+          url: 'https://etherscan.io/address/0x052b73d934E9412045Bf731574463Fd026D74645#code',
         },
       ],
     },
@@ -488,7 +488,7 @@ export const linea: ScalingProject = {
         {
           title:
             'Eip4844BlobAcceptor.sol - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
-          url: 'https://etherscan.io/address/0x59290394dDC1cF84e671701A929710643c343530#code',
+          url: 'https://etherscan.io/address/0x052b73d934E9412045Bf731574463Fd026D74645#code',
         },
       ],
     },
@@ -506,12 +506,12 @@ export const linea: ScalingProject = {
           {
             title:
               'L1MessageService.sol - Etherscan source code, claimMessageWithProof() function',
-            url: 'https://etherscan.io/address/0x59290394dDC1cF84e671701A929710643c343530#code#F21#L92',
+            url: 'https://etherscan.io/address/0x052b73d934E9412045Bf731574463Fd026D74645#code#F21#L92',
           },
           {
             title:
               'LivenessRecovery.sol - Etherscan source code, setLivenessRecoveryOperator() function ',
-            url: 'https://etherscan.io/address/0x59290394dDC1cF84e671701A929710643c343530#code#F36#L41',
+            url: 'https://etherscan.io/address/0x052b73d934E9412045Bf731574463Fd026D74645#code#F36#L41',
           },
         ],
       },
@@ -558,7 +558,7 @@ export const linea: ScalingProject = {
           {
             title:
               'LineaRollupBase.sol - Etherscan source code, finalizeBlocks() and _verifyProof() calls',
-            url: 'https://etherscan.io/address/0x59290394dDC1cF84e671701A929710643c343530#code#F38#L277',
+            url: 'https://etherscan.io/address/0x052b73d934E9412045Bf731574463Fd026D74645#code#F38#L277',
           },
           {
             title: 'PlonkVerifierMainnetFull.sol (Proof Type 0)',

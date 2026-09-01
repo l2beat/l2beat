@@ -143,6 +143,7 @@ export interface InteropTransferBatch {
  * holding every transfer in memory.
  */
 export interface InteropTokenRouteRecord {
+  plugin: string
   srcChain: string
   srcTokenAddress: string | undefined
   dstChain: string
@@ -152,6 +153,11 @@ export interface InteropTokenRouteRecord {
   dstWasMinted: boolean | undefined
   transferCount: number
   sampleTransferId: string
+  /** Tx hashes of the sample transfer (the row behind `sampleTransferId`),
+   * so route consumers can point a human at an explorer without loading the
+   * full transfer row. */
+  sampleSrcTxHash: string | undefined
+  sampleDstTxHash: string | undefined
 }
 
 interface PartialAbstractTokenFilter {
@@ -357,6 +363,7 @@ export class InteropTransferRepository extends BaseRepository {
 
   async getTokenRoutes(): Promise<InteropTokenRouteRecord[]> {
     const groupColumns = [
+      'plugin',
       'srcChain',
       'srcTokenAddress',
       'dstChain',
@@ -366,14 +373,54 @@ export class InteropTransferRepository extends BaseRepository {
       'dstWasMinted',
     ] as const
 
+    // The sample tx hashes must come from the same row as `sampleTransferId`
+    // (mixing max() per column would stitch hashes from different transfers),
+    // hence the join back on the primary key instead of extra aggregates.
+    // Transfer ids are random, so a bare max() would pick an arbitrary row;
+    // groups can mix fully hashed transfers with partially observed ones
+    // (a side's token address comes from the message payload even when its
+    // event — and thus tx hash — was never seen), so prefer a fully hashed
+    // sample, then any hashed one, before settling for an arbitrary row.
     const rows = await this.db
-      .selectFrom('InteropTransfer')
-      .select((eb) => [
-        ...groupColumns,
-        eb.fn.countAll().as('transferCount'),
-        eb.fn.max('transferId').as('sampleTransferId'),
+      .with('route', (qb) =>
+        qb
+          .selectFrom('InteropTransfer')
+          .select((eb) => [
+            ...groupColumns,
+            eb.fn.countAll().as('transferCount'),
+            eb.fn
+              .coalesce(
+                eb.fn
+                  .max('transferId')
+                  .filterWhere('srcTxHash', 'is not', null)
+                  .filterWhere('dstTxHash', 'is not', null),
+                eb.fn
+                  .max('transferId')
+                  .filterWhere((eb) =>
+                    eb.or([
+                      eb('srcTxHash', 'is not', null),
+                      eb('dstTxHash', 'is not', null),
+                    ]),
+                  ),
+                eb.fn.max('transferId'),
+              )
+              .as('sampleTransferId'),
+          ])
+          .groupBy([...groupColumns]),
+      )
+      .selectFrom('route')
+      .innerJoin(
+        'InteropTransfer as sample',
+        'sample.transferId',
+        'route.sampleTransferId',
+      )
+      .select([
+        ...groupColumns.map((column) => `route.${column}` as const),
+        'route.transferCount',
+        'route.sampleTransferId',
+        'sample.srcTxHash as sampleSrcTxHash',
+        'sample.dstTxHash as sampleDstTxHash',
       ])
-      .groupBy([...groupColumns])
       .execute()
 
     return rows.map((row) => {
@@ -384,6 +431,7 @@ export class InteropTransferRepository extends BaseRepository {
       }
 
       return {
+        plugin: row.plugin,
         srcChain: row.srcChain,
         srcTokenAddress: row.srcTokenAddress ?? undefined,
         dstChain: row.dstChain,
@@ -396,6 +444,8 @@ export class InteropTransferRepository extends BaseRepository {
         dstWasMinted: row.dstWasMinted ?? undefined,
         transferCount: Number(row.transferCount),
         sampleTransferId: row.sampleTransferId,
+        sampleSrcTxHash: row.sampleSrcTxHash ?? undefined,
+        sampleDstTxHash: row.sampleDstTxHash ?? undefined,
       }
     })
   }

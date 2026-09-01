@@ -1,6 +1,6 @@
 {
   "name": "railgun",
-  "timestamp": 1787311119,
+  "timestamp": 1788265057,
   "configHash": "0x798f9778c8f74d5f26a94dc3f191bffc7f933ded7a367d22dbe27146799124c3",
   "entries": [
     {
@@ -13,14 +13,6 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "description": "transfer ETH or ERC20s out of the treasury.",
-          "role": ".transferRoleMembers"
-        }
-      ],
       "deployerAddress": "eth:0x223e4fD4a088Abf96f16A579A3EAde3F87Dd2911",
       "sinceTimestamp": 1657776211,
       "sinceBlock": 15138816,
@@ -126,46 +118,6 @@
       ],
       "proxyType": "immutable",
       "description": "Admin interface for Railgun's pausable upgradeable proxies. It does not hold funds, but its controller can operate every proxy attached to it.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
-          "role": ".$admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
-          "description": "pause, unpause, transfer proxy ownership, or upgrade the GovernorRewards implementation.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "description": "pause, unpause, transfer proxy ownership, or upgrade the treasury implementation.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
-          "description": "pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet implementation.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1625961245,
       "sinceBlock": 12802673,
@@ -188,7 +140,14 @@
     {
       "address": "eth:0x5a02474A3083Bc969f20F92E7a8bd3824EC607f0",
       "type": "EOA",
-      "proxyType": "EOA"
+      "sourceHashes": [
+        "0xd9649be084919b1ae25d4d396555667632253f10ddb6a9bddc939db45f797b10"
+      ],
+      "proxyType": "EIP7702 EOA",
+      "values": {
+        "$implementation": "eth:0x5A7FC11397E9a8AD41BF10bf13F22B0a63f96f6d",
+        "nonce": 0
+      }
     },
     {
       "name": "VerificationKeySetter_64DA",
@@ -200,14 +159,6 @@
       ],
       "proxyType": "immutable",
       "description": "Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
-          "description": "update the Railgun smart wallet SNARK verifying keys through the Delegator.",
-          "role": ".verificationKeyDelegates"
-        }
-      ],
       "deployerAddress": "eth:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2",
       "sinceTimestamp": 1752516023,
       "sinceBlock": 22919063,
@@ -254,14 +205,6 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "description": "transfer ETH or ERC20s out of the treasury.",
-          "role": ".transferRoleMembers"
-        }
-      ],
       "deployerAddress": "eth:0x223e4fD4a088Abf96f16A579A3EAde3F87Dd2911",
       "sinceTimestamp": 1657776188,
       "sinceBlock": 15138812,
@@ -317,27 +260,7 @@
     {
       "address": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B",
-          "description": "pause, unpause, transfer proxy ownership, or upgrade the Sweeper implementation.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
-          "description": "stage replacement verification keys and manage the helper's local SETTING and WAITING states.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "IntervalPayouts",
@@ -349,14 +272,6 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "description": "transfer ETH or ERC20s out of the treasury.",
-          "role": ".transferRoleMembers"
-        }
-      ],
       "deployerAddress": "eth:0x223e4fD4a088Abf96f16A579A3EAde3F87Dd2911",
       "sinceTimestamp": 1657776163,
       "sinceBlock": 15138811,
@@ -419,14 +334,6 @@
       ],
       "proxyType": "immutable",
       "description": "Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
-          "description": "update the Railgun smart wallet SNARK verifying keys through the Delegator.",
-          "role": ".verificationKeyDelegates"
-        }
-      ],
       "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1677376967,
       "sinceBlock": 16709316,
@@ -474,14 +381,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Reward distributor that pulls assets from the Railgun treasury and allocates them to stakers via token voting.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "description": "transfer ETH or ERC20s out of the treasury.",
-          "role": ".transferRoleMembers"
-        }
-      ],
       "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1674193031,
       "sinceBlock": 16445969,
@@ -557,14 +456,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Older Railgun sweeper generation that still holds Treasury transfer rights. It is upgradeable and forwards balances to an immutable receiver.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "description": "transfer ETH or ERC20s out of the treasury.",
-          "role": ".transferRoleMembers"
-        }
-      ],
       "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1662769859,
       "sinceBlock": 15505785,
@@ -607,14 +498,6 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "description": "transfer ETH or ERC20s out of the treasury.",
-          "role": ".transferRoleMembers"
-        }
-      ],
       "deployerAddress": "eth:0x223e4fD4a088Abf96f16A579A3EAde3F87Dd2911",
       "sinceTimestamp": 1657776206,
       "sinceBlock": 15138815,
@@ -704,101 +587,6 @@
       ],
       "proxyType": "immutable",
       "description": "Permission router proxy owned by Railgun governance.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686",
-          "role": ".$admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
-          "description": "switch the VKeySetter into COMMITTING so its owner can push stored verification keys to the verifier.",
-          "role": ".delegator"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
-          "description": "switch the VKeySetter into COMMITTING so its owner can push stored verification keys to the verifier.",
-          "role": ".delegator"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
-          "description": "add or remove allowed reward safety vectors.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
-          "description": "add or remove reward tokens from the distribution set.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
-          "description": "change the per-interval reward rate.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686",
-          "description": "pause, unpause, transfer proxy ownership, or upgrade the legacy Sweeper implementation.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D",
-          "description": "mint additional RAIL up to the hard cap and transfer token ownership.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "description": "grant or revoke treasury roles, including who can move ETH and ERC20s out of the treasury.",
-          "role": ".defaultAdminRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "description": "transfer ETH or ERC20s out of the treasury.",
-          "role": ".transferRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
-          "description": "add or remove allowed SNARK safety vectors.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
-          "description": "add or remove tokens from the shielding blocklist.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
-          "description": "change the shield, unshield, and NFT fee schedule.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
-          "description": "change the treasury that receives protocol fees.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1625810239,
       "sinceBlock": 12791440,
@@ -886,15 +674,7 @@
     {
       "address": "eth:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
-          "description": "stage replacement verification keys and manage the helper's local SETTING and WAITING states.",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Voting",
@@ -906,224 +686,6 @@
       ],
       "proxyType": "immutable",
       "description": "Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
-          "description": "switch the VKeySetter into COMMITTING so its owner can push stored verification keys to the verifier.",
-          "role": ".delegator",
-          "via": [
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
-          "description": "switch the VKeySetter into COMMITTING so its owner can push stored verification keys to the verifier.",
-          "role": ".delegator",
-          "via": [
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
-          "description": "add or remove allowed reward safety vectors.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
-          "description": "add or remove reward tokens from the distribution set.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
-          "description": "change the per-interval reward rate.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
-          "description": "pause, unpause, transfer proxy ownership, or upgrade the GovernorRewards implementation.",
-          "role": ".$admin",
-          "via": [
-            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686",
-          "description": "pause, unpause, transfer proxy ownership, or upgrade the legacy Sweeper implementation.",
-          "role": ".$admin",
-          "via": [
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
-          "description": "grant or revoke delegated caller permissions and transfer ownership of the Delegator.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D",
-          "description": "mint additional RAIL up to the hard cap and transfer token ownership.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "description": "grant or revoke treasury roles, including who can move ETH and ERC20s out of the treasury.",
-          "role": ".defaultAdminRoleMembers",
-          "via": [
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "description": "pause, unpause, transfer proxy ownership, or upgrade the treasury implementation.",
-          "role": ".$admin",
-          "via": [
-            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "description": "transfer ETH or ERC20s out of the treasury.",
-          "role": ".transferRoleMembers",
-          "via": [
-            { "address": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f" },
-            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "description": "transfer ETH or ERC20s out of the treasury.",
-          "role": ".transferRoleMembers",
-          "via": [
-            { "address": "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686" },
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "description": "transfer ETH or ERC20s out of the treasury.",
-          "role": ".transferRoleMembers",
-          "via": [
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
-          "description": "add or remove allowed SNARK safety vectors.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
-          "description": "add or remove tokens from the shielding blocklist.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
-          "description": "change the shield, unshield, and NFT fee schedule.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
-          "description": "change the treasury that receives protocol fees.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
-          "description": "pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet implementation.",
-          "role": ".$admin",
-          "via": [
-            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
-            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
-          "role": ".owner"
-        }
-      ],
       "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
       "sinceTimestamp": 1662770918,
       "sinceBlock": 15505853,
@@ -1133,7 +695,7 @@
         "EXECUTION_END_OFFSET": 1209600,
         "EXECUTION_START_OFFSET": 604800,
         "PROPOSAL_SPONSOR_THRESHOLD": "500000000000000000000000",
-        "proposalCount": 28,
+        "proposalCount": 29,
         "QUORUM": "2000000000000000000000000",
         "SPONSOR_LOCKOUT_TIME": 604800,
         "SPONSOR_WINDOW": 2592000,
@@ -1213,14 +775,6 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "description": "transfer ETH or ERC20s out of the treasury.",
-          "role": ".transferRoleMembers"
-        }
-      ],
       "deployerAddress": "eth:0x223e4fD4a088Abf96f16A579A3EAde3F87Dd2911",
       "sinceTimestamp": 1657776264,
       "sinceBlock": 15138819,
@@ -1358,7 +912,7 @@
         "defaultAdminRoleMembers": [
           "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
         ],
-        "RAILBalance": "2,511,408.955106978308446253",
+        "RAILBalance": "2,405,950.945969868700478047",
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
         "transferRoleMembers": [
           "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
@@ -1462,7 +1016,7 @@
         "$immutable": true,
         "DEPLOY_TIME": 1625670240,
         "intervalAtTime": [],
-        "RAILStaked": "41,172,368.517504230292547533",
+        "RAILStaked": "41,237,344.424612276749285541",
         "SNAPSHOT_INTERVAL": 86400,
         "SNAPSHOT_INTERVAL_fmt": "1d",
         "STAKE_LOCKTIME": 2592000,
@@ -1504,14 +1058,6 @@
       ],
       "proxyType": "immutable",
       "description": "Immutable payout stream that can pull a fixed amount of a configured asset from the Railgun treasury to a fixed beneficiary whenever the next interval is due.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
-          "description": "transfer ETH or ERC20s out of the treasury.",
-          "role": ".transferRoleMembers"
-        }
-      ],
       "deployerAddress": "eth:0x223e4fD4a088Abf96f16A579A3EAde3F87Dd2911",
       "sinceTimestamp": 1657776236,
       "sinceBlock": 15138817,
@@ -1686,6 +1232,26 @@
       "function transferProxyOwnership(address _proxy, address _newOwner)",
       "function unpause(address _proxy)",
       "function upgrade(address _proxy, address _newImplementation)"
+    ],
+    "eth:0x5A7FC11397E9a8AD41BF10bf13F22B0a63f96f6d": [
+      "event LogErr(address indexed to, uint256 value, bytes data, bytes returnData)",
+      "event LogPrivilegeChanged(address indexed addr, bytes32 priv)",
+      "function execute(tuple(address to, uint256 value, bytes data)[] calls, bytes signature) payable",
+      "function executeBySelf(tuple(address to, uint256 value, bytes data)[] calls) payable",
+      "function executeBySelfSingle(tuple(address to, uint256 value, bytes data) call) payable",
+      "function executeBySender(tuple(address to, uint256 value, bytes data)[] calls) payable",
+      "function executeMultiple(tuple(tuple(address to, uint256 value, bytes data)[] calls, bytes signature)[] toExec) payable",
+      "function isValidSignature(bytes32 hash, bytes signature) view returns (bytes4)",
+      "function nonce() view returns (uint256)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) pure returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) pure returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) pure returns (bytes4)",
+      "function privileges(address key) view returns (bytes32)",
+      "function setAddrPrivilege(address addr, bytes32 priv) payable",
+      "function supportsInterface(bytes4 interfaceID) pure returns (bool)",
+      "function tryCatch(address to, uint256 value, bytes data) payable",
+      "function tryCatchLimit(address to, uint256 value, bytes data, uint256 gasLimit) payable",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature) op, bytes32 userOpHash, uint256 missingAccountFunds) payable returns (uint256)"
     ],
     "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598": [
       "constructor(address _admin, address _delegator, address _verifier)",
@@ -2091,6 +1657,499 @@
     "railgun/VKeySetter": "0x91335987d90d44c42826772e13ce649fe7f74f91f53eb69227ef49ff63fe5d89",
     "railgun/Voting": "0x67493aa4e015e72df54398b5228d0608b52403af2ad52e9d3e93adb52249abc7"
   },
-  "usedBlockNumbers": { "ethereum": 25803161 },
-  "permissionsConfigHash": "0x56bb3ba002f719a35f1d9124f1e67edd6294599dc20dd69d0fcfcf0a7efc6a21"
+  "usedBlockNumbers": { "ethereum": 25882378 },
+  "permissionsConfigHash": "0x56bb3ba002f719a35f1d9124f1e67edd6294599dc20dd69d0fcfcf0a7efc6a21",
+  "permissions": {
+    "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers"
+        }
+      ]
+    },
+    "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the GovernorRewards implementation.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the treasury implementation.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet implementation.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+          "description": "update the Railgun smart wallet SNARK verifying keys through the Delegator.",
+          "role": ".verificationKeyDelegates"
+        }
+      ]
+    },
+    "eth:0x7673e2E62435D25EDBcb58fD0d88c4C95806b10F": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers"
+        }
+      ]
+    },
+    "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the Sweeper implementation.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
+          "description": "stage replacement verification keys and manage the helper's local SETTING and WAITING states.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B",
+          "role": "admin"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x859E0C1790b8a721F4943742603cDB685A73BA5D": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers"
+        }
+      ]
+    },
+    "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+          "description": "update the Railgun smart wallet SNARK verifying keys through the Delegator.",
+          "role": ".verificationKeyDelegates"
+        }
+      ]
+    },
+    "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers"
+        }
+      ]
+    },
+    "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
+          "description": "switch the VKeySetter into COMMITTING so its owner can push stored verification keys to the verifier.",
+          "role": ".delegator"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
+          "description": "switch the VKeySetter into COMMITTING so its owner can push stored verification keys to the verifier.",
+          "role": ".delegator"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
+          "description": "add or remove allowed reward safety vectors.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
+          "description": "add or remove reward tokens from the distribution set.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
+          "description": "change the per-interval reward rate.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the legacy Sweeper implementation.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D",
+          "description": "mint additional RAIL up to the hard cap and transfer token ownership.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "description": "grant or revoke treasury roles, including who can move ETH and ERC20s out of the treasury.",
+          "role": ".defaultAdminRoleMembers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "add or remove allowed SNARK safety vectors.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "add or remove tokens from the shielding blocklist.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "change the shield, unshield, and NFT fee schedule.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "change the treasury that receives protocol fees.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xCA9A2894e814305fAfc2BA83a70B34295b1DdE9D": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers"
+        }
+      ]
+    },
+    "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers"
+        }
+      ]
+    },
+    "eth:0xa863262Bf5E97e8CFeC47a71402aC360C0983060": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers"
+        }
+      ]
+    },
+    "eth:0xbbc2fB58643235AFfBF1f0CDd27Bc6E6CFBBa4e2": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
+          "description": "stage replacement verification keys and manage the helper's local SETTING and WAITING states.",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598",
+          "description": "switch the VKeySetter into COMMITTING so its owner can push stored verification keys to the verifier.",
+          "role": ".delegator",
+          "via": [
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
+          "description": "switch the VKeySetter into COMMITTING so its owner can push stored verification keys to the verifier.",
+          "role": ".delegator",
+          "via": [
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
+          "description": "add or remove allowed reward safety vectors.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
+          "description": "add or remove reward tokens from the distribution set.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
+          "description": "change the per-interval reward rate.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the GovernorRewards implementation.",
+          "role": ".$admin",
+          "via": [
+            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the legacy Sweeper implementation.",
+          "role": ".$admin",
+          "via": [
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+          "description": "grant or revoke delegated caller permissions and transfer ownership of the Delegator.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D",
+          "description": "mint additional RAIL up to the hard cap and transfer token ownership.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "description": "grant or revoke treasury roles, including who can move ETH and ERC20s out of the treasury.",
+          "role": ".defaultAdminRoleMembers",
+          "via": [
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the treasury implementation.",
+          "role": ".$admin",
+          "via": [
+            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers",
+          "via": [
+            { "address": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f" },
+            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers",
+          "via": [
+            { "address": "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686" },
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers",
+          "via": [
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "add or remove allowed SNARK safety vectors.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "add or remove tokens from the shielding blocklist.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "change the shield, unshield, and NFT fee schedule.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "change the treasury that receives protocol fees.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "description": "pause, unpause, transfer proxy ownership, or upgrade the Railgun smart wallet implementation.",
+          "role": ".$admin",
+          "via": [
+            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xa353bC0454931Ac46fd90c8EF27f908Ab9E34686",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8" },
+            { "address": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0xf5F9d74FbFd04801DFf83425ff6C2002f60B921A": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE8A8B458BcD1Ececc6b6b58F80929b29cCecFF40",
+          "description": "transfer ETH or ERC20s out of the treasury.",
+          "role": ".transferRoleMembers"
+        }
+      ]
+    }
+  }
 }

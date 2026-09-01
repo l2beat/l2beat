@@ -1,0 +1,44 @@
+import type { Engine, EngineRequest, TokenUsage } from '../engine/types.js'
+import type { ReviewOutput } from '../post/schema.js'
+import { rankFindings } from '../rank/rankFindings.js'
+import { FindOutput, toFindings } from './schema.js'
+
+export interface FindResult {
+  review: ReviewOutput
+  usage?: TokenUsage
+}
+
+const CONTEXT_SOURCES = ['pr-description', 'checkout']
+
+export async function runFind(
+  engine: Engine,
+  input: EngineRequest,
+): Promise<FindResult> {
+  const result = await engine.run(input)
+  const base = { context_sources: CONTEXT_SOURCES, intent: '', findings: [] }
+  if (!result.ok) {
+    return {
+      review: { ...base, aborted: `${result.reason}: ${result.detail}` },
+      usage: result.usage,
+    }
+  }
+  const parsed = FindOutput.safeValidate(result.output)
+  if (!parsed.success) {
+    return {
+      review: {
+        ...base,
+        aborted: `invalid-output: ${parsed.path} ${parsed.message}`,
+      },
+      usage: result.usage,
+    }
+  }
+  return {
+    review: {
+      ...base,
+      intent: parsed.data.intent,
+      findings: rankFindings(toFindings(parsed.data)),
+      commands: result.commands,
+    },
+    usage: result.usage,
+  }
+}

@@ -45,10 +45,9 @@ export class MulticallV3Client {
     )
     const values = decoded[0] as [boolean, string][]
     return values.map(([success, data]): MulticallV3Response => {
-      const bytes = Bytes.fromHex(data)
       return {
-        success: success && bytes.length !== 0,
-        data: bytes,
+        success,
+        data: Bytes.fromHex(data),
       }
     })
   }

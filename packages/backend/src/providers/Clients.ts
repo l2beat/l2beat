@@ -1,6 +1,5 @@
 import { type Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
-  AvailWsClient,
   type AztecBlockClient,
   AztecRpcClient,
   BeaconChainClient,
@@ -16,7 +15,6 @@ import {
   type IRpcClient,
   LighterClient,
   type LogsClient,
-  LoopringClient,
   MulticallV3Client,
   NearClient,
   PolkadotRpcClient,
@@ -30,7 +28,6 @@ import {
   toRetryOptions,
   VoyagerClient,
   withRetries,
-  ZksyncLiteClient,
 } from '@l2beat/shared'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import type { Config } from '../config/Config'
@@ -44,14 +41,12 @@ export interface Clients {
   voyager: VoyagerClient | undefined
   lighter: LighterClient | undefined
   starkex: StarkexClient | undefined
-  loopring: LoopringClient | undefined
-  degate: LoopringClient | undefined
   coingecko: CoingeckoClient
   beacon: BeaconChainClient | undefined
   celestia: CelestiaRpcClient | undefined
   celestiaDaBeat: CelestiaRpcClient | undefined
   avail: PolkadotRpcClient | undefined
-  availWs: AvailWsClient | undefined
+  availDaBeat: PolkadotRpcClient | undefined
   eigen: EigenApiClient | undefined
   getRpcClient: (chain: string) => IRpcClient
   getStarknetClient: (chain: string) => StarknetClient
@@ -70,14 +65,12 @@ export function initClients(config: Config, logger: Logger): Clients {
   })
   let starkexClient: StarkexClient | undefined
   let voyagerClient: VoyagerClient | undefined
-  let loopringClient: LoopringClient | undefined
-  let degateClient: LoopringClient | undefined
   let ethereumClient: IRpcClient | undefined
   let beaconChainClient: BeaconChainClient | undefined
   let celestia: CelestiaRpcClient | undefined
   let celestiaDaBeat: CelestiaRpcClient | undefined
   let avail: PolkadotRpcClient | undefined
-  let availWs: AvailWsClient | undefined
+  let availDaBeat: PolkadotRpcClient | undefined
   let near: NearClient | undefined
   let espresso: EspressoClient | undefined
   let eigen: EigenApiClient | undefined
@@ -149,19 +142,6 @@ export function initClients(config: Config, logger: Logger): Clients {
           break
         }
 
-        case 'zksync': {
-          const zksyncLiteClient = new ZksyncLiteClient({
-            sourceName: 'zksynclite',
-            url: blockApi.url,
-            http,
-            callsPerMinute: blockApi.callsPerMinute,
-            retryStrategy: blockApi.retryStrategy,
-            logger,
-          })
-          blockClients.push(zksyncLiteClient)
-          break
-        }
-
         case 'starknet': {
           const client = new StarknetClient({
             sourceName: chain.name,
@@ -173,23 +153,6 @@ export function initClients(config: Config, logger: Logger): Clients {
           })
           blockClients.push(client)
           starknetClients.push(client)
-          break
-        }
-        case 'loopring':
-        case 'degate3': {
-          const client = new LoopringClient({
-            sourceName: blockApi.type,
-            url: blockApi.url,
-            type: blockApi.type,
-            http,
-            callsPerMinute: blockApi.callsPerMinute,
-            retryStrategy: blockApi.retryStrategy,
-            logger,
-          })
-          blockClients.push(client)
-          blockApi.type === 'loopring'
-            ? (loopringClient = client)
-            : (degateClient = client)
           break
         }
         case 'fuel': {
@@ -370,7 +333,14 @@ export function initClients(config: Config, logger: Logger): Clients {
       logger,
       http,
     })
-    availWs = new AvailWsClient(config.daBeat.availWsUrl)
+    availDaBeat = new PolkadotRpcClient({
+      url: config.daBeat.availRpcUrl,
+      callsPerMinute: 100,
+      retryStrategy: 'RELIABLE',
+      sourceName: 'avail',
+      logger,
+      http,
+    })
     espresso = new EspressoClient({
       sourceName: 'espresso',
       apiUrl: config.daBeat.espressoApiUrl,
@@ -400,15 +370,13 @@ export function initClients(config: Config, logger: Logger): Clients {
     aztecBlock: aztecBlockClients,
     indexer: indexerClients,
     starkex: starkexClient,
-    loopring: loopringClient,
-    degate: degateClient,
     coingecko: coingeckoClient,
     beacon: beaconChainClient,
     celestia,
     celestiaDaBeat,
     eigen,
     avail,
-    availWs,
+    availDaBeat,
     near,
     espresso,
     getStarknetClient,

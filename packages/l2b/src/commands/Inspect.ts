@@ -1,4 +1,5 @@
 import {
+  attachPermissions,
   ConfigReader,
   type ContractValue,
   getDiscoveryPaths,
@@ -37,6 +38,7 @@ export const Inspect = command({
     const templateService = new TemplateService(paths.discovery)
     const config = configReader.readConfig(args.project)
     const discovery = configReader.readDiscovery(args.project)
+    attachPermissions([discovery])
 
     let entry
     if (ChainSpecificAddress.check(args.addressOrName)) {

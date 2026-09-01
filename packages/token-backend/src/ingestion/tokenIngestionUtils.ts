@@ -1,6 +1,7 @@
 import type { InteropTokenRouteRecord } from '@l2beat/database'
 import { Address32, type InteropBridgeType } from '@l2beat/shared-pure'
 import { InteropTransferClassifier } from '../../../shared/build'
+import type { TransferPluginEvidence } from './IngestionTrace'
 
 export interface TokenAddress {
   chain: string
@@ -8,9 +9,14 @@ export interface TokenAddress {
 }
 
 export interface InteropTransferMatch {
+  plugin: string
   bridgeType: InteropBridgeType
   transferCount: number
   sampleTransferId: string
+  sampleSrcChain: string
+  sampleSrcTxHash: string | undefined
+  sampleDstChain: string
+  sampleDstTxHash: string | undefined
   token: TokenAddress
   otherToken: TokenAddress | undefined
 }
@@ -28,10 +34,15 @@ export function buildInteropTransferIndex(
     const src = normalizeTransferSide(route.srcChain, route.srcTokenAddress)
     const dst = normalizeTransferSide(route.dstChain, route.dstTokenAddress)
     const base = {
+      plugin: route.plugin,
       bridgeType:
         route.bridgeType ?? InteropTransferClassifier.inferBridgeType(route),
       transferCount: route.transferCount,
       sampleTransferId: route.sampleTransferId,
+      sampleSrcChain: route.srcChain,
+      sampleSrcTxHash: route.sampleSrcTxHash,
+      sampleDstChain: route.dstChain,
+      sampleDstTxHash: route.sampleDstTxHash,
     }
 
     if (src) addMatch(map, src, { ...base, token: src, otherToken: dst })
@@ -43,6 +54,63 @@ export function buildInteropTransferIndex(
       return map.get(getTokenKey(address)) ?? []
     },
   }
+}
+
+export function summarizeTransferPlugins(
+  matches: InteropTransferMatch[],
+): TransferPluginEvidence[] {
+  const byPlugin = new Map<
+    string,
+    { transferCount: number; sample: InteropTransferMatch }
+  >()
+
+  for (const match of matches) {
+    const entry = byPlugin.get(match.plugin)
+    if (!entry) {
+      byPlugin.set(match.plugin, {
+        transferCount: match.transferCount,
+        sample: match,
+      })
+      continue
+    }
+    entry.transferCount += match.transferCount
+    if (isBetterSample(match, entry.sample)) {
+      entry.sample = match
+    }
+  }
+
+  return Array.from(byPlugin.entries())
+    .map(([plugin, { transferCount, sample }]) => ({
+      plugin,
+      transferCount,
+      sampleSrcChain: sample.sampleSrcChain,
+      sampleSrcTxHash: sample.sampleSrcTxHash,
+      sampleDstChain: sample.sampleDstChain,
+      sampleDstTxHash: sample.sampleDstTxHash,
+    }))
+    .sort(
+      (a, b) =>
+        b.transferCount - a.transferCount || a.plugin.localeCompare(b.plugin),
+    )
+}
+
+/** A sample with more tx hashes wins (sides may lack hashes when the event
+ * was never observed); among equally hashed samples the busier route wins. */
+function isBetterSample(
+  candidate: InteropTransferMatch,
+  current: InteropTransferMatch,
+): boolean {
+  const candidateHashes = countSampleHashes(candidate)
+  const currentHashes = countSampleHashes(current)
+  if (candidateHashes !== currentHashes) return candidateHashes > currentHashes
+  return candidate.transferCount > current.transferCount
+}
+
+function countSampleHashes(match: InteropTransferMatch): number {
+  return (
+    (match.sampleSrcTxHash !== undefined ? 1 : 0) +
+    (match.sampleDstTxHash !== undefined ? 1 : 0)
+  )
 }
 
 export function normalizeInteropTokenAddress(

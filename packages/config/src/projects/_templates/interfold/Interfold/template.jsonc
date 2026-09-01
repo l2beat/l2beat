@@ -1,0 +1,140 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Interfold",
+  "category": "core",
+  "description": "Coordinator for Encrypted Execution Environments (E3s). It accepts requests for allowlisted programs, selects a ciphernode committee, snapshots the configured proof system, and verifies the encrypted result and threshold decryption before publishing plaintext output.",
+  "ignoreMethods": [
+    "checkFailureCondition",
+    "e3CryptoConfigIds",
+    "e3Payments",
+    "e3s",
+    "getDeadlines",
+    "getE3",
+    "getE3LifecycleDeadline",
+    "getE3Stage",
+    "getE3TimeoutConfig",
+    "getFailureReason",
+    "getRequester"
+  ],
+  "ignoreRelatives": ["feeToken"],
+  "ignoreInWatchMode": ["activeE3Count", "nexte3Id"],
+  "fields": {
+    "owner": {
+      "description": "Account controlling protocol configuration.",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause or unpause new requests; replace the registry, bonding, slashing, refund and node-release dependencies; allow fee assets and E3 programs; replace proof verifiers; and change pricing (including the flat randomness fee), timeouts, parameter sets and committee thresholds without an onchain delay."
+        }
+      ]
+    },
+    "requestsPaused": {
+      "description": "Whether new E3 requests are disabled.",
+      "type": "RISK_PARAMETER"
+    },
+    "registeredE3Programs": {
+      "description": "E3 application contracts permanently allowlisted by governance. Registration cannot be revoked in the current implementation.",
+      "type": "CODE_CHANGE",
+      "handler": {
+        "type": "event",
+        "select": "e3Program",
+        "add": { "event": "event E3ProgramRegistered(address e3Program)" }
+      }
+    },
+    "bfvDecryptionThreshold": {
+      "description": "Number of decryption shares required for the active minimum-size BFV committee.",
+      "type": "RISK_PARAMETER",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function committeeThresholds(uint8 size, uint256 index) view returns (uint32)",
+        "args": [0, 0]
+      }
+    },
+    "bfvCommitteeSize": {
+      "description": "Number of ciphernode seats in the active minimum-size BFV committee.",
+      "type": "RISK_PARAMETER",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function committeeThresholds(uint8 size, uint256 index) view returns (uint32)",
+        "args": [0, 1]
+      }
+    },
+    "bfvParamSet": {
+      "description": "ABI-encoded BFV parameter set accepted by the active circuits. Param-set index 0 is the only set accepted by the current crypto configuration.",
+      "type": "RISK_PARAMETER",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function paramSetRegistry(uint8 paramSet) view returns (bytes)",
+        "args": [0]
+      }
+    },
+    "bfvPkVerifier": {
+      "description": "Verifier used for BFV distributed-key-generation proofs for future E3s.",
+      "type": "CODE_CHANGE",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function getPkVerifier(bytes32 encryptionSchemeId) view returns (address)",
+        "args": [
+          "0x2c2a814a0495f913a3a312fc4771e37552bc14f8a2d4075a08122d356f0849c6"
+        ]
+      }
+    },
+    "bfvDecryptionVerifier": {
+      "description": "Verifier used for BFV threshold-decryption proofs for future E3s.",
+      "type": "CODE_CHANGE",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function getDecryptionVerifier(bytes32 encryptionSchemeId) view returns (address)",
+        "args": [
+          "0x2c2a814a0495f913a3a312fc4771e37552bc14f8a2d4075a08122d356f0849c6"
+        ]
+      }
+    },
+    "bfvCiphertextVerifier": {
+      "description": "Verifier used for the encrypted computation output of future BFV E3s.",
+      "type": "CODE_CHANGE",
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "function getCiphertextVerifier(bytes32 encryptionSchemeId) view returns (address)",
+        "args": [
+          "0x2c2a814a0495f913a3a312fc4771e37552bc14f8a2d4075a08122d356f0849c6"
+        ]
+      }
+    },
+    "activeCryptoConfigId": {
+      "description": "Hash of the exact circuit configuration accepted for new requests.",
+      "type": "CODE_CHANGE",
+      "severity": "HIGH"
+    },
+    "getTimeoutConfig": {
+      "description": "Protocol-wide DKG, encrypted-computation and decryption timeout windows applied to new E3s.",
+      "type": "RISK_PARAMETER"
+    },
+    "getPricingConfig": {
+      "description": "Fee model and fee split applied to new E3s, including minimum committee and threshold constraints. The randomnessFlatFee is a non-refundable request-time fee credited to the protocol treasury to reimburse the protocol-funded Chainlink VRF subscription.",
+      "type": "RISK_PARAMETER"
+    },
+    "nodeReleaseRegistry": {
+      "description": "Registry controlling which self-attested ciphernode software releases remain eligible for new E3s. Replacing it requires paused requests and no active E3s, and instantly invalidates every operator's cached eligibility.",
+      "type": "CODE_CHANGE"
+    },
+    "maxDuration": {
+      "description": "Maximum request duration accepted by the coordinator.",
+      "type": "RISK_PARAMETER"
+    },
+    "markFailedGracePeriod": {
+      "description": "Grace period after a lifecycle deadline during which failure processing remains restricted.",
+      "type": "RISK_PARAMETER"
+    },
+    "feeToken": {
+      "description": "External ERC-20 collected from E3 requesters. Its own protocol is outside the Interfold discovery perimeter."
+    }
+  }
+}

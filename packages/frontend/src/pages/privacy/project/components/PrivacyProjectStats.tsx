@@ -2,6 +2,24 @@ import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
+import type { PrivacyRelayerStat } from '~/server/features/privacy/types'
+import { cn } from '~/utils/cn'
+
+const RELAYER_STAT_COPY: Record<
+  PrivacyRelayerStat['kind'],
+  { title: string; tooltip: string }
+> = {
+  activeRelayers: {
+    title: 'Active Relayers 30D',
+    tooltip:
+      'The number of unique relayer addresses observed in relayed withdrawals over the past 30 days.',
+  },
+  avgDailyRelayers: {
+    title: 'Avg. Relayers 30D',
+    tooltip:
+      'The average number of unique relayers seen advertising their services in daily network observations over the past 30 days.',
+  },
+}
 
 interface Props {
   totalValueLockedUsd: number | undefined
@@ -13,6 +31,7 @@ interface Props {
     last7d: number
     last30d: number
   }
+  relayerStat?: PrivacyRelayerStat
 }
 
 export function PrivacyProjectStats({
@@ -21,10 +40,19 @@ export function PrivacyProjectStats({
   assetsCount,
   bucketsCount,
   deposits,
+  relayerStat,
 }: Props) {
-  const hasTrackedAssets = assetsCount > 0
+  const hasFlowTracking = bucketsCount > 0
+  const hasRelayerTracking = relayerStat !== undefined
+  const relayerStatElement = hasRelayerTracking ? (
+    <ProjectSummaryStat
+      title={RELAYER_STAT_COPY[relayerStat.kind].title}
+      value={formatInteger(relayerStat.value)}
+      tooltip={RELAYER_STAT_COPY[relayerStat.kind].tooltip}
+    />
+  ) : undefined
 
-  if (!hasTrackedAssets) {
+  if (!hasFlowTracking && !hasRelayerTracking) {
     return (
       <div className="grid gap-4 md:grid-cols-4">
         <ProjectSummaryStat
@@ -43,8 +71,32 @@ export function PrivacyProjectStats({
     )
   }
 
+  if (!hasFlowTracking) {
+    return (
+      <div className="grid gap-4 md:grid-cols-2">
+        <ProjectSummaryStat
+          title="Live asset metrics"
+          value={
+            <div className="flex flex-col md:gap-1">
+              <span>Not tracked</span>
+              <span className="font-medium text-paragraph-12 text-secondary leading-normal">
+                Onchain asset monitoring is not available for this project.
+              </span>
+            </div>
+          }
+        />
+        {relayerStatElement}
+      </div>
+    )
+  }
+
   return (
-    <div className="grid gap-4 md:grid-cols-4">
+    <div
+      className={cn(
+        'grid gap-4',
+        hasRelayerTracking ? 'md:grid-cols-5' : 'md:grid-cols-4',
+      )}
+    >
       <ProjectSummaryStat
         className="max-md:hidden"
         title="Total Value Locked"
@@ -99,6 +151,7 @@ export function PrivacyProjectStats({
         title="Deposits Total"
         value={formatInteger(deposits.total ?? 0)}
       />
+      {relayerStatElement}
     </div>
   )
 }

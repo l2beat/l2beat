@@ -1,0 +1,14 @@
+{
+  "CiphernodeRegistry.sol": {
+    "hash": "0x181143fe8736537b7086ceca31a6731ebb34e2e2612a63c3ff66ef5c7f3816af",
+    "address": "eth:0xB06Aaf9EF87984192490E947078D2f3563399b7B",
+    "chain": "ethereum",
+    "blockNumber": 25831469
+  },
+  "CiphernodeRegistryV2.sol": {
+    "hash": "0x993dbb9f6f7d08758f2b721cf9a1c301f9a7234933ca34d0430901203f34f1cf",
+    "address": "eth:0xFff476751949a7e1B784b5c88648833c1e8dD69c",
+    "chain": "ethereum",
+    "blockNumber": 25883001
+  }
+}

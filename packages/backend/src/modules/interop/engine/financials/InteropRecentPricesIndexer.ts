@@ -1,6 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
-import type { InteropRecentPricesRecord } from '@l2beat/database/dist/repositories/InteropRecentPricesRepository'
+import type { Database, InteropRecentPricesRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { INDEXER_NAMES } from '../../../../tools/uif/indexerIdentity'

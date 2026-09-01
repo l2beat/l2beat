@@ -1,6 +1,6 @@
 {
   "name": "linea",
-  "timestamp": 1784543140,
+  "timestamp": 1788264976,
   "configHash": "0xbed9112d38b3dd51aa89ea6b6767dc307e1c13601ff6b7dc5a7d6584a32c589b",
   "entries": [
     {
@@ -266,21 +266,7 @@
     {
       "address": "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can pause the bridge.",
-          "role": ".allPausers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "description": "pause the rollup for 2d, followed by 2d cooldown, during which the rollup cannot be paused, except by the Security Council.",
-          "role": ".pauseAllAC"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "CallForwardingProxy",
@@ -292,14 +278,6 @@
       ],
       "proxyType": "immutable",
       "description": "A public proxy contract forwarding calls to a predefined target contract (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F). Can be called by any address.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "description": "submit and finalize blocks as the Operator role when 6 months of no finalizations have passed.",
-          "role": ".livenessRecoveryOperator"
-        }
-      ],
       "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1733219987,
       "sinceBlock": 21321239,
@@ -361,13 +339,6 @@
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1691086259,
       "sinceBlock": 17836169,
@@ -382,15 +353,7 @@
     {
       "address": "eth:0x46d2F319fd42165D4318F099E143dEA8124E9E3e",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "description": "Allowed to prove blocks and post the corresponding transaction data.",
-          "role": ".Operators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "LidoStVaultYieldProvider",
@@ -500,15 +463,7 @@
     {
       "address": "eth:0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "description": "Allowed to prove blocks and post the corresponding transaction data.",
-          "role": ".Operators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x535dE1e2A961529AA84EF208981f8cF4e7dcbdF5",
@@ -530,13 +485,6 @@
       ],
       "proxyType": "gnosis safe zodiac module",
       "description": "A simple Safe module for that can queue and execute transactions as eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051 after a delay of currently 3mo, if registered as a module there.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
       "ignoreInWatchMode": ["txNonce", "queueNonce"],
       "deployerAddress": "eth:0x3acC729EdE75355EDab57aB82bEb32011cB1B079",
       "sinceTimestamp": 1753454807,
@@ -579,267 +527,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can pause the bridge.",
-          "role": ".allPausers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can pause the bridge.",
-          "role": ".allUnpausers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can pause token bridging actions initiated from the other layer.",
-          "role": ".completeTokenBridgingPausers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can pause token bridging actions initiated from this layer.",
-          "role": ".initiateTokenBridgingPausers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.",
-          "role": ".reserveTokenSetters",
-          "via": [
-            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
-            {
-              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
-              "delay": 7776000
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.",
-          "role": ".reserveTokenSetters"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again.",
-          "role": ".reserveTokenRemovers",
-          "via": [
-            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
-            {
-              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
-              "delay": 7776000
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again.",
-          "role": ".reserveTokenRemovers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can set custom ERC20 contracts for specific ERC20s.",
-          "role": ".customContractSetters",
-          "via": [
-            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
-            {
-              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
-              "delay": 7776000
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can set custom ERC20 contracts for specific ERC20s.",
-          "role": ".customContractSetters"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can set the contract used as the source of truth from crosschain messages.",
-          "role": ".messageServiceSetters"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can unpause token bridging actions initiated from the other layer.",
-          "role": ".completeTokenBridgingUnpausers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can unpause token bridging actions initiated from this layer.",
-          "role": ".initiateTokenBridgingUnpausers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "manage all critical access control roles and permissions (full admin of the main bridge escrow).",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
-          "description": "enable/disable the module, set delays and expiration of transactions, set the target.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
-            {
-              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
-              "delay": 7776000
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
-          "description": "change the beacon implementation.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "description": "manage all critical access control roles and permissions (full admin of the rollup system).",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "description": "pause the rollup for 2d, followed by 2d cooldown, during which the rollup cannot be paused, except by the Security Council.",
-          "role": ".pauseAllAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "description": "pause the rollup indefinitely.",
-          "role": ".securityCouncilAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "description": "send ETH from the rollup bridge to the YieldManager.",
-          "role": ".ethStakerAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "description": "set the address of the yield manager contract that receives ETH from rollup bridge.",
-          "role": ".yieldManagerSetterAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "cancel queued transactions.",
-          "role": ".cancellerAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "execute transactions that are ready.",
-          "role": ".executorAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC",
-          "via": [
-            { "address": "eth:0xd6B95c960779c72B8C6752119849318E5d550574" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "propose transactions.",
-          "role": ".proposerAC",
-          "via": [
-            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
-            {
-              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
-              "delay": 7776000
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "propose transactions.",
-          "role": ".proposerAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
-          "description": "manage native yield staking: modify reserve parameters, set yield pools, set yield receiver addresses.",
-          "role": ".yieldStakingManagerAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
-          "description": "operate native yield staking: stake and unstake, collect yield, pause and unpause, ossify yield managers.",
-          "role": ".yieldStakingOperatorAC"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
-            { "address": "eth:0xd6B95c960779c72B8C6752119849318E5d550574" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
-            { "address": "eth:0xd6B95c960779c72B8C6752119849318E5d550574" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
-            { "address": "eth:0xd6B95c960779c72B8C6752119849318E5d550574" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
-          "delay": 7776000,
-          "role": ".ZodiacModule_modules"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
-          "role": ".executorAC"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1689149759,
@@ -863,7 +550,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 78,
+        "nonce": 79,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -874,15 +561,7 @@
     {
       "address": "eth:0x89F1668D215Bb5839A0A7a1A4619b1541258388c",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x526AE78F0103Ae73F05449ae30eb626C1003784E",
-          "description": "add and remove addresses to the filter list. Addresses in this list can not send forced transactions from L1.",
-          "role": ".defaultAdminAC"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x9376c137AF5124FFc39bD8940A3D88D1cd508992",
@@ -907,6 +586,7 @@
         "implementation": "eth:0x36f274C1C197F277EA3C57859729398FCc8a3763",
         "owner": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
       },
+      "fieldMeta": { "implementation": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB": "UpgradeableBeacon"
       }
@@ -941,38 +621,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.",
-          "role": ".reserveTokenSetters"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again.",
-          "role": ".reserveTokenRemovers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "description": "can set custom ERC20 contracts for specific ERC20s.",
-          "role": ".customContractSetters"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
-          "description": "enable/disable the module, set delays and expiration of transactions, set the target.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "propose transactions.",
-          "role": ".proposerAC"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x12d674b7eCc0302977E956Cd2d5AC8D030fdbea9",
       "sinceTimestamp": 1748512535,
@@ -994,7 +642,7 @@
           "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436"
         ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 17,
+        "nonce": 18,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1015,21 +663,7 @@
     {
       "address": "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "description": "send ETH from the rollup bridge to the YieldManager.",
-          "role": ".ethStakerAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
-          "description": "operate native yield staking: stake and unstake, collect yield, pause and unpause, ossify yield managers.",
-          "role": ".yieldStakingOperatorAC"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "LineaRollup",
@@ -1038,7 +672,7 @@
       "template": "linea/LineaRollup_ForcedTrx_v8_0",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0xf3482110e327210ee9824abef6aa6fea72bf9a49a46187d08853a978c2210c65"
+        "0x99448a403aaba56b396cab263fdccd1a13345cb737178fc7813f1a5bf8d927d5"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.",
@@ -1055,7 +689,7 @@
       "sinceBlock": 17677070,
       "values": {
         "$admin": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-        "$implementation": "eth:0x59290394dDC1cF84e671701A929710643c343530",
+        "$implementation": "eth:0x052b73d934E9412045Bf731574463Fd026D74645",
         "$pastUpgrades": [
           [
             "2023-07-12T11:05:23.000Z",
@@ -1116,9 +750,14 @@
             "2026-07-16T11:32:59.000Z",
             "0x4bcfe7ea1724555288f7cf4d7a0de608182483a41d670e3027b89c3e989240c9",
             ["eth:0x59290394dDC1cF84e671701A929710643c343530"]
+          ],
+          [
+            "2026-09-01T09:07:47.000Z",
+            "0x0e551aff381b8c6c4c73eafddb326906ac0d3599295444324cee8b988aaa6a6a",
+            ["eth:0x052b73d934E9412045Bf731574463Fd026D74645"]
           ]
         ],
-        "$upgradeCount": 12,
+        "$upgradeCount": 13,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1230,9 +869,9 @@
         "CONTRACT_VERSION": "8.0",
         "COOLDOWN_DURATION": 172800,
         "COOLDOWN_DURATION_fmt": "2d",
-        "currentFinalizedShnarf": "0x65b26dfd4761edf1386f0f153fa39d8049ac1f29013abc9c3ca857b536ac9ed3",
-        "currentFinalizedState": "0x8a16f57bbed2bed6466092f58e7c9731a6f44dd85ce9e5ba7f48accd292b5de7",
-        "currentPeriodAmountInWei": "5792500000000000000",
+        "currentFinalizedShnarf": "0xf64bf85b0316d88d448c3d4acf833834aa5a91b327bf537d00893c8178d8cf80",
+        "currentFinalizedState": "0xfa3e0fd675ed2cf7d249b6bf58c271ec4d6844d4181992da2f37d7333fa02378",
+        "currentPeriodAmountInWei": "20105042000000000016",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "ethStakerAC": [
@@ -1363,7 +1002,7 @@
       },
       "implementationNames": {
         "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F": "TransparentUpgradeableProxy",
-        "eth:0x59290394dDC1cF84e671701A929710643c343530": "LineaRollup"
+        "eth:0x052b73d934E9412045Bf731574463Fd026D74645": "LineaRollup"
       }
     },
     {
@@ -1399,7 +1038,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1417,19 +1056,6 @@
       ],
       "proxyType": "immutable",
       "description": "A standard timelock with access control. The current minimum delay is 0s.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
-          "description": "manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC"
-        }
-      ],
       "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1689150959,
       "sinceBlock": 17676332,
@@ -1615,7 +1241,7 @@
         "isWithdrawalReserveBelowMinimum": false,
         "L1_MESSAGE_SERVICE": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "minimumWithdrawalReserveAmount": "17500000000000000000000",
-        "minimumWithdrawalReservePercentageBps": 8500,
+        "minimumWithdrawalReservePercentageBps": 3500,
         "OSSIFICATION_INITIATOR_ROLE": "0x9b6f6cc60cc992c1b2dbfe3564c7159c78b4c15a858781972f9be245ab0a7962",
         "OSSIFICATION_PROCESSOR_ROLE": "0x9ef55ee0235bd9abf16b2b7865531896bd633b74155b6c1d064d0402f2d1b3c8",
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
@@ -1628,14 +1254,14 @@
         "SET_YIELD_PROVIDER_ROLE": "0x4bfab1661ce1ffeb4b53fc15e3fd6e7ae742e97d90ba229951fcc314e10f05d9",
         "STAKING_PAUSE_CONTROLLER_ROLE": "0xb05f5f3bc6b24add2de79f85477c2f0351f8e8a2209394f90c9e1c6c7e540c79",
         "targetWithdrawalReserveAmount": "20000000000000000000000",
-        "targetWithdrawalReservePercentageBps": 9000,
+        "targetWithdrawalReservePercentageBps": 4000,
         "UNPAUSE_ALL_ROLE": "0xd8b4c34c2ec1f3194471108c64ad2beda340c0337ee4ca35592f9ef270f4228b",
         "UNPAUSE_NATIVE_YIELD_DONATION_ROLE": "0xdeffd8054a76b73eb83e6ecf8d06a4e7af5aae3149b7863aed86d69dc1fea967",
         "UNPAUSE_NATIVE_YIELD_PERMISSIONLESS_ACTIONS_ROLE": "0x7961622440af20a7a00804174e730d12d511766368df55fbaf2d698ffa1d4216",
         "UNPAUSE_NATIVE_YIELD_REPORTING_ROLE": "0x32026462812ef90f03ebdf4117c1e143d38ab0e31e1266d4e8bd348c28ee2aa5",
         "UNPAUSE_NATIVE_YIELD_STAKING_ROLE": "0x4b4665d8754e6ea0608430ef3e91c1b45c72aafe8800e289cd35f38d85361858",
         "UNPAUSE_NATIVE_YIELD_UNSTAKING_ROLE": "0xf3b4edd31d82596b9f4e954680c4101d115ae7609dd7c1e14a6fdb7387f56e5c",
-        "userFundsInYieldProvidersTotal": "5699074346699004822439",
+        "userFundsInYieldProvidersTotal": "29109409833006374835577",
         "WITHDRAWAL_RESERVE_SETTER_ROLE": "0x58cd6cd2c63b9e5685aee547419caac3d1184e3aeb3ed7c8b63ec61cda1e27e0",
         "YIELD_PROVIDER_STAKING_ROLE": "0x220bd22ef7c53d75fe3eac0a09e90815a0c5ba4f9e8da8b039542cd3db347258",
         "YIELD_PROVIDER_UNSTAKER_ROLE": "0x1208ee08ba851b41059d729bfba4fffc3a98c2b6d121e3cf0db274417dea3d70",
@@ -1694,23 +1320,6 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x6dD3120E329dC5FaA3d2Cf65705Ef4f6486F65F7",
       "sinceTimestamp": 1689158711,
       "sinceBlock": 17676969,
@@ -1751,18 +1360,6 @@
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "linea:0x49ee40140E522651744e1C27828c76eE92802833",
       "sinceTimestamp": 1688650653,
       "sinceBlock": 3,
@@ -1782,28 +1379,12 @@
     {
       "address": "linea:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "description": "can pause the bridge.",
-          "role": ".allPausers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "linea:0x2b0F9C76970975aec03784EFd763623757EF7652",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
-          "description": "Can anchor L1 data on the L2. A check is supposed to be added to the proof system on L1 so that it is not possible to settle if the anchor is not correct. The function is permissioned because otherwise anyone can cause a liveness failure by posting an invalid anchor.",
-          "role": ".l1l2MessageSetter"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "TokenBridge",
@@ -2141,8 +1722,8 @@
         },
         "CONTRACT_VERSION": "1.0",
         "COOLDOWN_DURATION": 172800,
-        "currentPeriodAmountInWei": "473870547187173000",
-        "currentPeriodEnd": 1784512965,
+        "currentPeriodAmountInWei": "20100000000000000000",
+        "currentPeriodEnd": 1788336625,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "INBOX_STATUS_CLAIMED": 2,
         "INBOX_STATUS_RECEIVED": 1,
@@ -2162,11 +1743,11 @@
         "l1l2MessageSetter": [
           "linea:0x2b0F9C76970975aec03784EFd763623757EF7652"
         ],
-        "lastAnchoredL1MessageNumber": 806577,
+        "lastAnchoredL1MessageNumber": 808719,
         "limitInWei": "8000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 100000000000000,
-        "nextMessageNumber": 107996,
+        "nextMessageNumber": 108247,
         "nonSecurityCouncilCooldownEnd": 0,
         "PAUSE_ALL_ROLE": "0x56bdc3c9ec86cb7db110a7699b2ade72f0b8819727d9f7d906b012641505fa77",
         "PAUSE_DURATION": 172800,
@@ -2300,32 +1881,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.",
-          "role": ".reserveTokenSetters"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again.",
-          "role": ".reserveTokenRemovers"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "description": "can set custom ERC20 contracts for specific ERC20s.",
-          "role": ".customContractSetters"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
-          "description": "propose transactions.",
-          "role": ".proposerAC"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "linea:0x3acC729EdE75355EDab57aB82bEb32011cB1B079",
       "sinceTimestamp": 1738349746,
@@ -2368,19 +1923,6 @@
       ],
       "proxyType": "immutable",
       "description": "A standard timelock with access control. The current minimum delay is 0s.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
-          "description": "manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC"
-        }
-      ],
       "deployerAddress": "linea:0xF06B7BD371e46e96DF807d45ED1298BeeE8894BA",
       "sinceTimestamp": 1689151821,
       "sinceBlock": 21,
@@ -2439,13 +1981,6 @@
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "linea:0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "linea:0x49ee40140E522651744e1C27828c76eE92802833",
       "sinceTimestamp": 1691086544,
       "sinceBlock": 118063,
@@ -2547,6 +2082,7 @@
         "implementation": "linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF",
         "owner": "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD"
       },
+      "fieldMeta": { "implementation": { "severity": "HIGH" } },
       "implementationNames": {
         "linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0": "UpgradeableBeacon"
       }
@@ -2561,145 +2097,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "description": "can pause the bridge.",
-          "role": ".allPausers"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "description": "can pause the bridge.",
-          "role": ".allUnpausers"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "description": "can pause token bridging actions initiated from the other layer.",
-          "role": ".completeTokenBridgingPausers"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "description": "can pause token bridging actions initiated from this layer.",
-          "role": ".initiateTokenBridgingPausers"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.",
-          "role": ".reserveTokenSetters"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again.",
-          "role": ".reserveTokenRemovers"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "description": "can set custom ERC20 contracts for specific ERC20s.",
-          "role": ".customContractSetters"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "description": "can set the contract used as the source of truth from crosschain messages.",
-          "role": ".messageServiceSetters"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "description": "can unpause token bridging actions initiated from the other layer.",
-          "role": ".completeTokenBridgingUnpausers"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "description": "can unpause token bridging actions initiated from this layer.",
-          "role": ".initiateTokenBridgingUnpausers"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "description": "manage all critical access control roles and permissions (full admin of the main bridge escrow).",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
-          "description": "cancel queued transactions.",
-          "role": ".cancellerAC"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
-          "description": "execute transactions that are ready.",
-          "role": ".executorAC"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
-          "description": "manage all access control roles and change the minimum delay.",
-          "role": ".timelockAdminAC",
-          "via": [
-            { "address": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
-          "description": "propose transactions.",
-          "role": ".proposerAC"
-        },
-        {
-          "permission": "interact",
-          "from": "linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0",
-          "description": "change the beacon implementation.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-          "role": "admin",
-          "via": [
-            { "address": "linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E" },
-            { "address": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
-          "role": "admin",
-          "via": [
-            { "address": "linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E" },
-            { "address": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "linea:0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A",
-          "role": "admin",
-          "via": [
-            { "address": "linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
-          "role": ".executorAC"
-        },
-        {
-          "permission": "act",
-          "from": "linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "linea:0xF06B7BD371e46e96DF807d45ED1298BeeE8894BA",
       "sinceTimestamp": 1689150124,
@@ -2739,183 +2136,7 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77": [
-      "constructor(tuple(bytes32 value, string name)[] _chainConfiguration)",
-      "error ChainConfigurationNotProvided()",
-      "event ChainConfigurationSet(bytes32 chainConfigurationHash, tuple(bytes32 value, string name)[] parameters)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function getChainConfiguration() view returns (bytes32)"
-    ],
-    "eth:0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc": [
-      "constructor(tuple(bytes32 value, string name)[] _chainConfiguration)",
-      "error ChainConfigurationNotProvided()",
-      "event ChainConfigurationSet(bytes32 chainConfigurationHash, tuple(bytes32 value, string name)[] parameters)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function getChainConfiguration() view returns (bytes32)"
-    ],
-    "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D": [
-      "constructor(address _target)",
-      "function target() view returns (address)"
-    ],
-    "eth:0x36f274C1C197F277EA3C57859729398FCc8a3763": [
-      "constructor()",
-      "error OnlyBridge(address bridgeAddress)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event EIP712DomainChanged()",
-      "event Initialized(uint8 version)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function _decimals() view returns (uint8)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function bridge() view returns (address)",
-      "function burn(address _account, uint256 _amount)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function initialize(string _tokenName, string _tokenSymbol, uint8 _tokenDecimals)",
-      "function mint(address _recipient, uint256 _amount)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
-    ],
-    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
-      "constructor()",
-      "event AddedOwner(address indexed owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address indexed handler)",
-      "event ChangedGuard(address indexed guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address indexed module)",
-      "event EnabledModule(address indexed module)",
-      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
-      "event RemovedOwner(address indexed owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "eth:0x486D8cADc10489B30b64c890aEc747F1220eEEC3": [
-      "constructor(address _l1MessageService, address _yieldManager, address _vaultHub, address _vaultFactory, address _steth, address _validatorContainerProofVerifier)",
-      "error ArrayLengthsDoNotMatch()",
-      "error CallerNotProxyAdmin()",
-      "error ContextIsNotYieldManager()",
-      "error MintLSTDisabledDuringOssification()",
-      "error NoEthSent()",
-      "error NoValidatorExitForUnstakePermissionless()",
-      "error NoVendorExitDataProvided()",
-      "error OperationNotSupportedDuringOssification(uint8 operationType)",
-      "error OperationNotSupportedDuringStakingPause(uint8 operationType)",
-      "error SingleValidatorOnlyForUnstakePermissionless()",
-      "error UnknownYieldProviderVendor()",
-      "error UnpauseStakingForbiddenWhenOssified()",
-      "error ZeroAddressNotAllowed()",
-      "error ZeroHashNotAllowed()",
-      "event LSTLiabilityPrincipalSynced(uint8 indexed yieldProviderVendor, uint96 indexed yieldProviderIndex, uint256 oldLSTLiabilityPrincipal, uint256 newLSTLiabilityPrincipal)",
-      "event LidoStVaultYieldProviderDeployed(address l1MessageService, address yieldManager, address vaultHub, address vaultFactory, address steth, address validatorContainerProofVerifier)",
-      "function CONNECT_DEPOSIT() view returns (uint256)",
-      "function L1_MESSAGE_SERVICE() view returns (address)",
-      "function STETH() view returns (address)",
-      "function VALIDATOR_CONTAINER_PROOF_VERIFIER() view returns (address)",
-      "function VAULT_FACTORY() view returns (address)",
-      "function VAULT_HUB() view returns (address)",
-      "function YIELD_MANAGER() view returns (address)",
-      "function beforeWithdrawFromYieldProvider(address _yieldProvider, bool _isPermissionlessReserveDeficitWithdrawal)",
-      "function exitVendorContracts(address _yieldProvider, bytes _vendorExitData)",
-      "function fundYieldProvider(address _yieldProvider, uint256 _amount)",
-      "function initializeVendorContracts(bytes _vendorInitializationData) returns (tuple(uint8 yieldProviderVendor, address primaryEntrypoint, address ossifiedEntrypoint, uint256 usersFundsIncrement) registrationData)",
-      "function initiateOssification(address _yieldProvider)",
-      "function pauseStaking(address _yieldProvider)",
-      "function progressPendingOssification(address _yieldProvider) returns (uint8 progressOssificationResult)",
-      "function reportYield(address _yieldProvider) returns (uint256 newReportedYield, uint256 outstandingNegativeYield)",
-      "function syncLSTLiabilityPrincipal(address _yieldProvider)",
-      "function unpauseStaking(address _yieldProvider)",
-      "function unstake(address _yieldProvider, bytes _withdrawalParams) payable",
-      "function unstakePermissionless(address _yieldProvider, uint256 _requiredUnstakeAmountWei, uint64 _validatorIndex, uint64 _slot, bytes _withdrawalParams, bytes _withdrawalParamsProof) payable returns (uint256 unstakedAmountWei)",
-      "function withdrawFromYieldProvider(address _yieldProvider, uint256 _amount)",
-      "function withdrawLST(address _yieldProvider, uint256 _amount, address _recipient)",
-      "function withdrawableValue(address _yieldProvider) payable returns (uint256 availableBalance)"
-    ],
-    "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "eth:0x526AE78F0103Ae73F05449ae30eb626C1003784E": [
-      "constructor(address _defaultAdmin, address[] _initialfilteredAddresses)",
-      "error AddressAlreadyFiltered(address filteredAddress)",
-      "error FilteredAddressesEmpty()",
-      "error ZeroAddressNotAllowed()",
-      "event FilteredStatusesSet(address[] filteredAddresses, bool isFiltered)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function addressIsFiltered(address _addressToCheck) view returns (bool isFiltered)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function setFilteredStatus(address[] _initialfilteredAddresses, bool _isFiltered)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
-    ],
-    "eth:0x59290394dDC1cF84e671701A929710643c343530": [
+    "eth:0x052b73d934E9412045Bf731574463Fd026D74645": [
       "constructor()",
       "error AddressIsNotFiltered(address addressNotFiltered)",
       "error BlobSubmissionDataEmpty(uint256 emptyBlobIndex)",
@@ -3108,6 +2329,182 @@
       "function updateUnpauseTypeRole(uint8 _pauseType, bytes32 _newRole)",
       "function verifiers(uint256 proofType) view returns (address verifierAddress)",
       "function yieldManager() view returns (address)"
+    ],
+    "eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77": [
+      "constructor(tuple(bytes32 value, string name)[] _chainConfiguration)",
+      "error ChainConfigurationNotProvided()",
+      "event ChainConfigurationSet(bytes32 chainConfigurationHash, tuple(bytes32 value, string name)[] parameters)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function getChainConfiguration() view returns (bytes32)"
+    ],
+    "eth:0x218C3339ff3fea595c02Ac31Ca8A782f5028C4dc": [
+      "constructor(tuple(bytes32 value, string name)[] _chainConfiguration)",
+      "error ChainConfigurationNotProvided()",
+      "event ChainConfigurationSet(bytes32 chainConfigurationHash, tuple(bytes32 value, string name)[] parameters)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function getChainConfiguration() view returns (bytes32)"
+    ],
+    "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D": [
+      "constructor(address _target)",
+      "function target() view returns (address)"
+    ],
+    "eth:0x36f274C1C197F277EA3C57859729398FCc8a3763": [
+      "constructor()",
+      "error OnlyBridge(address bridgeAddress)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint8 version)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function _decimals() view returns (uint8)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function bridge() view returns (address)",
+      "function burn(address _account, uint256 _amount)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function initialize(string _tokenName, string _tokenSymbol, uint8 _tokenDecimals)",
+      "function mint(address _recipient, uint256 _amount)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
+    ],
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "eth:0x486D8cADc10489B30b64c890aEc747F1220eEEC3": [
+      "constructor(address _l1MessageService, address _yieldManager, address _vaultHub, address _vaultFactory, address _steth, address _validatorContainerProofVerifier)",
+      "error ArrayLengthsDoNotMatch()",
+      "error CallerNotProxyAdmin()",
+      "error ContextIsNotYieldManager()",
+      "error MintLSTDisabledDuringOssification()",
+      "error NoEthSent()",
+      "error NoValidatorExitForUnstakePermissionless()",
+      "error NoVendorExitDataProvided()",
+      "error OperationNotSupportedDuringOssification(uint8 operationType)",
+      "error OperationNotSupportedDuringStakingPause(uint8 operationType)",
+      "error SingleValidatorOnlyForUnstakePermissionless()",
+      "error UnknownYieldProviderVendor()",
+      "error UnpauseStakingForbiddenWhenOssified()",
+      "error ZeroAddressNotAllowed()",
+      "error ZeroHashNotAllowed()",
+      "event LSTLiabilityPrincipalSynced(uint8 indexed yieldProviderVendor, uint96 indexed yieldProviderIndex, uint256 oldLSTLiabilityPrincipal, uint256 newLSTLiabilityPrincipal)",
+      "event LidoStVaultYieldProviderDeployed(address l1MessageService, address yieldManager, address vaultHub, address vaultFactory, address steth, address validatorContainerProofVerifier)",
+      "function CONNECT_DEPOSIT() view returns (uint256)",
+      "function L1_MESSAGE_SERVICE() view returns (address)",
+      "function STETH() view returns (address)",
+      "function VALIDATOR_CONTAINER_PROOF_VERIFIER() view returns (address)",
+      "function VAULT_FACTORY() view returns (address)",
+      "function VAULT_HUB() view returns (address)",
+      "function YIELD_MANAGER() view returns (address)",
+      "function beforeWithdrawFromYieldProvider(address _yieldProvider, bool _isPermissionlessReserveDeficitWithdrawal)",
+      "function exitVendorContracts(address _yieldProvider, bytes _vendorExitData)",
+      "function fundYieldProvider(address _yieldProvider, uint256 _amount)",
+      "function initializeVendorContracts(bytes _vendorInitializationData) returns (tuple(uint8 yieldProviderVendor, address primaryEntrypoint, address ossifiedEntrypoint, uint256 usersFundsIncrement) registrationData)",
+      "function initiateOssification(address _yieldProvider)",
+      "function pauseStaking(address _yieldProvider)",
+      "function progressPendingOssification(address _yieldProvider) returns (uint8 progressOssificationResult)",
+      "function reportYield(address _yieldProvider) returns (uint256 newReportedYield, uint256 outstandingNegativeYield)",
+      "function syncLSTLiabilityPrincipal(address _yieldProvider)",
+      "function unpauseStaking(address _yieldProvider)",
+      "function unstake(address _yieldProvider, bytes _withdrawalParams) payable",
+      "function unstakePermissionless(address _yieldProvider, uint256 _requiredUnstakeAmountWei, uint64 _validatorIndex, uint64 _slot, bytes _withdrawalParams, bytes _withdrawalParamsProof) payable returns (uint256 unstakedAmountWei)",
+      "function withdrawFromYieldProvider(address _yieldProvider, uint256 _amount)",
+      "function withdrawLST(address _yieldProvider, uint256 _amount, address _recipient)",
+      "function withdrawableValue(address _yieldProvider) payable returns (uint256 availableBalance)"
+    ],
+    "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "eth:0x526AE78F0103Ae73F05449ae30eb626C1003784E": [
+      "constructor(address _defaultAdmin, address[] _initialfilteredAddresses)",
+      "error AddressAlreadyFiltered(address filteredAddress)",
+      "error FilteredAddressesEmpty()",
+      "error ZeroAddressNotAllowed()",
+      "event FilteredStatusesSet(address[] filteredAddresses, bool isFiltered)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function addressIsFiltered(address _addressToCheck) view returns (bool isFiltered)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setFilteredStatus(address[] _initialfilteredAddresses, bool _isFiltered)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
     "eth:0x66CFD1562d6Aa4629e9e4142662c1A403528Df00": [
       "error AmountTooBig(uint256 amount, uint256 limit)",
@@ -3991,7 +3388,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "global/Timelock": "0xadf6c9c4d77d92049a7365bc568182b2182a16c5c6e5e0e7ab6c15c6a1c76e3c",
-    "global/UpgradeableBeacon": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/UpgradeableBeacon": "0x5131b8b980cf5a0a571c88590e4878fe796a0b46c9d9854db77dfdf4125f92c9",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "gnosisSafeModules/ZodiacDelay": "0x1cf1f83927c30dff78d2b2b635f9995b93db52502fcae1b9478e1dd4664540c5",
     "linea/AddressFilter": "0xf041beaf993cf44b777d84da4360f6df2e8b6689c93751aee22ab830d8c06d3d",
@@ -4006,6 +3403,656 @@
     "linea/OldL2USDCBridge": "0xccb6aa386553cef9261d1c92eeefb41fec3e371485b321044615eb9e86ca0698",
     "linea/YieldManager": "0xd2e14da483a48105a5200c246ccaf5b00f9e781f312953ee46daabb7a9055b35"
   },
-  "usedBlockNumbers": { "ethereum": 25573314, "linea": 31451677 },
-  "permissionsConfigHash": "0xa1811486c6001b182a4ea4aeaf384b6c06c386c0406ac1055813ccf0d3e94830"
+  "usedBlockNumbers": { "ethereum": 25882371, "linea": 31901474 },
+  "permissionsConfigHash": "0xa1811486c6001b182a4ea4aeaf384b6c06c386c0406ac1055813ccf0d3e94830",
+  "permissions": {
+    "eth:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can pause the bridge.",
+          "role": ".allPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "pause the rollup for 2d, followed by 2d cooldown, during which the rollup cannot be paused, except by the Security Council.",
+          "role": ".pauseAllAC"
+        }
+      ]
+    },
+    "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "submit and finalize blocks as the Operator role when 6 months of no finalizations have passed.",
+          "role": ".livenessRecoveryOperator"
+        }
+      ]
+    },
+    "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x46d2F319fd42165D4318F099E143dEA8124E9E3e": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "Allowed to prove blocks and post the corresponding transaction data.",
+          "role": ".Operators"
+        }
+      ]
+    },
+    "eth:0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "Allowed to prove blocks and post the corresponding transaction data.",
+          "role": ".Operators"
+        }
+      ]
+    },
+    "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051",
+          "role": ".GnosisSafe_modules"
+        }
+      ]
+    },
+    "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can pause the bridge.",
+          "role": ".allPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can pause the bridge.",
+          "role": ".allUnpausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can pause token bridging actions initiated from the other layer.",
+          "role": ".completeTokenBridgingPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can pause token bridging actions initiated from this layer.",
+          "role": ".initiateTokenBridgingPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.",
+          "role": ".reserveTokenSetters",
+          "via": [
+            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
+            {
+              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+              "delay": 7776000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.",
+          "role": ".reserveTokenSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again.",
+          "role": ".reserveTokenRemovers",
+          "via": [
+            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
+            {
+              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+              "delay": 7776000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again.",
+          "role": ".reserveTokenRemovers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can set custom ERC20 contracts for specific ERC20s.",
+          "role": ".customContractSetters",
+          "via": [
+            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
+            {
+              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+              "delay": 7776000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can set custom ERC20 contracts for specific ERC20s.",
+          "role": ".customContractSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can set the contract used as the source of truth from crosschain messages.",
+          "role": ".messageServiceSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can unpause token bridging actions initiated from the other layer.",
+          "role": ".completeTokenBridgingUnpausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can unpause token bridging actions initiated from this layer.",
+          "role": ".initiateTokenBridgingUnpausers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "manage all critical access control roles and permissions (full admin of the main bridge escrow).",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+          "description": "enable/disable the module, set delays and expiration of transactions, set the target.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
+            {
+              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+              "delay": 7776000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
+          "description": "change the beacon implementation.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "manage all critical access control roles and permissions (full admin of the rollup system).",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "pause the rollup for 2d, followed by 2d cooldown, during which the rollup cannot be paused, except by the Security Council.",
+          "role": ".pauseAllAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "pause the rollup indefinitely.",
+          "role": ".securityCouncilAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "send ETH from the rollup bridge to the YieldManager.",
+          "role": ".ethStakerAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "set the address of the yield manager contract that receives ETH from rollup bridge.",
+          "role": ".yieldManagerSetterAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "cancel queued transactions.",
+          "role": ".cancellerAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "execute transactions that are ready.",
+          "role": ".executorAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "via": [
+            { "address": "eth:0xd6B95c960779c72B8C6752119849318E5d550574" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "propose transactions.",
+          "role": ".proposerAC",
+          "via": [
+            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
+            {
+              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+              "delay": 7776000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "propose transactions.",
+          "role": ".proposerAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
+          "description": "manage native yield staking: modify reserve parameters, set yield pools, set yield receiver addresses.",
+          "role": ".yieldStakingManagerAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
+          "description": "operate native yield staking: stake and unstake, collect yield, pause and unpause, ossify yield managers.",
+          "role": ".yieldStakingOperatorAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
+            { "address": "eth:0xd6B95c960779c72B8C6752119849318E5d550574" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x504A330327A089d8364C4ab3811Ee26976d388ce",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
+            { "address": "eth:0xd6B95c960779c72B8C6752119849318E5d550574" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
+            { "address": "eth:0xd6B95c960779c72B8C6752119849318E5d550574" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+          "delay": 7776000,
+          "role": ".ZodiacModule_modules"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "role": ".executorAC"
+        }
+      ]
+    },
+    "eth:0x89F1668D215Bb5839A0A7a1A4619b1541258388c": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x526AE78F0103Ae73F05449ae30eb626C1003784E",
+          "description": "add and remove addresses to the filter list. Addresses in this list can not send forced transactions from L1.",
+          "role": ".defaultAdminAC"
+        }
+      ]
+    },
+    "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.",
+          "role": ".reserveTokenSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again.",
+          "role": ".reserveTokenRemovers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "description": "can set custom ERC20 contracts for specific ERC20s.",
+          "role": ".customContractSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+          "description": "enable/disable the module, set delays and expiration of transactions, set the target.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "propose transactions.",
+          "role": ".proposerAC"
+        }
+      ]
+    },
+    "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xcEE1f08Bcae342E950e88c209F7e6327ABB6d448": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "description": "send ETH from the rollup bridge to the YieldManager.",
+          "role": ".ethStakerAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94",
+          "description": "operate native yield staking: stake and unstake, collect yield, pause and unpause, ossify yield managers.",
+          "role": ".yieldStakingOperatorAC"
+        }
+      ]
+    },
+    "eth:0xd6B95c960779c72B8C6752119849318E5d550574": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC"
+        }
+      ]
+    },
+    "linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
+          "role": "admin"
+        }
+      ]
+    },
+    "linea:0x2532bfdc9Ba58B13358A9C5C05136d6938Bc42d0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause the bridge.",
+          "role": ".allPausers"
+        }
+      ]
+    },
+    "linea:0x2b0F9C76970975aec03784EFd763623757EF7652": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
+          "description": "Can anchor L1 data on the L2. A check is supposed to be added to the proof system on L1 so that it is not possible to settle if the anchor is not correct. The function is permissioned because otherwise anyone can cause a liveness failure by posting an invalid anchor.",
+          "role": ".l1l2MessageSetter"
+        }
+      ]
+    },
+    "linea:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.",
+          "role": ".reserveTokenSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again.",
+          "role": ".reserveTokenRemovers"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can set custom ERC20 contracts for specific ERC20s.",
+          "role": ".customContractSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
+          "description": "propose transactions.",
+          "role": ".proposerAC"
+        }
+      ]
+    },
+    "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC"
+        }
+      ]
+    },
+    "linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "linea:0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A",
+          "role": "admin"
+        }
+      ]
+    },
+    "linea:0xf5cc7604a5ef3565b4D2050D65729A06B68AA0bD": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause the bridge.",
+          "role": ".allPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause the bridge.",
+          "role": ".allUnpausers"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause token bridging actions initiated from the other layer.",
+          "role": ".completeTokenBridgingPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can pause token bridging actions initiated from this layer.",
+          "role": ".initiateTokenBridgingPausers"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can prevent tokens that have not been bridged already from being bridged by assigning them a reserved status.",
+          "role": ".reserveTokenSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can remove the reserved status from a token, meaning that it is allowed to be bridged again.",
+          "role": ".reserveTokenRemovers"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can set custom ERC20 contracts for specific ERC20s.",
+          "role": ".customContractSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can set the contract used as the source of truth from crosschain messages.",
+          "role": ".messageServiceSetters"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can unpause token bridging actions initiated from the other layer.",
+          "role": ".completeTokenBridgingUnpausers"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "can unpause token bridging actions initiated from this layer.",
+          "role": ".initiateTokenBridgingUnpausers"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "description": "manage all critical access control roles and permissions (full admin of the main bridge escrow).",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
+          "description": "cancel queued transactions.",
+          "role": ".cancellerAC"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
+          "description": "execute transactions that are ready.",
+          "role": ".executorAC"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
+          "via": [
+            { "address": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
+          "description": "propose transactions.",
+          "role": ".proposerAC"
+        },
+        {
+          "permission": "interact",
+          "from": "linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0",
+          "description": "change the beacon implementation.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
+          "role": "admin",
+          "via": [
+            { "address": "linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E" },
+            { "address": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
+          "role": "admin",
+          "via": [
+            { "address": "linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E" },
+            { "address": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "linea:0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A",
+          "role": "admin",
+          "via": [
+            { "address": "linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca",
+          "role": ".executorAC"
+        },
+        {
+          "permission": "act",
+          "from": "linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c",
+          "role": ".owner"
+        }
+      ]
+    }
+  }
 }

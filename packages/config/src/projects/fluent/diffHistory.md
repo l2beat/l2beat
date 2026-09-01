@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xbf3b8920c47a32329e350323e85d0744aa8ab7d3
+
+# Diff at Thu, 27 Aug 2026 08:52:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe0597dfc044814c2211715fa77b5f9f3ec22e2a block: 1787738150
+- current timestamp: 1787738150
+
+## Description
+
+Add HIGH severity to beacon implementation in global/UpgradeableBeacon template (no value changes).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787738150 (main branch discovery), not current.
+
+```diff
+    contract UpgradeableBeacon (eth:0xdD283a04cc711aB9c08d79e665835821BEef710B) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x056fD0A3eD85c6ae1Ec1c398B33581951Ed4b090. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta:
++        {"implementation":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0x73136e41c34c81975853f0e99cbc7387702f0f4f
+
+# Diff at Wed, 26 Aug 2026 09:56:52 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@00448b8c7fc6d3a3b8b155e386f5ffa195696a81 block: 1784884231
+- current timestamp: 1787738150
+
+## Description
+
+Upgraded TEE verification SP1 program, program hash reproduced.
+
+## Watched changes
+
+```diff
+    contract NitroVerifier (eth:0xFdB04b67ecD8352bA3885F66fFfddf1f5f25292F) [fluent/NitroVerifier] {
+    +++ description: Verifies AWS Nitro Enclave attestations onchain. The enclave's signing key is admitted only after an SP1 proof confirms its attestation matches the expected PCR0 measurement, binding preconfirmation authority to audited enclave code.
+      values.getProgramVKey:
+-        "0x00e726560b91ff68e7e232d79536f4a8fb951f1f0197f97f7377b3f21e7e641e"
++        "0x00637b56bd0f68aa55fa7128386e6a61a73df18a3d7a50a47c8c02d672346915"
+    }
+```
+
 Generated with discovered.json: 0x2996eac49f580b11fbe2de42e52b69b13d3060f8
 
 # Diff at Thu, 30 Jul 2026 11:25:53 GMT:

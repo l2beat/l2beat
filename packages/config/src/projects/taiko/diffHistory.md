@@ -1,3 +1,120 @@
+Generated with discovered.json: 0x9cd6757a716676d4360e503fd56888733d523dd3
+
+# Diff at Tue, 01 Sep 2026 12:14:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@971c51541a4e32a7dcee1adc458d42516d2950ec block: 1787832377
+- current timestamp: 1788264785
+
+## Description
+
+SC proposal moving to veto phase.
+
+## Watched changes
+
+```diff
+    contract SignerList (Security Council) (eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2) [taiko/SignerList] {
+    +++ description: A signer list for storing multisig members and their agents, stores the addresses of the Multisigs that use this signer list. Each signer delegates their permissions to their agent address that they can configure here.
+      values.$members.0:
+-        "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163"
++        "eth:0xCf76A87E24FE2054DCF02a5f65eAc0F24A34c439"
+    }
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.
+      values.proposalCount:
+-        38
++        39
+      values.proposalIds.38:
++        "608479335948875503511285097395089134668700712998"
+    }
+```
+
+```diff
+    contract Taiko Multisig (eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) [GnosisSafe] {
+    +++ description: None
+      values.$members.0:
+-        "eth:0xAC5898b0FFFd23F4Ef09F0E50Fa1bC4896eF7163"
++        "eth:0xFa92ff698D57f7B875570D9F59501812B843CD44"
+    }
+```
+
+Generated with discovered.json: 0x17f2e268ad4a5e3f532d4cb569d6f97557b6b97a
+
+# Diff at Thu, 27 Aug 2026 12:07:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@07685e2b690dd5d880203f3696ff2e1bc300a13d block: 1787647451
+- current timestamp: 1787832377
+
+## Description
+
+Add proposal that reduces the Security Council to a 4/5 multisig. The resulting Council is not a valid Security Council after the L2BEAT criteria: https://medium.com/l2beat/stages-update-security-council-requirements-4c79cea8ef52, https://forum.l2beat.com/t/stage-1-requirements-update-security-council-walkaway-test/412 .
+
+full review of the proposal: https://gist.github.com/sekuba/b19aa30b123d7247280e96f5a49e5c15 .
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (eth:0x989E348275b659d36f8751ea1c10D146211650BE) [taiko/OptimisticTokenVotingPlugin] {
+    +++ description: An optimistic governance module. Standard proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d. Emergency proposals can be executed without delay.
+      values.proposalCount:
+-        37
++        38
+      values.proposalIds.37:
++        "608325339122031231284005618251537221674155900965"
+    }
+```
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
++++ description: total standard proposal count.
++++ severity: HIGH
+      values.proposalCount:
+-        23
++        24
+    }
+```
+
+Generated with discovered.json: 0xeb8204b46d9882056b1611fb4a4abd9915ec4187
+
+# Diff at Tue, 25 Aug 2026 08:45:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@afee435bc99a79b6a7bbb46fd9865fb0e8b74e89 block: 1786955407
+- current timestamp: 1787647451
+
+## Description
+
+Proposal 22: https://gist.github.com/sekuba/e325f390dbe8a73ebc53c1ad95e6c48d bringing proving efficiency.
+
+Proghashes are reproduced.
+
+## Watched changes
+
+```diff
+    contract Multisig (eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321) [taiko/Multisig] {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
++++ description: total standard proposal count.
++++ severity: HIGH
+      values.proposalCount:
+-        22
++        23
+    }
+```
+
+```diff
+    contract PreconfWhitelist (eth:0xFD019460881e6EeC632258222393d5821029b2ac) [taiko/PreconfWhitelist] {
+    +++ description: Contains the whitelist of addresses eligible to propose batches on L1 and issue preconfirmations. It dynamically selects a single active operator for each epoch using a delayed Ethereum beacon block root as randomness. There is no fallback proposer path in this contract: non-selected operators cannot propose for the current epoch.
+      values.operatorMapping.1:
+-        "eth:0x2267C7246523191b8bf7615B86b3bdEE612b7D9E"
++        "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06"
+    }
+```
+
 Generated with discovered.json: 0xa2899bfdb5071b6c3c99b069bd47a0bebc3bdd3c
 
 # Diff at Mon, 17 Aug 2026 08:31:35 GMT:
