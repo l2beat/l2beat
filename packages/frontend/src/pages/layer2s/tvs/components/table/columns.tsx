@@ -116,15 +116,19 @@ export const getL2TvsColumns = (
     : getTokenAssetCategoryColumns(opts)),
 ]
 
-function tvsBreakdownColumn<
-  T extends
-    | TvsToken['category']
-    | Exclude<TvsToken['source'], 'custom-canonical'>,
->(opts: {
+type TvsBreakdownKind =
+  | {
+      type: 'bridgingType'
+      dataKey: Exclude<TvsToken['source'], 'custom-canonical'>
+    }
+  | {
+      type: 'category'
+      dataKey: TvsToken['category']
+    }
+
+type TvsBreakdownColumn = {
   id: string
   header: string
-  dataKey: T
-  type: 'bridgingType' | 'category'
   isTvsLoading?: boolean
   meta: {
     align: 'right'
@@ -132,7 +136,14 @@ function tvsBreakdownColumn<
     tooltip?: string
     headClassName: string
   }
-}) {
+} & TvsBreakdownKind
+
+function tvsBreakdownColumn(opts: TvsBreakdownColumn) {
+  const breakdown =
+    opts.type === 'bridgingType'
+      ? { type: 'bridgingType' as const, dataKey: opts.dataKey }
+      : { type: 'category' as const, dataKey: opts.dataKey }
+
   return withChangeSort(
     columnHelper,
     columnHelper.accessor((row) => row.tvs.data?.breakdown[opts.dataKey], {
@@ -141,9 +152,8 @@ function tvsBreakdownColumn<
       cell: (ctx) => (
         <BreakdownCell
           row={ctx.row.original}
-          dataKey={opts.dataKey}
-          type={opts.type}
           isTvsLoading={opts.isTvsLoading}
+          {...breakdown}
         />
       ),
       sortUndefined: 'last',
@@ -285,66 +295,49 @@ function getTokenAssetCategoryColumns(opts: {
   ]
 }
 
-function BreakdownCell({
-  row,
-  dataKey,
-  type,
-  isTvsLoading,
-}: {
-  row: L2TvsTableRow
-  dataKey:
-    | TvsToken['category']
-    | Exclude<TvsToken['source'], 'custom-canonical'>
-  type: 'bridgingType' | 'category'
-  isTvsLoading?: boolean
-}) {
-  if (isTvsLoading) {
+function BreakdownCell(
+  props: {
+    row: L2TvsTableRow
+    isTvsLoading?: boolean
+  } & TvsBreakdownKind,
+) {
+  if (props.isTvsLoading) {
     return (
       <div className="flex justify-end">
         <Skeleton className="h-6 w-full" />
       </div>
     )
   }
-  const data = row.tvs.data
+  const data = props.row.tvs.data
   if (!data) {
     return <NoDataBadge />
   }
 
   const filters = getFilterSearchParams({
-    [type]: {
-      values: [dataKeyToFilter(dataKey)],
+    [props.type]: {
+      values: [
+        props.type === 'category'
+          ? categoryToLabel(props.dataKey)
+          : sourceToLabel(props.dataKey),
+      ],
     },
   })
 
   return (
     <TableLink
       href={
-        data.breakdown[dataKey] > 0
-          ? `/layer2s/projects/${row.slug}/tvs-breakdown?filters=${filters}#tvs-breakdown-token-table`
+        data.breakdown[props.dataKey] > 0
+          ? `/layer2s/projects/${props.row.slug}/tvs-breakdown?filters=${filters}#tvs-breakdown-token-table`
           : undefined
       }
     >
-      <SyncStatusWrapper isSynced={!row.tvs.syncWarning}>
+      <SyncStatusWrapper isSynced={!props.row.tvs.syncWarning}>
         <ValueSecuredCell
-          value={data.breakdown[dataKey]}
-          change={data.change[dataKey]}
+          value={data.breakdown[props.dataKey]}
+          change={data.change[props.dataKey]}
           changePeriod={data.changePeriod}
         />
       </SyncStatusWrapper>
     </TableLink>
   )
-}
-
-function dataKeyToFilter(dataKey: TvsToken['category'] | TvsToken['source']) {
-  switch (dataKey) {
-    case 'ether':
-    case 'btc':
-    case 'stablecoin':
-    case 'other':
-    case 'rwaPublic':
-    case 'rwaRestricted':
-      return categoryToLabel(dataKey)
-    default:
-      return sourceToLabel(dataKey)
-  }
 }
