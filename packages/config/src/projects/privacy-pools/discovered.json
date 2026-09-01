@@ -208,15 +208,7 @@
     {
       "address": "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
-          "description": "publish new association-set roots and IPFS CIDs used by withdrawals.",
-          "role": ".aspPostmen"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x652E36f8EA937c19417380dCDb48D6e4375d13dA",
@@ -412,38 +404,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
-          "description": "authorize UUPS upgrades to the Entrypoint implementation.",
-          "role": ".ownerRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
-          "description": "grant and revoke OWNER_ROLE and ASP_POSTMAN.",
-          "role": ".ownerRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
-          "description": "publish new association-set roots and IPFS CIDs used by withdrawals.",
-          "role": ".aspPostmen"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
-          "description": "register and remove pools, update per-asset minimum deposits and fee caps, and wind down pools.",
-          "role": ".ownerRoleMembers"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
-          "description": "withdraw fees held in the Entrypoint.",
-          "role": ".ownerRoleMembers"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x42FEdcd80C8C9694DBc3b2ff0fD48BB8651dfC62",
       "sinceTimestamp": 1742919851,
@@ -2021,5 +1981,51 @@
     "privacy-pools/WithdrawalVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25193240 },
-  "permissionsConfigHash": "0xb3365335e1f2fefd11a0fb91e3b482c6ce8c3aed603ad7b3dbc5c6fd90b5fc31"
+  "permissionsConfigHash": "0xb3365335e1f2fefd11a0fb91e3b482c6ce8c3aed603ad7b3dbc5c6fd90b5fc31",
+  "permissions": {
+    "eth:0x1f4Fe25Cf802a0605229e0Dc497aAf653E86E187": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+          "description": "publish new association-set roots and IPFS CIDs used by withdrawals.",
+          "role": ".aspPostmen"
+        }
+      ]
+    },
+    "eth:0xAd7f9A19E2598b6eFE0A25C84FB1c87F81eB7159": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+          "description": "authorize UUPS upgrades to the Entrypoint implementation.",
+          "role": ".ownerRoleMembers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+          "description": "grant and revoke OWNER_ROLE and ASP_POSTMAN.",
+          "role": ".ownerRoleMembers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+          "description": "publish new association-set roots and IPFS CIDs used by withdrawals.",
+          "role": ".aspPostmen"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+          "description": "register and remove pools, update per-asset minimum deposits and fee caps, and wind down pools.",
+          "role": ".ownerRoleMembers"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x6818809EefCe719E480a7526D76bD3e561526b46",
+          "description": "withdraw fees held in the Entrypoint.",
+          "role": ".ownerRoleMembers"
+        }
+      ]
+    }
+  }
 }

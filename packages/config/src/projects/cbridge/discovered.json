@@ -108,13 +108,6 @@
         "0xeb95d39e1b35f76b6331da863f87bf2e148dd21abf5666590443b65f6a125630"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x4066D196A423b2b3B8B054f4F40efB47a74E200C",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1649432377,
       "sinceBlock": 14545993,
@@ -275,13 +268,6 @@
         "0x1c9416031605fbda74b5da95a290e00995eaed2f6f6ba85ff2681131efe940a0"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xF140024969F6c76494a78518D9a99c8776B55f70",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
       "sinceTimestamp": 1690520231,
       "sinceBlock": 17789313,
@@ -445,23 +431,6 @@
         "0xd51a863b498f5cbb3e78ed94d7e69fa4cd246b862a12894d80ec1dedad934361"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xF140024969F6c76494a78518D9a99c8776B55f70",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8E339115b295DeD49880eA62C1F06d1dbec3496b" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nextProposalId"],
       "deployerAddress": "eth:0x108e64Be829981dF9B4a5e526041385F4662Ead2",
       "sinceTimestamp": 1656926298,
@@ -1023,5 +992,44 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
   "usedBlockNumbers": { "ethereum": 25142734 },
-  "permissionsConfigHash": "0x17f9d772d70b3d074b16bc0c586165280767da45e2191e5e810f401eb6cde10b"
+  "permissionsConfigHash": "0x17f9d772d70b3d074b16bc0c586165280767da45e2191e5e810f401eb6cde10b",
+  "permissions": {
+    "eth:0x520d812604E7b2ce71819FDBFE9aC40E56327F8f": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4066D196A423b2b3B8B054f4F40efB47a74E200C",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x8E339115b295DeD49880eA62C1F06d1dbec3496b": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF140024969F6c76494a78518D9a99c8776B55f70",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF140024969F6c76494a78518D9a99c8776B55f70",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8E339115b295DeD49880eA62C1F06d1dbec3496b" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
+          "role": ".owner"
+        }
+      ]
+    }
+  }
 }

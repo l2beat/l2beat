@@ -13,15 +13,7 @@
       "name": "KintoFoundation",
       "address": "eth:0x08E674c4538caE03B6c05405881dDCd95DcaF5a8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
@@ -143,113 +135,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "role": ".owner",
-          "via": [
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x655761AD5FC251F414D6993A73184B0669F278c8",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
-            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
-          "role": ".executors"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1702416755,
       "sinceBlock": 18772804,
@@ -306,15 +191,7 @@
       "name": "Ankr",
       "address": "eth:0x2bfDA59220413DEd39dD0E443620b5277EcE6348",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "OneStepProver0",
@@ -347,18 +224,7 @@
     {
       "address": "eth:0x4a3BB34aDE10127752015A6aF6136da15fde636A",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators",
-          "via": [
-            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
-          ]
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "RollupProxy",
@@ -572,15 +438,7 @@
       "name": "Hypernative2",
       "address": "eth:0x58028fFbc25aE2e12b96276bDB125955F41D41f3",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "UpgradeExecutor",
@@ -593,24 +451,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1702607855,
       "sinceBlock": 18788587,
       "values": {
@@ -653,15 +493,7 @@
       "name": "Certora 1",
       "address": "eth:0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ChallengeManager",
@@ -713,15 +545,7 @@
       "name": "Caldera2",
       "address": "eth:0x64Cf65036a76E3827e448cadbc53D31EefDCE04a",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Outbox",
@@ -772,53 +596,6 @@
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x655761AD5FC251F414D6993A73184B0669F278c8",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-          "role": "admin"
-        }
-      ],
       "sinceTimestamp": 1702607855,
       "sinceBlock": 18788587,
       "values": {
@@ -966,46 +743,19 @@
     {
       "address": "eth:0x8A577165f8ef813296043d5f75fF2F2F2349afFd",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators",
-          "via": [
-            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
-          ]
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "MamoriLabs3",
       "address": "eth:0x944eB0a2829A859959586b10D54229278534a696",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "KintsugiFoundation",
       "address": "eth:0x94561e98DD5E55271f91A103e4979aa6C493745E",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xA07eeCA8dc436Be2DfBCb4F0C3aD1424c1876185",
@@ -1032,18 +782,7 @@
     {
       "address": "eth:0xad40f1440544475f4B70573a106F41dF1860598b",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators",
-          "via": [
-            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
-          ]
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Inbox",
@@ -1111,18 +850,7 @@
     {
       "address": "eth:0xCb5BCC84741b379BFa0968b841C5de1fC9240CBd",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators",
-          "via": [
-            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
-          ]
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xD253b62108d1831aEd298Fc2434A5A8e4E418053",
@@ -1176,14 +904,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722896903,
       "sinceBlock": 20465349,
@@ -1213,45 +933,18 @@
     {
       "address": "eth:0xDcbb957bF991A0b252Fd996946Ea27E51ECabA69",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators",
-          "via": [
-            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
-          ]
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xe27f3f6db6824def1738b2aACe2672aC59046a39",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
-          "role": ".batchPosters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Venn2",
       "address": "eth:0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Venn/Ironblocks",
@@ -1292,13 +985,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0f1b7bd7762662B23486320AA91F30312184f70C",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678700303,
       "sinceBlock": 16818229,
@@ -1707,36 +1393,7 @@
       "name": "KintoSecurityCouncil_L2Alias",
       "address": "kinto:0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "delay": 604800,
-          "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations).",
-          "role": ".securityCouncilPermission"
-        },
-        {
-          "permission": "interact",
-          "from": "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "delay": 950400,
-          "description": "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup.",
-          "role": ".securityCouncilPermission"
-        },
-        {
-          "permission": "interact",
-          "from": "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "delay": 950400,
-          "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.",
-          "role": ".securityCouncilPermission"
-        },
-        {
-          "permission": "interact",
-          "from": "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "description": "confirm sanctions, making them permanent without providing an exit window.",
-          "role": ".securityCouncilPermission"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Kinto Multisig 2",
@@ -1747,43 +1404,6 @@
         "0xc04b35188931b9e8fc65adf08c2b701d5ec4d4776ecac7b19256f900184e935a"
       ],
       "proxyType": "Beacon proxy",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "kinto:0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9",
-          "description": "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "delay": 1036800,
-          "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations).",
-          "role": ".kintoMultisig2Permission"
-        },
-        {
-          "permission": "interact",
-          "from": "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-          "description": "approve smart wallet recoveries for any KintoWallet.",
-          "role": ".kintoMultisig2Permission"
-        },
-        {
-          "permission": "interact",
-          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "role": ".KYC_PROVIDERs"
-        },
-        {
-          "permission": "upgrade",
-          "from": "kinto:0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "kinto:0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["getNonce"],
       "sinceTimestamp": 1704061899,
       "sinceBlock": 84,
@@ -2263,41 +1883,17 @@
     {
       "address": "kinto:0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "role": ".KYC_PROVIDERs"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "kinto:0x6E31039abF8d248aBed57E307C9E1b7530c269E4",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "role": ".KYC_PROVIDERs"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "kinto:0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "role": ".KYC_PROVIDERs"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "BeaconKintoWallet",
@@ -2331,19 +1927,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "kinto:0x87f0eE85bF3198654900a422832157abBba30828",
-          "description": "change the beacon implementation.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "kinto:0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["totalWallets"],
       "sinceTimestamp": 1703803636,
       "sinceBlock": 64,
@@ -2523,53 +2106,6 @@
       ],
       "proxyType": "immutable",
       "description": "OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "kinto:0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
-          "description": "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "kinto:0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
-          "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "role": ".KYC_PROVIDERs"
-        },
-        {
-          "permission": "interact",
-          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet.",
-          "role": ".GOVERNANCErs"
-        },
-        {
-          "permission": "interact",
-          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "transfer KYC NFTs to a different address.",
-          "role": ".DEFAULT_ADMINs"
-        },
-        {
-          "permission": "upgrade",
-          "from": "kinto:0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "kinto:0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "role": ".UPGRADERs"
-        }
-      ],
       "sinceTimestamp": 1729791296,
       "sinceBlock": 234140,
       "values": {
@@ -3096,15 +2632,7 @@
     {
       "address": "kinto:0xb539019776eF803E89EC062Ad54cA24D1Fdb008a",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
-          "role": ".KYC_PROVIDERs"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "MamoriLabs",
@@ -6179,5 +5707,533 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23282254, "kinto": 919415 },
-  "permissionsConfigHash": "0x67d124a9e25281511ee49cade023505634857f4b550461e3785b7b3fd4076c45"
+  "permissionsConfigHash": "0x67d124a9e25281511ee49cade023505634857f4b550461e3785b7b3fd4076c45",
+  "permissions": {
+    "eth:0x08E674c4538caE03B6c05405881dDCd95DcaF5a8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
+            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
+            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
+            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x655761AD5FC251F414D6993A73184B0669F278c8",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
+            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
+            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
+            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
+            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
+            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df" },
+            { "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
+          "role": ".executors"
+        }
+      ]
+    },
+    "eth:0x2bfDA59220413DEd39dD0E443620b5277EcE6348": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0x4a3BB34aDE10127752015A6aF6136da15fde636A": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators",
+          "via": [
+            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
+          ]
+        }
+      ]
+    },
+    "eth:0x58028fFbc25aE2e12b96276bDB125955F41D41f3": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0x64Cf65036a76E3827e448cadbc53D31EefDCE04a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x655761AD5FC251F414D6993A73184B0669F278c8",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x8A577165f8ef813296043d5f75fF2F2F2349afFd": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators",
+          "via": [
+            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
+          ]
+        }
+      ]
+    },
+    "eth:0x944eB0a2829A859959586b10D54229278534a696": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0x94561e98DD5E55271f91A103e4979aa6C493745E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0xCb5BCC84741b379BFa0968b841C5de1fC9240CBd": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators",
+          "via": [
+            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
+          ]
+        }
+      ]
+    },
+    "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0xDcbb957bF991A0b252Fd996946Ea27E51ECabA69": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators",
+          "via": [
+            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
+          ]
+        }
+      ]
+    },
+    "eth:0xad40f1440544475f4B70573a106F41dF1860598b": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators",
+          "via": [
+            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
+          ]
+        }
+      ]
+    },
+    "eth:0xe27f3f6db6824def1738b2aACe2672aC59046a39": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
+    },
+    "eth:0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0f1b7bd7762662B23486320AA91F30312184f70C",
+          "role": "admin"
+        }
+      ]
+    },
+    "kinto:0x28fC10E12A78f986c78F973Fc70ED88072b34c8e": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "delay": 604800,
+          "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations).",
+          "role": ".securityCouncilPermission"
+        },
+        {
+          "permission": "interact",
+          "from": "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "delay": 950400,
+          "description": "manage the whitelisted addresses in the KintoAppRegistry which affects censorship on the entire rollup.",
+          "role": ".securityCouncilPermission"
+        },
+        {
+          "permission": "interact",
+          "from": "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "delay": 950400,
+          "description": "upgrade the implementation of the core contracts KintoID, KintoAppRegistry and KintoWalletFactory.",
+          "role": ".securityCouncilPermission"
+        },
+        {
+          "permission": "interact",
+          "from": "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "confirm sanctions, making them permanent without providing an exit window.",
+          "role": ".securityCouncilPermission"
+        }
+      ]
+    },
+    "kinto:0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "kinto:0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9",
+          "description": "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "delay": 1036800,
+          "description": "change the configuration of all AccessManager permissions (minimum delay shown, the total delay can be longer for some operations).",
+          "role": ".kintoMultisig2Permission"
+        },
+        {
+          "permission": "interact",
+          "from": "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "approve smart wallet recoveries for any KintoWallet.",
+          "role": ".kintoMultisig2Permission"
+        },
+        {
+          "permission": "interact",
+          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
+          "role": ".KYC_PROVIDERs"
+        },
+        {
+          "permission": "upgrade",
+          "from": "kinto:0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "kinto:0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd",
+          "role": "admin"
+        }
+      ]
+    },
+    "kinto:0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
+          "role": ".KYC_PROVIDERs"
+        }
+      ]
+    },
+    "kinto:0x6E31039abF8d248aBed57E307C9E1b7530c269E4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
+          "role": ".KYC_PROVIDERs"
+        }
+      ]
+    },
+    "kinto:0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
+          "role": ".KYC_PROVIDERs"
+        }
+      ]
+    },
+    "kinto:0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "kinto:0x87f0eE85bF3198654900a422832157abBba30828",
+          "description": "change the beacon implementation.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "kinto:0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "role": "admin"
+        }
+      ]
+    },
+    "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "kinto:0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
+          "description": "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "kinto:0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
+          "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
+          "role": ".KYC_PROVIDERs"
+        },
+        {
+          "permission": "interact",
+          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet.",
+          "role": ".GOVERNANCErs"
+        },
+        {
+          "permission": "interact",
+          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "transfer KYC NFTs to a different address.",
+          "role": ".DEFAULT_ADMINs"
+        },
+        {
+          "permission": "upgrade",
+          "from": "kinto:0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "kinto:0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "role": ".UPGRADERs"
+        }
+      ]
+    },
+    "kinto:0xb539019776eF803E89EC062Ad54cA24D1Fdb008a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
+          "role": ".KYC_PROVIDERs"
+        }
+      ]
+    }
+  }
 }
