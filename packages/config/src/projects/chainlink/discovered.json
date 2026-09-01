@@ -1,6 +1,6 @@
 {
   "name": "chainlink",
-  "timestamp": 1786960649,
+  "timestamp": 1788261539,
   "configHash": "0x2b86a003b09a0d3103f1aed20373ea845cea7cf4de8e98609e38190318586c89",
   "entries": [
     {
@@ -193,7 +193,7 @@
           "eth:0x05724B9C8C1dDE1b2f659d7c0676ff63f6d5E781",
           "eth:0x480496c0884D61F2f56707Adb11697F8018898c2",
           "eth:0xB65B6d224351cD61f856c227b2d5cFc611E9B2d8",
-          "eth:0x47A1dD4E277530fffb5B5f70A43CCbD542F54e17",
+          "eth:0x80D46daD5A5450a3611CD1d7F9110AEdFA55bfF6",
           "eth:0xFdE996F00E42b33bdE7C640786333623aCC3f298",
           "eth:0x7052cB84079905400ea52B635cAb6a275fDA8823",
           "eth:0xb7F0643D4ca8c296564Ce335062833e1afa3Afdb",
@@ -207,7 +207,7 @@
         ],
         "multisigThreshold": "4 of 9 (44%)",
         "NAME": "Gnosis Safe",
-        "nonce": 2210,
+        "nonce": 2214,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -305,7 +305,7 @@
         "latestConfigDigestAndEpoch": {
           "scanLogs": false,
           "configDigest": "0x00015fb1bf262779af44a451aaa926c8e0f02c1f012c0cd445ef41c0b50b818e",
-          "epoch": 14507
+          "epoch": 21735
         },
         "linkAvailableForPayment": 0,
         "maxAnswer": "95780971304118053647396689196894323976171195136475135",
@@ -520,11 +520,6 @@
     },
     {
       "address": "eth:0x43dC29Fe432733F239D8485d7DcdAA867B7175b8",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x47A1dD4E277530fffb5B5f70A43CCbD542F54e17",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1028,7 +1023,7 @@
         "latestConfigDigestAndEpoch": {
           "scanLogs": false,
           "configDigest": "0x0001e754045b2e3624f54e63b92d76f6f94eda08059db3ae9ed57b8b245f1750",
-          "epoch": 14521
+          "epoch": 21748
         },
         "linkAvailableForPayment": 0,
         "maxAnswer": "95780971304118053647396689196894323976171195136475135",
@@ -1082,6 +1077,11 @@
       "implementationNames": {
         "eth:0x7d4E742018fb52E48b08BE73d041C18B21de6Fb5": "AccessControlledOCR2Aggregator"
       }
+    },
+    {
+      "address": "eth:0x80D46daD5A5450a3611CD1d7F9110AEdFA55bfF6",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x80eFDeE7F82d0F2aBF3bF29A9A85edF0B42C9e19",
@@ -1414,7 +1414,7 @@
         "latestConfigDigestAndEpoch": {
           "scanLogs": false,
           "configDigest": "0x00019e55be9064246f399af0a3d969ce600228fc619c23c923eb8c0468d1834c",
-          "epoch": 251285
+          "epoch": 258486
         },
         "linkAvailableForPayment": 0,
         "maxAnswer": "95780971304118053647396689196894323976171195136475135",
@@ -2963,8 +2963,8 @@
     "ChainlinkOCR2Aggregator": "0x0ceda58eb8c7016c3e902557f785bc5e4145b201e64548d164ee996a7cf9e701",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25774050 },
-  "permissionsConfigHash": "0x2bd8a0e2c2bc539e58348fb5b2a4a2f530b378ee04b8d1033394f33edea58180",
+  "usedBlockNumbers": { "ethereum": 25882085 },
+  "permissionsConfigHash": "0x14b822d4a659b0667f0b81632d49db216444b8018a72ea52a4c0da460749fa4d",
   "permissions": {
     "eth:0x05FD2a0Ce04700375e475a12d2708F1632992D32": {
       "receivedPermissions": [
