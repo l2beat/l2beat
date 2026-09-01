@@ -1,4 +1,5 @@
 import type { ProjectInclusionDelayChartStakeDistribution } from '@l2beat/config'
+import { getDiscoveryPaths } from '@l2beat/discovery'
 import { formatAsAsciiTable, formatNumberWithCommas } from '@l2beat/shared-pure'
 import fs from 'fs/promises'
 import fetch from 'node-fetch'
@@ -65,7 +66,6 @@ const POLYGON_VALIDATORS_URL =
   'https://staking-api.polygon.technology/api/v2/validators'
 const AZTEC_PROVIDERS_URL = 'https://dashtec.xyz/api/providers'
 const DEFAULT_AZTEC_PAGE_SIZE = 200
-const DEFAULT_OUTPUT_ROOT = 'src/projects'
 const STAKE_DISTRIBUTION_FILE_NAME = 'stake-distribution.json'
 
 export class StakeDistributionFetcher {
@@ -205,10 +205,11 @@ async function writeJsonFile(filePath: string, data: unknown): Promise<void> {
   await fs.writeFile(filePath, `${JSON.stringify(data, null, 2)}\n`)
 }
 
+// Resolved from the repository's .discovery.json so the default output does
+// not depend on the directory the command is run from.
 function getDefaultOutputFilePath(project: StakingProjectId): string {
-  return path.resolve(
-    process.cwd(),
-    DEFAULT_OUTPUT_ROOT,
+  return path.join(
+    getDiscoveryPaths().discovery,
     project,
     STAKE_DISTRIBUTION_FILE_NAME,
   )
