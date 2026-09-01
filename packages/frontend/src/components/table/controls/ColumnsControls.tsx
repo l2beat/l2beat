@@ -28,13 +28,11 @@ export function ColumnsControls<T>({ columns }: Props<T>) {
       </span>
     </div>
   )
-  const columnsWithoutGroups = columns.flatMap((column) =>
-    column.columns.length > 0 ? column.columns : [column],
-  )
-
-  const pickerColumns = columnsWithoutGroups.filter((column) =>
-    column.getCanHide(),
-  )
+  const pickerColumns = columns
+    .flatMap((column) =>
+      column.columns.length > 0 ? column.columns : [column],
+    )
+    .filter((column) => column.getCanHide())
 
   return (
     <>

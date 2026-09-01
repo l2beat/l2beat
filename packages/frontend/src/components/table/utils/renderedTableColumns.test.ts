@@ -22,7 +22,7 @@ interface Row {
 const columnHelper = createColumnHelper<Row>()
 
 describe('rendered table columns', () => {
-  it('excludes sort-only companions from headers, cells, and grouped colSpan', () => {
+  it('excludes change-sort companions from headers, cells, and grouped colSpan', () => {
     const table = createTable({
       data: [{ total: 1, totalChange: 0.1 }],
       columns: [

@@ -18,7 +18,7 @@ declare module '@tanstack/react-table' {
      */
     isChangeSortColumn?: boolean
     /**
-     * Id of the sort-only companion column that sorts this cell by percentage
+     * Id of the change-sort companion column that sorts this cell by percentage
      * change. Renders a second sort control in the header.
      */
     changeSortColumnId?: string
