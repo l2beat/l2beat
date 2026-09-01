@@ -1,7 +1,6 @@
 export * from './api-celestia/CelestiaApiClient'
 export * from './api-celestia/types'
 export * from './api-eigen/EigenApiClient'
-export * from './avail/AvailClient'
 export * from './beaconchain/BeaconChainClient'
 export * from './blobs/BlobClient'
 export * from './blockIndexer/BlockIndexerClient'
