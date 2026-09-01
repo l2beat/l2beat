@@ -76,6 +76,23 @@ describe(combinePermissionsIntoDiscovery.name, () => {
     expect(Object.keys(stored ?? {})).toEqual(['receivedPermissions'])
   })
 
+  // The consumer's crawl stops at the entrypoint, so an actor inside a shared
+  // module holds a permission here without having an entry of its own.
+  it('stores a receiver that has no entry in the project', () => {
+    const discovery = output([contract(TIMELOCK), reference(PROXY_ADMIN)])
+
+    combinePermissionsIntoDiscovery(
+      discovery,
+      permissions([upgrade(COUNCIL, TIMELOCK)]),
+    )
+
+    expect(discovery.permissions).toEqual({
+      [COUNCIL]: {
+        receivedPermissions: [{ permission: 'upgrade', from: TIMELOCK }],
+      },
+    })
+  })
+
   it('clears a map left over by a previous run', () => {
     const discovery = output([contract(TIMELOCK), contract(PROXY_ADMIN)])
     combinePermissionsIntoDiscovery(
@@ -138,4 +155,8 @@ function output(entries: EntryParameters[]): DiscoveryOutput {
 
 function contract(address: ChainSpecificAddress): EntryParameters {
   return { type: 'Contract', address }
+}
+
+function reference(address: ChainSpecificAddress): EntryParameters {
+  return { type: 'Reference', address, targetProject: 'shared-zk-stack' }
 }
