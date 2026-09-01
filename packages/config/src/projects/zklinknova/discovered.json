@@ -5632,7 +5632,7 @@
     "scroll": 17695863,
     "zksync2": 63447251
   },
-  "permissionsConfigHash": "0x76b96f0b0064ee50211b2ce1d640449a579fecc94aae34c8fbcf27dd6e51b8b1",
+  "permissionsConfigHash": "0x0a4ef58244f3c68871e188e2774810b9bd4533d94088c66cbf8a17fcb01a93ab",
   "permissions": {
     "arb1:0x48698A17D193bFc882395AC06a1DEdbb222F2917": {
       "directlyReceivedPermissions": [

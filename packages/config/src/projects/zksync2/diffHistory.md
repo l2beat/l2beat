@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x187456d8a4c607df85a29b9cd2e6b00c0b7ddc8a
+
+# Diff at Tue, 01 Sep 2026 11:35:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@971c51541a4e32a7dcee1adc458d42516d2950ec block: 1786966191
+- current timestamp: 1786966191
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786966191 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB) [global/ProxyAdmin] {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","role":"admin"}]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","role":"admin"}]
+    }
+```
+
+```diff
+    reference EraChainAdminProxy (eth:0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B","role":".owner"},{"permission":"interact","from":"eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213","description":"create new zk chains (based on the current version), register tokens (ZK cluster Admin role).","role":".admin"},{"permission":"interact","from":"eth:0x32400084C286CF3E17e7B677ea9583e60a000324","description":"administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).","role":".getAdmin"},{"permission":"interact","from":"eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role).","role":".admin"}]
+    }
+```
+
+```diff
+    reference Matter Labs Multisig (eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213","description":"create new zk chains (based on the current version), register tokens (ZK cluster Admin role).","role":".admin","via":[{"address":"eth:0x2cf3bD6a9056b39999F3883955E183F655345063"}]},{"permission":"interact","from":"eth:0x32400084C286CF3E17e7B677ea9583e60a000324","description":"administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).","role":".getAdmin","via":[{"address":"eth:0x2cf3bD6a9056b39999F3883955E183F655345063"}]},{"permission":"interact","from":"eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"set the pending admin of this contract and the ServerNotifier contract address (ZK cluster Admin role).","role":".admin","via":[{"address":"eth:0x2cf3bD6a9056b39999F3883955E183F655345063"}]},{"permission":"interact","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","description":"change the members and threshold of the Validator Multisig and set the delay between batch commitment and execution.","role":".owner"},{"permission":"upgrade","from":"eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d","role":"admin","via":[{"address":"eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB"}]},{"permission":"upgrade","from":"eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31","role":"admin","via":[{"address":"eth:0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B"},{"address":"eth:0x2cf3bD6a9056b39999F3883955E183F655345063"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x0D8d1be440f997bDB9CA44C0140fD12551f99BBB","role":".owner"},{"permission":"act","from":"eth:0x2cf3bD6a9056b39999F3883955E183F655345063","role":".owner"}]
+    }
+```
+
+```diff
+    reference ProxyAdmin (eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776","role":"admin"},{"permission":"upgrade","from":"eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213","role":"admin"},{"permission":"upgrade","from":"eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063","role":"admin"},{"permission":"upgrade","from":"eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD","role":"admin"},{"permission":"upgrade","from":"eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860","role":"admin"},{"permission":"upgrade","from":"eth:0x8829AD80E425C646DAB305381ff105169FeEcE56","role":"admin"},{"permission":"upgrade","from":"eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6","role":"admin"},{"permission":"upgrade","from":"eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","role":"admin"},{"permission":"upgrade","from":"eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB","role":"admin"},{"permission":"upgrade","from":"eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076","role":"admin"}]
+    }
+```
+
+```diff
+    reference ProtocolUpgradeHandler (eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e","role":".owner"},{"permission":"act","from":"eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1","role":".owner"},{"permission":"interact","from":"eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213","description":"set critical contract addresses for the shared cluster, register settlement layers, pause and unpause migrations and the bridge and manage zk chain registration.","role":".owner"},{"permission":"interact","from":"eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6","description":"pause / unpause the bridge.","role":".owner"},{"permission":"interact","from":"eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.","role":".owner"},{"permission":"interact","from":"eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB","description":"pause, unpause and set critical escrow address references.","role":".owner"},{"permission":"interact","from":"eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076","description":"pause, resume chain migrations.","role":".owner"},{"permission":"interact","from":"eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45","description":"manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).","role":".owner"}]
+    }
+```
+
 Generated with discovered.json: 0x11a4db4bc1edb8c79e0884780e35e34d5f1dbc4b
 
 # Diff at Mon, 17 Aug 2026 11:30:53 GMT:

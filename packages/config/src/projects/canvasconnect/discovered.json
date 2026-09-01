@@ -655,7 +655,7 @@
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
   "usedBlockNumbers": { "ethereum": 19825363 },
-  "permissionsConfigHash": "0x1737f87f1d9378511b5e153b9d36cd9fd285d41f9b2f9d5787491b8b080cb323",
+  "permissionsConfigHash": "0x754ca90b8e8e2d3461aaad63861ca955d45b5b474c2e85e31680fffa4e1b4fcf",
   "permissions": {
     "eth:0x107691bD4F590270B9793c807cB912DD278e8cB5": {
       "receivedPermissions": [
@@ -664,6 +664,34 @@
           "from": "eth:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
           "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain.",
           "role": ".operators"
+        }
+      ]
+    },
+    "eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "description": "Administer the CallProxy's `GOVERNANCE_ADMIN` and role-admin hierarchy. This AccessControl role is separate from the outer proxy governor that schedules implementation upgrades.",
+          "role": ".governanceAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "description": "Grant and revoke application roles, including the `APP_GOVERNOR` role that controls caller-specific fallback routes.",
+          "role": ".appRoleAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "description": "Route fallback calls from specific callers to a still-active registry in the default verifier's reference chain. This principally determines which verifier and bootloader configuration processes their proof submissions; the proxy's explicit `isValid` entry point always queries the default target.",
+          "role": ".appGovernorAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "delay": 691200,
+          "role": ".$admin"
         }
       ]
     },

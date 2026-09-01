@@ -1163,7 +1163,7 @@
     "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6"
   },
   "usedBlockNumbers": { "ethereum": 25544316 },
-  "permissionsConfigHash": "0xc3f56e1fee5e2ceb848142e2a14f60abb6615010aa4b22f289617479d33107b3",
+  "permissionsConfigHash": "0xf6446f545c5b2976561dc573a1d38625ba85459252696d65fddad7ffee9c524b",
   "permissions": {
     "eth:0x09d1ad25B369A0C48Bdf4CaAb85aFd08a3f07044": {
       "receivedPermissions": [
@@ -1186,6 +1186,34 @@
         {
           "permission": "upgrade",
           "from": "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "role": ".$admin"
+        }
+      ]
+    },
+    "eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "description": "Administer the CallProxy's `GOVERNANCE_ADMIN` and role-admin hierarchy. This AccessControl role is separate from the outer proxy governor that schedules implementation upgrades.",
+          "role": ".governanceAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "description": "Grant and revoke application roles, including the `APP_GOVERNOR` role that controls caller-specific fallback routes.",
+          "role": ".appRoleAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "description": "Route fallback calls from specific callers to a still-active registry in the default verifier's reference chain. This principally determines which verifier and bootloader configuration processes their proof submissions; the proxy's explicit `isValid` entry point always queries the default target.",
+          "role": ".appGovernorAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "delay": 691200,
           "role": ".$admin"
         }
       ]

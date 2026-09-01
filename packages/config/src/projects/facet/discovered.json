@@ -1013,7 +1013,7 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
   "usedBlockNumbers": { "ethereum": 25230004, "facet": 3880205 },
-  "permissionsConfigHash": "0xb93674a2bf445042792d9a95f86fe939e04da71422a61e33106be42845543e03",
+  "permissionsConfigHash": "0x4be56a691e65807da452855c4a56f9f739838f6deafb9789407b05b54767c5a0",
   "permissions": {
     "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF": {
       "directlyReceivedPermissions": [

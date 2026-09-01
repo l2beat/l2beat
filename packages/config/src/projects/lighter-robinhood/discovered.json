@@ -734,7 +734,7 @@
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "robinhood": 44827049 },
-  "permissionsConfigHash": "0xcae3c8a56ead011ccd2c86c59a1ba049acee18e419c72c8fbe1905986866b9c2",
+  "permissionsConfigHash": "0x4311265ccf3b973dbc8aa741ea7b57b1a475526868fe3ca1b48d368669ccb08d",
   "permissions": {
     "robinhood:0x114E0f5a71D169DdfBAef41160A0Ac789f7015cA": {
       "receivedPermissions": [

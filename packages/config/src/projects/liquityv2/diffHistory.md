@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x7cf3c64d8d5c6e710046a065d36974b38df052a6
+
+# Diff at Tue, 01 Sep 2026 13:29:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@cc203ca7bd63d4c1bd165dd66cbddbddf055a601 block: 1786539815
+- current timestamp: 1786539815
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786539815 (main branch discovery), not current.
+
+```diff
+    reference Chainlink_rETH_ETH (eth:0x536218f9E9Eb48863970252233c8F271f554C2d0) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".rEthEthOracle"},{"permission":"interact","from":"eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B","description":"Supplies the rETH price this PriceFeed reads.","role":".rEthEthOracle"}]
+    }
+```
+
+```diff
+    reference Chainlink_ETH_USD (eth:0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".ethUsdOracle"},{"permission":"interact","from":"eth:0x34F1E9c7dcc279ec70d3c4488EB2D80FBa8B7b2B","description":"Supplies the ETH price this PriceFeed reads.","role":".ethUsdOracle"},{"permission":"interact","from":"eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".ethUsdOracle"},{"permission":"interact","from":"eth:0xCC5F8102eb670c89a4a3c567C13851260303c24F","description":"Supplies the ETH price this PriceFeed reads.","role":".ethUsdOracle"},{"permission":"interact","from":"eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".ethUsdOracle"},{"permission":"interact","from":"eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E","description":"Supplies the ETH price this PriceFeed reads.","role":".ethUsdOracle"}]
+    }
+```
+
+```diff
+    reference Chainlink_stETH_USD (eth:0xCfE54B5cD566aB89272946F602D76Ea879CAb4a8) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E","description":"Can shut down the branch: returning a stale, zero, or reverting answer forces the branch into shutdown, which halts new borrowing and leaves only redemptions.","role":".stEthUsdOracle"},{"permission":"interact","from":"eth:0xe7Aa2Ba9E086A379d3beb224098bC634a46e314E","description":"Supplies the stETH price this PriceFeed reads.","role":".stEthUsdOracle"}]
+    }
+```
+
 Generated with discovered.json: 0xd2816df365b0fe9e861414b793871414dca24da1
 
 # Diff at Mon, 03 Aug 2026 10:52:30 GMT:

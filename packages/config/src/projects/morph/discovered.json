@@ -1647,7 +1647,7 @@
     "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d"
   },
   "usedBlockNumbers": { "ethereum": 25754044 },
-  "permissionsConfigHash": "0x3a0164d1a1a67ed67e2926da0984cd1a6ddc0562e77e5c7fca50279ac22ce46e",
+  "permissionsConfigHash": "0x772da5aee264504dac2fcbabc8cde0b98b3543f220ad2bebcab4dae5082d635a",
   "permissions": {
     "eth:0x0092bC49078f130D27e70dBeee441E227280B97D": {
       "receivedPermissions": [

@@ -992,7 +992,7 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
   "usedBlockNumbers": { "ethereum": 25142734 },
-  "permissionsConfigHash": "0x17f9d772d70b3d074b16bc0c586165280767da45e2191e5e810f401eb6cde10b",
+  "permissionsConfigHash": "0xa2c1b0fad300651bdc3b23dce877d9531d3871a67d31ed9a627c7b87b5a47f3b",
   "permissions": {
     "eth:0x520d812604E7b2ce71819FDBFE9aC40E56327F8f": {
       "receivedPermissions": [
