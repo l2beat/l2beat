@@ -1,4 +1,32 @@
-Generated with discovered.json: 0x83d6c5c88e4856c473b26d4dd5086e38a26a28ec
+Generated with discovered.json: 0xaf473fc32479601b52d3fe115913ac8d866b73f0
+
+# Diff at Tue, 01 Sep 2026 12:47:14 GMT:
+
+- author: Dawid Drobny (<dawdrobny@gmail.com>)
+- comparing to: main@58d130dd81e18684eafef31edfa3067a670f33c6 block: 1785226129
+- current timestamp: 1785226129
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1785226129 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (eth:0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the AggregateVerifier.
+      values.minimumGasLimitOneByte:
++        21040
+      values.minimumGasLimitZeroBytes:
++        21000
+    }
+```
+
+Generated with discovered.json: 0xb1af486742f65ae86bbf943234e87e36cba16c59
 
 # Diff at Thu, 30 Jul 2026 14:35:25 GMT:
 
