@@ -2,14 +2,20 @@ import type { Env } from '@l2beat/backend-tools'
 import type { ProjectService } from '@l2beat/config'
 import uniq from 'lodash/uniq'
 import type { DaBeatConfig } from '../Config'
+import type { FeatureFlags } from '../FeatureFlags'
 
 export async function getDaBeatConfig(
   ps: ProjectService,
   env: Env,
+  flags: FeatureFlags,
 ): Promise<DaBeatConfig> {
-  const projects = await ps.getProjects({
+  const allProjects = await ps.getProjects({
     select: ['daLayer'],
   })
+  // Individual projects can be disabled with e.g. FEATURES=*,!da-beat.avail
+  const projects = allProjects.filter((x) =>
+    flags.isEnabled('da-beat', x.id.toString()),
+  )
 
   const coingeckoIds = projects
     .map((x) => x.daLayer.economicSecurity?.token.coingeckoId)
