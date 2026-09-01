@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   type AllProviders,
+  addReferencedDiscoveries,
   ConfigReader,
   type ConfigRegistry,
   combinePermissionsIntoDiscovery,
@@ -9,7 +10,6 @@ import {
   DiscoveryRegistry,
   flattenDiscoveredSources,
   getDiscoveryPaths,
-  loadDiscoveriesForModelling,
   modelPermissions,
   remapDiscoverySourceNames,
   type TemplateService,
@@ -159,34 +159,5 @@ export class DiscoveryRunner {
       )
       throw err
     }
-  }
-}
-
-// The freshly discovered project stays authoritative, everything it references
-// is filled in from disk.
-function addReferencedDiscoveries(
-  discoveries: DiscoveryRegistry,
-  projectName: string,
-  configReader: ConfigReader,
-  logger: Logger,
-): void {
-  let referenced: DiscoveryRegistry
-  try {
-    referenced = loadDiscoveriesForModelling(projectName, configReader)
-  } catch (error) {
-    // One broken reference must not take down the whole update loop.
-    logger.error(
-      `Could not read referenced discoveries of ${projectName}`,
-      error,
-    )
-    return
-  }
-
-  for (const project of referenced.getSortedProjects()) {
-    if (project === projectName) {
-      continue
-    }
-    logger.info(`Modelling against referenced project ${project}`)
-    discoveries.set(project, referenced.get(project).discoveryOutput)
   }
 }
