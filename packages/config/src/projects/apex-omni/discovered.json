@@ -48,24 +48,6 @@
       ],
       "proxyType": "immutable",
       "description": "Controls upgrades to managed contracts. The master can schedule, cancel, and complete upgrades after the main contract's notice period.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
-          "description": "transfer mastership.",
-          "role": ".getMaster"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x235118AfB54B6d6c7b48F1B5434c25CD6Eb6B68F",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
-          "role": ".getMaster"
-        }
-      ],
       "deployerAddress": "arb1:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1717731698,
       "sinceBlock": 219222767,
@@ -191,15 +173,7 @@
     {
       "address": "arb1:0x48184910dA6765111F2ea02D0182Fc95Be17E52d",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
-          "description": "commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
@@ -221,20 +195,6 @@
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
-          "description": "add tokens, pause and unpause token deposits.",
-          "role": ".networkGovernor"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
-          "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
-          "role": ".networkGovernor"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "arb1:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
       "sinceTimestamp": 1718456781,
@@ -340,15 +300,7 @@
     {
       "address": "base:0x48184910dA6765111F2ea02D0182Fc95Be17E52d",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
-          "description": "commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "EmptyVerifier",
@@ -393,24 +345,6 @@
         "0x79e413df099ed6b1f0679dd44d054e27d4f83befaa24d1772c3c2311767b5388"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
-          "description": "transfer mastership.",
-          "role": ".getMaster"
-        },
-        {
-          "permission": "upgrade",
-          "from": "base:0x4c5629AEA0B419d26C780dD78d5671e2Ce27c563",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
-          "role": ".getMaster"
-        }
-      ],
       "deployerAddress": "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1720251617,
       "sinceBlock": 16731135,
@@ -441,20 +375,6 @@
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
-          "description": "add tokens, pause and unpause token deposits.",
-          "role": ".networkGovernor"
-        },
-        {
-          "permission": "interact",
-          "from": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
-          "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
-          "role": ".networkGovernor"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "base:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
       "sinceTimestamp": 1730880019,
@@ -684,15 +604,7 @@
     {
       "address": "bnb:0x48184910dA6765111F2ea02D0182Fc95Be17E52d",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
-          "description": "commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "bnb:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
@@ -712,24 +624,6 @@
         "0x79e413df099ed6b1f0679dd44d054e27d4f83befaa24d1772c3c2311767b5388"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
-          "description": "transfer mastership.",
-          "role": ".getMaster"
-        },
-        {
-          "permission": "upgrade",
-          "from": "bnb:0x1202e0557A23531D09015C802e993d6423685FfB",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
-          "role": ".getMaster"
-        }
-      ],
       "deployerAddress": "bnb:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1717731965,
       "sinceBlock": 39393747,
@@ -854,20 +748,6 @@
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
-          "description": "add tokens, pause and unpause token deposits.",
-          "role": ".networkGovernor"
-        },
-        {
-          "permission": "interact",
-          "from": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
-          "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
-          "role": ".networkGovernor"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "bnb:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
       "sinceTimestamp": 1718456681,
@@ -1150,15 +1030,7 @@
     {
       "address": "eth:0x48184910dA6765111F2ea02D0182Fc95Be17E52d",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
-          "description": "commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
@@ -1251,20 +1123,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
-          "description": "add tokens, pause and unpause token deposits.",
-          "role": ".networkGovernor"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
-          "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
-          "role": ".networkGovernor"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
       "sinceTimestamp": 1718456123,
@@ -1302,24 +1160,6 @@
       ],
       "proxyType": "immutable",
       "description": "Controls upgrades to managed contracts. The master can schedule, cancel, and complete upgrades after the main contract's notice period.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
-          "description": "transfer mastership.",
-          "role": ".getMaster"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
-          "role": ".getMaster"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xe38f8bc093a1f76f0A444bA6B75F46d6dC686dba",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1717731383,
       "sinceBlock": 20037302,
@@ -1437,24 +1277,6 @@
         "0x79e413df099ed6b1f0679dd44d054e27d4f83befaa24d1772c3c2311767b5388"
       ],
       "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
-          "description": "transfer mastership.",
-          "role": ".getMaster"
-        },
-        {
-          "permission": "upgrade",
-          "from": "mantle:0x0c0F729c74c9AC41F9C702dAd11011F40D4190B0",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
-          "role": ".getMaster"
-        }
-      ],
       "deployerAddress": "mantle:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "sinceTimestamp": 1720251194,
       "sinceBlock": 66060441,
@@ -1577,15 +1399,7 @@
     {
       "address": "mantle:0x48184910dA6765111F2ea02D0182Fc95Be17E52d",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
-          "description": "commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "mantle:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
@@ -1607,20 +1421,6 @@
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
-          "description": "add tokens, pause and unpause token deposits.",
-          "role": ".networkGovernor"
-        },
-        {
-          "permission": "interact",
-          "from": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
-          "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
-          "role": ".networkGovernor"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "mantle:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
       "sinceTimestamp": 1730880070,
@@ -3017,5 +2817,237 @@
     "ethereum": 25587657,
     "mantle": 98292777
   },
-  "permissionsConfigHash": "0x3401d8a0787441b5a10f77622619fc5ad0ba9e702cf85a97eb41893b2ef3ee95"
+  "permissionsConfigHash": "0x3401d8a0787441b5a10f77622619fc5ad0ba9e702cf85a97eb41893b2ef3ee95",
+  "permissions": {
+    "arb1:0x2e8AD1434663b209EE59eF1a6612114239F4a190": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
+          "description": "transfer mastership.",
+          "role": ".getMaster"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x235118AfB54B6d6c7b48F1B5434c25CD6Eb6B68F",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
+          "role": ".getMaster"
+        }
+      ]
+    },
+    "arb1:0x48184910dA6765111F2ea02D0182Fc95Be17E52d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
+          "description": "commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "arb1:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
+          "description": "add tokens, pause and unpause token deposits.",
+          "role": ".networkGovernor"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x3169844a120C0f517B4eB4A750c08d8518C8466a",
+          "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
+          "role": ".networkGovernor"
+        }
+      ]
+    },
+    "base:0x48184910dA6765111F2ea02D0182Fc95Be17E52d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
+          "description": "commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "base:0x72343e8e448Fa539A1F118f870A1De1132f2fcaD": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
+          "description": "transfer mastership.",
+          "role": ".getMaster"
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4c5629AEA0B419d26C780dD78d5671e2Ce27c563",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
+          "role": ".getMaster"
+        }
+      ]
+    },
+    "base:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
+          "description": "add tokens, pause and unpause token deposits.",
+          "role": ".networkGovernor"
+        },
+        {
+          "permission": "interact",
+          "from": "base:0xeE7981C4642dE8d19AeD11dA3bac59277DfD59D7",
+          "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
+          "role": ".networkGovernor"
+        }
+      ]
+    },
+    "bnb:0x48184910dA6765111F2ea02D0182Fc95Be17E52d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
+          "description": "commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "bnb:0x81DEE5B8BfFa75Cc1ec729533EeD30CfE4F81F8C": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
+          "description": "transfer mastership.",
+          "role": ".getMaster"
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0x1202e0557A23531D09015C802e993d6423685FfB",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
+          "role": ".getMaster"
+        }
+      ]
+    },
+    "bnb:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
+          "description": "add tokens, pause and unpause token deposits.",
+          "role": ".networkGovernor"
+        },
+        {
+          "permission": "interact",
+          "from": "bnb:0xb8D9F005654b7b127b34dae8F973Ba729ca3A2D9",
+          "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
+          "role": ".networkGovernor"
+        }
+      ]
+    },
+    "eth:0x48184910dA6765111F2ea02D0182Fc95Be17E52d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
+          "description": "commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "eth:0xF9f8794A2D9885C36D06aA25fc25a8cAda276B94": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
+          "description": "add tokens, pause and unpause token deposits.",
+          "role": ".networkGovernor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
+          "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
+          "role": ".networkGovernor"
+        }
+      ]
+    },
+    "eth:0xFBD68679271fDa6ca9bf6F20993Cd39E20072753": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
+          "description": "transfer mastership.",
+          "role": ".getMaster"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x35D173cdfE4d484BC5985fDa55FABad5892c7B82",
+          "role": ".getMaster"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xe38f8bc093a1f76f0A444bA6B75F46d6dC686dba",
+          "role": "admin"
+        }
+      ]
+    },
+    "mantle:0x2B9BA259F24965a81Fa0c4E477e3791673744059": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+          "description": "transfer mastership.",
+          "role": ".getMaster"
+        },
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x0c0F729c74c9AC41F9C702dAd11011F40D4190B0",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+          "role": ".getMaster"
+        }
+      ]
+    },
+    "mantle:0x48184910dA6765111F2ea02D0182Fc95Be17E52d": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+          "description": "commit, execute, and revert L2 blocks, and send block confirmations to other zkLink chains.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "mantle:0xba3852Ea9b72DE82AF343f7e3F09c86fdea912ED": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+          "description": "add tokens, pause and unpause token deposits.",
+          "role": ".networkGovernor"
+        },
+        {
+          "permission": "interact",
+          "from": "mantle:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+          "description": "change the network governor, validator set, L1 gateway and cross-chain synchronization services.",
+          "role": ".networkGovernor"
+        }
+      ]
+    }
+  }
 }

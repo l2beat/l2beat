@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x382354af229437c39e7652de13f1fe6ccfe3321e
+Generated with discovered.json: 0x049f85e7e8c0636c657cd1b5eec71f5695da2049
 
-# Diff at Tue, 01 Sep 2026 09:28:37 GMT:
+# Diff at Tue, 01 Sep 2026 15:45:16 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@aa49c62758c26aa449b48d2b116d7b4ea40373f8 block: 1787129183
+- comparing to: main@4facb275df13e07de60919ee9d4e4272557bfcac block: 1787129183
 - current timestamp: 1788159443
 
 ## Description
@@ -59,14 +59,6 @@ Generated with discovered.json: 0x382354af229437c39e7652de13f1fe6ccfe3321e
 ```
 
 ```diff
-    EOA  (eth:0x062f05CD6c835677B05a8658A351969476861316) {
-    +++ description: None
-      receivedPermissions.2:
-+        {"permission":"interact","from":"eth:0x2baFBBC2c96Bf2e76ab253899Fb51F9522b8Ef3D","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner"}
-    }
-```
-
-```diff
     contract RMN (eth:0x0B047953451A207743fB62541B21199b95190602) [transporter/RMN] {
     +++ description: RMN 2.1 emergency-stop contract for CCIP. It stores global and route-specific curses: the owner and authorized callers can add curses, while only the owner can remove them and change the authorized-caller set. Its legacy v1.6 compatibility isBlessed() always returns true and its signer config is empty, so this implementation does not independently attest Merkle roots.
 +++ description: Decoded view of getCursedSubjects: GLOBAL_CURSE if the global subject is set, otherwise the chain name from the CCIPChainName mapping (decimal selector when not in the mapping).
@@ -89,16 +81,6 @@ Generated with discovered.json: 0x382354af229437c39e7652de13f1fe6ccfe3321e
 +++ description: Raw bytes16 subjects currently cursed by RMN. Each entry is either the special GLOBAL_CURSE_SUBJECT 0x01000000000000000000000000000001, which affects every CCIP path through this RMN, or bytes16(uint128(chainSelector)), which affects the corresponding route. An empty list means no curse is active. See cursedSubjects for the decoded view.
       values.getCursedSubjects.6:
 +        "0x00000000000000001435840d10d50ab8"
-    }
-```
-
-```diff
-    contract ARM_Multisig4 (eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) [transporter/ManyChainMultiSig] {
-    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 8 signatures across 69 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 8-of-69 multisig and is strictly more constrained. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17]. The owner can rotate the entire signer tree.
-      receivedPermissions.103:
-+        {"permission":"interact","from":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","description":"add, pause, or reconfigure destination routes, including their Router, network fees, address format, default and mandatory verifiers, default executor, and destination OffRamp.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.104:
-+        {"permission":"interact","from":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","description":"change the FeeQuoter used to price messages and the fee aggregator that receives accumulated network fees.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
     }
 ```
 
@@ -140,8 +122,6 @@ Generated with discovered.json: 0x382354af229437c39e7652de13f1fe6ccfe3321e
 +        {"sourceChainSelector":"4949039107694359620","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
       values.getOffRamps.16:
 +        {"sourceChainSelector":"4051577828743386545","offRamp":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3"}
-      receivedPermissions.1:
-+        {"permission":"interact","from":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","description":"invoke forwardFromRouter and submit messages to this OnRamp for the configured destination route.","role":".routeRouters"}
     }
 ```
 
@@ -182,16 +162,6 @@ Generated with discovered.json: 0x382354af229437c39e7652de13f1fe6ccfe3321e
 +        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x0000000000000000000000007b73923e101950efe098c2eca74c8320b2813f48"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
       values.sourceChainConfigs.matic:
 +        {"router":"eth:0x3237c0D7B58BEc8Dc17F00103B784Bd6678f789E","isEnabled":true,"onRamps":["0x0000000000000000000000007b8c563e2b29c2d194bc8d18092684420aa47bbe"],"defaultCCVs":["eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b"],"laneMandatedCCVs":[]}
-    }
-```
-
-```diff
-    contract ARMTimelock (eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449) [transporter/RBACTimelock] {
-    +++ description: Role based timelock used to administer CCIP contracts.
-      directlyReceivedPermissions.101:
-+        {"permission":"interact","from":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","description":"add, pause, or reconfigure destination routes, including their Router, network fees, address format, default and mandatory verifiers, default executor, and destination OffRamp.","role":".owner"}
-      directlyReceivedPermissions.102:
-+        {"permission":"interact","from":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","description":"change the FeeQuoter used to price messages and the fee aggregator that receives accumulated network fees.","role":".owner"}
     }
 ```
 
@@ -472,8 +442,6 @@ Generated with discovered.json: 0x382354af229437c39e7652de13f1fe6ccfe3321e
       values.onRamps.robinhood:
 -        "eth:0x913814782144864e523C3FdB78E3ca25D2c2aeCa"
 +        "eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7"
-      directlyReceivedPermissions.3:
-+        {"permission":"interact","from":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","description":"invoke forwardFromRouter and submit messages to this OnRamp for the configured destination route.","role":".routeRouters"}
     }
 ```
 
@@ -588,26 +556,6 @@ Generated with discovered.json: 0x382354af229437c39e7652de13f1fe6ccfe3321e
 ```
 
 ```diff
-    contract ARM_GnosisSafe (eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf) [GnosisSafe] {
-    +++ description: None
-      receivedPermissions.103:
-+        {"permission":"interact","from":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","description":"add, pause, or reconfigure destination routes, including their Router, network fees, address format, default and mandatory verifiers, default executor, and destination OffRamp.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.104:
-+        {"permission":"interact","from":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","description":"change the FeeQuoter used to price messages and the fee aggregator that receives accumulated network fees.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-    }
-```
-
-```diff
-    contract ARM_Multisig1 (eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e) [transporter/ManyChainMultiSig] {
-    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 42 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-42 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
-      receivedPermissions.103:
-+        {"permission":"interact","from":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","description":"add, pause, or reconfigure destination routes, including their Router, network fees, address format, default and mandatory verifiers, default executor, and destination OffRamp.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.104:
-+        {"permission":"interact","from":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","description":"change the FeeQuoter used to price messages and the fee aggregator that receives accumulated network fees.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-    }
-```
-
-```diff
     contract ARM_Multisig2 (eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) [transporter/ManyChainMultiSig] {
     +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 42 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-42 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
       description:
@@ -638,10 +586,6 @@ Generated with discovered.json: 0x382354af229437c39e7652de13f1fe6ccfe3321e
       values.summaryGroups:
 -        "Group 1: 2-of-18, parent=0, signers=18 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7"
 +        "Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7"
-      receivedPermissions.103:
-+        {"permission":"interact","from":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","description":"add, pause, or reconfigure destination routes, including their Router, network fees, address format, default and mandatory verifiers, default executor, and destination OffRamp.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.104:
-+        {"permission":"interact","from":"eth:0xc3423F3FB30857D9C14717b119884b1B63d250b7","description":"change the FeeQuoter used to price messages and the fee aggregator that receives accumulated network fees.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
     }
 ```
 
@@ -672,8 +616,6 @@ Generated with discovered.json: 0x382354af229437c39e7652de13f1fe6ccfe3321e
 +++ description: Remote chains currently configured on this child pool.
       values.getSupportedChains.5:
 +        "neox"
-      receivedPermissions.0:
-+        {"permission":"interact","from":"eth:0x2baFBBC2c96Bf2e76ab253899Fb51F9522b8Ef3D","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers"}
     }
 ```
 
@@ -715,112 +657,6 @@ discovery. Values are for block 1787129183 (main branch discovery), not current.
 +        "ccip/CapabilitiesRegistry"
       fieldMeta:
 +        {"getNodeOperators":{"description":"Registered node operators and their admins. An admin can update its operator record and add, update, or remove nodes assigned to that operator, subject to DON-membership and capability constraints; the contract owner shares this authority."}}
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40","description":"submit DON capability updates that create, revoke, or promote candidate and active Commit and Execution OCR configurations.","role":".getCapabilityRegistry"}]
-    }
-```
-
-```diff
-    EOA  (eth:0x062f05CD6c835677B05a8658A351969476861316) {
-    +++ description: None
-      receivedPermissions.0:
-+        {"permission":"interact","from":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af","description":"change accepted finality, storage locations, the fee aggregator, fast-finality fee basis points, and the sender-allowlist administrator.","role":".owner"}
-      receivedPermissions.1:
-+        {"permission":"interact","from":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af","description":"configure CCTP domains and remote-chain Router, fee, verification-gas, payload-size, and sender-allowlist parameters, and directly update sender allowlists.","role":".owner"}
-      receivedPermissions.2:
-+        {"permission":"interact","from":"eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574","description":"configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.","role":".owner"}
-      receivedPermissions.3:
-+        {"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"replace the offchain storage-location identifiers and nominate a successor storage-locations administrator.","role":".getStorageLocationsAdmin"}
-      receivedPermissions.5:
-+        {"permission":"interact","from":"eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12","description":"add, replace, or remove inbound verifier implementations for version tags and outbound verifier implementations for destination chains.","role":".owner"}
-      receivedPermissions.6:
-+        {"permission":"interact","from":"eth:0xBfD2109d3ff5b6f09281BDb52ca6b56D7Bb1ff12","description":"change the fee aggregator that receives fee-token balances withdrawn from this resolver.","role":".owner"}
-    }
-```
-
-```diff
-    contract ARM_Multisig4 (eth:0x117ec8aD107976e1dBCc21717ff78407Bc36aADc) [transporter/ManyChainMultiSig] {
-    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 8 signatures across 69 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 8-of-69 multisig and is strictly more constrained. Root: 3-of-3, childGroups=(1,18,19). [click for per-group breakdown: Group 1: 3-of-16, parent=0, childGroups=(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17) | Group 2: 1-of-2, parent=1, signers=2 | Group 3: 1-of-2, parent=1, signers=2 | Group 4: 1-of-2, parent=1, signers=2 | Group 5: 1-of-1, parent=1, signers=1 | Group 6: 1-of-2, parent=1, signers=2 | Group 7: 1-of-2, parent=1, signers=2 | Group 8: 1-of-4, parent=1, signers=4 | Group 9: 1-of-1, parent=1, signers=1 | Group 10: 1-of-1, parent=1, signers=1 | Group 11: 1-of-1, parent=1, signers=1 | Group 12: 1-of-1, parent=1, signers=1 | Group 13: 1-of-3, parent=1, signers=3 | Group 14: 1-of-1, parent=1, signers=1 | Group 15: 1-of-1, parent=1, signers=1 | Group 16: 1-of-3, parent=1, signers=3 | Group 17: 1-of-2, parent=1, signers=2 | Group 18: 1-of-7, parent=0, signers=7 | Group 19: 2-of-2, parent=0, childGroups=(20,21) | Group 20: 2-of-16, parent=19, signers=16 | Group 21: 2-of-17, parent=19, signers=17]. The owner can rotate the entire signer tree.
-      receivedPermissions.0:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"add or deprecate capabilities and select each capability's optional configuration contract when the capability is added.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.1:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"add or remove node operators and update any operator's admin address or name.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.2:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"add, update, or remove nodes for any node operator, subject to the configured DON-membership and capability constraints.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.3:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"create, reconfigure, or remove DONs, controlling their node membership, capability payloads, fault tolerance, public access, and, at creation, whether they accept workflows. Configuring a DON can invoke its capability configuration contracts.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.4:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"update their node operator record and add, update, or remove nodes assigned to it, subject to DON-membership and capability constraints.","role":".getNodeOperators","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.7:
-+        {"permission":"interact","from":"eth:0x05CEB5F0d52316B48a84fECA8230c90492a4B75b","description":"add, remove, enable, or disable destination chains and set the flat executor fee charged for each one.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.8:
-+        {"permission":"interact","from":"eth:0x05CEB5F0d52316B48a84fECA8230c90492a4B75b","description":"change the accepted finality policy and fee aggregator, add or remove CCVs from the allowlist, and enable or disable allowlist enforcement for execution quotes.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.26:
-+        {"permission":"interact","from":"eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b","description":"add, replace, or remove inbound verifier implementations for version tags and outbound verifier implementations for destination chains.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.27:
-+        {"permission":"interact","from":"eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b","description":"change the fee aggregator that receives fee-token balances withdrawn from this resolver.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.28:
-+        {"permission":"interact","from":"eth:0x35cce3F115A25e7a90101E02906a57b9f8e4C2c6","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.29:
-+        {"permission":"interact","from":"eth:0x35cce3F115A25e7a90101E02906a57b9f8e4C2c6","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.32:
-+        {"permission":"interact","from":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3","description":"add, disable, or reconfigure source routes, including their local Router, accepted source OnRamps, default CCVs, and lane-mandated CCVs.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.46:
-+        {"permission":"interact","from":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","description":"change the fee aggregator that receives fee tokens withdrawn from this endpoint.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.47:
-+        {"permission":"interact","from":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","description":"replace the Executor target that handles forwarded calls, changing the fee, finality, and CCV policy exposed by this endpoint.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.55:
-+        {"permission":"interact","from":"eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40","description":"add, replace, or remove per-chain reader sets, fault-tolerance thresholds, and opaque chain-family configuration.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.57:
-+        {"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"add or reconfigure remote-chain verification parameters, including the Router, fees, verification gas, payload size, and sender-allowlist state.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.58:
-+        {"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"change the allowed finality policy, fee aggregator, and sender-allowlist administrator, and directly update sender allowlists.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.59:
-+        {"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"replace each source chain's committee signers and signature threshold.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.62:
-+        {"permission":"interact","from":"eth:0x806489226179d519D7bf5814BA8ea0F7D850aCf2","description":"configure remote chains and pools, Router and administrators, accepted finality, rate limits, transfer fees, CCV hooks, and authorized callers.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.63:
-+        {"permission":"interact","from":"eth:0x806489226179d519D7bf5814BA8ea0F7D850aCf2","description":"withdraw fee-token balances held by this pool to an arbitrary recipient.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.72:
-+        {"permission":"interact","from":"eth:0x8d8Aab1Ef7047C1bBc6D17202CB39EcA43263CFC","description":"add or remove addresses allowed to submit CCTP messages and attestations through this proxy.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.86:
-+        {"permission":"interact","from":"eth:0x966A3BE75103C680b6A4248689630c788659d2A5","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.87:
-+        {"permission":"interact","from":"eth:0x966A3BE75103C680b6A4248689630c788659d2A5","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.103:
-+        {"permission":"interact","from":"eth:0xC373cB40513af4A9a128E6350F2b127F5D413E88","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.104:
-+        {"permission":"interact","from":"eth:0xC373cB40513af4A9a128E6350F2b127F5D413E88","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.107:
-+        {"permission":"interact","from":"eth:0xcd8ba189347Fc5e968778BBFFDB656ea94a7737D","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.108:
-+        {"permission":"interact","from":"eth:0xcd8ba189347Fc5e968778BBFFDB656ea94a7737D","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.109:
-+        {"permission":"interact","from":"eth:0xD061610Ea164ddFdCe7162fd543951A82E6D446b","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.110:
-+        {"permission":"interact","from":"eth:0xD061610Ea164ddFdCe7162fd543951A82E6D446b","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.120:
-+        {"permission":"interact","from":"eth:0xE16982d9262dC0483Bd3dAdE2C020fFcB402E459","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.121:
-+        {"permission":"interact","from":"eth:0xE16982d9262dC0483Bd3dAdE2C020fFcB402E459","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.124:
-+        {"permission":"interact","from":"eth:0xE5E7C0a97877Cc6b3aDb735Fa725BCD60B3E9FB4","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.125:
-+        {"permission":"interact","from":"eth:0xE5E7C0a97877Cc6b3aDb735Fa725BCD60B3E9FB4","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.126:
-+        {"permission":"interact","from":"eth:0xE77aD12b305cD90eEe6b769Ac6490a42c0039d67","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.127:
-+        {"permission":"interact","from":"eth:0xE77aD12b305cD90eEe6b769Ac6490a42c0039d67","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.128:
-+        {"permission":"interact","from":"eth:0xed37ecDcc2bb79ab310457702713626d5C07FC2D","description":"configure remote chains, their distinct USDC lockboxes and pools, Router and administrators, accepted finality, rate limits, transfer fees, CCV hooks, and authorized callers.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.129:
-+        {"permission":"interact","from":"eth:0xed37ecDcc2bb79ab310457702713626d5C07FC2D","description":"stage or cancel a lane's CCTP migration, set its burn accounting and Circle migrator, and withdraw fee-token balances to an arbitrary recipient.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.131:
-+        {"permission":"interact","from":"eth:0xf38c74E599Ad1243D47b50D30b5C873B813ED7C1","description":"configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.132:
-+        {"permission":"interact","from":"eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D","description":"change the fee aggregator that receives fee-token balances withdrawn from this proxy.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
-      receivedPermissions.133:
-+        {"permission":"interact","from":"eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D","description":"replace any of the four USDC child pools and select the lock-or-burn mechanism used for each remote chain.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449"}]}
     }
 ```
 
@@ -830,110 +666,6 @@ discovery. Values are for block 1787129183 (main branch discovery), not current.
       name:
 -        "Router"
 +        "DeprecatedRouter"
-      receivedPermissions:
-+        [{"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"select the OnRamp and OffRamp addresses authorized to invoke this verifier for each configured remote chain.","role":".routeRouters"}]
-    }
-```
-
-```diff
-    contract ARMProxy (eth:0x411dE17f12D1A34ecC7F45f49844626267c75e81) [transporter/ARMProxy] {
-    +++ description: Call-forwarding proxy for the active ARM/RMN implementation. It transparently forwards curse checks, the legacy isBlessed() compatibility check and other supported ARM/RMN interface calls; their semantics depend on the selected implementation.
-      receivedPermissions.12:
-+        {"permission":"interact","from":"eth:0x34a786a4D88c438f71be45D0FaB6240Dc9F74574","description":"block this pool's transfers when RMN marks a remote chain or the global subject as cursed.","role":".getRmnProxy"}
-      receivedPermissions.30:
-+        {"permission":"interact","from":"eth:0x806489226179d519D7bf5814BA8ea0F7D850aCf2","description":"block this pool's transfers when RMN marks a remote chain or the global subject as cursed.","role":".getRmnProxy"}
-      receivedPermissions.60:
-+        {"permission":"interact","from":"eth:0xed37ecDcc2bb79ab310457702713626d5C07FC2D","description":"block this pool's transfers when RMN marks a remote chain or the global subject as cursed.","role":".getRmnProxy"}
-      receivedPermissions.61:
-+        {"permission":"interact","from":"eth:0xF00B3b06690bC7E2bC6A9ccae55d17b7CD818465","description":"block this pool's transfers when RMN marks a remote chain or the global subject as cursed.","role":".getRmnProxy"}
-      receivedPermissions.63:
-+        {"permission":"interact","from":"eth:0xf38c74E599Ad1243D47b50D30b5C873B813ED7C1","description":"block this pool's transfers when RMN marks a remote chain or the global subject as cursed.","role":".getRmnProxy"}
-    }
-```
-
-```diff
-    contract ARMTimelock (eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449) [transporter/RBACTimelock] {
-    +++ description: Role based timelock used to administer CCIP contracts.
-      directlyReceivedPermissions.0:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"add or deprecate capabilities and select each capability's optional configuration contract when the capability is added.","role":".owner"}
-      directlyReceivedPermissions.1:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"add or remove node operators and update any operator's admin address or name.","role":".owner"}
-      directlyReceivedPermissions.2:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"add, update, or remove nodes for any node operator, subject to the configured DON-membership and capability constraints.","role":".owner"}
-      directlyReceivedPermissions.3:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"create, reconfigure, or remove DONs, controlling their node membership, capability payloads, fault tolerance, public access, and, at creation, whether they accept workflows. Configuring a DON can invoke its capability configuration contracts.","role":".owner"}
-      directlyReceivedPermissions.4:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"update their node operator record and add, update, or remove nodes assigned to it, subject to DON-membership and capability constraints.","role":".getNodeOperators"}
-      directlyReceivedPermissions.7:
-+        {"permission":"interact","from":"eth:0x05CEB5F0d52316B48a84fECA8230c90492a4B75b","description":"add, remove, enable, or disable destination chains and set the flat executor fee charged for each one.","role":".owner"}
-      directlyReceivedPermissions.8:
-+        {"permission":"interact","from":"eth:0x05CEB5F0d52316B48a84fECA8230c90492a4B75b","description":"change the accepted finality policy and fee aggregator, add or remove CCVs from the allowlist, and enable or disable allowlist enforcement for execution quotes.","role":".owner"}
-      directlyReceivedPermissions.26:
-+        {"permission":"interact","from":"eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b","description":"add, replace, or remove inbound verifier implementations for version tags and outbound verifier implementations for destination chains.","role":".owner"}
-      directlyReceivedPermissions.27:
-+        {"permission":"interact","from":"eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b","description":"change the fee aggregator that receives fee-token balances withdrawn from this resolver.","role":".owner"}
-      directlyReceivedPermissions.28:
-+        {"permission":"interact","from":"eth:0x35cce3F115A25e7a90101E02906a57b9f8e4C2c6","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner"}
-      directlyReceivedPermissions.29:
-+        {"permission":"interact","from":"eth:0x35cce3F115A25e7a90101E02906a57b9f8e4C2c6","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers"}
-      directlyReceivedPermissions.32:
-+        {"permission":"interact","from":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3","description":"add, disable, or reconfigure source routes, including their local Router, accepted source OnRamps, default CCVs, and lane-mandated CCVs.","role":".owner"}
-      directlyReceivedPermissions.44:
-+        {"permission":"interact","from":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","description":"change the fee aggregator that receives fee tokens withdrawn from this endpoint.","role":".owner"}
-      directlyReceivedPermissions.45:
-+        {"permission":"interact","from":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","description":"replace the Executor target that handles forwarded calls, changing the fee, finality, and CCV policy exposed by this endpoint.","role":".owner"}
-      directlyReceivedPermissions.53:
-+        {"permission":"interact","from":"eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40","description":"add, replace, or remove per-chain reader sets, fault-tolerance thresholds, and opaque chain-family configuration.","role":".owner"}
-      directlyReceivedPermissions.55:
-+        {"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"add or reconfigure remote-chain verification parameters, including the Router, fees, verification gas, payload size, and sender-allowlist state.","role":".owner"}
-      directlyReceivedPermissions.56:
-+        {"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"change the allowed finality policy, fee aggregator, and sender-allowlist administrator, and directly update sender allowlists.","role":".owner"}
-      directlyReceivedPermissions.57:
-+        {"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"replace each source chain's committee signers and signature threshold.","role":".owner"}
-      directlyReceivedPermissions.60:
-+        {"permission":"interact","from":"eth:0x806489226179d519D7bf5814BA8ea0F7D850aCf2","description":"configure remote chains and pools, Router and administrators, accepted finality, rate limits, transfer fees, CCV hooks, and authorized callers.","role":".owner"}
-      directlyReceivedPermissions.61:
-+        {"permission":"interact","from":"eth:0x806489226179d519D7bf5814BA8ea0F7D850aCf2","description":"withdraw fee-token balances held by this pool to an arbitrary recipient.","role":".owner"}
-      directlyReceivedPermissions.70:
-+        {"permission":"interact","from":"eth:0x8d8Aab1Ef7047C1bBc6D17202CB39EcA43263CFC","description":"add or remove addresses allowed to submit CCTP messages and attestations through this proxy.","role":".owner"}
-      directlyReceivedPermissions.84:
-+        {"permission":"interact","from":"eth:0x966A3BE75103C680b6A4248689630c788659d2A5","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner"}
-      directlyReceivedPermissions.85:
-+        {"permission":"interact","from":"eth:0x966A3BE75103C680b6A4248689630c788659d2A5","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers"}
-      directlyReceivedPermissions.101:
-+        {"permission":"interact","from":"eth:0xC373cB40513af4A9a128E6350F2b127F5D413E88","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner"}
-      directlyReceivedPermissions.102:
-+        {"permission":"interact","from":"eth:0xC373cB40513af4A9a128E6350F2b127F5D413E88","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers"}
-      directlyReceivedPermissions.105:
-+        {"permission":"interact","from":"eth:0xcd8ba189347Fc5e968778BBFFDB656ea94a7737D","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner"}
-      directlyReceivedPermissions.106:
-+        {"permission":"interact","from":"eth:0xcd8ba189347Fc5e968778BBFFDB656ea94a7737D","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers"}
-      directlyReceivedPermissions.107:
-+        {"permission":"interact","from":"eth:0xD061610Ea164ddFdCe7162fd543951A82E6D446b","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner"}
-      directlyReceivedPermissions.108:
-+        {"permission":"interact","from":"eth:0xD061610Ea164ddFdCe7162fd543951A82E6D446b","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers"}
-      directlyReceivedPermissions.118:
-+        {"permission":"interact","from":"eth:0xE16982d9262dC0483Bd3dAdE2C020fFcB402E459","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner"}
-      directlyReceivedPermissions.119:
-+        {"permission":"interact","from":"eth:0xE16982d9262dC0483Bd3dAdE2C020fFcB402E459","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers"}
-      directlyReceivedPermissions.122:
-+        {"permission":"interact","from":"eth:0xE5E7C0a97877Cc6b3aDb735Fa725BCD60B3E9FB4","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner"}
-      directlyReceivedPermissions.123:
-+        {"permission":"interact","from":"eth:0xE5E7C0a97877Cc6b3aDb735Fa725BCD60B3E9FB4","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers"}
-      directlyReceivedPermissions.124:
-+        {"permission":"interact","from":"eth:0xE77aD12b305cD90eEe6b769Ac6490a42c0039d67","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner"}
-      directlyReceivedPermissions.125:
-+        {"permission":"interact","from":"eth:0xE77aD12b305cD90eEe6b769Ac6490a42c0039d67","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers"}
-      directlyReceivedPermissions.126:
-+        {"permission":"interact","from":"eth:0xed37ecDcc2bb79ab310457702713626d5C07FC2D","description":"configure remote chains, their distinct USDC lockboxes and pools, Router and administrators, accepted finality, rate limits, transfer fees, CCV hooks, and authorized callers.","role":".owner"}
-      directlyReceivedPermissions.127:
-+        {"permission":"interact","from":"eth:0xed37ecDcc2bb79ab310457702713626d5C07FC2D","description":"stage or cancel a lane's CCTP migration, set its burn accounting and Circle migrator, and withdraw fee-token balances to an arbitrary recipient.","role":".owner"}
-      directlyReceivedPermissions.129:
-+        {"permission":"interact","from":"eth:0xf38c74E599Ad1243D47b50D30b5C873B813ED7C1","description":"configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.","role":".owner"}
-      directlyReceivedPermissions.130:
-+        {"permission":"interact","from":"eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D","description":"change the fee aggregator that receives fee-token balances withdrawn from this proxy.","role":".owner"}
-      directlyReceivedPermissions.131:
-+        {"permission":"interact","from":"eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D","description":"replace any of the four USDC child pools and select the lock-or-burn mechanism used for each remote chain.","role":".owner"}
     }
 ```
 
@@ -965,275 +697,9 @@ discovery. Values are for block 1787129183 (main branch discovery), not current.
       name:
 -        "Router"
 +        "MainRouter"
-      directlyReceivedPermissions.1:
-+        {"permission":"interact","from":"eth:0x1A0F886eFBBf88C1D2Ac399a02720A2b1568E2Af","description":"select the OnRamp and OffRamp addresses authorized to invoke this verifier for each configured remote chain.","role":".routeRouters"}
-      directlyReceivedPermissions.2:
-+        {"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"select the OnRamp and OffRamp addresses authorized to invoke this verifier for each configured remote chain.","role":".routeRouters"}
-      directlyReceivedPermissions.3:
-+        {"permission":"interact","from":"eth:0xF00B3b06690bC7E2bC6A9ccae55d17b7CD818465","description":"select the OnRamps and OffRamps authorized to invoke this pool for each configured remote chain.","role":".router"}
-      directlyReceivedPermissions.4:
-+        {"permission":"interact","from":"eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D","description":"select the OnRamps and OffRamps authorized to invoke this proxy for each remote chain.","role":".router"}
       fieldMeta.onRamps.description:
 -        "All OnRamp registrations the Router knows about, keyed by destination chain name. Each maps to the OnRamp contract address that ccipSend() will delegate to for that destination. Replayed from OnRampSet events. ignoreRelative is set because the v1.6 architecture uses a single per-chain OnRamp serving all destinations, already walked via arbitrumOnRamp."
 +        "All OnRamp registrations the Router knows about, keyed by destination chain name. Each maps to the OnRamp contract address that ccipSend() will delegate to for that destination. Replayed from OnRampSet events. Relatives are ignored here because a shared per-chain OnRamp can serve many destinations; individual ramp deployments must be tracked separately rather than crawled once per route."
-    }
-```
-
-```diff
-    contract ARM_GnosisSafe (eth:0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf) [GnosisSafe] {
-    +++ description: None
-      receivedPermissions.0:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"add or deprecate capabilities and select each capability's optional configuration contract when the capability is added.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.1:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"add or remove node operators and update any operator's admin address or name.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.2:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"add, update, or remove nodes for any node operator, subject to the configured DON-membership and capability constraints.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.3:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"create, reconfigure, or remove DONs, controlling their node membership, capability payloads, fault tolerance, public access, and, at creation, whether they accept workflows. Configuring a DON can invoke its capability configuration contracts.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.4:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"update their node operator record and add, update, or remove nodes assigned to it, subject to DON-membership and capability constraints.","role":".getNodeOperators","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.7:
-+        {"permission":"interact","from":"eth:0x05CEB5F0d52316B48a84fECA8230c90492a4B75b","description":"add, remove, enable, or disable destination chains and set the flat executor fee charged for each one.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.8:
-+        {"permission":"interact","from":"eth:0x05CEB5F0d52316B48a84fECA8230c90492a4B75b","description":"change the accepted finality policy and fee aggregator, add or remove CCVs from the allowlist, and enable or disable allowlist enforcement for execution quotes.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.26:
-+        {"permission":"interact","from":"eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b","description":"add, replace, or remove inbound verifier implementations for version tags and outbound verifier implementations for destination chains.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.27:
-+        {"permission":"interact","from":"eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b","description":"change the fee aggregator that receives fee-token balances withdrawn from this resolver.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.28:
-+        {"permission":"interact","from":"eth:0x35cce3F115A25e7a90101E02906a57b9f8e4C2c6","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.29:
-+        {"permission":"interact","from":"eth:0x35cce3F115A25e7a90101E02906a57b9f8e4C2c6","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.32:
-+        {"permission":"interact","from":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3","description":"add, disable, or reconfigure source routes, including their local Router, accepted source OnRamps, default CCVs, and lane-mandated CCVs.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.46:
-+        {"permission":"interact","from":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","description":"change the fee aggregator that receives fee tokens withdrawn from this endpoint.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.47:
-+        {"permission":"interact","from":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","description":"replace the Executor target that handles forwarded calls, changing the fee, finality, and CCV policy exposed by this endpoint.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.55:
-+        {"permission":"interact","from":"eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40","description":"add, replace, or remove per-chain reader sets, fault-tolerance thresholds, and opaque chain-family configuration.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.57:
-+        {"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"add or reconfigure remote-chain verification parameters, including the Router, fees, verification gas, payload size, and sender-allowlist state.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.58:
-+        {"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"change the allowed finality policy, fee aggregator, and sender-allowlist administrator, and directly update sender allowlists.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.59:
-+        {"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"replace each source chain's committee signers and signature threshold.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.62:
-+        {"permission":"interact","from":"eth:0x806489226179d519D7bf5814BA8ea0F7D850aCf2","description":"configure remote chains and pools, Router and administrators, accepted finality, rate limits, transfer fees, CCV hooks, and authorized callers.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.63:
-+        {"permission":"interact","from":"eth:0x806489226179d519D7bf5814BA8ea0F7D850aCf2","description":"withdraw fee-token balances held by this pool to an arbitrary recipient.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.72:
-+        {"permission":"interact","from":"eth:0x8d8Aab1Ef7047C1bBc6D17202CB39EcA43263CFC","description":"add or remove addresses allowed to submit CCTP messages and attestations through this proxy.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.86:
-+        {"permission":"interact","from":"eth:0x966A3BE75103C680b6A4248689630c788659d2A5","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.87:
-+        {"permission":"interact","from":"eth:0x966A3BE75103C680b6A4248689630c788659d2A5","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.103:
-+        {"permission":"interact","from":"eth:0xC373cB40513af4A9a128E6350F2b127F5D413E88","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.104:
-+        {"permission":"interact","from":"eth:0xC373cB40513af4A9a128E6350F2b127F5D413E88","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.107:
-+        {"permission":"interact","from":"eth:0xcd8ba189347Fc5e968778BBFFDB656ea94a7737D","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.108:
-+        {"permission":"interact","from":"eth:0xcd8ba189347Fc5e968778BBFFDB656ea94a7737D","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.109:
-+        {"permission":"interact","from":"eth:0xD061610Ea164ddFdCe7162fd543951A82E6D446b","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.110:
-+        {"permission":"interact","from":"eth:0xD061610Ea164ddFdCe7162fd543951A82E6D446b","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.120:
-+        {"permission":"interact","from":"eth:0xE16982d9262dC0483Bd3dAdE2C020fFcB402E459","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.121:
-+        {"permission":"interact","from":"eth:0xE16982d9262dC0483Bd3dAdE2C020fFcB402E459","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.124:
-+        {"permission":"interact","from":"eth:0xE5E7C0a97877Cc6b3aDb735Fa725BCD60B3E9FB4","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.125:
-+        {"permission":"interact","from":"eth:0xE5E7C0a97877Cc6b3aDb735Fa725BCD60B3E9FB4","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.126:
-+        {"permission":"interact","from":"eth:0xE77aD12b305cD90eEe6b769Ac6490a42c0039d67","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.127:
-+        {"permission":"interact","from":"eth:0xE77aD12b305cD90eEe6b769Ac6490a42c0039d67","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.128:
-+        {"permission":"interact","from":"eth:0xed37ecDcc2bb79ab310457702713626d5C07FC2D","description":"configure remote chains, their distinct USDC lockboxes and pools, Router and administrators, accepted finality, rate limits, transfer fees, CCV hooks, and authorized callers.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.129:
-+        {"permission":"interact","from":"eth:0xed37ecDcc2bb79ab310457702713626d5C07FC2D","description":"stage or cancel a lane's CCTP migration, set its burn accounting and Circle migrator, and withdraw fee-token balances to an arbitrary recipient.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.131:
-+        {"permission":"interact","from":"eth:0xf38c74E599Ad1243D47b50D30b5C873B813ED7C1","description":"configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.132:
-+        {"permission":"interact","from":"eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D","description":"change the fee aggregator that receives fee-token balances withdrawn from this proxy.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.133:
-+        {"permission":"interact","from":"eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D","description":"replace any of the four USDC child pools and select the lock-or-burn mechanism used for each remote chain.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-    }
-```
-
-```diff
-    contract ARM_Multisig1 (eth:0xD9757aA52907798d1aF2FDa7A6C0cC733E5aCf7e) [transporter/ManyChainMultiSig] {
-    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 42 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-42 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-17, parent=0, signers=17 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
-      receivedPermissions.0:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"add or deprecate capabilities and select each capability's optional configuration contract when the capability is added.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.1:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"add or remove node operators and update any operator's admin address or name.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.2:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"add, update, or remove nodes for any node operator, subject to the configured DON-membership and capability constraints.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.3:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"create, reconfigure, or remove DONs, controlling their node membership, capability payloads, fault tolerance, public access, and, at creation, whether they accept workflows. Configuring a DON can invoke its capability configuration contracts.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.4:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"update their node operator record and add, update, or remove nodes assigned to it, subject to DON-membership and capability constraints.","role":".getNodeOperators","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.7:
-+        {"permission":"interact","from":"eth:0x05CEB5F0d52316B48a84fECA8230c90492a4B75b","description":"add, remove, enable, or disable destination chains and set the flat executor fee charged for each one.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.8:
-+        {"permission":"interact","from":"eth:0x05CEB5F0d52316B48a84fECA8230c90492a4B75b","description":"change the accepted finality policy and fee aggregator, add or remove CCVs from the allowlist, and enable or disable allowlist enforcement for execution quotes.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.26:
-+        {"permission":"interact","from":"eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b","description":"add, replace, or remove inbound verifier implementations for version tags and outbound verifier implementations for destination chains.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.27:
-+        {"permission":"interact","from":"eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b","description":"change the fee aggregator that receives fee-token balances withdrawn from this resolver.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.28:
-+        {"permission":"interact","from":"eth:0x35cce3F115A25e7a90101E02906a57b9f8e4C2c6","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.29:
-+        {"permission":"interact","from":"eth:0x35cce3F115A25e7a90101E02906a57b9f8e4C2c6","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.32:
-+        {"permission":"interact","from":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3","description":"add, disable, or reconfigure source routes, including their local Router, accepted source OnRamps, default CCVs, and lane-mandated CCVs.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.46:
-+        {"permission":"interact","from":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","description":"change the fee aggregator that receives fee tokens withdrawn from this endpoint.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.47:
-+        {"permission":"interact","from":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","description":"replace the Executor target that handles forwarded calls, changing the fee, finality, and CCV policy exposed by this endpoint.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.55:
-+        {"permission":"interact","from":"eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40","description":"add, replace, or remove per-chain reader sets, fault-tolerance thresholds, and opaque chain-family configuration.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.57:
-+        {"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"add or reconfigure remote-chain verification parameters, including the Router, fees, verification gas, payload size, and sender-allowlist state.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.58:
-+        {"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"change the allowed finality policy, fee aggregator, and sender-allowlist administrator, and directly update sender allowlists.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.59:
-+        {"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"replace each source chain's committee signers and signature threshold.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.62:
-+        {"permission":"interact","from":"eth:0x806489226179d519D7bf5814BA8ea0F7D850aCf2","description":"configure remote chains and pools, Router and administrators, accepted finality, rate limits, transfer fees, CCV hooks, and authorized callers.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.63:
-+        {"permission":"interact","from":"eth:0x806489226179d519D7bf5814BA8ea0F7D850aCf2","description":"withdraw fee-token balances held by this pool to an arbitrary recipient.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.72:
-+        {"permission":"interact","from":"eth:0x8d8Aab1Ef7047C1bBc6D17202CB39EcA43263CFC","description":"add or remove addresses allowed to submit CCTP messages and attestations through this proxy.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.86:
-+        {"permission":"interact","from":"eth:0x966A3BE75103C680b6A4248689630c788659d2A5","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.87:
-+        {"permission":"interact","from":"eth:0x966A3BE75103C680b6A4248689630c788659d2A5","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.103:
-+        {"permission":"interact","from":"eth:0xC373cB40513af4A9a128E6350F2b127F5D413E88","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.104:
-+        {"permission":"interact","from":"eth:0xC373cB40513af4A9a128E6350F2b127F5D413E88","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.107:
-+        {"permission":"interact","from":"eth:0xcd8ba189347Fc5e968778BBFFDB656ea94a7737D","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.108:
-+        {"permission":"interact","from":"eth:0xcd8ba189347Fc5e968778BBFFDB656ea94a7737D","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.109:
-+        {"permission":"interact","from":"eth:0xD061610Ea164ddFdCe7162fd543951A82E6D446b","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.110:
-+        {"permission":"interact","from":"eth:0xD061610Ea164ddFdCe7162fd543951A82E6D446b","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.120:
-+        {"permission":"interact","from":"eth:0xE16982d9262dC0483Bd3dAdE2C020fFcB402E459","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.121:
-+        {"permission":"interact","from":"eth:0xE16982d9262dC0483Bd3dAdE2C020fFcB402E459","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.124:
-+        {"permission":"interact","from":"eth:0xE5E7C0a97877Cc6b3aDb735Fa725BCD60B3E9FB4","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.125:
-+        {"permission":"interact","from":"eth:0xE5E7C0a97877Cc6b3aDb735Fa725BCD60B3E9FB4","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.126:
-+        {"permission":"interact","from":"eth:0xE77aD12b305cD90eEe6b769Ac6490a42c0039d67","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.127:
-+        {"permission":"interact","from":"eth:0xE77aD12b305cD90eEe6b769Ac6490a42c0039d67","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.128:
-+        {"permission":"interact","from":"eth:0xed37ecDcc2bb79ab310457702713626d5C07FC2D","description":"configure remote chains, their distinct USDC lockboxes and pools, Router and administrators, accepted finality, rate limits, transfer fees, CCV hooks, and authorized callers.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.129:
-+        {"permission":"interact","from":"eth:0xed37ecDcc2bb79ab310457702713626d5C07FC2D","description":"stage or cancel a lane's CCTP migration, set its burn accounting and Circle migrator, and withdraw fee-token balances to an arbitrary recipient.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.131:
-+        {"permission":"interact","from":"eth:0xf38c74E599Ad1243D47b50D30b5C873B813ED7C1","description":"configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.132:
-+        {"permission":"interact","from":"eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D","description":"change the fee aggregator that receives fee-token balances withdrawn from this proxy.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.133:
-+        {"permission":"interact","from":"eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D","description":"replace any of the four USDC child pools and select the lock-or-burn mechanism used for each remote chain.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-    }
-```
-
-```diff
-    contract ARM_Multisig2 (eth:0xE53289F32c8E690b7173aA33affE9B6B0CB0012F) [transporter/ManyChainMultiSig] {
-    +++ description: Tree-quorum multisig used to gate CCIP governance actions. Signers belong to leaf groups; each interior group has its own M-of-N quorum and counts how many of its children (signers or sub-groups) have succeeded. A call is accepted only if the root group reaches its quorum. Minimum 4 signatures across 43 total signers, but those signatures must come from the specific groups required by the tree; this is NOT equivalent to a flat 4-of-43 multisig and is strictly more constrained. Root: 2-of-3, childGroups=(1,2,3). [click for per-group breakdown: Group 1: 2-of-18, parent=0, signers=18 | Group 2: 2-of-18, parent=0, signers=18 | Group 3: 2-of-7, parent=0, signers=7]. The owner can rotate the entire signer tree.
-      receivedPermissions.0:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"add or deprecate capabilities and select each capability's optional configuration contract when the capability is added.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.1:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"add or remove node operators and update any operator's admin address or name.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.2:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"add, update, or remove nodes for any node operator, subject to the configured DON-membership and capability constraints.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.3:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"create, reconfigure, or remove DONs, controlling their node membership, capability payloads, fault tolerance, public access, and, at creation, whether they accept workflows. Configuring a DON can invoke its capability configuration contracts.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.4:
-+        {"permission":"interact","from":"eth:0x006bC1F599a10B73C88cc3cD19a92829C4AC1E83","description":"update their node operator record and add, update, or remove nodes assigned to it, subject to DON-membership and capability constraints.","role":".getNodeOperators","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.7:
-+        {"permission":"interact","from":"eth:0x05CEB5F0d52316B48a84fECA8230c90492a4B75b","description":"add, remove, enable, or disable destination chains and set the flat executor fee charged for each one.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.8:
-+        {"permission":"interact","from":"eth:0x05CEB5F0d52316B48a84fECA8230c90492a4B75b","description":"change the accepted finality policy and fee aggregator, add or remove CCVs from the allowlist, and enable or disable allowlist enforcement for execution quotes.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.26:
-+        {"permission":"interact","from":"eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b","description":"add, replace, or remove inbound verifier implementations for version tags and outbound verifier implementations for destination chains.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.27:
-+        {"permission":"interact","from":"eth:0x2CaAfd3B4Cf606220580c885Bd2B448FB93dC03b","description":"change the fee aggregator that receives fee-token balances withdrawn from this resolver.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.28:
-+        {"permission":"interact","from":"eth:0x35cce3F115A25e7a90101E02906a57b9f8e4C2c6","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.29:
-+        {"permission":"interact","from":"eth:0x35cce3F115A25e7a90101E02906a57b9f8e4C2c6","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.32:
-+        {"permission":"interact","from":"eth:0x408428bca0e24A25ac8baAc1b70f64AF257717c3","description":"add, disable, or reconfigure source routes, including their local Router, accepted source OnRamps, default CCVs, and lane-mandated CCVs.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.46:
-+        {"permission":"interact","from":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","description":"change the fee aggregator that receives fee tokens withdrawn from this endpoint.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.47:
-+        {"permission":"interact","from":"eth:0x6608d995bBDE874De5292bFD289643c88D176ED3","description":"replace the Executor target that handles forwarded calls, changing the fee, finality, and CCV policy exposed by this endpoint.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.55:
-+        {"permission":"interact","from":"eth:0x76a443768A5e3B8d1AED0105FC250877841Deb40","description":"add, replace, or remove per-chain reader sets, fault-tolerance thresholds, and opaque chain-family configuration.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.57:
-+        {"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"add or reconfigure remote-chain verification parameters, including the Router, fees, verification gas, payload size, and sender-allowlist state.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.58:
-+        {"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"change the allowed finality policy, fee aggregator, and sender-allowlist administrator, and directly update sender allowlists.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.59:
-+        {"permission":"interact","from":"eth:0x7BcE1A3297604CAFa601f05799b6Ed98e8c01B7F","description":"replace each source chain's committee signers and signature threshold.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.62:
-+        {"permission":"interact","from":"eth:0x806489226179d519D7bf5814BA8ea0F7D850aCf2","description":"configure remote chains and pools, Router and administrators, accepted finality, rate limits, transfer fees, CCV hooks, and authorized callers.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.63:
-+        {"permission":"interact","from":"eth:0x806489226179d519D7bf5814BA8ea0F7D850aCf2","description":"withdraw fee-token balances held by this pool to an arbitrary recipient.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.72:
-+        {"permission":"interact","from":"eth:0x8d8Aab1Ef7047C1bBc6D17202CB39EcA43263CFC","description":"add or remove addresses allowed to submit CCTP messages and attestations through this proxy.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.86:
-+        {"permission":"interact","from":"eth:0x966A3BE75103C680b6A4248689630c788659d2A5","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.87:
-+        {"permission":"interact","from":"eth:0x966A3BE75103C680b6A4248689630c788659d2A5","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.103:
-+        {"permission":"interact","from":"eth:0xC373cB40513af4A9a128E6350F2b127F5D413E88","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.104:
-+        {"permission":"interact","from":"eth:0xC373cB40513af4A9a128E6350F2b127F5D413E88","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.107:
-+        {"permission":"interact","from":"eth:0xcd8ba189347Fc5e968778BBFFDB656ea94a7737D","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.108:
-+        {"permission":"interact","from":"eth:0xcd8ba189347Fc5e968778BBFFDB656ea94a7737D","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.109:
-+        {"permission":"interact","from":"eth:0xD061610Ea164ddFdCe7162fd543951A82E6D446b","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.110:
-+        {"permission":"interact","from":"eth:0xD061610Ea164ddFdCe7162fd543951A82E6D446b","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.120:
-+        {"permission":"interact","from":"eth:0xE16982d9262dC0483Bd3dAdE2C020fFcB402E459","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.121:
-+        {"permission":"interact","from":"eth:0xE16982d9262dC0483Bd3dAdE2C020fFcB402E459","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.124:
-+        {"permission":"interact","from":"eth:0xE5E7C0a97877Cc6b3aDb735Fa725BCD60B3E9FB4","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.125:
-+        {"permission":"interact","from":"eth:0xE5E7C0a97877Cc6b3aDb735Fa725BCD60B3E9FB4","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.126:
-+        {"permission":"interact","from":"eth:0xE77aD12b305cD90eEe6b769Ac6490a42c0039d67","description":"add or remove addresses allowed to deposit and withdraw the configured token from this lockbox.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.127:
-+        {"permission":"interact","from":"eth:0xE77aD12b305cD90eEe6b769Ac6490a42c0039d67","description":"deposit the configured token and withdraw any amount held by this lockbox to an arbitrary recipient.","role":".getAllAuthorizedCallers","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.128:
-+        {"permission":"interact","from":"eth:0xed37ecDcc2bb79ab310457702713626d5C07FC2D","description":"configure remote chains, their distinct USDC lockboxes and pools, Router and administrators, accepted finality, rate limits, transfer fees, CCV hooks, and authorized callers.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.129:
-+        {"permission":"interact","from":"eth:0xed37ecDcc2bb79ab310457702713626d5C07FC2D","description":"stage or cancel a lane's CCTP migration, set its burn accounting and Circle migrator, and withdraw fee-token balances to an arbitrary recipient.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.131:
-+        {"permission":"interact","from":"eth:0xf38c74E599Ad1243D47b50D30b5C873B813ED7C1","description":"configure supported chains, remote pools, CCTP domains, rate limits, the Router, and the caller allowlist for this USDC pool.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.132:
-+        {"permission":"interact","from":"eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D","description":"change the fee aggregator that receives fee-token balances withdrawn from this proxy.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
-      receivedPermissions.133:
-+        {"permission":"interact","from":"eth:0xf70B4B6ec7AdB8822b23119c844729E9b1B1683D","description":"replace any of the four USDC child pools and select the lock-or-burn mechanism used for each remote chain.","role":".owner","via":[{"address":"eth:0x44835bBBA9D40DEDa9b64858095EcFB2693c9449","delay":10800}]}
     }
 ```
 
@@ -1495,7 +961,7 @@ discovery. Values are for block 1787129183 (main branch discovery), not current.
     +++ description: Part of CCTP: Used for automated access control for minting.
 ```
 
-Generated with discovered.json: 0x9d032718683b62dc65ef7b46def182c7f9d427ac
+Generated with discovered.json: 0xe1ee4b68585d0139399add87dbcc9ad94b68e3fd
 
 # Diff at Thu, 20 Aug 2026 13:50:19 GMT:
 

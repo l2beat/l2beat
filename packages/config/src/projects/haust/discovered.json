@@ -133,28 +133,12 @@
     {
       "address": "eth:0xc68685bBcb11F05ACE5117f9693a073be5fb55Ca",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xaD83Cd3e5A725546daDC5A25088c5c098d320Ca8",
-          "description": "set the trusted sequencer address.",
-          "role": ".admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xd4eb5EcF61FF2eCFA9069787ED14820E9A53bF2b",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xaD83Cd3e5A725546daDC5A25088c5c098d320Ca8",
-          "description": "sign state transitions (replaces state validation for this aggchain).",
-          "role": ".aggchainSigners"
-        }
-      ]
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -346,5 +330,27 @@
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
   "usedBlockNumbers": { "ethereum": 23783849 },
-  "permissionsConfigHash": "0x933816924ec9b37ceda05ed7dac98e8e2f848bc062c48e33bfb6c3a023e12d55"
+  "permissionsConfigHash": "0x933816924ec9b37ceda05ed7dac98e8e2f848bc062c48e33bfb6c3a023e12d55",
+  "permissions": {
+    "eth:0xc68685bBcb11F05ACE5117f9693a073be5fb55Ca": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xaD83Cd3e5A725546daDC5A25088c5c098d320Ca8",
+          "description": "set the trusted sequencer address.",
+          "role": ".admin"
+        }
+      ]
+    },
+    "eth:0xd4eb5EcF61FF2eCFA9069787ED14820E9A53bF2b": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xaD83Cd3e5A725546daDC5A25088c5c098d320Ca8",
+          "description": "sign state transitions (replaces state validation for this aggchain).",
+          "role": ".aggchainSigners"
+        }
+      ]
+    }
+  }
 }

@@ -285,42 +285,7 @@
     {
       "address": "arb1:0x3f90c4913621e6758eB8767EA934FCa59ae5Dee8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
-          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
-          "role": ".anyTrustFastConfirmer",
-          "via": [
-            { "address": "arb1:0x42124A2E725E6458701b8Ef46B78Db55827fA836" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators",
-          "via": [
-            { "address": "arb1:0x42124A2E725E6458701b8Ef46B78Db55827fA836" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators",
-          "via": [
-            { "address": "arb1:0xDbB10Cdb2F0611C311E7D7057794a690E7872005" }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "GnosisSafeL2",
@@ -332,20 +297,6 @@
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
-          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
-          "role": ".anyTrustFastConfirmer"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
       "sinceTimestamp": 1762350107,
@@ -449,53 +400,6 @@
         "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x107695630130919cb040B095b9b20511D6e211bB",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x3616995dF5D07B28f2B186F1386cace9EB9Bbd20",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x6F4836aFD5e21EDcee9b838C5a4125829EC198d0",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xACAec98D879E39d83a30F914A36bf4877424D04f",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xdA3102d2f80CaD9571a9Eb3656e808e973620dBD",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xeB88b89e085D6B747Dd6b9CEaf2716bdd89F1E7c",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
       "sinceTimestamp": 1761511538,
       "sinceBlock": 393710880,
@@ -517,113 +421,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "role": ".owner",
-          "via": [
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x107695630130919cb040B095b9b20511D6e211bB",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x3616995dF5D07B28f2B186F1386cace9EB9Bbd20",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x6F4836aFD5e21EDcee9b838C5a4125829EC198d0",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xACAec98D879E39d83a30F914A36bf4877424D04f",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xdA3102d2f80CaD9571a9Eb3656e808e973620dBD",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xeB88b89e085D6B747Dd6b9CEaf2716bdd89F1E7c",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
-            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf",
-          "role": ".executors"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "arb1:0xB3aA47edBc9A1178B56bB55D1a9E3821845870e8",
       "sinceTimestamp": 1758905666,
@@ -703,15 +500,7 @@
     {
       "address": "arb1:0x9f787F6e07469BBA84f0BE488c42eDC4c766cC83",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
-          "role": ".batchPosters"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ValidatorUtils",
@@ -771,24 +560,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
       "sinceTimestamp": 1761511538,
       "sinceBlock": 393710880,
@@ -936,14 +707,6 @@
         "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
       ],
       "proxyType": "gnosis safe",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "arb1:0xc2507E8d43AE685fd1e98805bc96C6d31bBB5c28",
       "sinceTimestamp": 1761592647,
@@ -1881,5 +1644,258 @@
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "arbitrum": 498266527 },
-  "permissionsConfigHash": "0x47c88c4e5788d05806e3b41dda7a1ff6cefba1d545e5e6f50fbf04e29431c002"
+  "permissionsConfigHash": "0x47c88c4e5788d05806e3b41dda7a1ff6cefba1d545e5e6f50fbf04e29431c002",
+  "permissions": {
+    "arb1:0x3f90c4913621e6758eB8767EA934FCa59ae5Dee8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "role": ".anyTrustFastConfirmer",
+          "via": [
+            { "address": "arb1:0x42124A2E725E6458701b8Ef46B78Db55827fA836" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators",
+          "via": [
+            { "address": "arb1:0x42124A2E725E6458701b8Ef46B78Db55827fA836" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators",
+          "via": [
+            { "address": "arb1:0xDbB10Cdb2F0611C311E7D7057794a690E7872005" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "arb1:0x42124A2E725E6458701b8Ef46B78Db55827fA836": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "role": ".anyTrustFastConfirmer"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x107695630130919cb040B095b9b20511D6e211bB",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x3616995dF5D07B28f2B186F1386cace9EB9Bbd20",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x6F4836aFD5e21EDcee9b838C5a4125829EC198d0",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xACAec98D879E39d83a30F914A36bf4877424D04f",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xdA3102d2f80CaD9571a9Eb3656e808e973620dBD",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xeB88b89e085D6B747Dd6b9CEaf2716bdd89F1E7c",
+          "role": "admin"
+        }
+      ]
+    },
+    "arb1:0x871e290d5447b958131F6d44f915F10032436ee6": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner",
+          "via": [
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x107695630130919cb040B095b9b20511D6e211bB",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x3616995dF5D07B28f2B186F1386cace9EB9Bbd20",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x6F4836aFD5e21EDcee9b838C5a4125829EC198d0",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x9f427c80C4DF962726808d4c876fc2c55474a764",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xACAec98D879E39d83a30F914A36bf4877424D04f",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xdA3102d2f80CaD9571a9Eb3656e808e973620dBD",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0xeB88b89e085D6B747Dd6b9CEaf2716bdd89F1E7c",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6" },
+            { "address": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf",
+          "role": ".executors"
+        }
+      ]
+    },
+    "arb1:0x9f787F6e07469BBA84f0BE488c42eDC4c766cC83": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0xe44B83D8a3A86994043C809E29B723a44FAEE479",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
+    },
+    "arb1:0xDbB10Cdb2F0611C311E7D7057794a690E7872005": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "arb1:0xabf2650D259213d6b3E1bC46Fc1eDb7405d48Fdf": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "arb1:0x8420251362dA42f5Be2285B2DEa2f20D16332fE6",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x14FdC47483e79d5A76599a74A2D622DA1cf97BBF",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

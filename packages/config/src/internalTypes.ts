@@ -25,6 +25,7 @@ import type {
   ProjectLivenessConfig,
   ProjectLivenessInfo,
   ProjectPermissions,
+  ProjectPrivacyInfo,
   ProjectRedWarning,
   ProjectReviewStatus,
   ProjectRiskView,
@@ -106,6 +107,8 @@ export interface ScalingProject {
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** Interop configuration */
   interopConfig?: InteropConfig
+  /** Privacy data - if defined, the project is also shown on the privacy dashboard */
+  privacyInfo?: ProjectPrivacyInfo
 }
 
 export interface ProjectScalingConfig {

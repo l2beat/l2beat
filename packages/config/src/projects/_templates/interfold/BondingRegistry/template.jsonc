@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "BondingRegistry",
   "category": "core",
-  "description": "Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond; the contract also enforces exits, committee obligations, bans and slashing debits.",
+  "description": "Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits.",
   "ignoreInWatchMode": [
     "bondingAssetConfigurationVersion",
     "ciphernodeBonds",
@@ -26,7 +26,7 @@
       ]
     },
     "activeOperators": {
-      "description": "Operator keys currently active under the collateral and ban rules, reconstructed from activation events.",
+      "description": "Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.",
       "type": "PERMISSION",
       "handler": {
         "type": "event",
@@ -126,8 +126,14 @@
       "type": "RISK_PARAMETER"
     },
     "exitDelay": {
-      "description": "Delay before queued ticket collateral and FOLD bond exits can be claimed.",
+      "description": "Delay before queued ticket collateral and FOLD bond exits can be claimed. Must exceed the randomness timeout plus the sortition submission window.",
       "type": "RISK_PARAMETER"
+    },
+    "eligibilityConfigurationVersion": {
+      "description": "Version counter of the operator-eligibility configuration. Each bump instantly invalidates every operator's cached active status until it refreshes under the new version. The configured NodeReleaseRegistry can bump it to force re-attestation during a release cutover."
+    },
+    "numActiveOperators": {
+      "description": "Number of operators whose active status is valid under the current eligibility-configuration version."
     }
   }
 }

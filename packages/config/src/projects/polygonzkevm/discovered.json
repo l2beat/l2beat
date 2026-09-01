@@ -286,15 +286,7 @@
     {
       "address": "eth:0xD6f0FEEaAB8EAc205b182D51AE05B588a132Be5A",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-          "description": "sign state transitions (replaces state validation for this aggchain).",
-          "role": ".aggchainSigners"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xDB5D9c10FD2a92692DB51853e06058EE0436d69B",
@@ -374,23 +366,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
-          "role": "admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x099198353446A9E3a20672eDC1Bd461E978842c3",
       "sinceTimestamp": 1694792111,
@@ -829,5 +804,36 @@
     "polygon-cdk/AggchainECDSAMultisig": "0x82ecfee4035ce80ca61e973569ea98f7de96585fc446962ce126778d59492772"
   },
   "usedBlockNumbers": { "ethereum": 24167804 },
-  "permissionsConfigHash": "0xa6fa4fa5aefe06801cdc2e164b02aa44f6f78444ab8d06677a5fffd0121c9bba"
+  "permissionsConfigHash": "0xa6fa4fa5aefe06801cdc2e164b02aa44f6f78444ab8d06677a5fffd0121c9bba",
+  "permissions": {
+    "eth:0xD6f0FEEaAB8EAc205b182D51AE05B588a132Be5A": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+          "description": "sign state transitions (replaces state validation for this aggchain).",
+          "role": ".aggchainSigners"
+        }
+      ]
+    },
+    "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }

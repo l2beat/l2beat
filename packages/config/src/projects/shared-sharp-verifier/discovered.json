@@ -1826,32 +1826,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-          "description": "Administer the CallProxy's `GOVERNANCE_ADMIN` and role-admin hierarchy. This AccessControl role is separate from the outer proxy governor that schedules implementation upgrades.",
-          "role": ".governanceAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-          "description": "Grant and revoke application roles, including the `APP_GOVERNOR` role that controls caller-specific fallback routes.",
-          "role": ".appRoleAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-          "description": "Route fallback calls from specific callers to a still-active registry in the default verifier's reference chain. This principally determines which verifier and bootloader configuration processes their proof submissions; the proxy's explicit `isValid` entry point always queries the default target.",
-          "role": ".appGovernorAC"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-          "delay": 691200,
-          "role": ".$admin"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x59232aC80E6d403b6381393e52f4665ECA328558",
       "sinceTimestamp": 1678120703,
@@ -11073,5 +11047,35 @@
     "shared-sharp-verifier/SHARPVerifierCallProxy": "0xd6abe3c01cd750925365115c44550fef728ff685bfa5f1c7971181b2e375a918"
   },
   "usedBlockNumbers": { "ethereum": 25674047 },
-  "permissionsConfigHash": "0x8537b691fa6f869162e2df71fe8b88c8a0e8668684852275d37d73b9c1d4d1f8"
+  "permissionsConfigHash": "0x8537b691fa6f869162e2df71fe8b88c8a0e8668684852275d37d73b9c1d4d1f8",
+  "permissions": {
+    "eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "description": "Administer the CallProxy's `GOVERNANCE_ADMIN` and role-admin hierarchy. This AccessControl role is separate from the outer proxy governor that schedules implementation upgrades.",
+          "role": ".governanceAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "description": "Grant and revoke application roles, including the `APP_GOVERNOR` role that controls caller-specific fallback routes.",
+          "role": ".appRoleAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "description": "Route fallback calls from specific callers to a still-active registry in the default verifier's reference chain. This principally determines which verifier and bootloader configuration processes their proof submissions; the proxy's explicit `isValid` entry point always queries the default target.",
+          "role": ".appGovernorAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "delay": 691200,
+          "role": ".$admin"
+        }
+      ]
+    }
+  }
 }

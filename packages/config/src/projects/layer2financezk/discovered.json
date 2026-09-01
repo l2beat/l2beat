@@ -6,33 +6,7 @@
     {
       "address": "eth:0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
-          "description": "manage the token admin role.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
-          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
-          "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain.",
-          "role": ".operators"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
-          "role": ".$admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
@@ -285,15 +259,7 @@
     {
       "address": "eth:0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
-          "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain.",
-          "role": ".operators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Compound Token",
@@ -322,28 +288,12 @@
     {
       "address": "eth:0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "role": ".tokenAdmins"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "role": ".tokenAdmins"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Broker",
@@ -777,5 +727,65 @@
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
   "usedBlockNumbers": { "ethereum": 23667402 },
-  "permissionsConfigHash": "0x113747a7c028f1f174194085f1b84dab2e838f37bae13aa2a610c7b829c9f4bd"
+  "permissionsConfigHash": "0x113747a7c028f1f174194085f1b84dab2e838f37bae13aa2a610c7b829c9f4bd",
+  "permissions": {
+    "eth:0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "description": "manage the token admin role.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain.",
+          "role": ".operators"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "role": ".$admin"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain.",
+          "role": ".operators"
+        }
+      ]
+    },
+    "eth:0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "description": "Can regsiter new tokens for deposits and withdrawals.",
+          "role": ".tokenAdmins"
+        }
+      ]
+    },
+    "eth:0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "description": "Can regsiter new tokens for deposits and withdrawals.",
+          "role": ".tokenAdmins"
+        }
+      ]
+    }
+  }
 }

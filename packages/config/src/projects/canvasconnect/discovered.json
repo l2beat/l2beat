@@ -6,28 +6,12 @@
     {
       "address": "eth:0x107691bD4F590270B9793c807cB912DD278e8cB5",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
-          "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain.",
-          "role": ".operators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x3e10FD04BfCE4dBF496d72F39172347Bf887ac1D",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
-          "description": "Can regsiter new tokens for deposits and withdrawals.",
-          "role": ".tokenAdmins"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "SHARPVerifierCallProxy",
@@ -95,15 +79,7 @@
     {
       "address": "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
-          "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain.",
-          "role": ".operators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "StarkExchange",
@@ -301,27 +277,7 @@
     {
       "address": "eth:0xc7C731AF62Cd43eB158ad3Ac0fC5d2dd32648C7A",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
-          "description": "manage the token admin role.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
-          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
-          "role": ".$admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xE00A7D799A60495ce50f188348498E500C9016ea",
@@ -699,5 +655,59 @@
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
   "usedBlockNumbers": { "ethereum": 19825363 },
-  "permissionsConfigHash": "0x1737f87f1d9378511b5e153b9d36cd9fd285d41f9b2f9d5787491b8b080cb323"
+  "permissionsConfigHash": "0x1737f87f1d9378511b5e153b9d36cd9fd285d41f9b2f9d5787491b8b080cb323",
+  "permissions": {
+    "eth:0x107691bD4F590270B9793c807cB912DD278e8cB5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain.",
+          "role": ".operators"
+        }
+      ]
+    },
+    "eth:0x3e10FD04BfCE4dBF496d72F39172347Bf887ac1D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "description": "Can regsiter new tokens for deposits and withdrawals.",
+          "role": ".tokenAdmins"
+        }
+      ]
+    },
+    "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "description": "Permissioned to regularly update the state roots of the L2 on L1. Each state update must have been proven via the SHARP verifier and contains commitments to the data that is itself kept offchain.",
+          "role": ".operators"
+        }
+      ]
+    },
+    "eth:0xc7C731AF62Cd43eB158ad3Ac0fC5d2dd32648C7A": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "description": "manage the token admin role.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "description": "Permissioned to appoint and remove the Operator, register additional verifier and availability verifier contracts (removals are delayed), set the default vault withdrawal lock, unfreeze the exchange and manage the governor set.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "role": ".$admin"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    }
+  }
 }

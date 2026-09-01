@@ -50,9 +50,9 @@ export async function getDaBeatConfig(
       ['NEAR_RPC_URL_FOR_DA_BEAT', 'NEAR_RPC_URL'],
       'https://rpc.mainnet.near.org/',
     ),
-    availWsUrl: env.string(
-      ['AVAIL_WS_URL_FOR_DA_BEAT', 'AVAIL_WS_URL'],
-      'wss://avail-rpc.publicnode.com',
+    availRpcUrl: env.string(
+      ['AVAIL_RPC_URL_FOR_DA_BEAT', 'AVAIL_RPC_URL'],
+      'https://mainnet-rpc.avail.so/rpc',
     ),
     espressoApiUrl: env.string(
       ['ESPRESSO_API_URL_FOR_DA_BEAT', 'ESPRESSO_API_URL'],

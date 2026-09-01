@@ -12,29 +12,13 @@
       "name": "Lighter Validator 2",
       "address": "robinhood:0x114E0f5a71D169DdfBAef41160A0Ac789f7015cA",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
-          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Lighter Validator 1",
       "address": "robinhood:0x19f3e744b6e8FbA3Bc3737437dC82E394638b88b",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
-          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Lighter Governor",
@@ -52,23 +36,6 @@
       ],
       "proxyType": "immutable",
       "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
       "sinceTimestamp": 1782477747,
       "sinceBlock": 229410,
@@ -104,15 +71,7 @@
       "name": "Lighter Security Council",
       "address": "robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
-          "description": "can reduce the upgrade delay to zero seconds.",
-          "role": ".securityCouncilAddress"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DesertVerifier",
@@ -151,55 +110,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
-          "description": "manage validators, update the address that manages the insurance fund, update the treasury address that collects fees from markets, add and update markets and assets.",
-          "role": ".networkGovernor"
-        },
-        {
-          "permission": "upgrade",
-          "from": "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
-          "role": "admin",
-          "via": [
-            {
-              "address": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
-              "delay": 1814400
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31",
-          "role": "admin",
-          "via": [
-            {
-              "address": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
-              "delay": 1814400
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
-          "role": "admin",
-          "via": [
-            {
-              "address": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
-              "delay": 1814400
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
-          "delay": 1814400,
-          "role": ".getMaster"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
       "sinceTimestamp": 1785839071,
@@ -231,15 +141,7 @@
       "name": "Lighter Validator 3",
       "address": "robinhood:0x8eC9b15e83E69418350d7286e9679e4DcEf7001f",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
-          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
-          "role": ".validators"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Lighter",
@@ -832,5 +734,117 @@
     "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "robinhood": 44827049 },
-  "permissionsConfigHash": "0xcae3c8a56ead011ccd2c86c59a1ba049acee18e419c72c8fbe1905986866b9c2"
+  "permissionsConfigHash": "0xcae3c8a56ead011ccd2c86c59a1ba049acee18e419c72c8fbe1905986866b9c2",
+  "permissions": {
+    "robinhood:0x114E0f5a71D169DdfBAef41160A0Ac789f7015cA": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
+          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "robinhood:0x19f3e744b6e8FbA3Bc3737437dC82E394638b88b": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
+          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
+          "role": ".validators"
+        }
+      ]
+    },
+    "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
+          "role": "admin"
+        }
+      ]
+    },
+    "robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
+          "description": "can reduce the upgrade delay to zero seconds.",
+          "role": ".securityCouncilAddress"
+        }
+      ]
+    },
+    "robinhood:0x8Caf9FF9392F39E87cBC65A130c026caaCD321ef": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
+          "description": "manage validators, update the address that manages the insurance fund, update the treasury address that collects fees from markets, add and update markets and assets.",
+          "role": ".networkGovernor"
+        },
+        {
+          "permission": "upgrade",
+          "from": "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d",
+          "role": "admin",
+          "via": [
+            {
+              "address": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
+              "delay": 1814400
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31",
+          "role": "admin",
+          "via": [
+            {
+              "address": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
+              "delay": 1814400
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
+          "role": "admin",
+          "via": [
+            {
+              "address": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
+              "delay": 1814400
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
+          "delay": 1814400,
+          "role": ".getMaster"
+        }
+      ]
+    },
+    "robinhood:0x8eC9b15e83E69418350d7286e9679e4DcEf7001f": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
+          "description": "can commit, verify, execute batches, and revert committed but not yet executed batches.",
+          "role": ".validators"
+        }
+      ]
+    }
+  }
 }

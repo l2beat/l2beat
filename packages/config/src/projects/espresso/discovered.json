@@ -49,20 +49,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
-          "description": "cancel queued transactions.",
-          "role": ".Canceller"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
-          "description": "propose transactions.",
-          "role": ".Proposer"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x389b5c80A1dbE24f96BEb50002cB5fbe2536e1Cc",
       "sinceTimestamp": 1727935367,
@@ -98,15 +84,7 @@
     {
       "address": "eth:0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
-          "description": "can call newFinalizedState() to prove the latest HotShot state.",
-          "role": ".permissionedProver"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x5aF3Cda1bcB6105c3F714fd1746490E25a171490",
@@ -123,75 +101,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
-          "description": "cancel queued transactions.",
-          "role": ".Canceller"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
-          "description": "execute transactions that are ready.",
-          "role": ".Executor"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
-          "description": "manage all access control roles.",
-          "role": ".defaultAdminAC",
-          "via": [
-            {
-              "address": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
-          "description": "manage all access control roles.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
-          "description": "propose transactions.",
-          "role": ".Proposer"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
-          "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period.",
-          "role": ".owner",
-          "via": [
-            {
-              "address": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
-              "delay": 172800
-            }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
-          "role": "admin",
-          "via": [
-            {
-              "address": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
-              "delay": 172800
-            }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
-          "delay": 172800,
-          "role": ".Executor"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x22dfbDF674E6bd4112a332388E36940650eF5608",
       "sinceTimestamp": 1769188523,
@@ -234,25 +143,6 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 2d.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
-          "description": "manage all access control roles.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
-          "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x4905147341FB390F0A3F4F01178a040Bc27d8A04",
       "sinceTimestamp": 1769784107,
       "sinceBlock": 24348349,
@@ -676,5 +566,125 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25631964 },
-  "permissionsConfigHash": "0xbc162867228491c7aa245669a66b06ff3214c5a279e5bf2b72ea6783281f8915"
+  "permissionsConfigHash": "0xbc162867228491c7aa245669a66b06ff3214c5a279e5bf2b72ea6783281f8915",
+  "permissions": {
+    "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        }
+      ]
+    },
+    "eth:0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "description": "can call newFinalizedState() to prove the latest HotShot state.",
+          "role": ".permissionedProver"
+        }
+      ]
+    },
+    "eth:0x5e37B8038615EF3D75cf28b5982C4CBF065401fB": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC",
+          "via": [
+            {
+              "address": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "propose transactions.",
+          "role": ".Proposer"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period.",
+          "role": ".owner",
+          "via": [
+            {
+              "address": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+              "delay": 172800
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "role": "admin",
+          "via": [
+            {
+              "address": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+              "delay": 172800
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "delay": 172800,
+          "role": ".Executor"
+        }
+      ]
+    },
+    "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x67861f1eF4Db9BCADdD8c5E86dB92386Dd4EC700",
+          "description": "manage all access control roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "role": "admin"
+        }
+      ]
+    }
+  }
 }
