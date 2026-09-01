@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Stable destination caller for Circle CCTP messages. Authorized callers can submit a CCTP message and attestation, which this contract forwards to its fixed Circle MessageTransmitter; the owner controls the caller set.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or remove addresses allowed to submit CCTP messages and attestations through this proxy."
+        }
+      ]
+    },
+    "getAllowedCallers": {
+      "description": "Addresses allowed to forward CCTP messages and attestations to the fixed Circle MessageTransmitter.",
+      "edit": ["sort"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "submit CCTP messages and attestations to the fixed Circle MessageTransmitter."
+        }
+      ]
+    },
+    "i_cctpTransmitter": {
+      "description": "Immutable Circle MessageTransmitter to which validated calls are forwarded."
+    }
+  }
+}

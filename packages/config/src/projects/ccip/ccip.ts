@@ -33,7 +33,7 @@ export const ccip: BaseProject = {
   addedAt: UnixTime(1769526436),
   interopConfig: {
     description:
-      "Multichain token framework using the CCIP messaging protocol, validated by Chainlink's offchain reporting (OCR) and 'decentralised oracle network' (DON).",
+      "Multichain token framework using the CCIP messaging protocol. Routes are migrating from v1.6's fixed OCR commit and execution networks to v2.0's modular cross-chain verifiers and permissionless execution.",
     detailedDescription: readProjectMarkdown('ccip', 'detailedDescription', {
       ocrCommitQuorum,
       ocrCommitN: String(ocrCommitN),
