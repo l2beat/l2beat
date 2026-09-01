@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xa8a97c0fd6ca0a394fbaf4c99930093f8c35160a
+
+# Diff at Tue, 01 Sep 2026 12:18:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@971c51541a4e32a7dcee1adc458d42516d2950ec block: 1787311119
+- current timestamp: 1788265057
+
+## Description
+
+Swap USDC to DAI proposal: https://tools.l2beat.com/decoder-new/?hash=0x83963ddea866aa6d77200fd5f6633d59aa6d4dc9a807496277f6910cc76a0369&data=AwA
+
+Actions:
+
+1. Treasury → Delegator: 15109.211424 USDC
+2. Delegator: USDC.approve(Curve3pool, 15109.211424)
+3. Curve3pool: exchange USDC→DAI (min_dy = 15031.466111962828487747 DAI, 0.5% slippage)
+4. Delegator → Treasury: 15031.466111962828487747 DAI (floor)
+5. Delegator → Treasury: 75.535005587752906974 DAI (expected bonus)
+
+## Watched changes
+
+```diff
+    EOA  (eth:0x5a02474A3083Bc969f20F92E7a8bd3824EC607f0) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0xd9649be084919b1ae25d4d396555667632253f10ddb6a9bddc939db45f797b10"]
+      values:
++        {"$implementation":"eth:0x5A7FC11397E9a8AD41BF10bf13F22B0a63f96f6d","nonce":0}
+    }
+```
+
+```diff
+    contract Voting (eth:0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) [railgun/Voting] {
+    +++ description: Token-weighted Railgun governance contract. Proposals must be sponsored, voted through quorum, and then executed through the Delegator.
++++ severity: HIGH
+      values.proposalCount:
+-        28
++        29
+    }
+```
+
 Generated with discovered.json: 0xb68c1522119f896599658251dcc3295d444e059e
 
 # Diff at Fri, 21 Aug 2026 11:19:42 GMT:

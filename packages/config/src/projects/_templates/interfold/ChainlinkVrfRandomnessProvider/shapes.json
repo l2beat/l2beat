@@ -1,0 +1,8 @@
+{
+  "ChainlinkVrfRandomnessProvider.sol": {
+    "hash": "0x053a1d3a2238ecd6620d25376ee40b4e0f65e788809cf862b9c86eee67d85ca7",
+    "address": "eth:0xa0273f884816dfF0BE9B5ED50aB3AA29D6AaA712",
+    "chain": "ethereum",
+    "blockNumber": 25883001
+  }
+}

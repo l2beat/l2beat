@@ -1,0 +1,50 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ChainlinkVrfRandomnessProvider",
+  "category": "core",
+  "description": "Supplies committee-sortition entropy as a Chainlink VRF v2.5 subscription consumer. Only its fixed requester (the CiphernodeRegistry) can request randomness, each E3 can be served exactly once, and requests revert while the funding subscription balance is below the configured minimum. All VRF parameters are immutable.",
+  "ignoreMethods": [
+    "e3IdByRequestId",
+    "getRandomness",
+    "randomnessRequested",
+    "requestIdByE3Id"
+  ],
+  "ignoreRelatives": ["s_vrfCoordinator"],
+  "fields": {
+    "owner": {
+      "description": "Account controlling the VRF coordinator pointer.",
+      "type": "PERMISSION",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "replace the Chainlink VRF coordinator that delivers the sortition entropy."
+        }
+      ]
+    },
+    "s_vrfCoordinator": {
+      "description": "External Chainlink VRF v2.5 coordinator trusted to deliver the verified randomness. The Chainlink system is outside the Interfold discovery perimeter.",
+      "type": "CODE_CHANGE",
+      "severity": "HIGH"
+    },
+    "requester": {
+      "description": "Only contract allowed to request randomness (the CiphernodeRegistry)."
+    },
+    "subscriptionId": {
+      "description": "Chainlink VRF subscription funding the randomness requests."
+    },
+    "minimumSubscriptionBalance": {
+      "description": "Minimum subscription balance below which new randomness requests revert."
+    },
+    "keyHash": {
+      "description": "Chainlink VRF key hash (gas lane) used for randomness requests.",
+      "type": "RISK_PARAMETER"
+    },
+    "requestConfirmations": {
+      "description": "Block confirmations Chainlink waits for before delivering randomness.",
+      "type": "RISK_PARAMETER"
+    },
+    "nativePayment": {
+      "description": "Whether the VRF subscription is paid in native ETH instead of LINK."
+    }
+  }
+}
