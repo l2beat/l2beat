@@ -7,8 +7,8 @@ import type {
   IngestionStepView,
   IngestionTrace,
   IngestionTraceView,
+  TransferPluginEvidence,
 } from './IngestionTrace'
-import type { TransferPluginEvidence } from './tokenIngestionUtils'
 
 /**
  * Canonical text descriptions for each `IngestionStep` and `IngestionOutcome`.
@@ -29,6 +29,9 @@ export function formatIngestionTrace(trace: IngestionTrace): string {
   lines.push(`Address: ${trace.address.chain}:${trace.address.address}`)
   trace.steps.forEach((step, index) => {
     lines.push(`${index + 1}. ${describeIngestionStep(step)}`)
+    for (const detail of describeIngestionStepDetails(step)) {
+      lines.push(`   - ${detail}`)
+    }
   })
   lines.push(`Outcome: ${describeIngestionOutcome(trace.outcome)}`)
   return lines.join('\n')
@@ -48,11 +51,7 @@ export function describeIngestionStep(step: IngestionStep): string {
           ? 'no abstract tokens'
           : step.abstractTokens.map(formatRef).join(', ')
       const base = `Found ${step.total} transfers (${step.nonSwapping} non-swapping). Other sides resolve to: ${refs}.`
-      if (step.plugins.length === 0) return base
-      const plugins = step.plugins
-        .map((evidence) => `\n   - ${formatPluginEvidence(evidence)}`)
-        .join('')
-      return `${base} Transfers by plugin:${plugins}`
+      return step.plugins.length === 0 ? base : `${base} Transfers by plugin:`
     }
     case 'resolved-from-transfers':
       return `Resolved abstract token ${formatRef(step.abstractToken)} from non-swapping transfers.`
@@ -119,10 +118,21 @@ function formatRef(ref: AbstractTokenRef): string {
   return `${ref.id}:${ref.symbol}`
 }
 
+/** Detail lines belonging to a step, rendered by `formatIngestionTrace` as an
+ * indented list under the step's summary line. */
+export function describeIngestionStepDetails(step: IngestionStep): string[] {
+  if (step.kind === 'transfer-evidence') {
+    return step.plugins.map(formatPluginEvidence)
+  }
+  return []
+}
+
 function formatPluginEvidence(evidence: TransferPluginEvidence): string {
   const sample = [
-    evidence.sampleSrcTxHash && `src tx ${evidence.sampleSrcTxHash}`,
-    evidence.sampleDstTxHash && `dst tx ${evidence.sampleDstTxHash}`,
+    evidence.sampleSrcTxHash &&
+      `src tx ${evidence.sampleSrcTxHash} on ${evidence.sampleSrcChain}`,
+    evidence.sampleDstTxHash &&
+      `dst tx ${evidence.sampleDstTxHash} on ${evidence.sampleDstChain}`,
   ]
     .filter((part): part is string => Boolean(part))
     .join(', ')

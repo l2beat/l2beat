@@ -37,7 +37,9 @@ describe(buildInteropTransferIndex.name, () => {
         bridgeType: 'burnAndMint',
         transferCount: 3,
         sampleTransferId: 'transfer-1',
+        sampleSrcChain: 'ethereum',
         sampleSrcTxHash: '0xsrc',
+        sampleDstChain: 'base',
         sampleDstTxHash: '0xdst',
         token: { chain: 'ethereum', address: srcToken },
         otherToken: { chain: 'base', address: dstToken },
@@ -84,10 +86,45 @@ describe(summarizeTransferPlugins.name, () => {
       {
         plugin: 'cctp',
         transferCount: 11,
+        sampleSrcChain: 'ethereum',
         sampleSrcTxHash: undefined,
+        sampleDstChain: 'base',
         sampleDstTxHash: '0xdst-only',
       },
     ])
+  })
+
+  it('prefers a fully hashed sample over a busier partially hashed one', () => {
+    const fullyHashed = match({
+      plugin: 'cctp',
+      transferCount: 2,
+      sampleSrcTxHash: '0xfull-src',
+      sampleDstTxHash: '0xfull-dst',
+    })
+    const busierPartial = match({
+      plugin: 'cctp',
+      transferCount: 50,
+      sampleSrcTxHash: '0xpartial-src',
+      sampleDstTxHash: undefined,
+    })
+
+    const expected = [
+      {
+        plugin: 'cctp',
+        transferCount: 52,
+        sampleSrcChain: 'ethereum',
+        sampleSrcTxHash: '0xfull-src',
+        sampleDstChain: 'base',
+        sampleDstTxHash: '0xfull-dst',
+      },
+    ]
+
+    expect(summarizeTransferPlugins([fullyHashed, busierPartial])).toEqual(
+      expected,
+    )
+    expect(summarizeTransferPlugins([busierPartial, fullyHashed])).toEqual(
+      expected,
+    )
   })
 
   it('prefers the busiest route among samples with tx hashes', () => {
@@ -110,7 +147,9 @@ describe(summarizeTransferPlugins.name, () => {
       {
         plugin: 'cctp',
         transferCount: 11,
+        sampleSrcChain: 'ethereum',
         sampleSrcTxHash: '0xbusy-src',
+        sampleDstChain: 'base',
         sampleDstTxHash: '0xbusy-dst',
       },
     ])
@@ -123,7 +162,9 @@ function match(overrides: Partial<InteropTransferMatch>): InteropTransferMatch {
     bridgeType: 'lockAndMint',
     transferCount: 1,
     sampleTransferId: 'transfer-id',
+    sampleSrcChain: 'ethereum',
     sampleSrcTxHash: '0xsrc',
+    sampleDstChain: 'base',
     sampleDstTxHash: '0xdst',
     token: { chain: 'ethereum', address: '0xaaa' },
     otherToken: { chain: 'base', address: '0xbbb' },

@@ -61,7 +61,9 @@ describe(TokenIngestionProcessor.name, () => {
           {
             plugin: 'plugin1',
             transferCount: 1,
+            sampleSrcChain: address.chain,
             sampleSrcTxHash: '0xsrc',
+            sampleDstChain: 'base',
             sampleDstTxHash: '0xdst',
           },
         ],

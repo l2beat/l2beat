@@ -1,6 +1,7 @@
 import type { InteropTokenRouteRecord } from '@l2beat/database'
 import { Address32, type InteropBridgeType } from '@l2beat/shared-pure'
 import { InteropTransferClassifier } from '../../../shared/build'
+import type { TransferPluginEvidence } from './IngestionTrace'
 
 export interface TokenAddress {
   chain: string
@@ -12,7 +13,9 @@ export interface InteropTransferMatch {
   bridgeType: InteropBridgeType
   transferCount: number
   sampleTransferId: string
+  sampleSrcChain: string
   sampleSrcTxHash: string | undefined
+  sampleDstChain: string
   sampleDstTxHash: string | undefined
   token: TokenAddress
   otherToken: TokenAddress | undefined
@@ -20,16 +23,6 @@ export interface InteropTransferMatch {
 
 export interface InteropTransferIndex {
   findInvolving(address: TokenAddress): InteropTransferMatch[]
-}
-
-/** Per-plugin summary of the transfers involving an address: the total count
- * and one sample transfer's tx hashes, so a researcher can jump from the
- * ingestion trace to an explorer. */
-export interface TransferPluginEvidence {
-  plugin: string
-  transferCount: number
-  sampleSrcTxHash: string | undefined
-  sampleDstTxHash: string | undefined
 }
 
 export function buildInteropTransferIndex(
@@ -46,7 +39,9 @@ export function buildInteropTransferIndex(
         route.bridgeType ?? InteropTransferClassifier.inferBridgeType(route),
       transferCount: route.transferCount,
       sampleTransferId: route.sampleTransferId,
+      sampleSrcChain: route.srcChain,
       sampleSrcTxHash: route.sampleSrcTxHash,
+      sampleDstChain: route.dstChain,
       sampleDstTxHash: route.sampleDstTxHash,
     }
 
@@ -88,7 +83,9 @@ export function summarizeTransferPlugins(
     .map(([plugin, { transferCount, sample }]) => ({
       plugin,
       transferCount,
+      sampleSrcChain: sample.sampleSrcChain,
       sampleSrcTxHash: sample.sampleSrcTxHash,
+      sampleDstChain: sample.sampleDstChain,
       sampleDstTxHash: sample.sampleDstTxHash,
     }))
     .sort(
@@ -97,20 +94,23 @@ export function summarizeTransferPlugins(
     )
 }
 
-/** A sample with at least one tx hash beats one without (non-EVM sides may
- * lack hashes); among equally hashed samples the busier route wins. */
+/** A sample with more tx hashes wins (sides may lack hashes when the event
+ * was never observed); among equally hashed samples the busier route wins. */
 function isBetterSample(
   candidate: InteropTransferMatch,
   current: InteropTransferMatch,
 ): boolean {
-  const candidateHasHash =
-    candidate.sampleSrcTxHash !== undefined ||
-    candidate.sampleDstTxHash !== undefined
-  const currentHasHash =
-    current.sampleSrcTxHash !== undefined ||
-    current.sampleDstTxHash !== undefined
-  if (candidateHasHash !== currentHasHash) return candidateHasHash
+  const candidateHashes = countSampleHashes(candidate)
+  const currentHashes = countSampleHashes(current)
+  if (candidateHashes !== currentHashes) return candidateHashes > currentHashes
   return candidate.transferCount > current.transferCount
+}
+
+function countSampleHashes(match: InteropTransferMatch): number {
+  return (
+    (match.sampleSrcTxHash !== undefined ? 1 : 0) +
+    (match.sampleDstTxHash !== undefined ? 1 : 0)
+  )
 }
 
 export function normalizeInteropTokenAddress(
