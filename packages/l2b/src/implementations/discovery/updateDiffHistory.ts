@@ -6,7 +6,9 @@
 
 import type { Logger } from '@l2beat/backend-tools'
 import {
+  addReferencedDiscoveries,
   ConfigReader,
+  clusterEntries,
   combinePermissionsIntoDiscovery,
   type DiscoveryDiff,
   type DiscoveryOutput,
@@ -226,6 +228,10 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
     overwriteCache,
   )
   discoveries.set(prevStructure.name, prevStructure)
+  // Without this the previous model spans one project while the current one
+  // spans the whole cluster, and every cross-project permission reads as newly
+  // added on the next timestamped discovery.
+  addReferencedDiscoveries(discoveries, projectName, configReader, logger)
 
   const discoveryPaths = getDiscoveryPaths()
   const templateService = new TemplateService(discoveryPaths.discovery)
@@ -242,6 +248,7 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
   combinePermissionsIntoDiscovery(
     targetDiscovery.discoveryOutput,
     permissionsOutput,
+    clusterEntries(discoveries),
   )
   const prevDiscovery = withoutUndefinedKeys(targetDiscovery.discoveryOutput)
 

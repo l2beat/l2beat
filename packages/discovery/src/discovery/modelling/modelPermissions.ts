@@ -8,7 +8,11 @@ import type { TemplateService } from '../analysis/TemplateService'
 import type { ConfigReader } from '../config/ConfigReader'
 import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import type { PermissionsConfig } from '../config/PermissionConfig'
-import type { DiscoveryOutput, PermissionsOutput } from '../output/types'
+import type {
+  DiscoveryOutput,
+  EntryParameters,
+  PermissionsOutput,
+} from '../output/types'
 import { buildAddressToNameMap } from './buildAddressToNameMap'
 import { type ClingoFact, parseClingoFact } from './clingoparser'
 import {
@@ -70,6 +74,43 @@ export function loadDiscoveriesForModelling(
     discoveries.set(discovery.name, discovery)
   }
   return discoveries
+}
+
+// Fills a registry that already holds a freshly discovered project with the
+// committed discovery of everything it references. The fresh project stays
+// authoritative. Used wherever a project is modelled against a discovery that
+// is newer than what is on disk.
+export function addReferencedDiscoveries(
+  discoveries: DiscoveryRegistry,
+  project: string,
+  configReader: ConfigReader,
+  logger: Logger = Logger.SILENT,
+): void {
+  let referenced: DiscoveryRegistry
+  try {
+    referenced = loadDiscoveriesForModelling(project, configReader)
+  } catch (error) {
+    // One broken reference must not take down the whole update loop.
+    logger.error(`Could not read referenced discoveries of ${project}`, error)
+    return
+  }
+
+  for (const name of referenced.getSortedProjects()) {
+    if (name === project) {
+      continue
+    }
+    logger.info(`Modelling against referenced project ${name}`)
+    discoveries.set(name, referenced.get(name).discoveryOutput)
+  }
+}
+
+// Every entry of the cluster, in the shape the permission writer wants.
+export function clusterEntries(
+  discoveries: DiscoveryRegistry,
+): EntryParameters[] {
+  return discoveries
+    .getSortedProjects()
+    .flatMap((name) => discoveries.get(name).discoveryOutput.entries)
 }
 
 export async function modelPermissions(
