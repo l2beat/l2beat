@@ -1,0 +1,88 @@
+{
+  "criticalEvents": [
+    {
+      "timestamp": 1734645071,
+      "type": "state",
+      "source": "tx:0x4f14b1991d4873d9b622257ea90a34acc14bb9979283309617ae4df2afc81256",
+      "reason": "Changed the Unichain Multisig 1 threshold while it participated in Unichain's upgrade authority."
+    },
+    {
+      "timestamp": 1734645095,
+      "type": "state",
+      "source": "tx:0x99fbaee89a08c16eac5596353f67516a16e0a2086b0023bd0279e3178df02463",
+      "reason": "Changed the Unichain Multisig 2 threshold while it controlled the SystemConfig."
+    },
+    {
+      "timestamp": 1737130811,
+      "type": "state",
+      "contract": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
+      "source": "tx:0xfcdc3edd3631f3b4119ffa84b961c192530a084ff131f1eff895207469a9b210",
+      "reason": "Registered the first permissionless FaultDisputeGame (game type 0) and a new PermissionedDisputeGame (game type 1) implementation that verify proposed state roots."
+    },
+    {
+      "timestamp": 1737658703,
+      "type": "state",
+      "contract": "eth:0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2",
+      "source": "tx:0xc378e44280c522d56a179fee89ec50e6561eaf3a8a7857e4ae5c3a44ed879c43",
+      "reason": "Switched the respected game type to the permissionless FaultDisputeGame, activating fault proofs for withdrawals."
+    },
+    {
+      "timestamp": 1738943723,
+      "type": "state",
+      "source": "tx:0xdfafffe5bd2719576b97c3bb44327bae72be6880d3080dfe3623674194645d75",
+      "reason": "Changed the Unichain Multisig 1 threshold while it participated in Unichain's upgrade authority."
+    },
+    {
+      "timestamp": 1738953155,
+      "type": "state",
+      "source": "tx:0x8947040ba4b100235363384a2a8af5913f7dea93b337b748929b21e37af0d691",
+      "reason": "Changed the Unichain Multisig 2 threshold while it controlled the SystemConfig."
+    },
+    {
+      "timestamp": 1746626291,
+      "type": "state",
+      "source": "tx:0x5580a50fd248f0d4034f5eb270636202e2d957b84a6975f7bd7b8c72ff541233",
+      "reason": "Enabled a module that delegated Unichain pause authority through the Operations Safe."
+    },
+    {
+      "timestamp": 1753378247,
+      "type": "state",
+      "source": "tx:0x48a3f2ec90b240d052e7612f85669cd496336e113ca6e591bbc8e0b22781e565",
+      "reason": "Enabled the new DeputyPauseModule on the Guardian Safe that can pause Unichain."
+    },
+    {
+      "timestamp": 1753380539,
+      "type": "state",
+      "source": "tx:0x7e5703b1ab5d09aa107aa1a5fb2c7808c32023bd76048c192139bdb9b5dda092",
+      "reason": "Disabled the former Unichain pause deputy on the Guardian Safe."
+    },
+    {
+      "timestamp": 1753380743,
+      "type": "state",
+      "source": "tx:0xd770166ff63183dae868ca11852268115035d2f74574b55b8e1ecd552da80378",
+      "reason": "Removed the former pause deputy from the Operations Safe authority path."
+    },
+    {
+      "timestamp": 1769108699,
+      "type": "state",
+      "source": "tx:0xf1ae77bea001acd7f3355ce971fd992601f467ce0a2305a38b1a82da459b502c",
+      "reason": "Enabled the SaferSafes execution module on the Operations Safe while it governed Unichain."
+    },
+    {
+      "timestamp": 1769109083,
+      "type": "state",
+      "source": "tx:0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
+      "reason": "Enabled the SaferSafes execution module on the Upgrade Safe while it governed Unichain."
+    },
+    {
+      "timestamp": 1783362755,
+      "type": "state",
+      "contract": "eth:0x2F12d621a16e2d3285929C9996f478508951dFe4",
+      "source": "tx:0xb3c65cbf6285d4b32d576c866fffced1c77747c53163b604e20feb6aad121421",
+      "reason": "Replaced the dispute games with interop-ready implementations: registered SuperPermissionedDisputeGame (type 1) and SuperCannon (type 8) games, retired the legacy fault games, and switched the respected game type used to validate withdrawals."
+    }
+  ],
+  "reviewedSeverityDowngrades": [
+    "eth:0xc407398d063f942feBbcC6F80a156b47F3f1BDA6#paused"
+  ]
+}

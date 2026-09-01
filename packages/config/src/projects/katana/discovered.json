@@ -1,7 +1,7 @@
 {
   "name": "katana",
   "timestamp": 1787645431,
-  "configHash": "0x3a15fa6f8bd36d1b4fb3812f927aeaa359676754aa278564ada4b4f18f503790",
+  "configHash": "0x83450a05923088503598831445568a55c49a57be274f0af89813d489295a567b",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -46,6 +46,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main system contract defining the katana Aggchain logic. This contract, based on the OP-Succinct L2OutputOracle, supports validity proofs and OP stack outputRoots (L2 state roots) are saved here.",
+      "critical": true,
       "ignoreInWatchMode": [
         "lastAccInputHash",
         "latestBlockNumber",
@@ -159,10 +160,14 @@
           "description": "degrades the system into a permissioned finalization mode without validity proofs. The state root in the aggchain proof in optimistic mode does not need an op succinct validity proof, but only a signature of the trustedSequencer."
         },
         "aggchainMultisigHash": { "severity": "HIGH" },
+        "admin": { "severity": "HIGH" },
+        "optimisticModeManager": { "severity": "HIGH" },
+        "aggchainManager": { "severity": "HIGH" },
         "selectedOpSuccinctConfigName": {
           "severity": "HIGH",
           "description": "currently enforced OpSuccinctConfig. update the call handler for the full config if this changes."
         },
+        "selectedOpSuccinctConfig": { "severity": "HIGH" },
         "aggregationVkey": {
           "severity": "LOW",
           "description": "DEPRECATED - Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key. This proof is in turn wrapped by the aggchainVkey."
@@ -339,6 +344,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -417,7 +423,7 @@
       ],
       "proxyType": "immutable",
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
-      "critical": true,
+      "critical": false,
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1740762647,
       "sinceBlock": 21946249,
@@ -461,7 +467,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
-      "critical": true,
+      "critical": false,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746742811,
@@ -586,6 +592,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Stores the configuration of the OP stack components and proof system. Specifies which game type is used for state validation, which currently is the PermissionedDisputeGame. This contract is modified to disable asset bridging, but it allows forced transactions.",
+      "critical": true,
       "ignoreInWatchMode": ["params", "balance"],
       "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746742811,
@@ -665,10 +672,10 @@
         "version": "agg3.15.0"
       },
       "fieldMeta": {
-        "respectedGameType": { "severity": "HIGH" },
+        "respectedGameType": { "severity": "LOW" },
         "paused": {
-          "severity": "HIGH",
-          "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
+          "severity": "MEDIUM",
+          "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses forced transactions (asset bridging through this portal is disabled)."
         }
       },
       "implementationNames": {
@@ -850,6 +857,20 @@
         "yieldVault": "eth:0x812B2C6Ab3f4471c0E43D4BB61098a9211017427",
         "yieldVaultMaximumSlippagePercentage": "10000000000000000"
       },
+      "fieldMeta": {
+        "accessControl": { "severity": "MEDIUM" },
+        "yieldVault": {
+          "severity": "MEDIUM",
+          "description": "external vault where the underlying backing assets are deposited to generate yield."
+        },
+        "yieldRecipient": { "severity": "MEDIUM" },
+        "migrationManager": { "severity": "MEDIUM" },
+        "minimumReservePercentage": {
+          "severity": "MEDIUM",
+          "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
+        },
+        "paused": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F": "TransparentUpgradeableProxy",
         "eth:0xcC865B0324121b43728176024f58bdbB3afd6f29": "GenericVaultBridgeToken"
@@ -950,6 +971,20 @@
         "yieldVault": "eth:0x31A5684983EeE865d943A696AAC155363bA024f9",
         "yieldVaultMaximumSlippagePercentage": "10000000000000000"
       },
+      "fieldMeta": {
+        "accessControl": { "severity": "MEDIUM" },
+        "yieldVault": {
+          "severity": "MEDIUM",
+          "description": "external vault where the underlying backing assets are deposited to generate yield."
+        },
+        "yieldRecipient": { "severity": "MEDIUM" },
+        "migrationManager": { "severity": "MEDIUM" },
+        "minimumReservePercentage": {
+          "severity": "MEDIUM",
+          "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
+        },
+        "paused": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF": "TransparentUpgradeableProxy",
         "eth:0x81c16F89222C32806Daf01f5129937dFE19D525e": "VbETH"
@@ -1045,6 +1080,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system. Since the OptimismPortal is not used for state root management in this setup, the guardian role and pausing may be inconsequential.",
+      "critical": true,
       "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746740171,
       "sinceBlock": 22441511,
@@ -1092,6 +1128,7 @@
         "proxyAdminOwner": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
         "version": "2.4.0"
       },
+      "fieldMeta": { "guardian": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811": "Proxy",
         "eth:0xb08Cc720F511062537ca78BdB0AE691F04F5a957": "SuperchainConfig"
@@ -1228,6 +1265,20 @@
         "yieldVault": "eth:0x0868076663Bbc6638ceDd27704cc8F0Fa53d5b81",
         "yieldVaultMaximumSlippagePercentage": "10000000000000000"
       },
+      "fieldMeta": {
+        "accessControl": { "severity": "MEDIUM" },
+        "yieldVault": {
+          "severity": "MEDIUM",
+          "description": "external vault where the underlying backing assets are deposited to generate yield."
+        },
+        "yieldRecipient": { "severity": "MEDIUM" },
+        "migrationManager": { "severity": "MEDIUM" },
+        "minimumReservePercentage": {
+          "severity": "MEDIUM",
+          "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
+        },
+        "paused": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855": "TransparentUpgradeableProxy",
         "eth:0xcC865B0324121b43728176024f58bdbB3afd6f29": "GenericVaultBridgeToken"
@@ -1316,6 +1367,7 @@
         "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
         "version": "0.5.0"
       },
+      "fieldMeta": { "accessControl": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x417d01B64Ea30C4E163873f3a1f77b727c689e02": "TransparentUpgradeableProxy",
         "eth:0xC6dD6399eAE419A0a33A8dc307f4c1dB26D30e45": "MigrationManager"
@@ -1559,6 +1611,20 @@
         "yieldVault": "eth:0xBEefb9f61CC44895d8AEc381373555a64191A9c4",
         "yieldVaultMaximumSlippagePercentage": "10000000000000000"
       },
+      "fieldMeta": {
+        "accessControl": { "severity": "MEDIUM" },
+        "yieldVault": {
+          "severity": "MEDIUM",
+          "description": "external vault where the underlying backing assets are deposited to generate yield."
+        },
+        "yieldRecipient": { "severity": "MEDIUM" },
+        "migrationManager": { "severity": "MEDIUM" },
+        "minimumReservePercentage": {
+          "severity": "MEDIUM",
+          "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
+        },
+        "paused": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x53E82ABbb12638F09d9e624578ccB666217a765e": "TransparentUpgradeableProxy",
         "eth:0xcC865B0324121b43728176024f58bdbB3afd6f29": "GenericVaultBridgeToken"
@@ -1602,7 +1668,7 @@
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
-      "critical": true,
+      "critical": false,
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1762212215,
       "sinceBlock": 23722054,
@@ -1683,6 +1749,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -1794,6 +1861,20 @@
         "yieldRecipient": "eth:0x261a25ec6c396389B75B6b22BD4A8227070E3B50",
         "yieldVault": "eth:0xc54b4E08C1Dcc199fdd35c6b5Ab589ffD3428a8d",
         "yieldVaultMaximumSlippagePercentage": "10000000000000000"
+      },
+      "fieldMeta": {
+        "accessControl": { "severity": "MEDIUM" },
+        "yieldVault": {
+          "severity": "MEDIUM",
+          "description": "external vault where the underlying backing assets are deposited to generate yield."
+        },
+        "yieldRecipient": { "severity": "MEDIUM" },
+        "migrationManager": { "severity": "MEDIUM" },
+        "minimumReservePercentage": {
+          "severity": "MEDIUM",
+          "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
+        },
+        "paused": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC": "TransparentUpgradeableProxy",
@@ -1915,7 +1996,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "critical": true,
+      "critical": false,
       "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746742811,
       "sinceBlock": 22441727,
@@ -2040,7 +2121,7 @@
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
-      "critical": true,
+      "critical": false,
       "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
       "sinceTimestamp": 1772552963,
       "sinceBlock": 24577927,
@@ -2245,7 +2326,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.",
-      "critical": true,
+      "critical": false,
       "ignoreInWatchMode": [
         "anchorGame",
         "getAnchorRoot",
@@ -2329,7 +2410,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
-      "critical": true,
+      "critical": false,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
       "sinceTimestamp": 1772552963,
@@ -2747,7 +2828,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "critical": true,
+      "critical": false,
       "ignoreInWatchMode": [
         "gameCount",
         "permissionedGameArgs",
@@ -2852,7 +2933,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "critical": true,
+      "critical": false,
       "deployerAddress": "eth:0xa63182aB4dED10f5007b7B78698851cE39b72F49",
       "sinceTimestamp": 1746742811,
       "sinceBlock": 22441727,
@@ -3049,6 +3130,7 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -3094,6 +3176,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Agglayer bridge contract. Supports interop with Ethereum and blockchains connected to Agglayer. Escrows all preminted ETH because it cannot mint on the L2. The globalExitRootManager is used as an oracle to validate bridge messages against.",
+      "critical": true,
       "ignoreInWatchMode": [
         "depositCount",
         "lastUpdatedDepositCount",
@@ -3152,6 +3235,12 @@
         "unsetGlobalIndexHashChain": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "version": "v1.2.0",
         "WETHToken": "katana:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "getProxiedTokensManager": { "severity": "HIGH" },
+        "bridgeManager": { "severity": "HIGH" },
+        "emergencyBridgePauser": { "severity": "HIGH" },
+        "emergencyBridgeUnpauser": { "severity": "HIGH" }
       },
       "implementationNames": {
         "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "TransparentUpgradeableProxy",
@@ -3213,7 +3302,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
-      "critical": true,
+      "critical": false,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1746742812,
@@ -3305,7 +3394,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
-      "critical": true,
+      "critical": false,
       "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1746742812,
       "sinceBlock": 0,
@@ -3713,6 +3802,14 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Collects EIP-1559 base fees",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "katana:0x420000000000000000000000000000000000001b",
+          "description": "receive fees.",
+          "role": ".recipient"
+        }
+      ],
       "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1746742812,
       "sinceBlock": 0,
@@ -3790,7 +3887,7 @@
         "0xee5dca77d41cb3095dbb6dbb7f542e32ec79f4ebfb289ca0622873a493080ffb"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Holds the 'operator fees' for the L2 network, which are part of the L2 fees that users pay.",
+      "description": "Collects the operator fees.",
       "ignoreInWatchMode": ["totalProcessed"],
       "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1746742812,
@@ -4101,6 +4198,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.",
+      "critical": true,
       "ignoreInWatchMode": ["insertedGERHashChain", "lastRollupExitRoot"],
       "deployerAddress": "katana:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1746742812,
@@ -4119,6 +4217,10 @@
         "pendingGlobalExitRootRemover": "katana:0x0000000000000000000000000000000000000000",
         "pendingGlobalExitRootUpdater": "katana:0x0000000000000000000000000000000000000000",
         "removedGERHashChain": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "globalExitRootRemover": { "severity": "HIGH" },
+        "globalExitRootUpdater": { "severity": "HIGH" }
       },
       "implementationNames": {
         "katana:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA": "TransparentUpgradeableProxy",
@@ -4146,6 +4248,7 @@
       ],
       "proxyType": "immutable",
       "description": "Utility library contract for the AgglayerBridgeL2.",
+      "critical": true,
       "deployerAddress": "katana:0x14567c0dCF79c20fE1A21E36EC975d1775a1905C",
       "sinceTimestamp": 1772018458,
       "sinceBlock": 25275647,
@@ -4169,6 +4272,7 @@
       ],
       "proxyType": "immutable",
       "description": "A timelock with access control. The current minimum delay is 12h.",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -4284,6 +4388,7 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelayFormatted": { "severity": "HIGH" },
         "polygonZkEVM": {
           "severity": "HIGH",
           "description": "This is immutably the 0 address in this particular contract, which means emergency mode is never active"
@@ -4547,6 +4652,7 @@
       ],
       "proxyType": "immutable",
       "description": "An ERC-20 implementation designed for cross-chain assets on the L2. It restricts token minting or burning strictly to the primary bridge contract.",
+      "critical": true,
       "deployerAddress": "katana:0x14567c0dCF79c20fE1A21E36EC975d1775a1905C",
       "sinceTimestamp": 1772018458,
       "sinceBlock": 25275647,
@@ -7160,7 +7266,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "katana/AggchainFEP_post035": "0xd7c4c5495e4b3160f046892fcc72e936581bb84457281f86ec66bf4bdb8df9f3",
+    "katana/AggchainFEP_post035": "0xa34778d06409cd43d1b889dfe385e0d7a0c73c7fcac8680a8815d5b8fe10c1dd",
     "katana/AgglayerBridgeL2": "0x26a12f6eb0f2fae1955dc3e6afe2db0b4234277a896f1f2509fde8ad8477cd1b",
     "katana/BridgeLib": "0xb8ad695e33fde1c15595da1cbf166d648c6be57a47ec43405d330e10b3d6e6ec",
     "katana/GlobalExitRootManagerL2SovereignChain": "0xb74e315d5528261b0f3aea62fc49dc10450d9eb9ee94555647fb733bb3230732",
@@ -7194,10 +7300,10 @@
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigNoGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/SystemConfig": "0xa5ad1d7fe3bfc5d96d4166fbfb1e6ef0b1d5baaf568225c532428da4d84175c6",
-    "polygon-cdk/GenericVaultBridgeToken": "0xd2f17c711d335952bd81aea0281b2e00062cc2cadf4fceec51609fb741d004a7",
+    "polygon-cdk/GenericVaultBridgeToken": "0x8f2f7de70d9d896531454700be7cf820d5095bd49d0c5da4ff998df7533d5823",
     "polygon-cdk/L2Timelock": "0xa68acff21822229ec6117f6af99e810af110069ec1e2217cc3ac6c1e832f528e",
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
   "usedBlockNumbers": { "ethereum": 25830927, "katana": 40902404 },
-  "permissionsConfigHash": "0xcbcd4986bf26f2b65d91116396f497d3a1e4239a7482104f0c724c0e47645a21"
+  "permissionsConfigHash": "0x21c08c834ff91ed8177014909a57212dc0bb16e80e7ae99eaf1d00eb2ff36407"
 }

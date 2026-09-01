@@ -1,7 +1,7 @@
 {
   "name": "unichain",
   "timestamp": 1783324564,
-  "configHash": "0xa438846df3b58dc9740bd6f5c4e13142792f6f0fed617126d35ebb0bc24b6379",
+  "configHash": "0xd9ef589f4f25bceca83b03c0bd47529955386a48c2117d1c4f2b6b214a2f3a13",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -450,7 +450,13 @@
         "vmFromGame": "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908",
         "wethFromGame": "eth:0x0bdbEc6bd35571F97f96f3ed21822a4f2e071A3c"
       },
-      "fieldMeta": { "respectedGameType": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "respectedGameType": { "severity": "HIGH" },
+        "disputeGameFinalityDelaySeconds": {
+          "severity": "HIGH",
+          "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
+        }
+      },
       "implementationNames": {
         "eth:0x27Cf508E4E3Aa8d30b3226aC3b5Ea0e8bcaCAFF9": "Proxy",
         "eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5": "AnchorStateRegistry"
@@ -643,6 +649,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -776,6 +783,7 @@
         "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -1585,6 +1593,7 @@
         "0x27b0a289daa062724e446091c8e756925f5fa5fcd7a6acebc7bf374c4e93408a"
       ],
       "proxyType": "immutable",
+      "critical": true,
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2302,7 +2311,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
-      "critical": true,
+      "critical": false,
       "deployerAddress": "eth:0x9996571372066A1545D3435C6935e3F9593A7eF5",
       "sinceTimestamp": 1624400033,
       "sinceBlock": 12686687,

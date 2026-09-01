@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xd406cf259ace2fc2f54ff4c57f9293401e8ae351
+Generated with discovered.json: 0xcbdb40ac3c136488e4c086edd20fad1c50af7220
 
-# Diff at Wed, 26 Aug 2026 12:56:59 GMT:
+# Diff at Tue, 01 Sep 2026 09:52:53 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fb74901bb22c00c7f3247db342eff035b686ebbd block: 1787644553
+- comparing to: main@6d482dab2fa483c8bcf364d0d43945a67f759d22 block: 1787644553
 - current timestamp: 1787644553
 
 ## Description
@@ -17,10 +17,85 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1787644553 (main branch discovery), not current.
 
 ```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AgglayerGateway (eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) [polygon-cdk/AgglayerGateway] {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      fieldMeta.aggchainVKeys.severity:
++        "HIGH"
+      fieldMeta.aggchainVKeysUpdated.severity:
++        "HIGH"
+      critical:
++        true
+    }
+```
+
+```diff
     contract SharedProxyAdmin (eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) [global/ProxyAdmin] {
     +++ description: None
+      critical:
++        true
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AgglayerBridge (eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) [polygon-cdk/AgglayerBridge] {
+    +++ description: The shared bridge contract, escrowing user funds sent to Agglayer chains. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.
+      fieldMeta.isEmergencyState.severity:
+-        "HIGH"
++        "MEDIUM"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract BridgeLib (eth:0x3622Fcf450ca40a340b7492Ae5F60E7c7Ea68aB3) [polygon-cdk/BridgeLib] {
+    +++ description: Extension contract of the AgglayerBridge for asset metadata..
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AgglayerManager (eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) [polygon-cdk/AgglayerManager] {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract AgglayerGER (eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) [polygon-cdk/AgglayerGER] {
+    +++ description: A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the Agglayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SP1Verifier (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Timelock (eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) [polygon-cdk/Timelock] {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      critical:
++        true
+      fieldMeta:
++        {"getMinDelayFormatted":{"severity":"HIGH"}}
     }
 ```
 

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x4c18367e3c344d4a1fd7d1538cc78799d961a07d
+Generated with discovered.json: 0x03a5a7ba2081550c45e8fef0e792d57da48ebb8f
 
-# Diff at Mon, 31 Aug 2026 16:08:23 GMT:
+# Diff at Tue, 01 Sep 2026 09:52:13 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1783324564
+- comparing to: main@6d482dab2fa483c8bcf364d0d43945a67f759d22 block: 1783324564
 - current timestamp: 1783324564
 
 ## Description
@@ -90,6 +90,8 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
 ```diff
     contract AnchorStateRegistry (eth:0x27Cf508E4E3Aa8d30b3226aC3b5Ea0e8bcaCAFF9) [opstack/AnchorStateRegistry_post13] {
     +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      fieldMeta.disputeGameFinalityDelaySeconds:
++        {"severity":"HIGH","description":"Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."}
       critical:
 +        true
     }
@@ -110,6 +112,8 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
 ```diff
     contract ProxyAdmin (eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4) [global/ProxyAdmin] {
     +++ description: None
+      critical:
++        true
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
     }
@@ -126,6 +130,8 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
 ```diff
     contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) [global/ProxyAdmin] {
     +++ description: None
+      critical:
++        true
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
     }
@@ -190,6 +196,14 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
 ```
 
 ```diff
+    contract LivenessGuard (eth:0x9343c452dec3251fe99D9Fd29b74c5b9CD1751a6) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
     contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) [opstack/SuperchainConfig_expiry] {
     +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
       fieldMeta.paused.severity:
@@ -240,7 +254,7 @@ discovery. Values are for block 1783324564 (main branch discovery), not current.
     contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager] {
     +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
       critical:
-+        true
++        false
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
     }

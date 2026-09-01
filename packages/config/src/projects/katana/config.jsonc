@@ -107,6 +107,58 @@
     "katana:0x420000000000000000000000000000000000001b"
   ],
   "overrides": {
+    // ---- Ossification perimeter ----
+    // Katana's OP-stack deployment has asset bridging disabled: custody and
+    // messaging run through the Agglayer shared bridge, and state validity is
+    // enforced by the AggchainFEP + AgglayerManager/Gateway pessimistic-proof
+    // path. The OP dispute-game withdrawal stack (games, ASR, DelayedWETH,
+    // MIPS/PreimageOracle, messengers, token bridges) secures nothing here, so
+    // the critical flags inherited from the shared opstack templates are
+    // removed. The portal stays critical as the forced-transaction
+    // (self-sequencing) entry, and the SystemConfig governs derivation.
+    "eth:0xA7A26BbA1191a064637d7B0b23896589F4e4d22D": {
+      "critical": false
+    },
+    "eth:0xaA8a62563CFe4E36118ED479B5486F503b438376": {
+      "critical": false
+    },
+    "eth:0xb41151Bf2B989d3771caBd5BCb5C435949543322": {
+      "critical": false
+    },
+    "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908": {
+      "critical": false
+    },
+    "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3": {
+      "critical": false
+    },
+    "eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65": {
+      "critical": false
+    },
+    "katana:0x4200000000000000000000000000000000000007": {
+      "critical": false
+    },
+    // SuperchainConfig fork: its guardian can pause the portal and with it the
+    // forced-transaction path (the only censorship-resistance mechanism).
+    "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811": {
+      "critical": true,
+      "fields": {
+        "guardian": {
+          "severity": "HIGH"
+        }
+      }
+    },
+    // ProxyAdmin: can upgrade the portal, SystemConfig and the other OP-stack proxies.
+    "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832": {
+      "critical": true
+    },
+    // ProxyAdmin: can upgrade the SuperchainConfig fork.
+    "eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52": {
+      "critical": true
+    },
+    // ProxyAdmin (L2): can upgrade the AgglayerBridgeL2 and the L2 GER manager.
+    "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": {
+      "critical": true
+    },
     "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666": {
       "fields": {
         "selectedOpSuccinctConfig": {
@@ -134,16 +186,19 @@
       "displayName": "vbETH"
     },
     "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe": {
-      "category": "spam"
+      "category": "spam",
+      "critical": false
     },
     "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC": {
-      "category": "spam"
+      "category": "spam",
+      "critical": false
     },
     "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F": {
       "category": "spam"
     },
     "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E": {
-      "category": "spam"
+      "category": "spam",
+      "critical": false
     },
     "eth:0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C": {
       "category": "spam"
@@ -158,7 +213,8 @@
       "category": "spam"
     },
     "katana:0x4200000000000000000000000000000000000010": {
-      "category": "spam"
+      "category": "spam",
+      "critical": false
     },
     "katana:0x4200000000000000000000000000000000000014": {
       "category": "spam"
@@ -207,18 +263,19 @@
           ]
         }
       }
-    }
-  },
-  "katana:0x420000000000000000000000000000000000001b": {
-    "description": "Collects the sequencer fees.",
-    "fields": {
-      "recipient": {
-        "permissions": [
-          {
-            "type": "interact",
-            "description": "receive fees."
-          }
-        ]
+    },
+    // moved into overrides (was a silently inert top-level key)
+    "katana:0x420000000000000000000000000000000000001b": {
+      "description": "Collects the operator fees.",
+      "fields": {
+        "recipient": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "receive fees."
+            }
+          ]
+        }
       }
     }
   }

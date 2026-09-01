@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x295fe57e2d531f583f5fbce1c127642e40ac7329
+Generated with discovered.json: 0x2a71e97636c805ab564085666df5542ca12c0249
 
-# Diff at Mon, 31 Aug 2026 15:32:56 GMT:
+# Diff at Tue, 01 Sep 2026 09:52:36 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@213634bdbfe31b47c124857f877cc3b9f13184f4 block: 1783498944
+- comparing to: main@6d482dab2fa483c8bcf364d0d43945a67f759d22 block: 1783498944
 - current timestamp: 1783498944
 
 ## Description
@@ -23,12 +23,16 @@ discovery. Values are for block 1783498944 (main branch discovery), not current.
 +        {"severity":"HIGH"}
       fieldMeta.accessControl:
 +        {"severity":"HIGH"}
+      critical:
++        true
     }
 ```
 
 ```diff
     contract ProxyAdmin (eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0) [global/ProxyAdmin] {
     +++ description: None
+      critical:
++        true
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
     }
@@ -60,12 +64,22 @@ discovery. Values are for block 1783498944 (main branch discovery), not current.
     +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
       fieldMeta.owner:
 +        {"severity":"HIGH"}
+      critical:
++        true
     }
 ```
 
 ```diff
     contract PreimageOracle (eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3) [opstack/PreimageOracle] {
     +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 3.0.0).
       critical:
 +        true
     }
@@ -90,6 +104,14 @@ discovery. Values are for block 1783498944 (main branch discovery), not current.
 ```
 
 ```diff
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier] {
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+      critical:
++        true
+    }
+```
+
+```diff
     contract MIPS (eth:0x6463dEE3828677F6270d83d45408044fc5eDB908) [opstack/MIPS] {
     +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
       critical:
@@ -110,6 +132,8 @@ discovery. Values are for block 1783498944 (main branch discovery), not current.
     +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
       fieldMeta.owner:
 +        {"severity":"HIGH"}
+      critical:
++        true
     }
 ```
 
@@ -131,6 +155,8 @@ discovery. Values are for block 1783498944 (main branch discovery), not current.
     +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
       fieldMeta.owner:
 +        {"severity":"HIGH"}
+      critical:
++        true
     }
 ```
 
@@ -147,16 +173,36 @@ discovery. Values are for block 1783498944 (main branch discovery), not current.
 ```
 
 ```diff
+    contract KailuaTreasury (eth:0x9937033Cc967eED9d753e31c77D2F146d002ae53) [risc0/KailuaTreasury] {
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 1mo.
+      critical:
++        true
+    }
+```
+
+```diff
     contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
     +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
       fieldMeta.owner:
 +        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract KailuaVerifier (eth:0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d) [N/A] {
+    +++ description: None
+      critical:
++        true
     }
 ```
 
 ```diff
     contract ProxyAdmin (eth:0xa70ddfb3e00fCFD083E64B200FE867104f703E1c) [global/ProxyAdmin] {
     +++ description: None
+      critical:
++        true
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
     }
@@ -177,8 +223,24 @@ discovery. Values are for block 1783498944 (main branch discovery), not current.
 ```
 
 ```diff
+    contract RiscZeroGroth16Verifier (eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9) [taiko/RiscZeroGroth16Verifier] {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+      critical:
++        true
+    }
+```
+
+```diff
     contract AnchorStateRegistry (eth:0xC9AC21AcD8696B64270716528bF83630Ea7a293c) [opstack/AnchorStateRegistry_post13] {
     +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract KailuaGame (eth:0xD37b0BEdD9094988a31dBbB6BF77dC97269E742b) [risc0/KailuaGame] {
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
       critical:
 +        true
     }

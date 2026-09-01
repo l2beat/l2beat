@@ -18,6 +18,9 @@ const IDS = [
   'lighter',
   'ink',
   'morph',
+  'unichain',
+  'bob',
+  'katana',
 ]
 
 async function main() {

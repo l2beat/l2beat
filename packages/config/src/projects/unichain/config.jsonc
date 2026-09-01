@@ -31,6 +31,40 @@
     "unichain:0x4200000000000000000000000000000000000015": "L1Block"
   },
   "overrides": {
+    // SuperchainProxyAdmin: can upgrade the shared SuperchainConfig that holds Unichain's pause authority.
+    "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": {
+      "critical": true
+    },
+    // ProxyAdmin (L1): can upgrade every core Unichain contract (portal, bridges, DGF, SystemConfig).
+    "eth:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4": {
+      "critical": true
+    },
+    // OP Mainnet's legacy AddressManager, discovered as a relative of the shared
+    // SuperchainProxyAdmin. It resolves implementations for OP Mainnet's own
+    // ResolvedDelegateProxies only; the SuperchainConfig that Unichain shares is a
+    // plain EIP-1967 proxy (proxyType 0), and Unichain's own messenger resolves
+    // through Unichain's AddressManager (eth:0x8098F676...). Outside the Unichain perimeter.
+    "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": {
+      "critical": false
+    },
+    // The air gap: how long a resolved dispute game must wait before its root
+    // can finalize withdrawals. Changing it alters the guardian's window to
+    // blacklist a faulty game, i.e. the conditions under which user
+    // withdrawals are validated.
+    "eth:0x27Cf508E4E3Aa8d30b3226aC3b5Ea0e8bcaCAFF9": {
+      "fields": {
+        "disputeGameFinalityDelaySeconds": {
+          "severity": "HIGH",
+          "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
+        }
+      }
+    },
+    // LivenessGuard of Unichain Multisig 1, which sits on the UnichainProxyAdminOwner
+    // (upgrade authority) path. Older guard version that does not match the shared
+    // gnosisSafeModules/LivenessGuard shape, so it is flagged here instead.
+    "eth:0x9343c452dec3251fe99D9Fd29b74c5b9CD1751a6": {
+      "critical": true
+    },
     "unichain:0x4200000000000000000000000000000000000002": {
       "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade."
     },

@@ -1,0 +1,40 @@
+{
+  "includeProjects": ["shared-polygon-cdk"],
+  "criticalEvents": [
+    {
+      "timestamp": 1755616379,
+      "type": "state",
+      "contract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+      "source": "tx:0xeb5bdbb003b7bc66410f9e0d6ff0cfa4278fc7840f1fd0779eefdd4cc45a59c6",
+      "reason": "Rotated the OP-Succinct range verification key (new range program for proving the L2 state transition)."
+    },
+    {
+      "timestamp": 1747746635,
+      "type": "state",
+      "source": "tx:0x597a39f137fb7e89891d1dcf2fe729a66fcc9ef2fc1a443c1d6d88748289580b",
+      "reason": "Changed the Katana Foundation Multisig threshold while it held Katana's pause authority and L2 bridge management roles."
+    },
+    {
+      "timestamp": 1748947067,
+      "type": "state",
+      "source": "tx:0xf6445e143165a2bff796ad596399a55514907e86c2bf39828f1526614f09bdff",
+      "reason": "Changed the Polygon Admin Multisig threshold while it governed the Agglayer contracts securing Katana."
+    },
+    {
+      "timestamp": 1753819655,
+      "type": "state",
+      "source": "tx:0x68e8beb689abb97c3ccb7b7c6a6fc683675db5d164f04196c8918994379fa9bd",
+      "reason": "Changed the Polygon Multisig 2 threshold while it controlled Katana's OP-stack ProxyAdmins and rollup management roles."
+    },
+    {
+      "timestamp": 1772138723,
+      "type": "state",
+      "source": "tx:0x068c8969daf88d8767a1cb4e0d51bc2ad115993d509133ac76e26939e833ab05",
+      "reason": "Changed the Katana Foundation Multisig threshold while it held Katana's pause authority and L2 bridge management roles."
+    }
+  ],
+  "reviewedSeverityDowngrades": [
+    "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666#rangeVkeyCommitment",
+    "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe#proxiedTokensManager"
+  ]
+}
