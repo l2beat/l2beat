@@ -14,12 +14,13 @@ has remained unchanged.
   runtime projection, stamped with the source dataset commit. Regenerate with
   `scripts/ossification-incidents-curve.ts`, verify with `--check`.
 - **Last change:** age of the project clock. The clock starts at the newest
-  deployment or qualifying change among all current critical contracts.
+  deployment or qualifying change in the current perimeter.
 - **Battle-tested exposure (USD·years):** project TVS integrated from the project
   clock start until now. It is null without TVS data and zero while an unverified
   critical contract gates maturity.
 - **Critical changes / year:** qualifying events in the trailing 36 months,
-  clustered into 24-hour windows. The observation denominator is at least 30 days.
+  clustered into 24-hour windows. The denominator is clipped to the observed
+  history and is at least 30 days.
 
 The Security summary shows the exit window as context for the upgrade capability.
 
@@ -81,9 +82,9 @@ proof verification, nullifiers, anonymity, viewing authority).
 | `$pastUpgrades` | Current critical contracts; the first transaction is initialization unless audited in `firstUpgradeIsChange`; audited later initialization/no-op transactions are listed per contract in `ignoredUpgradeTransactions` | Latest qualifying transaction timestamp can reset the clock; every non-initialization transaction is a change-rate event. Multiple upgrade records from one transaction (for example upgrade, execute, restore) form one code change |
 | `changelog.json` watched change | Address belongs to a current critical contract and the entry changes a field whose CURRENT curated severity is HIGH (`fieldMeta` in discovered.json) | Resets the clock and adds a change-rate event |
 | Implementation change fallback | Address belongs to a current critical contract and that contract has no `$pastUpgrades` | Resets the clock and adds an event regardless of field severity |
-| `criticalEvents` | Reviewed, evidence-backed event that mechanical discovery history cannot reconstruct or dates imprecisely | Adds the specified code/state event; see History semantics for the supersede and `historical` rules |
+| `criticalEvents` | Reviewed, evidence-backed event that mechanical discovery history cannot reconstruct or dates imprecisely | Adds the specified code/state event. An entry naming both `updateId` and `contract` supersedes that update's mechanical diff events for that contract; `historical: true` events feed the change rate only and never reset the current clock |
 | `unverified` | Any current critical contract | Gates maturity, score, and exposure to zero |
-| `historicalContracts` | Entry has `critical: true` and is no longer in the current perimeter | Closed reviewed ledger (see History semantics); affects only change history/rate, never the current clock or unverified gate |
+| `historicalContracts` | Entry has `critical: true` and is no longer in the current perimeter | Closed reviewed ledger fixed at the removal review (onchain upgrade timestamps plus reviewed `criticalEvents`; diff history is never consulted for it); affects only change history/rate, never the current clock or unverified gate |
 | Project `TokenValue` series | Root project only | Supplies battle-tested exposure; it does not affect score or change rate |
 
 ## Tools and code map
@@ -93,7 +94,7 @@ proof verification, nullifiers, anonymity, viewing authority).
 - `getOssificationFactor.ts`: pure clocks, event extraction, clustering, and score.
 - `getOssificationPerimeter.ts`: lint/research closure only; it never decides runtime
   membership.
-- `scripts/ossification-lint.ts <projectId>`: candidate worklist for missing/excess
+- `scripts/ossification-lint.ts <projectId...>`: candidate worklist for missing/excess
   flags, the severity-history audit (silenced annotated-HIGH events), and the
   historical-ledger closure check; suggestions require judgment.
 - `scripts/ossification-fetch-events.ts <chain:address> <eventSig>`: onchain log
