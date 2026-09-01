@@ -76,7 +76,8 @@ export class CirculatingSupplyAmountIndexer extends ManagedMultiIndexer<Circulat
               (p) => Number.isFinite(p.value) && p.value >= 0,
             )
             if (validSupplies.length !== supplies.length) {
-              this.logger.error(
+              // Use critical level to trigger maintenance alert
+              this.logger.critical(
                 `Dropped invalid circulating supply values for ${configuration.properties.apiId}`,
                 {
                   priceId: configuration.properties.apiId,
