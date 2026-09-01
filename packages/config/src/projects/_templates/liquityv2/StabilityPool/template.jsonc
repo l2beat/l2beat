@@ -5,6 +5,7 @@
   "ignoreMethods": ["scaleToB", "scaleToS"],
   "ignoreRelatives": ["collToken"],
   "ignoreInWatchMode": [
+    "getCollBalance",
     "getEntireBranchColl",
     "getEntireBranchDebt",
     "getTotalBoldDeposits",

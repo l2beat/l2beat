@@ -29,6 +29,7 @@ import {
 } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
+import type { PrivacyRelayerStat } from '../types'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetupSummary,
@@ -67,6 +68,7 @@ export interface ProjectPrivacyEntry {
       last7d: number
       last30d: number
     }
+    relayerStat?: PrivacyRelayerStat
   }
   isUnderReview: boolean
   recentUpdatesCount: number
@@ -330,6 +332,7 @@ export async function getPrivacyProjectEntry(
     summary: {
       totalValueLockedUsd,
       deposits: details.summary.deposits,
+      relayerStat: details.summary.relayerStat,
     },
     isUnderReview: !!details.statuses.reviewStatus,
     recentUpdatesCount: countRecentDiscoveryUpdates(discoveryUpdates),

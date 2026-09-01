@@ -1,6 +1,6 @@
 {
   "name": "eigenda",
-  "timestamp": 1784811471,
+  "timestamp": 1787834881,
   "configHash": "0x4d38e2ed74b1c2cd3c26e18cea88385fa993421c4991a531fe80463fa490aaf2",
   "entries": [
     {
@@ -13,123 +13,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
-          "description": "can add and remove strategies",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x5D9A6573206e5205702E4caD87DC61f4C2a1Ad04",
       "sinceTimestamp": 1744215143,
@@ -139,17 +22,16 @@
         "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "eth:0xB646A0871af2b2c6e115b24D7E36d406780b6ca8",
-          "eth:0xA3e302a6Ea0cf79B8580d94e92Eb5514292daacE",
           "eth:0x1b6cC4C0670bBA2B992b82Cb8E76B286D63264c6",
           "eth:0x403F4d4958409480502CdC78a54cE1B67263C17a",
           "eth:0x891bbCfEF0C7504218b3156Cd0795cA5C8c7d489"
         ],
-        "$threshold": 3,
+        "$threshold": 2,
         "domainSeparator": "0x0f8eb27939d8e0595e7cc493a40b145f31803628460538623d3988094d1a63f9",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 43,
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 44,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -333,7 +215,6 @@
           "0xedebd1222578e5cd75d76c8972ab5ee7439591ee667094aea695b092484877fb",
           "0x35a645a980a13c0cb3024a5e78408ddde2b5affd306cd331ce2be9cd5968ca23",
           "0x9451e780b7a82699a8a5345caf25822345920da114581a31b412b59694f13adc",
-          "0x571acc1fd08b9f09262d7c3bcd1f92045e6632f62c1010776baec5e71f8f0714",
           "0xf4d2e74aefcf9a4201e7fcd300f93faf1628fdf83397a950dd49c48cc5113aaf",
           "0x74e99d8b01a4e92c6c37961c04d1956cab258a9dd036696515961e751101b7db",
           "0x2770a27e7c93d6eb0ae83ec2cae237cd4252ed2a3ad766be30783570d3195240",
@@ -345,20 +226,15 @@
           "0x527dcc8a9eac6bd0fc0312f8c20b76a57c962ba6ee6f23e3fdc5e6462542f7da",
           "0xb0c2ad4df99ac14cc0859092c6391b88036a8d9940adfa1e091367999c50543b",
           "0xfdaa0fe4307b2e9f18c1211f08ba2613a2ec3002eaad3e2d61f87b9cb25e305d",
-          "0x495069623e95f02bcc9e1d2b3648723d7f41ea7d675d7627e1bf5a61016f4836",
           "0xf5cb5ed8b9977a41406e89704eb1e0d06cad740a6cde74857036f17e0a01b4a9",
           "0x4e69818bbb7112a75a417a8da67ba346b541bc18a4fcd78897cf0d20d5573f14",
           "0xb1466ebd795b92cdd28a91fda29fc81ddbb10d46e2a29c1bec4be99431dbcf1d",
           "0x0496a1c5a3f9d2350177e1d3fc810b61acfcfd24e1d40e1d716524fd379e858a",
-          "0x9f38709f446fcd85a0a1909aa45a6ef8efcdbf85df20073e598db86e566ea2ea",
           "0x475ca3b08b5861bb0f8e49ebc14775847cf531c6c16a1473d4610d6f609f179c",
           "0xaa2854f59d446537e7b349ca80646985c4bc296ee0a6ef4ae2e7ce2cfc6476e2",
-          "0x8d4e5576c75115b4f0206d4af8bcbf5fb807607b9ad204a0884ad269981132f3",
           "0x0058fc08ccd6efbfa1b28be52f2f97a34e2168217f144bbb680a537d2ca18111",
           "0x2d92999b9b651916f60c7d28934b9b91d9c43c7a4474861340ccc09cadc29750",
           "0xd0ee55b8e193f2dc21c140d4212079a5b78c3df1ac953f7d4f0dd7ed3c7316d6",
-          "0x05532d1781804b53a8614009f79ced98a4474294984d19e793780a3b8c286a98",
-          "0x29ef6b67feaaa31f210c9a7b8ef073a3fb35eeb5f6fe063f5e75247b884abd0a",
           "0xd1bfc317efb9f0d3ae5a0bd8c3a6c1948d10e63cebd06250aa7d2d20fec2f851",
           "0x3b874990e71ab573e41e7807e8c884700858af957cb72c728369aaf7b1b7ef94",
           "0x4104842f50e49ad930345cd0c3620b615730315b983118d55ddb256fb97ab0d8",
@@ -385,9 +261,7 @@
           "0x43dda608c71270a62bb2ef064f4866902da95538e2d98d20be1a9b2a8142f2dd",
           "0x32293d3ad6447b8c67a1f02ff0bfae0e73ec4d442842cd816e9395b0e370858c",
           "0x12bbc1398d50485699592d0d1c05bc358714095a1d4d9971becfa9f1b48806b2",
-          "0x155ffb09581c003557d6614d7764b3a594a9a689ca705ec6ea5e9dcf29ea9e56",
           "0xc07a06bef2237cb01b3714510ea2d7e2b0f056081e8fe0ace4c8f3e00f1c2697",
-          "0xec7f32b9be7f5385bc3bb4683cf03d41f53c317d833776da1cdb54f32a52db77",
           "0x4237db2359e8736fb9987c4c34707454ab3b0089c8ae1bd363decfa693d66c15",
           "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e",
           "0xe5f9b527a2b5ace562d7ad9e3e8ed8baa162ae5bd92ea66cdf7215c6b1b19759",
@@ -402,7 +276,12 @@
           "0x0a65b09f4cc1527b6dcf4dbf071cd42b941a1aa634d1a02c6a47c5324b345654",
           "0x2a5ccd8075a6e252f1448cd3fdbcde296d2f56aaf2d757c5863db608ae41b02e",
           "0x42162fbd59503a09b5709d0e612b824cd12f92fa577ea993fd67e797df19415c",
-          "0x62fd7709add808809511fe2d3a230cd9cb7321cc2f47e2c35fd959d0449be8ee"
+          "0x62fd7709add808809511fe2d3a230cd9cb7321cc2f47e2c35fd959d0449be8ee",
+          "0x05532d1781804b53a8614009f79ced98a4474294984d19e793780a3b8c286a98",
+          "0x29ef6b67feaaa31f210c9a7b8ef073a3fb35eeb5f6fe063f5e75247b884abd0a",
+          "0x2520bd4e689b56254392f79be8265dd92d712b27807a32214f9917aab329f466",
+          "0xa2322c7ee765f262424419e095e6480da07962654f0f50d211b828f82283a3b2",
+          "0x1575fdaf8270ce19550bb9e152c9bcf36434cbc40d88ac9cfca2bb3825dc8427"
         ],
         "registries": [
           "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -453,14 +332,6 @@
       ],
       "proxyType": "immutable",
       "description": "Defines and stores pauser and unpauser roles for EigenDA contracts.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can pause the DA bridge",
-          "role": ".pauserRegistry"
-        }
-      ],
       "deployerAddress": "eth:0x4eF221F76F046f3cFA3f739c9dcD368D59df99DA",
       "sinceTimestamp": 1686348935,
       "sinceBlock": 17445563,
@@ -560,14 +431,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can create rewards submissions.",
-          "role": ".rewardsInitiator"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x2bBA03bA38D90634e6afD8C23C16ca01651bc493",
       "sinceTimestamp": 1721762183,
@@ -661,14 +524,6 @@
         "0xe23c519b7324d6dc9132c8567ac55ae72bdf168c914d22825c7614d822364b0f"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
-          "description": "can eject DA operators from a quorum.",
-          "role": ".ejectors"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x34D64c402cA43C1c4B368e16130C64aC245718C6",
       "sinceTimestamp": 1732035611,
@@ -731,15 +586,7 @@
     {
       "address": "eth:0x454Ef2f69f91527856E06659f92a66f464C1ca4e",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can confirm batches to the DA bridge.",
-          "role": ".batchConfirmers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "EigenDACertVerifier",
@@ -827,15 +674,7 @@
     {
       "address": "eth:0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can confirm batches to the DA bridge.",
-          "role": ".batchConfirmers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x5dc74815C14E2D4223B79D2dE94C4ccD5f5f7DA7",
@@ -921,68 +760,6 @@
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x45B866E099a790cbddA655Ca20Cb11168B2cD088",
       "sinceTimestamp": 1712353787,
       "sinceBlock": 19592322,
@@ -997,15 +774,7 @@
     {
       "address": "eth:0x8642473a123FE33b0aaE90bD8604eA1029417236",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
-          "description": "can eject DA operators from a quorum.",
-          "role": ".ejectors"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "EigenDAServiceManager",
@@ -1144,15 +913,7 @@
     {
       "address": "eth:0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can confirm batches to the DA bridge.",
-          "role": ".batchConfirmers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x900a9E1D5D5980973f513173249727505FA3bd22",
@@ -1171,11 +932,6 @@
     },
     {
       "address": "eth:0xA38372470ed4c3C4bb5123CC7f335212950e350A",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xA3e302a6Ea0cf79B8580d94e92Eb5514292daacE",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1348,15 +1104,7 @@
     {
       "address": "eth:0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
-          "description": "can eject DA operators from a quorum.",
-          "role": ".ejectors"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "EigenDAThresholdRegistry",
@@ -1412,15 +1160,7 @@
     {
       "address": "eth:0xe0550117Cb066D3b330eBd764B0d75D3BA378734",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
-          "description": "can approve the replacement of churned operators from a quorum",
-          "role": ".churnApprover"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "EigenDACertVerifier",
@@ -1459,15 +1199,7 @@
     {
       "address": "eth:0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
-          "description": "Can store and serve both unencoded blobs as well as encoded chunks.",
-          "role": ".relayers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "OperatorStateRetriever",
@@ -1497,15 +1229,7 @@
     {
       "address": "eth:0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
-          "description": "Can disperse EigenDA blobs to the EigenDA node operators.",
-          "role": ".dispersers"
-        }
-      ]
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -2229,6 +1953,301 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 25595575 },
-  "permissionsConfigHash": "0x488329afba596d2c9c4ba758b575ca924bb2773fe1d2edf19649a69dc5fbc7a8"
+  "usedBlockNumbers": { "ethereum": 25846657 },
+  "permissionsConfigHash": "0x8115bc3998e65dc319b211c81f5de4f975153bbd69f76aa6b6b8828f702afc6d",
+  "permissions": {
+    "eth:0x002721B4790d97dC140a049936aA710152Ba92D5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "description": "can add and remove strategies",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x0c431C66F4dE941d089625E5B423D00707977060": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "role": ".pauserRegistry"
+        }
+      ]
+    },
+    "eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can create rewards submissions.",
+          "role": ".rewardsInitiator"
+        }
+      ]
+    },
+    "eth:0x338477FfaF63c04AC06048787f910671eC914B34": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "description": "can eject DA operators from a quorum.",
+          "role": ".ejectors"
+        }
+      ]
+    },
+    "eth:0x454Ef2f69f91527856E06659f92a66f464C1ca4e": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can confirm batches to the DA bridge.",
+          "role": ".batchConfirmers"
+        }
+      ]
+    },
+    "eth:0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can confirm batches to the DA bridge.",
+          "role": ".batchConfirmers"
+        }
+      ]
+    },
+    "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x1be7258230250Bc6a4548F8D59d576a87D216C12",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x8642473a123FE33b0aaE90bD8604eA1029417236": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "description": "can eject DA operators from a quorum.",
+          "role": ".ejectors"
+        }
+      ]
+    },
+    "eth:0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can confirm batches to the DA bridge.",
+          "role": ".batchConfirmers"
+        }
+      ]
+    },
+    "eth:0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "description": "can eject DA operators from a quorum.",
+          "role": ".ejectors"
+        }
+      ]
+    },
+    "eth:0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+          "description": "Can disperse EigenDA blobs to the EigenDA node operators.",
+          "role": ".dispersers"
+        }
+      ]
+    },
+    "eth:0xe0550117Cb066D3b330eBd764B0d75D3BA378734": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "description": "can approve the replacement of churned operators from a quorum",
+          "role": ".churnApprover"
+        }
+      ]
+    },
+    "eth:0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "description": "Can store and serve both unencoded blobs as well as encoded chunks.",
+          "role": ".relayers"
+        }
+      ]
+    }
+  }
 }

@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x685225d131150b8c1b2f390e4b4f0c4baf7f62b3
+
+# Diff at Thu, 27 Aug 2026 14:20:06 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@07685e2b690dd5d880203f3696ff2e1bc300a13d block: 1787143507
+- current timestamp: 1787840339
+
+## Description
+
+ArbFilteredTransactionsManager (ArbOS 61 transaction-filtering precompile) now tracked; no filterers registered.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (arb1:0x0000000000000000000000000000000000000074) [orbitstack/ArbFilteredTransactionsManager] {
+    +++ description: ArbOS 61 transaction-filtering precompile (0x..74). An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay. Available from ArbOS 61 onwards. On chains where the feature is not enabled (e.g. Arbitrum One and Nova) it has no filterers and no filtered transactions, but is tracked so any future activation is caught immediately. Compare Robinhood, where this precompile is active.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      values.transactionFilterers:
+-        "EXPECT_REVERT"
++        []
+      values.$immutable:
++        true
+      sourceHashes:
++        ["0xc92ac7c82ac0ae6811eb5889bb19d300f3f59cc6c21e25d1be2dcc6c4a9db41a"]
+      implementationNames:
++        {"arb1:0x0000000000000000000000000000000000000074":""}
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (arb1:0x912CE59144191C1204E64559FE8253a0e49E6548) [orbitstack/layer2/L2ArbitrumToken] {
+    +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+      values.totalSupply:
+-        "9999998977630224104158908096"
++        "9999998977610261816650915825"
+    }
+```
+
 Generated with discovered.json: 0xee242bcd6242117c5a88cde0dc7b95e1ea130f5e
 
 # Diff at Wed, 19 Aug 2026 12:46:19 GMT:

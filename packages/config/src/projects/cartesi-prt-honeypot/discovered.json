@@ -122,14 +122,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
-          "description": "withdraw the entire balance in the escrow.",
-          "role": ".withdrawer"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1634112168,
       "sinceBlock": 13408863,
@@ -648,5 +640,17 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 23796692 },
-  "permissionsConfigHash": "0xeb5b65494022006b366d9813f45a340050c6c497467585273bdc743c858f147a"
+  "permissionsConfigHash": "0xeb5b65494022006b366d9813f45a340050c6c497467585273bdc743c858f147a",
+  "permissions": {
+    "eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
+          "description": "withdraw the entire balance in the escrow.",
+          "role": ".withdrawer"
+        }
+      ]
+    }
+  }
 }

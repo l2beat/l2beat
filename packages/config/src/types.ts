@@ -995,6 +995,12 @@ export type ProjectExternalDependency =
 
 export interface ProjectPrivacyInfo {
   tokens: ProjectPrivacyToken[]
+  /**
+   * A project tracks relayers either through onchain events or through
+   * Railgun Waku sampling - the two produce incompatible statistics, so
+   * mixing kinds within one project is not representable.
+   */
+  relayerTracking?: ProjectPrivacyRelayerTracking
   summaryTrackedItemName?: string
   /**
    * Privacy-specific detailed description shown on the privacy project page.
@@ -1020,6 +1026,27 @@ export interface ProjectPrivacyInfo {
 export interface PrivacyNoteDiscovery {
   description: string
   risks?: string[]
+}
+
+export type ProjectPrivacyRelayerTracking =
+  | {
+      type: 'onchainEvents'
+      sources: ProjectPrivacyOnchainRelayerSource[]
+    }
+  | ProjectPrivacyRailgunWakuRelayerSource
+
+/** Relayers identified by extracting their addresses from onchain withdrawal events. */
+export type ProjectPrivacyOnchainRelayerSource = {
+  address: ChainSpecificAddress
+  sinceTimestamp: UnixTime
+  extractor: 'privacyPoolsWithdrawalRelayed' | 'tornadoCashWithdrawal'
+}
+
+/** Relayers counted from daily observations of fee advertisements on the Railgun Waku network. */
+export type ProjectPrivacyRailgunWakuRelayerSource = {
+  type: 'railgunWaku'
+  chainId: number
+  sinceTimestamp: UnixTime
 }
 
 export interface PrivacyExitWindow extends ExitWindowRisk {

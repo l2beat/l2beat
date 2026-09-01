@@ -218,21 +218,7 @@
     {
       "address": "base:0x7F4cBa3D7f20bF5146e4e5F8929b676CA05a5545",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0x0001805c0B57DBd48B5c5c26E237a135dDC678ae",
-          "description": "change the pending LightNode administrator or the VerifyTool used by proof verification.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "base:0x0001805c0B57DBd48B5c5c26E237a135dDC678ae",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "SafeL2",
@@ -244,14 +230,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA",
-          "description": "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations.",
-          "role": ".adminRole"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "base:0x386ce1a187eC7329CFb8E467EB02FB07c698256A",
       "sinceTimestamp": 1779355507,
@@ -289,14 +267,6 @@
         "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA",
-          "description": "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations.",
-          "role": ".adminRole"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "base:0x386ce1a187eC7329CFb8E467EB02FB07c698256A",
       "sinceTimestamp": 1779356273,
@@ -332,18 +302,6 @@
       ],
       "proxyType": "immutable",
       "description": "OpenZeppelin AccessManager-derived authority for Butter's restricted Bridge and FeeService functions. Its role configuration controls who can change bridge validation dependencies, relay and token settings, fee parameters, pause state, and implementation upgrades.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56",
-          "role": ".authority"
-        },
-        {
-          "permission": "act",
-          "from": "base:0xfeE31a1FD7FcA0E05428ff751242e46F6D5769a6",
-          "role": ".authority"
-        }
-      ],
       "deployerAddress": "base:0xBBcfBbECC798ae9941104B0F6991134439c1c426",
       "sinceTimestamp": 1730533487,
       "sinceBlock": 21872070,
@@ -786,5 +744,57 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "base": 49781409 },
-  "permissionsConfigHash": "0xa504b4d5d6aa34229e70df987237ac1f644b4af890d46bd83e7384abed74cb16"
+  "permissionsConfigHash": "0xa504b4d5d6aa34229e70df987237ac1f644b4af890d46bd83e7384abed74cb16",
+  "permissions": {
+    "base:0x7F4cBa3D7f20bF5146e4e5F8929b676CA05a5545": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0x0001805c0B57DBd48B5c5c26E237a135dDC678ae",
+          "description": "change the pending LightNode administrator or the VerifyTool used by proof verification.",
+          "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x0001805c0B57DBd48B5c5c26E237a135dDC678ae",
+          "role": "admin"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "base:0x9987463102993e177b107e0cE97a0420428D1999": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA",
+          "description": "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations.",
+          "role": ".adminRole"
+        }
+      ]
+    },
+    "base:0xAAAaEE7549a61282F2B4Ca1766f46249D9e71aaA": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA",
+          "description": "change AuthorityManager permissions and execute restricted Bridge and FeeService management operations.",
+          "role": ".adminRole"
+        }
+      ]
+    },
+    "base:0xACC31A6756B60304C03d6626fc98c062E4539CCA": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "base:0x0000317Bec33Af037b5fAb2028f52d14658F6A56",
+          "role": ".authority"
+        },
+        {
+          "permission": "act",
+          "from": "base:0xfeE31a1FD7FcA0E05428ff751242e46F6D5769a6",
+          "role": ".authority"
+        }
+      ]
+    }
+  }
 }

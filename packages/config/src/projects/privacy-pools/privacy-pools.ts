@@ -47,6 +47,11 @@ interface PrivacyPoolBucket {
 }
 
 const BUCKETS = getPrivacyPoolBuckets()
+const ENTRYPOINT = discovery.getContract('PrivacyPoolsEntrypoint')
+assert(
+  ENTRYPOINT.sinceTimestamp !== undefined,
+  'PrivacyPoolsEntrypoint must have a sinceTimestamp',
+)
 const PRIVACY_POOLS_SINCE_TIMESTAMP = UnixTime(
   Math.min(...BUCKETS.map((bucket) => bucket.sinceTimestamp)),
 )
@@ -141,6 +146,16 @@ export const privacyPools: BaseProject = {
   },
   privacyInfo: {
     tokens: getPrivacyTokens(),
+    relayerTracking: {
+      type: 'onchainEvents',
+      sources: [
+        {
+          address: ENTRYPOINT.address,
+          sinceTimestamp: UnixTime(ENTRYPOINT.sinceTimestamp),
+          extractor: 'privacyPoolsWithdrawalRelayed',
+        },
+      ],
+    },
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',

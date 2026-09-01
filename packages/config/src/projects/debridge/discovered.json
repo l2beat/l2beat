@@ -10,14 +10,6 @@
         "0xdddaab1d0ccad17e0578e5dad9eab7bf81a90144cf89b5f4d5714c407dd2c9c5"
       ],
       "proxyType": "EIP7702 EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
-          "description": "force-cancel any not-yet-fulfilled order that has a cancel beneficiary set by its maker (refunds can only go to that maker-designated address).",
-          "role": ".govCancelAC"
-        }
-      ],
       "ignoreInWatchMode": [
         "keyCount",
         "keyHashes",
@@ -48,15 +40,7 @@
     {
       "address": "eth:0x1c0720B124e7251e881a0fbCfe259d085C59f205",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x24C0E1C19c8eC997b781dF4B4A0f812aE9667c96",
@@ -72,13 +56,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
       "sinceTimestamp": 1765183175,
       "sinceBlock": 23966953,
@@ -94,21 +71,7 @@
     {
       "address": "eth:0x391276932b5105C2DB8eE928dfd8872564d6d246",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
-          "description": "withdraw all protocol fees accrued in the DeBridgeGate to itself.",
-          "role": ".feeCollectorAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
-          "description": "withdraw accumulated DLN protocol fees (not user principal) to itself.",
-          "role": ".feeCollectorAC"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "IntentManagerValidator",
@@ -268,54 +231,22 @@
     {
       "address": "eth:0x4bC16662A2cE381E7bb54Dc577c05619C5E67526",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x4CA2191cDE585d65EB6AFC09D23D60b8A0AB677D",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x573F5E2940789B378BA09cf7d3fD010C422a9ff5",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x59CE95b8955F0E7Be128d5Af77161B36f6084214",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ExternalCallAdapter",
@@ -383,15 +314,7 @@
     {
       "address": "eth:0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DeBridgeRouter",
@@ -506,163 +429,6 @@
         "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
-          "description": "pause the DeBridgeGate, stopping all sends, claims and deToken deployments on this chain (only the admin can unpause).",
-          "role": ".govMonitoringAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
-          "description": "replace the SignatureVerifier (and with it the entire validation layer of the deBridge messaging protocol), the CallProxy and the deToken deployer, censor individual submissions (blockSubmission), toggle supported chains, set all fees and per-address fee discounts, designate the fee withdrawal contract, unpause the gate, and grant/revoke all roles. Most of these setters emit no events.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9",
-          "description": "replace the executor contract that handles external calldata of DLN orders and pause the adapter.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251",
-          "description": "manage the whitelist of swap routers and forwarding targets this contract may call with arbitrary calldata (and grant infinite token approvals to), set the service fee and fee treasury, and sweep any funds held by the router.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
-          "description": "administer all deployed deTokens: pause their transfers and grant/revoke minter rights, including the ability to grant itself the right to mint unbacked deTokens.",
-          "role": ".deBridgeTokenAdmin"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
-          "description": "replace the implementation of all deTokens at once (this contract acts as their beacon), change the admin assigned to newly deployed deTokens, and override deToken names/symbols. None of these setters emit events.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
-          "description": "grant and revoke the DEBRIDGE_GATE_ROLE that authorizes contracts to execute arbitrary external calls through the CallProxy.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "add and remove deBridge validators (oracles), change all signature thresholds (quorum must remain a majority of the oracle set), and re-point the gate contract allowed to request verification. Threshold changes emit no events.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
-          "description": "grant/revoke the FEE_COLLECTOR_ROLE that receives all deBridge protocol fees, pause fee withdrawals, and change the referenced gate contract.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
-          "description": "set the trusted DlnSource address (message receiver) for each supported chain, replace the external call adapter that custodies funds of orders with attached calldata, unpause the contract, and grant/revoke all roles.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
-          "description": "set the trusted DlnDestination address for each supported chain (a malicious address there can drain all escrowed order funds via forged unlock messages), change DLN fees without upper bound, unpause the contract, and grant/revoke all roles.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
-          "role": ".owner"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "deployerAddress": "eth:0x9f856fC3e2ea6D2ef7b1f030D4A8BF34556eAc5d",
       "sinceTimestamp": 1637442903,
@@ -780,63 +546,12 @@
     {
       "address": "eth:0x83f81E7f9E284AAFFEDED797008663595f7342bF",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xddddddddd4B6472c5002F95610b194D1161223d0",
-          "description": "grant and revoke the ALLOWED_SPENDER_ROLE, i.e. authorize any address (including itself) to spend all outstanding user approvals of the deBridge intent system.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708",
-          "description": "set intent fill fees up to 100% with immediate effect (fees are not part of the user-signed intent), manage the trusted solver set, sweep funds held by the contract, and grant/revoke all roles.",
-          "role": ".defaultAdminAC"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3",
-          "role": ".owner"
-        },
-        {
-          "permission": "act",
-          "from": "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x874B1d14bF4FE455C9eCAcDf66b629e10664c6E1",
@@ -846,15 +561,7 @@
     {
       "address": "eth:0x874f46124C1DAaD4749B94f82eD142754826240E",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "CallProxy",
@@ -1021,23 +728,6 @@
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5",
       "sinceTimestamp": 1670855027,
       "sinceBlock": 16169200,
@@ -1058,13 +748,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
       "sinceTimestamp": 1765183559,
       "sinceBlock": 23966985,
@@ -1107,13 +790,6 @@
         "0x8fd8f837bb320bd2a7463c103bea2ff207b0969b5795f320a6c868858aa92074"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0x6681b27BEC88Ba8c6F0E4B42dD6E3e5c1a797021",
       "sinceTimestamp": 1761039275,
       "sinceBlock": 23625079,
@@ -1134,28 +810,12 @@
     {
       "address": "eth:0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b",
-          "description": "grant and revoke the INTENT_MANAGER_ROLE that allows creating DLN orders with custom or zero protocol fees.",
-          "role": ".defaultAdminAC"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "SimpleFeeProxy",
@@ -1229,13 +889,6 @@
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xFD830dd9B446c9b880b32A03FB9A750AaE4A68aa",
       "sinceTimestamp": 1647386205,
       "sinceBlock": 14394077,
@@ -1311,25 +964,7 @@
     {
       "address": "eth:0xd6dF82F60a2FE1e61aEc29679bc4954F33D8C1EC",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816",
-          "role": ".owner"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0xd725E456D5beD8275E297C4Dd11135e3C5cDe544",
@@ -1339,15 +974,7 @@
     {
       "address": "eth:0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DeBridgeAllowanceHolder",
@@ -1395,14 +1022,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Fills user-signed intents by creating DLN orders on their behalf: it pulls input tokens from users through the DeBridgeAllowanceHolder (Permit2 or direct approvals) and forwards them into DlnSource in the same transaction, charging a variable fee that is NOT part of the user-signed intent. It is non-custodial in steady state. Note that the EIP-712 signature users sign covers only an opaque intent hash, and fills are permissionless unless the intent restricts senders.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xddddddddd4B6472c5002F95610b194D1161223d0",
-          "description": "unconditionally transfer any amount of any token from any user who approved the DeBridgeAllowanceHolder (directly or via Permit2) to any recipient, and make arbitrary calls from its address.",
-          "role": ".allowedSpenderAC"
-        }
-      ],
       "deployerAddress": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
       "sinceTimestamp": 1765183559,
       "sinceBlock": 23966985,
@@ -1482,33 +1101,6 @@
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
       ],
       "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
-          "role": "admin"
-        }
-      ],
       "deployerAddress": "eth:0xd6F0DabbBccd143f7d526a82Ca176b5395cCc844",
       "sinceTimestamp": 1637594986,
       "sinceBlock": 13665292,
@@ -1663,15 +1255,7 @@
     {
       "address": "eth:0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "DlnSource",
@@ -1814,15 +1398,7 @@
     {
       "address": "eth:0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
-          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
-          "role": ".oracleAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -2970,5 +2546,481 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25796445 },
-  "permissionsConfigHash": "0x059b071fef39bee6c621d912a14e7bdc9a1475990c4e2dd4b78d45a1fd23ba8a"
+  "permissionsConfigHash": "0x059b071fef39bee6c621d912a14e7bdc9a1475990c4e2dd4b78d45a1fd23ba8a",
+  "permissions": {
+    "eth:0x0746e7e4d15F30885616B4ac3D274393354E80c0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "description": "force-cancel any not-yet-fulfilled order that has a cancel beneficiary set by its maker (refunds can only go to that maker-designated address).",
+          "role": ".govCancelAC"
+        }
+      ]
+    },
+    "eth:0x1c0720B124e7251e881a0fbCfe259d085C59f205": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0x391276932b5105C2DB8eE928dfd8872564d6d246": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
+          "description": "withdraw all protocol fees accrued in the DeBridgeGate to itself.",
+          "role": ".feeCollectorAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "description": "withdraw accumulated DLN protocol fees (not user principal) to itself.",
+          "role": ".feeCollectorAC"
+        }
+      ]
+    },
+    "eth:0x4CA2191cDE585d65EB6AFC09D23D60b8A0AB677D": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0x4bC16662A2cE381E7bb54Dc577c05619C5E67526": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0x573F5E2940789B378BA09cf7d3fD010C422a9ff5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0x59CE95b8955F0E7Be128d5Af77161B36f6084214": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
+          "description": "pause the DeBridgeGate, stopping all sends, claims and deToken deployments on this chain (only the admin can unpause).",
+          "role": ".govMonitoringAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
+          "description": "replace the SignatureVerifier (and with it the entire validation layer of the deBridge messaging protocol), the CallProxy and the deToken deployer, censor individual submissions (blockSubmission), toggle supported chains, set all fees and per-address fee discounts, designate the fee withdrawal contract, unpause the gate, and grant/revoke all roles. Most of these setters emit no events.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9",
+          "description": "replace the executor contract that handles external calldata of DLN orders and pause the adapter.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251",
+          "description": "manage the whitelist of swap routers and forwarding targets this contract may call with arbitrary calldata (and grant infinite token approvals to), set the service fee and fee treasury, and sweep any funds held by the router.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
+          "description": "administer all deployed deTokens: pause their transfers and grant/revoke minter rights, including the ability to grant itself the right to mint unbacked deTokens.",
+          "role": ".deBridgeTokenAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
+          "description": "replace the implementation of all deTokens at once (this contract acts as their beacon), change the admin assigned to newly deployed deTokens, and override deToken names/symbols. None of these setters emit events.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
+          "description": "grant and revoke the DEBRIDGE_GATE_ROLE that authorizes contracts to execute arbitrary external calls through the CallProxy.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "add and remove deBridge validators (oracles), change all signature thresholds (quorum must remain a majority of the oracle set), and re-point the gate contract allowed to request verification. Threshold changes emit no events.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
+          "description": "grant/revoke the FEE_COLLECTOR_ROLE that receives all deBridge protocol fees, pause fee withdrawals, and change the referenced gate contract.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "description": "set the trusted DlnSource address (message receiver) for each supported chain, replace the external call adapter that custodies funds of orders with attached calldata, unpause the contract, and grant/revoke all roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "description": "set the trusted DlnDestination address for each supported chain (a malicious address there can drain all escrowed order funds via forged unlock messages), change DLN fees without upper bound, unpause the contract, and grant/revoke all roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
+          "role": ".owner"
+        }
+      ]
+    },
+    "eth:0x83f81E7f9E284AAFFEDED797008663595f7342bF": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xddddddddd4B6472c5002F95610b194D1161223d0",
+          "description": "grant and revoke the ALLOWED_SPENDER_ROLE, i.e. authorize any address (including itself) to spend all outstanding user approvals of the deBridge intent system.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708",
+          "description": "set intent fill fees up to 100% with immediate effect (fees are not part of the user-signed intent), manage the trusted solver set, sweep funds held by the contract, and grant/revoke all roles.",
+          "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6D83EAEb957986FEA14Ff0E88AF23736598e22cc",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
+          "from": "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F",
+          "role": ".owner"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0x874f46124C1DAaD4749B94f82eD142754826240E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x61eF2e01E603aEB5Cd96F9eC9AE76cc6A68f6cF9",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xE7351Fd770A37282b91D153Ee690B63579D6dd7f",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xeF4fB24aD0916217251F553c0596F8Edc630EB66",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x663DC15D3C1aC63ff12E45Ab68FeA3F0a883C251",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xddddddddd4B6472c5002F95610b194D1161223d0",
+          "description": "unconditionally transfer any amount of any token from any user who approved the DeBridgeAllowanceHolder (directly or via Permit2) to any recipient, and make arbitrary calls from its address.",
+          "role": ".allowedSpenderAC"
+        }
+      ]
+    },
+    "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xDDDDDDDdeB2E68Ee19832e356FCB5537124A9708",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07",
+          "role": "admin"
+        }
+      ]
+    },
+    "eth:0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0xbda458dfc28021dEbD72060671Fc350fA5CB39e5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x4247c6f71407359E4C8D29787E98D752F264CD4b",
+          "description": "grant and revoke the INTENT_MANAGER_ROLE that allows creating DLN orders with custom or zero protocol fees.",
+          "role": ".defaultAdminAC"
+        }
+      ]
+    },
+    "eth:0xd6dF82F60a2FE1e61aEc29679bc4954F33D8C1EC": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd2a4cA9DA7B84c16B888df340d96a5a92aA44F07",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816",
+          "role": ".owner"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    },
+    "eth:0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    },
+    "eth:0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "description": "sign cross-chain submissions as a deBridge validator. A quorum of these signers can authorize arbitrary messages, mint deTokens and unlock collateral from the deBridge gate on this chain.",
+          "role": ".oracleAddresses"
+        }
+      ]
+    }
+  }
 }

@@ -6,27 +6,7 @@
     {
       "address": "arb1:0x263294039413B96D25E4173a5F7599F8b3801504",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "Can request withdrawals, start a validator set change, add lockers and finalizers (Can also change cold validators by adding a finalizer and proposing/finalizing a new validator set).",
-          "role": ".hotAddresses"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "finalize withdrawals, finalize validator set updates.",
-          "role": ".finalizers"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "vote for locking the bridge contract.",
-          "role": ".lockers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "HyperliquidBridge",
@@ -143,148 +123,42 @@
     {
       "address": "arb1:0x58E1b0E63C905D5982324FCd9108582623b8132e",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "Can request withdrawals, start a validator set change, add lockers and finalizers (Can also change cold validators by adding a finalizer and proposing/finalizing a new validator set).",
-          "role": ".hotAddresses"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "finalize withdrawals, finalize validator set updates.",
-          "role": ".finalizers"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "vote for locking the bridge contract.",
-          "role": ".lockers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0x5a92b4A6a525445c9B4FFf61C0db71dCfE305ede",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause and change the validator set), remove lockers and finalizers.",
-          "role": ".coldAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0x8003FD297a7Aa477B746825E7A506675bF590E91",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause and change the validator set), remove lockers and finalizers.",
-          "role": ".coldAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0x86d6AE3032732F27239075D77a1317989B52F628",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause and change the validator set), remove lockers and finalizers.",
-          "role": ".coldAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0xda6816df552c3f9e0FB64979fb357800d690d79B",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "Can request withdrawals, start a validator set change, add lockers and finalizers (Can also change cold validators by adding a finalizer and proposing/finalizing a new validator set).",
-          "role": ".hotAddresses"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "finalize withdrawals, finalize validator set updates.",
-          "role": ".finalizers"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "vote for locking the bridge contract.",
-          "role": ".lockers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0xE346B41B47296153A21E64D6bFc857C27874C6e7",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause and change the validator set), remove lockers and finalizers.",
-          "role": ".coldAddresses"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "Can request withdrawals, start a validator set change, add lockers and finalizers (Can also change cold validators by adding a finalizer and proposing/finalizing a new validator set).",
-          "role": ".hotAddresses"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "finalize withdrawals, finalize validator set updates.",
-          "role": ".finalizers"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "vote for locking the bridge contract.",
-          "role": ".lockers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "arb1:0xf9d2282A4A4C216f624717C0747D23146FC048c5",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "finalize withdrawals, finalize validator set updates.",
-          "role": ".finalizers"
-        },
-        {
-          "permission": "interact",
-          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
-          "description": "vote for locking the bridge contract.",
-          "role": ".lockers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "hyperevm:0x0000000000000000000000000000000000000000",
@@ -387,15 +261,7 @@
     {
       "address": "hyperevm:0x8E66c6AC847f06b9502fA2512435a62005f5Fb92",
       "type": "EOA",
-      "proxyType": "EOA",
-      "eoaWithUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "hyperevm:0x6B9E773128f453f5c2C60935Ee2DE2CBc5390A24",
-          "role": "admin"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "hyperevm:0xa56fA84d6B417b0aE968AAc312E57214473BEDE4",
@@ -544,5 +410,161 @@
     "hyperliquid/HyperliquidBridge": "0x6349c4d94e64347ff4aa348ac6cfad812936cdf0f3ba72b0e7f12d0caf1574c3"
   },
   "usedBlockNumbers": { "arbitrum": 492017408, "hyperevm": 42539214 },
-  "permissionsConfigHash": "0xcfb0b8bf963d6efe7243ad107a247b46390ad9cb260c9e419548cbf82edb2c65"
+  "permissionsConfigHash": "0xcfb0b8bf963d6efe7243ad107a247b46390ad9cb260c9e419548cbf82edb2c65",
+  "permissions": {
+    "arb1:0x263294039413B96D25E4173a5F7599F8b3801504": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "Can request withdrawals, start a validator set change, add lockers and finalizers (Can also change cold validators by adding a finalizer and proposing/finalizing a new validator set).",
+          "role": ".hotAddresses"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "finalize withdrawals, finalize validator set updates.",
+          "role": ".finalizers"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "vote for locking the bridge contract.",
+          "role": ".lockers"
+        }
+      ]
+    },
+    "arb1:0x58E1b0E63C905D5982324FCd9108582623b8132e": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "Can request withdrawals, start a validator set change, add lockers and finalizers (Can also change cold validators by adding a finalizer and proposing/finalizing a new validator set).",
+          "role": ".hotAddresses"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "finalize withdrawals, finalize validator set updates.",
+          "role": ".finalizers"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "vote for locking the bridge contract.",
+          "role": ".lockers"
+        }
+      ]
+    },
+    "arb1:0x5a92b4A6a525445c9B4FFf61C0db71dCfE305ede": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause and change the validator set), remove lockers and finalizers.",
+          "role": ".coldAddresses"
+        }
+      ]
+    },
+    "arb1:0x8003FD297a7Aa477B746825E7A506675bF590E91": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause and change the validator set), remove lockers and finalizers.",
+          "role": ".coldAddresses"
+        }
+      ]
+    },
+    "arb1:0x86d6AE3032732F27239075D77a1317989B52F628": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause and change the validator set), remove lockers and finalizers.",
+          "role": ".coldAddresses"
+        }
+      ]
+    },
+    "arb1:0xE346B41B47296153A21E64D6bFc857C27874C6e7": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause and change the validator set), remove lockers and finalizers.",
+          "role": ".coldAddresses"
+        }
+      ]
+    },
+    "arb1:0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "Can request withdrawals, start a validator set change, add lockers and finalizers (Can also change cold validators by adding a finalizer and proposing/finalizing a new validator set).",
+          "role": ".hotAddresses"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "finalize withdrawals, finalize validator set updates.",
+          "role": ".finalizers"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "vote for locking the bridge contract.",
+          "role": ".lockers"
+        }
+      ]
+    },
+    "arb1:0xda6816df552c3f9e0FB64979fb357800d690d79B": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "Can request withdrawals, start a validator set change, add lockers and finalizers (Can also change cold validators by adding a finalizer and proposing/finalizing a new validator set).",
+          "role": ".hotAddresses"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "finalize withdrawals, finalize validator set updates.",
+          "role": ".finalizers"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "vote for locking the bridge contract.",
+          "role": ".lockers"
+        }
+      ]
+    },
+    "arb1:0xf9d2282A4A4C216f624717C0747D23146FC048c5": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "finalize withdrawals, finalize validator set updates.",
+          "role": ".finalizers"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "description": "vote for locking the bridge contract.",
+          "role": ".lockers"
+        }
+      ]
+    },
+    "hyperevm:0x8E66c6AC847f06b9502fA2512435a62005f5Fb92": {
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "hyperevm:0x6B9E773128f453f5c2C60935Ee2DE2CBc5390A24",
+          "role": "admin"
+        }
+      ],
+      "eoaWithUpgradePermissions": true
+    }
+  }
 }
