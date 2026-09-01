@@ -303,7 +303,7 @@ export interface DaBeatConfig {
   readonly celestiaApiUrl: string
   readonly celestiaCallsPerMinute: number
   readonly nearRpcUrl: string
-  readonly availWsUrl: string
+  readonly availRpcUrl: string
   readonly espressoApiUrl: string
 }
 

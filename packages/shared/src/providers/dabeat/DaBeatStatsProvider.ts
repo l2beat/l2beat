@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import type {
-  AvailWsClient,
+  AvailClient,
   BeaconChainClient,
   CelestiaRpcClient,
   EspressoClient,
@@ -18,7 +18,7 @@ export class DaBeatStatsProvider {
     private readonly beaconChainClient: BeaconChainClient | undefined,
     private readonly nearClient: NearClient | undefined,
     private readonly celestiaClient: CelestiaRpcClient | undefined,
-    private readonly availWsClient: AvailWsClient | undefined,
+    private readonly availClient: AvailClient | undefined,
     private readonly espressoClient: EspressoClient | undefined,
   ) {}
 
@@ -99,25 +99,17 @@ export class DaBeatStatsProvider {
   }
 
   async getAvailStats(): Promise<DaBeatStats> {
-    assert(this.availWsClient, 'Avail WS client not found')
-    await this.availWsClient.connect()
+    assert(this.availClient, 'Avail client not found')
+    const validatorsOverview = await this.availClient.getStakingEraOverview()
+    const total = Object.values(validatorsOverview).reduce(
+      (acc, { total }) => acc + total,
+      0n,
+    )
 
-    try {
-      const currentEra = await this.availWsClient.getCurrentEra()
-      const validatorsOverview =
-        await this.availWsClient.getStakingEraOverview(currentEra)
-      const total = Object.values(validatorsOverview).reduce(
-        (acc, { total }) => acc + total,
-        0n,
-      )
-
-      return {
-        totalStake: total,
-        thresholdStake: (total * 200n) / 300n,
-        numberOfValidators: Object.keys(validatorsOverview).length,
-      }
-    } finally {
-      await this.availWsClient.disconnect()
+    return {
+      totalStake: total,
+      thresholdStake: (total * 200n) / 300n,
+      numberOfValidators: Object.keys(validatorsOverview).length,
     }
   }
 
