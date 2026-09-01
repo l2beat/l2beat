@@ -27,6 +27,7 @@ describe(withChangeSort.name, () => {
     expect(valueColumn.meta?.changeSortColumnId).toEqual('totalChange')
     expect(valueColumn.meta?.align).toEqual('right')
     expect(changeColumn.id).toEqual('totalChange')
+    expect(changeColumn.header).toEqual('7D%')
     expect(changeColumn.enableHiding).toEqual(false)
     expect(changeColumn.meta?.isChangeSortColumn).toEqual(true)
   })
