@@ -131,10 +131,10 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
           },
         },
       ),
-      {
-        getChange: (row) => row.tvs?.change?.total,
-        period: '7D',
-      },
+      (row) => ({
+        change: row.tvs?.change?.total,
+        period: row.tvs?.changePeriod,
+      }),
     ),
     ...withChangeSort(
       columnHelper,
@@ -170,10 +170,10 @@ export function getL2SummaryColumns(opts?: L2SummaryColumnsOpts) {
             'User operations per second averaged over the past day, shown together with a percentage change compared to 7D ago.',
         },
       }),
-      {
-        getChange: (row) => row.activity?.change,
-        period: '7D',
-      },
+      (row) => ({
+        change: row.activity?.change,
+        period: row.activity?.changePeriod,
+      }),
     ),
   ]
 }

@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import type { Header } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
 import { SortingArrows } from './SortingArrows'
@@ -35,12 +36,19 @@ export function ValueAndChangeSortingHeader<TData>({
     return valueSortingArrows
   }
 
-  const changeHeader =
-    typeof changeColumn.columnDef.header === 'string'
-      ? changeColumn.columnDef.header
-      : undefined
+  const changeHeaderInstance = header.headerGroup.headers.find(
+    (candidate) => candidate.column.id === changeSortColumnId,
+  )
+  assert(
+    changeHeaderInstance,
+    'Expected change-sort companion header in the same group',
+  )
 
-  if (!changeHeader) {
+  const changeHeader = flexRender(
+    changeHeaderInstance.column.columnDef.header,
+    changeHeaderInstance.getContext(),
+  )
+  if (changeHeader == null) {
     return valueSortingArrows
   }
 

@@ -123,10 +123,10 @@ export const getL2ActivityColumns = (
           colSpan: (ctx) => (ctx.row.original.data ? 1 : 100),
         },
       }),
-      {
-        getChange: (row) => row.data?.pastDayCount.change,
-        period: '7D',
-      },
+      (row) => ({
+        change: row.data?.pastDayCount.change,
+        period: row.data?.pastDayCount.changePeriod,
+      }),
     ),
     columnHelper.accessor('data.maxCount.value', {
       header: `Max ${metric === 'uops' ? 'UOPS' : 'TPS'}`,
@@ -180,10 +180,10 @@ export const getL2ActivityColumns = (
           hideIfNull: true,
         },
       }),
-      {
-        getChange: (row) => row.data?.summedCount.change,
-        period: 'last30d',
-      },
+      (row) => ({
+        change: row.data?.summedCount.change,
+        period: row.data?.summedCount.changePeriod,
+      }),
     ),
     metric === 'tps' &&
       columnHelper.accessor('data.totalCount.value', {

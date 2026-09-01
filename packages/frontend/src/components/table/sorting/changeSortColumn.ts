@@ -17,9 +17,9 @@ const CHANGE_SORT_HEADERS: Record<PercentageChangePeriod, string> = {
 export function withChangeSort<TData, TValue>(
   columnHelper: ColumnHelper<TData>,
   column: ColumnDef<TData, TValue>,
-  opts: {
-    getChange: (row: TData) => number | undefined
-    period: PercentageChangePeriod
+  getChange: (row: TData) => {
+    change: number | undefined
+    period: PercentageChangePeriod | undefined
   },
 ): [ColumnDef<TData, TValue>, ColumnDef<TData, number | undefined>] {
   const id = column.id
@@ -34,9 +34,17 @@ export function withChangeSort<TData, TValue>(
         changeSortColumnId: changeId,
       },
     },
-    columnHelper.accessor(opts.getChange, {
+    columnHelper.accessor((row) => getChange(row).change, {
       id: changeId,
-      header: CHANGE_SORT_HEADERS[opts.period],
+      header: ({ table }) => {
+        for (const row of table.getCoreRowModel().rows) {
+          const period = getChange(row.original).period
+          if (period !== undefined) {
+            return CHANGE_SORT_HEADERS[period]
+          }
+        }
+        return null
+      },
       sortUndefined: 'last',
       sortDescFirst: true,
       enableHiding: false,

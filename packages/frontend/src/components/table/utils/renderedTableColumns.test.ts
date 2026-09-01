@@ -35,10 +35,10 @@ describe('rendered table columns', () => {
               id: 'total',
               header: 'Total',
             }),
-            {
-              getChange: (row) => row.totalChange,
-              period: '7D',
-            },
+            (row) => ({
+              change: row.totalChange,
+              period: '7D' as const,
+            }),
           ),
         }),
       ],

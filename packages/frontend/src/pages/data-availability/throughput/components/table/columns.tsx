@@ -228,10 +228,10 @@ export const publicSystemsColumns = [
           'The total amount of data posted to the layer over the past day, displayed along with the percentage change compared to 1D ago.',
       },
     }),
-    {
-      getChange: (row) => row.data?.pastDayData?.change,
-      period: '1D',
-    },
+    (row) => ({
+      change: row.data?.pastDayData?.change,
+      period: row.data?.pastDayData?.changePeriod,
+    }),
   ),
   columnHelper.display({
     header: 'Finality',

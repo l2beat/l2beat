@@ -124,10 +124,10 @@ export const columns = [
         )
       },
     }),
-    {
-      getChange: (row) => row.priceUsd.change,
-      period: '7D',
-    },
+    (row) => ({
+      change: row.priceUsd.change,
+      period: row.priceUsd.changePeriod,
+    }),
   ),
   ...withChangeSort(
     columnHelper,
@@ -143,10 +143,10 @@ export const columns = [
         return <ProjectTokenValueCell row={ctx.row.original} />
       },
     }),
-    {
-      getChange: (row) => row.valueForProject.change,
-      period: '7D',
-    },
+    (row) => ({
+      change: row.valueForProject.change,
+      period: row.valueForProject.changePeriod,
+    }),
   ),
   columnHelper.display({
     id: 'actions',

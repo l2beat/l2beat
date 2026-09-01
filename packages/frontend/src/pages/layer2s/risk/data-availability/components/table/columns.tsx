@@ -52,10 +52,10 @@ export function getL2RiskDataAvailabilityColumns(hideProofSystem?: boolean) {
             'The data posted by the project to the DA layer over the past day, together with a % change compared to 7D ago.',
         },
       }),
-      {
-        getChange: (row) => row.dataPosted?.change,
-        period: '7D',
-      },
+      (row) => ({
+        change: row.dataPosted?.change,
+        period: row.dataPosted?.changePeriod,
+      }),
     ),
     !hideProofSystem &&
       columnHelper.accessor('proofSystem', {

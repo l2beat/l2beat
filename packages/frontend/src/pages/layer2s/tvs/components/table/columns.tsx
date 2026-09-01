@@ -105,10 +105,10 @@ export const getL2TvsColumns = (
           },
         },
       ),
-      {
-        getChange: (row) => row.tvs.data?.change.total,
-        period: '7D',
-      },
+      (row) => ({
+        change: row.tvs.data?.change.total,
+        period: row.tvs.data?.changePeriod,
+      }),
     ),
   }),
   ...(opts?.breakdownType === 'bridgeType'
@@ -149,10 +149,10 @@ function tvsBreakdownColumn<
       sortUndefined: 'last',
       meta: opts.meta,
     }),
-    {
-      getChange: (row) => row.tvs.data?.change[opts.dataKey],
-      period: '7D',
-    },
+    (row) => ({
+      change: row.tvs.data?.change[opts.dataKey],
+      period: row.tvs.data?.changePeriod,
+    }),
   )
 }
 

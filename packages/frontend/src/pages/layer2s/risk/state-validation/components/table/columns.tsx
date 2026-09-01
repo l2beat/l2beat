@@ -48,6 +48,7 @@ function getTvsColumns<T extends CommonL2Entry & { tvs: TvsData }>(
               value.additionalTrustAssumptionsPercentage
             }
             change={value.change?.total}
+            changePeriod={value.changePeriod}
             syncWarning={value.syncWarning}
           />
         )
@@ -59,10 +60,10 @@ function getTvsColumns<T extends CommonL2Entry & { tvs: TvsData }>(
           'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens, shown together with a percentage change compared to 7D ago.',
       },
     }),
-    {
-      getChange: (row) => row.tvs.change?.total,
-      period: '7D',
-    },
+    (row) => ({
+      change: row.tvs.change?.total,
+      period: row.tvs.changePeriod,
+    }),
   )
 }
 

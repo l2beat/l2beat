@@ -125,10 +125,10 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
           },
         },
       ),
-      {
-        getChange: (row) => row.tvsData?.change.total,
-        period: '7D',
-      },
+      (row) => ({
+        change: row.tvsData?.change.total,
+        period: row.tvsData?.changePeriod,
+      }),
     ),
     ...withChangeSort(
       columnHelper,
@@ -164,10 +164,10 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
             'User operations per second averaged over the past day, shown together with a percentage changed compared to 7D ago.',
         },
       }),
-      {
-        getChange: (row) => row.activity?.change,
-        period: '7D',
-      },
+      (row) => ({
+        change: row.activity?.change,
+        period: row.activity?.changePeriod,
+      }),
     ),
   ])
 }
