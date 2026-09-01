@@ -1,4 +1,3 @@
-import type { ProjectCrops } from '@l2beat/config'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -20,19 +19,20 @@ import { MobileSectionNavigation } from '~/components/section-navigation/MobileS
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { ProjectGardenCrops } from '~/server/features/garden/getProjectGardenCrops'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 
 interface Props extends AppLayoutProps {
   entry: ProjectPrivacyEntry
-  crops?: ProjectCrops
+  garden?: ProjectGardenCrops
   queryState: DehydratedState
 }
 
 export function PrivacyProjectPage({
   entry,
-  crops,
+  garden,
   queryState,
   ...props
 }: Props) {
@@ -140,7 +140,7 @@ export function PrivacyProjectPage({
                       </div>
                     </PrimaryCard>
 
-                    {crops && <GardenCropsNotice crops={crops} />}
+                    {garden && <GardenCropsNotice {...garden} />}
 
                     <ProjectDetails items={entry.sections} />
                   </HighlightableLinkContextProvider>

@@ -124,6 +124,7 @@ export function GardenTable({ entries }: { entries: GardenEntry[] }) {
                     key={column.key}
                     letter={column.letter}
                     label={column.label}
+                    note={column.note}
                     evaluation={entry.crops[column.key]}
                     delay={columnIndex * 0.09 + rowIndex * 0.05}
                   />

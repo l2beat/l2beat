@@ -15,6 +15,7 @@ import {
 import { type Parser, v } from '@l2beat/validate'
 import type { ZkCatalogAttester } from './common/zkCatalogAttesters'
 import type { ZkCatalogTagType } from './common/zkCatalogTags'
+import type { OsiLicenseId } from './crops/osiLicenses'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -1130,7 +1131,21 @@ export type PrivacyFlowExtractorParams = PrivacyFlowExtractorConfig['params']
 
 // #region crops data
 
-export type ProjectCropStatus = 'reviewed' | 'partiallyReviewed' | 'notReviewed'
+// Re-exported so consumers of the package can read a resolved license without
+// deep-importing the generated OSI list.
+export type { OsiLicense, OsiLicenseId } from './crops/osiLicenses'
+
+/**
+ * `fullyTransparent` is not a gap in the review: the protocol makes no claim
+ * to the property and everything is in the open, which is a finished answer
+ * rather than a pending one. It renders grey like `notReviewed` because there
+ * is no quality to grade, not because nobody looked.
+ */
+export type ProjectCropStatus =
+  | 'reviewed'
+  | 'partiallyReviewed'
+  | 'notReviewed'
+  | 'fullyTransparent'
 
 export interface ProjectCropEvaluation {
   /** Drives the color of the crop. Not needed when `status` is `notReviewed`. */
@@ -1147,9 +1162,20 @@ export interface ProjectCropEvaluation {
   notReviewed?: string[]
 }
 
+export interface ProjectOpenSourceCropEvaluation extends ProjectCropEvaluation {
+  /**
+   * SPDX id of the license the project ships under, which has to be one the
+   * OSI has approved - see `OSI_LICENSES`. Declared as an id rather than
+   * written out as a point, so the name and the link come from the OSI list
+   * and the prose cannot drift from the license we actually checked. Left out
+   * when the license has not been confirmed.
+   */
+  license?: OsiLicenseId
+}
+
 export interface ProjectCrops {
   censorshipResistance: ProjectCropEvaluation
-  openSource: ProjectCropEvaluation
+  openSource: ProjectOpenSourceCropEvaluation
   privacy: ProjectCropEvaluation
   security: ProjectCropEvaluation
 }

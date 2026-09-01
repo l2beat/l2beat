@@ -343,9 +343,10 @@ export const ethscriptions: ScalingProject = {
       ],
     },
     privacy: {
-      status: 'notReviewed',
-      notReviewed: [
-        'Not reviewed. Ethscription activity and the L2 state derived from it are public on Ethereum.',
+      status: 'fullyTransparent',
+      points: [
+        'The protocol does not make privacy claims, and is fully transparent.',
+        'Ethscription activity and the L2 state derived from it are public on Ethereum.',
       ],
     },
     security: {

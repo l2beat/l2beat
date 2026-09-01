@@ -37,6 +37,13 @@ const PLANTS: {
     description:
       'A dashed ring with no plant. Either the property is out of scope for this protocol, or we have not reviewed it yet.',
   },
+  {
+    sentiment: 'neutral',
+    status: 'fullyTransparent',
+    title: 'Fully transparent',
+    description:
+      'A whole plant, outlined rather than filled, that you see straight through. The protocol makes no claim to the property and hides nothing about it - an answer, not a gap.',
+  },
 ]
 
 export function PlantLegendSection() {
@@ -48,7 +55,7 @@ export function PlantLegendSection() {
         size="md"
       />
       <PrimaryCard className="md:p-8">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
           {PLANTS.map((plant, index) => (
             <article key={plant.title} className="flex flex-col gap-2">
               <CropPlantSample

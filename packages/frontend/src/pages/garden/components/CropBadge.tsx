@@ -1,9 +1,10 @@
 import type {
+  OsiLicense,
   ProjectCropEvaluation,
   ProjectCropStatus,
   Sentiment,
 } from '@l2beat/config'
-import type { CSSProperties } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import {
   Tooltip,
   TooltipContent,
@@ -61,44 +62,43 @@ const CHIP_DASHED_BORDER =
 interface Props {
   letter: string
   label: string
-  evaluation: ProjectCropEvaluation
+  /** Caveat shown above the findings - see `CropDefinition.note`. */
+  note?: string
+  /**
+   * A resolved evaluation is assignable here: the license arrives already
+   * looked up, so the plant never has to reach into the OSI list itself.
+   */
+  evaluation: ProjectCropEvaluation & { license?: OsiLicense }
   delay: number
 }
 
-export function CropBadge({ letter, label, evaluation, delay }: Props) {
-  const status: ProjectCropStatus = evaluation.status ?? 'reviewed'
-  // A not-reviewed crop has no color, so it always renders as neutral.
-  const sentiment: Sentiment =
-    status === 'notReviewed' ? 'neutral' : (evaluation.sentiment ?? 'neutral')
-  const isDashed = status !== 'reviewed'
+export function CropBadge({ letter, label, note, evaluation, delay }: Props) {
+  const status = resolveStatus(evaluation)
+  const sentiment = resolveSentiment(evaluation)
 
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <span className="hover:-translate-y-0.5 flex w-10 flex-col items-center gap-1 transition-transform duration-200">
-          <span className={cn('flex h-10 items-end', PLANT_COLOR[sentiment])}>
-            <CropPlant status={status} sentiment={sentiment} delay={delay} />
-          </span>
-          <span
-            className={cn(
-              'flex size-[26px] items-center justify-center rounded-full border-[1.5px] font-semibold',
-              letter.length > 1 ? 'text-[10px]' : 'text-xs',
-              CHIP_FILL[sentiment],
-              isDashed ? CHIP_DASHED_BORDER : CHIP_BORDER[sentiment],
-            )}
-            style={{
-              animation: `garden-pop .5s ease-out ${delay}s both`,
-            }}
-          >
-            {letter}
-          </span>
+        <span className="hover:-translate-y-0.5 transition-transform duration-200">
+          <CropPlantBadge
+            letter={letter}
+            label={label}
+            status={status}
+            sentiment={sentiment}
+            delay={delay}
+          />
         </span>
       </TooltipTrigger>
       <TooltipContent className="max-w-[360px]">
         <SentimentText sentiment={sentiment} className="font-medium text-base">
-          {`${label}: ${getStatusText(status, sentiment)}`}
+          {`${label}: ${getCropStatusText(status, sentiment)}`}
         </SentimentText>
-        <CropBullets items={evaluation.points} className="mt-1.5" />
+        <CropNote note={note} />
+        <CropSection
+          title="What's good"
+          items={evaluation.points}
+          license={evaluation.license}
+        />
         <CropSection title="What is missing" items={evaluation.missing} />
         <CropSection
           title="Additional considerations"
@@ -110,14 +110,135 @@ export function CropBadge({ letter, label, evaluation, delay }: Props) {
   )
 }
 
-function CropSection({
+/**
+ * The plant and its lettered chip, with no tooltip around them. Used on its
+ * own where the reasoning is already on the page in full, so hovering would
+ * only repeat what the reader can see.
+ */
+export function CropPlantBadge({
+  letter,
+  label,
+  status,
+  sentiment,
+  delay,
+  compact,
+}: {
+  letter: string
+  label: string
+  status: ProjectCropStatus
+  sentiment: Sentiment
+  delay: number
+  /** Smaller plant and chip, for a page that shows all four at once. */
+  compact?: boolean
+}) {
+  // The dash marks an assessment that is not finished. `fullyTransparent` is
+  // finished - there was simply nothing to grade - so its ring stays solid.
+  const isDashed = status === 'partiallyReviewed' || status === 'notReviewed'
+  return (
+    <span
+      className={cn(
+        'flex flex-col items-center gap-1',
+        compact ? 'w-8' : 'w-10',
+      )}
+      aria-label={`${label}: ${getCropStatusText(status, sentiment)}`}
+    >
+      <span
+        className={cn(
+          'flex items-end',
+          compact ? 'h-8' : 'h-10',
+          PLANT_COLOR[sentiment],
+        )}
+      >
+        <CropPlant
+          status={status}
+          sentiment={sentiment}
+          delay={delay}
+          compact={compact}
+        />
+      </span>
+      <span
+        className={cn(
+          'flex items-center justify-center rounded-full border-[1.5px] font-semibold',
+          compact ? 'size-[21px]' : 'size-[26px]',
+          letter.length > 1 || compact ? 'text-[10px]' : 'text-xs',
+          CHIP_FILL[sentiment],
+          isDashed ? CHIP_DASHED_BORDER : CHIP_BORDER[sentiment],
+        )}
+        style={{
+          animation: `garden-pop .5s ease-out ${delay}s both`,
+        }}
+      >
+        {letter}
+      </span>
+    </span>
+  )
+}
+
+/** Defaults `status` the way the config leaves it implicit. */
+export function resolveStatus(
+  evaluation: ProjectCropEvaluation,
+): ProjectCropStatus {
+  return evaluation.status ?? 'reviewed'
+}
+
+/** A not-reviewed crop has no color, so it always resolves to neutral. */
+export function resolveSentiment(evaluation: ProjectCropEvaluation): Sentiment {
+  return resolveStatus(evaluation) === 'notReviewed'
+    ? 'neutral'
+    : (evaluation.sentiment ?? 'neutral')
+}
+
+/**
+ * The license behind a green Open source crop, worded to sit among the other
+ * findings. It carries the OSI's own name for the license and links to their
+ * page, because it is the one claim here a reader can go and check.
+ */
+function CropLicenseText({ license }: { license: OsiLicense }) {
+  return (
+    <>
+      {'License: '}
+      <a
+        href={license.url}
+        target="_blank"
+        rel="noreferrer noopener"
+        className="text-link underline"
+      >
+        {license.name}
+      </a>
+      <span className="text-secondary">{` (${license.spdxId}, OSI approved)`}</span>
+    </>
+  )
+}
+
+/**
+ * The standing caveat for a crop, ahead of anything we found about one
+ * protocol. Muted because it is context rather than a finding, but never
+ * hidden: a reader who only reads the plant should still meet it.
+ */
+export function CropNote({
+  note,
+  className,
+}: {
+  note: string | undefined
+  className?: string
+}) {
+  if (!note) {
+    return null
+  }
+  return <p className={cn('mt-1.5 text-secondary', className)}>{note}</p>
+}
+
+export function CropSection({
   title,
   items,
+  license,
 }: {
   title: string
   items: string[] | undefined
+  /** Rendered as the first bullet of this group - see `CropBullets`. */
+  license?: OsiLicense | undefined
 }) {
-  if (items === undefined || items.length === 0) {
+  if (!license && (items === undefined || items.length === 0)) {
     return null
   }
   return (
@@ -125,42 +246,59 @@ function CropSection({
       <p className="mt-2.5 font-semibold text-[10px] text-secondary uppercase tracking-wider">
         {title}
       </p>
-      <CropBullets items={items} className="mt-1" />
+      <CropBullets items={items} license={license} className="mt-1" />
     </>
   )
 }
 
-function CropBullets({
+export function CropBullets({
   items,
+  license,
   className,
 }: {
   items: string[] | undefined
+  /** Rendered as the first bullet, ahead of the findings it underpins. */
+  license?: OsiLicense | undefined
   className?: string
 }) {
-  if (items === undefined || items.length === 0) {
+  if (!license && (items === undefined || items.length === 0)) {
     return null
   }
   return (
     <ul className={cn('flex flex-col gap-1', className)}>
-      {items.map((item) => (
-        <li key={item} className="flex gap-2 text-primary">
-          <span
-            aria-hidden
-            className="mt-[7px] size-1 shrink-0 rounded-full bg-current opacity-50"
-          />
-          <span>{item}</span>
-        </li>
+      {license && (
+        <CropBullet>
+          <CropLicenseText license={license} />
+        </CropBullet>
+      )}
+      {items?.map((item) => (
+        <CropBullet key={item}>{item}</CropBullet>
       ))}
     </ul>
   )
 }
 
-function getStatusText(
+function CropBullet({ children }: { children: ReactNode }) {
+  return (
+    <li className="flex gap-2 text-primary">
+      <span
+        aria-hidden
+        className="mt-[7px] size-1 shrink-0 rounded-full bg-current opacity-50"
+      />
+      <span>{children}</span>
+    </li>
+  )
+}
+
+export function getCropStatusText(
   status: ProjectCropStatus,
   sentiment: Sentiment,
 ): string {
   if (status === 'notReviewed') {
     return CROP_STATUS_LABELS.notReviewed
+  }
+  if (status === 'fullyTransparent') {
+    return CROP_STATUS_LABELS.fullyTransparent
   }
   if (status === 'partiallyReviewed') {
     return `${CROP_SENTIMENT_LABELS[sentiment]} · ${CROP_STATUS_LABELS.partiallyReviewed}`
@@ -192,10 +330,12 @@ function CropPlant({
   status,
   sentiment,
   delay,
+  compact,
 }: {
   status: ProjectCropStatus
   sentiment: Sentiment
   delay: number
+  compact?: boolean
 }) {
   const grow: CSSProperties = {
     transformBox: 'fill-box',
@@ -227,14 +367,21 @@ function CropPlant({
 
   return (
     <svg
-      width={34}
-      height={40}
+      width={compact ? 27 : 34}
+      height={compact ? 32 : 40}
       viewBox="0 0 34 40"
       className="block overflow-visible"
       aria-hidden
     >
       <Soil status={status} />
-      {status === 'notReviewed' ? (
+      {status === 'fullyTransparent' ? (
+        <TransparentFlower
+          grow={grow}
+          leafL={leafL}
+          leafR={leafR}
+          bloom={bloom}
+        />
+      ) : status === 'notReviewed' ? (
         <g
           style={{
             transformBox: 'fill-box',
@@ -352,7 +499,80 @@ function CropPlant({
   )
 }
 
+/**
+ * The whole flower, drawn as an outline instead of a solid shape: every part of
+ * it is there, and you see straight through it. Used for a property a protocol
+ * makes no claim to and hides nothing about, which is an answer rather than a
+ * gap - so unlike the not-reviewed ghost, the plant is complete and unbroken.
+ */
+function TransparentFlower({
+  grow,
+  leafL,
+  leafR,
+  bloom,
+}: {
+  grow: CSSProperties
+  leafL: CSSProperties
+  leafR: CSSProperties
+  bloom: CSSProperties
+}) {
+  // Outline only, and unbroken: the plant is whole and simply see-through,
+  // which is the opposite claim to the dashes on a crop nobody has assessed.
+  const outline = {
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+  } as const
+
+  return (
+    <g style={idleSway}>
+      <g style={grow}>
+        <path d="M17 34 C17 27 17 20 17 13" strokeWidth="1.8" {...outline} />
+        <path
+          d="M17 27 C11 27.5 6.5 24 5.6 18.8 C11.2 18.4 15.7 22 17 27 Z"
+          strokeWidth="1.4"
+          {...outline}
+          style={leafL}
+        />
+        <path
+          d="M17 27 C23 27.5 27.5 24 28.4 18.8 C22.8 18.4 18.3 22 17 27 Z"
+          strokeWidth="1.4"
+          {...outline}
+          style={leafR}
+        />
+        <g style={bloom}>
+          <circle cx="17" cy="5.2" r="3.2" strokeWidth="1.3" {...outline} />
+          <circle cx="12.4" cy="9" r="3.2" strokeWidth="1.3" {...outline} />
+          <circle cx="21.6" cy="9" r="3.2" strokeWidth="1.3" {...outline} />
+          <circle cx="17" cy="12.6" r="3.2" strokeWidth="1.3" {...outline} />
+          <circle cx="17" cy="9" r="2.05" strokeWidth="1.2" {...outline} />
+        </g>
+      </g>
+    </g>
+  )
+}
+
+const idleSway: CSSProperties = {
+  transformBox: 'fill-box',
+  transformOrigin: '50% 100%',
+  animation: 'garden-sway 4.6s ease-in-out 1s infinite',
+}
+
 function Soil({ status }: { status: ProjectCropStatus }) {
+  if (status === 'fullyTransparent') {
+    return (
+      <ellipse
+        cx="17"
+        cy="35.4"
+        rx="11.5"
+        ry="3"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.1"
+      />
+    )
+  }
   if (status === 'notReviewed') {
     return (
       <ellipse

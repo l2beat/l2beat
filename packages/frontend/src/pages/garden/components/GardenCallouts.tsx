@@ -13,7 +13,7 @@ export function GardenCallouts() {
       <CalloutCard
         tone="garden"
         title="Want your protocol in the garden?"
-        description="See what we look for in each crop, then send it in."
+        description="The bar for each crop is spelled out below. Send yours in when it clears."
         cta="Submit your protocol"
         href={SUBMIT_PROTOCOL_PATH}
       />

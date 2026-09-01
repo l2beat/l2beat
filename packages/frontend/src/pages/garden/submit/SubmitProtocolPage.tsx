@@ -5,7 +5,6 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { GARDEN_ANIMATIONS_CSS, GARDEN_SURFACES_CSS } from '../gardenCss'
 import { PlotBackground } from './assets/PlotBackground'
 import { ClosingSection } from './components/ClosingSection'
-import { CropsSection } from './components/CropsSection'
 import { HeroSection } from './components/HeroSection'
 import { ProcessSection } from './components/ProcessSection'
 
@@ -23,7 +22,6 @@ export function SubmitProtocolPage(props: AppLayoutProps) {
             <MainPageHeader>Submit your protocol</MainPageHeader>
             <main>
               <HeroSection />
-              <CropsSection />
               <ProcessSection />
               <ClosingSection />
             </main>

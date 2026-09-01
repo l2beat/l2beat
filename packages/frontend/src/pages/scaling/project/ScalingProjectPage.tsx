@@ -1,4 +1,3 @@
-import type { ProjectCrops } from '@l2beat/config'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { CssVariables } from '~/components/CssVariables'
@@ -20,19 +19,20 @@ import { MobileSectionNavigation } from '~/components/section-navigation/MobileS
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { ProjectGardenCrops } from '~/server/features/garden/getProjectGardenCrops'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { ProjectScalingSummary } from './components/ScalingProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectScalingEntry
-  crops?: ProjectCrops
+  garden?: ProjectGardenCrops
   queryState: DehydratedState
   selectedUpdateId?: string
 }
 
 export function ScalingProjectPage({
   projectEntry,
-  crops,
+  garden,
   queryState,
   selectedUpdateId,
   ...props
@@ -109,7 +109,7 @@ export function ScalingProjectPage({
                 </div>
                 <div className="row-start-2">
                   <ProjectScalingSummary project={projectEntry} />
-                  {crops && <GardenCropsNotice crops={crops} />}
+                  {garden && <GardenCropsNotice {...garden} />}
 
                   {projectEntry.header.category === 'Other' &&
                     projectEntry.reasonsForBeingOther &&

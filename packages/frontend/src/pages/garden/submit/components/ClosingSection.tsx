@@ -19,8 +19,8 @@ export function ClosingSection() {
             Ready to plant?
           </h2>
           <p className="mt-3 text-pretty text-paragraph-15 text-secondary md:text-paragraph-16">
-            Send us the details and we will take it from there. Questions, or a
-            disagreement with a plant already growing, belong on the{' '}
+            Send us the details and we will take it from there. Questions, or
+            comments on the assessments, belong on the{' '}
             <CustomLink href={externalLinks.forum}>forum</CustomLink>.
           </p>
           <Button asChild variant="fill" className="mt-6 w-full gap-2 sm:w-max">

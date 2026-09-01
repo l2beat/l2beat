@@ -1,5 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { CROPS_LEGOS, OSI_LICENSES } from '../../common/cropsLegos'
+import { CROPS_LEGOS } from '../../common/cropsLegos'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
@@ -155,8 +155,8 @@ export const umbra: BaseProject = {
     },
     openSource: {
       sentiment: 'good',
+      license: 'MIT',
       points: [
-        CROPS_LEGOS.osiLicensed(OSI_LICENSES.MIT),
         'The immutable core contracts, the cryptographic library and the frontend are published and can be built and run locally.',
       ],
     },

@@ -1,4 +1,9 @@
-import type { Project, ProjectCrops } from '@l2beat/config'
+import type { Project } from '@l2beat/config'
+import type { ResolvedCrops } from '@l2beat/config/build/crops/canonicalCrops'
+import {
+  qualifiesForGarden,
+  resolveProjectCrops,
+} from '@l2beat/config/build/crops/canonicalCrops'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getDb } from '~/server/database'
 import { getGardenAttestation } from '~/server/features/garden/getGardenAttestation'
@@ -80,7 +85,8 @@ export interface GardenEntry {
   subtitle: string
   iconUrl: string
   types: GardenProjectType[]
-  crops: ProjectCrops
+  /** Resolved on the server: the plants render plain data, never config. */
+  crops: ResolvedCrops
   tvs: GardenMetric | undefined
 }
 
@@ -112,9 +118,12 @@ export async function getGardenData(
       subtitle: getSubtitle(project),
       iconUrl: manifest.getUrl(`/icons/${project.slug}.png`),
       types: getTypes(project),
-      crops: project.crops,
+      crops: resolveProjectCrops(project.crops),
       tvs: getMetric(project, tvsBreakdown, depositCounts),
     }))
+    // A red crop keeps a project out of the garden. It is still reviewed, and
+    // its project page still shows the evaluation - it is just not planted.
+    .filter((entry) => qualifiesForGarden(entry.crops))
 
   return {
     head: {

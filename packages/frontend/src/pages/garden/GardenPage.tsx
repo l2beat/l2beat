@@ -1,4 +1,5 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { GardenBackground } from './assets/GardenBackground'
@@ -6,6 +7,7 @@ import {
   AttestationNotice,
   type GardenAttestation,
 } from './components/AttestationNotice'
+import { CropsSection } from './components/CropsSection'
 import { GardenCallouts } from './components/GardenCallouts'
 import { GardenTable } from './components/GardenTable'
 import { PlantLegendSection } from './components/PlantLegendSection'
@@ -38,8 +40,10 @@ export function GardenPage({ entries, attestation, ...props }: Props) {
             <AttestationNotice attestation={attestation} />
             <GardenCallouts />
             <PlantLegendSection />
+            <CropsSection />
           </div>
         </div>
+        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )

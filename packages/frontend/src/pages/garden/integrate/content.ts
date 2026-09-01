@@ -61,6 +61,7 @@ export const ENDPOINTS: EndpointDoc[] = [
   "id": "tornado-cash",
   "name": "Tornado Cash",
   "href": "${BASE}/privacy/projects/tornado-cash",
+  "inGarden": true,
   "attested": true,
   "attestation": { "uid": "0x…", "revision": 3, "explorerUrl": "…" },
   "crops": {
@@ -72,7 +73,17 @@ export const ENDPOINTS: EndpointDoc[] = [
       "additionalConsiderations": [],
       "notReviewed": ["The routers and interfaces users actually reach …"]
     },
-    "openSource": { "sentiment": "good", "status": "reviewed", ... },
+    "openSource": {
+      "sentiment": "good",
+      "status": "reviewed",
+      "license": {
+        "spdxId": "GPL-3.0",
+        "name": "GNU General Public License version 3",
+        "url": "https://opensource.org/license/gpl-3-0",
+        "categories": ["popular-strong-community"]
+      },
+      "points": ["Reproducible from source: …"], ...
+    },
     "privacy": { "sentiment": "good", "status": "reviewed", ... },
     "security": { "sentiment": "good", "status": "partiallyReviewed", ... }
   }

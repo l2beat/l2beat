@@ -1,4 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getProjectGardenCrops } from '~/server/features/garden/getProjectGardenCrops'
 import { getPrivacyProjectDetails } from '~/server/features/privacy/getPrivacyProjectDetails'
 import { getPrivacyProjectEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -41,7 +42,7 @@ export async function getPrivacyProjectData(
       props: {
         ...appLayoutProps,
         entry: projectEntry,
-        crops: details.crops,
+        garden: getProjectGardenCrops(details.crops),
         queryState: helpers.dehydrate(),
       },
     },

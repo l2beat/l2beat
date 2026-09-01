@@ -15,6 +15,12 @@ export interface CropDefinition {
   /** The letter in the chip under each plant. */
   letter: string
   label: string
+  /**
+   * Shown above the findings wherever this crop is explained - the tooltip,
+   * the project page, and the criteria card. For a crop whose plant a reader
+   * could mistake for a promise, this is where we say what it is not.
+   */
+  note?: string
 }
 
 export const CROP_COLUMNS: CropDefinition[] = [
@@ -37,6 +43,7 @@ export const CROP_COLUMNS: CropDefinition[] = [
     key: 'security',
     letter: 'S',
     label: 'Security',
+    note: "Security is a complex property. We evaluate if the projects follow best practices. This is not an audit or an endorsement of a protocol's security, and never a guarantee that funds are safe.",
   },
 ]
 
@@ -54,4 +61,5 @@ export const CROP_STATUS_LABELS: Record<ProjectCropStatus, string> = {
   reviewed: 'Reviewed',
   partiallyReviewed: 'Partially reviewed',
   notReviewed: 'Not reviewed',
+  fullyTransparent: 'Fully transparent',
 }

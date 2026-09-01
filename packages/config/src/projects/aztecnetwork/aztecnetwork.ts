@@ -13,7 +13,6 @@ import {
   DA_MODES,
   EXITS,
   OPERATOR,
-  OSI_LICENSES,
   RISK_VIEW,
   SOA,
   STATE_VALIDATION,
@@ -823,8 +822,8 @@ export const aztecnetwork: ScalingProject = {
     },
     openSource: {
       sentiment: 'good',
+      license: 'Apache-2.0',
       points: [
-        CROPS_LEGOS.osiLicensed(OSI_LICENSES.APACHE_2_0),
         'Onchain verifier has been reproduced.',
         'Rollup is forkable onchain by design.',
       ],

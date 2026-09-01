@@ -5,10 +5,12 @@ import {
 import type {
   CropKey,
   ResolvedCropEvaluation,
+  ResolvedCrops,
 } from '@l2beat/config/build/crops/canonicalCrops'
 import {
   CROP_KEYS,
-  resolveCropEvaluation,
+  qualifiesForGarden,
+  resolveProjectCrops,
 } from '@l2beat/config/build/crops/canonicalCrops'
 import {
   ATTESTATION_NETWORK,
@@ -64,7 +66,12 @@ export interface CropsApiProject {
   name: string
   /** Absolute url of the project page. Null for projects without one. */
   href: string | null
-  crops: Record<CropKey, ResolvedCropEvaluation>
+  crops: ResolvedCrops
+  /**
+   * Whether the review clears the bar for the garden. False while any crop is
+   * red, so a consumer showing the garden can apply the same rule we do.
+   */
+  inGarden: boolean
   /** Whether the current onchain attestation names this project. */
   attested: boolean
   /**
@@ -95,10 +102,7 @@ export async function getCropsProjects(): Promise<CropsApiProject[]> {
   return projects
     .map((project) => {
       const path = getGardenProjectPath(project)
-      const crops = {} as Record<CropKey, ResolvedCropEvaluation>
-      for (const key of CROP_KEYS) {
-        crops[key] = resolveCropEvaluation(project.crops[key])
-      }
+      const crops = resolveProjectCrops(project.crops)
       const isAttested = attested.has(project.id)
       return {
         id: project.id,
@@ -106,6 +110,7 @@ export async function getCropsProjects(): Promise<CropsApiProject[]> {
         name: project.name,
         href: path ? `${BASE_URL}${path}` : null,
         crops,
+        inGarden: qualifiesForGarden(crops),
         attested: isAttested,
         // Null rather than omitted, so consumers do not have to distinguish
         // "no field" from "reviewed but not attested yet".
@@ -115,9 +120,7 @@ export async function getCropsProjects(): Promise<CropsApiProject[]> {
     .sort((a, b) => a.id.localeCompare(b.id))
 }
 
-export function toCropsSummary(
-  crops: Record<CropKey, ResolvedCropEvaluation>,
-): CropsApiSummary {
+export function toCropsSummary(crops: ResolvedCrops): CropsApiSummary {
   const summary = {} as CropsApiSummary
   for (const key of CROP_KEYS) {
     summary[key] = {
