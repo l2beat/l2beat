@@ -24,14 +24,12 @@ import { readProjectMarkdown } from '../../utils/readMarkdown'
 
 const discovery = new ProjectDiscovery('payy')
 
-const upgradesAndGovernanceContent = `All privileged functions are ultimately controlled by the PayyMultisig (${discovery.getMultisigStats('PayyMultisig')}). It owns the ProxyAdmin, which can instantly upgrade the Rollup proxy, and it is the owner of the Rollup contract, allowing it to manage provers, validators, ZK verifiers, supported tokens and burn substitutors, and to directly overwrite the state root via setRoot(). There is no timelock or exit window on any of these actions.`
-
 export const payy: ScalingProject = {
   type: 'layer2',
   id: ProjectId('payy'),
   capability: 'appchain',
   addedAt: UnixTime(1787616000), // 2026-08-25T00:00:00Z
-  badges: [BADGES.VM.AppChain, BADGES.DA.Celestia, BADGES.Other.Privacy],
+  badges: [BADGES.VM.AppChain, BADGES.DA.CustomDA, BADGES.Other.Privacy],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Payy',
@@ -63,13 +61,7 @@ export const payy: ScalingProject = {
   chainConfig: {
     name: 'payy',
     chainId: undefined,
-    apis: [
-      {
-        type: 'payy',
-        url: 'https://validators.mainnet.payy.network',
-        callsPerMinute: 300,
-      },
-    ],
+    apis: [],
   },
   config: {
     escrows: [
@@ -134,7 +126,7 @@ export const payy: ScalingProject = {
     dataAvailability: {
       name: 'Data is not stored on chain',
       description:
-        'Transaction data and the private note tree are kept offchain by the Payy network. Only state roots and public deposit (mint) and withdrawal (burn) messages are posted to Ethereum with each state update. Although each update includes a data commitment hash, the onchain function intended to assert its availability on Celestia (`verifyCommitHash()`) is an empty placeholder, so Ethereum does not verify data availability.',
+        'Transaction data and the private note tree are kept offchain by the Payy network. Only state roots and public deposit (mint) and withdrawal (burn) messages are posted to Ethereum with each state update. Although each update includes a data commitment hash, the onchain function intended to assert its availability on a DA layer (`verifyCommitHash()`) is an empty placeholder, so Ethereum does not verify data availability. While Payy has announced Celestia as its DA layer, the commitment format posted onchain cannot be linked to any Celestia blob, and no trace of Payy data on Celestia could be identified.',
       risks: [
         {
           category: 'Funds can be lost if',
@@ -247,7 +239,9 @@ export const payy: ScalingProject = {
     ],
   },
   upgradesAndGovernance: {
-    content: upgradesAndGovernanceContent,
+    content: readProjectMarkdown('payy', 'upgradesAndGovernance', {
+      multisigStats: discovery.getMultisigStats('PayyMultisig'),
+    }),
   },
   privacyInfo: {
     detailedDescription: readProjectMarkdown('payy', 'detailedDescription'),
@@ -274,10 +268,10 @@ export const payy: ScalingProject = {
       },
     },
     reproducibility: {
-      value: 'Reproducible',
+      value: 'Partially reproducible',
       sentiment: 'warning',
       description:
-        'The sources for UI / wallet are not published, so users have to rely on Payy operated software.\n\nThe contracts, Noir circuits and node software are published in the Payy repository (without any license) and can be built and run locally.',
+        'The sources for UI / wallet are not published, so users have to rely on Payy operated software. Also, DA is not posted to identifiable public source, so L2 state could not be independently reproduced.\n\nThe contracts, Noir circuits and node software are published in the Payy repository (without any license) and can be built and run locally.',
     },
     privacy: {
       value: 'Linkable notes',
@@ -300,7 +294,9 @@ export const payy: ScalingProject = {
     ],
     riskSummary: readProjectMarkdown('payy', 'riskSummary'),
     upgradesAndGovernance: {
-      content: upgradesAndGovernanceContent,
+      content: readProjectMarkdown('payy', 'upgradesAndGovernance', {
+        multisigStats: discovery.getMultisigStats('PayyMultisig'),
+      }),
     },
   },
   contracts: {
